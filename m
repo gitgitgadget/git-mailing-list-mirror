@@ -1,75 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 1/2] t5520-pull: Add testcases showing spurious
- conflicts from git pull --rebase
-Date: Sun, 8 Aug 2010 16:43:58 -0500
-Message-ID: <20100808214358.GB6962@burratino>
-References: <1281294286-27709-1-git-send-email-newren@gmail.com>
- <1281294286-27709-2-git-send-email-newren@gmail.com>
- <201008082336.18270.j6t@kdbg.org>
+From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Subject: Re: wiki "abuse"
+Date: Sun, 08 Aug 2010 23:48:21 +0200
+Message-ID: <877hk0n5cq.fsf@gmail.com>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
+	<AANLkTinQo_Ug9hiN_A=_kXfVuWF_a1ZWVh0hAQP48TkP@mail.gmail.com>
+	<AANLkTinxNJ3aVUT1_i3-XL2dq8oobsgfUp14btZZjEUD@mail.gmail.com>
+	<alpine.DEB.2.00.1008071753400.23481@asgard.lang.hm>
+	<AANLkTimFYVcnjJrtczTsrkOesAu=jNfSjaFBrPObkdX5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, gitster@pobox.com,
-	git@vger.kernel.org, santi@agolina.net, Johannes.Schindelin@gmx.de
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Aug 08 23:45:43 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
+X-From: git-owner@vger.kernel.org Sun Aug 08 23:48:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiDgX-00088x-BT
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 23:45:37 +0200
+	id 1OiDjU-0000dW-Gw
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 23:48:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754772Ab0HHVpX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Aug 2010 17:45:23 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:49335 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754266Ab0HHVpW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Aug 2010 17:45:22 -0400
-Received: by yxg6 with SMTP id 6so3249321yxg.19
-        for <git@vger.kernel.org>; Sun, 08 Aug 2010 14:45:22 -0700 (PDT)
+	id S1754784Ab0HHVsf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Aug 2010 17:48:35 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:43623 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754584Ab0HHVse convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Aug 2010 17:48:34 -0400
+Received: by pxi14 with SMTP id 14so3462457pxi.19
+        for <git@vger.kernel.org>; Sun, 08 Aug 2010 14:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Q1CG9rQ5PSgyTNR8N9hT1AEpeZnu2LrNgsI9XMdF8xo=;
-        b=p7hdFy1rSH/C1c1LQGuos3ZLPR7Gv1J4UyHpquzG6lDxjMrrKQ5V3BpDNWVBJw4dsY
-         JX9hrcKgbINTMUhLj1X7ltd6TFddyEPKCiUH4ObvmJIKu+xdwooYBGCy8ltwO/AQNrDZ
-         N3frliTRnCungawfRncg2A9I4SJutTbqaeth0=
+        h=domainkey-signature:received:received:from:to:cc:subject
+         :in-reply-to:references:user-agent:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=RyTfRHllj+CTqjZjF7mmlieisVVmUQtfQ4+NjdGw9XQ=;
+        b=pljDnJ0Dhf+B4IIip61ni1Sut27yZdFFu9djYu7M4xy8LKKhcX0PqstKk1qMu3STvn
+         HNqRLcvdAAG2wRnhS63nzyd441d9T04pgtZx4szaWOS/eurajS3VyEzO1gBxjqUSpyDe
+         57SFaOQ1Uh/uFquK9oEXA3P5DRkxDxHNhfLj8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Hw5404jg4QwniRMIWQCLt5lMYj9hULJ7Opgh6eUAiG0G75LRorwO4vln4XdbHpycr6
-         YQ9oNdVt1/C2PvjzyMHmRo5Tpg3xLHFso5YEGoWq13v73sKlp1vvbKND0hlfG3zbv0mn
-         caUQU8QsZDtIxxYTBkb6mzELb0Z75WuZgqa6A=
-Received: by 10.101.131.17 with SMTP id i17mr6520358ann.229.1281303921887;
-        Sun, 08 Aug 2010 14:45:21 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id i30sm7083977anh.29.2010.08.08.14.45.20
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 08 Aug 2010 14:45:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201008082336.18270.j6t@kdbg.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type:content-transfer-encoding;
+        b=SF3mIXc3HxsosnC8Yol+Qu52/Gb9RJlgg3RwAITLyTZ/iXizPKkIy5nah5Iq9PPV4K
+         2Qvoud0N/UbNsuXwLHJUB5ps6cfR+s1+AfaQCA6v73Z0ttJrKzusTDAz8GVm3CUEb0fw
+         gzKt0xaxlHnrTYBcjbHXu0oIDpfvZodbop5GI=
+Received: by 10.114.15.11 with SMTP id 11mr17390910wao.121.1281304113748;
+        Sun, 08 Aug 2010 14:48:33 -0700 (PDT)
+Received: from localhost ([88.103.132.186])
+        by mx.google.com with ESMTPS id q6sm8891962waj.10.2010.08.08.14.48.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 08 Aug 2010 14:48:32 -0700 (PDT)
+In-Reply-To: <AANLkTimFYVcnjJrtczTsrkOesAu=jNfSjaFBrPObkdX5@mail.gmail.com>
+	(Amir E. Aharoni's message of "Sun, 8 Aug 2010 10:57:41 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152934>
 
-Johannes Sixt wrote:
-> On Sonntag, 8. August 2010, Elijah Newren wrote:
+"Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il> writes:
 
->> +test_expect_success 'setup for avoiding reapplying old patches' '
->> +	(cd dst &&
->> +	 (git rebase --abort || true) &&
+> 2010/8/8  <david@lang.hm>:
+>> On Sat, 7 Aug 2010, Amir E. Aharoni wrote:
+>> there is a lot of spamming happening nowdays in wikis and other web =
+forums,
+>> so it's not too surprising to me that a page that is just 'this is w=
+ho I am
+>> and here is a link to my blog' would be considered spam. There are c=
+ompanies
+>> who are out there trying to get improved google ratings by having lo=
+ts of
+>> pages with links to their page. many of them do this by buying lots =
+of
+>> domains and hosting them in different places, but there are a lot th=
+at are
+>> unethical enough to put pages very similar to what you describe as h=
+aving
+>> posted on any site they can manage to get into.
 >
-> Perhaps:
+> There are people on this list who know MediaWiki much better than i
+> do, so you don't need technical support from me, but i'll mention
+> anyway, that installing a Captcha extension, even a simple one such a=
+s
+> http://www.mediawiki.org/wiki/Extension:ConfirmEdit , lowers automate=
+d
+> spamming.
 >
-> 	test_might_fail git rebase --abort &&
+> And if the suspected spammer is a human and not a robot, talking to
+> him is better than blocking on sight.
 >
-> but I'm not sure whether that's the intended use of test_might_fail.
+> Can anyone please unblock my account Amire80 and IP 132.64.34.38?
+> There are some contributions i want to make. Thank you.
 
-It is.  Thanks for noticing.
+To the people who have replied so far: please read Amir's original
+message again. The point is not if you or anyone is interested in Amir'=
+s
+blog or who he is or whatever (some possibly appropriate measures were
+already mentioned in this thread), the point is that if what Amir
+described is true (and I see no reason to doubt that), some Git Wiki
+admin obviously behaves like a jerk. I admire Amir's patience,
+politeness and constructive reaction to that and hope the person who
+abused him will give up admin privileges or at least apologise.
+
+=C5=A0t=C4=9Bp=C3=A1n
