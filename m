@@ -1,156 +1,64 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv2 1/2] t5520-pull: Add testcases showing spurious 
-	conflicts from git pull --rebase
-Date: Sun, 8 Aug 2010 20:01:52 +0000
-Message-ID: <AANLkTikhsFfCfmR2V8iSRvU73B5yW=_kqJAEfAGgxpLY@mail.gmail.com>
-References: <1281294286-27709-1-git-send-email-newren@gmail.com>
-	<1281294286-27709-2-git-send-email-newren@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [GSoC update] git-remote-svn: Week 15
+Date: Sun, 8 Aug 2010 15:13:47 -0500
+Message-ID: <AANLkTinSge3dygR93qLAC3+28QTU0O3mjYPKQV8+v7Cw@mail.gmail.com>
+References: <20100808105232.GB2309@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org, santi@agolina.net,
-	Johannes.Schindelin@gmx.de
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 08 22:02:03 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 08 22:14:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiC4G-000864-Ew
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 22:02:00 +0200
+	id 1OiCGF-0003z2-Ot
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 22:14:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751599Ab0HHUBz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Aug 2010 16:01:55 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47548 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750934Ab0HHUBy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Aug 2010 16:01:54 -0400
-Received: by iwn33 with SMTP id 33so3128584iwn.19
-        for <git@vger.kernel.org>; Sun, 08 Aug 2010 13:01:53 -0700 (PDT)
+	id S1753722Ab0HHUOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Aug 2010 16:14:10 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:38465 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751720Ab0HHUOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Aug 2010 16:14:09 -0400
+Received: by ywh1 with SMTP id 1so3219924ywh.19
+        for <git@vger.kernel.org>; Sun, 08 Aug 2010 13:14:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wmQjZ2c8Yja2Ds60IdT+jJ0z5UasU2RjRgL7RxSfmN4=;
-        b=LmBU4ylsAjs+w08YBddZknxnlNechdR6SjMcNlUCZOgRdIwx/004v+g36uOSIHydlE
-         s/PuuGfVF+GGwkdi5dkjYedFRN6kmL5TdzuEoIIcPwv4iALViq+WXljvLzVBeljXwZ6q
-         iR0CK5lruXhR1pIPzyHve5jsa6AYGoX5B1pFE=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=AH/sqkfPUwhZwe43cRwuUxesy4SoicCcUjes+TX0Hhs=;
+        b=s8NO2VeeTcYmO9+8d9ckyG1GnlVOgNKyrnXYizgPQFV410I/ovfXjV+qqPZj9Rp5y3
+         UqS6qv0ztoVhgCLZJsul0EMnCs3acfDfuQk5emtHRj/XoosR1//l9Kiaz7ZkHRRbnOEa
+         llMMo0g9qlUquAN4OxYFvQAQTpimxYlGgyvkA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cSMieYgqaDoHyDDtWwyY04yMzp1Tg9yEM0mKUaXV2/5edZG5TXuCaPRr4ROhjbCGf+
-         lJoLMzW0ptUBby5buabkIbKiC1tqV6YHYU2VX7aDieloyfSX0e4AAXacJBv0LjhREwQ/
-         r6VHsLkl7bCYzkKl3i23rA8abBExkW1B1ZD0I=
-Received: by 10.231.159.203 with SMTP id k11mr17798572ibx.115.1281297712887; 
-	Sun, 08 Aug 2010 13:01:52 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Sun, 8 Aug 2010 13:01:52 -0700 (PDT)
-In-Reply-To: <1281294286-27709-2-git-send-email-newren@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ULuHiCyB1tKMKCpK21Y952rf7Bk75PtF2tNESjGeL73veCMlL91/Csc3DzOSOSXu0t
+         1OMzqiVMFiIZpsD/ihkGqoNCIwx939jlCxTwW0a/YkwQib9LDDyroYBlvf27CXtchM8S
+         dSOZ72CDYQ8cWPFW2mQJtHSa9FKxtAeZEW5zc=
+Received: by 10.151.73.13 with SMTP id a13mr16771979ybl.434.1281298447159; 
+	Sun, 08 Aug 2010 13:14:07 -0700 (PDT)
+Received: by 10.151.6.12 with HTTP; Sun, 8 Aug 2010 13:13:47 -0700 (PDT)
+In-Reply-To: <20100808105232.GB2309@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152923>
 
-On Sun, Aug 8, 2010 at 19:04, Elijah Newren <newren@gmail.com> wrote:
->
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> =C2=A0t/t5520-pull.sh | =C2=A0 58 +++++++++++++++++++++++++++++++++++=
-++++++++++++++++++++
-> =C2=A01 files changed, 58 insertions(+), 0 deletions(-)
->
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 319e389..1624dd3 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -160,4 +160,62 @@ test_expect_success 'pull --rebase works on bran=
-ch yet to be born' '
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_cmp expect actual
-> =C2=A0'
->
-> +test_expect_success 'setup for detecting upstreamed changes' '
-> + =C2=A0 =C2=A0 =C2=A0 mkdir src &&
-> + =C2=A0 =C2=A0 =C2=A0 (cd src &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git init &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0for i in $(seq 1 10); do echo $i; done >=
- stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git add stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -m "Initial revision"
-> + =C2=A0 =C2=A0 =C2=A0 ) &&
-> + =C2=A0 =C2=A0 =C2=A0 git clone src dst &&
-> + =C2=A0 =C2=A0 =C2=A0 (cd src &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/5/43/ stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -a -m "5->43" &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/6/42/ stuff &&
+Heya,
 
-Please use sed so the test doesn't depend on perl being present.
+On Sun, Aug 8, 2010 at 05:52, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> This task is VERY non-trivial, and essentially
+> involves making fast-import provide feedback and making
+> svn-dump-fast-export aware of the Git object store.
 
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -a -m "Make it bigger" &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0correct=3D$(git rev-parse HEAD)
-> + =C2=A0 =C2=A0 =C2=A0 ) &&
-> + =C2=A0 =C2=A0 =C2=A0 (cd dst &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/5/43/ stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -a -m "Independent discovery =
-of 5->43"
-> + =C2=A0 =C2=A0 =C2=A0 )
-> +'
-> +
-> +test_expect_failure 'git pull --rebase detects upstreamed changes' '
-> + =C2=A0 =C2=A0 =C2=A0 (cd dst &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git pull --rebase &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0test -z "$(git ls-files -u)"
-> + =C2=A0 =C2=A0 =C2=A0 )
-> +'
-> +
-> +test_expect_success 'setup for avoiding reapplying old patches' '
-> + =C2=A0 =C2=A0 =C2=A0 (cd dst &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0(git rebase --abort || true) &&
+Could you send a ping to the relevant threads of the patches to fast-import?
 
-If you're ignoring the git rebase --abort return value:
+-- 
+Cheers,
 
-  (cd dst &&
-    git rebase --abort;
-    git reset ...)
-
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git reset --hard origin/master
-> + =C2=A0 =C2=A0 =C2=A0 ) &&
-> + =C2=A0 =C2=A0 =C2=A0 git clone --bare src src-replace.git &&
-> + =C2=A0 =C2=A0 =C2=A0 rm -rf src &&
-> + =C2=A0 =C2=A0 =C2=A0 mv src-replace.git src &&
-> + =C2=A0 =C2=A0 =C2=A0 (cd dst &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/2/22/ stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -a -m "Change 2" &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/3/33/ stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -a -m "Change 3" &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/4/44/ stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit -a -m "Change 4" &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git push &&
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0perl -pi -e s/44/55/ stuff &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit --amend -a -m "Modified Chang=
-e 4"
-> + =C2=A0 =C2=A0 =C2=A0 )
-> +'
-> +
-> +test_expect_failure 'git pull --rebase does not reapply old patches'=
- '
-> + =C2=A0 =C2=A0 =C2=A0 (cd dst &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0(git pull --rebase || true) &&
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0test 1 =3D $(find .git/rebase-apply -nam=
-e "000*" | wc -l)
-> + =C2=A0 =C2=A0 =C2=A0 )
-> +'
-> +
-> =C2=A0test_done
-> --
-> 1.7.2.1
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Sverre Rabbelier
