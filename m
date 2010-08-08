@@ -1,69 +1,79 @@
-From: Willy Tarreau <w@1wt.eu>
-Subject: [PATCH] minor typo fix for git-rebase
-Date: Sun, 8 Aug 2010 07:30:01 +0200
-Message-ID: <20100808053001.GD8115@1wt.eu>
+From: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
+Subject: Re: wiki "abuse"
+Date: Sun, 8 Aug 2010 10:57:41 +0300
+Message-ID: <AANLkTimFYVcnjJrtczTsrkOesAu=jNfSjaFBrPObkdX5@mail.gmail.com>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> 
+	<AANLkTinQo_Ug9hiN_A=_kXfVuWF_a1ZWVh0hAQP48TkP@mail.gmail.com> 
+	<AANLkTinxNJ3aVUT1_i3-XL2dq8oobsgfUp14btZZjEUD@mail.gmail.com> 
+	<alpine.DEB.2.00.1008071753400.23481@asgard.lang.hm>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 08 07:30:24 2010
+X-From: git-owner@vger.kernel.org Sun Aug 08 09:58:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhySm-00073J-8Z
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 07:30:24 +0200
+	id 1Oi0m1-0004NU-AN
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 09:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752123Ab0HHFaE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 8 Aug 2010 01:30:04 -0400
-Received: from 1wt.eu ([62.212.114.60]:40210 "EHLO 1wt.eu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751732Ab0HHFaD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 8 Aug 2010 01:30:03 -0400
-Received: (from willy@localhost)
-	by mail.home.local (8.14.4/8.14.4/Submit) id o785U1wM011840
-	for git@vger.kernel.org; Sun, 8 Aug 2010 07:30:01 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
+	id S1752635Ab0HHH6G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Aug 2010 03:58:06 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:44991 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214Ab0HHH6E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Aug 2010 03:58:04 -0400
+Received: by qwh6 with SMTP id 6so6296124qwh.19
+        for <git@vger.kernel.org>; Sun, 08 Aug 2010 00:58:01 -0700 (PDT)
+Received: by 10.220.88.138 with SMTP id a10mr9138424vcm.96.1281254281305; Sun, 
+	08 Aug 2010 00:58:01 -0700 (PDT)
+Received: by 10.220.193.2 with HTTP; Sun, 8 Aug 2010 00:57:41 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1008071753400.23481@asgard.lang.hm>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152895>
 
-Hi !
+2010/8/8  <david@lang.hm>:
+> On Sat, 7 Aug 2010, Amir E. Aharoni wrote:
+> there is a lot of spamming happening nowdays in wikis and other web f=
+orums,
+> so it's not too surprising to me that a page that is just 'this is wh=
+o I am
+> and here is a link to my blog' would be considered spam. There are co=
+mpanies
+> who are out there trying to get improved google ratings by having lot=
+s of
+> pages with links to their page. many of them do this by buying lots o=
+f
+> domains and hosting them in different places, but there are a lot tha=
+t are
+> unethical enough to put pages very similar to what you describe as ha=
+ving
+> posted on any site they can manage to get into.
 
-I found the minor typo below while reading the script.
+There are people on this list who know MediaWiki much better than i
+do, so you don't need technical support from me, but i'll mention
+anyway, that installing a Captcha extension, even a simple one such as
+http://www.mediawiki.org/wiki/Extension:ConfirmEdit , lowers automated
+spamming.
 
-Cheers,
-Willy
+And if the suspected spammer is a human and not a robot, talking to
+him is better than blocking on sight.
 
---------
-From 54fbcaabbd2c9d6da1b51a35114838797585cb06 Mon Sep 17 00:00:00 2001
-From: Willy Tarreau <w@1wt.eu>
-Date: Sun, 8 Aug 2010 07:13:32 +0200
-Subject: git-rebase: fix typo when parsing --force-rebase
+Can anyone please unblock my account Amire80 and IP 132.64.34.38?
+There are some contributions i want to make. Thank you.
 
-Due to two missing hyphens, The "force" keyword on the command line
-would be taken as an alias for the --force-rebase option.
+--=20
+=D7=90=D6=B8=D7=9E=D6=B4=D7=99=D7=A8 =D7=90=D6=B1=D7=9C=D6=B4=D7=99=D7=A9=
+=D7=81=D6=B8=D7=A2 =D7=90=D6=B7=D7=94=D6=B2=D7=A8=D7=95=D6=B9=D7=A0=D6=B4=
+=D7=99
+Amir Elisha Aharoni
 
-Signed-off-by: Willy Tarreau <w@1wt.eu>
----
- git-rebase.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+http://aharoni.wordpress.com
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 2d88742..1d38afd 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -346,7 +346,7 @@ do
- 	--root)
- 		rebase_root=t
- 		;;
--	-f|--f|--fo|--for|--forc|force|--force-r|--force-re|--force-reb|--force-reba|--force-rebas|--force-rebase|--no-ff)
-+	-f|--f|--fo|--for|--forc|--force|--force-r|--force-re|--force-reb|--force-reba|--force-rebas|--force-rebase|--no-ff)
- 		force_rebase=t
- 		;;
- 	--rerere-autoupdate|--no-rerere-autoupdate)
--- 
-1.6.4.4
+"We're living in pieces,
+=C2=A0I want to live in peace." - T. Moore
