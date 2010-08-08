@@ -1,77 +1,69 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Re: [PATCH/RFC] tests: WIP Infrastructure for Git smoke testing
-Date: Sun, 8 Aug 2010 14:54:21 +0000
-Message-ID: <AANLkTimdFz38gfq1oW0VQ9giaavFnqRUH8DDEeoFN=BT@mail.gmail.com>
-References: <1280438455-16255-1-git-send-email-avarab@gmail.com>
-	<201007300011.50330.trast@student.ethz.ch>
-	<20100808134238.GA9659@book.hvoigt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Aug 08 16:54:28 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] Documentation/git-log: Clarify --full-diff
+Date: Sun,  8 Aug 2010 17:31:34 +0200
+Message-ID: <4acdfd58d0ff4aa6b55dab4d4233f55c1b753b5e.1281281303.git.git@drmicha.warpmail.net>
+References: <yf9ocddut4h.fsf@chiyo.mc.pp.se>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Lars Hjemli <hjemli@gmail.com>,
+	Marcus Comstedt <marcus@mc.pp.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 08 17:31:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oi7Ge-0006yu-HA
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 16:54:28 +0200
+	id 1Oi7qk-0002vA-D9
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 17:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754293Ab0HHOyX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Aug 2010 10:54:23 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:57333 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754102Ab0HHOyX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Aug 2010 10:54:23 -0400
-Received: by yxg6 with SMTP id 6so3216723yxg.19
-        for <git@vger.kernel.org>; Sun, 08 Aug 2010 07:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KNFxbAYCNFn2cxUYOhUyVxauzbH4oPqu5AtcLZubX7A=;
-        b=dwtBlJ+bRSA+HSPQbXrouDAbElvOSVPTFC0k3b34HGfx16ds+JSMSEUOs3Ww7/TZ00
-         Uwx0qgHScVDQVbFuQidIajHliqkKaLhXC8hGLnLNFqGgVhttBZYzIPH1JxS1Ccmq+L3s
-         4J+sRK7HGAOFVWQVRhgkAvciTetU3pt+bFtIY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PM1kjjjYpM+yV4OXH9PquwB9EWYaRDUkcmksipg5Knr2dhVo4aKqp5RC6KQlSpCZgt
-         2LqVc1tDk7xUWUGiRX5a/WNV4Xplnk1ss5gm1qclrBmSq9HXoCXNf+LA4GUDBldjOrFM
-         KvKdqY3tOho3uEsPE5yLSQvJtSkR+6Zd0KYRc=
-Received: by 10.100.127.15 with SMTP id z15mr16451078anc.213.1281279261991; 
-	Sun, 08 Aug 2010 07:54:21 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Sun, 8 Aug 2010 07:54:21 -0700 (PDT)
-In-Reply-To: <20100808134238.GA9659@book.hvoigt.net>
+	id S1754370Ab0HHPbW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Aug 2010 11:31:22 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57026 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751562Ab0HHPbW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 8 Aug 2010 11:31:22 -0400
+Received: from compute2.internal (compute2.internal [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 61166199883;
+	Sun,  8 Aug 2010 11:31:21 -0400 (EDT)
+Received: from heartbeat1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sun, 08 Aug 2010 11:31:21 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=9+rRii7Y0BnESk6yV1w1cKBKDnQ=; b=MrLAZPyIQ6S33+lBX/SYOogoOUui1UYQp4oF/0utQx4Yi81W5cdbdR/mADzKjKlIwBOSCSst5R5DMHdPLu1H7tAPVpiWdU/XQ9ljlGfSgVL91bB9S/WpA2OySkHxDA4tXs/EVI/CRnRFY8XXM0n5/Fb7wB7pcJMJ1GzQarL7tF4=
+X-Sasl-enc: xvuCrxt6y4o6qLQD1tblZ/Rwf6qWQ/gRuVYFYKv9f4+N 1281281480
+Received: from localhost (p54858FD1.dip0.t-ipconnect.de [84.133.143.209])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8DCD84E9D2D;
+	Sun,  8 Aug 2010 11:31:20 -0400 (EDT)
+X-Mailer: git-send-email 1.7.2.1.52.g7f7860
+In-Reply-To: <yf9ocddut4h.fsf@chiyo.mc.pp.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152917>
 
-On Sun, Aug 8, 2010 at 13:42, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> On Fri, Jul 30, 2010 at 12:11:50AM +0200, Thomas Rast wrote:
->> =C4=86var Arnfj=C3=B6r=C4=91 Bjarmason wrote:
->> > =C2=A0 - Is this worthwhile. Are there developers / packagers / ot=
-her
->> > =C2=A0 =C2=A0 interested parties here who'd be interested in actua=
-lly running
->> > =C2=A0 =C2=A0 smoke testers? It should be really easy to set one u=
-p.
->>
->> I'm all for it!
->
-> Me too! I should be able to setup a cronjob for tests under a Windows=
- XP
-> machine. Does that count as an obscure platform ? ;)
+The current description gives the impression that "--full-diff" affects
+"log -p" only.
 
-I think it does :)
+Make it clearer that it affects all diff-based output types.
 
-I just sent another version of the series to the list. It'd be very
-useful if you could try sending a smoke report from Windows XP.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/git-log.txt |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
 
-Thanks.
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index e970664..c213bdb 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -55,6 +55,9 @@ OPTIONS
+ 	paths.  With this, the full diff is shown for commits that touch
+ 	the specified paths; this means that "<path>..." limits only
+ 	commits, and doesn't limit diff for those commits.
+++
++Note that this affects all diff-based output types, e.g. those
++produced by --stat etc.
+ 
+ --log-size::
+ 	Before the log message print out its size in bytes. Intended
+-- 
+1.7.2.1.52.g7f7860
