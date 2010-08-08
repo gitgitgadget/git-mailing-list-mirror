@@ -1,66 +1,58 @@
-From: Lars Hjemli <hjemli@gmail.com>
+From: Marcus Comstedt <marcus@mc.pp.se>
 Subject: Re: git log --stat FILE
-Date: Sun, 8 Aug 2010 13:54:59 +0200
-Message-ID: <AANLkTikKwp9gS9nt=JnsdyXMgx+PxrhHhNFftYFqX+M_@mail.gmail.com>
+Date: Sun, 08 Aug 2010 14:04:27 +0200
+Message-ID: <yf9d3tts438.fsf@chiyo.mc.pp.se>
 References: <yf9wrs1fili.fsf@chiyo.mc.pp.se>
+	<AANLkTikKwp9gS9nt=JnsdyXMgx+PxrhHhNFftYFqX+M_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Marcus Comstedt <marcus@mc.pp.se>
-X-From: git-owner@vger.kernel.org Sun Aug 08 13:55:10 2010
+To: Lars Hjemli <hjemli@gmail.com>, Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 08 14:04:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oi4T7-00022B-FC
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 13:55:09 +0200
+	id 1Oi4cG-00050e-Hp
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 14:04:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753692Ab0HHLzB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 8 Aug 2010 07:55:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47796 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753620Ab0HHLzA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 8 Aug 2010 07:55:00 -0400
-Received: by mail-fx0-f46.google.com with SMTP id 14so4556359fxm.19
-        for <git@vger.kernel.org>; Sun, 08 Aug 2010 04:54:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MyGsel/fyxd6+xZoOUmuyZlPNfLwIx/rWRn1Yx8iaKk=;
-        b=icN0rpoxbIucEo9vnAf8iwtfheiavNcsMIJTkmMaI18Wh60cuf1jC09Jiqth9K4KYV
-         bVuyJu7WUmIF5bqF1zkEDrRGBqwT23NeOXpce5ugntkgsfC7Smu/pzc0By2aL3oEOobG
-         gaKLpYpwu1TjsoYtXB0NO3uOfA/5zJM+0cIAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nYOwLmrCm6AZB7RqsRgrC5fuiqu1dx71XH7fdMw8Onsa6Al0trMZH1oElCyV82Iwf1
-         EO+cNTZKC3V+dLN2Z1USN43bs3IAW5jYreCVFbykTPPLjgqBhLZJwgNn/Gp/7xot5kGn
-         A4msl8GJUO/057vdyqDqeU4u0grPF8EOA133o=
-Received: by 10.239.185.197 with SMTP id d5mr802442hbh.12.1281268499268; Sun, 
-	08 Aug 2010 04:54:59 -0700 (PDT)
-Received: by 10.239.165.79 with HTTP; Sun, 8 Aug 2010 04:54:59 -0700 (PDT)
-In-Reply-To: <yf9wrs1fili.fsf@chiyo.mc.pp.se>
+	id S1753715Ab0HHMEc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 8 Aug 2010 08:04:32 -0400
+Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:32954 "EHLO
+	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753626Ab0HHMEa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 8 Aug 2010 08:04:30 -0400
+Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bahamut.mc.pp.se (Postfix) with ESMTPS id D712EE93C;
+	Sun,  8 Aug 2010 14:04:28 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
+	t=1281269068; bh=C8IuDqMiMSpeNNaolPkG5hIZCQ1lCe+U7R5nXXGN2xY=;
+	h=To:Cc:Subject:References:From:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=rgF5b3T/HBY22ZmpsHSojfXNDJMoVzHL60u2J
+	tIlbA/RBhtLQYnFFtWbOKCBCUC/dT0/tcyRdvI1JkQVGLYtXuE0LODU4LI4ybQZvjk2
+	yrZgPpe7eryr5CDEqeXWc8EGfZxXc3rc0PBV/m+Z1MHujP4dk+cajZy7w/d77Stvhw4
+	=
+Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
+	(envelope-from <marcus@mc.pp.se>)
+	id 1Oi4c7-00056J-Q5; Sun, 08 Aug 2010 14:04:27 +0200
+In-Reply-To: <AANLkTikKwp9gS9nt=JnsdyXMgx+PxrhHhNFftYFqX+M_@mail.gmail.com> (Lars Hjemli's message of "Sun, 8 Aug 2010 13:54:59 +0200")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.4.22 (linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152902>
 
-On Sun, Aug 8, 2010 at 13:29, Marcus Comstedt <marcus@mc.pp.se> wrote:
-> When I do "git log --stat FILE", then only commits which touch FILE
-> are displayed, as expected. =C2=A0However, contrary to expectation (w=
-ell,
-> my expectation at least), the stat shows that only one file (FILE) is
-> modified by the commits, even if they actually modified multiple file=
-s.
-> That's not what I wanted;
 
-Try adding --full-diff to your `git log` incantation.
+Thanks guys.
 
---
-larsh
+I suspected there was some option I had missed.  :-)
+
+Both the option name and the documentaion mention only diffs, not
+stats, which makes it a bit hard to find...
+
+
+  // Marcus
