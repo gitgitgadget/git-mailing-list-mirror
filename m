@@ -1,93 +1,78 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v2] Allow HTTP user agent string to be modified.
-Date: Sun, 8 Aug 2010 10:51:55 +0800
-Message-ID: <AANLkTi=G=GvxXEh1hGuYQK42cdkMUaFhqxsQ39K=2180@mail.gmail.com>
-References: <1281152060-16736-1-git-send-email-olsonse@umich.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] contrib: Replaced /bin/sh with /bin/bash to make
+ scripts with Bash syntax work on Solaris.
+Date: Sat, 7 Aug 2010 22:11:42 -0500
+Message-ID: <20100808031142.GA20077@burratino>
+References: <1281099365-11978-1-git-send-email-asgeir@twingine.no>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>,
-	Mark Lodato <lodatom@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Spencer E. Olson" <olsonse@umich.edu>
-X-From: git-owner@vger.kernel.org Sun Aug 08 04:52:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: "Asgeir S. Nilsen" <asgeir@twingine.no>
+X-From: git-owner@vger.kernel.org Sun Aug 08 05:13:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OhvzV-0000Gw-Si
-	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 04:52:02 +0200
+	id 1OhwKB-0004ly-6z
+	for gcvg-git-2@lo.gmane.org; Sun, 08 Aug 2010 05:13:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752599Ab0HHCv6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 7 Aug 2010 22:51:58 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40959 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752407Ab0HHCv4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 7 Aug 2010 22:51:56 -0400
-Received: by iwn33 with SMTP id 33so2627232iwn.19
-        for <git@vger.kernel.org>; Sat, 07 Aug 2010 19:51:55 -0700 (PDT)
+	id S1752191Ab0HHDNN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 7 Aug 2010 23:13:13 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:37799 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751972Ab0HHDNK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 7 Aug 2010 23:13:10 -0400
+Received: by gwb20 with SMTP id 20so3141961gwb.19
+        for <git@vger.kernel.org>; Sat, 07 Aug 2010 20:13:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=078qGJ430LD21LsBQPTg41yT+Z2x1VJHLFCGVIGzBCE=;
-        b=meMHvxB/Idn6vj7I9fsb3Zvp5zF89+9EU/jaZ3N34xOndKo4dRpABSQtGY4Z04S/vh
-         H+amJyouwjAz8A5Cwb3KDxoX6RLDpQHjqIJxF4WWLFP/Sw68wtnWF+2ZpIjZ3eE/B6t5
-         H81N9tV+Do4QZy8vSeDBmL3Vd6pRHQKw8+waM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=i4Z1mrQHj006GYZxHWhVozDY+6m5URp6lsF9t3iwLUc=;
+        b=BC86zXNi4Hqgj045/HzDAAUkaO4NLAE1XfndCTiqXeT1VMGYRVX+KgrjnTddu4WC3K
+         RmHVT3Gzg72lTjZq70Qdn5Ae9lyqbBU2Pjz5nbrZIANOBffWw+uVK3NWfeajJTFStN0O
+         5pJzlfNISbEUlB2tw99SVsilbmS0kr3/fmYXQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=nRroqjO1x1MBicRRtV/Z3KcwbtJCtc3skIS6eiEfQAHwOLFauNj51b67WQXgfw80b4
-         oNCr5uY+Gq7UM4fSBW1XpLC31yNJORmywX088NYWLXNLCMZ21qIJsOm3GIUXp7qc9jNQ
-         ikb7zEAn4tldrKwLa9iFrfo6Shxh5LimaADIo=
-Received: by 10.231.35.199 with SMTP id q7mr16463883ibd.47.1281235915559; Sat, 
-	07 Aug 2010 19:51:55 -0700 (PDT)
-Received: by 10.231.158.141 with HTTP; Sat, 7 Aug 2010 19:51:55 -0700 (PDT)
-In-Reply-To: <1281152060-16736-1-git-send-email-olsonse@umich.edu>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ohM4ns1YUV+L8EY38UJzHofYYwMfJDCmIJB17xI+N05DU7NImGHakaBIEvAyu0g22K
+         6JbsEtLevRw1I97qzHdycbhZ5nEVtSMGuRB6lFYcBO9ofJ706ohxeLFXP/9YHOBsBSix
+         +M4eADxArW0CA6m+w497BJ+ERo1294ZKmQGsA=
+Received: by 10.150.197.3 with SMTP id u3mr2791930ybf.318.1281237187212;
+        Sat, 07 Aug 2010 20:13:07 -0700 (PDT)
+Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
+        by mx.google.com with ESMTPS id c2sm1320553ybi.9.2010.08.07.20.13.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 07 Aug 2010 20:13:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1281099365-11978-1-git-send-email-asgeir@twingine.no>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152880>
 
-Hi,
+Asgeir S. Nilsen wrote:
 
-On Sat, Aug 7, 2010 at 11:34 AM, Spencer E. Olson <olsonse@umich.edu> w=
-rote:
->[snip]
-> @@ -41,6 +41,7 @@ static long curl_low_speed_time =3D -1;
-> =A0static int curl_ftp_no_epsv;
-> =A0static const char *curl_http_proxy;
-> =A0static char *user_name, *user_pass;
-> +static const char *user_agent =3D NULL;
+> +++ b/contrib/ciabot/ciabot.sh
+> @@ -1,4 +1,4 @@
+> -#!/bin/sh
+> +#!/bin/bash
 
-This can be skipped, I think.
+Maybe, relying on a sane $PATH:
 
->[snip]
-> @@ -279,7 +283,10 @@ static CURL *get_curl_handle(void)
-> =A0 =A0 =A0 =A0if (getenv("GIT_CURL_VERBOSE"))
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0curl_easy_setopt(result, CURLOPT_VERBO=
-SE, 1);
->
-> - =A0 =A0 =A0 curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AG=
-ENT);
-> + =A0 =A0 =A0 if (user_agent !=3D NULL)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 curl_easy_setopt(result, CURLOPT_USERAG=
-ENT, user_agent);
-> + =A0 =A0 =A0 else
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 curl_easy_setopt(result, CURLOPT_USERAG=
-ENT, GIT_USER_AGENT);
+	#!/usr/bin/env sh
 
-Hmm, perhaps
+Not sure what would happen on the less unixy platforms.
 
-    curl_easy_setopt(result, CURLOPT_USERAGENT,
-        user_agent ? user_agent : GIT_USER_AGENT);
+Relying on POSIX execlp:
 
-to replace the if-else?
+	# shebang line omitted for portability
 
---=20
-Cheers,
-Ray Chuan
+Simplest of all is to tweak the #! lines in whatever script is used to
+deploy the scripts from contrib.  I would not mind seeing an
+install-contrib target incorporated into the Makefile that does that.
