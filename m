@@ -1,72 +1,83 @@
-From: "J.H." <warthog9@kernel.org>
-Subject: Re: wiki "abuse"
-Date: Mon, 09 Aug 2010 13:07:11 -0700
-Message-ID: <4C605FEF.9020809@kernel.org>
-References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> 	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> 	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> 	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302> <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com> <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] contrib: Replaced /bin/sh with /bin/bash to make
+ scripts with Bash syntax work on Solaris.
+Date: Mon, 9 Aug 2010 15:16:29 -0500
+Message-ID: <20100809201629.GB2888@burratino>
+References: <1281099365-11978-1-git-send-email-asgeir@twingine.no>
+ <20100808031142.GA20077@burratino>
+ <7vvd7j67wo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	=?UTF-8?B?w4Z2YXIgQXJu?= =?UTF-8?B?ZmrDtnLDsCBCamFybWFzb24=?= 
-	<avarab@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 09 22:07:27 2010
+Cc: "Asgeir S. Nilsen" <asgeir@twingine.no>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 22:18:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiYd3-0005Ix-0X
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 22:07:25 +0200
+	id 1OiYnS-0003EZ-Kl
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 22:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432Ab0HIUHR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 16:07:17 -0400
-Received: from shards.monkeyblade.net ([198.137.202.13]:58925 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756397Ab0HIUHQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 16:07:16 -0400
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id o79K7A63022499
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Mon, 9 Aug 2010 13:07:11 -0700
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.6
-In-Reply-To: <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 09 Aug 2010 13:07:12 -0700 (PDT)
+	id S1755348Ab0HIUSE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 16:18:04 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:63846 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754214Ab0HIUSC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 16:18:02 -0400
+Received: by wyi11 with SMTP id 11so64453wyi.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 13:18:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ikRwEev42NlSEgi3PUyWbqnmDVjzS37qmg3qHv/AzeY=;
+        b=EacDtavV0uHl2uFGDfTI7VKERidagMYyEiNNUAZiOqQU0xvj9Mk0BrEtC5xupDeDfz
+         egHS9d7yRG/dOJpNbmPC4DNo2PyfjE31mHE9VZz1jqW7f6gGWzhyaYJuhnkfMM1Izgl/
+         wtRqKQ1wyBGMCX7p4qXoZkS/1iUGYVYwqHZvI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=XAj46onptNQIn1MOVKvSuaEUxJsrSOB9UNBq5dJEZnZ3cI+WTkzBk8glOiubONeDdi
+         naXN98ltqDbxfsUeoGqDjUnAdMA7KswMbKCjZEUDhgaC+YX4SMQ7dan3p3Eyek2s9VGq
+         lI6WkRzU4DV712juaJag3qsphMbXTUczZewg4=
+Received: by 10.216.234.132 with SMTP id s4mr3091917weq.0.1281385081603;
+        Mon, 09 Aug 2010 13:18:01 -0700 (PDT)
+Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
+        by mx.google.com with ESMTPS id l6sm2860346wed.1.2010.08.09.13.17.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 09 Aug 2010 13:18:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vvd7j67wo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153015>
 
-On 08/09/2010 01:03 PM, Sverre Rabbelier wrote:
-> Heya,
->=20
-> On Mon, Aug 9, 2010 at 14:03, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
->> If the change is done by a real well-intentioned user, then you shou=
-ld
->> revert the change explaining your reasoning, and allowing counter
->> arguments, not ban.
->=20
-> Come on people, let's be serious here. The guy is not a real
-> well-intentioned user, he's a troll trying to use the git wiki for
-> pagerank. Let's stop feeding said troll and let this thread die.
->=20
-> John, can you turn of user pages on the git wiki? It seems that =C3=86=
-var
-> can help you do this if need be.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-If that's the consensus and such it's doable (I believe), take a little
-finagling.  So I'll put this out there now, is there any objection to
-this course of action, if so now would be a good time to speak up befor=
-e
-I turn the user pages off.
+>> Maybe, relying on a sane $PATH:
+>>
+>> 	#!/usr/bin/env sh
+>
+> That's even worse.  Please don't go there.
 
-- John 'Warthog9' Hawley
+Okay.  I was trying to be exhaustive, even if most of the strategies I
+mentioned are insane (=E2=80=9Cmaybe=E2=80=9D was probably too strong o=
+f a word :)).
+(For example, I remember some version of Cygwin requiring the #! line,
+so I fear it is dangerous to leave that off.)
+
+After-the-fact s,/bin/sh,$SHELL_THE_USER_WANTS, substitution is the
+only sane strategy I have seen used in practice.  POSIX has even
+blessed something like it, at last.
+
+http://www.opengroup.org/onlinepubs/9699919799/utilities/sh.html#tag_20=
+_117_16
