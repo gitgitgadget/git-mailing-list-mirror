@@ -1,88 +1,106 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: wiki "abuse"
-Date: Mon, 9 Aug 2010 16:14:27 -0500
-Message-ID: <AANLkTikNDdi1gDaoWdHsiUPLW2CtZMP0J2c94DpLA=AV@mail.gmail.com>
-References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> 
-	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> 
-	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> 
-	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302> <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com> 
-	<AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com> 
-	<4C606E1B.6020800@lsrfire.ath.cx>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/5] merge-recursive: porcelain messages for checkout
+Date: Mon, 9 Aug 2010 21:15:00 +0000
+Message-ID: <AANLkTikQAduZ3=1U6ObzLKdY0pomMBm2BGbq+Xyfmggh@mail.gmail.com>
+References: <1281363602-27856-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1281363602-27856-3-git-send-email-Matthieu.Moy@imag.fr>
+	<7vhbj34kz8.fsf@alter.siamese.dyndns.org>
+	<vpq4of3se4v.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Aug 09 23:14:54 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Mon Aug 09 23:15:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiZgL-0004mB-HC
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 23:14:53 +0200
+	id 1OiZgb-0004tD-P7
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 23:15:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755350Ab0HIVOt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 17:14:49 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:46323 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754860Ab0HIVOs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 17:14:48 -0400
-Received: by gxk23 with SMTP id 23so3575269gxk.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 14:14:47 -0700 (PDT)
+	id S1755832Ab0HIVPD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 17:15:03 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33434 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755555Ab0HIVPB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 17:15:01 -0400
+Received: by iwn33 with SMTP id 33so3814674iwn.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 14:15:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=q5V4MBBT8/WufEO5VEqR60Fsg+/G2aF9b+fAacvHFeo=;
-        b=jEKk2ZcNpBfOTfgW5oyxhLGe01LvBskKelK9LMxw+N/0Q5bg2rCUeuFrIwFPJb4W6S
-         7qSBVgrP9xLfuBpMDoiB37Lzga77QCW8vC9CdkTDKDDzAI+kcrs3Z9zdE128cEvMrQSr
-         BYsVKgiIFbyJRIPpYiiFkzvNPhkmfScASnVZw=
+        bh=OP4h0ypCyeOaBVQiZCy3bxh9Atwdtuy/W6vhH1uNdnk=;
+        b=PQRC2G1i6qb6d8Z35RbkYIrwfbnFyacQ44shAGj0mizZgQnJs6nESTy7X0QX2Axds6
+         ZyMhLm6p5A1JUfQBMveQT+q+qjPb4FkEdByvLzLVshXZk4LrSmdeX+Rb+wdzkH8uaslr
+         zrYWUD6Qb3hoPqIcjvSM2uVJGHPBk96JosE4o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=xxbLo7i8lVFGJaYJpZWZiWFiBShOE2CB/Z3SA0vvdnvc6OgDpRqaDOrQdN4fFvRK5/
-         otbGK99bbrffttDgm3wrqw6aWcN1sbQ4stvoyq1Lw7Sc6KCOpZQSoiHtUvb55o2uxSGw
-         MdsOnEzQ6ObVoCVDa1HfPhPiWl/W8I5rAkPKw=
-Received: by 10.151.77.5 with SMTP id e5mr18381506ybl.245.1281388487637; Mon, 
-	09 Aug 2010 14:14:47 -0700 (PDT)
-Received: by 10.231.139.160 with HTTP; Mon, 9 Aug 2010 14:14:27 -0700 (PDT)
-In-Reply-To: <4C606E1B.6020800@lsrfire.ath.cx>
+        b=nWaWVfRRlVkey47QHDrt6YOSg4RqCGzYG4j35mse41CKy1VY/RpoO0xh6ilgUkzaFD
+         Siy/2i1ThoIW9ooQXo0S5+7qX8CWanpgGeBfu+ACQiFcMqEhdmmr3lhRLyIhG64J01Qj
+         wti0xL1v9wT7ftFJmsqnURI99WDbodpuuRIyQ=
+Received: by 10.231.160.17 with SMTP id l17mr19636976ibx.102.1281388500575; 
+	Mon, 09 Aug 2010 14:15:00 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Mon, 9 Aug 2010 14:15:00 -0700 (PDT)
+In-Reply-To: <vpq4of3se4v.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153026>
 
-Heya,
+On Mon, Aug 9, 2010 at 20:52, Matthieu Moy <Matthieu.Moy@grenoble-inp.f=
+r> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>>
+>>> +void set_porcelain_error_msgs(const char **msgs, const char *cmd)
+>>> =C2=A0{
+>>> + =C2=A0 =C2=A0const char *msg;
+>>> + =C2=A0 =C2=A0char *tmp;
+>>> + =C2=A0 =C2=A0const char *cmd2 =3D strcmp(cmd, "checkout") ? cmd :=
+ "switch branches";
+>>
+>> This may have implications to the later i18n effort, but lets ignore=
+ it
+>> for now. =C2=A0I don't think it will be too bad.
+>
+> Note that the ? : construct just allows factoring out two messages,
+> but one can easily distinguish all cases and give the complete error
+> message in the source (we don't care about performance/memory here,
+> it's a one-time thing).
+>
+> So, yes, that's easily fixable later if it causes problems to i18n.
 
-2010/8/9 Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>:
-> In the mails in this thread he doesn't look very trollish to me, and =
-he
-> didn't have much of a chance to contribute something useful to the wi=
-ki.
+Yeah, this is a drop in the lego ocean that is Git's source
+code. Don't worry about it, it can be fixed later.
 
-He had a full day.
+You can stop reading at this point.
 
-> =C2=A0What are the grounds of your verdict?
+=46WIW "lego" is the i18n term used for printf("messages %s assembled
+like this", "that are"). E.g.:
 
-Contents of the profile page, and high troll content of this thread.
+    printf(_("It's a nice %s"), is_evening() ? _("evening") : _("day"))=
+;
 
-> Can user pages be excluded from indexing by search engines?
+Things like that will cause trouble for e.g. French where it's "C'est
+un soir=C3=A9e formidable." or "C'est un jour formidable." (I hope I go=
+t
+that right). You can move the %s around, but it's still hard to
+translate stuff like that, especially as translation programs often
+display strings independently.
 
-Yup, by disabling them :P. Mediawiki has rel=3D"nofollow" on all
-outgoing links, but I don't know how easy that is to turn on. I see no
-use in having user pages though, so I'm in favor of just turning them
-off.
+It's better to have independent strings like _("It's a nice evening")
+and _("It's a nice day") instead, even if it leads to duplication.
 
---=20
-Cheers,
+I'll be submitting a lot of patches to fix things like this once the
+i18n series gets merged.
 
-Sverre Rabbelier
+Have fun.
