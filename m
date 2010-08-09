@@ -1,62 +1,72 @@
-From: Sultan Shakir <sshakirflhosp@gmail.com>
-Subject: Git and Documentation
-Date: Mon, 9 Aug 2010 13:35:39 -0400
-Message-ID: <AANLkTi=P=RsToSor=giC+dgV24bPj7KJ3eRV1M5a+iuD@mail.gmail.com>
-References: <AANLkTik_rO_+az5kE=yhfXK1uUO3v0RKdcO2hzFBcZym@mail.gmail.com>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: wiki "abuse"
+Date: Mon, 09 Aug 2010 13:07:11 -0700
+Message-ID: <4C605FEF.9020809@kernel.org>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> 	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> 	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> 	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302> <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com> <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 09 22:06:20 2010
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJu?= =?UTF-8?B?ZmrDtnLDsCBCamFybWFzb24=?= 
+	<avarab@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 22:07:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiYbx-0004lD-Ut
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 22:06:18 +0200
+	id 1OiYd3-0005Ix-0X
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 22:07:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756369Ab0HIUGN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 16:06:13 -0400
-Received: from mail-gw0-f66.google.com ([74.125.83.66]:38895 "EHLO
-	mail-gw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754343Ab0HIUGM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 16:06:12 -0400
-X-Greylist: delayed 4806 seconds by postgrey-1.27 at vger.kernel.org; Mon, 09 Aug 2010 16:06:12 EDT
-Received: by gwb11 with SMTP id 11so1736121gwb.1
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 13:06:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=VlEQHHToL7h5jbxuGkEcW8ktaQfJVrxYaJR4RSewkbQ=;
-        b=VCPgwnyiDRnpK8GSC0j1lSIqQe9bOp0+MVAXipI+oHPz06O4y6pqUjimtUY60Lpr9Y
-         QSd0lXtvp8xZO7jSD3/DWMPQV5IDxmBbwVgIY7xxHFyWBXlSW4FV5T+//Zyuh6guuol2
-         ZhaH4w2tkby1mNY9aEb56ULia0FWRf4Zqzjtw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=k31MruRUn71RrMJve5ga6BhzlKwSBmj8xsfCtnYv5RIwdv1cNv0BOPj/e3kdDh7b8T
-         lb3b1UtCnsYDGkAKB0bgGkrPniFE3dmSAvXgEl4eJR4O5IOSeVvRBjDzHalmiO9o76Up
-         CXG7+NMcoa8wP0JAwhSDQRRxKZIR3SOOscnH8=
-Received: by 10.100.34.19 with SMTP id h19mr18375805anh.2.1281375339232; Mon, 
-	09 Aug 2010 10:35:39 -0700 (PDT)
-Received: by 10.231.205.210 with HTTP; Mon, 9 Aug 2010 10:35:39 -0700 (PDT)
-In-Reply-To: <AANLkTik_rO_+az5kE=yhfXK1uUO3v0RKdcO2hzFBcZym@mail.gmail.com>
+	id S1756432Ab0HIUHR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 16:07:17 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:58925 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756397Ab0HIUHQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 16:07:16 -0400
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id o79K7A63022499
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Mon, 9 Aug 2010 13:07:11 -0700
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.6
+In-Reply-To: <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 09 Aug 2010 13:07:12 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153014>
 
-Dear Git Community:
-My organization is exploring using Git to manage our code repository.
-We also have a strong need for documentation of our code. =A0The code i=
-s
-written in a=A0proprietary language (Discern Explorer/CCL). =A0We looke=
-d
-into Natural Docs but don't think we can combine it with Git.=A0=A0Does
-anyone know of an app where we can combine the power of Git and code
-documentation in one? =A0Thank you. -Sultan
+On 08/09/2010 01:03 PM, Sverre Rabbelier wrote:
+> Heya,
+>=20
+> On Mon, Aug 9, 2010 at 14:03, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> If the change is done by a real well-intentioned user, then you shou=
+ld
+>> revert the change explaining your reasoning, and allowing counter
+>> arguments, not ban.
+>=20
+> Come on people, let's be serious here. The guy is not a real
+> well-intentioned user, he's a troll trying to use the git wiki for
+> pagerank. Let's stop feeding said troll and let this thread die.
+>=20
+> John, can you turn of user pages on the git wiki? It seems that =C3=86=
+var
+> can help you do this if need be.
+
+If that's the consensus and such it's doable (I believe), take a little
+finagling.  So I'll put this out there now, is there any objection to
+this course of action, if so now would be a good time to speak up befor=
+e
+I turn the user pages off.
+
+- John 'Warthog9' Hawley
