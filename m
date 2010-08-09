@@ -1,111 +1,101 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: Re: workflow with blessed, lieutenant, and developers
-Date: Mon, 9 Aug 2010 15:30:09 -0400
-Message-ID: <20100809193009.GA8191@localhost.localdomain>
-References: <20100809092152.5f32646a@packard.rktmb.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: understanding how remote tracking works
+Date: Mon, 09 Aug 2010 12:31:32 -0700
+Message-ID: <7vaaov60rv.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=J3tDnZUg3k5bzDk2ydzYVVLKLwoW0gpBypYAs@mail.gmail.com>
+ <i3nlq0$8un$1@dough.gmane.org>
+ <AANLkTinktpx-rXj1K0BSy0Qwo62SEGFAJWvhKo0nJq=i@mail.gmail.com>
+ <AANLkTi=usaZGfOM67acmdAWwvbHe_eHyjmRLGmdTYNaC@mail.gmail.com>
+ <20100809021900.GA10596@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 09 21:30:26 2010
+Cc: Michael Witten <mfwitten@gmail.com>, geoffrey.russell@gmail.com,
+	Ralf Ebert <info@ralfebert.de>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 21:32:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiY3F-00061w-Vv
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 21:30:26 +0200
+	id 1OiY4k-0006qo-Oa
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 21:31:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754760Ab0HITaT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 15:30:19 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:56248 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754082Ab0HITaS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 15:30:18 -0400
-Received: by qwh6 with SMTP id 6so7537858qwh.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 12:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=cDEvc4p9dPGmo5FpeCRCoXh7IcUqjALP4VWaz3D7EJw=;
-        b=ngmqFGqLCeGknFWxsvDrNCOIKAdI4DFmj9IpJgrIftaPPjL6fJpLkBrM/iQGmykNzc
-         nOyD+ufkTSRrZeKzhyFXPZOFDeUEXD9MWZRS27PAW9AgCWunzI3LGo2wIptEPsuNxyoD
-         Lk8XTN9fFlDi0lde4byiq1qMA9xzhlMkNk2hA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=tlPVy+2NvoCwdzk73zhOcPylLU2qydhyHvG0ImY5TjiPEVF7d2zClEg46gNtQnWkyG
-         3a8nylRlmbrfvJl830iKtODHrpoVgZWtHI8POK/o6VU1sbqULL83+v2v6O3qwap4/Dw8
-         TPGI12EgZsQq79kwflUVcYZEWhWuEnpjpsddE=
-Received: by 10.224.26.93 with SMTP id d29mr8869502qac.24.1281382217202;
-        Mon, 09 Aug 2010 12:30:17 -0700 (PDT)
-Received: from localhost.localdomain (cpe-174-101-209-27.cinci.res.rr.com [174.101.209.27])
-        by mx.google.com with ESMTPS id w5sm6734896qcq.7.2010.08.09.12.30.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Aug 2010 12:30:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100809092152.5f32646a@packard.rktmb.org>
-User-Agent: Mutt/1.5.20 (2009-12-10)
+	id S1754934Ab0HITbx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 15:31:53 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36530 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754829Ab0HITbw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 15:31:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FD2CCC868;
+	Mon,  9 Aug 2010 15:31:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9TPg+B76jsRp
+	YqqQch03t0Y0OTc=; b=mneYdQRgC/cU/CJDvxWGG6+udAzGkpC/r2QWxBBwz6uJ
+	kEuidVyJQbIftIPwaj60z4rcpa7rEwIE+XfSqWqZGToI6LY7t5yWEGzQBks3yls2
+	vogOSJ46VAMAmZWNoUAdPZrIG7l0X0YkG5YidVrHpxqX8PfJVaRTSABIrsHo2IQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dfb2M5
+	8sxR7dQC9Eu/sM8cZzG/BDEjp7OXATMX08FVwSNk027o7gyEB0vxeUs8AzsrnyKO
+	bP7y5ZL5QMdHpJx8FU7N9wQG8P2D92S65MH/s7nYIcxZqWQ8NF2CjaDFXMdzTCjz
+	Oh4O4jY8yHW0SnaodYl/tsNsv6tiogvni/ZhY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A89D5CC863;
+	Mon,  9 Aug 2010 15:31:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.126]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 71E89CC853; Mon,  9 Aug
+ 2010 15:31:38 -0400 (EDT)
+In-Reply-To: <20100809021900.GA10596@burratino> (Jonathan Nieder's message of
+ "Sun\, 8 Aug 2010 21\:19\:00 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BF9B2608-A3EC-11DF-BE22-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153004>
 
-On Mon, Aug 09, 2010 at 09:21:52AM +0300, Mihamina Rakotomandimby wrote=
-:
-> I would like to setup a similar thing but with=20
-> - Only one lieutenant (me)
-> - A blessed repository where I am the only one to push to
-> - Developers who push to me (the lieutenant)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-There are multiple lieutenants, or none. You are the (possible
-benevolent) dictator in this case.
+> Michael Witten wrote:
+>> On Sun, Aug 8, 2010 at 20:53, Geoff Russell <geoffrey.russell@gmail.=
+com> wrote:
+>
+>>> I'm working my way through Jon Loeliger's Git book and it's
+>>> confusing when the actual behaviour differs from that in the book
+>>
+>> This probably results from the git culture's conflation (or should I
+>> say confusion?) of low-level and high-level representations and
+>> commands.
+>
+> I guess I=E2=80=99ll bite.  What does that mean?  We have =E2=80=9Csh=
+ow-ref=E2=80=9D and
+> =E2=80=9Cupdate-ref=E2=80=9D precisely as low-level commands that are=
+ independent
+> of representation.
 
-> Developers pull/clone from the blessed repository.
-> I initially clone from the blessed repository.
->=20
-> 1=B0) What command line do developers use to push to me but not to th=
+I tend to agree with Michael (modulo s/ culture/'s early&/) here.  Many
+documents written in the early days, the "tutorial" document by Linus
+being the most prominent example, were written in a way to focus exposi=
+ng
+the implementation details to show how simple the structure is.  These
+documents and tips by early adopters, simply by virtue of being old, ar=
 e
-> blessed (origin)?
+found more easily by search engines.  Later we started encouraging use =
+of
+show-ref and update-ref to isolate users from the implementation detail=
+s
+that can be changed for performance reasons.
 
-Developers don't push to someone else. They can either:
-1) Send an email to the dictator requesting a pull
-2) Send an email to the mailing list requesting a pull and review
-3) Send patches to the mailing list requesting integration and review
+> Probably the more relevant question: what do you want to do about it?
 
-I don't recomend #1 because #2 is strictly better. #3 has a specific
-command: git-format-patch
-
-When using #2/#3, its useful to have the developers CC the maintainer
-of the project.
-
-Developers usually need to push to a public branch at a hosting site
-like github or repo.or.cz.
-
-> 2=B0) After they pushed to me, I have the choice to "approve" or "rej=
-ect"
-> a commit: what is the keyword and git option for that?
-
-Add the remote and fetch. Then merge the branch into your master (or
-whatever branch you choose).
-
-In the case of patches on a mailing list, you need to copy them to a
-mailbox (for example, in Mutt, I use t to tag the group and ;C to copy
-them all into a mbox) and use git-am to apply all the patches (you
-should do this in a new branch). You can then choose to merge the
-branch in.
-
-> 3=B0) I push the merge of approved commits to the blessed repository:
-> what keywords and git options?
-
-git push origin
-
-
-Make sure you remember that Git is not a replacement for
-communication. There should be a way for people to review patches
-BEFORE they are applied to the blessed repository.
+Continue the current course of encouraging the use of plumbing commands
+and not looking at the low-level implementation detail.  Perhaps help
+people update their documents, moving stale descriptions into "historic=
+al
+note" sections.
