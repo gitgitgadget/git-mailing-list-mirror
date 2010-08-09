@@ -1,108 +1,74 @@
-From: Ralf Ebert <info@ralfebert.de>
-Subject: [PATCH] More readable 'Not a git repository' messages
-Date: Mon, 09 Aug 2010 19:24:35 +0200
-Message-ID: <i3pdkj$hut$1@dough.gmane.org>
+From: Ivan Kanis <expire-by-2010-08-14@kanis.fr>
+Subject: Re: Git server eats all memory
+Date: Mon, 09 Aug 2010 19:38:06 +0200
+Message-ID: <871va7lm9t.fsf@kanis.fr>
+References: <wesfwyupgrg.fsf@kanis.fr>
+	<AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
+	<87ocdhlgbl.fsf@kanis.fr>
+	<AANLkTikt7LuhxHhOqPm2P-2hzXP54YThX5FRxF4yCFZu@mail.gmail.com>
+	<AANLkTi=tf51FWkZZFw9cF=pcCyadgp7a9EXK=KQ6GSQS@mail.gmail.com>
+	<87hbj74pve.fsf@kanis.fr>
+	<AANLkTi=yeTh2tKn9t_=iZbdB5VLrfCPZ2_fBpYdf9wta@mail.gmail.com>
+	<wesbp9cnnag.fsf@kanis.fr>
+	<AANLkTinT-taMqB87moLZ_CLio2USnxsriq6U0EJvSGte@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 09 19:24:51 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ivan Kanis <expire-by-2010-08-14@kanis.fr>,
+	git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 19:38:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiW5i-00053h-Vb
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 19:24:51 +0200
+	id 1OiWIm-0005Ck-HT
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 19:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751431Ab0HIRYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 13:24:46 -0400
-Received: from lo.gmane.org ([80.91.229.12]:51013 "EHLO lo.gmane.org"
+	id S1751523Ab0HIRiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Aug 2010 13:38:12 -0400
+Received: from kanis.fr ([75.127.73.245]:4538 "EHLO kanis.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751113Ab0HIRYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 13:24:45 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OiW5b-00051X-Rx
-	for git@vger.kernel.org; Mon, 09 Aug 2010 19:24:43 +0200
-Received: from port-92-198-61-236.static.qsc.de ([92.198.61.236])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 19:24:43 +0200
-Received: from info by port-92-198-61-236.static.qsc.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 19:24:43 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: port-92-198-61-236.static.qsc.de
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.11) Gecko/20100713 Thunderbird/3.0.6
+	id S1751231Ab0HIRiM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 13:38:12 -0400
+Received: from [89.83.137.164] (helo=tao)
+	by kanis.fr with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.63)
+	(envelope-from <expire-by-2010-08-14@kanis.fr>)
+	id 1OiWIb-00052T-Ft; Mon, 09 Aug 2010 13:38:09 -0400
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAAB5QTFRF
+ IBkXUxMTOCwoTC4qcUY8iFxQmmper31txpaJ/v/8aKZ1oAAAAcVJREFUOMt100tu2zAQAFDCXnUZ
+ oAcIqG68LZULVLQBbwuSiffm6AIRRyeotAySJoVu2+FPpJWWC3/4NKOZocSW/yxWfnJ2+Bdwzhj7
+ 8gleWVy7DXC2rkMNr2V/zRbghXIwthf3VbIA9Ffc71vZCSFyCEsBggtNS8ludwvfmhYA0Vn9o4DP
+ zMWxR7+cPWzAYFzwM0ModtdmcDbDS6i/hT7L+RZof5yCXGrYe5jn2YO6BYMjgY+51tCIAqHgBLwR
+ pwLnGuRjAKyBJkuN4yd4U92uCY1vUr2D/c5b8DuxyQwfOHUeaLqDJhnkkuGXbB56h2C1IVBdgncc
+ bBi6feroa9B6jUDojnQPQKupbyXyeeCE1oT7Oqrt+SnfY3mkiyGA/3AmD3H5g32CcBx6hY8pRkwJ
+ 9PpcjRGobUfprFnhAa1vepwcgMOhwG+pdSgKHFU9HAvoAH6XUl7lDUCCq5Qb6GMbVm3Aj++qDYCt
+ wdBc/YHgOFCmS3mjDMRcSE2qY4E3Q3PVIQRQmeodNH4QEbRUFZzW+VotzwX4yTcRTySOML1qjcE5
+ hTirVqDHkMAP0PjAywp3d18JZtqzvr9zDYD+GaSKtE6Zlr/DLPNFmOcvBAAAAABJRU5ErkJggg==
+In-Reply-To: <AANLkTinT-taMqB87moLZ_CLio2USnxsriq6U0EJvSGte@mail.gmail.com>
+	(Nguyen Thai Ngoc Duy's message of "Mon, 9 Aug 2010 19:57:00 +1000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152991>
 
-Stating the folder concerned with the operation and wording the
-messages differently make them slightly more readable.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
 
-old: Not a git repository (or any of the parent directories): .git
-new: Not in a git repository: /home/bob/somefolder
+> This command on git already gives me ~40MB peak. Are you sure you ran
+> it on your big repo?
 
-old: Not a git repository (or any parent up to mount parent /home/bob)
-old: Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM 
-not set).
-new: Not in a git repository: /home/bob/somefolder
-new: (stopped searching at /home because GIT_DISCOVERY_ACROSS_FILESYSTEM 
-is not set)
+Hi Nguyen,
 
-Signed-off-by: Ralf Ebert <info@ralfebert.de>
----
-  setup.c |   11 +++++++----
-  1 files changed, 7 insertions(+), 4 deletions(-)
+Yes I ran it on the big repo...
 
-diff --git a/setup.c b/setup.c
-index 2769160..e27fbf1 100644
---- a/setup.c
-+++ b/setup.c
-@@ -321,6 +321,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
-  {
-  	const char *work_tree_env = getenv(GIT_WORK_TREE_ENVIRONMENT);
-  	const char *env_ceiling_dirs = getenv(CEILING_DIRECTORIES_ENVIRONMENT);
-+	char cwd_orig[PATH_MAX];
-  	static char cwd[PATH_MAX+1];
-  	const char *gitdirenv;
-  	const char *gitfile_dir;
-@@ -376,8 +377,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
-  		die("Not a git repository: '%s'", gitdirenv);
-  	}
-  -	if (!getcwd(cwd, sizeof(cwd)-1))
-+	if (!getcwd(cwd_orig, sizeof(cwd_orig)))
-  		die_errno("Unable to read current working directory");
-+	strcpy(cwd, cwd_orig);
-   	ceil_offset = longest_ancestor_length(cwd, env_ceiling_dirs);
-  	if (ceil_offset < 0 && has_dos_drive_prefix(cwd))
-@@ -431,7 +433,7 @@ const char *setup_git_directory_gently(int *nongit_ok)
-  				*nongit_ok = 1;
-  				return NULL;
-  			}
--			die("Not a git repository (or any of the parent directories): %s", 
-DEFAULT_GIT_DIR_ENVIRONMENT);
-+			die("Not in a git repository: %s", cwd_orig);
-  		}
-  		if (one_filesystem) {
-  			if (stat("..", &buf)) {
-@@ -446,8 +448,9 @@ const char *setup_git_directory_gently(int *nongit_ok)
-  					return NULL;
-  				}
-  				cwd[offset] = '\0';
--				die("Not a git repository (or any parent up to mount parent %s)\n"
--				"Stopping at filesystem boundary (GIT_DISCOVERY_ACROSS_FILESYSTEM 
-not set).", cwd);
-+				die("Not in a git repository: %s\n"
-+				"(stopped searching at %s because "
-+				"GIT_DISCOVERY_ACROSS_FILESYSTEM is not set)", cwd_orig, cwd);
-  			}
-  		}
-  		if (chdir("..")) {
+Take care,
 -- 
-1.7.2.1.44.g721e7.dirty
+Ivan Kanis
+http://kanis.fr
+
+Men of lofty genius when they are doing the least work are the most
+active.
+    -- Leonardo da Vinci 
