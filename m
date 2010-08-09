@@ -1,69 +1,86 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] More readable 'Not a git repository' messages
-Date: Mon, 9 Aug 2010 18:01:32 -0500
-Message-ID: <20100809230132.GG4429@burratino>
-References: <i3pdkj$hut$1@dough.gmane.org>
- <AANLkTinttmKi4+EbE54r-GeRbN3_2wxUHu_qJMn5Nysn@mail.gmail.com>
- <i3q0d8$m8f$1@dough.gmane.org>
+Subject: discarding refs/original/* after filter-branch (Re: understanding
+ how remote tracking works)
+Date: Mon, 9 Aug 2010 18:07:11 -0500
+Message-ID: <20100809230711.GH4429@burratino>
+References: <AANLkTi=J3tDnZUg3k5bzDk2ydzYVVLKLwoW0gpBypYAs@mail.gmail.com>
+ <i3nlq0$8un$1@dough.gmane.org>
+ <AANLkTinktpx-rXj1K0BSy0Qwo62SEGFAJWvhKo0nJq=i@mail.gmail.com>
+ <AANLkTi=usaZGfOM67acmdAWwvbHe_eHyjmRLGmdTYNaC@mail.gmail.com>
+ <20100809021900.GA10596@burratino>
+ <7vaaov60rv.fsf@alter.siamese.dyndns.org>
+ <20100809205309.GA3204@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ralf Ebert <info@ralfebert.de>
-X-From: git-owner@vger.kernel.org Tue Aug 10 01:03:14 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Witten <mfwitten@gmail.com>, geoffrey.russell@gmail.com,
+	Ralf Ebert <info@ralfebert.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 10 01:08:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OibNB-0006Nd-05
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 01:03:13 +0200
+	id 1OibSZ-00081Z-5Q
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 01:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757146Ab0HIXDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 19:03:07 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:39315 "EHLO
+	id S1757219Ab0HIXIj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 19:08:39 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:58295 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752606Ab0HIXDF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 19:03:05 -0400
-Received: by vws3 with SMTP id 3so7139350vws.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 16:03:05 -0700 (PDT)
+	with ESMTP id S1757012Ab0HIXIi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 19:08:38 -0400
+Received: by vws3 with SMTP id 3so7143374vws.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 16:08:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=rUwcODFY7R5p+crb1agujW81rqiHBNx7OjsEBChhiw4=;
-        b=JplN9u45Nsz8Tq7ZWA/AnTaJlONWVlYrn+yVK8TedWJInbAV7b8Op/djAni6q9X5T+
-         KAMlu1PrVxCvtycTO9iiqGPE9d64a0tFg2KdDGITIZsbEHLT9o0jIEaBRm4TIwV17oeT
-         QJmmQ0fpffHZebX35p9qvDa+KmwYuClh++7A8=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=c0doMMOM7PtgLM5CDmAdkFXjZK1Kqq6744/bb+g4zFU=;
+        b=obl27OMvURcNztSC6G0rAtZEmOGhgAsBjTs+zfXySYNF6/LePKtjBL34/B+cyjanpp
+         2jVxATWPFfuogsGW/t4UW72kYNlkOzDvHCamR+K2Bk1+Gsr5wHxYH4aIMMylUfdA/HmC
+         LOY1KowO1yc7wtVytCPQOm9tK2/31gZrCQnK8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=EIkzXECawj5VAChzNr3u8zRglsiRnCgoy8ot39/AGaR4N8dn265cJeGZ5qE4cbB1Rh
-         nbbR8HR8FP5WtBNivNDOaX0phxyxmIfowboL+a/KHI+Cjrp3Y23AulpKdbF50tSpbLJN
-         srITx9eJLTwP6v4gLp8l7ssKQ0T+9LRoHKZ+0=
-Received: by 10.220.61.202 with SMTP id u10mr9045040vch.155.1281394984944;
-        Mon, 09 Aug 2010 16:03:04 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=vu5hOy1HE0gPkjdJ9OaxGMzN8Epha/+3RzODLxvafPHVnRin+LdeyFpNJWsprUNSwp
+         yPu/CwoO2xfN6Pqgrb5FQ0Z6zxZRd8Rwd4UxwpVjUiA2MzjDUMFgEmZIxFurGWbBhnAj
+         6BTANuGse5tZz5AzOgKCIQu0M0yYARoSoFG5s=
+Received: by 10.220.60.204 with SMTP id q12mr9930549vch.43.1281395317846;
+        Mon, 09 Aug 2010 16:08:37 -0700 (PDT)
 Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id o7sm1166018vcn.29.2010.08.09.16.03.03
+        by mx.google.com with ESMTPS id w6sm362536vcj.27.2010.08.09.16.08.36
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Aug 2010 16:03:04 -0700 (PDT)
+        Mon, 09 Aug 2010 16:08:37 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <i3q0d8$m8f$1@dough.gmane.org>
+In-Reply-To: <20100809205309.GA3204@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153050>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153051>
 
-Ralf Ebert wrote:
+Jonathan Nieder wrote:
 
-> this code is inside a loop that goes up in the directory hierarchy.
-> So cwd[offset] = '\0' does not only happen once before dying.
+> There are a lot of instances of =E2=80=9Crm -r .git/refs/original=E2=80=
+=9D after
+> running filter-branch, too.  Maybe filter-branch ought to provide
+> some synonym for
+>=20
+>  eval "$(
+> 	git for-each-ref refs/heads/\* --shell --format=3D'git update-ref -d=
+ %(refname) &&' &&
+> 	echo :
+>  )"
 
-I hope not, since then the returned cwd value would be useless
-for restoring the original cwd later.
+That should have read as
 
-Shameless plug: you may find the version in commit 98937be (i.e.
-branch jn/maint-setup-fix in pu) more readable. :)
+ ...
+	git for-each-ref refs/original --shell ...
+
+Sorry about that.
