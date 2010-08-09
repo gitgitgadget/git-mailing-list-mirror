@@ -1,90 +1,69 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: wiki "abuse"
-Date: Mon, 9 Aug 2010 23:02:27 +0000
-Message-ID: <AANLkTimb4gp1azHd-r8MiQqeWC0OJhQLOUjsw2x=vA=g@mail.gmail.com>
-References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
-	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com>
-	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com>
-	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302>
-	<AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com>
-	<AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
-	<4C606E1B.6020800@lsrfire.ath.cx>
-	<AANLkTikNDdi1gDaoWdHsiUPLW2CtZMP0J2c94DpLA=AV@mail.gmail.com>
-	<AANLkTi=dhmxBpTehFFMZGnbTVccbMJLmzKy2V0uj9R6r@mail.gmail.com>
-	<AANLkTi=dGWaRa3HR4nb6Ka1+0CovrBMnyZts5d8RZW1c@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] More readable 'Not a git repository' messages
+Date: Mon, 9 Aug 2010 18:01:32 -0500
+Message-ID: <20100809230132.GG4429@burratino>
+References: <i3pdkj$hut$1@dough.gmane.org>
+ <AANLkTinttmKi4+EbE54r-GeRbN3_2wxUHu_qJMn5Nysn@mail.gmail.com>
+ <i3q0d8$m8f$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 01:02:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ralf Ebert <info@ralfebert.de>
+X-From: git-owner@vger.kernel.org Tue Aug 10 01:03:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OibMZ-0006Cd-KT
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 01:02:35 +0200
+	id 1OibNB-0006Nd-05
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 01:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757218Ab0HIXCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 19:02:30 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42414 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754288Ab0HIXCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 19:02:30 -0400
-Received: by iwn33 with SMTP id 33so3899577iwn.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 16:02:29 -0700 (PDT)
+	id S1757146Ab0HIXDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Aug 2010 19:03:07 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:39315 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606Ab0HIXDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 19:03:05 -0400
+Received: by vws3 with SMTP id 3so7139350vws.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 16:03:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=foaoLuLeKOBcGihY3W4FKjZ8neH6U4YEZqiNs6VueMM=;
-        b=fsbtYEjE6hEIz3SersAwXKcABV3e9LFfps5vjEDOGXSEaXt+bdwYDICsyTMXtcuR1l
-         cd3g2ra7Kbv7P1kpvotcQFBI9srCMoQdpgNPAeIw8EA4J1cTa3+vgGlDZVuXH5qaQtvx
-         Tblk4wHiBrRazE9K626em1zHffylxMwlBTTSY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=rUwcODFY7R5p+crb1agujW81rqiHBNx7OjsEBChhiw4=;
+        b=JplN9u45Nsz8Tq7ZWA/AnTaJlONWVlYrn+yVK8TedWJInbAV7b8Op/djAni6q9X5T+
+         KAMlu1PrVxCvtycTO9iiqGPE9d64a0tFg2KdDGITIZsbEHLT9o0jIEaBRm4TIwV17oeT
+         QJmmQ0fpffHZebX35p9qvDa+KmwYuClh++7A8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=IzYSqKEILj+TETpt+2tJF0x/PIh0A+UV1wVEs4Z9Gn5WTRDAwa9q8KexupSXOtfHzQ
-         DTsL0QpzSbx4xpv0D0xE2jnZ1YWu+LuuJ+LuyrpNtVwBcfb4zr5+Sax87TaU7yBmT+3h
-         WWcfD76N84bhZieLmS5+pB9uexi7o79EJd5g8=
-Received: by 10.231.34.67 with SMTP id k3mr18773139ibd.98.1281394948076; Mon, 
-	09 Aug 2010 16:02:28 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Mon, 9 Aug 2010 16:02:27 -0700 (PDT)
-In-Reply-To: <AANLkTi=dGWaRa3HR4nb6Ka1+0CovrBMnyZts5d8RZW1c@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=EIkzXECawj5VAChzNr3u8zRglsiRnCgoy8ot39/AGaR4N8dn265cJeGZ5qE4cbB1Rh
+         nbbR8HR8FP5WtBNivNDOaX0phxyxmIfowboL+a/KHI+Cjrp3Y23AulpKdbF50tSpbLJN
+         srITx9eJLTwP6v4gLp8l7ssKQ0T+9LRoHKZ+0=
+Received: by 10.220.61.202 with SMTP id u10mr9045040vch.155.1281394984944;
+        Mon, 09 Aug 2010 16:03:04 -0700 (PDT)
+Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
+        by mx.google.com with ESMTPS id o7sm1166018vcn.29.2010.08.09.16.03.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 09 Aug 2010 16:03:04 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <i3q0d8$m8f$1@dough.gmane.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153050>
 
-2010/8/9 Sverre Rabbelier <srabbelier@gmail.com>:
+Ralf Ebert wrote:
 
-> 2010/8/9 Felipe Contreras <felipe.contreras@gmail.com>:
->> That would make certain pages not useful:
->> https://git.wiki.kernel.org/index.php/GitProjects
->
-> That page is just as useful as or nofollow attribute. The only thing
-> the nofollow attribute does is makes the pagerank not flow through. It
-> doesn't make that page any less useful as a jump-board for humans.
+> this code is inside a loop that goes up in the directory hierarchy.
+> So cwd[offset] = '\0' does not only happen once before dying.
 
-Yes it does. Most people that are using that information are likely
-*not* reading the wiki. They're looking at some search result for a
-project whose pagerank is being partially boosted by the Git wiki.
+I hope not, since then the returned cwd value would be useless
+for restoring the original cwd later.
 
-If we turn on nofollow on the wiki we remove the wiki from the link
-tree on the web, and turn it into a leaf node.
-
-That's just not worth it, especially since it seems to do very little
-to stop vandalism (which we're not even discussing here).
-
-Wikipedia still gets a lot of linkspam after they turned on
-rel=nofollow, but the web is poorer as a result since Wikipedia is now
-one giant leaf node on the web.
-
-We like trees too much around here to turn Git into a leaf.
+Shameless plug: you may find the version in commit 98937be (i.e.
+branch jn/maint-setup-fix in pu) more readable. :)
