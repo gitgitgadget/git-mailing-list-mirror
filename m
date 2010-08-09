@@ -1,111 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Encoding problem on OSX?
-Date: Mon, 9 Aug 2010 18:46:21 -0500
-Message-ID: <20100809234620.GA6418@burratino>
-References: <AANLkTikh12guRxCK2Vf=WvshzX8P-fYTyu3qxYWNJ2px@mail.gmail.com>
- <AANLkTiky2uUHfOsh8rNXZPEqTLcNSZowy=Qcm+4Hjn_n@mail.gmail.com>
+From: david@lang.hm
+Subject: Re: wiki "abuse"
+Date: Mon, 9 Aug 2010 16:56:47 -0700 (PDT)
+Message-ID: <alpine.DEB.2.00.1008091652450.23481@asgard.lang.hm>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> <AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> <AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> <alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302>
+ <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com> <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com> <4C606E1B.6020800@lsrfire.ath.cx> <AANLkTikNDdi1gDaoWdHsiUPLW2CtZMP0J2c94DpLA=AV@mail.gmail.com> <AANLkTi=dhmxBpTehFFMZGnbTVccbMJLmzKy2V0uj9R6r@mail.gmail.com>
+ <AANLkTi=dGWaRa3HR4nb6Ka1+0CovrBMnyZts5d8RZW1c@mail.gmail.com> <AANLkTimr8vDeyRLLjM+J2Z1zmdiXjwZEw2JAXeXvzNt6@mail.gmail.com> <alpine.DEB.1.00.1008100051440.2983@bonsai2> <4C608CB2.8000602@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@namtrac.org>
-X-From: git-owner@vger.kernel.org Tue Aug 10 01:48:06 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	=?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: A Large Angry SCM <gitzilla@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 10 01:57:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oic4X-0004Oo-79
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 01:48:01 +0200
+	id 1OicDJ-0006mp-MT
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 01:57:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757310Ab0HIXr4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 19:47:56 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57037 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757160Ab0HIXrz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 19:47:55 -0400
-Received: by vws3 with SMTP id 3so7168347vws.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 16:47:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=kezPPQhx34eFnNZuzwQQvhtQEtPy3B2fURbnKb0LFqo=;
-        b=Apr1X7+8bNfFwf6KAczPLiWNXWOlN7D/hhiwCDxTR+1PXra79ZPtVpwj9f9yib+V7U
-         O8n9jRP1hZUxnVEH69djQDaVUJqbit8pl3hMBnFRRcKlbmFe6bN0Kb73huOeFoo96F1k
-         /w1Wccg5Z/BSAauvNvR7OByc7cFRjTyzVRjsM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=WbW+oWZvrK7NhD3eONry50FoUhSMCf9Q3AlE3Ib72KRr9fqbQypTzTydX44vORr4He
-         nbCygTvFjJNQmRerqDBBZZ6PxAIOawEyvu0fAijWpXDfYLEmvxxjkyxLGx3N0OhVxc8o
-         qXffo4yWbYdH9yCmq4tJpSwO8RIMkaRM/HxZE=
-Received: by 10.220.85.196 with SMTP id p4mr843998vcl.271.1281397675090;
-        Mon, 09 Aug 2010 16:47:55 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id r15sm2925650vbp.0.2010.08.09.16.47.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Aug 2010 16:47:54 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTiky2uUHfOsh8rNXZPEqTLcNSZowy=Qcm+4Hjn_n@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757311Ab0HIX47 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Aug 2010 19:56:59 -0400
+Received: from mail.lang.hm ([64.81.33.126]:50499 "EHLO bifrost.lang.hm"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757268Ab0HIX47 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 19:56:59 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id o79NulIp025791;
+	Mon, 9 Aug 2010 16:56:47 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <4C608CB2.8000602@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153057>
 
-=C4=B0smail D=C3=B6nmez wrote:
+On Mon, 9 Aug 2010, A Large Angry SCM wrote:
 
-> git shortlog HEAD >log &&
-> fuzz log >log.predictable &&
-> test_cmp expect.template log.predictable
->=20
-> --- expect.template 2010-08-09 13:45:46.000000000 +0000
-> +++ log.predictable 2010-08-09 13:45:46.000000000 +0000
-> @@ -1,8 +1,8 @@
-> =C2=A0A U Thor (5):
-> =C2=A0=C2=A0 =C2=A0 =C2=A0 SUBJECT
-> =C2=A0=C2=A0 =C2=A0 =C2=A0 SUBJECT
-> - =C2=A0 =C2=A0 =C2=A0SUBJECT
-> - =C2=A0 =C2=A0 =C2=A0SUBJECT
-> + =C2=A0 =C2=A0 =C2=A0SUBJECT=F0=9D=84=9Es =F0=9D=84=9Es a very, very=
- long f=F0=9D=84=9Erst l=F0=9D=84=9Ene for the comm=F0=9D=84=9Et
-> message to see =F0=9D=84=9Ef =F0=9D=84=9Et =F0=9D=84=9Es wrapped corr=
-ectly
-> + =C2=A0 =C2=A0 =C2=A0SUBJECT????s ????s a very, very long f????rst l=
-????ne for the
-> comm????t message to see ????f ????t ????s wrapped correctly
-> =C2=A0=C2=A0 =C2=A0 =C2=A0 SUBJECT
+> On 08/09/2010 07:00 PM, Johannes Schindelin wrote:
+>> On Tue, 10 Aug 2010, Felipe Contreras wrote:
+>> 
+>>> Here's a useful Wikipedia guideline: assume good faith:
+>>> http://en.wikipedia.org/wiki/Wikipedia:Assume_good_faith
+>> 
+>> For the dear love of God.
+>> 
+>> Just assume -- hypothetically -- for one second that you, Felipe
+>> Contreras, tried to create a user page on
+>> http://subversion.tigris.org/wiki/ reading like this:
+>> 
+>> -- snip --
+>> Felipe E. Contreras, a proud Git user.
+>> 
+>> * [http://felipec.wordpress.com/ Felipe Contreras]
+>> ** [http://felipec.wordpress.com/tag/git/ Keep an open mind]
+>> ** [http://whygitisbetterthanx.com/ Git is better]
+>> -- snap --
+>> 
+>> only that the last link was to one of your blog posts and was not well
+>> researched.
+>> 
+>> If you still think that such a completely unbiased and uncontroversial
+>> user page was a good idea, well, you should take over the monitoring of
+>> the Git Wiki, I guess, and make sure you remove all link spam. Actually, I
+>> like that idea. Can you do that, please? Can you watch the recent changes
+>> of the Git Wiki and keep it a place where information is king? Thank you
+>> so much in advance!
+>
+> Dscho: Thank you for the excellent job you _are_ doing keeping the spam on 
+> the git wiki under control. Please continue.
+>
+> Warthog9: Please take this as another vote to disable the user pages.
+>
+> Everyone else: Most of this thread was/is well intentioned but there is a 
+> significant problem with spam on high profile wiki sites (like ours) and the 
+> information readily available (from what I've read on this thread) to the 
+> _volunteer_ wiki admin slash spam fighter fit the pattern of a spammer. If 
+> you believe that Johannes is not doing an acceptable job policing the wiki 
+> _AND_ you are willing and able to do the job then speak up with that 
+> information.
 
-Very interesting; thanks for a report.
+the big problem is not that his page was removed, there's some problem 
+around the fact that there was not hint to him that it wasn't allowed.
 
-=46rom the definition of fuzz(), it looks like
+the big problem that I think many people see is that when he asked the 
+admin why it was removed, instead of being given an explination (or 
+ideally, beping pointed to an explination) his questions was deleted as 
+being 'admin abuse' and he was banned, still without explination.
 
-	sed "
-			s/$_x40/OBJECT_NAME/g
-			s/$_x05/OBJID/g
-			s/^ \{6\}[CTa].*/      SUBJECT/g
-			s/^ \{8\}[^ ].*/        CONTINUATION/g
-		" <log >log.fuzzy
+This thread has explored why the content he posted was not desrirable, but 
+if you are banning someone, you should not assume that they know why you 
+are banning them.
 
-failed to completely match the fourth and five lines of the shortlog:
-
-	A U Thor (5):
-	      Test
-	      This is a very, very long first[etc]
-	      Th=F0=9D=84=9Es =F0=9D=84=9Es a very, very long f=F0=9D=84=9Erst=
-[etc]
-	      Th<malformed treble clef>s <malformed treble clef>s a...
-
-Could you confirm this?  What does
-
-	locale
-	printf 'Th\360\235\204\236s\n' | sed 's/.*//g'
-
-print?
-
-Jonathan
+David Lang
