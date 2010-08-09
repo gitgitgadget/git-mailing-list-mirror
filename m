@@ -1,130 +1,107 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: wiki "abuse"
-Date: Mon, 9 Aug 2010 20:55:38 +0200 (CEST)
-Message-ID: <alpine.DEB.1.00.1008092055120.2983@bonsai2>
-References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> <AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> <AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> <alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302>
- <alpine.DEB.1.00.1008091824080.8314@intel-tinevez-2-302> <AANLkTi=12A8tGTgB+DvxuKT+q0fhnTy87EuCvNMrDkkd@mail.gmail.com> <alpine.DEB.1.00.1008092004450.2983@bonsai2> <AANLkTin3tQHLbsP0qr2tO4KovCY+Sg=DrSvDGt4t1Amy@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v2] tests: A SANITY test prereq for testing if we're root
+Date: Mon, 9 Aug 2010 19:02:13 +0000
+Message-ID: <AANLkTi=68=ffWqmXyMckJuSvbW4Wk9-7JWR-S9nheOEA@mail.gmail.com>
+References: <1280934026-25658-1-git-send-email-avarab@gmail.com>
+	<1281132549-11587-1-git-send-email-avarab@gmail.com>
+	<7vd3tr7mkj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-2029280774-1281380140=:2983"
-Cc: Valeo de Vries <valeo@valeo.co.cc>, git <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 09 20:55:54 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 21:02:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiXVk-0007JD-EI
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 20:55:48 +0200
+	id 1OiXce-0002iW-Sd
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 21:02:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754597Ab0HISzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 14:55:42 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:43127 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1754348Ab0HISzm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 14:55:42 -0400
-Received: (qmail invoked by alias); 09 Aug 2010 18:55:40 -0000
-Received: from pD9EB25D8.dip0.t-ipconnect.de (EHLO noname) [217.235.37.216]
-  by mail.gmx.net (mp067) with SMTP; 09 Aug 2010 20:55:40 +0200
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX1+8VZNS+3G8CQfR4ZwRznrEueWNrByuV0DA0LGmVZ
-	PZh00oAbYXMHtT
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <AANLkTin3tQHLbsP0qr2tO4KovCY+Sg=DrSvDGt4t1Amy@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1754916Ab0HITCS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 15:02:18 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47876 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754703Ab0HITCQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 15:02:16 -0400
+Received: by mail-yw0-f46.google.com with SMTP id 1so3498570ywh.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 12:02:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=X6Kv8u6ovdfgODnzxdIqrifKjC9B27u9wlJw76dKh9c=;
+        b=gARclYJk6vjyu5aviaadMEjnNcchPnHPFRpz95aQBEmx+wCNCec1szaaVHCa6Tj/r5
+         5MFOda/3wUzGlGXcXp7Z17sBHDHD5Oz7FNHaVCg4J3LNESAYlG3baRWjds/0PLcrMbjF
+         gW44Jkyw52aEWXW6AojJfc9TOhDDkEb6hUW/c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Y7VbE5n+CqJ5bLqcWMdSN78MHc+X9tupAcp2o6s9KttiFECVaxF5L9Pc58C197UNZu
+         Wh3BjB4GNpzysdCytJE1PazYYp7cOkz6AroXdZEzwuqErzj7DQOnuXAfgwISUdxCQ3FT
+         KPmChJcepbuRDQ2NM1ZlY+0SY+pbJpS9dYf30=
+Received: by 10.100.154.15 with SMTP id b15mr18207727ane.20.1281380533557; 
+	Mon, 09 Aug 2010 12:02:13 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Mon, 9 Aug 2010 12:02:13 -0700 (PDT)
+In-Reply-To: <7vd3tr7mkj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152999>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Mon, Aug 9, 2010 at 16:55, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
+s:
+>
+>> + - SANITY
+>> +
+>> + =C2=A0 Test is not run by root user, and an attempt to write to an
+>> + =C2=A0 unwritable file is expected to fail correctly.
+>
+> As I said in the previous round, I am indeed in favor of having a sin=
+gle
+> "running as root---code that expects that the normal UNIXy permission
+> based protection to apply, aka 'running in sane environment', will no=
+t
+> work correctly" prerequisite token, rather than having separate "can =
+I
+> expect an unwritable file to be unwritable?" =C2=A0"can I expect an u=
+nreadble
+> file to be unreadable?" bits.
 
---8323329-2029280774-1281380140=:2983
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: 8BIT
+I probably shouldn't have used your docs as-is, you're right. It could
+be explained better.
 
-Hi,
+> The name of the token _might_ be subject to debate (I am fine with
+> either SANITY or NOROOT), but the explanation should mention this is
+> defined to be a bit more broad than "unWRITABLE", I think.
 
-On Mon, 9 Aug 2010, Ævar Arnfjörð Bjarmason wrote:
+NOROOT is better I think,.
 
-> On Mon, Aug 9, 2010 at 18:08, Johannes Schindelin
-> <Johannes.Schindelin@gmx.de> wrote:
-> > Hi,
-> >
-> > On Mon, 9 Aug 2010, Valeo de Vries wrote:
-> >
-> >> Banning users without letting on what the rules are isn't very polite,
-> >> or productive for that matter.
-> >
-> > When in Rome, do as the Romans do. Going about in Rome, spitting
-> > everywhere, is rude, even if it is considered polite in your home country.
-> 
-> Going to Rome and introducing yourself would probably be more
-> analogous in this case, and then being kicked out when you find the
-> Romans don't care :)
-> 
-> Anyway, people are wont to treat things they've seen in the past the
-> same, and most wikis have and encourage user pages & associated talk
-> pages.
-> 
-> If the Git wiki doesn't want them that could be advertised more
-> prominently, here are some suggestions:
-> 
->   * Change this to cite some community rules page or whatever, it's
->     what users see when they sign up:
-> 
->         https://git.wiki.kernel.org/index.php/MediaWiki:Welcomecreation
-> 
->   * Disable links to talk / user pages, e.g. I have this (incomplete)
->     thing in a LocalSettings.php for a wiki that doesn't want talk
->     pages:
-> 
->         // No user/talk for anonymous users
->         $wgShowIPinHeader = false;
-> 
->         $wgHooks['SkinTemplateNavigation'][] = 'vfRemoveWikiLikeLinks';
->         function vfRemoveWikiLikeLinks( &$sktemplate, &$links ) {
->             // Remove talk page links
->             unset($links['namespaces']['talk']);
->         }
-> 
->     I have some other stuff, but it's mostly specific to the Vector
->     skin (the Git wiki uses monobook). You can also add a page view
->     hook that redirects users visiting User_talk:* or User:* pages to
->     some page explaining that they're not wanted using similar hooks.
-> 
->     Having two red links on every page on the wiki saying
-> 
->        "There is currently no text in this page. You can search for
->         this page title in other pages, search the related logs, or
->         *edit this page*."
-> 
->     Is a pretty big invitation to edit your userpage.
-> 
->   * Add something to your user / user talk page (since you're an
->     admin) indicating how to contact you, e.g.:
-> 
->         Hi. I'm an admin here. Please don't use this page to message
->         me, but
->         [https://git.wiki.kernel.org/index.php/Special:EmailUser/Dscho
-> send me an E-Mail]
->         instead.
-> 
-> And I'm sorry that I called you an "out of control admin" in an
-> earlier mail, that was uncalled for.
-> 
-> But I do think it's important that we as a project try to project a
-> friendly attitude to newbies. Doing thankless admining is hard, but
-> how we (people helping on IRC, the list, the wiki etc) talk to and
-> interface with new people interested in Git can have a lot of positive
-> or negative effect on the reputation of the project.
-> 
-> In this case it sounds like the problem can be solved in the long term
-> with some software modifications to the wiki, I happen to have some
-> experience with MediaWiki, and I'd be happy to help with that.
+> "test -w /" is a traditional way to approximately check if you are
+> running as root (technically, it only checks if you are running with
+> unduly high privilege---your sysadm _could_ have done "chmod 2775 /"
+> and made it owned by the admin group).
 
-I welcome you warmly to do all that.
---8323329-2029280774-1281380140=:2983--
+Initially I wrote it as:
+
+     # test whether the filesystem supports symbolic links
+     ln -s x y 2>/dev/null && test -h y 2>/dev/null && test_set_prereq =
+SYMLINKS
+     rm -f y
+    +
+    +# test whether we can make read-only files
+    +mkdir hla
+    +chmod -w hla
+    +touch hla/gh >/dev/null 2>&1
+    +test -f hla/gh || test_set_prereq SANITY
+    +rm -rf hla
+
+But then I saw your old "test -w /" implementation and figured it was
+good enough without doing all this work on setup. I can submit another
+patch with that fixup if you like, maybe it'll prevent odd failures on
+someone's odd system.
