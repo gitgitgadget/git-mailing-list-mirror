@@ -1,80 +1,100 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] Avoid rename/add conflict when contents are identical
-Date: Mon, 9 Aug 2010 21:24:25 +0000
-Message-ID: <AANLkTi=tnWy3w1Ek+uvS+QCr4F+An4FfZcHepiTCFGAf@mail.gmail.com>
-References: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: wiki "abuse"
+Date: Mon, 9 Aug 2010 16:27:04 -0500
+Message-ID: <AANLkTikqcBTPR8Up_zvPduwjw9=0b+h4cVY-U4-R11Ge@mail.gmail.com>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> 
+	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> 
+	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> 
+	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302> <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com> 
+	<AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com> 
+	<4C606E1B.6020800@lsrfire.ath.cx> <AANLkTikNDdi1gDaoWdHsiUPLW2CtZMP0J2c94DpLA=AV@mail.gmail.com> 
+	<AANLkTi=A9m=y4r4Y0q2GLwT1gubyoC_-XaXg+6-RfrGn@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Schalk, Ken" <ken.schalk@intel.com>
-X-From: git-owner@vger.kernel.org Mon Aug 09 23:24:33 2010
+Cc: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 23:27:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiZpg-0000BN-Fy
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 23:24:32 +0200
+	id 1OiZsY-0001Nb-MK
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 23:27:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755647Ab0HIVY1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 17:24:27 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:53773 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755196Ab0HIVY0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 17:24:26 -0400
-Received: by iwn33 with SMTP id 33so3821204iwn.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 14:24:26 -0700 (PDT)
+	id S1756154Ab0HIV1Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 17:27:25 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:60423 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754843Ab0HIV1Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 17:27:24 -0400
+Received: by gxk23 with SMTP id 23so3578181gxk.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 14:27:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=nCovHBxRfpSlNXrrlCkyPcjHA+vSCfzsrb3+SEBTVvY=;
-        b=OLt5u55Dwv3P6Ilz32rcXwhu3136LVdjDtfujD6DfDBgTI6OtQt6gM0DLV6e50FCAK
-         ECiS7nzMr9RoGq/2EVKvSPUkzPk8Kpb3C4PgxcRtW5s+N9ZFqbU8Y6NqI0sUG/I8+4I8
-         0sl6ZRea8/4D75pYvzHg18I+ceuwnTXX9PDho=
+        bh=r4owfuoYGI6FCQUCoy16owzmraUeNLCawlIkgJUkJN8=;
+        b=wNiF9+LqHK99YPNhwL42ziLy3CluM1yt0qNbw48sskNxV6QyAthlPoykRWJsyew9Mt
+         c9RHeHzSdZlNn+Dmfp3HJwCfyG9BTDfTxLpDe2gXTv9TIfSCvjeIqRJ6hmTYjalcyebn
+         L5Irug2Wf8BkFyCPP6t54t9oGKsor9OjIRf4c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=fRgGZH1yidtPaa1UoPr76cABFDVFw/4aF7MCKG6IDlGC2pyRD8ho4WJR8eA609dbY3
-         S693O1+KasHQxWFHovrsj1jWnMBosx7masdjtfhyU/aH9PUpK1+DdOD8y6YC66PFPcK+
-         xzZrDZKCvptUQY4fpG4olluhnnemqTLIQURbY=
-Received: by 10.231.19.198 with SMTP id c6mr19366289ibb.140.1281389065833; 
-	Mon, 09 Aug 2010 14:24:25 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Mon, 9 Aug 2010 14:24:25 -0700 (PDT)
-In-Reply-To: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
+        b=o2bM2jEvgFwgk1NR1y3UtuEy6Z6/A6R3VS41z4r5Za+gw4k71fbTeOSOZNmlUQ3m7/
+         QUfUDGUMjflRFN7Yd2UAHLnYjuZn2DgxKX81UhZQGUHmL5fQRRiqmJlj4pI0g1TWxHZM
+         BoWrfo7OrRsVz7C3QTT4LVs49peo34J3iyjlU=
+Received: by 10.151.63.41 with SMTP id q41mr18609666ybk.248.1281389244350; 
+	Mon, 09 Aug 2010 14:27:24 -0700 (PDT)
+Received: by 10.231.139.160 with HTTP; Mon, 9 Aug 2010 14:27:04 -0700 (PDT)
+In-Reply-To: <AANLkTi=A9m=y4r4Y0q2GLwT1gubyoC_-XaXg+6-RfrGn@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153029>
 
-On Mon, Aug 9, 2010 at 21:00, Schalk, Ken <ken.schalk@intel.com> wrote:
+Heya,
 
-> Here's a simple sequence that generates this kind of conflict:
+2010/8/9 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>:
+> You must be one of those =C3=BCbermench to whom the concept of
+> procrastination is unknown :)
+
+Not that, but I am leery of people trying to promote their site like th=
+is.
+
+> FWIW the contents were (sorry Johannes):
 >
-> =C2=A0git init
-> =C2=A0echo content > fileA
-> =C2=A0git add fileA
-> =C2=A0git commit -m Initial
-> =C2=A0git checkout -b abranch
-> =C2=A0mv fileA fileB
-> =C2=A0git add fileB
-> =C2=A0rm fileA
-> =C2=A0ln -s fileB fileA
-> =C2=A0git add fileA
-> =C2=A0git commit -m Linked
-> =C2=A0git checkout master
-> =C2=A0git mv fileA fileB
-> =C2=A0git add fileB
-> =C2=A0git commit -m Moved
-> =C2=A0git merge --no-commit abranch
+> =C2=A0 =C2=A0Amir E. Aharoni, a proud SVN user.
+>
+> =C2=A0 =C2=A0* [http://aharoni.wordpress.com/ Aharoni in Unicode, ya =
+mama - blog]
+> =C2=A0 =C2=A0** [http://aharoni.wordpress.com/2010/08/05/advocacy-for=
+-the-uncool/ a
+> =C2=A0 =C2=A0reality check for git fanboys]
+>
+> FWIW he seems to be able to contribute to Wikipedia without being
+> banned for trolling: http://en.wikipedia.org/wiki/User:Amire80
 
-I don't know merge well enough to review the code in this patch, but
-the patch would be much better if you turned this sequence of commands
-(slightly altered, see t/README) into a now-passing test as part of
-the patch.
+I think there's a significant quality difference between that
+wikipedia profile and what was on the wiki.
 
-t/t3030-merge-recursive.sh would be the right place to add it.
+> As an aside, that's not an unusual user page for Wikipedia. Which I
+> think goes a long way to clearing up the obvious culture clash here.
+
+I agree, the Wikipedia page looks a lot more like a user page, and a
+lot less like a shameless plug because his wiki profile links to other
+wiki pages, not to his personal website.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
