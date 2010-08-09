@@ -1,50 +1,70 @@
-From: Richard Bronosky <Richard@Bronosky.com>
-Subject: rejected updates/pushes can be found on remote
-Date: Mon, 9 Aug 2010 00:54:33 -0400
-Message-ID: <AANLkTingxD_VTpmMZ+u=KXtY16DjpksxmGGKuO0B219q@mail.gmail.com>
+From: Mihamina Rakotomandimby <mihamina@gulfsat.mg>
+Subject: Re: wiki "abuse"
+Date: Mon, 9 Aug 2010 09:07:19 +0300
+Organization: GULFSAT
+Message-ID: <20100809090719.73111efe@packard.rktmb.org>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
+	<AANLkTinQo_Ug9hiN_A=_kXfVuWF_a1ZWVh0hAQP48TkP@mail.gmail.com>
+	<AANLkTinxNJ3aVUT1_i3-XL2dq8oobsgfUp14btZZjEUD@mail.gmail.com>
+	<alpine.DEB.2.00.1008071753400.23481@asgard.lang.hm>
+	<AANLkTimFYVcnjJrtczTsrkOesAu=jNfSjaFBrPObkdX5@mail.gmail.com>
+	<877hk0n5cq.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 09 06:54:43 2010
+X-From: git-owner@vger.kernel.org Mon Aug 09 08:07:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiKNl-0003te-Fc
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 06:54:41 +0200
+	id 1OiLWS-0005Yp-KP
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 08:07:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751276Ab0HIEyg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 00:54:36 -0400
-Received: from slice1.bronosky.com ([174.143.204.116]:48435 "EHLO
-	slice1.bronosky.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750978Ab0HIEyf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 00:54:35 -0400
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	id S1752417Ab0HIGHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Aug 2010 02:07:30 -0400
+Received: from smtp-out.malagasy.com ([41.204.104.33]:44248 "EHLO
+	smtp-out.malagasy.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751270Ab0HIGH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 02:07:29 -0400
+Received: from smtp-2.blueline.mg (unknown [41.204.104.56])
+	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by slice1.bronosky.com (Postfix) with ESMTP id 343F317661
-	for <git@vger.kernel.org>; Mon,  9 Aug 2010 04:54:35 +0000 (UTC)
-Received: by wwj40 with SMTP id 40so11166520wwj.1
-        for <git@vger.kernel.org>; Sun, 08 Aug 2010 21:54:33 -0700 (PDT)
-Received: by 10.227.156.129 with SMTP id x1mr13362128wbw.178.1281329673355; 
-	Sun, 08 Aug 2010 21:54:33 -0700 (PDT)
-Received: by 10.216.172.139 with HTTP; Sun, 8 Aug 2010 21:54:33 -0700 (PDT)
+	by smtp-out.malagasy.com (Postfix) with ESMTPS id 305A48CE02
+	for <git@vger.kernel.org>; Mon,  9 Aug 2010 09:07:26 +0300 (EAT)
+Received: from localhost (static-104-53.blueline.mg [41.204.104.53])
+	by smtp-2.blueline.mg (Postfix) with ESMTP id 187F76008E
+	for <git@vger.kernel.org>; Mon,  9 Aug 2010 09:07:26 +0300 (EAT)
+X-Virus-Scanned: par antivirus2.malagasy.com
+X-Spam-Flag: NO
+X-Spam-Score: -2.664
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.664 required=7 tests=[AWL=-0.065, BAYES_00=-2.599]
+Received: from smtp-2.blueline.mg ([41.204.104.56])
+	by localhost (antivirus2.malagasy.com [41.204.104.53]) (amavisd-new, port 10024)
+	with ESMTP id XPvdPx51ESJ3 for <git@vger.kernel.org>;
+	Mon,  9 Aug 2010 09:07:20 +0300 (EAT)
+Received: from packard.rktmb.org (static-104-10.blueline.mg [41.204.104.10])
+	by smtp-2.blueline.mg (Postfix) with ESMTP id 4BD8060091
+	for <git@vger.kernel.org>; Mon,  9 Aug 2010 09:07:20 +0300 (EAT)
+In-Reply-To: <877hk0n5cq.fsf@gmail.com>
+X-Mailer: Claws Mail 3.7.4 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152951>
 
-I don't know if this is evil or not. I just find it interesting. If
-you have and update hook on the remote that returns non-zero,
-rejecting a push, you can later find the hash (on the remote). I'm
-glad it get to the remote because I do "git diff --name-only $2 $3" to
-decide whether or not to accept. But, I wonder if most people are
-aware that it hangs around until it is garbage collected. This could
-potentially be an attack vector, or at least a liability. (Imagine
-some IP troll uploading their code to you and subpoenaing your
-server.)
+> stepnem@gmail.com :
+> I admire Amir's patience,
+> politeness and constructive reaction to that and hope the person who
+> abused him will give up admin privileges or at least apologise.
+
+So do I. But we can also notice everyone stayed polite.
 
 -- 
-.!# RichardBronosky #!.
+
+       Architecte Informatique chez Blueline/Gulfsat:
+    Administration Systeme, Recherche & Developpement
+                                    +261 34 56 000 19
