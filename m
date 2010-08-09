@@ -1,107 +1,98 @@
-From: Ivan Kanis <expire-by-2010-08-14@kanis.fr>
-Subject: Excessive mmap [was Git server eats all memory]
-Date: Mon, 09 Aug 2010 12:12:34 +0200
-Message-ID: <wesy6cgm6wd.fsf_-_@kanis.fr>
-References: <wesfwyupgrg.fsf@kanis.fr>
-	<AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
-	<87ocdhlgbl.fsf@kanis.fr>
-	<AANLkTikt7LuhxHhOqPm2P-2hzXP54YThX5FRxF4yCFZu@mail.gmail.com>
-	<AANLkTi=tf51FWkZZFw9cF=pcCyadgp7a9EXK=KQ6GSQS@mail.gmail.com>
-	<87hbj74pve.fsf@kanis.fr>
-	<AANLkTinyX9cABkEDy3HBZoDVNWos2djNBSaw2Hg_yzAO@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: 'git stash list' vs. non-default 'log.date' setting
+Date: Mon, 9 Aug 2010 12:40:56 +0200
+Message-ID: <20100809104056.GJ4612@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ivan Kanis <expire-by-2010-08-11@kanis.fr>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	jaredhance@gmail.com, Avery Pennarun <apenwarr@gmail.com>,
-	jnareb@gmail.com, git <git@vger.kernel.org>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 09 12:13:15 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 09 12:41:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiPM0-0004X2-Ja
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 12:13:12 +0200
+	id 1OiPn3-0006iS-Dz
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 12:41:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756045Ab0HIKNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 06:13:08 -0400
-Received: from elysmail.net ([188.165.214.80]:64385 "EHLO elysmail.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755836Ab0HIKNG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 06:13:06 -0400
-Received: from IVAN (reverse.completel.net [92.103.229.106]) by elysmail.net with SMTP;
-   Mon, 9 Aug 2010 11:12:36 +0100
-Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwBAMAAAClLOS0AAAAAXNSR0IArs4c6QAAAB5QTFRF
- IBkXUxMTOCwoTC4qcUY8iFxQmmper31txpaJ/v/8aKZ1oAAAAcVJREFUOMt100tu2zAQAFDCXnUZ
- oAcIqG68LZULVLQBbwuSiffm6AIRRyeotAySJoVu2+FPpJWWC3/4NKOZocSW/yxWfnJ2+Bdwzhj7
- 8gleWVy7DXC2rkMNr2V/zRbghXIwthf3VbIA9Ffc71vZCSFyCEsBggtNS8ludwvfmhYA0Vn9o4DP
- zMWxR7+cPWzAYFzwM0ModtdmcDbDS6i/hT7L+RZof5yCXGrYe5jn2YO6BYMjgY+51tCIAqHgBLwR
- pwLnGuRjAKyBJkuN4yd4U92uCY1vUr2D/c5b8DuxyQwfOHUeaLqDJhnkkuGXbB56h2C1IVBdgncc
- bBi6feroa9B6jUDojnQPQKupbyXyeeCE1oT7Oqrt+SnfY3mkiyGA/3AmD3H5g32CcBx6hY8pRkwJ
- 9PpcjRGobUfprFnhAa1vepwcgMOhwG+pdSgKHFU9HAvoAH6XUl7lDUCCq5Qb6GMbVm3Aj++qDYCt
- wdBc/YHgOFCmS3mjDMRcSE2qY4E3Q3PVIQRQmeodNH4QEbRUFZzW+VotzwX4yTcRTySOML1qjcE5
- hTirVqDHkMAP0PjAywp3d18JZtqzvr9zDYD+GaSKtE6Zlr/DLPNFmOcvBAAAAABJRU5ErkJggg==
-In-Reply-To: <AANLkTinyX9cABkEDy3HBZoDVNWos2djNBSaw2Hg_yzAO@mail.gmail.com>
-	(Dmitry Potapov's message of "Sat, 7 Aug 2010 10:42:08 +0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (windows-nt)
-X-Antivirus: avast! (VPS 100808-1, 08/08/2010), Outbound message
-X-Antivirus-Status: Clean
-X-Declude-Sender: expire-by-2010-08-14@kanis.fr [92.103.229.106]
-X-Declude-Spoolname: 11021150.eml
-X-Declude-RefID: str=0001.0A0B0202.4C5FD4A0.010C,ss=1,fgs=0
-X-Declude-Note: Scanned by Declude 4.10.53 "http://www.declude.com/x-note.htm"
-X-Declude-Scan: Outgoing Score [-4] at 11:12:49 on 09 Aug 2010
-X-Declude-Tests: None
-X-Country-Chain: FRANCE->destination
-X-Declude-Code: 1f
-X-HELO: IVAN
-X-Identity: 92.103.229.106 | reverse.completel.net | gmail.com
+	id S1756115Ab0HIKlB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 06:41:01 -0400
+Received: from francis.fzi.de ([141.21.7.5]:2275 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756092Ab0HIKlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 06:41:00 -0400
+Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 9 Aug 2010 12:40:57 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-OriginalArrivalTime: 09 Aug 2010 10:40:57.0237 (UTC) FILETIME=[599BAC50:01CB37AF]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152962>
 
-Dmitry Potapov <dpotapov@gmail.com> wrote:
+Hi,
 
-> On Fri, Aug 06, 2010 at 07:23:17PM +0200, Ivan Kanis wrote:
->>
->> I expected the malloc to take 4G but was surprised it didn't. It seems
->> to be mmap taking all the memory. I am not familiar with that function,
->> it looks like it's mapping memory to a file... Is it reasonable to mmap
->> so much memory?
->
-> AFAIK, Git does not need to mmap the whole pack to memory, but it
-> is more efficient to mmap the whole pack wherever possible, because
-> it has a completely random access, so if you store only one sliding
-> window, you will have to re-read it many times. Besides, mmap size
-> does not mean that so much physical memory is used. Pages should
-> be loaded when they are necessary, and if you have more than one
-> client cloning the same repo, this memory should be shared by them.
 
-I have clone identical repositories and the system starts to swap. I
-think it shows that cloning two repository doesn't share mmap.
+Commits 8f8f547 (Introduce new pretty formats %g[sdD] for reflog
+information, 2009-10-19) and 391c53b (stash list: use new %g formats
+instead of sed, 2009-10-19) (Thomas on Cc:) changed the way how the
+output of 'git stash list' is generated.  I agree that avoiding a sed
+invocation and respecting pager settings are good things (although I
+also think that if you have so many stashes that you need a pager,
+then you are doing something wrong).
 
-I saw this constant defined in git-compat-util.h
+However, these changes have some side-effects:
 
-/* This value must be multiple of (pagesize * 2) */
-#define DEFAULT_PACKED_GIT_WINDOW_SIZE \
-        (sizeof(void*) >= 8 \
-                ?  1 * 1024 * 1024 * 1024 \
-                : 32 * 1024 * 1024)
+1) The output of 'git stash list' is affected by the 'log.date' config
+   variable:
 
-If I read this correctly git is allocating 1G of mmap on 64 bit
-architecture. Isn't that a bit much? I am running on a 64 bit server so
-I have bumped DEFAULT_PACKED_GIT_WINDOW_SIZE down to 64M but, alas, the
-pack command still takes over 4G...
+   $ git config --get log.date
+   $ git stash list
+   stash@{0}: On master: foo
+   $ git config log.date iso8601
+   $ git stash list
+   stash@{2010-08-03 16:54:34 +0200}: On master: foo
 
-I'll keep investigating today,
+   I would expect that stashes are always listed as stash@{num}, no
+   matter what I have in 'log.date' (just like 'git reflog').  It
+   takes up less screen space and is easier to remember.
 
-Take care,
--- 
-Ivan Kanis
+2) The bash completion script expects that, too, because a non-default
+   value for 'log.date' breaks the completion of 'git stash'
+   subcommands with a stash argument:
 
-Nothing in life is to be feared. It is only to be understood.
-    -- Marie Curie 
+   $ git stash apply <TAB>
+   16                  stash@{2010-08-03  =20
+
+
+=46ortunately, fixing 2) is a no-brainer:
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index 6756990..e3600d4 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -2167,7 +2167,7 @@ _git_stash ()
+ 			COMPREPLY=3D()
+ 			;;
+ 		show,*|apply,*|drop,*|pop,*|branch,*)
+-			__gitcomp "$(git --git-dir=3D"$(__gitdir)" stash list \
++			__gitcomp "$(git --git-dir=3D"$(__gitdir)" stash list --date=3Ddefa=
+ult \
+ 					| sed -n -e 's/:.*//p')"
+ 			;;
+ 		*)
+
+But what to do with 1)?  Of course, I would hate to use --date=3Ddefaul=
+t
+by 'git stash list' invocations, and, (again) of course, I don't want
+to change my 'log.date' setting either.  Maybe changing the %gd (and
+%gD) format specifiers to ignore 'log.date' altogether but still
+respect --date=3D<whatever>?
+
+
+Best,
+G=E1bor
