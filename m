@@ -1,91 +1,125 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'git stash list' vs. non-default 'log.date' setting
-Date: Mon, 09 Aug 2010 08:02:49 -0700
-Message-ID: <7vbp9b96cm.fsf@alter.siamese.dyndns.org>
-References: <20100809104056.GJ4612@neumann>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: wiki "abuse"
+Date: Mon, 9 Aug 2010 23:37:17 +0800
+Message-ID: <AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
+	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Aug 09 17:03:50 2010
+Cc: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 17:37:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiTtF-0005v3-4O
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 17:03:49 +0200
+	id 1OiUPn-0000VK-38
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 17:37:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756991Ab0HIPDL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 11:03:11 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43310 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756968Ab0HIPDG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 11:03:06 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3638CCC649;
-	Mon,  9 Aug 2010 11:03:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=UEf2aKhwm1hl
-	ZbZuW5vUgzTPcAM=; b=ApMXoxXEvENx6LfnenSKBtZZs/KRImXWnWpHWyWarYVj
-	8vCglk8iTIr0lAfrEkZEa/ztUOwpPCXxQk5heZyRuRFYfmkdSjZYG64CJoz3ScSZ
-	9InMrS4lWDdMf7TfvcXmrCyiQeFIL+VqhJGjRYrrwC60cCONVi9OI/WU2e0bd34=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=RY9UVc
-	HVLPPzoM6ccSWqlP3X9ct0/XP9a7n64rZDEORU+Psad0EcSwHX9PenyiK6VMfqBI
-	6T9Qkua11ixKg23m4+AlMg7pDDcynYO1+4R76KGwUm1hAFpO6BIV+Zzu8b7+pv4X
-	vVF3m+TRJZlp5vMHhYOtKBfNYtPE3OxKF4ZRE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9916CC648;
-	Mon,  9 Aug 2010 11:02:57 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.126]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6F621CC640; Mon,  9 Aug
- 2010 11:02:51 -0400 (EDT)
-In-Reply-To: <20100809104056.GJ4612@neumann> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
- =?utf-8?Q?=22's?= message of "Mon\, 9 Aug 2010 12\:40\:56 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 321C9C8C-A3C7-11DF-B4BB-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756212Ab0HIPhU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 11:37:20 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:53740 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756714Ab0HIPhS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 11:37:18 -0400
+Received: by ewy23 with SMTP id 23so3483441ewy.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 08:37:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PcKf5uinbibGVHpZ/QOwGJGdwnZLBCDE7qAsxPa+xKI=;
+        b=FLLJ6hVYNELUSNdh6eTFyzMrHDEpdq8KRNDMhNmdTSz/XDaCQjw2WpNMe7g8ZBDVLz
+         duQX6WVWwmzrfi/nkHE5zRttALN6+TkeXTea4xzWnXabj1al65lOqUqnxbjdAXqxKKMm
+         QK1paY9b9IQS1+tf2ew0hA/5cXzp8iUkk87ug=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=D87f7IT/Mhu/21ti1fdwi/w3+k++spE5hpI6wycQu2kl3oMnVII6pV+G9hcswpzwTm
+         AeDHs0J7Q3pyPCqds+BU3kz0l58trHMSdmUtmVKp9KZXlsgsJmNPr3zXcU7Lj7+IW5J3
+         dzdi0XQukvU+kluX3A3lHHrfRnE+8Gv9+W2O8=
+Received: by 10.213.17.195 with SMTP id t3mr12368700eba.61.1281368237374; Mon, 
+	09 Aug 2010 08:37:17 -0700 (PDT)
+Received: by 10.213.15.72 with HTTP; Mon, 9 Aug 2010 08:37:17 -0700 (PDT)
+In-Reply-To: <AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152974>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152975>
 
-SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
+Hi,
 
-> Fortunately, fixing 2) is a no-brainer:
+On Mon, Aug 9, 2010 at 11:02 PM, Sverre Rabbelier <srabbelier@gmail.com=
+> wrote:
+> Heya,
+>
+> [+Dscho]
 
-I don't think it is a "no-brainer" to "fix" it, even though it may be s=
-o
-to hack it around.  Having to give "--date=3Ddefault" to "git log -g" t=
-o
-cause it to show reflog entries in non-date format sounds like a terrib=
-le
-UI bug to me.  I'd expect
+there, fixed that for you.
 
-    $ git log -g --date=3Ddefault
+> On Sat, Aug 7, 2010 at 12:56, Amir E. Aharoni
+> <amir.aharoni@mail.huji.ac.il> wrote:
+>> I have accounts on dozens of wikis and i am an admin on a few of the=
+m.
+>> I opened an account on https://git.wiki.kernel.org/ , created a user
+>> page and put there a link to my blog. That's always the first thing =
+i
+>> do on wikis to which i plan to contribute, because that's the easies=
+t
+>> way to tell the world who i am before i start changing pages that
+>> other people wrote. It's not so different from filling in the
+>> "website" field on the profile page on GitHub, Twitter, LinkedIn or
+>> any other website and it's pretty normative.
+>>
+>> On the Git wiki, however, the user page i created was deleted for
+>> "link spam" and my account was blocked for "Spamming links to extern=
+al
+>> sites". I asked on the deleting admin's user talk page what is wrong
+>> about putting a link to my blog. The admin didn't reply, but deleted
+>> my question with the comment "Inappropriate abuse of the Wiki as a
+>> messenger, as well as abuse of the admin". On all the wikis i know t=
+he
+>> whole point of user talk pages is sending messages between users and
+>> with all seriousness i just can't understand how what i did
+>> constitutes "abuse of the admin".
+>>
+>> It is possible, of course, that this wiki has different rules. For
+>> example, you may want nothing but technical pages and no personal
+>> content whatsoever. Although it is quite contrary to the wiki idea, =
+it
+>> is legitimate, but you should at least write it somewhere. Wikis
+>> usually have a "Help" or a "Community portal" page - i couldn't find
+>> anything like that on yours. And if you don't want user and user tal=
+k
+>> pages to exist, just don't allow people to edit them in the first
+>> place.
+>>
+>> I would be glad to have my account, Amire80, unblocked. I can open
+>> another one, but i happen to like this user name.
+>
+> See also the rest of the thread on gmane [0].
+>
+> [0] http://thread.gmane.org/gmane.comp.version-control.git/152861
+>
+> --
+> Cheers,
+>
+> Sverre Rabbelier
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
 
-to give you the logs in the default date format, overriding log.date, a=
-nd
-perhaps either of these
 
-    $ git log -g --no-date
-    $ git log -g --date=3Dno
-    $ git log -g --numbered
 
-to countermand log.date and force it to show numbered entries.
-
-I _think_ "git log -g" uses a hacky heuristics to choose between date/n=
-umber
-based on how you give the stating ref.  I personally do not like this d=
-wim
-very much, but it seems to be stable and established by now, so it may =
-be
-a good thing to use here instead:
-
-    $ git log -g refs/stash@{0}
-    $ git log -g refs/stash@{now}
+--=20
+Cheers,
+Ray Chuan
