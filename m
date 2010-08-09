@@ -1,100 +1,63 @@
-From: "Schalk, Ken" <ken.schalk@intel.com>
-Subject: [PATCH] Avoid rename/add conflict when contents are identical
-Date: Mon, 9 Aug 2010 14:00:31 -0700
-Message-ID: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: wiki "abuse"
+Date: Mon, 09 Aug 2010 23:07:39 +0200
+Message-ID: <4C606E1B.6020800@lsrfire.ath.cx>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com> 	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com> 	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com> 	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302> <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com> <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Aug 09 23:00:39 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Felipe Contreras <felipe.contreras@gmail.com>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Tay Ray Chuan <rctay89@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 23:08:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiZSZ-0006pq-6G
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 23:00:39 +0200
+	id 1OiZZw-0001bT-SG
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 23:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755436Ab0HIVAd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 17:00:33 -0400
-Received: from mga14.intel.com ([143.182.124.37]:13974 "EHLO mga14.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754860Ab0HIVAd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 17:00:33 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga102.ch.intel.com with ESMTP; 09 Aug 2010 14:00:32 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.55,345,1278313200"; 
-   d="scan'208";a="309952374"
-Received: from azsmsx601.amr.corp.intel.com ([10.2.121.193])
-  by azsmga001.ch.intel.com with ESMTP; 09 Aug 2010 14:00:32 -0700
-Received: from azsmsx503.amr.corp.intel.com ([10.2.121.76]) by
- azsmsx601.amr.corp.intel.com ([10.2.121.193]) with mapi; Mon, 9 Aug 2010
- 14:00:32 -0700
-Thread-Topic: [PATCH] Avoid rename/add conflict when contents are identical
-Thread-Index: Acs4BTW0FPMG8wQsTZe56UdnS0gknw==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1755623Ab0HIVIK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 17:08:10 -0400
+Received: from india601.server4you.de ([85.25.151.105]:41301 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754325Ab0HIVIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 17:08:09 -0400
+Received: from [10.0.1.100] (p57B7F133.dip.t-dialin.net [87.183.241.51])
+	by india601.server4you.de (Postfix) with ESMTPSA id 8E84E2F8056;
+	Mon,  9 Aug 2010 23:08:07 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153024>
 
-Skip the entire rename/add conflict case if the file added on the
-other branch has the same contents as the file being renamed.  This
-avoids giving the user an extra copy of the same file and presenting a
-conflict that is confusing and pointless.
+Am 09.08.2010 22:03, schrieb Sverre Rabbelier:
+> Heya,
+>=20
+> On Mon, Aug 9, 2010 at 14:03, Felipe Contreras
+> <felipe.contreras@gmail.com> wrote:
+>> If the change is done by a real well-intentioned user, then you shou=
+ld
+>> revert the change explaining your reasoning, and allowing counter
+>> arguments, not ban.
+>=20
+> Come on people, let's be serious here. The guy is not a real
+> well-intentioned user, he's a troll trying to use the git wiki for
+> pagerank. Let's stop feeding said troll and let this thread die.
 
-Here's a simple sequence that generates this kind of conflict:
+In the mails in this thread he doesn't look very trollish to me, and he
+didn't have much of a chance to contribute something useful to the wiki=
+=2E
+ What are the grounds of your verdict?
 
-  git init
-  echo content > fileA
-  git add fileA
-  git commit -m Initial
-  git checkout -b abranch
-  mv fileA fileB
-  git add fileB
-  rm fileA
-  ln -s fileB fileA
-  git add fileA
-  git commit -m Linked
-  git checkout master
-  git mv fileA fileB
-  git add fileB
-  git commit -m Moved
-  git merge --no-commit abranch
+Can user pages be excluded from indexing by search engines?
 
-Signed-off-by: Ken Schalk <ken.schalk@intel.com>
----
- merge-recursive.c |   12 ++++++++++++
- 1 files changed, 12 insertions(+), 0 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fb6aa4a..57c7a85 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -955,6 +955,18 @@ static int process_renames(struct merge_options *o,
-                                                        ren1->pair->two : NULL,
-                                                        branch1 == o->branch1 ?
-                                                        NULL : ren1->pair->two, 1);
-+                       } else if ((dst_other.mode == ren1->pair->two->mode) &&
-+                                  sha_eq(dst_other.sha1, ren1->pair->two->sha1)) {
-+                               /* Added file on the other side
-+                                  identical to the file being
-+                                  renamed: clean merge */
-+                               update_file(o, 1, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
-+                               if (!o->call_depth)
-+                                       update_stages(ren1_dst, NULL,
-+                                                       branch1 == o->branch1 ?
-+                                                       ren1->pair->two : NULL,
-+                                                       branch1 == o->branch1 ?
-+                                                       NULL : ren1->pair->two, 1);
-                        } else if (!sha_eq(dst_other.sha1, null_sha1)) {
-                                const char *new_path;
-                                clean_merge = 0;
---
-1.7.0
+Ren=C3=A9
