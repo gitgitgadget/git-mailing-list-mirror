@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 05/10] Add string-specific memory pool
-Date: Mon, 9 Aug 2010 17:34:42 -0500
-Message-ID: <20100809223442.GA4429@burratino>
+Subject: [PATCH 06/10] Add stream helper library
+Date: Mon, 9 Aug 2010 17:39:43 -0500
+Message-ID: <20100809223943.GB4429@burratino>
 References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
  <20100716101352.GA14374@burratino>
  <20100809215719.GA4203@burratino>
@@ -12,45 +12,45 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 00:36:31 2010
+X-From: git-owner@vger.kernel.org Tue Aug 10 00:41:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiaxK-0004ij-Cz
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 00:36:30 +0200
+	id 1Oib1x-0006ej-IV
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 00:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab0HIWgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 18:36:14 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:57885 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753069Ab0HIWgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 18:36:13 -0400
-Received: by qwh6 with SMTP id 6so7691053qwh.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 15:36:12 -0700 (PDT)
+	id S1756920Ab0HIWlM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Aug 2010 18:41:12 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:46127 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752606Ab0HIWlL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 18:41:11 -0400
+Received: by qyk7 with SMTP id 7so2679947qyk.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 15:41:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=4IiNst0qBmg0Cm2schgpzKLSiukihllhRR/bEPOl7sw=;
-        b=Gpp9+mtkq2zNphsRIPU73W+fIM+o+xTQbbsN2EJTfwAhFDlN3GDW5fkW8dfzrAmPkM
-         9o6JfyqcyotkYaEFfKRfzlQxLcE4nLMZh0f6mkqei5Dmi0OKzWdIApsTmYBOnmlN298/
-         feL4o4bRsjOlpISTUYY4wzN2/PCIk6XMGvtBQ=
+        bh=Bc6LyMdbjykr4ooEk+N3Q3whij9q7maavGgDzjB2FD0=;
+        b=PknxHX2qGOmQhiOAPwygeHgmhPoDWQIcjFP/jbgVwq7bxZQdzLd2/9VcCB2n2TjPpM
+         3iVTjAfXP6pMR9NDEojp+AOf39s+fhNzeWO38HJCPqrPk2JAin0f3NRJ/q9VPBOZT4s4
+         lKTSXc1SW21R7OhUSL/6XUnpJH2swoe70m63A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=U85Pbys2ovb60/Cb71oHXPJ1uLUb+8sB6+0uni5OIKDpXll5IMTXfK+AER6LAwC28O
-         JTfNX3l7aA1hRvAjHpILqP6DGDS0MMpDJAr3zlcfFCJHyHdoCR56Z8tGW9PqPIPrwzlc
-         nQRmFo6ySwKfiaLT+e8LWVhD+k1/rq5XmIO6M=
-Received: by 10.220.124.129 with SMTP id u1mr9947890vcr.47.1281393371853;
-        Mon, 09 Aug 2010 15:36:11 -0700 (PDT)
+        b=qN0gWmLYC43sqRS5Sr28opwFNd0CucZqUYpOX/pnWb4abyAAQ4sKXVsPTWRBD//prI
+         cPTTTBprFhaE9frUDLtLUV32gfuPGNyxXczPUH9hPnlXpTWgqExZiv567Tlu+xM5a/gu
+         iMx8L8eSDVn0pvY8ubTkpatln2a/qTiH2d6EI=
+Received: by 10.220.62.136 with SMTP id x8mr9909125vch.150.1281393670605;
+        Mon, 09 Aug 2010 15:41:10 -0700 (PDT)
 Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id e5sm2523634vbe.7.2010.08.09.15.36.09
+        by mx.google.com with ESMTPS id v11sm2883914vbb.4.2010.08.09.15.41.08
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Aug 2010 15:36:11 -0700 (PDT)
+        Mon, 09 Aug 2010 15:41:09 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100809215719.GA4203@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -58,338 +58,392 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153042>
 
 From: David Barr <david.barr@cordelta.com>
 
-Intern strings so they can be compared by address and stored without
-wasting space.
+This library provides thread-unsafe fgets()- and fread()-like
+functions where the caller does not have to supply a buffer.  It
+maintains a couple of static buffers and provides an API to use
+them.
 
-This library uses the macros in the obj_pool.h and trp.h to create a
-memory pool for strings and expose an API for handling them.
-
-[rr: added API docs]
-[jn: with some API simplifications, new documentation and tests]
+[rr: allow input from files other than stdin]
+[jn: with tests, documentation, and error handling improvements]
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-New test.  The return value from pool_tok_seq is not checked by
-the vcs-svn lib but trying to use it in tests revealed it was not
-so intuitive.  pool_tok_seq() was behaving strangely when passed
-an array of size 0; I think there is nothing sane to do in that
-case --- maybe it should abort().  The API was passing around
-char * that cannot be modified; changed to const char *.
-
-Another set of eyes on this would be welcome.
+New tests and API docs.  The return value from buffer_deinit
+can be used to check for errors now (I found this useful when
+writing tests).
 
  .gitignore              |    1 +
- Makefile                |    9 +++-
- t/t0080-vcs-svn.sh      |   16 +++++++
- test-string-pool.c      |   31 ++++++++++++++
- vcs-svn/string_pool.c   |  102 +++++++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/string_pool.h   |   11 +++++
- vcs-svn/string_pool.txt |   43 ++++++++++++++++++++
- 7 files changed, 210 insertions(+), 3 deletions(-)
- create mode 100644 test-string-pool.c
- create mode 100644 vcs-svn/string_pool.c
- create mode 100644 vcs-svn/string_pool.h
- create mode 100644 vcs-svn/string_pool.txt
+ Makefile                |    8 +++-
+ t/t0080-vcs-svn.sh      |   54 ++++++++++++++++++++++++++
+ test-line-buffer.c      |   46 ++++++++++++++++++++++
+ vcs-svn/line_buffer.c   |   97 +++++++++++++++++++++++++++++++++++++++++++++++
+ vcs-svn/line_buffer.h   |   12 ++++++
+ vcs-svn/line_buffer.txt |   58 ++++++++++++++++++++++++++++
+ 7 files changed, 274 insertions(+), 2 deletions(-)
+ create mode 100644 test-line-buffer.c
+ create mode 100644 vcs-svn/line_buffer.c
+ create mode 100644 vcs-svn/line_buffer.h
+ create mode 100644 vcs-svn/line_buffer.txt
 
 diff --git a/.gitignore b/.gitignore
-index af47653..9f109db 100644
+index 9f109db..8c0512e 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -173,6 +173,7 @@
- /test-run-command
- /test-sha1
- /test-sigchain
-+/test-string-pool
- /test-treap
- /common-cmds.h
- *.tar.gz
+@@ -166,6 +166,7 @@
+ /test-dump-cache-tree
+ /test-genrandom
+ /test-index-version
++/test-line-buffer
+ /test-match-trees
+ /test-obj-pool
+ /test-parse-options
 diff --git a/Makefile b/Makefile
-index e7c33ec..24103c9 100644
+index 24103c9..a76cce5 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -415,6 +415,7 @@ TEST_PROGRAMS_NEED_X += test-path-utils
- TEST_PROGRAMS_NEED_X += test-run-command
- TEST_PROGRAMS_NEED_X += test-sha1
- TEST_PROGRAMS_NEED_X += test-sigchain
-+TEST_PROGRAMS_NEED_X += test-string-pool
- TEST_PROGRAMS_NEED_X += test-treap
- TEST_PROGRAMS_NEED_X += test-index-version
- 
-@@ -1742,7 +1743,7 @@ ifndef NO_CURL
+@@ -408,6 +408,7 @@ TEST_PROGRAMS_NEED_X += test-date
+ TEST_PROGRAMS_NEED_X += test-delta
+ TEST_PROGRAMS_NEED_X += test-dump-cache-tree
+ TEST_PROGRAMS_NEED_X += test-genrandom
++TEST_PROGRAMS_NEED_X += test-line-buffer
+ TEST_PROGRAMS_NEED_X += test-match-trees
+ TEST_PROGRAMS_NEED_X += test-obj-pool
+ TEST_PROGRAMS_NEED_X += test-parse-options
+@@ -1743,7 +1744,7 @@ ifndef NO_CURL
  endif
  XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
  	xdiff/xmerge.o xdiff/xpatience.o
--VCSSVN_OBJS =
-+VCSSVN_OBJS = vcs-svn/string_pool.o
+-VCSSVN_OBJS = vcs-svn/string_pool.o
++VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o
  OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS) $(VCSSVN_OBJS)
  
  dep_files := $(foreach f,$(OBJECTS),$(dir $f).depend/$(notdir $f).d)
-@@ -1866,7 +1867,7 @@ xdiff-interface.o $(XDIFF_OBJS): \
+@@ -1867,7 +1868,8 @@ xdiff-interface.o $(XDIFF_OBJS): \
  	xdiff/xutils.h xdiff/xprepare.h xdiff/xdiffi.h xdiff/xemit.h
  
  $(VCSSVN_OBJS): \
--	vcs-svn/obj_pool.h vcs-svn/trp.h
-+	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h
+-	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h
++	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h \
++	vcs-svn/line_buffer.h
  endif
  
  exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
-@@ -2017,10 +2018,12 @@ test-delta$X: diff-delta.o patch-delta.o
+@@ -2016,6 +2018,8 @@ test-date$X: date.o ctype.o
  
+ test-delta$X: diff-delta.o patch-delta.o
+ 
++test-line-buffer$X: vcs-svn/lib.a
++
  test-parse-options$X: parse-options.o
  
-+test-string-pool$X: vcs-svn/lib.a
-+
- .PRECIOUS: $(TEST_OBJS)
- 
- test-%$X: test-%.o $(GITLIBS)
--	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
-+	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(filter %.a,$^) $(LIBS)
- 
- check-sha1:: test-sha1$X
- 	./test-sha1.sh
+ test-string-pool$X: vcs-svn/lib.a
 diff --git a/t/t0080-vcs-svn.sh b/t/t0080-vcs-svn.sh
-index ce02c58..99a314b 100755
+index 99a314b..d3225ad 100755
 --- a/t/t0080-vcs-svn.sh
 +++ b/t/t0080-vcs-svn.sh
-@@ -76,6 +76,22 @@ test_expect_success 'obj pool: high-water mark' '
+@@ -76,6 +76,60 @@ test_expect_success 'obj pool: high-water mark' '
  	test_cmp expected actual
  '
  
-+test_expect_success 'string pool' '
-+	echo a does not equal b >expected.differ &&
-+	echo a equals a >expected.match &&
-+	echo equals equals equals >expected.matchmore &&
++test_expect_success 'line buffer' '
++	echo HELLO >expected1 &&
++	printf "%s\n" "" HELLO >expected2 &&
++	echo >expected3 &&
++	printf "%s\n" "" Q | q_to_nul >expected4 &&
++	printf "%s\n" foo "" >expected5 &&
++	printf "%s\n" "" foo >expected6 &&
 +
-+	test-string-pool "a,--b" >actual.differ &&
-+	test-string-pool "a,a" >actual.match &&
-+	test-string-pool "equals-equals" >actual.matchmore &&
-+	test_must_fail test-string-pool a,a,a &&
-+	test_must_fail test-string-pool a &&
++	test-line-buffer <<-\EOF >actual1 &&
++	5
++	HELLO
++	EOF
 +
-+	test_cmp expected.differ actual.differ &&
-+	test_cmp expected.match actual.match &&
-+	test_cmp expected.matchmore actual.matchmore
++	test-line-buffer <<-\EOF >actual2 &&
++	0
++
++	5
++	HELLO
++	EOF
++
++	q_to_nul <<-\EOF |
++	1
++	Q
++	EOF
++	test-line-buffer >actual3 &&
++
++	q_to_nul <<-\EOF |
++	0
++
++	1
++	Q
++	EOF
++	test-line-buffer >actual4 &&
++
++	test-line-buffer <<-\EOF >actual5 &&
++	5
++	foo
++	EOF
++
++	test-line-buffer <<-\EOF >actual6 &&
++	0
++
++	5
++	foo
++	EOF
++
++	test_cmp expected1 actual1 &&
++	test_cmp expected2 actual2 &&
++	test_cmp expected3 actual3 &&
++	test_cmp expected4 actual4 &&
++	test_cmp expected5 actual5 &&
++	test_cmp expected6 actual6
 +'
 +
- test_expect_success 'treap sort' '
- 	cat <<-\EOF >unsorted &&
- 	68
-diff --git a/test-string-pool.c b/test-string-pool.c
+ test_expect_success 'string pool' '
+ 	echo a does not equal b >expected.differ &&
+ 	echo a equals a >expected.match &&
+diff --git a/test-line-buffer.c b/test-line-buffer.c
 new file mode 100644
-index 0000000..2adf84b
+index 0000000..c11bf7f
 --- /dev/null
-+++ b/test-string-pool.c
-@@ -0,0 +1,31 @@
++++ b/test-line-buffer.c
+@@ -0,0 +1,46 @@
 +/*
-+ * test-string-pool.c: code to exercise the svn importer's string pool
++ * test-line-buffer.c: code to exercise the svn importer's input helper
++ *
++ * Input format:
++ *	number NL
++ *	(number bytes) NL
++ *	number NL
++ *	...
 + */
 +
 +#include "git-compat-util.h"
-+#include "vcs-svn/string_pool.h"
++#include "vcs-svn/line_buffer.h"
++
++static uint32_t strtouint32(const char *s)
++{
++	char *end;
++	uintmax_t n = strtoumax(s, &end, 10);
++	if (*s == '\0' || *end != '\0')
++		die("invalid count: %s", s);
++	return (uint32_t) n;
++}
 +
 +int main(int argc, char *argv[])
 +{
-+	const uint32_t unequal = pool_intern("does not equal");
-+	const uint32_t equal = pool_intern("equals");
-+	uint32_t buf[3];
-+	uint32_t n;
++	char *s;
 +
-+	if (argc != 2)
-+		usage("test-string-pool <string>,<string>");
-+
-+	n = pool_tok_seq(3, buf, ",-", argv[1]);
-+	if (n >= 3)
-+		die("too many strings");
-+	if (n <= 1)
-+		die("too few strings");
-+
-+	buf[2] = buf[1];
-+	buf[1] = (buf[0] == buf[2]) ? equal : unequal;
-+	pool_print_seq(3, buf, ' ', stdout);
-+	fputc('\n', stdout);
-+
-+	pool_reset();
++	if (argc != 1)
++		usage("test-line-buffer < input.txt");
++	if (buffer_init(NULL))
++		die_errno("open error");
++	while ((s = buffer_read_line())) {
++		s = buffer_read_string(strtouint32(s));
++		fputs(s, stdout);
++		fputc('\n', stdout);
++		buffer_skip_bytes(1);
++		if (!(s = buffer_read_line()))
++			break;
++		buffer_copy_bytes(strtouint32(s) + 1);
++	}
++	if (buffer_deinit())
++		die("input error");
++	if (ferror(stdout))
++		die("output error");
++	buffer_reset();
 +	return 0;
 +}
-diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
+diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
 new file mode 100644
-index 0000000..550f0e5
+index 0000000..1543567
 --- /dev/null
-+++ b/vcs-svn/string_pool.c
-@@ -0,0 +1,102 @@
++++ b/vcs-svn/line_buffer.c
+@@ -0,0 +1,97 @@
 +/*
 + * Licensed under a two-clause BSD-style license.
 + * See LICENSE for details.
 + */
 +
 +#include "git-compat-util.h"
-+#include "trp.h"
++#include "line_buffer.h"
 +#include "obj_pool.h"
-+#include "string_pool.h"
 +
-+static struct trp_root tree = { ~0 };
++#define LINE_BUFFER_LEN 10000
++#define COPY_BUFFER_LEN 4096
 +
-+struct node {
-+	uint32_t offset;
-+	struct trp_node children;
-+};
++/* Create memory pool for char sequence of known length */
++obj_pool_gen(blob, char, 4096)
 +
-+/* Two memory pools: one for struct node, and another for strings */
-+obj_pool_gen(node, struct node, 4096)
-+obj_pool_gen(string, char, 4096)
++static char line_buffer[LINE_BUFFER_LEN];
++static char byte_buffer[COPY_BUFFER_LEN];
++static FILE *infile;
 +
-+static char *node_value(struct node *node)
++int buffer_init(const char *filename)
 +{
-+	return node ? string_pointer(node->offset) : NULL;
++	infile = filename ? fopen(filename, "r") : stdin;
++	if (!infile)
++		return -1;
++	return 0;
 +}
 +
-+static int node_cmp(struct node *a, struct node *b)
++int buffer_deinit(void)
 +{
-+	return strcmp(node_value(a), node_value(b));
++	int err;
++	if (infile == stdin)
++		return ferror(infile);
++	err = ferror(infile);
++	err |= fclose(infile);
++	return err;
 +}
 +
-+/* Build a Treap from the node structure (a trp_node w/ offset) */
-+trp_gen(static, tree_, struct node, children, node, node_cmp);
-+
-+const char *pool_fetch(uint32_t entry)
++/* Read a line without trailing newline. */
++char *buffer_read_line(void)
 +{
-+	return node_value(node_pointer(entry));
++	char *end;
++	if (!fgets(line_buffer, sizeof(line_buffer), infile))
++		/* Error or data exhausted. */
++		return NULL;
++	end = line_buffer + strlen(line_buffer);
++	if (end[-1] == '\n')
++		end[-1] = '\0';
++	else if (feof(infile))
++		; /* No newline at end of file.  That's fine. */
++	else
++		/*
++		 * Line was too long.
++		 * There is probably a saner way to deal with this,
++		 * but for now let's return an error.
++		 */
++		return NULL;
++	return line_buffer;
 +}
 +
-+uint32_t pool_intern(const char *key)
++char *buffer_read_string(uint32_t len)
 +{
-+	/* Canonicalize key */
-+	struct node *match = NULL;
-+	uint32_t key_len;
-+	if (key == NULL)
-+		return ~0;
-+	key_len = strlen(key) + 1;
-+	struct node *node = node_pointer(node_alloc(1));
-+	node->offset = string_alloc(key_len);
-+	strcpy(node_value(node), key);
-+	match = tree_search(&tree, node);
-+	if (!match) {
-+		tree_insert(&tree, node);
-+	} else {
-+		node_free(1);
-+		string_free(key_len);
-+		node = match;
++	char *s;
++	blob_free(blob_pool.size);
++	s = blob_pointer(blob_alloc(len + 1));
++	s[fread(s, 1, len, infile)] = '\0';
++	return ferror(infile) ? NULL : s;
++}
++
++void buffer_copy_bytes(uint32_t len)
++{
++	uint32_t in;
++	while (len > 0 && !feof(infile) && !ferror(infile)) {
++		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
++		in = fread(byte_buffer, 1, in, infile);
++		len -= in;
++		fwrite(byte_buffer, 1, in, stdout);
++		if (ferror(stdout)) {
++			buffer_skip_bytes(len);
++			return;
++		}
 +	}
-+	return node_offset(node);
 +}
 +
-+uint32_t pool_tok_r(char *str, const char *delim, char **saveptr)
++void buffer_skip_bytes(uint32_t len)
 +{
-+	char *token = strtok_r(str, delim, saveptr);
-+	return token ? pool_intern(token) : ~0;
-+}
-+
-+void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream)
-+{
-+	uint32_t i;
-+	for (i = 0; i < len && ~seq[i]; i++) {
-+		fputs(pool_fetch(seq[i]), stream);
-+		if (i < len - 1 && ~seq[i + 1])
-+			fputc(delim, stream);
++	uint32_t in;
++	while (len > 0 && !feof(infile) && !ferror(infile)) {
++		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
++		in = fread(byte_buffer, 1, in, infile);
++		len -= in;
 +	}
 +}
 +
-+uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str)
++void buffer_reset(void)
 +{
-+	char *context = NULL;
-+	uint32_t token = ~0;
-+	uint32_t length;
-+
-+	if (sz == 0)
-+		return ~0;
-+	if (str)
-+		token = pool_tok_r(str, delim, &context);
-+	for (length = 0; length < sz; length++) {
-+		seq[length] = token;
-+		if (token == ~0)
-+			return length;
-+		token = pool_tok_r(NULL, delim, &context);
-+	}
-+	seq[sz - 1] = ~0;
-+	return sz;
++	blob_reset();
 +}
-+
-+void pool_reset(void)
-+{
-+	node_reset();
-+	string_reset();
-+}
-diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
+diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
 new file mode 100644
-index 0000000..222fb66
+index 0000000..9c78ae1
 --- /dev/null
-+++ b/vcs-svn/string_pool.h
-@@ -0,0 +1,11 @@
-+#ifndef STRING_POOL_H_
-+#define STRING_POOL_H_
++++ b/vcs-svn/line_buffer.h
+@@ -0,0 +1,12 @@
++#ifndef LINE_BUFFER_H_
++#define LINE_BUFFER_H_
 +
-+uint32_t pool_intern(const char *key);
-+const char *pool_fetch(uint32_t entry);
-+uint32_t pool_tok_r(char *str, const char *delim, char **saveptr);
-+void pool_print_seq(uint32_t len, uint32_t *seq, char delim, FILE *stream);
-+uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str);
-+void pool_reset(void);
++int buffer_init(const char *filename);
++int buffer_deinit(void);
++char *buffer_read_line(void);
++char *buffer_read_string(uint32_t len);
++void buffer_copy_bytes(uint32_t len);
++void buffer_skip_bytes(uint32_t len);
++void buffer_reset(void);
 +
 +#endif
-diff --git a/vcs-svn/string_pool.txt b/vcs-svn/string_pool.txt
+diff --git a/vcs-svn/line_buffer.txt b/vcs-svn/line_buffer.txt
 new file mode 100644
-index 0000000..1b41f15
+index 0000000..8906fb1
 --- /dev/null
-+++ b/vcs-svn/string_pool.txt
-@@ -0,0 +1,43 @@
-+string_pool API
++++ b/vcs-svn/line_buffer.txt
+@@ -0,0 +1,58 @@
++line_buffer API
 +===============
 +
-+The string_pool API provides facilities for replacing strings
-+with integer keys that can be more easily compared and stored.
-+The facilities are designed so that one could teach Git without
-+too much trouble to store the information needed for these keys to
-+remain valid over multiple executions.
++The line_buffer library provides a convenient interface for
++mostly-line-oriented input.
++
++Each line is not permitted to exceed 10000 bytes.  The provided
++functions are not thread-safe or async-signal-safe, and like
++`fgets()`, they generally do not function correctly if interrupted
++by a signal without SA_RESTART set.
++
++Calling sequence
++----------------
++
++The calling program:
++
++ - specifies a file to read with `buffer_init`
++ - processes input with `buffer_read_line`, `buffer_read_string`,
++   `buffer_skip_bytes`, and `buffer_copy_bytes`
++ - closes the file with `buffer_deinit`, perhaps to start over and
++   read another file.
++
++Before exiting, the caller can use `buffer_reset` to deallocate
++resources for the benefit of profiling tools.
 +
 +Functions
 +---------
 +
-+pool_intern::
-+	Include a string in the string pool and get its key.
-+	If that string is already in the pool, retrieves its
-+	existing key.
++`buffer_init`::
++	Open the named file for input.  If filename is NULL,
++	start reading from stdin.  On failure, returns -1 (with
++	errno indicating the nature of the failure).
 +
-+pool_fetch::
-+	Retrieve the string associated to a given key.
++`buffer_deinit`::
++	Stop reading from the current file (closing it unless
++	it was stdin).  Returns nonzero if `fclose` fails or
++	the error indicator was set.
 +
-+pool_tok_r::
-+	Extract the key of the next token from a string.
-+	Interface mimics strtok_r.
++`buffer_read_line`::
++	Read a line and strip off the trailing newline.
++	On failure or end of file, returns NULL.
 +
-+pool_print_seq::
-+	Print a sequence of strings named by key to a file, using the
-+	specified delimiter to separate them.
++`buffer_read_string`::
++	Read `len` characters of input or up to the end of the
++	file, whichever comes first.  Returns NULL on error.
++	Returns whatever characters were read (possibly "")
++	for end of file.
 +
-+	If NULL (key ~0) appears in the sequence, the sequence ends
-+	early.
++`buffer_copy_bytes`::
++	Read `len` bytes of input and dump them to the standard output
++	stream.  Returns early for error or end of file.
 +
-+pool_tok_seq::
-+	Split a string into tokens, storing the keys of segments
-+	into a caller-provided array.
++`buffer_skip_bytes`::
++	Discards `len` bytes from the input stream (stopping early
++	if necessary because of an error or eof).
 +
-+	Unless sz is 0, the array will always be ~0-terminated.
-+	If there is not enough room for all the tokens, the
-+	array holds as many tokens as fit in the entries before
-+	the terminating ~0.  Return value is the index after the
-+	last token, or sz if the tokens did not fit.
-+
-+pool_reset::
-+	Deallocate storage for the string pool.
++`buffer_reset`::
++	Deallocates non-static buffers.
 -- 
 1.7.2.1.544.ga752d.dirty
