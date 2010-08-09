@@ -1,106 +1,78 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: workflow with blessed, lieutenant, and developers
-Date: Mon, 9 Aug 2010 00:42:16 -0700
-Message-ID: <172AD488-0169-440A-89FB-DD78584D244A@gmail.com>
-References: <20100809092152.5f32646a@packard.rktmb.org>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Mihamina Rakotomandimby <mihamina@gulfsat.mg>
-X-From: git-owner@vger.kernel.org Mon Aug 09 09:42:28 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: wiki "abuse"
+Date: Mon, 09 Aug 2010 09:43:00 +0200
+Message-ID: <vpq39uofczf.fsf@bauges.imag.fr>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
+	<AANLkTinQo_Ug9hiN_A=_kXfVuWF_a1ZWVh0hAQP48TkP@mail.gmail.com>
+	<AANLkTinxNJ3aVUT1_i3-XL2dq8oobsgfUp14btZZjEUD@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael Witten <mfwitten@gmail.com>, git@vger.kernel.org
+To: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
+X-From: git-owner@vger.kernel.org Mon Aug 09 09:43:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiN07-0004lA-RM
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 09:42:28 +0200
+	id 1OiN0s-00051P-Hd
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 09:43:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755462Ab0HIHmV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 03:42:21 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:50258 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751484Ab0HIHmU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 03:42:20 -0400
-Received: by pwj7 with SMTP id 7so1172606pwj.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 00:42:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=QWyCz1bNQi+jca+NvFWoqXFpX3X0k730RAtfgC5dEPs=;
-        b=XMt4PjhE8X+sTdSsnCZ00fmz0/d0bFRExvGfmpeyAXyQ2JkJTuohgK1KVSTDfyITmy
-         v5JckY3JKPJ9/rJKuhv5E3FCwdLQCtPyZRnPJJ17ijAAnLDaX1tiqoFgUP25YsH+WBZ6
-         629cvM0sNg0Fc2si3Nc8h6ZrfxwlN/EZht2Ac=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=fX6mdrbRYbNleH4D2VqClRRaAnTW+69a1rn1FOCyCD6wleSy/nE7+X6qORxDCzjMS/
-         9J/TloxgCQWyYKMasF1I0wVdJLP+B3q72q11vDoLPv5lMsdUjG6bkSOyQNy1t3/OrsyW
-         XiIMvPxfJ7upFfNxBKwJfopHjkw2UKf0VSMHI=
-Received: by 10.142.211.6 with SMTP id j6mr13369216wfg.98.1281339739618;
-        Mon, 09 Aug 2010 00:42:19 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id w27sm6263421wfd.17.2010.08.09.00.42.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 09 Aug 2010 00:42:18 -0700 (PDT)
-In-Reply-To: <20100809092152.5f32646a@packard.rktmb.org>
-X-Mailer: Apple Mail (2.936)
+	id S1755530Ab0HIHnJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 9 Aug 2010 03:43:09 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48518 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755465Ab0HIHnI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 9 Aug 2010 03:43:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o797ecOu016724
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 9 Aug 2010 09:40:38 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OiN0e-0002UJ-LE; Mon, 09 Aug 2010 09:43:00 +0200
+In-Reply-To: <AANLkTinxNJ3aVUT1_i3-XL2dq8oobsgfUp14btZZjEUD@mail.gmail.com> (Amir E. Aharoni's message of "Sat\, 7 Aug 2010 23\:00\:08 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 09 Aug 2010 09:40:39 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o797ecOu016724
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1281944441.2641@c8qNHVymIHhBsMiBtsomjg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152953>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/152954>
 
-On Aug 8, 2010, at 11:21 PM, Mihamina Rakotomandimby wrote:
+"Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il> writes:
 
-> I would like to setup a similar thing but with
-> - Only one lieutenant (me)
-
-In Linux terminology, you would be the benevolent dictator, not the =20
-lieutenant.  The lieutenants are those you trust to submit good patches=
-=2E
-
-> - A blessed repository where I am the only one to push to
-
-Okay, though I might use the term 'official'.
-
-> - Developers who push to me (the lieutenant)
-
-Developers shouldn't push directly into your working repo.  If you =20
-don't want to use pull requests (where a developer tells you when a =20
-branch is ready for you to pull into your own repo) then you can have =20
-a centralized bare Git repository for them to push to.  Either they =20
-will push completed branches which you then merge into mainline (which =
-=20
-is essentially the same as the pull request model, except the =20
-developers are sharing a repo for this purpose), or the developers =20
-themselves will do the merging in the developer repo, which you then =20
-pull into your working repo, and after vetting it push to the offical =20
-repo.
-
-> Developers pull/clone from the blessed repository.
-> I initially clone from the blessed repository.
+> 2010/8/7 Michael Witten <mfwitten@gmail.com>:
+>> On Sat, Aug 7, 2010 at 12:56, Amir E. Aharoni
+>> <amir.aharoni@mail.huji.ac.il> wrote:
+>>> I opened an account on https://git.wiki.kernel.org/ , created a user
+>>> page and put there a link to my blog. That's always the first thing i
+>>> do on wikis to which i plan to contribute, because that's the easiest
+>>> way to tell the world who i am before i start changing pages that
+>>> other people wrote.
+>>
+>> I say this without malice: Nobody really cares who you are.
 >
-> 1=B0) What command line do developers use to push to me but not to th=
-e
-> blessed (origin)?
-> 2=B0) After they pushed to me, I have the choice to "approve" or =20
-> "reject"
-> a commit: what is the keyword and git option for that?
-> 3=B0) I push the merge of approved commits to the blessed repository:
-> what keywords and git options?
+> And you are quite right, but from several years of experience with
+> wikis i saw much more misunderstanding coming from editing without
+> creating a user page than from creating a user page without editing,
+> so what happened to me today was quite shocking.
+>
+> And all the more: if you don't care about user pages, just lock them
+> for editing.
 
-If you're going to manage a project, you need to spend enough time =20
-learning how Git works that you can answer these questions yourself.  =20
-There are multiple good resources online.  I suggest starting with a =20
-tutorial, and then experimenting to see what works and what doesn't =20
-before you actually try to start working for real.  Along the way =20
-you'll find Google very helpful.
+Just adding my 2 cents: I don't think user pages are terribly usefull,
+but I don't think they harm either. I also have a user page on the
+wiki with a link to my homepage, and I find this to be a simple and
+good way to actually identify myself on the wiki.
 
-Josh
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
