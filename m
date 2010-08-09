@@ -1,105 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3 1/2] t5520-pull: Add testcases showing spurious
- conflicts from git pull --rebase
-Date: Mon, 09 Aug 2010 12:09:02 -0700
-Message-ID: <7vfwyn61td.fsf@alter.siamese.dyndns.org>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCHv3 1/2] t5520-pull: Add testcases showing spurious 
+	conflicts from git pull --rebase
+Date: Mon, 9 Aug 2010 13:22:40 -0600
+Message-ID: <AANLkTin0xvK8H8RvaXtmaNHJh1dStn0AN1Mqed7JGvuO@mail.gmail.com>
 References: <1281300917-5610-1-git-send-email-newren@gmail.com>
- <1281300917-5610-2-git-send-email-newren@gmail.com>
+	<1281300917-5610-2-git-send-email-newren@gmail.com>
+	<7vfwyn61td.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, santi@agolina.net, Johannes.Schindelin@gmx.de,
 	avarab@gmail.com
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 09 21:09:29 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 09 21:22:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiXiu-0005ca-CJ
-	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 21:09:24 +0200
+	id 1OiXvs-0002cQ-8L
+	for gcvg-git-2@lo.gmane.org; Mon, 09 Aug 2010 21:22:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827Ab0HITJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 15:09:19 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51087 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754643Ab0HITJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 15:09:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8E936CC523;
-	Mon,  9 Aug 2010 15:09:16 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lb222yGITtwBxPE4w4owEDUSxlE=; b=hpZ1Ig
-	lYTee6CKpJpwnhSWexJl6P4Lm7cZPlMSxCQO7LVVpVk8QUMV48DnIG976rPkz/VD
-	d+tM2nWRbq5vCEtSddYKcFQHW0qJvUy0vzVyB1H6QwNzUDI5wf82MQHhd+ROdXjc
-	AF1RBazmXeOrqFdxPHWaOoqQ3yKl22jdqHulQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QA3HeBAPOMZ+j1L3O+Xn5vow8emjZVJ1
-	sAKCkL629SWVCc5Da0RuzHV4XGRk8hrXIbtjVCGkPqcmW2hJbZ9dveyfmL5/nMGX
-	BXyGuARvg6dEe/xxJZSOAY+lhEFVOxlUhWwvCOXF+Knlq5V87wX0+phzkOoNAAaq
-	LSdxyXFvHlU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 293C3CC51D;
-	Mon,  9 Aug 2010 15:09:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.126]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A2EE2CC515; Mon,  9 Aug
- 2010 15:09:04 -0400 (EDT)
-In-Reply-To: <1281300917-5610-2-git-send-email-newren@gmail.com> (Elijah
- Newren's message of "Sun\,  8 Aug 2010 14\:55\:16 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 978D4D38-A3E9-11DF-8FA4-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754488Ab0HITWm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 9 Aug 2010 15:22:42 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51119 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753844Ab0HITWm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 9 Aug 2010 15:22:42 -0400
+Received: by fxm13 with SMTP id 13so235723fxm.19
+        for <git@vger.kernel.org>; Mon, 09 Aug 2010 12:22:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yANg8HpWB4rg0Ap3KKyHe5Tql0NAgDlK83A8EYmMFeU=;
+        b=FiRocgrq77lIegAfVAt17ASrPy2efl1CYFyj+NrdAZmZGl9yrLjV5agTXGbPshuUFb
+         WDbPIx/Ashia6bskdWKHakZdQf6pk8DjtuGpXvupXl+kuaCSBDSUxZuFNLVvCLZrBVLr
+         TNuiR16gmQkC2Hf8NuR2gcaFrV1F0crx3jx7w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=asfX5JtwgvuvI9Q6e+I40kryJC/re+L085P/g4mRc/JmYoYGR5XDRg5wR5HzCUHQqM
+         lRsdwi0PwWCbBFf+d7pYI7LQoYh7W6fr/yLNUNDKlftTsXty0P5Ojb504LL2g3WZUuEP
+         u2fTjQkC7mgyohGb3wRs83rZHAugIxdvcoyvc=
+Received: by 10.223.119.136 with SMTP id z8mr16994958faq.63.1281381760424; 
+	Mon, 09 Aug 2010 12:22:40 -0700 (PDT)
+Received: by 10.223.149.82 with HTTP; Mon, 9 Aug 2010 12:22:40 -0700 (PDT)
+In-Reply-To: <7vfwyn61td.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153002>
 
-Elijah Newren <newren@gmail.com> writes:
-
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
->  t/t5520-pull.sh |   63 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 files changed, 63 insertions(+), 0 deletions(-)
+On Mon, Aug 9, 2010 at 1:09 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Elijah Newren <newren@gmail.com> writes:
+<snip>
+>> +modify () {
+>> + =C2=A0 =C2=A0 sed -e "$1" < "$2" > "$2".x &&
+>> + =C2=A0 =C2=A0 mv "$2".x "$2"
+>> +}
 >
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 319e389..9099e55 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -4,6 +4,11 @@ test_description='pulling into void'
->  
->  . ./test-lib.sh
->  
-> +modify () {
-> +	sed -e "$1" < "$2" > "$2".x &&
-> +	mv "$2".x "$2"
-> +}
+> Just a style thing but I'd prefer to see the above written like this:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0modify () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sed -e "$1" <"=
+$2" >"$2.x" &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mv "$2.x" "$2"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
 
-Just a style thing but I'd prefer to see the above written like this:
+I copied this function verbatim from t/t4127-apply-same-fn.sh.  Would
+you like me to fix that one too?
 
-        modify () {
-                sed -e "$1" <"$2" >"$2.x" &&
-                mv "$2.x" "$2"
-        }
+>> +test_expect_success 'setup for avoiding reapplying old patches' '
+>> + =C2=A0 =C2=A0 (cd dst &&
+>> + =C2=A0 =C2=A0 =C2=A0git rebase --abort;
+>
+> This may be hypothetical but this discards error condition from faili=
+ng to
+> ch into dst (for whatever reason). =C2=A0Don't we expect "git rebase =
+--abort"
+> to exit with a non-zero status? =C2=A0Same comment for the last one i=
+n the
+> patch below.
 
-> +test_expect_success 'setup for avoiding reapplying old patches' '
-> +	(cd dst &&
-> +	 git rebase --abort;
-
-This may be hypothetical but this discards error condition from failing to
-ch into dst (for whatever reason).  Don't we expect "git rebase --abort"
-to exit with a non-zero status?  Same comment for the last one in the
-patch below.
-
-> +test_expect_failure 'git pull --rebase does not reapply old patches' '
-> +	(cd dst &&
-> +	 git pull --rebase;
-> +	 test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
-> +	)
-> +'
-> +
->  test_done
-
-Thanks.
+Yes, Hannes pointed out the same issue.  Does the follow-up interdiff
+I posted in response to my patch address this in a way you'd like?
