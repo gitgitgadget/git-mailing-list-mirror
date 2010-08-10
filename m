@@ -1,153 +1,163 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH] test-lib: Multi-prereq support only checked the last prereq
-Date: Tue, 10 Aug 2010 23:21:51 +0000
-Message-ID: <1281482511-2461-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH v2] git-notes: Run partial expensive test everywhere
+Date: Tue, 10 Aug 2010 23:37:48 +0000
+Message-ID: <1281483468-24388-1-git-send-email-avarab@gmail.com>
+References: <1281470164-27008-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 11 01:22:08 2010
+X-From: git-owner@vger.kernel.org Wed Aug 11 01:38:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oiy8y-0002Mu-O9
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 01:22:05 +0200
+	id 1OiyOo-0007sb-3h
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 01:38:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757896Ab0HJXWA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 19:22:00 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:45767 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751881Ab0HJXV6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 19:21:58 -0400
-Received: by wwj40 with SMTP id 40so13537091wwj.1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 16:21:57 -0700 (PDT)
+	id S1757991Ab0HJXiM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 19:38:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46519 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751881Ab0HJXiL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 19:38:11 -0400
+Received: by wyb32 with SMTP id 32so1247212wyb.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 16:38:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Ep1KW/P4JSTK+r9a1VGox3uECIHzgdUqfUtI5B3QOww=;
-        b=AjbmFuCb+gTxHZLPUnjTVsKxl0UtwRUk1kpZ6s2P5TEu0M6D8Rmt7EyjHO5RIhRNwS
-         nFimjS0D+zV56938TDkc0wVLn9r1bmCVW/xHWFyTnJAq+2G4Bmkh0wSxh6k7eP/gPX4e
-         /F4MiUu7hMBrI8kA+WWvdV0hkV13NEf9uppSE=
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=B/9OMYMljO1ZDL3pYJaLe5DBLUBfpCro5h/pEcHyxaE=;
+        b=MnItUlMqx0p+hUcAIgcVzqwjDS0J/XRfmgVvx0y+Rv9cAnF2nbtZOt0K8SoGTejGp1
+         ngoSsir/SNiNMzicYPBjfay0bb93exV2pIFyv4HMPf8PHLahpzZyNMKHWbIFp9WXuzjh
+         M/cVltlwY5JiLDRo/hg6gesYvQ3axepfxDRWE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=uuoDz39YPXychBHjvPej2CPSfpTeibIJBwHVWcs+W44SQMRw8eR+YC1+j2smYAVDsA
-         Dw9sqxboLRsu0hN/7qyrqZBN5pkFW/XTmWd5Ck2H7aEby44kRFCV0i15m4F/sTNtXt4V
-         x+r0OZ1Ouebk9LibAbBUG2CpAruy0WpaGwIFY=
-Received: by 10.227.142.208 with SMTP id r16mr15755803wbu.140.1281482517421;
-        Tue, 10 Aug 2010 16:21:57 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=ubQEaiYLCrCu7LJ/uDWDFfZvB3qopAVve5fDO83HqLMqBnMybTf27mMW3aaSY9JkiS
+         B2MyZrL1iifnrIpAks08wEUnxM+G4Ceh2plqMKvUYllbgaf55CaLalIZEQ4PjGqVaL/5
+         IilrRjDxTK+nUfN5cwMGNe/LleH6eLVTO7sf8=
+Received: by 10.227.134.210 with SMTP id k18mr15764566wbt.160.1281483489636;
+        Tue, 10 Aug 2010 16:38:09 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id i25sm5986315wbi.16.2010.08.10.16.21.56
+        by mx.google.com with ESMTPS id a1sm5998659wbb.8.2010.08.10.16.38.08
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 10 Aug 2010 16:21:56 -0700 (PDT)
+        Tue, 10 Aug 2010 16:38:08 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.295.gd03d
+In-Reply-To: <1281470164-27008-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153173>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153174>
 
-The support for multiple test prerequisites added by me in "test-lib:
-Add support for multiple test prerequisites" was broken.
+The git-notes expensive timing test is only expensive because it
+either did 10,100,1k and 10k iterations or nothing.
 
-The clever for-loop (which I blindly copied from Junio) iterated over
-each prerequisite and returned true/false within a case statement.
-Thus only the last prerequisite in the list of prerequisites was ever
-considered, the rest were ignored.
+Change it to do 10 by default, with an option to run the expensive
+version with the old GIT_NOTES_TIMING_TESTS=3DZomgYesPlease variable.
 
-=46ix that by changing the test_have_prereq code to something less
-clever that keeps a count of the total prereqs and the ones we have
-and compares the count at the end.
+Since nobody was ostensibly running this test under TAP the code had
+bitrotted so that it emitted invalid TAP. This change fixes that.
 
-This comes with the added advantage that it's easy to list the missing
-prerequisites in the test output.
+The old version would also mysteriously fail on systems without
+/usr/bin/time, there's now a check for that using the multiple test
+prerequisite facility.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
 
-I should have spotted this earlier.
+On Tue, Aug 10, 2010 at 21:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> On Tue, Aug 10, 2010 at 19:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+ <avarab@gmail.com> wrote:
+>> + =C2=A0 =C2=A0 =C2=A0 # Hack around multiple test prerequisites not=
+ supporting AND-ing
+>> + =C2=A0 =C2=A0 =C2=A0 # of terms
+>> + =C2=A0 =C2=A0 =C2=A0 test_set_prereq USR_BIN_TIME+NOT_EXPENSIVE
+>> + =C2=A0 =C2=A0 =C2=A0 test_have_prereq EXPENSIVE && test_set_prereq=
+ USR_BIN_TIME+EXPENSIVE
+>> +fi
+>
+> In retrospect this may have been some brainfried code, I'll check it
+> out tomorrow.
 
- t/t0000-basic.sh |    6 +++++-
- t/test-lib.sh    |   21 ++++++++++++++++++---
- 2 files changed, 23 insertions(+), 4 deletions(-)
+Here's a patch that's not crazy. In v1 I was hacking around not having
+a facility I already added to the test-lib (tired).
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 2887677..9602085 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -84,7 +84,11 @@ donthaveit=3Dyes
- test_expect_success HAVEIT,DONTHAVEIT 'unmet prerequisites causes test=
- to be skipped' '
-     donthaveit=3Dno
- '
--if test $haveit$donthaveit !=3D yesyes
-+donthaveiteither=3Dyes
-+test_expect_success DONTHAVEIT,HAVEIT 'unmet prerequisites causes test=
- to be skipped' '
-+    donthaveiteither=3Dno
-+'
-+if test $haveit$donthaveit$donthaveiteither !=3D yesyesyes
- then
- 	say "bug in test framework: multiple prerequisite tags do not work re=
-liably"
- 	exit 1
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4e73fff..8c8e129 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -337,15 +337,30 @@ test_have_prereq () {
- 	IFS=3D,
- 	set -- $*
- 	IFS=3D$save_IFS
-+
-+	total_prereq=3D0
-+	ok_prereq=3D0
-+	missing_prereq=3D
-+
- 	for prerequisite
- 	do
-+		total_prereq=3D$(($total_prereq + 1))
- 		case $satisfied in
- 		*" $prerequisite "*)
--			: yes, have it ;;
-+			ok_prereq=3D$(($ok_prereq + 1))
-+			;;
- 		*)
--			! : nope ;;
-+			# Keep a list of missing prerequisites
-+			if test -z "$missing_prereq"
-+			then
-+				missing_prereq=3D$prerequisite
-+			else
-+				missing_prereq=3D"$prerequisite,$missing_prereq"
-+			fi
- 		esac
+This patch goes on top of my "test-lib: Multi-prereq support only
+checked the last prereq" patch, which fixes up the test prereq
+facility so that it actually works.
+
+ t/t3302-notes-index-expensive.sh |   32 ++++++++++++++++++++----------=
+--
+ 1 files changed, 20 insertions(+), 12 deletions(-)
+
+diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-exp=
+ensive.sh
+index 361a10a..7c08e99 100755
+--- a/t/t3302-notes-index-expensive.sh
++++ b/t/t3302-notes-index-expensive.sh
+@@ -7,11 +7,9 @@ test_description=3D'Test commit notes index (expensive=
+!)'
+=20
+ . ./test-lib.sh
+=20
+-test -z "$GIT_NOTES_TIMING_TESTS" && {
+-	skip_all=3D"Skipping timing tests"
+-	test_done
+-	exit
+-}
++test_set_prereq NOT_EXPENSIVE
++test -n "$GIT_NOTES_TIMING_TESTS" && test_set_prereq EXPENSIVE
++test -x /usr/bin/time && test_set_prereq USR_BIN_TIME
+=20
+ create_repo () {
+ 	number_of_commits=3D$1
+@@ -102,17 +100,27 @@ time_notes () {
  	done
-+
-+	test $total_prereq =3D $ok_prereq
  }
 =20
- # You are not expected to call test_ok_ and test_failure_ directly, us=
-e
-@@ -408,7 +423,7 @@ test_skip () {
- 	case "$to_skip" in
- 	t)
- 		say_color skip >&3 "skipping test: $@"
--		say_color skip "ok $test_count # skip $1 (prereqs: $prereq)"
-+		say_color skip "ok $test_count # skip $1 (missing $missing_prereq of=
- $prereq)"
- 		: true
- 		;;
- 	*)
+-for count in 10 100 1000 10000; do
++do_tests () {
++	pr=3D$1
++	count=3D$2
++
++	test_expect_success $pr 'setup / mkdir' '
++		mkdir $count &&
++		cd $count
++	'
+=20
+-	mkdir $count
+-	(cd $count;
++	test_expect_success $pr "setup $count" "create_repo $count"
+=20
+-	test_expect_success "setup $count" "create_repo $count"
++	test_expect_success $pr 'notes work' "test_notes $count"
+=20
+-	test_expect_success 'notes work' "test_notes $count"
++	test_expect_success USR_BIN_TIME,$pr 'notes timing with /usr/bin/time=
+' "time_notes 100"
++
++	test_expect_success $pr 'teardown / cd ..' 'cd ..'
++}
+=20
+-	test_expect_success 'notes timing' "time_notes 100"
+-	)
++do_tests NOT_EXPENSIVE 10
++for count in 100 1000 10000; do
++	do_tests EXPENSIVE $count
+ done
+=20
+ test_done
 --=20
 1.7.2.1.295.gd03d
