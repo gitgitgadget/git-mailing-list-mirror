@@ -1,88 +1,80 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: [PATCH] More readable 'Not a git repository' messages
-Date: Tue, 10 Aug 2010 15:34:17 -0700
-Message-ID: <D944E855-0ECF-41AF-ACD4-8ED8EABCBC1D@gmail.com>
-References: <i3pdkj$hut$1@dough.gmane.org> <20100810155240.GA5116@localhost.localdomain>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jared Hance <jaredhance@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 00:34:29 2010
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Proposal for new Git Wiki admin
+Date: Wed, 11 Aug 2010 01:39:53 +0300
+Message-ID: <AANLkTin+17umpp7Zs5c1DcMvN0X7geMAjMEfGwiK8=uF@mail.gmail.com>
+References: <20100810162602.GG3921@kytes>
+	<m3y6ce2kdz.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 00:40:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OixOr-0006tH-Lr
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 00:34:25 +0200
+	id 1OixUL-0000Sv-As
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 00:40:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755750Ab0HJWeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 18:34:21 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:43362 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779Ab0HJWeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 18:34:19 -0400
-Received: by pxi10 with SMTP id 10so255813pxi.19
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 15:34:19 -0700 (PDT)
+	id S1758001Ab0HJWj7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 18:39:59 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45919 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757988Ab0HJWj6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 18:39:58 -0400
+Received: by bwz3 with SMTP id 3so2253167bwz.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 15:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=tXFNNZ/DrzOBuDAP4o2vWPUhueaRpPRT/FGSXpMomD8=;
-        b=dEjWKeTNDDEvNTBclAV0iQbDP3tp9BQ5kqr0kQW2xhAF2pqu7W5Psal4k/bnBCqTIf
-         7p4dWzslgfwYKZas7vgf9Z0L0IUJfYZhAd+gvyjWrMYXsbEeCbSUr1ymz6A9ACPgb6Z0
-         l+iJSsU7OFNX+B/K7zX4wE8K31FvXCb/UfUQk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MQ1CeN4XFaUKW1t3Cbj9lq1pY6a953nuMFcmB64OcyQ=;
+        b=cVDeVmiBhLBY+dL1Y/IFVALJ0ELUE626wv8FENdlGJafdyw1hLsfkkj2krCjpbsVJR
+         b/zo5nDHS5ckRG2qEPh2wNUmR1emjrRqH+6OQLRqZkL5j2cy69ar43SoA/iGuD7pUYJL
+         Ms6E6Zgbj5SWasujknq/uI6+4pkniD0T3J65w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=W2TmzNJJxZPpNlA1e7+gJwnQ4+puQTkV00aeEzWbzEvCtKbZboYutv+gfv9J/Tes2e
-         r30pI55AppoRmX3LF95rk2llzbISRnvO8dxmoU1EQxAjZuTG73qJhCnSUrmS8dIsOUYu
-         LcahXxSwVBJsp5c9sXbZm6aIe8zU/dlGF0nU8=
-Received: by 10.142.169.19 with SMTP id r19mr5243654wfe.177.1281479658975;
-        Tue, 10 Aug 2010 15:34:18 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id v38sm8329814wfh.12.2010.08.10.15.34.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 10 Aug 2010 15:34:17 -0700 (PDT)
-In-Reply-To: <20100810155240.GA5116@localhost.localdomain>
-X-Mailer: Apple Mail (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=T+WgGUrQoJT+dQMg7EVhsV4x6yF3n+TEj9ATTNiGLKAJhwboqwqSPJ/1Q6fxPPX9GF
+         x7KphG+UKmcdGIfKJFP8IGTRK27fcBrKdFC4G2BGiXUdOeEhF8Wcq3XPOoMfD6LfC40z
+         HTlSBTEnxVO93yhXtwuCoMhkA/yKunlisN5MA=
+Received: by 10.204.16.207 with SMTP id p15mr1486426bka.48.1281479993767; Tue, 
+	10 Aug 2010 15:39:53 -0700 (PDT)
+Received: by 10.204.122.143 with HTTP; Tue, 10 Aug 2010 15:39:53 -0700 (PDT)
+In-Reply-To: <m3y6ce2kdz.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153170>
 
-On Aug 10, 2010, at 8:52 AM, Jared Hance wrote:
+On Wed, Aug 11, 2010 at 1:06 AM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> I propose myself.
 
-> On Mon, Aug 09, 2010 at 07:24:35PM +0200, Ralf Ebert wrote:
->> old: Not a git repository (or any of the parent directories): .git
->> new: Not in a git repository: /home/bob/somefolder
->
-> Don't we lose information here? Perhaps print the value of
-> DEFAULT_GIT_DIR_ENVIRONMENT.
->
->> old: Not a git repository (or any parent up to mount parent /home/ 
->> bob)
->> old: Stopping at filesystem boundary
->> (GIT_DISCOVERY_ACROSS_FILESYSTEM not set).
->> new: Not in a git repository: /home/bob/somefolder
->> new: (stopped searching at /home because
->> GIT_DISCOVERY_ACROSS_FILESYSTEM is not set)
->
-> This certainly looks good, but some people might not realize /home is
-> a filesystem boundary (perhaps those who had someone else set up their
-> system and don't know their partition setup. I suggest:
->
-> (stopped searching at the filesystem boundary, /home, because
-> GIT_DISCOVERY_ACROSS_FILESYSTEM is not set)
+I was going to propose you, but wasn't sure if you would have time :)
 
-If the search for .git stops at /home or $HOME, why not say nothing at  
-all?  If you've turned /home (or /) into a Git repo, then either you  
-know what you're doing or you deserve as much pain as possible.  (I  
-haven't decided which.)
+> I had (some) admin rights on old (former) MoinMoin based git wiki at
+> http://git.or.cz/gitwiki/ (you can see it in history). =C2=A0I am not=
+ sure
+> if I would have that much time nowadays for spam preventing, but
+> I would try.
 
-Josh
+You can create a patrol group as I planned to do, I would be gladly
+help preventing spam. See:
+http://www.mediawiki.org/wiki/Help:Patrolled_edits
+
+Also note that having 3 admins would make things even easier; as long
+as the admins are capable and sensible, the more the better.
+
+--=20
+=46elipe Contreras
