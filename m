@@ -1,66 +1,77 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] More readable 'Not a git repository' messages
-Date: Tue, 10 Aug 2010 21:31:12 +1000
-Message-ID: <AANLkTimeizUKBrwibUTnVPZWwU_M72uQTn8ucmjK_V70@mail.gmail.com>
-References: <i3pdkj$hut$1@dough.gmane.org>
-	<AANLkTinttmKi4+EbE54r-GeRbN3_2wxUHu_qJMn5Nysn@mail.gmail.com>
-	<i3q0d8$m8f$1@dough.gmane.org>
-	<20100809230132.GG4429@burratino>
-	<i3q3ah$upb$1@dough.gmane.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git notes primer?
+Date: Tue, 10 Aug 2010 13:32:39 +0200
+Message-ID: <4C6138D7.6050300@drmicha.warpmail.net>
+References: <201008101040.07172.thomas@koch.ro>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Ralf Ebert <info@ralfebert.de>
-X-From: git-owner@vger.kernel.org Tue Aug 10 13:31:23 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: thomas@koch.ro
+X-From: git-owner@vger.kernel.org Tue Aug 10 13:32:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oin38-0002bN-WC
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 13:31:19 +0200
+	id 1Oin4I-00032k-74
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 13:32:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756168Ab0HJLbP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 07:31:15 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:38183 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752490Ab0HJLbN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 07:31:13 -0400
-Received: by wwj40 with SMTP id 40so12741236wwj.1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 04:31:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=PE14JdXrMgas4aTas7oirHhCw0GcLLsHj3hj93bSTTA=;
-        b=h8rAiM7Hrk4R7k6mrAKw9ANPsCXKlbMEq78xTQGbr6AaBR68pgajAr0L4LlcfxeLks
-         +Ik8+fwZFsr0CVTLWqjFTBiJIbe1JCdb8seK2vj8SUbnFQP7mEFN0EQuzowRjDQ2Co4U
-         kppKntVH03B4byfo33LsTAX50+/UjjD0/jwDU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=XQPdhtRY91+4XeFNQLTDlYUEmLQsefpmKt6rfcdLOBetTe5401moME2D2Ur2ZmXtiM
-         lPKJxiCchHIXOP5rtwSKvHqnO79GWIbDEN5ZgkYpKqtf2NVQFXNX826ipJZYfGUm5PIR
-         JhQCAdYQ9kZaobByNesvzgY23dCMaLPoleuUE=
-Received: by 10.216.21.7 with SMTP id q7mr3830920weq.19.1281439872382; Tue, 10
- Aug 2010 04:31:12 -0700 (PDT)
-Received: by 10.216.173.133 with HTTP; Tue, 10 Aug 2010 04:31:12 -0700 (PDT)
-In-Reply-To: <i3q3ah$upb$1@dough.gmane.org>
+	id S1756859Ab0HJLc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 07:32:26 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46913 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756571Ab0HJLcY (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 07:32:24 -0400
+Received: from compute3.internal (compute3.internal [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1854E46D;
+	Tue, 10 Aug 2010 07:32:24 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Tue, 10 Aug 2010 07:32:24 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=8+eQaK+P2kCfCdIiND4RbuVJFdo=; b=HEma/a18MzUoM4ibXu4epa+re1VNuZf4yM7M7MB79FwTgmR0ty742Y/s5ZM4u/5ETOiZ+giqhir6vime9wvAWS186+IMvJOc1KJwc7UH7GxWmMuZ/IN64CtUQSzfDwuFYUSAFVvuBEKtmnl6QuL0DFlmDWa7LJhRH1Cg8fpfNOA=
+X-Sasl-enc: O9evU9LS8oFkaHpExRl/ifaH00Bh92z5Bh2xndgjnFIS 1281439943
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 463C6400447;
+	Tue, 10 Aug 2010 07:32:23 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9pre) Gecko/20100806 Lightning/1.0b2pre Lanikai/3.1.2
+In-Reply-To: <201008101040.07172.thomas@koch.ro>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153093>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153094>
 
-On Tue, Aug 10, 2010 at 9:34 AM, Ralf Ebert <info@ralfebert.de> wrote:
-> I do, I guess it makes sense to rework the patch on top of that.
+Thomas Koch venit, vidit, dixit 10.08.2010 10:40:
+> Hi,
+> 
+> I'm working on a patch management system as topgit, but without the 
+> complexity:
+> http://koch.ro/blog/index.php?/archives/139-tnt-is-not-topgit.html
+> 
+> Before I continue with my current design, I wanted to have a look at git 
+> notes, whether it would provide better mechanisms then tracking my meta 
+> informations in a hidden background branch. (Much like pristine-tar does.)
+> 
+> However I couldn't get a grip on git notes:
+> 
+> - Is git notes the only command that works on notes?
+> - How are notes saved inside GIT?
 
-While you're working on that, I was thinking that cwd may be long as
-it's absolute path. How about rephrase the error message a little bit
-and give more space for cwd? Something like
+For thoese two it's best to look at the textconv-cache facility
+developed by Jeff King which uses notes internally, without creating
+"proper" notes.
 
-Not a git repository: <reason explained>
-Stopped at <current cwd>
--- 
-Duy
+> - Is git notes and it's implementation stable now?
+
+The API should be as stable as any API on master.
+
+> - Are there any tutorials on workflows with git notes?
+> - What different use cases of git notes do you know?
+> - What use cases triggered the development of git notes in the first place?
+
+The origin was being able to amend/annotate commit messages without
+rewriting history.
+
+Others may have to say more ;)
+
+Michael
