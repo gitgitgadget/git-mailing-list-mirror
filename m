@@ -1,91 +1,83 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Git and Documentation
-Date: Tue, 10 Aug 2010 15:56:57 -0500
-Message-ID: <AANLkTikK6_MqPQSg944DNfVULT3ccN9xMsObCAqHqxY_@mail.gmail.com>
-References: <AANLkTik_rO_+az5kE=yhfXK1uUO3v0RKdcO2hzFBcZym@mail.gmail.com> 
-	<AANLkTi=P=RsToSor=giC+dgV24bPj7KJ3eRV1M5a+iuD@mail.gmail.com> 
-	<AANLkTi=pk4oXz84kWbHEzTUiWkTV5P4P9mTwzQbJG865@mail.gmail.com> 
-	<AANLkTikwVfymGB8oEQUN=1LMWoif22p316mm=PzSxQwa@mail.gmail.com> 
-	<4C61B737.50108@dbservice.com> <AANLkTimK_ounhk1Qou02V_3+JjpY9Y5ZO3OO2uRn6A7k@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] git-notes: Run partial expensive test everywhere
+Date: Tue, 10 Aug 2010 21:00:11 +0000
+Message-ID: <AANLkTikO6_cBBywSdvSdpWNO8OgSzmp9EB-xQ7Y_s4qf@mail.gmail.com>
+References: <1281470164-27008-1-git-send-email-avarab@gmail.com>
+	<AANLkTim2tozO31HKLwxi6kWyZKYMd9egDhS5U_gb5OvZ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sultan Shakir <sshakirflhosp@gmail.com>, git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 22:57:47 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 10 23:00:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OivtJ-0004Ms-08
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 22:57:45 +0200
+	id 1Oivvn-0005hZ-9j
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 23:00:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757986Ab0HJU53 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 16:57:29 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:39767 "EHLO
+	id S1757979Ab0HJVAO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 17:00:14 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:34522 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757718Ab0HJU52 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 16:57:28 -0400
-Received: by fxm13 with SMTP id 13so985142fxm.19
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 13:57:27 -0700 (PDT)
+	with ESMTP id S1757718Ab0HJVAN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 17:00:13 -0400
+Received: by fxm13 with SMTP id 13so986709fxm.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 14:00:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=pJhi7vW7CbxXjNI5xx5dm+ml4efqJNCk2cXpqA5ym5s=;
-        b=u7lpkmfVFDAmCe0Dy5cGgEcnxPFK5kfG5Fvv43H3fWOWh2pQJHLidK2rY92nmpfx/p
-         Hl29GHPd+e/742pc3/qn1pts+13p4PdzWd/IsP9aa832/GN7p28L/sL6IBgmBX8kdz2D
-         xJMIccviE7isNMTEptzy8MIG5t9PR6LmcVNS4=
+        bh=YW50Ac4U21Kq8ZEmZOw6KpWS6NSAfvKR/yrWUyvBJlk=;
+        b=EjtJHcrQU1uu77BZbVp9jiMLsV/ehMnLyIIeUxtMl7Gu1r0NBbbbC6r5ijTkMPL49Q
+         XPajesdUm/IVbQi+zlUhJsOZ6XZpPezsbJyX2TeRx5TcTBM91Wk/0Hs5/UpoW3UbxJGu
+         koO5u8qdr1gwgGapf0yX9p5brPHmgJ9c6jVgw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=cVjd9EFsws1qYPOfhgEN6yTcypbi3I4iJy8jrN9nN7BCm4S5QXm8HyTcElNTABmlLx
-         8eS+8+WssMaXL3VEfHDRZc0urhP/BJfLNue6jehWSuHIVrqB2y9uVWLXiOGFMwksYc5O
-         YaxOZDw5yjxf8U9vb3QL95qBlI6DWMA87oX54=
-Received: by 10.239.134.2 with SMTP id 2mr897361hbx.201.1281473847223; Tue, 10 
-	Aug 2010 13:57:27 -0700 (PDT)
-Received: by 10.239.186.139 with HTTP; Tue, 10 Aug 2010 13:56:57 -0700 (PDT)
-In-Reply-To: <AANLkTimK_ounhk1Qou02V_3+JjpY9Y5ZO3OO2uRn6A7k@mail.gmail.com>
+        b=aDtWxsAKgUfRNEWYqaxrQSV/xll4EyA7zbFLevbUW9L0rE5hqy35qDG4JYCR68fbxf
+         uMqN0tg2TOVSrKoqhXmDvOiv1D8bba/uA3ksRUyS0kWjvz8GKJ+QSSXddAS4QhB44/r4
+         UkmQjuIWlanqFpVzIRB/ESsDEeYFM2OZWlPy0=
+Received: by 10.223.122.146 with SMTP id l18mr18812405far.82.1281474011962; 
+	Tue, 10 Aug 2010 14:00:11 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Tue, 10 Aug 2010 14:00:11 -0700 (PDT)
+In-Reply-To: <AANLkTim2tozO31HKLwxi6kWyZKYMd9egDhS5U_gb5OvZ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153159>
 
-On Tue, Aug 10, 2010 at 15:47, Michael Witten <mfwitten@gmail.com> wrot=
-e:
-> On Tue, Aug 10, 2010 at 15:31, Tomas Carnecky <tom@dbservice.com> wro=
-te:
->> If the documentation is generated as part of the build, then there i=
-s no
->> reason to have it part of the history - you can always rebuild it fr=
-om
->> the source. For the same reason you don't put compiled source into g=
-it.
+On Tue, Aug 10, 2010 at 20:29, Sverre Rabbelier <srabbelier@gmail.com> =
+wrote:
+> Heya,
 >
-> Well, theoretically.
+> On Tue, Aug 10, 2010 at 14:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
+ <avarab@gmail.com> wrote:
+>> The git-notes expensive timing test is only expensive because it
+>> either did 1k iterations or nothing. Change it to do 10 by default,
+>> with an option to run the expensive version with the old
+>> GIT_NOTES_TIMING_TESTS=3DZomgYesPlease variable.
 >
-> According to:
->
-> =C2=A0http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob_plain;f=3DMaint=
-Notes;hb=3Dtodo
->
-> the git project's repository itself tracks generated documentation fo=
-r
-> practical reasons:
->
-> =C2=A0The "html" and "man" [branches] are
-> =C2=A0autogenerated documentation from the
-> =C2=A0tip of the "master" branch; the tip
-> =C2=A0of "html" is extracted to be visible
-> =C2=A0at kernel.org at:
->
-> =C2=A0 =C2=A0http://www.kernel.org/pub/software/scm/git/docs/
->
+> Nice, why 10 though? Any motivation for that particular value?
 
-I should add that generating documentation is time consuming and often
-requires brittle software; there's a lot to gain by having one system
-produce the same output for virtually everyone else.
+The old version had "for count in 10 100 1000 10000; do". Mine has 10
+as non-expensive, and "for count in 100 1000 10000; do" as expensive.
+
+I.e. I'm running the first test batch from the old tests.
+
+I have no idea whether it actually needs to run 10..10k times, I
+didn't try to grok the actual test code.
+
+>> The old version would also mysteriously fail on systems without
+>> /usr/bin/time, there's now a check for that using the test
+>> prerequisite facility.
+>
+> Should this patch be split up?
+
+It all touched the same bits, it'd be nastier to split it up IMO.
