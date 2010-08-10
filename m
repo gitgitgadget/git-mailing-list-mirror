@@ -1,72 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Johannes misbehavior in the wiki, and a request for admin rights
- 	(was: wiki "abuse")
-Date: Tue, 10 Aug 2010 15:48:55 +0200
-Message-ID: <4C6158C7.3060003@drmicha.warpmail.net>
-References: <AANLkTinYqFMZe=ahgyaW-cYJXuBanvCU1A6AYVcVcrPB@mail.gmail.com> 	<4C613DFC.40006@drmicha.warpmail.net> <20100810123349.GA3921@kytes> <AANLkTik_chgd7iPE1p9iYSP5UuWDu4f0C5-F+faDV5Ed@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Black smoke from git rebase -i exec
+Date: Tue, 10 Aug 2010 13:57:05 +0000
+Message-ID: <AANLkTimgRu=nRFpO+QW758SWbQ+Vs+8gtpAc4N-cNWr6@mail.gmail.com>
+References: <AANLkTikCgSNRipTbjiL+uPOqCL3WXwn08_QV=UJ7EwvT@mail.gmail.com>
+	<vpqlj8ezizq.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	John Hawley <warthog9@kernel.org>, git <git@vger.kernel.org>,
-	Daniele Segato <daniele.bilug@gmail.com>,
-	Valeo de Vries <valeo@valeo.co.cc>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: "Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
-X-From: git-owner@vger.kernel.org Tue Aug 10 15:53:47 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Aug 10 15:57:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OipGy-0002av-M2
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 15:53:45 +0200
+	id 1OipKN-0004EQ-8r
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 15:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757727Ab0HJNso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 09:48:44 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33083 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757717Ab0HJNsm (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 09:48:42 -0400
-Received: from compute2.internal (compute2.internal [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 33B39412;
-	Tue, 10 Aug 2010 09:48:41 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 10 Aug 2010 09:48:42 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=BOCJqteGOMOJbFvbeXELJAwxwrE=; b=gwRdZPzi93036m6g/DSgxGcLQlcRSdYS6coXZ74Fx1I/yUvBT27kla6mDb786SY9LmAagHkx603Phc51mIVEpws1R7Xwo8u6CMmkeLS4r1/o28XdeokSjPWFW7PC7oF9IYI0PylGR1Toi5wTxKmeJKPJsuLwDHgNUwsV0l8yDbU=
-X-Sasl-enc: g2L/agnZlqMBACMFVHbsHIBMfCGinmH4nvWMBJ3vCPWo 1281448121
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id B94135E05FC;
-	Tue, 10 Aug 2010 09:48:39 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9pre) Gecko/20100806 Lightning/1.0b2pre Lanikai/3.1.2
-In-Reply-To: <AANLkTik_chgd7iPE1p9iYSP5UuWDu4f0C5-F+faDV5Ed@mail.gmail.com>
+	id S1757670Ab0HJN5K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 09:57:10 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52976 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753439Ab0HJN5H convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 09:57:07 -0400
+Received: by fxm13 with SMTP id 13so664554fxm.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 06:57:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Y8Q0w5scAIoiXPjGMlUyVfdC8fkryFdsfatlUGgflC0=;
+        b=Csm1m4unrB83ADw2L9g817KHRmSAznYzUjD0cFHpj+ko8GbVG3e3e2lKikurBHSjLi
+         zDVfoOpW3Gf1L3RDRJHik+EOfmZYnqHJ5y64NtBEI1qsD9FKsyrKd9eFUczjIyFYJdgo
+         NIgIP68/WXo0nAsRDgy+HLsUnehdqNYAPwuEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b4J1pgJP7DBZ5uPtO6WcyclT7gtXtBeNKbeP28q3EVSr0sln/+WxBfMWtxHHJIPIhG
+         0FJzDsMqvB7UF74Y9xJRPSe8KS472yRUh6hvkkrBVakjl4VmigruqIlJN5rgRNzwvX1W
+         0wYoeJsrQYzlXA2AcuRVCtJE44AhyRsWA/yok=
+Received: by 10.223.117.194 with SMTP id s2mr18216572faq.57.1281448625466; 
+	Tue, 10 Aug 2010 06:57:05 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Tue, 10 Aug 2010 06:57:05 -0700 (PDT)
+In-Reply-To: <vpqlj8ezizq.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153107>
 
-Amir E. Aharoni venit, vidit, dixit 10.08.2010 15:44:
-> 2010/8/10 Ramkumar Ramachandra <artagnon@gmail.com>:
->> Amir: We as a community are sorry that you've been treated
->> unfairly. Thanks for letting us know; we'll make sure that this
->> doesn't happen with others in future.
-> 
-> Johannes has just unblocked me and apologized.
-> 
-> I, on my behalf, sincerely apologize for the inappropriate language
-> that i used on that user page that i created. I was trying to vent
-> some frustration and i have clearly done it in the wrong place.
-> 
-> I believe that i have positive things to contribute to the Git wiki
-> and to the Git community in general and that this incident will be
-> soon forgotten.
-> 
+On Tue, Aug 10, 2010 at 13:37, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> =C4=98var Arnfj=C3=B6r=C5=A1 Bjarmason <avarab@gmail.com> writes:
+>
+>> There's some black smoke in pu after the git rebase -i series was
+>> applied: http://smoke.git.nix.is/app/projects/report_details/14
+>
+> Strange, I can't reproduce this on my box (tried on RHEL x86_64 and
+> Debian i686).
 
-Thanks, Amir & Dscho!
+Hi. The issue appears to be that there's some non-POSIX code in your
+patch (but I didn't check what). The test works for me with bash, but
+fails with dash (which is the Debian testing /bin/sh).
 
-Now back to work :)
-
-Michael
+Can you try with dash or some other non-bash POSIX shell and see if it
+fails?
