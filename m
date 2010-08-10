@@ -1,102 +1,81 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Johannes misbehavior in the wiki, and a request for admin rights
- (was: wiki "abuse")
-Date: Tue, 10 Aug 2010 10:49:33 -0400
-Message-ID: <AANLkTinktAhPz_zp6Hf7yanxbn4FougPZwQj9msAXUvk@mail.gmail.com>
-References: <AANLkTinYqFMZe=ahgyaW-cYJXuBanvCU1A6AYVcVcrPB@mail.gmail.com>
- <4C613DFC.40006@drmicha.warpmail.net> <20100810123349.GA3921@kytes>
- <AANLkTi=4fhCMPGvO_zd_hmwXSG3wckJA8vTYwWFMEstx@mail.gmail.com> <AANLkTini7xKkncXxjv=p32PupR4W2FP3Rqm2atnsV1Q_@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Black smoke from git rebase -i exec
+Date: Tue, 10 Aug 2010 17:05:11 +0200
+Message-ID: <vpq62ziv788.fsf@bauges.imag.fr>
+References: <AANLkTikCgSNRipTbjiL+uPOqCL3WXwn08_QV=UJ7EwvT@mail.gmail.com>
+	<vpqlj8ezizq.fsf@bauges.imag.fr>
+	<AANLkTimgRu=nRFpO+QW758SWbQ+Vs+8gtpAc4N-cNWr6@mail.gmail.com>
+	<4C615E5E.3090301@viscovery.net>
+	<AANLkTikVB6VoSy3=XVHqGsA7xH39MgDwh2hDnX89enfM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	John Hawley <warthog9@kernel.org>, git <git@vger.kernel.org>,
-	Daniele Segato <daniele.bilug@gmail.com>,
-	Valeo de Vries <valeo@valeo.co.cc>,
-	"Amir E. Aharoni" <amir.aharoni@mail.huji.ac.il>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 16:50:03 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	gitster@pobox.com
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 10 17:06:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oiq9S-00087F-KS
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 16:50:02 +0200
+	id 1OiqP4-0000Rt-Mg
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 17:06:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757790Ab0HJOt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 10:49:56 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:60543 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757762Ab0HJOty (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 10:49:54 -0400
-Received: by wwj40 with SMTP id 40so12957255wwj.1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 07:49:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=nrCPy5GbuWF9qIy3AwZ7QiTBI3m8XJRmxdGABqp9ExA=;
-        b=SWr4fI+ObF3oFFyn+pa0YEHFXJzewzoIuWeTuHI7WXpX7dUZiMR7w1dQ3ElCOX9NJ5
-         sQPL9glC0+IFhK8ShbsrGtol3sYrpPWACe9WCDTywM3QCF7YeCTRFsIy2/tJIlglsh5I
-         5+c8XgnxcMg4nVYUUmBxsJHTEyHuN8xv8iBVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=oecZkN/nFdm8BHnm4o03qudJqMKD6V0rmkTrs5OdcDyPj0XV9Npchhz6NavhXxs3pO
-         yBd9GQFFqANxtxM8zAGL98C7cM1rhDHZY/4MPkc+Y2AMgc6KDcLvpQ8ggJYH0GhpNRLj
-         EuLEayLNx7WmIPjN+E9tDE2LRtCyl7yE4v+Mc=
-Received: by 10.216.234.11 with SMTP id r11mr4055275weq.85.1281451793239; Tue,
- 10 Aug 2010 07:49:53 -0700 (PDT)
-Received: by 10.216.235.202 with HTTP; Tue, 10 Aug 2010 07:49:33 -0700 (PDT)
-In-Reply-To: <AANLkTini7xKkncXxjv=p32PupR4W2FP3Rqm2atnsV1Q_@mail.gmail.com>
+	id S932176Ab0HJPGG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 11:06:06 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58906 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932129Ab0HJPGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 11:06:04 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7AEsMK4007376
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 10 Aug 2010 16:54:22 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OiqO7-0002K3-Lk; Tue, 10 Aug 2010 17:05:11 +0200
+In-Reply-To: <AANLkTikVB6VoSy3=XVHqGsA7xH39MgDwh2hDnX89enfM@mail.gmail.com>
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue\, 10
+ Aug 2010 14\:16\:38 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 10 Aug 2010 16:54:23 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o7AEsMK4007376
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1282056867.79179@jFCDI5yaE7S4qSEtU8VABQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153116>
 
-On Tue, Aug 10, 2010 at 10:35 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Tue, Aug 10, 2010 at 09:16, Felipe Contreras <felipe.contreras@gmail.com> wrote:
->> I don't think it's a single incident:
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+
+> On Tue, Aug 10, 2010 at 14:12, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+>> You cannot apply single-command-export if the command is a shell fun=
+ction.
+>> You must rewrite this as:
+>>
+>> =A0 =A0 =A0 =A0(
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0export FAKE_LINES=3D"..." &&
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0test_must_fail git rebase ....
+>> =A0 =A0 =A0 =A0) &&
 >
-> I do. Dscho has been keeping the old wiki clean for I don't know how
-> long. He has done the same for the new wiki. I am confident that those
-> other bans are for good reasons.
+> Except that's not portable either, it should be:
+>
+>     FAKE_LINES=3D"..." &&
+>     export FAKE_LINES &&
+> 	test_must_fail git rebase ...
+>
+> See the other examples in t3404-rebase-interactive.sh
 
-I also find the subject line distasteful; there is no evidence of
-misbehaviour, and the subject line implies that there is.  I'm
-hesitant to change the subject line and break the thread, however.
+Yes, I had found this. New patch comming soon.
 
-However, the best advice I ever got about trust is: "Trust, but verify."
-
-Right now, whether or not Johannes has done the right thing has been
-called into question and is resulting in such an angry thread *only*
-because it's impossible to verify what has actually been done.  When
-people can verify what happened - which in this case just means
-looking at the deleted pages - then trust is possible and easy.
-
-Most social problems come from the social environment, not individual
-people's actions.  In this case, the social environment (wiki
-settings) have been configured explicitly to cast doubt on Johannes.
-It was an accident waiting to happen, and it finally happened.
-
-The proposal to add a second admin to the wiki - or at least make
-deleted pages visible to one other person - is not about Johannes.
-It's about creating a healthy social environment that allows people to
-relieve their suspicion before they let it get out of control.
-
-So far, all the counterarguments have been of the form, "But Johannes
-is a good guy, so we don't need to check on him."  That's an invalid
-argument, because the real proposal (modulo the stupid subject line of
-this thread) is not about Johannes at all.  Checking on him isn't
-about preventing him from being an idiot, it's about preventing
-everyone else from being an idiot.  Which I think we can all agree at
-this point, would have been nice.
-
-Have fun,
-
-Avery
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
