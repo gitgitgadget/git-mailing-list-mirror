@@ -1,99 +1,56 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC 3/3] read-tree: stop leaking tree objects
-Date: Mon, 9 Aug 2010 22:33:44 -0500
-Message-ID: <20100810033344.GD2386@burratino>
-References: <wes62zknmki.fsf@kanis.fr>
- <7v1va760ip.fsf@alter.siamese.dyndns.org>
- <20100810032647.GA2386@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Tonight's pushout...
+Date: Mon, 09 Aug 2010 22:35:33 -0700
+Message-ID: <7vd3tr3u8q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ivan Kanis <expire-by-2010-08-14@kanis.fr>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 05:35:18 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 10 07:36:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OifcU-0001IU-Bl
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 05:35:18 +0200
+	id 1OihVc-0005n4-N1
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 07:36:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757185Ab0HJDfO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 9 Aug 2010 23:35:14 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:64070 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756506Ab0HJDfM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 9 Aug 2010 23:35:12 -0400
-Received: by gxk23 with SMTP id 23so3634710gxk.19
-        for <git@vger.kernel.org>; Mon, 09 Aug 2010 20:35:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=AXEKHu00meqgyE7UjWlufiIRb9WRBSWv0GoXXdluY90=;
-        b=RdXnCi2hiVmgZ8C7TyWxtVFLw5wMotjd2t3kM4aZL7JzqKpp1QJMnikQ+Ur38cun4g
-         qdriYw74Ztcx/N6l5tVc0l7mYp+54h8OQtd2/qXGuWqdk90TqXV1+tPBLVB1bjUEn45P
-         JC65ZCo3OiQ76Tyg6MexH6x5hs1z2thC0G1dU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ju4fenp+iXgrnOx8OtE2iX2FSZ0wI7NBBEGL+oPfiTiBBzBpmq2eT+zBCmgoDQYmpJ
-         AcIBbETZY8DTtU869JgVaSmmjg8QReLL9B+pA/M2qzDC8PJ60a4CdmwYotVFjFuGkisT
-         B7KSW7uhKR/ttsJDgsxWCvc2hOz6ISMnL+6/8=
-Received: by 10.101.207.21 with SMTP id j21mr18749634anq.269.1281411312129;
-        Mon, 09 Aug 2010 20:35:12 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id c6sm9641113anj.11.2010.08.09.20.35.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 09 Aug 2010 20:35:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100810032647.GA2386@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751963Ab0HJFgQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 01:36:16 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60132 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751624Ab0HJFgP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 01:36:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D1D22CC329;
+	Tue, 10 Aug 2010 01:36:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=HRxj
+	7Cba2A4ulJEK79vI905oGQc=; b=Wqsy1wu5FXIhEJgPhR4uB1CQE58O3Y824ror
+	X7DPMWwgbOtf36pVPvAANAoGJnqj7NJMEPWenLGpvBlmZPAUJwskLgXu0LJw+8BH
+	hbfrF+Vsgb5x2QqjRns3tOISRKWxvAjZDcBrzLiR4YkJ4nnV1OOQH/MndT4WvEXa
+	uNfQciQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=chF
+	dnm7vo7lLE4Mj3bhaAbsKkK1KC4HwhhS0JPiGmdoROhwALlNZIctJyA0vPaUeNJU
+	gpkR+73KvPhvV+6VkbP0vM1zeuphXufyYKqUuCWwo8vRIY+ZheQCoKQKs/13YGbb
+	Wi8+2LogIYjdp5zpBinIZ5KcLTfJYMXg1lvTVsnk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C519CC328;
+	Tue, 10 Aug 2010 01:35:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 44423CC326; Tue, 10 Aug
+ 2010 01:35:34 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 26B21E60-A441-11DF-A928-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153076>
 
-The underlying problem is that the fill_tree_descriptor()
-API is easy to misuse, and this patch does not fix that.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- unpack-trees.c |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 8cf0da3..f561d88 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -329,6 +329,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask, unsigned long
- {
- 	int i, ret, bottom;
- 	struct tree_desc t[MAX_UNPACK_TREES];
-+	void *buf[MAX_UNPACK_TREES];
- 	struct traverse_info newinfo;
- 	struct name_entry *p;
- 
-@@ -346,12 +347,16 @@ static int traverse_trees_recursive(int n, unsigned long dirmask, unsigned long
- 		const unsigned char *sha1 = NULL;
- 		if (dirmask & 1)
- 			sha1 = names[i].sha1;
--		fill_tree_descriptor(t+i, sha1);
-+		buf[i] = fill_tree_descriptor(t+i, sha1);
- 	}
- 
- 	bottom = switch_cache_bottom(&newinfo);
- 	ret = traverse_trees(n, t, &newinfo);
- 	restore_cache_bottom(&newinfo, bottom);
-+
-+	for (i = 0; i < n; i++)
-+		free(buf[i]);
-+
- 	return ret;
- }
- 
--- 
-1.7.2.1.544.ga752d.dirty
+... contains 'pu' which is known to be broken (the merge at the tip
+doesn't even have a correct merge resolution).  I am a bit under the
+weather (and on antibiotics) and am lacking concentration right now.  but
+I just wanted to push out the tips of topic branches out to show which
+ones are already queued to be considered.
