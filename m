@@ -1,74 +1,83 @@
-From: Ted Ts'o <tytso@mit.edu>
-Subject: Re: wiki "abuse"
-Date: Tue, 10 Aug 2010 12:07:33 -0400
-Message-ID: <20100810160733.GL3635@thunk.org>
-References: <AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com>
- <AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>
- <4C606E1B.6020800@lsrfire.ath.cx>
- <AANLkTikNDdi1gDaoWdHsiUPLW2CtZMP0J2c94DpLA=AV@mail.gmail.com>
- <AANLkTi=dhmxBpTehFFMZGnbTVccbMJLmzKy2V0uj9R6r@mail.gmail.com>
- <AANLkTi=dGWaRa3HR4nb6Ka1+0CovrBMnyZts5d8RZW1c@mail.gmail.com>
- <AANLkTimr8vDeyRLLjM+J2Z1zmdiXjwZEw2JAXeXvzNt6@mail.gmail.com>
- <alpine.DEB.1.00.1008100051440.2983@bonsai2>
- <4C608CB2.8000602@gmail.com>
- <AANLkTikbOjy-8ViJnUJ1cg4Zm-XQyhP4e_hW8u1xxbDU@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [Patch] Use a default for a bad env config file variable
+Date: Tue, 10 Aug 2010 18:08:21 +0200
+Message-ID: <4C617975.8000501@drmicha.warpmail.net>
+References: <AANLkTi=42V8=26oEwcNOHubuK+VAf-QaYnvCLAKQ0xtg@mail.gmail.com>	<vpq4of2scen.fsf@bauges.imag.fr> <AANLkTi=UCJa9uT5i9TRB9hGsH1D8b9DgB49TPM5k1htQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitzilla@gmail.com,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: John Tapsell <johnflux@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 18:07:51 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: James <purpleidea@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 10 18:08:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OirMl-0003AX-5i
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 18:07:51 +0200
+	id 1OirN7-0003JY-PJ
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 18:08:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932298Ab0HJQHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 12:07:46 -0400
-Received: from thunk.org ([69.25.196.29]:58630 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932149Ab0HJQHo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 12:07:44 -0400
-Received: from root (helo=tytso-glaptop)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1OirMT-0004dQ-Jf; Tue, 10 Aug 2010 12:07:33 -0400
-Received: from tytso by tytso-glaptop with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1OirMT-0003lt-Hp; Tue, 10 Aug 2010 12:07:33 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTikbOjy-8ViJnUJ1cg4Zm-XQyhP4e_hW8u1xxbDU@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
+	id S932149Ab0HJQIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 12:08:10 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50409 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932331Ab0HJQIH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 12:08:07 -0400
+Received: from compute1.internal (compute1.internal [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 534A24E6;
+	Tue, 10 Aug 2010 12:08:06 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 10 Aug 2010 12:08:06 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=LnzGjCYaakZ0Dnw8y3k3L0MPtKc=; b=j3Q0uqNOcb9bG7dsJuShjg9pVDTMU2v0K65O2MJUxKAbUruMsZBv1rzafWKIXBf/LdwHbQZ+PEBxHGOoSAQPxzdv3dsy4ko8XwfSnqmU1NGyrhrZ357xcGD4cI1YCNtigd///a+1GKErgeSQ0O/D1eUsjkZc8e0FJSGqPHecvZw=
+X-Sasl-enc: UilBKzohUW+hQNJwhUfDq8HEguhfQFz2U7tmFexp8ibM 1281456486
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B8BAC400C90;
+	Tue, 10 Aug 2010 12:08:05 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9pre) Gecko/20100806 Lightning/1.0b2pre Lanikai/3.1.2
+In-Reply-To: <AANLkTi=UCJa9uT5i9TRB9hGsH1D8b9DgB49TPM5k1htQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153127>
 
-On Tue, Aug 10, 2010 at 07:46:29PM +0900, John Tapsell wrote:
+James venit, vidit, dixit 10.08.2010 17:54:
+> Sorry about that,
+> I guess I had only read the README.
+> Hope this is better:
 > 
-> Amir has shown nothing but ultra politeness throughout this thread,
-> and has even apologized to Johannes (though I do not see why), and in
-> return he has been attacked.
+> From d29adf8c788b8a747bfd38dd7e10f684de9aa8e9 Mon Sep 17 00:00:00 2001
+> From: James Shubin <purpleidea@gmail.com>
+> Date: Tue, 10 Aug 2010 10:30:22 -0400
+> Subject: [PATCH] Use a default for a bad env config file variable.
 
-Have you read the rest of his thread?  The pointer that he was trying
-to put on his user page points to contect that isn't all that polite,
-and definitely trollish.
+Now, make that commit subject
 
-Johannes probably would have avoided most of this if he had used a
-custom reason, "user attempt to put pointer to an anti-git trollish
-screed; banning as a troll".
+gitweb: Use a default for a bad env config file variable
 
-					- Ted
+(i.e. insert "gitweb: ", delete the stop) and you're good to go ;)
+
+Michael
+
+> 
+> 
+> Signed-off-by: James Shubin <purpleidea@gmail.com>
+> ---
+>  gitweb/gitweb.perl |    4 ++++
+>  1 files changed, 4 insertions(+), 0 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 4efeebc..43294e1 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -605,6 +605,10 @@ sub evaluate_gitweb_config {
+>  	} elsif (-e $GITWEB_CONFIG_SYSTEM) {
+>  		do $GITWEB_CONFIG_SYSTEM;
+>  		die $@ if $@;
+> +	# if config file from env is missing, then try the default anyways
+> +	} elsif (-e "++GITWEB_CONFIG_SYSTEM++") {
+> +		do "++GITWEB_CONFIG_SYSTEM++";
+> +		die $@ if $@;
+>  	}
+>  }
+> 
