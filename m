@@ -1,100 +1,92 @@
-From: Chris Mear <chrismear@gmail.com>
-Subject: Re: workflow for working on feature branches and incrementally 
-	incorporating "master" changes
-Date: Tue, 10 Aug 2010 23:05:16 +0100
-Message-ID: <AANLkTi=vscGSErrV_6xBqmryc1hFqi4bjmyOTVgTLNsS@mail.gmail.com>
-References: <AANLkTi=h2MbSKmQk9p6w44WORAa8XzkpF0nBXKOgJ4T1@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Proposal for new Git Wiki admin
+Date: Tue, 10 Aug 2010 15:06:18 -0700 (PDT)
+Message-ID: <m3y6ce2kdz.fsf@localhost.localdomain>
+References: <20100810162602.GG3921@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Bradley Wagner <bradley.wagner@hannonhill.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 00:06:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 00:06:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiwyC-0003TE-H2
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 00:06:52 +0200
+	id 1OiwyE-0003TE-VE
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 00:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932828Ab0HJWFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 18:05:30 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:35933 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932719Ab0HJWFR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 18:05:17 -0400
-Received: by qyk7 with SMTP id 7so7936759qyk.19
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 15:05:16 -0700 (PDT)
+	id S933344Ab0HJWGX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 18:06:23 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43472 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932849Ab0HJWGU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 18:06:20 -0400
+Received: by fxm13 with SMTP id 13so1019141fxm.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 15:06:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=i4ViNIorUpclby5jqq7ANdvhaTzu7AEBhxo2AaxqGPQ=;
-        b=XXlqIvjtaMr5XwAIDHLZ+clFuKWOQeCpB23BBcjc2pk65fiQO2v33zv9ClkVjojNMQ
-         +4F7rWfercgXLupnj3CP2byzZATC3Vd5KMgRBdSTYD4FznSfxpcwHfd//m5wzZJAvJ7z
-         vUUQyi/4d4nAiQoDTxLOKHCIEYj9mwzw36Yi4=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=4ZqVcXrsql6JrtCsbi6eIzPUAp+LQSW/InC24Q7Sf+0=;
+        b=vGt71V9R6GA1zKcrqEbPs7WlfYZA0xSzhlwe5tE5kMUlyQPy9f/8gnc0DXBPvDwLjr
+         62ANtn8noVbwj0d24vOMagUds4p1rG0svzBgrJ7+7vKeJPPDD5CIzWsz4przzM1kzFv3
+         7mHZp2aDnk8lL92+FY1ZHvb958r3JX7Nuer1o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=UCaaGbSqWosOOJbHwiuYEZ5JOdm3TuZri4yWVcYik/eYWeElQsiRsiJMdnUMdxvRjn
-         UANKgD6ugd5WyM3MhD4cAzowTt74ElI3+CE5LIZHdRwcHOvckgqym4PmiyyasvfTjsLd
-         f/x4xZhxXBFbx57G0HrXjFt7+pwtyirKW78Dw=
-Received: by 10.224.37.78 with SMTP id w14mr9909236qad.75.1281477916769; Tue, 
-	10 Aug 2010 15:05:16 -0700 (PDT)
-Received: by 10.229.188.4 with HTTP; Tue, 10 Aug 2010 15:05:16 -0700 (PDT)
-In-Reply-To: <AANLkTi=h2MbSKmQk9p6w44WORAa8XzkpF0nBXKOgJ4T1@mail.gmail.com>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=DOeiScFVF5MitR2PnR9qYUuE4rBKjWCT8U0+TVWhIk6+ig4TReMUS4TbrvOZBIkav4
+         DbXspzdakY5zRYHq6M04D4BWs6RlwayBIoUltpIZe/jGUxBbLz8oxyL8pp4jnUPWot0b
+         G+DedLlHjv9krvnOlRWstT67Zyi4N4m0L8ni0=
+Received: by 10.223.119.136 with SMTP id z8mr18908705faq.63.1281477979290;
+        Tue, 10 Aug 2010 15:06:19 -0700 (PDT)
+Received: from localhost.localdomain (abwr164.neoplus.adsl.tpnet.pl [83.8.241.164])
+        by mx.google.com with ESMTPS id 8sm1030805fav.38.2010.08.10.15.06.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 10 Aug 2010 15:06:18 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o7AM6IF8009196;
+	Wed, 11 Aug 2010 00:06:29 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o7AM604V009179;
+	Wed, 11 Aug 2010 00:06:00 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20100810162602.GG3921@kytes>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153163>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153164>
 
-On 10 August 2010 21:20, Bradley Wagner <bradley.wagner@hannonhill.com> wrote:
-> If you're working on a feature branch by yourself, what is a good
-> workflow for keeping the branch in up-to-date with "master" as you're
-> developing on the feature branch or is this unnecessary? Should you
-> just wait until you want to officially integrate the feature branch
-> into the "master"?
->
-> We were doing:
->
-> commit to local feature branch
-> push to remote feature branch
-> ... repeat....
-> rebase from master (occasionally)
-> push to remote
->
-> but at this point the branches have diverged.
->
-> We're coming at this from SVN, so we might just be thinking about this
-> the wrong way.
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-Git's rebase feature is a *very* nice, clean way to keep a feature
-branch up to date with the master branch. But, as you've seen,
-rebasing can make things a bit confusing you need to push that feature
-branch to other people.
+> Avery has graciously explained why we need another Git Wiki
+> administrator here [1]. I'm starting this new thread so that people
+> can discuss the idea with the list and the existing admin (Johannes)
+> and finally make someone an admin. In the worst case when nobody is
+> willing to become an admin, I can step in- I'll consider that my
+> responsibility since I started the thread.
+> 
+> Please tell us if you're willing/ capable of being a Git Wiki admin
+> with Johannes. Also, feel free to nominate/ suggest people for the
+> post.
 
-I've found that a good rule of thumb is to never rewrite (i.e. rebase)
-branches that have already been shared with others. Of course there's
-nothing impossible or fundamentally bad about pushing rewritten
-branches like this. But, unless people are expecting it to happen and
-know how to deal with it when they pull, it can cause confusion,
-particularly on teams that are just getting acquainted with Git.
+I propose myself.
 
-Instead, if a feature branch is going to be shared with others, and
-it's going to be long-lived, then we keep it up-to-date by merging
-from master every now and again, rather than rebasing.
+I had (some) admin rights on old (former) MoinMoin based git wiki at
+http://git.or.cz/gitwiki/ (you can see it in history).  I am not sure
+if I would have that much time nowadays for spam preventing, but
+I would try.
 
-On the other hand, if I'm working on a feature branch by myself, and I
-haven't shared it with anyone yet, I frequently rebase against master
-to keep things clean. I also use interactive rebase a lot to tidy up
-commits. But as soon as I've shared my branch with the team, I no
-longer do any rebasing/rewriting.
-
-If there are Git wizards on your team, it is true that they may find
-this an inflexible way of working. But I've found it to be a good
-compromise between ease of pulling and maintaining a clean commit
-history.
-
-Chris
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
