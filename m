@@ -1,109 +1,133 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] t/lib-git-svn.sh: use $PERL_PATH for perl, not perl from $PATH
-Date: Tue, 10 Aug 2010 12:14:25 +0000
-Message-ID: <1281442465-27750-1-git-send-email-avarab@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Johannes misbehavior in the wiki, and a request for admin rights 
+	(was: wiki "abuse")
+Date: Tue, 10 Aug 2010 15:31:30 +0300
+Message-ID: <AANLkTimqCKVEeDqUFe0mF+hHoBEPhyGuRzvX2OMJvfkA@mail.gmail.com>
+References: <AANLkTinYqFMZe=ahgyaW-cYJXuBanvCU1A6AYVcVcrPB@mail.gmail.com>
+	<4C613DFC.40006@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sam Vilain <sam.vilain@catalyst.net.nz>,
-	"Philippe Bruhat (BooK)" <book@cpan.org>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 10 14:14:58 2010
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	John Hawley <warthog9@kernel.org>, git <git@vger.kernel.org>,
+	Daniele Segato <daniele.bilug@gmail.com>,
+	Valeo de Vries <valeo@valeo.co.cc>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Aug 10 14:31:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OinjM-0004w4-3a
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 14:14:56 +0200
+	id 1OinzW-0004ZL-W9
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 14:31:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757284Ab0HJMOv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 08:14:51 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:60518 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752490Ab0HJMOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 08:14:50 -0400
-Received: by wwj40 with SMTP id 40so12787593wwj.1
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 05:14:49 -0700 (PDT)
+	id S1757559Ab0HJMbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 08:31:34 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:52419 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753589Ab0HJMbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 08:31:32 -0400
+Received: by bwz3 with SMTP id 3so1843863bwz.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 05:31:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=P8/0VJ8akgvupuKKsDWsS+Jnjfg/4zK5l4Q4Z8ttFWo=;
-        b=amvIqgT6x0fKmkxvrnQdRL95IM3RxskrSRS7FKw8p6LInPT8MmgcqKwtDr/BHg9dce
-         KSiISgfukOwD3moXDe5KcLi/EQjKmLIBfNRRI9I76csqGL5HxDR6YNCIBeO402orHm9p
-         wnbbF+JBsunO1XzyuHCNf18wIT01hZqxuy1HE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=7piWReoemrhsxzWf/2jkJLRMx4AvOfItxutArF3UKfE=;
+        b=SJ45wT8p3JGZBEoFNRVs1b5niWb1bW+pevXf+kCWjSB9oKvTZfCJ3e043kdwOQP+pG
+         2n/tcnDLCf9bxa2b6gdqywjqrAQJeaO3qqt2j7qumzQLNAsDbEPRrk/i9Q1kdF2y06dC
+         TqwprezoM3I2JQguClv90tC6y9AbAv85UBgJM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=eMp7Xrt6M11H+NOTm2iQvXjhFsKsYm1/b4KivSYkGpwp8tT02ZyGCo7CVL8GQEvkZN
-         /c1icnzKKJptiNiwlpp3BQCzCkwPSjzhYjFtbO7iwPrCYURhAFGtzWCGVhih6pHjpZw3
-         eUXckNbv3+zI5PccDOMLajawGNM/Dilht99/0=
-Received: by 10.216.235.106 with SMTP id t84mr9596342weq.46.1281442488982;
-        Tue, 10 Aug 2010 05:14:48 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id h37sm3264190wej.23.2010.08.10.05.14.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 10 Aug 2010 05:14:47 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=utzUfeieUCDIR+ZqVdzSlXlEoqxa7siGVY183ElnOj/okQf1giPjWnKikMRzUK7c/H
+         YSD06L4xnK9ANLUC/+JIYpmwnkWzAo37Wz6CfHKD3QfRc5wz4mhZTLlcZHIySBA3tww3
+         //DObaxPRTuTnyyFHhr69VKy044JCvf5b3L1k=
+Received: by 10.204.161.205 with SMTP id s13mr3977114bkx.148.1281443490913; 
+	Tue, 10 Aug 2010 05:31:30 -0700 (PDT)
+Received: by 10.204.122.143 with HTTP; Tue, 10 Aug 2010 05:31:30 -0700 (PDT)
+In-Reply-To: <4C613DFC.40006@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153097>
 
-Change the git-svn tests to use $PERL_PATH, not the "perl" in $PATH.
+On Tue, Aug 10, 2010 at 2:54 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Oh, pleaaaze, no (on the subject line). No need for more fuel in this topic.
 
-Using perl in $PATH was added by Sam Vilain in v1.6.6-rc0~95^2~3,
-Philippe Bruhat introduced $PERL_PATH to the test suite in
-v1.6.6-rc0~9^2, but the lib-git-svn.sh tests weren't updated to use
-the new convention.
+This is a separate topic; IMO we need another admin.
 
-This resulted in the git-svn tests always being skipped on my
-system. My /usr/bin/perl has access to SVN::Core and SVN::Repos, but
-the perl in my $PATH does not.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+> Felipe Contreras venit, vidit, dixit 10.08.2010 12:18:
+>> On Tue, Aug 10, 2010 at 12:09 PM, Johannes Schindelin
+>> <Johannes.Schindelin@gmx.de> wrote:
+>>> As for the accusation that there was no explanation: this is false.
+>>
+>> Where is the evidence that you warned the user _before_ banning him?
 >
----
- t/lib-git-svn.sh |    5 ++---
- 1 files changed, 2 insertions(+), 3 deletions(-)
+> The evidence is that Dscho says so.
+> The counter evidence is that Amir says otherwise.
 
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index c3f6676..92d6d31 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -16,7 +16,6 @@ fi
- GIT_DIR=3D$PWD/.git
- GIT_SVN_DIR=3D$GIT_DIR/svn/refs/remotes/git-svn
- SVN_TREE=3D$GIT_SVN_DIR/svn-tree
--PERL=3D${PERL:-perl}
-=20
- svn >/dev/null 2>&1
- if test $? -ne 1
-@@ -30,7 +29,7 @@ export svnrepo
- svnconf=3D$PWD/svnconf
- export svnconf
-=20
--$PERL -w -e "
-+"$PERL_PATH" -w -e "
- use SVN::Core;
- use SVN::Repos;
- \$SVN::Core::VERSION gt '1.1.0' or exit(42);
-@@ -130,7 +129,7 @@ stop_httpd () {
- }
-=20
- convert_to_rev_db () {
--	$PERL -w -- - "$@" <<\EOF
-+	"$PERL_PATH" -w -- - "$@" <<\EOF
- use strict;
- @ARGV =3D=3D 2 or die "Usage: convert_to_rev_db <input> <output>";
- open my $wr, '+>', $ARGV[1] or die "$!: couldn't open: $ARGV[1]";
---=20
-1.7.1
+That's not evidence in my book.
+
+> Knowing Dscho, I consider an occasional rash of quick-shooting possible;
+> I consider it impossible that he's dishonest with us here.
+>
+> Note that what is an "explanation" to one person may not be one to
+> another one, especially across two language and culture barriers. In
+> particular, my statement about Dscho's credibility does not imply any
+> statement about Amir's.
+
+Note that Johannes is playing with words: "As for the accusation that
+there was no explanation: this is false."; there's a difference
+between explaining why somebody has been banned, and warning somebody
+_before_ banning him. I suggested the latter didn't happen, Johannes
+reluctantly reassured the former.
+
+I'm not interested in begging Johannes for a detailed explanation of
+what happened, that's what the user talk pages are for.
+
+> [...]
+>> I'd like to propose myself as sysop in order to make the wiki more
+>> hospitable.
+> [more detailed proposal cut out]
+>
+> Looking at the history of our wiki I don't see any need to overshoot as
+> a result of this mostly singular incident. It should suffice to
+
+I don't think having more than one admin is overshooting.
+
+> - reactivate Amir's account
+
+Who is going to do that? Johannes apparently already said his last
+words on that topic.
+
+> - make a clear statement about user pages (limit, discourage or disable)
+
+That is a separate topic.
+
+> P.S.: wiki discussions should stay on this list to avoid the type of
+> dis-association which has happened with git-scm.com and whatever names
+> itself "The Git Community Foo".
+
+I disagree.
+
+If the wiki followed the git workflow, then the changes would have to
+be proposed as patches to the mailing list, and a maintainer would
+review and apply them to the wiki. Obviously that's not how wikis
+work; anyone can contribute to the wiki, and such contributions don't
+have to touch the mailing list. The wiki and the mailing list are
+independent.
+
+Similarly, there's no need to cause noise in the mailing list about
+disputes in the wiki. For example: "Why did you revert my change in
+page FooBar?"; the mailing list doesn't know about page FooBar, nor
+the changes that are happening there, so any dispute will catch the
+mailing list out of context.
+
+Moreover there are people interested on the wiki, but not on the mailing list.
+
+-- 
+Felipe Contreras
