@@ -1,86 +1,61 @@
-From: Daniele Segato <daniele.bilug@gmail.com>
-Subject: Re: wiki "abuse"
-Date: Tue, 10 Aug 2010 10:03:25 +0200
-Message-ID: <AANLkTinzyv96Dv1cDS4EE2F35A7PTcesAAx+BL+6wfX+@mail.gmail.com>
-References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
-	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com>
-	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com>
-	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302>
-	<alpine.DEB.1.00.1008091824080.8314@intel-tinevez-2-302>
-	<AANLkTi=12A8tGTgB+DvxuKT+q0fhnTy87EuCvNMrDkkd@mail.gmail.com>
-	<alpine.DEB.1.00.1008092004450.2983@bonsai2>
+From: Thomas Koch <thomas@koch.ro>
+Subject: git notes primer?
+Date: Tue, 10 Aug 2010 10:40:06 +0200
+Message-ID: <201008101040.07172.thomas@koch.ro>
+Reply-To: thomas@koch.ro
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Valeo de Vries <valeo@valeo.co.cc>, git <git@vger.kernel.org>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Aug 10 10:03:39 2010
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 10 10:40:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OijoB-0004GS-2d
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 10:03:39 +0200
+	id 1OikNf-00022k-4j
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 10:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751461Ab0HJIDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 10 Aug 2010 04:03:30 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57914 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751323Ab0HJID1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 04:03:27 -0400
-Received: by vws3 with SMTP id 3so7446703vws.19
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 01:03:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Pot5+BnV5/9uZ2cFeSahy7OTSAFYSsutRyU8pk2O5Ac=;
-        b=KGUlQonbo6UCGRZEhnJSHrO2wB1XfYlWATw3Ev1uTAO+r+wnUbSzUlFzOhjyOMrIU/
-         XAVYCGvHy3KbUiFMNQkgc1bAtEu2EKs0XSRF/1EPV5lEAp70vA/NrHUN1HOhIe6S08wt
-         c1Q0DTmxFRQ/wAJB0QxTYmGB63rOj6vYScVUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=R3IksBc3UC/EN4ksLymEXurSqDrOhpNRt1PQ+FXH4Fdqf87ElWyOdLqVhuATF65d+y
-         w2AZ5E7vTttTxfEqGte5kumPoQh0F7hEnYUeOXrNUv2EavnKPMr0py1hG9AR7b57j2Iq
-         w5Vjz9lcdi4AlE2Gm5Vk0nFMCkp5VEuP3Wid0=
-Received: by 10.220.76.74 with SMTP id b10mr10266422vck.218.1281427406053; 
-	Tue, 10 Aug 2010 01:03:26 -0700 (PDT)
-Received: by 10.220.184.221 with HTTP; Tue, 10 Aug 2010 01:03:25 -0700 (PDT)
-In-Reply-To: <alpine.DEB.1.00.1008092004450.2983@bonsai2>
+	id S1752333Ab0HJIkL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 04:40:11 -0400
+Received: from koch.ro ([88.198.2.104]:42848 "EHLO koch.ro"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751620Ab0HJIkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 04:40:10 -0400
+X-Greylist: delayed 655 seconds by postgrey-1.27 at vger.kernel.org; Tue, 10 Aug 2010 04:40:10 EDT
+Received: from 84-72-85-88.dclient.hispeed.ch ([84.72.85.88] helo=jona.localnet)
+	by koch.ro with esmtpsa (TLS1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <thomas@koch.ro>)
+	id 1OikAh-0008VT-BV
+	for git@vger.kernel.org; Tue, 10 Aug 2010 10:26:55 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.32-4-amd64; KDE/4.4.5; x86_64; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153082>
 
-On Mon, Aug 9, 2010 at 8:08 PM, Johannes Schindelin
-<Johannes.Schindelin@gmx.de> wrote:
-> When in Rome, do as the Romans do. Going about in Rome, spitting
-> everywhere, is rude, even if it is considered polite in your home country.
+Hi,
 
-This is racist.
+I'm working on a patch management system as topgit, but without the 
+complexity:
+http://koch.ro/blog/index.php?/archives/139-tnt-is-not-topgit.html
 
-I'm Italian, I can't say I love my country or my people manners but
-nowhere here "spitting everywhere" is considered polite, nor everybody
-does that.
+Before I continue with my current design, I wanted to have a look at git 
+notes, whether it would provide better mechanisms then tracking my meta 
+informations in a hidden background branch. (Much like pristine-tar does.)
 
-And you missed the point here.
+However I couldn't get a grip on git notes:
 
-Does the wiki allow a personal page?
-If it does then don't bother people who create their personal page and
-don't ban them without asking - contacting them in advance.
+- Is git notes the only command that works on notes?
+- How are notes saved inside GIT?
+- Is git notes and it's implementation stable now?
+- Are there any tutorials on workflows with git notes?
+- What different use cases of git notes do you know?
+- What use cases triggered the development of git notes in the first place?
 
-If you simply don't want personal pages in the wiki then disable them.
+Thank you for your time,
 
-This is the second time I see you acting like that (judging people
-without knowing the background or without letting them explain them).
-The first time was some day ago in a bug report from msysgit which is OT now.
-
-This kind of behavior cut out people who could or are willing to help
-git and the git community like me or Amir.
-
-My 2 cent
-
-Daniele Segato
+Thomas Koch, http://www.koch.ro
