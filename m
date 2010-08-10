@@ -1,139 +1,201 @@
-From: Joshua Shrader <jshrader83@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
 Subject: Re: workflow for working on feature branches and incrementally 
 	incorporating "master" changes
-Date: Tue, 10 Aug 2010 18:26:16 -0400
-Message-ID: <AANLkTim8ALA++TS2SsOCxW50f98Q3ADtJgx4H9cF_=pn@mail.gmail.com>
+Date: Wed, 11 Aug 2010 08:32:19 +1000
+Message-ID: <AANLkTimd1z746ptjJmu_Ytqep1VwR7Hrr6bC4b6kw72w@mail.gmail.com>
 References: <AANLkTi=h2MbSKmQk9p6w44WORAa8XzkpF0nBXKOgJ4T1@mail.gmail.com>
-	<AANLkTi=vscGSErrV_6xBqmryc1hFqi4bjmyOTVgTLNsS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bradley Wagner <bradley.wagner@hannonhill.com>, git@vger.kernel.org
-To: Chris Mear <chrismear@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 00:26:23 2010
+Cc: git@vger.kernel.org
+To: Bradley Wagner <bradley.wagner@hannonhill.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 00:32:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OixH5-0003zd-HE
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 00:26:23 +0200
+	id 1OixNE-0006BA-Nw
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 00:32:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932416Ab0HJW0T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 18:26:19 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:51143 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932249Ab0HJW0R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 18:26:17 -0400
-Received: by vws3 with SMTP id 3so8033005vws.19
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 15:26:16 -0700 (PDT)
+	id S1758024Ab0HJWcb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 18:32:31 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:36255 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757936Ab0HJWcU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 18:32:20 -0400
+Received: by qwh6 with SMTP id 6so8696464qwh.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 15:32:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=DzJWz7hD264BBdN0bqGOaFVQG4uB1KnZzDi0u6djPkI=;
-        b=dSHsBSE1RUyzVVFtaFIQSzmc0H1kG4ZCMC8QrraNKPgCAVPKicfQzuKoeRh8KfV3F8
-         orfTWpSNn5NwfZISwY3aADwLXT+033xObQvHjkunwFrVxYWL+TM2dIfcP452JGD29h4s
-         dTULeMtJFHyQBvWDy+lHtKqEz1ECdqDEPq1FA=
+        bh=XmTd4bDzOQpjwZqCqLRJ4T+hsg/7KSwILVwjB0ukVcg=;
+        b=xMM3CrJ+j8GhQpxIVDVymogeKYPRryWTt7cofXoslvyrl6s754U9dBOCfOIGMaYKJa
+         le6dBFZPtw+DR9j31qtKb8WZ4NNDsxV6Jv3/tQyw4ecI4Phr0SqXRYXjU1hIKZhdV+mr
+         zLAG9McjQ5MtHDyEFkpHmhs6ovRWY5afN7DV4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=A9YEULMyuiyCOvF7zFplfKlioh1l6o3wAn/KgAVWNpBADtl9cKCPdpo4+enfYW/FUq
-         srWcNY3TbazX2Yu1Y0lHdfC+TKvEJbwb2MX8dLSZ2dcBn2Db7M5H74688koQTz0037Rc
-         6RctAheQMJmCZnrXP/M/HWVDb5PcVzuvSZCvs=
-Received: by 10.220.60.133 with SMTP id p5mr10849762vch.169.1281479176468; 
-	Tue, 10 Aug 2010 15:26:16 -0700 (PDT)
-Received: by 10.220.162.13 with HTTP; Tue, 10 Aug 2010 15:26:16 -0700 (PDT)
-In-Reply-To: <AANLkTi=vscGSErrV_6xBqmryc1hFqi4bjmyOTVgTLNsS@mail.gmail.com>
+        b=DyKks8KrZILLfKQX22ddpLT3vW2/Yuy5sMwTuhB1llanlarYbhQVu8PaTJQj7UYx8c
+         Dq1+92j9AtzhWhFjTu9rcB2Xh+ppUYBs8rsTOTUKqvkclCu8UupQ2rdtu25WrTpmwc8u
+         XtRA7XPfIC0GEnFPsVZJ2agc6t8ZHKp3o+KG0=
+Received: by 10.224.86.224 with SMTP id t32mr10077995qal.263.1281479539633; 
+	Tue, 10 Aug 2010 15:32:19 -0700 (PDT)
+Received: by 10.229.231.199 with HTTP; Tue, 10 Aug 2010 15:32:19 -0700 (PDT)
+In-Reply-To: <AANLkTi=h2MbSKmQk9p6w44WORAa8XzkpF0nBXKOgJ4T1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153168>
 
-To elaborate on Chris's response, as an alternative to merging to
-feature from master repeatedly, you may want to take a look at git
-rerere.  The "Discussion" section at
-http://www.kernel.org/pub/software/scm/git/docs/git-rerere.html
-explains a workflow where this feature is useful.  You don't rebase,
-and so preserve where the feature originally branched, but you also
-avoid multiple merge commits from master that may clutter the commit
-history.  Essentially, you do a merge, resolve any conflicts, and then
-back out of the merge with git reset --hard HEAD^.  This removes the
-merge commit, but rerere remembers all of the conflicts that you
-resolved.  When you repeat this process the next time, you won't have
-to re-resolve conflicts that you've already taken care of.
+I'll describe the workflow that works very well for me.
 
-Essentially, the history looks like you've developed the feature in
-complete isolation of master, and fixed all of the conflicts at once
-during the only publicly visible merge commit from feature back to
-master.  But what you've really done is solved the conflicts little by
-little, so the final merge isn't a huge pain in the *ss.
+I use a single branch, working, as a working branch. I NEVER publish
+the tip of this branch. Rather, it always contains my working tree
+which consists of:
 
-This is probably a more advanced use case, and so might not be the
-best approach to a team just getting their feet wet with Git, but
-still, it's a workflow that does what you're asking.
+- a base, which is a merge of:
+   - completed work I have yet to publish
+   - the upstream branch, as pulled at some previous time
+   - fixes from other people that have yet to be integrated into the up=
+stream
+- a linear series of one or more commits that I am currently working on
+- the tip, or HEAD of the working branch.
 
-On Tue, Aug 10, 2010 at 6:05 PM, Chris Mear <chrismear@gmail.com> wrote=
-:
-> On 10 August 2010 21:20, Bradley Wagner <bradley.wagner@hannonhill.co=
-m> wrote:
->> If you're working on a feature branch by yourself, what is a good
->> workflow for keeping the branch in up-to-date with "master" as you'r=
-e
->> developing on the feature branch or is this unnecessary? Should you
->> just wait until you want to officially integrate the feature branch
->> into the "master"?
->>
->> We were doing:
->>
->> commit to local feature branch
->> push to remote feature branch
->> ... repeat....
->> rebase from master (occasionally)
->> push to remote
->>
->> but at this point the branches have diverged.
->>
->> We're coming at this from SVN, so we might just be thinking about th=
-is
->> the wrong way.
+Here are some typical workflows:
+
+- pull from upstream:
+
+   - fetch the upstream (git fetch upstream)
+   - checkout the branch tracking the BASE of my working branch (git
+checkout working-base)
+   - merge with the upstream (git merge upstream/master)
+   - rebase the linear bit of my work on that (git rebase working-base =
+working)
+
+- isolate some work as a fix to some upstream build tag (BUILD-XXXX)
+  - fetch tags from upstream (git fetch upstream refs/tags/*:refs/tags/=
+*)
+  - create a new branch for the topic (git branch topic HEAD)
+  - create a new base branch for the topic (git branch topic-base HEAD~=
+N)
+  - rebase the topic onto the BUILD-XXX tag (git rebase --onto
+BUILD-XXX topic-base topic && git branch -f topic-base BUILD-XXX)
+  - merge the topic into the base of my working branch (git checkout
+working-base && git merge topic)
+  - rebase the remainder of the working branch onto the updated
+working-base (git rebase working-base working)
+
+- patch a previously isolated topic with the top commit from the workin=
+g branch
+  - create a temporary branch for the fix ( git branch -f topic-fix
+HEAD && git rebase --onto topic HEAD~1 topic-fix)
+  - update the topic ( git checkout topic && git merge --ff-only
+topic-fix && git branch -d topic-fix)
+  - merge the topic back into the base of my working tree ( git
+checkout working-base && git merge topic && git rebase working-base
+working)
+
+- publish a topic
+  - git tag topic-XXX topic && git branch -f topic-base topic-XXX &&
+git push public topic-XXXX
+
+- integrate a tag someone else has published into my base
+  - git checkout working-base && git merge other-topic-XXX && git
+rebase working-base working
+
+This way of working has some very nice properties:
+
+* the base of my working branch (working-base) contains all my
+_dependencies_, that is:
+   * the upstream branch
+   * my finished, but un-integrated work
+   * other people's finished but un-integrated work
+
+* integrating dependencies is done the same way, irrespective of where
+they come from, e.g.:
+
+   git checkout working-base && git merge dependency && git rebase
+working-base working
+
+* the base of my branch is a  merge hell, but I don't care, because it
+is built from well known, relatively stable dependencies - I can throw
+it away and rebuild it any time relatively easily.
+
+* my working tree remains stable - it always contains stuff I have
+recently worked on, or stuff I want
+
+* my topic branches remain clean and uncluttered with merges, so I can
+release them to others without dragging unwanted stuff along
+
+* merges tend to be trivial, since they are based on stable work.
+rebases are usually easy, because they are used only used on a
+relatvely small amount on unpublished, unstable work
+
+This only downside to the workflow is the complexity of using an extra
+branch (working-base) to track the base of the working branch. If you
+forget to update it, you can accidentally do some stupid things (which
+can be fixed by using the info in git reflog).
+
+In fact, this workflow is so useful to me, that I believe it needs its
+own git porcelain to assist with the management. I am, in fact,
+developing two commands to do just this: git base and git work.
+
+git base manages the base of the branch (using a reference called
+refs/bases/<branch>) while git work helps to manage the workflow of
+maintaining the base of the branch. With these two (as yet unpublished
+commands), the workflows above become as simple as:
+
+ * initialise the base: git base set upstream/master
+ * sync with upsteam: git work merge upstream/master
+ * merge with some dependency: git work merge dependency-XXXX
+ * create a new topic from recent work: git work create topic HEAD~N BU=
+ILD-XXX
+ * update an existing topic with recent work: git work update topic HEA=
+D~N
+ * rebase onto a clean base: git work rebase BUILD-XXX
+ * visualize just the current work: gitk $(git work)  (which expands
+as gitk $(git base)..working or gitk refs/bases/working..working)
+ etc.
+
+I hope to have time to release some feature stable contributions in a
+week or two...stay tuned.
+
+Regards,
+
+jon.
+
+
+On Wed, Aug 11, 2010 at 6:20 AM, Bradley Wagner
+<bradley.wagner@hannonhill.com> wrote:
+> If you're working on a feature branch by yourself, what is a good
+> workflow for keeping the branch in up-to-date with "master" as you're
+> developing on the feature branch or is this unnecessary? Should you
+> just wait until you want to officially integrate the feature branch
+> into the "master"?
 >
-> Git's rebase feature is a *very* nice, clean way to keep a feature
-> branch up to date with the master branch. But, as you've seen,
-> rebasing can make things a bit confusing you need to push that featur=
-e
-> branch to other people.
+> We were doing:
 >
-> I've found that a good rule of thumb is to never rewrite (i.e. rebase=
-)
-> branches that have already been shared with others. Of course there's
-> nothing impossible or fundamentally bad about pushing rewritten
-> branches like this. But, unless people are expecting it to happen and
-> know how to deal with it when they pull, it can cause confusion,
-> particularly on teams that are just getting acquainted with Git.
+> commit to local feature branch
+> push to remote feature branch
+> ... repeat....
+> rebase from master (occasionally)
+> push to remote
 >
-> Instead, if a feature branch is going to be shared with others, and
-> it's going to be long-lived, then we keep it up-to-date by merging
-> from master every now and again, rather than rebasing.
+> but at this point the branches have diverged.
 >
-> On the other hand, if I'm working on a feature branch by myself, and =
-I
-> haven't shared it with anyone yet, I frequently rebase against master
-> to keep things clean. I also use interactive rebase a lot to tidy up
-> commits. But as soon as I've shared my branch with the team, I no
-> longer do any rebasing/rewriting.
+> We're coming at this from SVN, so we might just be thinking about thi=
+s
+> the wrong way.
 >
-> If there are Git wizards on your team, it is true that they may find
-> this an inflexible way of working. But I've found it to be a good
-> compromise between ease of pulling and maintaining a clean commit
-> history.
->
-> Chris
+> Thanks!
 > --
 > To unsubscribe from this list: send the line "unsubscribe git" in
 > the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
 >
