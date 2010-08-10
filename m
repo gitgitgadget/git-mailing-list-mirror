@@ -1,81 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Black smoke from git rebase -i exec
-Date: Tue, 10 Aug 2010 17:05:11 +0200
-Message-ID: <vpq62ziv788.fsf@bauges.imag.fr>
-References: <AANLkTikCgSNRipTbjiL+uPOqCL3WXwn08_QV=UJ7EwvT@mail.gmail.com>
-	<vpqlj8ezizq.fsf@bauges.imag.fr>
-	<AANLkTimgRu=nRFpO+QW758SWbQ+Vs+8gtpAc4N-cNWr6@mail.gmail.com>
-	<4C615E5E.3090301@viscovery.net>
-	<AANLkTikVB6VoSy3=XVHqGsA7xH39MgDwh2hDnX89enfM@mail.gmail.com>
+From: James <purpleidea@gmail.com>
+Subject: [Patch] Use a default for a bad env config file variable
+Date: Tue, 10 Aug 2010 11:11:16 -0400
+Message-ID: <AANLkTi=42V8=26oEwcNOHubuK+VAf-QaYnvCLAKQ0xtg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	gitster@pobox.com
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 17:06:11 2010
+Content-Type: multipart/mixed; boundary=001636417b2d698c7b048d798b00
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 10 17:11:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OiqP4-0000Rt-Mg
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 17:06:11 +0200
+	id 1OiqU7-0003kP-4X
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 17:11:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932176Ab0HJPGG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 11:06:06 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:58906 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932129Ab0HJPGE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 10 Aug 2010 11:06:04 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7AEsMK4007376
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 10 Aug 2010 16:54:22 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OiqO7-0002K3-Lk; Tue, 10 Aug 2010 17:05:11 +0200
-In-Reply-To: <AANLkTikVB6VoSy3=XVHqGsA7xH39MgDwh2hDnX89enfM@mail.gmail.com>
- (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue\, 10
- Aug 2010 14\:16\:38 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 10 Aug 2010 16:54:23 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7AEsMK4007376
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1282056867.79179@jFCDI5yaE7S4qSEtU8VABQ
+	id S932198Ab0HJPLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 11:11:18 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:40362 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932129Ab0HJPLR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 11:11:17 -0400
+Received: by pxi10 with SMTP id 10so101505pxi.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 08:11:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=5PLoiYyLbDBkaKx3QcbBug78goDPnpDyncTX4vNISYI=;
+        b=IMIlTrUUGSCIQb4v2DmJ+YvLQ49+coDtH77PCxNJNLpVEA07Gq/fXQxSuctF8s9BdQ
+         bjgueAk1siQJ6hOGiQ0rlVMemt7u5aToAysT4bIjVeeUmlV5RsDtm6qb4c07767I3R2u
+         XZ+vRPeRzPxSUr7vjpV83/3T/NvtgirJcl3xI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=WAXZzwPEYe/Mnw9pRAY8lbbli0hFdSe/pzgRSKN8NlTuFLj+pgOqH/ws8KQmG/swgw
+         aizRqIYWmj+gqRogT3fXHIeq1tfLl7/PGFi46Mm70T6jPdb8yD+6icFb7MRX/YwBDNbl
+         6SZIypV9t9MTOXQr0RFITUDBP13FQRhC1elq4=
+Received: by 10.114.26.6 with SMTP id 6mr15975794waz.82.1281453076306; Tue, 10 
+	Aug 2010 08:11:16 -0700 (PDT)
+Received: by 10.220.46.69 with HTTP; Tue, 10 Aug 2010 08:11:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153117>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+--001636417b2d698c7b048d798b00
+Content-Type: text/plain; charset=UTF-8
 
-> On Tue, Aug 10, 2010 at 14:12, Johannes Sixt <j.sixt@viscovery.net> w=
-rote:
->> You cannot apply single-command-export if the command is a shell fun=
-ction.
->> You must rewrite this as:
->>
->> =A0 =A0 =A0 =A0(
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0export FAKE_LINES=3D"..." &&
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0test_must_fail git rebase ....
->> =A0 =A0 =A0 =A0) &&
->
-> Except that's not portable either, it should be:
->
->     FAKE_LINES=3D"..." &&
->     export FAKE_LINES &&
-> 	test_must_fail git rebase ...
->
-> See the other examples in t3404-rebase-interactive.sh
+Hi git list, my name is James, and this is my first patch.
 
-Yes, I had found this. New patch comming soon.
+It's quite trivial really, all that changes is that if someone sets
+the environment variable: $GITWEB_CONFIG_SYSTEM, and this points to
+something like: /srv/gitosis/gitweb.conf, which doesn't actually
+exist, then gitweb will default to trying out the built in default of
+/etc/gitweb.conf (if it was built with that var).
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+This patch should make it easier for people who are configuring
+gitweb+gitosis, so that a separate gitweb.conf config file can be used
+to call the main config, but which doesn't null out the system
+defaults if it is missing.
+
+Thank you in advance,
+_James
+
+--001636417b2d698c7b048d798b00
+Content-Type: application/octet-stream; 
+	name="0001-Use-a-default-for-a-bad-env-config-file-variable.patch"
+Content-Disposition: attachment; 
+	filename="0001-Use-a-default-for-a-bad-env-config-file-variable.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gcovc33r
+
+RnJvbSBkMjlhZGY4Yzc4OGI4YTc0N2JmZDM4ZGQ3ZTEwZjY4NGRlOWFhOGU5IE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBKYW1lcyBTaHViaW4gPHB1cnBsZWlkZWFAZ21haWwuY29tPgpE
+YXRlOiBUdWUsIDEwIEF1ZyAyMDEwIDEwOjMwOjIyIC0wNDAwClN1YmplY3Q6IFtQQVRDSF0gVXNl
+IGEgZGVmYXVsdCBmb3IgYSBiYWQgZW52IGNvbmZpZyBmaWxlIHZhcmlhYmxlLgoKLS0tCiBnaXR3
+ZWIvZ2l0d2ViLnBlcmwgfCAgICA0ICsrKysKIDEgZmlsZXMgY2hhbmdlZCwgNCBpbnNlcnRpb25z
+KCspLCAwIGRlbGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL2dpdHdlYi9naXR3ZWIucGVybCBiL2dp
+dHdlYi9naXR3ZWIucGVybAppbmRleCA0ZWZlZWJjLi40MzI5NGUxIDEwMDc1NQotLS0gYS9naXR3
+ZWIvZ2l0d2ViLnBlcmwKKysrIGIvZ2l0d2ViL2dpdHdlYi5wZXJsCkBAIC02MDUsNiArNjA1LDEw
+IEBAIHN1YiBldmFsdWF0ZV9naXR3ZWJfY29uZmlnIHsKIAl9IGVsc2lmICgtZSAkR0lUV0VCX0NP
+TkZJR19TWVNURU0pIHsKIAkJZG8gJEdJVFdFQl9DT05GSUdfU1lTVEVNOwogCQlkaWUgJEAgaWYg
+JEA7CisJIyBpZiBjb25maWcgZmlsZSBmcm9tIGVudiBpcyBtaXNzaW5nLCB0aGVuIHRyeSB0aGUg
+ZGVmYXVsdCBhbnl3YXlzCisJfSBlbHNpZiAoLWUgIisrR0lUV0VCX0NPTkZJR19TWVNURU0rKyIp
+IHsKKwkJZG8gIisrR0lUV0VCX0NPTkZJR19TWVNURU0rKyI7CisJCWRpZSAkQCBpZiAkQDsKIAl9
+CiB9CiAKLS0gCjEuNy4wLjQKCg==
+--001636417b2d698c7b048d798b00--
