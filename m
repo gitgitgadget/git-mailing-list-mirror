@@ -1,89 +1,86 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Daniele Segato <daniele.bilug@gmail.com>
 Subject: Re: wiki "abuse"
-Date: Tue, 10 Aug 2010 09:29:56 +0200
-Message-ID: <4C60FFF4.50108@drmicha.warpmail.net>
-References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com>	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com>	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302>	<AANLkTinEEpvJv6z1WNgoMujoZyhU8zON597mY+Bp7nV8@mail.gmail.com>	<AANLkTin5q5WZFUXkZQ3V5Z1fQjYU2QOi5mFpn-Rb7m04@mail.gmail.com>	<4C606E1B.6020800@lsrfire.ath.cx>	<AANLkTikNDdi1gDaoWdHsiUPLW2CtZMP0J2c94DpLA=AV@mail.gmail.com> <AANLkTi=A9m=y4r4Y0q2GLwT1gubyoC_-XaXg+6-RfrGn@mail.gmail.com>
+Date: Tue, 10 Aug 2010 10:03:25 +0200
+Message-ID: <AANLkTinzyv96Dv1cDS4EE2F35A7PTcesAAx+BL+6wfX+@mail.gmail.com>
+References: <AANLkTimyyh+MyS6zpJp1_RfCOoj6yr4LHXXM_7ZiWgzf@mail.gmail.com>
+	<AANLkTi=wxre8pEDPQBeA4FvGcFHKS-kBdCqDv11o=x1c@mail.gmail.com>
+	<AANLkTi=GmOokrPoevARoxe16ZLpHKzaBy0tBfycJM5J2@mail.gmail.com>
+	<alpine.DEB.1.00.1008091820320.8314@intel-tinevez-2-302>
+	<alpine.DEB.1.00.1008091824080.8314@intel-tinevez-2-302>
+	<AANLkTi=12A8tGTgB+DvxuKT+q0fhnTy87EuCvNMrDkkd@mail.gmail.com>
+	<alpine.DEB.1.00.1008092004450.2983@bonsai2>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	=?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 10 09:30:02 2010
+Cc: Valeo de Vries <valeo@valeo.co.cc>, git <git@vger.kernel.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Aug 10 10:03:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OijHe-0007iK-19
-	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 09:30:02 +0200
+	id 1OijoB-0004GS-2d
+	for gcvg-git-2@lo.gmane.org; Tue, 10 Aug 2010 10:03:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753602Ab0HJH3o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 10 Aug 2010 03:29:44 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:48281 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753501Ab0HJH3n (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 10 Aug 2010 03:29:43 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E70374B2;
-	Tue, 10 Aug 2010 03:29:41 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 10 Aug 2010 03:29:42 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=BVd9o4aZznXd3fmxTQDcvGNq2k4=; b=SF68MJx89JWtdz3s1o7YTEzH00q+aKRPBbdeYnftm1BtonD11eqGhWhfwDCGyppvHomqmn+Fva/oKXNvmIEXcyl3ezpZd6Atg0YDUlrbI+knDX6YQyAnbG2qFn8tgGkej1ERva0LKKmUjGbaY0kb68lJmxEh66UV7ee3JGilsDM=
-X-Sasl-enc: YyvUMOj7zD4Nlx8CMy3TW49NGIRJHkG2P4DEeyBdz+mK 1281425381
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8D4BE400351;
-	Tue, 10 Aug 2010 03:29:40 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9pre) Gecko/20100806 Lightning/1.0b2pre Lanikai/3.1.2
-In-Reply-To: <AANLkTi=A9m=y4r4Y0q2GLwT1gubyoC_-XaXg+6-RfrGn@mail.gmail.com>
+	id S1751461Ab0HJIDa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 10 Aug 2010 04:03:30 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:57914 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751323Ab0HJID1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 10 Aug 2010 04:03:27 -0400
+Received: by vws3 with SMTP id 3so7446703vws.19
+        for <git@vger.kernel.org>; Tue, 10 Aug 2010 01:03:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Pot5+BnV5/9uZ2cFeSahy7OTSAFYSsutRyU8pk2O5Ac=;
+        b=KGUlQonbo6UCGRZEhnJSHrO2wB1XfYlWATw3Ev1uTAO+r+wnUbSzUlFzOhjyOMrIU/
+         XAVYCGvHy3KbUiFMNQkgc1bAtEu2EKs0XSRF/1EPV5lEAp70vA/NrHUN1HOhIe6S08wt
+         c1Q0DTmxFRQ/wAJB0QxTYmGB63rOj6vYScVUo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=R3IksBc3UC/EN4ksLymEXurSqDrOhpNRt1PQ+FXH4Fdqf87ElWyOdLqVhuATF65d+y
+         w2AZ5E7vTttTxfEqGte5kumPoQh0F7hEnYUeOXrNUv2EavnKPMr0py1hG9AR7b57j2Iq
+         w5Vjz9lcdi4AlE2Gm5Vk0nFMCkp5VEuP3Wid0=
+Received: by 10.220.76.74 with SMTP id b10mr10266422vck.218.1281427406053; 
+	Tue, 10 Aug 2010 01:03:26 -0700 (PDT)
+Received: by 10.220.184.221 with HTTP; Tue, 10 Aug 2010 01:03:25 -0700 (PDT)
+In-Reply-To: <alpine.DEB.1.00.1008092004450.2983@bonsai2>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153081>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 09.08.2010 2=
-3:21:
-> 2010/8/9 Sverre Rabbelier <srabbelier@gmail.com>:
->> Heya,
->>
->> 2010/8/9 Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>:
->>> In the mails in this thread he doesn't look very trollish to me, an=
-d he
->>> didn't have much of a chance to contribute something useful to the =
-wiki.
->>
->> He had a full day.
->=20
-> You must be one of those =C3=BCbermench to whom the concept of
-> procrastination is unknown :)
->=20
->>>  What are the grounds of your verdict?
->>
->> Contents of the profile page, and high troll content of this thread.
->=20
-> FWIW the contents were (sorry Johannes):
->=20
->     Amir E. Aharoni, a proud SVN user.
->=20
->     * [http://aharoni.wordpress.com/ Aharoni in Unicode, ya mama - bl=
-og]
->     ** [http://aharoni.wordpress.com/2010/08/05/advocacy-for-the-unco=
-ol/ a
->     reality check for git fanboys]
->=20
+On Mon, Aug 9, 2010 at 8:08 PM, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> wrote:
+> When in Rome, do as the Romans do. Going about in Rome, spitting
+> everywhere, is rude, even if it is considered polite in your home country.
 
-[Thanks for sharing.]
-That was actually part of this thread's problem: There was no easy way
-for none-admins to even see *what* had been deleted since there was no
-easy way get at the history for the deleted user page of a banned user.
-Based on that content, probably most people would have sympathized with
-the deletion, although not necessarily with the (lack of) communication
-flow.
+This is racist.
 
-Michael
+I'm Italian, I can't say I love my country or my people manners but
+nowhere here "spitting everywhere" is considered polite, nor everybody
+does that.
+
+And you missed the point here.
+
+Does the wiki allow a personal page?
+If it does then don't bother people who create their personal page and
+don't ban them without asking - contacting them in advance.
+
+If you simply don't want personal pages in the wiki then disable them.
+
+This is the second time I see you acting like that (judging people
+without knowing the background or without letting them explain them).
+The first time was some day ago in a bug report from msysgit which is OT now.
+
+This kind of behavior cut out people who could or are willing to help
+git and the git community like me or Amir.
+
+My 2 cent
+
+Daniele Segato
