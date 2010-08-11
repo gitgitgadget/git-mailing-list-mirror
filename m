@@ -1,91 +1,99 @@
-From: David Woodhouse <dwmw2@infradead.org>
-Subject: Re: Query: Patches break with Microsoft exchange server.
-Date: Wed, 11 Aug 2010 17:30:34 +0100
-Message-ID: <1281544234.5107.25.camel@localhost>
-References: <4C5F9B25.8080401@st.com>
-	 <AANLkTinxwRFLUibJECm0c3_oL5mYRkmscsw-xXgAHSTe@mail.gmail.com>
-	 <4C624AE1.30504@st.com> <4C62C5BD.3020808@mnsu.edu>
-	 <1281542305.5107.11.camel@localhost>
-	 <AANLkTi=9xVdfXJXpkNPUMahc7AsbxjVbZFSxeBrzvbmS@mail.gmail.com>
+From: Sultan Shakir <sshakirflhosp@gmail.com>
+Subject: Re: Git and Documentation
+Date: Wed, 11 Aug 2010 12:34:20 -0400
+Message-ID: <AANLkTinyHAkr7bd6Wsr-=MtxN1QT1r8tRCGJ94vhpBHP@mail.gmail.com>
+References: <AANLkTik_rO_+az5kE=yhfXK1uUO3v0RKdcO2hzFBcZym@mail.gmail.com>
+	<AANLkTi=P=RsToSor=giC+dgV24bPj7KJ3eRV1M5a+iuD@mail.gmail.com>
+	<AANLkTi=pk4oXz84kWbHEzTUiWkTV5P4P9mTwzQbJG865@mail.gmail.com>
+	<AANLkTikwVfymGB8oEQUN=1LMWoif22p316mm=PzSxQwa@mail.gmail.com>
+	<4C61B737.50108@dbservice.com>
+	<AANLkTimK_ounhk1Qou02V_3+JjpY9Y5ZO3OO2uRn6A7k@mail.gmail.com>
+	<AANLkTikK6_MqPQSg944DNfVULT3ccN9xMsObCAqHqxY_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jeffrey Hundstad <jeffrey.hundstad@mnsu.edu>,
-	viresh kumar <viresh.kumar@st.com>,
-	Felipe Contreras <felipe.contreras@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org" 
-	<linux-arm-kernel@lists.infradead.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"Justin P. Mattock" <justinmattock@gmail.com>,
-	Uwe =?ISO-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Valeo de Vries <valeo@valeo.co.cc>,
-	Linus Walleij <linus.ml.walleij@gmail.com>,
-	Matti Aarnio <matti.aarnio@zmailer.org>, mihai.dontu@gmail.com,
-	richardcochran@gmail.com, "Gadiyar, Anand" <gadiyar@ti.com>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 18:31:04 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org
+To: Michael Witten <mfwitten@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 18:34:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjECg-000731-Uq
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 18:30:59 +0200
+	id 1OjEG3-0000uz-1N
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 18:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753179Ab0HKQan (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 12:30:43 -0400
-Received: from casper.infradead.org ([85.118.1.10]:50865 "EHLO
-	casper.infradead.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752537Ab0HKQam (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 12:30:42 -0400
-Received: from [2001:8b0:10b:1:225:64ff:fee8:e9df]
-	by casper.infradead.org with esmtpsa (Exim 4.72 #1 (Red Hat Linux))
-	id 1OjECK-0008SI-AZ; Wed, 11 Aug 2010 16:30:36 +0000
-In-Reply-To: <AANLkTi=9xVdfXJXpkNPUMahc7AsbxjVbZFSxeBrzvbmS@mail.gmail.com>
-X-Mailer: Evolution 2.31.6 
-X-SRS-Rewrite: SMTP reverse-path rewritten from <dwmw2@infradead.org> by casper.infradead.org
-	See http://www.infradead.org/rpr.html
+	id S1754585Ab0HKQeW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 12:34:22 -0400
+Received: from mail-qw0-f66.google.com ([209.85.216.66]:53021 "EHLO
+	mail-qw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754523Ab0HKQeV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 12:34:21 -0400
+Received: by qwd7 with SMTP id 7so43435qwd.1
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 09:34:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1LSCyR09MVcVYfHVnU1LVrnr0zm6OgiauAiua4TDyes=;
+        b=AKIXkQT52/50+q9AgqUQ7051R26PLKboEzrUkG5A6ds0wUf+fOM+Y5FmvOaPvKkpXh
+         ajEsi8EdpAHkl8EsbaE5GFBXGSRSXm59IKCyWhgJOPb7KImm8dHCLX6oosCrHb8vlwgT
+         dvWj6xaPdvAZrO4FMRYpDeIafhcnEp/CfOQuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fokR5ERnyatyYKVUeKIVs4ZuAKh52IPTtGA36T/Va+Jt72NPA3zft11eaXJyO3VpHf
+         YLWsQQ7xzOlR5Rd7OMW37khvakHiX0UZM9Lru/bfcP6WmlxLmJQ3A2rBn3sCDM1GfaPf
+         8BjHMGjBAy6QlLNnft3dpngL0KKB8rhWWonvk=
+Received: by 10.224.37.19 with SMTP id v19mr11114243qad.65.1281544460715; Wed, 
+	11 Aug 2010 09:34:20 -0700 (PDT)
+Received: by 10.229.69.76 with HTTP; Wed, 11 Aug 2010 09:34:20 -0700 (PDT)
+In-Reply-To: <AANLkTikK6_MqPQSg944DNfVULT3ccN9xMsObCAqHqxY_@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153265>
 
-On Wed, 2010-08-11 at 12:18 -0400, Avery Pennarun wrote:
-> 
-> Out of curiosity, why fall back to one chunk at a time?  It seems to
-> me that IMAP should be able to still support multiple outstanding
-> requests in that case, but you'd just get errors on the latter chunks.
-> 
-> It is just that there was no point optimizing the workaround case?
+On Tue, Aug 10, 2010 at 4:56 PM, Michael Witten <mfwitten@gmail.com> wr=
+ote:
+> On Tue, Aug 10, 2010 at 15:47, Michael Witten <mfwitten@gmail.com> wr=
+ote:
+>> On Tue, Aug 10, 2010 at 15:31, Tomas Carnecky <tom@dbservice.com> wr=
+ote:
+>>> If the documentation is generated as part of the build, then there =
+is no
+>>> reason to have it part of the history - you can always rebuild it f=
+rom
+>>> the source. For the same reason you don't put compiled source into =
+git.
+>>
+>> Well, theoretically.
+>>
+>> According to:
+>>
+>> =A0http://git.kernel.org/?p=3Dgit/git.git;a=3Dblob_plain;f=3DMaintNo=
+tes;hb=3Dtodo
+>>
+>> the git project's repository itself tracks generated documentation f=
+or
+>> practical reasons:
+>>
+>> =A0The "html" and "man" [branches] are
+>> =A0autogenerated documentation from the
+>> =A0tip of the "master" branch; the tip
+>> =A0of "html" is extracted to be visible
+>> =A0at kernel.org at:
+>>
+>> =A0 =A0http://www.kernel.org/pub/software/scm/git/docs/
+>>
+>
+> I should add that generating documentation is time consuming and ofte=
+n
+> requires brittle software; there's a lot to gain by having one system
+> produce the same output for virtually everyone else.
+>
 
-There wasn't a lot of point in optimising it.
-
-The current logic, shown in the patch I referenced, is to keep fetching
-new chunks while the stream position matches the end of the previous
-chunk we attempted to fetch.
-
-To handle multiple outstanding requests, especially if they can be
-satisfied out-of-order, would have been more complex because the stream
-position (in the 'really_fetched' variable) wouldn't necessarily match
-anything interesting. We'd have to keep more state, and the whole thing
-would get a lot more intrusive.
-
-Also, for the common case where the server isn't broken and the mail
-size happens not to fall on a chunk boundary, the current implementation
-results in no extra fetch requests. Doing otherwise would either mean
-extra fetch requests even for this common case, or would mean even more
-complexity to 'catch up' by issuing additional fetch requests as soon as
-we realise the server lied about RFC822.SIZE (which is when we receive
-the last chunk, and it runs over the size we expected).
-
-It may be that there's a neat and simple way to handle all of the above,
-and if so then patches would be welcome -- but personally, I just
-couldn't be bothered to think too hard about it. There were more
-pressing matters to attend to, like implementing QRESYNC support.
-
--- 
-David Woodhouse                            Open Source Technology Centre
-David.Woodhouse@intel.com                              Intel Corporation
+Thank you all.
