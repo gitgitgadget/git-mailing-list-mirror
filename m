@@ -1,109 +1,92 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: With feature branches, what is ever committed directly to master
-Date: Wed, 11 Aug 2010 19:21:05 +1000
-Message-ID: <AANLkTi=b3UBYiLEZDPsjp-J6h-=hJXw7mLjQBx614Q0N@mail.gmail.com>
-References: <AANLkTin0VgH8CvnUn_tCJPTkhh7Ce-tYWo52qouoVvRN@mail.gmail.com>
-	<20100811065751.GA8808@jpl.local>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [WIP/PATCH 0/4] Re: Making error messages stand out
+Date: Wed, 11 Aug 2010 19:21:52 +1000
+Message-ID: <AANLkTi=cNUTG-DGZNpwrag9Wz2-JoQQamiayKVNA5wbn@mail.gmail.com>
+References: <20100725005443.GA18370@burratino>
+	<AANLkTilnQhsopnuAf0nja8Qq63VrOlt0_uCJrqYv5X-v@mail.gmail.com>
+	<201007251122.41166.trast@student.ethz.ch>
+	<20100729235151.GB6623@burratino>
+	<AANLkTi=ao2RY8NGm4cACqz3_5zfT2zvXB4JHOopBD9T5@mail.gmail.com>
+	<20100811083100.GA16495@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bradley Wagner <bradley.wagner@hannonhill.com>, git@vger.kernel.org
-To: =?UTF-8?B?TWFnbnVzIELDpGNr?= <magnus.back@sonyericsson.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 11:21:16 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	git <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 11:22:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj7Un-0003K9-NC
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 11:21:14 +0200
+	id 1Oj7VW-0003co-Uh
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 11:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756072Ab0HKJVI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 05:21:08 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:43779 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752902Ab0HKJVG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 05:21:06 -0400
-Received: by qyk36 with SMTP id 36so485147qyk.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 02:21:05 -0700 (PDT)
+	id S1756407Ab0HKJVy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 05:21:54 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54205 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755578Ab0HKJVx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 05:21:53 -0400
+Received: by wwj40 with SMTP id 40so14007913wwj.1
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 02:21:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=0EoiI2WhGyaWqRVcV584FHDvgpqkSKNsN45EUO+zvlc=;
-        b=TDqtOHGTHZso3Es07Nu0ohhKZCyTVJAraH3TH/PREQ1p6Xw4esZUV/6HtS5DJEtlQ+
-         BpsPAqbC/NZ3hjhpUfvK6wPDjyMUnII4gcXgI6VuQjXzupBE4MZiqnBoSn39hpAflgCD
-         yEmDEJzUmKEIY1r4PJeBAj1SRMAaq/RKjuGsk=
+        bh=VBlLSWxz4rWYIUXnkPX22dljlX5WJ/aZCobOwWxUpOc=;
+        b=LlEhJ6kGH9R5e/ijg7oFLvSZjkS8o7xbtzo0WjDbwl6jHk32Hpe9d9DfOCMgWVWVI6
+         hx/ZC3m2t8LfW+0+fFSxjfuv2LoFKYgdgr23qOeQX5AAs7ZSPEvXssuxZrhmJJvu5c1j
+         FP9O9/4iRj+TAFzzhRZy8p/SZ0vD7yVd7gVzc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=hT4XiJP6hz2U1QocHmY0magGTOEbSWbfIN8M9ahVnGandK2dXxp6v3lNSn3l8uMj8Q
-         e30hCzu3yd4JT+Lj2ypS1qGxOXWAin5e0UEXbmAzh73VpGGToieLXA1HRtEsuuka82ty
-         jY1yhX4Dj1Gke9awCpiZHw5i2ZfpVH9DzdqDE=
-Received: by 10.229.222.6 with SMTP id ie6mr9395844qcb.28.1281518465612; Wed, 
-	11 Aug 2010 02:21:05 -0700 (PDT)
-Received: by 10.229.231.199 with HTTP; Wed, 11 Aug 2010 02:21:05 -0700 (PDT)
-In-Reply-To: <20100811065751.GA8808@jpl.local>
+        b=OEQQnjW9wSWGXGwju4e72wDbMLZ2l68Ngli0WxMLMpVc1NY8THZJkLtf0Eb1ARuJ9V
+         L60RZ/ichfNoS/5ZYz983wBiznTO/xXm2J4NnMPRXGyNa+Os9DKXzew8poamWCLQgJl9
+         eIZS8wN+heUZNkBCTTYeI9A1ypjLLMi7lbVXw=
+Received: by 10.216.10.77 with SMTP id 55mr16477950weu.17.1281518512374; Wed, 
+	11 Aug 2010 02:21:52 -0700 (PDT)
+Received: by 10.216.173.133 with HTTP; Wed, 11 Aug 2010 02:21:52 -0700 (PDT)
+In-Reply-To: <20100811083100.GA16495@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153218>
 
-On Wed, Aug 11, 2010 at 4:57 PM, Magnus B=C3=A4ck
-<magnus.back@sonyericsson.com> wrote:
-
-> Finally, bugfixes and similar smaller changes that don't make up a
-> whole string of commits should probably not be developed on branches.
-
-I think there is a case for _developing_ fixes on branches as opposed
-to _sharing_ fix branches. In particular, it is good to minimize the
-stuff that a fix drags along, so delivering a a fix to an integration
-stream which is depends on the minimum amount of other cruft is good
-practice. It also means the fix can easily be shared with other
-developers even if it hasn't yet mean integrated into the main
-integration stream.
-
-This is where the idea of maintaining a private working branch
-(described in an earlier e-mail) really pays off. You get to keep all
-your unintegrated fixes in your working tree, but
-you can freely share the stable ones with other developers and the
-integration stream without reduced fear of creating a merge nightmare,
-since you have taken care (in selecting the base for the fix) to keep
-each fix isolated.
-
-As to whether the team should maintain _shared_ feature branches this
-does, as you say, depend on your circumstances. By _shared_ feature
-branch, I mean a branch that has its own build cycle, test cycle etc.
-Such things are expensive, and they get more expensive the more
-complicated your delivery environment is. If your team and product is
-small and nimble, it doesn't cost much to maintain the several loosely
-coupled development processes. If it isn't, then you save a lot by
-having a single integration stream that everyone bases their work on
-since you can share that build and QA overhead across the entire team.
-
-jon.
-
+On Wed, Aug 11, 2010 at 6:31 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Sverre Rabbelier wrote:
+>> On Thu, Jul 29, 2010 at 18:51, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
 >
->> Is "master" really even unstable at that point?
+>>> though, I find the best solution is to use short, formulaic message=
+s:
+>>>
+>>> =C2=A0...
+>>> =C2=A0Recorded resolution for 'dir/a'.
+>>> =C2=A0[detached HEAD aa9ae6b] related change
+>>> =C2=A0 1 files changed, 1 insertions(+), 1 deletions(-)
+>>> =C2=A0fatal: could not apply 649420f... second
+>>> =C2=A0hint: after resolving the conflicts, mark the corrected paths
+>>> =C2=A0hint: with 'git add <paths>' and run 'git rebase --continue'
+>>
+>> Yes please. This would be _extremely_ helpful!
 >
-> I guess that depends on your organization, your developers, and the
-> maturity, architecture and inherent quality of the software. And, of
-> course, how you define unstable. How bad can it be before it hurts?
-> How would *you* weigh the risk of branching against the risk of
-> developer slowdowns caused by frequent regressions?
+> Ok. :)
 >
-> --
-> Magnus B=C3=A4ck =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0Opinions are my own and do not necessarily
-> SW Configuration Manager =C2=A0 =C2=A0 =C2=A0 =C2=A0 represent the on=
-es of my employer, etc.
-> Sony Ericsson
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+> This does not suppress the =E2=80=9CCould not apply=E2=80=9D message =
+at the end yet.
+
+Even better, make it available for some time with, say "git hints".
+After doing lots of things to resolve conflicts, I simply forget what
+it hinted me.
+--=20
+Duy
