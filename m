@@ -1,77 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Encoding problem on OSX?
-Date: Wed, 11 Aug 2010 02:55:03 -0500
-Message-ID: <20100811075503.GD5450@burratino>
-References: <AANLkTikh12guRxCK2Vf=WvshzX8P-fYTyu3qxYWNJ2px@mail.gmail.com>
- <AANLkTiky2uUHfOsh8rNXZPEqTLcNSZowy=Qcm+4Hjn_n@mail.gmail.com>
- <20100809234620.GA6418@burratino>
- <AANLkTikqpYO9GG9PZD_==PyUSGRV8=L5LrZ0RVsESuXN@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@namtrac.org>
-X-From: git-owner@vger.kernel.org Wed Aug 11 10:04:34 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH (resend)] post-receive-email: remove spurious commas in email subject
+Date: Wed, 11 Aug 2010 10:14:13 +0200
+Message-ID: <1281514453-23855-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <4C581E98.6090504@digium.com>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Aug 11 10:18:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj6IY-0003az-Tj
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:04:31 +0200
+	id 1Oj6W2-0001cr-6E
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:18:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932234Ab0HKIEN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 04:04:13 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:36693 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755131Ab0HKIEK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 04:04:10 -0400
-Received: by gxk23 with SMTP id 23so4018489gxk.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 01:04:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=iTOtZBzNSmKwiElCsfI9T1MINBC5/FSVtT/cyadk0EQ=;
-        b=Mv6Jpci1nsKNsvlAMjJ3aM802KaBrlfShfT5UHiLg3zc2WikY3D0zx0gkNQBbV6Dc4
-         hxEmK9CpEIQsVqEff+NiGWfOVgeWPGPBVYsfUKxWNvFx92Nq/Hdp5RuThIPqKJ1tXcoK
-         ZWY+KlfKK4c5O89L1ve+mOv7cUfHHWUCJeM2o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=fBV+uOO3dLW0eMJ9KS1gaYF1hxMEpBgkRQmIZTRoFpqiD4F/BTBpVz7cECzKOgrj7D
-         B/KWFJ9pgt0qH2mXeUtOBNmtSeNbbDUCq1FH8SiXDw2kBkpZcCfCR5FuoShPSjiWb0S6
-         8FOUXMQyWsE5VWCquJPb3PZ3SVxRUFNnL2Z7o=
-Received: by 10.101.20.12 with SMTP id x12mr21265631ani.95.1281513392073;
-        Wed, 11 Aug 2010 00:56:32 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id w6sm12188295anb.3.2010.08.11.00.56.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 00:56:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikqpYO9GG9PZD_==PyUSGRV8=L5LrZ0RVsESuXN@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757837Ab0HKISU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 04:18:20 -0400
+Received: from imag.imag.fr ([129.88.30.1]:36735 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752900Ab0HKISS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 04:18:18 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7B8EFc3016264
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 11 Aug 2010 10:14:15 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Oj6Rz-0001p3-C8; Wed, 11 Aug 2010 10:14:15 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Oj6Rz-0006DM-A0; Wed, 11 Aug 2010 10:14:15 +0200
+X-Mailer: git-send-email 1.7.2.1.52.g95e25.dirty
+In-Reply-To: <4C581E98.6090504@digium.com>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 11 Aug 2010 10:14:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153200>
 
-=C4=B0smail D=C3=B6nmez wrote:
+The previous form produced subjects like
 
-> [~]> printf 'Th\360\235\204\236s\n' | sed 's/.*//g'
->=20
-> [ismail@havana][08:51:06]
-> [~]>
+  [SCM] project.git branch, foo, updated. ...
 
-Thanks for checking.  So sed is not completely broken.  Could you try
+The new one will produce the lighter
 
- sh t4201-shortlog.sh
- cd "trash directory.t4201-shortlog"
- git log
- cat "trash directory.t4201-shortlog/log"
+  [SCM] project.git branch foo updated. ...
 
-?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+"Kevin P. Fleming" <kpfleming@digium.com> writes:
+
+> On 08/03/2010 08:10 AM, Matthieu Moy wrote:
+>
+>> I am the only one bothered by these extra commas in email subject? If
+>> so, I can live with it, but I thought I'd give it a try ;-).
+>
+> No, I've removed them in our local copy as well, but never bothered to
+> send the changes to the list :-)
+
+I guess it's time to get this into git.git then ...
+
+ contrib/hooks/post-receive-email |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index 30ae63d..09c5241 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -203,7 +203,7 @@ generate_email_header()
+ 	# Generate header
+ 	cat <<-EOF
+ 	To: $recipients
+-	Subject: ${emailprefix}$projectdesc $refname_type, $short_refname, ${change_type}d. $describe
++	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
+ 	X-Git-Refname: $refname
+ 	X-Git-Reftype: $refname_type
+ 	X-Git-Oldrev: $oldrev
+-- 
+1.7.2.1.52.g95e25.dirty
