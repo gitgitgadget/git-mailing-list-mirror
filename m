@@ -1,61 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t/lib-git-svn.sh: use $PERL_PATH for perl, not perl from
- $PATH
-Date: Wed, 11 Aug 2010 11:32:02 -0700
-Message-ID: <7vzkwtxaot.fsf@alter.siamese.dyndns.org>
-References: <1281442465-27750-1-git-send-email-avarab@gmail.com>
+Subject: Re: [PATCH 5/7] t/t4016-diff-quote: change from skip_all=* to prereq
+ skip
+Date: Wed, 11 Aug 2010 11:32:15 -0700
+Message-ID: <7vocd9xaog.fsf@alter.siamese.dyndns.org>
+References: <1281469968-25670-1-git-send-email-avarab@gmail.com>
+ <1281469968-25670-6-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>,
-	"Philippe Bruhat \(BooK\)" <book@cpan.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 20:32:31 2010
+X-From: git-owner@vger.kernel.org Wed Aug 11 20:33:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjG6H-0001vp-68
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:32:29 +0200
+	id 1OjG6v-0002K0-TN
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755292Ab0HKScR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 14:32:17 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46980 "EHLO
+	id S1755302Ab0HKScb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 14:32:31 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47516 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755226Ab0HKScO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 14:32:14 -0400
+	with ESMTP id S1753414Ab0HKSca convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 14:32:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E596CC3CE;
-	Wed, 11 Aug 2010 14:32:14 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CA0B6CC3F7;
+	Wed, 11 Aug 2010 14:32:29 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=Pvng3AlDYU5K3SKIwVM64U8fpl0=; b=DTQYOMG21C81vTmvrbVbAK1
-	suVWIahoblyWLiwQOdG3Du8JgRCvU9wPLwaCvs5TVkYByVkBxxBbo9zJ0K8eg1Dy
-	VTFXIcW8QFxnkCfoxQmM1voZKeqNtp+lbh+iTGyHAUmWdjsPlYD3obhr3cC45zte
-	pOtLRkN61E8nfSkA+K7c=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=LWsHqrdgNOzpn2/hFhxGyguQr
+	1U=; b=QaSf4N8uncHd7ogR0lQ/aTzuzPOe2fPRhu5wg8pm6/xBrfbUNzHBo0kdk
+	bHJFcyRt7wiZReFZuzg+9sHK8vxDHrRbz6rbPJC9Mya6LRJy9Ev+3AT9Wb7P12kz
+	CtXw2EkPRM1l+wzLO1JwAs5nt2g2ZNjWaPqPUHF3Hb5YUPmOQw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=kQGrJOdA1sPLaMbJdCOheHrfN3p79zSfCaDtZKh5N1W2+y3AR
-	BSse0NcENVdv1bMXrEimgaHgYsN72NUJOO5CeUcS5aFNx6LQbKWmDgeJszRwUbNm
-	aTtb8Mi/xVCYYvhZwQWJA7TdYVS4k1XcNbUxmlzDvy/k1W3JL7Xzm4kgbs=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=IaD7UzhjQVfgaee+FT7
+	KhDg95SNEucBQG1Mss4l17W0naX8HJH+gU0p3by49U0sIE3MSI6eEbiJU4qZpOrj
+	Fgonh7ADmJQwvhBb0AGNxRFyPKymO0b7T2UBCXM54vCtaldSAKMX12rHT83x7Xmr
+	F/R06obseJz82O9QsKYR6mzU=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7F595CC3C9;
-	Wed, 11 Aug 2010 14:32:09 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 61D78CC3F1;
+	Wed, 11 Aug 2010 14:32:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 387BBCC3C6; Wed, 11 Aug
- 2010 14:32:04 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9A1ECC3DA; Wed, 11 Aug
+ 2010 14:32:16 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C031F9DA-A576-11DF-A337-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CA0D2254-A576-11DF-87D9-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153275>
 
-Thanks.  Other test scripts (and the insn in t/README) refer to PERL_PATH
-already and t/test-lib.sh includes build options for its definition, so
-this should be complete.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
+> diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
+> index 34e5144..10e2db3 100755
+> --- a/t/t4016-diff-quote.sh
+> +++ b/t/t4016-diff-quote.sh
+> @@ -11,14 +11,16 @@ test_description=3D'Quoting paths in diff output.
+>  P0=3D'pathname'
+>  P1=3D'pathname	with HT'
+>  P2=3D'pathname with SP'
+> +if P3=3D'pathname
+>  with LF'
+> +: 2>/dev/null >"$P1" && test -f "$P1" && rm -f "$P1"
+> +then
+> +	test_set_prereq TABS_IN_FILENAMES
+> +else
+> +	say 'Your filesystem does not allow tabs in filenames'
+> +fi
 
- 
+Did you really mean to have that "if" before assignment to P3, and if s=
+o
+why (as opposed to "after assignment to P3" or "before assignment to P0=
+")?
