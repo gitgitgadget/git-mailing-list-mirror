@@ -1,80 +1,90 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/7] t/t4016-diff-quote: change from skip_all=* to prereq
+Subject: Re: [PATCH 2/7] t/t5705-clone-2gb: change from skip_all=* to prereq
  skip
-Date: Wed, 11 Aug 2010 11:32:15 -0700
-Message-ID: <7vocd9xaog.fsf@alter.siamese.dyndns.org>
+Date: Wed, 11 Aug 2010 11:32:22 -0700
+Message-ID: <7viq3hxao9.fsf@alter.siamese.dyndns.org>
 References: <1281469968-25670-1-git-send-email-avarab@gmail.com>
- <1281469968-25670-6-git-send-email-avarab@gmail.com>
+ <1281469968-25670-3-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 20:33:10 2010
+X-From: git-owner@vger.kernel.org Wed Aug 11 20:33:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjG6v-0002K0-TN
+	id 1OjG6w-0002K0-Cf
 	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755302Ab0HKScb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 14:32:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47516 "EHLO
+	id S1755327Ab0HKSce convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 14:32:34 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47621 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753414Ab0HKSca convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 14:32:30 -0400
+	with ESMTP id S1755313Ab0HKScd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 14:32:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CA0B6CC3F7;
-	Wed, 11 Aug 2010 14:32:29 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 07C13CC3FA;
+	Wed, 11 Aug 2010 14:32:33 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=LWsHqrdgNOzpn2/hFhxGyguQr
-	1U=; b=QaSf4N8uncHd7ogR0lQ/aTzuzPOe2fPRhu5wg8pm6/xBrfbUNzHBo0kdk
-	bHJFcyRt7wiZReFZuzg+9sHK8vxDHrRbz6rbPJC9Mya6LRJy9Ev+3AT9Wb7P12kz
-	CtXw2EkPRM1l+wzLO1JwAs5nt2g2ZNjWaPqPUHF3Hb5YUPmOQw=
+	:content-transfer-encoding; s=sasl; bh=gbZFQMgi+sVXzhswIcfYDS+8y
+	i8=; b=RHmm+HxyGIUiWdNTcHpKFS0jeRRkBXLLqz8h9EvVLj4U1S21BQeEx0n95
+	+e44MB4/TwYHAOWf++enSMtUEDJ4nv/6KfRjPbiCjpfvFVP/TwDBp7u2mfxVv8Pb
+	Vqx+CS52iv9YlHrhEIL0DVEaXVMPxMSpFtivT1yM/qu2FFGqb4=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=IaD7UzhjQVfgaee+FT7
-	KhDg95SNEucBQG1Mss4l17W0naX8HJH+gU0p3by49U0sIE3MSI6eEbiJU4qZpOrj
-	Fgonh7ADmJQwvhBb0AGNxRFyPKymO0b7T2UBCXM54vCtaldSAKMX12rHT83x7Xmr
-	F/R06obseJz82O9QsKYR6mzU=
+	:content-transfer-encoding; q=dns; s=sasl; b=MmWMJz7Kq+3puyTeII2
+	6MGr0CKfsP/XSRZG+E0NhtiLz/UuLp55WlaQdqOun7Gdqeh/9HHYL7zgRzuQxqdq
+	HZTAAA2ODFmFYPxcIfZB/HLZLtY4WFIbNsSBVMRsVz3kLf7NprDVaHf00a8oBTdd
+	8NXr9G4b/cy6SyTXes4o9RUk=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 61D78CC3F1;
-	Wed, 11 Aug 2010 14:32:26 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AADEBCC3F8;
+	Wed, 11 Aug 2010 14:32:30 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C9A1ECC3DA; Wed, 11 Aug
- 2010 14:32:16 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D22FBCC3E7; Wed, 11 Aug
+ 2010 14:32:23 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CA0D2254-A576-11DF-87D9-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: CCAAC944-A576-11DF-839C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153276>
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
-> index 34e5144..10e2db3 100755
-> --- a/t/t4016-diff-quote.sh
-> +++ b/t/t4016-diff-quote.sh
-> @@ -11,14 +11,16 @@ test_description=3D'Quoting paths in diff output.
->  P0=3D'pathname'
->  P1=3D'pathname	with HT'
->  P2=3D'pathname with SP'
-> +if P3=3D'pathname
->  with LF'
-> +: 2>/dev/null >"$P1" && test -f "$P1" && rm -f "$P1"
-> +then
-> +	test_set_prereq TABS_IN_FILENAMES
-> +else
-> +	say 'Your filesystem does not allow tabs in filenames'
-> +fi
+> Change this test to skip test with test prerequisites, and to do setu=
+p
+> work in tests. This improves the skipped statistics on platforms wher=
+e
+> the test isn't run.
+>
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
+> ---
+>  t/t5705-clone-2gb.sh |   11 ++++-------
+>  1 files changed, 4 insertions(+), 7 deletions(-)
+>
+> diff --git a/t/t5705-clone-2gb.sh b/t/t5705-clone-2gb.sh
+> index e4d1b6a..694e28d 100755
+> --- a/t/t5705-clone-2gb.sh
+> +++ b/t/t5705-clone-2gb.sh
+> @@ -3,12 +3,9 @@
+>  test_description=3D'Test cloning a repository larger than 2 gigabyte=
+'
+>  . ./test-lib.sh
+> =20
+> -test -z "$GIT_TEST_CLONE_2GB" &&
+> -skip_all=3D"Skipping expensive 2GB clone test; enable it with GIT_TE=
+ST_CLONE_2GB=3Dt" &&
+> -test_done &&
+> -exit
+> +test -n "$GIT_TEST_CLONE_2GB" && test_set_prereq CLONE_2GB
 
-Did you really mean to have that "if" before assignment to P3, and if s=
-o
-why (as opposed to "after assignment to P3" or "before assignment to P0=
-")?
+In your 6/7 you preserve the "skipping" message with "say"; don't you w=
+ant
+to do the same here?
