@@ -1,124 +1,97 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2] test-lib: Don't write test-results when HARNESS_ACTIVE
-Date: Wed, 11 Aug 2010 19:37:31 +0000
-Message-ID: <1281555451-6847-1-git-send-email-avarab@gmail.com>
-References: <1278632080-31949-1-git-send-email-avarab@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Git thinks a failing command doesn't exist
+Date: Wed, 11 Aug 2010 19:45:14 +0000
+Message-ID: <AANLkTik3QmyP3sygbd36VhUQtdK-z81vqVAoAcPofFO+@mail.gmail.com>
+References: <AANLkTin7E-v9TYd1KoD73knnSwSMy-V-pvS0TmpQd72M@mail.gmail.com>
+	<20100811192554.GA8106@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 11 21:38:23 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Aug 11 21:45:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjH83-0007Yu-II
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 21:38:23 +0200
+	id 1OjHEq-0002aR-5X
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 21:45:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756337Ab0HKTiT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 15:38:19 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57465 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755845Ab0HKTiS (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 15:38:18 -0400
-Received: by wyb32 with SMTP id 32so496100wyb.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 12:38:17 -0700 (PDT)
+	id S1756554Ab0HKTpR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 15:45:17 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55531 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756190Ab0HKTpQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 15:45:16 -0400
+Received: by fxm13 with SMTP id 13so382592fxm.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 12:45:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=00ioCkES8bwl85eCBSs4AslRk3XIAUvBu3WgOfywoXQ=;
-        b=eJn5XyOLYu163s0lvNxed1nveeOAC0IixQfTwNHcHFxPS7pYJkCLX/Rg8xTih8wtV4
-         WjMzlyxdHEyigSLC5umt58jxmjS5BFbFbrauIRWrZoqe8qUBrx5INdjaXURuWCUQAFQz
-         ESKEK6aD7q/XgjEtgDKgtcxDH6FyMs9ESEbaE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=f8TK9IXXad7AVQXerDWfUS8Sbh/dWLvMWEvMhZfi9oA=;
+        b=ofuWWEvVcmfplRRF0mEtWjmB3qXWZNnjb73DzFg/GSYMTC3n6WvHm2f1QVuydAjDgj
+         dcTgxrxZeqWGxtG+MnEaKQG3tw87G1vdBoicxpr+KwdVqEHI3mHh8i4GBBACgi33MOcK
+         meLZf4sjCMrrirTZLZo1zKA3qKh0cmke+dwl0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=hE76nyRG3bD3FKBhtUroWkOZubWFMt+KaBTcn6FKKL3vVyxD8foyj6aekmQN5iZk+v
-         wqGlmF2FeRqBC31++NFuhCGVi18XnLWbcvjdX1WbTWRsd6lBubpAKTOyQSpW417lZTZX
-         jBcLqnz5n5rtkSOJvBz+BRYLCilTflcpzYm1w=
-Received: by 10.216.53.74 with SMTP id f52mr16967201wec.112.1281555457061;
-        Wed, 11 Aug 2010 12:37:37 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id u32sm341626weq.11.2010.08.11.12.37.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 12:37:36 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.295.gdf931
-In-Reply-To: <1278632080-31949-1-git-send-email-avarab@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wrKxlTLTT611+JQvU7T2PnmHcIMVUGbSlMe2tDGEQfR0g3UB/XSDEY1URfWXskqtJF
+         dVN2+088rzPJGxvWLYVRJKxRh41iZiGCtnPqrGLMOCj/HsO0gELg2TuN/0SdpjIMqDD8
+         sDPMXg5qzycVP6E4LQoTseymbTpn27UyrZx2o=
+Received: by 10.223.110.73 with SMTP id m9mr20685743fap.25.1281555914912; Wed, 
+	11 Aug 2010 12:45:14 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Wed, 11 Aug 2010 12:45:14 -0700 (PDT)
+In-Reply-To: <20100811192554.GA8106@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153294>
 
-TAP harnesses don't need to read test-results/*, since they keep track
-of the number of passing/failing tests internally. Skip the generation
-of these files when HARNESS_ACTIVE is set.
-
-It's now possible to run the Git test suite without writing anything
-to the t/ directory at all if you use a TAP harness and the --root
-switch:
-
-    cd t
-    sudo mount -t tmpfs none /tmp/memory -o size=3D300m
-    prove -j9 ./t[0-9]*.sh :: --root=3D/tmp/memory
-
-The I/O that the ~500 test-results/* files contributed was very
-minimal, but I thought this was worth mentioning.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Wed, Aug 11, 2010 at 19:25, Jeff King <peff@peff.net> wrote:
+> On Wed, Aug 11, 2010 at 07:12:38PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0=
+ Bjarmason wrote:
 >
----
+>> Has this been noted before:
+>>
+>> =C2=A0 =C2=A0 $ git rebase --continue
+>> =C2=A0 =C2=A0 .: 986: Can't open /home/avar/g/git/.git/rebase-merge/=
+author-script
+>> =C2=A0 =C2=A0 git: 'rebase' is not a git command. See 'git --help'.
+>> =C2=A0 =C2=A0 Did you mean this?
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 rebase
+>>
+>> Rebase failed, but the help mechanism seems to just test the exit
+>> code, or something similar.
+>
+> Which git version and which platform? There is code in run-command to
+> check for an exit code of 127 (which is what posix shells should prod=
+uce
+> for a missing command), and to set ENOENT in that case, which is what
+> execv_dashed_external notices for a missing command.
 
-This one fell through the cracks, and conflicted with Thomas's later
-"Only run aggregate-results over actual counts" patch.
+It's 1.7.2.1.295.gdf931 on Debian testing. Which is pu as it was on
+midnight UTC (I build it from cron) + these patches (which shouldn't
+matter):
 
-Please apply it, it keeps conflicting with local changes I have to the
-test-lib.sh
+    # Monkeypatches
 
- t/test-lib.sh |   23 +++++++++++++----------
- 1 files changed, 13 insertions(+), 10 deletions(-)
+                  git cherry-pick 041bc904d2 # t/lib-git-svn.sh: use
+$PERL_PATH for perl, not perl from $PATH
+    git cherry-pick 855a1f8836 # commit: fix test broken by
+jn/commit-no-change-wo-status
+    git revert --no-edit 48e46574e6 # rebase -i: add exec command to
+launch a shell command
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 4e73fff..956f1a5 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -646,16 +646,19 @@ test_create_repo () {
-=20
- test_done () {
- 	GIT_EXIT_OK=3Dt
--	test_results_dir=3D"$TEST_DIRECTORY/test-results"
--	mkdir -p "$test_results_dir"
--	test_results_path=3D"$test_results_dir/${0%.sh}-$$.counts"
--
--	echo "total $test_count" >> $test_results_path
--	echo "success $test_success" >> $test_results_path
--	echo "fixed $test_fixed" >> $test_results_path
--	echo "broken $test_broken" >> $test_results_path
--	echo "failed $test_failure" >> $test_results_path
--	echo "" >> $test_results_path
-+
-+	if test -z "$HARNESS_ACTIVE"; then
-+		test_results_dir=3D"$TEST_DIRECTORY/test-results"
-+		mkdir -p "$test_results_dir"
-+		test_results_path=3D"$test_results_dir/${0%.sh}-$$.counts"
-+
-+		echo "total $test_count" >> $test_results_path
-+		echo "success $test_success" >> $test_results_path
-+		echo "fixed $test_fixed" >> $test_results_path
-+		echo "broken $test_broken" >> $test_results_path
-+		echo "failed $test_failure" >> $test_results_path
-+		echo "" >> $test_results_path
-+	fi
-=20
- 	if test "$test_fixed" !=3D 0
- 	then
---=20
-1.7.2.1.295.gdf931
+> So either your shell is producing that exit code for a different case=
+,
+> or git is broken.
+
+My shell is Debian /bin/dash 0.5.5.1-6.
+
+Unfortunately the error with rebase was some one-off thing that I
+couldn't reproduce. I'm not even sure /what/ I did to make it happen.
