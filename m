@@ -1,69 +1,112 @@
-From: Adam Mercer <ramercer@gmail.com>
-Subject: Re: Using filter-branch to move repo contents in subdirectory
-Date: Wed, 11 Aug 2010 14:59:03 -0500
-Message-ID: <AANLkTi=G=oWaQ4PvjbkfEs2FUXgbKr3s+hWy8azSZsAH@mail.gmail.com>
-References: <AANLkTik2dL5jrEjZe0LB6Y4_PEwRt-7t_5CG7gup3pnV@mail.gmail.com> 
-	<AANLkTi=TeJvF+swpMWddDtA7jh4XWedQ+FjigEdRYkx_@mail.gmail.com> 
-	<AANLkTimu+V8zJeBV65nhqw0zaQHVHzZZahw2q-20SaWO@mail.gmail.com> 
-	<20100811193214.GB8106@coredump.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3] Allow HTTP user agent string to be modified.
+Date: Wed, 11 Aug 2010 13:08:41 -0700
+Message-ID: <7v62zgyks6.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=G=GvxXEh1hGuYQK42cdkMUaFhqxsQ39K=2180@mail.gmail.com>
+ <1281504288-31836-1-git-send-email-olsonse@umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Aug 11 21:59:36 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>,
+	Nick Hengeveld <nickh@reactrix.com>,
+	Mark Lodato <lodatom@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Spencer E. Olson" <olsonse@umich.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 11 22:09:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjHSZ-0000Sr-LL
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 21:59:35 +0200
+	id 1OjHbr-0004ho-1M
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 22:09:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758491Ab0HKT7Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 15:59:25 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57506 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756655Ab0HKT7Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 15:59:24 -0400
-Received: by fxm13 with SMTP id 13so390759fxm.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 12:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=oGrfNmR9KJioyq9dEemV4SltTU4F1Bf+9oCb7HKIdz8=;
-        b=hsD+XzbGhH1LZ/JfGz+fy5rfSwQ9sUcqG1Zod5/Lh4fSOC65/8yiciuW/RlM5vJdCx
-         GGV5QUpvxqFZmX/CfjddVvaxwFV6lkJateokhhv1dXci9fta2itMYfct+ThfNAozWqhu
-         d4Qu2mXJGirb4mslhfo90uY5KMbu3kF9laQwU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=xnxIlNm+++IskmYIgjjtpPc/XsREIL5oUWXmtVRFG/51C3+QVR3weV+7GcUpUTjeR1
-         sMJ/m2m1DGVzuaZdYGjdGBkJqeaSdAIzdfqYonrqpA/tKuGErpe4bx2/spS2qXsphrWm
-         ppLaHydK1EJ8OCbVbMkYxkU2mBtR6PIF+CbCY=
-Received: by 10.239.155.74 with SMTP id h10mr1080829hbc.30.1281556763223; Wed, 
-	11 Aug 2010 12:59:23 -0700 (PDT)
-Received: by 10.239.183.74 with HTTP; Wed, 11 Aug 2010 12:59:03 -0700 (PDT)
-In-Reply-To: <20100811193214.GB8106@coredump.intra.peff.net>
+	id S1756837Ab0HKUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 16:08:58 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43673 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756710Ab0HKUI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 16:08:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3DD2CC30B;
+	Wed, 11 Aug 2010 16:08:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TGolt4SJ2MNFenVFmp9rVnJmLMY=; b=EiJLw5
+	NJ/6PNMw0S6AyGA7ynLrdTRQGQ/uwKWd/vdazxa8OIdAdCDP9Zo87oHvkm4F2DWA
+	sSxJ5+Th8i4DsZjmLluaaRRmD85aORbf924ixxzVPS/5YmF7/uqtQLEqbA4dfiKj
+	sHARZF619r+g6oPPSJ0z2EFg2FUJNgpp9o3Kk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w8wSp99d0uLimot1pE6hU3NnYk7B1OUj
+	FRRpfOII7UnPS9ZFIkOrz/FUeJqB7DWYgTrp1qetXFU1YBkGw91p+81jIkdcHqI+
+	/PPqpyIyxHLeEeXIynA/4qLFevtZXMXNOKwz0UTrpX06kA8JaAGagnGTgeCyw5WJ
+	AygOwSW3mew=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 57155CC30A;
+	Wed, 11 Aug 2010 16:08:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07CC3CC305; Wed, 11 Aug
+ 2010 16:08:42 -0400 (EDT)
+In-Reply-To: <1281504288-31836-1-git-send-email-olsonse@umich.edu> (Spencer
+ E. Olson's message of "Tue\, 10 Aug 2010 23\:24\:48 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 41D7410E-A584-11DF-A49A-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153298>
 
-On Wed, Aug 11, 2010 at 14:32, Jeff King <peff@peff.net> wrote:
+"Spencer E. Olson" <olsonse@umich.edu> writes:
 
-> It looks like git-update-index will not create $GIT_INDEX_FILE at all if
-> you have no actual input lines to --index-info. So perhaps you have some
-> commit in your repo that has no actual content in it. Either that or
-> for some reason your "ls-files -s | gsed" invocation is producing no
-> output.
+> diff --git a/http.c b/http.c
+> index 1320c50..b0b6925 100644
+> --- a/http.c
+> +++ b/http.c
+> @@ -41,6 +41,7 @@ static long curl_low_speed_time = -1;
+>  static int curl_ftp_no_epsv;
+>  static const char *curl_http_proxy;
+>  static char *user_name, *user_pass;
+> +static const char *user_agent;
+>  
+>  #if LIBCURL_VERSION_NUM >= 0x071700
+>  /* Use CURLOPT_KEYPASSWD as is */
+> @@ -196,6 +197,9 @@ static int http_options(const char *var, const char *value, void *cb)
+>  		return 0;
+>  	}
+>  
+> +	if (!strcmp("http.useragent", var))
+> +		return git_config_string(&user_agent, var, value);
+> +
+>  	/* Fall back on the default ones */
+>  	return git_default_config(var, value, cb);
+>  }
+> @@ -279,7 +283,8 @@ static CURL *get_curl_handle(void)
+>  	if (getenv("GIT_CURL_VERBOSE"))
+>  		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
+>  
+> -	curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AGENT);
+> +	curl_easy_setopt(result, CURLOPT_USERAGENT,
+> +		user_agent ? user_agent : GIT_USER_AGENT );
 
-Yep, that was the problem. I'd been modifying the history with several
-git filter-branch calls and the initial commit in the repo was empty.
-Getting rid of this initial empty commit allowed the command to run.
+Excess space before ")".
 
-Cheers
+>  
+>  	if (curl_ftp_no_epsv)
+>  		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+> @@ -380,6 +385,8 @@ void http_init(struct remote *remote)
+>  #endif
+>  	set_from_env(&ssl_cainfo, "GIT_SSL_CAINFO");
+>  
+> +	set_from_env(&user_agent, "GIT_USER_AGENT");
 
-Adam
+The name GIT_USER_AGENT may be Ok as an internal token used in our http
+implementation, but the environment variable is an end-user facing entity.
+
+Don't we want to say HTTP somewhere, e.g. "GIT_HTTP_USER_AGENT"?
+
+If "User Agent" means the "browser claims to be..." thing to everybody
+without much context then I won't worry too much, but MUA is a mail user
+agent, and we do use the term in our docs when describing send-email,
+so...
