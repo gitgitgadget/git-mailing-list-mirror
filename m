@@ -1,80 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH v3] Allow HTTP user agent string to be modified.
-Date: Wed, 11 Aug 2010 16:04:02 +0800
-Message-ID: <AANLkTim1=Sa++uabphu03gv4i+JakoOhxf1w91WLB4sd@mail.gmail.com>
-References: <AANLkTi=G=GvxXEh1hGuYQK42cdkMUaFhqxsQ39K=2180@mail.gmail.com>
-	<1281504288-31836-1-git-send-email-olsonse@umich.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Encoding problem on OSX?
+Date: Wed, 11 Aug 2010 02:55:03 -0500
+Message-ID: <20100811075503.GD5450@burratino>
+References: <AANLkTikh12guRxCK2Vf=WvshzX8P-fYTyu3qxYWNJ2px@mail.gmail.com>
+ <AANLkTiky2uUHfOsh8rNXZPEqTLcNSZowy=Qcm+4Hjn_n@mail.gmail.com>
+ <20100809234620.GA6418@burratino>
+ <AANLkTikqpYO9GG9PZD_==PyUSGRV8=L5LrZ0RVsESuXN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>,
-	Mark Lodato <lodatom@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Spencer E. Olson" <olsonse@umich.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 11 10:04:18 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@namtrac.org>
+X-From: git-owner@vger.kernel.org Wed Aug 11 10:04:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj6IL-0003VC-RY
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:04:18 +0200
+	id 1Oj6IY-0003az-Tj
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:04:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755413Ab0HKIEH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 04:04:07 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:44243 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753429Ab0HKIED convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 04:04:03 -0400
-Received: by eya25 with SMTP id 25so4244323eya.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 01:04:02 -0700 (PDT)
+	id S932234Ab0HKIEN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 04:04:13 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:36693 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755131Ab0HKIEK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 04:04:10 -0400
+Received: by gxk23 with SMTP id 23so4018489gxk.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 01:04:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QqNNtH1mmbko8ud2bX96mv0+kbGdFp9il7E+vFKiXtQ=;
-        b=WD1X6gEiUY+7D7O5tRP3HqS1NGKwuzKwWvSZqS8exjWQAs7eYpyW9JggKgFj0vqYW8
-         wwtj5/ksQJU7lDgMu9lbhxZ9205zPmbuwzxttcNnBDGECYVbddWUPSS4MU0P7vIHIRb0
-         PP2sG3OIj2a6o5Ri8dxQTa1QbLJrKKeuXyCY0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=iTOtZBzNSmKwiElCsfI9T1MINBC5/FSVtT/cyadk0EQ=;
+        b=Mv6Jpci1nsKNsvlAMjJ3aM802KaBrlfShfT5UHiLg3zc2WikY3D0zx0gkNQBbV6Dc4
+         hxEmK9CpEIQsVqEff+NiGWfOVgeWPGPBVYsfUKxWNvFx92Nq/Hdp5RuThIPqKJ1tXcoK
+         ZWY+KlfKK4c5O89L1ve+mOv7cUfHHWUCJeM2o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=H0lHzaB3DWw4c9BGdYfyNp3wuuLZG1lMHaq/AwL/UHSJCBL2w7u6RCKncpb/Fd7q3i
-         6lt2vOUvKsrpPNdwFV4z37CNbgJl2SaG7U/uexyDGeKtOVXOynm/t2ZPjP/WBp1rqmOv
-         dUVAPR+NzChkq/H32iQ1Gaz3pxKFiagwM5jwM=
-Received: by 10.213.19.67 with SMTP id z3mr5453285eba.87.1281513842474; Wed,
- 11 Aug 2010 01:04:02 -0700 (PDT)
-Received: by 10.213.15.72 with HTTP; Wed, 11 Aug 2010 01:04:02 -0700 (PDT)
-In-Reply-To: <1281504288-31836-1-git-send-email-olsonse@umich.edu>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=fBV+uOO3dLW0eMJ9KS1gaYF1hxMEpBgkRQmIZTRoFpqiD4F/BTBpVz7cECzKOgrj7D
+         B/KWFJ9pgt0qH2mXeUtOBNmtSeNbbDUCq1FH8SiXDw2kBkpZcCfCR5FuoShPSjiWb0S6
+         8FOUXMQyWsE5VWCquJPb3PZ3SVxRUFNnL2Z7o=
+Received: by 10.101.20.12 with SMTP id x12mr21265631ani.95.1281513392073;
+        Wed, 11 Aug 2010 00:56:32 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id w6sm12188295anb.3.2010.08.11.00.56.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 11 Aug 2010 00:56:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikqpYO9GG9PZD_==PyUSGRV8=L5LrZ0RVsESuXN@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153199>
 
-On Wed, Aug 11, 2010 at 1:24 PM, Spencer E. Olson <olsonse@umich.edu> w=
-rote:
-> Some firewalls restrict HTTP connections based on the clients user ag=
-ent. =A0This
-> commit provides the user the ability to modify the user agent string =
-via either
-> a new config option (http.useragent) or by an environment variable
-> (GIT_USER_AGENT). =A0Relevant documentation is added to Documentation=
-/config.txt.
->
-> Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
-> ---
->
-> Hi all,
->
-> This is an updated version of this patch including the changes sugges=
-ted by Ray
-> Chuan.
+=C4=B0smail D=C3=B6nmez wrote:
 
-  Acked-by: Tay Ray Chuan <rctay89@gmail.com>
+> [~]> printf 'Th\360\235\204\236s\n' | sed 's/.*//g'
+>=20
+> [ismail@havana][08:51:06]
+> [~]>
 
---=20
-Cheers,
-Ray Chuan
+Thanks for checking.  So sed is not completely broken.  Could you try
+
+ sh t4201-shortlog.sh
+ cd "trash directory.t4201-shortlog"
+ git log
+ cat "trash directory.t4201-shortlog/log"
+
+?
