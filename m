@@ -1,98 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC] Add global and system-wide gitattributes
-Date: Wed, 11 Aug 2010 14:31:16 +0200
-Message-ID: <vpq39uluy97.fsf@bauges.imag.fr>
-References: <1281488646-7108-1-git-send-email-gsvick@gmail.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Proposal for new Git Wiki admin
+Date: Wed, 11 Aug 2010 21:51:12 +0900
+Message-ID: <87vd7hpb27.fsf@catnip.gol.com>
+References: <20100810162602.GG3921@kytes>
+	<m3y6ce2kdz.fsf@localhost.localdomain> <20100811050056.GA3715@kytes>
+	<4C62494A.2030805@drmicha.warpmail.net>
+	<AANLkTimuHzC_brw2bBDTvc=-Cj+70AMFEj7nzspW5mGq@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Henrik Grubbstrm <grubba@grubba.org>
-To: Petr Onderka <gsvick@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 14:35:08 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 11 14:51:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjAWR-0003Eu-Ea
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 14:35:07 +0200
+	id 1OjAmP-0002lH-1f
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 14:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101Ab0HKMev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 08:34:51 -0400
-Received: from imag.imag.fr ([129.88.30.1]:54857 "EHLO imag.imag.fr"
+	id S1752080Ab0HKMvc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 08:51:32 -0400
+Received: from lo.gmane.org ([80.91.229.12]:52204 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752073Ab0HKMeu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 08:34:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7BCVGot017908
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 11 Aug 2010 14:31:17 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OjASi-000565-Qu; Wed, 11 Aug 2010 14:31:16 +0200
-In-Reply-To: <1281488646-7108-1-git-send-email-gsvick@gmail.com> (Petr Onderka's message of "Wed\, 11 Aug 2010 01\:04\:06 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 11 Aug 2010 14:31:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1751797Ab0HKMvb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 08:51:31 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OjAmI-0002hj-GU
+	for git@vger.kernel.org; Wed, 11 Aug 2010 14:51:30 +0200
+Received: from 218.231.154.125.eo.eaccess.ne.jp ([218.231.154.125])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 14:51:30 +0200
+Received: from miles by 218.231.154.125.eo.eaccess.ne.jp with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 14:51:30 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 218.231.154.125.eo.eaccess.ne.jp
+System-Type: x86_64-unknown-linux-gnu
+Cancel-Lock: sha1:VuD8cuAk+xfzbulqmivx48+pZx8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153232>
 
-Petr Onderka <gsvick@gmail.com> writes:
+Felipe Contreras <felipe.contreras@gmail.com> writes:
+> What we need is people that resolve the conflicts, not ignore them.
 
-> Allow gitattributes to be set globally and system wide in ~/.giattributes
-> and $(prefix)/etc/gitattributes files, respectively. This way, settings
-> for particular file types can be set in one place and apply for all user's
-> repositories.
+The thing is, much of what you've said against Johannes gives the
+impression of a personal attack (whether or not you meant it as such).
 
-The feature is definitely useful, and I'll use it as soon as it gets
-into git.git ;-).
+If you really want to resolve things, it would really help to tone it
+down, avoid accusations, and try to focus on the positive side.
 
-One point: we need to make sure the choice for the the user-wide
-filename is the right one, since it's a pain to change it later.
-
-We already have ~/.gitconfig, which often points to ~/.gitexcludes or
-~/.gitignored (but this filename is specified with a config variable,
-for which we didn't manage to agree on a default value). We're about
-to add ~/.gitattributes. That makes 3 ~/.git* files, and I think it's
-time to make it a directory (similar to $GIT_DIR/info/)
-
-I think it should be done like this:
-
-1) Default core.excludesfile to $CONF/exclude
-
-2) Make your user-wide gitattribute $CONF/attributes
-
-3) Optionally, read $CONF/config as well as ~/.gitconfig so that
-   people can have all their git configuration in the same directory.
-
-Now, we need to agree on $CONF. Some non-options are:
-
-* CONF=~/.gitconfig would clash with the file ~/.gitconfig
-
-* CONF=~/.git would prevent people from versionning their $HOME.
-
-I'd be in favor of following the freedesktop standard (roughly,
-defaulting to ~/.config/git):
-
-  http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-
-because other applications start using it, and it allows one to easily
-keep the configuration in a (typically git-versionned) ~/.config
-directory. And if we are to choose a config directory, it doesn't harm
-to chose one consistant with other applications and with a standard.
-
-I never got time to implement this. If you're willing to do something
-like that, that would be great. If not, I'd suggest having a config
-variable to point to the user-wide gitattributes file (without a
-default value), because it allows a future transition by giving a
-default value to the variable.
+-miles
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Friendless, adj. Having no favors to bestow. Destitute of fortune. Addicted to
+utterance of truth and common sense.
