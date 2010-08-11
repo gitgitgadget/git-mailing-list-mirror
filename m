@@ -1,79 +1,119 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git notes primer?
-Date: Wed, 11 Aug 2010 00:10:36 -0500
-Message-ID: <20100811051036.GA639@burratino>
-References: <201008101040.07172.thomas@koch.ro>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thomas Koch <thomas@koch.ro>
-X-From: git-owner@vger.kernel.org Wed Aug 11 07:12:26 2010
+From: "Spencer E. Olson" <olsonse@umich.edu>
+Subject: [PATCH v3] Allow HTTP user agent string to be modified.
+Date: Tue, 10 Aug 2010 23:24:48 -0600
+Message-ID: <1281504288-31836-1-git-send-email-olsonse@umich.edu>
+References: <AANLkTi=G=GvxXEh1hGuYQK42cdkMUaFhqxsQ39K=2180@mail.gmail.com>
+Cc: Tay Ray Chuan <rctay89@gmail.com>,
+	Nick Hengeveld <nickh@reactrix.com>,
+	Mark Lodato <lodatom@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	"Spencer E. Olson" <olsonse@umich.edu>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 11 07:25:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj3c1-0003ze-Jl
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 07:12:25 +0200
+	id 1Oj3on-000793-LN
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 07:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751807Ab0HKFMJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 01:12:09 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:52981 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040Ab0HKFMH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 01:12:07 -0400
-Received: by ywh1 with SMTP id 1so3963037ywh.19
-        for <git@vger.kernel.org>; Tue, 10 Aug 2010 22:12:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=asANlsyNyFY1lDBZfbQEkBbz4wVCFOhk5atw4tjjjsk=;
-        b=hBGGmcUOzXVaclmSV9Qrw9gECCrUuQzPx1j/1QpFY/b70fIycrgmRBsM8BglNjO4rU
-         mYcEWD0Q7rxp59Jva8E/HIxnE1WqX9gZ5MCTCsPPN/UYncATbiGnMLpg/6jVRHwWn46P
-         g48Re08mwfkxj2njpokotD2pFFCKsp69v20UY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=qeLYHSnb3NIwpBotKlHE8lADpGJzSLjvc1R5T37c5uL7y+450cXFprEMMXkOUIw1+t
-         R2plaVC12mUDo4eeGW2Jpj08V3eZEcr/mf8v1a1qO//09+1EY1trEdIQtCAqEtLz2kR+
-         rTahAeWmxoeUtohHuGPrUS/W5gnpN8uf6qdd0=
-Received: by 10.100.128.15 with SMTP id a15mr21087541and.67.1281503526320;
-        Tue, 10 Aug 2010 22:12:06 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id x33sm11852453ana.13.2010.08.10.22.12.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 10 Aug 2010 22:12:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201008101040.07172.thomas@koch.ro>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751907Ab0HKFZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 01:25:33 -0400
+Received: from smtp.mail.umich.edu ([141.211.14.82]:41682 "EHLO
+	hellskitchen.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751304Ab0HKFZb (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 01:25:31 -0400
+Received: FROM localhost.localdomain (174-28-223-52.albq.qwest.net [174.28.223.52])
+	By hellskitchen.mr.itd.umich.edu ID 4C623449.2B19C.15806 ;
+	Authuser olsonse;
+	11 Aug 2010 01:25:29 EDT
+X-Mailer: git-send-email 1.7.0.4
+In-Reply-To: <AANLkTi=G=GvxXEh1hGuYQK42cdkMUaFhqxsQ39K=2180@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153188>
 
-Hi Thomas,
+Some firewalls restrict HTTP connections based on the clients user agent.  This
+commit provides the user the ability to modify the user agent string via either
+a new config option (http.useragent) or by an environment variable
+(GIT_USER_AGENT).  Relevant documentation is added to Documentation/config.txt.
 
-Thomas Koch wrote:
+Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
+---
 
-> Before I continue with my current design, I wanted to have a look at =
-git=20
-> notes, whether it would provide better mechanisms then tracking my me=
-ta=20
-> informations in a hidden background branch. (Much like pristine-tar d=
-oes.)
+Hi all,
 
-=E2=80=9Cgit notes=E2=80=9D associates arbitrary data to specific objec=
-ts (blobs, trees,
-commits, annotated tags).  If your metainformation is per-branch rather
-than per-commit, then notes will probably not help you.
+This is an updated version of this patch including the changes suggested by Ray
+Chuan.
 
-=46eel free to be inspired by their design, though. :)
 
-Regards,
-Jonathan
+ Documentation/config.txt |    9 +++++++++
+ http.c                   |    9 ++++++++-
+ 2 files changed, 17 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f81fb91..826e816 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1243,6 +1243,15 @@ http.noEPSV::
+ 	support EPSV mode. Can be overridden by the 'GIT_CURL_FTP_NO_EPSV'
+ 	environment variable. Default is false (curl will use EPSV).
+ 
++http.useragent::
++	The HTTP USER_AGENT string presented to an HTTP server.  The default
++	value represents the version of the client git such as git/1.7.1.
++	This option allows you to override this value to a more common value
++	such as Mozilla/4.0.  This may be necessary, for instance, if
++	connecting through a firewall that restricts HTTP connections to a set
++	of common USER_AGENT strings (but not including those like git/1.7.1).
++	Can be overridden by the 'GIT_USER_AGENT' environment variable.
++
+ i18n.commitEncoding::
+ 	Character encoding the commit messages are stored in; git itself
+ 	does not care per se, but this information is necessary e.g. when
+diff --git a/http.c b/http.c
+index 1320c50..b0b6925 100644
+--- a/http.c
++++ b/http.c
+@@ -41,6 +41,7 @@ static long curl_low_speed_time = -1;
+ static int curl_ftp_no_epsv;
+ static const char *curl_http_proxy;
+ static char *user_name, *user_pass;
++static const char *user_agent;
+ 
+ #if LIBCURL_VERSION_NUM >= 0x071700
+ /* Use CURLOPT_KEYPASSWD as is */
+@@ -196,6 +197,9 @@ static int http_options(const char *var, const char *value, void *cb)
+ 		return 0;
+ 	}
+ 
++	if (!strcmp("http.useragent", var))
++		return git_config_string(&user_agent, var, value);
++
+ 	/* Fall back on the default ones */
+ 	return git_default_config(var, value, cb);
+ }
+@@ -279,7 +283,8 @@ static CURL *get_curl_handle(void)
+ 	if (getenv("GIT_CURL_VERBOSE"))
+ 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
+ 
+-	curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AGENT);
++	curl_easy_setopt(result, CURLOPT_USERAGENT,
++		user_agent ? user_agent : GIT_USER_AGENT );
+ 
+ 	if (curl_ftp_no_epsv)
+ 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
+@@ -380,6 +385,8 @@ void http_init(struct remote *remote)
+ #endif
+ 	set_from_env(&ssl_cainfo, "GIT_SSL_CAINFO");
+ 
++	set_from_env(&user_agent, "GIT_USER_AGENT");
++
+ 	low_speed_limit = getenv("GIT_HTTP_LOW_SPEED_LIMIT");
+ 	if (low_speed_limit != NULL)
+ 		curl_low_speed_limit = strtol(low_speed_limit, NULL, 10);
+-- 
+1.7.0.4
