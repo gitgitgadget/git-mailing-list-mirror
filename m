@@ -1,98 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] split_cmdline: Allow caller to access error string
-Date: Wed, 11 Aug 2010 11:31:45 -0700
-Message-ID: <7vhbj1yp9q.fsf@alter.siamese.dyndns.org>
-References: <1281158019-25995-1-git-send-email-gdb@mit.edu>
+Subject: Re: [PATCH 4/7] t/t5503-tagfollow: change from skip_all=* to prereq
+ skip
+Date: Wed, 11 Aug 2010 11:32:09 -0700
+Message-ID: <7vtyn1xaom.fsf@alter.siamese.dyndns.org>
+References: <1281469968-25670-1-git-send-email-avarab@gmail.com>
+ <1281469968-25670-5-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Aug 11 20:32:04 2010
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 11 20:32:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjG5r-0001jq-Iq
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:32:03 +0200
+	id 1OjG6H-0001vp-Mq
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:32:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753620Ab0HKSb4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 14:31:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45799 "EHLO
+	id S1755300Ab0HKScU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 14:32:20 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47212 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753414Ab0HKSbz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 14:31:55 -0400
+	with ESMTP id S1755226Ab0HKScS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 14:32:18 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 09E27CC3B8;
-	Wed, 11 Aug 2010 14:31:55 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 81DA1CC3DE;
+	Wed, 11 Aug 2010 14:32:18 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=CRGoJSzvjgrd7xcsJVP5hDFWPA0=; b=Whp+IhBf5/QL7ixJzaJsIiy
-	x6PXA8tfLJX+o+0SwFjNluI2DSrVTfUqsBM+QTIGIXtzBhEwesCH0zrXo1N2qeWF
-	BjYi+RM7lDZrg5zptwCwc6feodL6phyu/ux8z9TckKggrJf4UEAiR+UsWaMEnWsT
-	rqIzX2wIV6yb5YLoDRLQ=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=tWhs+ovFhkR6lr5mVMfis5pvO
+	NA=; b=tOF9LqL6UtNXC5+fYxh8MvqYP6imOeHV1Kou08J3mSe30XNTVCk10vM+c
+	XlJvDdeEz3WQQcKeIu7uc9n5Shh/5icyd96OFjxRXrPOzwab4A2skfgqML9RNKlF
+	x5Pz70gXgQdmSQyEjLauz4EdNOelDg4rUxUcPgceb2QuStuzOw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=P0ezs3o7tBaAa2wPYYow4aYI5TtkEnXrxwyf7UpkZL4apHQ1t
-	fGaISoyxpIGJ7kE1Nihn3Q4+VzJjrB7LU9RAU2QxYJpKWUwVoAk59AV1PCTHMdZi
-	CwGHwZC/Fj+ifXwjNxbVZJVn8vn/4txpIAViP9nt2TvAQ7wIpJ5I1THKGc=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=Y1vLdw7hRTaC6SjEtFX
+	qbdgnNuozR2dQWWMXDicBNR7vjh4ZocZnOU0dw7RRxpE/gmqtOAdFKJCqP6AYphH
+	8JlMdQHqkwablHKGnLa1imn9iEnarJAxjzJTZX+8VgdSGpE/mKOMqpu1qf8fM/eg
+	6CX7ku7fh5I6v4A1ef/iViEI=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3923CC3B4;
-	Wed, 11 Aug 2010 14:31:52 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 283E5CC3D3;
+	Wed, 11 Aug 2010 14:32:15 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 07AD6CC3B3; Wed, 11 Aug
- 2010 14:31:47 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D5DAECC3CB; Wed, 11 Aug
+ 2010 14:32:10 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B6531976-A576-11DF-839C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C3921F1A-A576-11DF-839C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153271>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153272>
 
-Greg Brockman <gdb@MIT.EDU> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> This allows the caller to add its own error message to that returned
-> by split_cmdline.  Thus error output following a failed split_cmdline
-> can be of the form
->
-> fatal: Bad alias.test string: cmdline ends with \
->
-> rather than
->
-> error: cmdline ends with \
-> fatal: Bad alias.test string
->
-> Signed-off-by: Greg Brockman <gdb@mit.edu>
-> ---
+> diff --git a/t/t5503-tagfollow.sh b/t/t5503-tagfollow.sh
+> index bab1a53..8a298a6 100755
+> --- a/t/t5503-tagfollow.sh
+> +++ b/t/t5503-tagfollow.sh
+> @@ -6,8 +6,11 @@ test_description=3D'test automatic tag following'
+> =20
+>  case $(uname -s) in
+>  *MINGW*)
+> -	skip_all=3D"GIT_DEBUG_SEND_PACK not supported - skipping tests"
+> -	test_done
+> +	say "GIT_DEBUG_SEND_PACK not supported - skipping tests"
+> +	;;
+> +*)
+> +	test_set_prereq NOT_MINGW
+> +	;;
+>  esac
 
-> diff --git a/alias.c b/alias.c
-> index 372b7d8..6f771cb 100644
-> --- a/alias.c
-> +++ b/alias.c
-> @@ -1,7 +1,9 @@
-> ...
-> +#define SPLIT_CMDLINE_BAD_ENDING 1
-> +#define SPLIT_CMDLINE_UNCLOSED_QUOTE 2
-> +static const char *split_cmdline_errors = { "cmdline ends with \\", "unclosed quote" };
-> ...
-> @@ -53,7 +55,7 @@ int split_cmdline(char *cmdline, const char ***argv)
->  				if (!c) {
->  					free(*argv);
->  					*argv = NULL;
-> -					return error("cmdline ends with \\");
-> +					return -SPLIT_CMDLINE_BAD_ENDING;
->  				}
->  			}
->  			cmdline[dst++] = c;
->...
-> @@ -75,3 +77,6 @@ int split_cmdline(char *cmdline, const char ***argv)
->  	return count;
->  }
->  
-> +const char *split_cmdline_strerror(int split_cmdline_errno) {
-> +	return split_cmdline_errors[-split_cmdline_errno-1];
-> +}
+To =C3=86var; isn't the prerequisite for these tests "does our git supp=
+ort send
+pack debugging?" not "are we not running on mingw?"  Let's call it
+DEBUG_SEND_PACK or something.
 
-Looks like a reasonable way to go.  Thanks.
+To J6t; does the assumption here still hold, or do we support send pack
+debugging these days?
