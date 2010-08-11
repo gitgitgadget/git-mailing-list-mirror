@@ -1,133 +1,68 @@
-From: "Spencer E. Olson" <olsonse@umich.edu>
-Subject: [PATCH v5] Allow HTTP user agent string to be modified.
-Date: Wed, 11 Aug 2010 14:40:38 -0600
-Message-ID: <1281559238-30151-1-git-send-email-olsonse@umich.edu>
-References: <AANLkTikzCVAb8YOZQhZ-sd6uhngiAQnhkB-k_JFZMem=@mail.gmail.com>
-Cc: Jacob Helwig <jacob.helwig@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Nick Hengeveld <nickh@reactrix.com>,
-	Mark Lodato <lodatom@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	"Spencer E. Olson" <olsonse@umich.edu>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 11 22:40:56 2010
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked
+ 	files
+Date: Wed, 11 Aug 2010 22:50:43 +0200
+Message-ID: <4C630D23.5090001@web.de>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu> <AANLkTikPSR36SdUuzWsXxZsy9jsKOnp=_iz43BF-6nYe@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Greg Brockman <gdb@mit.edu>, git@vger.kernel.org, gitster@pobox.com
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 22:50:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjI6Z-0003eD-PD
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 22:40:56 +0200
+	id 1OjIGB-0008WU-DM
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 22:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757304Ab0HKUkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 16:40:51 -0400
-Received: from smtp.mail.umich.edu ([141.211.14.82]:34262 "EHLO
-	hellskitchen.mr.itd.umich.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755823Ab0HKUku (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 16:40:50 -0400
-Received: FROM localhost.localdomain (174-28-223-52.albq.qwest.net [174.28.223.52])
-	By hellskitchen.mr.itd.umich.edu ID 4C630ACF.C0516.6262 ;
-	Authuser olsonse;
-	11 Aug 2010 16:40:48 EDT
-X-Mailer: git-send-email 1.7.0.4
-In-Reply-To: <AANLkTikzCVAb8YOZQhZ-sd6uhngiAQnhkB-k_JFZMem=@mail.gmail.com>
+	id S1757384Ab0HKUup convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 16:50:45 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:56976 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755823Ab0HKUup (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 16:50:45 -0400
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate01.web.de (Postfix) with ESMTP id C23DD16609B0C;
+	Wed, 11 Aug 2010 22:50:43 +0200 (CEST)
+Received: from [80.128.112.119] (helo=[192.168.178.29])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1OjIG3-0003YK-00; Wed, 11 Aug 2010 22:50:43 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <AANLkTikPSR36SdUuzWsXxZsy9jsKOnp=_iz43BF-6nYe@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/9goYZO0Z3na+9XepKWsIONS18CwtRm2O36iw+
+	NR6hytpjv0NCLUoy5AR1NBljhEVhOcH7cwmq5x7gKsqdChos0s
+	0iicPwlGFUH3z2bas7IA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153304>
 
-Some firewalls restrict HTTP connections based on the clients user agent.  This
-commit provides the user the ability to modify the user agent string via either
-a new config option (http.useragent) or by an environment variable
-(GIT_HTTP_USER_AGENT).  Relevant documentation is added to
-Documentation/config.txt.
+Are we talking about two different issues here?
 
-Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
----
+Am 11.08.2010 14:24, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> On Wed, Aug 11, 2010 at 07:03, Greg Brockman <gdb@mit.edu> wrote:
+>> Currently, 'git add' will complain about excluded files, even if the=
+y
+>> are already tracked:
 
-Thanks Jacob.  Here is with the commit message fixed.
+I'm all for not complaining when adding an ignored file that is
+already tracked, as the user already told us he wants to track
+this file despite .gitignore.
 
+>> ... so it feels natural to me not
+>> to require extra user confirmation when an explicit path has been pr=
+ovided.
+>=20
+> I like it. I keep a /etc in git with .gitignore "*". This would help =
+a
+> lot for use cases like that. Explicitly specifying a full path should
+> override gitignore IMO.
 
- Documentation/config.txt |    9 +++++++++
- Makefile                 |    2 +-
- http.c                   |    9 ++++++++-
- 3 files changed, 18 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index f81fb91..7253b71 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1243,6 +1243,15 @@ http.noEPSV::
- 	support EPSV mode. Can be overridden by the 'GIT_CURL_FTP_NO_EPSV'
- 	environment variable. Default is false (curl will use EPSV).
- 
-+http.useragent::
-+	The HTTP USER_AGENT string presented to an HTTP server.  The default
-+	value represents the version of the client git such as git/1.7.1.
-+	This option allows you to override this value to a more common value
-+	such as Mozilla/4.0.  This may be necessary, for instance, if
-+	connecting through a firewall that restricts HTTP connections to a set
-+	of common USER_AGENT strings (but not including those like git/1.7.1).
-+	Can be overridden by the 'GIT_HTTP_USER_AGENT' environment variable.
-+
- i18n.commitEncoding::
- 	Character encoding the commit messages are stored in; git itself
- 	does not care per se, but this information is necessary e.g. when
-diff --git a/Makefile b/Makefile
-index e151516..f84f4a1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1873,7 +1873,7 @@ builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
- 
- config.s config.o: EXTRA_CPPFLAGS = -DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
- 
--http.s http.o: EXTRA_CPPFLAGS = -DGIT_USER_AGENT='"git/$(GIT_VERSION)"'
-+http.s http.o: EXTRA_CPPFLAGS = -DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
- 
- ifdef NO_EXPAT
- http-walker.s http-walker.o: EXTRA_CPPFLAGS = -DNO_EXPAT
-diff --git a/http.c b/http.c
-index 1320c50..0a5011f 100644
---- a/http.c
-+++ b/http.c
-@@ -41,6 +41,7 @@ static long curl_low_speed_time = -1;
- static int curl_ftp_no_epsv;
- static const char *curl_http_proxy;
- static char *user_name, *user_pass;
-+static const char *user_agent;
- 
- #if LIBCURL_VERSION_NUM >= 0x071700
- /* Use CURLOPT_KEYPASSWD as is */
-@@ -196,6 +197,9 @@ static int http_options(const char *var, const char *value, void *cb)
- 		return 0;
- 	}
- 
-+	if (!strcmp("http.useragent", var))
-+		return git_config_string(&user_agent, var, value);
-+
- 	/* Fall back on the default ones */
- 	return git_default_config(var, value, cb);
- }
-@@ -279,7 +283,8 @@ static CURL *get_curl_handle(void)
- 	if (getenv("GIT_CURL_VERBOSE"))
- 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
- 
--	curl_easy_setopt(result, CURLOPT_USERAGENT, GIT_USER_AGENT);
-+	curl_easy_setopt(result, CURLOPT_USERAGENT,
-+		user_agent ? user_agent : GIT_HTTP_USER_AGENT);
- 
- 	if (curl_ftp_no_epsv)
- 		curl_easy_setopt(result, CURLOPT_FTP_USE_EPSV, 0);
-@@ -380,6 +385,8 @@ void http_init(struct remote *remote)
- #endif
- 	set_from_env(&ssl_cainfo, "GIT_SSL_CAINFO");
- 
-+	set_from_env(&user_agent, "GIT_HTTP_USER_AGENT");
-+
- 	low_speed_limit = getenv("GIT_HTTP_LOW_SPEED_LIMIT");
- 	if (low_speed_limit != NULL)
- 		curl_low_speed_limit = strtol(low_speed_limit, NULL, 10);
--- 
-1.7.0.4
+I'm not so sure if we should silently add ignored files just because
+they appear on the command line. For me having to force the first time
+I do a "git add" for an otherwise ignored file looks like a feature.
