@@ -1,106 +1,94 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [WIP/PATCH 0/4] Re: Making error messages stand out
-Date: Wed, 11 Aug 2010 03:31:00 -0500
-Message-ID: <20100811083100.GA16495@burratino>
-References: <20100725005443.GA18370@burratino>
- <AANLkTilnQhsopnuAf0nja8Qq63VrOlt0_uCJrqYv5X-v@mail.gmail.com>
- <201007251122.41166.trast@student.ethz.ch>
- <20100729235151.GB6623@burratino>
- <AANLkTi=ao2RY8NGm4cACqz3_5zfT2zvXB4JHOopBD9T5@mail.gmail.com>
+From: =?UTF-8?B?xLBzbWFpbCBEw7ZubWV6?= <ismail@namtrac.org>
+Subject: Re: Encoding problem on OSX?
+Date: Wed, 11 Aug 2010 11:33:35 +0300
+Message-ID: <AANLkTim5Z7M0CypudaGtb2UuON5ajf3Xn=hz6oAJwv8w@mail.gmail.com>
+References: <AANLkTikh12guRxCK2Vf=WvshzX8P-fYTyu3qxYWNJ2px@mail.gmail.com> 
+	<AANLkTiky2uUHfOsh8rNXZPEqTLcNSZowy=Qcm+4Hjn_n@mail.gmail.com> 
+	<20100809234620.GA6418@burratino> <AANLkTikqpYO9GG9PZD_==PyUSGRV8=L5LrZ0RVsESuXN@mail.gmail.com> 
+	<20100811075503.GD5450@burratino> <AANLkTin1bspb+bzt6P1Fz7Q11=F2ZBftC19XQuQqHL+B@mail.gmail.com> 
+	<20100811082953.GA16456@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
-	git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 10:32:47 2010
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 10:34:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj6js-0007sO-ID
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:32:44 +0200
+	id 1Oj6l7-0008Uj-DE
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:34:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932681Ab0HKIcc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 04:32:32 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61791 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932677Ab0HKIcb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 04:32:31 -0400
-Received: by yxg6 with SMTP id 6so4026022yxg.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 01:32:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=4qLLE/6NMDvcWHtyQ6e3jrGZNbhBB3qik4ZtpWxLJss=;
-        b=IXrTIBMLFTTWgRWsI+IBD4kS+Qg4IdQZx2GcZISReLy2BbSiQJjr99KlfPVp9EGvCb
-         nllOnI23pxw9wlmMtVh1UqYn9mA10695HyYse3tpbErBLfQAMBBEmgPQJqp/iRHVO1E2
-         72JA9j6x8wYXeUPy0klNgRMPVU0ATvoewNBA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=FQ8IrZa1/Vtoe4I+T2uZ6GxasbAVZfKGHJ1zQJymxSrgHIPIyJAfMABx1y19qbvlD9
-         UyXnJkN9GNuwMfvhjwKeTswM8/epc8tf7lmqasmSzhffgmvFQ/nsl/N2BYnPYM/BK//c
-         9HbqcQ9yeC/WNJvOQ5xSumFvQXRaaqHJZMW4g=
-Received: by 10.100.154.15 with SMTP id b15mr21006232ane.20.1281515550324;
-        Wed, 11 Aug 2010 01:32:30 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id u14sm12264005ann.0.2010.08.11.01.32.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 01:32:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=ao2RY8NGm4cACqz3_5zfT2zvXB4JHOopBD9T5@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932677Ab0HKId5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 04:33:57 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:47358 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755131Ab0HKId4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 04:33:56 -0400
+Received: by pwj7 with SMTP id 7so2060473pwj.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 01:33:55 -0700 (PDT)
+Received: by 10.142.180.1 with SMTP id c1mr16048803wff.25.1281515635160; Wed, 
+	11 Aug 2010 01:33:55 -0700 (PDT)
+Received: by 10.142.178.20 with HTTP; Wed, 11 Aug 2010 01:33:35 -0700 (PDT)
+In-Reply-To: <20100811082953.GA16456@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153204>
 
-Sverre Rabbelier wrote:
-> On Thu, Jul 29, 2010 at 18:51, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-
->> though, I find the best solution is to use short, formulaic messages=
-:
->>
->> =C2=A0...
->> =C2=A0Recorded resolution for 'dir/a'.
->> =C2=A0[detached HEAD aa9ae6b] related change
->> =C2=A0 1 files changed, 1 insertions(+), 1 deletions(-)
->> =C2=A0fatal: could not apply 649420f... second
->> =C2=A0hint: after resolving the conflicts, mark the corrected paths
->> =C2=A0hint: with 'git add <paths>' and run 'git rebase --continue'
+On Wed, Aug 11, 2010 at 11:29 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> =C4=B0smail D=C3=B6nmez wrote:
 >
-> Yes please. This would be _extremely_ helpful!
+>> [~/Sources/git/t]> =C2=A0sh t4201-shortlog.sh
+>> ok 1 - setup
+>> not ok - 2 default output format
+>> #
+>> # =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git shortlog HEAD >log &=
+&
+>> # =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fuzz log >log.predictabl=
+e &&
+>> # =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_cmp expect.template=
+ log.predictable
+>> #
+>> ok 3 - pretty format
+>
+> Oops, my bad.
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sh t4201-shortlog.sh --immediate
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0cat "trash directory.t4201-shortlog/log"
+>
+> is what I meant. =C2=A0The idea is to get the log that that log.predi=
+ctable
+> is based on, by fetching the log from immediately after the failing t=
+est.
 
-Ok. :)
+Ok here we go;
 
-This does not suppress the =E2=80=9CCould not apply=E2=80=9D message at=
- the end yet.
 
-Patches are against cc/revert.
+[~/Sources/git/t]>        sh t4201-shortlog.sh --immediate
+ok 1 - setup
+not ok - 2 default output format
+#=09
+#		git shortlog HEAD >log &&
+#		fuzz log >log.predictable &&
+#		test_cmp expect.template log.predictable
+#=09
+[ismail@havana][11:32:29]
+[~/Sources/git/t]> cat "trash directory.t4201-shortlog/log"
+A U Thor (5):
+      Test
+      This is a very, very long first line for the commit message to
+see if it is wrapped correctly
+      Th=F0=9D=84=9Es =F0=9D=84=9Es a very, very long f=F0=9D=84=9Erst =
+l=F0=9D=84=9Ene for the comm=F0=9D=84=9Et message
+to see =F0=9D=84=9Ef =F0=9D=84=9Et =F0=9D=84=9Es wrapped correctly
+      Th????s ????s a very, very long f????rst l????ne for the
+comm????t message to see ????f ????t ????s wrapped correctly
+      a								12	34	56	78
 
-Jonathan Nieder (4):
-  Eliminate =E2=80=9CFinished cherry-pick/revert=E2=80=9D message
-  Introduce advise() to print hints
-  cherry-pick: Use error() for failure message
-  cherry-pick: Use advise() for hints
-
- Documentation/howto/revert-branch-rebase.txt |    6 ---
- builtin/revert.c                             |   52 ++++++++++++------=
--------
- contrib/examples/git-revert.sh               |    1 -
- git-rebase--interactive.sh                   |    6 +-
- t/t3507-cherry-pick-conflict.sh              |   20 ++++++++++
- t/t3508-cherry-pick-many-commits.sh          |   42 +++++++++++++++---=
----
- 6 files changed, 78 insertions(+), 49 deletions(-)
+Someone else (1):
+      Commit by someone else
