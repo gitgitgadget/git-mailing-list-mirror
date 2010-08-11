@@ -1,57 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/7] tests: use skip_all=* to skip tests
-Date: Wed, 11 Aug 2010 11:32:30 -0700
-Message-ID: <7vd3tpxao1.fsf@alter.siamese.dyndns.org>
-References: <1281469968-25670-1-git-send-email-avarab@gmail.com>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked 
+	files
+Date: Wed, 11 Aug 2010 14:36:13 -0400
+Message-ID: <AANLkTinbMHDa6P8N4Mne34rMkmzzbrpm0osd2LRbr-Jv@mail.gmail.com>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+	<7vmxstypot.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 20:33:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 20:36:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjG6w-0002K0-Tw
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:33:11 +0200
+	id 1OjGA3-0004II-1b
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 20:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755358Ab0HKScm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 14:32:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47832 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753420Ab0HKScl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 14:32:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5AB45CC401;
-	Wed, 11 Aug 2010 14:32:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=FOt/iCmS+njmBxUP3eAPIvgLvH8=; b=cRwqiCcXgPeoRjFSGeoOEZZ
-	cuCKZt+8TTEryRR8bWVgdY1vp7JRfhhmHlzvV2Oy90umEMCfLSUSir8ZPUELtrr0
-	SbqaA4MX28Fn0Zc7i0TgFVd8YeJOSaHoRs/S4zr4sKcjLSV499bOzh2WWUwXnRqi
-	oxKVDRHKlu2bntMWXYwE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=yLwQVDN2qw2mOVKE3UdvK5CiJsRDQsesN6QywfHZaN+1N8vrQ
-	KXys95BZEHMOykxpJaWYoQIrP5QgY1Bb0Ym4Ob7eMMIz4+JwgLkh+5kZm+HpMnDI
-	16/5fFSg8x3R/C96qm0x+97Ud+CZs3Wpu0JEunaXb1tDaBAou2gUtXDFeM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EDBB0CC3FC;
-	Wed, 11 Aug 2010 14:32:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AFD01CC3F9; Wed, 11 Aug
- 2010 14:32:31 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CF6A66C6-A576-11DF-ABA5-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753528Ab0HKSgS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 14:36:18 -0400
+Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:50884 "EHLO
+	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753684Ab0HKSgR convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 14:36:17 -0400
+X-AuditID: 1209190e-b7bbeae000000a09-88-4c62eda2f8c8
+Received: from mailhub-auth-1.mit.edu (MAILHUB-AUTH-1.MIT.EDU [18.9.21.35])
+	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id B9.70.02569.2ADE26C4; Wed, 11 Aug 2010 14:36:18 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o7BIaFwW001299
+	for <git@vger.kernel.org>; Wed, 11 Aug 2010 14:36:16 -0400
+Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7BIaDVK025363
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 11 Aug 2010 14:36:14 -0400 (EDT)
+Received: by wyb32 with SMTP id 32so433821wyb.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 11:36:13 -0700 (PDT)
+Received: by 10.216.231.73 with SMTP id k51mr17012849weq.5.1281551773094; Wed, 
+	11 Aug 2010 11:36:13 -0700 (PDT)
+Received: by 10.216.19.142 with HTTP; Wed, 11 Aug 2010 11:36:13 -0700 (PDT)
+In-Reply-To: <7vmxstypot.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: AAAAARWXE7o=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153277>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153278>
 
-Except for a few which I'll comment separately all of these looked
-reasonable (I didn't look at 7/7 very carefully, though).
+> What should happen if the user did these instead, after adding "dir" =
+as an
+> ignored entry, and adding dir/file but not dir/untracked to the index=
+?
+>
+> =A0(1) =A0 =A0git add dir/file dir/untracked =A0 =A0; explicitly name=
+d
+> =A0(2) =A0 =A0git add dir/* =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;=
+ have shell glob--same as (1)
+> =A0(3) =A0 =A0git add "dir/*" =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ; h=
+ave git glob
+> =A0(4) =A0 =A0git add dir =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ ; have git recurse
 
-Thanks.
+In all four cases, the output I get is:
+"""
+The following paths are ignored by one of your .gitignore files:
+dir
+Use -f if you really want to add them.
+fatal: no files added
+"""
+
+Note that this is also the output if you run
+
+(5) rm dir/untracked && git add "dir/*"
+
+Greg
