@@ -1,97 +1,147 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2] git-am: Ignore whitespace before patches
-Date: Wed, 11 Aug 2010 22:55:14 +0000
-Message-ID: <AANLkTind7ZtTS+Fi-tOSE7ExgD1ubhpLuxYJgWYms2aE@mail.gmail.com>
-References: <1273944188-9472-1-git-send-email-avarab@gmail.com>
-	<1281556645-23361-1-git-send-email-avarab@gmail.com>
-	<AANLkTin2DM-q7acST-x_Oz7jU-hODy8se6sngGxTDi_9@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 00:55:24 2010
+From: Daniel Johnson <computerdruid@gmail.com>
+Subject: [RFC/PATCHv2] fetch: allow command line --tags to override config
+Date: Wed, 11 Aug 2010 18:57:20 -0400
+Message-ID: <1281567440-6329-1-git-send-email-ComputerDruid@gmail.com>
+References: <AANLkTike2mAoGGk2ryZGjOmfT=yjHBLD4W5GPaXkxiso@mail.gmail.com>
+Cc: Daniel Johnson <ComputerDruid@gmail.com>,
+	Tay Ray Chuan <rctay89@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 12 00:58:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjKCh-0003l5-4V
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 00:55:23 +0200
+	id 1OjKFR-00051b-Kz
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 00:58:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753708Ab0HKWzR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 18:55:17 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47711 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750871Ab0HKWzR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 18:55:17 -0400
-Received: by fxm13 with SMTP id 13so496250fxm.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 15:55:15 -0700 (PDT)
+	id S1754928Ab0HKW6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 18:58:09 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:39759 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754786Ab0HKW6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 18:58:06 -0400
+Received: by qwh6 with SMTP id 6so659612qwh.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 15:58:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=S64OzwcOo0H4ww5xVjcszoeC+Q04SRxrWhUbzwiydGE=;
-        b=YwMwnMWfCWHCglqeyWF0uWTL4Ek+Z4MuBdXktOpvQ9DMvmXZbWBHKIOYFzrdn4LbZr
-         Ls0knLgG7iTxwuv9zeDpSr5t+xUa6JC6uIz0jPxv0W78wf8TlxV6tz1Kzq0c38QLtbZf
-         O7eyNgvxGN/lG3VOkueP7f/GEAESYXdWYY52Y=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=kv+nkHTV7HKK2cPm2/0UxpAb/w6ZJ/cNHAdWZo732+k=;
+        b=q+fkAv3HprHHOju25jh8SMYDNDvCWRYHYKIiSylTkoAisRFZFWWAa0LThgtB5mBJr0
+         Xe9Qvm1fXDGrvsoYg4UYxk8dso5ACJKGdeecwg+Sa0ZwfPVup9ZczVN2KFpyF585WBdL
+         2tulRsL1GuTFlyliNmf9xsGkZjN7s2eoTYubY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bBuitqikZeCW1Hg4wK8T2oFwEDL2AI6SwV8EHhd46pe9sUjukMORRtNBn1qufcm0dv
-         Kbm6xlDSm7WYuOrNtNo87/x0xF/EaUjb7dVGU8owSKh0J0I3I8TQY7+unjQQW/wkvR7n
-         M24XBA8PYhV1Xw9vXvpfpvpZWOAiGuuE7OUXo=
-Received: by 10.223.123.145 with SMTP id p17mr20828044far.90.1281567314071; 
-	Wed, 11 Aug 2010 15:55:14 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Wed, 11 Aug 2010 15:55:14 -0700 (PDT)
-In-Reply-To: <AANLkTin2DM-q7acST-x_Oz7jU-hODy8se6sngGxTDi_9@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=oQnHnU7qyzeZ7HAtPSF9+juMr+6OGcRkwG9mmOJ+YQm3evsqMSGq1Bv7kQv97Kcj0W
+         jAW0wjI/ReYgX3vlruIdelrMV7irnMCOCDTuzqktkyBXQ2KuDHZsbxc74VONQ+S0g695
+         2V2Qv2oFlQXfyBIEnO9/tEtyhAt8+S0W4EOjM=
+Received: by 10.224.116.20 with SMTP id k20mr11333912qaq.308.1281567485060;
+        Wed, 11 Aug 2010 15:58:05 -0700 (PDT)
+Received: from ComputerDruid@gmail.com (pool-71-163-16-224.bltmmd.fios.verizon.net [71.163.16.224])
+        by mx.google.com with ESMTPS id t1sm869891qcs.33.2010.08.11.15.58.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 11 Aug 2010 15:58:03 -0700 (PDT)
+Received: by ComputerDruid@gmail.com (sSMTP sendmail emulation); Wed, 11 Aug 2010 18:58:15 -0400
+X-Mailer: git-send-email 1.7.2
+In-Reply-To: <AANLkTike2mAoGGk2ryZGjOmfT=yjHBLD4W5GPaXkxiso@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153310>
 
-On Wed, Aug 11, 2010 at 22:50, Jon Seymour <jon.seymour@gmail.com> wrot=
-e:
-> On Thu, Aug 12, 2010 at 5:57 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on
-> <avarab@gmail.com> wrote:
->> Change git-am to ignore whitespace (as defined by sh's read) at the
->> beginning of patches.
->>
->> This makes git-am work with patches downloaded from the GMail web
->> interface, here's an example from a raw Gmail attachment produced wi=
-th
->> `hexdump -C':
->>
->> =C2=A0 =C2=A020 20 20 20 20 20 20 20 =C2=A020 20 20 20 20 20 20 20 =C2=
-=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
->> =C2=A0 =C2=A020 20 20 20 20 20 20 20 =C2=A020 20 20 20 20 20 20 0a =C2=
-=A0| =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .|
->> =C2=A0 =C2=A052 65 74 75 72 6e 2d 50 =C2=A061 74 68 3a 20 3c 61 76 =C2=
-=A0|Return-Path: <av|
->>
->> Having to tell GMail users that they must manually edit their patche=
-s
->> before git-am will accept them (as this article does:
->> http://evag.evn.am/git/git-and-gmail) isn't optimal.
+Originally, if remote.<name>.tagopt was set, the --tags and option would
+have no effect when given to git fetch. So if
+tagopt="--no-tags"
+
+	git fetch --tags
+
+would not actually fetch tags.
+
+This patch changes this behavior to only follow what is written in the
+config if there is no option passed by the command line.
+
+Signed-off-by: Daniel Johnson <ComputerDruid@gmail.com>
+---
+On Sat, Aug 7, 2010 at 10:17 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+> On Fri, Aug 6, 2010 at 9:54 PM, Daniel Johnson <computerdruid@gmail.com> wrote:
+>> ---
+>> How does this look?
 >
-> This is a good point. Current behaviour discourages testing of patche=
-s
-> as delivered by e-mail since the GMail user is more likely to overloo=
-k
-> actual whitespace errors in a patch because they come to expect this
-> usual failure.
+> Looks ok - now you'll have to squash this with your code patch.
+And here it is. Sorry about the lateness. I also fixed a mistake I made in the
+documentation (linked to the wrong secton).
 
-Just to clarify, git-am doesn't print a whitespace error on GMail
-patches currently, the detection just fails:
+I'd still like comments on both the code and the change in behavior behind it.
 
-    $ git am ~/Desktop/mail.txt
-    Patch format detection failed.
+ Documentation/config.txt        |    4 +++-
+ Documentation/fetch-options.txt |    8 ++++++--
+ builtin/fetch.c                 |   10 ++++++----
+ 3 files changed, 15 insertions(+), 7 deletions(-)
 
-But with my patch:
-
-    $ git am ~/Desktop/mail.txt
-    Applying: git-am: Ignore whitespace before patches
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index f81fb91..682ebef 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1627,7 +1627,9 @@ remote.<name>.tagopt::
+ 	Setting this value to \--no-tags disables automatic tag following when
+ 	fetching from remote <name>. Setting it to \--tags will fetch every
+ 	tag from remote <name>, even if they are not reachable from remote
+-	branch heads.
++	branch heads. Passing these flags directly to linkgit:git-fetch[1] can
++	override this setting. See options \--tags and \--no-tags of
++	linkgit:git-fetch[1].
+ 
+ remote.<name>.vcs::
+ 	Setting this to a value <vcs> will cause git to interact with
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 9333c42..470ac31 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -49,7 +49,9 @@ ifndef::git-pull[]
+ endif::git-pull[]
+ 	By default, tags that point at objects that are downloaded
+ 	from the remote repository are fetched and stored locally.
+-	This option disables this automatic tag following.
++	This option disables this automatic tag following. The default
++	behavior for a remote may be specified with the remote.<name>.tagopt
++	setting. See linkgit:git-config[1].
+ 
+ -t::
+ --tags::
+@@ -58,7 +60,9 @@ endif::git-pull[]
+ 	objects reachable from the branch heads that are being
+ 	tracked will not be fetched by this mechanism.  This
+ 	flag lets all tags and their associated objects be
+-	downloaded.
++	downloaded. The default behavior for a remote may be
++	specified with the remote.<name>.tagopt setting. See
++	linkgit:git-config[1].
+ 
+ -u::
+ --update-head-ok::
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 1b67f5f..7a53144 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -675,10 +675,12 @@ static int do_fetch(struct transport *transport,
+ 
+ 	for_each_ref(add_existing, &existing_refs);
+ 
+-	if (transport->remote->fetch_tags == 2 && tags != TAGS_UNSET)
+-		tags = TAGS_SET;
+-	if (transport->remote->fetch_tags == -1)
+-		tags = TAGS_UNSET;
++	if (tags == TAGS_DEFAULT) {
++		if (transport->remote->fetch_tags == 2)
++			tags = TAGS_SET;
++		if (transport->remote->fetch_tags == -1)
++			tags = TAGS_UNSET;
++	}
+ 
+ 	if (!transport->get_refs_list || !transport->fetch)
+ 		die("Don't know how to fetch from %s", transport->url);
+-- 
+1.7.2
