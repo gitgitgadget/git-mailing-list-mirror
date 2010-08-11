@@ -1,138 +1,80 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git notes primer?
-Date: Wed, 11 Aug 2010 11:52:03 +0200
-Message-ID: <201008111152.03982.johan@herland.net>
-References: <201008101040.07172.thomas@koch.ro>
+From: Petr Onderka <gsvick@gmail.com>
+Subject: Re: [PATCH/RFC] Add global and system-wide gitattributes
+Date: Wed, 11 Aug 2010 12:50:45 +0200
+Message-ID: <AANLkTi=q-tdtaWp8O3AHyvynL97LJuy7e9HUFwfkmX3O@mail.gmail.com>
+References: <1281488646-7108-1-git-send-email-gsvick@gmail.com>
+	<Pine.GSO.4.63.1008111059281.1471@shipon.roxen.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: thomas@koch.ro
-X-From: git-owner@vger.kernel.org Wed Aug 11 12:37:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: =?ISO-8859-1?Q?Henrik_Grubbstr=F6m?= <grubba@roxen.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 12:50:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj8ga-0003SG-Bi
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 12:37:28 +0200
+	id 1Oj8tX-0000UE-Hn
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 12:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751122Ab0HKKhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 06:37:11 -0400
-Received: from mail.mailgateway.no ([82.117.37.108]:60591 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751029Ab0HKKhK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 06:37:10 -0400
-X-Greylist: delayed 2703 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Aug 2010 06:37:09 EDT
-Received: from 59.81-166-95.customer.lyse.net ([81.166.95.59] helo=epsilon.localnet)
-	by mail.mailgateway.no with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.60 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1Oj7yf-000G8f-2Y; Wed, 11 Aug 2010 11:52:05 +0200
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; i686; ; )
-In-Reply-To: <201008101040.07172.thomas@koch.ro>
+	id S1751372Ab0HKKuq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 06:50:46 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:49383 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751210Ab0HKKup convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 06:50:45 -0400
+Received: by qyk7 with SMTP id 7so4493673qyk.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 03:50:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=47bp9Apq55TszVkqb4qLNs3kqykl8ivGve1pCHn/rZE=;
+        b=V8xICwlNgUSvjn0zf3QndG+sNzOlvRPLET4rPAQl6W3TDxaq/Bx5amAl19tP9KH841
+         P5bBzQ1qCupHqxRwIzyPfrgETMDDLSg7NeuywncIrajt+mdbvKijrnGiPtjZZPOAAG+u
+         sFvHUbag7P9OeIO0IPgSs01RRIrntY8Z7r2Fo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rOqCcu0mxhYCTDsk2DmlZuh1JhwbucrN3FJgy21WDboutkXXWMfYX0iSWQmPEmaP3i
+         qANtxoMfR96zK8oAc/9ji0KUNMAeEc6u7Nb8wsE7iY4+2fP4oQzU6Ei5NpdFS0y0Nw00
+         ZeKx1GO/OEUPs2urh0YNWFOnQ815f08bD1VhA=
+Received: by 10.229.1.203 with SMTP id 11mr9296170qcg.238.1281523845116; Wed, 
+	11 Aug 2010 03:50:45 -0700 (PDT)
+Received: by 10.229.28.196 with HTTP; Wed, 11 Aug 2010 03:50:45 -0700 (PDT)
+In-Reply-To: <Pine.GSO.4.63.1008111059281.1471@shipon.roxen.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153225>
 
-On Tuesday, August 10, 2010 10:40:06 am Thomas Koch wrote:
-> Hi,
-> 
-> I'm working on a patch management system as topgit, but without the
-> complexity:
-> http://koch.ro/blog/index.php?/archives/139-tnt-is-not-topgit.html
-> 
-> Before I continue with my current design, I wanted to have a look at git
-> notes, whether it would provide better mechanisms then tracking my meta
-> informations in a hidden background branch. (Much like pristine-tar does.)
-> 
-> However I couldn't get a grip on git notes:
-> 
-> - Is git notes the only command that works on notes?
+Hi,
 
-Primarily, yes, although there are some exceptions:
+>> Allow gitattributes to be set globally and system wide in ~/.giattri=
+butes
+>
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ^^
+> I assume you mean "~/.gitattributes" (ie missing a 't').
 
-- There is a special fast-import command for quickly building notes trees
+Yeah.
 
-- There is some code in log/rev-list for displaying notes
+> I'm not sure if the above priority order is the most desireable order=
+, since
+> the user may want to set a default attribute, and have it to be overr=
+idden
+> by the .gitattributes in the repositories.
 
-- Recently, commands like 'rebase' and 'commit --amend' have learned options 
-to enable copying of notes from the original object to the rewritten object
+I wasn't sure either. I'm assuming info/gitattributes was made with
+higher priority, so that that users could override .gitattributes
+without polluting their repository, so I made the new ones behave the
+same way. But now that I think of it, you probably want to do that
+only for a specific repository, and have defaults for all repositories
+that could be overriden by local .gitattributes. I'm going to rewrite
+it this way.
 
-There may be more integration between notes and other git commands added in 
-the future.
-
-> - How are notes saved inside GIT?
-
-Notes are kept in 'notes refs' (refs/notes/*) which point into a history that 
-is separate/disconnected from your "regular" commit history. core.notesRef (or 
-$GIT_NOTES_REF, or the --ref option to 'git notes') determines which notes ref 
-you're currently working on (defaults to 'refs/notes/commits').
-
-Every command that manipulates notes adds a commit to your current notes ref. 
-Thus, you can review your notes editing history by running 'git log' on a 
-notes ref.
-
-The tree associated with each notes commit has a special form: All tree 
-entries are named after the SHA1 of the Git object they annotate. As such, the 
-notes for a given Git object (with a given SHA1 "1234567890abcdef...") is 
-found at "refs/notes/$NOTES_REF:1234567890abcdef...".
-
-Unfortunately, this doesn't scale when you get thousands of notes, so there is 
-some automatic fan-out happening when the number of notes exceed certain 
-thresholds. We then start making subtrees to limit the number of entries at 
-each tree level. Your notes objects are then relocated to live at 
-"refs/notes/$NOTES_REF:12/34567890abcdef..." (note the extra slash), and if 
-even more notes are added, more slashes are added to limit the number of 
-entries at each level (e.g. "refs/notes/$NOTES_REF:12/34/56/78/90abcdef...")
-
-Fortunately, this is all encapsulated by the internal notes API (in notes.h/c) 
-and by the 'git notes' command, so as long as you use them, you shouldn't need 
-to care about the implementation details.
-
-> - Is git notes and it's implementation stable now?
-
-Yes, the current APIs and commands are as stable as any other in 'master'. 
-However, 'git notes' is still a young feature, and expect new functionality to 
-be added in the future. For example, I'm currently working on 'git notes 
-merge' for auto-merging notes trees (needs special code to handle the fan-
-outs). 'git notes merge' is needed so that we can more easily share notes 
-between repos.
-
-> - Are there any tutorials on workflows with git notes?
-
-Not really. I don't think there are any workflows where git notes is an 
-integral part of the workflow.
-
-> - What different use cases of git notes do you know?
-
-- Extra annotations to commit messages
-
-- Implementing a textconv cache (already done by Jeff King in notes-cache.h/c)
-
-- Notes could be used to communicate bug status changes in a (distributed) bug 
-tracker (e.g. adding notes like "Causes-Bug: #12345" to a commit, and then 
-"Fixes-Bug: #12345" to a later bugfix commit)
-
-- Notes could be used to implement a storage backend for a code review system 
-(reviews to a given commit are kept as notes on that commit)
-
-- When synchronizing with foreign version control systems (e.g. git-svn), 
-notes could be used to keep track of cross-VCS relations, e.g. adding a "SVN-
-commit: #12345" note to the corresponding Git commit.
-
-- Any other use case where you need to keep some metadata associated with 
-objects in the git database.
-
-> - What use cases triggered the development of git notes in the first place?
-
-As has already been stated, we wanted to allow extra annotations to be added 
-to existing commit messages without rewriting the commit objects.
-
-Hope this helps,
-
-
-...Johan
+Petr Onderka
