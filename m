@@ -1,102 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2] t6040 (branch =?utf-8?Q?trackin?=
-	=?utf-8?B?Zyk6IGNoZWNrIOKAnHN0YXR1c+KAnSBpbnN0ZWFkIG9mIOKAnGNvbW1pdA==?=
-	=?utf-8?B?4oCd?=
-Date: Wed, 11 Aug 2010 02:49:09 -0500
-Message-ID: <20100811074909.GC5450@burratino>
-References: <20100725005443.GA18370@burratino>
- <20100725010230.GI18420@burratino>
- <201008110911.40133.trast@student.ethz.ch>
- <20100811073028.GA5450@burratino>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH v3] Allow HTTP user agent string to be modified.
+Date: Wed, 11 Aug 2010 16:04:02 +0800
+Message-ID: <AANLkTim1=Sa++uabphu03gv4i+JakoOhxf1w91WLB4sd@mail.gmail.com>
+References: <AANLkTi=G=GvxXEh1hGuYQK42cdkMUaFhqxsQ39K=2180@mail.gmail.com>
+	<1281504288-31836-1-git-send-email-olsonse@umich.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Aug 11 09:50:52 2010
+Cc: git@vger.kernel.org, Nick Hengeveld <nickh@reactrix.com>,
+	Mark Lodato <lodatom@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: "Spencer E. Olson" <olsonse@umich.edu>
+X-From: git-owner@vger.kernel.org Wed Aug 11 10:04:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj65M-0005k3-BK
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 09:50:52 +0200
+	id 1Oj6IL-0003VC-RY
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 10:04:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863Ab0HKHuj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 03:50:39 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:33742 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497Ab0HKHui convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 03:50:38 -0400
-Received: by gxk23 with SMTP id 23so4015602gxk.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 00:50:37 -0700 (PDT)
+	id S1755413Ab0HKIEH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 04:04:07 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:44243 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753429Ab0HKIED convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 04:04:03 -0400
+Received: by eya25 with SMTP id 25so4244323eya.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 01:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=iOcukV4khoaln+7m725yENvDh227q0zJOz0WVWTmq/4=;
-        b=vMRa3dC+hI0DI3+YHHefmZacc3Y7ldGMoLYc/PEW3SESKX4SemX0GC2BLxSeSRnr0G
-         BYRu+UeNBKe0OonzM0lEfBq0tnPz2Zktd08QDWRsxyXvn0Cshcs53BJUjrxwaLFxd22V
-         jLGC3sn85I8lX7D0SAT6Wu0b5X6AuiVCYlCVI=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QqNNtH1mmbko8ud2bX96mv0+kbGdFp9il7E+vFKiXtQ=;
+        b=WD1X6gEiUY+7D7O5tRP3HqS1NGKwuzKwWvSZqS8exjWQAs7eYpyW9JggKgFj0vqYW8
+         wwtj5/ksQJU7lDgMu9lbhxZ9205zPmbuwzxttcNnBDGECYVbddWUPSS4MU0P7vIHIRb0
+         PP2sG3OIj2a6o5Ri8dxQTa1QbLJrKKeuXyCY0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=EoZmyDXS5Ij6qODAmhJ5f7cxOaEMbxGbwgoYtJfoXK8STLnURwmO1CqsRcqFSPvWcs
-         hss14kG581WDLViT01Y7Zv/eDsUIrz/eE+Jd7lx/NCQQznhRPJ7v5MSy49aJ0M8Vs3bS
-         IR/TR3Z7IcjJp89q6vMvLq6YZBNQvMWsgqTn8=
-Received: by 10.151.123.3 with SMTP id a3mr20684828ybn.126.1281513037084;
-        Wed, 11 Aug 2010 00:50:37 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id q31sm7061022ybk.1.2010.08.11.00.50.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 00:50:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100811073028.GA5450@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=H0lHzaB3DWw4c9BGdYfyNp3wuuLZG1lMHaq/AwL/UHSJCBL2w7u6RCKncpb/Fd7q3i
+         6lt2vOUvKsrpPNdwFV4z37CNbgJl2SaG7U/uexyDGeKtOVXOynm/t2ZPjP/WBp1rqmOv
+         dUVAPR+NzChkq/H32iQ1Gaz3pxKFiagwM5jwM=
+Received: by 10.213.19.67 with SMTP id z3mr5453285eba.87.1281513842474; Wed,
+ 11 Aug 2010 01:04:02 -0700 (PDT)
+Received: by 10.213.15.72 with HTTP; Wed, 11 Aug 2010 01:04:02 -0700 (PDT)
+In-Reply-To: <1281504288-31836-1-git-send-email-olsonse@umich.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153198>
 
-Among the tests for correct branch tracking output is one that
-examines =E2=80=9Cgit commit=E2=80=9D output:
+On Wed, Aug 11, 2010 at 1:24 PM, Spencer E. Olson <olsonse@umich.edu> w=
+rote:
+> Some firewalls restrict HTTP connections based on the clients user ag=
+ent. =A0This
+> commit provides the user the ability to modify the user agent string =
+via either
+> a new config option (http.useragent) or by an environment variable
+> (GIT_USER_AGENT). =A0Relevant documentation is added to Documentation=
+/config.txt.
+>
+> Signed-off-by: Spencer E. Olson <olsonse@umich.edu>
+> ---
+>
+> Hi all,
+>
+> This is an updated version of this patch including the changes sugges=
+ted by Ray
+> Chuan.
 
- $ git commit
- # Your branch and 'origin/maint' have diverged,
- # and have 9 and 69 different commit(s) each, respectively.
- [...]
- no changes added to commit (use "git add" and/or "git commit -a")
- $
+  Acked-by: Tay Ray Chuan <rctay89@gmail.com>
 
-But we are experimenting with changing that output.  So drop
-that test for now and replace it with a test for =E2=80=9Cgit status=E2=
-=80=9D
-(which was not being checked yet and shares the same output
-format and wt-status backend).
-
-Reported-by: Thomas Rast <trast@student.ethz.ch>
-Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Oops, wrong patch.  Here=E2=80=99s the one I meant.  Sane?
-
-diff --git a/t/t6040-tracking-info.sh b/t/t6040-tracking-info.sh
-index 1785e17..a5b4489 100755
---- a/t/t6040-tracking-info.sh
-+++ b/t/t6040-tracking-info.sh
-@@ -68,8 +68,7 @@ test_expect_success 'status' '
- 	(
- 		cd test &&
- 		git checkout b1 >/dev/null &&
--		# reports nothing to commit
--		test_must_fail git commit --dry-run
-+		git status
- 	) >actual &&
- 	grep "have 1 and 1 different" actual
- '
 --=20
+Cheers,
+Ray Chuan
