@@ -1,107 +1,85 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
-Date: Wed, 11 Aug 2010 03:03:56 -0400
-Message-ID: <1281510236-8103-1-git-send-email-gdb@mit.edu>
-Cc: Greg Brockman <gdb@mit.edu>
-To: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Wed Aug 11 09:04:21 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 9/9] commit: suppress status summary when no changes staged
+Date: Wed, 11 Aug 2010 09:11:39 +0200
+Message-ID: <201008110911.40133.trast@student.ethz.ch>
+References: <20100725005443.GA18370@burratino> <20100725010230.GI18420@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Jakub Narebski <jnareb@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 11 09:11:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oj5MK-00038u-P5
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 09:04:21 +0200
+	id 1Oj5Td-0006Ln-D4
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 09:11:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752899Ab0HKHEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 03:04:09 -0400
-Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:62731 "EHLO
-	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752037Ab0HKHEI (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 03:04:08 -0400
-X-AuditID: 12074422-b7bb6ae0000009fa-86-4c624b5db618
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id 0A.D4.02554.D5B426C4; Wed, 11 Aug 2010 03:03:57 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7B7466d011489;
-	Wed, 11 Aug 2010 03:04:06 -0400
-Received: from localhost (STRATTON-FOUR-FORTY-FOUR.MIT.EDU [18.187.6.189])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7B7442n017927;
-	Wed, 11 Aug 2010 03:04:05 -0400 (EDT)
-X-Mailer: git-send-email 1.7.0.4
-X-Brightmail-Tracker: AAAAAA==
+	id S1752263Ab0HKHLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 03:11:43 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:51075 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751898Ab0HKHLm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 03:11:42 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 11 Aug
+ 2010 09:11:41 +0200
+Received: from thomas.site (129.132.211.83) by cas10.d.ethz.ch (172.31.38.210)
+ with Microsoft SMTP Server (TLS) id 14.0.702.0; Wed, 11 Aug 2010 09:11:41
+ +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <20100725010230.GI18420@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153195>
 
-Currently, 'git add' will complain about excluded files, even if they
-are already tracked:
+Jonathan Nieder wrote:
+> Example: before:
+>
+> 	$ git commit
+> 	# On branch master
+> 	# Changed but not updated:
+[...]
+> 	no changes added to commit (use "git add" and/or "git commit -a")
+> 	$
+>
+> After:
+>
+> 	$ git commit
+> 	no changes added to commit (use "git add" and/or "git commit -a")
+> 	$
 
-$ mkdir dir && touch dir/file && cat > .gitignore <<< dir
-$ git add -f dir/file
-$ git status
-  ...
-  new file:   dir/file
-  ...
-$ git add dir/file
-The following paths are ignored by one of your .gitignore files:
-dir
-Use -f if you really want to add them.
-fatal: no files added
+Either Junio just picked this up in the last push or I just never
+noticed before, but this breaks t6040 which tests for the "On branch
+..." stuff:
 
-This commit changes 'git add' to disregard excludes for tracked files
-whose paths are explicitly specified on the command-line.  So in the
-above example, 'git add dir/file' no longer requires a '-f'.  However,
-'git add dir' does.
+  ../trash directory.t6040-tracking-info$ git commit --dry-run
+  # On branch follower
+  # Your branch is ahead of 'master' by 1 commit.
+  #
+  nothing to commit (use -u to show untracked files)
+  ../trash directory.t6040-tracking-info$ ~/g/git-commit --dry-run
+  nothing to commit (use -u to show untracked files)
 
-Signed-off-by: Greg Brockman <gdb@mit.edu>
----
- builtin/add.c |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
+resulting in
 
-What do people think of this behavior?  My motivation in writing this patch is
-that I sometimes track files in an ignored directory, and it can be cumbersome
-to remember to pass '-f' when adding them.  Related commands such as 'git add -p'
-and 'git commit -a' do not require a '-f' in this case, so it feels natural to me not
-to require extra user confirmation when an explicit path has been provided.
+  expecting success:
+          (
+                  cd test &&
+                  git checkout b1 >/dev/null &&
+                  # reports nothing to commit
+                  test_must_fail git commit --dry-run
+          ) >actual &&
+          grep "have 1 and 1 different" actual
 
-As always, thanks in advance for your comments.
+  Already on 'b1'
+  not ok - 5 status
 
-diff --git a/builtin/add.c b/builtin/add.c
-index 56a4e0a..46b1fdb 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -423,8 +423,27 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 		/* Set up the default git porcelain excludes */
- 		memset(&dir, 0, sizeof(dir));
- 		if (!ignored_too) {
-+			const char **tracked = xmalloc(sizeof(char *) * (argc + 1));
-+			const char **p;
-+			int tidx = 0;
-+			int pidx = 0;
-+
- 			dir.flags |= DIR_COLLECT_IGNORED;
- 			setup_standard_excludes(&dir);
-+
-+			for (p = pathspec; *p; p++) {
-+				if ((*p)[0] && cache_name_exists(*p, strlen(*p), 0))
-+					tracked[tidx++] = *p;
-+				else
-+					pathspec[pidx++] = *p;
-+			}
-+
-+			tracked[tidx] = NULL;
-+			pathspec[pidx] = NULL;
-+			exit_status |= add_files_to_cache(prefix, tracked, flags);
-+			/* All files were tracked */
-+			if (pidx == 0)
-+				goto finish;
- 		}
- 
- 		/* This picks up the paths that are not tracked */
--- 
-1.7.0.4
+--
+Thomas Rast
+trast@{inf,student}.ethz.ch
