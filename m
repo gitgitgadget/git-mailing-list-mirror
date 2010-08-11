@@ -1,98 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] Add global and system-wide gitattributes
-Date: Wed, 11 Aug 2010 15:19:04 -0700
-Message-ID: <7vzkwsvllz.fsf@alter.siamese.dyndns.org>
-References: <1281488646-7108-1-git-send-email-gsvick@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Where do I stick development documentation?
+Date: Wed, 11 Aug 2010 22:49:14 +0000
+Message-ID: <AANLkTi=dS1DYJ3MB-Du34sVPy8Qw8VNck=Lx54DtSfO0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Henrik Grubbstrm <grubba@grubba.org>
-To: Petr Onderka <gsvick@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 00:19:21 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 12 00:49:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjJdo-0004oq-PN
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 00:19:21 +0200
+	id 1OjK6q-0001JZ-UQ
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 00:49:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756560Ab0HKWTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 18:19:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44666 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756238Ab0HKWTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 18:19:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 09A2BCC5CB;
-	Wed, 11 Aug 2010 18:19:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9TiX/JD5rU5W7ReuWAVAqbpV1Q4=; b=C4TkuT
-	3ouSLJrIDHl0Pi5KykZb6JQqzKbRZ7ROLIj9uHoUf/CrOf75UIJLIKksz2pGQoV4
-	5+Dwi9mZOXl8QJM8VAZXlPfi3i4IlqqoVCssJzAmshD/ZgMC2qUu0/hDgW/yCni9
-	uXULvRVe90eBBDnO7djXTb7PCrql/s0xZ/d1k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=x6KlMbMzYD9aXgHJGwFmFiaDPRf3BLl+
-	J4Hie8AKDy5ptLWIO5KixASnuk2nULbokwn5n5KroPzBq4le54LqLLsI/WC+jpy7
-	rL9iatSxT1m/bQxv4Z3RWMq/L8tXuPmyuHBx5wLZVr4ytE7JXMOSlsknKUXrhS6d
-	U7Xql4cQPzM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A2890CC5C6;
-	Wed, 11 Aug 2010 18:19:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A40ECC5C5; Wed, 11 Aug
- 2010 18:19:06 -0400 (EDT)
-In-Reply-To: <1281488646-7108-1-git-send-email-gsvick@gmail.com> (Petr
- Onderka's message of "Wed\, 11 Aug 2010 01\:04\:06 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 76FD6A86-A596-11DF-B2E3-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756947Ab0HKWtQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 18:49:16 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:62604 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756581Ab0HKWtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 18:49:15 -0400
+Received: by fxm13 with SMTP id 13so494553fxm.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 15:49:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=exD0Vqt8AVNn4HeRBKvrRsPPTyff/+2OTEx/Kirs2Vw=;
+        b=YvqnWJvO308PeKka3IO0hpEZ03O9E6FXdiWcOiTCMejwhdqR82l41jWzYrllVEhr7T
+         0PNqUQ7A8ThmN5e4MY36s2AVj1Grd6tczH7kfQw0j9my72MomOkvz1xY7B9d23WGhohj
+         CfxciCeuxJklSq2vJWyjY3U9R/4GNVe6SjdO8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=RN4GBOSEyrHiMONciFrKaSyT1ti2GE+44AsFlLMAdsILghSZ5n4Ihj3J374TtGbj5t
+         fgTq7UrHiotQowbOX2vkGXvI59X3VtiF5TzmjGXVYN2dYUWkIqR/t5HApFseccqC2xlw
+         UV7oItKK0UnPiypCNTxTzejzNkSZdpkYcVdY8=
+Received: by 10.223.119.136 with SMTP id z8mr20815654faq.63.1281566954102; 
+	Wed, 11 Aug 2010 15:49:14 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Wed, 11 Aug 2010 15:49:14 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153306>
 
-Petr Onderka <gsvick@gmail.com> writes:
+There's some documentation aimed at developing that I'd like to see /
+write in Git at some point.
 
-> @@ -480,7 +501,15 @@ static void bootstrap_attr_stack(void)
->  			debug_push(elem);
->  		}
->  
-> -		elem = read_attr_from_file(git_path(INFOATTRIBUTES_FILE), 1);
-> +		elem = read_attr_from_file(git_path(INFOATTRIBUTES_FILE), 1, NULL);
-> +		home = get_home_directory();
-> +		if (git_attr_global() && home) {
-> +			char *user_attr = xstrdup(mkpath("%s/%s", home, GITATTRIBUTES_FILE));
-> +			elem = read_attr_from_file(user_attr, 1, elem);
-> +			free(user_attr);
-> +		}
-> +		if (git_attr_system())
-> +			elem = read_attr_from_file(git_etc_gitattributes(), 1, elem);
+Developing:
 
-Have you read the comment at the top of prepare-attr-stack?  This patch
-feels triply wrong:
+   * How to work with Gettext
 
- - The attribute stack is arranged to have higher precedence file near the
-   top ($GIT_DIR/info/attributes used to be the highest).  The above
-   addition means that ~/.gitattributes from user's home trumps what is in
-   a particular repository.  That is backwards.  You may work on more than
-   one projects and have more than one repositories.  What you share among
-   them personally will go to ~/.gitattributes, while a setting specific
-   to a particular repository goes to $GIT_DIR/info/attributes and the
-   latter needs to be able to override the former.
+   * How to write portable code, i.e. constructs to avoid in C / shell
+     script etc (these keep coming up).
 
- - Same thing for git_attr_system() being at the end, which means you set
-   up your own $GIT_DIR/info/attributes (or ~/.gitattributes) carefully
-   but that can be broken by a selfish sysadmin who puts stuff that is
-   only useful to him in /etc/gitattributes, which is not what you want.
+Translators:
 
- - Whenever we enter a new directory (either recursing into, or coming
-   back up), prepare_attr_stack() is called to pop the attributes records
-   from now-exited directories and push the attributes records from
-   directories we are about to descend into.  The current code knows that
-   the topmost element on the stack is special ($GIT_DIR/info/attributes)
-   and first pops it, adjust the stack for elements that came from the
-   directory hierarcy, and then pushes that back.  I don't see any code in
-   the patch to do the equivalent for these two new attribute sources.
+   * How to deal with gettext / submit po files / keep them up to date
+     etc.
+
+   * Core git concepts (that need to be translated), maybe I could
+     adopt the gitglossary to this task, but it'd need to be a bit
+     more structured, i.e. describe core data concepts first, then
+     some other terms.
+
+     Actually, on that point, do we have documentation that describes
+     git's data model in one place? I.e. everything from blobs to
+     trees, how raw commit objects etc. look. Something like "Git for
+     computer scientists".
+
+The problem is that I don't know where to put these. I like idea of
+them being man pages, maybe gitdev-gettext.txt,
+gitdev-code-portable.txt or something like that?
+
+The only thing like that currently it
+Documentation/{SubmittingPatches,CodingGuidelines} and t/README.
