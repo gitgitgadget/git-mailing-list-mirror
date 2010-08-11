@@ -1,78 +1,100 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Proposal for new Git Wiki admin
-Date: Wed, 11 Aug 2010 18:34:54 +0300
-Message-ID: <AANLkTiknPsWcw9zes7vYKoDmBqjtXPpKFoZ_Ge7F8Dnz@mail.gmail.com>
-References: <20100810162602.GG3921@kytes>
-	<m3y6ce2kdz.fsf@localhost.localdomain>
-	<20100811050056.GA3715@kytes>
-	<4C62494A.2030805@drmicha.warpmail.net>
-	<AANLkTimuHzC_brw2bBDTvc=-Cj+70AMFEj7nzspW5mGq@mail.gmail.com>
-	<20100811134640.GA10888@kytes>
-	<AANLkTimQsNj-3M=y7Dop4brB8U-8vVPqgD0+zBX5R6FG@mail.gmail.com>
+From: Jeffrey Hundstad <jeffrey.hundstad@mnsu.edu>
+Subject: Re: Query: Patches break with Microsoft exchange server.
+Date: Wed, 11 Aug 2010 10:46:05 -0500
+Message-ID: <4C62C5BD.3020808@mnsu.edu>
+References: <4C5F9B25.8080401@st.com>
+	<AANLkTinxwRFLUibJECm0c3_oL5mYRkmscsw-xXgAHSTe@mail.gmail.com>
+	<4C624AE1.30504@st.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 11 17:35:07 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"; Format="flowed"
+Content-Transfer-Encoding: 7bit
+Cc: mihai.dontu@gmail.com, Linus Walleij <linus.ml.walleij@gmail.com>,
+	richardcochran@gmail.com, Felipe Contreras <felipe.contreras@gmail.com>,
+	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+	Matti Aarnio <matti.aarnio@zmailer.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"Justin P. Mattock" <justinmattock@gmail.com>,
+	=?UTF-8?B?VXdlIEtsZWluZS1Lw7ZuaWc=?= <u.kleine-koenig@pengutronix.de>,
+	"Gadiyar, Anand" <gadiyar@ti.com>, dwmw2@infradead.org,
+	"linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>, Valeo de Vries <valeo@valeo.co.cc>
+To: viresh kumar <viresh.kumar@st.com>
+X-From: linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org Wed Aug 11 17:46:51 2010
+Return-path: <linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org>
+Envelope-to: linux-arm-kernel@m.gmane.org
+Received: from bombadil.infradead.org ([18.85.46.34])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjDKX-0007BX-Ri
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 17:35:02 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754149Ab0HKPe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 11:34:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61185 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753904Ab0HKPe4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 11:34:56 -0400
-Received: by bwz3 with SMTP id 3so204274bwz.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 08:34:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=x4WNJPJBPmhefGR0HMz57BrcSTG11MB+7zfE55605To=;
-        b=pj0urMyyoiGbqm9eHcXZUdT4HoVwfSMtGjD14ZgZbRZY4G6E4h7RIXkVrqNU6rvHp7
-         DX0hyDBSynGjz01deNiPZdFSNLpo9/XiWMwGOvPllQD0Q2MhMQ9VQj/yKAvN1VP/4LGy
-         c/xg8cFI2rMSI/WSHBGSQYctvBNNqlRZhVS4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=kacKXoSXWpP+6CMpYbfH0SG/9Ur5ROU2JGz1pwYM91riqlLh3KTf7DJfL2LkPNLXZ2
-         7blSkhyxkFy0QIww4//U4Wai2z0MzShK+L3SvJdpdSEo8ilAwCFVGk5KPRmA32YLW+Af
-         pcaXfSnyFxTbm4eoSZzTr8pvnihIahR0u85JU=
-Received: by 10.204.8.10 with SMTP id f10mr1071888bkf.181.1281540894692; Wed, 
-	11 Aug 2010 08:34:54 -0700 (PDT)
-Received: by 10.204.21.200 with HTTP; Wed, 11 Aug 2010 08:34:54 -0700 (PDT)
-In-Reply-To: <AANLkTimQsNj-3M=y7Dop4brB8U-8vVPqgD0+zBX5R6FG@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153257>
+	(envelope-from <linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org>)
+	id 1OjDVy-00074i-Lh
+	for linux-arm-kernel@m.gmane.org; Wed, 11 Aug 2010 17:46:50 +0200
+Received: from localhost ([::1] helo=bombadil.infradead.org)
+	by bombadil.infradead.org with esmtp (Exim 4.72 #1 (Red Hat Linux))
+	id 1OjDVT-0006oX-Bh; Wed, 11 Aug 2010 15:46:19 +0000
+Received: from mail.mnsu.edu ([134.29.1.12])
+	by bombadil.infradead.org with esmtps (Exim 4.72 #1 (Red Hat Linux))
+	id 1OjDVO-0006mZ-QD; Wed, 11 Aug 2010 15:46:17 +0000
+Received: from [134.29.32.1] (j3gum-3.ITS.MNSU.EDU [134.29.32.1])
+	by mail.mnsu.edu (8.13.7/8.13.7) with ESMTP id o7BFk5eg025908
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 11 Aug 2010 10:46:06 -0500
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US;
+	rv:1.9.1.11) Gecko/20100805 Icedove/3.0.6
+In-Reply-To: <4C624AE1.30504@st.com>
+X-CRM114-Version: 20090807-BlameThorstenAndJenny ( TRE 0.7.6 (BSD) )
+	MR-646709E3 
+X-CRM114-CacheID: sfid-20100811_114614_982720_E8B2618C 
+X-CRM114-Status: GOOD (  10.62  )
+X-Spam-Score: -0.0 (/)
+X-Spam-Report: SpamAssassin version 3.3.1 on bombadil.infradead.org summary:
+	Content analysis details:   (-0.0 points)
+	pts rule name              description
+	---- ----------------------
+	--------------------------------------------------
+	-0.0 T_RP_MATCHES_RCVD Envelope sender domain matches handover relay
+	domain
+X-BeenThere: linux-arm-kernel@lists.infradead.org
+X-Mailman-Version: 2.1.12
+Precedence: list
+List-Id: <linux-arm-kernel.lists.infradead.org>
+List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-arm-kernel>, 
+	<mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
+List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
+List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
+List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
+List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>, 
+	<mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
+Sender: linux-arm-kernel-bounces@lists.infradead.org
+Errors-To: linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153258>
 
-On Wed, Aug 11, 2010 at 5:49 PM, Felipe Contreras
-<felipe.contreras@gmail.com> wrote:
-> On Wed, Aug 11, 2010 at 4:46 PM, Ramkumar Ramachandra
->> Johannes: If Felipe still keeps insisting on a public apology, please
->> oblige and get it over with.
->
-> I am not insisting on an apology, I am more interested on what will
-> happen the next time something like this happen. But I don't expect
-> anything from Johannes.
+On 08/11/2010 02:01 AM, viresh kumar wrote:
+ > When i send a mail using git send-email then it receives fine on
+ > outlook but on thunderbird, tabs are converted to spaces.
+ >
+ > This doesn't happen with every patch on thunderbird, but only a few.
+ > And observation is that it happens only with big patches.
+ > (more than 500 lines)
+ >
+ > Any idea, how to solve issue now on thunderbird??
 
-Note: and just to be clear again; I don't expect anything from
-Johannes not because I have something against him, but because any
-other admin can do that.
+Hello,
+
+Exchange 2010 does not handle IMAP "chunking" (partial message transfer) 
+correctly.  Any request after about 1 megabyte of total message size 
+will fail.
+
+Thunderbird uses this "chunking" feature to give you a status update 
+while downloading large messages.  The IMAP statements are of this type:
+11 UID fetch 244477 (UID RFC822.SIZE BODY[]<20480.12288>)
+
+When the 20480 is larger than 1MB Exchange "claims" there is no more.  
+Sigh....
+
+Fortunately you can disable this feature.  To disable this in 
+Thunderbird you can go to the Advanced configuration and disable the 
+following feature, by setting it to false:
+mail.server.default.fetch_by_chunks
+
 
 -- 
-Felipe Contreras
+Jeffrey Hundstad
