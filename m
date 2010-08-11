@@ -1,192 +1,543 @@
 From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: [PATCH V5 15/17] Add --full-line-diff option
-Date: Wed, 11 Aug 2010 23:03:40 +0800
-Message-ID: <1281539022-31616-16-git-send-email-struggleyb.nku@gmail.com>
+Subject: [PATCH V5 13/17] Add parent rewriting to line history browser
+Date: Wed, 11 Aug 2010 23:03:38 +0800
+Message-ID: <1281539022-31616-14-git-send-email-struggleyb.nku@gmail.com>
 References: <1281539022-31616-1-git-send-email-struggleyb.nku@gmail.com>
 Cc: Jens.Lehmann@web.de, trast@student.ethz.ch, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 11 17:06:07 2010
+X-From: git-owner@vger.kernel.org Wed Aug 11 17:06:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjCsV-0005Yv-Mw
-	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 17:06:04 +0200
+	id 1OjCsU-0005Yv-27
+	for gcvg-git-2@lo.gmane.org; Wed, 11 Aug 2010 17:06:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820Ab0HKPFy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 11:05:54 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:50547 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753800Ab0HKPFx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 11:05:53 -0400
-Received: by mail-px0-f174.google.com with SMTP id 10so75651pxi.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 08:05:53 -0700 (PDT)
+	id S1753796Ab0HKPFl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 11:05:41 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:62685 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753780Ab0HKPFk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 11:05:40 -0400
+Received: by mail-pv0-f174.google.com with SMTP id 2so75417pvg.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 08:05:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=/vibvGhP2mC0C/PwCfssiPW5O+Hx/GRw6p8RO8nh500=;
-        b=WFqHaEVMTzrSKubspfcOHcs/2IgRUjO4joZkQBe/8jh22ATHIuYe4PBFLrhdQNFPpd
-         htaZl6GTiUhBTwEgknzQH8P+Y7PpzYyf7UGGaXk3oh2BSKyd/GFPEDUhzSU3+WgyCZX2
-         +7cEYEgnHODz32NaJM48ju+JaaTT7PigshSB8=
+        bh=h7DfsfqMBXd3MnLaJJAWCfyVsBCF+LRmfmDTbvMdxUU=;
+        b=viXyDhfEHDPaDqxlTbr1UmpE/OdmjPnZHbFkGeHk2cnN0l4G1Rf/SPCFDuOusBohb6
+         4aHIjpSWznVvoYEgpKfVaMr1a2yB4w5UhN3Mj5zyePkEeb0QmJXA4hh+PTOTNesqmzjy
+         BBkLCokxRRuVUzgyfySviTxwuuDuvrSET5dVc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=ouxvjpbMSDMLV7f63YGv1qrOwzxTdWUJ5bskohftOekV1nK5+sYj/SUDCOXHlE0Umi
-         6BMZotf2wDyr+9NOSRfce+E0He1mKm3ePzxi8cW4Fdj7+9SR0jLddALIGsDBREC2gdfj
-         AgftqesjneUHxeVas3rFL1tLEF2GHGapKJUJI=
-Received: by 10.114.133.18 with SMTP id g18mr22168228wad.48.1281539153022;
-        Wed, 11 Aug 2010 08:05:53 -0700 (PDT)
+        b=O2+/o5iYY2sdHIWcxD1+gzngj41npKzmUeNYc6yf5d6k5H6nx+ToPSYq/+tQq4/Zjh
+         L1LPJ7UZU3uWxZyTcHG0gKUMw6cyWMydw+T6U/QV4Ka4m4jqdQQC/uLqK7+DJm8xxH87
+         ZCoyPXIhAevgWTYY8MZXpU73Czfmc8bsAGtgc=
+Received: by 10.114.121.8 with SMTP id t8mr21984553wac.156.1281539140456;
+        Wed, 11 Aug 2010 08:05:40 -0700 (PDT)
 Received: from localhost.localdomain ([116.226.85.245])
-        by mx.google.com with ESMTPS id c10sm356199wam.1.2010.08.11.08.05.45
+        by mx.google.com with ESMTPS id c10sm356199wam.1.2010.08.11.08.05.34
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 08:05:52 -0700 (PDT)
+        Wed, 11 Aug 2010 08:05:39 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.19.g79e5d
 In-Reply-To: <1281539022-31616-1-git-send-email-struggleyb.nku@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153253>
 
-Always print the interesting ranges even if the current
-commit does not change any line of it.
+Walking forward through history (i.e., topologically earliest
+commits first), we filter the parent list of every commit as
+follows. Consider a parent P:
+ - If P touches any of the interesting line ranges, we keep it.
+ - If P is a merge and it takes all the interesting line ranges
+   from one of its parents, P is rewritten to this parent, else
+   we keep P.
+ - Otherwise, P is rewritten to its (only) parent P^.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 ---
- builtin/log.c |    8 +++++++-
- line.c        |   22 ++++++++++++++++------
- revision.c    |    5 ++++-
- revision.h    |    3 ++-
- 4 files changed, 29 insertions(+), 9 deletions(-)
+ line.c     |  263 ++++++++++++++++++++++++++++++++++++++++++++++++++++++------
+ line.h     |    2 +
+ revision.c |    3 +
+ revision.h |    5 +-
+ 4 files changed, 246 insertions(+), 27 deletions(-)
 
-diff --git a/builtin/log.c b/builtin/log.c
-index 637bcea..0151d2f 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -85,6 +85,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- {
- 	int i;
- 	int decoration_given = 0;
-+	static int full_line_diff;
- 	struct userformat_want w;
- 	const char *path = NULL, *fullpath = NULL;
- 	static struct diff_line_range *range;
-@@ -95,6 +96,9 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 		OPT_CALLBACK('L', NULL, &line_cb, "n,m",
- 			     "Process only line range n,m, counting from 1",
- 			     log_line_range_callback),
-+		OPT_BOOLEAN(0, "full-line-diff", &full_line_diff,
-+			    "Always print the interesting range even if the \
-+			    current commit does not change any line of it"),
- 		OPT_END()
- 	};
- 
-@@ -223,8 +227,10 @@ parse_done:
- 	}
- 
- 	/* Test whether line level history is asked for */
--	if (range && range->nr > 0)
-+	if (range && range->nr > 0) {
- 		setup_line(rev, range);
-+		rev->full_line_diff = full_line_diff;
-+	}
- }
- 
- /*
 diff --git a/line.c b/line.c
-index 5580768..7de6427 100644
+index c0cb599..a2afe60 100644
 --- a/line.c
 +++ b/line.c
-@@ -1244,10 +1244,18 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
- 	/*
- 	 * the ranges that touch no different file, in this case
- 	 * the line number will not change, and of course we have
--	 * no sensible rang->pair since there is no diff run.
-+	 * no sensible range->pair since there is no diff run.
- 	 */
--	if (one == NULL)
-+	if (one == NULL) {
-+		if (rev->full_line_diff) {
-+			chunk.two = two->data;
-+			chunk.two_end = two->data + two->size;
-+			chunk.ltwo = 1;
-+			chunk.range = range;
-+			diff_flush_chunks(&rev->diffopt, &chunk);
-+		}
+@@ -9,8 +9,11 @@
+ #include "xdiff-interface.h"
+ #include "strbuf.h"
+ #include "log-tree.h"
++#include "graph.h"
+ #include "line.h"
+ 
++static int limited;
++
+ static void cleanup(struct diff_line_range *r)
+ {
+ 	while (r) {
+@@ -389,6 +392,7 @@ struct diff_line_range *diff_line_range_clone(struct diff_line_range *r)
+ 	struct diff_line_range *ret = xmalloc(sizeof(*ret));
+ 	int i = 0;
+ 
++	assert(r);
+ 	DIFF_LINE_RANGE_INIT(ret);
+ 	ret->ranges = xcalloc(r->nr, sizeof(struct line_range));
+ 	memcpy(ret->ranges, r->ranges, sizeof(struct line_range) * r->nr);
+@@ -469,14 +473,14 @@ void add_line_range(struct rev_info *revs, struct commit *commit,
+ {
+ 	struct diff_line_range *ret = NULL;
+ 
+-	if (r != NULL) {
+-		ret = lookup_decoration(&revs->line_range, &commit->object);
+-		if (ret != NULL)
+-			diff_line_range_merge(ret, r);
+-		else
+-			add_decoration(&revs->line_range, &commit->object, r);
++	ret = lookup_decoration(&revs->line_range, &commit->object);
++	if (ret != NULL && r != NULL)
++		diff_line_range_merge(ret, r);
++	else
++		add_decoration(&revs->line_range, &commit->object, r);
++
++	if (r != NULL)
+ 		commit->object.flags |= RANGE_UPDATE;
+-	}
+ }
+ 
+ struct diff_line_range *lookup_line_range(struct rev_info *revs,
+@@ -550,6 +554,23 @@ void map_lines(long p_start, long p_end, long t_start, long t_end,
  		return;
+ 	}
+ 
++	if (start == t_start)
++	{
++		*o_start = p_start;
++		*o_end = p_start + (end - start);
++		if (*o_end > p_end)
++			*o_end = p_end;
++		return;
++	}
++
++	if (end == t_end) {
++		*o_start = p_end - (end - start);
++		if (*o_start < p_start)
++			*o_start = p_start;
++		*o_end = p_end;
++		return;
++	}
++
+ 	/*
+ 	 * A heuristic for lines mapping:
+ 	 *
+@@ -782,7 +803,7 @@ static void map_range_cb(void *data, long same, long p_next, long t_next)
+  * to parents.
+  * map_range_cb and map_range are used to map line ranges to the parent.
+  */
+-static void assign_range_to_parent(struct rev_info *rev, struct commit *c,
++static int assign_range_to_parent(struct rev_info *rev, struct commit *c,
+ 		struct commit *p, struct diff_line_range *r,
+ 		struct diff_options *opt, int map)
+ {
+@@ -930,9 +951,19 @@ static void assign_range_to_parent(struct rev_info *rev, struct commit *c,
+ 			prev_r->next = NULL;
+ 	}
+ 
++	if (!map)
++		goto out;
++
+ 	if (rr) {
+ 		assert(p);
+ 		add_line_range(rev, p, rr);
++	} else {
++		/*
++		 * If there is no new ranges assigned to the parent,
++		 * we should mark it as a 'root' commit.
++		 */
++		free(c->parents);
++		c->parents = NULL;
+ 	}
+ 
+ 	/* and the ranges of current commit c is updated */
+@@ -940,10 +971,13 @@ static void assign_range_to_parent(struct rev_info *rev, struct commit *c,
+ 	if (diff)
+ 		c->object.flags |= NEED_PRINT;
+ 
++out:
+ 	if (tree1)
+ 		free(tree1);
+ 	if (tree2)
+ 		free(tree2);
++
++	return diff;
+ }
+ 
+ static void diff_update_parent_range(struct rev_info *rev,
+@@ -960,13 +994,21 @@ static void diff_update_parent_range(struct rev_info *rev,
+ 	assign_range_to_parent(rev, commit, c, r, &rev->diffopt, 1);
+ }
+ 
++struct commit_state {
++	struct diff_line_range *range;
++	struct object obj;
++};
++
+ static void assign_parents_range(struct rev_info *rev, struct commit *commit)
+ {
+ 	struct commit_list *parents = commit->parents;
+ 	struct diff_line_range *r = lookup_line_range(rev, commit);
+ 	struct diff_line_range *evil = NULL, *range = NULL;
++	struct decoration parents_state;
++	struct commit_state *state = NULL;
+ 	int nontrivial = 0;
+ 
++	memset(&parents_state, 0, sizeof(parents_state));
+ 	/*
+ 	 * If we are in linear history, update range and flush the patch if
+ 	 * necessary
+@@ -983,23 +1025,78 @@ static void assign_parents_range(struct rev_info *rev, struct commit *commit)
+ 	parents = commit->parents;
+ 	while (parents) {
+ 		struct commit *p = parents->item;
+-		assign_range_to_parent(rev, commit, p, r, &rev->diffopt, 1);
++		int diff = 0;
++		struct diff_line_range *origin_range = lookup_line_range(rev, p);
++		if (origin_range)
++			origin_range = diff_line_range_clone_deeply(origin_range);
++
++		state = xmalloc(sizeof(*state));
++		state->range = origin_range;
++		state->obj = p->object;
++		add_decoration(&parents_state, &p->object, state);
++		diff = assign_range_to_parent(rev, commit, p, r, &rev->diffopt, 1);
++		/* Since all the ranges comes from this parent, we can ignore others */
++		if (diff == 0) {
++			/* restore the state of parents before this one */
++			parents = commit->parents;
++			while (parents->item != p) {
++				struct commit_list *list = parents;
++				struct diff_line_range *line_range = NULL;
++				parents = parents->next;
++				line_range = lookup_line_range(rev, list->item);
++				cleanup(line_range);
++				state = lookup_decoration(&parents_state, &list->item->object);
++				add_decoration(&parents_state, &list->item->object, NULL);
++				add_line_range(rev, list->item, state->range);
++				list->item->object = state->obj;
++				free(state);
++				free(list);
++			}
++
++			commit->parents = parents;
++			parents = parents->next;
++			commit->parents->next = NULL;
++
++			/* free the non-use commit_list */
++			while (parents) {
++				struct commit_list *list = parents;
++				parents = parents->next;
++				free(list);
++			}
++			goto out;
++		}
++		/* take the ranges from 'commit', try to detect nontrivial merge */
+ 		assign_range_to_parent(rev, commit, p, evil, &rev->diffopt, 0);
+ 		parents = parents->next;
+ 	}
+ 
++	commit->object.flags |= NONTRIVIAL_MERGE;
+ 	/*
+ 	 * yes, this must be an evil merge.
+ 	 */
+ 	range = evil;
+ 	while (range) {
+ 		if (range->nr) {
+-			commit->object.flags |= NEED_PRINT | EVIL_MERGE;
++			commit->object.flags |= EVIL_MERGE;
+ 			nontrivial = 1;
+ 		}
+ 		range = range->next;
+ 	}
+ 
++out:
++	/* Never print out any diff for a merge commit */
++	commit->object.flags &= ~NEED_PRINT;
++
++	parents = commit->parents;
++	while (parents) {
++		state = lookup_decoration(&parents_state, &parents->item->object);
++		if (state) {
++			cleanup(state->range);
++			free(state);
++		}
++		parents = parents->next;
++	}
++
+ 	if (nontrivial)
+ 		add_decoration(&rev->nontrivial_merge, &commit->object, evil);
+ 	else
+@@ -1184,15 +1281,34 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
+ }
+ 
+ #define EVIL_MERGE_STR "nontrivial merge found"
+-static void flush_nontrivial_merge(struct rev_info *rev, struct diff_line_range *range)
++static void flush_nontrivial_merge(struct rev_info *rev,
++		struct diff_line_range *range)
+ {
+ 	struct diff_options *opt = &rev->diffopt;
+ 	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
+ 	const char *frag = diff_get_color_opt(opt, DIFF_FRAGINFO);
+ 	const char *meta = diff_get_color_opt(opt, DIFF_METAINFO);
+ 	const char *new = diff_get_color_opt(opt, DIFF_FILE_NEW);
++	char *line_prefix = "";
++	struct strbuf *msgbuf;
++	int evil = 0;
++	struct diff_line_range *r = range;
++
++	if (opt && opt->output_prefix) {
++		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
++		line_prefix = msgbuf->buf;
 +	}
  
- 	if (range->status == DIFF_STATUS_DELETED)
- 		die("We are following an nonexistent file, interesting!");
-@@ -1369,7 +1377,8 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
- 	struct strbuf *msgbuf;
+-	fprintf(opt->file, "%s%s%s\n", meta, EVIL_MERGE_STR, reset);
++	while (r) {
++		if (r->nr)
++			evil = 1;
++		r = r->next;
++	}
++
++	if (!evil)
++		return;
++
++	fprintf(opt->file, "%s%s%s%s\n", line_prefix, meta, EVIL_MERGE_STR, reset);
  
- 	if (range == NULL || !(c->object.flags & NONTRIVIAL_MERGE ||
--							c->object.flags & NEED_PRINT))
-+			c->object.flags & NEED_PRINT ||
-+			rev->full_line_diff))
+ 	while (range) {
+ 		if (range->nr) {
+@@ -1200,7 +1316,8 @@ static void flush_nontrivial_merge(struct rev_info *rev, struct diff_line_range
+ 			const char *ptr = range->spec->data;
+ 			const char *end = range->spec->data + range->spec->size;
+ 			int i = 0;
+-			fprintf(opt->file, "%s%s%s\n\n", meta, range->spec->path, reset);
++			fprintf(opt->file, "%s%s%s%s\n", line_prefix,
++				meta, range->spec->path, reset);
+ 			for (; i < range->nr; i++) {
+ 				struct line_range *r = range->ranges + i;
+ 				fprintf(opt->file, "%s@@ %ld,%ld @@%s\n", frag, r->start,
+@@ -1217,12 +1334,17 @@ static void flush_nontrivial_merge(struct rev_info *rev, struct diff_line_range
+ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ {
+ 	struct diff_line_range *range = lookup_line_range(rev, c);
+-	struct diff_line_range *nontrivial = lookup_decoration(&rev->nontrivial_merge, &c->object);
++	struct diff_line_range *nontrivial = lookup_decoration(&rev->nontrivial_merge,
++							&c->object);
+ 	struct log_info log;
++	struct diff_options *opt = &rev->diffopt;
+ 
+-	if (range == NULL)
++	if (range == NULL || !(c->object.flags & NONTRIVIAL_MERGE ||
++							c->object.flags & NEED_PRINT))
  		return;
  
- 	if (rev->graph)
-@@ -1390,7 +1399,7 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
- 		flush_nontrivial_merge(rev, nontrivial);
- 	else {
- 		while (range) {
--			if (range->diff)
-+			if (range->diff || (range->nr && rev->full_line_diff))
- 				diff_flush_filepair(rev, range);
- 			range = range->next;
- 		}
-@@ -1421,7 +1430,7 @@ int cmd_line_log_walk(struct rev_info *rev)
++	if (rev->graph)
++		graph_update(rev->graph, c);
+ 	log.commit = c;
+ 	log.parent = NULL;
+ 	rev->loginfo = &log;
+@@ -1234,13 +1356,21 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ 	 */
+ 	fprintf(rev->diffopt.file, "\n");
+ 
+-	if (c->object.flags & EVIL_MERGE)
+-		return flush_nontrivial_merge(rev, nontrivial);
++	if (c->object.flags & NONTRIVIAL_MERGE)
++		flush_nontrivial_merge(rev, nontrivial);
++	else {
++		while (range) {
++			if (range->diff)
++				diff_flush_filepair(rev, range);
++			range = range->next;
++		}
++	}
+ 
+-	while (range) {
+-		if (range->diff)
+-			diff_flush_filepair(rev, range);
+-		range = range->next;
++	while (rev->graph && !graph_is_commit_finished(rev->graph)) {
++		struct strbuf sb;
++		strbuf_init(&sb, 0);
++		graph_next_line(rev->graph, &sb);
++		fputs(sb.buf, opt->file);
+ 	}
+ }
+ 
+@@ -1254,13 +1384,14 @@ int cmd_line_log_walk(struct rev_info *rev)
+ 		die("revision walk prepare failed");
+ 
+ 	list = rev->commits;
+-	if (list) {
++	if (list && !limited) {
+ 		list->item->object.flags |= RANGE_UPDATE;
+ 		list = list->next;
+ 	}
  	/* Clear the flags */
- 	while (list && !limited) {
- 		list->item->object.flags &= ~(RANGE_UPDATE | NONTRIVIAL_MERGE |
--						NEED_PRINT | EVIL_MERGE);
-+				NEED_PRINT | EVIL_MERGE);
+-	while (list) {
+-		list->item->object.flags &= ~(RANGE_UPDATE | EVIL_MERGE | NEED_PRINT);
++	while (list && !limited) {
++		list->item->object.flags &= ~(RANGE_UPDATE | NONTRIVIAL_MERGE |
++						NEED_PRINT | EVIL_MERGE);
  		list = list->next;
  	}
  
-@@ -1434,7 +1443,8 @@ int cmd_line_log_walk(struct rev_info *rev)
+@@ -1272,7 +1403,8 @@ int cmd_line_log_walk(struct rev_info *rev)
+ 		if (commit->object.flags & RANGE_UPDATE)
  			assign_parents_range(rev, commit);
  
- 		if (commit->object.flags & NEED_PRINT ||
--			commit->object.flags & NONTRIVIAL_MERGE || rev->graph)
-+			commit->object.flags & NONTRIVIAL_MERGE ||
-+			rev->full_line_diff)
+-		if (commit->object.flags & NEED_PRINT)
++		if (commit->object.flags & NEED_PRINT ||
++			commit->object.flags & NONTRIVIAL_MERGE || rev->graph)
  			line_log_flush(rev, commit);
  
  		r = lookup_line_range(rev, commit);
+@@ -1296,3 +1428,84 @@ int cmd_line_log_walk(struct rev_info *rev)
+ 	return 0;
+ }
+ 
++static enum rewrite_result rewrite_one(struct rev_info *rev, struct commit **pp)
++{
++	struct diff_line_range *r = NULL;
++	struct commit *p;
++	while (1) {
++		p = *pp;
++		if (p->object.flags & RANGE_UPDATE)
++			assign_parents_range(rev, p);
++		if (p->object.flags & NEED_PRINT || p->object.flags & NONTRIVIAL_MERGE)
++			return rewrite_one_ok;
++		if (!p->parents)
++			return rewrite_one_noparents;
++
++		r = lookup_line_range(rev, p);
++		if (!r)
++			return rewrite_one_noparents;
++		*pp = p->parents->item;
++	}
++}
++
++/* The rev->commits must be sorted in topologically order */
++void limit_list_line(struct rev_info *rev)
++{
++	struct commit_list *list = rev->commits;
++	struct commit_list *commits = xmalloc(sizeof(struct commit_list));
++	struct commit_list *out = commits, *prev = commits;
++	struct commit *c;
++	struct diff_line_range *r;
++
++	if (list) {
++		list->item->object.flags |= RANGE_UPDATE;
++		list = list->next;
++	}
++	/* Clear the flags */
++	while (list) {
++		list->item->object.flags &= ~(RANGE_UPDATE | NONTRIVIAL_MERGE |
++						NEED_PRINT | EVIL_MERGE);
++		list = list->next;
++	}
++
++	list = rev->commits;
++	while (list) {
++		c = list->item;
++
++		if (c->object.flags & RANGE_UPDATE)
++			assign_parents_range(rev, c);
++
++		if (c->object.flags & NEED_PRINT || c->object.flags & NONTRIVIAL_MERGE) {
++			if (rewrite_parents(rev, c, rewrite_one))
++				die("Can't rewrite parent for commit %s",
++					sha1_to_hex(c->object.sha1));
++			commits->item = c;
++			commits->next = xmalloc(sizeof(struct commit_list));
++			prev = commits;
++			commits = commits->next;
++		} else {
++			r = lookup_line_range(rev, c);
++			if (r) {
++				cleanup(r);
++				r = NULL;
++				add_line_range(rev, c, r);
++			}
++		}
++
++		list = list->next;
++	}
++
++	prev->next = NULL;
++	free(commits);
++
++	list = rev->commits;
++	while (list) {
++		struct commit_list *l = list;
++		list = list->next;
++		free(l);
++	}
++
++	rev->commits = out;
++	limited = 1;
++}
++
+diff --git a/line.h b/line.h
+index 202130f..c00f1e6 100644
+--- a/line.h
++++ b/line.h
+@@ -136,4 +136,6 @@ const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
+ 
+ extern int cmd_line_log_walk(struct rev_info *rev);
+ 
++extern void limit_list_line(struct rev_info *rev);
++
+ #endif
 diff --git a/revision.c b/revision.c
-index a6527ca..62fe002 100644
+index fb08978..a6527ca 100644
 --- a/revision.c
 +++ b/revision.c
-@@ -1887,7 +1887,10 @@ int prepare_revision_walk(struct rev_info *revs)
+@@ -13,6 +13,7 @@
+ #include "decorate.h"
+ #include "log-tree.h"
+ #include "string-list.h"
++#include "line.h"
+ 
+ volatile show_early_output_fn_t show_early_output;
+ 
+@@ -1886,6 +1887,8 @@ int prepare_revision_walk(struct rev_info *revs)
  			return -1;
  	if (revs->topo_order)
  		sort_in_topological_order(&revs->commits, revs->lifo);
--	if (revs->rewrite_parents && revs->line_level_traverse)
-+	if (revs->full_line_diff)
-+		revs->dense = 0;
-+	if (revs->rewrite_parents && revs->line_level_traverse
-+		&& !revs->full_line_diff)
- 		limit_list_line(revs);
++	if (revs->rewrite_parents && revs->line_level_traverse)
++		limit_list_line(revs);
  	if (revs->simplify_merges)
  		simplify_merges(revs);
+ 	if (revs->children.name)
 diff --git a/revision.h b/revision.h
-index 7f7d178..db901e5 100644
+index 48222f6..7f7d178 100644
 --- a/revision.h
 +++ b/revision.h
-@@ -73,7 +73,8 @@ struct rev_info {
- 			bisect:1,
- 			ancestry_path:1,
- 			first_parent_only:1,
--			line_level_traverse:1;
-+			line_level_traverse:1,
-+			full_line_diff:1;
+@@ -16,8 +16,9 @@
+ #define SYMMETRIC_LEFT	(1u<<8)
+ #define RANGE_UPDATE	(1u<<9) /* for line level traverse */
+ #define NEED_PRINT	(1u<<10)
+-#define EVIL_MERGE	(1u<<11)
+-#define ALL_REV_FLAGS	((1u<<12)-1)
++#define NONTRIVIAL_MERGE	(1u<<11)
++#define EVIL_MERGE	(1u<<12)
++#define ALL_REV_FLAGS	((1u<<13)-1)
  
- 	/* Diff flags */
- 	unsigned int	diff:1,
+ #define DECORATE_SHORT_REFS	1
+ #define DECORATE_FULL_REFS	2
 -- 
 1.7.2.19.g79e5d
