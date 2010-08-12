@@ -1,70 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH V5 16/17] Add tests for line history browser
-Date: Thu, 12 Aug 2010 13:37:54 -0700
-Message-ID: <7v1va3sh25.fsf@alter.siamese.dyndns.org>
-References: <1281539022-31616-1-git-send-email-struggleyb.nku@gmail.com>
- <1281539022-31616-17-git-send-email-struggleyb.nku@gmail.com>
- <AANLkTi=qvywaiwYpr7ZZ6Gf0i_curaLr0E8gRLD5WTK-@mail.gmail.com>
- <AANLkTinYaOhNNBj9_6mFF3azaFAwUJgeLVkyax2ZbVOm@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified
+ tracked files
+Date: Thu, 12 Aug 2010 15:40:52 -0500
+Message-ID: <20100812204051.GF2029@burratino>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+ <vpqsk2kjks7.fsf@bauges.imag.fr>
+ <AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
+ <7viq3fsirv.fsf@alter.siamese.dyndns.org>
+ <AANLkTikDvcn4eFDdkv26ADzsipwD_ofkdYwu_0abeLA3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Jens.Lehmann@web.de, trast@student.ethz.ch,
-	gitster@pobox.com
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 22:38:28 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	git@vger.kernel.org, Jens.Lehmann@web.de
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Thu Aug 12 22:42:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjeXj-00087l-6r
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:38:27 +0200
+	id 1Ojebf-00024r-Re
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:42:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933998Ab0HLUiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 16:38:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36259 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933996Ab0HLUiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 16:38:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 94533CD71B;
-	Thu, 12 Aug 2010 16:38:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=o2VsjQ0vtiJ7QZn+u/wUx+R0Q58=; b=dRcvmO
-	hgdqc8n+6gRTnNkuhzOc6O81ocmZqnob9YZGY3nHMtk1S1Ma/rWt8fUN4RoWch7a
-	CrNSaTxz4c7jyEzRobQJ91Ic2KUdhlwmw+hp27T4yzLhqOVxmAi/q9VXlUv61Dsg
-	Jn163fn6OOoKaFpZG/1xzlUSD5dd0iuYRK+qE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=sGfk8yt14uwpjcsvZOjLEaqgKEUDJrkE
-	Ww4lyBXAIMTEle6nbxLABUENnkx5qzsOH0/e9alLADMGheczFOFJ8jWj45D3sAQ/
-	MSqz8veMYmUYrWrultLTbuGeLbR3zjB77YItZnZ/Dnj3pD+dMI/9ys8+aB8KFPG2
-	PKw0gf98DIs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 41A54CD719;
-	Thu, 12 Aug 2010 16:38:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0BCFCD702; Thu, 12 Aug
- 2010 16:37:55 -0400 (EDT)
-In-Reply-To: <AANLkTinYaOhNNBj9_6mFF3azaFAwUJgeLVkyax2ZbVOm@mail.gmail.com>
- (Bo Yang's message of "Thu\, 12 Aug 2010 20\:24\:15 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 83749094-A651-11DF-A00F-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1760594Ab0HLUmZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:42:25 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38125 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760582Ab0HLUmY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 16:42:24 -0400
+Received: by gyg10 with SMTP id 10so573260gyg.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:42:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=AYB7DDFO1Tl+e6Y7toCMOwmGKWh/sOb+VtLg1HFHMq8=;
+        b=uXP7vF/Mjg7IYIX1DqkOnRxL91pmVPrtajRr3ZyRCXw1I8WVTiraA0X/OAPq18Gx6O
+         feJvlnt1H2TZVJaqiLUn1NSHXzsIk8u5Nv5ZFvjObU84tYWjEbMq0g0GQPJCdMCRmvR9
+         En5uEPUMWwq3FyxurKFNXUcRGvjPzeDVGS/AM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=a+zBZyr50jiIV8hnQxs5a7muz0tkIk2TqNJXqtRXxydUr+SmTLqmZDT4xX/O4eyiz1
+         jHY403VZWxdM0Ot1ksNN8d6wFiXK4Vlx5RNrzl6skEnQBKfx+SV75vXCN7K7UcLNstt8
+         QjxmRkPLs9oDUfL45qf5lsMvYl4nzw4bnEm2U=
+Received: by 10.231.34.70 with SMTP id k6mr684316ibd.25.1281645743747;
+        Thu, 12 Aug 2010 13:42:23 -0700 (PDT)
+Received: from burratino ([66.99.3.154])
+        by mx.google.com with ESMTPS id n20sm260556ibe.17.2010.08.12.13.42.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 12 Aug 2010 13:42:23 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikDvcn4eFDdkv26ADzsipwD_ofkdYwu_0abeLA3@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153415>
 
-Bo Yang <struggleyb.nku@gmail.com> writes:
+Greg Brockman wrote:
 
->    Seems this is the SP problem. Do you apply this series with
-> --whitespace=fix ? This will erase some spaces in the diff files,
-> so...
+> For example, in my personal usage, when I ignore a directory but trac=
+k
+> some files within it, this is because I don't want to specify an
+> ignore for every single other file in that directory.  Also note that
+> negated .gitignore entries don't seem to work in this case, i.e. a
+> .gitignore with contents
+> dir
+> !dir/file
+> won't actually let file be addable again.
 
-That probably is it.  Your patches have other whitespace breakages (mostly
-"new blank line at EOF") that I had to use --whitespace=fix to correct
-them.
+Aside: yeah, this is something I have run into before.  The workaround
+I used was to use a dir/.gitignore instead, like this:
+
+ *
+ !/file
+
+which is ugly.
+
+Maybe git should get internal support for something like
+
+ dir/**
+
+(meaning =E2=80=9Call files under dir=E2=80=9D) and =E2=80=9C!dir/file=E2=
+=80=9D could be internally
+munged to
+
+ !/dir
+ dir/**
+ !dir/file
+
+when it appears after =E2=80=9Cdir=E2=80=9D.
