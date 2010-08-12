@@ -1,99 +1,74 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: windows smoke tester (was Re: What's cooking in git.git (Aug
- 2010, #02; Wed, 11))
-Date: Thu, 12 Aug 2010 15:58:13 -0700
-Message-ID: <4C647C85.2080109@gmail.com>
-References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>	<4C63BD9B.6000608@viscovery.net>	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>	<AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>	<AANLkTina+62MczLNhXC6VCtz_kQZ_t0+uZ8fH=vTV=XO@mail.gmail.com>	<4C64308D.8030000@gmail.com>	<AANLkTikh14FVmE6E78FNRvSG0B_5ZmNcOLSwye4ExNVx@mail.gmail.com>	<4C647360.50304@gmail.com> <AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv4 2/2] pull --rebase: Avoid spurious conflicts and
+ reapplying unnecessary patches
+Date: Fri, 13 Aug 2010 01:17:32 +0200
+Message-ID: <AANLkTim6Tg7fNqxFYGU=bxQAn24ipkNaiENU5waCyQ4y@mail.gmail.com>
+References: <1281592569-740-1-git-send-email-newren@gmail.com>
+ <1281592569-740-3-git-send-email-newren@gmail.com> <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
+ <AANLkTimoB=__-FmuFYa_rKqMjoYwWQS9hzziuk9Jseyx@mail.gmail.com> <AANLkTikt6kRZRGW5Y=0qFf41P2HVLe97qGH=5ya5gcbw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	kusmabite@gmail.com
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 00:58:24 2010
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	martinvz <martin.von.zweigbergk@gmail.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 01:17:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ojgj9-0003qu-RE
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:58:24 +0200
+	id 1Ojh26-00034a-U0
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 01:17:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760990Ab0HLW6R convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:58:17 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:39951 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760947Ab0HLW6Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 18:58:16 -0400
-Received: by pxi10 with SMTP id 10so612634pxi.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:58:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=xtea4S1VNdp6C5B4Sp9gh+67jYSabek5Fe7nQO5w+dU=;
-        b=VNMk4+gokyRobOB6nXIzn0DHD46P5sFWad1/irX9slp55cgDpe8u+QqeZOC5bmgjDf
-         5OSpzKRqGEki3ZrTLphpk7+Lj6+Cwy9wjJxj4YFQRdsVqdX3B5qf2pWidFfKjXzbx/qK
-         c9B41Rxexpbf58geq3eDn3fRSYo4c18t6u00c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=KBYTQfgfm62sD8Hrd/el1I1EHlyajq8xisJ5855Uaaf21iUTHkaO94oJtnA6l4hv/w
-         AAmg2Qu9ohWO80laRk2NBIKSxH/WjvA3JbYlTIMspWoivhR6xy33ke0AOyKEsiKo2h22
-         6mT/1JHIzAAq70VPI2+ORqSA5dQhlIO5wp30U=
-Received: by 10.114.58.11 with SMTP id g11mr868278waa.14.1281653895483;
-        Thu, 12 Aug 2010 15:58:15 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id d39sm3220986wam.16.2010.08.12.15.58.12
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Aug 2010 15:58:14 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
+	id S1753760Ab0HLXRx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 19:17:53 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:63606 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752937Ab0HLXRx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 19:17:53 -0400
+Received: by gwb20 with SMTP id 20so646321gwb.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 16:17:52 -0700 (PDT)
+Received: by 10.231.184.16 with SMTP id ci16mr875929ibb.23.1281655072129; Thu,
+ 12 Aug 2010 16:17:52 -0700 (PDT)
+Received: by 10.231.16.196 with HTTP; Thu, 12 Aug 2010 16:17:32 -0700 (PDT)
+In-Reply-To: <AANLkTikt6kRZRGW5Y=0qFf41P2HVLe97qGH=5ya5gcbw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153441>
 
-On 12/08/10 15:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Thu, Aug 12, 2010 at 22:19, Chris Packham <judge.packham@gmail.com=
-> wrote:
->> I checked out Avar's (Aevar?)
->=20
-> Whatever works :)
->=20
->=20
->> branch One problem is that I don't have any of the perl TAP
->> modules. It's complaining about TAP/Harness/Archive.pm. Any
->> suggestions for installing additional perl modules under msysgit?
->=20
-> I don't know what msysgit does for perl but if you can make it use
-> strawberry perl's perl + modules that'd be easiest:
->=20
->     http://strawberryperl.com
+On Fri, Aug 13, 2010 at 12:08 AM, Santi B=E9jar <santi@agolina.net> wro=
+te:
+> On Thu, Aug 12, 2010 at 10:19 PM, Elijah Newren <newren@gmail.com> wr=
+ote:
+>> Hi,
+>>
+>> Thanks for the review and comments!
+>>
+>> On Thu, Aug 12, 2010 at 7:34 AM, Santi B=E9jar <santi@agolina.net> w=
+rote:
+>> <snip>
+>>> All this makes sense.
+>>>
+>>> But can you explain when it happens? One possibility is when you do=
+n't
+>>> fork from the tracking branch as in:
+>>
+>> That's one possibility. =A0Patch 1/2 in this thread contains testcas=
+es
+>> for two others. =A0Another possibility is having your patches get
+>> upstream by some alternative route (e.g. pulling your changes to a
+>> third machine, pushing from there, and then going back to your
+>> original machine and trying to pull --rebase).
+>
+> I think this is commit message material.
 
-I'll see if I can get it to work. Msys comes with its own perl so maybe
-there is another way.
+I just want to add one thing, thanks for your great commit message.
+Although the patch itself if 7 lines it is fantastic to have a commit
+message explaining all the historical context and this level of
+detail.
 
-> It comes with an easy-to use CPAN shell out of the box.
->=20
->> Another problem is that the mingw sh.exe is _really_ slow (the box i=
-s an
->> oldish Dell Latitude).
->=20
-> Odd that sh.exe is the slowest bit.
-
-I'm probably pointing the finger at sh.exe but it is more that somethin=
-g
-else it is doing is slowing things down (probably the fancy PS1 setting=
-).
-
-> One thing (as the t/README notes) that'll make the tests much faster
-> is using a ramdisk for the trash directory, but I don't know if
-> Windows can do that.
-
-I doubt windows has the capability (heck they've only had 3 file system=
-s
-in the last 20 years).
+Thanks,
+Santi
