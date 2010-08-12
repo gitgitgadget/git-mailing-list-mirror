@@ -1,91 +1,92 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [Q] `git fetch tag NAME' into mirror repo does not update HEAD,
- what to do?
-Date: Thu, 12 Aug 2010 12:02:49 -0500
-Message-ID: <Xp6r8yG_6tK_gooNBRqAKdsGRTcXgRo-b1bJv3J7ckxs2iD_-UXlPw@cipher.nrlssc.navy.mil>
-References: <201008120954.27648.brian.foster@innova-card.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 05/10] Add string-specific memory pool
+Date: Thu, 12 Aug 2010 10:22:41 -0700
+Message-ID: <7vmxsru4ny.fsf@alter.siamese.dyndns.org>
+References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
+ <20100716101352.GA14374@burratino> <20100809215719.GA4203@burratino>
+ <20100809223442.GA4429@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 19:03:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 19:23:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjbBE-0005Jz-Rt
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 19:03:01 +0200
+	id 1OjbUc-00014Z-0a
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 19:23:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752657Ab0HLRCz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 13:02:55 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:43896 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750886Ab0HLRCy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 13:02:54 -0400
-Received: by mail.nrlssc.navy.mil id o7CH2omb014293; Thu, 12 Aug 2010 12:02:50 -0500
-In-Reply-To: <201008120954.27648.brian.foster@innova-card.com>
-X-OriginalArrivalTime: 12 Aug 2010 17:02:49.0541 (UTC) FILETIME=[31A50F50:01CB3A40]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1755166Ab0HLRW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 13:22:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59067 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752977Ab0HLRWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 13:22:55 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FCF5CDA28;
+	Thu, 12 Aug 2010 13:22:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=vcvvwgOiL2HAa67+kkuV6v4GDlQ=; b=gJazMlP2+KmB/NWPQGxotl2
+	VDwm8Hg3ItzP/cO4Y/JZyEHYJjKUgW7/67C6e99pimJwnJoGLMRP0CGPDQ5YVmkl
+	+Ye2+tvKzIQS94m7wCAsaUp0yJSzRad5G+WvUaULn/tMC23x5g+b6hiPh8YWcIqt
+	M1ZUA3QV1aMv/lXjITok=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=fEO7VmY+TVGbyKsVH62Ozv7IPct76+gJ5S9yXMp0DkolnzZPh
+	86uLkUXBacPh3ZLmVbojagtMPNxjNa69nbKZv1y/byFAu4YnRtqFg8FwfWQHaMBt
+	930ICZBqyHqUYIJb9TXY/g0v0u1dV5GE/KaSPjp1oNIL+gB0q2moiJwPJo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4124DCDA25;
+	Thu, 12 Aug 2010 13:22:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A4F9CDA21; Thu, 12 Aug
+ 2010 13:22:43 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3AFB6876-A636-11DF-B404-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153388>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153389>
 
-Brian Foster wrote:
->  Bare repository ORIG's master looks like this:
-> 
->    o--o--o--o--v1--o--v2--o--o--o HEAD
-> 
->  where v1 and v2 are (annotated) tagged commits.
-> 
->  Repository SLAVE is a mirror clone of ORIG which
->  (very deliberately!) lags behind (i.e., its HEAD
->  is one of the earlier (and usually tagged) commits
->  on ORIG).  SLAVE's master was like this:
-> 
->    o--o--o--o--v1 HEAD
-> 
->  We wanted to update its HEAD to v2, so did:
-> 
->    git fetch ORIG tag v2
-> 
->  This gave us:
-> 
->    o--o--o--o--v1 HEAD
->                  \ 
->                   o--v2
-> 
->  It did not update SLAVE's HEAD to v2, which we wanted.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Are you using --mirror only so that the branch pointer in
-the mirror repository will be updated when you fetch?
+> diff --git a/Makefile b/Makefile
+> index e7c33ec..24103c9 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -415,6 +415,7 @@ TEST_PROGRAMS_NEED_X += test-path-utils
+>  TEST_PROGRAMS_NEED_X += test-run-command
+>  TEST_PROGRAMS_NEED_X += test-sha1
+>  TEST_PROGRAMS_NEED_X += test-sigchain
+> +TEST_PROGRAMS_NEED_X += test-string-pool
+>  TEST_PROGRAMS_NEED_X += test-treap
+>  TEST_PROGRAMS_NEED_X += test-index-version
 
-If you are not really interested in having a "real" mirror,
-then maybe you should set your mirror up to track a
-specific branch (or branches) in the mirrored repository.
+Does your Makefile do the right thing to vcs-svn/*.[oa] upon "make clean"?
 
-You could have a branch named for example "for_mirror/master",
-in the mirrored repository (ORIG) that you would prepare.
-You could update the for_mirror/master branch when you were
-ready using 'git branch' like this:
+> diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
+> new file mode 100644
+> index 0000000..550f0e5
+> --- /dev/null
+> +++ b/vcs-svn/string_pool.c
+> @@ -0,0 +1,102 @@
+> ...
+> +uint32_t pool_intern(const char *key)
+> +{
+> +	/* Canonicalize key */
+> +	struct node *match = NULL;
+> +	uint32_t key_len;
+> +	if (key == NULL)
+> +		return ~0;
+> +	key_len = strlen(key) + 1;
+> +	struct node *node = node_pointer(node_alloc(1));
 
-   git branch -f for_mirror/master v2
-
-In the mirror repository (SLAVE), you would update the
-fetchspec so that the mirror mirrored the branches below
-the "for_mirror" namespace in the remote repository
-like this:
-
-   fetch = +refs/heads/for_mirror/*:refs/heads/*
-
-Then, a simple 'git fetch' would fetch the updates (including
-tags) and update the branch pointer in the mirror like you want
-it to do.  Tracking multiple branches this way is possible just
-by creating another branch in the ORIG repository with the proper
-name.
-
--Brandon
+Please fix decl-after-stmt here.
