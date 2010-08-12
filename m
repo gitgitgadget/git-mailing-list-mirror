@@ -1,123 +1,71 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: gitweb not friendly to firefox revived
-Date: Thu, 12 Aug 2010 11:23:56 +0200
-Message-ID: <20100812092356.GC9763@pengutronix.de>
-References: <20100801195138.GA1980@pengutronix.de> <m3lj8qozan.fsf@localhost.localdomain> <20100803210730.GA1254@pengutronix.de> <201008032350.40117.jnareb@gmail.com>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: What's cooking in git.git (Aug 2010, #02; Wed, 11)
+Date: Thu, 12 Aug 2010 05:37:33 -0400
+Message-ID: <AANLkTi=MenKX7Eh5PTpjfiYirrgLBCamWgorA35rx-Fy@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+	<4C63BD9B.6000608@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kernel@pengutronix.de,
-	Stephen Boyd <bebarino@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 11:24:07 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Elijah Newren <newren@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Aug 12 11:37:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjU17-00078l-8t
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 11:24:05 +0200
+	id 1OjUEL-0003wn-Qt
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 11:37:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933326Ab0HLJX7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 05:23:59 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:49725 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933317Ab0HLJX5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 05:23:57 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1OjU0y-0006zW-6G; Thu, 12 Aug 2010 11:23:56 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1OjU0y-0006xC-4E; Thu, 12 Aug 2010 11:23:56 +0200
-Content-Disposition: inline
-In-Reply-To: <201008032350.40117.jnareb@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1759241Ab0HLJhj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 05:37:39 -0400
+Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:63243 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753337Ab0HLJhj convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 05:37:39 -0400
+X-AuditID: 12074422-b7bb6ae0000009fa-b3-4c63c0d7f4c2
+Received: from mailhub-auth-4.mit.edu (MAILHUB-AUTH-4.MIT.EDU [18.7.62.39])
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id E6.4B.02554.7D0C36C4; Thu, 12 Aug 2010 05:37:28 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o7C9ba9W007082
+	for <git@vger.kernel.org>; Thu, 12 Aug 2010 05:37:37 -0400
+Received: from mail-wy0-f174.google.com (mail-wy0-f174.google.com [74.125.82.174])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7C9bXCb000768
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 12 Aug 2010 05:37:35 -0400 (EDT)
+Received: by wyb32 with SMTP id 32so1173691wyb.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 02:37:33 -0700 (PDT)
+Received: by 10.216.28.213 with SMTP id g63mr6486596wea.71.1281605853705; Thu,
+ 12 Aug 2010 02:37:33 -0700 (PDT)
+Received: by 10.216.19.142 with HTTP; Thu, 12 Aug 2010 02:37:33 -0700 (PDT)
+In-Reply-To: <4C63BD9B.6000608@viscovery.net>
+X-Brightmail-Tracker: AAAAAhWWOO0VlxO6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153358>
 
-Hello,
+>> * gb/shell-ext (2010-07-28) 3 commits
+>> =A0- Add sample commands for git-shell
+>> =A0- Add interactive mode to git-shell for user-friendliness
+>> =A0- Allow creation of arbitrary git-shell commands
+>
+> This needs work on Windows because we do not have geteuid(), perhaps =
+just
+> a compiler flag -Dgeteuid=3Dgetuid
+I had a submitted a revised patch that just uses HOME, see
+http://thread.gmane.org/gmane.comp.version-control.git/152050/focus=3D1=
+52135.
+ I guess that didn't make it in yet.
 
-> Nevertheless it shows what's the problem.  Somehow (perhaps wrong
-> encoding, perhaps screw up with quoted-printable and git-am, perhaps
-> copy'n' paste included ANSII color codes from terminal, perhaps somet=
-hing
-> different altogether) you got control characters (\e =3D ESC) in $aut=
-hor.
-> In strict XHTML mode (with 'application/xml
->=20
-> Please try the following patch
->=20
-> -- >8 --
-> From: Jakub Narebski <jnareb@gmail.com>
-> Subject: [PATCH] gitweb: Harden format_search_author()
->=20
-> Protect format_search_author against control characters in $author.
-> While at it simplify it a bit, and use spaces for align.
->=20
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
->  gitweb/gitweb.perl |   29 ++++++++++++++---------------
->  1 files changed, 14 insertions(+), 15 deletions(-)
->=20
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 8b02767..ea9c09c 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1856,23 +1856,22 @@ sub format_search_author {
->  	my ($author, $searchtype, $displaytext) =3D @_;
->  	my $have_search =3D gitweb_check_feature('search');
-> =20
-> -	if ($have_search) {
-> -		my $performed =3D "";
-> -		if ($searchtype eq 'author') {
-> -			$performed =3D "authored";
-> -		} elsif ($searchtype eq 'committer') {
-> -			$performed =3D "committed";
-> -		}
-> -
-> -		return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash,
-> -				searchtext=3D>$author,
-> -				searchtype=3D>$searchtype), class=3D>"list",
-> -				title=3D>"Search for commits $performed by $author"},
-> -				$displaytext);
-> +	return $displaytext unless ($have_search);
-> =20
-> -	} else {
-> -		return $displaytext;
-> +	my $performed =3D "";
-> +	if ($searchtype eq 'author') {
-> +		$performed =3D "authored";
-> +	} elsif ($searchtype eq 'committer') {
-> +		$performed =3D "committed";
->  	}
-> +
-> +	my $title =3D to_utf8("Search for commits $performed by $author");
-> +	$title =3D~ s/[[:cntrl:]]/?/g;
-> +
-> +	return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash,
-> +	                              searchtext=3D>$author, searchtype=3D>=
-$searchtype),
-> +	                -class=3D>"list", -title=3D>$title},
-> +	               $displaytext);
->  }
-Seems to do the right thing.  With Firefox I get a correct listing now
-instead of the xml parse error.
+Thanks,
 
-Thanks
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Greg
