@@ -1,81 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 2/2] pull --rebase: Avoid spurious conflicts and
- reapplying unnecessary patches
-Date: Thu, 12 Aug 2010 15:29:23 -0700
-Message-ID: <7vhbizpirg.fsf@alter.siamese.dyndns.org>
-References: <1281592569-740-1-git-send-email-newren@gmail.com>
- <1281592569-740-3-git-send-email-newren@gmail.com>
- <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
- <AANLkTimoB=__-FmuFYa_rKqMjoYwWQS9hzziuk9Jseyx@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: windows smoke tester (was Re: What's cooking in git.git (Aug
+ 2010, #02; Wed, 11))
+Date: Thu, 12 Aug 2010 22:29:51 +0000
+Message-ID: <AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+	<4C63BD9B.6000608@viscovery.net>
+	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
+	<AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>
+	<AANLkTina+62MczLNhXC6VCtz_kQZ_t0+uZ8fH=vTV=XO@mail.gmail.com>
+	<4C64308D.8030000@gmail.com>
+	<AANLkTikh14FVmE6E78FNRvSG0B_5ZmNcOLSwye4ExNVx@mail.gmail.com>
+	<4C647360.50304@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>,
-	git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	martinvz <martin.von.zweigbergk@gmail.com>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 00:29:43 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: kusmabite@gmail.com, Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Greg Brockman <gdb@mit.edu>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Elijah Newren <newren@gmail.com>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 00:30:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjgHN-0000dJ-MV
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:29:42 +0200
+	id 1OjgHf-0000oN-I6
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934017Ab0HLW3h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 18:29:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48246 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760958Ab0HLW3g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 18:29:36 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0AB99CC591;
-	Thu, 12 Aug 2010 18:29:36 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rTgoQhQNF0V2DJKuna+u1TPK/QA=; b=eiUP8m
-	nBwYe0TGIqXp4gqSwBqwdkT/LnsADJyHLSKr8CCDydGf9XE/2D0Lv8IcNoaW+bCO
-	lZs8PrGWI4GFN/zhKHBnD935lrHj0IANsZIkF3SflonjZMcZI/WQEV0ovkZBPRSo
-	LMBvT4ho6rj+GMRirrOl1KUdqfM9UwuBIv/C0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YNdTOX7knRdeqxhdNQPhWqh56OIDGcH4
-	WtPO25qQHS/+Dfm/CH3fPqRJaSAipH/PD9tofWXeA9RIxII/aACAhFUN5OPJCIfX
-	IGZq3ZXPMH6bStnqGt7vmyA/KmB6wYFAb4WNR5Z7W3EUdx5DE2Wf6NMATM/sRNoU
-	RpfJVxFycGw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB185CC58C;
-	Thu, 12 Aug 2010 18:29:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B044FCC58A; Thu, 12 Aug
- 2010 18:29:24 -0400 (EDT)
-In-Reply-To: <AANLkTimoB=__-FmuFYa_rKqMjoYwWQS9hzziuk9Jseyx@mail.gmail.com>
- (Elijah Newren's message of "Thu\, 12 Aug 2010 14\:19\:55 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 13166A56-A661-11DF-9D13-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934036Ab0HLW3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 18:29:53 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47971 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760957Ab0HLW3w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 18:29:52 -0400
+Received: by gxk23 with SMTP id 23so633573gxk.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:29:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=TVlMR5MZFqj8Xh71+1DbAbVfentXxHgd3qopk80jXUw=;
+        b=gHzAW7V6WkeF4V4ng/sgQKyCPJjvhc48P4FmcVVdRqaFHch7cmiJhSw4T6b+KFQcE6
+         yIEDY0xNKTs6pS0vofE3J+qkCvqnCzuw4ElD479WH82jPDznZ2xlVle39tijsG6uDb1i
+         bVLmMww9lNrrNkmWTZu3RZC3lW/ZBbE4MdR6E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=o1NiBtywE2VwU9Hqa7U3ZCFqamCZmK5k/EBhDo4AbDiGr6juKRExU0flKMsrrE2Yhb
+         JfeK9eLepZS1s0m6XU6twBxzOkWC+s1ZjoulxSYcjrnvw3vx+SJL/9l6ub3sfBB2cSTs
+         scosdFg3OXjJzy8Zf5C+6qJMxPhPhOqHqbhps=
+Received: by 10.231.152.146 with SMTP id g18mr822602ibw.48.1281652191239; Thu,
+ 12 Aug 2010 15:29:51 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Thu, 12 Aug 2010 15:29:51 -0700 (PDT)
+In-Reply-To: <4C647360.50304@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153434>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153435>
 
-Elijah Newren <newren@gmail.com> writes:
+On Thu, Aug 12, 2010 at 22:19, Chris Packham <judge.packham@gmail.com> wrote:
+> I checked out Avar's (Aevar?)
 
->> Can you refer to commits with something like this?
->>
->> c85c792 (pull --rebase: be cleverer with rebased upstream branches, 2008-01-26)
->
-> Sure, I'll start doing that.
->
->> You've moved all the lines after the call to "git fetch". It changes
->> the behavior when the reflog is not enabled, as the old value of
->> remoteref is lost.
->
-> Doh.  That's what I get for trying to 'clean up' some code and put all
-> the references to setting oldremoteref together.  I should have stuck
-> with my original 7-line addition patch.  I'll resend the simplified
-> patch.
+Whatever works :)
 
-Then I'll wait for the re-roll of 2/2 with updated message and
-corrected code; thanks.
+
+> branch One problem is that I don't have any of the perl TAP
+> modules. It's complaining about TAP/Harness/Archive.pm. Any
+> suggestions for installing additional perl modules under msysgit?
+
+I don't know what msysgit does for perl but if you can make it use
+strawberry perl's perl + modules that'd be easiest:
+
+    http://strawberryperl.com
+
+It comes with an easy-to use CPAN shell out of the box.
+
+> Another problem is that the mingw sh.exe is _really_ slow (the box is an
+> oldish Dell Latitude).
+
+Odd that sh.exe is the slowest bit.
+
+One thing (as the t/README notes) that'll make the tests much faster
+is using a ramdisk for the trash directory, but I don't know if
+Windows can do that.
