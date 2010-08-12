@@ -1,177 +1,122 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Where do I stick development documentation?
-Date: Thu, 12 Aug 2010 03:11:50 +0000
-Message-ID: <AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
-References: <AANLkTi=dS1DYJ3MB-Du34sVPy8Qw8VNck=Lx54DtSfO0@mail.gmail.com>
-	<20100812023922.GB19174@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: jn/commit-no-change-wo-status (Re: What's cooking in git.git (Aug
+ 2010, #02; Wed, 11))
+Date: Wed, 11 Aug 2010 22:15:08 -0500
+Message-ID: <20100812031508.GC19174@burratino>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+ <20100812014107.GA18937@burratino>
+ <AANLkTi=5biMga0=nAVwQLNd1jEJXXtUJBqdhuyt-YoWv@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 05:11:59 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 05:16:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjOD0-0005Kn-NY
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 05:11:59 +0200
+	id 1OjOHa-0006Pq-OH
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 05:16:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759542Ab0HLDLw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 23:11:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:36663 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759221Ab0HLDLw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 23:11:52 -0400
-Received: by fxm13 with SMTP id 13so563724fxm.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 20:11:50 -0700 (PDT)
+	id S1759076Ab0HLDQi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 23:16:38 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:59806 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758254Ab0HLDQh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 23:16:37 -0400
+Received: by yxg6 with SMTP id 6so252985yxg.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 20:16:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zv/YgVGwwlzFZpkpf2W74Jy/HjAd7kTZN7u39v0ArgQ=;
-        b=pPfp+1YLKYpBK6J/Y4pZ9Vb8SJW3629yx7TzhIyQpfhUiO2KU6MLasSLSK11uAvuWn
-         +YmLmBdQRiy1Eh6H6dsj26beV9BvbpXh/14kJMgTal+Yr9aS4+Exm4rLiR/YCykdjAbi
-         xLAiXv4mqtNut7x5rb8P/yNjyqSERIs8+s1rA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=qvSyM6/ZR48ry2tE1pgysvpPOaPLcuRV3St1ZRHIsJE=;
+        b=jxBX8F1553CjZ4l0GKZ6q1xjWhe1WYpukJqSVXtLag1S0YUqFpOek1MCgmm3X4Wper
+         p3KhToCFjayz2WxftP+Utb1D3DDpe96NfMeruBo9POfkIYPdPVFU5bGz8cZ+bojKvM8e
+         yxakz15YenI4cev9yJ7e0b3QYBLaPtez5Eqi4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=b2ys1moNqBCbCzID9rGFGcz2VYp1fak6ZZDUHdahKQSn6c5d7/mfYJAAsNuoKZ7gIr
-         unPAYleb7ejz5t+fR8SGKU5ls/WgeGHQRuofofs/EyfffcFQ0an2xBvXeRIpOuNtBYpM
-         eDJCQcslhzn/yfU5GhUNfaABpTKYeVTHWn+Gw=
-Received: by 10.223.107.82 with SMTP id a18mr7961272fap.86.1281582710414; Wed, 
-	11 Aug 2010 20:11:50 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Wed, 11 Aug 2010 20:11:50 -0700 (PDT)
-In-Reply-To: <20100812023922.GB19174@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=sPunAYJCXZZsA0xz7scMcm6CspE3AFqZ1xxxM5ufz3gOMvkC04HyN9ibhdQWZ5PEaS
+         gsK5c3CQKyB/T2ZgWJvdXNnMHWjWuvmNhM3bTeyCiDk92zo3O+hpOzENhpBbW7NOgFdd
+         qL66HrSwBr8QtuKhxUNgDI5siu4LqDeSdMR0Q=
+Received: by 10.101.173.21 with SMTP id a21mr22770101anp.63.1281582996476;
+        Wed, 11 Aug 2010 20:16:36 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id a12sm1281955and.36.2010.08.11.20.16.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 11 Aug 2010 20:16:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=5biMga0=nAVwQLNd1jEJXXtUJBqdhuyt-YoWv@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153331>
 
-On Thu, Aug 12, 2010 at 02:39, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> There's some documentation aimed at developing that I'd like to see =
-/
->> write in Git at some point.
->>
->> Developing:
->>
->> =C2=A0 =C2=A0* How to work with Gettext
->>
->> =C2=A0 =C2=A0* How to write portable code, i.e. constructs to avoid =
-in C / shell
->> =C2=A0 =C2=A0 =C2=A0script etc (these keep coming up).
->
-> Maybe:
->
-> =C2=A0Documentation/technical/api-gettext.txt
-> =C2=A0Documentation/CodingGuidelines
-> =C2=A0Documentation/PlatformNotes
->
-> or some variations on the theme?
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-That would totally screw with my secret mission to turn everything
-into manpages, though :)
+> But I don't know, the "git commit" output doesn't confuse me so I'm
+> not in the target audience.
 
-I don't know how sane it would be, but it'd be neat to tell people "to
-patch git just fire up `man gitdev-patches' in your terminal ..".
+=46or what it=E2=80=99s worth, I had three scenarios in mind:
 
-Another plus is writing in asciidoc, instead of some pseudocode that
-isn't parsed by anything but human eyes.
+Getting started
+---------------
 
-But meh, I don't know :)
+One way to learn a program is to just try things.  Some people take
+this practice to an extreme and unforunately (1) would expect =E2=80=9C=
+git
+commit=E2=80=9D to do the same thing as =E2=80=9Ccvs commit=E2=80=9D an=
+d (2) would not want to
+read a manual or a long stream of text when it does not do so.
 
->> =C2=A0 =C2=A0* How to deal with gettext / submit po files / keep the=
-m up to date
->> =C2=A0 =C2=A0 =C2=A0etc.
->
-> gittranslation.7?
+I hope we can streamline that process somehow, for example by
+starting the output with the error message:
 
-Sounds good.
+ $ git commit
+ fatal: no changes added to commit
+ hint: use 'git add' and 'git reset' to update what will be committed
+ hint: you have 37 untracked files; use 'git status' to list them
 
->> =C2=A0 =C2=A0* Core git concepts (that need to be translated), maybe=
- I could
->> =C2=A0 =C2=A0 =C2=A0adopt the gitglossary to this task, but it'd nee=
-d to be a bit
->> =C2=A0 =C2=A0 =C2=A0more structured, i.e. describe core data concept=
-s first, then
->> =C2=A0 =C2=A0 =C2=A0some other terms.
->
-> That sounds good. =C2=A0Once we develop infrastructure for translatin=
-g
-> manpages, we could encourage translators to do gitglossary first
-> to standardize terminology.
+24-line terminal
+----------------
 
-I'll push "add sub-sections to gitglossary" to my TODO. I think the
-flet alphabetical order does it a disservice, but then again maybe
-leaving the glossary alone and writing a new document would be better.
+When I forget to stage changes, the previous output in the terminal=E2=80=
+=99s
+scrollback buffer may give a reminder of what those changes were.
+The current =E2=80=9Cgit status=E2=80=9D output makes that information =
+harder to find.
 
-What I had in mind was something like this (incomplete, and mostly in
-Icelandic): http://gist.github.com/425917
+=46or the same reason, I basically never use git status without -s.
+Before status --short existed, I used diff-files and ls-files -o.
+Now I generally use =E2=80=9Cadd -u=E2=80=9D, =E2=80=9Cdiff --cached=E2=
+=80=9D, and =E2=80=9Cadd/reset -p=E2=80=9D.
 
-I.e. just a bulletpoint list of core terms that you need to translate
-for Git.
+Need reminder of changes
+------------------------
 
->> =C2=A0 =C2=A0 =C2=A0Actually, on that point, do we have documentatio=
-n that describes
->> =C2=A0 =C2=A0 =C2=A0git's data model in one place? I.e. everything f=
-rom blobs to
->> =C2=A0 =C2=A0 =C2=A0trees, how raw commit objects etc. look. Somethi=
-ng like "Git for
->> =C2=A0 =C2=A0 =C2=A0computer scientists".
->
-> Hopefully some pic wizard can convert that to nroff. :)
->
-> I think Tommi Virtanen should be easy to reach in case anyone wants t=
-o
-> try adapting the article somehow.
+Some people forget where they are and would be confused if =E2=80=9Cgit
+commit=E2=80=9D just failed without explaining why.  They need an indic=
+ation
+of what just happened and what they need to try to do to fix it up.
 
-That'd be neat. Sometimes I forget how git stores things (so that I
-could e.g. construct commit objects with echo / sha1sum on the command
-line). Having one documentation that explains all that would be nice.
+=46or such people, the existing output is fine.  With a successful
+series, the new output would also be fine, and running =E2=80=9Cgit che=
+ckout=E2=80=9D
+or =E2=80=9Cgit status=E2=80=9D would seem the most natural thing in th=
+e world rather
+than an imposition.
 
-It'd also be very neat if we had tools to print out any object in its
-raw form, --pretty=3Draw is partly there, but it's more pretty than
-raw.
-
-E.g. a tool like that might give you a human readable representation
-of a object file (including packed files), instead of having to do
-something like this (from "Inspecting a corrupt git object"):
-
-    On Wed, Aug 4, 2010 at 09:48, Thomas Rast <trast@student.ethz.ch> w=
-rote:
-    > Magnus B=C3=A4ck wrote:
-    >>
-    >> $ head -n 1 /tmp/hexdump_corrupt.txt
-    >> 00000000 =C2=A078 9c 2b 29 4a 4d 55 30 =C2=A032 36 62 30 34 30 3=
-0 33
-|x.+)JMU026b04003|
-    >> $ head -n 1 /tmp/hexdump_okay.txt
-    >> 00000000 =C2=A078 01 2b 29 4a 4d 55 30 =C2=A032 36 62 30 34 30 3=
-0 33
-|x.+)JMU026b04003|
-    >>
-    >> From what I gather from the community book and Pro Git, a git ob=
-ject
-    >> file is a deflated representation of the object type as a string=
-, the
-    >> payload size, a null byte, and the payload. Is there a standard =
-tool for
-    >> inflating the file back so that I can inspect what the actual di=
-fference
-    >> between these two are? Short of writing a tool utilizing zlib, a=
-t least.
-    >
-    > I'm sure it's a one-liner in almost any scripting language, e.g. =
-you
-    > can use
-    >
-    > =C2=A0python -c 'import sys,zlib;
-sys.stdout.write(zlib.decompress(open(sys.argv[1]).read()))'
+Hope that helps.
+Jonathan
