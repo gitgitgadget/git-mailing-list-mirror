@@ -1,67 +1,123 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH V5 16/17] Add tests for line history browser
-Date: Thu, 12 Aug 2010 16:27:41 +0000
-Message-ID: <AANLkTinZ8vqfqL5ajFuxMDa9_SP5-vewFYnBUp5fxaAu@mail.gmail.com>
-References: <1281539022-31616-1-git-send-email-struggleyb.nku@gmail.com>
-	<1281539022-31616-17-git-send-email-struggleyb.nku@gmail.com>
-	<AANLkTi=qvywaiwYpr7ZZ6Gf0i_curaLr0E8gRLD5WTK-@mail.gmail.com>
-	<AANLkTinYaOhNNBj9_6mFF3azaFAwUJgeLVkyax2ZbVOm@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
+Date: Thu, 12 Aug 2010 18:31:13 +0200
+Message-ID: <vpq39ujg5da.fsf@bauges.imag.fr>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+	<vpqsk2kjks7.fsf@bauges.imag.fr>
+	<AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, trast@student.ethz.ch,
-	gitster@pobox.com
-To: Bo Yang <struggleyb.nku@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 18:27:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Thu Aug 12 18:35:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjadA-0008SK-Ob
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 18:27:49 +0200
+	id 1Ojakl-0005Et-PR
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 18:35:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760014Ab0HLQ1n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 12:27:43 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58705 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753570Ab0HLQ1m convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 12:27:42 -0400
-Received: by fxm13 with SMTP id 13so839907fxm.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 09:27:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=H8DNWBYcDyLOG4oNPQz3lOP6GvLBHrTvd2jazHzkBPw=;
-        b=Sk4usnzqLZo/BA/Xp+rkdxnO9F8xVTbxkg2sOm4/dB5U8r4zZXxlQ9RTqSDBW3+wxE
-         zqY1TQRI4BPbzmJTLAozpx77puSOygmean0RzauUFYK4AfHUZv+hIfd+Ju3diM8cuAxA
-         DQjsE5eOLv+zpKthv9IMA/1lXeec7/Z46TDa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=w2u1cYM6t5ilkK0dBlpVewDD7QUM/xukGw0SaFr919Gr/Qg4cpEPsUiktjqmuixIr3
-         deMLEEm3NVRSsUKE3ABUVeld+jm4bNJK7By89OiBdc5lLs8EKAJvyr5t8tr5YSc3+GDA
-         6SC2oLrZEWL2VGKPwx0lgAhyX6iM8o2K5EBtg=
-Received: by 10.223.113.13 with SMTP id y13mr514443fap.37.1281630461491; Thu,
- 12 Aug 2010 09:27:41 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Thu, 12 Aug 2010 09:27:41 -0700 (PDT)
-In-Reply-To: <AANLkTinYaOhNNBj9_6mFF3azaFAwUJgeLVkyax2ZbVOm@mail.gmail.com>
+	id S1753570Ab0HLQfe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 12:35:34 -0400
+Received: from imag.imag.fr ([129.88.30.1]:60088 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752224Ab0HLQfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 12:35:33 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7CGVE65001995
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Aug 2010 18:31:14 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OjagT-0003Cu-Vo; Thu, 12 Aug 2010 18:31:14 +0200
+In-Reply-To: <AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com> (Greg Brockman's message of "Thu\, 12 Aug 2010 11\:54\:01 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 12 Aug 2010 18:31:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153386>
 
-On Thu, Aug 12, 2010 at 12:24, Bo Yang <struggleyb.nku@gmail.com> wrote=
-:
-> Hi =C3=86var,
->
-> =C2=A0 Seems this is the SP problem. Do you apply this series with
-> --whitespace=3Dfix ? This will erase some spaces in the diff files,
+Greg Brockman <gdb@MIT.EDU> writes:
 
-I just pulled it down from pu, maybe Junio applied it like that.
+>>> This commit changes 'git add' to disregard excludes for tracked files
+>>> whose paths are explicitly specified on the command-line.
+>>
+>> I don't think you need this to solve the problem,
 
-Try pulling down pu and testing, do you have failures?
+This remains (see below) ...
+
+>> and as Junio said, that would make "git add dir/*" add all the
+>> ignored files, which would make -f essentially useless.
+
+... but this is actually wrong, yes. Your commit message states
+
+| This commit changes 'git add' to disregard excludes for tracked
+| files whose paths are explicitly specified on the command-line.
+
+I had missed the "tracked files whose ..." part, and focused on the
+"path is explicitely specified on the command-line".
+
+And actually, all you need is to see whether the file is tracked or
+not, and not whether it's been given from the command-line. With your
+patch, I get:
+
+$ git init git
+Initialized empty Git repository in /tmp/git/.git/
+$ cd git
+$ mkdir dir
+$ touch dir/file
+$ echo dir > .gitignore
+$ git add -f dir/file
+$ echo content >> dir/file
+$ git add dir/file
+$ git add dir/f*    # <--- shell globing
+
+Up to now, everything OK. But:
+
+$ git add dir/f\*   # <--- Git globing.
+The following paths are ignored by one of your .gitignore files:
+dir
+Use -f if you really want to add them.
+fatal: no files added
+
+I think Git should not apply any .gitignore rule to already-tracked
+files, whether they are given from the command-line explicitely or
+through globbing.
+
+One case which can be discussed:
+
+$ git add dir
+The following paths are ignored by one of your .gitignore files:
+dir
+Use -f if you really want to add them.
+fatal: no files added
+
+I don't think I should need a -f flag here either, since dir/ contains
+only tracked files. But I don't care much here.
+
+> Incidentally, I noticed that 'git add dir/file' for ignored dir worked
+> fine in an older version of git.  'git bisect' reveals that the
+> behavior I would like to change was introduced in 29209cb.  From the
+> commit message, I get the sense that this particular behavior was not
+> actually intentional (someone please correct me if I'm missing
+> something).
+
+My understanding is that the goal was to reject the first "git add
+subdir/file", but not subsequent ones.
+
+I'd suggest that you write a first patch introducing new tests,
+possibly marked as test_expect_failure, so that people can at least
+agree on the desired behavior, and then an implementation could
+follow.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
