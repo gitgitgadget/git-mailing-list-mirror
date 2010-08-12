@@ -1,92 +1,72 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] index-pack: Don't follow replace refs.
-Date: Thu, 12 Aug 2010 05:17:53 +0200
-Message-ID: <201008120517.53874.chriscool@tuxfamily.org>
-References: <1281401149-23141-1-git-send-email-nelhage@ksplice.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Low-level repository inspection (Re: Where do I stick development
+ documentation?)
+Date: Wed, 11 Aug 2010 22:17:56 -0500
+Message-ID: <20100812031756.GD19174@burratino>
+References: <AANLkTi=dS1DYJ3MB-Du34sVPy8Qw8VNck=Lx54DtSfO0@mail.gmail.com>
+ <20100812023922.GB19174@burratino>
+ <AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Nelson Elhage <nelhage@ksplice.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 05:18:15 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 05:19:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjOJ4-0006p8-VV
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 05:18:15 +0200
+	id 1OjOKI-00077p-Gy
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 05:19:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759562Ab0HLDSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 23:18:05 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:44584 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759623Ab0HLDSD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 23:18:03 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D4DAF818028;
-	Thu, 12 Aug 2010 05:17:55 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <1281401149-23141-1-git-send-email-nelhage@ksplice.com>
+	id S1759574Ab0HLDT0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 23:19:26 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43318 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759210Ab0HLDTZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 23:19:25 -0400
+Received: by gwb20 with SMTP id 20so250193gwb.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 20:19:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=2ZauGgJUov08cENtev3uGOkh99+0BqzTiNyS3S7nhYs=;
+        b=ejtEhg/77e05vckqA6LeHAaqYd8edodBIhNtKehocozhzRbEWru7Sog/ADrTpdWb3/
+         gGkGCt0UA8pP4nhMoDIkTYzX4icaXeFoeAJNADJRG5ThghbWS4uimuS5mqGq+XT1VewN
+         k/PdqOP9oNAQpxohtEu5MHDOnqM22HDy739Kk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=HbuFK9YpBtk4NMVXWMoDZCVSQr7XHQ0RPCrp+/05TujyGPMQrxbrhwJB5oUvAVKBTl
+         q/zMeCTA93zCpBCNCDbICOCQnlFlQRk4LplESgU2sL8pqZt/BVmaSN0clWn36Bb26830
+         sBwFsDI0zBFMDURHElDcd8c8BcqdhgG6fLGoA=
+Received: by 10.100.8.11 with SMTP id 11mr22827600anh.66.1281583164321;
+        Wed, 11 Aug 2010 20:19:24 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id i25sm1283518anh.37.2010.08.11.20.19.23
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 11 Aug 2010 20:19:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153333>
 
-On Tuesday 10 August 2010 02:45:49 Nelson Elhage wrote:
-> Without this, attempting to index a pack containing objects that have been
-> replaced results in a fatal error that looks like:
-> 
-> fatal: SHA1 COLLISION FOUND WITH <replaced-object> !
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-I think it is a good patch except for a nit pick below.
+> It'd also be very neat if we had tools to print out any object in its
+> raw form, --pretty=3Draw is partly there, but it's more pretty than
+> raw.
 
-> Signed-off-by: Nelson Elhage <nelhage@ksplice.com>
-> ---
->  builtin/index-pack.c |    2 ++
->  t/t6050-replace.sh   |    6 ++++++
->  2 files changed, 8 insertions(+), 0 deletions(-)
-> 
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index a89ae83..fad76bf 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -884,6 +884,8 @@ int cmd_index_pack(int argc, const char **argv, const
-> char *prefix) if (argc == 2 && !strcmp(argv[1], "-h"))
->  		usage(index_pack_usage);
-> 
-> +	read_replace_refs = 0;
-> +
->  	/*
->  	 * We wish to read the repository's config file if any, and
->  	 * for that it is necessary to call setup_git_directory_gently().
-> diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-> index 203ffdb..b5635a7 100755
-> --- a/t/t6050-replace.sh
-> +++ b/t/t6050-replace.sh
-> @@ -219,6 +219,12 @@ test_expect_success 'bisect and replacements' '
->       git bisect reset
->  '
-> 
-> +test_expect_success 'index-pack and replacements' '
-> +     git --no-replace-objects rev-list --objects HEAD | \
-> +       git --no-replace-objects pack-objects test-
-
-Maybe you could add "&&" at the end of the above line to make sure that an 
-error in the commands is caught.
-
-So, for what it's worth, if the above is fixed:
-
-Acked-by: Christian Couder <chriscool@tuxfamily.org>
-
-> +     git index-pack test-*.pack
-> +'
-> +
->  #
->  #
->  test_done
-
-Thanks,
-Christian.
+How about git cat-file (and other =E2=80=9Cinterrogation commands=E2=80=
+=9D listed in
+git.1)?
