@@ -1,80 +1,75 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: [Q] `git fetch tag NAME' into mirror repo does not update HEAD,
- what to do?
-Date: Thu, 12 Aug 2010 13:05:29 +0200
-Message-ID: <4C63D579.507@dbservice.com>
-References: <201008120954.27648.brian.foster@innova-card.com> <4C63B1C9.6050801@dbservice.com> <201008121238.51983.brian.foster@innova-card.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2010, #02; Wed, 11)
+Date: Thu, 12 Aug 2010 13:35:27 +0200
+Message-ID: <AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+	<4C63BD9B.6000608@viscovery.net>
+	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Brian Foster <brian.foster@innova-card.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 13:05:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Greg Brockman <gdb@mit.edu>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Elijah Newren <newren@gmail.com>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 13:35:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjVbR-0000mf-MQ
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 13:05:42 +0200
+	id 1OjW4N-0007ZZ-60
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 13:35:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759835Ab0HLLFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 07:05:36 -0400
-Received: from office.neopsis.com ([78.46.209.98]:48146 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759811Ab0HLLFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 07:05:35 -0400
-X-Spam-Status: No, hits=0.0 required=5.0
-	tests=AWL: 0.036,BAYES_00: -1.665,TOTAL_SCORE: -1.629,autolearn=ham
-X-Spam-Level: 
-Received: from calvin.caurea.org ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Thu, 12 Aug 2010 13:05:32 +0200
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-In-Reply-To: <201008121238.51983.brian.foster@innova-card.com>
-X-Enigmail-Version: 1.1.1
+	id S1759890Ab0HLLf3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 07:35:29 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:47015 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751842Ab0HLLf2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 07:35:28 -0400
+Received: by qwh6 with SMTP id 6so1396376qwh.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 04:35:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=dhEKp8lnT1/q+E5I/ZGGhOyYJIO3n8eV6NbbRImsBXc=;
+        b=KYAEY+I+pI9FN5uT2o67ePvtjaScBbOBSfhnZFZ1ENhZ8bHYPlyQjVSpwSNyExLRtI
+         TRk/mpI+7Bmc+xeUwuBMr/L8CAzDR2+U3DFyLITLWUmAU4FxWAw3vrHeE4ZPgdeBsta7
+         EZxgZcYXZF30CIa6NiBGnH+GwF1zs+Neu9h2s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=XWmb1f7PM5gylkcUC4llJGNYAJAYfNUGl+WHSAdCt6gkcCkp17eTxzuNuVlzJiKjx5
+         IHXC0bkLEpcoCyBbbuH8twrhV6kMa8BMSduBDmAoWNFU9aKH89ajGVXF27xK48uPNL0+
+         jJSoG+64idxG7DcK4ezLtwWRKdxFCHXSBSZ1A=
+Received: by 10.229.228.146 with SMTP id je18mr22996qcb.13.1281612927664; Thu,
+ 12 Aug 2010 04:35:27 -0700 (PDT)
+Received: by 10.220.172.67 with HTTP; Thu, 12 Aug 2010 04:35:27 -0700 (PDT)
+In-Reply-To: <AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153366>
 
-On 8/12/10 12:38 PM, Brian Foster wrote:
-> On Thursday 12 August 2010 10:33:13 Tomas Carnecky wrote:
-> 
-> Tom,
->  Thanks for the reply, but I suspect you didn't read
->  the problem correctly ....
+On Thu, Aug 12, 2010 at 12:20 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Thu, Aug 12, 2010 at 09:23, Johannes Sixt <j.sixt@viscovery.net> w=
+rote:
+>> [Sorry for the Cc spam; I lack the time to conduct individual messag=
+es.]
+>>
+>> I compiled many topics in pu and ran the test suite on Windows,
+>
+> A Windows smoker would be useful :)
+>
 
-I suspect I did but did not explain correctly (though I didn't realize
-mirror implies bare, my bad).
-
-> 
->> On 8/12/10 9:54 AM, Brian Foster wrote:
->>>  Bare repository ORIG's master looks like this:
->>> [ ... ] 
->>>  Repository SLAVE is a mirror clone of ORIG which
-> NOTE.......................^^^^^^
->> [ ... ] 
->> Fetch only fetches commits. It doesn't update any local refs (other than
->> FETCH_HEAD). If you want to switch HEAD to that new tag, use checkout.
-
-Oh boy, that explanation is really bad -.- What I meant is that if you
-don't supply the <dst> part of the refspec it will only update
-FETCH_HEAD. So 'git fetch origin master' will not update anything but
-FETCH_HEAD.
-
->  No, a fetch in a mirror, when fetching all the way
->  to the HEAD (e.g., a simple `git fetch origin'),
->  does update the branch.  (You can easily modify the
->  script I included to prove this.)
-
-There are different ways to invoke git fetch. Either way, fetch will
-never modify HEAD. However, it can modify the branch that HEAD is
-pointing to (in case HEAD is a symref). But you are not fetching a
-branch, you are fetching a tag. So you need to use checkout after you
-fetch it. Either 'git checkout FETCH_HEAD' or 'git checkout v2'.
-
-tom
+I guess I could look into setting one up. Where would I look for the
+most up-to-date instructions on doing this?
