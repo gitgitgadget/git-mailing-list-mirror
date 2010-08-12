@@ -1,88 +1,101 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: jn/apply-filename-with-sp (Re: What's cooking in git.git (Aug
- 2010, #02; Wed, 11))
-Date: Thu, 12 Aug 2010 22:46:13 +0000
-Message-ID: <AANLkTikZY8-QaBZbZauoTKDnMxp6D9bS+Av4uSVTwOT5@mail.gmail.com>
-References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
-	<4C63BD9B.6000608@viscovery.net>
-	<20100812224044.GK2029@burratino>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv4 2/2] pull --rebase: Avoid spurious conflicts and
+ reapplying unnecessary patches
+Date: Fri, 13 Aug 2010 00:51:59 +0200
+Message-ID: <AANLkTinJK3YZ0sojnpiH0KZvFFC38X8LFr3U1ZrU_UXG@mail.gmail.com>
+References: <1281592569-740-1-git-send-email-newren@gmail.com>
+ <1281592569-740-3-git-send-email-newren@gmail.com> <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
+ <AANLkTikLhe9+6ovLT99qG9wwDjXVmT8_81xuN8P31eve@mail.gmail.com> <AANLkTinqW4h-SG21ZEAvhKEPJ46WfBRyYboUsfXjy7Zn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Greg Brockman <gdb@mit.edu>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Elijah Newren <newren@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 00:46:19 2010
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	martinvz <martin.von.zweigbergk@gmail.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 00:52:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjgXT-0007YX-BL
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:46:19 +0200
+	id 1OjgdO-0001Yi-8Z
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:52:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934000Ab0HLWqP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:46:15 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:65289 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754644Ab0HLWqN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 18:46:13 -0400
-Received: by ywh1 with SMTP id 1so621544ywh.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:46:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kOlfJ5e//NznieXV5ndjBMMYRxrg/3SRovjCa7YeUnw=;
-        b=uIwYHPV7rx1HxuT9SuEWLIzAIU31pTUnsrIvqZWcVWgeRa97aYHh48d7iNvbBruSND
-         g/kSLwnVRD0YXUomG07Fhz28X068xjq/FxfWFwCes2qOPLBsujrnAwYEQ0INhBkNlIVs
-         gAY6+DyDFSzRfuuphYtCaEbzxe+el5FRxxwwo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cI47zdPavcjHJ6xMabq3zgfb1gIoqY8/SN0gygDVQQMl3WlNle2R3EA873bILsUm/l
-         1sVl6i/e9sKflqUBwAPj5O7XE76ZX29DDd48mAPDyswHRm+dPzVQAbYvbk6WDodbGQ/q
-         ev2k2fjhAWEB0nxedoa6C7fDKA7KNaiXjN1Gk=
-Received: by 10.231.149.207 with SMTP id u15mr942416ibv.13.1281653173227; Thu,
- 12 Aug 2010 15:46:13 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Thu, 12 Aug 2010 15:46:13 -0700 (PDT)
-In-Reply-To: <20100812224044.GK2029@burratino>
+	id S1761046Ab0HLWwU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:52:20 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:54424 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761021Ab0HLWwU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 18:52:20 -0400
+Received: by gwb20 with SMTP id 20so637739gwb.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:52:19 -0700 (PDT)
+Received: by 10.231.39.195 with SMTP id h3mr699856ibe.88.1281653539136; Thu,
+ 12 Aug 2010 15:52:19 -0700 (PDT)
+Received: by 10.231.16.196 with HTTP; Thu, 12 Aug 2010 15:51:59 -0700 (PDT)
+In-Reply-To: <AANLkTinqW4h-SG21ZEAvhKEPJ46WfBRyYboUsfXjy7Zn@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153439>
 
-On Thu, Aug 12, 2010 at 22:40, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Johannes Sixt wrote:
->> Am 8/12/2010 1:35, schrieb Junio C Hamano:
+On Thu, Aug 12, 2010 at 11:02 PM, Elijah Newren <newren@gmail.com> wrot=
+e:
+> Hi,
 >
->>> * jn/apply-filename-with-sp (2010-07-23) 4 commits
->>> =C2=A0- apply: Handle traditional patches with space in filename
->>> =C2=A0- t4135 (apply): use expand instead of pr for portability
->>> =C2=A0- tests: Test how well "git apply" copes with weird filenames
->>> =C2=A0- apply: Split quoted filename handling into new function
->>>
->>> Looked Ok. =C2=A0Will merge to 'next'.
+> On Thu, Aug 12, 2010 at 8:37 AM, Santi B=E9jar <santi@agolina.net> wr=
+ote:
+>> diff --git c/git-pull.sh w/git-pull.sh
+>> index a09a44e..c1617d5 100755
+>> --- c/git-pull.sh
+>> +++ w/git-pull.sh
+>> @@ -214,7 +214,10 @@ test true =3D "$rebase" && {
+>> =A0 =A0 =A0 =A0do
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if test "$reflog" =3D "$(git merge-ba=
+se $reflog $curr_branch)"
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0then
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 oldremoteref=3D"$reflo=
+g"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test "$reflog" !=3D=
+ $(git merge-base $reflog
+>> $remoteref)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 oldrem=
+oteref=3D"$reflog"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
+>
+> How does this help? =A0I've been trying to scratch my head trying to
+> figure out a case where it could affect the outcome, and am strugglin=
+g
+> to come up with one.
+
+Me too :)
+
+The only case where it makes a difference, it is wrong. I was trying
+to be extra cautious, but ... too much in this case.
+
+>
+>> @@ -273,6 +276,14 @@ then
+>> =A0 =A0 =A0 =A0exit
+>> =A0fi
 >>
->> The test cases that work with files with tabs must have a prerequisi=
-te;
->> see t3600-rm.sh.
+>> +if test true =3D "$rebase"
+>> +then
+>> + =A0 =A0 =A0 if test "$oldremoteref" =3D $(git merge-base $oldremot=
+eref $merge_head)
+>> + =A0 =A0 =A0 then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 unset oldremoteref
+>> + =A0 =A0 =A0 fi
+>> +fi
+>> +
 >
-> Would this work?
+> This was indeed my original patch, then I just (incorrectly, as you
+> pointed out) moved other bits of code to be with this so that the
+> determination of oldremoteref was all in one place.
 
-This is nice, but incomplete. I just recently added a bunch of
-TABS_IN_FILENAMES prereqs to pu, moving that prereq setup to
-test-lib.sh + making the rm test use it would be better, we might want
-more specific name restrictions than just "funny".
+OK. Then for your original patch:
 
-Please also add docs for the new prereq to t/README. There's a new
-section for those now too.
+Acked-by: Santi B=E9jar <santi@agolina.net>
 
-Thanks.
+Thanks,
+Santi
