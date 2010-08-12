@@ -1,98 +1,79 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] push: mention "git pull" in error message for non-fast forwards
-Date: Thu, 12 Aug 2010 12:03:29 +0200
-Message-ID: <vpqvd7gp2q6.fsf@bauges.imag.fr>
-References: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2010, #02; Wed, 11)
+Date: Thu, 12 Aug 2010 10:11:51 +0000
+Message-ID: <AANLkTimcb92zD-bcguV65qnhLN+oCaJRi7SZq1GFw4hd@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+	<4C63BD9B.6000608@viscovery.net>
+	<AANLkTi=MenKX7Eh5PTpjfiYirrgLBCamWgorA35rx-Fy@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 12 12:03:54 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Elijah Newren <newren@gmail.com>
+To: Greg Brockman <gdb@mit.edu>
+X-From: git-owner@vger.kernel.org Thu Aug 12 12:12:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjUda-0007ei-8r
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 12:03:50 +0200
+	id 1OjUlU-0002ZG-21
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 12:12:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759628Ab0HLKDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 06:03:43 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:51993 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752676Ab0HLKDm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 06:03:42 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7C9qZvl009451
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 12 Aug 2010 11:52:35 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OjUdF-0006YV-MH; Thu, 12 Aug 2010 12:03:29 +0200
-In-Reply-To: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr> (Matthieu Moy's message of "Mon\,  2 Aug 2010 15\:42\:44 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 12 Aug 2010 11:52:35 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7C9qZvl009451
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1282211558.54087@rTR6+STsa6uU715jh/WlGA
+	id S932720Ab0HLKLy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 06:11:54 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38736 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751869Ab0HLKLx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 06:11:53 -0400
+Received: by fxm13 with SMTP id 13so608644fxm.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 03:11:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CaomAe8rQIJEvuH2BACN4PWpMP9Az4yzBF8EwkdhqHo=;
+        b=g2YVnIkrbK1FOC33xh+Wkez/VVI/sHk9QJoFzuP0IdmwBsT/Z/oNnBRh0C8ACIPYPu
+         TUuAankFFjI0/GqFl7PoWn7hFHuEBuXDI8QmigZ/uoHdYLaFZyI/O2QIWdl2lCJidfT4
+         VVHuoq4k+1sxm494lRbdc2Lgn0WZbx5iZ5oJE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=k9adEESzGxExQrv8pqpJ5lS3xJgrnaObcGOuztxcy3nbD6v/pSJbwxiHxmgsj48bbv
+         R7jUIiSTgSte6fwKI3CveN3nAgnpKMYW5rLTEpgumP8cr0mXIupZUetY0LVbf7l5+vNT
+         ZEwETqHDMJAP1w1k6v+y/oulrwqradtHwfqkc=
+Received: by 10.223.124.145 with SMTP id u17mr21342428far.92.1281607911656; 
+	Thu, 12 Aug 2010 03:11:51 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Thu, 12 Aug 2010 03:11:51 -0700 (PDT)
+In-Reply-To: <AANLkTi=MenKX7Eh5PTpjfiYirrgLBCamWgorA35rx-Fy@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153360>
 
-Hi,
+On Thu, Aug 12, 2010 at 09:37, Greg Brockman <gdb@mit.edu> wrote:
+>>> * gb/shell-ext (2010-07-28) 3 commits
+>>> =C2=A0- Add sample commands for git-shell
+>>> =C2=A0- Add interactive mode to git-shell for user-friendliness
+>>> =C2=A0- Allow creation of arbitrary git-shell commands
+>>
+>> This needs work on Windows because we do not have geteuid(), perhaps=
+ just
+>> a compiler flag -Dgeteuid=3Dgetuid
+> I had a submitted a revised patch that just uses HOME, see
+> http://thread.gmane.org/gmane.comp.version-control.git/152050/focus=3D=
+152135.
+> =C2=A0I guess that didn't make it in yet.
 
-I'm sorry to insist, but nothing has happened to this patch, and I'd
-really like it to get merged. The only reaction appart from Junio was
-Jonathan, and althought it contained a disgression about "if I were
-running the world", it started with "Your change is good." ;-).
+Maybe that should be (untested):
 
-Thanks,
+    char* home =3D expand_user_path("~");
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
-
-> The message remains fuzzy to include "git pull", "git pull --rebase" and
-> others, but directs the user to the simplest solution in the vast
-> majority of cases.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> When the message was added, it was decided explicitely not to say
-> explicitely "use git pull", first because there are other ways to
-> merge, and then to encourage the users to read the docs.
->
-> After a few months of teaching newbies/students to use Git, the
-> question "it doesn't want to push, what shall I do" still comes in the
-> top questions asked. Each time I've been asked, the newbie's face was
-> enlightened by hearing just the word "pull".
->
-> So I guess those few extra characters in the error message would save
-> me a lot of time ;-).
->
->  builtin/push.c |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/push.c b/builtin/push.c
-> index f4358b9..69bc2f2 100644
-> --- a/builtin/push.c
-> +++ b/builtin/push.c
-> @@ -130,8 +130,8 @@ static int push_with_options(struct transport *transport, int flags)
->  
->  	if (nonfastforward && advice_push_nonfastforward) {
->  		fprintf(stderr, "To prevent you from losing history, non-fast-forward updates were rejected\n"
-> -				"Merge the remote changes before pushing again.  See the 'Note about\n"
-> -				"fast-forwards' section of 'git push --help' for details.\n");
-> +				"Merge the remote changes (e.g. 'git pull') before pushing again.  See the\n"
-> +				"'Note about fast-forwards' section of 'git push --help' for details.\n");
->  	}
->  
->  	return 1;
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+To avoid duplicating the getenv("HOME") code (e.g. if someone wants to
+make a getpwuid fallback in the future).
