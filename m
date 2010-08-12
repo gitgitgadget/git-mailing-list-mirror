@@ -1,132 +1,90 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] gettext: setlocale(LC_CTYPE, "") breaks Git's C function assumptions
-Date: Thu, 12 Aug 2010 22:08:15 +0000
-Message-ID: <1281650895-7449-1-git-send-email-avarab@gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv4 2/2] pull --rebase: Avoid spurious conflicts and
+ reapplying unnecessary patches
+Date: Fri, 13 Aug 2010 00:08:23 +0200
+Message-ID: <AANLkTikt6kRZRGW5Y=0qFf41P2HVLe97qGH=5ya5gcbw@mail.gmail.com>
+References: <1281592569-740-1-git-send-email-newren@gmail.com>
+ <1281592569-740-3-git-send-email-newren@gmail.com> <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
+ <AANLkTimoB=__-FmuFYa_rKqMjoYwWQS9hzziuk9Jseyx@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 13 00:08:31 2010
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	martinvz <martin.von.zweigbergk@gmail.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 00:08:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ojfwq-0000Jq-7n
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:08:28 +0200
+	id 1OjfxB-0000QW-He
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849Ab0HLWIX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:08:23 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:43621 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753855Ab0HLWIW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 18:08:22 -0400
-Received: by wyb32 with SMTP id 32so1906193wyb.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:08:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=Uno5NW0QpwDBBRBhU1kYrcSUA57/WjFXzhC9aHBxP5A=;
-        b=w8NwSUQdZzcTIr5lUYHKpvxQrQubEGX8YoH8djuEfGBLzuVdXQHEFUu1aHwqs5vfAU
-         lqhb+pSe4b5eemIlQc3su9qs0KqA4+4QZiKj0T8/UBRIpsrYEXhDuBaCB+d0AY+mRA8P
-         LLEnx+2XM8dlu+FM88L5eDIPeq6eW6U4VtjE4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=TWkSM7cPM3RJS9UcgNfeXAXNokVctAfhpRpoYgPThDa9ikcjUKR+2JufaNCtYBCXbK
-         lUHdT5NoqcT3qUf1v3YD3ej9iRpY4DxGWIuR15BI3dMXxqeaS2YO+k+HZcmGKGK6xq0d
-         6kPHUlm/82ojQwsPWJySMmSOXcK72+Fb1fHJg=
-Received: by 10.227.156.66 with SMTP id v2mr647843wbw.136.1281650901037;
-        Thu, 12 Aug 2010 15:08:21 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id a1sm1648543wbb.14.2010.08.12.15.08.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Aug 2010 15:08:20 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.327.gfb40
+	id S1760526Ab0HLWIo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:08:44 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:43704 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753855Ab0HLWIo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 18:08:44 -0400
+Received: by yxg6 with SMTP id 6so627556yxg.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:08:43 -0700 (PDT)
+Received: by 10.231.34.70 with SMTP id k6mr797105ibd.25.1281650923205; Thu, 12
+ Aug 2010 15:08:43 -0700 (PDT)
+Received: by 10.231.36.6 with HTTP; Thu, 12 Aug 2010 15:08:23 -0700 (PDT)
+In-Reply-To: <AANLkTimoB=__-FmuFYa_rKqMjoYwWQS9hzziuk9Jseyx@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153427>
 
-Remove the setlocale/LC_CTYPE call from gettext.c, we only need
-setlocale/LC_MESSAGES to use the message catalog, and setting LC_CTYPE
-from the environment breaks Git's assumptions about C library
-functions.
-
-Under a non-C locale functions like vsnprintf become locale sensitive,
-so that they'll e.g. refuse to process ISO-8895-1 data under a UTF-8
-locale.
-
-This triggered a "your vsnprintf is broken" error on Git's own
-repository when inspecting v0.99.6~1 under a UTF-8 locale.
-
-That commit contains a ISO-8859-1 encoded author name, which the
-locale aware vsnprintf(3) won't interpolate in the format argument,
-due to mismatch between the data encoding and the locale.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Thu, Aug 12, 2010 at 10:19 PM, Elijah Newren <newren@gmail.com> wrot=
+e:
+> Hi,
 >
----
+> Thanks for the review and comments!
+>
+> On Thu, Aug 12, 2010 at 7:34 AM, Santi B=E9jar <santi@agolina.net> wr=
+ote:
+> <snip>
+>> All this makes sense.
+>>
+>> But can you explain when it happens? One possibility is when you don=
+'t
+>> fork from the tracking branch as in:
+>
+> That's one possibility. =A0Patch 1/2 in this thread contains testcase=
+s
+> for two others. =A0Another possibility is having your patches get
+> upstream by some alternative route (e.g. pulling your changes to a
+> third machine, pushing from there, and then going back to your
+> original machine and trying to pull --rebase).
 
-This goes on top of the ab/i18n series in pu.
+I think this is commit message material.
 
- gettext.c                           |    1 -
- t/t0203-gettext-setlocale-sanity.sh |   26 ++++++++++++++++++++++++++
- 2 files changed, 26 insertions(+), 1 deletions(-)
- create mode 100755 t/t0203-gettext-setlocale-sanity.sh
+>
+>> Subject: Difference between pull --rebase and fetch+rebase
+>> Message-ID: <27059158.post@talk.nabble.com>
+>> From: martinvz <martin.von.zweigbergk@gmail.com>
+>>
+>> and this patch should also fix martinvz's issue (I've CC martinvz, c=
+an
+>> you test this patch? Thanks).
+>
+> Since you've cc'd martinvz, I'll note for his benefit that in the
+> thread you reference above, you stated,
+>
+> "By the way, when Git tries to apply these two commits it should dete=
+ct
+> that they are already applied so it should do nothing, isn't it?"
+>
+> The answer is no, it won't detect they are already applied, as
+> explained in the commit message that started the current thread. =A0(=
+If
+> git did detect the changes were already applied, this bug would have
+> been innocuous.)
 
-diff --git a/gettext.c b/gettext.c
-index 7ae5cae..db99742 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -17,6 +17,5 @@ extern void git_setup_gettext(void) {
- 	}
-=20
- 	(void)setlocale(LC_MESSAGES, "");
--	(void)setlocale(LC_CTYPE, "");
- 	(void)textdomain("git");
- }
-diff --git a/t/t0203-gettext-setlocale-sanity.sh b/t/t0203-gettext-setl=
-ocale-sanity.sh
-new file mode 100755
-index 0000000..a212460
---- /dev/null
-+++ b/t/t0203-gettext-setlocale-sanity.sh
-@@ -0,0 +1,26 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-+#
-+
-+test_description=3D"The Git C functions aren't broken by setlocale(3)"
-+
-+. ./lib-gettext.sh
-+
-+test_expect_success 'git show a ISO-8859-1 commit under C locale' '
-+	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	test_commit "iso-c-commit" iso-under-c &&
-+	git show >out 2>err &&
-+	! test -s err &&
-+	grep -q "iso-c-commit" out
-+'
-+
-+test_expect_success GETTEXT_LOCALE 'git show a ISO-8859-1 commit under=
- a UTF-8 locale' '
-+	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
-+	test_commit "iso-utf8-commit" iso-under-utf8 &&
-+	LANGUAGE=3Dis LC_ALL=3D"$is_IS_locale" git show >out 2>err &&
-+	! test -s err &&
-+	grep -q "iso-utf8-commit" out
-+'
-+
-+test_done
---=20
-1.7.2.1.327.gfb40
+Thanks, you are right.
+
+Santi
