@@ -1,80 +1,109 @@
-From: Magnus =?iso-8859-1?Q?B=E4ck?= <magnus.back@sonyericsson.com>
-Subject: Status of conflicted files resolved with rerere
-Date: Thu, 12 Aug 2010 23:28:28 +0200
-Message-ID: <20100812212828.GA17825@jpl.local>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 05/10] Add string-specific memory pool
+Date: Thu, 12 Aug 2010 16:30:47 -0500
+Message-ID: <20100812213047.GH2029@burratino>
+References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
+ <20100716101352.GA14374@burratino>
+ <20100809215719.GA4203@burratino>
+ <20100809223442.GA4429@burratino>
+ <7vmxsru4ny.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 12 23:28:41 2010
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 23:32:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjfKG-0007xn-Kr
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 23:28:36 +0200
+	id 1OjfNz-0001Lt-W5
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 23:32:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760691Ab0HLV2b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 17:28:31 -0400
-Received: from smtprelay-b12.telenor.se ([62.127.194.21]:54335 "EHLO
-	smtprelay-b12.telenor.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753882Ab0HLV2a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 17:28:30 -0400
-Received: from ipb3.telenor.se (ipb3.telenor.se [195.54.127.166])
-	by smtprelay-b12.telenor.se (Postfix) with ESMTP id 9EE37E94DA
-	for <git@vger.kernel.org>; Thu, 12 Aug 2010 23:28:29 +0200 (CEST)
-X-SMTPAUTH-B2: [b627879]
-X-SENDER-IP: [83.227.167.132]
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Ar86AHoEZExT46eEPGdsb2JhbACHZ4tHjQUMAQEBATUtvWmFOgQ
-X-IronPort-AV: E=Sophos;i="4.55,360,1278280800"; 
-   d="scan'208";a="560889701"
-Received: from ua-83-227-167-132.cust.bredbandsbolaget.se (HELO elwood.jpl.local) ([83.227.167.132])
-  by ipb3.telenor.se with ESMTP; 12 Aug 2010 23:28:29 +0200
-Received: by elwood.jpl.local (Postfix, from userid 1000)
-	id 6B987422BF; Thu, 12 Aug 2010 23:28:28 +0200 (CEST)
+	id S1760707Ab0HLVcX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 17:32:23 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:40141 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755106Ab0HLVcW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 17:32:22 -0400
+Received: by qwh6 with SMTP id 6so1982030qwh.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 14:32:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=l4L8M+e61jZw1NrEzIBreCLBuZEHGbe69Brnywjdrj4=;
+        b=qlfYj3JvRrumwQYU/66a52+Y8ZLDUtd68imBeYX+5EDurpI4UakzuzDkD3NVqfE3vn
+         DGofaAzVRh84Og+kjaKYFpP4REv8/6930sdT4LMfB9iYfyenJcZPgKuuq9Wb+S4tGb18
+         1/FSqSXfIpO5KpUefBHvYhyVsDM4KOr+b9JuQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=LeC7shftED7NtLx/1whJHkheQmtC07Bm1HhoZk6KIKSUdWQnzHsvZ1KUHjSqLvi6Yn
+         793JlHueuzjxmSo1j9n1rn00c5CJHUDxCh932cfPGCdBwk5e4dNezhTklZr+ep8NF90t
+         cuGW8c6tUdXDBqX/INCBPYRZSH989Ji9rXbz4=
+Received: by 10.224.37.78 with SMTP id w14mr418042qad.75.1281648741881;
+        Thu, 12 Aug 2010 14:32:21 -0700 (PDT)
+Received: from burratino ([66.99.3.154])
+        by mx.google.com with ESMTPS id t18sm2402351qco.20.2010.08.12.14.32.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 12 Aug 2010 14:32:21 -0700 (PDT)
 Content-Disposition: inline
-User-Agent: Mutt/1.5.13 (2006-08-11)
+In-Reply-To: <7vmxsru4ny.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153420>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153421>
 
-I played around with git rerere today and was surprised by the results.
-When a conflict has been resolved automatically by rerere, the file
-isn't added to the index like other files are where Git just used one o=
-f
-the regular merge resolution algorithms. What's worse, if git mergetool
-is invoked -- which is what I normally do when git merge needs help --
-it has no idea that the file actually has been merged already, and
-launches the merge tool with the three files involved in the merge. If
-the user hasn't been paying attention to each line of the git merge
-output (stating the files who were automatically resolved) it's easy to
-trash rerere's work.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Would it make sense for git merge to add rerere'd files (where all hunk=
-s
-were recognized and resolved) to the index automatically? That would
-make it possible for the user to run git mergetool without reading ever=
-y
-single line of output from previous commands just to figure out which
-files should be added to the index straight off and which files require
-merging.
+>> diff --git a/Makefile b/Makefile
+>> index e7c33ec..24103c9 100644
+>> --- a/Makefile
+>> +++ b/Makefile
+>> @@ -415,6 +415,7 @@ TEST_PROGRAMS_NEED_X +=3D test-path-utils
+>>  TEST_PROGRAMS_NEED_X +=3D test-run-command
+>>  TEST_PROGRAMS_NEED_X +=3D test-sha1
+>>  TEST_PROGRAMS_NEED_X +=3D test-sigchain
+>> +TEST_PROGRAMS_NEED_X +=3D test-string-pool
+>>  TEST_PROGRAMS_NEED_X +=3D test-treap
+>>  TEST_PROGRAMS_NEED_X +=3D test-index-version
+>
+> Does your Makefile do the right thing to vcs-svn/*.[oa] upon "make cl=
+ean"?
 
-=46or users resolving conflicts by editing the file and fiddling with t=
-he
-<<<<<<<<< marks etc such a change wouldn't make that big difference, bu=
-t
-for mergetool users it seems like a quite useful improvement. Or is
-there something I'm failing to grasp here? This is on Git 1.7.0.3 by th=
-e
-way.
+Good catch.  Here=E2=80=99s a fixup for patch 2 (=E2=80=9CIntroduce vcs=
+-svn lib=E2=80=9D).
 
+-- 8< --
+Subject: vcs-svn: remove build artifacts on =E2=80=9Cmake clean=E2=80=9D
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+diff --git a/Makefile b/Makefile
+index 2418820..24c4b3d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2184,8 +2184,8 @@ distclean: clean
+ 	$(RM) configure
+=20
+ clean:
+-	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
+-		builtin/*.o $(LIB_FILE) $(XDIFF_LIB)
++	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vc=
+s-svn/*.o \
++		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+ 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) -r bin-wrappers
 --=20
-Magnus B=E4ck                      Opinions are my own and do not neces=
-sarily
-SW Configuration Manager         represent the ones of my employer, etc=
-=2E
-Sony Ericsson
