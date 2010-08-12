@@ -1,109 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 05/10] Add string-specific memory pool
-Date: Thu, 12 Aug 2010 16:30:47 -0500
-Message-ID: <20100812213047.GH2029@burratino>
-References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
- <20100716101352.GA14374@burratino>
- <20100809215719.GA4203@burratino>
- <20100809223442.GA4429@burratino>
- <7vmxsru4ny.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] git-am: Ignore whitespace before patches
+Date: Thu, 12 Aug 2010 14:34:51 -0700
+Message-ID: <7vocd7qzus.fsf@alter.siamese.dyndns.org>
+References: <1273944188-9472-1-git-send-email-avarab@gmail.com>
+ <1281556645-23361-1-git-send-email-avarab@gmail.com>
+ <AANLkTinDHvwHLZfj6DDPtV39Z2xhDZREiqwdt5cjiaLP@mail.gmail.com>
+ <20100812202457.GC2029@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 23:32:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 23:35:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjfNz-0001Lt-W5
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 23:32:28 +0200
+	id 1OjfQd-0002Rw-DP
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 23:35:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760707Ab0HLVcX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 17:32:23 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:40141 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755106Ab0HLVcW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 17:32:22 -0400
-Received: by qwh6 with SMTP id 6so1982030qwh.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 14:32:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=l4L8M+e61jZw1NrEzIBreCLBuZEHGbe69Brnywjdrj4=;
-        b=qlfYj3JvRrumwQYU/66a52+Y8ZLDUtd68imBeYX+5EDurpI4UakzuzDkD3NVqfE3vn
-         DGofaAzVRh84Og+kjaKYFpP4REv8/6930sdT4LMfB9iYfyenJcZPgKuuq9Wb+S4tGb18
-         1/FSqSXfIpO5KpUefBHvYhyVsDM4KOr+b9JuQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=LeC7shftED7NtLx/1whJHkheQmtC07Bm1HhoZk6KIKSUdWQnzHsvZ1KUHjSqLvi6Yn
-         793JlHueuzjxmSo1j9n1rn00c5CJHUDxCh932cfPGCdBwk5e4dNezhTklZr+ep8NF90t
-         cuGW8c6tUdXDBqX/INCBPYRZSH989Ji9rXbz4=
-Received: by 10.224.37.78 with SMTP id w14mr418042qad.75.1281648741881;
-        Thu, 12 Aug 2010 14:32:21 -0700 (PDT)
-Received: from burratino ([66.99.3.154])
-        by mx.google.com with ESMTPS id t18sm2402351qco.20.2010.08.12.14.32.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Aug 2010 14:32:21 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vmxsru4ny.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1760751Ab0HLVfG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 17:35:06 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55137 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754711Ab0HLVfE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 17:35:04 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3EA7CCDE51;
+	Thu, 12 Aug 2010 17:35:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=mhE4WpQJ46GgrfoywDGub3g0RhU=; b=lM0lWM
+	CatTQOdTIWwJmUBIDBiEKjGfy4ZfTrfddshDY5PFxBMEFn3/I7M9iyCM5790RQRy
+	w5kyrXv1Tu+oZUlzeXZB44vbqPYrWBmv46xqY2BC5b2qF0qmnkzJ+FpEX4x+FE/T
+	lnkFoTEhAs1/7ODenGnGTKdYlOsRY+2gHULj8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=EkmM0HBdkXMewxCkLi3nA5yKQZFYYMNy
+	gnMbc1IF606CIb5m9Xe6Tn+R8BUQMzmV1TU0fRpHT0tpXFq5rg6vpWSUMO+ClHre
+	PnQDSZZW84KU47uDu6MdS+f3EdP2UcQ8aR532tYYyy7vitvHZvZKo5kEwPUCsnuW
+	KPIBIFSWp+I=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E90F6CDE4F;
+	Thu, 12 Aug 2010 17:34:57 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1BF85CDE4E; Thu, 12 Aug
+ 2010 17:34:52 -0400 (EDT)
+In-Reply-To: <20100812202457.GC2029@burratino> (Jonathan Nieder's message of
+ "Thu\, 12 Aug 2010 15\:24\:57 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 74617452-A659-11DF-A546-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153421>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153422>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->> diff --git a/Makefile b/Makefile
->> index e7c33ec..24103c9 100644
->> --- a/Makefile
->> +++ b/Makefile
->> @@ -415,6 +415,7 @@ TEST_PROGRAMS_NEED_X +=3D test-path-utils
->>  TEST_PROGRAMS_NEED_X +=3D test-run-command
->>  TEST_PROGRAMS_NEED_X +=3D test-sha1
->>  TEST_PROGRAMS_NEED_X +=3D test-sigchain
->> +TEST_PROGRAMS_NEED_X +=3D test-string-pool
->>  TEST_PROGRAMS_NEED_X +=3D test-treap
->>  TEST_PROGRAMS_NEED_X +=3D test-index-version
+> Jay Soffian wrote:
 >
-> Does your Makefile do the right thing to vcs-svn/*.[oa] upon "make cl=
-ean"?
+>> Perhaps, before making git-am less strict, we should modify
+>> format-patch to include a sha1 of the diff output so that corruption
+>> can be reliably detected by git-am.
+>
+> I seem to remember a discussion about hand-munging and rebasing of
+> patches suggesting such verification might be a bad idea[1].  I dunno.
+>
+> [1] but all a search turned up is this:
+> http://thread.gmane.org/gmane.comp.version-control.git/136008/focus=136234
 
-Good catch.  Here=E2=80=99s a fixup for patch 2 (=E2=80=9CIntroduce vcs=
--svn lib=E2=80=9D).
+You meant this perhaps.
 
--- 8< --
-Subject: vcs-svn: remove build artifacts on =E2=80=9Cmake clean=E2=80=9D
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/Makefile b/Makefile
-index 2418820..24c4b3d 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2184,8 +2184,8 @@ distclean: clean
- 	$(RM) configure
-=20
- clean:
--	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o \
--		builtin/*.o $(LIB_FILE) $(XDIFF_LIB)
-+	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vc=
-s-svn/*.o \
-+		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
- 	$(RM) $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git$X
- 	$(RM) $(TEST_PROGRAMS)
- 	$(RM) -r bin-wrappers
---=20
+http://thread.gmane.org/gmane.comp.version-control.git/138084/focus=138100
