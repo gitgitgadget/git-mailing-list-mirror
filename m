@@ -1,76 +1,90 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Where do I stick development documentation?
-Date: Thu, 12 Aug 2010 20:08:41 +0000
-Message-ID: <AANLkTinT9ev0MWNP_Z4vnFGoMN6jSSPPPK4KiZzyLQhS@mail.gmail.com>
-References: <AANLkTi=dS1DYJ3MB-Du34sVPy8Qw8VNck=Lx54DtSfO0@mail.gmail.com>
-	<20100812023922.GB19174@burratino>
-	<AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
-	<AANLkTikTX5_qchqDuxiz=dGeTG0gB7_iRt=mpR9vJH5J@mail.gmail.com>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
+Date: Thu, 12 Aug 2010 16:19:39 -0400
+Message-ID: <AANLkTikDvcn4eFDdkv26ADzsipwD_ofkdYwu_0abeLA3@mail.gmail.com>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+	<vpqsk2kjks7.fsf@bauges.imag.fr>
+	<AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
+	<7viq3fsirv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Michael Witten <mfwitten@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 22:08:49 2010
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Jens.Lehmann@web.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 22:19:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oje52-0001tg-DB
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:08:48 +0200
+	id 1OjeFh-0006hX-7b
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:19:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760517Ab0HLUIn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:08:43 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:48073 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760490Ab0HLUIm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 16:08:42 -0400
-Received: by gwb20 with SMTP id 20so575238gwb.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:08:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=xE4JFxdXT7YWvgxB7csF0WsX6PoqhQrybdxHG7rN7x8=;
-        b=u6+BwQA9kaiPgXM1bXBHKHmqs7f5kqp1k1vd6oKtacyXeUyimT2xF+8CzUo+mJg+g8
-         4Qxv/UAgCym30kl+QCDAt6yqo2D9PhzIKR0+oXO1r7Fgez4xXMQYjGpZjBl2rKQXnQqp
-         /mxNDfX0RkMo/QTPph7G5tdi5IQi3C/RtBcHE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ng/LzfOsdfB6vToPz10y4S45a+IhwKZYOgklZ63a6M1QYgNgVIXm2SthRCu5h9GbR/
-         nJDw7Dq1mniP/wvFf+uoW5E+KhfGhcYaeFQzoQ4ASuCY2K7rqxTgF6QFCZrNU8il/PpT
-         Mbj6E1GPef8YNY8gRoZMKST4kZymvGGKb+Sgk=
-Received: by 10.231.150.7 with SMTP id w7mr677980ibv.14.1281643721257; Thu, 12
- Aug 2010 13:08:41 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Thu, 12 Aug 2010 13:08:41 -0700 (PDT)
-In-Reply-To: <AANLkTikTX5_qchqDuxiz=dGeTG0gB7_iRt=mpR9vJH5J@mail.gmail.com>
+	id S1760509Ab0HLUTn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:19:43 -0400
+Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:54803 "EHLO
+	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754969Ab0HLUTm convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 16:19:42 -0400
+X-AuditID: 1209190e-b7bbeae000000a09-5f-4c64575f55df
+Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
+	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 94.F3.02569.F57546C4; Thu, 12 Aug 2010 16:19:43 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7CKJfxe012501
+	for <git@vger.kernel.org>; Thu, 12 Aug 2010 16:19:41 -0400
+Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7CKJeTN009016
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 12 Aug 2010 16:19:41 -0400 (EDT)
+Received: by gxk23 with SMTP id 23so581990gxk.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:19:40 -0700 (PDT)
+Received: by 10.231.183.10 with SMTP id ce10mr587294ibb.96.1281644379899; Thu,
+ 12 Aug 2010 13:19:39 -0700 (PDT)
+Received: by 10.231.154.212 with HTTP; Thu, 12 Aug 2010 13:19:39 -0700 (PDT)
+In-Reply-To: <7viq3fsirv.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: AAAAAhWWNLgVlxO7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153406>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153407>
 
-On Thu, Aug 12, 2010 at 20:00, Michael Witten <mfwitten@gmail.com> wrot=
-e:
-> On Wed, Aug 11, 2010 at 22:11, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- <avarab@gmail.com> wrote:
->>
->> That would totally screw with my secret mission to turn everything
->> into manpages, though :)
+>> First of all, as you point out 'git add foo.pdf' works where foo.pdf
+>> has been explicitly ignored, while in contrast 'git add dir/file'
+>> fails when file has only been indirectly ignored because it is in an
+>> ignored directory. =A0In the former case, the user explicitly specif=
+ied
+>> a policy for that file. =A0In the later case, the policy is only
+>> indirectly expressed because that file happens to be in an ignored
+>> directory.
 >
-> Frankly, it sounds like you want something more expressive and
-> interlinked, such as Texinfo documentation.
+> Sorry, but I don't get this argument. =A0When the user says "everythi=
+ng in
+> this directory is ignored", why does it make it less direct than "thi=
+s
+> particular file is ignored"?
+In general, I view the presence of a dir entry in a .gitignore as the
+user setting a default policy for files in that directory, but the
+user might actually mean for there to be some exceptions to that
+policy.
 
-I'd like TexInfo, but I don't think Git is switching to that anytime
-soon.
+=46or example, in my personal usage, when I ignore a directory but trac=
+k
+some files within it, this is because I don't want to specify an
+ignore for every single other file in that directory.  Also note that
+negated .gitignore entries don't seem to work in this case, i.e. a
+=2Egitignore with contents
+dir
+!dir/file
+won't actually let file be addable again.
 
-However ASCIIDOC is also fine for my purposes, which is just that
-these docs will be compiled as part of the manpage compilation, so
-they'll be there with man(1), info(1) and on the web with the HTML
-export.
+In contrast, when I add dir/file to a .gitignore, there is no doubt
+that I want to ignore that particular file.
+
+Does that make more sense?
+
+Greg
