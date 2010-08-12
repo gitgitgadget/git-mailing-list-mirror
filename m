@@ -1,56 +1,66 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: specifying one-side of a merge commit?
-Date: Thu, 12 Aug 2010 08:11:11 +0200
-Message-ID: <20100812061111.GA25026@atjola.homenet>
-References: <AANLkTi=mnO8+XM4Bcjneaq+ngUSFesvZ_TYMRyy=f43a@mail.gmail.com>
+From: Raja R Harinath <harinath@hurrynot.org>
+Subject: case where diff output needs improving? (was Re: [PATCH v2 0/7] tests: use skip_all=* to skip tests)
+Date: Thu, 12 Aug 2010 11:52:35 +0530
+Message-ID: <87zkwsxsd0.fsf_-_@hariville.hurrynot.org>
+References: <7vd3tpxao1.fsf@alter.siamese.dyndns.org>
+	<1281553450-26467-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 08:11:28 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 12 08:30:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjR0g-0005UU-Kr
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 08:11:26 +0200
+	id 1OjRJ7-0003UM-9f
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 08:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758717Ab0HLGLX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 02:11:23 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:38235 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1758691Ab0HLGLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 02:11:21 -0400
-Received: (qmail invoked by alias); 12 Aug 2010 06:11:19 -0000
-Received: from i59F57E1E.versanet.de (EHLO atjola.homenet) [89.245.126.30]
-  by mail.gmx.net (mp007) with SMTP; 12 Aug 2010 08:11:19 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX193RXQ9Unt32VOAY5x0YrlWmuZ/nrOHLVgo6SdH+/
-	Mu05VaO1EdUtkW
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=mnO8+XM4Bcjneaq+ngUSFesvZ_TYMRyy=f43a@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1758754Ab0HLGaX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 02:30:23 -0400
+Received: from lo.gmane.org ([80.91.229.12]:58167 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758744Ab0HLGaW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 02:30:22 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OjRIz-0003RG-1W
+	for git@vger.kernel.org; Thu, 12 Aug 2010 08:30:21 +0200
+Received: from 117.192.132.159 ([117.192.132.159])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 08:30:21 +0200
+Received: from harinath by 117.192.132.159 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 08:30:21 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 117.192.132.159
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:4PaiMWqJFohzVEiEVRz3uyk+9VY=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153346>
 
-On 2010.08.12 13:11:52 +0800, Tay Ray Chuan wrote:
-> Hi,
->=20
-> I wonder how do you guys do this?
->=20
-> So far, what I've come up with is this:
->=20
->   $ git rev-list $MERGE ^$MERGE^ | head -2 | tail -1
->=20
-> I'm sure there's a better way.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Are you looking for $MERGE^2? See SPECIFYING REVISIONS in
-git-rev-parse(1).
+[snip]    =20
+>     diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quote.sh
+>     index 10e2db3..ab0c2f0 100755
+>     --- a/t/t4016-diff-quote.sh
+>     +++ b/t/t4016-diff-quote.sh
+>     @@ -14 +14 @@ P2=3D'pathname with SP'
+>     -if P3=3D'pathname
+>     +P3=3D'pathname
+>     @@ -16 +16 @@ with LF'
+>     -: 2>/dev/null >"$P1" && test -f "$P1" && rm -f "$P1"
+>     +if : 2>/dev/null >"$P1" && test -f "$P1" && rm -f "$P1"
 
-Bj=F6rn
+Assuming this was from a git invocation, it seems that 'diff' could jus=
+t
+show line 15 instead of '@@ -16, +16 @@' above.
+
+- Hari
