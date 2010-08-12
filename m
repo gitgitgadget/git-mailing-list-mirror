@@ -1,88 +1,100 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
-Date: Thu, 12 Aug 2010 10:30:00 +0200
-Message-ID: <vpqsk2kjks7.fsf@bauges.imag.fr>
-References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+From: david@lang.hm
+Subject: Re: [PATCH V5 00/17] Reroll a version 5 of this series
+Date: Thu, 12 Aug 2010 01:31:17 -0700 (PDT)
+Message-ID: <alpine.DEB.2.00.1008120130280.23369@asgard.lang.hm>
+References: <1281539022-31616-1-git-send-email-struggleyb.nku@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Thu Aug 12 10:30:30 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, trast@student.ethz.ch,
+	gitster@pobox.com
+To: Bo Yang <struggleyb.nku@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 10:31:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjTBG-0001Su-3y
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 10:30:30 +0200
+	id 1OjTCe-000223-J8
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 10:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933130Ab0HLIa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 04:30:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38342 "EHLO shiva.imag.fr"
+	id S933144Ab0HLIbw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 04:31:52 -0400
+Received: from mail.lang.hm ([64.81.33.126]:37376 "EHLO bifrost.lang.hm"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933075Ab0HLIaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 04:30:23 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7C8J6TM020578
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 12 Aug 2010 10:19:06 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OjTAn-0005aT-3B; Thu, 12 Aug 2010 10:30:01 +0200
-In-Reply-To: <1281510236-8103-1-git-send-email-gdb@mit.edu> (Greg Brockman's message of "Wed\, 11 Aug 2010 03\:03\:56 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 12 Aug 2010 10:19:07 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7C8J6TM020578
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1282205951.13611@20XN97q5fJQcqy99vDdfxg
+	id S933075Ab0HLIbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 04:31:50 -0400
+Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
+	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id o7C8VHuZ007911;
+	Thu, 12 Aug 2010 01:31:17 -0700
+X-X-Sender: dlang@asgard.lang.hm
+In-Reply-To: <1281539022-31616-1-git-send-email-struggleyb.nku@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153354>
 
-Greg Brockman <gdb@MIT.EDU> writes:
+what is this series?
 
-> Currently, 'git add' will complain about excluded files, even if they
-> are already tracked:
+this is all good incramental information, but there's no info indicating 
+what this is updating.
 
-This is not exactly true:
+David Lang
 
-$ echo '*.pdf' > .gitignore; touch foo.pdf; git add -f foo.pdf
-$ echo content >> foo.pdf; git add foo.pdf
+On Wed, 11 Aug 2010, Bo Yang wrote:
 
-Here, the second "git add" didn't need the -f flag.
-
-So, your problem is not about already-tracked exclude files, but it is
-about already-tracked files in an excluded directory.
-
-> This commit changes 'git add' to disregard excludes for tracked files
-> whose paths are explicitly specified on the command-line.
-
-I don't think you need this to solve the problem, and as Junio said,
-that would make "git add dir/*" add all the ignored files, which would
-make -f essentially useless.
-
-After a quick look at the code, the issue seems close to (dir.c):
-
-struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
-{
-	if (!cache_name_is_other(pathname, len))
-		return NULL;
-
-	ALLOC_GROW(dir->ignored, dir->ignored_nr+1, dir->ignored_alloc);
-	return dir->ignored[dir->ignored_nr++] = dir_entry_new(pathname, len);
-}
-
-I guess the "if (!cache_name_is_other(pathname, len))" test is the one
-allowing the behavior I got above, but here, in the case of "git add
-dir/file" with "dir" being ignored, "pathname" is just "dir", not
-"dir/file", hence your problem.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Changes:
+> 1. Fix all format problems;
+> 2. Split the "too long" lines in multiple lines;
+> 3. '$' to represent the last line of a file;
+> 4. Error string change;
+> 5. Add more comments;
+> 6. Combine test cases together;
+> 7. Struct name change
+>
+> Bo Yang (17):
+>  parse-options: enhance STOP_AT_NON_OPTION
+>  parse-options: add two helper functions
+>  Add the basic data structure for line level history
+>  Refactor parse_loc
+>  Parse the -L options
+>  Export three functions from diff.c
+>  Add range clone functions
+>  map/take range to the parent of commits
+>  Print the line log
+>  Hook line history into cmd_log, ensuring a topo-ordered walk
+>  Make rewrite_parents public to other part of git
+>  Make graph_next_line external to other part of git
+>  Add parent rewriting to line history browser
+>  Add --graph prefix before line history output
+>  Add --full-line-diff option
+>  Add tests for line history browser
+>  Document line history browser
+>
+> Documentation/blame-options.txt     |   19 +-
+> Documentation/git-log.txt           |   15 +
+> Documentation/line-range-format.txt |   18 +
+> Makefile                            |    2 +
+> builtin/blame.c                     |   89 +--
+> builtin/log.c                       |  113 +++-
+> diff.c                              |    6 +-
+> diff.h                              |   17 +
+> graph.c                             |   14 +-
+> graph.h                             |   10 +
+> line.c                              | 1551 +++++++++++++++++++++++++++++++++++
+> line.h                              |  141 ++++
+> parse-options.c                     |   22 +-
+> parse-options.h                     |    7 +-
+> revision.c                          |   25 +-
+> revision.h                          |   23 +-
+> t/t4301-log-line-single-history.sh  |  627 ++++++++++++++
+> t/t4302-log-line-merge-history.sh   |  163 ++++
+> 18 files changed, 2733 insertions(+), 129 deletions(-)
+> create mode 100644 Documentation/line-range-format.txt
+> create mode 100644 line.c
+> create mode 100644 line.h
+> create mode 100755 t/t4301-log-line-single-history.sh
+> create mode 100755 t/t4302-log-line-merge-history.sh
+>
+>
