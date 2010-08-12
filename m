@@ -1,92 +1,177 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked 
- files
-Date: Wed, 11 Aug 2010 19:59:58 -0700
-Message-ID: <7vaaosv8lt.fsf@alter.siamese.dyndns.org>
-References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
- <7vmxstypot.fsf@alter.siamese.dyndns.org>
- <AANLkTinbMHDa6P8N4Mne34rMkmzzbrpm0osd2LRbr-Jv@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Where do I stick development documentation?
+Date: Thu, 12 Aug 2010 03:11:50 +0000
+Message-ID: <AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
+References: <AANLkTi=dS1DYJ3MB-Du34sVPy8Qw8VNck=Lx54DtSfO0@mail.gmail.com>
+	<20100812023922.GB19174@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Thu Aug 12 05:00:14 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 05:11:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjO1e-0002I3-3u
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 05:00:14 +0200
+	id 1OjOD0-0005Kn-NY
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 05:11:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759452Ab0HLDAI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 11 Aug 2010 23:00:08 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33155 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759233Ab0HLDAH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 23:00:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EAB0DCC7C7;
-	Wed, 11 Aug 2010 23:00:06 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/7fzV/+lkOfMyyVz9OXIcVwzKf4=; b=jEDNQb
-	bdmT0jpeLTHP4+9AJ4/oq49jA8r9BF/Vr1DmMzAiy7K1oe1cSZZQSdc8Z67j7NnC
-	LewO0f3/hJ7KfhowpmKabug5rMmn6QqoJOGbIq50oiXcxRQIiivwns3CxHoktWgd
-	+KmI6B2fac6mzGcoMLNtCHRSNQqXEdYXveNeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gb2uEJeNBDKyRXA/7be8/h8QlquKZamh
-	m/afKfXLJ7dDGc/o0A5019ivI8d1si91F/jWmL+1zt3FpaTNWaotO6U3rS3Xkiz+
-	LGPw///SbJZm+M+08PgQBB1CCkJWxWt2CD5Dxtlz8FRJIoVisTR8BEV6unPb69+5
-	aIEqe3Wn0tc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AFA2ACC797;
-	Wed, 11 Aug 2010 23:00:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0499CC795; Wed, 11 Aug
- 2010 22:59:59 -0400 (EDT)
-In-Reply-To: <AANLkTinbMHDa6P8N4Mne34rMkmzzbrpm0osd2LRbr-Jv@mail.gmail.com>
- (Greg Brockman's message of "Wed\, 11 Aug 2010 14\:36\:13 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B44F9568-A5BD-11DF-95D7-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759542Ab0HLDLw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 23:11:52 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36663 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759221Ab0HLDLw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 23:11:52 -0400
+Received: by fxm13 with SMTP id 13so563724fxm.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 20:11:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zv/YgVGwwlzFZpkpf2W74Jy/HjAd7kTZN7u39v0ArgQ=;
+        b=pPfp+1YLKYpBK6J/Y4pZ9Vb8SJW3629yx7TzhIyQpfhUiO2KU6MLasSLSK11uAvuWn
+         +YmLmBdQRiy1Eh6H6dsj26beV9BvbpXh/14kJMgTal+Yr9aS4+Exm4rLiR/YCykdjAbi
+         xLAiXv4mqtNut7x5rb8P/yNjyqSERIs8+s1rA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=b2ys1moNqBCbCzID9rGFGcz2VYp1fak6ZZDUHdahKQSn6c5d7/mfYJAAsNuoKZ7gIr
+         unPAYleb7ejz5t+fR8SGKU5ls/WgeGHQRuofofs/EyfffcFQ0an2xBvXeRIpOuNtBYpM
+         eDJCQcslhzn/yfU5GhUNfaABpTKYeVTHWn+Gw=
+Received: by 10.223.107.82 with SMTP id a18mr7961272fap.86.1281582710414; Wed, 
+	11 Aug 2010 20:11:50 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Wed, 11 Aug 2010 20:11:50 -0700 (PDT)
+In-Reply-To: <20100812023922.GB19174@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153329>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153330>
 
-Greg Brockman <gdb@MIT.EDU> writes:
-
->> What should happen if the user did these instead, after adding "dir" as an
->> ignored entry, and adding dir/file but not dir/untracked to the index?
+On Thu, Aug 12, 2010 at 02:39, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> There's some documentation aimed at developing that I'd like to see =
+/
+>> write in Git at some point.
 >>
->>  (1)    git add dir/file dir/untracked    ; explicitly named
->>  (2)    git add dir/*                     ; have shell glob--same as (1)
->>  (3)    git add "dir/*"                   ; have git glob
->>  (4)    git add dir                       ; have git recurse
+>> Developing:
+>>
+>> =C2=A0 =C2=A0* How to work with Gettext
+>>
+>> =C2=A0 =C2=A0* How to write portable code, i.e. constructs to avoid =
+in C / shell
+>> =C2=A0 =C2=A0 =C2=A0script etc (these keep coming up).
 >
-> In all four cases, the output I get is:
-> """
-> The following paths are ignored by one of your .gitignore files:
-> dir
-> Use -f if you really want to add them.
-> fatal: no files added
-> """
+> Maybe:
 >
-> Note that this is also the output if you run
+> =C2=A0Documentation/technical/api-gettext.txt
+> =C2=A0Documentation/CodingGuidelines
+> =C2=A0Documentation/PlatformNotes
 >
-> (5) rm dir/untracked && git add "dir/*"
+> or some variations on the theme?
 
-Here is the one that troubles me the most:
+That would totally screw with my secret mission to turn everything
+into manpages, though :)
 
- (6) git add dir/f*
+I don't know how sane it would be, but it'd be neat to tell people "to
+patch git just fire up `man gitdev-patches' in your terminal ..".
 
-This _looks_ like very explicitly named from git's point of view, but from
-the end user's point of view it is not.  Depending on presense (or absense)
-of another file whose name begins with 'f' in the directory, the add will
-be either prevented or silently accepted.
+Another plus is writing in asciidoc, instead of some pseudocode that
+isn't parsed by anything but human eyes.
 
-I am not sure what the best solution would be; I tend to think the current
-behaviour is slightly saner in the face of shell globbing.
+But meh, I don't know :)
+
+>> =C2=A0 =C2=A0* How to deal with gettext / submit po files / keep the=
+m up to date
+>> =C2=A0 =C2=A0 =C2=A0etc.
+>
+> gittranslation.7?
+
+Sounds good.
+
+>> =C2=A0 =C2=A0* Core git concepts (that need to be translated), maybe=
+ I could
+>> =C2=A0 =C2=A0 =C2=A0adopt the gitglossary to this task, but it'd nee=
+d to be a bit
+>> =C2=A0 =C2=A0 =C2=A0more structured, i.e. describe core data concept=
+s first, then
+>> =C2=A0 =C2=A0 =C2=A0some other terms.
+>
+> That sounds good. =C2=A0Once we develop infrastructure for translatin=
+g
+> manpages, we could encourage translators to do gitglossary first
+> to standardize terminology.
+
+I'll push "add sub-sections to gitglossary" to my TODO. I think the
+flet alphabetical order does it a disservice, but then again maybe
+leaving the glossary alone and writing a new document would be better.
+
+What I had in mind was something like this (incomplete, and mostly in
+Icelandic): http://gist.github.com/425917
+
+I.e. just a bulletpoint list of core terms that you need to translate
+for Git.
+
+>> =C2=A0 =C2=A0 =C2=A0Actually, on that point, do we have documentatio=
+n that describes
+>> =C2=A0 =C2=A0 =C2=A0git's data model in one place? I.e. everything f=
+rom blobs to
+>> =C2=A0 =C2=A0 =C2=A0trees, how raw commit objects etc. look. Somethi=
+ng like "Git for
+>> =C2=A0 =C2=A0 =C2=A0computer scientists".
+>
+> Hopefully some pic wizard can convert that to nroff. :)
+>
+> I think Tommi Virtanen should be easy to reach in case anyone wants t=
+o
+> try adapting the article somehow.
+
+That'd be neat. Sometimes I forget how git stores things (so that I
+could e.g. construct commit objects with echo / sha1sum on the command
+line). Having one documentation that explains all that would be nice.
+
+It'd also be very neat if we had tools to print out any object in its
+raw form, --pretty=3Draw is partly there, but it's more pretty than
+raw.
+
+E.g. a tool like that might give you a human readable representation
+of a object file (including packed files), instead of having to do
+something like this (from "Inspecting a corrupt git object"):
+
+    On Wed, Aug 4, 2010 at 09:48, Thomas Rast <trast@student.ethz.ch> w=
+rote:
+    > Magnus B=C3=A4ck wrote:
+    >>
+    >> $ head -n 1 /tmp/hexdump_corrupt.txt
+    >> 00000000 =C2=A078 9c 2b 29 4a 4d 55 30 =C2=A032 36 62 30 34 30 3=
+0 33
+|x.+)JMU026b04003|
+    >> $ head -n 1 /tmp/hexdump_okay.txt
+    >> 00000000 =C2=A078 01 2b 29 4a 4d 55 30 =C2=A032 36 62 30 34 30 3=
+0 33
+|x.+)JMU026b04003|
+    >>
+    >> From what I gather from the community book and Pro Git, a git ob=
+ject
+    >> file is a deflated representation of the object type as a string=
+, the
+    >> payload size, a null byte, and the payload. Is there a standard =
+tool for
+    >> inflating the file back so that I can inspect what the actual di=
+fference
+    >> between these two are? Short of writing a tool utilizing zlib, a=
+t least.
+    >
+    > I'm sure it's a one-liner in almost any scripting language, e.g. =
+you
+    > can use
+    >
+    > =C2=A0python -c 'import sys,zlib;
+sys.stdout.write(zlib.decompress(open(sys.argv[1]).read()))'
