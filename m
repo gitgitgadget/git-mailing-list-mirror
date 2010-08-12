@@ -1,64 +1,73 @@
-From: Michael Witten <mfwitten@gmail.com>
-Subject: Re: Where do I stick development documentation?
-Date: Thu, 12 Aug 2010 15:00:24 -0500
-Message-ID: <AANLkTikTX5_qchqDuxiz=dGeTG0gB7_iRt=mpR9vJH5J@mail.gmail.com>
-References: <AANLkTi=dS1DYJ3MB-Du34sVPy8Qw8VNck=Lx54DtSfO0@mail.gmail.com>
- <20100812023922.GB19174@burratino> <AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked
+ files
+Date: Thu, 12 Aug 2010 13:00:52 -0700
+Message-ID: <7viq3fsirv.fsf@alter.siamese.dyndns.org>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+ <vpqsk2kjks7.fsf@bauges.imag.fr>
+ <AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 22:01:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Jens.Lehmann@web.de
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Thu Aug 12 22:01:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjdxW-0006o7-0d
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:01:02 +0200
+	id 1Ojdxh-0006w5-ER
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:01:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753428Ab0HLUA4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:00:56 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38744 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751914Ab0HLUAz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 16:00:55 -0400
-Received: by fxm13 with SMTP id 13so972544fxm.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:00:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AEOTRawcs/cHsNxP93W/aWl0gkA355AYve0l38z3iTY=;
-        b=W4ONF9tMhtyn/MgpKGwwaTVzyhVImIzdnvNkAbdNAKd9J6W4jaMkakfppa2r+TMiDg
-         Fd+5Skd50LNqrWd9YLgMfnaFcv6ithREJ3EJTJc3BZlzueVsfz2+5KlQrJzfrp87OuCX
-         r4LfKUgimmLKumLMaEi/28DU99DmbMBH3GAJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=r1ywHAZBLeJMw83Q3eeCVJ+Mj88cGfMpLeyaKdS3whxSrr0egNVhCiEfpatPttavQb
-         Rz3tm5bDkNrk2Zn7M89sxkVsjT4B/XUDqA6zHA9LqWtjBJPHS/QMUsKRCoIr5ntjssi0
-         J1O1A/uQcSi86MN1uoO0SLsM3f5w1b1V1sDEQ=
-Received: by 10.239.133.84 with SMTP id 20mr22498hbu.125.1281643254209; Thu,
- 12 Aug 2010 13:00:54 -0700 (PDT)
-Received: by 10.239.186.139 with HTTP; Thu, 12 Aug 2010 13:00:24 -0700 (PDT)
-In-Reply-To: <AANLkTinPUqSywAscEG=VsYdFPwS=x0izM1cw-J1EBDGT@mail.gmail.com>
+	id S1754138Ab0HLUBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 16:01:07 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47609 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751914Ab0HLUBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 16:01:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E286BCD21D;
+	Thu, 12 Aug 2010 16:01:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=bWRoJlw2hyZ74i3+RYN16cNYpYE=; b=gGxm5Z
+	q2vO8Xy5j2GvKVZzzJbXCgpT9dSF9/MQs6yBVISy2kR1rfvfx3aER7OIKxdH6bP3
+	5SEmf6kLsDIKmx+rUCHACg0AKycoijHckD81Ifcq/Ht+Z8l6ksQj+wZdCugz6Iv+
+	lT0rucOVPyKbYrLliK2J1ubk9sy170MEShxN0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZktEfENFazGOQNWvfncg94eP/DwxUd+Z
+	7+piue+90D61BYEwurB7wBX4CgBjlbrlQTfV3e7MGT/PPugqOJX/XFSR2VqreVJ+
+	qM1ZyBfgb3XYjYhEsHQXC2kO3Ouio4koMJ10H3CxoMmtE+tPSRuBtgeCGLL6di9d
+	+eJERcCgeKg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 95AF9CD21C;
+	Thu, 12 Aug 2010 16:00:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA7C3CD21B; Thu, 12 Aug
+ 2010 16:00:54 -0400 (EDT)
+In-Reply-To: <AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
+ (Greg Brockman's message of "Thu\, 12 Aug 2010 11\:54\:01 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 53AAE70A-A64C-11DF-851F-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153404>
 
-On Wed, Aug 11, 2010 at 22:11, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
->
-> That would totally screw with my secret mission to turn everything
-> into manpages, though :)
+Greg Brockman <gdb@MIT.EDU> writes:
 
-=46rankly, it sounds like you want something more expressive and
-interlinked, such as Texinfo documentation.
+> First of all, as you point out 'git add foo.pdf' works where foo.pdf
+> has been explicitly ignored, while in contrast 'git add dir/file'
+> fails when file has only been indirectly ignored because it is in an
+> ignored directory.  In the former case, the user explicitly specified
+> a policy for that file.  In the later case, the policy is only
+> indirectly expressed because that file happens to be in an ignored
+> directory.
+
+Sorry, but I don't get this argument.  When the user says "everything in
+this directory is ignored", why does it make it less direct than "this
+particular file is ignored"?
