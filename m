@@ -1,90 +1,112 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
-Date: Thu, 12 Aug 2010 16:19:39 -0400
-Message-ID: <AANLkTikDvcn4eFDdkv26ADzsipwD_ofkdYwu_0abeLA3@mail.gmail.com>
-References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
-	<vpqsk2kjks7.fsf@bauges.imag.fr>
-	<AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
-	<7viq3fsirv.fsf@alter.siamese.dyndns.org>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCHv4 2/2] pull --rebase: Avoid spurious conflicts and
+ reapplying unnecessary patches
+Date: Thu, 12 Aug 2010 14:19:55 -0600
+Message-ID: <AANLkTimoB=__-FmuFYa_rKqMjoYwWQS9hzziuk9Jseyx@mail.gmail.com>
+References: <1281592569-740-1-git-send-email-newren@gmail.com>
+	<1281592569-740-3-git-send-email-newren@gmail.com>
+	<AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Jens.Lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 22:19:49 2010
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	martinvz <martin.von.zweigbergk@gmail.com>
+To: =?UTF-8?B?U2FudGkgQsOpamFy?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Thu Aug 12 22:20:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjeFh-0006hX-7b
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:19:49 +0200
+	id 1OjeFw-0006lN-Dr
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:20:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760509Ab0HLUTn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:19:43 -0400
-Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:54803 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754969Ab0HLUTm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 16:19:42 -0400
-X-AuditID: 1209190e-b7bbeae000000a09-5f-4c64575f55df
-Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 94.F3.02569.F57546C4; Thu, 12 Aug 2010 16:19:43 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7CKJfxe012501
-	for <git@vger.kernel.org>; Thu, 12 Aug 2010 16:19:41 -0400
-Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7CKJeTN009016
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 12 Aug 2010 16:19:41 -0400 (EDT)
-Received: by gxk23 with SMTP id 23so581990gxk.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:19:40 -0700 (PDT)
-Received: by 10.231.183.10 with SMTP id ce10mr587294ibb.96.1281644379899; Thu,
- 12 Aug 2010 13:19:39 -0700 (PDT)
-Received: by 10.231.154.212 with HTTP; Thu, 12 Aug 2010 13:19:39 -0700 (PDT)
-In-Reply-To: <7viq3fsirv.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: AAAAAhWWNLgVlxO7
+	id S1760556Ab0HLUT5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:19:57 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:39579 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760525Ab0HLUT4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 16:19:56 -0400
+Received: by fxm13 with SMTP id 13so982687fxm.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:19:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0FlvmoteOSZkMLIBFdTJCM44If7cH9pHMOyfUC5lthY=;
+        b=ttj+awwiQGAoFcRJlEyB3CbV/YoWQ4ueKnMKOX92pIRTS+ZFiRRxNZe4meg6RkSiRz
+         6csOwUZk60SdTV87LU1bp81Du21GE3f+2XwuGbW6Iusrdlaf2aREGAuFQlXBDSt65368
+         GCCRmGNmhvoGf491H01yjI5GT/D+OPHOMMPRs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XAQWvDBrTSgFy7PpoZSGB65HFTewMNLyCVl415B9Aeau/L+RyqndJMlKsJkl9MCMdp
+         PgjpcnEGQd9XXIDouz54YerUSPErHHisjWIkRALK1VIuEh6ibJNRHSN5fHqesWAmV8T3
+         gq0xLU8o1VCKOefF/lrCfNJGoXmdFbrYF5kzw=
+Received: by 10.223.104.15 with SMTP id m15mr727904fao.103.1281644395413; Thu,
+ 12 Aug 2010 13:19:55 -0700 (PDT)
+Received: by 10.223.149.82 with HTTP; Thu, 12 Aug 2010 13:19:55 -0700 (PDT)
+In-Reply-To: <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153408>
 
->> First of all, as you point out 'git add foo.pdf' works where foo.pdf
->> has been explicitly ignored, while in contrast 'git add dir/file'
->> fails when file has only been indirectly ignored because it is in an
->> ignored directory. =A0In the former case, the user explicitly specif=
-ied
->> a policy for that file. =A0In the later case, the policy is only
->> indirectly expressed because that file happens to be in an ignored
->> directory.
+Hi,
+
+Thanks for the review and comments!
+
+On Thu, Aug 12, 2010 at 7:34 AM, Santi B=C3=A9jar <santi@agolina.net> w=
+rote:
+<snip>
+> All this makes sense.
 >
-> Sorry, but I don't get this argument. =A0When the user says "everythi=
-ng in
-> this directory is ignored", why does it make it less direct than "thi=
-s
-> particular file is ignored"?
-In general, I view the presence of a dir entry in a .gitignore as the
-user setting a default policy for files in that directory, but the
-user might actually mean for there to be some exceptions to that
-policy.
+> But can you explain when it happens? One possibility is when you don'=
+t
+> fork from the tracking branch as in:
 
-=46or example, in my personal usage, when I ignore a directory but trac=
-k
-some files within it, this is because I don't want to specify an
-ignore for every single other file in that directory.  Also note that
-negated .gitignore entries don't seem to work in this case, i.e. a
-=2Egitignore with contents
-dir
-!dir/file
-won't actually let file be addable again.
+That's one possibility.  Patch 1/2 in this thread contains testcases
+for two others.  Another possibility is having your patches get
+upstream by some alternative route (e.g. pulling your changes to a
+third machine, pushing from there, and then going back to your
+original machine and trying to pull --rebase).
 
-In contrast, when I add dir/file to a .gitignore, there is no doubt
-that I want to ignore that particular file.
+> Subject: Difference between pull --rebase and fetch+rebase
+> Message-ID: <27059158.post@talk.nabble.com>
+> From: martinvz <martin.von.zweigbergk@gmail.com>
+>
+> and this patch should also fix martinvz's issue (I've CC martinvz, ca=
+n
+> you test this patch? Thanks).
 
-Does that make more sense?
+Since you've cc'd martinvz, I'll note for his benefit that in the
+thread you reference above, you stated,
 
-Greg
+"By the way, when Git tries to apply these two commits it should detect
+that they are already applied so it should do nothing, isn't it?"
+
+The answer is no, it won't detect they are already applied, as
+explained in the commit message that started the current thread.  (If
+git did detect the changes were already applied, this bug would have
+been innocuous.)
+
+> Can you refer to commits with something like this?
+>
+> c85c792 (pull --rebase: be cleverer with rebased upstream branches, 2=
+008-01-26)
+
+Sure, I'll start doing that.
+
+> You've moved all the lines after the call to "git fetch". It changes
+> the behavior when the reflog is not enabled, as the old value of
+> remoteref is lost.
+
+Doh.  That's what I get for trying to 'clean up' some code and put all
+the references to setting oldremoteref together.  I should have stuck
+with my original 7-line addition patch.  I'll resend the simplified
+patch.
+
+Elijah
