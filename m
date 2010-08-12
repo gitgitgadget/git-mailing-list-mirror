@@ -1,80 +1,123 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: case where diff output needs improving? (was Re: [PATCH v2 0/7] 
-	tests: use skip_all=* to skip tests)
-Date: Thu, 12 Aug 2010 06:43:38 +0000
-Message-ID: <AANLkTiktfhsFWuS5V9aBcuUwQUUAvkc3+q4rhZhTarYP@mail.gmail.com>
-References: <7vd3tpxao1.fsf@alter.siamese.dyndns.org>
-	<1281553450-26467-1-git-send-email-avarab@gmail.com>
-	<87zkwsxsd0.fsf_-_@hariville.hurrynot.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] rerere: demonstrate a weakness with identical conflicts
+ in different files
+Date: Thu, 12 Aug 2010 09:28:18 +0200
+Message-ID: <4C63A292.4010604@viscovery.net>
+References: <4C629495.60105@viscovery.net> <7vmxssvi2t.fsf@alter.siamese.dyndns.org> <7vfwykv92a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Raja R Harinath <harinath@hurrynot.org>
-X-From: git-owner@vger.kernel.org Thu Aug 12 08:43:47 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 09:28:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjRVx-0007oP-Us
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 08:43:46 +0200
+	id 1OjSDH-0008QW-L1
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 09:28:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932564Ab0HLGnl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 02:43:41 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:59868 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475Ab0HLGnk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 02:43:40 -0400
-Received: by bwz3 with SMTP id 3so662293bwz.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 23:43:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=cITUuMEidssZdbVa+sGqFxC7f8LoKtJQJZt0VeACpMo=;
-        b=r1M95qnYUViIeO1FFxdK6v8zoJpFtGy/qo5oay1gOElA/a3jqhjGaW/gNRCwKCPJ+L
-         Lq4+C9l0Fknm46lkI8xuZzGYaTeIQLYjDoWlw/oTbOPCDXzu9V+nwopbK++dMygHHkuF
-         VyzmpHy4G7uEfcn95pDiQoHOFv6yVnU1t1PJs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aDLh53vcPUhSGBcIBYP1w+zoP3KUuIB+FsvIByuQNyTQS/v4Dcecj/xGb8DuEk1eBb
-         xKtSb9+myB9Py9b9NOMbD84QzFHeamlzz9HHF6UAZg+vBKcqFnhvcfpZBzhsu+IMz6BY
-         SWpyFKia1XDbg6r4LQ9rxHC9gGe5K4VrBMycM=
-Received: by 10.223.117.194 with SMTP id s2mr21114988faq.57.1281595418670; 
-	Wed, 11 Aug 2010 23:43:38 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Wed, 11 Aug 2010 23:43:38 -0700 (PDT)
-In-Reply-To: <87zkwsxsd0.fsf_-_@hariville.hurrynot.org>
+	id S932810Ab0HLH20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 03:28:26 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:20856 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755778Ab0HLH2Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 03:28:25 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OjSD6-00087Z-Mi; Thu, 12 Aug 2010 09:28:21 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 672581660F;
+	Thu, 12 Aug 2010 09:28:18 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.11) Gecko/20100711 Thunderbird/3.0.6
+In-Reply-To: <7vfwykv92a.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153349>
 
-On Thu, Aug 12, 2010 at 06:22, Raja R Harinath <harinath@hurrynot.org> =
-wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
-> [snip]
->> =C2=A0 =C2=A0 diff --git a/t/t4016-diff-quote.sh b/t/t4016-diff-quot=
-e.sh
->> =C2=A0 =C2=A0 index 10e2db3..ab0c2f0 100755
->> =C2=A0 =C2=A0 --- a/t/t4016-diff-quote.sh
->> =C2=A0 =C2=A0 +++ b/t/t4016-diff-quote.sh
->> =C2=A0 =C2=A0 @@ -14 +14 @@ P2=3D'pathname with SP'
->> =C2=A0 =C2=A0 -if P3=3D'pathname
->> =C2=A0 =C2=A0 +P3=3D'pathname
->> =C2=A0 =C2=A0 @@ -16 +16 @@ with LF'
->> =C2=A0 =C2=A0 -: 2>/dev/null >"$P1" && test -f "$P1" && rm -f "$P1"
->> =C2=A0 =C2=A0 +if : 2>/dev/null >"$P1" && test -f "$P1" && rm -f "$P=
-1"
->
-> Assuming this was from a git invocation, it seems that 'diff' could j=
-ust
-> show line 15 instead of '@@ -16, +16 @@' above.
+Am 8/12/2010 4:50, schrieb Junio C Hamano:
+> Yes, rr-cache/ database keys off of the
+> conflict id, so if your repository has more than one contents that produce
+> exactly the same conflict, say F and G, then, most likely:
+> 
+>  * You see one of them first, say F, record preimage.F and record its
+>    resolution as postimage.F
+> 
+>  * You encounter conflict G; record it in thisimage, try three-way merge
+>    between postimage.F and that using preimage.F as the common ancestor.
+>    If this doesn't work (and it likely doesn't), rerere punts.
 
-That was from -U0, and showing line 15 would go against the -U0 paramet=
-er.
+Aha! Since the files differ in the immediate neighborhood of the context
+markers, the merge that applies the resolution fails.
+
+Squash in this and the test passes:
+
+diff --git a/t/t4208-rerere-dup.sh b/t/t4208-rerere-dup.sh
+index 34c182a..2afa0ef 100755
+--- a/t/t4208-rerere-dup.sh
++++ b/t/t4208-rerere-dup.sh
+@@ -12,6 +12,7 @@
+ test_expect_success 'setup' '
+ 	cat > a1 <<- EOF &&
+ 	alpha
++	delta
+ 	beta
+ 	gamma
+ 	EOF
+@@ -23,6 +24,7 @@ test_expect_success 'setup' '
+ 	git checkout -b first &&
+ 	cat > a1 <<- EOF &&
+ 	alpha
++	delta
+ 	BETA
+ 	gamma
+ 	EOF
+@@ -32,6 +34,7 @@ test_expect_success 'setup' '
+ 	git checkout master &&
+ 	cat > a1 <<- EOF &&
+ 	alpha
++	delta
+ 	----
+ 	gamma
+ 	EOF
+@@ -49,6 +52,7 @@ test_expect_success 'merge records
+ test_expect_success 'record a resolution' '
+ 	cat > a1 <<- EOF &&
+ 	alpha
++	delta
+ 	--beta--
+ 	gamma
+ 	EOF
+@@ -61,7 +65,7 @@ test_expect_success 'postimage must
+ '
+
+ test_expect_success 'same resolution recorded twice' '
+-	test $(grep "Recorded resolution" actual | wc -l) = 2 &&
++#	test $(grep "Recorded resolution" actual | wc -l) = 2 &&
+ 	test $(ls .git/rr-cache | wc -w) = 1
+ '
+
+
+The last hunk is necessary because the output of rerere is now:
+
+Recorded resolution for 'a1'.
+Resolved 'a2' using previous resolution.
+
+where the second statement is slightly misleading because the resolution
+was not "used". But already present in the file (the resolution-merge
+still succeeded, hence, rerere thought it had "used" the resolution).
+
+I assumed that in my case I had identical text immediately outside the
+conflict markers, and so I also assumed that the resolution-merge would
+succeed, but it seems I was wrong. I'll go back and investigate closer as
+time permits.
+
+Thanks for your help so far.
+
+-- Hannes
