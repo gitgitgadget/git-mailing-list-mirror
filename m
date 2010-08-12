@@ -1,132 +1,71 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
-Date: Thu, 12 Aug 2010 20:26:09 +0000
-Message-ID: <AANLkTikV-fye7qc5kQNC5dSCTHB6nYoVfCg_PeFuk0KT@mail.gmail.com>
-References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
-	<vpqsk2kjks7.fsf@bauges.imag.fr>
-	<AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] git-am: Ignore whitespace before patches
+Date: Thu, 12 Aug 2010 15:24:57 -0500
+Message-ID: <20100812202457.GC2029@burratino>
+References: <1273944188-9472-1-git-send-email-avarab@gmail.com>
+ <1281556645-23361-1-git-send-email-avarab@gmail.com>
+ <AANLkTinDHvwHLZfj6DDPtV39Z2xhDZREiqwdt5cjiaLP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	gitster@pobox.com, Jens.Lehmann@web.de
-To: Greg Brockman <gdb@mit.edu>
-X-From: git-owner@vger.kernel.org Thu Aug 12 22:26:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 22:26:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjeM8-00027p-4x
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:26:28 +0200
+	id 1OjeMa-0002P5-PN
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 22:26:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757287Ab0HLU0L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 16:26:11 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:47504 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754980Ab0HLU0K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 16:26:10 -0400
-Received: by gxk23 with SMTP id 23so584615gxk.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:26:09 -0700 (PDT)
+	id S933942Ab0HLU0b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 16:26:31 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:60550 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754988Ab0HLU0a (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 16:26:30 -0400
+Received: by qwh6 with SMTP id 6so1922041qwh.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 13:26:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MDEMXt4Ct8BUYafy2eesO49FfyLTxt6moqLkHVBz4C4=;
-        b=Gc8lk/Ew21OiT0v0YUFLTZB19+8wFHv5iLr25HWe782UHd+MaeH0g4hARRE7Ks01vB
-         Gf6S3FGw5Tl8ViG8WHEjlgVuFVCMfRoXvLFBYMEgNX+wFq8ApCcKfYqFtIAPbe4QuVSd
-         0tqn5qb0UFs1NnaqOvlFfGsusaIdTUIG2h1Zo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=0QUSYcOHSnyoIFLWbEOAMqAfB8Z9PGnpIVduLm1tkVI=;
+        b=S+qJC1aziwiofA6f3IkYxF8LMf+qhY4EDWuMMxvWuIVBvO2bN07GEc3bAxoS+WmOyD
+         f8uczKN5AwZ2z+dBgW+Y0RSSucuNgxhynGWRorHDYwH9B1QO9QGJQ6rpcYq8klhKI50F
+         HbeiIkRDcHReyhDMCFTNjdD3xoW4qMXqhncZU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uLdjFpqtoSDX6qoqL+7dIeXeliq55zmvOUAo6NNOPXyixR//rsQPjTS2XJMhheqhdV
-         imvS2LD+/AWZZC88Us05tlv91Ddka9T/34RHYddgk8lw4y3jS/7dAKEEjZNTGytRAn/K
-         w6iBvH0/o/PRIsXZqfiPuoepDnNWntzOE3oHQ=
-Received: by 10.231.176.197 with SMTP id bf5mr347531ibb.175.1281644769518;
- Thu, 12 Aug 2010 13:26:09 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Thu, 12 Aug 2010 13:26:09 -0700 (PDT)
-In-Reply-To: <AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=GGVAKlu9erDrS3IxSSM22MqVQ1qfHi9ctDgO4Pf8F115EU6oHwJEot4sLQKJ0oiHcZ
+         Dnfv9zPYJ12U3WDBkl3lmgE7RDv2+lJlAKqLzBpuiJvYp6+IA7Dbt5i2Hm2qMrrqH1G0
+         vCTpLki9eTCyIRHo0FtJn3sDIKMzlnCTX1SEI=
+Received: by 10.229.221.131 with SMTP id ic3mr528201qcb.152.1281644789470;
+        Thu, 12 Aug 2010 13:26:29 -0700 (PDT)
+Received: from burratino ([66.99.3.154])
+        by mx.google.com with ESMTPS id t1sm2326417qcs.21.2010.08.12.13.26.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 12 Aug 2010 13:26:28 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinDHvwHLZfj6DDPtV39Z2xhDZREiqwdt5cjiaLP@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153410>
 
-On Thu, Aug 12, 2010 at 15:54, Greg Brockman <gdb@mit.edu> wrote:
+Jay Soffian wrote:
 
-> Secondly, I don't think this makes '-f' useless. =C2=A0'-f' would sti=
-ll be
-> used to initially add an untracked file to the index. =C2=A0So this w=
-ould
-> maintain an invariant that no ignored files are tracked unless the
-> user has specified a '-f' for it in the past.
+> Perhaps, before making git-am less strict, we should modify
+> format-patch to include a sha1 of the diff output so that corruption
+> can be reliably detected by git-am.
 
-I initially misread what this series was about, and I was about to
-withdraw my support for it. But this seems completely reasonable, and
-actually I think Git's current behavior here is clearly a bug.
+I seem to remember a discussion about hand-munging and rebasing of
+patches suggesting such verification might be a bad idea[1].  I dunno.
 
-To elabore with examples this behavior here is fine, and I think
-everyone agrees with that:
-
-    aoeu tmp (160M) $ git init meh
-    Initialized empty Git repository in /tmp/meh/.git/
-    aoeu tmp (160M) $ cd !$
-    cd meh
-    aoeu meh (master) $ echo '*' > .gitignore
-    aoeu meh (master) $ mkdir ignore-dir
-    aoeu meh (master) $ echo ignore > ignore-dir/file
-    aoeu meh (master) $ echo ignore > file
-    aoeu meh (master) $ git add file ignore-dir
-    The following paths are ignored by one of your .gitignore files:
-    file
-    ignore-dir
-    Use -f if you really want to add them.
-    fatal: no files added
-
-Here I have * in .gitignore but I'm adding files with an explicit
-path. Making this not ask for -f would be pretty bad, e.g. for the
-glob reasons Junio cited.
-
-So I have to -f it:
-
-    aoeu meh (master) $ git add -f file ignore-dir
-    aoeu meh (master) $ git commit -m"commiting ignored stuff"
-    [master (root-commit) 6cae514] commiting ignored stuff
-     2 files changed, 2 insertions(+), 0 deletions(-)
-     create mode 100644 file
-     create mode 100644 ignore-dir/file
-
-However this part I think is a bug:
-
-    aoeu meh (master) $ echo whee >> ignore-dir/file
-    aoeu meh (master) $ echo whee >> file
-    aoeu meh (master) $ git status --short
-     M file
-     M ignore-dir/file
-    aoeu meh (master) $ git add file
-    aoeu meh (master) $ git add ignore-dir/file
-    The following paths are ignored by one of your .gitignore files:
-    ignore-dir
-    Use -f if you really want to add them.
-    fatal: no files added
-    $ git status --short
-    M  file
-     M ignore-dir/file
-
-Here "file" is already tracked by Git and it doesn't complain when I
-"git add" a update to it, but it complains about "ignore-dir/file"
-just because it's in a subdirectory.
-
-I hadn't noticed this before because I usually use "git add -u", which
-doesn't complain about the ignore and happily updates the file in the
-index:
-
-    aoeu meh (master) $ git add -u
-    aoeu meh (master) $ git status --short
-    M  file
-    M  ignore-dir/file
-
-I think "git add ignore-dir/file" above should act exactly like "git
-add file", and not force me to add a "-f" to "git add".
+[1] but all a search turned up is this:
+http://thread.gmane.org/gmane.comp.version-control.git/136008/focus=136234
