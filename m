@@ -1,77 +1,95 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: Re: [BUG/TEST] git-svn: fetch fails with deleted tag
-Date: Wed, 11 Aug 2010 22:18:39 -0700 (PDT)
-Message-ID: <765385.99383.qm@web30004.mail.mud.yahoo.com>
-References: <1281159415-60900-1-git-send-email-ddkilzer@kilzer.net>
-Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: What's cooking in git.git (Aug 2010, #02; Wed, 11)
+Date: Wed, 11 Aug 2010 23:47:34 -0600
+Message-ID: <AANLkTinvWO_OakFbuHWrRWYCg4bvHuVPu8=d0_y5o0Ws@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Eric Wong <normalperson@yhbt.net>,
-	"David D. Kilzer" <ddkilzer@kilzer.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 12 07:18:49 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 07:47:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjQBi-0006rh-Ef
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 07:18:46 +0200
+	id 1OjQdi-00071S-Av
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 07:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751995Ab0HLFSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 01:18:41 -0400
-Received: from web30004.mail.mud.yahoo.com ([209.191.69.21]:27647 "HELO
-	web30004.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751971Ab0HLFSk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 01:18:40 -0400
-Received: (qmail 99402 invoked by uid 60001); 12 Aug 2010 05:18:39 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1281590319; bh=Qc+uDBchJwrqKrLz4UAvnp1X1sWOvolR9uK/LiyGXZs=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=L4CSkfmd5OMFblvPoyL3vCY6jSbAp8LmAWfgk/Q5tjhM9C3lv+lc7IYsWsr2mJLLjN3lbDkbEPGy+goSjPjxKmY3UMv+qDJKZQ6U9oHMlx+EIFB7NLoagev9BdgegaYzb0+zkGfyHT8SviXCdxASYl7acppmfbePXHa4LftmSuw=
-X-YMail-OSG: VfChJiUVM1lWs_LyJfRgg8rbXif3HZoblmKv6qToHtiaqfO
- _QL.BWcSNKSnkf7X6SEv4_i8bzrIRyzkzud2yMZPRSuJm2Qr7M1WAlSWOVRG
- RAJk1Y1RK5XeuvgHtCkeqY1SrO.y5.CIvvX9uLeesqvwzYj337gc7J266HQR
- ljGbHFucWMghq4aLVkADEOFe4xtULqPFhlQDbACbL6KODCf1Yna_Q8UDqSbw
- 32TtnaKVwvsegMcDp70mS91rAp.MOPbKRKhMufzH9_3paibHUlMiu4dINCeT
- rNP6lp_75sTzw30S3JJ6bcHQbHCTFar2A86.cpFggUuYA7SeZ4x3WDg--
-Received: from [67.188.213.238] by web30004.mail.mud.yahoo.com via HTTP; Wed, 11 Aug 2010 22:18:39 PDT
-X-RocketYMMF: ddkilzer
-X-Mailer: YahooMailRC/470 YahooMailWebService/0.8.105.279950
-In-Reply-To: <1281159415-60900-1-git-send-email-ddkilzer@kilzer.net>
+	id S1752671Ab0HLFrh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 01:47:37 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:65288 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752504Ab0HLFrg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 01:47:36 -0400
+Received: by bwz3 with SMTP id 3so626927bwz.19
+        for <git@vger.kernel.org>; Wed, 11 Aug 2010 22:47:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3zepWGE9xC4KOakFMExJ3jCAmEw/0zBPOaf3Oiy9EL4=;
+        b=DhGLy/fLBqbRP9DP1+OuvkFMTZQhdOSs1nYB+180zNyqlFSp3uHutJ+Zim6VB/KJPb
+         o8Rui3H/KOnrnuh1FHjsFsPjvFqioj40sLJvrVK7wVVqPWp5MeE2Pn4HADcEfZpe11XB
+         krXruP4q88fpB4mX6Ozs1cmUe+jqKaMy/tdBk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Wkp1DVF7+nz0nW4yXb+TkaB5K4Fksbjp534CWacvopq2Ix6Xr/I/Lz9xAMgUGp4GF5
+         1oxegYir3Nr3FSWo6magqh+a/8fLS8nHybKTWXEczTM6P9BWfP08u0GIPibmpg6NHdLY
+         atYM5kaELGTX353eac+rVaDBRIWldYBQ85P9w=
+Received: by 10.223.122.6 with SMTP id j6mr21052124far.78.1281592054825; Wed, 
+	11 Aug 2010 22:47:34 -0700 (PDT)
+Received: by 10.223.149.82 with HTTP; Wed, 11 Aug 2010 22:47:34 -0700 (PDT)
+In-Reply-To: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153340>
 
-On Fri, August 6, 2010 at 10:36:55 PM, David D. Kilzer wrote:
+Hi,
 
-> The attached test fails when fetching the svn repo:
-> 
->      Checksum mismatch: ChangeLog 065854....
->     expected:  ce771b....
->          got: 9563fd....
-> 
-> The issue  seems to be that the tag was created, deleted and then
-> recreated from the  same source revision but at different paths.
+On Wed, Aug 11, 2010 at 5:35 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> * en/rebase-against-rebase-fix (2010-08-06) 2 commits
+> =C2=A0- pull --rebase: Avoid spurious conflicts and reapplying unnece=
+ssary patches
+> =C2=A0- t5520-pull: Add testcases showing spurious conflicts from git=
+ pull --rebase
 
+It looks like you pulled my original submission, despite the fact that
+you commented on v3 of the series.  Granted, everything after v1 was
+just commit log wording changes and testsuite fixups, but I'll resend
+to make it easy for you to grab the latest.
 
-I have a fix for this.  I hope to send it out by Friday for further review.
+> * en/fast-export-fix (2010-07-17) 2 commits
+> =C2=A0- fast-export: Add a --full-tree option
+> =C2=A0- fast-export: Fix dropping of files with --import-marks and pa=
+th limiting
+<snip>
+> * en/d-f-conflict-fix (2010-07-27) 7 commits
+> =C2=A0(merged to 'next' on 2010-08-03 at 7f78604)
+> =C2=A0+ t/t6035-merge-dir-to-symlink.sh: Remove TODO on passing test
+> =C2=A0+ fast-import: Improve robustness when D->F changes provided in=
+ wrong order
+> =C2=A0+ fast-export: Fix output order of D/F changes
+> =C2=A0+ merge_recursive: Fix renames across paths below D/F conflicts
+> =C2=A0+ merge-recursive: Fix D/F conflicts
+> =C2=A0+ Add a rename + D/F conflict testcase
+> =C2=A0+ Add additional testcases for D/F conflicts
 
-This bug affects svn tags that are created, deleted and recreated with the 
-following criteria:
+Out of curiosity, is there anything preventing these two series from
+advancing?  I was particularly hoping that the fix (first patch) in
+the en/fast-export-fix series would be applied to maint; Sverre seemed
+to agree -- http://article.gmane.org/gmane.comp.version-control.git/151=
+046.
+ If it's just time, I understand, I was just curious if there was
+anything I could or should do to help these series (or the new
+en/rebase-against-rebase-fix one) along.
 
-- Both tags have the same name (since the second one replaces the first one 
-after it's deleted).
-- Both tags were created from the same revision in the repository.
-- Each tag used a different repository path, e.g., one was from trunk while the 
-other was from a branch.
-- [Optional] Both tags had a file with the same path name but different content.
-
-If the optional fourth criteria is met, the checksum mismatch occurs and git-svn 
-fails during import.
-
-However, if only the first three criteria are met, git-svn actually creates a 
-tag with the first (deleted) tag's content!  The second tag's content is never 
-imported, leaving the user with a tag in git whose content doesn't match the 
-latest tag in svn.
-
-Dave
+Thanks,
+Elijah
