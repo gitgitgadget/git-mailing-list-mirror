@@ -1,223 +1,132 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/10] Add treap implementation
-Date: Thu, 12 Aug 2010 17:02:57 -0500
-Message-ID: <20100812220257.GI2029@burratino>
-References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
- <20100716101352.GA14374@burratino>
- <20100809215719.GA4203@burratino>
- <20100809221734.GE4203@burratino>
- <7vhbizu4nq.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] gettext: setlocale(LC_CTYPE, "") breaks Git's C function assumptions
+Date: Thu, 12 Aug 2010 22:08:15 +0000
+Message-ID: <1281650895-7449-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 00:04:54 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 13 00:08:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjftM-00077x-5k
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:04:52 +0200
+	id 1Ojfwq-0000Jq-7n
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 00:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754663Ab0HLWEh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:04:37 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:54563 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754416Ab0HLWEg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 18:04:36 -0400
-Received: by qwh6 with SMTP id 6so2014365qwh.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:04:35 -0700 (PDT)
+	id S1754849Ab0HLWIX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 18:08:23 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43621 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753855Ab0HLWIW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 18:08:22 -0400
+Received: by wyb32 with SMTP id 32so1906193wyb.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 15:08:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=F5g3NKmuQCLRlgy7Ku4gGy+HSYOkLvVXXvhC/VyZcuo=;
-        b=Z1F0+saWu1pGO+OlCZzA6JuBTxBTNOtmSR5GJjpgJ4tw7hp/q3dQklXuYSpN7HmJOf
-         HYQ3XC9WAwLEP/S8rbfEqOvHmpljxFERLggpkCkscbN9hBU6XM2liaB8vmmDDJ9hdeY1
-         KeQsLHAfONyoTwlymsYh8RvQECLaoV1Op2iU8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=Uno5NW0QpwDBBRBhU1kYrcSUA57/WjFXzhC9aHBxP5A=;
+        b=w8NwSUQdZzcTIr5lUYHKpvxQrQubEGX8YoH8djuEfGBLzuVdXQHEFUu1aHwqs5vfAU
+         lqhb+pSe4b5eemIlQc3su9qs0KqA4+4QZiKj0T8/UBRIpsrYEXhDuBaCB+d0AY+mRA8P
+         LLEnx+2XM8dlu+FM88L5eDIPeq6eW6U4VtjE4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=FNBjVq8Ld6PZjMAYZMkDgcBxxT2Cxb78TRggQ1iDaWtqS1DZUpmg8MXp/4CSdQoEhz
-         SM/tUM0vl/f1Dj1kDeBn7/aePNEEZAV7y5ASky+zV4EQSc0OqKywXxErgSxawJqZUZVT
-         q6gKq0XkCzCkNhFfv5kCodB8bVFa8CUV/ngGY=
-Received: by 10.224.28.77 with SMTP id l13mr398710qac.320.1281650675472;
-        Thu, 12 Aug 2010 15:04:35 -0700 (PDT)
-Received: from burratino ([66.99.3.154])
-        by mx.google.com with ESMTPS id e1sm807206vch.20.2010.08.12.15.04.29
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=TWkSM7cPM3RJS9UcgNfeXAXNokVctAfhpRpoYgPThDa9ikcjUKR+2JufaNCtYBCXbK
+         lUHdT5NoqcT3qUf1v3YD3ej9iRpY4DxGWIuR15BI3dMXxqeaS2YO+k+HZcmGKGK6xq0d
+         6kPHUlm/82ojQwsPWJySMmSOXcK72+Fb1fHJg=
+Received: by 10.227.156.66 with SMTP id v2mr647843wbw.136.1281650901037;
+        Thu, 12 Aug 2010 15:08:21 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id a1sm1648543wbb.14.2010.08.12.15.08.19
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Aug 2010 15:04:31 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vhbizu4nq.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Thu, 12 Aug 2010 15:08:20 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.327.gfb40
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153425>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153426>
 
-Junio C Hamano wrote:
+Remove the setlocale/LC_CTYPE call from gettext.c, we only need
+setlocale/LC_MESSAGES to use the message catalog, and setting LC_CTYPE
+from the environment breaks Git's assumptions about C library
+functions.
 
-> Need SP after "while" (there are other occurrences).
+Under a non-C locale functions like vsnprintf become locale sensitive,
+so that they'll e.g. refuse to process ISO-8895-1 data under a UTF-8
+locale.
 
-Good catch.  checkpatch also notices some long lines, but I think
-that=E2=80=99s worth ignoring.
+This triggered a "your vsnprintf is broken" error on Git's own
+repository when inspecting v0.99.6~1 under a UTF-8 locale.
 
--- 8< --
-Subject: treap: style fix
+That commit contains a ISO-8859-1 encoded author name, which the
+locale aware vsnprintf(3) won't interpolate in the format argument,
+due to mismatch between the data encoding and the locale.
 
-Missing spaces in while (0) and trpn_pointer(a, b).
-
-Remove parentheses around return value.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 ---
- vcs-svn/trp.h |   30 +++++++++++++++---------------
- 1 files changed, 15 insertions(+), 15 deletions(-)
 
-diff --git a/vcs-svn/trp.h b/vcs-svn/trp.h
-index 1f5f51f..ee35c68 100644
---- a/vcs-svn/trp.h
-+++ b/vcs-svn/trp.h
-@@ -37,7 +37,7 @@ struct trp_root {
- 			*trpn_pointer(a_base, a_offset) =3D \
- 				*trpn_pointer(a_base, old_offset); \
- 		} \
--	} while (0);
-+	} while (0)
+This goes on top of the ab/i18n series in pu.
+
+ gettext.c                           |    1 -
+ t/t0203-gettext-setlocale-sanity.sh |   26 ++++++++++++++++++++++++++
+ 2 files changed, 26 insertions(+), 1 deletions(-)
+ create mode 100755 t/t0203-gettext-setlocale-sanity.sh
+
+diff --git a/gettext.c b/gettext.c
+index 7ae5cae..db99742 100644
+--- a/gettext.c
++++ b/gettext.c
+@@ -17,6 +17,5 @@ extern void git_setup_gettext(void) {
+ 	}
 =20
- /* Left accessors. */
- #define trp_left_get(a_base, a_field, a_node) \
-@@ -46,7 +46,7 @@ struct trp_root {
- 	do { \
- 		trpn_modify(a_base, a_node); \
- 		trp_left_get(a_base, a_field, a_node) =3D (a_left); \
--	} while(0)
-+	} while (0)
-=20
- /* Right accessors. */
- #define trp_right_get(a_base, a_field, a_node) \
-@@ -55,7 +55,7 @@ struct trp_root {
- 	do { \
- 		trpn_modify(a_base, a_node); \
- 		trp_right_get(a_base, a_field, a_node) =3D (a_right); \
--	} while(0)
-+	} while (0)
-=20
- /*
-  * Fibonacci hash function.
-@@ -72,7 +72,7 @@ struct trp_root {
- 	do { \
- 		trp_left_set(a_base, a_field, (a_node), ~0); \
- 		trp_right_set(a_base, a_field, (a_node), ~0); \
--	} while(0)
-+	} while (0)
-=20
- /* Internal utility macros. */
- #define trpn_first(a_base, a_field, a_root, r_node) \
-@@ -90,7 +90,7 @@ struct trp_root {
- 		trp_right_set(a_base, a_field, (a_node), \
- 			trp_left_get(a_base, a_field, (r_node))); \
- 		trp_left_set(a_base, a_field, (r_node), (a_node)); \
--	} while(0)
-+	} while (0)
-=20
- #define trpn_rotate_right(a_base, a_field, a_node, r_node) \
- 	do { \
-@@ -98,7 +98,7 @@ struct trp_root {
- 		trp_left_set(a_base, a_field, (a_node), \
- 			trp_right_get(a_base, a_field, (r_node))); \
- 		trp_right_set(a_base, a_field, (r_node), (a_node)); \
--	} while(0)
-+	} while (0)
-=20
- #define trp_gen(a_attr, a_pre, a_type, a_field, a_base, a_cmp) \
- a_attr a_type MAYBE_UNUSED *a_pre##first(struct trp_root *treap) \
-@@ -136,7 +136,7 @@ a_attr a_type MAYBE_UNUSED *a_pre##search(struct tr=
-p_root *treap, a_type *key) \
- { \
- 	int cmp; \
- 	uint32_t ret =3D treap->trp_root; \
--	while (~ret && (cmp =3D (a_cmp)(key, trpn_pointer(a_base,ret)))) { \
-+	while (~ret && (cmp =3D (a_cmp)(key, trpn_pointer(a_base, ret)))) { \
- 		if (cmp < 0) { \
- 			ret =3D trp_left_get(a_base, a_field, ret); \
- 		} else { \
-@@ -149,7 +149,7 @@ a_attr a_type MAYBE_UNUSED *a_pre##nsearch(struct t=
-rp_root *treap, a_type *key)
- { \
- 	int cmp; \
- 	uint32_t ret =3D treap->trp_root; \
--	while (~ret && (cmp =3D (a_cmp)(key, trpn_pointer(a_base,ret)))) { \
-+	while (~ret && (cmp =3D (a_cmp)(key, trpn_pointer(a_base, ret)))) { \
- 		if (cmp < 0) { \
- 			if (!~trp_left_get(a_base, a_field, ret)) \
- 				break; \
-@@ -163,7 +163,7 @@ a_attr a_type MAYBE_UNUSED *a_pre##nsearch(struct t=
-rp_root *treap, a_type *key)
- a_attr uint32_t MAYBE_UNUSED a_pre##insert_recurse(uint32_t cur_node, =
-uint32_t ins_node) \
- { \
- 	if (cur_node =3D=3D ~0) { \
--		return (ins_node); \
-+		return ins_node; \
- 	} else { \
- 		uint32_t ret; \
- 		int cmp =3D (a_cmp)(trpn_pointer(a_base, ins_node), \
-@@ -185,7 +185,7 @@ a_attr uint32_t MAYBE_UNUSED a_pre##insert_recurse(=
-uint32_t cur_node, uint32_t i
- 			else \
- 				ret =3D cur_node; \
- 		} \
--		return (ret); \
-+		return ret; \
- 	} \
- } \
- a_attr void MAYBE_UNUSED a_pre##insert(struct trp_root *treap, a_type =
-*node) \
-@@ -204,27 +204,27 @@ a_attr uint32_t MAYBE_UNUSED a_pre##remove_recurs=
-e(uint32_t cur_node, uint32_t r
- 		uint32_t right =3D trp_right_get(a_base, a_field, cur_node); \
- 		if (left =3D=3D ~0) { \
- 			if (right =3D=3D ~0) \
--				return (~0); \
-+				return ~0; \
- 		} else if (right =3D=3D ~0 || trp_prio_get(left) < trp_prio_get(righ=
-t)) { \
- 			trpn_rotate_right(a_base, a_field, cur_node, ret); \
- 			right =3D a_pre##remove_recurse(cur_node, rem_node); \
- 			trp_right_set(a_base, a_field, ret, right); \
--			return (ret); \
-+			return ret; \
- 		} \
- 		trpn_rotate_left(a_base, a_field, cur_node, ret); \
- 		left =3D a_pre##remove_recurse(cur_node, rem_node); \
- 		trp_left_set(a_base, a_field, ret, left); \
--		return (ret); \
-+		return ret; \
- 	} else if (cmp < 0) { \
- 		uint32_t left =3D a_pre##remove_recurse( \
- 			trp_left_get(a_base, a_field, cur_node), rem_node); \
- 		trp_left_set(a_base, a_field, cur_node, left); \
--		return (cur_node); \
-+		return cur_node; \
- 	} else { \
- 		uint32_t right =3D a_pre##remove_recurse( \
- 			trp_right_get(a_base, a_field, cur_node), rem_node); \
- 		trp_right_set(a_base, a_field, cur_node, right); \
--		return (cur_node); \
-+		return cur_node; \
- 	} \
- } \
- a_attr void MAYBE_UNUSED a_pre##remove(struct trp_root *treap, a_type =
-*node) \
+ 	(void)setlocale(LC_MESSAGES, "");
+-	(void)setlocale(LC_CTYPE, "");
+ 	(void)textdomain("git");
+ }
+diff --git a/t/t0203-gettext-setlocale-sanity.sh b/t/t0203-gettext-setl=
+ocale-sanity.sh
+new file mode 100755
+index 0000000..a212460
+--- /dev/null
++++ b/t/t0203-gettext-setlocale-sanity.sh
+@@ -0,0 +1,26 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
++#
++
++test_description=3D"The Git C functions aren't broken by setlocale(3)"
++
++. ./lib-gettext.sh
++
++test_expect_success 'git show a ISO-8859-1 commit under C locale' '
++	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
++	test_commit "iso-c-commit" iso-under-c &&
++	git show >out 2>err &&
++	! test -s err &&
++	grep -q "iso-c-commit" out
++'
++
++test_expect_success GETTEXT_LOCALE 'git show a ISO-8859-1 commit under=
+ a UTF-8 locale' '
++	. "$TEST_DIRECTORY"/t3901-8859-1.txt &&
++	test_commit "iso-utf8-commit" iso-under-utf8 &&
++	LANGUAGE=3Dis LC_ALL=3D"$is_IS_locale" git show >out 2>err &&
++	! test -s err &&
++	grep -q "iso-utf8-commit" out
++'
++
++test_done
 --=20
-1.7.2.1.544.ga752d.dirty
+1.7.2.1.327.gfb40
