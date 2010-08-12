@@ -1,60 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: specifying one-side of a merge commit?
-Date: Thu, 12 Aug 2010 13:11:52 +0800
-Message-ID: <AANLkTi=mnO8+XM4Bcjneaq+ngUSFesvZ_TYMRyy=f43a@mail.gmail.com>
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: Re: [BUG/TEST] git-svn: fetch fails with deleted tag
+Date: Wed, 11 Aug 2010 22:18:39 -0700 (PDT)
+Message-ID: <765385.99383.qm@web30004.mail.mud.yahoo.com>
+References: <1281159415-60900-1-git-send-email-ddkilzer@kilzer.net>
+Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 12 07:12:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Wong <normalperson@yhbt.net>,
+	"David D. Kilzer" <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 12 07:18:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjQ59-00059W-VF
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 07:12:00 +0200
+	id 1OjQBi-0006rh-Ef
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 07:18:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751432Ab0HLFLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 01:11:55 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44775 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750919Ab0HLFLy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 01:11:54 -0400
-Received: by ewy23 with SMTP id 23so453935ewy.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 22:11:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=x5m12tbU1gjIXuQ/4+CMRaLVdQE6rffzvDMBOwUuwhI=;
-        b=mbZj+V0ArGqRPb78FHM1o0rB/DtoFDpOUE1h5uA3OHSIADr27V1Sz66OLd/iqsqEn8
-         SQDvfLebXSw4UqAu3ZC5aEhAcO4aKGnVFP5QuC33S1lAgUs8hGwsnpaC3VzOq/OdPkDv
-         cb+TT3nLJORvqgatOSEBkVOcX/fA7+/Jbpjr4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Q5ojh+JyRxi+hjVYEWNHtjcPvCTAgDX4dOQn2qnbbcqHPX/weHlRKTAqqcmUq74XZw
-         vKC0/IJLBZ2hHgGWCVOvMNSwnDAFV3u5wLKShiIHHt7hZR3vyj/75n3nnyVkTbKs970a
-         cZS2Njm+WQOmQroICpkscauc9rRiTTdjHBKP0=
-Received: by 10.213.104.138 with SMTP id p10mr2324899ebo.6.1281589912986; Wed,
- 11 Aug 2010 22:11:52 -0700 (PDT)
-Received: by 10.213.15.72 with HTTP; Wed, 11 Aug 2010 22:11:52 -0700 (PDT)
+	id S1751995Ab0HLFSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 01:18:41 -0400
+Received: from web30004.mail.mud.yahoo.com ([209.191.69.21]:27647 "HELO
+	web30004.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1751971Ab0HLFSk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 01:18:40 -0400
+Received: (qmail 99402 invoked by uid 60001); 12 Aug 2010 05:18:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1281590319; bh=Qc+uDBchJwrqKrLz4UAvnp1X1sWOvolR9uK/LiyGXZs=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=L4CSkfmd5OMFblvPoyL3vCY6jSbAp8LmAWfgk/Q5tjhM9C3lv+lc7IYsWsr2mJLLjN3lbDkbEPGy+goSjPjxKmY3UMv+qDJKZQ6U9oHMlx+EIFB7NLoagev9BdgegaYzb0+zkGfyHT8SviXCdxASYl7acppmfbePXHa4LftmSuw=
+X-YMail-OSG: VfChJiUVM1lWs_LyJfRgg8rbXif3HZoblmKv6qToHtiaqfO
+ _QL.BWcSNKSnkf7X6SEv4_i8bzrIRyzkzud2yMZPRSuJm2Qr7M1WAlSWOVRG
+ RAJk1Y1RK5XeuvgHtCkeqY1SrO.y5.CIvvX9uLeesqvwzYj337gc7J266HQR
+ ljGbHFucWMghq4aLVkADEOFe4xtULqPFhlQDbACbL6KODCf1Yna_Q8UDqSbw
+ 32TtnaKVwvsegMcDp70mS91rAp.MOPbKRKhMufzH9_3paibHUlMiu4dINCeT
+ rNP6lp_75sTzw30S3JJ6bcHQbHCTFar2A86.cpFggUuYA7SeZ4x3WDg--
+Received: from [67.188.213.238] by web30004.mail.mud.yahoo.com via HTTP; Wed, 11 Aug 2010 22:18:39 PDT
+X-RocketYMMF: ddkilzer
+X-Mailer: YahooMailRC/470 YahooMailWebService/0.8.105.279950
+In-Reply-To: <1281159415-60900-1-git-send-email-ddkilzer@kilzer.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153339>
 
-Hi,
+On Fri, August 6, 2010 at 10:36:55 PM, David D. Kilzer wrote:
 
-I wonder how do you guys do this?
+> The attached test fails when fetching the svn repo:
+> 
+>      Checksum mismatch: ChangeLog 065854....
+>     expected:  ce771b....
+>          got: 9563fd....
+> 
+> The issue  seems to be that the tag was created, deleted and then
+> recreated from the  same source revision but at different paths.
 
-So far, what I've come up with is this:
 
-  $ git rev-list $MERGE ^$MERGE^ | head -2 | tail -1
+I have a fix for this.  I hope to send it out by Friday for further review.
 
-I'm sure there's a better way.
+This bug affects svn tags that are created, deleted and recreated with the 
+following criteria:
 
--- 
-Cheers,
-Ray Chuan
+- Both tags have the same name (since the second one replaces the first one 
+after it's deleted).
+- Both tags were created from the same revision in the repository.
+- Each tag used a different repository path, e.g., one was from trunk while the 
+other was from a branch.
+- [Optional] Both tags had a file with the same path name but different content.
+
+If the optional fourth criteria is met, the checksum mismatch occurs and git-svn 
+fails during import.
+
+However, if only the first three criteria are met, git-svn actually creates a 
+tag with the first (deleted) tag's content!  The second tag's content is never 
+imported, leaving the user with a tag in git whose content doesn't match the 
+latest tag in svn.
+
+Dave
