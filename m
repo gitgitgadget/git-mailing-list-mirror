@@ -1,87 +1,168 @@
-From: Nelson Elhage <nelhage@ksplice.com>
-Subject: [PATCH] index-pack: Don't follow replace refs.
-Date: Thu, 12 Aug 2010 10:18:12 -0400
-Message-ID: <1281622692-29460-1-git-send-email-nelhage@ksplice.com>
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Nelson Elhage <nelhage@ksplice.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Aug 12 16:23:45 2010
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv4 2/2] pull --rebase: Avoid spurious conflicts and
+ reapplying unnecessary patches
+Date: Thu, 12 Aug 2010 16:37:25 +0200
+Message-ID: <AANLkTikLhe9+6ovLT99qG9wwDjXVmT8_81xuN8P31eve@mail.gmail.com>
+References: <1281592569-740-1-git-send-email-newren@gmail.com>
+ <1281592569-740-3-git-send-email-newren@gmail.com> <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	martinvz <martin.von.zweigbergk@gmail.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 12 16:37:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjYh5-0005AB-Dc
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 16:23:43 +0200
+	id 1OjYuq-0004sU-Dm
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 16:37:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760188Ab0HLOXh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 10:23:37 -0400
-Received: from DMZ-MAILSEC-SCANNER-6.MIT.EDU ([18.7.68.35]:56650 "EHLO
-	dmz-mailsec-scanner-6.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753875Ab0HLOXh (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 10:23:37 -0400
-X-Greylist: delayed 300 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Aug 2010 10:23:36 EDT
-X-AuditID: 12074423-b7cb4ae000000a9b-19-4c6402b04ecd
-Received: from mailhub-auth-4.mit.edu (MAILHUB-AUTH-4.MIT.EDU [18.7.62.39])
-	by dmz-mailsec-scanner-6.mit.edu (Symantec Brightmail Gateway) with SMTP id C5.06.02715.0B2046C4; Thu, 12 Aug 2010 10:18:24 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o7CEIYKx026419;
-	Thu, 12 Aug 2010 10:18:34 -0400
-Received: from PHANATIQUE.MIT.EDU (c-71-192-160-118.hsd1.nh.comcast.net [71.192.160.118])
-	(authenticated bits=0)
-        (User authenticated as nelhage@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7CEIVkP028794
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 12 Aug 2010 10:18:33 -0400 (EDT)
-X-Mailer: git-send-email 1.7.1.29.g6093d
-X-Brightmail-Tracker: AAAAARWWQ6w=
+	id S933709Ab0HLOhu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 10:37:50 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:62186 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933641Ab0HLOht convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 10:37:49 -0400
+Received: by pzk26 with SMTP id 26so451351pzk.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 07:37:49 -0700 (PDT)
+Received: by 10.114.130.13 with SMTP id c13mr188858wad.68.1281623865164; Thu,
+ 12 Aug 2010 07:37:45 -0700 (PDT)
+Received: by 10.114.195.14 with HTTP; Thu, 12 Aug 2010 07:37:25 -0700 (PDT)
+In-Reply-To: <AANLkTimHiYUPyNTtT4SwapqN8YZGB1wjxJPwTTaPZhEa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153377>
 
-Without this, attempting to index a pack containing objects that have been
-replaced results in a fatal error that looks like:
+On Thu, Aug 12, 2010 at 3:34 PM, Santi B=E9jar <santi@agolina.net> wrot=
+e:
+> On Thu, Aug 12, 2010 at 7:56 AM, Elijah Newren <newren@gmail.com> wro=
+te:
 
-fatal: SHA1 COLLISION FOUND WITH <replaced-object> !
+[...]
 
-Signed-off-by: Nelson Elhage <nelhage@ksplice.com>
-Acked-by: Christian Couder <chriscool@tuxfamily.org>
----
- builtin/index-pack.c |    2 ++
- t/t6050-replace.sh   |    6 ++++++
- 2 files changed, 8 insertions(+), 0 deletions(-)
+>>
+>> Signed-off-by: Elijah Newren <newren@gmail.com>
+>> ---
+>> =A0git-pull.sh =A0 =A0 | =A0 34 ++++++++++++++++++++++------------
+>> =A0t/t5520-pull.sh | =A0 =A04 ++--
+>> =A02 files changed, 24 insertions(+), 14 deletions(-)
+>>
+>> diff --git a/git-pull.sh b/git-pull.sh
+>> index a09a44e..54da07b 100755
+>> --- a/git-pull.sh
+>> +++ b/git-pull.sh
+>> @@ -206,18 +206,6 @@ test true =3D "$rebase" && {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0git diff-index --ignore-submodules --=
+cached --quiet HEAD -- ||
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die "refusing to pull with rebase: yo=
+ur working tree is not up-to-date"
+>> =A0 =A0 =A0 =A0fi
+>> - =A0 =A0 =A0 oldremoteref=3D &&
+>> - =A0 =A0 =A0 . git-parse-remote &&
+>> - =A0 =A0 =A0 remoteref=3D"$(get_remote_merge_branch "$@" 2>/dev/nul=
+l)" &&
+>> - =A0 =A0 =A0 oldremoteref=3D"$(git rev-parse -q --verify "$remotere=
+f")" &&
+>> - =A0 =A0 =A0 for reflog in $(git rev-list -g $remoteref 2>/dev/null=
+)
+>> - =A0 =A0 =A0 do
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test "$reflog" =3D "$(git merge-bas=
+e $reflog $curr_branch)"
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 then
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 oldremoteref=3D"$reflo=
+g"
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
+>> - =A0 =A0 =A0 done
+>> =A0}
+>> =A0orig_head=3D$(git rev-parse -q --verify HEAD)
+>> =A0git fetch $verbosity $progress $dry_run --update-head-ok "$@" || =
+exit 1
+>> @@ -273,6 +261,28 @@ then
+>> =A0 =A0 =A0 =A0exit
+>> =A0fi
+>>
+>> +if test true =3D "$rebase"
+>> +then
+>> + =A0 =A0 =A0 oldremoteref=3D &&
+>> + =A0 =A0 =A0 . git-parse-remote &&
+>> + =A0 =A0 =A0 remoteref=3D"$(get_remote_merge_branch "$@" 2>/dev/nul=
+l)" &&
+>> + =A0 =A0 =A0 oldremoteref=3D"$(git rev-parse -q --verify "$remotere=
+f")" &&
+>> + =A0 =A0 =A0 for reflog in $(git rev-list -g $remoteref 2>/dev/null=
+)
+>> + =A0 =A0 =A0 do
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test "$reflog" =3D "$(git merge-bas=
+e $reflog $curr_branch)"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 oldremoteref=3D"$reflo=
+g"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 break
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 fi
+>> + =A0 =A0 =A0 done
+>> +
+>> + =A0 =A0 =A0 o=3D$(git show-branch --merge-base $curr_branch $merge=
+_head $oldremoteref)
+>> + =A0 =A0 =A0 if test "$oldremoteref" =3D "$o"
+>> + =A0 =A0 =A0 then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 unset oldremoteref
+>> + =A0 =A0 =A0 fi
+>> +fi
+>> +
+>
+> You've moved all the lines after the call to "git fetch". It changes
+> the behavior when the reflog is not enabled, as the old value of
+> remoteref is lost.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index a89ae83..fad76bf 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -884,6 +884,8 @@ int cmd_index_pack(int argc, const char **argv, const char *prefix)
- 	if (argc == 2 && !strcmp(argv[1], "-h"))
- 		usage(index_pack_usage);
- 
-+	read_replace_refs = 0;
+Something like this?
+
+=46ix the non-rebased upstream case by only setting $old_remote_ref
+with commits not ancestors of $remoteref or $merge_head. This should
+have no affect on the rebased upstream case.
+
+diff --git c/git-pull.sh w/git-pull.sh
+index a09a44e..c1617d5 100755
+--- c/git-pull.sh
++++ w/git-pull.sh
+@@ -214,7 +214,10 @@ test true =3D "$rebase" && {
+        do
+                if test "$reflog" =3D "$(git merge-base $reflog $curr_b=
+ranch)"
+                then
+-                       oldremoteref=3D"$reflog"
++                       if test "$reflog" !=3D $(git merge-base $reflog
+$remoteref)
++                       then
++                               oldremoteref=3D"$reflog"
++                       fi
+                        break
+                fi
+        done
+@@ -273,6 +276,14 @@ then
+        exit
+ fi
+
++if test true =3D "$rebase"
++then
++       if test "$oldremoteref" =3D $(git merge-base $oldremoteref $mer=
+ge_head)
++       then
++               unset oldremoteref
++       fi
++fi
 +
- 	/*
- 	 * We wish to read the repository's config file if any, and
- 	 * for that it is necessary to call setup_git_directory_gently().
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index 203ffdb..cf423b8 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -219,6 +219,12 @@ test_expect_success 'bisect and replacements' '
-      git bisect reset
- '
- 
-+test_expect_success 'index-pack and replacements' '
-+     git --no-replace-objects rev-list --objects HEAD | \
-+       git --no-replace-objects pack-objects test- &&
-+     git index-pack test-*.pack
-+'
-+
- #
- #
- test_done
--- 
-1.7.1.29.g6093d
+ merge_name=3D$(git fmt-merge-msg $log_arg <"$GIT_DIR/FETCH_HEAD") || e=
+xit
+ case "$rebase" in
+ true)
+
+(also attached because of whitespace damage)
+
+HTH,
+Santi
