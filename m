@@ -1,113 +1,93 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2/pu] perl/Makefile: Unset INSTALL_BASE when making perl.mak
-Date: Thu, 12 Aug 2010 02:48:40 +0000
-Message-ID: <1281581320-4235-1-git-send-email-avarab@gmail.com>
-References: <1280831411-4511-1-git-send-email-avarab@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rerere: demonstrate a weakness with identical conflicts
+ in different files
+Date: Wed, 11 Aug 2010 19:50:05 -0700
+Message-ID: <7vfwykv92a.fsf@alter.siamese.dyndns.org>
+References: <4C629495.60105@viscovery.net>
+ <7vmxssvi2t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 12 04:48:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Aug 12 04:50:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjNqe-0008Ao-Cv
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 04:48:52 +0200
+	id 1OjNs4-0008R5-3k
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 04:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759437Ab0HLCsr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 22:48:47 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:32987 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759385Ab0HLCsq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 11 Aug 2010 22:48:46 -0400
-Received: by wyb32 with SMTP id 32so876983wyb.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 19:48:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=zrm0d8hs7Lyv3hnAl6TD98L+zCp6LdPVq4XElPFOFGw=;
-        b=GGzqh0pSthymTipGUTp/Kn4HW2Nx6qN1/ZkZDpUS1XRyjWA0lQLwQiOAzKsGjPcR0m
-         v9S3wRhBs80X8x+CLkh9w8ADQyEGiaQ0sW758T9xXpFV2dx8VDjlfMQRYXzPk+BSb4fX
-         kWsTzm27DJVU00UAuWxk+qi5pimdD3yl5+xYA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=xwbayJaNNlbmsgQ8+ctTrkdK4GVQ2ecgoTBBdPzNi2dt9vdic2rBsKZL64GHvnqjqs
-         GbAW0mz/VmqqhEdjRrK1UV30yE7075vDMexubKuYyehcwC3/EUCtccK8xnPgizr6X2a/
-         WwLIVV5Bcc05yrxfF35uVbSo8dZ/fQG0scj7k=
-Received: by 10.227.142.84 with SMTP id p20mr17426234wbu.182.1281581325179;
-        Wed, 11 Aug 2010 19:48:45 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id a1sm746400wbb.2.2010.08.11.19.48.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 19:48:44 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.327.gfb40
-In-Reply-To: <1280831411-4511-1-git-send-email-avarab@gmail.com>
+	id S1759426Ab0HLCuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 22:50:15 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59862 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759384Ab0HLCuO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 22:50:14 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 00A7BCC683;
+	Wed, 11 Aug 2010 22:50:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=oqqYOHqak/u6Pa+QEfyiB8ylnPg=; b=TbDl6s
+	uLtyu84xcErUKjy9Js4PgD6pqehGoK7JaWxMV9/QH6XS64moSH4X9pDifKBYIavI
+	vynVOBfUw9M4pqyfmgP3w7Ii3WaXbTvGLKUwJM7EHowXJKotxrHkto8B7VssV/WF
+	bNJ3aS7Uzf0EFIRdpVlB6+UFc7GMeSg9yQ6BI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=h4bTXF+CBPBi06+v6WFz9e85hSj/9AEm
+	spvwfYbkocTNUcmN6ff2sa+/RM0mMBOkBJoVbBDNutcFkmZ2E5zwvlPyzKOovw3v
+	ZTyi7itX43WGbNr+VKXFwtM4eB8qJ1c0L/Imiq3z199NoC/d8B3VtsxNCFZhHye4
+	D4rcy1Hr5RI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CADEECC682;
+	Wed, 11 Aug 2010 22:50:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BFDF5CC67F; Wed, 11 Aug
+ 2010 22:50:07 -0400 (EDT)
+In-Reply-To: <7vmxssvi2t.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 11 Aug 2010 16\:35\:22 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 52EB26DA-A5BC-11DF-8CC0-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153328>
 
-PREFIX and INSTALL_BASE are mutually exclusive. If both are supplied
-by INSTALL_BASE being set in PERL_MM_OPT ExtUtils::MakeMaker will
-produce an error:
+Junio C Hamano <gitster@pobox.com> writes:
 
-    $ echo $PERL_MM_OPT
-    INSTALL_BASE=3D/home/avar/perl5
-    $ make -C perl  PERL_PATH=3D'/usr/bin/perl' prefix=3D'/home/avar' p=
-erl.mak
-    make: Entering directory `/home/avar/g/git/perl'
-    /usr/bin/perl Makefile.PL PREFIX=3D'/home/avar'
-    Only one of PREFIX or INSTALL_BASE can be given.  Not both.
-    make: *** [perl.mak] Error 255
-    make: Leaving directory `/home/avar/g/git/perl'
+> Hmm, my knee-jerk reaction was that something may be keying off of the
+> conflict ids to keep track of which ones are dealt with and which ones are
+> yet to be resolved, but I don't recall any part of the implementation that
+> would do something like that offhand.  Sorry.
 
-Change the perl Makefile to work around this by explicitly unsetting
-INSTALL_BASE.
+Heh, what was I thinking.  Yes, rr-cache/ database keys off of the
+conflict id, so if your repository has more than one contents that produce
+exactly the same conflict, say F and G, then, most likely:
 
-INSTALL_BASE is set in PERL_MM_OPT by e.g. the popular local::lib
-package, from its documentation:
+ * You see one of them first, say F, record preimage.F and record its
+   resolution as postimage.F
 
-    eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib 2>/dev/null)
+ * You encounter conflict G; record it in thisimage, try three-way merge
+   between postimage.F and that using preimage.F as the common ancestor.
+   If this doesn't work (and it likely doesn't), rerere punts.
 
-Many other environments might also have set PERL_MM_OPT before
-building Git. This change enables us to build in these environments.
+Note that this issue can happen even when the trees you are currently
+merging have only content derived from G and nothing related to F, as
+their resolutions share the same conflict id.
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
+I vaguely recall discussing this with you here and bringing up a possibile
+solution for a situation like this; keep sets of <preimage, postimage>
+(starting from the current {pre,post}image adding {pre,post}image.1,
+{pre,post}image.2 and so on).  When we see a new conflict (after a mergy
+operation before "rerere" resolves it), try to run the three-way merge
+with it and each pair, and if we don't find anything that successfully
+merges, record it as a new half of the pre-post pair, incrementing the
+counter, and record a new resolution to complete the new pair for later
+use.
 
-Here's a patch on top of pu instead. This change conflicted with the
-gettext series.
-
- perl/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/perl/Makefile b/perl/Makefile
-index 4e624ff..b2977cd 100644
---- a/perl/Makefile
-+++ b/perl/Makefile
-@@ -39,7 +39,7 @@ $(makfile): ../GIT-CFLAGS Makefile
- 	echo '	echo $(instdir_SQ)' >> $@
- else
- $(makfile): Makefile.PL ../GIT-CFLAGS
--	$(PERL_PATH) $< PREFIX=3D'$(prefix_SQ)' --localedir=3D'$(localedir_SQ=
-)'
-+	$(PERL_PATH) $< PREFIX=3D'$(prefix_SQ)' INSTALL_BASE=3D'' --localedir=
-=3D'$(localedir_SQ)'
- endif
-=20
- # this is just added comfort for calling make directly in perl dir
---=20
-1.7.2.1.327.gfb40
+We also need to split "thisimage" into multiple ones in case this happens
+in a single tree (i.e. contents derived from F and from G are both present
+and produce the conflict in the same merge).
