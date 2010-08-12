@@ -1,89 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 9/9] commit: suppress status summary when no changes
- staged
-Date: Wed, 11 Aug 2010 18:57:42 -0500
-Message-ID: <20100811235742.GA18499@burratino>
-References: <20100725005443.GA18370@burratino>
- <20100725010230.GI18420@burratino>
- <201008110911.40133.trast@student.ethz.ch>
- <20100811073028.GA5450@burratino>
- <AANLkTi=DPu+roNsuWZARkK=cmKhcqMx=CDyiv6cf7tof@mail.gmail.com>
+From: Michael Geddes <michael@frog.wheelycreek.net>
+Subject: Bug in alternates
+Date: Thu, 12 Aug 2010 08:26:52 +0800
+Message-ID: <201008120826.53902.michael@frog.wheelycreek.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>, Jeff King <peff@peff.net>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 12 02:30:13 2010
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 12 02:39:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjLgP-00081a-Mf
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 02:30:10 +0200
+	id 1OjLp6-000375-Am
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 02:39:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759030Ab0HKX7U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 11 Aug 2010 19:59:20 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:42193 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759294Ab0HKX7S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 11 Aug 2010 19:59:18 -0400
-Received: by mail-qw0-f46.google.com with SMTP id 6so706470qwh.19
-        for <git@vger.kernel.org>; Wed, 11 Aug 2010 16:59:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=wOE8ktZD0RD7nCx6U05yRPtgSTWJWNP4/Eb1CwwCVII=;
-        b=sjPodsIEemhHKde1d74NovSfsyxsOFBHUraK8n8r2e7uRQXyfIAjsWxzSOzFgQtBvH
-         o6cgYRAYrsleFi3JaBeZsBby3dkRiHpzFI5RUNGG90rgzXY32zuPv9EhN6Py8pWUCooV
-         Optx8fFtbrKMBOOm6VdSdyhTKzzsasPCpJfMw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=L6FWwFlKZW9pNqbTA7+UJ8UnSBbwGeP3wmTD75dRs0W+cmG+mucUYtO5mdGlMZKnXf
-         pl7EGiXm7pyXAFjY+86/woehi6zNBshYvVRLBwEeTTFEeE93NpxrQVv6de+yQV43B/zx
-         Rb31k+d4THVOGPsW8hugKr62zPc5w+OPYurOY=
-Received: by 10.220.87.69 with SMTP id v5mr11962677vcl.273.1281571156891;
-        Wed, 11 Aug 2010 16:59:16 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id b8sm399392vci.21.2010.08.11.16.59.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 11 Aug 2010 16:59:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=DPu+roNsuWZARkK=cmKhcqMx=CDyiv6cf7tof@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933621Ab0HLAh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 11 Aug 2010 20:37:29 -0400
+Received: from smtpauth.rollernet.us ([208.79.240.5]:45871 "EHLO
+	smtpauth.rollernet.us" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933615Ab0HLAhV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 11 Aug 2010 20:37:21 -0400
+X-Greylist: delayed 616 seconds by postgrey-1.27 at vger.kernel.org; Wed, 11 Aug 2010 20:37:21 EDT
+Received: from smtpauth.rollernet.us (localhost [127.0.0.1])
+	by smtpauth.rollernet.us (Postfix) with ESMTP id F214E59406C
+	for <git@vger.kernel.org>; Wed, 11 Aug 2010 17:27:00 -0700 (PDT)
+Received: from wheelycreek.net (unknown [203.59.141.93])
+	(Authenticated sender: nellwheelycreek)
+	by smtpauth.rollernet.us (Postfix) with ESMTPA
+	for <git@vger.kernel.org>; Wed, 11 Aug 2010 17:26:57 -0700 (PDT)
+Received: from hiro.localnet ([192.168.22.2]:43075)
+	by wheelycreek.net with [XMail 1.26 ESMTP Server]
+	id <SDD5> for <git@vger.kernel.org> from <michael@frog.wheelycreek.net>;
+	Thu, 12 Aug 2010 00:26:56 -0000
+User-Agent: KMail/1.13.2 (Linux/2.6.35-7-generic; KDE/4.4.2; i686; ; )
+X-Rollernet-Abuse: Processed by Roller Network Mail Services. Contact abuse@rollernet.us to report violations. Abuse policy: http://rollernet.us/abuse.php
+X-Rollernet-Submit: Submit ID 23fc.4c633fd1.54047.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153319>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Aug 11, 2010 at 07:30, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+Hi - I had a bit of a hiccup with git yesterday - there's a bit of a story to 
+it, which at the least might be amusing. There's script to reproduce at the 
+bottom if you don't care for the story.
 
->> -test_expect_success 'status' '
->> +test_expect_failure 'status' '
+I had done a 
+ git clone --reference Foo  git@host:Foo Foo.New
+then after getting it right, I  did
+ mv Foo Foo.old
+ mv Foo.New Foo
 
-Oops.  Did you see the follow-up patch?
+Then I  had all these missing references, and I thought .. oh yeah, that's 
+cause it can't find the references.. well I don't really know how to change 
+that (I do now), but I want all the objects in that directory anyway for when 
+I delete the Foo.old directory..
+so I did a 
 
-> Better to test_expect_success like my patch does and explicitly check
-> the output, otherwise that test will pass if any part of it fails,
-> e.g. if the checkout fails.
->
-> Not likely, but it's more likely that the output will change again, i=
-n
-> which case the grep tests I did would start failing again.
+cd Foo
+git fetch
 
-The wt-status output series ought have included a separate test for
-the new =E2=80=9Cgit commit --dry-run=E2=80=9D output.  But this is not=
- what that test
-script is about, and I think including it there would have been
-confusing.
+.. so all was good for a while.. It was all there and hunky-dory.
 
-Sorry for the breakage, and thanks for reporting it.
+Then.. the fated git gui  'garbage collect' dialogue appeared, and I thought, 
+"why not", so I did.
+
+At that point, git decided to pack all the references (yay) .. and then it 
+said.. hmm.. are those available in my alternates .. let's see  
+..Foo/.git/objects  .. yeah - all those objects are there.. so I can just 
+remove that pack.
+
+Woops. 
+
+If you're not following the story, the Foo repo had itself as an alternate.
+
+Include me in replies please- I'm not on the list.
+
+//.ichael Geddes
+
+Here's the script:
+------------8<-----------testalt--------------
+#!/bin/sh
+mkdir testaltrep
+cd testaltrep
+git init 
+for i in 1 2 3 4 5 6 7 8 9 ; do
+  touch $i.txt
+  git add $i.txt 
+done
+git commit -m "Commit" 
+echo "$PWD/.git/objects" > .git/objects/info/alternates
+# Seems like it has to be done like this to get it to repack.
+git repack -adl && git repack -ad  && git repack -adl
+if git checkout master   ; then
+  echo OK
+  ret=0
+else
+  echo BAD Unable to checkout reference
+  ret=1
+fi
+
+cd ..
+rm -rf testaltrep
+
+exit ${ret}
