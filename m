@@ -1,95 +1,80 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: What's cooking in git.git (Aug 2010, #02; Wed, 11)
-Date: Thu, 12 Aug 2010 10:20:59 +0000
-Message-ID: <AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
-References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
-	<4C63BD9B.6000608@viscovery.net>
+Date: Thu, 12 Aug 2010 12:31:33 +0200
+Message-ID: <4C63CD85.10304@viscovery.net>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org> <4C63BD9B.6000608@viscovery.net> <20100812102125.GA19498@LK-Perkele-V2.elisa-laajakaista.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Jonathan Nieder <jrnieder@gmail.com>,
-	Greg Brockman <gdb@mit.edu>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Elijah Newren <newren@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Aug 12 12:21:08 2010
+	Greg Brockman <gdb@MIT.EDU>, Elijah Newren <newren@gmail.com>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Aug 12 12:31:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjUuI-0006ES-Oi
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 12:21:07 +0200
+	id 1OjV4c-0001lf-Aj
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 12:31:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933359Ab0HLKVC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 06:21:02 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56396 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933343Ab0HLKVB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 06:21:01 -0400
-Received: by fxm13 with SMTP id 13so612046fxm.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 03:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IWeGa0drt5T+h6alqVYTHXAdy0Mf5dL91eiuC6+myfg=;
-        b=rYgArMIOfDX549ISMVSL9t2UBIwY+226GjWEXieP+IYI8907aw0LoWgYcyfDDFwZwp
-         e7p8ARn9DZtWZkFW08/VZQC4v7SjD2PZ83Oco5h1FdylPZOoZUo/VKlcWvovGaYMOo+H
-         Mi2MNTz7/dhu0xA5+4Y7f18PH2jpRNpu4z9Uc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=lJ3MrFoc1r9Zh0i2ZU0u+xAhWJPCz4eLvLYRhs4aghoT7y71fy0fgKI4iW/jo22tAL
-         JAwdKKwTPrmgIK6qtq543//IBRe0EFK0ksJsQwHW3xroA7DCB6WsY+wGfOcqglhJcdLx
-         xbX5AvvLi+WoGH0gcpdlgLvVeZbjd9VyLIHvI=
-Received: by 10.223.124.145 with SMTP id u17mr21355365far.92.1281608459966; 
-	Thu, 12 Aug 2010 03:20:59 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Thu, 12 Aug 2010 03:20:59 -0700 (PDT)
-In-Reply-To: <4C63BD9B.6000608@viscovery.net>
+	id S933371Ab0HLKbk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 06:31:40 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:64509 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932934Ab0HLKbj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 06:31:39 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OjV4Q-0008FT-3H; Thu, 12 Aug 2010 12:31:34 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id CF1B61660F;
+	Thu, 12 Aug 2010 12:31:33 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.11) Gecko/20100711 Thunderbird/3.0.6
+In-Reply-To: <20100812102125.GA19498@LK-Perkele-V2.elisa-laajakaista.fi>
+X-Enigmail-Version: 1.0.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153363>
 
-On Thu, Aug 12, 2010 at 09:23, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
-> [Sorry for the Cc spam; I lack the time to conduct individual message=
-s.]
->
-> I compiled many topics in pu and ran the test suite on Windows,
-
-A Windows smoker would be useful :)
-
-> Am 8/12/2010 1:35, schrieb Junio C Hamano:
->> * en/rebase-against-rebase-fix (2010-08-06) 2 commits
->> =C2=A0- pull --rebase: Avoid spurious conflicts and reapplying unnec=
-essary patches
->> =C2=A0- t5520-pull: Add testcases showing spurious conflicts from gi=
-t pull --rebase
->
-> This should not use "sed -i" in the test suite.
-
-Another case for the modify() helper function I guess.
-
->> * jn/apply-filename-with-sp (2010-07-23) 4 commits
->> =C2=A0- apply: Handle traditional patches with space in filename
->> =C2=A0- t4135 (apply): use expand instead of pr for portability
->> =C2=A0- tests: Test how well "git apply" copes with weird filenames
->> =C2=A0- apply: Split quoted filename handling into new function
+Am 8/12/2010 12:21, schrieb Ilari Liusvaara:
+> On Thu, Aug 12, 2010 at 11:23:39AM +0200, Johannes Sixt wrote:
+> 
+>>> * il/rfc-remote-fd-ext (2010-07-31) 4 commits
+>>>  - Rewrite bidirectional traffic loop
+>>>  - gitignore: Ignore the new /git-remote-{ext,fd} helpers
+>>>  - New remote helper: git-remote-ext
+>>>  - New remote helper git-remote-fd
 >>
->> Looked Ok. =C2=A0Will merge to 'next'.
->
-> The test cases that work with files with tabs must have a prerequisit=
-e;
-> see t3600-rm.sh.
+>> We do not have EWOULDBLOCK on Windows. Is it needed or could the
+>> respective write() loop in remote-ext.c not be replaced by write_in_full()?
+> 
+> No, the writes can't be replaced by write_in_full() without changing what
+> the code does, because write_in_full() retries short writes, whereas current
+> code does not retry reads nor writes. And retrying reads/writes in code
+> juggling with multiple fds is usally no-no.
 
-Hrm, another test with tabs in filenames. There are already three
-setting the TABS_IN_FILENAMES prereq, but I missed this one.
+builtin/remote-ext.c uses a loop that looks very much like what
+write_in_full() does; transport-helper.c's checks for EAGAIN look very
+similar to xwrite(). Why can't you reuse these functions?
 
-I should probably move those checks into some prereq library, maybe to
-test-lib.sh itself.
+> The EWOULDBLOCK is needed on some systems if fds involved are nonblocking[1]. I
+> think the easiest way to handle system that has EAGAIN but not EWOULDBLOCK
+> would be:
+> 
+> #ifndef EWOULDBLOCK
+> #define EWOULDBLOCK EGAIN
+> #endif
+> 
+> [1] Some systems return EAGAIN on read/write failed due to blocking (with
+> EAGAIN == EWOULDBLOCK), others return EWOULDBLOCK.
+
+But shouldn't then xwrite() and xread() be extended to check also for
+EWOULDBLOCK?
+
+-- Hannes
