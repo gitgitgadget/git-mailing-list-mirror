@@ -1,122 +1,88 @@
-From: Brian Foster <brian.foster@innova-card.com>
-Subject: [Q] `git fetch tag NAME' into mirror repo does not update HEAD, what to do?
-Date: Thu, 12 Aug 2010 09:54:27 +0200
-Message-ID: <201008120954.27648.brian.foster@innova-card.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
+Date: Thu, 12 Aug 2010 10:30:00 +0200
+Message-ID: <vpqsk2kjks7.fsf@bauges.imag.fr>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 12 10:28:05 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Thu Aug 12 10:30:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjT8p-0000To-5b
-	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 10:27:59 +0200
+	id 1OjTBG-0001Su-3y
+	for gcvg-git-2@lo.gmane.org; Thu, 12 Aug 2010 10:30:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933024Ab0HLI1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 04:27:54 -0400
-Received: from 6-61.252-81.static-ip.oleane.fr ([81.252.61.6]:36407 "EHLO
-	zebulon.innova-card.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751798Ab0HLI1v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 04:27:51 -0400
-X-Greylist: delayed 1993 seconds by postgrey-1.27 at vger.kernel.org; Thu, 12 Aug 2010 04:27:50 EDT
-Received: from localhost ([127.0.0.1])
-	by zebulon.innova-card.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Thu, 12 Aug 2010 09:54:35 +0200
-User-Agent: KMail/1.12.2 (Linux/2.6.28-15-generic; KDE/4.3.2; x86_64; ; )
+	id S933130Ab0HLIa0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 04:30:26 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38342 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933075Ab0HLIaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 04:30:23 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7C8J6TM020578
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 12 Aug 2010 10:19:06 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OjTAn-0005aT-3B; Thu, 12 Aug 2010 10:30:01 +0200
+In-Reply-To: <1281510236-8103-1-git-send-email-gdb@mit.edu> (Greg Brockman's message of "Wed\, 11 Aug 2010 03\:03\:56 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 12 Aug 2010 10:19:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o7C8J6TM020578
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1282205951.13611@20XN97q5fJQcqy99vDdfxg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153353>
 
+Greg Brockman <gdb@MIT.EDU> writes:
 
- Bare repository ORIG's master looks like this:
+> Currently, 'git add' will complain about excluded files, even if they
+> are already tracked:
 
-   o--o--o--o--v1--o--v2--o--o--o HEAD
+This is not exactly true:
 
- where v1 and v2 are (annotated) tagged commits.
+$ echo '*.pdf' > .gitignore; touch foo.pdf; git add -f foo.pdf
+$ echo content >> foo.pdf; git add foo.pdf
 
- Repository SLAVE is a mirror clone of ORIG which
- (very deliberately!) lags behind (i.e., its HEAD
- is one of the earlier (and usually tagged) commits
- on ORIG).  SLAVE's master was like this:
+Here, the second "git add" didn't need the -f flag.
 
-   o--o--o--o--v1 HEAD
+So, your problem is not about already-tracked exclude files, but it is
+about already-tracked files in an excluded directory.
 
- We wanted to update its HEAD to v2, so did:
+> This commit changes 'git add' to disregard excludes for tracked files
+> whose paths are explicitly specified on the command-line.
 
-   git fetch ORIG tag v2
+I don't think you need this to solve the problem, and as Junio said,
+that would make "git add dir/*" add all the ignored files, which would
+make -f essentially useless.
 
- This gave us:
+After a quick look at the code, the issue seems close to (dir.c):
 
-   o--o--o--o--v1 HEAD
-                 \ 
-                  o--v2
+struct dir_entry *dir_add_ignored(struct dir_struct *dir, const char *pathname, int len)
+{
+	if (!cache_name_is_other(pathname, len))
+		return NULL;
 
- It did not update SLAVE's HEAD to v2, which we wanted.
- This was worked-around by editing refs/heads/master(?)
- but we don't want to do that again (esp. since we got
- it wrong the first time (Thank you back-ups!)).
-
- Whilst we want to switch to a push from ORIG to SLAVE
- model, until that happens (there are some IT issues),
- we are still fetching on SLAVE from ORIG.  Hence, how
- can we avoid the above issue; that is, what should we
- have done?  Searching various docs has failed to find
- any clew or answer.
-
- There are several GIT versions involved (all(?) are
- 1.5-ish or later).  Below is a script to reproduce
- the situation (tested with v1.7.0.2).
-
-cheers!
-	-blf-
-
-=====(cut here and below)===== demo.sh =====(git version 1.7.0.2)=====
-#!/bin/bash
-
-add_new_files() {
-	touch   -- "$@"
-	git add -- "$@"
-	git commit -m "Added: $*"
+	ALLOC_GROW(dir->ignored, dir->ignored_nr+1, dir->ignored_alloc);
+	return dir->ignored[dir->ignored_nr++] = dir_entry_new(pathname, len);
 }
 
-set -xe
+I guess the "if (!cache_name_is_other(pathname, len))" test is the one
+allowing the behavior I got above, but here, in the case of "git add
+dir/file" with "dir" being ignored, "pathname" is just "dir", not
+"dir/file", hence your problem.
 
-mkdir ORIG
-cd ORIG
-git init	# ORIG is bare in real case
-
-add_new_files foo
-add_new_files bar
-
-git tag -a -m First v1
-
-cd ..
-git clone --bare --mirror ORIG SLAVE.git
-
-cd ORIG
-
-add_new_files xyzzy
-add_new_files plover
-
-git tag -a -m Update v2
-
-add_new_files stuff
-add_new_files more_stuff
-
-cd ../SLAVE.git
-
-git fetch --verbose origin tag v2
-
-# SLAVE's master's HEAD has not changed ....  ;-(
-
-git tag -l
-git log --oneline master
-git log --oneline v2
-=====(cut here and above)===== demo.sh =====(git version 1.7.0.2)=====
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
