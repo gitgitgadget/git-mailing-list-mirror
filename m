@@ -1,79 +1,111 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] Do not build i18n on Windows.
-Date: Sat, 14 Aug 2010 10:24:41 +0200
-Message-ID: <201008141024.42093.j6t@kdbg.org>
-References: <201008140002.40587.j6t@kdbg.org> <AANLkTiku5R+idX-C8f0AcCikBLmfEb5ZEhdft+CSRzU0@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] ls-tree: show size of trees with -l
+Date: Sat, 14 Aug 2010 03:20:23 +0700
+Message-ID: <1281730823-10797-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 14 10:24:52 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 14 11:33:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkC2u-0000gb-8W
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 10:24:52 +0200
+	id 1OkD76-0001rp-HX
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 11:33:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932895Ab0HNIYq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Aug 2010 04:24:46 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:19225 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932788Ab0HNIYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Aug 2010 04:24:45 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id EAD13CDF88;
-	Sat, 14 Aug 2010 10:24:42 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 5D20619F5FD;
-	Sat, 14 Aug 2010 10:24:42 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <AANLkTiku5R+idX-C8f0AcCikBLmfEb5ZEhdft+CSRzU0@mail.gmail.com>
-Content-Disposition: inline
+	id S933582Ab0HNJdL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Aug 2010 05:33:11 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:63578 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752229Ab0HNJdJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Aug 2010 05:33:09 -0400
+Received: by pxi10 with SMTP id 10so1119368pxi.19
+        for <git@vger.kernel.org>; Sat, 14 Aug 2010 02:33:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=32AIXNMb0VFiW/7bQlEnnDR8pzevDQmrL50YAwHu9Vo=;
+        b=FWSbs8M18Y/NEPnxaYG2f+18zaFmMw9b7+Vt/3ZGSz5yXXYlQ6/AdNY/HYJlV/OciE
+         p3FS0Wphri30ACKHOOAoipI+Xqr+yUmuA3xJPxJ63zElmn8kGJM/n76WJ4t0Fnb5D1M6
+         7DcdzgZvgKuvW377q3sRGG0WYfrpOQKZWaUio=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=hM4UzRQWxpvMnPU2Ax3WGA4JxZCHtaHNa7Mc/NTQZHaDUIMrxqMc8dHM0NQw4HrW+Y
+         1r5zRQRJrsZewnEHPIrsoYx2raPgpR4fjoMlfUmBFJKMJYlnpb/g88jX9NTxz0FfYjDZ
+         dyu9zsKE4b4CtMtDw8fxYu9paKzkigKUN3osY=
+Received: by 10.143.18.20 with SMTP id v20mr1522120wfi.12.1281778388959;
+        Sat, 14 Aug 2010 02:33:08 -0700 (PDT)
+Received: from dektop ([119.12.209.140])
+        by mx.google.com with ESMTPS id v13sm2115290wfv.5.2010.08.14.02.33.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 14 Aug 2010 02:33:07 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Sat, 14 Aug 2010 03:20:24 +0700
+X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153549>
 
-On Samstag, 14. August 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wro=
-te:
-> On Fri, Aug 13, 2010 at 22:02, Johannes Sixt <j6t@kdbg.org> wrote:
-> > We do not have the necessary libraries and tools.
->
-> Just curious, do you mean Windows / MINGW can't build gettext, or tha=
-t
-> you just haven't done so in your build process yet? At least
-> http://www.mingw.org/wiki/LibrariesAndTools seems to indicate that
-> libintl has been ported to Windows.
+In commit a5bbda8 (Add an option to git-ls-tree to display also the
+size of blob), Jakub said that size of non-blob entries had no
+meaning therefore dashes were printed instead.
 
-The msysgit build environment that I am using does not have libintl. Th=
-e=20
-reason *might* be that I haven't updated it since months. Upstream msys=
-git=20
-could already have it.
+I would say tree size, along with blob size, helps estimate bandwidth
+needed to transfer a single commit, for example. Of course it's not
+completely accurate as all objects will be compressed. But it gives a
+rough figure to compare.
 
-The MSVC build environment doesn't have libintl in any case. Even if ms=
-ysgit=20
-gains libintl, the MSVC does *not* automatically gain it as well. Hence=
-,=20
-setting NO_GETTEXT in the MSVC section of the Makefile makes sense for =
-now.
+Pack v4 has not come yet (and it's been three years, I truely hope it
+will come next year). When it comes, I will gladly send a revert patch
+of this one if it proves too expensive to compute tree size.
 
-BTW, libintl is not the only obstacle: the gettext tools are needed as =
-well.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ By the way, dashes will still be printed for subprojects, I guess.
 
-> If you're just not interested in building gettext by default on
-> Windows I think it's completely reasonable to add it to the Makefile
-> (given that you're probably pretty much the only one doing so). It
-> would just be useful to clarify the "why".
+ Documentation/git-ls-tree.txt |    2 +-
+ builtin/ls-tree.c             |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-As long as libintl and the gettext tools are not in msysgit, we should =
-set=20
-NO_GETTEXT for MinGW builds. Once we have them, I don't care that much=20
-whether we set it by default or not.
-
--- Hannes
+diff --git a/Documentation/git-ls-tree.txt b/Documentation/git-ls-tree.=
+txt
+index 1f89d36..9e02905 100644
+--- a/Documentation/git-ls-tree.txt
++++ b/Documentation/git-ls-tree.txt
+@@ -50,7 +50,7 @@ OPTIONS
+=20
+ -l::
+ --long::
+-	Show object size of blob (file) entries.
++	Show object size of entries.
+=20
+ -z::
+ 	\0 line termination on output.
+diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
+index dc86b0d..7df87ec 100644
+--- a/builtin/ls-tree.c
++++ b/builtin/ls-tree.c
+@@ -93,7 +93,7 @@ static int show_tree(const unsigned char *sha1, const=
+ char *base, int baselen,
+ 	if (!(ls_options & LS_NAME_ONLY)) {
+ 		if (ls_options & LS_SHOW_SIZE) {
+ 			char size_text[24];
+-			if (!strcmp(type, blob_type)) {
++			if (!strcmp(type, blob_type) || !strcmp(type, tree_type)) {
+ 				unsigned long size;
+ 				if (sha1_object_info(sha1, &size) =3D=3D OBJ_BAD)
+ 					strcpy(size_text, "BAD");
+--=20
+1.7.1.rc1.69.g24c2f7
