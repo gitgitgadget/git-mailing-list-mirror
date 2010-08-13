@@ -1,109 +1,63 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: workflow with blessed, lieutenant, and developers
-Date: Fri, 13 Aug 2010 18:47:36 +0200
-Message-ID: <20100813164736.GA27540@nibiru.local>
-References: <20100809092152.5f32646a@packard.rktmb.org>
-Reply-To: weigelt@metux.de
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Status of conflicted files resolved with rerere
+Date: Fri, 13 Aug 2010 13:19:47 -0400
+Message-ID: <AANLkTi=0dV54q6o3f-XrxKAHDKn8mhWFmsLDen_3+1G7@mail.gmail.com>
+References: <20100812212828.GA17825@jpl.local>
+	<AANLkTi=tVV5gL2b2LfXALXahzabJXzVjB5z9-OSztOMJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 13 18:57:31 2010
+Cc: =?UTF-8?B?TWFnbnVzIELDpGNr?= <magnus.back@sonyericsson.com>,
+	git@vger.kernel.org
+To: Avery Pennarun <apenwarr@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 19:19:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjxZS-0007SK-Dy
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 18:57:30 +0200
+	id 1Ojxv9-0002nT-Sx
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 19:19:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761859Ab0HMQ5X convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 12:57:23 -0400
-Received: from caprica.metux.de ([82.165.128.25]:55145 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754613Ab0HMQ5X convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 12:57:23 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o7DGv1k7019858
-	for <git@vger.kernel.org>; Fri, 13 Aug 2010 18:57:01 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o7DGu9ku019819
-	for git@vger.kernel.org; Fri, 13 Aug 2010 18:56:09 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o7DGlaS1015071
-	for git@vger.kernel.org; Fri, 13 Aug 2010 18:47:36 +0200
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20100809092152.5f32646a@packard.rktmb.org>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1761883Ab0HMRTt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 13:19:49 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:34741 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761863Ab0HMRTs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 13:19:48 -0400
+Received: by yxg6 with SMTP id 6so1049930yxg.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 10:19:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8jX6SGa4vtep0YDX1RwHjeU52b0dTSrOmpjNi+0KhG0=;
+        b=A/EGgJSC21GNUK0rMhSN9IRShJmldZ+p+z2n6EKWt2N0eUU1xS0DMoPoPClKygsKRH
+         l5wpKXXiYPgrkoMRPmwtFyPPewT0Yc1L05lK2M5Rn8Y1XfMoVdA3CmtteYEqcYzYbqby
+         6q9CAS43GQu23dU3kr+Z9VgVZaywiDUTuQt5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rh9Ff9e63fzUQGWyEpRttNBSWZSWyi1V9da74szjyZRfLRoLkGK4jgXl3sPPuh2ERS
+         CllCtOFFZ0f0Wmb7YN8mtsM+KQ8d5WISvfWI8FExy8reqCIo6+j3mPDU+3Iz9rKu2hG5
+         CaIcKykTavzsMyyVNsHTKylr7mnv5gDOWgwtg=
+Received: by 10.150.194.7 with SMTP id r7mr2374471ybf.157.1281719987764; Fri,
+ 13 Aug 2010 10:19:47 -0700 (PDT)
+Received: by 10.231.170.199 with HTTP; Fri, 13 Aug 2010 10:19:47 -0700 (PDT)
+In-Reply-To: <AANLkTi=tVV5gL2b2LfXALXahzabJXzVjB5z9-OSztOMJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153477>
 
-* Mihamina Rakotomandimby <mihamina@gulfsat.mg> wrote:
+On Thu, Aug 12, 2010 at 5:36 PM, Avery Pennarun <apenwarr@gmail.com> wr=
+ote:
+> That said, I've never had a problem where rerere did the wrong thing
+> for me. =C2=A0Maybe there could be an option to override it.
 
-Hi,
+$ git config rerere.autoupdate true
 
-> I would like to setup a similar thing but with=20
-> - Only one lieutenant (me)
-> - A blessed repository where I am the only one to push to
-> - Developers who push to me (the lieutenant)
-
-if you really want them to push to you (instead of pull-requests),
-you could set up an ssh-based git repo, which restricts your devs
-to just their own branches (via .ssh/authorized_keys and wrapper
-commands) and do whatever you like (eg. generating pull-requests,
-open a ticked in some issue tracker, etc) in the post-update hook.
-
-> 1=B0) What command line do developers use to push to me but not to th=
-e
-> blessed (origin)?
-> 2=B0) After they pushed to me, I have the choice to "approve" or "rej=
-ect"
-> a commit: what is the keyword and git option for that?
-> 3=B0) I push the merge of approved commits to the blessed repository:
-> what keywords and git options?
-
-depends on your branch naming scheme.
-
-man 1 git-push
-
-
-you could even go some steps further and hack up wrappers/hooks
-which let your dev's pushes to the main repo / mainline branch
-to somewhere else (aka: masquerading). lets say your dev "Max"
-pushes to master, this will actually create some new branch
-"approveme/Max/$timestamp" instead of updating master itself.
-now you can regularily look through these branches and decide=20
-whether to merge or drop them.=20
-(BTW: I'd recommend always rebasing to master before merging
-into it - less chance of conflicts and cleaner history).=20
-
-what you need is:
-
-a) ssh key-authentication with individual per-user commands,
-   which pass the dev's pushes to intermediate/temporary
-   per-user repositories.=20
-b) hack up an post-update hook in the intermediate repo(s),
-   which push their updates into the main repo with proper
-   rewritten ref names (eg. "approveme/$username/$timestamp).
-
-
-cu
---=20
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+j.
