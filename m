@@ -1,65 +1,127 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git's tests have depended on Perl since at least 2006
-Date: Fri, 13 Aug 2010 23:44:28 +0000
-Message-ID: <AANLkTin9k3FerH1exQXMVS7LrJbLraptd5cJzLEh2Mgj@mail.gmail.com>
-References: <AANLkTim9aNtFdwM5m-FB_LWX96es2DR_9mU3rGcV4dME@mail.gmail.com>
-	<7v4oeyjfnw.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=FvAZZsxctJ-sXuQxsMgn15BhKooXjO13CVy6U@mail.gmail.com>
-	<7vvd7ehyzy.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2 jn/svn-fe 0/5] vcs-svn: Port to Windows
+Date: Fri, 13 Aug 2010 18:47:23 -0500
+Message-ID: <20100813234723.GC2153@burratino>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+ <4C63BD9B.6000608@viscovery.net>
+ <20100813000848.GA8076@burratino>
+ <4C65BA46.9010604@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 14 01:44:47 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Aug 14 01:50:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok3va-0004bV-Hz
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 01:44:46 +0200
+	id 1Ok40c-0006HM-Ul
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 01:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756246Ab0HMXoa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Aug 2010 19:44:30 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:42333 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753771Ab0HMXo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 19:44:29 -0400
-Received: by yxg6 with SMTP id 6so1167251yxg.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 16:44:28 -0700 (PDT)
+	id S1756290Ab0HMXty convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 19:49:54 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:39960 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756093Ab0HMXtx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 19:49:53 -0400
+Received: by vws3 with SMTP id 3so1665334vws.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 16:49:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=N/R3PX92juRGcIIMinKjw3rT8aNF73wDaZtGSd7tglY=;
-        b=IMkV0zYuZEKqs8AhGos0wNMzEhZvbEctpSo0NtzDHHd5t2w6F6bQiMjmWdr5KkH2p/
-         LiAzrJCB7WxkZBGIDkBNtzxNa64C50ytvw/WjF7BRrUgzn0IiIeLn9RWaXLVEIbNb7up
-         99sjmchpJqEfY4biQqtZ5CGSatUtBcn6+ZCcs=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=EpwhNxQ9af1c4a97YnN6zfRX+ZTG/lzfJeY2Um4e7aE=;
+        b=S2pwC0DDXVvT57k8Yb8b1yaWLUbs59+sVlmyd7jCqVhOUs4BUG0jCH+9u6yeyitVbL
+         cr5vBrM4M5tcXzGlxi8Fza63xfwmBgOFsa5NVlMkWTBww2Pg1y8EWsIoOXRZ7B9Vi78a
+         3PMECVY5c7T/53UKCS4cfHwaASBA9NojwDdQU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=lgSXq2Setqm6p3IIntbfxcJDMUgLjIT0zYhYHWV4voUMN5L9f9yq1CImXuo32vhm5H
-         yKOv/iP4/G4XWBuCdjmaXxNVKUzmcZEu7mOIulPXGlS1GgM8pQKt7he/kjPiPmwv8k2m
-         500aGNFA0VOyzO/bnjJ/Yx6I4pttboLMH83K8=
-Received: by 10.231.15.195 with SMTP id l3mr2125236iba.188.1281743068664; Fri,
- 13 Aug 2010 16:44:28 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 16:44:28 -0700 (PDT)
-In-Reply-To: <7vvd7ehyzy.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Vu6eUVaNWkklwQ7KtsfvarhI9NBmfTVU1kdM5t4xQQB0lBb0gTN1Vfr+g4kGEWb6+r
+         dtlLzz/8tKwVGcGrk2l9sft5iNUx+SQWYICnYOPFFpTDRYzizqAf1N3NN6ewN8un1Mku
+         QqD4qhrpMnOmdLs97jmHh8ASY02+VR0kfPWaU=
+Received: by 10.220.158.9 with SMTP id d9mr1214593vcx.245.1281743392949;
+        Fri, 13 Aug 2010 16:49:52 -0700 (PDT)
+Received: from burratino ([64.134.175.141])
+        by mx.google.com with ESMTPS id m6sm1225665vcx.24.2010.08.13.16.49.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 13 Aug 2010 16:49:52 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4C65BA46.9010604@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153527>
 
-On Fri, Aug 13, 2010 at 23:30, Junio C Hamano <gitster@pobox.com> wrote:
-> I had an impression that your smoker report supports builds on tap harness
-> that in turn builds on perl.
+Johannes Sixt wrote:
+> Am 13.08.2010 02:08, schrieb Jonathan Nieder:
 
-It does, but I was considering cases like:
+>> Subject: vcs-svn: Port to Windows
+>>
+>> MSys #define-s dirent away.  Avoid trouble by avoiding that
+>> identifier.
+>>
+>> Windows does not have strtok_r (and while does have an identical
+>> strtok_s, but it is not obvious how to use it).  Grab an
+>> implementation from glibc.
+>>
+>> The svn-fe test fails in the =E2=80=9Csvn export=E2=80=9D step becau=
+se of the
+>> lack of symlink support.  With a less ambitious dump, it passes.
+>>
+>> Cc: Johannes Sixt <j6t@kdbg.org>
+>> Cc: Ramkumar Ramachandra <artagnon@gmail.com>
+>> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+> Thanks, it compiles with this patch and passes the test suite.
+>
+> Acked-by: Johannes Sixt <j6t@kdbg.org>
+>
+> The license, LGPL 2.1 or later is OK, I assume?
 
-    PATH=/a/limited/test/environment /usr/bin/prove ...
+xdiff uses it, so I think that should be fine.  If not, it shouldn=E2=80=
+=99t
+be hard to rewrite based on the man page; I only took the glibc
+version because it was easy to do.
 
-But actually getting rid of the smoker Perl dependency would be easy,
-it's just running each test, saving the output to a file and tar-ing
-it all up. It'd be very easy to provide a shellscript that did that.
+Here=E2=80=99s a split-up patch.  Patch 1 adds an autoconf test (thanks=
+,
+Jakub!).  Patch 2 is a little (though not much) shorter than the blind
+search-and-replace I sent before.  This uses uint32_t instead of int
+in patch 3 because the vcs-svn lib uses 32-bit lengths elsewhere.
+
+Not tested on Windows but it is not so different from v1 which was.
+
+Thanks again for the help.
+
+Jonathan Nieder (5):
+  compat: add strtok_r()
+  vcs-svn: Rename dirent pool to build on Windows
+  vcs-svn: Avoid %z in format string
+  t9010 (svn-fe): use Unix-style path in URI
+  t9010 (svn-fe): avoid symlinks in test
+
+ Makefile              |    8 +++
+ compat/strtok_r.c     |   61 ++++++++++++++++++++
+ config.mak.in         |    1 +
+ configure.ac          |    6 ++
+ git-compat-util.h     |    5 ++
+ t/t9010-svn-fe.sh     |    4 +-
+ vcs-svn/fast_export.c |    5 +-
+ vcs-svn/repo_tree.c   |  146 ++++++++++++++++++++++++-----------------=
+-------
+ 8 files changed, 159 insertions(+), 77 deletions(-)
+ create mode 100644 compat/strtok_r.c
+
+--=20
+1.7.2.1.544.ga752d.dirty
