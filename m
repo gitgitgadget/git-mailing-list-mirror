@@ -1,103 +1,139 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv5 0/2] Fix spurious conflicts with pull --rebase
-Date: Thu, 12 Aug 2010 19:50:48 -0600
-Message-ID: <1281664250-2703-1-git-send-email-newren@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Subject: [PATCHv5 1/2] t5520-pull: Add testcases showing spurious conflicts from git pull --rebase
+Date: Thu, 12 Aug 2010 19:50:49 -0600
+Message-ID: <1281664250-2703-2-git-send-email-newren@gmail.com>
+References: <1281664250-2703-1-git-send-email-newren@gmail.com>
 Cc: gitster@pobox.com, santi@agolina.net,
 	Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 13 03:42:53 2010
+X-From: git-owner@vger.kernel.org Fri Aug 13 03:42:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjjIK-0002ek-IU
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 03:42:52 +0200
+	id 1OjjIL-0002ek-1s
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 03:42:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753328Ab0HMBmq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 21:42:46 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:59135 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752695Ab0HMBmp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 21:42:45 -0400
-Received: by ywh1 with SMTP id 1so678055ywh.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 18:42:45 -0700 (PDT)
+	id S1754261Ab0HMBmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 21:42:49 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60742 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753374Ab0HMBms (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 21:42:48 -0400
+Received: by yxg6 with SMTP id 6so697684yxg.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 18:42:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=yXhcHcrDOB2M/S6bHAplUqraBun14JiNAHyLwJnWzoQ=;
-        b=XeJnXvO4yHyWvVQ4bmstDh17dyP7TxBNNqoTHfHMgyeR9HuCWiRg3M2uzoauX/k71v
-         mTvm/xMwZlnEIc0REIc26PppMi7DLgAYI61K6i4s5vG3r0abRIaMSy/b447ZDJXqCxzT
-         NF81ZGEzWbOUOIkbDFacLKiejJfZkAROeBS9g=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=VSl2ZTQNSaLe/7JT7mLRW54XKcjLd6SKrkfF8QfHLGw=;
+        b=MCSVCS8wNI509rvbnXniz7a7hutgU8ryqAX9ETsrryFGWgV4RaQxk2uAzZq5QNwFWI
+         z57H6LqqD30TynHBP2pzJdO5HyFwkecHxqkg8qycv7Mg8jH53YgA+PPKvqNz70W0q3oH
+         W/BSw+B5nAiF+P40+Hjm2q1aSSyaBjT4dmIVM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=SsIwzkC0ejY9MJi28pwtiKFgK5Ikq3FyKDD2co1gNWucE5VypB8QCnJLNJw6Chy5Lt
-         xp7st6f77V6NpdQqX3n87kKX9tVheanH++W/457pvguw4BZinF1l+b+GEKf1E2+TYKYA
-         OGXj9EqjeiAIlwYuaQMbkIUd4/dtCvz6YDECw=
-Received: by 10.231.161.80 with SMTP id q16mr760203ibx.142.1281663764508;
-        Thu, 12 Aug 2010 18:42:44 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=cIcpeXQ0R/NgzYJOga/N2zHP2K0wPN0INi0DcN1WGKslujmfe+RkMDyab/71mR73jT
+         qq60FaBnzPZq8/qTuKHEsi+N70JHnv+y6Ar9LDTz3bbfAnbGAwyguNLD6lX6jsLv2q1N
+         1M2RuF5KAEV3RWGUO/uNql7qis8/ThVpHjfHU=
+Received: by 10.231.16.76 with SMTP id n12mr633733iba.194.1281663766843;
+        Thu, 12 Aug 2010 18:42:46 -0700 (PDT)
 Received: from localhost.localdomain (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id j2sm607195iba.12.2010.08.12.18.42.41
+        by mx.google.com with ESMTPS id j2sm607195iba.12.2010.08.12.18.42.44
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Aug 2010 18:42:43 -0700 (PDT)
+        Thu, 12 Aug 2010 18:42:46 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.43.gbae63
+In-Reply-To: <1281664250-2703-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153453>
 
-Changes since v4
-  * Added a little bit of detail to the commit log about cases when
-    the change can affect
-  * Fixed issue pointed out by Santi with moving 12 lines of code (to
-    bring definition of oldupstream variable together); the different
-    pieces had important reasons for being where they were.
-Changes since v1
-  * Changes above, plus other commit log wording changes and lots of
-    style and formatting issues for the testcase
 
-This patch series fixes spurious conflict issues with git pull
---rebase for the case where the upstream repository is *not* rebased.
-(There is no change in the case where the upstream repository is
-rebased.)
-
-In cc85c792 (pull --rebase: be cleverer with rebased upstream
-branches, 2008-01-26) and d44e712 (pull: support rebased upstream +
-fetch + pull --rebase, 2009-07-19), the call to git-rebase was
-modified in an effort to reduce the number of commits being reapplied,
-by trying to avoid commits that upstream already had or has.  It was
-specifically designed with an upstream that is rebased in mind.
-Unfortunately, it had two side effects for the non-rebased upstream
-case: (1) it prevented detecting if "local" patches are already
-upstream, and (2) it could in some cases cause more patches known to
-be upstream to be reapplied rather than less.  This series fixes both
-of these issues for the non-rebased upstream case.  See the commit
-message of the second patch for details.
-
-It's worth noting that issue (1) above also affects the case where the
-upstream repository has been rebased, which this patch series does not
-address.  As far as I can tell, fixing it would require changes
-(including new syntax) to format-patch to allow it to be told what
-'upstream' is, and some changes to git-pull.sh/git-rebase.sh to pass
-it this information.
-
-Elijah Newren (2):
-  t5520-pull: Add testcases showing spurious conflicts from git pull
-    --rebase
-  pull --rebase: Avoid spurious conflicts and reapplying unnecessary
-    patches
-
- git-pull.sh     |    9 ++++++++
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
  t/t5520-pull.sh |   62 +++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 71 insertions(+), 0 deletions(-)
+ 1 files changed, 62 insertions(+), 0 deletions(-)
 
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 319e389..85a6b23 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -4,6 +4,11 @@ test_description='pulling into void'
+ 
+ . ./test-lib.sh
+ 
++modify () {
++	sed -e "$1" <"$2" >"$2.x" &&
++	mv "$2.x" "$2"
++}
++
+ D=`pwd`
+ 
+ test_expect_success setup '
+@@ -160,4 +165,61 @@ test_expect_success 'pull --rebase works on branch yet to be born' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'setup for detecting upstreamed changes' '
++	mkdir src &&
++	(cd src &&
++	 git init &&
++	 printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" > stuff &&
++	 git add stuff &&
++	 git commit -m "Initial revision"
++	) &&
++	git clone src dst &&
++	(cd src &&
++	 modify s/5/43/ stuff &&
++	 git commit -a -m "5->43" &&
++	 modify s/6/42/ stuff &&
++	 git commit -a -m "Make it bigger"
++	) &&
++	(cd dst &&
++	 modify s/5/43/ stuff &&
++	 git commit -a -m "Independent discovery of 5->43"
++	)
++'
++
++test_expect_failure 'git pull --rebase detects upstreamed changes' '
++	(cd dst &&
++	 git pull --rebase &&
++	 test -z "$(git ls-files -u)"
++	)
++'
++
++test_expect_success 'setup for avoiding reapplying old patches' '
++	(cd dst &&
++	 test_might_fail git rebase --abort &&
++	 git reset --hard origin/master
++	) &&
++	git clone --bare src src-replace.git &&
++	rm -rf src &&
++	mv src-replace.git src &&
++	(cd dst &&
++	 modify s/2/22/ stuff &&
++	 git commit -a -m "Change 2" &&
++	 modify s/3/33/ stuff &&
++	 git commit -a -m "Change 3" &&
++	 modify s/4/44/ stuff &&
++	 git commit -a -m "Change 4" &&
++	 git push &&
++
++	 modify s/44/55/ stuff &&
++	 git commit --amend -a -m "Modified Change 4"
++	)
++'
++
++test_expect_failure 'git pull --rebase does not reapply old patches' '
++	(cd dst &&
++	 test_must_fail git pull --rebase &&
++	 test 1 = $(find .git/rebase-apply -name "000*" | wc -l)
++	)
++'
++
+ test_done
 -- 
 1.7.2.1.43.gbae63
