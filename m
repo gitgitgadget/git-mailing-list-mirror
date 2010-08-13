@@ -1,93 +1,87 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: windows smoke tester (was Re: What's cooking in git.git (Aug
- 2010, #02; Wed, 11))
-Date: Fri, 13 Aug 2010 01:01:08 +0000
-Message-ID: <AANLkTikuy3q8JrppTr+YPwZHFh2PNk+An2qvdoWiuAJH@mail.gmail.com>
-References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
-	<4C63BD9B.6000608@viscovery.net>
-	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
-	<AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>
-	<AANLkTina+62MczLNhXC6VCtz_kQZ_t0+uZ8fH=vTV=XO@mail.gmail.com>
-	<4C64308D.8030000@gmail.com>
-	<AANLkTikh14FVmE6E78FNRvSG0B_5ZmNcOLSwye4ExNVx@mail.gmail.com>
-	<4C647360.50304@gmail.com>
-	<AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
-	<4C647C85.2080109@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid rename/add conflict when contents are identical
+Date: Thu, 12 Aug 2010 18:18:19 -0700
+Message-ID: <7vd3tnmht0.fsf@alter.siamese.dyndns.org>
+References: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	kusmabite@gmail.com
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 03:01:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Schalk\, Ken" <ken.schalk@intel.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 03:18:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ojie4-000823-0l
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 03:01:16 +0200
+	id 1Ojiun-0004AT-NX
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 03:18:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755200Ab0HMBBL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 12 Aug 2010 21:01:11 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46100 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751699Ab0HMBBJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 12 Aug 2010 21:01:09 -0400
-Received: by gwb20 with SMTP id 20so679657gwb.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 18:01:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ilyj2U3WSnQq8g62rWyzuAKC1vHokceCDDEx+5sQESg=;
-        b=dKO2hnn86tvq6RmNv1scREKmnyFlDjwlHFv/z4mFMpTAOD7poWeOlxQ0ByhBeoj1Vi
-         n8BT2wJXBtJs6YRyuHB6mPgzjTjlytdq2hEChfCtiPmEvGi5/UdaL7fb/mMoYz8OFK8f
-         YJLAvpHiYZovN2TM3wXAWCPt26HCK4Mj0O/U8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QwYlAEJA38ty4gowbam5lx9HHKMfxJKivQbX8UxdcuFCYAWRjjr6W3C0TSzJzulrSX
-         a8it/2FfsvNZtM1jbY2jxMVmylRMGfwHafoJGa5s0NGDUYbcx8s6/odb08jqdQdeGTrc
-         evZZvkI13mhOAU9+7efjMBKFCB8KbxWNfcTW0=
-Received: by 10.231.119.229 with SMTP id a37mr605172ibr.169.1281661268822;
- Thu, 12 Aug 2010 18:01:08 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Thu, 12 Aug 2010 18:01:08 -0700 (PDT)
-In-Reply-To: <4C647C85.2080109@gmail.com>
+	id S1760716Ab0HMBS2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 21:18:28 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43745 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754888Ab0HMBS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 21:18:27 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 011D5CD934;
+	Thu, 12 Aug 2010 21:18:26 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TvsMmJLYHm2jVRPScCveQRk5ngg=; b=fCjzKu
+	f5Dn8AI88HKZ0g6bvyBbehQurupFbN2uKB6/gFFusCB+XgogS2ZA2CVEQVoGAqr3
+	kcloxj+jd9W8KBmhDHlyOyesMN7/sQ1NRHhixSi6C5xeUXqTzbhMo0GewSto2tK+
+	TzbRnkADx+jkF55rt/mhm4oyUnZJSzd8R3JEc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WtpRIC1bUa6r4FDJs9Ww9YSHo6RO8UTd
+	6vB13L2JJPxCRELEaKliAqYA/3S+yPUHKQ2x925bhzZg457uXU2BPCsS+c9AUz8D
+	3UNzLVx4QcHY/pO7SCtizsqqsmfsS0HymyK9f+VvY8yESQphWR1wXzGaUGH+U8w4
+	MqH3yS93B64=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D2CE8CD932;
+	Thu, 12 Aug 2010 21:18:23 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1ADF2CD92E; Thu, 12 Aug
+ 2010 21:18:20 -0400 (EDT)
+In-Reply-To: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
+ (Ken Schalk's message of "Mon\, 9 Aug 2010 14\:00\:31 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AAED387A-A678-11DF-B719-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153450>
 
-On Thu, Aug 12, 2010 at 22:58, Chris Packham <judge.packham@gmail.com> =
-wrote:
-> On 12/08/10 15:29, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Thu, Aug 12, 2010 at 22:19, Chris Packham <judge.packham@gmail.co=
-m> wrote:
->>> I checked out Avar's (Aevar?)
->>
->> Whatever works :)
->>
->>
->>> branch One problem is that I don't have any of the perl TAP
->>> modules. It's complaining about TAP/Harness/Archive.pm. Any
->>> suggestions for installing additional perl modules under msysgit?
->>
->> I don't know what msysgit does for perl but if you can make it use
->> strawberry perl's perl + modules that'd be easiest:
->>
->> =C2=A0 =C2=A0 http://strawberryperl.com
->
-> I'll see if I can get it to work. Msys comes with its own perl so may=
-be
-> there is another way.
+"Schalk, Ken" <ken.schalk@intel.com> writes:
 
-If it comes with its own perl it should also have a cpan shell:
+> diff --git a/merge-recursive.c b/merge-recursive.c
+> index fb6aa4a..57c7a85 100644
+> --- a/merge-recursive.c
+> +++ b/merge-recursive.c
+> @@ -955,6 +955,18 @@ static int process_renames(struct merge_options *o,
+>                                                         ren1->pair->two : NULL,
+>                                                         branch1 == o->branch1 ?
+>                                                         NULL : ren1->pair->two, 1);
+> +                       } else if ((dst_other.mode == ren1->pair->two->mode) &&
+> +                                  sha_eq(dst_other.sha1, ren1->pair->two->sha1)) {
+> +                               /* Added file on the other side
+> +                                  identical to the file being
+> +                                  renamed: clean merge */
+> +                               update_file(o, 1, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
+> +                               if (!o->call_depth)
+> +                                       update_stages(ren1_dst, NULL,
+> +                                                       branch1 == o->branch1 ?
+> +                                                       ren1->pair->two : NULL,
+> +                                                       branch1 == o->branch1 ?
+> +                                                       NULL : ren1->pair->two, 1);
+>                         } else if (!sha_eq(dst_other.sha1, null_sha1)) {
+>                                 const char *new_path;
+>                                 clean_merge = 0;
 
-    perl -MCPAN -e 'install TAP::Harness::Archive'
+The logic seems to be clear enough.  Could you write a test script instead
+of description in the commit log message, so that future changes to the
+codebase won't break this improvement?
 
-That should be easier than installing strawberry in addition to the
-mingw perl.
+Thanks.
