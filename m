@@ -1,65 +1,119 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] diff --follow: do call diffcore_std() as necessary
-Date: Fri, 13 Aug 2010 21:27:38 +0000
-Message-ID: <AANLkTin-qPe-meW_kV5vtC0BT8QS-sZ90BrckRAbjk9X@mail.gmail.com>
-References: <AANLkTikPhWgeeLBV3dbLZ5UM3UDmkOmpqrmwqPmGfn7Z@mail.gmail.com>
-	<7vhbiyl8ji.fsf@alter.siamese.dyndns.org>
-	<7vpqxmjphl.fsf@alter.siamese.dyndns.org>
-	<7veie2jnww.fsf_-_@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Bo Yang <struggleyb.nku@gmail.com>,
-	Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 23:28:02 2010
+From: Daniel Johnson <computerdruid@gmail.com>
+Subject: [RFC/PATCHv2] t5525: test the tagopt variable and that it can be overridden
+Date: Fri, 13 Aug 2010 17:27:32 -0400
+Message-ID: <1281734852-21413-1-git-send-email-ComputerDruid@gmail.com>
+References: <AANLkTimYm+GmJ4BmZKOmcZkJf_wgeUiKhTs06qxex+0q@mail.gmail.com>
+Cc: Daniel Johnson <ComputerDruid@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
+To: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 23:29:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok1nA-0005JO-GG
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:27:56 +0200
+	id 1Ok1oJ-0005nb-Mv
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:29:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753507Ab0HMV1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Aug 2010 17:27:45 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:37308 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753225Ab0HMV1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 17:27:44 -0400
-Received: by iwn7 with SMTP id 7so199675iwn.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:27:40 -0700 (PDT)
+	id S1753661Ab0HMV3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 17:29:02 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:37096 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753174Ab0HMV3A (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 17:29:00 -0400
+Received: by qyk9 with SMTP id 9so1282736qyk.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:29:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=K6oaIZIBksYmz5pUXMbPF5vB8SzP1qOB/2NEidvAz5A=;
-        b=x5JSRxdtvxJ5Jv2iCky1ctM2gCI9gNR5ZQPpjgkyc2xWcBt+qtYpmjJDcx2mOpwJ/Z
-         QR4KVu0PI7FTX8g7LaQOP82DZviTLn9fwPypV8wY0wMlENCVNzuWjSZJArjtwRhTCo4b
-         JM+IAbQOt0wP9IFgbAbhvEVYvSDTo+/3fTOaE=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=yShjIIqKc4mpUtL0rUEnlSpGzz6INTWBx26iyjBQXOA=;
+        b=KeJwkqjq4fwteiiCmyr2/rnsivmPB4gkoiTyxV4hTaEiKTf9sFM7g49eCmd5OaR/iU
+         rkUifzaUinX7OGwiv1L8FjOu0dtmzbTk1tEr9efpMOKjgWyr5SgU+nIohg0EShxmQd3w
+         XBCFlRBhf/gYez55e7RdLEFJuSY/BnPUYS0p4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=PRtF65IqokW3smx1otMRMACNHPWp3wC7puOzutsWhGZulDqenL+k6l/iMH/0PrSW9Q
-         1WVcPaUAOQARdp+kkL6bGZnrBuItVTSyr6g0QHmSnvKfhg/Cdz+GEmTHrkV2fzN8XtEc
-         F1aSdlRvSc9A14O6YFIv0vTgpY9hHD5M4c96s=
-Received: by 10.231.152.78 with SMTP id f14mr2361970ibw.60.1281734859003; Fri,
- 13 Aug 2010 14:27:39 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 14:27:38 -0700 (PDT)
-In-Reply-To: <7veie2jnww.fsf_-_@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=rAE7vOATUvkfdxw033q8v7iYwh3ylogI/PUctCrJbalVPoCyXuXfd00wckw1+kTpiT
+         +ZvINnZ6XjWG+j3iBNzVGNlb7P/ni1eIxVUdnCDvuo2dO67QcQXvMk7zxP46Kn/biXx5
+         p4KurzFrEV+rnKPrBzqWeZG0vIIfJl+04T9cg=
+Received: by 10.229.229.18 with SMTP id jg18mr377858qcb.156.1281734939544;
+        Fri, 13 Aug 2010 14:28:59 -0700 (PDT)
+Received: from ComputerDruid@gmail.com (pool-71-163-16-224.bltmmd.fios.verizon.net [71.163.16.224])
+        by mx.google.com with ESMTPS id q8sm3951303qcs.24.2010.08.13.14.28.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Aug 2010 14:28:58 -0700 (PDT)
+Received: by ComputerDruid@gmail.com (sSMTP sendmail emulation); Fri, 13 Aug 2010 17:29:10 -0400
+X-Mailer: git-send-email 1.7.2
+In-Reply-To: <AANLkTimYm+GmJ4BmZKOmcZkJf_wgeUiKhTs06qxex+0q@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153510>
 
-On Fri, Aug 13, 2010 at 19:46, Junio C Hamano <gitster@pobox.com> wrote:
+---
+>> @@ -0,0 +1,44 @@
+>> +
+>> +#!/bin/sh
+>
+> Is that an empty line before the test begins? The shebang should be on
+> the first line.
+Embarrassing. That's what I get for using yank/put and not paying closer
+attention. The rest is fixed too.
 
-> This hopefully fixes the breakage.
+ t/t5525-fetch-tagopt.sh |   41 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 41 insertions(+), 0 deletions(-)
+ create mode 100755 t/t5525-fetch-tagopt.sh
 
-Hopefully. It'd also be nice if we had a regression test for this, but
-I don't know how hard that would be to arrange. If it's hard to
-reproduce we might get away with a filter-branch + subdir filter from
-the idea repository.
+diff --git a/t/t5525-fetch-tagopt.sh b/t/t5525-fetch-tagopt.sh
+new file mode 100755
+index 0000000..4fbf7a1
+--- /dev/null
++++ b/t/t5525-fetch-tagopt.sh
+@@ -0,0 +1,41 @@
++#!/bin/sh
++
++test_description='tagopt variable affects "git fetch" and is overridden by commandline.'
++
++. ./test-lib.sh
++
++setup_clone () {
++	git clone --mirror . $1 &&
++	git remote add remote_$1 $1 &&
++	(cd $1 &&
++	git tag tag_$1)
++}
++
++test_expect_success setup '
++	test_commit test &&
++	setup_clone one &&
++	git config remote.remote_one.tagopt --no-tags &&
++	setup_clone two &&
++	git config remote.remote_two.tagopt --tags
++	'
++
++test_expect_success "fetch with tagopt=--no-tags does not get tag" '
++	git fetch remote_one &&
++	test_must_fail git show-ref tag_one
++	'
++
++test_expect_success "fetch --tags with tagopt=--no-tags gets tag" '
++	git fetch --tags remote_one &&
++	git show-ref tag_one
++	'
++
++test_expect_success "fetch --no-tags with tagopt=--tags does not get tag" '
++	git fetch --no-tags remote_two &&
++	test_must_fail git show-ref tag_two
++	'
++
++test_expect_success "fetch with tagopt=--tags gets tag" '
++	git fetch remote_two &&
++	git show-ref tag_two
++	'
++test_done
+-- 
+1.7.2
