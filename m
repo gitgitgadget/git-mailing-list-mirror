@@ -1,84 +1,65 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Git's tests have depended on Perl since at least 2006
-Date: Fri, 13 Aug 2010 21:25:10 +0000
-Message-ID: <AANLkTim9aNtFdwM5m-FB_LWX96es2DR_9mU3rGcV4dME@mail.gmail.com>
+Subject: Re: [PATCH] diff --follow: do call diffcore_std() as necessary
+Date: Fri, 13 Aug 2010 21:27:38 +0000
+Message-ID: <AANLkTin-qPe-meW_kV5vtC0BT8QS-sZ90BrckRAbjk9X@mail.gmail.com>
+References: <AANLkTikPhWgeeLBV3dbLZ5UM3UDmkOmpqrmwqPmGfn7Z@mail.gmail.com>
+	<7vhbiyl8ji.fsf@alter.siamese.dyndns.org>
+	<7vpqxmjphl.fsf@alter.siamese.dyndns.org>
+	<7veie2jnww.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 13 23:25:22 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	Constantine Plotnikov <constantine.plotnikov@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 23:28:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok1kd-0003zO-T8
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:25:20 +0200
+	id 1Ok1nA-0005JO-GG
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520Ab0HMVZN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Aug 2010 17:25:13 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45326 "EHLO
+	id S1753507Ab0HMV1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 17:27:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37308 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753174Ab0HMVZK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 17:25:10 -0400
-Received: by iwn7 with SMTP id 7so197902iwn.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:25:10 -0700 (PDT)
+	with ESMTP id S1753225Ab0HMV1o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 17:27:44 -0400
+Received: by iwn7 with SMTP id 7so199675iwn.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:27:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=vD+Ze50ykcuYROkxZZrDpKI7++JMeaz37Cbcdtjp+0s=;
-        b=lZZRBzog48G7R9Y58401Lo9hvw2a5zSWgxIU5uaKoNWL+323rZImtGexokcm8fLTSI
-         JnVGwe5sX08wp2ybudrGoobatEBxP0zrv4jpXmTJirqPd40KUI0BZk/vkVL7i1433S0C
-         stcenAped7biw+bEYSdX1MzY7z88i0/0n41AA=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=K6oaIZIBksYmz5pUXMbPF5vB8SzP1qOB/2NEidvAz5A=;
+        b=x5JSRxdtvxJ5Jv2iCky1ctM2gCI9gNR5ZQPpjgkyc2xWcBt+qtYpmjJDcx2mOpwJ/Z
+         QR4KVu0PI7FTX8g7LaQOP82DZviTLn9fwPypV8wY0wMlENCVNzuWjSZJArjtwRhTCo4b
+         JM+IAbQOt0wP9IFgbAbhvEVYvSDTo+/3fTOaE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=VzpHueDMuG7aC3FqgV2KE26h2HsuYvYQP8XbNE32lPtRhffKCIeWYbJN1RWWutkRlW
-         cYHboWkneMK412/OVWg1f8Y3faRS0xdtfFoiBdKaou5mtYZ5qirVEi+my69QJhpw9kTz
-         6C11y8bm34kZsys0gp8odxlaNIxN4+W4y95nY=
-Received: by 10.231.16.76 with SMTP id n12mr1944306iba.194.1281734710096; Fri,
- 13 Aug 2010 14:25:10 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 14:25:10 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=PRtF65IqokW3smx1otMRMACNHPWp3wC7puOzutsWhGZulDqenL+k6l/iMH/0PrSW9Q
+         1WVcPaUAOQARdp+kkL6bGZnrBuItVTSyr6g0QHmSnvKfhg/Cdz+GEmTHrkV2fzN8XtEc
+         F1aSdlRvSc9A14O6YFIv0vTgpY9hHD5M4c96s=
+Received: by 10.231.152.78 with SMTP id f14mr2361970ibw.60.1281734859003; Fri,
+ 13 Aug 2010 14:27:39 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 14:27:38 -0700 (PDT)
+In-Reply-To: <7veie2jnww.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153509>
 
-This is just an interesting datapoint, but Git's test suite currently
-crashes and burns if you don't have a perl in your $PATH, no matter if
-you've compiled with NO_PERL=YesPlease or not. This has been the case
-since at least 2006, or v1.3.0-rc1~13^2~34.
+On Fri, Aug 13, 2010 at 19:46, Junio C Hamano <gitster@pobox.com> wrote:
 
-The affected tests are:
+> This hopefully fixes the breakage.
 
-    ./t0000-basic.sh ./t0025-crlf-auto.sh ./t0080-vcs-svn.sh
-    ./t0020-crlf.sh ./t1010-mktree.sh ./t1300-repo-config.sh
-    ./t3300-funny-names.sh ./t4012-diff-binary.sh
-    ./t4020-diff-external.sh ./t4014-format-patch.sh
-    ./t4029-diff-trailing-space.sh ./t4031-diff-rewrite-binary.sh
-    ./t4030-diff-textconv.sh ./t4043-diff-rename-binary.sh
-    ./t4103-apply-binary.sh ./t4116-apply-reverse.sh ./t4200-rerere.sh
-    ./t5303-pack-corruption-resilience.sh ./t5300-pack-object.sh
-    ./t6011-rev-list-with-bad-commit.sh
-    ./t6013-rev-list-reverse-parents.sh ./t6003-rev-list-topo-order.sh
-
-I have a WIP patch series to tackle this issue:
-
-    http://github.com/avar/git/compare/git:pu...in-progress-dont-depend-on-perl
-
-It adds a PERL dependency to things and changes perl to
-"$PERL_PATH". Many things were implicitly depending on perl due to
-this bit in test-lib.sh:
-
-    q_to_nul () {
-        perl -pe 'y/Q/\000/'
-    }
-
-And many other bits do other things with perl but aren't declaring a
-PERL dependency.
-
-Anyway, I just thought I'd mention it, that this hasn't been fixed yet
-would suggest that nearly everyone has perl anyway, and that maybe we
-shouldn't think twice about introducing a perl dependency to things
-when it's convenient.
+Hopefully. It'd also be nice if we had a regression test for this, but
+I don't know how hard that would be to arrange. If it's hard to
+reproduce we might get away with a filter-branch + subdir filter from
+the idea repository.
