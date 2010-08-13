@@ -1,151 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH RFC] parse_object: pass on the original sha1, not the
- replaced one
-Date: Fri, 13 Aug 2010 19:02:40 +1000
-Message-ID: <AANLkTinmJ0=VxFAaCXNjB2WAiPYHq3jXmRnzVoEiw_-f@mail.gmail.com>
-References: <1280579802-8606-1-git-send-email-pclouds@gmail.com>
-	<201008051341.08632.chriscool@tuxfamily.org>
-	<AANLkTim9vMiEuBJJdCdGqjTOz8cs-nH+LyJF-rPGOTvS@mail.gmail.com>
-	<201008130559.33640.chriscool@tuxfamily.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] gettext: setlocale(LC_CTYPE, "") breaks Git's C function assumptions
+Date: Fri, 13 Aug 2010 02:39:49 -0700 (PDT)
+Message-ID: <m3pqxm3l7k.fsf@localhost.localdomain>
+References: <1281650895-7449-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Aug 13 11:03:00 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 11:40:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjqAF-00015Q-5Z
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 11:02:59 +0200
+	id 1Ojqk3-0008Sh-Uc
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 11:40:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761378Ab0HMJCm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 05:02:42 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40662 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755902Ab0HMJCl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 05:02:41 -0400
-Received: by wyb32 with SMTP id 32so2385121wyb.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 02:02:40 -0700 (PDT)
+	id S934146Ab0HMJjw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 05:39:52 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:38137 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934113Ab0HMJjv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 05:39:51 -0400
+Received: by wwj40 with SMTP id 40so2710720wwj.1
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 02:39:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=HGQ76cL0GMxlsi14OPn31Weoi1dyO21yZQyNSoFmTMs=;
-        b=U/Ok1DeYGyVGGBtC59Te02PstZS9BVSRwQEntrHx+tHTBbUobRd1TH8lnoa/lL0fgQ
-         WN0Sq4UtYrsKW+bQW1omgA8zIdT+1gjLYlrzLcrWC7CSqkgScjpFLA+i6NNCZ+21lFK3
-         As+K7N0RwppBxEgKQ3Nc+1/LVlZW7BcB1Uixs=
+        bh=MO5i7GNCNEWB2NO/CMMZtwcH9m3HZgwe4mQ6wcKbpAg=;
+        b=a4ehzRlxsHs4WlivZ5cAYvQiCUrz/x/DZqdEUqwYI6I5EkYVK3MlA5yT6bxsKMJI/U
+         0iUNNLiPVI7Bs6QiQ+2pILgmmC9pZI55ZtJONJqYPcEeraWQrBEldcWHXhj/G7kWWU0X
+         URgSyab1BIt1ulgu9NcJL+UX0ns9ANGEg0q9U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E5EXuvxhPa/dTonm5AwX8zjjUb2a3ao/TDjD9AVVVMShyYDodTyzjYpcImw27BzxTy
-         d6EIvPyew+3m2kjAFIbNB+gSEpi6ahHu8XiG2ahGI3bUTNMXd/PTrn391ODlL/CjMQc7
-         Ui4i5otKwP/As2kBmw0FDppzUibKWKCnBA3ro=
-Received: by 10.216.10.11 with SMTP id 11mr7794167weu.64.1281690160238; Fri,
- 13 Aug 2010 02:02:40 -0700 (PDT)
-Received: by 10.216.173.133 with HTTP; Fri, 13 Aug 2010 02:02:40 -0700 (PDT)
-In-Reply-To: <201008130559.33640.chriscool@tuxfamily.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=CHt7rIzO6oYw8DHPimBNgJhmefaspujUGwdGRm9Utykq+3j6WR8RGFlvB1BPAMfvix
+         1OrvQ2eUMIQcGKP2slB6o2X3xSZkGjSNfP3+ocCif7l6QSIeVtSNubIN0OvePRM+E6rQ
+         s4le9xUWXp0qjA7RytuN5/ehMh3hiCJPb7GsQ=
+Received: by 10.227.72.200 with SMTP id n8mr1049630wbj.223.1281692390492;
+        Fri, 13 Aug 2010 02:39:50 -0700 (PDT)
+Received: from localhost.localdomain (abwf88.neoplus.adsl.tpnet.pl [83.8.229.88])
+        by mx.google.com with ESMTPS id e8sm1417471wej.22.2010.08.13.02.39.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Aug 2010 02:39:49 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o7D9e08c014925;
+	Fri, 13 Aug 2010 11:40:11 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o7D9diMT014919;
+	Fri, 13 Aug 2010 11:39:44 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1281650895-7449-1-git-send-email-avarab@gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153467>
 
-On Fri, Aug 13, 2010 at 1:59 PM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> On Saturday 07 August 2010 06:03:05 Nguyen Thai Ngoc Duy wrote:
->> On Thu, Aug 5, 2010 at 9:41 PM, Christian Couder
->>
->> <chriscool@tuxfamily.org> wrote:
->> > It looks like parse_commit() is buggy regarding replaced objects. =
-But I
->> > am not sure how it should be fixed.
->>
->> It could be fixed the same way you did with parse_object(): replace
->> read_sha1_file() with read_sha1_file_repl(). You would also need to
->> fix parse_tree() and parse_tag(). But..
->>
->> > Anyway if you use parse_object(), then you don't need parse_commit=
-(). So
->> > if possible you should use parse_object() instead of both
->> > lookup_commit() and parse_commit().
->>
->> That's how those functions are used. For example, in
->> traverse_commit_list(), lookup_*() may be called and uninteresting
->> objects marked UNINTERESTING. Later on in process_{tree,blob,tag},
->> parse_* may be called if their content is interesting.
->>
->> To me, the fix above will leave a gap when object->sha1 is the
->> original sha1, until parse_*() is called. It just does not sound goo=
-d.
->
-> What do you think about adding a parse_commit_repl() function like th=
-e patch
-> below and then using it instead of parse_commit()?
+=C6var Arnfj=F6r=F0 Bjarmason  <avarab@gmail.com> writes:
 
-How do you plan to use this new function? #define parse_commit(c)
-parse_commit_repl(c) or use the new function explictly when needed?
+> Remove the setlocale/LC_CTYPE call from gettext.c, we only need
+> setlocale/LC_MESSAGES to use the message catalog, and setting LC_CTYP=
+E
+> from the environment breaks Git's assumptions about C library
+> functions.
+>=20
+> Under a non-C locale functions like vsnprintf become locale sensitive=
+,
+> so that they'll e.g. refuse to process ISO-8895-1 data under a UTF-8
+> locale.
+>=20
+> This triggered a "your vsnprintf is broken" error on Git's own
+> repository when inspecting v0.99.6~1 under a UTF-8 locale.
+>=20
+> That commit contains a ISO-8859-1 encoded author name, which the
+> locale aware vsnprintf(3) won't interpolate in the format argument,
+> due to mismatch between the data encoding and the locale.
 
-You are going to need parse_tree_repl() too unless you declare
-tree/blob replacement is not supported and make git-replace refuse
-blob/tree replacement.
+Sidenote: This commit was done probably before invention of 'encoding'
+header, but it should be displayable anyway.
 
-Another thing to address is, there will be a duration between
-lookup_commit() and parse_commit_repl(), where object.sha1 is the
-original one. If it is saved elsewhere, troubles are ahead.
-
-> ------- >8 ---------------------------------------------------
->
-> diff --git a/commit.c b/commit.c
-> index 652c1ba..183a735 100644
-> --- a/commit.c
-> +++ b/commit.c
-> @@ -316,6 +316,50 @@ int parse_commit(struct commit *item)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;
-> =C2=A0}
->
-> +int parse_commit_repl(struct commit **commit)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 enum object_type type;
-> + =C2=A0 =C2=A0 =C2=A0 void *buffer;
-> + =C2=A0 =C2=A0 =C2=A0 unsigned long size;
-> + =C2=A0 =C2=A0 =C2=A0 int ret;
-> + =C2=A0 =C2=A0 =C2=A0 const unsigned char *repl;
-> + =C2=A0 =C2=A0 =C2=A0 struct commit *item =3D *commit;
-> +
-> + =C2=A0 =C2=A0 =C2=A0 if (!item)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return -1;
-> + =C2=A0 =C2=A0 =C2=A0 if (item->object.parsed)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-> + =C2=A0 =C2=A0 =C2=A0 buffer =3D read_sha1_file_repl(item->object.sh=
-a1, &type, &size, &repl);
-> + =C2=A0 =C2=A0 =C2=A0 if (!buffer)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return error("Coul=
-d not read %s",
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0sha1_to_hex(item->object.sha1));
-> +
-> + =C2=A0 =C2=A0 =C2=A0 if (item->object.sha1 !=3D repl) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct commit *rep=
-l_item =3D lookup_commit(repl);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!repl_item) {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 free(buffer);
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 return error("Bad replacement %s for commit %s",
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sha1_to_hex(rep=
-l),
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0sha1_to_hex(ite=
-m->object.sha1));
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-
-You need to use lookup_object() instead here. lookup_commit() wil
-create new object if "repl" is not found.
 --=20
-Duy
+Jakub Narebski
+Poland
+ShadeHawk on #git
