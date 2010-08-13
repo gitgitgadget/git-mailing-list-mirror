@@ -1,77 +1,83 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: BUG! missing .idx causes .pack to be removed
-Date: Fri, 13 Aug 2010 18:02:21 +0200
-Message-ID: <20100813160221.GA10974@nibiru.local>
-References: <20100805170137.GA2630@nibiru.local> <AANLkTi=bjM7rGSXv0eB5+6VEX=wY84upkzDcBJ6C9KdK@mail.gmail.com> <4C5BB64A.4070601@lsrfire.ath.cx>
-Reply-To: weigelt@metux.de
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: git rebase -i exec merger broke t3404-rebase-interactive.sh
+Date: Fri, 13 Aug 2010 16:37:09 +0000
+Message-ID: <AANLkTinzBuR+9=+PwejJVwSkUiGODaP-RC7=agyLOgMt@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 13 18:12:36 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Fri Aug 13 18:37:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ojwru-0003B4-2S
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 18:12:30 +0200
+	id 1OjxFw-0005Fc-Af
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 18:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934540Ab0HMQMY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 12:12:24 -0400
-Received: from caprica.metux.de ([82.165.128.25]:40580 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754512Ab0HMQMX convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 12:12:23 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o7DGC1ZF017937
-	for <git@vger.kernel.org>; Fri, 13 Aug 2010 18:12:01 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o7DGBKJ7017910
-	for git@vger.kernel.org; Fri, 13 Aug 2010 18:11:20 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o7DG2LBh017331
-	for git@vger.kernel.org; Fri, 13 Aug 2010 18:02:21 +0200
-Content-Disposition: inline
-In-Reply-To: <4C5BB64A.4070601@lsrfire.ath.cx>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1761790Ab0HMQhL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 12:37:11 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:39481 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635Ab0HMQhK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 12:37:10 -0400
+Received: by gyg10 with SMTP id 10so1010245gyg.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 09:37:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=Q10o349vFZaOvVSRFHOA0KX0m32Pc5eoZUwtUzx2vuw=;
+        b=MXd0z1i/RJwEp4lp3gzySLDzLyEA2nzbByt60vJNXCO4e9viooWT77AqjL+LMHCBRs
+         sI7wXQISdr2AgcLyeZS2yiShZ7j6CpoCJEvhlG1ykZ37kHowwK8t51yRuJQ7F1zwEh35
+         81xPDE22FyKmjW2cUknOk65yOoxklZ8pThjgo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=aWsjeNh1b7i87DJKwjjqg443e5k2aTPEYXT8NHxjm4pPQmNgJ5HrySxUrKSq4jvsr3
+         vdSwJ8EZiNWnXa1B4RLxhjzvpjZ27YVVO8D45UvOtvG9PtJjp4ZZc80GBR5MK4DkmHoH
+         0l4Tt+SjZ5mPvtirSpnihxRmsMhy2pzVtyxEg=
+Received: by 10.150.53.21 with SMTP id b21mr2253747yba.350.1281717430054; Fri,
+ 13 Aug 2010 09:37:10 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 09:37:09 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153475>
 
-* Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> wrote:
-> > IIRC, a .pack file is useless without its corresponding .idx file. =
-So
-> > the removal of a .pack file makes sense here - to me, at least.
->=20
-> git-index-pack can rebuild the index for a pack file.  Not sure if it
-> should be done automagically, but the file is not completely useless.
+39e388728 (merging git rebase -i exec support) broke the funny names
+test in t3404-rebase-interactive.sh:
 
-ACK. packfiles are completely self-contained - the index files are
-only used for lookup and can be created any time (IMHO that's also
-done automatically on remote transfers). So removing a packfile,
-just because the index is missing, causes an serious data loss.
-That's what I'd consider a critical bug!
+    expecting success:
+            git rev-list A..funny >expect &&
+            test_tick &&
+            FAKE_LINES="1 2 3 4" git rebase -i A &&
+            git rev-list A.. >actual &&
+            test_cmp expect actual
 
-The correct solution would be either recreating the index
-automatically or at least spit out an big-fat warning.
+    rebase -i script before editing:
+    pick f6fec15 end with slash\
+    pick 4f2ade4 something (\000) that looks like octal
+    pick f95dfbf something (\n) that looks like a newline
+    pick 0e82af6 another commit
 
+    rebase -i script after editing:
+    pick f6fec15 end with slash\
+    pick 4f2ade4 something (\000) that looks like octal
+    pick f95dfbf something (\n) that looks like a newline
+    pick 0e82af6 another commit
+    Unknown command: ) that looks like a newline
+    Please fix this in the file /home/avar/g/git/t/trash
+directory.t3404-rebase-interactive/.git/rebase-merge/git-rebase-todo.
+    not ok - 50 rebase-i history with funny messages
+    #
+    #               git rev-list A..funny >expect &&
+    #               test_tick &&
+    #               FAKE_LINES="1 2 3 4" git rebase -i A &&
+    #               git rev-list A.. >actual &&
+    #               test_cmp expect actual
+    #
 
-cu
---=20
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+This one breaks under bash too, does it work for you Matthieu? If so
+what sort of environment are you executing it in?
