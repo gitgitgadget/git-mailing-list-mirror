@@ -1,159 +1,137 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC/PATCH] t5525: test the tagopt variable and that it can be overridden
-Date: Fri, 13 Aug 2010 20:55:35 +0000
-Message-ID: <AANLkTimYm+GmJ4BmZKOmcZkJf_wgeUiKhTs06qxex+0q@mail.gmail.com>
-References: <7v8w4bmhmc.fsf@alter.siamese.dyndns.org>
-	<1281730410-20009-1-git-send-email-ComputerDruid@gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] hash binary sha1 into patch id
+Date: Fri, 13 Aug 2010 23:23:31 +0200
+Message-ID: <20100813212331.GA24127@localhost>
+References: <20100813094027.GA20906@localhost>
+ <20100813200031.GD2003@burratino>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Daniel Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 22:55:43 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YiEDa0DAkWCtVeE4"
+Cc: git@vger.kernel.org, Marat Radchenko <marat@slonopotamus.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 23:24:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok1Hy-0006vU-M0
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 22:55:43 +0200
+	id 1Ok1jL-0003Sf-Sl
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:24:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133Ab0HMUzg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 16:55:36 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:37113 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751661Ab0HMUzf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 16:55:35 -0400
-Received: by gxk23 with SMTP id 23so1120449gxk.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 13:55:35 -0700 (PDT)
+	id S1753434Ab0HMVXm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 17:23:42 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:57099 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753395Ab0HMVXl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 17:23:41 -0400
+Received: by ewy23 with SMTP id 23so1573094ewy.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:23:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RCsKE5gxFYCWWTOMb6o/NJvJjiHKpFUVcMlQDfl3lKE=;
-        b=cXB1uFUNTou6dNzk2oYj2FJy2LVirj0faO4i0r9q2T+KDQpgg8rNWENUAvFqRXx44N
-         7ML5PclOLbeaNlFiY/MbYOXYUDI7mCaefM6NAkzOS+t/87OQHIrC+l3Czldhik8j/RY7
-         0bF5v/sxyCt4RohJ8Cu/GpurcrJV1hnLiUIdI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=GTFvAasBcnqEHlcsBOVNkf2Oq3Q4BBqAYXKTV/D04KI=;
+        b=IEBhDZD8W0yXLCBznZJGcNsgoI4oTBctCmjk/ZdOFdsrz3trf14k3pdEk87uOMiADW
+         PfYW/CqhoLPYOwuvecjEYYDytagJpqyMF9izASpiNN7UGzT0/sUQ5z0Wilj7TqC3r+uf
+         nCSFWh3tpc/wg+0T7r5duXURG+h59RrHK4FaI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wiCBeyo/7WHT+GN7sSOeEKDY1LwQT38vHlSllnl8xd27DJ9m6/umEGHROHTKLUd3YJ
-         LsFSMsg5JOiJ/oCsQ/5yP1NnsHVc2tWgUTj+v5JkLucLRJ07J6MJmk/kcLsAx5RyLzY0
-         2iNA/nr5BOomusIV07o0mBAObRu5oFdTlJJyA=
-Received: by 10.151.24.11 with SMTP id b11mr2470700ybj.317.1281732935120; Fri,
- 13 Aug 2010 13:55:35 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 13:55:35 -0700 (PDT)
-In-Reply-To: <1281730410-20009-1-git-send-email-ComputerDruid@gmail.com>
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=BImNvHOVLEEFBfV9D0wm7ruekgFbEM+q6hChg56QXgbGHk4GnQfYPRn8V6RLHuF6J1
+         x+ethjnth2nkOVU46NfNMwYvK9uUHe4POfJen+oxROlymdlZxkQnmaaDq7c8JwYTbYls
+         0TOz35l6T1RQsIX5lATIUqcdubkQrxN+CdZ90=
+Received: by 10.213.33.135 with SMTP id h7mr1989787ebd.34.1281734620018;
+        Fri, 13 Aug 2010 14:23:40 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id v59sm4962964eeh.4.2010.08.13.14.23.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Aug 2010 14:23:38 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1Ok1it-0006Hs-4r; Fri, 13 Aug 2010 23:23:31 +0200
+Content-Disposition: inline
+In-Reply-To: <20100813200031.GD2003@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153507>
 
-On Fri, Aug 13, 2010 at 20:13, Daniel Johnson <computerdruid@gmail.com>=
- wrote:
-> ---
->> The current behaviour seems to me a bug introduced while git-fetch w=
-as
->> rewritten in C (the original found in contrib/examples reads from th=
-e
->> config only when no --tags/--no-tags option is given from the comman=
-d
->> line).
->>
->> Is this something we can protect with a test script from future brea=
-kages?
-> This should test that behavior. I'd appreciate feedback on how to imp=
-rove this
-> test. I'm not sure if this is the right name/number either.
 
-Thanks for tackling this.
+--YiEDa0DAkWCtVeE4
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> =C2=A0t/t5525-fetch-tagopt.sh | =C2=A0 44 +++++++++++++++++++++++++++=
-+++++++++++++++++
-> =C2=A01 files changed, 44 insertions(+), 0 deletions(-)
-> =C2=A0create mode 100755 t/t5525-fetch-tagopt.sh
->
-> diff --git a/t/t5525-fetch-tagopt.sh b/t/t5525-fetch-tagopt.sh
+Hi Jonathan,
 
-The test name looks fine.
+On Fri, Aug 13, 2010 at 03:00:31PM -0500, Jonathan Nieder wrote:
+> Clemens Buchacher wrote:
+>=20
+> > Since commit 2f82f760 (Take binary diffs into account for "git rebase")=
+, binary
+> > files are included in patch ID computation. Binary files are diffed usi=
+ng the
+> > text diff algorithm, however
+> [...]
+> > Instead of hashing the diff of binary files, use the post-image sha1, w=
+hich is
+> > just as unique. As a result, performance is much improved.
+>=20
+> Maybe it should use both the pre- and post-image?
 
-(The t55* test names are a bit of a mess with mixed pull/fetch, but
-that's not something that should be dealt with here)
+That would make the patch ID more correct in that it will identify
+a particular change. But ultimately, we want to know whether or not
+a change has been applied already. If the contents of a binary file
+are the same in both commits, this is almost certainly true,
+regardless of whether or not the pre-images match.
 
-> new file mode 100755
-> index 0000000..17bd407
-> --- /dev/null
-> +++ b/t/t5525-fetch-tagopt.sh
-> @@ -0,0 +1,44 @@
-> +
-> +#!/bin/sh
+So I think we get better behavior if we ignore the pre-image.
+Although the difference is probably minuscule.
 
-Is that an empty line before the test begins? The shebang should be on
-the first line.
+>=20
+> > diff --git a/diff.c b/diff.c
+> > index 17873f3..20fc6db 100644
+> > --- a/diff.c
+> > +++ b/diff.c
+> > @@ -3758,6 +3758,12 @@ static int diff_get_patch_id(struct diff_options=
+ *options, unsigned char *sha1)
+> >  					len2, p->two->path);
+> >  		git_SHA1_Update(&ctx, buffer, len1);
+> > =20
+> > +		if (diff_filespec_is_binary(p->two)) {
+> > +			len1 =3D sprintf(buffer, "%s", sha1_to_hex(p->two->sha1));
+> > +			git_SHA1_Update(&ctx, buffer, len1);
+>=20
+>=20
+> i.e., maybe also
+>=20
+> 			git_SHA1_Update(&ctx, sha1_to_hex(p->one->sha1), 40);
 
-> +test_description=3D'tagopt variable affects "git fetch" and is overr=
-idden by commandline.'
-> +
-> +. ./test-lib.sh
-> +
-> +setup_clone () {
-> + =C2=A0 =C2=A0 =C2=A0 (git clone --mirror . $1 &&
-> + =C2=A0 =C2=A0 =C2=A0 git remote add remote_$1 $1 &&
-> + =C2=A0 =C2=A0 =C2=A0 cd $1 &&
-> + =C2=A0 =C2=A0 =C2=A0 git tag tag_$1)
-> +}
+Thanks.
 
-Maybe only put the "cd $1 ..." inside a subshell for clarity.
+--YiEDa0DAkWCtVeE4
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-> +test_expect_success setup '
-> + =C2=A0 =C2=A0 =C2=A0 echo >file original &&
-> + =C2=A0 =C2=A0 =C2=A0 git add file &&
-> + =C2=A0 =C2=A0 =C2=A0 git commit -a -m original &&
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-Maybe this can use test_commit if you don't mind it creating a tag
-too.
+iQEcBAEBAgAGBQJMZbfTAAoJELKdZexG8uqM218H/24Ny32cWAH+yuTxlfvX5E4w
+d92xWRWnmZ2dI1CWxE9uysYk9J2v7E/z6XUmktcCOVe1c3d6Erske6tJfTx7yYuW
+yoEg9tu3NWypdV6tqhcghVyR6eiF0ecgd/B1qXX5u/MBsilHn8//BIhM/gx7YpDL
+qGe4yg0afB/hrtmcmkdxAbQoVLg2hzRVjiM/MfTr3xTFLw/P78sto9GxjxSvqO+k
+eYABvXtBxWF9PQyjlfwlDDrxHOyMOyCx4E01rkhWBxnWuaiWEIgBwkz1O3Ubr2AO
+UgU4u6suzU54GwOpNixzKQ3Lnn+BLRZZ7/eM4moyhlgK+1kgC3skbeUT2tx0urk=
+=Cnn3
+-----END PGP SIGNATURE-----
 
-> + =C2=A0 =C2=A0 =C2=A0 setup_clone one &&
-> + =C2=A0 =C2=A0 =C2=A0 git config remote.remote_one.tagopt --no-tags =
-&&
-> + =C2=A0 =C2=A0 =C2=A0 setup_clone two &&
-> + =C2=A0 =C2=A0 =C2=A0 git config remote.remote_two.tagopt --tags
-> + =C2=A0 =C2=A0 =C2=A0 '
-> +
-> +test_expect_success "fetch with tagopt=3D--no-tags does not get tag"=
- '
-> + =C2=A0 =C2=A0 =C2=A0 git fetch remote_one &&
-> + =C2=A0 =C2=A0 =C2=A0 ! (git show-ref tag_one)
-> + =C2=A0 =C2=A0 =C2=A0 '
-
-Doesn't need a subshell? You should also use:
-
-    test_must_fail git show-ref ...
-
-> +test_expect_success "fetch --tags with tagopt=3D--no-tags gets tag" =
-'
-> + =C2=A0 =C2=A0 =C2=A0 git fetch --tags remote_one &&
-> + =C2=A0 =C2=A0 =C2=A0 (git show-ref tag_one)
-> + =C2=A0 =C2=A0 =C2=A0 '
-
-Doesn't need a subshell?
-
-> +test_expect_success "fetch --no-tags with tagopt=3D--tags does not g=
-et tag" '
-> + =C2=A0 =C2=A0 =C2=A0 git fetch --no-tags remote_two &&
-> + =C2=A0 =C2=A0 =C2=A0 ! (git show-ref tag_two)
-> + =C2=A0 =C2=A0 =C2=A0 '
-> +
-> +test_expect_success "fetch with tagopt=3D--tags gets tag" '
-> + =C2=A0 =C2=A0 =C2=A0 git fetch remote_two &&
-> + =C2=A0 =C2=A0 =C2=A0 (git show-ref tag_two)
-> + =C2=A0 =C2=A0 =C2=A0 '
-> +test_done
-
-test_must_fail etc etc.
-
-Otherwise it looks good.
+--YiEDa0DAkWCtVeE4--
