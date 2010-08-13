@@ -1,78 +1,82 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: BUG: git log: fatal: internal error in diff-resolve-rename-copy
-Date: Fri, 13 Aug 2010 10:53:25 -0700
-Message-ID: <AANLkTinSUy9pDtsJizmQTTOsMOVEQ=7+U5Ri4=-RZmB-@mail.gmail.com>
-References: <AANLkTikPhWgeeLBV3dbLZ5UM3UDmkOmpqrmwqPmGfn7Z@mail.gmail.com> <7vhbiyl8ji.fsf@alter.siamese.dyndns.org>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: inotify daemon speedup for git [POC/HACK]
+Date: Fri, 13 Aug 2010 19:53:33 +0200
+Message-ID: <20100813175333.GC27540@nibiru.local>
+References: <20100727122018.GA26780@pvv.org> <AANLkTinuU6b1vmRFuBrA4Tc5H6gmC5cMP3Pa8EYz-8JE@mail.gmail.com> <9E67A084-4EDB-4CCB-A771-11B97107F4EF@gmail.com> <AANLkTi=oA33M4DmS5FyDx7Wn1DFrUGcmhSYkvcSYMc2r@mail.gmail.com> <20100728000009.GE25268@spearce.org> <AANLkTimkLrTwavErFkyaUTSVU-2s3me5f+cyqNFp7n+D@mail.gmail.com> <52EDBD9A-2961-4F66-88B3-07BF873FA994@gmail.com> <AANLkTi=TQnyATgJ0LSdR3qeeCVAgu+wOFcHmHUBguPiV@mail.gmail.com> <AANLkTinabaO3csi3TBRJKPTZ1zVGgK8-ijs6h1YUkT-n@mail.gmail.com> <AANLkTimqBSTRzcU++jW6izMgeA=HB00wBXQVHuSsn1oR@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Constantine Plotnikov <constantine.plotnikov@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Bo Yang <struggleyb.nku@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 19:54:46 2010
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 13 20:01:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OjySs-0002cP-0o
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 19:54:46 +0200
+	id 1OjyZO-0006I8-Nb
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 20:01:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761997Ab0HMRya convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 13:54:30 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:42085 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1761966Ab0HMRyS convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 13:54:18 -0400
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o7DHrjRh006779
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 13 Aug 2010 10:53:45 -0700
-Received: by iwn7 with SMTP id 7so85844iwn.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 10:53:45 -0700 (PDT)
-Received: by 10.231.149.12 with SMTP id r12mr1775847ibv.185.1281722025401;
- Fri, 13 Aug 2010 10:53:45 -0700 (PDT)
-Received: by 10.231.172.67 with HTTP; Fri, 13 Aug 2010 10:53:25 -0700 (PDT)
-In-Reply-To: <7vhbiyl8ji.fsf@alter.siamese.dyndns.org>
-X-Spam-Status: No, hits=-2.917 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S934700Ab0HMSBX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 14:01:23 -0400
+Received: from caprica.metux.de ([82.165.128.25]:34788 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S934675Ab0HMSBW (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 14:01:22 -0400
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o7DI11lH022796
+	for <git@vger.kernel.org>; Fri, 13 Aug 2010 20:01:01 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o7DI10sD022786
+	for git@vger.kernel.org; Fri, 13 Aug 2010 20:01:00 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o7DHrXUQ027248
+	for git@vger.kernel.org; Fri, 13 Aug 2010 19:53:33 +0200
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <AANLkTimqBSTRzcU++jW6izMgeA=HB00wBXQVHuSsn1oR@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153484>
 
-On Fri, Aug 13, 2010 at 10:36 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->
-> Another potential "funny" is this (unrelated to the reported issue).
->
-> The "--follow" logic is called from diff_tree_sha1() function, but th=
-e
-> input trees to diff_tree_sha1() are not necessarily the top-level tre=
-es
-> (compare_tree_entry() calls it while it recursively descends into
-> subtrees). =A0For example, with the example Constantine gave us, the =
-first
-> "try-to-follow-renames" call happens with the "base" set to "platform=
-/"
-> but the rename source is actually "lang-api/src/com/intellij/..."
-> hierarchy, so it is a wasted call. =A0I think we only want to run the=
- rename
-> following at the very top level, i.e. like the attached patch.
->
-> Linus, what do you think? =A0Am I missing something obvious?
+* Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
 
-I think you're right. You're certainly not missing anythng _obvious_.
-Iirc the only reason I put that 'follow' hack in diff_tree_sha1() was
-because that way I didn't need to worry about all the callers, but I
-didn't even think about the whole recursion issue.
+> But then we could as well drop git object store in favor of Fossil (OK
+> I'm going to far).
 
-So ack on that.
+You mean venti ?
 
-                Linus
+Actually: that's an idea I'm thinking about for quite a while :)
+
+But venti is yet lacking delete operations and differential
+compression. The first is unproblematic (even it would require
+rewriting the log areas in some ways to reclaim space), but
+for differential compression, the venti store would have to
+know a lot about the object's internal structure.
+
+I'm doing some bit reasearch in the area of distributed 
+content-addressed objects stores , designing an superstore 
+called "Nebulon" [1] with things like strong encryption and
+on-demand fetching/syncing. But getting git into it seems
+to be a bit tricky, at least the hashes would change ...
+
+
+cu
+
+[1] http://www.metux.de/index.php/de/nebulon-storage-cloud.html
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
