@@ -1,73 +1,119 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC/PATCHv2] t5525: test the tagopt variable and that it can be overridden
-Date: Fri, 13 Aug 2010 21:39:04 +0000
-Message-ID: <AANLkTikP5xsvfBt7Rq9CoNnF=7SE4-V6LBML=tDMtT_Q@mail.gmail.com>
-References: <AANLkTimYm+GmJ4BmZKOmcZkJf_wgeUiKhTs06qxex+0q@mail.gmail.com>
-	<1281734852-21413-1-git-send-email-ComputerDruid@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: jn/apply-filename-with-sp (Re: What's cooking in git.git (Aug
+ 2010, #02; Wed, 11))
+Date: Fri, 13 Aug 2010 23:44:50 +0200
+Message-ID: <4C65BCD2.6000701@kdbg.org>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org> <4C63BD9B.6000608@viscovery.net> <20100812224044.GK2029@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
-To: Daniel Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 23:39:12 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Greg Brockman <gdb@MIT.EDU>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Elijah Newren <newren@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 13 23:45:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok1y1-0002Vy-EA
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:39:09 +0200
+	id 1Ok23e-0005Pm-Jd
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:44:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754721Ab0HMVjG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 17:39:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:50502 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750969Ab0HMVjE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 17:39:04 -0400
-Received: by iwn7 with SMTP id 7so208168iwn.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:39:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ZT45SONlSkvL14/dZ3YIIHy2vHWyjK5K2qDiwZwpEq8=;
-        b=Udy/xOu3g9fTRGHKCOIuiuGEgJ7dODBvL6GY9JLwzYWV05yaPrtFkPyPPmJ7Zymq5t
-         e/uDvsgcdB8vs4TGcFAm+mpe01/EazfTKdg0Gbzkld1vYmi6z8P+m87vI/ZLI6ggz6qF
-         o7KHCCI5ppHP5wPTBFT7lW3S0k4DnDoYXj1Uc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CewoxkEOe4XJbax6VPmARPLjWe/yK6vdF9cs0Zmv1v+D9VRrGqMJWogXHrLApd0olx
-         S7XAErgmYN7SPKbP4lzL6z2U18eGQ0+BU7EluJmhpiJGg+8r0t/Qk+JpazYINP5ReAjb
-         Tgfbfyk+n2uLLLGxPb4qLvxhcsLbhhtQAP6tU=
-Received: by 10.231.147.131 with SMTP id l3mr2148492ibv.74.1281735544196; Fri,
- 13 Aug 2010 14:39:04 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 14:39:04 -0700 (PDT)
-In-Reply-To: <1281734852-21413-1-git-send-email-ComputerDruid@gmail.com>
+	id S1754855Ab0HMVow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 17:44:52 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:25833 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753343Ab0HMVow (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 17:44:52 -0400
+Received: from [192.168.0.200] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 22F071000F;
+	Fri, 13 Aug 2010 23:44:49 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
+In-Reply-To: <20100812224044.GK2029@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153515>
 
-On Fri, Aug 13, 2010 at 21:27, Daniel Johnson <computerdruid@gmail.com>=
- wrote:
-> ---
->>> @@ -0,0 +1,44 @@
->>> +
->>> +#!/bin/sh
+Am 13.08.2010 00:40, schrieb Jonathan Nieder:
+> Johannes Sixt wrote:
+>> Am 8/12/2010 1:35, schrieb Junio C Hamano:
+>
+>>> * jn/apply-filename-with-sp (2010-07-23) 4 commits
+>>>   - apply: Handle traditional patches with space in filename
+>>>   - t4135 (apply): use expand instead of pr for portability
+>>>   - tests: Test how well "git apply" copes with weird filenames
+>>>   - apply: Split quoted filename handling into new function
+>>>
+>>> Looked Ok.  Will merge to 'next'.
 >>
->> Is that an empty line before the test begins? The shebang should be =
-on
->> the first line.
-> Embarrassing. That's what I get for using yank/put and not paying clo=
-ser
-> attention. The rest is fixed too.
+>> The test cases that work with files with tabs must have a prerequisite;
+>> see t3600-rm.sh.
+>
+> Would this work?
+>
+> -- 8<  --
+> Subject: t4135 (apply): filenames with tabs are not usable on NTFS
+>
+> Move the code setting up the FUNNYNAMES prerequisite from
+> v1.3.0-rc1~67 (workaround fat/ntfs deficiences for t3600-rm.sh,
+> 2006-03-03) to test-lib and use it.
+>
+> Reported-by: Johannes Sixt<j6t@kdbg.org>
+> Signed-off-by: Jonathan Nieder<jrnieder@gmail.com>
 
-Nice, I haven't actually *run it* but it looks good, so provided that
-it passes tests when our beloved maintainer applies it:
+No, it needs this squashed in (warning, whitespace damaged), except that 
+the prerequisite EXPAND is nowhere defined - it is only a hint for you(?) 
+that we need something else there because we don't have expand on Windows.
 
-Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+I don't know why the test with quotes fails. It must be a bug in MSYS 
+bash, because the file system does not have any problems with quotes in 
+file names.
+
+diff --git a/t/t4135-apply-weird-filenames.sh 
+b/t/t4135-apply-weird-filenames.sh
+index 5c7165e..6730a30 100755
+--- a/t/t4135-apply-weird-filenames.sh
++++ b/t/t4135-apply-weird-filenames.sh
+@@ -88,10 +88,10 @@ try_filename() {
+  try_filename 'plain'            'postimage.txt'
+  try_filename 'with spaces'      'post image.txt'
+  try_filename 'with tab'         'post	image.txt' FUNNYNAMES
+-try_filename 'with backslash'   'post\image.txt'
+-try_filename 'with quote'       '"postimage".txt' '' success failure success
++try_filename 'with backslash'   'post\image.txt' BSLASHPSPEC
++try_filename 'with quote'       '"postimage".txt' FUNNYNAMES success 
+failure success
+
+-test_expect_success FULLDIFF 'whitespace-damaged traditional patch' '
++test_expect_success EXPAND,FULLDIFF 'whitespace-damaged traditional patch' '
+  	reset_preimage &&
+  	reset_subdirs &&
+  	echo postimage >b/postimage.txt &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 1e5640b..d50e787 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -963,8 +963,8 @@ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
+  f1='newline
+  embedded'
+  if
+-	>"$f1" 2>/dev/null &&
+-	>'tab	embedded' 2>/dev/null
++	{ >"$f1"; } 2>/dev/null &&
++	{ >'tab	embedded'; } 2>/dev/null
+  then
+  	test_set_prereq FUNNYNAMES
+  fi
+
+Without the braces in this check the error message is still printed. I 
+didn't test whether just writing 2>/dev/null first would suppress it as well.
+
+BTW, I would prefer to keep the test in t3600 and t4135, that it doesn't 
+happen for every other test script unnecessarily.
+
+-- Hannes
