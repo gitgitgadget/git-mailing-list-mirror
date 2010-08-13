@@ -1,73 +1,92 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/2] merge-recursive: Workaround unused variable warning
-Date: Thu, 12 Aug 2010 20:09:11 -0600
-Message-ID: <1281665352-10533-2-git-send-email-newren@gmail.com>
+Subject: [PATCH 2/2] Mark tests that use symlinks as needing SYMLINKS prerequisite
+Date: Thu, 12 Aug 2010 20:09:12 -0600
+Message-ID: <1281665352-10533-3-git-send-email-newren@gmail.com>
 References: <1281665352-10533-1-git-send-email-newren@gmail.com>
 Cc: gitster@pobox.com, Johannes Sixt <j.sixt@viscovery.net>,
 	Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 13 04:02:02 2010
+X-From: git-owner@vger.kernel.org Fri Aug 13 04:02:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ojjar-0007Bj-Jh
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 04:02:01 +0200
+	id 1Ojjb6-0007Eq-5e
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 04:02:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761267Ab0HMCB7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 12 Aug 2010 22:01:59 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61612 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761191Ab0HMCBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 12 Aug 2010 22:01:51 -0400
-Received: by gwb20 with SMTP id 20so698934gwb.19
-        for <git@vger.kernel.org>; Thu, 12 Aug 2010 19:01:50 -0700 (PDT)
+	id S1761273Ab0HMCCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 12 Aug 2010 22:02:00 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:44275 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761261Ab0HMCBw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 12 Aug 2010 22:01:52 -0400
+Received: by gyg10 with SMTP id 10so683320gyg.19
+        for <git@vger.kernel.org>; Thu, 12 Aug 2010 19:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=utx6TgrDuERT5xrmitOM4kOuzSIay4XyMBhxqzJ/S4A=;
-        b=iA+p+62rFQ2gnO4HlUChLR51g7esni3FWW7NcnrHxU9M7k0uT1k8zNQf9DSRILVV9a
-         QyHFts/Fdk9MNBMJmWsVfvfP7eQccB4odDaVx619bF0tUewbqpq551a3iMxETPsjIVKq
-         a9nCdIVnuFesU0mSCbqeq8zTdD2vU39ScrnD0=
+        bh=FW0lRY08dh1+SW5Qc0RPOk1CUh8jRKzK6CtECSVbpwE=;
+        b=cMvZovVSj2vveZUBMlgrDB8wdCPmAxQ1hGEvF9P8MXTvDPp8j3plfxqSzCQi0oTH9K
+         dWMCh0gsJnYP3qKyMfvkHol9tDW8FH0vKVm/yACY2MJtxSgfNzQwjgerRJkOxe227eB1
+         2/Ixzgl6Vqy4DfWQsoj+AUnbsIhzCJgXi/vzw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=vtp0HmlB+1uqR0IGPSWEPzPQjcnDCo7IvYfX9owFGJDMGoXho616RrKwdAly2vtWFy
-         Lpjxdg+nsusshG9zaI5ibKtukWVGKU7WwWvxK/uO4E601+RJzKhuM7boBVVluvdRQYiP
-         LeUYxqgnfd/mtt+lPjrY/4EuvRGj/qc3rJf/Y=
-Received: by 10.231.190.10 with SMTP id dg10mr950290ibb.46.1281664909956;
-        Thu, 12 Aug 2010 19:01:49 -0700 (PDT)
+        b=Z+L3n1ZqYC2m1naUwyKYCQuQWXLrss/kWw6u+0pCUmIjwqCPWwfysVPxybmPbs+3i0
+         GhvzBD02DHLduKHoysauV5TA/iXgU1tLXNq1WI/uStsbVvKZp2H+Tu2bCFGQFWrYYqrw
+         hjM+bAzHfmSQL21bLvy+8M0ED2acvZDr6e4FI=
+Received: by 10.231.146.141 with SMTP id h13mr1018866ibv.1.1281664912211;
+        Thu, 12 Aug 2010 19:01:52 -0700 (PDT)
 Received: from localhost.localdomain (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id h8sm625597ibk.21.2010.08.12.19.01.47
+        by mx.google.com with ESMTPS id h8sm625597ibk.21.2010.08.12.19.01.50
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 12 Aug 2010 19:01:49 -0700 (PDT)
+        Thu, 12 Aug 2010 19:01:51 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.121.gb1ae7a
 In-Reply-To: <1281665352-10533-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153459>
 
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ t/t3509-cherry-pick-merge-df.sh |    6 ++++++
+ t/t9350-fast-export.sh          |    2 +-
+ 2 files changed, 7 insertions(+), 1 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 9678c1d..7e32498 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1214,6 +1214,7 @@ static int process_df_entry(struct merge_options *o,
- 	/* We currently only handle D->F cases */
- 	assert((!o_sha && a_sha && !b_sha) ||
- 	       (!o_sha && !a_sha && b_sha));
-+	(void)o_sha;
+diff --git a/t/t3509-cherry-pick-merge-df.sh b/t/t3509-cherry-pick-merge-df.sh
+index 6e7ef84..93ad20d 100755
+--- a/t/t3509-cherry-pick-merge-df.sh
++++ b/t/t3509-cherry-pick-merge-df.sh
+@@ -3,6 +3,12 @@
+ test_description='Test cherry-pick with directory/file conflicts'
+ . ./test-lib.sh
  
- 	entry->processed = 1;
++if ! test_have_prereq SYMLINKS
++then
++	skip_all="symbolic links not supported - skipping tests"
++	test_done
++fi
++
+ test_expect_success 'Setup rename across paths each below D/F conflicts' '
+ 	mkdir a &&
+ 	>a/f &&
+diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
+index 1ee1461..27aea5c 100755
+--- a/t/t9350-fast-export.sh
++++ b/t/t9350-fast-export.sh
+@@ -376,7 +376,7 @@ test_expect_success 'tree_tag-obj'    'git fast-export tree_tag-obj'
+ test_expect_success 'tag-obj_tag'     'git fast-export tag-obj_tag'
+ test_expect_success 'tag-obj_tag-obj' 'git fast-export tag-obj_tag-obj'
  
+-test_expect_success 'directory becomes symlink'        '
++test_expect_success SYMLINKS 'directory becomes symlink'        '
+ 	git init dirtosymlink &&
+ 	git init result &&
+ 	(
 -- 
 1.7.2.1.119.gca9fe.dirty
