@@ -1,119 +1,116 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: jn/apply-filename-with-sp (Re: What's cooking in git.git (Aug
- 2010, #02; Wed, 11))
-Date: Fri, 13 Aug 2010 23:44:50 +0200
-Message-ID: <4C65BCD2.6000701@kdbg.org>
-References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org> <4C63BD9B.6000608@viscovery.net> <20100812224044.GK2029@burratino>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] hash binary sha1 into patch id
+Date: Fri, 13 Aug 2010 23:58:01 +0200
+Message-ID: <20100813215801.GA24534@localhost>
+References: <20100813094027.GA20906@localhost>
+ <20100813200031.GD2003@burratino>
+ <20100813212331.GA24127@localhost>
+ <20100813213726.GB2516@burratino>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Greg Brockman <gdb@MIT.EDU>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Elijah Newren <newren@gmail.com>
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5vNYLRcllDrimb99"
+Cc: git@vger.kernel.org, Marat Radchenko <marat@slonopotamus.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Junio C Hamano <gitster@pobox.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 13 23:45:00 2010
+X-From: git-owner@vger.kernel.org Fri Aug 13 23:58:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok23e-0005Pm-Jd
-	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:44:58 +0200
+	id 1Ok2GU-00038r-7U
+	for gcvg-git-2@lo.gmane.org; Fri, 13 Aug 2010 23:58:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754855Ab0HMVow (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 13 Aug 2010 17:44:52 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:25833 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753343Ab0HMVow (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 13 Aug 2010 17:44:52 -0400
-Received: from [192.168.0.200] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 22F071000F;
-	Fri, 13 Aug 2010 23:44:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.10) Gecko/20100512 Thunderbird/3.0.5
-In-Reply-To: <20100812224044.GK2029@burratino>
+	id S1754090Ab0HMV6I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 17:58:08 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:57586 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753911Ab0HMV6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 17:58:06 -0400
+Received: by eyg5 with SMTP id 5so516115eyg.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 14:58:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=52uP8RLGMKjVGZyryjI60piWPPpMT2K+Uin66GdXzq0=;
+        b=kG3OgRjWR8fhuhWqfmjOd2R7T72OCSbYrG1z2EAmnDbwVCsEl5MV85Goj/GgGuwbec
+         z4JptY4SJFfepLFyRxoO4xCUrAVEMvgFL5gEdUtEyYeYR2lWDDP7rkRqXoxW8bshxGHn
+         Ky9Vupv43S+Wh+zb2/BfbPIKf5REP/i3kkhU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=NvGtxcArYRDgINMZUcwt3QDTlKixPMfanvkUl6oe93VyGXm4LgjjQo33wqsNdkYq6O
+         pV6vyxeI2ksKTyzaekx8GYwmJbKlJWEQ2XPUfhXUCxcy40GhBF+ELeSk2ANTNvb6r329
+         kG09QVIYA2JkdpXCwvA8EhdNbwAHujfS4RBlk=
+Received: by 10.213.19.67 with SMTP id z3mr1138759eba.87.1281736685657;
+        Fri, 13 Aug 2010 14:58:05 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id a48sm5011893eei.1.2010.08.13.14.58.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 13 Aug 2010 14:58:04 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1Ok2GH-0006OV-It; Fri, 13 Aug 2010 23:58:01 +0200
+Content-Disposition: inline
+In-Reply-To: <20100813213726.GB2516@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153515>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153516>
 
-Am 13.08.2010 00:40, schrieb Jonathan Nieder:
-> Johannes Sixt wrote:
->> Am 8/12/2010 1:35, schrieb Junio C Hamano:
->
->>> * jn/apply-filename-with-sp (2010-07-23) 4 commits
->>>   - apply: Handle traditional patches with space in filename
->>>   - t4135 (apply): use expand instead of pr for portability
->>>   - tests: Test how well "git apply" copes with weird filenames
->>>   - apply: Split quoted filename handling into new function
->>>
->>> Looked Ok.  Will merge to 'next'.
->>
->> The test cases that work with files with tabs must have a prerequisite;
->> see t3600-rm.sh.
->
-> Would this work?
->
-> -- 8<  --
-> Subject: t4135 (apply): filenames with tabs are not usable on NTFS
->
-> Move the code setting up the FUNNYNAMES prerequisite from
-> v1.3.0-rc1~67 (workaround fat/ntfs deficiences for t3600-rm.sh,
-> 2006-03-03) to test-lib and use it.
->
-> Reported-by: Johannes Sixt<j6t@kdbg.org>
-> Signed-off-by: Jonathan Nieder<jrnieder@gmail.com>
 
-No, it needs this squashed in (warning, whitespace damaged), except that 
-the prerequisite EXPAND is nowhere defined - it is only a hint for you(?) 
-that we need something else there because we don't have expand on Windows.
+--5vNYLRcllDrimb99
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't know why the test with quotes fails. It must be a bug in MSYS 
-bash, because the file system does not have any problems with quotes in 
-file names.
+On Fri, Aug 13, 2010 at 04:37:26PM -0500, Jonathan Nieder wrote:
+>=20
+> FWIW what I was imagining was some structured binary format:
+>=20
+> With A some long string, patch 1:
+>=20
+>  A  --> AAA
+>=20
+> Patch 2:
+>=20
+>  AA --> AAA
+>=20
+> Ideally one would want an attempt to apply patch 2 to result in a
+> conflict.  Probably that is far-fetched.
 
-diff --git a/t/t4135-apply-weird-filenames.sh 
-b/t/t4135-apply-weird-filenames.sh
-index 5c7165e..6730a30 100755
---- a/t/t4135-apply-weird-filenames.sh
-+++ b/t/t4135-apply-weird-filenames.sh
-@@ -88,10 +88,10 @@ try_filename() {
-  try_filename 'plain'            'postimage.txt'
-  try_filename 'with spaces'      'post image.txt'
-  try_filename 'with tab'         'post	image.txt' FUNNYNAMES
--try_filename 'with backslash'   'post\image.txt'
--try_filename 'with quote'       '"postimage".txt' '' success failure success
-+try_filename 'with backslash'   'post\image.txt' BSLASHPSPEC
-+try_filename 'with quote'       '"postimage".txt' FUNNYNAMES success 
-failure success
+Actually, rebase will try to merge the respective branches and it
+will typically succeed, because the post-images are the same. It
+will fail due to conflict only if yet another patch has been
+applied upstream on top of patch 1.
 
--test_expect_success FULLDIFF 'whitespace-damaged traditional patch' '
-+test_expect_success EXPAND,FULLDIFF 'whitespace-damaged traditional patch' '
-  	reset_preimage &&
-  	reset_subdirs &&
-  	echo postimage >b/postimage.txt &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1e5640b..d50e787 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -963,8 +963,8 @@ test -z "$NO_GETTEXT" && test_set_prereq GETTEXT
-  f1='newline
-  embedded'
-  if
--	>"$f1" 2>/dev/null &&
--	>'tab	embedded' 2>/dev/null
-+	{ >"$f1"; } 2>/dev/null &&
-+	{ >'tab	embedded'; } 2>/dev/null
-  then
-  	test_set_prereq FUNNYNAMES
-  fi
+But that is also how textual changes behave. So for the sake of
+consistency, it makes sense to require the pre-images to be the
+same. I will resend an appropriate patch tomorrow.
 
-Without the braces in this check the error message is still printed. I 
-didn't test whether just writing 2>/dev/null first would suppress it as well.
+--5vNYLRcllDrimb99
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-BTW, I would prefer to keep the test in t3600 and t4135, that it doesn't 
-happen for every other test script unnecessarily.
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
--- Hannes
+iQEcBAEBAgAGBQJMZb/pAAoJELKdZexG8uqMKCEIAIZJpu8wXmTIRpU9p+TbNqvZ
+r0mP2jExTmGbgJd6f22brLRXgEqouHj8WPn93OHz2KiqJBMAH8/TEz7nv+lqEzH+
+4X/6A6U1HhS30W9Ipzrz5uJfuunsPto/rUR9pVb9jR5S/ncTU9FiCqlb90XuHLBt
+mFPx+vP5BvUuvivzJGqw6EMNgcLWvRBnoHUH7WsgqoSjAkMebZzynPFoSRY6h0I+
+m6/arX2VpzDboHXNM4gIo8pNItfX40L2ipPE423s0P8u1sFEkqKK+WMc9u2ykYgj
+Dn8r67tbbPC88zlLZ+8zlFmXzCgQcihAuafjt8P7RNFlmnvhnBNhEope62LhDh8=
+=KcP9
+-----END PGP SIGNATURE-----
+
+--5vNYLRcllDrimb99--
