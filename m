@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/5] compat: add strtok_r()
-Date: Fri, 13 Aug 2010 18:59:40 -0500
-Message-ID: <20100813235940.GD2153@burratino>
+Subject: [PATCH 2/5] vcs-svn: Rename dirent pool to build on Windows
+Date: Fri, 13 Aug 2010 19:01:34 -0500
+Message-ID: <20100814000133.GE2153@burratino>
 References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
  <4C63BD9B.6000608@viscovery.net>
  <20100813000848.GA8076@burratino>
@@ -15,46 +15,46 @@ Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	David Barr <david.barr@cordelta.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Aug 14 02:02:09 2010
+X-From: git-owner@vger.kernel.org Sat Aug 14 02:03:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok4CO-00013G-PT
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 02:02:09 +0200
+	id 1Ok4Dg-0001HV-15
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 02:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932114Ab0HNABw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 20:01:52 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:64026 "EHLO
+	id S932172Ab0HNADX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 20:03:23 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53190 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754313Ab0HNABv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 20:01:51 -0400
-Received: by vws3 with SMTP id 3so1671758vws.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 17:01:50 -0700 (PDT)
+	with ESMTP id S1756416Ab0HNADW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 20:03:22 -0400
+Received: by vws3 with SMTP id 3so1672659vws.19
+        for <git@vger.kernel.org>; Fri, 13 Aug 2010 17:03:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=aUjMMCL3HhRZsOpOJc8p/80XOg4Vd1cW420Ic9b+0V0=;
-        b=Wj3AxYFHay4J0/dEYabKn8qhYZEuan5DQAEm/4/g7rHp7XbNXkgKInCLgO/SYRX4Ik
-         yp5W2Fe9OGadBJHGNVlhDK35vASR2g+iZF6ETE0NgWPZkZIn82uMMC4eCFqX40xCDPfo
-         xyYX44kQfKXg3gwuq2ec18I5fzRQaRzmE4cPM=
+        bh=C4JOoaeTcuHfwFxK551rx/4U6Axca3B/WAYN1Hal0ts=;
+        b=ZBfCWtxzJHTC6tTJ2s5l28mjIrDWhsgDlK8M5Qpzeu0fiAf/yJ8b7MNc4ijsGTzAvs
+         YO84XOeFl1vA9y3hJaR5WLABgyQyFXMJC1YVvaHFEQ+glg0HWtJc/RYuH4hfuHySi7Ka
+         9YT+xSnZdB7rKoGPMDZRVR6s9szm8vkfIxPuc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=tGi2hIYoT9JSx5fuQzU6RtUqMEYoI8g5PvVOVpvCVLFRVN6tToHF16f491RgY9h1rG
-         tqygAupJp94rznWtqOexbSo5f9wWj+exaKAVUyZGJe5P868/bBucUoWayF3wNwfl69Ft
-         z5/Ql7GyiCpHcYYX0upURiNpynQJD+36b2TwM=
-Received: by 10.220.60.70 with SMTP id o6mr1318129vch.2.1281744110298;
-        Fri, 13 Aug 2010 17:01:50 -0700 (PDT)
+        b=M8iHFkj+8IC9SBTNwj+J9pguxdN2DDtaV1rI6dtLbQDUdclcOrGeIEIkUteLTaPnYw
+         xHAqBleepl0FHyWMJCHGqiwKqldunL2zJGmVl755rP3O6enf11/br4gXv1G09LH31K8Q
+         rErx+4DLeA9rSI0w229hPeT6uQBHw1nHWtsU8=
+Received: by 10.220.71.136 with SMTP id h8mr1264097vcj.135.1281744201742;
+        Fri, 13 Aug 2010 17:03:21 -0700 (PDT)
 Received: from burratino ([64.134.175.141])
-        by mx.google.com with ESMTPS id d12sm1228658vcn.14.2010.08.13.17.01.21
+        by mx.google.com with ESMTPS id m11sm1229035vcg.6.2010.08.13.17.03.15
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 13 Aug 2010 17:01:49 -0700 (PDT)
+        Fri, 13 Aug 2010 17:03:21 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100813234723.GC2153@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -62,183 +62,345 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153531>
 
-Windows does not have strtok_r (and while it does have an identical
-strtok_s, but it is not obvious how to use it).  Grab an
-implementation from glibc.
+dirent is #define=E2=80=99d to mingw_dirent in compat/mingw.h, with the
+result that
 
-The svn-fe tool uses strtok_r to parse paths.
+ obj_pool_gen(dirent, struct repo_dirent, 4096)
 
-Acked-by: Johannes Sixt <j6t@kdbg.org>
-Helped-by: Jakub Narebski <jnareb@gmail.com>
+creates functions with names like mingw_dirent_alloc and
+references to dirent_alloc go unresolved.  Rename the functions
+to dent_* to avoid this problem.
+
+Reported-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-I have carried over Hannes=E2=80=99s ack; hopefully that is okay.
+ vcs-svn/repo_tree.c |  146 +++++++++++++++++++++++++------------------=
+-------
+ 1 files changed, 73 insertions(+), 73 deletions(-)
 
- Makefile          |    8 +++++++
- compat/strtok_r.c |   61 +++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- config.mak.in     |    1 +
- configure.ac      |    6 +++++
- git-compat-util.h |    5 ++++
- 5 files changed, 81 insertions(+), 0 deletions(-)
- create mode 100644 compat/strtok_r.c
-
-diff --git a/Makefile b/Makefile
-index 9643b89..ec46ec4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -68,6 +68,8 @@ all::
- #
- # Define NO_MKSTEMPS if you don't have mkstemps in the C library.
- #
-+# Define NO_STRTOK_R if you don't have strtok_r in the C library.
-+#
- # Define NO_LIBGEN_H if you don't have libgen.h.
- #
- # Define NEEDS_LIBGEN if your libgen needs -lgen when linking
-@@ -1041,6 +1043,7 @@ ifeq ($(uname_S),Windows)
- 	NO_UNSETENV =3D YesPlease
- 	NO_STRCASESTR =3D YesPlease
- 	NO_STRLCPY =3D YesPlease
-+	NO_STRTOK_R =3D YesPlease
- 	NO_MEMMEM =3D YesPlease
- 	# NEEDS_LIBICONV =3D YesPlease
- 	NO_ICONV =3D YesPlease
-@@ -1095,6 +1098,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_UNSETENV =3D YesPlease
- 	NO_STRCASESTR =3D YesPlease
- 	NO_STRLCPY =3D YesPlease
-+	NO_STRTOK_R =3D YesPlease
- 	NO_MEMMEM =3D YesPlease
- 	NEEDS_LIBICONV =3D YesPlease
- 	OLD_ICONV =3D YesPlease
-@@ -1325,6 +1329,10 @@ endif
- ifdef NO_STRTOULL
- 	COMPAT_CFLAGS +=3D -DNO_STRTOULL
- endif
-+ifdef NO_STRTOK_R
-+	COMPAT_CFLAGS +=3D -DNO_STRTOK_R
-+	COMPAT_OBJS +=3D compat/strtok_r.o
-+endif
- ifdef NO_SETENV
- 	COMPAT_CFLAGS +=3D -DNO_SETENV
- 	COMPAT_OBJS +=3D compat/setenv.o
-diff --git a/compat/strtok_r.c b/compat/strtok_r.c
-new file mode 100644
-index 0000000..7b5d568
---- /dev/null
-+++ b/compat/strtok_r.c
-@@ -0,0 +1,61 @@
-+/* Reentrant string tokenizer.  Generic version.
-+   Copyright (C) 1991,1996-1999,2001,2004 Free Software Foundation, In=
-c.
-+   This file is part of the GNU C Library.
-+
-+   The GNU C Library is free software; you can redistribute it and/or
-+   modify it under the terms of the GNU Lesser General Public
-+   License as published by the Free Software Foundation; either
-+   version 2.1 of the License, or (at your option) any later version.
-+
-+   The GNU C Library is distributed in the hope that it will be useful=
-,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-+   Lesser General Public License for more details.
-+
-+   You should have received a copy of the GNU Lesser General Public
-+   License along with the GNU C Library; if not, write to the Free
-+   Software Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA
-+   02111-1307 USA.  */
-+
-+#include "../git-compat-util.h"
-+
-+/* Parse S into tokens separated by characters in DELIM.
-+   If S is NULL, the saved pointer in SAVE_PTR is used as
-+   the next starting point.  For example:
-+	char s[] =3D "-abc-=3D-def";
-+	char *sp;
-+	x =3D strtok_r(s, "-", &sp);	// x =3D "abc", sp =3D "=3D-def"
-+	x =3D strtok_r(NULL, "-=3D", &sp);	// x =3D "def", sp =3D NULL
-+	x =3D strtok_r(NULL, "=3D", &sp);	// x =3D NULL
-+		// s =3D "abc\0-def\0"
-+*/
-+char *
-+gitstrtok_r (char *s, const char *delim, char **save_ptr)
-+{
-+  char *token;
-+
-+  if (s =3D=3D NULL)
-+    s =3D *save_ptr;
-+
-+  /* Scan leading delimiters.  */
-+  s +=3D strspn (s, delim);
-+  if (*s =3D=3D '\0')
-+    {
-+      *save_ptr =3D s;
-+      return NULL;
-+    }
-+
-+  /* Find the end of the token.  */
-+  token =3D s;
-+  s =3D strpbrk (token, delim);
-+  if (s =3D=3D NULL)
-+    /* This token finishes the string.  */
-+    *save_ptr =3D token + strlen (token);
-+  else
-+    {
-+      /* Terminate the token and make *SAVE_PTR point past it.  */
-+      *s =3D '\0';
-+      *save_ptr =3D s + 1;
-+    }
-+  return token;
-+}
-diff --git a/config.mak.in b/config.mak.in
-index b4e65c3..4ffd774 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -46,6 +46,7 @@ NO_IPV6=3D@NO_IPV6@
- NO_C99_FORMAT=3D@NO_C99_FORMAT@
- NO_HSTRERROR=3D@NO_HSTRERROR@
- NO_STRCASESTR=3D@NO_STRCASESTR@
-+NO_STRTOK_R=3D@NO_STRTOK_R@
- NO_MEMMEM=3D@NO_MEMMEM@
- NO_STRLCPY=3D@NO_STRLCPY@
- NO_UINTMAX_T=3D@NO_UINTMAX_T@
-diff --git a/configure.ac b/configure.ac
-index 5601e8b..708e7b8 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -783,6 +783,12 @@ GIT_CHECK_FUNC(strcasestr,
- [NO_STRCASESTR=3DYesPlease])
- AC_SUBST(NO_STRCASESTR)
- #
-+# Define NO_STRTOK_R if you don't have strtok_r
-+GIT_CHECK_FUNC(strtok_r,
-+[NO_STRTOK_R=3D],
-+[NO_STRTOK_R=3DYesPlease])
-+AC_SUBST(NO_STRTOK_R)
-+#
- # Define NO_MEMMEM if you don't have memmem.
- GIT_CHECK_FUNC(memmem,
- [NO_MEMMEM=3D],
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 02a73ee..28d6b00 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -312,6 +312,11 @@ extern size_t gitstrlcpy(char *, const char *, siz=
-e_t);
- extern uintmax_t gitstrtoumax(const char *, char **, int);
- #endif
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+index c3d7ee7..e94d91d 100644
+--- a/vcs-svn/repo_tree.c
++++ b/vcs-svn/repo_tree.c
+@@ -30,7 +30,7 @@ struct repo_commit {
+ /* Memory pools for commit, dir and dirent */
+ obj_pool_gen(commit, struct repo_commit, 4096)
+ obj_pool_gen(dir, struct repo_dir, 4096)
+-obj_pool_gen(dirent, struct repo_dirent, 4096)
++obj_pool_gen(dent, struct repo_dirent, 4096)
 =20
-+#ifdef NO_STRTOK_R
-+#define strtok_r gitstrtok_r
-+extern char *gitstrtok_r(char *s, const char *delim, char **save_ptr);
-+#endif
-+
- #ifdef NO_HSTRERROR
- #define hstrerror githstrerror
- extern const char *githstrerror(int herror);
+ static uint32_t active_commit;
+ static uint32_t mark;
+@@ -38,7 +38,7 @@ static uint32_t mark;
+ static int repo_dirent_name_cmp(const void *a, const void *b);
+=20
+ /* Treap for directory entries */
+-trp_gen(static, dirent_, struct repo_dirent, children, dirent, repo_di=
+rent_name_cmp);
++trp_gen(static, dent_, struct repo_dirent, children, dent, repo_dirent=
+_name_cmp);
+=20
+ uint32_t next_blob_mark(void)
+ {
+@@ -52,27 +52,27 @@ static struct repo_dir *repo_commit_root_dir(struct=
+ repo_commit *commit)
+=20
+ static struct repo_dirent *repo_first_dirent(struct repo_dir *dir)
+ {
+-	return dirent_first(&dir->entries);
++	return dent_first(&dir->entries);
+ }
+=20
+ static int repo_dirent_name_cmp(const void *a, const void *b)
+ {
+-	const struct repo_dirent *dirent1 =3D a, *dirent2 =3D b;
+-	uint32_t a_offset =3D dirent1->name_offset;
+-	uint32_t b_offset =3D dirent2->name_offset;
++	const struct repo_dirent *dent1 =3D a, *dent2 =3D b;
++	uint32_t a_offset =3D dent1->name_offset;
++	uint32_t b_offset =3D dent2->name_offset;
+ 	return (a_offset > b_offset) - (a_offset < b_offset);
+ }
+=20
+-static int repo_dirent_is_dir(struct repo_dirent *dirent)
++static int repo_dirent_is_dir(struct repo_dirent *dent)
+ {
+-	return dirent !=3D NULL && dirent->mode =3D=3D REPO_MODE_DIR;
++	return dent !=3D NULL && dent->mode =3D=3D REPO_MODE_DIR;
+ }
+=20
+-static struct repo_dir *repo_dir_from_dirent(struct repo_dirent *diren=
+t)
++static struct repo_dir *repo_dir_from_dirent(struct repo_dirent *dent)
+ {
+-	if (!repo_dirent_is_dir(dirent))
++	if (!repo_dirent_is_dir(dent))
+ 		return NULL;
+-	return dir_pointer(dirent->content_offset);
++	return dir_pointer(dent->content_offset);
+ }
+=20
+ static struct repo_dir *repo_clone_dir(struct repo_dir *orig_dir)
+@@ -90,19 +90,19 @@ static struct repo_dir *repo_clone_dir(struct repo_=
+dir *orig_dir)
+ static struct repo_dirent *repo_read_dirent(uint32_t revision, uint32_=
+t *path)
+ {
+ 	uint32_t name =3D 0;
+-	struct repo_dirent *key =3D dirent_pointer(dirent_alloc(1));
++	struct repo_dirent *key =3D dent_pointer(dent_alloc(1));
+ 	struct repo_dir *dir =3D NULL;
+-	struct repo_dirent *dirent =3D NULL;
++	struct repo_dirent *dent =3D NULL;
+ 	dir =3D repo_commit_root_dir(commit_pointer(revision));
+ 	while (~(name =3D *path++)) {
+ 		key->name_offset =3D name;
+-		dirent =3D dirent_search(&dir->entries, key);
+-		if (dirent =3D=3D NULL || !repo_dirent_is_dir(dirent))
++		dent =3D dent_search(&dir->entries, key);
++		if (dent =3D=3D NULL || !repo_dirent_is_dir(dent))
+ 			break;
+-		dir =3D repo_dir_from_dirent(dirent);
++		dir =3D repo_dir_from_dirent(dent);
+ 	}
+-	dirent_free(1);
+-	return dirent;
++	dent_free(1);
++	return dent;
+ }
+=20
+ static void repo_write_dirent(uint32_t *path, uint32_t mode,
+@@ -111,7 +111,7 @@ static void repo_write_dirent(uint32_t *path, uint3=
+2_t mode,
+ 	uint32_t name, revision, dir_o =3D ~0, parent_dir_o =3D ~0;
+ 	struct repo_dir *dir;
+ 	struct repo_dirent *key;
+-	struct repo_dirent *dirent =3D NULL;
++	struct repo_dirent *dent =3D NULL;
+ 	revision =3D active_commit;
+ 	dir =3D repo_commit_root_dir(commit_pointer(revision));
+ 	dir =3D repo_clone_dir(dir);
+@@ -119,52 +119,52 @@ static void repo_write_dirent(uint32_t *path, uin=
+t32_t mode,
+ 	while (~(name =3D *path++)) {
+ 		parent_dir_o =3D dir_offset(dir);
+=20
+-		key =3D dirent_pointer(dirent_alloc(1));
++		key =3D dent_pointer(dent_alloc(1));
+ 		key->name_offset =3D name;
+=20
+-		dirent =3D dirent_search(&dir->entries, key);
+-		if (dirent =3D=3D NULL)
+-			dirent =3D key;
++		dent =3D dent_search(&dir->entries, key);
++		if (dent =3D=3D NULL)
++			dent =3D key;
+ 		else
+-			dirent_free(1);
++			dent_free(1);
+=20
+-		if (dirent =3D=3D key) {
+-			dirent->mode =3D REPO_MODE_DIR;
+-			dirent->content_offset =3D 0;
+-			dirent_insert(&dir->entries, dirent);
++		if (dent =3D=3D key) {
++			dent->mode =3D REPO_MODE_DIR;
++			dent->content_offset =3D 0;
++			dent_insert(&dir->entries, dent);
+ 		}
+=20
+-		if (dirent_offset(dirent) < dirent_pool.committed) {
+-			dir_o =3D repo_dirent_is_dir(dirent) ?
+-					dirent->content_offset : ~0;
+-			dirent_remove(&dir->entries, dirent);
+-			dirent =3D dirent_pointer(dirent_alloc(1));
+-			dirent->name_offset =3D name;
+-			dirent->mode =3D REPO_MODE_DIR;
+-			dirent->content_offset =3D dir_o;
+-			dirent_insert(&dir->entries, dirent);
++		if (dent_offset(dent) < dent_pool.committed) {
++			dir_o =3D repo_dirent_is_dir(dent) ?
++					dent->content_offset : ~0;
++			dent_remove(&dir->entries, dent);
++			dent =3D dent_pointer(dent_alloc(1));
++			dent->name_offset =3D name;
++			dent->mode =3D REPO_MODE_DIR;
++			dent->content_offset =3D dir_o;
++			dent_insert(&dir->entries, dent);
+ 		}
+=20
+-		dir =3D repo_dir_from_dirent(dirent);
++		dir =3D repo_dir_from_dirent(dent);
+ 		dir =3D repo_clone_dir(dir);
+-		dirent->content_offset =3D dir_offset(dir);
++		dent->content_offset =3D dir_offset(dir);
+ 	}
+-	if (dirent =3D=3D NULL)
++	if (dent =3D=3D NULL)
+ 		return;
+-	dirent->mode =3D mode;
+-	dirent->content_offset =3D content_offset;
++	dent->mode =3D mode;
++	dent->content_offset =3D content_offset;
+ 	if (del && ~parent_dir_o)
+-		dirent_remove(&dir_pointer(parent_dir_o)->entries, dirent);
++		dent_remove(&dir_pointer(parent_dir_o)->entries, dent);
+ }
+=20
+ uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
+ {
+ 	uint32_t mode =3D 0, content_offset =3D 0;
+-	struct repo_dirent *src_dirent;
+-	src_dirent =3D repo_read_dirent(revision, src);
+-	if (src_dirent !=3D NULL) {
+-		mode =3D src_dirent->mode;
+-		content_offset =3D src_dirent->content_offset;
++	struct repo_dirent *src_dent;
++	src_dent =3D repo_read_dirent(revision, src);
++	if (src_dent !=3D NULL) {
++		mode =3D src_dent->mode;
++		content_offset =3D src_dent->content_offset;
+ 		repo_write_dirent(dst, mode, content_offset, 0);
+ 	}
+ 	return mode;
+@@ -178,10 +178,10 @@ void repo_add(uint32_t *path, uint32_t mode, uint=
+32_t blob_mark)
+ uint32_t repo_replace(uint32_t *path, uint32_t blob_mark)
+ {
+ 	uint32_t mode =3D 0;
+-	struct repo_dirent *src_dirent;
+-	src_dirent =3D repo_read_dirent(active_commit, path);
+-	if (src_dirent !=3D NULL) {
+-		mode =3D src_dirent->mode;
++	struct repo_dirent *src_dent;
++	src_dent =3D repo_read_dirent(active_commit, path);
++	if (src_dent !=3D NULL) {
++		mode =3D src_dent->mode;
+ 		repo_write_dirent(path, mode, blob_mark, 0);
+ 	}
+ 	return mode;
+@@ -189,10 +189,10 @@ uint32_t repo_replace(uint32_t *path, uint32_t bl=
+ob_mark)
+=20
+ void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark)
+ {
+-	struct repo_dirent *src_dirent;
+-	src_dirent =3D repo_read_dirent(active_commit, path);
+-	if (src_dirent !=3D NULL && blob_mark =3D=3D 0)
+-		blob_mark =3D src_dirent->content_offset;
++	struct repo_dirent *src_dent;
++	src_dent =3D repo_read_dirent(active_commit, path);
++	if (src_dent !=3D NULL && blob_mark =3D=3D 0)
++		blob_mark =3D src_dent->content_offset;
+ 	repo_write_dirent(path, mode, blob_mark, 0);
+ }
+=20
+@@ -203,13 +203,13 @@ void repo_delete(uint32_t *path)
+=20
+ static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo=
+_dir *dir);
+=20
+-static void repo_git_add(uint32_t depth, uint32_t *path, struct repo_d=
+irent *dirent)
++static void repo_git_add(uint32_t depth, uint32_t *path, struct repo_d=
+irent *dent)
+ {
+-	if (repo_dirent_is_dir(dirent))
+-		repo_git_add_r(depth, path, repo_dir_from_dirent(dirent));
++	if (repo_dirent_is_dir(dent))
++		repo_git_add_r(depth, path, repo_dir_from_dirent(dent));
+ 	else
+ 		fast_export_modify(depth, path,
+-				   dirent->mode, dirent->content_offset);
++				   dent->mode, dent->content_offset);
+ }
+=20
+ static void repo_git_add_r(uint32_t depth, uint32_t *path, struct repo=
+_dir *dir)
+@@ -218,7 +218,7 @@ static void repo_git_add_r(uint32_t depth, uint32_t=
+ *path, struct repo_dir *dir)
+ 	while (de) {
+ 		path[depth] =3D de->name_offset;
+ 		repo_git_add(depth + 1, path, de);
+-		de =3D dirent_next(&dir->entries, de);
++		de =3D dent_next(&dir->entries, de);
+ 	}
+ }
+=20
+@@ -233,13 +233,13 @@ static void repo_diff_r(uint32_t depth, uint32_t =
+*path, struct repo_dir *dir1,
+ 		if (de1->name_offset < de2->name_offset) {
+ 			path[depth] =3D de1->name_offset;
+ 			fast_export_delete(depth + 1, path);
+-			de1 =3D dirent_next(&dir1->entries, de1);
++			de1 =3D dent_next(&dir1->entries, de1);
+ 			continue;
+ 		}
+ 		if (de1->name_offset > de2->name_offset) {
+ 			path[depth] =3D de2->name_offset;
+ 			repo_git_add(depth + 1, path, de2);
+-			de2 =3D dirent_next(&dir2->entries, de2);
++			de2 =3D dent_next(&dir2->entries, de2);
+ 			continue;
+ 		}
+ 		path[depth] =3D de1->name_offset;
+@@ -257,18 +257,18 @@ static void repo_diff_r(uint32_t depth, uint32_t =
+*path, struct repo_dir *dir1,
+ 			fast_export_delete(depth + 1, path);
+ 			repo_git_add(depth + 1, path, de2);
+ 		}
+-		de1 =3D dirent_next(&dir1->entries, de1);
+-		de2 =3D dirent_next(&dir2->entries, de2);
++		de1 =3D dent_next(&dir1->entries, de1);
++		de2 =3D dent_next(&dir2->entries, de2);
+ 	}
+ 	while (de1) {
+ 		path[depth] =3D de1->name_offset;
+ 		fast_export_delete(depth + 1, path);
+-		de1 =3D dirent_next(&dir1->entries, de1);
++		de1 =3D dent_next(&dir1->entries, de1);
+ 	}
+ 	while (de2) {
+ 		path[depth] =3D de2->name_offset;
+ 		repo_git_add(depth + 1, path, de2);
+-		de2 =3D dirent_next(&dir2->entries, de2);
++		de2 =3D dent_next(&dir2->entries, de2);
+ 	}
+ }
+=20
+@@ -286,7 +286,7 @@ void repo_commit(uint32_t revision, uint32_t author=
+, char *log, uint32_t uuid,
+ 		 uint32_t url, unsigned long timestamp)
+ {
+ 	fast_export_commit(revision, author, log, uuid, url, timestamp);
+-	dirent_commit();
++	dent_commit();
+ 	dir_commit();
+ 	active_commit =3D commit_alloc(1);
+ 	commit_pointer(active_commit)->root_dir_offset =3D
+@@ -297,10 +297,10 @@ static void mark_init(void)
+ {
+ 	uint32_t i;
+ 	mark =3D 0;
+-	for (i =3D 0; i < dirent_pool.size; i++)
+-		if (!repo_dirent_is_dir(dirent_pointer(i)) &&
+-		    dirent_pointer(i)->content_offset > mark)
+-			mark =3D dirent_pointer(i)->content_offset;
++	for (i =3D 0; i < dent_pool.size; i++)
++		if (!repo_dirent_is_dir(dent_pointer(i)) &&
++		    dent_pointer(i)->content_offset > mark)
++			mark =3D dent_pointer(i)->content_offset;
+ 	mark++;
+ }
+=20
+@@ -325,5 +325,5 @@ void repo_reset(void)
+ 	pool_reset();
+ 	commit_reset();
+ 	dir_reset();
+-	dirent_reset();
++	dent_reset();
+ }
 --=20
 1.7.2.1.544.ga752d.dirty
