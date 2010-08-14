@@ -1,61 +1,138 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] log: test for regression introduced in v1.7.2-rc0~103^2~2
-Date: Sat, 14 Aug 2010 01:19:24 +0000
-Message-ID: <AANLkTi=Na_K=9oXM7iyeKodWXyXuSy-0UL792igTEjEe@mail.gmail.com>
-References: <7vzkwqi10w.fsf@alter.siamese.dyndns.org>
-	<1281748247-8180-1-git-send-email-avarab@gmail.com>
+From: Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH RFC] parse_object: pass on the original sha1, not the replaced one
+Date: Sat, 14 Aug 2010 04:03:32 +0200
+Message-ID: <201008140403.33164.chriscool@tuxfamily.org>
+References: <1280579802-8606-1-git-send-email-pclouds@gmail.com> <201008130559.33640.chriscool@tuxfamily.org> <AANLkTinmJ0=VxFAaCXNjB2WAiPYHq3jXmRnzVoEiw_-f@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 14 03:19:38 2010
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 14 04:03:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ok5PN-00040F-KR
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 03:19:37 +0200
+	id 1Ok66H-0005vP-FA
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 04:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756755Ab0HNBT3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 13 Aug 2010 21:19:29 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:38540 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756728Ab0HNBT2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 13 Aug 2010 21:19:28 -0400
-Received: by ywh1 with SMTP id 1so1176437ywh.19
-        for <git@vger.kernel.org>; Fri, 13 Aug 2010 18:19:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rriKsQfD+g/ruOveEWdAiK+39tnmt5IpBpmyNGSIY2M=;
-        b=kveh6ierqTGlaJZ/Gw5o9GKpz1I7pA+PsQZxrSye6P8dj0cK+Att86HA4KpNaSnBJP
-         ij3Fh7//JY78InpmbKS4o4LTX6DjI9rtG/ZFqPYloswzs/PorHMpcI4sPTgcwpQiZWq9
-         PZ8HVYV1Z7cyNFEGQdrVKywcPc2FQGDJtfSbg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YcuRzqA5jTYtqo2ldcsr4Q0KiXOxqpgP232CukVaais2wwl9uKkhFYQW9qy9n9Uu7o
-         cY9xSk7QmTlzhEPEvdBv5vvPHhQ7guIMTi1Oam6q03s3/QWvl52PhIGtoT8F8gFqIryi
-         O7DNnJA7dMHWxMfdaNLmI1F/iLxchzKH6Dy8c=
-Received: by 10.231.169.10 with SMTP id w10mr2380937iby.106.1281748764614;
- Fri, 13 Aug 2010 18:19:24 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Fri, 13 Aug 2010 18:19:24 -0700 (PDT)
-In-Reply-To: <1281748247-8180-1-git-send-email-avarab@gmail.com>
+	id S1756830Ab0HNCDl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 13 Aug 2010 22:03:41 -0400
+Received: from smtp3-g21.free.fr ([212.27.42.3]:52210 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756735Ab0HNCDl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 13 Aug 2010 22:03:41 -0400
+Received: from style.localnet (unknown [82.243.130.161])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id B0B8C818042;
+	Sat, 14 Aug 2010 04:03:34 +0200 (CEST)
+User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; x86_64; ; )
+In-Reply-To: <AANLkTinmJ0=VxFAaCXNjB2WAiPYHq3jXmRnzVoEiw_-f@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153541>
 
-On Sat, Aug 14, 2010 at 01:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> Add a regression test for the git log -M --follow --name-only bug
-> introduced in v1.7.2-rc0~103^2~2
+On Friday 13 August 2010 11:02:40 Nguyen Thai Ngoc Duy wrote:
+> On Fri, Aug 13, 2010 at 1:59 PM, Christian Couder
+> 
+> <chriscool@tuxfamily.org> wrote:
+> > On Saturday 07 August 2010 06:03:05 Nguyen Thai Ngoc Duy wrote:
+> >> On Thu, Aug 5, 2010 at 9:41 PM, Christian Couder
+> >> 
+> >> <chriscool@tuxfamily.org> wrote:
+> >> > It looks like parse_commit() is buggy regarding replaced objects. But
+> >> > I am not sure how it should be fixed.
+> >> 
+> >> It could be fixed the same way you did with parse_object(): replace
+> >> read_sha1_file() with read_sha1_file_repl(). You would also need to
+> >> fix parse_tree() and parse_tag(). But..
+> >> 
+> >> > Anyway if you use parse_object(), then you don't need parse_commit().
+> >> > So if possible you should use parse_object() instead of both
+> >> > lookup_commit() and parse_commit().
+> >> 
+> >> That's how those functions are used. For example, in
+> >> traverse_commit_list(), lookup_*() may be called and uninteresting
+> >> objects marked UNINTERESTING. Later on in process_{tree,blob,tag},
+> >> parse_* may be called if their content is interesting.
+> >> 
+> >> To me, the fix above will leave a gap when object->sha1 is the
+> >> original sha1, until parse_*() is called. It just does not sound good.
+> > 
+> > What do you think about adding a parse_commit_repl() function like the
+> > patch below and then using it instead of parse_commit()?
+> 
+> How do you plan to use this new function? #define parse_commit(c)
+> parse_commit_repl(c) or use the new function explictly when needed?
 
-AKA "we didn't have any tests for log's --name-only *at all*".
+We have to use the new function explicitly instead of parse_commit() but I 
+think in most cases we just need to change parse_commit(stuff) into 
+parse_commit_repl(&stuff) and it will work.
+ 
+> You are going to need parse_tree_repl() too 
+
+Yes, probably, I did not look at that yet.
+
+> unless you declare
+> tree/blob replacement is not supported and make git-replace refuse
+> blob/tree replacement.
+
+I think they should be supported as much as possible in the long run but it is 
+not as important as supporting commits.
+
+> Another thing to address is, there will be a duration between
+> lookup_commit() and parse_commit_repl(), where object.sha1 is the
+> original one. If it is saved elsewhere, troubles are ahead.
+
+Yes, parse_commit_repl() may not be the only solution needed in some cases but 
+I think it is good enough in most cases.
+
+> > ------- >8 ---------------------------------------------------
+> > 
+> > diff --git a/commit.c b/commit.c
+> > index 652c1ba..183a735 100644
+> > --- a/commit.c
+> > +++ b/commit.c
+> > @@ -316,6 +316,50 @@ int parse_commit(struct commit *item)
+> >        return ret;
+> >  }
+> > 
+> > +int parse_commit_repl(struct commit **commit)
+> > +{
+> > +       enum object_type type;
+> > +       void *buffer;
+> > +       unsigned long size;
+> > +       int ret;
+> > +       const unsigned char *repl;
+> > +       struct commit *item = *commit;
+> > +
+> > +       if (!item)
+> > +               return -1;
+> > +       if (item->object.parsed)
+> > +               return 0;
+> > +       buffer = read_sha1_file_repl(item->object.sha1, &type, &size,
+> > &repl); +       if (!buffer)
+> > +               return error("Could not read %s",
+> > +                            sha1_to_hex(item->object.sha1));
+> > +
+> > +       if (item->object.sha1 != repl) {
+> > +               struct commit *repl_item = lookup_commit(repl);
+> > +               if (!repl_item) {
+> > +                       free(buffer);
+> > +                       return error("Bad replacement %s for commit %s",
+> > +                                    sha1_to_hex(repl),
+> > +                                    sha1_to_hex(item->object.sha1));
+> > +               }
+> 
+> You need to use lookup_object() instead here. lookup_commit() wil
+> create new object if "repl" is not found.
+
+We are inside the "if (item->object.sha1 != repl)" block, so we know that we 
+will have to do "*commit = repl_item" with a repl_item that is different from 
+item. So we have to create the repl_item commit if it doesn't exist.
+
+Thanks,
+Christian.
