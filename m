@@ -1,104 +1,102 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb not friendly to firefox revived
-Date: Sat, 14 Aug 2010 14:33:33 +0200
-Message-ID: <201008141433.35451.jnareb@gmail.com>
-References: <20100801195138.GA1980@pengutronix.de> <4C6670EE.3060806@gmail.com> <AANLkTimR9Wkz+YOchyjvO8fgAwk5YsGtcpMOpyZY4Fjv@mail.gmail.com>
+Subject: Re: Basic Git usage
+Date: Sat, 14 Aug 2010 05:39:16 -0700 (PDT)
+Message-ID: <m3hbix2wss.fsf@localhost.localdomain>
+References: <1281760358285-5422412.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	"Uwe =?utf-8?q?Kleine-K=C3=B6nig?=" <u.kleine-koenig@pengutronix.de>,
-	git@vger.kernel.org, kernel@pengutronix.de
-To: "=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason" 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 14 14:33:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: hogsolo <greg@localdirt.com>
+X-From: git-owner@vger.kernel.org Sat Aug 14 14:39:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkFv4-0001TU-Eq
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 14:33:02 +0200
+	id 1OkG1F-00042Z-3t
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 14:39:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756121Ab0HNMc5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Aug 2010 08:32:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35725 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756040Ab0HNMc5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Aug 2010 08:32:57 -0400
-Received: by bwz3 with SMTP id 3so1660787bwz.19
-        for <git@vger.kernel.org>; Sat, 14 Aug 2010 05:32:55 -0700 (PDT)
+	id S1756172Ab0HNMjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Aug 2010 08:39:19 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:40437 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756105Ab0HNMjS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Aug 2010 08:39:18 -0400
+Received: by fxm13 with SMTP id 13so2254894fxm.19
+        for <git@vger.kernel.org>; Sat, 14 Aug 2010 05:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=okIOxi9kOcWWVneerv5DJs511M6Q39UAoPtKtyVQZcE=;
-        b=PhH1rDBWbD8JTSfztS7yZRepM4njm9KtNobCXwVLS+zCQ/+oEZVb3F+Gv4wKJbh4Qg
-         RfOFGJBEwDz6xmm7lIIMLZzL5/zHXojOVl+scYXSuuVNV2T+cd6uyTNWwO1fY8qceNjI
-         BO1j8p5DSVjrp5ZTIiV8LwsnPKP9GDET7ZLHI=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=UNLBvjE9VTh2k00d/cH7A7YuujmS5rsVgCxc0TmsbGw=;
+        b=hKO7FLMEsIZm4YXF4Hq/0NQLh2J6uhMr20yshvNqwSAHr4Uy9dOClKQaHKTmSsZABk
+         IotqUeOm10IKpEa3514B7Es6MZFPo5CNUMd4scmsRdET/nFdNLnAyby/ZHJRHEQm/ogx
+         oZ4+MmVD1WqIMoOI1RvKZqOrkTI+vfb/S0Two=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hr718eiXWnHxOu3C0DrW/zrluGO6aM3t269i4/UzlAw/Vzw7n22joGXmP3mdPm3+WW
-         Po6t8JGgnNAMQ7bEWXBOBLYqJ9leu+M/63qDfbK7ncZ9VNsjZCrPk+UdDked5cDUMl6x
-         B/j2o1QivwpRrE7+hV0Ok4A+OQh4m5eBJEV0E=
-Received: by 10.204.47.193 with SMTP id o1mr1626224bkf.134.1281789175772;
-        Sat, 14 Aug 2010 05:32:55 -0700 (PDT)
-Received: from [192.168.1.13] (abvh53.neoplus.adsl.tpnet.pl [83.8.205.53])
-        by mx.google.com with ESMTPS id d27sm483167bku.10.2010.08.14.05.32.53
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=TKeE9CfPhVV0LLVfgPZR3fZyu5zlnvWGBlAm6Np7m9XPhq4BXmiBY0NihySZzR0eNJ
+         3rM6J15y3+U1peyQzhJaxKZNJoHhTOHmqZjJGl92yGp78hhCpOribfANy/BjeQKsNDEi
+         vGi2SbPG0ohzmNYn03mn5CFbkNwNT7W0fp6uI=
+Received: by 10.223.113.13 with SMTP id y13mr3190567fap.37.1281789556775;
+        Sat, 14 Aug 2010 05:39:16 -0700 (PDT)
+Received: from localhost.localdomain (abvh53.neoplus.adsl.tpnet.pl [83.8.205.53])
+        by mx.google.com with ESMTPS id b36sm1556852faq.11.2010.08.14.05.39.15
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 14 Aug 2010 05:32:54 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTimR9Wkz+YOchyjvO8fgAwk5YsGtcpMOpyZY4Fjv@mail.gmail.com>
-Content-Disposition: inline
+        Sat, 14 Aug 2010 05:39:16 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o7ECdV4W001709;
+	Sat, 14 Aug 2010 14:39:42 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o7ECdGpD001699;
+	Sat, 14 Aug 2010 14:39:16 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1281760358285-5422412.post@n2.nabble.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153557>
 
-On Sat, 14 Aug 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> 2010/8/14 Stephen Boyd <bebarino@gmail.com>:
->> =C2=A0On 08/03/2010 02:50 PM, Jakub Narebski wrote:
->>>
->>> +
->>> + =C2=A0 =C2=A0 =C2=A0 my $title =3D to_utf8("Search for commits $p=
-erformed by $author");
->>> + =C2=A0 =C2=A0 =C2=A0 $title =3D~ s/[[:cntrl:]]/?/g;
->>> +
->>>
->>
->> Isn't it possible that other data coming from git could have escape
->> characters in them such as the commit subject line? In which case th=
-is same
->> bug would occur?
->>
->> Therefore isn't it better to strip out control characters (that's wh=
-at this
->> patch is doing right?) in esc_html?
->=20
-> I don't think stripping them out is the right thing either, hiding
-> from you that something is Really Wrong (binary garbage in patches)
-> isn't good.
->=20
-> Something like this would be better:
->=20
->     s/([[:cntrl:]])/sprintf("\\%03x", ord $1)/ge
+hogsolo <greg@localdirt.com> writes:
 
-Or=20
-      s|([[:cntrl:]])|quot_cec($1)|eg;
+> Hi, Im new to Git, formerly an SVN user.
+>
+> I have a master repo and have created a branch. I want to work in both at
+> the same time. I want to change some files in the master, then switch to the
+> branch ( git checkout branchname) , work on some files, then switch back to
+> the master. 
+>
+> However git wont let me switch back to the master until I have added,
+> committed and pushed my files in the branch. 
+>
+> Is this correct behavior for git? It would seem that I not be REQUIRED to
+> check in anything I was working on before switching between branch and
+> master, but that's the behavior I'm seeing via error messages.
 
-But is it worth it?  This is about _title_ attribute, shown only on=20
-mouseover (mouse hover).
+Git wouldn't allow you to switch a branch ('git checkout <branch>') if
+you have uncomitted changes that would conflict with the branch you
+switch to.  For example if you have uncomitted changes to file 'foo',
+and this file is different on the branch you switch to, then git rightly
+refuses to switch branches.
+
+You can tell git to try to merge changes with
+
+  git checkout -m <branch>
+
+or you can force git to discard your local changes with
+
+  git checkout -f <branch>
+
+or you can stash away your changes before switching branch.
 
 
-But perhaps it would be worth it to add 'prep_attr' and 'esc_attr'
-functions, though esc_html can be used in those places where esc_attr
-would be needed...
+In no case _pushing_ changes is a requirement.
 
---=20
+-- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
