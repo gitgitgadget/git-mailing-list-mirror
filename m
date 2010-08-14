@@ -1,99 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] ls-tree: show size of trees with -l
-Date: Sat, 14 Aug 2010 16:40:11 +0200
-Message-ID: <201008141640.14745.jnareb@gmail.com>
-References: <1281730823-10797-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] git-svn: fix fetch with deleted tag
+Date: Sat, 14 Aug 2010 14:52:48 +0000
+Message-ID: <AANLkTinpLUyQP=6XktduWAmSHg3CgcT3Y7cMJ9FQ4by_@mail.gmail.com>
+References: <1281794831-33347-1-git-send-email-ddkilzer@kilzer.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 14 16:39:55 2010
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: "David D. Kilzer" <ddkilzer@kilzer.net>
+X-From: git-owner@vger.kernel.org Sat Aug 14 16:53:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkHto-0001fI-R1
-	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 16:39:53 +0200
+	id 1OkI6V-0006xK-DB
+	for gcvg-git-2@lo.gmane.org; Sat, 14 Aug 2010 16:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab0HNOjr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Aug 2010 10:39:47 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64933 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756662Ab0HNOjq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 14 Aug 2010 10:39:46 -0400
-Received: by fxm13 with SMTP id 13so2284486fxm.19
-        for <git@vger.kernel.org>; Sat, 14 Aug 2010 07:39:45 -0700 (PDT)
+	id S1756789Ab0HNOwv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Aug 2010 10:52:51 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:45686 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756708Ab0HNOwu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 14 Aug 2010 10:52:50 -0400
+Received: by gxk23 with SMTP id 23so1396160gxk.19
+        for <git@vger.kernel.org>; Sat, 14 Aug 2010 07:52:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=o5qr0WrUbmYQuFOXzedSLr8uCv5r2iBOw0WXAukFxJs=;
-        b=Hb4WYNk3arjXIpgB413xPFV8Zvyyal90TK9DKUCyHwCrCax7hL62nTWQen8m2yJFM8
-         kmGdn7ZK3QZ/HVrYetOB2CqxwyA+JvXst8thZztgI+44rpxwD2SJpuTKTscEmjDmkXLn
-         kuP0aksCxfEmGugsWOdvXnYziufjuCVKTLQtg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sGOSGPxhkB6Z0RJZOYbQaeWvxTVPv55C6tb/V8CP4Bg=;
+        b=v7ZujYEEuNnfYstXMx0HRPFO8mGKqXMCnrcbBUS6lXLXcIkgTVVWzonR47NWd5Da5V
+         CKTxFSX1HR0PlGuRsRIg/TQNVQvwN798cTC4SQKSAjUGgZxEZZny9dq7+Mdu9edKH4nF
+         7j0TBSwi/m56uiXFqkvfebVN0AwM31VlM2/FI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KcLT9rmkj3DIenMiISm+2+Qe1k8dNSnsEHMiI3+4pulm4YkX0W2CP0DbVAUTsRD+Zp
-         OW17bIqzrlgxwZwVFJ1lAPgpcwlahMnNocqDUgZZ6I7hlfekDAS6ZSGiE8EPMePnUNML
-         W/MgKmXFz86JDntaDL+bS1wNrqasiW+j/wfe0=
-Received: by 10.223.121.133 with SMTP id h5mr3249223far.74.1281796785058;
-        Sat, 14 Aug 2010 07:39:45 -0700 (PDT)
-Received: from [192.168.1.13] (abvh53.neoplus.adsl.tpnet.pl [83.8.205.53])
-        by mx.google.com with ESMTPS id b9sm1590921faq.31.2010.08.14.07.39.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 14 Aug 2010 07:39:44 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1281730823-10797-1-git-send-email-pclouds@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AzL2Fasm6YiUjWmsqK8hRVromqf80uZndXUbh6I/z4LQhIn9pjdKqsIsxLczE/KhJX
+         NkCsugnGLI43NsQiVj2SgpqkJxrIyxCkpsSXo6QxNqxrudLlXUIn3rt/ZD8PoYB+y7x7
+         FDdY8jF4np25OFYEeCgZUkh+tyMSYJX8gxaG8=
+Received: by 10.231.15.195 with SMTP id l3mr2877891iba.188.1281797568934; Sat,
+ 14 Aug 2010 07:52:48 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Sat, 14 Aug 2010 07:52:48 -0700 (PDT)
+In-Reply-To: <1281794831-33347-1-git-send-email-ddkilzer@kilzer.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153562>
 
-On Fri, 13 Apr 2010, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Sat, Aug 14, 2010 at 14:07, David D. Kilzer <ddkilzer@kilzer.net> wr=
+ote:
 
-> In commit a5bbda8 (Add an option to git-ls-tree to display also the
-> size of blob), Jakub said that size of non-blob entries had no
-> meaning therefore dashes were printed instead.
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 my ($url, undef, undef) =3D ::cmt_metadata($max_commit);
 
-I wrote that?
+This can just be:
 
->=20
-> I would say tree size, along with blob size, helps estimate bandwidth
-> needed to transfer a single commit, for example. Of course it's not
-> completely accurate as all objects will be compressed. But it gives a
-> rough figure to compare.
->=20
-> Pack v4 has not come yet (and it's been three years, I truely hope it
-> will come next year). When it comes, I will gladly send a revert patc=
-h
-> of this one if it proves too expensive to compute tree size.
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
+    my ($url) =3D ::cmt_metadata($max_commit);
 
-Actually "git ls-tree -l <tree-ish>" doesn't show size of tree objects
-because packv4 was to be ready soon, and in packv4 trees would be store=
-d
-decomposed, so getting size of tree object (e.g. using git-cat-file) is
-would be costly because git would have to re-generate tree object just=20
-to get its size (if it is in packfile).
+Perl will throw the extra arguments away for you.
 
-But we don't have packv4 yet, even though it is 3 years since a5bbda8.
-It looks like packv4 development moves with the speed of Perl 6=20
-development.  But if Rakudo * (Perl 6 implementation) could have get=20
-released (even if it is developers release), then there is hope for=20
-packv4 yet... I hope...
+> +test_expect_success 'setup svn repo' '
+> + =C2=A0 =C2=A0 =C2=A0 mkdir -p import/trunk/subdir &&
+> + =C2=A0 =C2=A0 =C2=A0 mkdir -p import/branches &&
+> + =C2=A0 =C2=A0 =C2=A0 mkdir -p import/tags &&
+> + =C2=A0 =C2=A0 =C2=A0 echo "base" > import/trunk/subdir/file &&
 
---=20
-Jakub Narebski
-Poland
+Junio usually prefers the ">foo" style to "> foo".
+
+> + =C2=A0 =C2=A0 =C2=A0 cd svn_project &&
+> +
+> + =C2=A0 =C2=A0 =C2=A0 echo "trunk change" >> subdir/file &&
+> + =C2=A0 =C2=A0 =C2=A0 svn_cmd ci -m "trunk change" subdir/file &&
+> +
+> + =C2=A0 =C2=A0 =C2=A0 svn_cmd switch "$svnrepo/branches/mybranch/tru=
+nk" &&
+> + =C2=A0 =C2=A0 =C2=A0 echo "branch change" >> subdir/file &&
+> + =C2=A0 =C2=A0 =C2=A0 svn_cmd ci -m "branch change" subdir/file &&
+> +
+> + =C2=A0 =C2=A0 =C2=A0 cd .. &&
+
+If you use a subshell here it'll cd back for you.
+
+> +++ b/t/t9156-git-svn-fetch-deleted-tag-2.sh
+> @@ -0,0 +1,45 @@
+> +#!/bin/sh
+> +
+> +test_description=3D'git svn fetch deleted tag 2'
+
+Any reason not to include both of these in the same file? Just to
+avoid having to manually reset the repository?
+
+</nitpicks>
