@@ -1,60 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] push: mention "git pull" in error message for non-fast forwards
-Date: Sun, 15 Aug 2010 19:34:14 +0200
-Message-ID: <vpqmxsnye3t.fsf@bauges.imag.fr>
-References: <1280756564-3932-1-git-send-email-Matthieu.Moy@imag.fr>
-	<vpqvd7gp2q6.fsf@bauges.imag.fr>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: windows smoke tester (was Re: What's cooking in git.git (Aug
+ 2010, #02; Wed, 11))
+Date: Mon, 16 Aug 2010 01:39:40 +0800
+Message-ID: <AANLkTin2tS-wuaOVepswfsWeubHjf6VRdUULMwWrkb1+@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+	<4C63BD9B.6000608@viscovery.net>
+	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
+	<AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>
+	<AANLkTina+62MczLNhXC6VCtz_kQZ_t0+uZ8fH=vTV=XO@mail.gmail.com>
+	<4C64308D.8030000@gmail.com>
+	<AANLkTikh14FVmE6E78FNRvSG0B_5ZmNcOLSwye4ExNVx@mail.gmail.com>
+	<4C647360.50304@gmail.com>
+	<AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
+	<4C647C85.2080109@gmail.com>
+	<AANLkTikuy3q8JrppTr+YPwZHFh2PNk+An2qvdoWiuAJH@mail.gmail.com>
+	<4C65E660.9030707@gmail.com>
+	<AANLkTi=y-j=2_uX8c2cBR+fpouAaOGu032tT9UCnf8C2@mail.gmail.com>
+	<AANLkTi=By2s0YyecQX1V8NXZWBxELtpgCrqJrTiHC+=W@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 15 19:38:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Chris Packham <judge.packham@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	kusmabite@gmail.com
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 15 19:39:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkhAA-00044A-HY
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 19:38:26 +0200
+	id 1OkhBT-0004dZ-Ru
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 19:39:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758507Ab0HORiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Aug 2010 13:38:09 -0400
-Received: from imag.imag.fr ([129.88.30.1]:46847 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758104Ab0HORiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Aug 2010 13:38:08 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7FHYEsr012100
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 15 Aug 2010 19:34:14 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Okh66-00067L-Iu; Sun, 15 Aug 2010 19:34:14 +0200
-In-Reply-To: <vpqvd7gp2q6.fsf@bauges.imag.fr> (Matthieu Moy's message of "Thu\, 12 Aug 2010 12\:03\:29 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sun, 15 Aug 2010 19:34:15 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S932406Ab0HORjm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 13:39:42 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:61348 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932307Ab0HORjm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 13:39:42 -0400
+Received: by ewy23 with SMTP id 23so2003905ewy.19
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 10:39:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=m2l1pij981aOztWNKr4HTaj2jgHm24c9m6vl7bFnLLI=;
+        b=XANF+vHuPyLgd0F77ulgP8rcTlrxUcGExDDV5bgqLhmprTizY/1lO8r/JgU72tYUE5
+         3em4T0XwQLPhPrTIm2fxMtdN4WOLBiWcVMSBFrmj0k5EeNdJKNLCuUkoB8LuOBsPLS4p
+         i/WNpVuUd2uBoPdb+sz+KdpA9WqBYjlDiUCEM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=N6ara/DW/sbPQRQ7dkh9hUJsnyJYdO7oM/AqgLaKujYiY4lz1bKBPdHrCY/BvZviiz
+         791PVv39fRQDrVmJKWojHqqtqz+Oh1GJtT4pqGMYg7PIiOY0s3XS5W+lly1jUHk3TbWL
+         +KDV9zfMkXff0+x7ckcEDt1lAyDfSnSGkHiNQ=
+Received: by 10.213.10.147 with SMTP id p19mr3946045ebp.66.1281893980595; Sun,
+ 15 Aug 2010 10:39:40 -0700 (PDT)
+Received: by 10.213.22.134 with HTTP; Sun, 15 Aug 2010 10:39:40 -0700 (PDT)
+In-Reply-To: <AANLkTi=By2s0YyecQX1V8NXZWBxELtpgCrqJrTiHC+=W@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153614>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Sun, Aug 15, 2010 at 9:08 AM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> Thanks, there's a bunch of failures though. Do those usually fail on
+> your Cygwin setup? I haven't looked at them in any detail.
 
-> Hi,
->
-> I'm sorry to insist, but nothing has happened to this patch, and I'd
-> really like it to get merged. The only reaction appart from Junio was
-> Jonathan, and althought it contained a disgression about "if I were
-> running the world", it started with "Your change is good." ;-).
+Sorry, can't tell you much, as this is absolutely the first time I'm
+running *all* the tests. Usually, I only run those that are likely to
+be affected by the parts I hack.
 
-It got merged into master. Thanks, Junio!
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+Cheers,
+Ray Chuan
