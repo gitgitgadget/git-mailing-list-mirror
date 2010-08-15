@@ -1,81 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: windows smoke tester (was Re: What's cooking in git.git (Aug
- 2010, #02; Wed, 11))
-Date: Mon, 16 Aug 2010 01:39:40 +0800
-Message-ID: <AANLkTin2tS-wuaOVepswfsWeubHjf6VRdUULMwWrkb1+@mail.gmail.com>
-References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
-	<4C63BD9B.6000608@viscovery.net>
-	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
-	<AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>
-	<AANLkTina+62MczLNhXC6VCtz_kQZ_t0+uZ8fH=vTV=XO@mail.gmail.com>
-	<4C64308D.8030000@gmail.com>
-	<AANLkTikh14FVmE6E78FNRvSG0B_5ZmNcOLSwye4ExNVx@mail.gmail.com>
-	<4C647360.50304@gmail.com>
-	<AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
-	<4C647C85.2080109@gmail.com>
-	<AANLkTikuy3q8JrppTr+YPwZHFh2PNk+An2qvdoWiuAJH@mail.gmail.com>
-	<4C65E660.9030707@gmail.com>
-	<AANLkTi=y-j=2_uX8c2cBR+fpouAaOGu032tT9UCnf8C2@mail.gmail.com>
-	<AANLkTi=By2s0YyecQX1V8NXZWBxELtpgCrqJrTiHC+=W@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Chris Packham <judge.packham@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	kusmabite@gmail.com
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 15 19:39:49 2010
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Confused about "degenerate" combined diff for merge commits
+Date: Sun, 15 Aug 2010 19:51:35 +0200
+Message-ID: <1jna5yt.1pm42a3uw2yquM%lists@haller-berlin.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 15 20:21:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkhBT-0004dZ-Ru
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 19:39:48 +0200
+	id 1Okhpu-0002a9-Pm
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 20:21:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406Ab0HORjm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 13:39:42 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:61348 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932307Ab0HORjm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 13:39:42 -0400
-Received: by ewy23 with SMTP id 23so2003905ewy.19
-        for <git@vger.kernel.org>; Sun, 15 Aug 2010 10:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=m2l1pij981aOztWNKr4HTaj2jgHm24c9m6vl7bFnLLI=;
-        b=XANF+vHuPyLgd0F77ulgP8rcTlrxUcGExDDV5bgqLhmprTizY/1lO8r/JgU72tYUE5
-         3em4T0XwQLPhPrTIm2fxMtdN4WOLBiWcVMSBFrmj0k5EeNdJKNLCuUkoB8LuOBsPLS4p
-         i/WNpVuUd2uBoPdb+sz+KdpA9WqBYjlDiUCEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=N6ara/DW/sbPQRQ7dkh9hUJsnyJYdO7oM/AqgLaKujYiY4lz1bKBPdHrCY/BvZviiz
-         791PVv39fRQDrVmJKWojHqqtqz+Oh1GJtT4pqGMYg7PIiOY0s3XS5W+lly1jUHk3TbWL
-         +KDV9zfMkXff0+x7ckcEDt1lAyDfSnSGkHiNQ=
-Received: by 10.213.10.147 with SMTP id p19mr3946045ebp.66.1281893980595; Sun,
- 15 Aug 2010 10:39:40 -0700 (PDT)
-Received: by 10.213.22.134 with HTTP; Sun, 15 Aug 2010 10:39:40 -0700 (PDT)
-In-Reply-To: <AANLkTi=By2s0YyecQX1V8NXZWBxELtpgCrqJrTiHC+=W@mail.gmail.com>
+	id S1750789Ab0HOSV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Aug 2010 14:21:28 -0400
+Received: from mail.ableton.net ([62.96.12.115]:46419 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750761Ab0HOSV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 14:21:27 -0400
+X-Greylist: delayed 1785 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Aug 2010 14:21:27 EDT
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:To; bh=QQFf7iGxI9PaLbHb90TLu1cNwoKfqQhHG4Prrh0X6JM=;
+	b=MvVdsbeSew3dz7AqtuWzvGbqgThyrUyGl2MvQMIOeM+AVfDaAfTcwg6Ld/w1MsoEMoMxxgrZCmOGx0kzTeW1mQGQelW7v0kaPxy1lO6BAppDq3RHta90Fk/cpKzM0SxK7/G40HFgyeOzgTKE/y3rTNDoWH1uOKVdr4+fIELT+Hw=;
+Received: from dslb-088-073-104-214.pools.arcor-ip.net ([88.73.104.214] helo=[192.168.42.92])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1OkhMu-0002t7-3I
+	for git@vger.kernel.org; Sun, 15 Aug 2010 19:51:36 +0200
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153615>
 
-On Sun, Aug 15, 2010 at 9:08 AM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> Thanks, there's a bunch of failures though. Do those usually fail on
-> your Cygwin setup? I haven't looked at them in any detail.
+(Git newbie alert. Please be patient with me if I'm missing obvious
+things...)
 
-Sorry, can't tell you much, as this is absolutely the first time I'm
-running *all* the tests. Usually, I only run those that are likely to
-be affected by the parts I hack.
+I'm converting a moderately large repository from Subversion to git.  As
+part of the process, I'm experimenting with correctly representing
+merges in the resulting git repository. In Subversion, we used commit
+logs such as "Merged r1234:1279 from branch_xyz", so in most cases it
+should be possible to use this information to create the proper parents
+in git. I'm currently trying how well this works by using grafts; but
+that's not the question.
 
---=20
-Cheers,
-Ray Chuan
+Now, I'm using "gitk --all --merges" to look at my synthesized merge
+commits; and I assume that I manufactured them correctly if the
+resulting combined diff is empty.  I only expect diff output for merge
+conflicts with a non-trivial resolution, i.e. neither ours nor theirs
+was used to resolve the conflict. Is this assumption correct so far?
+
+However, for some of these merge commits I see diff output such as this:
+
+diff --cc Src/ClipBoard.cpp
+index 4357ea0,4357ea0..3fad79a
+--- a/Src/ClipBoard.cpp
++++ b/Src/ClipBoard.cpp
+@@@ -71,7 -71,7 +71,7 @@@ AClipBoard* AClipBoard::SNew(
+  
+  AClipBoard* AClipBoard::SClipBoard()
+  {
+--  static AClipBoard* spClipBoard = SNew();
+++  static TPtr<AClipBoard> spClipBoard = SNew();
+    return spClipBoard;
+  }
+  
+It looks like both merge parents had an identical diff here, so this is
+not a conflict; why does diff --cc even show this to me?
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
