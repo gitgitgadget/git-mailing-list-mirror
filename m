@@ -1,56 +1,78 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] git-svn: fix fetch with deleted tag
-Date: Sun, 15 Aug 2010 06:55:00 +0000
-Message-ID: <20100815065500.GA29542@dcvr.yhbt.net>
-References: <1281794831-33347-1-git-send-email-ddkilzer@kilzer.net> <AANLkTinpLUyQP=6XktduWAmSHg3CgcT3Y7cMJ9FQ4by_@mail.gmail.com> <84607.29034.qm@web30003.mail.mud.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Status of conflicted files resolved with rerere
+Date: Sat, 14 Aug 2010 23:59:36 -0700
+Message-ID: <7veie0gy3r.fsf@alter.siamese.dyndns.org>
+References: <20100812212828.GA17825@jpl.local>
+ <AANLkTi=tVV5gL2b2LfXALXahzabJXzVjB5z9-OSztOMJ@mail.gmail.com>
+ <D06701C5-E581-46AA-BC7D-3DA7C4127D44@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: "David D. Kilzer" <ddkilzer@kilzer.net>
-X-From: git-owner@vger.kernel.org Sun Aug 15 08:55:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Avery Pennarun <apenwarr@gmail.com>,
+	Magnus =?utf-8?Q?B=C3=A4ck?= <magnus.back@sonyericsson.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 15 09:00:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkX7c-0007cO-R3
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 08:55:09 +0200
+	id 1OkXCQ-0000Fk-Id
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 09:00:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932216Ab0HOGzB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 02:55:01 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:44760 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932124Ab0HOGzA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Aug 2010 02:55:00 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2F97A1F509;
-	Sun, 15 Aug 2010 06:55:00 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <84607.29034.qm@web30003.mail.mud.yahoo.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S932250Ab0HOG7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Aug 2010 02:59:49 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59283 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932094Ab0HOG7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 02:59:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 69D40CD45A;
+	Sun, 15 Aug 2010 02:59:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rVt3we2hYj5RXLLW3H83iaN81Gw=; b=S0lxcz
+	L03k/daVhcC8ZeJcaRtEr+0k5/Bu8y5b6k2WlN9upbNX78PDj0dvzqofmL8C4iSq
+	EblpcwXMvEuSBhsoKJRcbcma2NWc9z9x0gWJO6tXtptRBUd+VxF+ub4KvGaoHf7f
+	I7V2/ReqFVWJSJsQvNj3e21tXrOhjxqq8etzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Es953rfLFnIGehbTNygymrFkaqEVV7tn
+	e+E+6VFoDu/SHjLREkEKie3u5Nz7Y8Jzg9t/atfSNT5t5Mwiza1GQ8SjZeDJ4fTF
+	Aa8sGguAssa4f/u60jI/KGDG1hFzfENuerMX3IuJN5wvvzc/b5Td3OfApXGQMb5M
+	7uyfs/3n6iY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 281E7CD458;
+	Sun, 15 Aug 2010 02:59:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63CC2CD457; Sun, 15 Aug
+ 2010 02:59:38 -0400 (EDT)
+In-Reply-To: <D06701C5-E581-46AA-BC7D-3DA7C4127D44@gmail.com> (David
+ Aguilar's message of "Sat\, 14 Aug 2010 19\:24\:43 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AE5DE464-A83A-11DF-B1CB-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153597>
 
-"David D. Kilzer" <ddkilzer@kilzer.net> wrote:
-> Thanks for the feedback!  I've already applied your other suggestions=
-=2E
+David Aguilar <davvid@gmail.com> writes:
 
-Thanks David and =C6var!
+> Here's what we'd need in order to improve rerere and mergetool  
+> interaction:  the ability to answer the question, "has this file been  
+> rerere merged?"
 
-David: Everything looks alright to me with =C6var's suggestions, so I'l=
-l
-ack whenever you have the final patch ready.
+I do not quite understand why the user _runs_ mergetool on a file that has
+been already merged; isn't it an option not to do so in the first place?
 
+Having said that.
 
-On a related note, if anybody has the time/patience to do some grunt
-work: converting all existing and fragile "cd" usage to use subshells
-would be much appreciated and help set better examples for introducing
-new code.
+I think you can use the fact that:
 
---=20
-Eric Wong
+ - "ls-files -u" will list paths with conflicts; and
+
+ - "rerere status" won't mention the ones that have been autoresolved
+
+if rerere is in effect (check for presense of .git/MERGE_RR).
