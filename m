@@ -1,77 +1,93 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Confused about "degenerate" combined diff for merge commits
-Date: Sun, 15 Aug 2010 19:51:35 +0200
-Message-ID: <1jna5yt.1pm42a3uw2yquM%lists@haller-berlin.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 15 20:21:36 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] reset: Better warning message on git reset --mixed
+ <paths>
+Date: Sun, 15 Aug 2010 11:36:38 -0700
+Message-ID: <7vr5hzg1u1.fsf@alter.siamese.dyndns.org>
+References: <1281814499-11797-1-git-send-email-avarab@gmail.com>
+ <20100814210505.GA2372@burratino> <7vvd7chcj4.fsf@alter.siamese.dyndns.org>
+ <87tymwzjbk.fsf@catnip.gol.com>
+ <AANLkTin3zyPvs3GjOt3=q6dOofFA2ba0sBAzt3=Ka1Wn@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Miles Bader <miles@gnu.org>, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org, Ralf Ebert <info@ralfebert.de>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 15 20:37:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Okhpu-0002a9-Pm
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 20:21:35 +0200
+	id 1Oki4p-0007nx-Ih
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 20:36:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750789Ab0HOSV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Aug 2010 14:21:28 -0400
-Received: from mail.ableton.net ([62.96.12.115]:46419 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750761Ab0HOSV1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Aug 2010 14:21:27 -0400
-X-Greylist: delayed 1785 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Aug 2010 14:21:27 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:To; bh=QQFf7iGxI9PaLbHb90TLu1cNwoKfqQhHG4Prrh0X6JM=;
-	b=MvVdsbeSew3dz7AqtuWzvGbqgThyrUyGl2MvQMIOeM+AVfDaAfTcwg6Ld/w1MsoEMoMxxgrZCmOGx0kzTeW1mQGQelW7v0kaPxy1lO6BAppDq3RHta90Fk/cpKzM0SxK7/G40HFgyeOzgTKE/y3rTNDoWH1uOKVdr4+fIELT+Hw=;
-Received: from dslb-088-073-104-214.pools.arcor-ip.net ([88.73.104.214] helo=[192.168.42.92])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1OkhMu-0002t7-3I
-	for git@vger.kernel.org; Sun, 15 Aug 2010 19:51:36 +0200
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
+	id S1750861Ab0HOSgx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Aug 2010 14:36:53 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61340 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750838Ab0HOSgw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 14:36:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EB27CCDD4B;
+	Sun, 15 Aug 2010 14:36:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pEwflcUFDsgTplLAqlbirI3hR18=; b=Pus4yD
+	R69/yBZoLz7GQ3vadGL8yjl6yirsFpWuiwD2/8Jt1ieq2mP615wxJgdf6V26ZR8g
+	Ceuy8PpV7ic8FE7f1xBGC8js+yAp29lbeMHHGHYbCdr/pUgz/yIzk9nSaIlViJKW
+	1REgjNUJGdi5/+eK1fhLJl3g8QjQDYU8q9IJc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LbirP5z8vaEPUUIGqL2NrdeltgGGMaMf
+	kQQxgdWCFapMYWqaiziRpjMNQTp3WPYHGgVj90uOfN02tnFXPk0U47FSeTVvs4uz
+	hHohWPHL5ZhhohK0YncEmYxHMWNt4EsgrpgGExhbGX0yxzTYZM3RIyBdurjgi7IV
+	CsAqMt1zVTg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 99AFBCDD49;
+	Sun, 15 Aug 2010 14:36:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 960A9CDD3C; Sun, 15 Aug
+ 2010 14:36:40 -0400 (EDT)
+In-Reply-To: <AANLkTin3zyPvs3GjOt3=q6dOofFA2ba0sBAzt3=Ka1Wn@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun\, 15 Aug
+ 2010 08\:38\:16 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0F1768D2-A89C-11DF-A8B6-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153616>
 
-(Git newbie alert. Please be patient with me if I'm missing obvious
-things...)
+Regarding the various modes that are forbidden with "reset", I've been
+wondering if we can do things differently.
 
-I'm converting a moderately large repository from Subversion to git.  As
-part of the process, I'm experimenting with correctly representing
-merges in the resulting git repository. In Subversion, we used commit
-logs such as "Merged r1234:1279 from branch_xyz", so in most cases it
-should be possible to use this information to create the proper parents
-in git. I'm currently trying how well this works by using grafts; but
-that's not the question.
+If you want to reset the index at selected paths, don't use any option, as
+nothing but --mixed makes sense.  Hence we deprecated use of --mixed when
+used this way.  But if _it_ makes sense, why deprecate it?  What harm
+would it do if we took it silently?
 
-Now, I'm using "gitk --all --merges" to look at my synthesized merge
-commits; and I assume that I manufactured them correctly if the
-resulting combined diff is empty.  I only expect diff output for merge
-conflicts with a non-trivial resolution, i.e. neither ours nor theirs
-was used to resolve the conflict. Is this assumption correct so far?
+IIRC, the reasoning that lead to the deprecation was that allowing --mixed
+may give a false impression to confused users that other mode options also
+might be usable with pathspec, e.g. "reset --soft [<commit>] <pathspec>".
+It obviously should barf loudly, as there is no way to move the HEAD to a
+named commit without touching the index and the worktree at only specified
+paths, but then the error message belongs to --soft, not --mixed.
 
-However, for some of these merge commits I see diff output such as this:
+Also "reset --hard [<commit>] -- <pathspec>" is forbidden in a repository
+with a working tree, but it is clear that what the user wanted to do with
+that unsupported command was what "checkout [<commit>] -- <pathspec>"
+would have done.
 
-diff --cc Src/ClipBoard.cpp
-index 4357ea0,4357ea0..3fad79a
---- a/Src/ClipBoard.cpp
-+++ b/Src/ClipBoard.cpp
-@@@ -71,7 -71,7 +71,7 @@@ AClipBoard* AClipBoard::SNew(
-  
-  AClipBoard* AClipBoard::SClipBoard()
-  {
---  static AClipBoard* spClipBoard = SNew();
-++  static TPtr<AClipBoard> spClipBoard = SNew();
-    return spClipBoard;
-  }
-  
-It looks like both merge parents had an identical diff here, so this is
-not a conflict; why does diff --cc even show this to me?
+What if we:
 
+ - change "reset --hard [<commit>] -- <pathspec>" to internally run the
+   moral equivalent "checkout" without complaining;
 
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+ - change "reset --mixed [<commit>] -- <pathspec>" to do the same thing as
+   it has always done without complaining; and
+
+ - make sure "reset --soft [<commit>] -- <pathspec>" barfs loudly.
+
+Do people see major downside?
