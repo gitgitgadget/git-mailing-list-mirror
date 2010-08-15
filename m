@@ -1,99 +1,82 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Silent maintenance
-Date: Sun, 15 Aug 2010 00:21:18 +0000
-Message-ID: <AANLkTim1HL_WH_ShxNYXmsSnbMNq7=C7oj46qav2OQe1@mail.gmail.com>
-References: <20100814131156.GA24769@nibiru.local>
-	<20100814210556.GB2372@burratino>
-	<AANLkTimLHand0g965TJmk=Y4Q+0uTFovZZRZXf9Fx4UB@mail.gmail.com>
-	<20100814220410.GA16592@coredump.intra.peff.net>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: windows smoke tester (was Re: What's cooking in git.git (Aug
+ 2010, #02; Wed, 11))
+Date: Sun, 15 Aug 2010 08:54:22 +0800
+Message-ID: <AANLkTi=y-j=2_uX8c2cBR+fpouAaOGu032tT9UCnf8C2@mail.gmail.com>
+References: <7vlj8cvi2e.fsf@alter.siamese.dyndns.org>
+	<4C63BD9B.6000608@viscovery.net>
+	<AANLkTi=9_FPS=zzcZ3ndqcd83KmQ-eVT9JmLbwjiZtXz@mail.gmail.com>
+	<AANLkTi=N-fA9r-Akm3_=ucFYew8BhcsQoWM-Z9S8+58C@mail.gmail.com>
+	<AANLkTina+62MczLNhXC6VCtz_kQZ_t0+uZ8fH=vTV=XO@mail.gmail.com>
+	<4C64308D.8030000@gmail.com>
+	<AANLkTikh14FVmE6E78FNRvSG0B_5ZmNcOLSwye4ExNVx@mail.gmail.com>
+	<4C647360.50304@gmail.com>
+	<AANLkTimp5TSvjcmZG-pGtG6ep3axertqWuooS7e+A3Ow@mail.gmail.com>
+	<4C647C85.2080109@gmail.com>
+	<AANLkTikuy3q8JrppTr+YPwZHFh2PNk+An2qvdoWiuAJH@mail.gmail.com>
+	<4C65E660.9030707@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Aug 15 02:21:42 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	kusmabite@gmail.com
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 15 02:54:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkQym-0000bu-UK
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 02:21:37 +0200
+	id 1OkRUn-0000E1-O3
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 02:54:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757584Ab0HOAVU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 14 Aug 2010 20:21:20 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44667 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756258Ab0HOAVT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 14 Aug 2010 20:21:19 -0400
-Received: by iwn7 with SMTP id 7so283508iwn.19
-        for <git@vger.kernel.org>; Sat, 14 Aug 2010 17:21:19 -0700 (PDT)
+	id S1757608Ab0HOAyY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 14 Aug 2010 20:54:24 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:34480 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756578Ab0HOAyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 14 Aug 2010 20:54:23 -0400
+Received: by ewy23 with SMTP id 23so1854935ewy.19
+        for <git@vger.kernel.org>; Sat, 14 Aug 2010 17:54:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LLxnK7AveHrfRIyGwSyQre4OjB87oA3cHOoitpINYlU=;
-        b=W210dBcxmaxoQt/poClUBCpQVO4lp5xvN1mrFIeAknVydiyzGU8iKZWXJ2Gu0HeE3T
-         9KsK4PKDguj3bqQ8u1Ra0fR4O7houDF/KDwBgJ9OYbvB1U6GizEAhukA/o4UDD7duiS3
-         tMVdo3/a404V8iluLnIseHVCLqR0HUflGzN9A=
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=wia/eBjHvNjWLqUa09C5tvrq3n3QXRZOS/MXV9GcFvA=;
+        b=VbTLwdn880ewtnpuMzZYeZhjZoXftpVDz2mojGdhC61pDdLoPb36rAciEzkxw1Dbnt
+         g2kMPFuA0VBIq5BAHcipqlGatF7K3fex3jR1lAy2VeAs03xJlw8zhNWghucz83wT9ZWR
+         wbSs8Ca+K8271res1uwuckD9bLhttJItE/4zA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QdZfgT2snF2GWXigXm6nnLQOqRrlzftOswUCiXP3bX90AKlYtlP9lwp2EXQgoLOQzo
-         8RZxvGB12AP+FewP3w7WUCJPBmXiMF7+c2Mhu/t7oerhPlaiVRTo4SijZPv+cUEsbWXj
-         qmxG9YFTJhmNMlJgy0mX8iQrJWFYi8oiecVlo=
-Received: by 10.231.161.68 with SMTP id q4mr3620801ibx.79.1281831678763; Sat,
- 14 Aug 2010 17:21:18 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Sat, 14 Aug 2010 17:21:18 -0700 (PDT)
-In-Reply-To: <20100814220410.GA16592@coredump.intra.peff.net>
+         :cc:content-type;
+        b=xfBiDeFYww4cFppNR/B7ouNeqI7xOnxXUmF4k2XQ8Mej/9yImRQ0aGvBeM4+7/G7+Y
+         xPBBF/CDoj70FjsvyqrVbuKwydQWdgAxOL/QNaOlU7FHj5LlbvTJkzYWzyEc5Waj/hUM
+         YOyOJUbJEECqfhSY1A1lKqtL7DMtrn8uQ+X/w=
+Received: by 10.213.12.196 with SMTP id y4mr3004182eby.89.1281833662127; Sat,
+ 14 Aug 2010 17:54:22 -0700 (PDT)
+Received: by 10.213.32.76 with HTTP; Sat, 14 Aug 2010 17:54:22 -0700 (PDT)
+In-Reply-To: <4C65E660.9030707@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153588>
 
-On Sat, Aug 14, 2010 at 22:04, Jeff King <peff@peff.net> wrote:
-> On Sat, Aug 14, 2010 at 09:41:44PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0=
- Bjarmason wrote:
->
->> On Sat, Aug 14, 2010 at 21:05, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
->> > Enrico Weigelt wrote:
->> >
->> >> are there some flags to make the maintenance commands like
->> >> git-repack and git-gc silent, so they only output errors ?
->> >
->> > Does --quiet work? =C2=A0If not, patches would be welcome.
->>
->> I intentionally neglected to mention that. That inevitably leads to
->> cases where something fails, but you didn't record the output.
->
-> I'm confused. Isn't the point of quiet to silence all of the cruft, a=
-nd
-> leave only actual errors?
->
-> =C2=A0$ git gc
-> =C2=A0Counting objects: 128, done.
-> =C2=A0Compressing objects: 100% (49/49), done.
-> =C2=A0Writing objects: 100% (128/128), done.
-> =C2=A0Total 128 (delta 71), reused 121 (delta 68)
->
-> =C2=A0$ git gc --quiet
->
-> =C2=A0$ chmod -w .git/objects/pack
-> =C2=A0$ git gc --quiet
-> =C2=A0fatal: Unable to create temporary file: Permission denied
-> =C2=A0error: failed to run repack
->
-> Isn't that what the OP wanted?
+Hi,
 
-Maybe, personally I prefer to get all or nothing. If you specify
---quiet you'll only get errors, so it doesn't give you much
-context. But if you use cronjob(1) you can see at a glance the normal
-output of all the successfully executed commands that led up to your
-failure.
+On Sat, Aug 14, 2010 at 8:42 AM, Chris Packham <judge.packham@gmail.com> wrote:
+> I couldn't install any perl modules with the environment provided by
+> msysgit, I couldn't make msys play nice with strawberry perl. In
+> desperation I tried cygwin
+> [snip]
 
-E.g. the output of a successful "cherry-pick" right before a failing
-merge can be really helpful to see the state of the failing program.
+I've tried it out on cygwin, check out report #30:
+
+  http://smoke.git.nix.is/app/projects/report_details/30
+
+A lot of stuff was skipped though - python, http.
+
+-- 
+Cheers,
+Ray Chuan
