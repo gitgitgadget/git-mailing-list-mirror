@@ -1,82 +1,99 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] reset: Better warning message on git reset --mixed <paths>
-Date: Sun, 15 Aug 2010 08:38:16 +0000
-Message-ID: <AANLkTin3zyPvs3GjOt3=q6dOofFA2ba0sBAzt3=Ka1Wn@mail.gmail.com>
-References: <1281814499-11797-1-git-send-email-avarab@gmail.com>
-	<20100814210505.GA2372@burratino>
-	<7vvd7chcj4.fsf@alter.siamese.dyndns.org>
-	<87tymwzjbk.fsf@catnip.gol.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v2] log: test for regression introduced in v1.7.2-rc0~103^2~2
+Date: Sun, 15 Aug 2010 10:16:25 +0000
+Message-ID: <1281867385-30545-1-git-send-email-avarab@gmail.com>
+References: <7v39uggs5h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Ralf Ebert <info@ralfebert.de>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Sun Aug 15 17:56:55 2010
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 15 17:58:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkfZu-0007Nh-6R
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 17:56:54 +0200
+	id 1Okfbi-0008GS-4Q
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 17:58:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758216Ab0HOP4q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 11:56:46 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48152 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757839Ab0HOP4p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 11:56:45 -0400
-Received: by iwn7 with SMTP id 7so763627iwn.19
-        for <git@vger.kernel.org>; Sun, 15 Aug 2010 08:56:44 -0700 (PDT)
+	id S1758359Ab0HOP6k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 11:58:40 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61434 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758183Ab0HOP6k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 11:58:40 -0400
+Received: by wwj40 with SMTP id 40so5347064wwj.1
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 08:58:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nT5YYjhr42tiZl9Hm36S8Cdi2B9ZajS5awLLFtQnO98=;
-        b=Vitm/bTZq+TOqZA9nDeba/LbJrSWPc03Pa7/Vhz4Pw9OZx1QfQ6z8PPugdUgWLIB5V
-         i37n80iWzi23F5e2D6BM+WQNbOH2YilY9WYcPZn5qU6qQBN1vPaXs09VpWxzVLJ/Gg2s
-         Kxg8fUm9/qA2JW2MoxKA5AMs6W9N0/q5jChrs=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=wwvCKEYmPiDwsKYC+UrxOLrUVLEBe8JxrithCAlFY/k=;
+        b=eVbmXxqLz351O9e+Xw9snNRUCS6XjyWI379r+vJ+/qie9xdBCl2/tdurBo0Tn2ftgd
+         t6RTStK/Abf/vOm9YuJhTEpcwnAE3MiBxw0rMLvyojvdgFegdjAzm4BmInpquux83aU3
+         MknQC+piRmi7/jCL/fu1Pz3AmGjz9h4C4g7Fc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FErvmhvcrn3MAGY6xJusWzbNARWbPASe8TIUCLinZmi0sRgPhxkexXsWCq321E23UO
-         takfrcD8yrjj3ikW+bZ9SRccZMBXwBB/XGvJGohEXYrZxThgiKkL2UntkiVDA5/Jqz48
-         tyMFxB2vNM2tsRAkECj/HEx6u3vStmbsjlqr8=
-Received: by 10.231.150.7 with SMTP id w7mr4224997ibv.14.1281861496247; Sun,
- 15 Aug 2010 01:38:16 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Sun, 15 Aug 2010 01:38:16 -0700 (PDT)
-In-Reply-To: <87tymwzjbk.fsf@catnip.gol.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=RVSkvelyLOviRmOvS2f0W7Cot6TBAcDie97vhImQ+je7LzRN96rToKPfglobUbHczN
+         Zp9Xr8YmpqsS549EMRqA9XKU7gN1GgJ9jaHzkeCBzX6DitgxCJimyGAp9bi7Wu4Vga/F
+         5Qm9sQEQJ2gAYJ36ZKmqiurlM1DemHkio7+Xs=
+Received: by 10.216.5.13 with SMTP id 13mr1383718wek.91.1281867393145;
+        Sun, 15 Aug 2010 03:16:33 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id n40sm2584924weq.29.2010.08.15.03.16.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 15 Aug 2010 03:16:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.339.gfad93
+In-Reply-To: <7v39uggs5h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153606>
 
-On Sun, Aug 15, 2010 at 02:43, Miles Bader <miles@gnu.org> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
->>> =C2=A0warning: --mixed with paths is deprecated; use 'git reset -- =
-<paths>' instead
->>
->> That sounds helpful.
->>
->> We've been saying this form is deprecated since 1.5.4; a better
->> alternative may be to make this into an error in the next release,
->> though.
->
-> On a similar note, how about a more helpful error message for
-> "git reset --hard PATH"? =C2=A0It took me _ages_ to figure out that I
-> needed to do "git checkout PATH" to get that effect...
->
-> e.g.:
->
-> =C2=A0 $ git reset --hard load-lua.cc
-> =C2=A0 fatal: --hard cannot be used with paths; use "git checkout -- =
-<paths> instead"
+Add a regression test for the git log -M --follow $diff_option bug
+introduced in v1.7.2-rc0~103^2~2, $diff_option being diff related
+options like -p, --stat, --name-only etc.
 
-Do you have suggestions for alternatives for "git reset [ --soft |
---merge | --keep ] -- <paths>" too? Since I'm working on this anyway I
-might roll that in.
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+
+Version two of this test case, simpler, and takes into account
+commentary from Junio.
+
+ t/t4202-log.sh |   13 +++++++++++++
+ 1 files changed, 13 insertions(+), 0 deletions(-)
+
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 95ac3f8..a0be122 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -441,5 +441,18 @@ test_expect_success 'log.decorate configuration' '
+=20
+ '
+=20
++test_expect_success 'show added path under "--follow -M"' '
++	# This tests for a regression introduced in v1.7.2-rc0~103^2~2
++	test_create_repo regression &&
++	(
++		cd regression &&
++		test_commit needs-another-commit &&
++		test_commit Foo.bar &&
++		git log -M --follow -p Foo.bar.t &&
++		git log -M --follow --stat Foo.bar.t &&
++		git log -M --follow --name-only Foo.bar.t
++	)
++'
++
+ test_done
+=20
+--=20
+1.7.2.1.339.gfad93
