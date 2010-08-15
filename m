@@ -1,99 +1,110 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2] log: test for regression introduced in v1.7.2-rc0~103^2~2
-Date: Sun, 15 Aug 2010 10:16:25 +0000
-Message-ID: <1281867385-30545-1-git-send-email-avarab@gmail.com>
-References: <7v39uggs5h.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] log: test for regression introduced in v1.7.2-rc0~103^2~2
+Date: Sun, 15 Aug 2010 09:24:16 +0000
+Message-ID: <AANLkTi=PAW_Owy_-DSQ32sboB28373Gb_aySbpeprwLg@mail.gmail.com>
+References: <7vzkwqi10w.fsf@alter.siamese.dyndns.org>
+	<1281748247-8180-1-git-send-email-avarab@gmail.com>
+	<AANLkTi=Na_K=9oXM7iyeKodWXyXuSy-0UL792igTEjEe@mail.gmail.com>
+	<7v39uggs5h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 15 17:58:47 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 15 18:19:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Okfbi-0008GS-4Q
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 17:58:46 +0200
+	id 1Okfw7-00005f-OQ
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 18:19:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758359Ab0HOP6k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 11:58:40 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:61434 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758183Ab0HOP6k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Aug 2010 11:58:40 -0400
-Received: by wwj40 with SMTP id 40so5347064wwj.1
-        for <git@vger.kernel.org>; Sun, 15 Aug 2010 08:58:39 -0700 (PDT)
+	id S932348Ab0HOQTq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 12:19:46 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61312 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932128Ab0HOQTp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 12:19:45 -0400
+Received: by iwn7 with SMTP id 7so779772iwn.19
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 09:19:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=wwvCKEYmPiDwsKYC+UrxOLrUVLEBe8JxrithCAlFY/k=;
-        b=eVbmXxqLz351O9e+Xw9snNRUCS6XjyWI379r+vJ+/qie9xdBCl2/tdurBo0Tn2ftgd
-         t6RTStK/Abf/vOm9YuJhTEpcwnAE3MiBxw0rMLvyojvdgFegdjAzm4BmInpquux83aU3
-         MknQC+piRmi7/jCL/fu1Pz3AmGjz9h4C4g7Fc=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=W7zXXMu5TPWmil3shVTnoS8VzNUAXsRwJzduNplh1d0=;
+        b=YBceNHFkI0W2f5zN/4+R78Ry1qKr36zd84g3N11m2sJKYYmjL0KXEd6Eyu5bTywFLj
+         RECKjquA6CJID7HNBpMlfQkntQOyJW+vSTuqmtAzZWd3TPgeYSKn/xMMSYn/IVfwqHYr
+         sAQJ6zXzum71QHDTGj3TWfcGqpNcFt9tUVZNA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=RVSkvelyLOviRmOvS2f0W7Cot6TBAcDie97vhImQ+je7LzRN96rToKPfglobUbHczN
-         Zp9Xr8YmpqsS549EMRqA9XKU7gN1GgJ9jaHzkeCBzX6DitgxCJimyGAp9bi7Wu4Vga/F
-         5Qm9sQEQJ2gAYJ36ZKmqiurlM1DemHkio7+Xs=
-Received: by 10.216.5.13 with SMTP id 13mr1383718wek.91.1281867393145;
-        Sun, 15 Aug 2010 03:16:33 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id n40sm2584924weq.29.2010.08.15.03.16.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 15 Aug 2010 03:16:31 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.339.gfad93
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AnAhPy6DZiT1olCLt0p1ZaCXRnFGrquSUAiK4i8C8p59q12jrQDyw8qG7p/QvzmWMv
+         0qiVxNwrpy3ZkwroKqM6T9EgQujNGglbKegmImNJb0EqBgbrlLr+XNuKy9VtXxzVqMq4
+         1JrezkxdiUgMbD/FyBmJmwZyv6CtVipvqE8kM=
+Received: by 10.231.12.77 with SMTP id w13mr3979397ibw.129.1281864256505; Sun,
+ 15 Aug 2010 02:24:16 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Sun, 15 Aug 2010 02:24:16 -0700 (PDT)
 In-Reply-To: <7v39uggs5h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153607>
 
-Add a regression test for the git log -M --follow $diff_option bug
-introduced in v1.7.2-rc0~103^2~2, $diff_option being diff related
-options like -p, --stat, --name-only etc.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Sun, Aug 15, 2010 at 09:08, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
----
+>> On Sat, Aug 14, 2010 at 01:10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmaso=
+n <avarab@gmail.com> wrote:
+>>> Add a regression test for the git log -M --follow --name-only bug
+>>> introduced in v1.7.2-rc0~103^2~2
+>>
+>> AKA "we didn't have any tests for log's --name-only *at all*".
+>
+> But this is not related to --name-only at all; anything that is "diff=
+"
+> related, e.g. -p, --stat, --name-status, will share the same issue.
 
-Version two of this test case, simpler, and takes into account
-commentary from Junio.
+I meant that as an extra benefit this is the first test for log +
+--name-only.
 
- t/t4202-log.sh |   13 +++++++++++++
- 1 files changed, 13 insertions(+), 0 deletions(-)
+>> diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+>> index 95ac3f8..ff624f4 100755
+>> --- a/t/t4202-log.sh
+>> +++ b/t/t4202-log.sh
+>> @@ -441,5 +441,14 @@ test_expect_success 'log.decorate configuration=
+' '
+>>
+>> =C2=A0'
+>>
+>> +test_expect_success 'Regression test for v1.7.2-rc0~103^2~2' '
+>
+> This is uninformative and ugly at the same time.
+>
+> =C2=A0- Can't we describe the nature of the situation where the old b=
+ug
+> =C2=A0 triggers concisely? =C2=A0Perhaps 'show added path under "--fo=
+llow -M"?'
 
-diff --git a/t/t4202-log.sh b/t/t4202-log.sh
-index 95ac3f8..a0be122 100755
---- a/t/t4202-log.sh
-+++ b/t/t4202-log.sh
-@@ -441,5 +441,18 @@ test_expect_success 'log.decorate configuration' '
-=20
- '
-=20
-+test_expect_success 'show added path under "--follow -M"' '
-+	# This tests for a regression introduced in v1.7.2-rc0~103^2~2
-+	test_create_repo regression &&
-+	(
-+		cd regression &&
-+		test_commit needs-another-commit &&
-+		test_commit Foo.bar &&
-+		git log -M --follow -p Foo.bar.t &&
-+		git log -M --follow --stat Foo.bar.t &&
-+		git log -M --follow --name-only Foo.bar.t
-+	)
-+'
-+
- test_done
-=20
---=20
-1.7.2.1.339.gfad93
+I didn't grok why this was happening, but yeah, that description is
+better.
+
+>> + =C2=A0 =C2=A0 # Needs an unrelated root commit
+>> + =C2=A0 =C2=A0 test_commit README &&
+>
+> This is not a "root" commit, is it?
+
+s/root/first/
+
+>> + =C2=A0 =C2=A0 >Foo.bar &&
+>> + =C2=A0 =C2=A0 git add Foo.bar &&
+>> + =C2=A0 =C2=A0 git commit --allow-empty-message </dev/null &&
+>
+> Does emptiness of the message matter?
+
+No, I was just going for a minimal test case, no commit message is
+more minimal than having one.
