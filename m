@@ -1,78 +1,187 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Status of conflicted files resolved with rerere
-Date: Sat, 14 Aug 2010 23:59:36 -0700
-Message-ID: <7veie0gy3r.fsf@alter.siamese.dyndns.org>
-References: <20100812212828.GA17825@jpl.local>
- <AANLkTi=tVV5gL2b2LfXALXahzabJXzVjB5z9-OSztOMJ@mail.gmail.com>
- <D06701C5-E581-46AA-BC7D-3DA7C4127D44@gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH v2] hash binary sha1 into patch id
+Date: Sun, 15 Aug 2010 09:20:43 +0200
+Message-ID: <20100815072043.GA368@localhost>
+References: <20100813094027.GA20906@localhost>
+ <20100813200031.GD2003@burratino>
+ <20100813212331.GA24127@localhost>
+ <20100813213726.GB2516@burratino>
+ <20100813215801.GA24534@localhost>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Magnus =?utf-8?Q?B=C3=A4ck?= <magnus.back@sonyericsson.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 15 09:00:10 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="XF85m9dhOBO43t/C"
+Cc: git@vger.kernel.org, Marat Radchenko <marat@slonopotamus.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 15 09:21:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkXCQ-0000Fk-Id
-	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 09:00:06 +0200
+	id 1OkXWj-0005QF-Ao
+	for gcvg-git-2@lo.gmane.org; Sun, 15 Aug 2010 09:21:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932250Ab0HOG7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Aug 2010 02:59:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59283 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932094Ab0HOG7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Aug 2010 02:59:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 69D40CD45A;
-	Sun, 15 Aug 2010 02:59:47 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rVt3we2hYj5RXLLW3H83iaN81Gw=; b=S0lxcz
-	L03k/daVhcC8ZeJcaRtEr+0k5/Bu8y5b6k2WlN9upbNX78PDj0dvzqofmL8C4iSq
-	EblpcwXMvEuSBhsoKJRcbcma2NWc9z9x0gWJO6tXtptRBUd+VxF+ub4KvGaoHf7f
-	I7V2/ReqFVWJSJsQvNj3e21tXrOhjxqq8etzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Es953rfLFnIGehbTNygymrFkaqEVV7tn
-	e+E+6VFoDu/SHjLREkEKie3u5Nz7Y8Jzg9t/atfSNT5t5Mwiza1GQ8SjZeDJ4fTF
-	Aa8sGguAssa4f/u60jI/KGDG1hFzfENuerMX3IuJN5wvvzc/b5Td3OfApXGQMb5M
-	7uyfs/3n6iY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 281E7CD458;
-	Sun, 15 Aug 2010 02:59:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 63CC2CD457; Sun, 15 Aug
- 2010 02:59:38 -0400 (EDT)
-In-Reply-To: <D06701C5-E581-46AA-BC7D-3DA7C4127D44@gmail.com> (David
- Aguilar's message of "Sat\, 14 Aug 2010 19\:24\:43 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AE5DE464-A83A-11DF-B1CB-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932277Ab0HOHUu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Aug 2010 03:20:50 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:58625 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932094Ab0HOHUt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 03:20:49 -0400
+Received: by ewy23 with SMTP id 23so1902185ewy.19
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 00:20:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=yyLMd9XNw6tu3CUEnajK1tqCwvuUjMf1E1P/BrWtkp8=;
+        b=TxWKOkPP/y+jwHdjGxqdPYJ3g6j6ZZNnw7cMWbkCCJXqmi7jEXkAOl+b+yo7wpmoo/
+         0M0kRJzU+eKctyC9tuc1t15qL6Wr0f4YxcAW+T4e0UfMubzwJ9PO79o6/7vVxUCw6nfa
+         brtVX4df2pfotnAbaSrOg+2ogj8Ftw6Be7dfo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=WjBp3WikQdpcthYFp4kp9yNFJomRt9ZpZiulTfiPUCHH3Yp061BncHxy6PGaU+qATY
+         nkDQpFieiSPoNERv1g2EQULVP3IFNL/vzi+H4NLz1LPXp62Hs9D1EPqMnBxif8JGK5sd
+         qK0MTiWooWBa9WiXOKYL6HeIU2Bs7mnpkoGQE=
+Received: by 10.213.19.74 with SMTP id z10mr3592349eba.37.1281856848376;
+        Sun, 15 Aug 2010 00:20:48 -0700 (PDT)
+Received: from darc.lan ([80.123.242.182])
+        by mx.google.com with ESMTPS id a48sm7564070eei.7.2010.08.15.00.20.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 15 Aug 2010 00:20:46 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OkXWN-0000Ap-Bo; Sun, 15 Aug 2010 09:20:43 +0200
+Content-Disposition: inline
+In-Reply-To: <20100813215801.GA24534@localhost>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153598>
 
-David Aguilar <davvid@gmail.com> writes:
 
-> Here's what we'd need in order to improve rerere and mergetool  
-> interaction:  the ability to answer the question, "has this file been  
-> rerere merged?"
+--XF85m9dhOBO43t/C
+Content-Type: multipart/mixed; boundary="CE+1k2dSO48ffgeK"
+Content-Disposition: inline
 
-I do not quite understand why the user _runs_ mergetool on a file that has
-been already merged; isn't it an option not to do so in the first place?
 
-Having said that.
+--CE+1k2dSO48ffgeK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think you can use the fact that:
+Since commit 2f82f760 (Take binary diffs into
+account for "git rebase"), binary files are
+included in patch ID computation. Binary files are
+diffed using the text diff algorithm, however,
+which has a huge impact on performance. The
+following tests performance for a 50000 line file
+marked as binary in .gitattributes.
 
- - "ls-files -u" will list paths with conflicts; and
+$ git format-patch --stdout --ignore-if-in-upstream master
 
- - "rerere status" won't mention the ones that have been autoresolved
+real    0m0.367s
+user    0m0.354s
+sys     0m0.010s
 
-if rerere is in effect (check for presense of .git/MERGE_RR).
+Instead of diffing the binary files, hash the pre-
+and post-image sha1, which is just as unique. As a
+result, performance is much improved.
+
+$ git format-patch --stdout --ignore-if-in-upstream master
+
+real    0m0.016s
+user    0m0.015s
+sys     0m0.001s
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+
+I am again attaching the corresponding test script. Since it mostly
+tests performance, I am not sure how to incorporate it into the
+main test suite.
+
+ diff.c |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/diff.c b/diff.c
+index 17873f3..f4a23ab 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3758,6 +3758,13 @@ static int diff_get_patch_id(struct diff_options *op=
+tions, unsigned char *sha1)
+ 					len2, p->two->path);
+ 		git_SHA1_Update(&ctx, buffer, len1);
+=20
++		if (diff_filespec_is_binary(p->one) ||
++		    diff_filespec_is_binary(p->two)) {
++			git_SHA1_Update(&ctx, sha1_to_hex(p->one->sha1), 40);
++			git_SHA1_Update(&ctx, sha1_to_hex(p->two->sha1), 40);
++			continue;
++		}
++
+ 		xpp.flags =3D 0;
+ 		xecfg.ctxlen =3D 3;
+ 		xecfg.flags =3D XDL_EMIT_FUNCNAMES;
+--=20
+1.7.2.1.1.g202c
+
+
+--CE+1k2dSO48ffgeK
+Content-Type: application/x-sh
+Content-Disposition: attachment; filename="test-patchid.sh"
+Content-Transfer-Encoding: quoted-printable
+
+#!/bin/bash=0A=0Aset -e=0A=0ANLINES=3D50000=0ANRAND=3D32768=0A# probability=
+ of change in percent=0ACHG_PROB=3D30=0Aperf=3D=0Awhile test $# -gt 0=0Ado=
+=0A	case $1 in=0A	-p)=0A		perf=3Dt=0A		;;=0A	-n)=0A		shift=0A		NLINES=3D$1=
+=0A		;;=0A	*)=0A		break=0A		;;=0A	esac=0A	shift=0Adone=0A=0Aif test $# -gt =
+0=0Athen=0A	export PATH=3D"$1:$PATH"=0A	shift=0Afi=0A=0Aif test $# -gt 0=0A=
+then=0A	echo "too many arguments" >&2=0A	exit 1=0Afi=0A=0Adir=3D$(mktemp -d=
+)=0A=0Ascramble()=0A{=0A	while read x=0A	do=0A		if test $RANDOM -lt $((($CH=
+G_PROB * $NRAND)/100))=0A		then=0A			echo $RANDOM=0A		else=0A			echo "$x"=
+=0A		fi=0A	done < "$1" > "$1.new"=0A	mv -f "$1.new" "$1"=0A}=0A=0Arun()=0A{=
+=0A	echo \$ "$@"=0A	if test -n "$perf"=0A	then=0A		perf record -g -f "$@" >=
+/dev/null=0A		perf report -g=0A	else=0A		time "$@" >/dev/null=0A	fi=0A}=0A=
+=0Acd "$dir"=0Agit init -q=0A=0Afor i in $(seq $NLINES)=0Ado=0A	echo $i=0Ad=
+one > file=0Agit add file=0Aecho "file binary" >.gitattributes=0Agit add .g=
+itattributes=0Agit commit -q -m initial=0Agit branch other=0A=0Ascramble fi=
+le=0Agit add file=0Agit commit -q -m 'change big file'=0A=0Agit checkout -q=
+ other=0A: >newfile=0Agit add newfile=0Agit commit -q -m 'add small file'=
+=0A=0Agfp=3D"git format-patch --stdout"=0A=0Arun $gfp master=0Arun $gfp --i=
+gnore-if-in-upstream master=0A=0Agit cherry-pick master >/dev/null 2>&1=0A=
+=0Agit checkout -q master=0Ascramble file=0Agit add file=0Agit commit -q -m=
+ 'change big file again'=0A=0Agit checkout -q other^{}=0Arun git rebase mas=
+ter=0Aif test -n "$(git rev-list master...HEAD~)"=0Athen=0A	echo "patch not=
+ identified" >&2=0A	exit 1=0Afi=0A=0Agit checkout -q -b squashed master=0Ag=
+it reset -q --soft HEAD~2=0Agit commit -q -m squashed=0Agit checkout -q oth=
+er^{}=0Aif git rebase squashed >/dev/null=0Athen=0A	echo "patch dropped" >&=
+2=0A	exit 1=0Afi=0A=0Acd - >/dev/null=0Arm -rf "$dir"=0A
+--CE+1k2dSO48ffgeK--
+
+--XF85m9dhOBO43t/C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMZ5VLAAoJELKdZexG8uqM8XsH/jf6o3Dqw2LnFKz5lVGrCORU
+jtzsyvh9wZl+Dq0R/f6vnmpFyMptlNAflzPz8ur8ofX8PWQgd2asmK5oK6BxhdbU
+GWn22bbTYt4L3JWI4x+p7iZcqiId3ZMJ/zUzVxdn+RdxtyHYW3Ndeu3VkChl+Ocv
+GXf8LCYViK3dUzKVoWstRibLDoDRNVHaNBQNKIFajCG3H+t7fySikaPOiPoIZ62k
+ozSMeyYm97pdXnepCmf7L18mOGMDLeLy5z8lQG0SUjKNa4E6DJ2R6nmcKBpOutn1
+5v8lkfsOE4ZMCMX062cqHB7TTvjDa81x+FnA/FOvkuyYxha3F/P4PytUFmRxG6c=
+=/1Co
+-----END PGP SIGNATURE-----
+
+--XF85m9dhOBO43t/C--
