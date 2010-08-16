@@ -1,83 +1,79 @@
-From: David Scurrah <D.Scurrah@bom.gov.au>
-Subject: Patch for git-completion.bash  [SEC=UNCLASSIFIED]
-Date: Mon, 16 Aug 2010 10:53:07 +1000
-Message-ID: <0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865@BOM-VMBX-HO.bom.gov.au>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/2] set NO_TRIVIAL for custom merge strategies
+Date: Sun, 15 Aug 2010 20:06:52 -0500
+Message-ID: <20100816010652.GA22546@burratino>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; 
-    boundary="_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_"
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "spearce@spearce.org" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Aug 16 03:03:26 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Yaroslav Halchenko <debian@onerussian.com>,
+	Miklos Vajna <vmiklos@frugalware.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 16 03:08:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oko6n-0003kI-Qe
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:03:26 +0200
+	id 1OkoBz-0004oA-GC
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:08:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751823Ab0HPBDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Aug 2010 21:03:20 -0400
-Received: from mgmtbom7.bom.gov.au ([134.178.63.157]:4564 "EHLO
-	mgmtbom7.bom.gov.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751795Ab0HPBDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 15 Aug 2010 21:03:20 -0400
-X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Aug 2010 21:03:19 EDT
-X-Protective-Marking: VER=2005.6, NS=gov.au, SEC=UNCLASSIFIED, 
-    ORIGIN=D.Scurrah@bom.gov.au
-Received: from BOM-CAS-HO2.bom.gov.au (bom-cas-ho2.bom.gov.au) by 
-    mgmtbom7.bom.gov.au (Clearswift SMTPRS 5.2.5) with ESMTP id 
-    <T9786f0c97386b23f9da38@mgmtbom7.bom.gov.au>; Mon, 16 Aug 2010 
-    10:53:08 +1000
-Received: from BOM-VMBX-HO.bom.gov.au ([fe80::e8b6:c91e:5d4a:2993]) by 
-    BOM-CAS-HO2.bom.gov.au ([fe80::3dfa:9a29:fba2:d87e%16]) with mapi; 
-    Mon, 16 Aug 2010 10:53:08 +1000
-Thread-Topic: Patch for git-completion.bash [uncl]
-Thread-Index: Acs83WQ63lxVsBCuQf6tyTrRDe9Xiw==
-Accept-Language: en-US, en-AU
-Content-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, en-AU
+	id S1751837Ab0HPBId convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 21:08:33 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:36300 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751795Ab0HPBIc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 21:08:32 -0400
+Received: by iwn7 with SMTP id 7so1116396iwn.19
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 18:08:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=IyD8MLsrc7RI3eYiSdgwf7xVa4ZxaMBTc0hIPDxTdfk=;
+        b=eUbyRQXfQej0b+lCJZFwaIwa8hF6anzf6VH6F0oSmUaWtPDtmPNwlHDwhhgAimpwa8
+         XlfqhGNLbPI/Rv3w7QGFdnhI0qfUh21qxXc3Yeuk3UcaHtEGOKWFxKLVdhdkDsyqXRN2
+         10AIbwo6WvB+8W4LqKJhzCmS0KXwM7mI77/so=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=SBHgCnj56i/x8cSka8YaOalYeHKjNqjtITZ9+p+6rFlL404GV71Zm3j8MgB0QgxIxR
+         35Sml/Zm/rHorzKOKW1hQObcizVdmlkJ9+kiLRYjqL7/xxuwNq2cilZ6zgN3sK5Ull9s
+         0ZHz5Czb3+AyUa+W7FftFBiIkYgnRSG0J/jzw=
+Received: by 10.231.184.168 with SMTP id ck40mr4583701ibb.174.1281920911393;
+        Sun, 15 Aug 2010 18:08:31 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm3982819ibk.3.2010.08.15.18.08.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 15 Aug 2010 18:08:30 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153637>
 
---_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+As noticed at <http://bugs.debian.org/581691>, the example custom
+=E2=80=9Ctheirs=E2=80=9D strategy does not take effect for trivial merg=
+es.
+A user-defined =E2=80=9Cours=E2=80=9D-like strategy would also not be p=
+ossible without
+this change.
 
-Cg==
+Longer term, it would be nice to be able to override the
+NO_FAST_FORWARD and NO_TRIVIAL flags for custom strategies in
+~/.gitconfig, but let=E2=80=99s wait until we need it.
 
---_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_
-Content-Type: text/x-patch; 
-    name="0001-Completion-script-fails-because-of-syntax-error.patch"
-Content-Description:     0001-Completion-script-fails-because-of-syntax-error.patch
-Content-Disposition: attachment; 
-    filename="0001-Completion-script-fails-because-of-syntax-error.patch";
-     size=985; creation-date="Mon, 16 Aug 2010 10:53:07 GMT"; 
-    modification-date="Mon, 16 Aug 2010 10:53:07 GMT"
-Content-Transfer-Encoding: base64
+Thoughts?
 
-RnJvbSA1OTNiOTJjMjJmYjcyODg0YzRkNjFlNmE0YWUxZGQ2NWRiODk0MjVmIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBTY3VycmFoIDxkc2N1cnJhaEBib20uZ292LmF1PgpE
-YXRlOiBNb24sIDE2IEF1ZyAyMDEwIDEwOjM1OjI4ICsxMDAwClN1YmplY3Q6IFtQQVRDSF0gQ29t
-cGxldGlvbiBzY3JpcHQgZmFpbHMgYmVjYXVzZSBvZiBzeW50YXggZXJyb3IKCi0tLQogY29udHJp
-Yi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2ggfCAgICAyICstCiAxIGZpbGVzIGNoYW5n
-ZWQsIDEgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9jb250cmli
-L2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaCBiL2NvbnRyaWIvY29tcGxldGlvbi9naXQt
-Y29tcGxldGlvbi5iYXNoCmluZGV4IDY3NTY5OTAuLjY0YjRmMDkgMTAwNzU1Ci0tLSBhL2NvbnRy
-aWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoCisrKyBiL2NvbnRyaWIvY29tcGxldGlv
-bi9naXQtY29tcGxldGlvbi5iYXNoCkBAIC0xMjAsNyArMTIwLDcgQEAgX19naXRfcHMxX3Nob3df
-dXBzdHJlYW0gKCkKIAkJCXVwc3RyZWFtPXN2bitnaXQgIyBkZWZhdWx0IHVwc3RyZWFtIGlzIFNW
-TiBpZiBhdmFpbGFibGUsIGVsc2UgZ2l0CiAJCQk7OwogCQllc2FjCi0JZG9uZSA8IDwoZ2l0IGNv
-bmZpZyAteiAtLWdldC1yZWdleHAgJ14oc3ZuLXJlbW90ZVwuLipcLnVybHxiYXNoXC5zaG93dXBz
-dHJlYW0pJCcgMj4vZGV2L251bGwgfCB0ciAnXDBcbicgJ1xuICcpCisJZG9uZSA8ICQoZ2l0IGNv
-bmZpZyAteiAtLWdldC1yZWdleHAgJ14oc3ZuLXJlbW90ZVwuLipcLnVybHxiYXNoXC5zaG93dXBz
-dHJlYW0pJCcgMj4vZGV2L251bGwgfCB0ciAnXDBcbicgJ1xuICcpCiAKIAkjIHBhcnNlIGNvbmZp
-Z3VyYXRpb24gdmFsdWVzCiAJZm9yIG9wdGlvbiBpbiAke0dJVF9QUzFfU0hPV1VQU1RSRUFNfTsg
-ZG8KLS0gCjEuNy4wLjEKCg==
+Jonathan Nieder (2):
+  t7606 (merge-theirs): modernize style
+  merge: let custom strategies intervene in trivial merges
 
---_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_--
+ builtin/merge.c         |    1 +
+ t/t7606-merge-custom.sh |   96 ++++++++++++++++++++++++++++++++++-----=
+--------
+ 2 files changed, 71 insertions(+), 26 deletions(-)
