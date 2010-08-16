@@ -1,104 +1,106 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] git-gui: change the termination checks to avoid potential hang.
-Date: Sun, 15 Aug 2010 00:21:30 +0100
-Message-ID: <87iq3bh1op.fsf_-_@fox.patthoyts.tk>
-References: <20100704203342.6064.32250.reportbug@balanced-tree>
-	<20100704212125.GA1613@burratino> <20100704212439.GA1765@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] reset: Better warning message on git reset --mixed
+ <paths>
+Date: Sun, 15 Aug 2010 19:12:11 -0500
+Message-ID: <20100816001211.GD3296@burratino>
+References: <1281814499-11797-1-git-send-email-avarab@gmail.com>
+ <20100814210505.GA2372@burratino>
+ <7vvd7chcj4.fsf@alter.siamese.dyndns.org>
+ <87tymwzjbk.fsf@catnip.gol.com>
+ <AANLkTin3zyPvs3GjOt3=q6dOofFA2ba0sBAzt3=Ka1Wn@mail.gmail.com>
+ <7vr5hzg1u1.fsf@alter.siamese.dyndns.org>
+ <1281906304.32195.26.camel@lucy.SSG5-Serial-WLAN>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Anders Kaseorg <andersk@MIT.EDU>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 16 01:54:47 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org,
+	Ralf Ebert <info@ralfebert.de>
+To: Ralf Ebert <ralf@ralfebert.de>
+X-From: git-owner@vger.kernel.org Mon Aug 16 02:14:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Okn2N-0002NU-Fz
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 01:54:47 +0200
+	id 1OknL6-00081Y-LI
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 02:14:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751735Ab0HOXym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 15 Aug 2010 19:54:42 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:54786 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750993Ab0HOXym (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 19:54:42 -0400
-Received: from [172.23.170.143] (helo=anti-virus02-10)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1Okn2G-000266-9i; Mon, 16 Aug 2010 00:54:40 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1Okn26-0004UD-K3; Mon, 16 Aug 2010 00:54:30 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 4138723AC7; Mon, 16 Aug 2010 00:54:30 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <20100704212439.GA1765@burratino> (Jonathan Nieder's message of
-	"Sun, 4 Jul 2010 16:24:39 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1751610Ab0HPANv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 20:13:51 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:34560 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751403Ab0HPANu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 20:13:50 -0400
+Received: by gxk23 with SMTP id 23so1708681gxk.19
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 17:13:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=TyyaN5xOcw8CxTXEASHsvDLL0M6ayxwKouDHQXhzMCU=;
+        b=TSg/v7TG8Yyi2kGDcTjhYwaVXu15zzaQlvUjr3eYNGPRojElQYZyldKykISi1MZGQD
+         wsntDMXAM/UHPWx5MaRsmOKgfD1Evru2H4cSLMjy0ahqJ/WPECUgcOWqdWnY3i9Jf6Rx
+         jofe2CBU+Hx834rKyzflJ5Ios07VEECwXySQw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=l1MFo2u0KvUnr3fQDJLx+Re07VImCywAclm/iP3doU9ox9ij8yv7YoAONjUkMzHpRG
+         ZqHZCeucoBCGzoKq6DT5YrsCRog9OXymugy4sYETfZR+zK02VCDfE0waDuxRzf78BD7Y
+         lNKI993QrMNmK6kmv0lsM9ya1cbIXJHZs9PBA=
+Received: by 10.150.189.15 with SMTP id m15mr4623116ybf.324.1281917629986;
+        Sun, 15 Aug 2010 17:13:49 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id q1sm5841691ybk.8.2010.08.15.17.13.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 15 Aug 2010 17:13:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1281906304.32195.26.camel@lucy.SSG5-Serial-WLAN>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153633>
 
-Supposedly the askpass utility can hang under some circumstances. This
-patch adjusts the Tk application to terminate properly and should avoid
-this problem.
+Ralf Ebert wrote:
 
-Reported-by: Anders Kaseorg <andersk@mit.edu>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
- git-gui--askpass |   17 +++++++++++------
- 1 files changed, 11 insertions(+), 6 deletions(-)
+> git wipe [<path>]            # git reset [<file>]; git checkout [<fil=
+e>]
 
-diff --git a/git-gui--askpass b/git-gui--askpass
-index 12e117e..8ba4779 100755
---- a/git-gui--askpass
-+++ b/git-gui--askpass
-@@ -30,16 +30,20 @@ if {!$yesno} {
- 
- frame .b
- button .b.ok     -text OK     -command finish
--button .b.cancel -text Cancel -command {destroy .}
-+button .b.cancel -text Cancel -command cancel
- 
- pack .b.ok -side left -expand 1
- pack .b.cancel -side right -expand 1
- pack .b -side bottom -fill x -padx 10 -pady 10
- 
- bind . <Visibility> {focus -force .e}
--bind . <Key-Return> finish
--bind . <Key-Escape> {destroy .}
--bind . <Destroy>    {exit $rc}
-+bind . <Key-Return> [list .b.ok invoke]
-+bind . <Key-Escape> [list .b.cancel invoke]
-+bind . <Destroy>    {set rc $rc}
-+
-+proc cancel {} {
-+	set ::rc 255
-+}
- 
- proc finish {} {
- 	if {$::yesno} {
-@@ -50,10 +54,11 @@ proc finish {} {
- 		}
- 	}
- 
--	set ::rc 0
- 	puts $::answer
--	destroy .
-+	set ::rc 0
- }
- 
- wm title . "OpenSSH"
- tk::PlaceWindow .
-+vwait rc
-+exit $rc
--- 
-1.7.2.1.44.g721e7
+git checkout HEAD -- <pathspec>.
+
+So:
+
+repository  ---> index ---> work tree
+
+Limited by paths
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+  r -> i: git reset <rev> -- <pathspec>
+  i -> w: git checkout -- <pathspec>
+  r -> w: git checkout <rev> -- <pathspec>
+
+Updating head symref
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+  r -> r: git checkout HEAD^0 && git reset --soft <rev> && git checkout=
+ <rev>
+  r -> i: git checkout HEAD^0 && git reset --mixed <rev> && git checkou=
+t <rev>
+  r -> w: git checkout <rev>
+
+Resetting branch tip
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+
+  r -> r: git reset --soft <rev>
+  r -> i: git reset --mixed <rev>
+  r -> w: git reset --hard <rev>
+
+=E2=80=9Cgit checkout --no-update=E2=80=9D and =E2=80=9Cgit checkout --=
+no-update --keep-index=E2=80=9D
+do not sound very useful to me, so I am not suggesting adding them.
