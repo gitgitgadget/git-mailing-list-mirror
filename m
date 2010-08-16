@@ -1,95 +1,90 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
 X-Spam-Level: *
-X-Spam-ASN: AS31976 209.132.176.0/21
-X-Spam-Status: No, score=1.5 required=3.0 tests=AWL,BAYES_00,
-	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD
-	shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
-Received: (qmail 29481 invoked by uid 107); 5 Nov 2009 19:40:41 -0000
-Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.176.167)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Thu, 05 Nov 2009 14:40:39 -0500
+X-Spam-ASN: AS31976 209.132.180.0/23
+X-Spam-Status: No, score=1.1 required=3.0 tests=AWL,BAYES_00,
+	DKIM_ADSP_CUSTOM_MED,DKIM_SIGNED,FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,
+	HEADER_FROM_DIFFERENT_DOMAINS,LIST_MIRROR_RECEIVED,RP_MATCHES_RCVD,
+	T_DKIM_INVALID shortcircuit=no autolearn=no autolearn_force=no version=3.4.0
+Received: (qmail 22091 invoked by uid 111); 16 Aug 2010 02:01:14 -0000
+Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
+    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 16 Aug 2010 02:01:13 +0000
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758742AbZKETgr (ORCPT <rfc822;peff@peff.net>);
-	Thu, 5 Nov 2009 14:36:47 -0500
-Received: (majordomo@vger.kernel.org) by vger.kernel.org id S1758445AbZKETgq
-	(ORCPT <rfc822;git-outgoing>); Thu, 5 Nov 2009 14:36:46 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:32909 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757755AbZKETgq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 5 Nov 2009 14:36:46 -0500
-X-Greylist: delayed 1461 seconds by postgrey-1.27 at vger.kernel.org; Thu, 05 Nov 2009 14:36:46 EST
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id C544F40026;
-	Thu,  5 Nov 2009 20:11:33 +0100 (CET)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id B6A5E40036; Thu,  5 Nov 2009 20:11:33 +0100 (CET)
-Received: from krank (unknown [62.20.90.206])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 7274E40026;
-	Thu,  5 Nov 2009 20:11:33 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id DEDC6617E7; Thu,  5 Nov 2009 20:12:29 +0100 (CET)
-To:	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To:	bill lam <cbill.lam@gmail.com>
-Subject: Re: how to rebase backwards
-From:	=?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Date:	Thu, 05 Nov 2009 20:12:29 +0100
-In-Reply-To: <20091103093716.GD7117@debian.b2j> (bill lam's message of "Tue, 3
-	Nov 2009 17:37:16 +0800")
-Message-ID: <877hu4zsyq.fsf@lysator.liu.se>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-References: <20091103054510.GB7117@debian.b2j>
-	<7vocnkt5o4.fsf@alter.siamese.dyndns.org>
-	<20091103093716.GD7117@debian.b2j>
+	id S1752163Ab0HPCBI (ORCPT <rfc822;peff@peff.net>);
+	Sun, 15 Aug 2010 22:01:08 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45978 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751891Ab0HPCBH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 22:01:07 -0400
+Received: by iwn7 with SMTP id 7so1155967iwn.19
+        for <git@vger.kernel.org>; Sun, 15 Aug 2010 19:01:07 -0700 (PDT)
+DKIM-Signature:	v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+1EXRGNhP9fDm/BRv7k+aGyGyQsV/YjToEHRlGoYhhk=;
+        b=T8lHNQWoFw7GHJhpZS3WT90YD4w5upsE+mmkYDCFoa8yKgZREsBzMblns2FdPwvpxW
+         +MUy36ROP/ptdlyNpscDl+fBsQ6ZhLu7NNJzkk1if1NtR/ylGujs2TepuUhe4NnH1fTj
+         4X1wgR3u79hpqeG2upGPuH7fKatl9E7Tz30EU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=xwwgmwzRkNfhcrNJXibVYtYIN7bceGpMnycITSzUX4SZrKodFY3elejbPhpokhw13Z
+         fN6ZUVOmb5eq4RtDSuOaiOvE4HXaDUvcZsNRzprFolbN40ooft5aH7pPxbD+8+ynVEkz
+         vNmEzTvCQjfmdM4LzreVDEzS7ARrKaf8qyZIU=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-X-Virus-Scanned: ClamAV using ClamSMTP
+Received: by 10.231.190.10 with SMTP id dg10mr5306379ibb.46.1281924067307;
+ Sun, 15 Aug 2010 19:01:07 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Sun, 15 Aug 2010 19:01:07 -0700 (PDT)
+In-Reply-To: <7vaaonfhs8.fsf@alter.siamese.dyndns.org>
+References: <7vzkwqi10w.fsf@alter.siamese.dyndns.org>
+	<1281748247-8180-1-git-send-email-avarab@gmail.com>
+	<AANLkTi=Na_K=9oXM7iyeKodWXyXuSy-0UL792igTEjEe@mail.gmail.com>
+	<7v39uggs5h.fsf@alter.siamese.dyndns.org>
+	<AANLkTi=PAW_Owy_-DSQ32sboB28373Gb_aySbpeprwLg@mail.gmail.com>
+	<7vaaonfhs8.fsf@alter.siamese.dyndns.org>
+Date:	Mon, 16 Aug 2010 02:01:07 +0000
+Message-ID: <AANLkTi=otHzT0n6Do0EzBMMbb0dyh8C6O0G+KpJjtAhg@mail.gmail.com>
+Subject: Re: [PATCH] log: test for regression introduced in v1.7.2-rc0~103^2~2
+From:	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+To:	Junio C Hamano <gitster@pobox.com>
+Cc:	git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8BIT
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
-X-Old-Spam-Status: No, score=-0.2 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
 
-bill lam <cbill.lam@gmail.com> writes:
-
-> Thank you for detail explanation.  From what you described, I begin
-> with master commit D, 
->  $ git checkout -b deploy
->  $ git commit --allow-empty -m deploy
-
-But why on earth would you want to use --allow-empty? There is no reason
-for that. Just let deploy be where it is when you created it (until you
-actually add something to it).
-
->                       E
->                      /^ deploy
->      ---A---B---C---D
->                     ^ master
->  
->  $ git rebase -i A
+On Mon, Aug 16, 2010 at 01:49, Junio C Hamano <gitster@pobox.com> wrote:
+> Ævar Arnfjörð Bjarmason <avarab@gmail.com> writes:
 >
->                       v deploy
->           B'--C'--D'--E'
->          /
->      ---A---B---C---D
->                     ^ master
+>>>> +     # Needs an unrelated root commit
+>>>> +     test_commit README &&
+>>>
+>>> This is not a "root" commit, is it?
+>>
+>> s/root/first/
 >
-> since E is an empty commit, I suppose content of D' E' and D are
-> identical at this point.  Is that correct?
+> It is not even the first commit, is it?  It comes on top of whatever
+> commits that earlier tests left.
+>
+>>>> +     >Foo.bar &&
+>>>> +     git add Foo.bar &&
+>>>> +     git commit --allow-empty-message </dev/null &&
+>>>
+>>> Does emptiness of the message matter?
+>>
+>> No, I was just going for a minimal test case, no commit message is
+>> more minimal than having one.
+>
+> I do not think having to write "--allow-empty-message </dev/null" is
+> aiming for being minimal; it is doing something unusual after all.
+>
+> If you do not remember why you added this test 6 months down the road,
+> wouldn't you be confused to think maybe the commit has to be unusual in
+> that it has to lack the message to trigger the bug?
 
-Assuming you didn't intentionally change it during rebase, yes.
-
-> If several months later, I forget which is the common ancestor for
-> master and deploy, how do I generate the above graph or identify
-> commit A as the common ancestor for these two branches?
-
-That is exactly what git does all the time. You can use many
-command. For instance git log --graph master...deply whill show you both
-branches, starting from their common ancestor. "git merge-base deploy
-master" will tell you that the common ancestor is. Etc.
-
--- 
-David Kågedal
+My v2 patch should address both of these issues.
