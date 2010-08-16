@@ -1,85 +1,89 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: [BUG RFC/PATCH] git-cvsimport
-Date: Mon, 16 Aug 2010 06:24:06 +0200
-Message-ID: <4C68BD66.9060506@alum.mit.edu>
-References: <AANLkTikxxqgNpmqfFQq+5GVd7VAW2DTaro5anRHcx6Tt@mail.gmail.com>
+From: David Scurrah <D.Scurrah@bom.gov.au>
+Subject: Re: Patch for git-completion.bash [SEC=UNCLASSIFIED]
+Date: Mon, 16 Aug 2010 15:45:21 +1000
+Message-ID: <0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE86C@BOM-VMBX-HO.bom.gov.au>
+References: <0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865@BOM-VMBX-HO.bom.gov.au>
+ <AANLkTimGrrvz6myV=Fmioqh9=rt+Fh7qSSLcoma6Z-Bw@mail.gmail.com>
+ <0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE869@BOM-VMBX-HO.bom.gov.au>
+ <AANLkTi=cKVeDNqP018ottyB0xW3xp1yosO1AY6CQbnUY@mail.gmail.com>
+ <0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE86A@BOM-VMBX-HO.bom.gov.au>
+ <AANLkTi=QY+3M9jpuwXVcH1-yFhNQrjTfL9epTL-OYGMY@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Martin Langhoff <martin@catalyst.net.nz>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 16 06:24:27 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "spearce@spearce.org" <spearce@spearce.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "avarab@gmail.com" <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 16 07:45:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkrFI-0007qz-HC
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 06:24:24 +0200
+	id 1OksVx-0002Jw-W0
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 07:45:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013Ab0HPEYS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Aug 2010 00:24:18 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:45297 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751902Ab0HPEYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Aug 2010 00:24:17 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.134] (p54BED8D4.dip.t-dialin.net [84.190.216.212])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o7G4O6kH005467
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 16 Aug 2010 06:24:07 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.24) Gecko/20100317 Thunderbird/2.0.0.24 Mnenhy/0.7.6.666
-In-Reply-To: <AANLkTikxxqgNpmqfFQq+5GVd7VAW2DTaro5anRHcx6Tt@mail.gmail.com>
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1752454Ab0HPFpZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Aug 2010 01:45:25 -0400
+Received: from mgmtbom7.bom.gov.au ([134.178.63.157]:4008 "EHLO
+	mgmtbom7.bom.gov.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752429Ab0HPFpY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Aug 2010 01:45:24 -0400
+X-Protective-Marking: VER=2005.6, NS=gov.au, SEC=UNCLASSIFIED, 
+    ORIGIN=D.Scurrah@bom.gov.au
+Received: from BOM-CAS-HO2.bom.gov.au (bom-cas-ho2.bom.gov.au) by mgmtbom7.bom.gov.au
+ (Clearswift SMTPRS 5.2.5) with ESMTP id <T9787fc518786b23f9da38@mgmtbom7.bom.gov.au>;
+ Mon, 16 Aug 2010 15:45:21 +1000
+Received: from BOM-VMBX-HO.bom.gov.au ([fe80::e8b6:c91e:5d4a:2993]) by
+ BOM-CAS-HO2.bom.gov.au ([fe80::3dfa:9a29:fba2:d87e%16]) with mapi; Mon, 16
+ Aug 2010 15:45:21 +1000
+Thread-Topic: Patch for git-completion.bash [SEC=UNCLASSIFIED]
+Thread-Index: Acs9BjcEinitjEinRx+yLTWgmiUryg==
+In-Reply-To: <AANLkTi=QY+3M9jpuwXVcH1-yFhNQrjTfL9epTL-OYGMY@mail.gmail.com>
+Accept-Language: en-US, en-AU
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, en-AU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153650>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> This is more of a BUG than a RFC/PATCH.
->=20
-> Now that Junio has applied my patch to not write test results under
-> harness I can:
->=20
->     sudo chown -R root t
->=20
-> And run the tests with --root=3D/dev/shm under prove, except for 3
-> git-cvsimport tests. I have pending patches to these, after they'll
-> get in I'll fix that.
->=20
-> But the reason they hang is interesting:
->=20
->     rm -rf /tmp/meh;
->     git init /tmp/meh &&
->     cd /tmp/meh &&
->     sudo chown -R root /home/avar/g/git/t/t9601/cvsroot &&
->     cvsps --norc -q --cvs-direct -u -A --root
-> /home/avar/g/git/t/t9601/cvsroot module
->     Initialized empty Git repository in /tmp/meh/.git/
->=20
-> cvsps will just hang due to the unfriendly chmod. Maybe we want
-> something like the below to deal with that.
->=20
-> However, even then it'll still hang on something else, I haven't
-> looked into what. I'm just going to fix this by having it copy the
-> things it needs to the --root directory.
-
-My guess is that cvsps is using CVS commands to access the test CVS
-repository, and that CVS wants to write to the file CVSROOT/history to
-log what is being done.  The logging behavior can be turned off either:
-
-* by using the "-R" option when invoking CVS.  This is a global option,
-meaning that it has to appear before the subcommand: "cvs -R update"
-rather than "cvs update -R".
-
-* by setting the "$CVSREADONLYFS" environment variable.
-
-Apparently -R and "$CVSREADONLYFS" were added in CVS 1.12.1, which was
-released in 2003.
-
-Michael
+VGhhbmtzIHJlYWRpbmcgdGhlIGxpc3Qgc2hvd2VkIHJ1bm5pbmcgYXMgc2ggaW5zdGVhZCBvZiBi
+YXNoIHdhcyBteSBwcm9ibGVtCgpJIGFtIHRyeWluZyB0byBjb21iaW5lIHRoZSB2ZXJ5IHVzZWZ1
+bCBnaXQtcHJvbXB0CihodHRwOi8vdm9sbml0c2t5LmNvbS9wcm9qZWN0L2dpdC1wcm9tcHQvKSBh
+bmQgZ2l0LWNvbXBsZXRpb24uYmFzaApzY3JpcHRzIGFzIGVhY2ggaGFkIHNvbWV0aGluZyB0aGUg
+b3RoZXIgbGFja2VkLgoKVGhlIHByb2JsZW0gaXMgdGhhdCB3aGlsZSBnaXQtcHJvbXB0IHN1Z2dl
+c3RzIHlvdSBzdGFydCBpdCBmcm9tIC5iYXNocmMKdmlhIApbWyAkLSA9PSAqaSogXV0gICAmJiAg
+IC4gL3BhdGgvdG8vZ2l0LXByb21wdC5zaAoKVXNpbmcgLiB0byBleGVjdXRlIGdpdC1jb21wbGV0
+aW9uLmJhc2ggcnVucyBzaCB3aGljaCBydW5zIGJhc2ggaW4gc2gKZW11bGF0aW9uIG1vZGUgd2hp
+Y2ggbWFrZXMgaXQgZmFpbCBpbiBzZXZlcmFsIHBsYWNlcy4KCkkgZGlkIHNlZSBhIHRocmVhZCBh
+Ym91dCBhbiBhdHRlbXB0IHRvIG1ha2UgdGhlIHNjcmlwdCB6c2ggY29tcGxpYW50IGFzCndlbGws
+IEkgd29uZGVyIGlmIGl0IHdvdWxkIGJlIGJldHRlciB0byBqdXN0IG1ha2UgaXQgc2ggY29tcGxp
+YW50IHNvCnRoYXQgaXQgaXMgbW9yZSBwb3J0YWJsZSwgSSBndWVzcyB0aGF0J3MgdG9vIGhhcmQK
+CnJlZ2FyZHMKCkRhdmlkIFNjdXJyYWgKPiA+Cj4gPiBPbiBNb24sIDIwMTAtMDgtMTYgYXQgMDQ6
+MTQgKzAwMDAsIMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uIHdyb3RlOgo+ID4+IE9uIE1vbiwg
+QXVnIDE2LCAyMDEwIGF0IDA0OjA5LCBEYXZpZCBTY3VycmFoIDxELlNjdXJyYWhAYm9tLmdvdi5h
+dT4gd3JvdGU6Cj4gPj4gPiBIaSwKPiA+PiA+Cj4gPj4gPiBPbiBNb24sIDIwMTAtMDgtMTYgYXQg
+MDE6MDkgKzAwMDAsIMOGdmFyIEFybmZqw7Zyw7AgQmphcm1hc29uIHdyb3RlOgo+ID4+ID4+IE9u
+IE1vbiwgQXVnIDE2LCAyMDEwIGF0IDAwOjUzLCBEYXZpZCBTY3VycmFoIDxELlNjdXJyYWhAYm9t
+Lmdvdi5hdT4gd3JvdGU6Cj4gPj4gPj4KPiA+PiA+PiBUaGFua3MgZm9yIG5vdCBzZW5kaW5nIGEg
+Y2xhc3NpZmllZCBwYXRjaC4KPiA+PiA+Cj4gPj4gPiBIYSBoYSAtIHRoZSBBdXN0cmFsaWFuIEdv
+dmVybm1lbnQgaGFzIHRvIGhhdmUgZW1haWwgY2xhc3NpZmljYXRpb25zIGZvcgo+ID4+ID4gZXZl
+cnkgZW1haWwgc2VudCAtIGNsYXNzaWZpZWQgSSBiZWxpZXZlIGp1c3QgbWVhbnMgSSBkbyBub3Qg
+d2lzaCB5b3UgdG8KPiA+PiA+IHNoYXJlIGl0IG5vdCB0aGF0IGl0IGlzIGEgc3RhdGUgc2VjcmV0
+IChzZWUgb25lIGltcGxlbWVudGF0aW9uCj4gPj4gPiBodHRwOi8vd3d3LmphbnVzLm5ldC5hdS9q
+YW51c1NFQUwvT3V0bG9vay9mZWF0dXJlcykKPiA+PiA+Cj4gPj4gPgo+ID4+ID4+IEhhdmUgeW91
+IHNlZW4gdGhlICJbYmFzaC1jb21wbGV0aW9uXSBzeW50YXggZXJyb3IgbmVhciB1bmV4cGVjdGVk
+Cj4gPj4gPj4gdG9rZW4gJzwnIG9uIGxpbmUgMTIzIGluIGJhc2hfY29tcGxldGlvbi5kL2dpdCIg
+dGhyZWFkIHJlY2VudGx5IG9uCj4gPj4gPj4gdGhpcyBsaXN0PyBJdCBwcm9iYWJseSBkZXNjcmli
+ZXMgdGhlIHByb2JsZW0geW91J3JlIGhhdmluZy4KPiA+PiA+Cj4gPj4gPiBJJ2xsIGxvb2tlZCBo
+YXJkIGFuZCBjYW4ndCBmaW5kIHRoZSB0aHJlYWQgeW91IG1lbnRpb25lZAo+ID4+ID4gYW5kIHRo
+ZSBjdXJyZW50IHZlcnNpb24gb24gbXkgRmVkb3JhIHN5c3RlbSBkb2VzIG5vdCBjb21wbGV0ZSBm
+aXJzdAo+ID4+ID4gbGV2ZWwgY29tbWFuZHMgbGlrZSBjaGVja291dCAuLi4KPiA+Pgo+ID4+IGh0
+dHA6Ly9jb21tZW50cy5nbWFuZS5vcmcvZ21hbmUuY29tcC52ZXJzaW9uLWNvbnRyb2wuZ2l0LzE1
+MTcyMwo+ID4+Cj4gPj4gPiBNYXliZSB0aGVyZSBpcyBzb21ldGhpbmcgSSBhbSBtaXNzaW5nLgo+
+ID4+Cj4gPj4gWW91J3JlIHByb2JhYmx5IGV4ZWN1dGluZyB0aGUgY29tcGxldGlvbiBmaWxlIGlu
+IGJhc2gncyBzaCBjb21wYXRpYmlsaXR5IG1vZGUuCgoK
