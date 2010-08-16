@@ -1,72 +1,90 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCH] completion: make compatible with zsh
-Date: Sun, 15 Aug 2010 21:43:39 -0400
-Message-ID: <AANLkTinoPRPqxPrzNHF5J595r_Oedy=LSPZNYdMhB+OD@mail.gmail.com>
-References: <AANLkTimknF-m4_TYt+-vBBW0e3A-DY1nY93k7mPybdaD@mail.gmail.com>
- <1281757237-32656-1-git-send-email-lodatom@gmail.com> <20100814212507.GD2372@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log: test for regression introduced in
+ v1.7.2-rc0~103^2~2
+Date: Sun, 15 Aug 2010 18:49:43 -0700
+Message-ID: <7vaaonfhs8.fsf@alter.siamese.dyndns.org>
+References: <7vzkwqi10w.fsf@alter.siamese.dyndns.org>
+ <1281748247-8180-1-git-send-email-avarab@gmail.com>
+ <AANLkTi=Na_K=9oXM7iyeKodWXyXuSy-0UL792igTEjEe@mail.gmail.com>
+ <7v39uggs5h.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=PAW_Owy_-DSQ32sboB28373Gb_aySbpeprwLg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 16 03:44:16 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 16 03:50:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OkokC-00044Y-Uz
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:44:09 +0200
+	id 1Okopr-0005Hm-Ha
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:49:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752121Ab0HPBoE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 21:44:04 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:47232 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752114Ab0HPBoC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 21:44:02 -0400
-Received: by qwh6 with SMTP id 6so4505767qwh.19
-        for <git@vger.kernel.org>; Sun, 15 Aug 2010 18:44:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NWfK85KgZoNbSagGIxwJxI6LtpJ2zzQ7Lmzv4txY3yo=;
-        b=sbH2ILYL4Dmp8+YwXHS67cy6iyAt8HcyVYQ67iddaXGksInaYLr0Va3v4efgyo+Nwz
-         bwuWi4gmcNt4PCc2PTpnjCYsPtCtqOhGeNmR1G57PG2RKbO4WZlDvXA9/KXLFs60w1dV
-         jQUPCiINiV9oWdiNnbqD5pI0x0WYNT6yIAlQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=rIUXNlnRT1bOzv4HsLibf1p5IIzBliItn4pQxlnwk+dJ4MlBNiC/hq9SQd1ZUoFgSe
-         JJLwmst2pfn4BlhjEYPyj5zBrOzAWccjhzzrwhxPrBvEhYPfcGaayV7FLCAGN/yO/VEa
-         zQfCXM3+7USfT/KqWRViuN5++gBISXhwQpDTw=
-Received: by 10.224.69.17 with SMTP id x17mr2851306qai.283.1281923039172; Sun,
- 15 Aug 2010 18:43:59 -0700 (PDT)
-Received: by 10.229.72.139 with HTTP; Sun, 15 Aug 2010 18:43:39 -0700 (PDT)
-In-Reply-To: <20100814212507.GD2372@burratino>
+	id S1752034Ab0HPBty convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 21:49:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34423 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751883Ab0HPBtx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 21:49:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BD02ACD893;
+	Sun, 15 Aug 2010 21:49:51 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=CPMexLW3wxJI
+	3o5MY3QqB/JE5kw=; b=jQBgxkVkChHw0QbeNaaPShLe/h4Mh9hJfI6LzSXx5kby
+	qdIDUBq/vGZgbOTB667O+AfGfbOUcfh6bpf/a+cd85KMyTz1Ohr+bBpefdCqut1v
+	+sFOqpCmgXHigYmZVgyYjtyiwq7hwBDP9+4jq/izLAXKGQFpdquI/RvzW+TBhIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dlLujw
+	IXVE3dEXiin+jn+wTJMT0CiW03gsplXRBF0TgRotrriYvaOmQki72RUwjBh7IO4E
+	15Fp2JoMu4xfxVJsMjHWEtVKO13jsKD6dDqDLjKRuHH8JgVIBtXILmcMF+jymcYm
+	v1dgtSqfIEk0dEYoX8rlRKJ+UIjuCYFcEMgLs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B347CD891;
+	Sun, 15 Aug 2010 21:49:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA2DCCD890; Sun, 15 Aug
+ 2010 21:49:45 -0400 (EDT)
+In-Reply-To: <AANLkTi=PAW_Owy_-DSQ32sboB28373Gb_aySbpeprwLg@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun\, 15 Aug
+ 2010 09\:24\:16 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8E2BE22E-A8D8-11DF-A872-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153643>
 
-[original email was sent only to me]
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-On Sat, Aug 14, 2010 at 5:25 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Mark Lodato wrote:
+>>> + =C2=A0 =C2=A0 # Needs an unrelated root commit
+>>> + =C2=A0 =C2=A0 test_commit README &&
+>>
+>> This is not a "root" commit, is it?
 >
->> ${var:2}
->> =C2=A0 =C2=A0 Zsh uses $var[3,-1] to trim the first two characters. =
-=C2=A0There is no
->> =C2=A0 =C2=A0 way to write cross-shell code to accomplish this, so w=
-e must wrap
->> =C2=A0 =C2=A0 this in a check for zsh.
->
-> Maybe
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0${var#??}
+> s/root/first/
 
-Good idea.  I'll include this in the next version of the patch.
+It is not even the first commit, is it?  It comes on top of whatever
+commits that earlier tests left.
+
+>>> + =C2=A0 =C2=A0 >Foo.bar &&
+>>> + =C2=A0 =C2=A0 git add Foo.bar &&
+>>> + =C2=A0 =C2=A0 git commit --allow-empty-message </dev/null &&
+>>
+>> Does emptiness of the message matter?
+>
+> No, I was just going for a minimal test case, no commit message is
+> more minimal than having one.
+
+I do not think having to write "--allow-empty-message </dev/null" is
+aiming for being minimal; it is doing something unusual after all.
+
+If you do not remember why you added this test 6 months down the road,
+wouldn't you be confused to think maybe the commit has to be unusual in
+that it has to lack the message to trigger the bug?
