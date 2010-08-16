@@ -1,101 +1,103 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 07/12] bundle: run setup_git_directory_gently() sooner
-Date: Mon, 16 Aug 2010 09:21:32 +0200
-Message-ID: <201008160921.33198.trast@student.ethz.ch>
-References: <20100626192203.GA19973@burratino> <20100806023529.GB22369@burratino> <20100806031204.GK22369@burratino>
+Date: Mon, 16 Aug 2010 03:07:09 -0500
+Message-ID: <20100816080709.GA17566@burratino>
+References: <20100626192203.GA19973@burratino>
+ <20100806023529.GB22369@burratino>
+ <20100806031204.GK22369@burratino>
+ <201008160921.33198.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 16 09:22:06 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Jeff King <peff@peff.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Aug 16 10:08:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oku1G-0004xo-55
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 09:22:06 +0200
+	id 1OkukV-0003Aq-GU
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 10:08:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752739Ab0HPHV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Aug 2010 03:21:56 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:37115 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752610Ab0HPHV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Aug 2010 03:21:56 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 16 Aug
- 2010 09:21:54 +0200
-Received: from thomas.site (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 16 Aug
- 2010 09:21:33 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <20100806031204.GK22369@burratino>
+	id S1752774Ab0HPIIq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 16 Aug 2010 04:08:46 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46329 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752607Ab0HPIIp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 16 Aug 2010 04:08:45 -0400
+Received: by iwn7 with SMTP id 7so1436432iwn.19
+        for <git@vger.kernel.org>; Mon, 16 Aug 2010 01:08:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=KPFA3DMKZc4TVUHidU5se7cSHbrjBMo+n6oH7l5xj5w=;
+        b=r/lqfz+3szBBDQuHvatCsRbRLjCZbpHjzS/kVNUmOMQUJfk0avK2tevJ7sKDUqwBBt
+         BB01xSo9oXXCboAI/KuD34/TsBFLHwCoEUznKeFcN7ToM2uxC99hq8wvR9BHiz0kUPPr
+         b82MTJJITObqprHrL1qWBJtS6R+kum4gqwHvY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=cFQkb753FzCmdX6ZooNzEaQnuWajNUWnuPVMkai0XPwfzgQm4VCW1wrYccT4xg3/2z
+         Q3GtzxzlC3oZfLY3d7dUeqqaTU+BfTDbPoPPuCe5UqWh/1Jtan2In2azMTZFA+SyiMKe
+         +fAhdFacXEzXlUBm59JnANws8Bc8Uw6iJzyqk=
+Received: by 10.231.146.134 with SMTP id h6mr5316147ibv.170.1281946124874;
+        Mon, 16 Aug 2010 01:08:44 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id j2sm4396862iba.12.2010.08.16.01.08.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 16 Aug 2010 01:08:44 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201008160921.33198.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153653>
 
-Jonathan Nieder wrote:
->  builtin/bundle.c |    6 ++----
->  git.c            |    2 +-
->  t/t7006-pager.sh |   33 +++++++++++++++++++++++++++++++++
->  3 files changed, 36 insertions(+), 5 deletions(-)
+On Mon, Aug 16, 2010 at 09:21:32AM +0200, Thomas Rast wrote:
+> Jonathan Nieder wrote:
+
+>> +test_expect_success 'configuration can enable pager (from subdir)' =
+'
 [...]
-> +test_expect_success 'configuration can enable pager (from subdir)' '
-> +	rm -f paginated.out &&
-> +	mkdir -p subdir &&
-> +	git config pager.bundle true &&
-> +	test_when_finished "git config --unset pager.bundle" &&
-> +
-> +	git bundle create test.bundle --all &&
-> +	rm -f paginated.out subdir/paginated.out &&
-> +	(
-> +		cd subdir &&
-> +		test_terminal git bundle unbundle ../test.bundle
-> +	) &&
-> +	{
-> +		test -e paginated.out ||
-> +		test -e subdir/paginated.out
-> +	}
-> +'
-> +
->  # A colored commit log will begin with an appropriate ANSI escape
->  # for the first color; the text "commit" comes later.
->  colorful() {
+>> +		test_terminal git bundle unbundle ../test.bundle
+[...]
+> On my valgrind test setup, this never worked (i.e., fails and bisects
+> to this commit).
 
-On my valgrind test setup, this never worked (i.e., fails and bisects
-to this commit).
+Agh, sloppy me...  Fixes below.
 
-Oddly, I am seeing this error message from the second test (second in
-t7006, not in this patch):
+> Oddly, I am seeing this error message from the second test (second in
+> t7006, not in this patch):
+[...]
+>   Can't locate IO/Pty.pm in @INC (@INC contains: <snip>) at /local/ho=
+me/trast/git/t/t7006/test-terminal.perl line 4.
+>   BEGIN failed--compilation aborted at /local/home/trast/git/t/t7006/=
+test-terminal.perl line 4.
+>   ok 2 - set up terminal for tests
+>=20
+> Which raises a few questions: Why was this never an issue before?
 
-  expecting success: 
-          rm -f stdout_is_tty ||
-          cleanup_fail &&
+That=E2=80=99s expected behavior, marked with =E2=80=9Cok=E2=80=9D. :) =
+ That test is checking
+if IO::Pty is available and works; if not, the relevant tests should
+be skipped.
 
-          if test -t 1
-          then
-                  >stdout_is_tty
-          elif
-                  test_have_prereq PERL &&
-                  "$PERL_PATH" "$TEST_DIRECTORY"/t7006/test-terminal.perl \
-                          sh -c "test -t 1"
-          then
-                  >test_terminal_works
-          fi
+> does the test need a prerequisite other than HAVE_PERL?4
 
-  Can't locate IO/Pty.pm in @INC (@INC contains: <snip>) at /local/home/trast/git/t/t7006/test-terminal.perl line 4.
-  BEGIN failed--compilation aborted at /local/home/trast/git/t/t7006/test-terminal.perl line 4.
-  ok 2 - set up terminal for tests
+Exactly.
 
-Which raises a few questions: Why was this never an issue before?  Am
-I supposed to have IO::Pty with a perl install (it's a perl 5.8.8) or
-does the test need a prerequisite other than HAVE_PERL?4
+Jonathan Nieder (2):
+  t7006 (pager): add missing TTY prerequisite
+  t7006 (pager): add missing TTY prerequisite
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+ t/t7006-pager.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
