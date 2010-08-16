@@ -1,90 +1,62 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] log: test for regression introduced in
- v1.7.2-rc0~103^2~2
-Date: Sun, 15 Aug 2010 18:49:43 -0700
-Message-ID: <7vaaonfhs8.fsf@alter.siamese.dyndns.org>
-References: <7vzkwqi10w.fsf@alter.siamese.dyndns.org>
- <1281748247-8180-1-git-send-email-avarab@gmail.com>
- <AANLkTi=Na_K=9oXM7iyeKodWXyXuSy-0UL792igTEjEe@mail.gmail.com>
- <7v39uggs5h.fsf@alter.siamese.dyndns.org>
- <AANLkTi=PAW_Owy_-DSQ32sboB28373Gb_aySbpeprwLg@mail.gmail.com>
+Subject: Re: [RFC] Questions for "Git User's Survey 2010" - features used,
+ features wanted
+Date: Sun, 15 Aug 2010 18:54:47 -0700
+Message-ID: <7v62zbfhjs.fsf@alter.siamese.dyndns.org>
+References: <201008152357.29889.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 16 03:50:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 16 03:55:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Okopr-0005Hm-Ha
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:49:59 +0200
+	id 1Okoui-0006Jq-Ef
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752034Ab0HPBty convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 21:49:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34423 "EHLO
+	id S1752117Ab0HPByy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Aug 2010 21:54:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37476 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751883Ab0HPBtx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 21:49:53 -0400
+	with ESMTP id S1752031Ab0HPByy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 21:54:54 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BD02ACD893;
-	Sun, 15 Aug 2010 21:49:51 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1225CD94F;
+	Sun, 15 Aug 2010 21:54:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=CPMexLW3wxJI
-	3o5MY3QqB/JE5kw=; b=jQBgxkVkChHw0QbeNaaPShLe/h4Mh9hJfI6LzSXx5kby
-	qdIDUBq/vGZgbOTB667O+AfGfbOUcfh6bpf/a+cd85KMyTz1Ohr+bBpefdCqut1v
-	+sFOqpCmgXHigYmZVgyYjtyiwq7hwBDP9+4jq/izLAXKGQFpdquI/RvzW+TBhIs=
+	:content-type; s=sasl; bh=Sd8ggWsQh6pni74/MzgSugSut/Q=; b=h1zci1
+	+FOfF8Kyy1Vg4wGeRBqzpzG6lGLg9y/inZzDKGTShbd0hejKGZj58ajZUhhYRTEF
+	pO3JbB3fS9JjjuRaqWOfICm5CTq06QV4znG+gpo1DJRS6qjc5xPT/5wq6JN7njbb
+	LXoN30riGCpssDZ7aKxsGtLYjyd1n8DqTOYIY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=dlLujw
-	IXVE3dEXiin+jn+wTJMT0CiW03gsplXRBF0TgRotrriYvaOmQki72RUwjBh7IO4E
-	15Fp2JoMu4xfxVJsMjHWEtVKO13jsKD6dDqDLjKRuHH8JgVIBtXILmcMF+jymcYm
-	v1dgtSqfIEk0dEYoX8rlRKJ+UIjuCYFcEMgLs=
+	:content-type; q=dns; s=sasl; b=E6K/IovXcwVbEdUq6ZVl1RpXj4HrsBZW
+	RshEy6wCXMuzTsW4o56AfscwzcRdKajexa5+GKtaCXXu8zvdakoBEKNTv9bXjwxX
+	kHUC+wCXykQs+iL5P4QcNf3rVC+u1sILqjM47udZYh1hQPFlqjTrYjehoL98rNyw
+	dpHifAv2SxQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9B347CD891;
-	Sun, 15 Aug 2010 21:49:49 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B96F4CD94D;
+	Sun, 15 Aug 2010 21:54:51 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA2DCCD890; Sun, 15 Aug
- 2010 21:49:45 -0400 (EDT)
-In-Reply-To: <AANLkTi=PAW_Owy_-DSQ32sboB28373Gb_aySbpeprwLg@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun\, 15 Aug
- 2010 09\:24\:16 +0000")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 19A9BCD948; Sun, 15 Aug
+ 2010 21:54:48 -0400 (EDT)
+In-Reply-To: <201008152357.29889.jnareb@gmail.com> (Jakub Narebski's message
+ of "Sun\, 15 Aug 2010 23\:57\:28 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E2BE22E-A8D8-11DF-A872-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 42405380-A8D9-11DF-A872-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153644>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
->>> + =C2=A0 =C2=A0 # Needs an unrelated root commit
->>> + =C2=A0 =C2=A0 test_commit README &&
->>
->> This is not a "root" commit, is it?
->
-> s/root/first/
+>  + environmental variables in config, expanding ~ and ~user
 
-It is not even the first commit, is it?  It comes on top of whatever
-commits that earlier tests left.
-
->>> + =C2=A0 =C2=A0 >Foo.bar &&
->>> + =C2=A0 =C2=A0 git add Foo.bar &&
->>> + =C2=A0 =C2=A0 git commit --allow-empty-message </dev/null &&
->>
->> Does emptiness of the message matter?
->
-> No, I was just going for a minimal test case, no commit message is
-> more minimal than having one.
-
-I do not think having to write "--allow-empty-message </dev/null" is
-aiming for being minimal; it is doing something unusual after all.
-
-If you do not remember why you added this test 6 months down the road,
-wouldn't you be confused to think maybe the commit has to be unusual in
-that it has to lack the message to trigger the bug?
+Micronit.  They are "environment variable", never "environmental".
