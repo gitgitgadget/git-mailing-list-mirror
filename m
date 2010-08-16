@@ -1,84 +1,83 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] reset: Better warning message on git reset --mixed <paths>
-Date: Mon, 16 Aug 2010 09:59:44 +0900
-Message-ID: <AANLkTim=TM_3aXMSSN1-vovdc3z6QNR15KHujiJ-wH4_@mail.gmail.com>
-References: <1281814499-11797-1-git-send-email-avarab@gmail.com>
- <20100814210505.GA2372@burratino> <7vvd7chcj4.fsf@alter.siamese.dyndns.org>
- <87tymwzjbk.fsf@catnip.gol.com> <AANLkTin3zyPvs3GjOt3=q6dOofFA2ba0sBAzt3=Ka1Wn@mail.gmail.com>
- <7vr5hzg1u1.fsf@alter.siamese.dyndns.org> <AANLkTik+yGn_0PR9uO2_EsZgQPW187P4qmZx4fJSbAWO@mail.gmail.com>
+From: David Scurrah <D.Scurrah@bom.gov.au>
+Subject: Patch for git-completion.bash  [SEC=UNCLASSIFIED]
+Date: Mon, 16 Aug 2010 10:53:07 +1000
+Message-ID: <0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865@BOM-VMBX-HO.bom.gov.au>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Ralf Ebert <info@ralfebert.de>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 16 03:00:40 2010
+Content-Type: multipart/mixed; 
+    boundary="_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_"
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "spearce@spearce.org" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Aug 16 03:03:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oko43-000385-1q
-	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:00:35 +0200
+	id 1Oko6n-0003kI-Qe
+	for gcvg-git-2@lo.gmane.org; Mon, 16 Aug 2010 03:03:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751812Ab0HPBAG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 15 Aug 2010 21:00:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:65472 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751775Ab0HPBAF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 15 Aug 2010 21:00:05 -0400
-Received: by iwn7 with SMTP id 7so1110154iwn.19
-        for <git@vger.kernel.org>; Sun, 15 Aug 2010 18:00:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=nCIFG2Vqlc+lSFVWJSrsLwKXA01F4pqNMMEUYggvwn8=;
-        b=UcYM4Uw9w/JyZ/tuorrDl7tnCxSpgnnf+3VvYJkoZzaxo/WP1aqG1Po3ppQP80d/F9
-         p04sv1oItk+3euhUWvKcLKecIvAnqcn623dhR2jZXoUxKdl9rFqcVZzW2t3Mcf7ItnsQ
-         A3C/8RKwKAm761pGe4OcQZBwaS6nPIYrZMKYo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=fAFIA3Wd13j6vulc6+DtGgsT7s16rKzF/L4dGUHbE/aLOVMIcrLhHXaB8iPyK3Yu7L
-         KsPXGe2R9hsqtQVQcEOvF2+AUysUmzw5TD32GqJS80x+uciTrWjEllasLvsorI/+l5X8
-         QkqZSlKUZ76JLdz4h4ax/uVOmsNEfvkUEOyjk=
-Received: by 10.231.191.6 with SMTP id dk6mr5130562ibb.51.1281920404219; Sun,
- 15 Aug 2010 18:00:04 -0700 (PDT)
-Received: by 10.231.146.65 with HTTP; Sun, 15 Aug 2010 17:59:44 -0700 (PDT)
-In-Reply-To: <AANLkTik+yGn_0PR9uO2_EsZgQPW187P4qmZx4fJSbAWO@mail.gmail.com>
-X-Google-Sender-Auth: 6TQbRKUeU2qnUjUOYFLG_NGV5Vg
+	id S1751823Ab0HPBDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 15 Aug 2010 21:03:20 -0400
+Received: from mgmtbom7.bom.gov.au ([134.178.63.157]:4564 "EHLO
+	mgmtbom7.bom.gov.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751795Ab0HPBDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 15 Aug 2010 21:03:20 -0400
+X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Sun, 15 Aug 2010 21:03:19 EDT
+X-Protective-Marking: VER=2005.6, NS=gov.au, SEC=UNCLASSIFIED, 
+    ORIGIN=D.Scurrah@bom.gov.au
+Received: from BOM-CAS-HO2.bom.gov.au (bom-cas-ho2.bom.gov.au) by 
+    mgmtbom7.bom.gov.au (Clearswift SMTPRS 5.2.5) with ESMTP id 
+    <T9786f0c97386b23f9da38@mgmtbom7.bom.gov.au>; Mon, 16 Aug 2010 
+    10:53:08 +1000
+Received: from BOM-VMBX-HO.bom.gov.au ([fe80::e8b6:c91e:5d4a:2993]) by 
+    BOM-CAS-HO2.bom.gov.au ([fe80::3dfa:9a29:fba2:d87e%16]) with mapi; 
+    Mon, 16 Aug 2010 10:53:08 +1000
+Thread-Topic: Patch for git-completion.bash [uncl]
+Thread-Index: Acs83WQ63lxVsBCuQf6tyTrRDe9Xiw==
+Accept-Language: en-US, en-AU
+Content-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, en-AU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153636>
 
-On Mon, Aug 16, 2010 at 5:51 AM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> So it's a question of whether git-reset should do all reset-y things
-> without complaining, even when that infringes on git-checkout's
-> domain.
+--_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Of course one question is:  why is this "git-checkout's domain" in the
-first place?
+Cg==
 
-=46rom a UI perspective this functionality doesn't seem to make any mor=
-e
-sense in checkout -- and perhaps _less_ -- than it does in git-reset.
-"git-checkout <path>" seems like a tacked-on-to-make-cvs-users-happy
-wart rather than a natural part of git-checkout.
+--_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_
+Content-Type: text/x-patch; 
+    name="0001-Completion-script-fails-because-of-syntax-error.patch"
+Content-Description:     0001-Completion-script-fails-because-of-syntax-error.patch
+Content-Disposition: attachment; 
+    filename="0001-Completion-script-fails-because-of-syntax-error.patch";
+     size=985; creation-date="Mon, 16 Aug 2010 10:53:07 GMT"; 
+    modification-date="Mon, 16 Aug 2010 10:53:07 GMT"
+Content-Transfer-Encoding: base64
 
-I know that as a beginning git user, I always tried to use "git-reset
---hard <path>", because that sort of made sense in my mental model of
-git commands, only to be confused when it didn't work.  The fact that
-one actually needed to to do git-checkout instead was confusing.
+RnJvbSA1OTNiOTJjMjJmYjcyODg0YzRkNjFlNmE0YWUxZGQ2NWRiODk0MjVmIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBEYXZpZCBTY3VycmFoIDxkc2N1cnJhaEBib20uZ292LmF1PgpE
+YXRlOiBNb24sIDE2IEF1ZyAyMDEwIDEwOjM1OjI4ICsxMDAwClN1YmplY3Q6IFtQQVRDSF0gQ29t
+cGxldGlvbiBzY3JpcHQgZmFpbHMgYmVjYXVzZSBvZiBzeW50YXggZXJyb3IKCi0tLQogY29udHJp
+Yi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2ggfCAgICAyICstCiAxIGZpbGVzIGNoYW5n
+ZWQsIDEgaW5zZXJ0aW9ucygrKSwgMSBkZWxldGlvbnMoLSkKCmRpZmYgLS1naXQgYS9jb250cmli
+L2NvbXBsZXRpb24vZ2l0LWNvbXBsZXRpb24uYmFzaCBiL2NvbnRyaWIvY29tcGxldGlvbi9naXQt
+Y29tcGxldGlvbi5iYXNoCmluZGV4IDY3NTY5OTAuLjY0YjRmMDkgMTAwNzU1Ci0tLSBhL2NvbnRy
+aWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoCisrKyBiL2NvbnRyaWIvY29tcGxldGlv
+bi9naXQtY29tcGxldGlvbi5iYXNoCkBAIC0xMjAsNyArMTIwLDcgQEAgX19naXRfcHMxX3Nob3df
+dXBzdHJlYW0gKCkKIAkJCXVwc3RyZWFtPXN2bitnaXQgIyBkZWZhdWx0IHVwc3RyZWFtIGlzIFNW
+TiBpZiBhdmFpbGFibGUsIGVsc2UgZ2l0CiAJCQk7OwogCQllc2FjCi0JZG9uZSA8IDwoZ2l0IGNv
+bmZpZyAteiAtLWdldC1yZWdleHAgJ14oc3ZuLXJlbW90ZVwuLipcLnVybHxiYXNoXC5zaG93dXBz
+dHJlYW0pJCcgMj4vZGV2L251bGwgfCB0ciAnXDBcbicgJ1xuICcpCisJZG9uZSA8ICQoZ2l0IGNv
+bmZpZyAteiAtLWdldC1yZWdleHAgJ14oc3ZuLXJlbW90ZVwuLipcLnVybHxiYXNoXC5zaG93dXBz
+dHJlYW0pJCcgMj4vZGV2L251bGwgfCB0ciAnXDBcbicgJ1xuICcpCiAKIAkjIHBhcnNlIGNvbmZp
+Z3VyYXRpb24gdmFsdWVzCiAJZm9yIG9wdGlvbiBpbiAke0dJVF9QUzFfU0hPV1VQU1RSRUFNfTsg
+ZG8KLS0gCjEuNy4wLjEKCg==
 
--Miles
-
---=20
-Do not taunt Happy Fun Ball.
+--_002_0E3686EB9FA8AA409AFA0A25468DCE4301309C3DE865BOMVMBXHObo_--
