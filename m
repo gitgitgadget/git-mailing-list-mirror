@@ -1,66 +1,74 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: limiting ref visibility to specific users
-Date: Tue, 17 Aug 2010 10:48:47 -0500
-Message-ID: <AANLkTikbT+e+7+LxrP6TkuuQ=8rMxuTnvFcUbUFzaUgk@mail.gmail.com>
-References: <20100817150921.GB12682@nibiru.local>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: [GSoC update] git-remote-svn: The final one
+Date: Tue, 17 Aug 2010 11:48:14 -0400 (EDT)
+Message-ID: <15605020.115671.1282060094242.JavaMail.root@mail.hq.genarts.com>
+References: <20100817144215.GC24886@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: weigelt@metux.de, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Aug 17 17:49:25 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Daniel Shahaf <d.s@daniel.shahaf.name>,
+	Stefan Sperling <stsp@elego.de>,
+	Bert Huijben <rhuijben@collab.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Will Palmer <wmpalmer@gmail.com>,
+	Philip Martin <philip.martin@wandisco.com>,
+	Jonas Gehring <jonas.gehring@boolsoft.org>,
+	=?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 17 17:55:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlOPi-0008AA-86
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 17:49:22 +0200
+	id 1OlOV9-0002yR-S4
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 17:55:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753682Ab0HQPtJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 11:49:09 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:40668 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713Ab0HQPtI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 11:49:08 -0400
-Received: by gwj17 with SMTP id 17so1579464gwj.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 08:49:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type;
-        bh=13zw05WHHOECLHQngwYv0VI4Hq3XNs+V7zZXeDMEPO0=;
-        b=bx5tSlojZtvygHzdYdDdfONwVX0Z757X0Ob50UlxePkyATmSbQNj42z8bc7r/V5d8d
-         AjKm+K1eoO3QxFflPaRga6kIHMUT8Ksr2gPzxmVX82enrLRPqWW2xyaBQwDOjXsVQjaZ
-         mXQ7dEDD3CEaLQLtCuhIailAhj0oTv2OYsjDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=QkjXWwET22rE5hzGZtTEKUBa9qewhBClU4IQmTfOdlLEdhpX4xHDRPES3MwY1NwlVe
-         EylWmJ/iRJm6YaVwvWrYP0Va8eA/BdGuWlm8ciz3lUDaGFvrcNmJBSjSSUx5Z3lkqGWf
-         J045VkFe41qX7vyYBZttcWiltyNr0LTdtVSSg=
-Received: by 10.150.178.14 with SMTP id a14mr7447312ybf.131.1282060147188;
- Tue, 17 Aug 2010 08:49:07 -0700 (PDT)
-Received: by 10.150.98.8 with HTTP; Tue, 17 Aug 2010 08:48:47 -0700 (PDT)
-In-Reply-To: <20100817150921.GB12682@nibiru.local>
+	id S1757347Ab0HQPyy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 11:54:54 -0400
+Received: from hq.genarts.com ([173.9.65.1]:28869 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752199Ab0HQPyy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 11:54:54 -0400
+X-Greylist: delayed 392 seconds by postgrey-1.27 at vger.kernel.org; Tue, 17 Aug 2010 11:54:54 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C21781E2635B;
+	Tue, 17 Aug 2010 11:48:20 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id VqA12vtjWP7R; Tue, 17 Aug 2010 11:48:14 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 4DB0C1E2624F;
+	Tue, 17 Aug 2010 11:48:14 -0400 (EDT)
+In-Reply-To: <20100817144215.GC24886@kytes>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153755>
 
-Heya,
+Ram-
 
-On Tue, Aug 17, 2010 at 10:09, Enrico Weigelt <weigelt@metux.de> wrote:
-> I'd like to control which refs are visible to certain users
-> (when coming via ssh). Is there already some generic way to
-> do that (eg. passing some filter rule by a calling wrapper ?)
+First, congratulations on making it through GSoC.  I've been avidly following your progress since our off-list discussion at the beginning of the summer, and I'm excited to watch the work continue.
 
-Shawn, weren't you looking into something similar for Gerrit? Although
-I think what you were investigating would allow the user to get the
-rest of the refs somehow?
+> 1. Getting the revision history out of Subversion in a sane format
+> (dumpfile v3).
+>      ...
+> 2. Converting the revision history from dumpfile v3 format into a git
+> fast-import stream.
+>      ...
+> 5. Stitching everything together with a remote helper
+> application.
+>      ...
+> 6. A branch/tag mapper.
 
--- 
-Cheers,
+So being selfish, what I care about is an improved method for converting SVN repos to git repos once and never going back.  It sounds to me like the major hurdles remaining there are getting svn-fe to handle dumpfile v3 and handling branches/tags.  Is that correct?
 
-Sverre Rabbelier
+Thanks, and keep up the good work!
+
+Stephen
