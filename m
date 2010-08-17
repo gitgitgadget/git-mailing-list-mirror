@@ -1,120 +1,97 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] t/t0000-basic.sh: Don't run a passing TODO unless TEST_PASSING_TODO=1
-Date: Tue, 17 Aug 2010 09:43:54 +0000
-Message-ID: <1282038234-1880-1-git-send-email-avarab@gmail.com>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 19/24] merge script: handle -m --log correctly
+Date: Tue, 17 Aug 2010 17:55:22 +0800
+Message-ID: <AANLkTimrrfVsP=yduEmstuhm=Y-Km=HmoYgAvRkmQf91@mail.gmail.com>
+References: <20100817065147.GA18293@burratino>
+	<20100817070656.GS22057@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 17 11:44:20 2010
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>,
+	Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 17 11:55:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlIiR-0002FL-Ta
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 11:44:20 +0200
+	id 1OlItH-0007H1-Bm
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 11:55:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757436Ab0HQJoO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 05:44:14 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44625 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756784Ab0HQJoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 05:44:13 -0400
-Received: by wyb32 with SMTP id 32so6819740wyb.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 02:44:12 -0700 (PDT)
+	id S1756204Ab0HQJzX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 05:55:23 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:39979 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751566Ab0HQJzW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Aug 2010 05:55:22 -0400
+Received: by pzk26 with SMTP id 26so2282496pzk.19
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 02:55:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=rm74Tyh/v3FmmIWFDzxH/gfDeEfP/scFukMVTudhuPU=;
-        b=f/yIyJW3hiQ8FJ18JCEyj0zH0wfj+qdChB2K0u86myXwbJfPLI5KQqPqTL2lVVY0FD
-         s6pJLb5DDmMWNeKBTFB5AUIv21LioVoWgjj5AoSJ6sgAA1e+0jS06GdQothVRYWfvk2e
-         4i8LTbFhkJCJ6xBnZuh5L021e5+vVvxfKMW3M=
+        bh=Afg5fV0ojN/YogINo6fOYUcZzOebGE/0RRS9BvndZ8A=;
+        b=Y6jTFlAwxA4sB9wnMjxbOqKLk+qBt2KaKSCsGrXEf4+PS7aV9PaFBiTYzMsiK0Nfh+
+         Ma9Q+dTBK8pRzaKl1GBTEw7T3JxYmwYv2bfiVV/8BLeItYfU0NzRdYCeZCiiaLv8uYaA
+         HcA+OT1ffy92e/nCzAGKPhgsfC7cMd2U+lI48=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=G9XaSfds1cx3VadzttCEmkyyEiKD78s3e8w+uL7r9sMkRl2HRmlfN3N7ypqjYu48H9
-         9PSlExfzceQma2YtRc8uBEANj8XdvTv4qOSyzWhlfAY4bvuSX2WsrbOj/e+pWpjxpWkf
-         Bl3q8YKOEldkIdwdL7WFz6dV4Xx4+agqAtZnI=
-Received: by 10.227.129.130 with SMTP id o2mr5554560wbs.116.1282038252506;
-        Tue, 17 Aug 2010 02:44:12 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id u11sm3928295weq.7.2010.08.17.02.44.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 17 Aug 2010 02:44:11 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.389.gc3d0b
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NC8TyfoAeQdpc0IUZrV/11ws/z9LMw46oV/tLqVZ9jlw8cdxQ2/hKSTVUla0supkLy
+         nw4knW1Bp++i2roNAjxYH/RU08oxCCl+pGU5QLbpqhblI3YkkMR1WI6D7D98BDNgJ3p/
+         HuSn7lHdK2FoC57zrOfz/YRrjXMROtBWtQrFQ=
+Received: by 10.142.140.19 with SMTP id n19mr5591319wfd.271.1282038922497;
+ Tue, 17 Aug 2010 02:55:22 -0700 (PDT)
+Received: by 10.142.226.8 with HTTP; Tue, 17 Aug 2010 02:55:22 -0700 (PDT)
+In-Reply-To: <20100817070656.GS22057@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153743>
 
-Change the sanity tests in t/t0000-basic.sh to not to run a passing
-TODO test unless the TEST_PASSING_TODO environment variable is set.
-
-The motivation is to have nothing out of the ordinary on a normal test
-run for test smoking purposes.
-
-If every normal test run has a passing TODO you're more likely to turn
-a blind eye to it and not to investigate cases where things really are
-passing unexpectedly.
-
-It also makes the prove(1) output less noisy. Before:
-
-    All tests successful.
-
-    Test Summary Report
-    -------------------
-    ./t0000-basic.sh                                   (Wstat: 0 Tests:=
- 46 Failed: 0)
-      TODO passed:   5
-    Files=3D484, Tests=3D6229, 143 wallclock secs ( 4.00 usr  4.15 sys =
-+ 104.77 cusr 351.57 csys =3D 464.49 CPU)
-    Result: PASS
-
-And after:
-
-    All tests successful.
-    Files=3D484, Tests=3D6228, 139 wallclock secs ( 4.07 usr  4.25 sys =
-+ 104.54 cusr 350.85 csys =3D 463.71 CPU)
-    Result: PASS
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Tue, Aug 17, 2010 at 3:06 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Based on v1.7.1.1~23^2 (merge: --log appends shortlog to message if
+> specified, 2010-05-11). =A0Without this change, the scripted
+> (non-builtin) merge does not pass t7604.
 >
----
- t/t0000-basic.sh |   11 ++++++++---
- 1 files changed, 8 insertions(+), 3 deletions(-)
+> Cc: Tay Ray Chuan <rctay89@gmail.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index f2c7336..2f6a17b 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -54,9 +54,14 @@ test_expect_success 'success is reported like this' =
-'
- test_expect_failure 'pretend we have a known breakage' '
-     false
- '
--test_expect_failure 'pretend we have fixed a known breakage' '
--    :
--'
-+if test -z "$TEST_PASSING_TODO"
-+then
-+	say "Not testing a known breakage, set TEST_PASSING_TODO=3D1 to enabl=
-e"
-+else
-+	test_expect_failure 'pretend we have fixed a known breakage' '
-+	    :
-+	'
-+fi
- test_set_prereq HAVEIT
- haveit=3Dno
- test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
+Thanks for the heads up.
+
+> diff --git a/contrib/examples/git-merge.sh b/contrib/examples/git-mer=
+ge.sh
+> index bab3da9..91e33a3 100755
+> --- a/contrib/examples/git-merge.sh
+> +++ b/contrib/examples/git-merge.sh
+> @@ -294,12 +294,18 @@ else
+> =A0 =A0 =A0 =A0# the given message. =A0If remote is invalid we will d=
+ie
+> =A0 =A0 =A0 =A0# later in the common codepath so we discard the error
+> =A0 =A0 =A0 =A0# in this loop.
+> - =A0 =A0 =A0 merge_name=3D$(for remote
+> + =A0 =A0 =A0 merge_msg=3D"$(
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 for remote
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0do
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0merge_name "$remote"
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 done | git fmt-merge-msg $log_arg
+> - =A0 =A0 =A0 )
+> - =A0 =A0 =A0 merge_msg=3D"${merge_msg:+$merge_msg$LF$LF}$merge_name"
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 done |
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test "$have_message" =3D t
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 then
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 git fmt-merge-msg -m "$=
+merge_msg" $log_arg
+
+hmm, when did git-fmt-merge-msg learn -m? Mine (1.7.2.1.219.gf2a27) doe=
+sn't.
+
 --=20
-1.7.2.1.389.gc3d0b
+Cheers,
+Ray Chuan
