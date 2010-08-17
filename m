@@ -1,103 +1,52 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Excessive mmap [was Git server eats all memory]
-Date: Tue, 17 Aug 2010 21:07:29 +0400
-Message-ID: <AANLkTimDx1Vg6kUaHgap6+khTmJYsxdiSDB6cb88-fnN@mail.gmail.com>
-References: <wesfwyupgrg.fsf@kanis.fr>
-	<AANLkTimwy6GumHYSTo2je_hOUO80KEpx4_8z3iOoZyc0@mail.gmail.com>
-	<87ocdhlgbl.fsf@kanis.fr>
-	<AANLkTikt7LuhxHhOqPm2P-2hzXP54YThX5FRxF4yCFZu@mail.gmail.com>
-	<AANLkTi=tf51FWkZZFw9cF=pcCyadgp7a9EXK=KQ6GSQS@mail.gmail.com>
-	<87hbj74pve.fsf@kanis.fr>
-	<AANLkTinyX9cABkEDy3HBZoDVNWos2djNBSaw2Hg_yzAO@mail.gmail.com>
-	<wesy6cgm6wd.fsf_-_@kanis.fr>
-	<AANLkTi=6JcwLuyNWq9oYzE_E+7DSn-sEvR-X3AHvXM6U@mail.gmail.com>
-	<westyn3n3sa.fsf@kanis.fr>
-	<AANLkTiktriuvciNTNPD4941AG3th6rWwUYT4v_UnaAz3@mail.gmail.com>
-	<weshbj1xiav.fsf@kanis.fr>
-	<AANLkTimi8iS-vdO+=WHEGLQTQuBi75nVUM_eO=oYV+GU@mail.gmail.com>
-	<wes4oetv31i.fsf@kanis.fr>
+From: Seth House <seth@eseth.com>
+Subject: Re: Conflict markers in mergetool $LOCAL ?
+Date: Tue, 17 Aug 2010 17:08:44 +0000 (UTC)
+Message-ID: <loom.20100817T185804-167@post.gmane.org>
+References: <loom.20100817T054731-955@post.gmane.org> <20100817093008.GA26357@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	Sam Vilain <sam@vilain.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	jaredhance@gmail.com, jnareb@gmail.com, git <git@vger.kernel.org>
-To: Ivan Kanis <expire-by-2010-08-22@kanis.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 17 19:07:54 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 17 19:09:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlPdf-0001dr-8x
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 19:07:51 +0200
+	id 1OlPem-0002HN-8Z
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 19:09:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757934Ab0HQRHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 13:07:32 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:64565 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757858Ab0HQRHb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 13:07:31 -0400
-Received: by qyk9 with SMTP id 9so25530qyk.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 10:07:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=wX1Q/GtVdU6OCFfhXoc3G/9wu6h7+/HixntCx/rUKBs=;
-        b=VceQMIu6mYod6GzM12/ocdefGfYhR9rD54PSmbbS3xt1+6f2RZQEK0QQdek12lmLh0
-         gyXtyLXQm/lX5c4yKsYYhg/IB30sT4FJ10EGnh6mAL3QCHdQSI6xt4ooPi0jyXvZZ2ct
-         KkMRPC7F6IWghnOtMpV215Hp90ggnzWGQB2aM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=qtPYm60/+g2lLmkohQxisqLPF1bZc4zpLJekXo2bG1ZBO6XaAkfPy6o7HML7HEYZZw
-         yxkeXedN6JksvxNYviovORptgjQ5HNCL2Zb+iathv+TKfJKzkwejW6FvmusB5ewUZ9Rt
-         HQkjnyKWnl+/7DcuFmWMOzdIut57DwxB0lNQc=
-Received: by 10.229.251.197 with SMTP id mt5mr5013170qcb.131.1282064850171;
- Tue, 17 Aug 2010 10:07:30 -0700 (PDT)
-Received: by 10.229.251.3 with HTTP; Tue, 17 Aug 2010 10:07:29 -0700 (PDT)
-In-Reply-To: <wes4oetv31i.fsf@kanis.fr>
+	id S1757847Ab0HQRI4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 13:08:56 -0400
+Received: from lo.gmane.org ([80.91.229.12]:38077 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751190Ab0HQRIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 13:08:54 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OlPef-0002Dp-Fw
+	for git@vger.kernel.org; Tue, 17 Aug 2010 19:08:53 +0200
+Received: from ip65-44-116-164.z116-44-65.sendoutcards.net ([65.44.116.164])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 19:08:53 +0200
+Received: from seth by ip65-44-116-164.z116-44-65.sendoutcards.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 19:08:53 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 65.44.116.164 (Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.6 (KHTML, like Gecko) Chrome/6.0.493.0 Safari/534.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153765>
 
-Hi Ivan,
+David Aguilar <davvid <at> gmail.com> writes:
+> What happens if you remove this section?:
 
-On Tue, Aug 17, 2010 at 02:26:01PM +0200, Ivan Kanis wrote:
->
-> I have ran the following command for my tests: vmstat -SM -n 60
->
-> Here's the stat for one git clone, I see that 4237M of memory is
-> consumed. That is roughly the size of the repository. This raises my
-> first question: why is the memory not reclaimed, at the end of the run?
+Same result. The conflict markers are still there:
 
-It is consumed by system cache to hold the last read data, and it will
-hold it as long as there is enough free memory. When there is not enough
-free memory, the system will free some old (long time unused) pages from
-the system cache. This allows the system to avoid re-reading same files
-when there is enough memory to keep them.
-
->
-> ls -lh objects/pack/*.pack
-> 4.2G objects/pack/pack-55ad6d01f37427ca69e6267b0cd4e5257e57272c.pack
->
-> Is it a sensible behavior to leave a 4G file lying around?
-
-I am not sure I understand your question. This pack contains all data
-of your repository. So what did you expect to happen?
-
-> Does it get erased when people are pushing changes in?
-
-No, usually, push adds a new pack. However, when there are too many
-packs, the garbage collector will try to repack everything in one new
-pack.  You can create an empty file with the same name but with .keep
-extension to preserve the specified pack from being repacked.
-
-
-Dmitry
+http://i.imgur.com/d1vp1.png
