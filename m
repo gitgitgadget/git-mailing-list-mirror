@@ -1,60 +1,93 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: limiting ref visibility to specific users
-Date: Tue, 17 Aug 2010 09:55:26 -0700
-Message-ID: <AANLkTi=aSwu0JttExA8CN=2GhFYwt10+cCvUR77jibmj@mail.gmail.com>
-References: <20100817150921.GB12682@nibiru.local> <AANLkTikbT+e+7+LxrP6TkuuQ=8rMxuTnvFcUbUFzaUgk@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [WIP/PATCH] Teach fast-import to print the id of each imported
+ commit
+Date: Tue, 17 Aug 2010 22:32:20 +0530
+Message-ID: <20100817170216.GA14491@kytes>
+References: <20100701031819.GA12524@burratino>
+ <20100701054849.GA14972@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>, weigelt@metux.de
-X-From: git-owner@vger.kernel.org Tue Aug 17 18:55:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 17 19:04:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlPS9-0003o3-So
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 18:55:58 +0200
+	id 1OlPaH-0008BI-Lr
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 19:04:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757402Ab0HQQzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 12:55:49 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:59175 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754750Ab0HQQzs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 12:55:48 -0400
-Received: by gxk23 with SMTP id 23so2600159gxk.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 09:55:47 -0700 (PDT)
-Received: by 10.150.166.15 with SMTP id o15mr7583057ybe.38.1282064146186; Tue,
- 17 Aug 2010 09:55:46 -0700 (PDT)
-Received: by 10.231.180.100 with HTTP; Tue, 17 Aug 2010 09:55:26 -0700 (PDT)
-In-Reply-To: <AANLkTikbT+e+7+LxrP6TkuuQ=8rMxuTnvFcUbUFzaUgk@mail.gmail.com>
+	id S1757832Ab0HQRER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 13:04:17 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:35045 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757742Ab0HQREP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 13:04:15 -0400
+Received: by ywh1 with SMTP id 1so2587506ywh.19
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 10:04:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=3283bS2RtJlZ3RymuGSOICnrxNvSB7DvPvdSmnXPSPM=;
+        b=bmdTbRg8drJSaJC0/rf46Q/6Nhtn4fa002FSxVW7hUi/VtQcv/hqfsiFpk/AOK1mGA
+         oJX0TgzFbJ/+UgkAqCpzHVC5qMBolGdrvWv3kwdXo4BgwBuzAhe3FBwPQAwgqeMSaw9u
+         GE3lqsTPfRB2WBM2MydBuAbje4+sL8W3Bt00Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KiGCpxDKJddUEuJV8W1LQETWUyKGvpFBNWX4tkT1RhXcg4bCvjqRoPPoxdQuRDYalR
+         jiUm1JjIJowvnHSuiFIDNnlaKzSLEUY312EhOzmPooLaeyOyPbCDjefz+Tau83Iuedg2
+         KZZB0YtkiBBtbzBUXcEc7VPyt2GADMrcyrGw4=
+Received: by 10.151.92.3 with SMTP id u3mr7334592ybl.209.1282064654634;
+        Tue, 17 Aug 2010 10:04:14 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id g31sm6294858ibh.16.2010.08.17.10.04.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 17 Aug 2010 10:04:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100701054849.GA14972@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153763>
 
-On Tue, Aug 17, 2010 at 8:48 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Tue, Aug 17, 2010 at 10:09, Enrico Weigelt <weigelt@metux.de> wrote:
->> I'd like to control which refs are visible to certain users
->> (when coming via ssh). Is there already some generic way to
->> do that (eg. passing some filter rule by a calling wrapper ?)
->
-> Shawn, weren't you looking into something similar for Gerrit? Although
-> I think what you were investigating would allow the user to get the
-> rest of the refs somehow?
+Hi,
 
-Yup.  We implemented this in JGit by allowing the application to
-provide an implementation of a RefFilter interface, only the refs that
-the filter approves are shown to the remote client.  During
-receive-pack (server side of push) the RefFilter also is used to
-restrict what objects the client may mention as a delta base, or as an
-object in the graph (e.g. commit parent, commit root tree, or tree
-entry member).
+Jonathan Nieder writes:
+> For the svn importer, it would be useful to have a map from
+> subversion revision numbers to git commits.  This is particularly
+> relevant because the subversion api sometimes represents as "copy
+> this directory from this revision", and the importer needs to be
+> able to access the corresponding trees.  So (optionally) print
+> each commit id when the corresponding object is written.
+> 
+> Unfortunately when each commit object is written, it is not yet
+> accessible to the caller.  The corresponding pack index
+> and header are not written until the next checkpoint finishes.
+> 
+> Should fast-import accept lines of the form
+> 
+>  M 100644 <commit id>:<path> <path>
+> 
+> and
+> 
+>  M 040000 <commit id>:<path> <path>
+> 
+> to allow the caller to use commits before they are accessible
+> through the git object database?
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> but definitely not ready for inclusion
 
-There is no equivalent in C Git.  You have to use either Gerrit Code
-Review, or build your own server on top of JGit to take advantage of
-that feature.
+I'm resurrecting this thread. We need to finish this feature before we
+can finish the dumpfilev3 support in svn-dump-fast-export.
 
--- 
-Shawn.
+-- Ram
