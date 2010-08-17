@@ -1,16 +1,12 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Stephen Bash <bash@genarts.com>
 Subject: Re: [GSoC update] git-remote-svn: The final one
-Date: Tue, 17 Aug 2010 18:10:39 +0200
-Message-ID: <AANLkTikyrC07OnMJWDmC7n0ks3TdOxb=jPmKWbK9Nc7u@mail.gmail.com>
-References: <20100817144215.GC24886@kytes>
-	<15605020.115671.1282060094242.JavaMail.root@mail.hq.genarts.com>
-	<20100817155933.GB6947@kytes>
-Reply-To: kusmabite@gmail.com
+Date: Tue, 17 Aug 2010 12:20:15 -0400 (EDT)
+Message-ID: <27168737.115723.1282062015125.JavaMail.root@mail.hq.genarts.com>
+References: <20100817155933.GB6947@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Stephen Bash <bash@genarts.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	David Michael Barr <david.barr@cordelta.com>,
 	Daniel Shahaf <d.s@daniel.shahaf.name>,
 	Stefan Sperling <stsp@elego.de>,
@@ -19,65 +15,65 @@ Cc: Stephen Bash <bash@genarts.com>,
 	Will Palmer <wmpalmer@gmail.com>,
 	Philip Martin <philip.martin@wandisco.com>,
 	Jonas Gehring <jonas.gehring@boolsoft.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
+	=?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, Git Mailing List <git@vger.kernel.org>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 17 18:11:04 2010
+X-From: git-owner@vger.kernel.org Tue Aug 17 18:20:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlOkb-0004Ho-Mp
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 18:10:58 +0200
+	id 1OlOts-0000pX-30
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 18:20:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757657Ab0HQQKm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 12:10:42 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:43380 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757462Ab0HQQKl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Aug 2010 12:10:41 -0400
-Received: by vws3 with SMTP id 3so4700537vws.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 09:10:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=JzolbopOi0WSmABdCLLRbr6ES33iACNRgigMFg/H2GM=;
-        b=lrt401mB6xtwCTs828o7IA1vrVBybOncN1UJlosgDMVQV8G40jSmQROPE0/sBSEZBQ
-         xVu8JPB+SpQY5AmS7vcnt7YGw19dyFHFjeMfeOKjY60hYrv11HnM2E6EpvLTELatEWdz
-         xoYp6Ccffgq4+nJltzzIFylzdknrx/n7c/SUY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=hTW2PQouZopqGuGwXzH6oFtWC5qDWJEF43U4bA28/51YH1Gj0X6b3LI7oYv/jNOBY9
-         FMeCFBAofIvLtqAPz9edXtrApPPRvPg/Ttah4hHW0I19ZdPk5r0kWroZzitw2nGDtl7e
-         pcH+tm8trG1+M1kjK+yQ8es6tRvxkxY1QLM90=
-Received: by 10.220.62.72 with SMTP id w8mr4149281vch.200.1282061439604; Tue,
- 17 Aug 2010 09:10:39 -0700 (PDT)
-Received: by 10.220.172.67 with HTTP; Tue, 17 Aug 2010 09:10:39 -0700 (PDT)
+	id S1757274Ab0HQQUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 12:20:24 -0400
+Received: from hq.genarts.com ([173.9.65.1]:8058 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754223Ab0HQQUX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 12:20:23 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 139FC1E2624F;
+	Tue, 17 Aug 2010 12:20:22 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 913kOMmG8SUw; Tue, 17 Aug 2010 12:20:15 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 6F7CA1E2635B;
+	Tue, 17 Aug 2010 12:20:15 -0400 (EDT)
 In-Reply-To: <20100817155933.GB6947@kytes>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153758>
 
-On Tue, Aug 17, 2010 at 5:59 PM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Stephen Bash writes:
->> First, congratulations on making it through GSoC. =A0I've been avidl=
-y following your progress since our off-list discussion at the beginnin=
-g of the summer, and I'm excited to watch the work continue.
-
-+1 on the congratulation! I've also been following the progress, but
-from a distance. As I use git-svn to work with SVN at $dayjob, I can't
-wait to get something running.
-
+> > So being selfish, what I care about is an improved method for
+> > converting SVN repos to git repos once and never going back. It
+> > sounds to me like the major hurdles remaining there are getting
+> > svn-fe to handle dumpfile v3 and handling branches/tags. Is that
+> > correct?
+> 
 > We're doing better than that- when the whole thing is complete, we
 > should have perfectly seamless two-way compatibility.
 
-Does this include handling SVN repos where the layout have changed
-during it's lifetime? If so, how will this look on the git side?
+That makes complete sense.  It just happens I'm interested in a subset of the problem (the order has come down from on high that we will be using git for future development), so I'm curious if/how a one-time conversion simplifies things.
+
+> But yes, you're
+> right- there are several non-trivial tasks to handle, the top three of
+> which are:
+> 1. Making svn-fe git-aware (and hence handle dumpfile v3)
+> 2. Writing a fast-export to dumpfilev3 converter
+> 3. Implementing the branch/ tag mapper in an extensible way
+
+Thanks for clarifying.
+
+> Don't worry about it though- we're all working hard on it :)
+
+I believe that :)  And you're not holding me up; I've spent my spare time this summer coming up with some Perl scripts to work with svn-fe for the one-time conversion, so I'll have my point case solved in the near future.  But I'm sure the problem will come up again, and I'll be happy to use the general tool then.
+
+Thanks,
+Stephen
