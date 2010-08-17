@@ -1,75 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 1/2] commit: add parse_commit_repl() to replace
- commits at parsing time
-Date: Tue, 17 Aug 2010 14:18:39 -0700
-Message-ID: <7vbp91aqfk.fsf@alter.siamese.dyndns.org>
-References: <20100817015901.5592.25471.chriscool@tuxfamily.org>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 0/6] Extensions of core.ignorecase=true support
+Date: Tue, 17 Aug 2010 23:20:17 +0200
+Message-ID: <201008172320.17939.j6t@kdbg.org>
+References: <cover.1281985411.git.j6t@kdbg.org> <AANLkTi=0j_JFWBp=kJG6v+YBUxKAiVAVc4UtG0LWmipq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Tue Aug 17 23:19:03 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Joshua Jensen <jjensen@workspacewhiz.com>
+To: Robert Buck <buck.robert.j@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 17 23:20:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlTYe-0007zx-0W
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 23:18:56 +0200
+	id 1OlTa7-0000Fq-I7
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 23:20:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750863Ab0HQVSv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 17:18:51 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47200 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750789Ab0HQVSu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 17:18:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C21CE753;
-	Tue, 17 Aug 2010 17:18:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=9zjWpdbDYzrm/ulEAIyUDPbOMcI=; b=UK5Q4R
-	FQpAyvyChUs2Axr/VEoXCtDQ4lVB1YRr/SCWbfpWudKBrCk70s4CdE0QkgzoUdgo
-	k25Q1RBaiy0BKyFsnfVwBO7EPPHkUaTZbmOGjcIECdlHkk5RV9s1rvm/bbIPXJVj
-	9SKGzbEldxmZsYh9cVAbi0QSZP2XJTtQnxiJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FDaQZmL9jEOJeuu7fQZ+07N9u4YpFaAa
-	1S8ElXINV+AkyllTMNRuK1PZVWHMYnRJXf3YiSm3QgvbuniosPYF5PmA1TtviEOG
-	MyEgGlT5ztyqsDitbuXprUKzzAIjemWKKdy6hpCsTkQon/YGNIHHgT3qnUPFn7qP
-	PUUBV1hWE64=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 810A6CE752;
-	Tue, 17 Aug 2010 17:18:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8995CE751; Tue, 17 Aug
- 2010 17:18:41 -0400 (EDT)
-In-Reply-To: <20100817015901.5592.25471.chriscool@tuxfamily.org> (Christian
- Couder's message of "Tue\, 17 Aug 2010 03\:58\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 04D49CC8-AA45-11DF-8584-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751037Ab0HQVUW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 17:20:22 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:15431 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750912Ab0HQVUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 17:20:22 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id DAF3010012;
+	Tue, 17 Aug 2010 23:20:18 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 12E0619F5C0;
+	Tue, 17 Aug 2010 23:20:18 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <AANLkTi=0j_JFWBp=kJG6v+YBUxKAiVAVc4UtG0LWmipq@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153779>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153780>
 
-Christian Couder <chriscool@tuxfamily.org> writes:
+On Dienstag, 17. August 2010, Robert Buck wrote:
+> While I tend to agree with case-insensitive searches, I would tend to
+> question the use of a non-case-preserving / last-use methodology
+> reminiscent of the days of DOS.
 
-> The function parse_commit() is not safe regarding replaced commits
-> because it uses the buffer of the replacement commit but the object
-> part of the commit struct stay the same. Especially the sha1 is not
-> changed so it doesn't match the content of the commit.
+There is no "last-use" involved. Everything's rather "first-use", i.e., 
+case-preserving.
 
-This all sounds backwards to me, if I am reading the discussion correctly.
+> The nice thing about case-insensitivity is that when requesting a file
+> by name any capitalization can be used. The bad thing, well come to
+> think of it, there is none that I can think of, but for those more
+> religious than I about Unix they may cite otherwise.
 
-If a replace record says commit 0123 is replaced by commit 4567 (iow, 0123
-was a mistake, and pretend that its content is what is recorded in 4567),
-and when we are honoring the replace records (iow, we are not fsck),
-shouldn't read_sha1("0123") give us a piece of memory that stores what is
-recorded in 4567, parse_object("0123") return a struct commit whose buffer
-points at a block of memory that has what is recorded in 4567 _while_ its
-object.sha1[] say "0123"?
+What do you mean by "requesting a file"?
 
-What problem are you trying to solve?
+core.ignorecase is purely about the worktree and the transition of files from 
+the worktree to the index. It is *not* involved when files are moved from the 
+index or the repository to the worktree. In particular, it is not used when 
+you give a pathspec to limit 'git log' results. (Joshua proposed a change 
+where core.ignorecase would also kick in in this case as well, but this 
+change is not included in this series, and I would not agree to it.)
+
+-- Hannes
