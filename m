@@ -1,77 +1,72 @@
-From: Vicent Marti <tanoku@gmail.com>
-Subject: Re: [GSoC] Libgit2, Summer of Code is over
-Date: Tue, 17 Aug 2010 13:33:27 +0200
-Message-ID: <AANLkTin_Ne+wYBXSpwOm5KNM+M3Zet0N2zPVEO+-pcjL@mail.gmail.com>
-References: <AANLkTinPSsTAZ9cxba2smHn1beRvchcsc7VHei2xSf_k@mail.gmail.com> <AANLkTikUKS7jjXyzLY0h50jg1gdDsKKWM3ZkPQcbgAJ7@mail.gmail.com>
+From: Paolo Bonzini <bonzini@gnu.org>
+Subject: Re: [PATCH 0/5] Update compat/regex
+Date: Tue, 17 Aug 2010 13:46:52 +0200
+Message-ID: <4C6A76AC.4000704@gnu.org>
+References: <20100817080322.GA28476@burratino> <1282037082-12996-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 17 13:33:58 2010
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Paolo Bonzini <paolo.bonzini@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Frank Li <lznuaa@gmail.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 17 13:47:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlKQX-0002wD-7J
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 13:33:57 +0200
+	id 1OlKdK-0000Ce-CP
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 13:47:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932081Ab0HQLdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 07:33:54 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:49386 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756505Ab0HQLdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 07:33:53 -0400
-Received: by qwh6 with SMTP id 6so5939192qwh.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 04:33:52 -0700 (PDT)
+	id S1752583Ab0HQLq6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 07:46:58 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:55430 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379Ab0HQLq5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 07:46:57 -0400
+Received: by qyk33 with SMTP id 33so597838qyk.19
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 04:46:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=QsCEV68483Ee+QsgOX1eaDnSXLJXALb4IZpsGXJw/EU=;
-        b=EPGiEzhtssNPCs9CoPN2tv2HFUbY2hqctbbpspATEF/4+2dYthHJPXOuolfRQKGPk4
-         lhlxsJL3BAUpcgoZma72Wp70zazc3jJ4diV8j/DNgpLZJfgNTB+vEI/t+U1L9AHTgAK2
-         dTBDN7rv/0BBdydrjf5bwQluJbOaKkRvXFHkY=
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=VgjyETG51zQezwV/77cNDZeaHXxDw3ShQqundg9X++s=;
+        b=ZAdmcpADWqmZtFWFVAYYg60EX+kk2UCtDxtTAD8gX13gKTSlW/wfANdKtfrhKaICgi
+         b77pNEowfozV/9CvT16Rh9TDtiNI698cAnUwOCflbq9oDAczay6t2d+FG4LUt47Wif3T
+         bbTPq1QrvfqxocfnHaF8CMHVFwuZ7NSuBdyVs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=EaFxk1D6gzqAOaeJQKfz7HtyyGa/QuFg4qbMkoUpLBQw65tR5gHLWQZ6JNgzOBmgmI
-         CtjcLZ2d9/HJtYmjTlkAzGJLD4p18bY97tbdnoPTRYGFzTyJ33asBovbxk60owLn5U7s
-         p3j5zgiqK8CX53mGJ21dNoavIUPjXNdC3ieCo=
-Received: by 10.229.52.20 with SMTP id f20mr226445qcg.243.1282044827181; Tue,
- 17 Aug 2010 04:33:47 -0700 (PDT)
-Received: by 10.229.247.138 with HTTP; Tue, 17 Aug 2010 04:33:27 -0700 (PDT)
-In-Reply-To: <AANLkTikUKS7jjXyzLY0h50jg1gdDsKKWM3ZkPQcbgAJ7@mail.gmail.com>
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=qtyZE+hSlwRJhc2jGkcFgenazeZyw72MMJHlFqHugMhHglaCvhmLRN2fSIZtqqwAKm
+         xCTGIRn5u51gB8eqI4ROuORfZ/84aiVPlUEADFd/todMtiey3gqr9C3M37ikocdQN/Qj
+         DrxvdYhH6ReBMIihufyBqtKal623DdSfyHVO4=
+Received: by 10.224.69.169 with SMTP id z41mr4259077qai.160.1282045616891;
+        Tue, 17 Aug 2010 04:46:56 -0700 (PDT)
+Received: from yakj.usersys.redhat.com (nat-pool-brq-t.redhat.com [209.132.186.34])
+        by mx.google.com with ESMTPS id t1sm8674885qcs.33.2010.08.17.04.46.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 17 Aug 2010 04:46:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.10) Gecko/20100621 Fedora/3.0.5-1.fc13 Lightning/1.0b2pre Mnenhy/0.8.3 Thunderbird/3.0.5
+In-Reply-To: <1282037082-12996-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153746>
 
-On Tue, Aug 17, 2010 at 3:53 AM, Tay Ray Chuan <rctay89@gmail.com> wrote:
-> Hi,
->
-> On Tue, Aug 17, 2010 at 3:46 AM, Vicent Marti <tanoku@gmail.com> wrote:
->> the Summer of Code has just reached its end and I'd like to offer some
->> closure; neither me nor my mentors have been too active on the mailing
->> list -- to be fair, there was too much work to be done on the library
->> before it could be considered of general interest. We've been focusing
->> on that.
->
-> IIRC, Scott Chacon from github is your mentor?
+On 08/17/2010 11:24 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>    compat/regex: use the regex engine from gawk for compat
+>    compat/regex: get the gawk regex engine to compile within git
 
-Yes, he is.
+Should these two be squashed to ensure bisectability over a wide range=20
+of host systems?
 
->
-> I wonder if libgit2 is being used at github (either directly or via
-> ruby bindings) - not only will it help through real-world testing, it
-> will also help to boost "street-cred".
-
-The library is not ready for production use; however, as far as I know
-they are interested on eventually using it -- when it's ready. I do
-agree, that would mean a massive boost to its credentials and
-development.
-
-Cheers,
-Vicent Marti
+Paolo
