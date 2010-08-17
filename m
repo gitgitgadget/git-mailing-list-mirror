@@ -1,129 +1,120 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 5/5] autoconf: don't use platform regex if it lacks REG_STARTEND
-Date: Tue, 17 Aug 2010 09:24:42 +0000
-Message-ID: <1282037082-12996-6-git-send-email-avarab@gmail.com>
-References: <20100817080322.GA28476@burratino>
+Subject: [PATCH] t/t0000-basic.sh: Don't run a passing TODO unless TEST_PASSING_TODO=1
+Date: Tue, 17 Aug 2010 09:43:54 +0000
+Message-ID: <1282038234-1880-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paolo Bonzini <paolo.bonzini@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Frank Li <lznuaa@gmail.com>,
-	Marius Storm-Olsen <mstormo@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
+Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>,
-	=?UTF-8?q?Ren=C3=A9=20Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 17 11:26:43 2010
+X-From: git-owner@vger.kernel.org Tue Aug 17 11:44:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlIRO-0001Ud-S9
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 11:26:43 +0200
+	id 1OlIiR-0002FL-Ta
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 11:44:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757404Ab0HQJ0W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 05:26:22 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62919 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757341Ab0HQJ0R (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 05:26:17 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 17so844005wwi.1
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 02:26:17 -0700 (PDT)
+	id S1757436Ab0HQJoO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 05:44:14 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:44625 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756784Ab0HQJoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 05:44:13 -0400
+Received: by wyb32 with SMTP id 32so6819740wyb.19
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 02:44:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=x/sLXKEMuADeQ3jyKmxtJ530zabvz4zWoMUXEKKm7Pc=;
-        b=MHsZUD34P+yWVwNMnmofa61LekPe5y1b2EH+U0ZL0wOBvBYibVSU6VFaKgPBBhANQP
-         H7FwsHfWT8kkAnyliKP1TA+sBx6ew0TvnBT7qfyXNSKHi91JUuuH+fqENyKPRQnI8ZKa
-         5IauQc7qoh1H3xX6KlwucebQPmBIX7lJzgF9Y=
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=rm74Tyh/v3FmmIWFDzxH/gfDeEfP/scFukMVTudhuPU=;
+        b=f/yIyJW3hiQ8FJ18JCEyj0zH0wfj+qdChB2K0u86myXwbJfPLI5KQqPqTL2lVVY0FD
+         s6pJLb5DDmMWNeKBTFB5AUIv21LioVoWgjj5AoSJ6sgAA1e+0jS06GdQothVRYWfvk2e
+         4i8LTbFhkJCJ6xBnZuh5L021e5+vVvxfKMW3M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=DG+mrweniJfVYk3ov7bqGy10u6U5hRvLDlmYhL741KnyCM8CYccCLDx3SXAWnTBBxC
-         fECqDBtArRKarbQsuPu3w86BfXEttPpuEHI1YoAa1QH0CPOuEu15Q15OZhhuVRLjjnO1
-         usE3wL9pZu3B8DJs5X1zg3gW2MeY+04GU7STI=
-Received: by 10.227.146.139 with SMTP id h11mr5377701wbv.197.1282037176428;
-        Tue, 17 Aug 2010 02:26:16 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=G9XaSfds1cx3VadzttCEmkyyEiKD78s3e8w+uL7r9sMkRl2HRmlfN3N7ypqjYu48H9
+         9PSlExfzceQma2YtRc8uBEANj8XdvTv4qOSyzWhlfAY4bvuSX2WsrbOj/e+pWpjxpWkf
+         Bl3q8YKOEldkIdwdL7WFz6dV4Xx4+agqAtZnI=
+Received: by 10.227.129.130 with SMTP id o2mr5554560wbs.116.1282038252506;
+        Tue, 17 Aug 2010 02:44:12 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id w14sm3916254weq.33.2010.08.17.02.26.13
+        by mx.google.com with ESMTPS id u11sm3928295weq.7.2010.08.17.02.44.11
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 17 Aug 2010 02:26:14 -0700 (PDT)
+        Tue, 17 Aug 2010 02:44:11 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.389.gc3d0b
-In-Reply-To: <20100817080322.GA28476@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153742>
 
-=46rom: Jonathan Nieder <jrnieder@gmail.com>
+Change the sanity tests in t/t0000-basic.sh to not to run a passing
+TODO test unless the TEST_PASSING_TODO environment variable is set.
 
-If the platform regex cannot match null bytes, we might as well
-use the glibc version instead.
+The motivation is to have nothing out of the ordinary on a normal test
+run for test smoking purposes.
 
-Cc: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-Cc: Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Tested-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+If every normal test run has a passing TODO you're more likely to turn
+a blind eye to it and not to investigate cases where things really are
+passing unexpectedly.
+
+It also makes the prove(1) output less noisy. Before:
+
+    All tests successful.
+
+    Test Summary Report
+    -------------------
+    ./t0000-basic.sh                                   (Wstat: 0 Tests:=
+ 46 Failed: 0)
+      TODO passed:   5
+    Files=3D484, Tests=3D6229, 143 wallclock secs ( 4.00 usr  4.15 sys =
++ 104.77 cusr 351.57 csys =3D 464.49 CPU)
+    Result: PASS
+
+And after:
+
+    All tests successful.
+    Files=3D484, Tests=3D6228, 139 wallclock secs ( 4.07 usr  4.25 sys =
++ 104.54 cusr 350.85 csys =3D 463.71 CPU)
+    Result: PASS
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
 ---
- config.mak.in |    1 +
- configure.ac  |   21 +++++++++++++++++++++
- 2 files changed, 22 insertions(+), 0 deletions(-)
+ t/t0000-basic.sh |   11 ++++++++---
+ 1 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/config.mak.in b/config.mak.in
-index b4e65c3..67dbd3b 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -58,6 +58,7 @@ NO_INET_NTOP=3D@NO_INET_NTOP@
- NO_INET_PTON=3D@NO_INET_PTON@
- NO_ICONV=3D@NO_ICONV@
- OLD_ICONV=3D@OLD_ICONV@
-+NO_REGEX=3D@NO_REGEX@
- NO_DEFLATE_BOUND=3D@NO_DEFLATE_BOUND@
- INLINE=3D@INLINE@
- SOCKLEN_T=3D@SOCKLEN_T@
-diff --git a/configure.ac b/configure.ac
-index 5601e8b..71ac89f 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -706,6 +706,27 @@ else
- fi
- AC_SUBST(NO_C99_FORMAT)
- #
-+# Define NO_REGEX if you have no or inferior regex support in your C l=
-ibrary.
-+AC_CACHE_CHECK([whether the platform regex can handle null bytes],
-+ [ac_cv_c_excellent_regex], [
-+AC_EGREP_CPP(yippeeyeswehaveit,
-+	AC_LANG_PROGRAM([AC_INCLUDES_DEFAULT
-+#include <regex.h>
-+],
-+[#ifdef REG_STARTEND
-+yippeeyeswehaveit
-+#endif
-+]),
-+	[ac_cv_c_excellent_regex=3Dyes],
-+	[ac_cv_c_excellent_regex=3Dyes])
-+])
-+if test $ac_cv_c_excellent_regex =3D yes; then
-+	NO_REGEX=3D
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index f2c7336..2f6a17b 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -54,9 +54,14 @@ test_expect_success 'success is reported like this' =
+'
+ test_expect_failure 'pretend we have a known breakage' '
+     false
+ '
+-test_expect_failure 'pretend we have fixed a known breakage' '
+-    :
+-'
++if test -z "$TEST_PASSING_TODO"
++then
++	say "Not testing a known breakage, set TEST_PASSING_TODO=3D1 to enabl=
+e"
 +else
-+	NO_REGEX=3DYesPlease
++	test_expect_failure 'pretend we have fixed a known breakage' '
++	    :
++	'
 +fi
-+AC_SUBST(NO_REGEX)
-+#
- # Define FREAD_READS_DIRECTORIES if your are on a system which succeed=
-s
- # when attempting to read from an fopen'ed directory.
- AC_CACHE_CHECK([whether system succeeds to read fopen'ed directory],
+ test_set_prereq HAVEIT
+ haveit=3Dno
+ test_expect_success HAVEIT 'test runs if prerequisite is satisfied' '
 --=20
 1.7.2.1.389.gc3d0b
