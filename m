@@ -1,87 +1,69 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Commit ID of a branch
-Date: Mon, 16 Aug 2010 16:43:40 -0700
-Message-ID: <4C69CD2C.9000700@gmail.com>
-References: <loom.20100816T231539-211@post.gmane.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [GSoC] Libgit2, Summer of Code is over
+Date: Tue, 17 Aug 2010 09:53:58 +0800
+Message-ID: <AANLkTikUKS7jjXyzLY0h50jg1gdDsKKWM3ZkPQcbgAJ7@mail.gmail.com>
+References: <AANLkTinPSsTAZ9cxba2smHn1beRvchcsc7VHei2xSf_k@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Guillermo <guillermog@tricuspide.com>
-X-From: git-owner@vger.kernel.org Tue Aug 17 01:46:45 2010
+To: Vicent Marti <tanoku@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 17 03:54:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ol9O8-00059N-O3
-	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 01:46:45 +0200
+	id 1OlBNP-0005Iy-9D
+	for gcvg-git-2@lo.gmane.org; Tue, 17 Aug 2010 03:54:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752679Ab0HPXqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 16 Aug 2010 19:46:39 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:42144 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752542Ab0HPXqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 16 Aug 2010 19:46:38 -0400
-Received: by pxi10 with SMTP id 10so2127188pxi.19
-        for <git@vger.kernel.org>; Mon, 16 Aug 2010 16:46:38 -0700 (PDT)
+	id S1754205Ab0HQByA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 16 Aug 2010 21:54:00 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:40191 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754027Ab0HQBx7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 16 Aug 2010 21:53:59 -0400
+Received: by eyg5 with SMTP id 5so1695487eyg.19
+        for <git@vger.kernel.org>; Mon, 16 Aug 2010 18:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=raUDQY8eJV0LwoGuoTkc/cRryPGAEUxDT7SPMlV+moI=;
-        b=mgmy1vGigeiIn/1TzSzSEBr3KfUlUNJZkFXNJUVkZeil/MAqRjdN/9DE4vBj2XjJrZ
-         Y1Pr3VSPZps4sBfUo8zNtuji2DwrSwixOaQKVMAX4TkNkYm13nBHeA6bAbm+IErSD52s
-         FewT5jCBQt7W3b9RmSrqb16HHTmanaM6uwVhQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=brXjLRM/mPQGEl3TTvYIiuNbJS/dNfVuFVeT1u7OWoY=;
+        b=w7VIneIO0dp5kyS8l1LaYupRvEm3JrMInUf3OD8lOgt87G8jGS+GR0lOADmYA/IFkF
+         bFFGzPvqqKpf0aoeigKftjvUjHorMAtRuglocDWOid1YUbTcnzUbGRr1n5b5TCtjSEOK
+         glgbOIs7g42z6dgeIMmaK5H2PR6/dabzNvors=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=Torf3WLlZXq604M8/zC8nkHUO1Hbif9buZ40zaHTP+a17/Eui5mvsD6bjOXPS78vzk
-         MQIUm/6zXVF2lBNuk1SEHTm2awzzk750R4NVIsrj/FOjJXHvSEfWSMSSGjijkCFePn1+
-         P3mOGWvgW0sIkCsw2KiChMQCIL56LwXEQQpVY=
-Received: by 10.114.39.16 with SMTP id m16mr6971125wam.119.1282002397402;
-        Mon, 16 Aug 2010 16:46:37 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id 33sm13103308wad.6.2010.08.16.16.46.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 16 Aug 2010 16:46:06 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <loom.20100816T231539-211@post.gmane.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=ND/VkL1vlviOqyDDZuSxdf/LEusYMnHePGFfuhNnkBMxHj59IvZOY1uxg8RYBxSU2q
+         BP9mVJJpT4eQDMKaWKMfLCopwXiK5GmvfDUvYw5XEyJK/WJhL1+hRmAell5s/73ogsRM
+         6/nQzKzzx8QaEWZM3E7CIqaKq/vjyxefV4CDY=
+Received: by 10.213.109.10 with SMTP id h10mr334503ebp.50.1282010038272; Mon,
+ 16 Aug 2010 18:53:58 -0700 (PDT)
+Received: by 10.213.22.134 with HTTP; Mon, 16 Aug 2010 18:53:58 -0700 (PDT)
+In-Reply-To: <AANLkTinPSsTAZ9cxba2smHn1beRvchcsc7VHei2xSf_k@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153682>
 
-On 16/08/10 14:19, Guillermo wrote:
-> Hello,
-> 
-> I want to write a script what checks in all my projects which is the submodule
-> commit that is registered in every git repo.
-> 
-> Lets say we have the following structure:
-> 
-> project1
-> - submodule1
-> project2
-> - submodule1
-> 
-> I want to find out what file within the .git dir of every project contains the
-> proper submodule Commit ID that should be checkout with git submodule update.
-> 
-> Regards,
-> Guillermo
+Hi,
 
-If I understand your question correctly, what you want is
+On Tue, Aug 17, 2010 at 3:46 AM, Vicent Marti <tanoku@gmail.com> wrote:
+> the Summer of Code has just reached its end and I'd like to offer some
+> closure; neither me nor my mentors have been too active on the mailing
+> list -- to be fair, there was too much work to be done on the library
+> before it could be considered of general interest. We've been focusing
+> on that.
 
-  git ls-tree HEAD submodule1
+IIRC, Scott Chacon from github is your mentor?
 
-Which will give you the sha1 of the commit in the submodule your project
-should be pointing to. We use this in various scripts at work.
+I wonder if libgit2 is being used at github (either directly or via
+ruby bindings) - not only will it help through real-world testing, it
+will also help to boost "street-cred".
 
-It is also possible to get this information (and more) from a slightly
-friendlier submodule command if you want it for non-script usage.
-
-  git submodule status
+-- 
+Cheers,
+Ray Chuan
