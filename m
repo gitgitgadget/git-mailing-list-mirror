@@ -1,262 +1,121 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v5 1/8] detached-stash: introduce parse_flags_and_revs function
-Date: Wed, 18 Aug 2010 23:09:33 +1000
-Message-ID: <1282136980-25793-2-git-send-email-jon.seymour@gmail.com>
-References: <1282136980-25793-1-git-send-email-jon.seymour@gmail.com>
-Cc: gitster@pobox.com, j6t@kdbg.org,
-	Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:10:48 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
+Date: Wed, 18 Aug 2010 15:18:26 +0200
+Message-ID: <2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com>
+References: <1282135226.24584.92.camel@wpalmer.simply-domain>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:18:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OliPk-0001G7-Sg
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:10:45 +0200
+	id 1OliXS-0005GY-Pk
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752849Ab0HRNKZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:10:25 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:44168 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751725Ab0HRNKX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:10:23 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 2so202375pvg.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:10:23 -0700 (PDT)
+	id S1752973Ab0HRNSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 09:18:33 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:60982 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752827Ab0HRNSb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 09:18:31 -0400
+Received: by eyg5 with SMTP id 5so293738eyg.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:18:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=/5QZAD8P3Z4ELJo8no8UPGVV7SBfHD8NNzqHeHFQH2Y=;
-        b=eVlJBUs3mfLFKgAmU0buFuardofWXKuwgg8d4DCEkqJzi3ULVhgXkVQehf1QLnJkj5
-         +sw7fFwqeA+EgFlaFZASY5m9uO71ZtVGiFM7/CenFxGxsTuHXMAcsRjuBGOUlGPzSz38
-         UWZ8NSyzINIXAV8HT7J1BXnkkJ8vFtFyqiaCk=
+        h=domainkey-signature:received:received:references:in-reply-to
+         :mime-version:content-type:message-id:content-transfer-encoding:cc
+         :from:subject:date:to:x-mailer;
+        bh=Os1slOfkWpTcVbYS6YViXIpy5gmV4AgyQV7xFUBtAOY=;
+        b=Elce5GALKdWIeTLZ1Uh5bpCIQaVH+t4rIzb31kLylKvYFW5EFcUw55DtYYk6WkRRfm
+         aSibG1g7AbvYsQjpIuW2nTikS0/t3QAp8xZ4eDXcWz4QUxURm3s9M5Cshts0ezlJ9I92
+         npJf+f65g/J+9lmZvteQK8kL3v/fYV8oLCKlA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=uaRyM4HKiNNrVA7/K+AiAU07PS3LAOXqMkhPiJ3QMwZMEEcD5MxsHkAAeOnmDRudq/
-         andDpuC48s59UMJF9klNApbFZ9hQZmrUHLTFfa5VXQ3Lvc2ctH0529+11bzOxTl7pZo6
-         4pcAur52irpSmTowUs9SxmQ2bcJg4Mi5J8Eyk=
-Received: by 10.142.192.20 with SMTP id p20mr1089691wff.342.1282137023689;
-        Wed, 18 Aug 2010 06:10:23 -0700 (PDT)
-Received: from localhost.localdomain ([120.16.55.229])
-        by mx.google.com with ESMTPS id w31sm303253wfd.20.2010.08.18.06.10.16
+        h=references:in-reply-to:mime-version:content-type:message-id
+         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
+        b=OKMO/1EkZKJTuF/fefmUFB6rM9PRllwYTiYeBBFXCnGf8H5pfsBxY7l0NZ2JahZGNr
+         Wp6YtwETwicfpWTJpcwgq3XwX0Q5pHwFeUqbK09oofFs6Ul2eV3GDK0HP4kVeq6N0GNF
+         K0+1lDJ+5yWqLjgEZrAyxXnxSbSsONkqj7oxc=
+Received: by 10.213.47.70 with SMTP id m6mr266267ebf.63.1282137510460;
+        Wed, 18 Aug 2010 06:18:30 -0700 (PDT)
+Received: from [10.36.80.159] ([62.113.137.5])
+        by mx.google.com with ESMTPS id v59sm462197eeh.10.2010.08.18.06.18.28
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:10:22 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.95.g4fabf
-In-Reply-To: <1282136980-25793-1-git-send-email-jon.seymour@gmail.com>
+        Wed, 18 Aug 2010 06:18:28 -0700 (PDT)
+In-Reply-To: <1282135226.24584.92.camel@wpalmer.simply-domain>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153841>
 
-Introduce parse_flags_and_revs. This function requires that
-there is at at most one stash-like revision parameter and
-sero or more flags.
+On 18. aug. 2010, at 14.40, Will Palmer wrote:
 
-It knows how to parse -q,--quiet and --index flags, but leaves
-other flags unparsed.
+> I am on Linux, and core.autocrlf is not set. .gitattributes in the
+> JQuery repository contains:
+> * crlf=input
 
-Specified revisions are checked to see that they are at least stash-like
-(meaning: they look like something created by git stash save or git stash
-create).
+That's a strange setting; in older versions of git, it means something like "if core.autocrlf is enabled, only convert CRLF on input"; that is, it effectively turns core.autocrlf=true into core.autocrlf=input.  I'm not sure why anybody would want that.
 
-If this is so, then IS_STASH_LIKE is initialized to a non-empty value.
+In any case, it doesn't appear to have prevented CRLFs from entering the repository, which is what's causing the behaviour you see.
 
-If the specified revision also looks like a stash log entry reference,
-then IS_STASH_REF is initialized to a non-empty value.
+> Bisect reveals:
+> fd6cce9e89ab5ac1125a3b5f5611048ad22379e7  v1.7.0-3-gfd6cce9
+> Add per-repository eol normalization
+> 
+> is the first git commit which shows this problem.
 
-References of the form ref@{spec} are required to precisely identify
-an individual commit.
+That's because from that commit, "crlf=input" turns on autocrlf implicitly (it is equivalent to "eol=lf").  Previously, the crlf attribute would only have an effect with core.autocrlf turned on.
 
-If no reference is specified, stash@{0} is assumed.
+> I am confused as to why I am seeing what I am seeing, though. I was
+> under the impression that "crlf=input" meant: "convert crlf to lf on
+> input", which I would take to mean that it would never have any effect
+> whatsoever on "git status"'s output.
 
-Once the specified reference is validated to be at least stash_like
-a ensemble of derived variables, (w_commit, w_tree, b_commit, etc)
-are initialized with a single call to git rev-parse.
-
-Repeated calls to parse_flags_and_rev() avoid repeated calls
-to git rev-parse if the specified arguments have already been
-parsed.
-
-An ensemble of supporting functions that make use of the state
-established by parse_flags_and_rev(). These are describe below.
-Subsequent patches in the series modify the existing
-git stash subcommands to make use of these functions as appropriate.
-
-The ancillary functions are:
-
-is_stash_like(): which can be used to test
-whether a specified commit looks like a commit created with
-git stash save or git stash create.
-
-assert_stash_like(): which can be used by
-commands that misbehave unless their arguments stash-like.
-
-is_stash_ref(): which checks whether an argument
-is valid stash reference(e.g. is of the form
-['refs/']stash['@{'something'}])
-
-assert_stash_ref(): which can be used by commands
-that misbehave unless their arguments are both stash-like and
-refer to valid stash entries.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- git-stash.sh |  133 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 133 insertions(+), 0 deletions(-)
-
-diff --git a/git-stash.sh b/git-stash.sh
-index 1d95447..42b0da2 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -225,6 +225,138 @@ show_stash () {
- 	git diff $flags $b_commit $w_commit
- }
+Files containing CRLFs in your repository keep the CRLFs in the working tree.  If you check them in now git will convert CRLF to LF, so they are marked as modified.
  
-+#
-+# Parses the remaining options looking for flags and
-+# at most one revision defaulting to ${ref_stash}@{0}
-+# if none found.
-+#
-+# Derives related tree and commit objects from the
-+# revision, if one is found.
-+#
-+# stash records the work tree, and is a merge between the
-+# base commit (first parent) and the index tree (second parent).
-+#
-+#   REV is set to the symbolic version of the specified stash-like commit
-+#   IS_STASH_LIKE is non-blank if ${REV} looks like a stash
-+#   IS_STASH_REF is non-blank if the ${REV} looks like a stash ref
-+#   s is set to the SHA1 of the stash commit
-+#   w_commit is set to the commit containing the working tree
-+#   b_commit is set to the base commit
-+#   i_commit is set to the commit containing the index tree
-+#   w_tree is set to the working tree
-+#   b_tree is set to the base tree
-+#   i_tree is set to the index tree
-+#
-+#   GIT_QUIET is set to t if -q is specified
-+#   INDEX_OPTION is set to --index if --index is specified.
-+#   FLAGS is set to the remaining flags
-+#
-+# dies if:
-+#   * too many revisions specified
-+#   * no revision is specified and there is no stash stack
-+#   * a revision is specified which cannot be resolve to a SHA1
-+#   * a non-existent stash reference is specified
-+#
-+
-+parse_flags_and_rev()
-+{
-+	test "$PARSE_CACHE" = "$*" && return 0 # optimisation
-+	PARSE_CACHE="$*"
-+
-+	IS_STASH_LIKE=
-+	IS_STASH_REF=
-+	INDEX_OPTION=
-+	s=
-+	w_commit=
-+	b_commit=
-+	i_commit=
-+	w_tree=
-+	b_tree=
-+	i_tree=
-+
-+	REV=$(git rev-parse --no-flags --symbolic "$@" 2>/dev/null)
-+	FLAGS=$(git rev-parse --no-revs -- "$@" 2>/dev/null)
-+
-+	set -- $FLAGS
-+
-+	FLAGS=
-+	while test $# -ne 0
-+	do
-+		case "$1" in
-+			-q|--quiet)
-+				GIT_QUIET=-t
-+			;;
-+			--index)
-+				INDEX_OPTION=--index
-+			;;
-+			--)
-+				:
-+			;;
-+			*)
-+				FLAGS="${FLAGS}${FLAGS:+ }$1"
-+			;;
-+		esac
-+		shift
-+	done
-+
-+	set -- $REV
-+
-+	case $# in
-+		0)
-+			have_stash || die "No stash found."
-+			set -- ${ref_stash}@{0}
-+		;;
-+		1)
-+			:
-+		;;
-+		*)
-+			die "Too many revisions specified: $REV"
-+		;;
-+	esac
-+
-+	REV=$(git rev-parse --quiet --symbolic --verify $1 2>/dev/null) || die "$1 is not valid reference"
-+
-+	i_commit=$(git rev-parse --quiet --verify $REV^2 2>/dev/null) &&
-+	set -- $(git rev-parse $REV $REV^1 $REV: $REV^1: $REV^2: 2>/dev/null) &&
-+	s=$1 &&
-+	w_commit=$1 &&
-+	b_commit=$2 &&
-+	w_tree=$3 &&
-+	b_tree=$4 &&
-+	i_tree=$5 &&
-+	IS_STASH_LIKE=t &&
-+	test "$ref_stash" = "$(git rev-parse --symbolic-full-name "${REV%@*}")" &&
-+	IS_STASH_REF=t
-+
-+	if test "${REV}" != "${REV%{*\}}"
-+	then
-+		# maintainers: it would be better if git rev-parse indicated
-+		# this condition with a non-zero status code but as of 1.7.2.1 it
-+		# it did not. So, we use non-empty stderr output as a proxy for the
-+		# condition of interest.
-+		test -z "$(git rev-parse "$REV" 2>&1 >/dev/null)" || die "$REV does not exist in the stash log"
-+	fi
-+
-+}
-+
-+is_stash_like()
-+{
-+	parse_flags_and_rev "$@"
-+	test -n "$IS_STASH_LIKE"
-+}
-+
-+assert_stash_like() {
-+	is_stash_like "$@" || die "'$*' is not a stash-like commit"
-+}
-+
-+is_stash_ref() {
-+	is_stash_like "$@" && test -n "$IS_STASH_REF"
-+}
-+
-+assert_stash_ref() {
-+	is_stash_ref "$@" || die "'$*' is not a stash reference"
-+}
-+
- apply_stash () {
- 	applied_stash=
- 	unstash_index=
-@@ -375,6 +507,7 @@ apply_to_branch () {
- 	drop_stash $stash
- }
- 
-+PARSE_CACHE='--not-parsed'
- # The default command is "save" if nothing but options are given
- seen_non_option=
- for opt
--- 
-1.7.2.1.95.g4fabf
+> If I clone using a version of git before v1.7.0-3-gfd6cce9, then "git
+> status" from a newer git, then everything also appears to work normally
+> (though I haven't dug much into this aspect)
+
+If you turn on core.autocrlf=input or core.autocrlf=true you should get the same behaviour with older gits as well.  Note that msysgit has had autocrlf enabled by default for years, so no positive action is required to do this.
+
+> Is there a git option for "just give me what's in the repository, don't
+> ever perform any conversions, one way or the other, just act sane" ?
+
+Not with that .gitattributes :)  If you don't want conversion, don't set the crlf, eol or text attributes.
+
+> I thought I had finally understood all this autocrlf nonsense, but once
+> again I see this as being only an "act stupid mode". I have no idea
+> what's going on here, and I just want to be able to rely on the
+> following:
+> - git clone someproj.git && cd someproj && git status;
+>   should NEVER report changes
+> - git reset --hard HEAD && git status;
+>   should NEVER report changes
+> 
+> and, why I ran into this situation this time around:
+> - git clone someproj.git && cd someproj && git checkout sometag;
+>   should ALWAYS work
+> 
+> Can anyone explain why these aren't valid assertions? If they're not,
+> then what is the proper way to tell git "give me a real pristine copy"?
+
+Git _is_ giving you a real pristine copy, it's just informing you that your repository is not consistent with the attributes you have set.
+
+> Below is a log of the problem in-action.
+
+[...]
+
+> #	modified:   build/google-compiler-20091218.jar
+> #	modified:   build/js.jar
+
+Heh.  I was about to ask if there was anything funny about these presumably binary files, but then I realized that .gitattributes is forcing crlf=input for _all_ files.  I suggest removing the crlf setting from .gitattributes.
+
+- Eyvind
