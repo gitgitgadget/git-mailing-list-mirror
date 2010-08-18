@@ -1,81 +1,92 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] merge-recursive: Workaround unused variable warning
-Date: Tue, 17 Aug 2010 19:10:32 -0500
-Message-ID: <20100818001032.GA7694@burratino>
-References: <1281665352-10533-1-git-send-email-newren@gmail.com>
- <1281665352-10533-2-git-send-email-newren@gmail.com>
- <AANLkTikLXy4gPttmX=wzcDaFAfZO=OEk4PEDKh3sCSOF@mail.gmail.com>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: BUG?: git-apply sometimes says "corrupt patch" when adding single lines
+Date: Wed, 18 Aug 2010 03:37:34 +0200
+Message-ID: <AANLkTi=mJdufWiKDQBSA6EVpb6Qj3GfGPKZL4pJGdKYu@mail.gmail.com>
+References: <AANLkTineHiG9vCpbJzJ2x9CFjZ7LQeExs7cN5YhoZhft@mail.gmail.com>
+	<20100817234314.GK2221@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 02:12:20 2010
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 03:37:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlWGP-0004kp-G0
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 02:12:17 +0200
+	id 1OlXb4-0002W2-00
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 03:37:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071Ab0HRAMM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 20:12:12 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:36847 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751438Ab0HRAML convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 17 Aug 2010 20:12:11 -0400
-Received: by qyk33 with SMTP id 33so4200qyk.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 17:12:10 -0700 (PDT)
+	id S1752765Ab0HRBhg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 17 Aug 2010 21:37:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:41313 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751835Ab0HRBhf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 17 Aug 2010 21:37:35 -0400
+Received: by iwn7 with SMTP id 7so61273iwn.19
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 18:37:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=J1axMKQ1TF9BKP+Tw6bEDCjFUOoGbZelEVtadyRZMNA=;
-        b=FxTrFWvoQN0kTYbdGKEd0W4XNk4qkRPF2RISx6pW7bH4kELFiuAN2QHSdGpaMyaQQo
-         E6uJoTgnafO1v6Wy9PW8KCb7BEgQpLyNOpnvnC1S7UxV2w7ru8suCV7SdissHsMdhvFk
-         TEVQ8oZjQ2Ef7D5fXAQNVpx6oaQu1vQ0nwmj8=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oCSqsOaMgB8K+f2KcoBi2Ai1puWTBCt7KsOdRcrhXs4=;
+        b=JiHc09jVpcOAqF0mxL1pDDHngfjpPXvbIR816oANLlCQDCrbgC0Z8ACJsfLRnnVECa
+         jaCatmdFIm0M1lzhCGwpozmFin4OquCKS1nD3sMJbWKJMVse59GW/+FTGGxv7EtCB4pa
+         fx4gWIff/adpFlqptbDmI/zdbLOkNerGhTzmI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Y7IaHnzkNNpOcevGEFmXAhvMp37XKpjYefmHLh5R82w7C0wI72C9X0xrLxhq1YGLvf
-         NvZJpxa42HERy8wn5S7jFxfSis27YFBtzIC7PhCc4FUUGChR3ZOYtCaTQMSWmsvrwvPt
-         oTh5QdktAuNvjAVgGJA393iGkaKdmqFm0i2Hc=
-Received: by 10.224.67.81 with SMTP id q17mr4864615qai.276.1282090330156;
-        Tue, 17 Aug 2010 17:12:10 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r1sm9450188qcq.10.2010.08.17.17.12.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 17 Aug 2010 17:12:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikLXy4gPttmX=wzcDaFAfZO=OEk4PEDKh3sCSOF@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kYJYP8eC1jWYOV9IqrBWXMX0eIxYdgdqbW+tBtirJ3Gp4C1ZbVcC6mQYxa2rsinRYB
+         KzCSllsSmZ1vHZlumohEhN3O1P28r2NgoK9Dso+PPycuEPSFuR0eZ5N3nAhB4ET2aE3J
+         YH4S8w37FOYLx1KBAhbNMa3Tf46th+fFY/K6o=
+Received: by 10.231.191.16 with SMTP id dk16mr2600585ibb.161.1282095454746;
+ Tue, 17 Aug 2010 18:37:34 -0700 (PDT)
+Received: by 10.231.177.194 with HTTP; Tue, 17 Aug 2010 18:37:34 -0700 (PDT)
+In-Reply-To: <20100817234314.GK2221@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153801>
 
-Elijah Newren wrote:
-> On Thu, Aug 12, 2010 at 8:09 PM, Elijah Newren <newren@gmail.com> wro=
-te:
+On Wed, Aug 18, 2010 at 1:43 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Tor Arvid Lund wrote:
+>
+>> I don't really know the git-gui code or the git C code well, but it
+>> seems that I got around the error with this small patch:
+>>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index 12ef9ea..124791f 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -1335,6 +1335,8 @@ static int parse_fragment(char *line, unsigned=
+ long size,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* l10n of "\ =
+No newline..." is at least that long.
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 case '\\':
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (newlines =3D=3D oldlines =3D=3D 1)
+> [...]
+>
+> Heh. =C2=A0This code is a roundabout way to say "if (newlines =3D=3D =
+oldlines)",
+> rather than "if (newlines =3D=3D 1 && oldlines =3D=3D 1)" that might =
+have been
+> intended.
 
->> +++ b/merge-recursive.c
->> @@ -1214,6 +1214,7 @@ static int process_df_entry(struct merge_optio=
-ns *o,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* We currently only handle D->F cases */
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0assert((!o_sha && a_sha && !b_sha) ||
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (!o_sha && !a_sha &=
-& b_sha));
->> + =C2=A0 =C2=A0 =C2=A0 (void)o_sha;
-[...]
->                        would a different method of fixing warnings
-> when NDEBUG is defined be preferred?  (Maybe changing the
-> "assert(foo)" into "if (!foo) die..." instead?)
+Right you are, good sir ;-)
 
-Yes, that sounds like a good idea.  The user would probably benefit
-from knowing what happened.
+> Unfortunately I do not have any more insight than that. =C2=A0If you =
+can
+> give an example reproducing this with git apply from the command
+> line, that would be very helpful.
+
+I'll try to do that tomorrow.. My brain needs sleep before it will func=
+tion :)
+
+-Tor Arvid-
