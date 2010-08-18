@@ -1,131 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] merge-recursive: Workaround unused variable warning
-Date: Wed, 18 Aug 2010 11:55:07 -0700
-Message-ID: <7veidvagz8.fsf@alter.siamese.dyndns.org>
-References: <1281665352-10533-1-git-send-email-newren@gmail.com>
- <1281665352-10533-2-git-send-email-newren@gmail.com>
- <AANLkTikLXy4gPttmX=wzcDaFAfZO=OEk4PEDKh3sCSOF@mail.gmail.com>
- <20100818001032.GA7694@burratino>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 1/6] Add string comparison functions that respect the
+ ignore_case variable.
+Date: Wed, 18 Aug 2010 18:58:00 +0000
+Message-ID: <AANLkTimWtdobYk-a8zz1dLS6xPMhOBX-y4v6jxrH-cQK@mail.gmail.com>
+References: <cover.1281985411.git.j6t@kdbg.org>
+	<4C6C01A9.4080306@workspacewhiz.com>
+	<AANLkTinwQqwjmeNfiUE6LiZtbBhEEFyisZXUgF9_b+2Q@mail.gmail.com>
+	<201008182032.40375.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 20:55:44 2010
+Cc: Joshua Jensen <jjensen@workspacewhiz.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Aug 18 20:58:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Olnna-00075M-1Z
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 20:55:42 +0200
+	id 1Olnpw-00005G-Fb
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 20:58:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753801Ab0HRSzY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 14:55:24 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60699 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753516Ab0HRSzX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 14:55:23 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D547BCEB65;
-	Wed, 18 Aug 2010 14:55:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=M/IeA7AD8NTj
-	DdlOMWk1H8nJGVg=; b=ayQ3a4Lq30KF4Wb8oBnYBjoJPHAg27GeMMvP+HhEbB+a
-	bmNvcsyel94vhdGkeBc5rruuarBj4C5Db90XnTgt5nEv4asp8aj+pVvM+ShpUYjL
-	UrZv0S4/Cha8jfV8/4gHFgsuS/2bvL2GvbsKJlLpwC2iphNKCZev4J5V3u+MhQQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=t+Vy/T
-	5Zr2NeC8isY82OSiVwG9JxHB/6lbccNH0Fwjn9GVXgYFd2b/YcUqrO4mhtEs+QKf
-	XwmpD1GEZ5g2aVkyZCHjYRoyuOByhqw14Y6EN81BKi27p+1DwOrsQOI1Fp0zE8W1
-	CqwfkE40PTkH1NvR6129DNR6uc8BVxC3t5Dlw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89CE3CEB59;
-	Wed, 18 Aug 2010 14:55:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74C57CEB54; Wed, 18 Aug
- 2010 14:55:09 -0400 (EDT)
-In-Reply-To: <20100818001032.GA7694@burratino> (Jonathan Nieder's message of
- "Tue\, 17 Aug 2010 19\:10\:32 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 234F962A-AAFA-11DF-A004-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753703Ab0HRS6D convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 14:58:03 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:40957 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753617Ab0HRS6C convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 14:58:02 -0400
+Received: by fxm13 with SMTP id 13so527952fxm.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 11:58:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fAF4vmicaJnxG/sx7tO2GB6Y9FIElodoI8fRwbffTEI=;
+        b=LXFia7Dy9Lb6e2o7IZK9TiH4fQ1hmBrTLLz2EtVye/hoOtod/31yUCJGOEEnwVPpZ+
+         s8nfqtX9B4i6Y0YvEvVTBbMTcK7agyfJ4gsBr4xBBJBrOTRE+dNZHbhsmh6rREoLoQm1
+         e6Jc/iYmaW7jXNFY7Le9sZex1FN0zTSs85EjA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=X8uUK8n+XNA4+ghe+650MkerEEyPx76r9MDHSvZvvQNP2Y35qYqGbZtuKmQw6hDL/I
+         MaWLEYUjMQfThr+5lcxBQW7ALxL1HkeilYozQvEt6cxXkXmCJwXpFBjkD0XkY7Rh6Ns2
+         n1ZV+Nem+fxx2f98hsT2IxFjEOYzzdrZ0shEE=
+Received: by 10.223.117.20 with SMTP id o20mr8278106faq.55.1282157880556; Wed,
+ 18 Aug 2010 11:58:00 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Wed, 18 Aug 2010 11:58:00 -0700 (PDT)
+In-Reply-To: <201008182032.40375.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153875>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Elijah Newren wrote:
->> On Thu, Aug 12, 2010 at 8:09 PM, Elijah Newren <newren@gmail.com> wr=
-ote:
+On Wed, Aug 18, 2010 at 18:32, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Mittwoch, 18. August 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+wrote:
+>> According to some further research at least FreeBSD and NetBSD have
+>> copied this GNU extension. You may find their versions easier to
+>> integrate.
 >
->>> +++ b/merge-recursive.c
->>> @@ -1214,6 +1214,7 @@ static int process_df_entry(struct merge_opti=
-ons *o,
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* We currently only handle D->F cases *=
-/
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0assert((!o_sha && a_sha && !b_sha) ||
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (!o_sha && !a_sha =
-&& b_sha));
->>> + =C2=A0 =C2=A0 =C2=A0 (void)o_sha;
-> [...]
->>                        would a different method of fixing warnings
->> when NDEBUG is defined be preferred?  (Maybe changing the
->> "assert(foo)" into "if (!foo) die..." instead?)
->
-> Yes, that sounds like a good idea.  The user would probably benefit
-> from knowing what happened.
+> We already have a GNU fnmatch in compat/fnmatch.
 
-I'd agree.  This assert() is not about protecting new callers from maki=
-ng
-obvious programming error by passing wrong parameters, but about Elijah
-not being confident enough that the changes made to process_entry() wit=
-h
-this series really covers all the cases so that only D/F cases are left
-unprocessed.
-
-Another possibility is to move this assert() out of process_df_entry() =
-and
-have it on the calling side.  Perhaps something like the attached.
-
-BTW, it is not so obvious if (!o_sha && !!a_sha !=3D !!b_sha) is equiva=
-lent
-to "we are handling a D-F case".  Can you explain why?
-
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index b0f055e..7bab728 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1208,9 +1208,8 @@ static int process_df_entry(struct merge_options =
-*o,
- 	const char *conf;
- 	struct stat st;
-=20
--	/* We currently only handle D->F cases */
--	assert((!o_sha && a_sha && !b_sha) ||
--	       (!o_sha && !a_sha && b_sha));
-+	if (! ((!o_sha && a_sha && !b_sha) || (!o_sha && !a_sha && b_sha)))
-+		return 1; /* we don't handle non D-F cases */
-=20
- 	entry->processed =3D 1;
-=20
-@@ -1321,6 +1320,12 @@ int merge_trees(struct merge_options *o,
- 				&& !process_df_entry(o, path, e))
- 				clean =3D 0;
- 		}
-+		for (i =3D 0; i < entries->nr; i++) {
-+			struct stage_data *e =3D entries->items[i].util;
-+			if (!e->processed)
-+				die("Unprocessed path??? %s",=20
-+				    entries->items[i].string);
-+		}
-=20
- 		string_list_clear(re_merge, 0);
- 		string_list_clear(re_head, 0);
+I didn't spot that. But until now it's only been used for Windows,
+there isn't a NO_* flag you can set to compile it in.
