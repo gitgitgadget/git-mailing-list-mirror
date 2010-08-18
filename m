@@ -1,108 +1,131 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
-Date: Wed, 18 Aug 2010 20:55:08 +0200
-Message-ID: <39E322E1-DA85-48D8-A279-75CDDD3A2881@gmail.com>
-References: <1282135226.24584.92.camel@wpalmer.simply-domain> <2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com> <1282140854.24584.112.camel@wpalmer.simply-domain>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 20:55:23 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] merge-recursive: Workaround unused variable warning
+Date: Wed, 18 Aug 2010 11:55:07 -0700
+Message-ID: <7veidvagz8.fsf@alter.siamese.dyndns.org>
+References: <1281665352-10533-1-git-send-email-newren@gmail.com>
+ <1281665352-10533-2-git-send-email-newren@gmail.com>
+ <AANLkTikLXy4gPttmX=wzcDaFAfZO=OEk4PEDKh3sCSOF@mail.gmail.com>
+ <20100818001032.GA7694@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Johannes Sixt <j.sixt@viscovery.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 20:55:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlnnA-0006pa-96
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 20:55:16 +0200
+	id 1Olnna-00075M-1Z
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 20:55:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753795Ab0HRSzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 14:55:13 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:56634 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753780Ab0HRSzL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 14:55:11 -0400
-Received: by mail-ey0-f174.google.com with SMTP id 5so620907eyg.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 11:55:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=lfXUrFMMTUeT3dMxS7SptkCQPoTsQM+YnkSXz97RMxA=;
-        b=dxZmIRyLGhnWCPZLxSIvqnU//P7azczQDagxrQBsQlACcG4j+pXq484kTsiwy7tNHf
-         MT68a5nYHN7GOr0p27el5UJoGAXevmd0yvHMJF1RLSutBCMmH1puJ83JSOm1u+cyTXSC
-         Vs6UDWcXZ4dag2k8NFlYIdxwFv9TgUCAFqxfg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=UBdROC/EcEVEYqS8sQvQQa4MloLwe6CDbcSnZUDUThrYF9QdQWBvf6g9Ru+2HZwYoA
-         0KkGKgiy6txQ4BwLAars5oToKyvehWpADEbVjrosIYEz51CzfpJrRw4nbRvZKtKuwu/K
-         L5pk8sOCAGfzdzYtJRXhsZZWv4N/B1OBLtSMU=
-Received: by 10.213.33.136 with SMTP id h8mr2387452ebd.94.1282157710790;
-        Wed, 18 Aug 2010 11:55:10 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id v59sm1015812eeh.16.2010.08.18.11.55.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 11:55:10 -0700 (PDT)
-In-Reply-To: <1282140854.24584.112.camel@wpalmer.simply-domain>
-X-Mailer: Apple Mail (2.1081)
+	id S1753801Ab0HRSzY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 14:55:24 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60699 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753516Ab0HRSzX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 14:55:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D547BCEB65;
+	Wed, 18 Aug 2010 14:55:19 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=M/IeA7AD8NTj
+	DdlOMWk1H8nJGVg=; b=ayQ3a4Lq30KF4Wb8oBnYBjoJPHAg27GeMMvP+HhEbB+a
+	bmNvcsyel94vhdGkeBc5rruuarBj4C5Db90XnTgt5nEv4asp8aj+pVvM+ShpUYjL
+	UrZv0S4/Cha8jfV8/4gHFgsuS/2bvL2GvbsKJlLpwC2iphNKCZev4J5V3u+MhQQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=t+Vy/T
+	5Zr2NeC8isY82OSiVwG9JxHB/6lbccNH0Fwjn9GVXgYFd2b/YcUqrO4mhtEs+QKf
+	XwmpD1GEZ5g2aVkyZCHjYRoyuOByhqw14Y6EN81BKi27p+1DwOrsQOI1Fp0zE8W1
+	CqwfkE40PTkH1NvR6129DNR6uc8BVxC3t5Dlw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89CE3CEB59;
+	Wed, 18 Aug 2010 14:55:15 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74C57CEB54; Wed, 18 Aug
+ 2010 14:55:09 -0400 (EDT)
+In-Reply-To: <20100818001032.GA7694@burratino> (Jonathan Nieder's message of
+ "Tue\, 17 Aug 2010 19\:10\:32 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 234F962A-AAFA-11DF-A004-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153874>
 
-On 18. aug. 2010, at 16.14, Will Palmer wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-[...]
+> Elijah Newren wrote:
+>> On Thu, Aug 12, 2010 at 8:09 PM, Elijah Newren <newren@gmail.com> wr=
+ote:
+>
+>>> +++ b/merge-recursive.c
+>>> @@ -1214,6 +1214,7 @@ static int process_df_entry(struct merge_opti=
+ons *o,
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* We currently only handle D->F cases *=
+/
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0assert((!o_sha && a_sha && !b_sha) ||
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (!o_sha && !a_sha =
+&& b_sha));
+>>> + =C2=A0 =C2=A0 =C2=A0 (void)o_sha;
+> [...]
+>>                        would a different method of fixing warnings
+>> when NDEBUG is defined be preferred?  (Maybe changing the
+>> "assert(foo)" into "if (!foo) die..." instead?)
+>
+> Yes, that sounds like a good idea.  The user would probably benefit
+> from knowing what happened.
 
-> I don't know when the .gitattributes file was added, surely git should
-> account for varied settings over time, especially when the meanings of
-> those settings have changed over time? Something like "only apply when
-> there are other changes to this file", or only when the newline-status
-> of the file itself has otherwise changed, for that matter.
+I'd agree.  This assert() is not about protecting new callers from maki=
+ng
+obvious programming error by passing wrong parameters, but about Elijah
+not being confident enough that the changes made to process_entry() wit=
+h
+this series really covers all the cases so that only D/F cases are left
+unprocessed.
 
-"core.autocrlf" now does something like this: it only converts a file if it contains no CRs in the repository.  The downside to this behaviour is that line endings are no longer normalised, but since normalisation never worked very well as a configuration setting, that's a worthwhile tradeoff.
+Another possibility is to move this assert() out of process_df_entry() =
+and
+have it on the calling side.  Perhaps something like the attached.
 
-The attributes are used to enable normalisation unconditionally, and this _should_ be okay since they are versioned along with the contents of the repository so those contents _should_ reflect the attributes' settings.  Unfortunately, as you discovered, this isn't necessarily true in older repositories.  Fortunately, as Thomas Rast noted elsewhere, .git/info/attributes can work around the problem.
+BTW, it is not so obvious if (!o_sha && !!a_sha !=3D !!b_sha) is equiva=
+lent
+to "we are handling a D-F case".  Can you explain why?
 
-[...]
 
->> If you turn on core.autocrlf=input or core.autocrlf=true you should get the same behaviour with older gits as well.  Note that msysgit has had autocrlf enabled by default for years, so no positive action is required to do this.
-> 
-> This was one of the first things I tried, but with no luck. Perhaps
-> there is some extra step involved to tell git "update the working copy
-> using the new setting"? I have tried both git checkout --force HEAD, and
-> git reset --hard HEAD, but neither seem to have an effect.
-
-"rm .git/index && git reset" usually does the trick for me.  If the index is intact, git will know that you haven't touched any files and won't bother to check them.
-
-[...]
-
->> Git _is_ giving you a real pristine copy, it's just informing you that your repository is not consistent with the attributes you have set.
-> 
-> "pristine" to me means "no changes". If there is an inconsistency which
-> git doesn't like, git should complain about that, refuse to checkout,
-> declare "broken repository! Oh no!" and refuse all operations, etc. It
-> git can determine that it is unable to act in a sane manner, I don't
-> want git to just go ahead making wild guesses.
-
-I don't see how refusing to check out would be helpful.  How would you recover from that?  I think git does the least it can in this situation: no files are modified in any way, but the user is notified that some of them will be modified if they are "git add"ed.  If they are then committed, the problem is solved and future checkouts _will_ be "pristine".
-
-In your case, simply committing the normalised files isn't an option since some of them are binaries and will be corrupted, so modifying .gitattributes is the way to go there.
-
-[...]
-
-> If it were "my repository", and there were some problem like this, then
-> I would probably use filter-branch to remove the error from history.
-
-Hopefully, the owner of the repository will at least remove the error from future versions, if not actually filter it out of existence.  But it _is_ an error, it's just that prior to git 1.7.2 only people with autocrlf set could see it.
-
-I did consider this as a potential problem when implementing the new crlf conversion behaviour, but reasoned that very few repositories would be affected in this way: there was no reason to set the crlf attribute unless you worked with people who had core.autocrlf set, and if you did, they would notice the spurious "modifications".
-
-I'm sorry you hit a repository with an incorrectly set crlf, and I hope there aren't many more out there.
-
-- Eyvind
+diff --git a/merge-recursive.c b/merge-recursive.c
+index b0f055e..7bab728 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -1208,9 +1208,8 @@ static int process_df_entry(struct merge_options =
+*o,
+ 	const char *conf;
+ 	struct stat st;
+=20
+-	/* We currently only handle D->F cases */
+-	assert((!o_sha && a_sha && !b_sha) ||
+-	       (!o_sha && !a_sha && b_sha));
++	if (! ((!o_sha && a_sha && !b_sha) || (!o_sha && !a_sha && b_sha)))
++		return 1; /* we don't handle non D-F cases */
+=20
+ 	entry->processed =3D 1;
+=20
+@@ -1321,6 +1320,12 @@ int merge_trees(struct merge_options *o,
+ 				&& !process_df_entry(o, path, e))
+ 				clean =3D 0;
+ 		}
++		for (i =3D 0; i < entries->nr; i++) {
++			struct stage_data *e =3D entries->items[i].util;
++			if (!e->processed)
++				die("Unprocessed path??? %s",=20
++				    entries->items[i].string);
++		}
+=20
+ 		string_list_clear(re_merge, 0);
+ 		string_list_clear(re_head, 0);
