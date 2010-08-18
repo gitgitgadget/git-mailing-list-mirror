@@ -1,88 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] Splitting gitweb and build-time configuration variables
-Date: Tue, 17 Aug 2010 22:03:21 -0500
-Message-ID: <20100818030321.GB21185@burratino>
-References: <201008172015.37353.jnareb@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH 1/2] commit: add parse_commit_repl() to replace
+ commits at parsing time
+Date: Wed, 18 Aug 2010 13:17:52 +1000
+Message-ID: <AANLkTimu0r_3L7_YJgfMVb6saFOyOK-mHLiKyTG_6Q5O@mail.gmail.com>
+References: <20100817015901.5592.25471.chriscool@tuxfamily.org>
+	<7vbp91aqfk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Petr Baudis <pasky@suse.cz>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
-	John Hawley <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 05:05:13 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 05:18:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlYxj-00024X-3u
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 05:05:11 +0200
+	id 1OlZA9-0005TR-VZ
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 05:18:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750977Ab0HRDFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 23:05:05 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46792 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750793Ab0HRDFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 23:05:03 -0400
-Received: by gwj17 with SMTP id 17so17546gwj.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 20:05:02 -0700 (PDT)
+	id S1750882Ab0HRDRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 23:17:55 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:53651 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750875Ab0HRDRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 23:17:54 -0400
+Received: by wwi17 with SMTP id 17so149819wwi.1
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 20:17:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=mEA0jlTRy1C1uNtpSrMQkQk4gm0UDTbPUPwSEakqWI8=;
-        b=CQThPkALfxt98YjgWKlSzLwAxj5dY/QTaqaGVc8veijDNiQPiz351NP7LdaPkXNmfl
-         Ckf6/wP7qw/fjZHCONoUNMynXu3YXaaxxIF5WkjTrAYXTqZc54miSwn9X8gfF+t0kQ68
-         JIC25ILPdJ1L8M87m6iSermv3ID/e0ZAC+Bys=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=SKFZmLezka7515Rhvl/YzGxPwz8nnalmXIyUM2fVmi8=;
+        b=KRdlnj8OYxBhnfkV9Ci9kaDXkG/HJfAkPeYN/bLIdmVDl/hK1q+YMTF6c7+3whxnU6
+         cb4DMHbC64P0hwx9pLqlqEjvZtO56U/i+kblu3OA5VlxO5WlUrgrW4UGY+fkC+XJIrJQ
+         lnAl4eYHyBhJvJYCs7pmHwcxr5RrlSJJRneio=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=NPpcFUV2fjRHlDgP5HcyGVqIlBJY5FSAaXwgBClnr4sx4f+6BZflciQ/pDP/bBpwkK
-         rR02o2cqAnm9FlpZV91scsAaV/sqwY3fcvGSDpSoEeRyKWPrAXI+bwOXg9K1VRwMsz96
-         /N61npw1j8OPtLeTzXPb7Ck+OVMg94ZwfEeGY=
-Received: by 10.150.149.19 with SMTP id w19mr8029454ybd.415.1282100702661;
-        Tue, 17 Aug 2010 20:05:02 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id 36sm1572270ybr.20.2010.08.17.20.05.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 17 Aug 2010 20:05:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201008172015.37353.jnareb@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=h4gOMrpMtd72d6GMU6uffNvh8/sWfVBkcCc4lcM+aIf/fnY6MNbfuVmtMrotBrTjXt
+         uH0VvaH9e5oOZg78uXJsNjpCC/3eZirLyMZOTSByjOqSqh3hLYnUJ8nBdoLI94XRmhpq
+         KvUek3vWScSwdBJCkfmtaWKaxmmQLBOiJ/AN8=
+Received: by 10.227.127.82 with SMTP id f18mr6463493wbs.185.1282101472576;
+ Tue, 17 Aug 2010 20:17:52 -0700 (PDT)
+Received: by 10.216.173.133 with HTTP; Tue, 17 Aug 2010 20:17:52 -0700 (PDT)
+In-Reply-To: <7vbp91aqfk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153807>
 
-Jakub Narebski wrote:
+On Wed, Aug 18, 2010 at 7:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> Christian Couder <chriscool@tuxfamily.org> writes:
+>
+>> The function parse_commit() is not safe regarding replaced commits
+>> because it uses the buffer of the replacement commit but the object
+>> part of the commit struct stay the same. Especially the sha1 is not
+>> changed so it doesn't match the content of the commit.
+>
+> This all sounds backwards to me, if I am reading the discussion correctly.
+>
+> If a replace record says commit 0123 is replaced by commit 4567 (iow, 0123
+> was a mistake, and pretend that its content is what is recorded in 4567),
+> and when we are honoring the replace records (iow, we are not fsck),
+> shouldn't read_sha1("0123") give us a piece of memory that stores what is
+> recorded in 4567, parse_object("0123") return a struct commit whose buffer
+> points at a block of memory that has what is recorded in 4567 _while_ its
+> object.sha1[] say "0123"?
 
-> 1. Description of build-time configuration variable is in the module
->    that defines it, and each block of variables coming from the same
->    module would have notice where one can find description of those
->    variables
-[...]
-> 2. Description of build-time configuration variables is in gitweb.perl,
->    and in each module there is comment that full description of those
->    variables can be found there, e.g. (proposal):
-> 
->      # Values of those variables are set during build time in 
->      # gitweb/gitweb.perl (main script).  You can find their description
->      # there.
-[...]
-> 3. Duplicate description of those variables
+1. parse_object() as it is now would return object.sha1[] = "4567".
+2. lookup_commit(), then parse_commit() would return object.sha1[] = "0123".
 
-With #2, a person reading the Makefile can grep for some particular
-substitution (++GITWEB_PROJECTROOT++) and quickly find the name and
-description of the variable it is used for.  If there were a 1:1
-correspondence between the variables in gitweb.perl and the Makefile,
-I would even suggest moving the description to the Makefile.
+> What problem are you trying to solve?
 
-In practice, I suspect the run-time configuration is more important to
-people.  That is already fairly well documented in gitweb/README.
-
-Just my two cents,
-Jonathan
+Inconsistency in replacing objects. I have no comments whether #1 or
+#2 is expected behavior. But at least it should stick to one behavior
+only.
+-- 
+Duy
