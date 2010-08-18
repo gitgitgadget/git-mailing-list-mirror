@@ -1,98 +1,222 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v5 6/8] detached-stash: simplify git stash show
-Date: Wed, 18 Aug 2010 23:48:51 +1000
-Message-ID: <1282139333-5150-3-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v5 7/8] detached-stash: tests of git stash with stash-like arguments
+Date: Wed, 18 Aug 2010 23:48:52 +1000
+Message-ID: <1282139333-5150-4-git-send-email-jon.seymour@gmail.com>
 References: <1282139333-5150-1-git-send-email-jon.seymour@gmail.com>
 Cc: gitster@pobox.com, j6t@kdbg.org,
 	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:49:49 2010
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:49:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Olj1X-0005IP-Oa
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:49:48 +0200
+	id 1Olj1Z-0005IP-HL
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:49:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752953Ab0HRNt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:49:28 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:33667 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752918Ab0HRNtZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:49:25 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 7so11722pwi.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:49:25 -0700 (PDT)
+	id S1753004Ab0HRNtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 09:49:31 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:62780 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752984Ab0HRNt3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:49:29 -0400
+Received: by pxi10 with SMTP id 10so218421pxi.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=M1W2RZ9MNsP3ONSYNA6jnM9zU8yZ0vmKqjNAmybvhTw=;
-        b=NGZ/qUqwcc5Bt/xbY2QsJ9ZAdyDdCcqDoJ9bTfipVJvt0m/3ZA3yStbbOyCpF/tYGT
-         2vsEhd38NeY/Soa24l4M6QyiIzcupEpfbG1PS6fjvhcD6n6UsOc0KhIG7lgZYeja42ig
-         yrKFQS3t2mDbTW5d8IswSX0DcxourX8SVW+48=
+        bh=QAjojfkLQgkR+58GMj5ciEaiVR/3f8x2nsY80EKaNog=;
+        b=javh0ThYr3bOz0iNP+Uz7umnHhWdV/BdE9eB3jaaKw7FQejnZ9oVAE66hBvJgCw933
+         oFrA75pVnOdXH9OP4tN0q8OBgtWK8q/pLf7dCPjx692Eiu8SmwlMImhfxsbpGv/uVHIi
+         Sqh0R2M5lsws7ZQP//rsmQWEtFjGQgEKk1DqM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=swHB3lARCWXdPdIUPmmIpEL3LZ3XHkALdzdnbZCBUhu4RNmqnHhkKZxxGFVIkhQK++
-         ocVGnm5NYo3V7wF+ITr+xeL0sRdwuu5jn4Ev9ZAFFDyThr/S0M277zhgjIrORTJzsagH
-         if4LJDVWtmFQ6mqhk2qqTC903Zs3yuC/l/9xA=
-Received: by 10.114.121.10 with SMTP id t10mr9580858wac.161.1282139365368;
-        Wed, 18 Aug 2010 06:49:25 -0700 (PDT)
+        b=OolhJ/eikoSYs+Jk3jw0k+7W1+CKSCSZ4JzCuuUoy07LIkkaqEqn80bzMsYpWa6pm+
+         KSvDFoofcybn36y6k9bQtQLepaTON8re6z4rBm3pBlW2jt+c2ctwVlP/Bewe+po4Ct67
+         oOPBX/1gqfP+IW9dookweyNrcl2vRz82oFUbs=
+Received: by 10.114.66.20 with SMTP id o20mr9589521waa.163.1282139369127;
+        Wed, 18 Aug 2010 06:49:29 -0700 (PDT)
 Received: from localhost.localdomain (203-158-55-26.dyn.iinet.net.au [203.158.55.26])
-        by mx.google.com with ESMTPS id s5sm538803wak.12.2010.08.18.06.49.22
+        by mx.google.com with ESMTPS id s5sm538803wak.12.2010.08.18.06.49.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:49:24 -0700 (PDT)
+        Wed, 18 Aug 2010 06:49:27 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.88.g3dbe5
 In-Reply-To: <1282139333-5150-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153853>
 
-This commit refactors git stash show to make use of the assert_stash_like function.
+Adds new tests which check that:
+* git stash branch handles a stash-like argument when there is a stash stack
+* git stash branch handles a stash-like argument when there is not a stash stack
+* git stash show handles a stash-like argument when there is a stash stack
+* git stash show handles a stash-like argument when there is not a stash stack
+* git stash drop fails early if the specified argument is not a stash reference
+* git stash pop fails early if the specified argument is not a stash reference
+* git stash * fails early if the reference supplied is bogus
+* git stash fails early with stash@{n} where n >= length of stash log
 
-git show now dies if the presented argument is non-stash-like.
-
-Previous behaviour was to tolerate commits that were not even stash-like.
-
-Previously, git stash show would accept stash-like arguments, but
-only if there was a stash on the stack.
-
-Now, git stash accepts stash-like arguments always and only fails
-if no stash-like argument is specified and there is no stash stack.
+| Amended per advice from Johannes Sixt to avoid burying stash create failures.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- git-stash.sh |   14 ++------------
- 1 files changed, 2 insertions(+), 12 deletions(-)
+ t/t3903-stash.sh |  140 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 140 insertions(+), 0 deletions(-)
 
-diff --git a/git-stash.sh b/git-stash.sh
-index ff1edc9..7ce818b 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -210,19 +210,9 @@ list_stash () {
- }
+diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+index 62e208a..efc7e7f 100755
+--- a/t/t3903-stash.sh
++++ b/t/t3903-stash.sh
+@@ -378,4 +378,144 @@ test_expect_failure 'stash file to directory' '
+ 	test foo = "$(cat file/file)"
+ '
  
- show_stash () {
--	have_stash || die 'No stash found'
--
--	flags=$(git rev-parse --no-revs --flags "$@")
--	if test -z "$flags"
--	then
--		flags=--stat
--	fi
--
--	w_commit=$(git rev-parse --quiet --verify --default $ref_stash "$@") &&
--	b_commit=$(git rev-parse --quiet --verify "$w_commit^") ||
--		die "'$*' is not a stash"
-+	assert_stash_like "$@"
- 
--	git diff $flags $b_commit $w_commit
-+	git diff ${FLAGS:---stat} $b_commit $w_commit
- }
- 
- #
++test_expect_success 'stash branch - no stashes on stack, stash-like argument' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	git reset --hard &&
++	echo foo >> file &&
++	STASH_ID=$(git stash create) &&
++	git reset --hard &&
++	git stash branch stash-branch ${STASH_ID} &&
++	test_when_finished "git reset --hard HEAD && git checkout master && git branch -D stash-branch" &&
++	test $(git ls-files --modified | wc -l) -eq 1
++'
++
++test_expect_success 'stash branch - stashes on stack, stash-like argument' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	git reset --hard &&
++	echo foo >> file &&
++	git stash &&
++	test_when_finished "git stash drop" &&
++	echo bar >> file &&
++	STASH_ID=$(git stash create) &&
++	git reset --hard &&
++	git stash branch stash-branch ${STASH_ID} &&
++	test_when_finished "git reset --hard HEAD && git checkout master && git branch -D stash-branch" &&
++	test $(git ls-files --modified | wc -l) -eq 1
++'
++
++test_expect_success 'stash show - stashes on stack, stash-like argument' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	git reset --hard &&
++	echo foo >> file &&
++	git stash &&
++	test_when_finished "git stash drop" &&
++	echo bar >> file &&
++	STASH_ID=$(git stash create) &&
++	git reset --hard &&
++	git stash show ${STASH_ID}
++'
++test_expect_success 'stash show - no stashes on stack, stash-like argument' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD" &&
++	git reset --hard &&
++	echo foo >> file &&
++	STASH_ID=$(git stash create) &&
++	git reset --hard &&
++	git stash show ${STASH_ID}
++'
++
++test_expect_success 'stash drop - fail early if specified stash is not a stash reference' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD && git stash clear" &&
++	git reset --hard &&
++	echo foo > file &&
++	git stash &&
++	echo bar > file &&
++	git stash &&
++	! git stash drop $(git rev-parse stash@{0}) &&
++	git stash pop &&
++	test bar = "$(cat file)" &&
++	git reset --hard HEAD
++'
++
++test_expect_success 'stash pop - fail early if specified stash is not a stash reference' '
++	git stash clear &&
++	test_when_finished "git reset --hard HEAD && git stash clear" &&
++	git reset --hard &&
++	echo foo > file &&
++	git stash &&
++	echo bar > file &&
++	git stash &&
++	! git stash pop $(git rev-parse stash@{0}) &&
++	git stash pop &&
++	test bar = "$(cat file)" &&
++	git reset --hard HEAD
++'
++
++test_expect_success 'stash drop - bad stash ref' '
++	git stash clear &&
++	echo bar5 > file &&
++	echo bar6 > file2 &&
++	git add file2 &&
++	git stash &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash drop does-not-exist &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash drop does-not-exist@{0} &&
++	git stash drop
++'
++
++test_expect_success 'stash pop - bad stash ref' '
++	git stash clear &&
++	echo bar5 > file &&
++	echo bar6 > file2 &&
++	git add file2 &&
++	git stash &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash pop does-not-exist &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash pop does-not-exist@{0} &&
++	git stash drop
++'
++
++test_expect_success 'stash apply - bad stash ref' '
++	git stash clear &&
++	echo bar5 > file &&
++	echo bar6 > file2 &&
++	git add file2 &&
++	git stash &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash apply does-not-exist &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash apply does-not-exist@{0} &&
++	git stash drop
++'
++
++test_expect_success 'stash show - bad stash ref' '
++	git stash clear &&
++	echo bar5 > file &&
++	echo bar6 > file2 &&
++	git add file2 &&
++	git stash &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash show does-not-exist &&
++	! git rev-parse --quiet --verify does-not-exist &&
++	! git stash show does-not-exist@{0} &&
++	git stash drop
++'
++
++test_expect_success 'stash drop - invalid stash reference' '
++	git stash clear &&
++	! git stash stash@{0} &&
++	echo bar5 > file &&
++	echo bar6 > file2 &&
++	git add file2 &&
++	git stash &&
++	! git drop stash@{1} &&
++	git stash drop
++'
++
+ test_done
 -- 
 1.7.2.1.95.g4fabf
