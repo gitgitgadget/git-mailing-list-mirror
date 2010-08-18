@@ -1,73 +1,107 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: Re: [RFC/PATCH] Add test case for dealing with a tracked file in an
- ignored directory
-Date: Wed, 18 Aug 2010 04:43:08 -0500
-Message-ID: <AANLkTik5t9Y8bLOLhnckPDXMh7gmC8s0xikg8xRfEpwU@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] Add test case for dealing with a tracked file in an ignored directory
+Date: Wed, 18 Aug 2010 11:50:05 +0200
+Message-ID: <vpq8w44mer6.fsf@bauges.imag.fr>
 References: <AANLkTiky+azVAnXEBFWR1q9_8NH8TX2TfuonXCpA_-ms@mail.gmail.com>
 	<1282123788-24055-1-git-send-email-gdb@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Greg Brockman <gdb@mit.edu>
-To: avarab@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	git@vger.kernel.org, gitster@pobox.com, Jens.Lehmann@web.de,
-	jrnieder@gmail.com
-X-From: git-owner@vger.kernel.org Wed Aug 18 11:43:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
+	Jens.Lehmann@web.de, jrnieder@gmail.com
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Wed Aug 18 11:53:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlfB9-00088E-NH
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 11:43:28 +0200
+	id 1OlfKx-0004Nx-Qy
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 11:53:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752181Ab0HRJnP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 05:43:15 -0400
-Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:64730 "EHLO
-	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750942Ab0HRJnM convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 05:43:12 -0400
-X-AuditID: 1209190c-b7c0dae000000a0c-92-4c6bab31d284
-Received: from mailhub-auth-1.mit.edu (MAILHUB-AUTH-1.MIT.EDU [18.9.21.35])
-	by dmz-mailsec-scanner-1.mit.edu (Symantec Brightmail Gateway) with SMTP id FB.6C.02572.13BAB6C4; Wed, 18 Aug 2010 05:43:13 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o7I9hBFQ017187
-	for <git@vger.kernel.org>; Wed, 18 Aug 2010 05:43:11 -0400
-Received: from mail-ww0-f44.google.com (mail-ww0-f44.google.com [74.125.82.44])
-	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7I9h99b012823
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 18 Aug 2010 05:43:11 -0400 (EDT)
-Received: by wwi17 with SMTP id 17so583450wwi.1
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 02:43:09 -0700 (PDT)
-Received: by 10.227.135.78 with SMTP id m14mr6815824wbt.47.1282124588917; Wed,
- 18 Aug 2010 02:43:08 -0700 (PDT)
-Received: by 10.216.172.79 with HTTP; Wed, 18 Aug 2010 02:43:08 -0700 (PDT)
-In-Reply-To: <1282123788-24055-1-git-send-email-gdb@mit.edu>
-X-Brightmail-Tracker: AAAAARWtyHc=
+	id S1751820Ab0HRJxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 05:53:31 -0400
+Received: from imag.imag.fr ([129.88.30.1]:42525 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750974Ab0HRJx3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 05:53:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7I9o5wm016673
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Aug 2010 11:50:05 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OlfHZ-0003iI-JQ; Wed, 18 Aug 2010 11:50:05 +0200
+In-Reply-To: <1282123788-24055-1-git-send-email-gdb@mit.edu> (Greg Brockman's message of "Wed\, 18 Aug 2010 04\:29\:48 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 18 Aug 2010 11:50:06 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153825>
 
-Whoops, forgot the sign-off line:
+Greg Brockman <gdb@MIT.EDU> writes:
 
-> This test case attempts to match the behavior of 'git add ignore-file=
-'
+> This test case attempts to match the behavior of 'git add ignore-file'
 > with 'git add ignore-dir/file' when .gitignore contains entries for
 > ignore-file and ignore-dir.
 
-Signed-off-by: Greg Brockman <gdb@mit.edu>
+Good :-).
 
-> ---
-> =A0t/t3700-add.sh | =A0 30 ++++++++++++++++++++++++++++++
-> =A01 files changed, 30 insertions(+), 0 deletions(-)
->
-> This patch is a follow-up to the thread '[RFC/PATCH] git-add: Don't
-> exclude explicitly-specified tracked files' at
->
-> =A0http://thread.gmane.org/gmane.comp.version-control.git/153194
-=2E..
+> +test_expect_success 'git add with file in ignored directory' '
+
+In the final version, you can make the tests test_expect_failure in
+the first patch, and turn them back into test_expect_success in the
+second (which fixes the issue). This makes it clear what your change
+to the code do, and makes sure the test suite passes for each commit.
+
+> +	mkdir ignored-dir &&
+> +	echo ignored-dir >> .gitignore &&
+> +	touch ignored-dir/file &&
+
+I think >ignored-dir/file is more portable than touch, and is
+recommanded in the testsuite. But a quick grep shows that touch is
+already used.
+
+> +	test_must_fail git add ignored-dir/file >actual 2>&1 &&
+> +	test_cmp actual expect &&
+> +	git add -f ignored-dir/file &&
+> +	git add ignored-dir/file &&
+
+(so, this is the first thing you're fixing, shouldn't be
+controversial)
+
+> +test_expect_success 'git add with ignored directory using git globs' "
+> +	mkdir ignored-dir2 && echo ignored-dir2 >> .gitignore && touch ignored-dir2/file &&
+> +	git add 'ignored-dir2/*' >actual 2>&1 &&
+> +	echo \"fatal: pathspec 'ignored-dir2/*' did not match any files\" | test_cmp - actual
+
+Currently, "git add 'dir/*'" will add the files under dir/ if dir/
+isn't ignored, and require -f if dir is ignored.
+
+I don't think you want to complain with "did not match any files"
+here.
+
+> +	git add -f ignored-dir2/file && echo change > ignored-dir2/file &&
+> +	git add 'ignored-dir2/*' >actual 2>&1 &&
+
+Just making sure I'm reading correctly: this is the second thing that
+should be fixed, and that your earlier patch didn't.
+
+You're not testing the case
+
+  git add ignored-dir/
+
+which gives another case where Git tries to add files not explicitely
+given on the command-line. But the correct behavior of this case may
+be more controversial, so maybe it's indeed better to focus on the
+other cases.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
