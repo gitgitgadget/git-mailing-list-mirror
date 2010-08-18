@@ -1,118 +1,68 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 03/24] t7600 (merge): do not launch gitk for --debug
-Date: Wed, 18 Aug 2010 08:55:59 +0000
-Message-ID: <AANLkTikBmYH1xC_7iiXQK8-vo0yavwX_ELR=z1kfVSLj@mail.gmail.com>
-References: <20100817065147.GA18293@burratino>
-	<20100817065459.GC22057@burratino>
-	<AANLkTi=1Fz_wdf-grxFB17zUXpW+d26MudbbJP5K=fO_@mail.gmail.com>
-	<20100818022931.GA19868@burratino>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [RFC/PATCH] git-add: Don't exclude explicitly-specified tracked files
+Date: Wed, 18 Aug 2010 04:07:48 -0500
+Message-ID: <AANLkTiky+azVAnXEBFWR1q9_8NH8TX2TfuonXCpA_-ms@mail.gmail.com>
+References: <1281510236-8103-1-git-send-email-gdb@mit.edu>
+	<vpqsk2kjks7.fsf@bauges.imag.fr>
+	<AANLkTimODL6j11D6QuUX4b47GwFOVOXdqkhqrRfRaxmq@mail.gmail.com>
+	<AANLkTikV-fye7qc5kQNC5dSCTHB6nYoVfCg_PeFuk0KT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Lars Hjemli <hjemli@gmail.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>,
-	Clemens Buchacher <drizzd@aon.at>, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 10:56:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	gitster@pobox.com, Jens.Lehmann@web.de
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 11:08:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OleRN-0005fX-Rg
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 10:56:10 +0200
+	id 1Olecq-00020p-RQ
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 11:08:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751208Ab0HRI4E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 04:56:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:43120 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750757Ab0HRI4C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 04:56:02 -0400
-Received: by iwn7 with SMTP id 7so434822iwn.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 01:56:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=I8LtyJ6z+k553Sj8vornFP8n+GPRGFh8V4H8Upj5ztw=;
-        b=DPAW+XlDIPvmhrqzq+434y+XJsa+aOh/Yy8Ku3XpP4j2hskGPR5WfZH/lmMhvLgd44
-         fAuB6QaxBm7wbocA5k+hjuDDU10K5a7gm3EQwUcuPh2JCoeiYC84WJe4oyMzF7NZ3L1p
-         5tN9GbpSRZFAcSIw6kRpZwewfS+durZHLI/nE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qTAXl5DNTOK7i6ywVf8aZuHeflt8isuSM35K6iwQxeBfEx+ecQpslwtr1+sbVVvVEw
-         KLTT0PSlPAEhPQYCWA7ogu+2NdxisLO8926k6N5pe1fqPDs6VXh8r/7EcpoG47OI4XVN
-         qrXof1qqADLEhoOva3Xf4L5VG3v3aBhijfyc0=
-Received: by 10.231.167.130 with SMTP id q2mr8840087iby.163.1282121759989;
- Wed, 18 Aug 2010 01:55:59 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Wed, 18 Aug 2010 01:55:59 -0700 (PDT)
-In-Reply-To: <20100818022931.GA19868@burratino>
+	id S1751640Ab0HRJHy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 05:07:54 -0400
+Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:57851 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750942Ab0HRJHx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 05:07:53 -0400
+X-AuditID: 12074422-b7bb6ae0000009fa-91-4c6ba2e0aa92
+Received: from mailhub-auth-3.mit.edu (MAILHUB-AUTH-3.MIT.EDU [18.9.21.43])
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id FD.F4.02554.0E2AB6C4; Wed, 18 Aug 2010 05:07:44 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7I97pV3015155
+	for <git@vger.kernel.org>; Wed, 18 Aug 2010 05:07:51 -0400
+Received: from mail-ew0-f46.google.com (mail-ew0-f46.google.com [209.85.215.46])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7I97nUp009295
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Wed, 18 Aug 2010 05:07:50 -0400 (EDT)
+Received: by ewy23 with SMTP id 23so158695ewy.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 02:07:48 -0700 (PDT)
+Received: by 10.216.131.161 with SMTP id m33mr6794187wei.13.1282122468653;
+ Wed, 18 Aug 2010 02:07:48 -0700 (PDT)
+Received: by 10.216.172.79 with HTTP; Wed, 18 Aug 2010 02:07:48 -0700 (PDT)
+In-Reply-To: <AANLkTikV-fye7qc5kQNC5dSCTHB6nYoVfCg_PeFuk0KT@mail.gmail.com>
+X-Brightmail-Tracker: AAAAAhWs/CYVrch4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153819>
 
-On Wed, Aug 18, 2010 at 02:29, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Sverre Rabbelier wrote:
->> On Tue, Aug 17, 2010 at 01:54, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
->
->>> -test_debug 'gitk --all'
->>> +test_debug 'git log --graph --decorate --oneline --all'
->>
->>> -test_debug 'gitk --all'
->>> +test_debug 'git log --graph --decorate --oneline --all'
-> [...]
->> Really? Why can't you stuff the command to execute in a variable? On
->> that note, why wasn't that done in the first place?! This kind of
->> repetition is not very DRY.
->
-> My thought was that
->
-> =C2=A0test_debug '$debug_command'
-> =C2=A0...
-> =C2=A0test_debug '$debug_command'
-> =C2=A0...
-> =C2=A0[etc]
->
-> is not very DRY either, so I am hoping some configurable version of
->
-> -- 8< --
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index e8f21d5..65b0e35 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -373,6 +373,7 @@ test_run_ () {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if test "$verbose" =3D "t" && test -n "$HA=
-RNESS_ACTIVE"; then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo ""
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
-> + =C2=A0 =C2=A0 =C2=A0 test_debug "git log --graph --decorate --oneli=
-ne --all"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0
-> =C2=A0}
->
-> -- >8 --
->
-> appears to replace it. =C2=A0In the short term, the "s/gitk --all/git=
- log
-> --graph --decorate --oneline --all/" was just meant as a quick fix
-> so as not to drop the feature. =C2=A0Ideas?
+> I think "git add ignore-dir/file" above should act exactly like "git
+> add file", and not force me to add a "-f" to "git add".
+I agree.  That seems very much like the correct behavior.  FWIW, prior
+to sending the patch I hadn't noticed that 'git add file' already
+works without a '-f', which is why my commit message doesn't mention
+it.
 
-The main issue here is that --debug means two things. It runs
-test_debug() code AND instructs the test-lib not to remove the trash
-directory when it's done.
+Anyway, I'm not sure if there's consensus on this being the right
+behavior.  Thus I will take Matthieu's advice and propose a test-case
+for the desired behavior.  I'll send that under separate cover in a
+few moments.
 
-If we had a separate --keep-trash option most of this problem would go
-away, no?
+Thanks everyone for contributing your thoughts thus far.
 
-Aside from that it's better to use git log rather than gitk in
-test_debug, since it's in text form it can be easily sent along with a
-failing test, which is not the case for dozens of gitk invocations.
+Greg
