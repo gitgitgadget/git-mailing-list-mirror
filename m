@@ -1,95 +1,86 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: [PATCH] submodule sync: Update "submodule.<name>.url"
-Date: Wed, 18 Aug 2010 03:01:13 -0700
-Message-ID: <1282125673-22956-1-git-send-email-davvid@gmail.com>
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 11:54:31 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 0/5] Update compat/regex
+Date: Wed, 18 Aug 2010 10:41:09 +0000
+Message-ID: <AANLkTin6ojQzrPDh0EGVQUGvxtX3OP58nokEUpXw5pEQ@mail.gmail.com>
+References: <20100817080322.GA28476@burratino>
+	<1282037082-12996-1-git-send-email-avarab@gmail.com>
+	<7vzkwkaktr.fsf@alter.siamese.dyndns.org>
+	<20100817235016.GL2221@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Paolo Bonzini <paolo.bonzini@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Frank Li <lznuaa@gmail.com>,
+	Marius Storm-Olsen <mstormo@gmail.com>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 12:41:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlfLp-0004os-HQ
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 11:54:29 +0200
+	id 1Olg57-00012W-D4
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 12:41:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752196Ab0HRJyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 05:54:25 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:64738 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750974Ab0HRJyX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 05:54:23 -0400
-Received: by pwi4 with SMTP id 4so233234pwi.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 02:54:23 -0700 (PDT)
+	id S1752704Ab0HRKlL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 06:41:11 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57073 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752161Ab0HRKlK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 06:41:10 -0400
+Received: by iwn7 with SMTP id 7so534520iwn.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 03:41:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=9besm/Ya1KTfgQhFHX4vMpUMmByLcS81w1QD5k0/yfk=;
-        b=Ilj+AcgRX4gqKQui6r78paCcv8iCgL8sPO8IfZJQdsHPwMyjVUF0dwgpdr+29EKExP
-         3cwVzz1WP3epY4FJid3eS9Yi90vJdWHw43hmdol7EH2VUfYZlses3UKESKHfKBOCCLGP
-         aKR4JxL3eDUWX7iMKEskMxWnJBTaCzuSkG/xk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=G+em8OuUn7zzwM1Ni7OyjBtV99q4kMQGyrzJt2Bs+E4=;
+        b=S/oz7vVIfS0IksaG1jgyf6+eH179v+w0KTDhRCJVUVKZLuECXsYPgZ3o0mOB5V8ZWW
+         v3Gz/6kARUO+51NYi1jVO8viSP8VCCZl44E0A16PJXyoF1pzcwMWaOF4gwAkUUcRqXBW
+         pAAsuHl6AVW2YXjZFR/ViT6IeQDpkboz3AgNM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=xlSCKzoj45cHLaGO7X1fX0nOHh69gGGa4Q0vl6Sg1SLorh4Tifblq/Pt+aV8uLHR2s
-         yvI8ci+GBDNsHonBQ9T2/HZ8QPwBUYCInX9gRmtSPJvdQNldHEbwAOovz+Slb4Uw7N9m
-         Nueya020nP+FWSa9PNlTOYyi8ygay1bSrz61w=
-Received: by 10.114.67.11 with SMTP id p11mr9356595waa.170.1282125263367;
-        Wed, 18 Aug 2010 02:54:23 -0700 (PDT)
-Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id x9sm155986waj.3.2010.08.18.02.54.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 02:54:22 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.97.g3235b
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=KsgyFrP0R2+Rn0iITxNlgV1cLjjybURl7tOG0Hg4A8mhf9XH0uId5EfFu7nOTwh2pS
+         eRjtXqTAxFok2tWN6KVAahMVYapfyvja0Gfi/FR949P/zqxTpauYoQQL8a2hUuazqJXM
+         QYAJb1VI2LEfL9k7V9NwVbIgNSLP4/gOc76Gw=
+Received: by 10.231.146.141 with SMTP id h13mr9481945ibv.1.1282128069403; Wed,
+ 18 Aug 2010 03:41:09 -0700 (PDT)
+Received: by 10.231.186.226 with HTTP; Wed, 18 Aug 2010 03:41:09 -0700 (PDT)
+In-Reply-To: <20100817235016.GL2221@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153827>
 
-When "git submodule sync" synchronizes the repository URLs
-it only updates submodules' .git/config.  However, the old
-URLs still exist in the super-project's .git/config.
+2010/8/17 Jonathan Nieder <jrnieder@gmail.com>:
+> Junio C Hamano wrote:
+>
+>> Hmm, is there [1/5] in the series?
+>
+> Yes, but it probably missed the list because of vger's message length
+> limits.
+>
+> For convenience, here is the series. =C2=A0I also think the first two
+> patches should be combined, but this does not do so because others
+> might disagree. =C2=A0Patch 5 (autoconf) is the v2 version.
 
-Update the super-project's configuration so that commands
-such as "git submodule update" use the URLs from .gitmodules.
+Pedantic: If there's going to be squashing that should probably
+include the regerror change too, otherwise it can't be bisected on
+MSVC either.
 
-Signed-off-by: David Aguilar <davvid@gmail.com>
----
- git-submodule.sh          |    3 ++-
- t/t7403-submodule-sync.sh |    3 +++
- 2 files changed, 5 insertions(+), 1 deletions(-)
+Personally I think nothing should be squashed, because the history of
+having 1 commit be the unaltered gawk library and the rest being the
+changes we need on top of it will help future developers when we need
+to update the regex library again.
 
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 170186f..be7e478 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -840,9 +840,10 @@ cmd_sync()
- 		then
- 		(
- 			clear_local_git_env
-+			say "Synchronizing submodule url for '$name'"
-+			git config submodule."$name".url "$url"
- 			cd "$path"
- 			remote=$(get_default_remote)
--			say "Synchronizing submodule url for '$name'"
- 			git config remote."$remote".url "$url"
- 		)
- 		fi
-diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
-index 7538756..3033c4a 100755
---- a/t/t7403-submodule-sync.sh
-+++ b/t/t7403-submodule-sync.sh
-@@ -58,6 +58,9 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
- 	(cd super-clone/submodule &&
- 	 git checkout master &&
- 	 git pull
-+	) &&
-+	(cd super-clone &&
-+	 test -d "$(git config submodule.submodule.url)"
- 	)
- '
- 
--- 
-1.7.2.1.97.g3235b.dirty
+And since most people hacking git probably do so on GNU or the BSD's
+which don't need NO_REGEX=3DYesPlease the practical downside of doing s=
+o
+is *very* little.
