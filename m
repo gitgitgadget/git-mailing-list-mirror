@@ -1,89 +1,116 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v5 0/8] detached-stash: regularise handling of stash arguments by git stash
-Date: Wed, 18 Aug 2010 23:09:32 +1000
-Message-ID: <1282136980-25793-1-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v5 3/8] detached-stash: simplify stash_drop
+Date: Wed, 18 Aug 2010 23:09:35 +1000
+Message-ID: <1282136980-25793-4-git-send-email-jon.seymour@gmail.com>
+References: <1282136980-25793-1-git-send-email-jon.seymour@gmail.com>
 Cc: gitster@pobox.com, j6t@kdbg.org,
 	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:10:24 2010
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:10:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OliPP-00015T-LT
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:10:24 +0200
+	id 1OliPm-0001G7-3B
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:10:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752726Ab0HRNKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:10:18 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:44168 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751725Ab0HRNKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:10:16 -0400
-Received: by pvg2 with SMTP id 2so202375pvg.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:10:16 -0700 (PDT)
+	id S1752927Ab0HRNKd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 09:10:33 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:40726 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752906Ab0HRNKc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:10:32 -0400
+Received: by mail-px0-f174.google.com with SMTP id 10so205454pxi.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:10:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=KafjchTHM5lPq7EZqUMvpmO2N8Azm6YVwDKjuqOgDSM=;
-        b=CA2DRcivZa8MwZRFit4GJXOGU2cPHSr46mOGx2FIc6afe5YI7iXELWcd8ZYTh3TQUy
-         cuibAxkoOR5jjiJzwVii+8r3HkkQcZZeSsO19ch2+Z8iQKSX3OMsPhPMO1VvcJh60Xun
-         r8XHT9dQisHTRc+zynrU9ijNAXTFjUe+CHa8s=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=IKRoC6rEx2xl04NJdTUk5WiVI403ttEDso9zMU7miuQ=;
+        b=TynbSImW8B+ckbRhuTdJF1MsSgzj2Qty2GB/eLDuzNlGz7isvrWLNK4UAVjV4iJ3lJ
+         SThZLH/jaBK0451EZnZUlsD/aiVAp/V8dlurn4/LdAQQZCAwTf8i6nasakvPPkkzUcN7
+         FpvvyXOiNExk7Gn2naiOKlmvfpUwKE3SZVT+4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=jhi2qlkVJsnfXPrujcu7nicitsvLPhIq/URZVcp5mbjBJp+jaxJAGvQrJtbkNz+EeH
-         UVE96C/R6OvQQPgJqWQArVUyc2EYrHUfPKypLLgYhcpGXwvV89Q0AiECo1EWQ7m2/uwr
-         RsM1owMY4oJPh6ecrRK8dRS7tofaYm3peUGYY=
-Received: by 10.142.156.14 with SMTP id d14mr6966283wfe.267.1282137015924;
-        Wed, 18 Aug 2010 06:10:15 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=hJg02PD33fsuY1j5KQIrRv8IqK5VXbUNk1+p41rem5jPfIgNOgUUdToDwdLFNHXeaH
+         v8p3eCyB5cmsU9mtj13cX/wowyl1J0mRpTNgIbIyQWIRMbWyPSMcy9Rd0VVlpzniJ0op
+         NXM4+ywMtl8rHPccla2OZAhXYW90FLW71ypJY=
+Received: by 10.142.179.15 with SMTP id b15mr7053558wff.163.1282137031206;
+        Wed, 18 Aug 2010 06:10:31 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.55.229])
-        by mx.google.com with ESMTPS id w31sm303253wfd.20.2010.08.18.06.10.09
+        by mx.google.com with ESMTPS id w31sm303253wfd.20.2010.08.18.06.10.27
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:10:14 -0700 (PDT)
+        Wed, 18 Aug 2010 06:10:30 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.95.g4fabf
+In-Reply-To: <1282136980-25793-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153838>
 
-This patch introduces a common flags and revision parsing function to the following git stash commands:
- * apply
- * branch
- * pop
- * drop
- * show
+Previously, git stash drop would fail noisily while executing git reflog
+delete if the specified revision was not a stash reference.
 
-With these changes, git stash now:
- * allows non-stash log entry references to passed to 'stash branch' provided they are stash-like
- * relaxes the requirement that a stash log currently entry exists for 'stash show' or 'stash branch' 
- * does not attempt to drop the specified revision if it doesn't look like a stash log entry reference
- * fails 'stash pop' and 'stash drop' early if the specified revision is not a stash log entry reference
- * fails early if more than one stash-like commit is specified
- * fails early if the specified revision is of the form ref@{n} and ref exists, but ref@{n} does not exist
- * reports various error conditions that can occur across multiple commanbds with consistent error messages.
+Now, git stash drop fails with an error message which more precisely
+indicates the reason for failure.
 
-The implementation of several commands is simplified to a lesser or greater degree by taking
-advantage of the new common parsing and validation function, parse_flags_and_rev(). 
+Furthermore, git stash drop will now fail with a non-zero status code
+if stash@{n} specifies a stash log entry that does not actually exist.
 
-This revision incorporates feedback and corrections from Johannes Sixt and Junio Hamano.
+This change in behaviour is achieved by delegating argument parsing
+to the common parse_flags_and_rev() function (via a call to
+assert_stash_ref).
 
-Jon Seymour (8):
-  detached-stash: introduce parse_flags_and_revs function
-  detached-stash: simplify stash_apply
-  detached-stash: simplify stash_drop
-  detached-stash: refactor git stash pop implementation
-  detached-stash: simplify git stash branch
-  detached-stash: simplify git stash show
-  detached-stash: tests of git stash with stash-like arguments
-  detached-stash: update Documentation
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ git-stash.sh |   31 +++----------------------------
+ 1 files changed, 3 insertions(+), 28 deletions(-)
 
- Documentation/git-stash.txt |   16 ++-
- git-stash.sh                |  223 ++++++++++++++++++++++++++++---------------
- t/t3903-stash.sh            |  140 +++++++++++++++++++++++++++
- 3 files changed, 296 insertions(+), 83 deletions(-)
-
+diff --git a/git-stash.sh b/git-stash.sh
+index ba68f1e..750f360 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -424,35 +424,10 @@ apply_stash () {
+ }
+ 
+ drop_stash () {
+-	have_stash || die 'No stash entries to drop'
++	assert_stash_ref "$@"
+ 
+-	while test $# != 0
+-	do
+-		case "$1" in
+-		-q|--quiet)
+-			GIT_QUIET=t
+-			;;
+-		*)
+-			break
+-			;;
+-		esac
+-		shift
+-	done
+-
+-	if test $# = 0
+-	then
+-		set x "$ref_stash@{0}"
+-		shift
+-	fi
+-	# Verify supplied argument looks like a stash entry
+-	s=$(git rev-parse --verify "$@") &&
+-	git rev-parse --verify "$s:"   > /dev/null 2>&1 &&
+-	git rev-parse --verify "$s^1:" > /dev/null 2>&1 &&
+-	git rev-parse --verify "$s^2:" > /dev/null 2>&1 ||
+-		die "$*: not a valid stashed state"
+-
+-	git reflog delete --updateref --rewrite "$@" &&
+-		say "Dropped $* ($s)" || die "$*: Could not drop stash entry"
++	git reflog delete --updateref --rewrite "${REV}" &&
++		say "Dropped ${REV} ($s)" || die "${REV}: Could not drop stash entry"
+ 
+ 	# clear_stash if we just dropped the last stash entry
+ 	git rev-parse --verify "$ref_stash@{0}" > /dev/null 2>&1 || clear_stash
 -- 
-1.7.2.1.95.g969a4.dirty
+1.7.2.1.95.g4fabf
