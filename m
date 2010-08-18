@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v2 2/4] test-lib: Use "$GIT_BUILD_DIR" instead of "$TEST_DIRECTORY"/../
-Date: Wed, 18 Aug 2010 13:34:31 +0000
-Message-ID: <1282138473-15613-3-git-send-email-avarab@gmail.com>
+Subject: [PATCH v2 3/4] test-lib: Allow overriding of TEST_DIRECTORY
+Date: Wed, 18 Aug 2010 13:34:32 +0000
+Message-ID: <1282138473-15613-4-git-send-email-avarab@gmail.com>
 References: <7vpqxhaw92.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,172 +11,84 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:35:14 2010
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:35:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlinR-0005kI-79
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:35:13 +0200
+	id 1OlinS-0005kI-DF
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:35:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187Ab0HRNey convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 09:34:54 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55971 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753091Ab0HRNex (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:34:53 -0400
-Received: by wyb32 with SMTP id 32so790682wyb.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:34:51 -0700 (PDT)
+	id S1753188Ab0HRNfF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 09:35:05 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:60840 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753093Ab0HRNfC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:35:02 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 17so841571wwi.1
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:35:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=VDImfxk25VeB9d1oVG1MXDzNjoA4Cqy2FvI/RA0sQrE=;
-        b=gn9ED5xETPTVZB73fgQnAPf14mxd5y4t+ZmRi1Pjv3pK0ZfA+0r7py8HFbywtoZA5K
-         un+teIuokTCxUMvS3a2jqMvWwjo4Up+6cIqBXk8j5fVwIOa8jVGg7x5X2P/xdAvelBxV
-         ivAXi47I2obHb5o3Feq/rYQoSOacJe9h1sNnE=
+        bh=WcTmBd6VuVwBicvySApmUjaG8upNVNPeL7zFqYJC9I8=;
+        b=tnCPX5QVftVhFSGq3UB7Kgzxc1q1nHWuA6sugYDCkAqVbcyOxgC5kToNJht/FoR7h8
+         cv+Jo4Llqpsq25lTZur6pNence82TX3GP/tFRSAoXrCl6e5tWuzctHjARkC4dSJixtsf
+         GVVNmJLqAqGQJjMmQ3k5SUpMQI8iSQx/j7k/Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=HfwVU9+kY6BRx8AyKhQXQDndlwgA8ZQMV3deJWV+KNfv6u0UvtgJmwvMQqvDPcv2YF
-         Woa9GtULw1jOZXqLosghSvLZP7/8QXwVEvHhGOr8JK3n7dezGQt7ts83e7JhMl5YdH8i
-         Z0hUV4prdToNTqRj79L2vhwUdwtdX1+Mmlgvw=
-Received: by 10.227.7.34 with SMTP id b34mr6716449wbb.200.1282138491602;
-        Wed, 18 Aug 2010 06:34:51 -0700 (PDT)
+        b=FUe+e96SAZnxzye5sO63qEE4wNFYQVQYqnGP6BnA7fCLWzffXcqxdxYVAClnngrOgN
+         12eYew9jop74eAyeCGx1N1diOAO6hSPlSTn85LkeSiAuW0X5GT3NXNf5ZUO3Q5XZBc7Y
+         Wpj4nSFCUa0g6oy7rJQwiGgnHIN8R/ilERnYk=
+Received: by 10.227.157.70 with SMTP id a6mr6930411wbx.163.1282138501216;
+        Wed, 18 Aug 2010 06:35:01 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id r10sm230012wbe.18.2010.08.18.06.34.50
+        by mx.google.com with ESMTPS id r10sm230012wbe.18.2010.08.18.06.34.58
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:34:51 -0700 (PDT)
+        Wed, 18 Aug 2010 06:34:59 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.414.g9bf49
 In-Reply-To: <7vpqxhaw92.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153845>
 
-Change code that used $TEST_DIRECTORY/.. to use $GIT_BUILD_DIR
-instead, the two are equivalent, but the latter is easier to read.
+Tests that test the test-lib.sh itself need to be executed in the
+dynamically created trash directory, so we can't assume
+$TEST_DIRECTORY is ../ for those.
 
-This required moving the assignment od GIT_BUILD_DIR to earlier in the
-test-lib.sh file.
+As a side benefit this change also makes it easy for us to move the
+t/*.sh tests into subdirectories if we ever want to do that.
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
-
-Note that the usage of GIT_BUILD_DIR in the first hunk isn't an error,
-since it's inside a function GIT_BUILD_DIR will be defined by the time
-it's used.
-
- t/test-lib.sh |   29 +++++++++++++++--------------
- 1 files changed, 15 insertions(+), 14 deletions(-)
+ t/test-lib.sh |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
 diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 0e460f9..689aa29 100644
+index 689aa29..01ddf3e 100644
 --- a/t/test-lib.sh
 +++ b/t/test-lib.sh
-@@ -685,7 +685,7 @@ test_create_repo () {
- 	repo=3D"$1"
- 	mkdir -p "$repo"
- 	cd "$repo" || error "Cannot setup test environment"
--	"$GIT_EXEC_PATH/git-init" "--template=3D$TEST_DIRECTORY/../templates/=
-blt/" >&3 2>&4 ||
-+	"$GIT_EXEC_PATH/git-init" "--template=3D$GIT_BUILD_DIR/templates/blt/=
-" >&3 2>&4 ||
- 	error "cannot run git init -- have you built things yet?"
- 	mv .git/hooks .git/hooks-disabled
- 	cd "$owd"
-@@ -748,6 +748,8 @@ test_done () {
+@@ -747,7 +747,13 @@ test_done () {
+=20
  # Test the binaries we have just built.  The tests are kept in
  # t/ subdirectory and are run in 'trash directory' subdirectory.
- TEST_DIRECTORY=3D$(pwd)
-+GIT_BUILD_DIR=3D"$TEST_DIRECTORY"/..
-+
+-TEST_DIRECTORY=3D$(pwd)
++if test -z "$TEST_DIRECTORY"
++then
++	# We allow tests to override this, in case they want to run tests
++	# outside of t/, e.g. for running tests on the test library
++	# itself.
++	TEST_DIRECTORY=3D$(pwd)
++fi
+ GIT_BUILD_DIR=3D"$TEST_DIRECTORY"/..
+=20
  if test -n "$valgrind"
- then
- 	make_symlink () {
-@@ -774,7 +776,7 @@ then
- 		test -x "$1" || return
-=20
- 		base=3D$(basename "$1")
--		symlink_target=3D$TEST_DIRECTORY/../$base
-+		symlink_target=3D$GIT_BUILD_DIR/$base
- 		# do not override scripts
- 		if test -x "$symlink_target" &&
- 		    test ! -d "$symlink_target" &&
-@@ -793,7 +795,7 @@ then
- 	# override all git executables in TEST_DIRECTORY/..
- 	GIT_VALGRIND=3D$TEST_DIRECTORY/valgrind
- 	mkdir -p "$GIT_VALGRIND"/bin
--	for file in $TEST_DIRECTORY/../git* $TEST_DIRECTORY/../test-*
-+	for file in $GIT_BUILD_DIR/git* $GIT_BUILD_DIR/test-*
- 	do
- 		make_valgrind_symlink $file
- 	done
-@@ -814,10 +816,10 @@ then
- elif test -n "$GIT_TEST_INSTALLED" ; then
- 	GIT_EXEC_PATH=3D$($GIT_TEST_INSTALLED/git --exec-path)  ||
- 	error "Cannot run git from $GIT_TEST_INSTALLED."
--	PATH=3D$GIT_TEST_INSTALLED:$TEST_DIRECTORY/..:$PATH
-+	PATH=3D$GIT_TEST_INSTALLED:$GIT_BUILD_DIR:$PATH
- 	GIT_EXEC_PATH=3D${GIT_TEST_EXEC_PATH:-$GIT_EXEC_PATH}
- else # normal case, use ../bin-wrappers only unless $with_dashes:
--	git_bin_dir=3D"$TEST_DIRECTORY/../bin-wrappers"
-+	git_bin_dir=3D"$GIT_BUILD_DIR/bin-wrappers"
- 	if ! test -x "$git_bin_dir/git" ; then
- 		if test -z "$with_dashes" ; then
- 			say "$git_bin_dir/git is not executable; using GIT_EXEC_PATH"
-@@ -825,13 +827,12 @@ else # normal case, use ../bin-wrappers only unle=
-ss $with_dashes:
- 		with_dashes=3Dt
- 	fi
- 	PATH=3D"$git_bin_dir:$PATH"
--	GIT_EXEC_PATH=3D$TEST_DIRECTORY/..
-+	GIT_EXEC_PATH=3D$GIT_BUILD_DIR
- 	if test -n "$with_dashes" ; then
--		PATH=3D"$TEST_DIRECTORY/..:$PATH"
-+		PATH=3D"$GIT_BUILD_DIR:$PATH"
- 	fi
- fi
--GIT_BUILD_DIR=3D"$TEST_DIRECTORY"/..
--GIT_TEMPLATE_DIR=3D"$TEST_DIRECTORY"/../templates/blt
-+GIT_TEMPLATE_DIR=3D"$GIT_BUILD_DIR"/templates/blt
- unset GIT_CONFIG
- GIT_CONFIG_NOSYSTEM=3D1
- GIT_CONFIG_NOGLOBAL=3D1
-@@ -849,22 +850,22 @@ then
- 	fi
- fi
-=20
--GITPERLLIB=3D"$TEST_DIRECTORY"/../perl/blib/lib:"$TEST_DIRECTORY"/../p=
-erl/blib/arch/auto/Git
-+GITPERLLIB=3D"$GIT_BUILD_DIR"/perl/blib/lib:"$GIT_BUILD_DIR"/perl/blib=
-/arch/auto/Git
- export GITPERLLIB
--test -d "$TEST_DIRECTORY"/../templates/blt || {
-+test -d "$GIT_BUILD_DIR"/templates/blt || {
- 	error "You haven't built things yet, have you?"
- }
-=20
- if test -z "$GIT_TEST_INSTALLED" && test -z "$NO_PYTHON"
- then
--	GITPYTHONLIB=3D"$TEST_DIRECTORY/../git_remote_helpers/build/lib"
-+	GITPYTHONLIB=3D"$GIT_BUILD_DIR/git_remote_helpers/build/lib"
- 	export GITPYTHONLIB
--	test -d "$TEST_DIRECTORY"/../git_remote_helpers/build || {
-+	test -d "$GIT_BUILD_DIR"/git_remote_helpers/build || {
- 		error "You haven't built git_remote_helpers yet, have you?"
- 	}
- fi
-=20
--if ! test -x "$TEST_DIRECTORY"/../test-chmtime; then
-+if ! test -x "$GIT_BUILD_DIR"/test-chmtime; then
- 	echo >&2 'You need to build test-chmtime:'
- 	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
- 	exit 1
 --=20
 1.7.2.1.414.g9bf49
