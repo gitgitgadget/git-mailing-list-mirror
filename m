@@ -1,102 +1,98 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v5 5/8] detached-stash: simplify git stash branch
-Date: Wed, 18 Aug 2010 23:48:50 +1000
-Message-ID: <1282139333-5150-2-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v5 6/8] detached-stash: simplify git stash show
+Date: Wed, 18 Aug 2010 23:48:51 +1000
+Message-ID: <1282139333-5150-3-git-send-email-jon.seymour@gmail.com>
 References: <1282139333-5150-1-git-send-email-jon.seymour@gmail.com>
 Cc: gitster@pobox.com, j6t@kdbg.org,
 	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:49:31 2010
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:49:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Olj1C-00056e-5Y
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:49:26 +0200
+	id 1Olj1X-0005IP-Oa
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:49:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752888Ab0HRNtY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:49:24 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:57658 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752796Ab0HRNtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:49:22 -0400
-Received: by pvg2 with SMTP id 2so215178pvg.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:49:22 -0700 (PDT)
+	id S1752953Ab0HRNt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 09:49:28 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:33667 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752918Ab0HRNtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:49:25 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 7so11722pwi.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:49:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=OzjnHGbjD/hm7+Hrm8UYXCkhr/os8nXiCZXmTtLwQKc=;
-        b=IG+oZpkp3+1xxP/uhqfMbUeH8DelsJMtyk95JmQDwe01QZJLj7qdwwftsDFIRbPRYS
-         zzkA8eFJJQ7OnrMvYgNBE7526z2Dw0ywvad/Mi4IkDUocfuyWSUBFdUf3hklmEaIhjRF
-         MTLVYGjUyISt9LAluJc8tc4rHfGXpvi12flAk=
+        bh=M1W2RZ9MNsP3ONSYNA6jnM9zU8yZ0vmKqjNAmybvhTw=;
+        b=NGZ/qUqwcc5Bt/xbY2QsJ9ZAdyDdCcqDoJ9bTfipVJvt0m/3ZA3yStbbOyCpF/tYGT
+         2vsEhd38NeY/Soa24l4M6QyiIzcupEpfbG1PS6fjvhcD6n6UsOc0KhIG7lgZYeja42ig
+         yrKFQS3t2mDbTW5d8IswSX0DcxourX8SVW+48=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=U0r+CGp4jvtcURLe4AEkuTpRX0qsBQRJy/y2uaJ04toshggE5/LlEn5I3zQRBJ6dMD
-         2pUq7KJyQpmEl/ROe0zGfIPEWPl+MuD4R97lYLw4y47BMJBaAG9wich4QacKeylwHDjP
-         8uIMVGyb6JbFRwChI46lJbWXpPEY/vKGOp8/k=
-Received: by 10.114.66.5 with SMTP id o5mr9569553waa.219.1282139362152;
-        Wed, 18 Aug 2010 06:49:22 -0700 (PDT)
+        b=swHB3lARCWXdPdIUPmmIpEL3LZ3XHkALdzdnbZCBUhu4RNmqnHhkKZxxGFVIkhQK++
+         ocVGnm5NYo3V7wF+ITr+xeL0sRdwuu5jn4Ev9ZAFFDyThr/S0M277zhgjIrORTJzsagH
+         if4LJDVWtmFQ6mqhk2qqTC903Zs3yuC/l/9xA=
+Received: by 10.114.121.10 with SMTP id t10mr9580858wac.161.1282139365368;
+        Wed, 18 Aug 2010 06:49:25 -0700 (PDT)
 Received: from localhost.localdomain (203-158-55-26.dyn.iinet.net.au [203.158.55.26])
-        by mx.google.com with ESMTPS id s5sm538803wak.12.2010.08.18.06.49.19
+        by mx.google.com with ESMTPS id s5sm538803wak.12.2010.08.18.06.49.22
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:49:21 -0700 (PDT)
+        Wed, 18 Aug 2010 06:49:24 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.88.g3dbe5
 In-Reply-To: <1282139333-5150-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153852>
 
-This patch teaches git stash branch to tolerate stash-like arguments.
+This commit refactors git stash show to make use of the assert_stash_like function.
 
-In particular, a stash is only required if an argument isn't specified
-and the stash is only dropped if a stash entry reference was
-specified or implied.
+git show now dies if the presented argument is non-stash-like.
 
-The implementation has been simplified by taking advantage of
-assert_stash_like() and the variables established by
-parse_flags_and_rev().
+Previous behaviour was to tolerate commits that were not even stash-like.
+
+Previously, git stash show would accept stash-like arguments, but
+only if there was a stash on the stack.
+
+Now, git stash accepts stash-like arguments always and only fails
+if no stash-like argument is specified and there is no stash stack.
 
 Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
 ---
- git-stash.sh |   17 +++++++----------
- 1 files changed, 7 insertions(+), 10 deletions(-)
+ git-stash.sh |   14 ++------------
+ 1 files changed, 2 insertions(+), 12 deletions(-)
 
 diff --git a/git-stash.sh b/git-stash.sh
-index ac4c0f6..ff1edc9 100755
+index ff1edc9..7ce818b 100755
 --- a/git-stash.sh
 +++ b/git-stash.sh
-@@ -441,20 +441,17 @@ drop_stash () {
+@@ -210,19 +210,9 @@ list_stash () {
  }
  
- apply_to_branch () {
--	have_stash || die 'Nothing to apply'
+ show_stash () {
+-	have_stash || die 'No stash found'
 -
- 	test -n "$1" || die 'No branch name specified'
- 	branch=$1
-+	shift 1
- 
--	if test -z "$2"
+-	flags=$(git rev-parse --no-revs --flags "$@")
+-	if test -z "$flags"
 -	then
--		set x "$ref_stash@{0}"
+-		flags=--stat
 -	fi
--	stash=$2
-+	set -- --index "$@"
+-
+-	w_commit=$(git rev-parse --quiet --verify --default $ref_stash "$@") &&
+-	b_commit=$(git rev-parse --quiet --verify "$w_commit^") ||
+-		die "'$*' is not a stash"
 +	assert_stash_like "$@"
-+
-+	git checkout -b $branch $REV^ &&
-+	apply_stash "$@"
  
--	git checkout -b $branch $stash^ &&
--	apply_stash --index $stash &&
--	drop_stash $stash
-+	test -z "$IS_STASH_REF" || drop_stash "$@"
+-	git diff $flags $b_commit $w_commit
++	git diff ${FLAGS:---stat} $b_commit $w_commit
  }
  
- PARSE_CACHE='--not-parsed'
+ #
 -- 
 1.7.2.1.95.g4fabf
