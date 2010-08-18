@@ -1,74 +1,88 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
-Date: Wed, 18 Aug 2010 21:19:19 +0200
-Message-ID: <200088BC-F39D-407B-97ED-A771AA05E89D@gmail.com>
-References: <1282135226.24584.92.camel@wpalmer.simply-domain> <2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com> <1282140854.24584.112.camel@wpalmer.simply-domain> <AANLkTik8RGR4OTeZYsttyBtiywGU7Wtz3gQsTjoqAQPD@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Will Palmer <wmpalmer@gmail.com>, git@vger.kernel.org
-To: Thomas Berg <merlin66b@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 21:19:29 2010
+From: Daniele Segato <daniele.bilug@gmail.com>
+Subject: Re: Wiki "CygwinBinaryInstall" missing
+Date: Wed, 18 Aug 2010 21:38:37 +0200
+Message-ID: <1282160317.15085.8.camel@mastrogen>
+References: <AANLkTikDBW5jUu4MYOEL-TEkD6t4jC-Wthsmbk=hGc55@mail.gmail.com>
+	 <AANLkTing0yxhzvMwOsYi5j1-u4VXN=1Wg04Ebbhi4JD7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 21:38:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OloAb-0003zv-3X
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 21:19:29 +0200
+	id 1OloSy-0005aR-Vs
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 21:38:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752287Ab0HRTTY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 15:19:24 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44705 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751566Ab0HRTTX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 15:19:23 -0400
-Received: by ewy23 with SMTP id 23so665295ewy.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 12:19:22 -0700 (PDT)
+	id S1752140Ab0HRTiY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 15:38:24 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58213 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751682Ab0HRTiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 15:38:22 -0400
+Received: by fxm13 with SMTP id 13so555003fxm.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 12:38:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=XuGKHND18nRKkne3AZGrgSTwuElNW8wJITUvUklKC/A=;
-        b=UXG4ZLAg25NCLOSe+FF1pcnyd09E9WPYaltYYXdPRLSdTj1aqsOOHcQAlvJ3/w3XK0
-         KEm+cvhm8hOhp+9TAkQ2/R9GlubxCd2WnjMAvwon5v8qkbDqHOXMPN6pBdzVsgYnxbaC
-         L8OFf48DjJBNmjFZq5On9KXpmrXNnIonD4ePM=
+        h=domainkey-signature:received:received:subject:from:to:cc
+         :in-reply-to:references:content-type:date:message-id:mime-version
+         :x-mailer:content-transfer-encoding;
+        bh=pnqMbeldQgcjGVIpnaAiErnjST0+yJtGyq6cZQpSVv4=;
+        b=HMeps0i47I6IIBM7T+HPsbM7XVW+kFK+vDpMg/kY8eDKvj9T9eAvxEZsIBiaELylTA
+         Q96fXraGaFRd8GJlrhRnb8AX6wSopP00MPlvJNlDvsW/9QkDeQIsHVN/ZfsqKMbh5Ftg
+         LpDMzHTn1TxgjLneVQdxaZpx5xfn8LArWmUkU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=s4azAY+E8j53XJ+llHyDXY5c0p+TnitrEVGBYtNOThFIoGSqBDO+ChVurqaWYtJGaU
-         8s4Y5udtEBA8s5DyCiZ88UAInnCb98vBqetKClw+E1htuq9oitbvRlhpiKSOtTBZKci4
-         63bGb8rlLUYteDM9h1m+hmT1yObsoAyDQRTtc=
-Received: by 10.213.105.194 with SMTP id u2mr2481798ebo.42.1282159162264;
-        Wed, 18 Aug 2010 12:19:22 -0700 (PDT)
-Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
-        by mx.google.com with ESMTPS id v8sm1059451eeh.2.2010.08.18.12.19.20
+        h=subject:from:to:cc:in-reply-to:references:content-type:date
+         :message-id:mime-version:x-mailer:content-transfer-encoding;
+        b=TzGYc2itlSvQFDqhw73r9apuUKukYf/TBAtEZN0/+wbXoR3rqZXt6YongRUUCzoRUH
+         fUkNZPhMg+4b6lrnn0Scn5E8QftSwtXqr2lImwlmUMvsj9hVIOdspUVt9kHawTUD8nwv
+         2eHjlfuFAPYoVE8tbdk9HHwp4U4CVOJBZDARo=
+Received: by 10.223.116.197 with SMTP id n5mr8306909faq.53.1282160300586;
+        Wed, 18 Aug 2010 12:38:20 -0700 (PDT)
+Received: from [192.168.1.10] (host106-67-dynamic.20-79-r.retail.telecomitalia.it [79.20.67.106])
+        by mx.google.com with ESMTPS id r8sm327762faa.37.2010.08.18.12.38.18
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 12:19:21 -0700 (PDT)
-In-Reply-To: <AANLkTik8RGR4OTeZYsttyBtiywGU7Wtz3gQsTjoqAQPD@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+        Wed, 18 Aug 2010 12:38:19 -0700 (PDT)
+In-Reply-To: <AANLkTing0yxhzvMwOsYi5j1-u4VXN=1Wg04Ebbhi4JD7@mail.gmail.com>
+X-Mailer: Evolution 2.30.2 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153879>
 
-On 18. aug. 2010, at 17.50, Thomas Berg wrote:
+Il giorno lun, 16/08/2010 alle 18.55 +0800, Tay Ray Chuan ha scritto:
+> Not to sure - the page was probably lost during the migration to the
+> new MediaWiki setup.
 
-> Hi,
-> 
-> On Wed, 2010-08-18 at 15:18 +0200, Eyvind Bernhardsen wrote:
->> Git _is_ giving you a real pristine copy, it's just informing you that your repository is not consistent with the attributes you have set.
-> 
-> Marking the files as modified is sometimes a very user-unfriendly way
-> of informing the user, at least if just want to work with something
-> unrelated, and not actually fix those issues. Maybe there is a better
-> way?
+I see
 
-There may be, but I'm not sure it would be worth the effort.  The reason I started working on CRLF normalization in the first place was because I got tired of seeing spuriously modified files everywhere when using core.autocrlf, so I know how annoying it is.  The difference now is that only people using "mis-attributed" repositories are annoyed, instead of anyone who uses core.autocrlf, and as I wrote elsewhere, I don't expect there to be many repositories where this is a problem.
+> If you get the time, you can just re-create the page with the
+> instructions to install git on cygwin.
 
-To be clear: triggering the problem not only requires that a crlf attribute is set to something other than "false", but also that the corresponding file actually contains CRs.
+I'm not the right person for the job, I don't use windows and I never
+installed git on cygwin nor I plan to do so (since I'll had to plan to
+install windows first)
 
-- Eyvind
+> IIRC, the usual way to get cygwin packages is to use the cygwin installer.
+
+I thought that, but what about common configurations or specific hints
+on specific version of Windows people are going to install it?
+
+> Alternatively, you can also compile it from the source - I've been
+> doing that for some time now, albeit with some features disabled (eg.
+> gitk).
+
+I've found a link on the web that speak about that
+the really missing information is the less technical installation you
+were talking about before.
+
+http://techblogging.wordpress.com/2008/04/11/compiling-and-installing-git-on-windows-under-cygwin/
+
+regards,
+Daniele Segato
