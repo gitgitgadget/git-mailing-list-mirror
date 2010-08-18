@@ -1,104 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] merge-recursive: Fix multiple file rename across D/F
- conflict
-Date: Wed, 18 Aug 2010 16:17:27 -0700
-Message-ID: <7v8w438q9k.fsf@alter.siamese.dyndns.org>
-References: <1282089199-17253-1-git-send-email-newren@gmail.com>
- <1282089199-17253-3-git-send-email-newren@gmail.com>
+Subject: Re: [PATCH re-roll] Do not display 'Switched to a new branch' when
+ the branch existed
+Date: Wed, 18 Aug 2010 16:38:12 -0700
+Message-ID: <7v4oer8paz.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimaZF1Q6BPB7CN0Wa5-Ov2ejVfPsmL34vps2VqK@mail.gmail.com>
+ <AANLkTi=3z9gJdT8LL3NANFyppUjvOVcrszjf5J5zAKPe@mail.gmail.com>
+ <20100818091603.GA6263@burratino> <7voccz8wo8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 19 01:17:44 2010
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 19 01:38:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Olrt7-0005LX-W7
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 01:17:42 +0200
+	id 1OlsDL-0003Rf-PY
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 01:38:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751480Ab0HRXRh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 19:17:37 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33342 "EHLO
+	id S1751387Ab0HRXi1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 19:38:27 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55877 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751030Ab0HRXRg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 19:17:36 -0400
+	with ESMTP id S1751030Ab0HRXiZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 19:38:25 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E6C41CE132;
-	Wed, 18 Aug 2010 19:17:33 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 90474CE3A4;
+	Wed, 18 Aug 2010 19:38:23 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NWlHXAOY/p8zRdyEsS6Izfw60oY=; b=IBM+9O
-	MpZ3JUomkTGq7j5qwNEG31qb5Fu7L3BwijPJtyBkABn7wNu7cGDH7nVzdynf/3wU
-	U0wHSyBNcFVEsTN0qDEgklYEOyP0rKIn2xFIiZ+O6tAV0iy3bo+RGrSb5CZvziIN
-	B0/vaSrh7q8MYiPk4dXygYMvwosH/wKtCEH14=
+	:content-type; s=sasl; bh=XCK4cnjjeZUpQU2+RWBnLVG+bcY=; b=DZDHBm
+	QvUkvnUu3hxFaoSaerhj769h5KUwprh2C+HKYwLvyqME/QOVEvfVaxpOwflTcAFr
+	NGYnPHK8/bz7XOyxoxG4lz6FB4BrHui3Il5ojMePSUTcfdGKpidYfBFjZFRE+aW5
+	gZlUBjIGJAP+scFhofBJ21EPP7vSLZsepsqCI=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=to8/2bAaQjFl7JONlqIIclnsMJ7zNn38
-	UU1xDyjQ31MRkJ580VXl85MWxKaIHgchTl4Qk1G00b0fXqGt10PY+CD7g7UcNV3x
-	Ah4PkxS+CVHZbzCgc3Yt1KNHKse9LJgGu4Ce3uxqqEEtQ6YBrARK1QKDMw31vdYf
-	8FGL5SFANgc=
+	:content-type; q=dns; s=sasl; b=Fpw4yCqGWsGOe6raAEW8TC2iSgNQT0k7
+	i9Lz7JND4x5W5jjKSLrWxQV6W0m6/5J1lgidl9jf6wv4n9mKQt1o+Degt27fohm5
+	5kfzoxVPG7K6FA4ryOkvI3G8XBltw9oVgipa9L9nqiVKpCUlTbhRcMFgSTx4VSTL
+	l9wz4jY7o/8=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C290ACE131;
-	Wed, 18 Aug 2010 19:17:31 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 41C7ECE39D;
+	Wed, 18 Aug 2010 19:38:19 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D7B2CE130; Wed, 18 Aug
- 2010 19:17:28 -0400 (EDT)
-In-Reply-To: <1282089199-17253-3-git-send-email-newren@gmail.com> (Elijah
- Newren's message of "Tue\, 17 Aug 2010 17\:53\:19 -0600")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 685D0CE39B; Wed, 18 Aug
+ 2010 19:38:14 -0400 (EDT)
+In-Reply-To: <7voccz8wo8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Wed\, 18 Aug 2010 13\:59\:03 -0700")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C6D60D46-AB1E-11DF-9280-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: AE628098-AB21-11DF-9B78-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153896>
 
-Elijah Newren <newren@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I'm really embarrased about this one...  :-/
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> The functionality of your patch is obviously good.  Thanks.
+>
+> In what way is it good?  I am especially worried about the word "reset"
+> being confusing.
+>
+> You are switching to a new context to work on something else, so I don't
+> necessarily think it is confusing that the word "new branch" in this
+> message does not mean "a branch that did not exist before this operation
+> (i.e. a newly created branch)."
 
-Let's embarrass you even more ;-)
-
-After 5a2580d, the merge has become very noisy, and I don't see a good
-reason for that change.
-
-With a version of git built from 5a2580d^, for example, merging
-sp/fix-smart-http-deadlock-on-error into maint would give me this:
-
-----------------
-$ git merge sp/fix-smart-http-deadlock-on-error
-Auto-merging remote-curl.c
-Merge made by recursive.
- remote-curl.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-----------------
-
-With 5a2580d, it has become this:
-
-----------------
-$ git merge sp/fix-smart-http-deadlock-on-error
-Adding builtin/add.c
-Auto-merging remote-curl.c
-Merge made by recursive.
- remote-curl.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-----------------
-
-And with this patch on top, it will make it a disaster:
-
-----------------
-$ git merge sp/fix-smart-http-deadlock-on-error
-Adding builtin/add.c
-... similar 97 Adding lines omitted ...
-Adding gitweb/static/gitweb.js
-Auto-merging remote-curl.c
-Adding t/lib-t6000.sh
-Adding t/t7810-grep.sh
-Adding t/t9350-fast-export.sh
-Merge made by recursive.
- remote-curl.c |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
-----------------
+Ahh, please disregard the above; I somehow failed to see that this is only
+in the "-b/-B" codepath.  Sorry for the noise.
