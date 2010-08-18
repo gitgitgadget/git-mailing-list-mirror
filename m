@@ -1,111 +1,114 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] tests: fix syntax error in "Use advise() for hints" test
-Date: Wed, 18 Aug 2010 14:36:44 +0000
-Message-ID: <1282142204-14720-1-git-send-email-avarab@gmail.com>
-References: <20100811083100.GA16495@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC/PATCH 1/2] commit: add parse_commit_repl() to replace
+ commits at parsing time
+Date: Wed, 18 Aug 2010 07:50:24 -0700
+Message-ID: <7vr5hw9dqn.fsf@alter.siamese.dyndns.org>
+References: <20100817015901.5592.25471.chriscool@tuxfamily.org>
+ <7vbp91aqfk.fsf@alter.siamese.dyndns.org>
+ <AANLkTimu0r_3L7_YJgfMVb6saFOyOK-mHLiKyTG_6Q5O@mail.gmail.com>
+ <201008180607.54675.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 16:37:14 2010
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git <git@vger.kernel.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Wed Aug 18 16:50:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OljlO-0001uz-PI
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 16:37:11 +0200
+	id 1OljyY-0001hS-7E
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 16:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753483Ab0HROg6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 10:36:58 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:34551 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753298Ab0HROg5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 10:36:57 -0400
-Received: by ewy23 with SMTP id 23so394417ewy.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 07:36:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=qPgZvVIaQDkf1+EUAMCS3eYDOdS+dR4bC07Vtogok0g=;
-        b=bSxVbctHwTV3nwoHLb8tlHV+fEymBqDkYpAdL6XA5oO/FigqUnwn0zbQhLmTIgWC0n
-         reoIvH686bf4Uu+JviMC4fmPYus/4kQ3nTnAECmKiPJ2Z0iifRtKTKhFbswM8mJqz7NV
-         i8oCQYVDTuoqpekdZ1guAsqQhXYHm78n8x9f0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=JTDkuOBuDTwSNzLW5NlFz2WVLc3VVoRJLEIW/pxcO9vXrhssNNtlgCvFURwjDhjhSi
-         lKdKTYcT4Ki+YDj/sOfceu6/c0niPiHeiZnhGdYduV9SPXF9/mWKrnw3AwtWx6I+3Sqa
-         Zo948oqeuFcTAJ56piaB5QoZ2402W1R03HVLw=
-Received: by 10.216.3.12 with SMTP id 12mr2079728weg.109.1282142216159;
-        Wed, 18 Aug 2010 07:36:56 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id n40sm243740weq.5.2010.08.18.07.36.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 07:36:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.414.g9bf49
-In-Reply-To: <20100811083100.GA16495@burratino>
+	id S1753621Ab0HROuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 10:50:37 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55746 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753148Ab0HROug (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 10:50:36 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BAFFECE653;
+	Wed, 18 Aug 2010 10:50:34 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1nSs73Vt9H+rLA2JwpJY3c+sZ94=; b=Jb7+Yh
+	GwcQIcI/Njx1oY/g1XOTfS71CE1Ro5CnzvMJWynI6Lk9lHyQVURgRp5/UymaG82O
+	qrROXpM8oBG0MtMJpIOpTrAXE7/LUY8xVanwQ4mrfoTSzmaObdDxpaTBVhA50hD7
+	02ByV9Am2EuixJsWm8ucJCbLtHXVBSWpyHwzI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rC/Rwvxr7W/o/BpGm8RL5ztPEJaOa8nL
+	7oheduhGk2qwTpED09yweU+JJ8XPQFsdo1NWQC0neVVNMhHqoY5V3lSh94ngDlbG
+	gdahCJQ4Dcl7g10jLVFHXeZhSdkTsD8DVCf4z0ecBIp0S+qnWBQkYUX97nBtqNCd
+	A/rrglm/n6o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 86847CE64F;
+	Wed, 18 Aug 2010 10:50:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 783DDCE64B; Wed, 18 Aug
+ 2010 10:50:26 -0400 (EDT)
+In-Reply-To: <201008180607.54675.chriscool@tuxfamily.org> (Christian Couder's
+ message of "Wed\, 18 Aug 2010 06\:07\:54 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F2F501DA-AAD7-11DF-9080-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153859>
 
-Change the test introduced in the "Use advise() for hints" patch by
-Jonathan Nieder not to use '' for quotes inside '' delimited code. It
-ended up introducing a file called <paths> to the main git repository.
+Christian Couder <chriscool@tuxfamily.org> writes:
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+> On Wednesday 18 August 2010 05:17:52 Nguyen Thai Ngoc Duy wrote:
+>> On Wed, Aug 18, 2010 at 7:18 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> > Christian Couder <chriscool@tuxfamily.org> writes:
+>> >> The function parse_commit() is not safe regarding replaced commits
+>> >> because it uses the buffer of the replacement commit but the object
+>> >> part of the commit struct stay the same. Especially the sha1 is not
+>> >> changed so it doesn't match the content of the commit.
+>> > 
+>> > This all sounds backwards to me, if I am reading the discussion
+>> > correctly.
+>> > 
+>> > If a replace record says commit 0123 is replaced by commit 4567 (iow,
+>> > 0123 was a mistake, and pretend that its content is what is recorded in
+>> > 4567), and when we are honoring the replace records (iow, we are not
+>> > fsck), shouldn't read_sha1("0123") give us a piece of memory that stores
+>> > what is recorded in 4567, parse_object("0123") return a struct commit
+>> > whose buffer points at a block of memory that has what is recorded in
+>> > 4567 _while_ its object.sha1[] say "0 123"?
+>> 
+>> 1. parse_object() as it is now would return object.sha1[] = "4567".
+>> 2. lookup_commit(), then parse_commit() would return object.sha1[] =
+>> "0123".
+>> 
+>> > What problem are you trying to solve?
+>> 
+>> Inconsistency in replacing objects. I have no comments whether #1 or
+>> #2 is expected behavior. But at least it should stick to one behavior
+>> only.
 >
----
- t/t3507-cherry-pick-conflict.sh |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+> We discussed this inconsistency in this thread:
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/152321/ 
+>
+> So we can resolve the inconsistency with Duy's patch to make parse_object() 
+> return object.sha1[] = "0123".
+>
+> It's simpler and probably safer. The downside is that the sha1 will not be 
+> consistent with the content anymore and that it will be more difficult to 
+> realize that an object has been replaced as there will be no sha1 change to be 
+> seen.
 
-diff --git a/t/t3507-cherry-pick-conflict.sh b/t/t3507-cherry-pick-conf=
-lict.sh
-index 3f29594..607bf25 100755
---- a/t/t3507-cherry-pick-conflict.sh
-+++ b/t/t3507-cherry-pick-conflict.sh
-@@ -38,7 +38,7 @@ test_expect_success 'failed cherry-pick does not adva=
-nce HEAD' '
- 	test "$head" =3D "$newhead"
- '
-=20
--test_expect_success 'advice from failed cherry-pick' '
-+test_expect_success 'advice from failed cherry-pick' "
- 	git checkout -f initial^0 &&
- 	git read-tree -u --reset HEAD &&
- 	git clean -d -f -f -q -x &&
-@@ -46,17 +46,17 @@ test_expect_success 'advice from failed cherry-pick=
-' '
- 	git update-index --refresh &&
- 	git diff-index --exit-code HEAD &&
-=20
--	picked=3D$(git rev-parse --short picked) &&
-+	picked=3D\$(git rev-parse --short picked) &&
- 	cat <<-EOF >expected &&
--	error: could not apply $picked... picked
-+	error: could not apply \$picked... picked
- 	hint: after resolving the conflicts, mark the corrected paths
- 	hint: with 'git add <paths>' or 'git rm <paths>'
--	hint: and commit the result with 'git commit -c $picked'
-+	hint: and commit the result with 'git commit -c \$picked'
- 	EOF
- 	test_must_fail git cherry-pick picked 2>actual &&
-=20
- 	test_cmp expected actual
--'
-+"
-=20
- test_expect_success 'failed cherry-pick produces dirty index' '
-=20
---=20
-1.7.2.1.414.g9bf49
+I do not see it as a downside at all.
+
+If the user wants to take replaced objects, they should be shown just like
+an ordinary objects at the machinery level.
+
+Of course, the user is free to add comments on the commit log to note the
+fact that a new commit is replacing some other commit and for what
+purpose.  Also if somebody really wants to, cat-file piped to hash-object
+can be used to see the difference.
