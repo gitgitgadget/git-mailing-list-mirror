@@ -1,89 +1,88 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: Re: [PATCH 0/6] Extensions of core.ignorecase=true support
-Date: Tue, 17 Aug 2010 22:41:25 -0400
-Message-ID: <AANLkTi=Fkj-_-wHZN4GY2b+2n0mk7MKV=au0Hm4B+i9d@mail.gmail.com>
-References: <cover.1281985411.git.j6t@kdbg.org>
-	<AANLkTi=0j_JFWBp=kJG6v+YBUxKAiVAVc4UtG0LWmipq@mail.gmail.com>
-	<201008172320.17939.j6t@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC] Splitting gitweb and build-time configuration variables
+Date: Tue, 17 Aug 2010 22:03:21 -0500
+Message-ID: <20100818030321.GB21185@burratino>
+References: <201008172015.37353.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Joshua Jensen <jjensen@workspacewhiz.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 18 04:41:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Petr Baudis <pasky@suse.cz>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>,
+	John Hawley <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 05:05:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlYaq-00058M-Sd
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 04:41:33 +0200
+	id 1OlYxj-00024X-3u
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 05:05:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750797Ab0HRCl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 17 Aug 2010 22:41:28 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:34431 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746Ab0HRCl1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 17 Aug 2010 22:41:27 -0400
-Received: by ewy23 with SMTP id 23so59171ewy.19
-        for <git@vger.kernel.org>; Tue, 17 Aug 2010 19:41:25 -0700 (PDT)
+	id S1750977Ab0HRDFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 17 Aug 2010 23:05:05 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:46792 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750793Ab0HRDFD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 17 Aug 2010 23:05:03 -0400
+Received: by gwj17 with SMTP id 17so17546gwj.19
+        for <git@vger.kernel.org>; Tue, 17 Aug 2010 20:05:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=KV5g1LlAJCD1C5YxgcUzWUgZBwerOO/UJNizGZaUP4Y=;
-        b=JPHg3nm+hWa4/e4LMhCrRkA+XJNcpo7JPXL9AKTEVh6AoetiXzZJpDOCPSGEgWG9te
-         OVAvHmbHpH7d5yJ2sYZt8N4kFdt7Ezrok7YAn81qyC1NQSSUjvArXn1BAZP0QM+G/M28
-         wCIkgQPyyBXLDH/kH0jpcEIYHB6T8sdM0jjKk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=mEA0jlTRy1C1uNtpSrMQkQk4gm0UDTbPUPwSEakqWI8=;
+        b=CQThPkALfxt98YjgWKlSzLwAxj5dY/QTaqaGVc8veijDNiQPiz351NP7LdaPkXNmfl
+         Ckf6/wP7qw/fjZHCONoUNMynXu3YXaaxxIF5WkjTrAYXTqZc54miSwn9X8gfF+t0kQ68
+         JIC25ILPdJ1L8M87m6iSermv3ID/e0ZAC+Bys=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=s3IlN+xNfl7T3GPh8BaHgUmiBoW+B6CIV1AvkIArwy8YyGYIr345Ffp6W5HRag2k83
-         hBDs8H7SrJYjRwpO8yS6Fo5hghM6I5caoh2vAdNRNxTIuma7z04i8RtWFk7ml2uPxBNf
-         6naME6gF/x8iul7yn4X+h//aqnDOdveHmSfcM=
-Received: by 10.213.104.211 with SMTP id q19mr6839435ebo.45.1282099285726;
- Tue, 17 Aug 2010 19:41:25 -0700 (PDT)
-Received: by 10.14.47.7 with HTTP; Tue, 17 Aug 2010 19:41:25 -0700 (PDT)
-In-Reply-To: <201008172320.17939.j6t@kdbg.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=NPpcFUV2fjRHlDgP5HcyGVqIlBJY5FSAaXwgBClnr4sx4f+6BZflciQ/pDP/bBpwkK
+         rR02o2cqAnm9FlpZV91scsAaV/sqwY3fcvGSDpSoEeRyKWPrAXI+bwOXg9K1VRwMsz96
+         /N61npw1j8OPtLeTzXPb7Ck+OVMg94ZwfEeGY=
+Received: by 10.150.149.19 with SMTP id w19mr8029454ybd.415.1282100702661;
+        Tue, 17 Aug 2010 20:05:02 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id 36sm1572270ybr.20.2010.08.17.20.05.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 17 Aug 2010 20:05:02 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201008172015.37353.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153806>
 
-So apparently when core.ignorecase=true, this really means
-casepreserving=false, casesensitive=true. Yet when
-core.ignorecase=false it actually means casepreserving=true,
-casesensitive=true. That's what I infer from the git-config
-documentation. Would you agree?
+Jakub Narebski wrote:
 
-On Tue, Aug 17, 2010 at 5:20 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Dienstag, 17. August 2010, Robert Buck wrote:
->> While I tend to agree with case-insensitive searches, I would tend to
->> question the use of a non-case-preserving / last-use methodology
->> reminiscent of the days of DOS.
->
-> There is no "last-use" involved. Everything's rather "first-use", i.e.,
-> case-preserving.
->
->> The nice thing about case-insensitivity is that when requesting a file
->> by name any capitalization can be used. The bad thing, well come to
->> think of it, there is none that I can think of, but for those more
->> religious than I about Unix they may cite otherwise.
->
-> What do you mean by "requesting a file"?
->
-> core.ignorecase is purely about the worktree and the transition of files from
-> the worktree to the index. It is *not* involved when files are moved from the
-> index or the repository to the worktree. In particular, it is not used when
-> you give a pathspec to limit 'git log' results. (Joshua proposed a change
-> where core.ignorecase would also kick in in this case as well, but this
-> change is not included in this series, and I would not agree to it.)
+> 1. Description of build-time configuration variable is in the module
+>    that defines it, and each block of variables coming from the same
+>    module would have notice where one can find description of those
+>    variables
+[...]
+> 2. Description of build-time configuration variables is in gitweb.perl,
+>    and in each module there is comment that full description of those
+>    variables can be found there, e.g. (proposal):
+> 
+>      # Values of those variables are set during build time in 
+>      # gitweb/gitweb.perl (main script).  You can find their description
+>      # there.
+[...]
+> 3. Duplicate description of those variables
 
-So what I am hearing is that unless one sets core.ignorecase, in mixed
-environments you are in for a world of hurt; you'd end up with Foo and
-foo from the Unix side of the house, and on Macs or Windows the last
-file materialized from the index or repository into the working
-directory would clobber the first one materialized, potentially
-introducing relatively quiescent bugs that could make their way into
-production environments.
+With #2, a person reading the Makefile can grep for some particular
+substitution (++GITWEB_PROJECTROOT++) and quickly find the name and
+description of the variable it is used for.  If there were a 1:1
+correspondence between the variables in gitweb.perl and the Makefile,
+I would even suggest moving the description to the Makefile.
+
+In practice, I suspect the run-time configuration is more important to
+people.  That is already fairly well documented in gitweb/README.
+
+Just my two cents,
+Jonathan
