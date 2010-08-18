@@ -1,87 +1,103 @@
-From: Thomas Berg <merlin66b@gmail.com>
-Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
-Date: Wed, 18 Aug 2010 17:50:17 +0200
-Message-ID: <AANLkTik8RGR4OTeZYsttyBtiywGU7Wtz3gQsTjoqAQPD@mail.gmail.com>
-References: <1282135226.24584.92.camel@wpalmer.simply-domain>
-	<2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com>
-	<1282140854.24584.112.camel@wpalmer.simply-domain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 17:50:45 2010
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH v2] submodule sync: Update "submodule.<name>.url"
+Date: Wed, 18 Aug 2010 08:58:33 -0700
+Message-ID: <1282147113-25816-1-git-send-email-davvid@gmail.com>
+References: <4C6BB9E2.4060700@viscovery.net>
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 17:52:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlkuW-0005QQ-C7
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 17:50:40 +0200
+	id 1Olkvo-0006LL-SZ
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 17:52:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753742Ab0HRPuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 11:50:23 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:49071 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753710Ab0HRPuT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 11:50:19 -0400
-Received: by qyk9 with SMTP id 9so1159273qyk.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 08:50:19 -0700 (PDT)
+	id S1751660Ab0HRPvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 11:51:55 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:64371 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750952Ab0HRPvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 11:51:54 -0400
+Received: by pvg2 with SMTP id 2so274970pvg.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 08:51:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=GPJwKLTVWDIyEvzw5e8KkWlyqBt4mIFCeJTygKMxne0=;
-        b=VZV2Ar83nhVhpUZ1mESwqnUTWFmi1kaitgSwbmSxw7DxycniCZzyAX5Fys387BhLKY
-         ygvYBN5wdzyXdymMW6IRbj/ODR3dG2sxadioo+LK65gvsoUj1EGZWTgfRFEYvEh++6Rm
-         vI78ipCFwe9Es0t6cJvt2s9/DT08xEdAkmHBw=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=5yKFnqdVYzroBYPcyO2PHielnbfvU3zbzdps3BdEBI4=;
+        b=uiW72y3UnVa203wCo79TOCj/MCy55Y+g7alCYzYgLL+Ozn0jlQrgGnL+BoVIRjs9Pp
+         gWAfN0kNRuePDxMWh0XuqyIZq+8gIsdz8zE68FT8YDQjLl8AnAlFp00XJHxMo8OOitAn
+         aEetekHk/ZhZqeKadssCzb2ejqLmlPCxUztjA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=eMRR5yTxyixW7KIdbN7LFWSkXt9/MJ+dE1jmeSHZuWBaNZg5qy/3HBLrRiQI0EVuHk
-         X3rXAXWRE0CKjcT+v9cDyLMtuSO8oIHNVEJ9iW2ix1eUY7njeOqqcXs+RoSBDWzxMEc7
-         4EjTcPZzB7Mpsk8xUErd2s3zaCCZtRlq8/bmU=
-Received: by 10.229.233.195 with SMTP id jz3mr6214190qcb.207.1282146617470;
- Wed, 18 Aug 2010 08:50:17 -0700 (PDT)
-Received: by 10.229.16.209 with HTTP; Wed, 18 Aug 2010 08:50:17 -0700 (PDT)
-In-Reply-To: <1282140854.24584.112.camel@wpalmer.simply-domain>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Jy1tO4Q0hXIj4Tjccm/BpMltoedypqVq1rvBQIWHwzJJQcFnRYRVYE4IA9+cXrXjD8
+         VRIsuKvGpt4xaQwzxMR5+YgdjVTie/6h/IjAvAuLjOfrSi99qZYhY/SfYQIdqkDQwRsw
+         wiYEVYQXskCVe5sGDkKP13V1kx3SjSfsqib34=
+Received: by 10.114.24.1 with SMTP id 1mr9789549wax.76.1282146706215;
+        Wed, 18 Aug 2010 08:51:46 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id 33sm722551wad.18.2010.08.18.08.51.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Aug 2010 08:51:43 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.97.g3235b
+In-Reply-To: <4C6BB9E2.4060700@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153863>
 
-Hi,
+When "git submodule sync" synchronizes the repository URLs
+it only updates submodules' .git/config.  However, the old
+URLs still exist in the super-project's .git/config.
 
-On Wed, 2010-08-18 at 15:18 +0200, Eyvind Bernhardsen wrote:
-> Git _is_ giving you a real pristine copy, it's just informing you that your repository is not consistent with the attributes you have set.
+Update the super-project's configuration so that commands
+such as "git submodule update" use the URLs from .gitmodules.
 
-Marking the files as modified is sometimes a very user-unfriendly way
-of informing the user, at least if just want to work with something
-unrelated, and not actually fix those issues. Maybe there is a better
-way?
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
 
-On Wed, Aug 18, 2010 at 4:14 PM, Will Palmer <wmpalmer@gmail.com> wrote:
-> "pristine" to me means "no changes". If there is an inconsistency which
-> git doesn't like, git should complain about that, refuse to checkout,
-> declare "broken repository! Oh no!" and refuse all operations, etc. It
-> git can determine that it is unable to act in a sane manner, I don't
-> want git to just go ahead making wild guesses.
->
-[snip]
-> Just to re-state: This is not "my repository". That is, I don't consider
-> it to be. So I would prefer only solutions which involve editing
-> something unversioned, such as .git/config, rather than making random
-> patches which feel very much like work-arounds to a git problem.
+Changes since v1:
+We now call clear_local_git_env after configuring
+the super project (thanks Johannes).
 
-Such a solution exists, you can create a file .git/info/attributes,
-which will override the faulty .gitattributes file in the repository
-[1]. Then you could make git treat all files as binary files, making
-no conversions. Using this unversioned file also enables you to jump
-back in history, rebase etc. without problems.
+ git-submodule.sh          |    3 ++-
+ t/t7403-submodule-sync.sh |    3 +++
+ 2 files changed, 5 insertions(+), 1 deletions(-)
 
-Hope this helps,
-Thomas
-
-[1] http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 170186f..9ebbab7 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -839,10 +839,11 @@ cmd_sync()
+ 		if test -e "$path"/.git
+ 		then
+ 		(
++			say "Synchronizing submodule url for '$name'"
++			git config submodule."$name".url "$url"
+ 			clear_local_git_env
+ 			cd "$path"
+ 			remote=$(get_default_remote)
+-			say "Synchronizing submodule url for '$name'"
+ 			git config remote."$remote".url "$url"
+ 		)
+ 		fi
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+index 7538756..3033c4a 100755
+--- a/t/t7403-submodule-sync.sh
++++ b/t/t7403-submodule-sync.sh
+@@ -58,6 +58,9 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
+ 	(cd super-clone/submodule &&
+ 	 git checkout master &&
+ 	 git pull
++	) &&
++	(cd super-clone &&
++	 test -d "$(git config submodule.submodule.url)"
+ 	)
+ '
+ 
+-- 
+1.7.2.1.97.g3235b
