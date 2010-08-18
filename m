@@ -1,223 +1,76 @@
-From: Mike Strauch <mike.strauch@hannonhill.com>
-Subject: Re: Ignoring commits when merging
-Date: Wed, 18 Aug 2010 14:08:20 -0400
-Message-ID: <AANLkTi=MLE6WEmmDb6964-wX4f79ucpGU6SPieQK66ry@mail.gmail.com>
-References: <AANLkTi=B9gsroJS_6SRqa2CLQOed2UguxN7KiFtFWL8t@mail.gmail.com>
-	<20100818015947.GA19632@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 20:08:35 2010
+From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
+Date: Wed, 18 Aug 2010 20:09:45 +0200
+Message-ID: <212160AC-4B30-4CFC-9F76-A1C23A102A5C@gmail.com>
+References: <1282135226.24584.92.camel@wpalmer.simply-domain> <2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com> <1282140854.24584.112.camel@wpalmer.simply-domain> <AANLkTik8RGR4OTeZYsttyBtiywGU7Wtz3gQsTjoqAQPD@mail.gmail.com> <1282149456.24584.114.camel@wpalmer.simply-domain>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Thomas Berg <merlin66b@gmail.com>, git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 20:09:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oln3z-00062M-Bc
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 20:08:35 +0200
+	id 1Oln5I-0006mx-Oo
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 20:09:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751716Ab0HRSIZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 14:08:25 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:39306 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751435Ab0HRSIX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 14:08:23 -0400
-Received: by bwz11 with SMTP id 11so435968bwz.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 11:08:22 -0700 (PDT)
-Received: by 10.204.52.12 with SMTP id f12mr5694237bkg.212.1282154900433; Wed,
- 18 Aug 2010 11:08:20 -0700 (PDT)
-Received: by 10.204.83.72 with HTTP; Wed, 18 Aug 2010 11:08:20 -0700 (PDT)
-In-Reply-To: <20100818015947.GA19632@burratino>
+	id S1751526Ab0HRSJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 14:09:52 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:64985 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751155Ab0HRSJv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 14:09:51 -0400
+Received: by ewy23 with SMTP id 23so599768ewy.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 11:09:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=nOh/6IThtwUZ4DZDLX0geVX0+Mn5kD+ZmvKdyQe8FPQ=;
+        b=GWXkSoUptoRLQxOMquw3ZZfLnxr19auNfRch4LRf5QAE0J/GBguM0yq0jzr44ZTybR
+         sOzEZ0boq/HelcoiUbMJS4PO1vh1mHzOFVSkILST+72NqZWJkvjfxDoJYqOZhJl2CqPZ
+         ETih0sfLuBiaawwMvVo8vjwXyYCXtijnakPtI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=c0iIWn8Mj1WPtfZJ/eeEYLJS5LrYKYHAMjrJUq5VlhWw+pn8hz1ympjlryvsR1jziw
+         t7WXYEBVHWAxx/48Gt1miaRiVF2VcW7Iip25e1hQud+zLktQIS2IJLmVwdBVSvZrsqRd
+         stmzQmW8HWJN7oxRKs43DF1ylpzugL094VGkI=
+Received: by 10.213.56.17 with SMTP id w17mr531799ebg.76.1282154989287;
+        Wed, 18 Aug 2010 11:09:49 -0700 (PDT)
+Received: from vredefort.d.eyvind.bernhardsens.net (eyvind.bernhardsens.net [84.49.224.5])
+        by mx.google.com with ESMTPS id v59sm948455eeh.10.2010.08.18.11.09.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Aug 2010 11:09:48 -0700 (PDT)
+In-Reply-To: <1282149456.24584.114.camel@wpalmer.simply-domain>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153870>
 
-Jonathan,
+On 18. aug. 2010, at 18.37, Will Palmer wrote:
 
-Thanks for the info.  The scenario that I am in is most like the
-"Writing a new bugfix" scenario you've described.  We have a
-maintenance branch in which the majority of commits are bug fixes.  We
-would then like to merge those bug fixes into our master branch.  The
-difference being that there will occasionally be a commit in our
-maintenance branch that we do not want to merge into our master branch
-because it contains application version information which is only
-relevant when we release something out of our maintenance branch.  So,
-the tree looks like:
+[...]
 
-              Release
+> .git/info/attributes
+> * -crlf
+> 
+> seems to be what I was looking for! Thank you.
 
-                   |
-       ------- previous bug fixes --------- version info commit----
-v1.0 --- bug fix commits --- X [maint]
-      / =A0    =A0  =A0 =A0 =A0                       \ M1
---- o --------- ...
--------------------------------------------------------------------- N
-[master]
-               \                                      /
-                -----------...--------- F [new feature branch]
+Excellent!  Thanks for testing, and thanks to Thomas for the suggestion.
 
-You'll also notice I've included a new feature branch here to give
-more of a big picture view of our setup.
+> Though I very much think the way git currently acts in this situation is
+> quite inexcusably broken.
 
-So, what happens is this:
+It's certainly not ideal, but the old behaviour was broken in an arguably more insidious way in that only people with autocrlf enabled saw the problem.  At least this way repository owners will see it themselves as they upgrade to newer versions of git, and (hopefully) fix it at the source.
 
-1. We fix some bugs in the maint branch (previous bug fixes)
-2. We test those fixes
-3. Merge the fixes back into master (M1)
-4. Commit version information to maint branch (version info commit)
-5. Release from maint branch (v1.0)
-6. Start the process over from step 1 but with the version information
-commit in the maint branch commit history.
+In the meantime, I'm glad that .git/info/attributes let you work around the problem.
 
-So, in this scenario there is really only ever 1 commit that we don't
-want to be merged into master from the maint branch.  This is not
-always the case of course.  There could be some other commits in maint
-branch that we don't want to merge back into master.  Anyway, if you
-have any more feedback that would be great.  Either way, I'll have to
-take a look at the man page you suggested.
-
-Thanks again,
-
--Mike
-
-On Tue, Aug 17, 2010 at 9:59 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Hi,
->
-> Mike Strauch wrote:
->
->> I'm fairly new to git and I'm trying to figure out the best way to
->> ignore certain commits when merging one branch into another.
->
-> An interesting question. =A0The answer (as so often) depends on what
-> you want to do. =A0"man 7 gitworkflows" might help.
->
-> Below I will pretend you are trying to backport some changes to a mor=
-e
-> stable branch; others may chime in with other scenarios.
->
-> First, a general hint: when using git and similar systems, it is
-> generally best if each merged result is somehow "better" than all of
-> its parents. =A0I will give an example below of what can go wrong if
-> this invariant is violated.
->
-> Merging to a maintenance branch
-> -------------------------------
->
-> Suppose given a history like this (1):
->
-> =A0o --- v1.0 [maint]
-> =A0 =A0 =A0 =A0 =A0 \
-> =A0 =A0 =A0 =A0 =A0 =A0feature --- feature --- bugfix --- bugfix [mas=
-ter]
->
-> Development has been happening on the "master" branch and now you
-> want to merge back the relevant fixes to make a new point release,
-> something like the following:
->
-> [*] o --- v1.0 ------------------------------------ v1.1 [maint]
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0\ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
-=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 master-only feature --- bugfix --- M [mas=
-ter]
->
-> =A0"a dangerous history"
->
-> Let's consider what that would mean. =A0Someone builds some new
-> work off of maint:
->
-> =A0o --- v1.0 --- v1.1 --- o ... o --- A [someone]
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 /
->
-> What happens when you pull the "someone" branch into master? =A0The
-> relevant piece of history looks like this:
->
-> =A0 =A0 =A0 =A0v1.1 --- o ... o --- A [someone]
-> =A0 =A0 =A0 /
-> =A0... M --- new development --- ... --- B [master]
->
-> When you try to pull A into B, git runs a three-way merge to
-> apply the changes from the someone branch after the branch point (M)
-> on the master branch. =A0In particular, the changes from M to v1.1
-> are pulled in. =A0The main change from M to v1.1 is to drop a
-> bunch of features. =A0So by pulling from someone, you lose features
-> on the master branch.
->
-> So a merge like [*] that drops desirable changes is generally not
-> a good idea.
->
-> Cherry-picking to a maintenance branch
-> --------------------------------------
->
-> As a result, starting from a history like (1), there is only one
-> choice: cherry-pick only the bugfixes, so the new features are not
-> incorporated into the history of the maint branch.
->
-> =A0$ git checkout maint
-> =A0$ git cherry-pick bugfix1 bugfix2
->
-> Afterwards, it is best to merge the maint branch into master, so
-> later changes on the maint branch can be merged into master more
-> easily. =A0Usually despite the duplicate changes will not result in
-> conflicts.
->
-> =A0$ git checkout master
-> =A0$ git merge maint
-> =A0$ git diff HEAD^
-> =A0$ : looks good
-> =A0$ git push public maint master
->
-> If there are conflicts, no need to worry: make sure that "master"
-> really includes all desirable changes from maint and merge with
-> strategy ours instead.
->
-> =A0$ git reset --merge
-> =A0$ git merge -s ours maint
->
-> Writing a new bugfix
-> --------------------
->
-> Suppose you have an idea for a new bugfix. =A0As discussed above, if
-> you write it directly on top of master, when it is time to apply
-> it to maint it will need cherry-picking. =A0If you base the patch
-> on maint, you can avoid that:
->
-> =A0$ git checkout -b bugfix maint
-> =A0... hack hack hack ...
-> =A0$ make test
-> =A0$ : looks good
-> =A0$ git checkout master
-> =A0$ git merge bugfix
-> =A0$ make test
-> =A0$ git push public bugfix master
->
-> =A0v1.1 [maint] --- X [bugfix]
-> =A0 =A0 \ =A0 =A0 =A0 =A0 =A0 =A0 \
-> =A0 =A0 =A0o --- ... --- N [master]
->
->
-> Once the patch gets enough testing from users of master, it is
-> time to apply it to maint.
->
-> =A0$ git checkout maint
-> =A0$ git merge bugfix
-> =A0$ make test
-> =A0$ git checkout master
-> =A0$ git merge maint
-> =A0$ git push public maint master
->
-> =A0v1.1 ----------- X [maint]
-> =A0 =A0 \ =A0 =A0 =A0 =A0 =A0 =A0 \
-> =A0 =A0 =A0o --- ... --- N [master]
->
-> One benefit of this approach is that during development, the patch
-> is tested against the maintenance branch, which is incidentally
-> probably where it is most important that it get testing.
->
-> Hope that helps,
-> Jonathan
->
+- Eyvind
