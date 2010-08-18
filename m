@@ -1,66 +1,106 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/6] Add string comparison functions that respect the
- ignore_case variable.
-Date: Wed, 18 Aug 2010 12:52:39 +0000
-Message-ID: <AANLkTi=mH9WPbJMKXRrgvdcuqZfHj1kC49M0jKUhaYeS@mail.gmail.com>
-References: <cover.1281985411.git.j6t@kdbg.org>
-	<513deaf9e8915473f7fc7f32401b17e383cb7d3a.1281985411.git.j6t@kdbg.org>
+From: Daniel Johnson <computerdruid@gmail.com>
+Subject: Re: fully deepening a shallow clone
+Date: Wed, 18 Aug 2010 08:54:07 -0400
+Message-ID: <201008180854.18474.ComputerDruid@gmail.com>
+References: <20100817004905.GA8305@gnu.kitenet.net> <AANLkTi=qEwcE6qSmAoNnqE-2Z41rjqPBSfgbaesQBPrA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Joshua Jensen <jjensen@workspacewhiz.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Aug 18 14:52:47 2010
+Content-Type: multipart/signed;
+  boundary="nextPart3878453.Amkdzs4zdC";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: Joey Hess <joey@kitenet.net>, git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 14:53:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oli8M-0008DR-9p
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 14:52:46 +0200
+	id 1Oli9J-0000H9-G4
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 14:53:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752635Ab0HRMwm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 08:52:42 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:43501 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751331Ab0HRMwk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 08:52:40 -0400
-Received: by iwn7 with SMTP id 7so661405iwn.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 05:52:40 -0700 (PDT)
+	id S1752783Ab0HRMxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 08:53:41 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:34424 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751441Ab0HRMxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 08:53:40 -0400
+Received: by vws3 with SMTP id 3so526288vws.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 05:53:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wafXQ8gkMC98h7m0zfrBXOxVBChO3fjBrPT7st4nGlg=;
-        b=BnGbG+yHY2glGyjfllSKL5M6glLzmHqFQy74rXMARRp0pFr7fkECUGCZjsvRuvmzAs
-         Pu0rO1+biHSBd3p4UrqvbpYILlRUuYQrlm5zDYAUUJvdYi1ZdE5NASxuyRLhuziccVr6
-         SJFxJJziAKHQwIklujHY/yuDI6i5h9DO6DRL8=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=YFNJwbf2M7Sk9lxMJvAerHpqRUl3EcYRuyL5+Vzcsqk=;
+        b=N9/rSy7jNJJNX+dzw2BLvKSIMF4DCAtABu/YK8IYnDmz62DYlYQU0n8vCI7kcwkWWN
+         f0srmGceDddKhAO2IXuv2MF4GUvTc3aagWKdPucIBm0SLx/7gm2QNnAe5uXR58MtIVft
+         togfSzJ4n0fBQamjB9gPdsmixI9q+I3B7Mymo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qDmz+lB5uq6kiJ9JlWWd4GCSqYaVeP+r6sW++NNp174ht6HcwqCTj4SIhSOaMJJYGA
-         vYYcGl4iRH8M0ea7HAh3IrBOdya1MMYzzKb4cyCYQNj31s2Nawwsj65XEFrWP9GFVOkw
-         XrKAANvRjetdxlVLWCin1RGeuP/jRiMwf50Jg=
-Received: by 10.231.36.13 with SMTP id r13mr9164009ibd.75.1282135959915; Wed,
- 18 Aug 2010 05:52:39 -0700 (PDT)
-Received: by 10.231.186.226 with HTTP; Wed, 18 Aug 2010 05:52:39 -0700 (PDT)
-In-Reply-To: <513deaf9e8915473f7fc7f32401b17e383cb7d3a.1281985411.git.j6t@kdbg.org>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=Id41V6BgkBYhyH9TjXBLVGVaVSCQnEOq/0yGpVFN2OMk6DWte8PPUkGkJ/Ocvx0Rdo
+         yNNWRtTwg9t3Z6ppHXZHzuF4DH4PPQ1RuhoVeqUX11hcbwNb4/xKMqUV/0wEAEucYs39
+         luf4Dxj+w0me6ifDAhiI+mG7X+Nm2lDSjYzEg=
+Received: by 10.220.72.78 with SMTP id l14mr1210471vcj.24.1282136016904;
+        Wed, 18 Aug 2010 05:53:36 -0700 (PDT)
+Received: from hyperion.localnet (pool-71-163-16-224.bltmmd.fios.verizon.net [71.163.16.224])
+        by mx.google.com with ESMTPS id r15sm98494vbp.10.2010.08.18.05.53.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 18 Aug 2010 05:53:35 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.34.1; KDE/4.5.0; i686; ; )
+In-Reply-To: <AANLkTi=qEwcE6qSmAoNnqE-2Z41rjqPBSfgbaesQBPrA@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153834>
 
-On Mon, Aug 16, 2010 at 19:38, Johannes Sixt <j6t@kdbg.org> wrote:
+--nextPart3878453.Amkdzs4zdC
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-> + =C2=A0 =C2=A0 =C2=A0 return fnmatch(pattern, string, flags | (ignor=
-e_case ? FNM_CASEFOLD : 0));
+On Wednesday 18 August 2010 05:36:08 Nguyen Thai Ngoc Duy wrote:
+> On Tue, Aug 17, 2010 at 10:49 AM, Joey Hess <joey@kitenet.net> wrote:
+> > git-pull(1):
+> >       --depth=3D<depth>
+> >           Deepen the history of a shallow repository created by git clo=
+ne
+> >           with --depth=3D<depth> option (see git-clone(1)) by the speci=
+fied
+> >           number of commits.
+> >=20
+> > Well, what if I want to deepen an existing shallow clone to include
+> > the full history? In practice, something like --depth=3D100000000 is go=
+ing
+> > to work, but in theory, that will eventually fail some day when there a=
+re
+> > enough commits. :)
+>=20
+> I have always thought --depth=3D0 will make full repo again. Have you tri=
+ed
+> that?
+I tried it myself. --depth=3D0 is the same as leaving the depth argument of=
+f=20
+entirely. If you are already working in a shallow clone fetch or pull witho=
+ut=20
+arguments won't deepen it at all, only pull in new commits.
 
-On Solaris 10:
+I haven't been able to figure out a good way to solve this yet though.
 
-dir.c: In function `fnmatch_icase':
-dir.c:34: error: `FNM_CASEFOLD' undeclared (first use in this function)
-dir.c:34: error: (Each undeclared identifier is reported only once
-dir.c:34: error: for each function it appears in.)
+--nextPart3878453.Amkdzs4zdC
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
+
+iEYEABECAAYFAkxr1/oACgkQhP2Vm0oJTtx4LACeNFd1AiCYHggdjD1aVrwY60SZ
+H2gAn16HlPUc7GS0523de5bqvORH3jOm
+=T2FU
+-----END PGP SIGNATURE-----
+
+--nextPart3878453.Amkdzs4zdC--
