@@ -1,53 +1,53 @@
 From: Jon Seymour <jon.seymour@gmail.com>
 Subject: [PATCH v5 0/8] detached-stash: regularise handling of stash arguments by git stash
-Date: Wed, 18 Aug 2010 23:07:57 +1000
-Message-ID: <1282136885-24190-1-git-send-email-jon.seymour@gmail.com>
+Date: Wed, 18 Aug 2010 23:09:32 +1000
+Message-ID: <1282136980-25793-1-git-send-email-jon.seymour@gmail.com>
 Cc: gitster@pobox.com, j6t@kdbg.org,
 	Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:08:53 2010
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:10:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OliNt-0000Kk-Jb
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:08:49 +0200
+	id 1OliPP-00015T-LT
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:10:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752819Ab0HRNIp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:08:45 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:62960 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751345Ab0HRNIn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:08:43 -0400
-Received: by pwi4 with SMTP id 4so292485pwi.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:08:43 -0700 (PDT)
+	id S1752726Ab0HRNKS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 09:10:18 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:44168 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751725Ab0HRNKQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:10:16 -0400
+Received: by pvg2 with SMTP id 2so202375pvg.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:10:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
         bh=KafjchTHM5lPq7EZqUMvpmO2N8Azm6YVwDKjuqOgDSM=;
-        b=KB6CYurVldCpXadNO/H/cwFJDtm9y2shyPL3kiGfLxFwXNijo2kvg7lc+Wcbi0Rime
-         IUex+cBvUVfTb7w8C/d+dto2kTk1YujL8+Aet2bGmxa49TFvhUTwZOofhvsYuYybso4C
-         lgztVDZU9QNtkwhKn+OF52X94sLniVoKRvfMM=
+        b=CA2DRcivZa8MwZRFit4GJXOGU2cPHSr46mOGx2FIc6afe5YI7iXELWcd8ZYTh3TQUy
+         cuibAxkoOR5jjiJzwVii+8r3HkkQcZZeSsO19ch2+Z8iQKSX3OMsPhPMO1VvcJh60Xun
+         r8XHT9dQisHTRc+zynrU9ijNAXTFjUe+CHa8s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Z6JESUBC4+9lrBDsHrt+5pmlWbrD5qaHUt5HNmqcUaGpsY0eYdKkY9XnmtdvWpGA9P
-         pkVONjaYDC3dsQe7T022Pf92IH6UIKf5bCwslqFQaGdNoJ0l+UvjGJg+yi3BhnY7jHsr
-         DM/Bm6z10o0VSvlelzM4xfiAj9ghtn/kDiUzo=
-Received: by 10.142.204.17 with SMTP id b17mr7003086wfg.184.1282136923285;
-        Wed, 18 Aug 2010 06:08:43 -0700 (PDT)
+        b=jhi2qlkVJsnfXPrujcu7nicitsvLPhIq/URZVcp5mbjBJp+jaxJAGvQrJtbkNz+EeH
+         UVE96C/R6OvQQPgJqWQArVUyc2EYrHUfPKypLLgYhcpGXwvV89Q0AiECo1EWQ7m2/uwr
+         RsM1owMY4oJPh6ecrRK8dRS7tofaYm3peUGYY=
+Received: by 10.142.156.14 with SMTP id d14mr6966283wfe.267.1282137015924;
+        Wed, 18 Aug 2010 06:10:15 -0700 (PDT)
 Received: from localhost.localdomain ([120.16.55.229])
-        by mx.google.com with ESMTPS id 23sm302973wfa.22.2010.08.18.06.08.35
+        by mx.google.com with ESMTPS id w31sm303253wfd.20.2010.08.18.06.10.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:08:41 -0700 (PDT)
+        Wed, 18 Aug 2010 06:10:14 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.95.g4fabf
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153837>
 
 This patch introduces a common flags and revision parsing function to the following git stash commands:
  * apply
