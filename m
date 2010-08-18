@@ -1,97 +1,87 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: fully deepening a shallow clone
-Date: Wed, 18 Aug 2010 11:48:38 -0400
-Message-ID: <20100818154838.GA4324@gnu.kitenet.net>
-References: <20100817004905.GA8305@gnu.kitenet.net>
- <AANLkTi=qEwcE6qSmAoNnqE-2Z41rjqPBSfgbaesQBPrA@mail.gmail.com>
+From: Thomas Berg <merlin66b@gmail.com>
+Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
+Date: Wed, 18 Aug 2010 17:50:17 +0200
+Message-ID: <AANLkTik8RGR4OTeZYsttyBtiywGU7Wtz3gQsTjoqAQPD@mail.gmail.com>
+References: <1282135226.24584.92.camel@wpalmer.simply-domain>
+	<2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com>
+	<1282140854.24584.112.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="7AUc2qLy4jB3hD7Z"
-Cc: git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 17:48:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	git@vger.kernel.org
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 17:50:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Olksm-0004EB-Ao
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 17:48:52 +0200
+	id 1OlkuW-0005QQ-C7
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 17:50:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753820Ab0HRPsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 11:48:43 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:43133 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753715Ab0HRPsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 11:48:41 -0400
-Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 2F66F11936E;
-	Wed, 18 Aug 2010 11:48:40 -0400 (EDT)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id EA4254C072; Wed, 18 Aug 2010 11:48:38 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=qEwcE6qSmAoNnqE-2Z41rjqPBSfgbaesQBPrA@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753742Ab0HRPuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 11:50:23 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:49071 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753710Ab0HRPuT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 11:50:19 -0400
+Received: by qyk9 with SMTP id 9so1159273qyk.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 08:50:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=GPJwKLTVWDIyEvzw5e8KkWlyqBt4mIFCeJTygKMxne0=;
+        b=VZV2Ar83nhVhpUZ1mESwqnUTWFmi1kaitgSwbmSxw7DxycniCZzyAX5Fys387BhLKY
+         ygvYBN5wdzyXdymMW6IRbj/ODR3dG2sxadioo+LK65gvsoUj1EGZWTgfRFEYvEh++6Rm
+         vI78ipCFwe9Es0t6cJvt2s9/DT08xEdAkmHBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=eMRR5yTxyixW7KIdbN7LFWSkXt9/MJ+dE1jmeSHZuWBaNZg5qy/3HBLrRiQI0EVuHk
+         X3rXAXWRE0CKjcT+v9cDyLMtuSO8oIHNVEJ9iW2ix1eUY7njeOqqcXs+RoSBDWzxMEc7
+         4EjTcPZzB7Mpsk8xUErd2s3zaCCZtRlq8/bmU=
+Received: by 10.229.233.195 with SMTP id jz3mr6214190qcb.207.1282146617470;
+ Wed, 18 Aug 2010 08:50:17 -0700 (PDT)
+Received: by 10.229.16.209 with HTTP; Wed, 18 Aug 2010 08:50:17 -0700 (PDT)
+In-Reply-To: <1282140854.24584.112.camel@wpalmer.simply-domain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153862>
 
+Hi,
 
---7AUc2qLy4jB3hD7Z
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Wed, 2010-08-18 at 15:18 +0200, Eyvind Bernhardsen wrote:
+> Git _is_ giving you a real pristine copy, it's just informing you that your repository is not consistent with the attributes you have set.
 
-Nguyen Thai Ngoc Duy wrote:
-> On Tue, Aug 17, 2010 at 10:49 AM, Joey Hess <joey@kitenet.net> wrote:
-> > git-pull(1):
-> > =A0 =A0 =A0 --depth=3D<depth>
-> > =A0 =A0 =A0 =A0 =A0 Deepen the history of a shallow repository created =
-by git clone
-> > =A0 =A0 =A0 =A0 =A0 with --depth=3D<depth> option (see git-clone(1)) by=
- the specified
-> > =A0 =A0 =A0 =A0 =A0 number of commits.
-> >
-> > Well, what if I want to deepen an existing shallow clone to include
-> > the full history? In practice, something like --depth=3D100000000 is go=
-ing
-> > to work, but in theory, that will eventually fail some day when there a=
-re
-> > enough commits. :)
->=20
-> I have always thought --depth=3D0 will make full repo again. Have you tri=
-ed that?
+Marking the files as modified is sometimes a very user-unfriendly way
+of informing the user, at least if just want to work with something
+unrelated, and not actually fix those issues. Maybe there is a better
+way?
 
-I'd be happy if it did, but it pulls 0 revs actually.
+On Wed, Aug 18, 2010 at 4:14 PM, Will Palmer <wmpalmer@gmail.com> wrote:
+> "pristine" to me means "no changes". If there is an inconsistency which
+> git doesn't like, git should complain about that, refuse to checkout,
+> declare "broken repository! Oh no!" and refuse all operations, etc. It
+> git can determine that it is unable to act in a sane manner, I don't
+> want git to just go ahead making wild guesses.
+>
+[snip]
+> Just to re-state: This is not "my repository". That is, I don't consider
+> it to be. So I would prefer only solutions which involve editing
+> something unversioned, such as .git/config, rather than making random
+> patches which feel very much like work-arounds to a git problem.
 
---=20
-see shy jo
+Such a solution exists, you can create a file .git/info/attributes,
+which will override the faulty .gitattributes file in the repository
+[1]. Then you could make git treat all files as binary files, making
+no conversions. Using this unversioned file also enables you to jump
+back in history, rebase etc. without problems.
 
---7AUc2qLy4jB3hD7Z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Hope this helps,
+Thomas
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBTGwA08kQ2SIlEuPHAQiCOA/5AQdHiJEHPHIJyPJeYFYWivKobnyZeque
-lPQI43tVp9hczqgaN0XlbImJ3M/I/TenmY5hilJ+TvdZ2zXp+rMX2AMlqvTTEJcf
-PKgHStkbkndfQLWcY3IsiVYXCkZ7vDEd+JaWDSb3Do0W5TZYHVqffwdrltCNRp4C
-wGDLzC1xVfEFHcgZtiMgyvEMzQW7TaEiektTZRo2ZERhFpD8nhJU1GFIP5rp4onF
-hkx8Z6Zk9NZ5soBSzwqkRk5U1mJ1QxLzdwMV7meDdiVW11vyHc/BC4YC+WJUH2nr
-V1RWueygkGzuwotu6gJJpDENiFj1cuteFTgt+TXmdzAW++ukdqd+jxMBcUTPhiFC
-3y6Ioh4JJ/hUbhtyZcwPaVIjEcJKwMETU+IZXp0YsfmiWdA+jglimRPzZklG15Sa
-FWr8qDCDsH/oUwz+LvAc0dH/SMMa8CjkOYnk3HB8NnmiscUi/+Q9R1NgG6JNTZ12
-3EUQSj0BCc8goHWBvgu2qxmmPfjf2JoXrkW/1WKxoESbeodhFUEb5GoiXxAdscrI
-onJLDw2btft0EyhBYHHZ5x+NPzJ/6RYJF3AbM5/w1u7YLXEu0hRVdyxzhLAmw4kM
-Qfg91/rs4UIAs3fwm5CCPRK1QViO1wKvIsFwnOkdXKO6AhK6ThTNdbIiR15xbL9a
-3/vPFOeU/9s=
-=Uoxn
------END PGP SIGNATURE-----
-
---7AUc2qLy4jB3hD7Z--
+[1] http://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
