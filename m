@@ -1,73 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] merge-recursive: Fix multiple file rename across D/F
- conflict
-Date: Wed, 18 Aug 2010 12:00:13 -0700
-Message-ID: <7vaaojagqq.fsf@alter.siamese.dyndns.org>
-References: <1282089199-17253-1-git-send-email-newren@gmail.com>
- <1282089199-17253-3-git-send-email-newren@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [FreeBSD? BUG]: t1304-default-acl.sh fails on FreeBSD 8.1-STABLE
+Date: Wed, 18 Aug 2010 19:14:50 +0000
+Message-ID: <AANLkTin5wc4+N5yhs=RipxVnY0aiX-5ptQKDL-z__Jyt@mail.gmail.com>
+References: <AANLkTikTu2vSCMPqtFvD964XsURayf2MNGSVW1nAaY1d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 21:00:27 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Git Mailing List <git@vger.kernel.org>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Aug 18 21:15:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Olns9-0001RP-Ko
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 21:00:25 +0200
+	id 1Olo6E-0001WR-0Y
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 21:14:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404Ab0HRTAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 15:00:21 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64484 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751964Ab0HRTAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 15:00:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C8034CEC31;
-	Wed, 18 Aug 2010 15:00:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wOcEHzjaKSBFn8HtXz5GZtOYXvE=; b=lLLczt
-	rzaY57dbDorwuIU0Sn1UGYwSvkDwXhtgckmerEt6vpHpIPEPOmpCbNbcbZbrCYcP
-	A0xPE//tJhgrMZ+E3qGkP5h+Fi3Eqv81ps9MgIeEZWJ6LqukxWoMqdDdPNausr9J
-	vNg3bhXwKh5tGp5g62R7eUC2dNNKtJhyz66uQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Dvf6j8qDR21AiI6sUqKBAgwROt3Q5WpZ
-	UN+VGxd+aOUCv0HqydYrmY5dPqwICR4dzKRG4L0GUxq50Clp3pfeGrJuMTFs9iVQ
-	Dm14wuqpxYMlLAmXgKJWAZuWd63MEZIc/ao0h/ZIs/3M6T+vZOj1dX9/S15XtCeP
-	M+2R83JpBDg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A22ECCEC30;
-	Wed, 18 Aug 2010 15:00:17 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F164CCEC2F; Wed, 18 Aug
- 2010 15:00:14 -0400 (EDT)
-In-Reply-To: <1282089199-17253-3-git-send-email-newren@gmail.com> (Elijah
- Newren's message of "Tue\, 17 Aug 2010 17\:53\:19 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D75FC3CE-AAFA-11DF-B539-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751820Ab0HRTOx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 15:14:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47863 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751535Ab0HRTOv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 15:14:51 -0400
+Received: by fxm13 with SMTP id 13so539975fxm.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 12:14:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=LBME/SsZgHVgsDWELCRNEpEpCVSJB0c57A2FWoQdWXY=;
+        b=Wubl8q3qh0oSkB4GFuiTDaLPl2vk6xhtziUWu1g0SfJjKh7SmdGkvVudnJ2Ha0T6L5
+         0DrIpqoz3Z8WwlDVu/qT6YJp5pyt9KYegHSMAo0ACRFB7141GWp/JiIXiJ1QSh4jY6nw
+         UUnLWf6Dp/nut4QnNs++geSoAOpPCUxV1FYOM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=rOosfjGYFhajznGLZNJNTZXLdFgZNZR8iOPPK9V1/lq7xpqhaFfDePjQVi4pwfDPnf
+         XXHluGt8F2V9BmAcZ6paGI0seT1haVFM+bxoEE3vbcFSGeJwSSIwNQ2JV+hVqa3uyWVj
+         BDOnTsgfmfemfW6zEJ3ApPLPYXd/GTv2dr0f8=
+Received: by 10.223.111.206 with SMTP id t14mr8313014fap.32.1282158890383;
+ Wed, 18 Aug 2010 12:14:50 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Wed, 18 Aug 2010 12:14:50 -0700 (PDT)
+In-Reply-To: <AANLkTikTu2vSCMPqtFvD964XsURayf2MNGSVW1nAaY1d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153877>
 
-Elijah Newren <newren@gmail.com> writes:
-
-> In 5a2580d (merge_recursive: Fix renames across paths below D/F conflicts
-> 2010-07-09), detection was added for renames across paths involved in a
-> directory<->file conflict.  However, the change accidentally involved
-> reusing an outer loop index ('i') in an inner loop, changing its values
-> and causing a slightly different type of breakage for cases where there are
-> multiple renames across the D/F conflict.  Fix by creating a new temporary
-> variable 'i'.
+On Tue, Aug 17, 2010 at 03:17, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> t/t1304-default-acl.sh fails on FreeBSD, seemingly because setfacl on
+> FreeBSD doesn't have a meaningful return code:
 >
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> I'm really embarrased about this one...  :-/
+> =C2=A0 =C2=A0$ setfacl -m u:root:rwx . ; echo $?
+> =C2=A0 =C2=A0setfacl: .: acl_get_file() failed: Operation not support=
+ed
+> =C2=A0 =C2=A00
+>
+> But on Linux:
+>
+> =C2=A0 =C2=A0$ setfacl -m u:root:rwx . ; echo $?
+> =C2=A0 =C2=A0setfacl: .: Operation not supported
+> =C2=A0 =C2=A01
+>
+> The Solaris setfacl also behaves.
+>
+> The FreeBSD manpage says this:
+>
+> =C2=A0 =C2=A0EXIT STATUS
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 The setfacl utility exits 0 on success, a=
+nd >0 if an error occurs.
+>
+> Anyone here know more about FreeBSD to shed light on this?
 
-I am too ;-)  Thanks for a fix.
+I sent this upstream with a patch:
+http://www.freebsd.org/cgi/query-pr.cgi?pr=3D149780
