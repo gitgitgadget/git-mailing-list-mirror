@@ -1,121 +1,106 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: [BUG?] Fresh clone of jquery.git shows modifications?
-Date: Wed, 18 Aug 2010 15:18:26 +0200
-Message-ID: <2F030CF4-995A-4BA2-9D79-DA2A71F9FF79@gmail.com>
-References: <1282135226.24584.92.camel@wpalmer.simply-domain>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:18:44 2010
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH v2 0/4] Support for running tests outside t/ + don't run a TODO test
+Date: Wed, 18 Aug 2010 13:34:29 +0000
+Message-ID: <1282138473-15613-1-git-send-email-avarab@gmail.com>
+References: <7vpqxhaw92.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:34:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OliXS-0005GY-Pk
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:18:43 +0200
+	id 1Olin4-0005UR-Eg
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:34:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752973Ab0HRNSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:18:33 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60982 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752827Ab0HRNSb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 18 Aug 2010 09:18:31 -0400
-Received: by eyg5 with SMTP id 5so293738eyg.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:18:30 -0700 (PDT)
+	id S1753144Ab0HRNeo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 09:34:44 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:53317 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753116Ab0HRNem (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:34:42 -0400
+Received: by wwf26 with SMTP id 26so2556553wwf.1
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:34:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-type:message-id:content-transfer-encoding:cc
-         :from:subject:date:to:x-mailer;
-        bh=Os1slOfkWpTcVbYS6YViXIpy5gmV4AgyQV7xFUBtAOY=;
-        b=Elce5GALKdWIeTLZ1Uh5bpCIQaVH+t4rIzb31kLylKvYFW5EFcUw55DtYYk6WkRRfm
-         aSibG1g7AbvYsQjpIuW2nTikS0/t3QAp8xZ4eDXcWz4QUxURm3s9M5Cshts0ezlJ9I92
-         npJf+f65g/J+9lmZvteQK8kL3v/fYV8oLCKlA=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=sJfa1N/PiNzWr+LVpCwPbXffQtaadNirX7TjoTxbgfA=;
+        b=vJxfKRKn6YQvGFLYeLM/KmUpMAtR7/BYcpw2KMg8wn/rWd6QT3L5+KIaUjkCTiHNLr
+         nMOYZZROe3YN45Zn83MuSAn//xrua70/PBQr3mE6yZaIsyfjDVaHlO33SyGVa5tmgpKX
+         NsXzfsv5FGc3GDVcT7aSi9a5emo5kSoVjeXJQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-type:message-id
-         :content-transfer-encoding:cc:from:subject:date:to:x-mailer;
-        b=OKMO/1EkZKJTuF/fefmUFB6rM9PRllwYTiYeBBFXCnGf8H5pfsBxY7l0NZ2JahZGNr
-         Wp6YtwETwicfpWTJpcwgq3XwX0Q5pHwFeUqbK09oofFs6Ul2eV3GDK0HP4kVeq6N0GNF
-         K0+1lDJ+5yWqLjgEZrAyxXnxSbSsONkqj7oxc=
-Received: by 10.213.47.70 with SMTP id m6mr266267ebf.63.1282137510460;
-        Wed, 18 Aug 2010 06:18:30 -0700 (PDT)
-Received: from [10.36.80.159] ([62.113.137.5])
-        by mx.google.com with ESMTPS id v59sm462197eeh.10.2010.08.18.06.18.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 06:18:28 -0700 (PDT)
-In-Reply-To: <1282135226.24584.92.camel@wpalmer.simply-domain>
-X-Mailer: Apple Mail (2.1081)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=VFdarLQzLapNK3Ai8mrziDbjN9cvpSvjfD8RxMxnCGSOY+52J+FoJSd8hbEK1xNK7R
+         rbhLoVyqFyDv7lVGii5zTkLoD3rlye1d/0CacJdGkRVTFFGtl3RhtQYNWuhrzPsmZJmM
+         7SIHKDh4G7Stz0rwqCRGr69nsAGbG97dcKXWo=
+Received: by 10.227.138.71 with SMTP id z7mr4018395wbt.173.1282138481010;
+        Wed, 18 Aug 2010 06:34:41 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id r10sm230012wbe.18.2010.08.18.06.34.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 18 Aug 2010 06:34:40 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.414.g9bf49
+In-Reply-To: <7vpqxhaw92.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153842>
 
-On 18. aug. 2010, at 14.40, Will Palmer wrote:
+On Tue, Aug 17, 2010 at 19:12, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> Sverre Rabbelier <srabbelier@gmail.com> writes:
+>
+>> E.g., something like:
+>>
+>> test_in_new_harness 0 1 0 0 '
+>>     test_expect_failure 'pretend we have fixed a known breakage' '
+>>            :
+>>      '
+>> '
+>
+> Now the question becomes who tests "test_in_new_harness" ;-)
+>
+> I'd rather prefer not to touch this one.  Isn't whatever the outer wr=
+apper
+> used flexible enough to be taught about this kind of thing and filter=
+ it?
 
-> I am on Linux, and core.autocrlf is not set. .gitattributes in the
-> JQuery repository contains:
-> * crlf=input
+The problem is that you have to modify *all* the outer wrappers. Since
+the test suite can be run with any TAP consumer that isn't viable, and
+at the very least having to do:
 
-That's a strange setting; in older versions of git, it means something like "if core.autocrlf is enabled, only convert CRLF on input"; that is, it effectively turns core.autocrlf=true into core.autocrlf=input.  I'm not sure why anybody would want that.
+    prove --source=3DSome::Custom::Git Thing ...
 
-In any case, it doesn't appear to have prevented CRLFs from entering the repository, which is what's causing the behaviour you see.
+Is tedious, and requires us to maintain the Some::Custom::Git thingy.
 
-> Bisect reveals:
-> fd6cce9e89ab5ac1125a3b5f5611048ad22379e7  v1.7.0-3-gfd6cce9
-> Add per-repository eol normalization
-> 
-> is the first git commit which shows this problem.
+Anyway, here's a better patch. It allows us to run a pasing TODO test,
+check if it works, and if so not mark *that* test as passing TODO, but
+simply as passing.
 
-That's because from that commit, "crlf=input" turns on autocrlf implicitly (it is equivalent to "eol=lf").  Previously, the crlf attribute would only have an effect with core.autocrlf turned on.
+As a side benefit it makes the test lib more awesome.
 
-> I am confused as to why I am seeing what I am seeing, though. I was
-> under the impression that "crlf=input" meant: "convert crlf to lf on
-> input", which I would take to mean that it would never have any effect
-> whatsoever on "git status"'s output.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
+  test-lib: Use $TEST_DIRECTORY or $GIT_BUILD_DIR instead of $(pwd) and
+    ../
+  test-lib: Use "$GIT_BUILD_DIR" instead of "$TEST_DIRECTORY"/../
+  test-lib: Allow overriding of TEST_DIRECTORY
+  t/t0000-basic.sh: Run the passing TODO test inside its own test-lib
 
-Files containing CRLFs in your repository keep the CRLFs in the working tree.  If you check them in now git will convert CRLF to LF, so they are marked as modified.
- 
-> If I clone using a version of git before v1.7.0-3-gfd6cce9, then "git
-> status" from a newer git, then everything also appears to work normally
-> (though I haven't dug much into this aspect)
+ t/t0000-basic.sh |   31 +++++++++++++++++++++++++++++++
+ t/test-lib.sh    |   39 +++++++++++++++++++++++----------------
+ 2 files changed, 54 insertions(+), 16 deletions(-)
 
-If you turn on core.autocrlf=input or core.autocrlf=true you should get the same behaviour with older gits as well.  Note that msysgit has had autocrlf enabled by default for years, so no positive action is required to do this.
-
-> Is there a git option for "just give me what's in the repository, don't
-> ever perform any conversions, one way or the other, just act sane" ?
-
-Not with that .gitattributes :)  If you don't want conversion, don't set the crlf, eol or text attributes.
-
-> I thought I had finally understood all this autocrlf nonsense, but once
-> again I see this as being only an "act stupid mode". I have no idea
-> what's going on here, and I just want to be able to rely on the
-> following:
-> - git clone someproj.git && cd someproj && git status;
->   should NEVER report changes
-> - git reset --hard HEAD && git status;
->   should NEVER report changes
-> 
-> and, why I ran into this situation this time around:
-> - git clone someproj.git && cd someproj && git checkout sometag;
->   should ALWAYS work
-> 
-> Can anyone explain why these aren't valid assertions? If they're not,
-> then what is the proper way to tell git "give me a real pristine copy"?
-
-Git _is_ giving you a real pristine copy, it's just informing you that your repository is not consistent with the attributes you have set.
-
-> Below is a log of the problem in-action.
-
-[...]
-
-> #	modified:   build/google-compiler-20091218.jar
-> #	modified:   build/js.jar
-
-Heh.  I was about to ask if there was anything funny about these presumably binary files, but then I realized that .gitattributes is forcing crlf=input for _all_ files.  I suggest removing the crlf setting from .gitattributes.
-
-- Eyvind
+--=20
+1.7.2.1.414.g9bf49
