@@ -1,69 +1,77 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC/PATCH] Add test case for dealing with a tracked file in an
- ignored directory
-Date: Wed, 18 Aug 2010 13:43:00 +0000
-Message-ID: <AANLkTi=UJmXx0-fV6OqDTOzuTdQQWioUb=3vrVx01qi6@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] Add test case for dealing with a tracked file in an ignored directory
+Date: Wed, 18 Aug 2010 15:47:55 +0200
+Message-ID: <vpqk4noc9ro.fsf@bauges.imag.fr>
 References: <AANLkTiky+azVAnXEBFWR1q9_8NH8TX2TfuonXCpA_-ms@mail.gmail.com>
 	<1282123788-24055-1-git-send-email-gdb@mit.edu>
+	<AANLkTi=UJmXx0-fV6OqDTOzuTdQQWioUb=3vrVx01qi6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Matthieu.Moy@grenoble-inp.fr, git@vger.kernel.org,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Greg Brockman <gdb@mit.edu>, git@vger.kernel.org,
 	gitster@pobox.com, Jens.Lehmann@web.de, jrnieder@gmail.com
-To: Greg Brockman <gdb@mit.edu>
-X-From: git-owner@vger.kernel.org Wed Aug 18 15:43:24 2010
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 15:48:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlivH-0001pF-0y
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:43:19 +0200
+	id 1Olj0Y-0004ke-5q
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 15:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753350Ab0HRNnE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 09:43:04 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40083 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753341Ab0HRNnC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 09:43:02 -0400
-Received: by fxm13 with SMTP id 13so257043fxm.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 06:43:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=uXvHB+R2rvWsvHSJHjPW2eKaQrSepp9VQpe7T5QsyWk=;
-        b=m5MrmRm32cn+5Dlv4HX9USZkWzqh5ziHXNvG+wHDuDlBngAhWa5tzZP9fyf+qikHyj
-         Sh2ddqcSotxEDQEvij+Ue2SbcbjE+6tuIM9YtVr3E1bbnqlpd0i8EWK/qQskyB+lOKZa
-         AAOKq4VwUXzp53Pxd2xdp9cJdmBsiIObcD+A8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=hH73TPcC8k89dalHV0jNJxdSoZ5g5JxjfD4XFbtD4UfdFM/6BSwDPjCgFkCgEat0r2
-         IiSsWnk8CzuEYa1EKc9oN95zPYiYtS4ZIzT8+Y4+ZKNnrkgKbbCzlVYGvUB4ZJXFmnzP
-         idtQCEareiE5doXokOa+UO4Ui33MoTrQXMLSM=
-Received: by 10.223.108.137 with SMTP id f9mr7957950fap.3.1282138980859; Wed,
- 18 Aug 2010 06:43:00 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Wed, 18 Aug 2010 06:43:00 -0700 (PDT)
-In-Reply-To: <1282123788-24055-1-git-send-email-gdb@mit.edu>
+	id S1752815Ab0HRNsk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 18 Aug 2010 09:48:40 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:54872 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751907Ab0HRNsj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 09:48:39 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7IDj4k5025220
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 18 Aug 2010 15:45:04 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Olizj-00067g-FY; Wed, 18 Aug 2010 15:47:55 +0200
+In-Reply-To: <AANLkTi=UJmXx0-fV6OqDTOzuTdQQWioUb=3vrVx01qi6@mail.gmail.com>
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Wed\, 18
+ Aug 2010 13\:43\:00 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 18 Aug 2010 15:45:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o7IDj4k5025220
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1282743906.2183@H05wuXrys6nFYUHcQ0T5Nw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153849>
 
-On Wed, Aug 18, 2010 at 09:29, Greg Brockman <gdb@mit.edu> wrote:
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 
-> +cat >expect <<EOF
-> +The following paths are ignored by one of your .gitignore files:
-> +ignored-dir
-> +Use -f if you really want to add them.
-> +fatal: no files added
-> +EOF
+> On Wed, Aug 18, 2010 at 09:29, Greg Brockman <gdb@mit.edu> wrote:
+>
+>> +cat >expect <<EOF
+>> +The following paths are ignored by one of your .gitignore files:
+>> +ignored-dir
+>> +Use -f if you really want to add them.
+>> +fatal: no files added
+>> +EOF
+>
+> Please make this a test, per this bit in t/README:
+>
+>  - Put all code inside test_expect_success and other assertions.
+>
+>    Even code that isn't a test per se, but merely some setup code
+>    should be inside a test assertion.
 
-Please make this a test, per this bit in t/README:
+Not sure what is the gain by doing so, and the vast majority of tests
+already there use the style of Greg's patch ...
 
- - Put all code inside test_expect_success and other assertions.
-
-   Even code that isn't a test per se, but merely some setup code
-   should be inside a test assertion.
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
