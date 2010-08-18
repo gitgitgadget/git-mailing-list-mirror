@@ -1,107 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [RFC/PATCH] Add test case for dealing with a tracked file in an ignored directory
-Date: Wed, 18 Aug 2010 11:50:05 +0200
-Message-ID: <vpq8w44mer6.fsf@bauges.imag.fr>
-References: <AANLkTiky+azVAnXEBFWR1q9_8NH8TX2TfuonXCpA_-ms@mail.gmail.com>
-	<1282123788-24055-1-git-send-email-gdb@mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: avarab@gmail.com, git@vger.kernel.org, gitster@pobox.com,
-	Jens.Lehmann@web.de, jrnieder@gmail.com
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Wed Aug 18 11:53:36 2010
+From: David Aguilar <davvid@gmail.com>
+Subject: [PATCH] submodule sync: Update "submodule.<name>.url"
+Date: Wed, 18 Aug 2010 03:01:13 -0700
+Message-ID: <1282125673-22956-1-git-send-email-davvid@gmail.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 18 11:54:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlfKx-0004Nx-Qy
-	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 11:53:36 +0200
+	id 1OlfLp-0004os-HQ
+	for gcvg-git-2@lo.gmane.org; Wed, 18 Aug 2010 11:54:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751820Ab0HRJxb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 05:53:31 -0400
-Received: from imag.imag.fr ([129.88.30.1]:42525 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750974Ab0HRJx3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 05:53:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7I9o5wm016673
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 18 Aug 2010 11:50:05 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OlfHZ-0003iI-JQ; Wed, 18 Aug 2010 11:50:05 +0200
-In-Reply-To: <1282123788-24055-1-git-send-email-gdb@mit.edu> (Greg Brockman's message of "Wed\, 18 Aug 2010 04\:29\:48 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 18 Aug 2010 11:50:06 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1752196Ab0HRJyZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 05:54:25 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:64738 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750974Ab0HRJyX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 05:54:23 -0400
+Received: by pwi4 with SMTP id 4so233234pwi.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 02:54:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=9besm/Ya1KTfgQhFHX4vMpUMmByLcS81w1QD5k0/yfk=;
+        b=Ilj+AcgRX4gqKQui6r78paCcv8iCgL8sPO8IfZJQdsHPwMyjVUF0dwgpdr+29EKExP
+         3cwVzz1WP3epY4FJid3eS9Yi90vJdWHw43hmdol7EH2VUfYZlses3UKESKHfKBOCCLGP
+         aKR4JxL3eDUWX7iMKEskMxWnJBTaCzuSkG/xk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=xlSCKzoj45cHLaGO7X1fX0nOHh69gGGa4Q0vl6Sg1SLorh4Tifblq/Pt+aV8uLHR2s
+         yvI8ci+GBDNsHonBQ9T2/HZ8QPwBUYCInX9gRmtSPJvdQNldHEbwAOovz+Slb4Uw7N9m
+         Nueya020nP+FWSa9PNlTOYyi8ygay1bSrz61w=
+Received: by 10.114.67.11 with SMTP id p11mr9356595waa.170.1282125263367;
+        Wed, 18 Aug 2010 02:54:23 -0700 (PDT)
+Received: from localhost (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id x9sm155986waj.3.2010.08.18.02.54.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 18 Aug 2010 02:54:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.97.g3235b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153826>
 
-Greg Brockman <gdb@MIT.EDU> writes:
+When "git submodule sync" synchronizes the repository URLs
+it only updates submodules' .git/config.  However, the old
+URLs still exist in the super-project's .git/config.
 
-> This test case attempts to match the behavior of 'git add ignore-file'
-> with 'git add ignore-dir/file' when .gitignore contains entries for
-> ignore-file and ignore-dir.
+Update the super-project's configuration so that commands
+such as "git submodule update" use the URLs from .gitmodules.
 
-Good :-).
+Signed-off-by: David Aguilar <davvid@gmail.com>
+---
+ git-submodule.sh          |    3 ++-
+ t/t7403-submodule-sync.sh |    3 +++
+ 2 files changed, 5 insertions(+), 1 deletions(-)
 
-> +test_expect_success 'git add with file in ignored directory' '
-
-In the final version, you can make the tests test_expect_failure in
-the first patch, and turn them back into test_expect_success in the
-second (which fixes the issue). This makes it clear what your change
-to the code do, and makes sure the test suite passes for each commit.
-
-> +	mkdir ignored-dir &&
-> +	echo ignored-dir >> .gitignore &&
-> +	touch ignored-dir/file &&
-
-I think >ignored-dir/file is more portable than touch, and is
-recommanded in the testsuite. But a quick grep shows that touch is
-already used.
-
-> +	test_must_fail git add ignored-dir/file >actual 2>&1 &&
-> +	test_cmp actual expect &&
-> +	git add -f ignored-dir/file &&
-> +	git add ignored-dir/file &&
-
-(so, this is the first thing you're fixing, shouldn't be
-controversial)
-
-> +test_expect_success 'git add with ignored directory using git globs' "
-> +	mkdir ignored-dir2 && echo ignored-dir2 >> .gitignore && touch ignored-dir2/file &&
-> +	git add 'ignored-dir2/*' >actual 2>&1 &&
-> +	echo \"fatal: pathspec 'ignored-dir2/*' did not match any files\" | test_cmp - actual
-
-Currently, "git add 'dir/*'" will add the files under dir/ if dir/
-isn't ignored, and require -f if dir is ignored.
-
-I don't think you want to complain with "did not match any files"
-here.
-
-> +	git add -f ignored-dir2/file && echo change > ignored-dir2/file &&
-> +	git add 'ignored-dir2/*' >actual 2>&1 &&
-
-Just making sure I'm reading correctly: this is the second thing that
-should be fixed, and that your earlier patch didn't.
-
-You're not testing the case
-
-  git add ignored-dir/
-
-which gives another case where Git tries to add files not explicitely
-given on the command-line. But the correct behavior of this case may
-be more controversial, so maybe it's indeed better to focus on the
-other cases.
-
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 170186f..be7e478 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -840,9 +840,10 @@ cmd_sync()
+ 		then
+ 		(
+ 			clear_local_git_env
++			say "Synchronizing submodule url for '$name'"
++			git config submodule."$name".url "$url"
+ 			cd "$path"
+ 			remote=$(get_default_remote)
+-			say "Synchronizing submodule url for '$name'"
+ 			git config remote."$remote".url "$url"
+ 		)
+ 		fi
+diff --git a/t/t7403-submodule-sync.sh b/t/t7403-submodule-sync.sh
+index 7538756..3033c4a 100755
+--- a/t/t7403-submodule-sync.sh
++++ b/t/t7403-submodule-sync.sh
+@@ -58,6 +58,9 @@ test_expect_success '"git submodule sync" should update submodule URLs' '
+ 	(cd super-clone/submodule &&
+ 	 git checkout master &&
+ 	 git pull
++	) &&
++	(cd super-clone &&
++	 test -d "$(git config submodule.submodule.url)"
+ 	)
+ '
+ 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.2.1.97.g3235b.dirty
