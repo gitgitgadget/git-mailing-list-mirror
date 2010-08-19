@@ -1,86 +1,67 @@
-From: Mikael Magnusson <mikachu@gmail.com>
-Subject: Re: [PATCH 1/3] clone: do not accept --depth on local clones
-Date: Thu, 19 Aug 2010 22:49:06 +0200
-Message-ID: <AANLkTimouObkUFVff8GQgGy7cDMAHXTDxGQx0gJUOO2Q@mail.gmail.com>
-References: <201008180854.18474.ComputerDruid@gmail.com>
-	<1282214437-16384-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] compat/regex: define out variables only used under
+ RE_ENABLE_I18N
+Date: Thu, 19 Aug 2010 14:07:13 -0700
+Message-ID: <7vlj8271mm.fsf@alter.siamese.dyndns.org>
+References: <201008191805.o7JI5Aw0002340@localhost.localdomain>
+ <1282242601-2630-1-git-send-email-avarab@gmail.com>
+ <7vtymq74mp.fsf@alter.siamese.dyndns.org>
+ <AANLkTikod-o3GHqyFSu7yKJZMc1pgZUQm+pEb-ErAYDB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, computerdruid@gmail.com, joey@kitenet.net
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 19 22:49:14 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 19 23:07:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmC30-0004fj-9J
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 22:49:14 +0200
+	id 1OmCKe-0004db-N6
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 23:07:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752814Ab0HSUtI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 16:49:08 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59752 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752304Ab0HSUtH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Aug 2010 16:49:07 -0400
-Received: by vws3 with SMTP id 3so2252005vws.19
-        for <git@vger.kernel.org>; Thu, 19 Aug 2010 13:49:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TffW7v+pub5cHNQfwzwkknTWbEygMtDoeUcmeBuASYI=;
-        b=WyQ3nFPl5VKYu1otD3QUYp+8T/GRrnuqr6oj/tqKN5Fep5NcOFVXQ5FKkFZp3Xp4QT
-         P9nZ3FPm26/wj6czFo/Dw5depWSUvjr598yZkV1zfqSoYXhcBgkWP2gHh1DYI1nNJ9j+
-         Or3ga/zDIe603tBT7YqfFhtjnlKoxvX5F3OHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xR2w3zjadmWcfs8tO7gKTu8uQNbgQgsXNg2urCjD8p1znggy0Ww+3c5Cfjl7EjTHvz
-         7okVkWHLRxe+lRoEC37ghnk6gltoqsQB0XzUn5LJfEUt8tEOWr/DJZcHoQOgTSex6Rca
-         Zj9MutLs/+OUmbbrjASTPLtHSq2bwZkA5ncug=
-Received: by 10.220.124.224 with SMTP id v32mr269919vcr.4.1282250946536; Thu,
- 19 Aug 2010 13:49:06 -0700 (PDT)
-Received: by 10.220.191.75 with HTTP; Thu, 19 Aug 2010 13:49:06 -0700 (PDT)
-In-Reply-To: <1282214437-16384-1-git-send-email-pclouds@gmail.com>
+	id S1752347Ab0HSVHX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 17:07:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49882 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750817Ab0HSVHW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 19 Aug 2010 17:07:22 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3ABF5CE698;
+	Thu, 19 Aug 2010 17:07:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=bdbq5DD1yCP+
+	x6la6+DP61YqYZQ=; b=AlXkldZ2g+SEFZcQVkKb6HUC4WzAZdRLVtmQ0PfHZExK
+	/UdXDEsUU9FznQMhvPAN4QzwLAqMMJWM57dQWLmoW+8Cz1q7HrbGEYR60YvWbC8a
+	R9dA3id8OmJ2eVN1P7nCih1DVYSnAjz3gNgN5Q/+J3Fl72ktfqUhmts8c07rBU0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=u7Mv0z
+	eW59o0ZqtTgzinozFxvqu9CD0rLLqSppPqmRlO0n1OmzxC8boSfJWSx58PVuVjt2
+	bjrVnvOgrP7ux81R2BVrVwEVajw/TW4uPsonELdY7TyWtjm9PzZkA5/dpMwYCwFj
+	BtGhR9rVGLnqLN1K5ha10O5RGQmv965M6v7i4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E9292CE697;
+	Thu, 19 Aug 2010 17:07:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2919DCE696; Thu, 19 Aug
+ 2010 17:07:15 -0400 (EDT)
+In-Reply-To: <AANLkTikod-o3GHqyFSu7yKJZMc1pgZUQm+pEb-ErAYDB@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Thu\, 19 Aug
+ 2010 20\:31\:47 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C06E583E-ABD5-11DF-9F9F-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153959>
 
-2010/8/19 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  builtin/clone.c |    7 +++++--
->  1 files changed, 5 insertions(+), 2 deletions(-)
->
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index efb1e6f..215c432 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -414,6 +414,9 @@ int cmd_clone(int argc, const char **argv, const =
-char *prefix)
->                repo =3D xstrdup(make_absolute_path(repo_name));
->        else
->                repo =3D repo_name;
-> +       is_local =3D path && !is_bundle;
-> +       if (is_local && option_depth)
-> +               die("local clone with --depth does not make sense");
->
->        if (argc =3D=3D 2)
->                dir =3D xstrdup(argv[1]);
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Wouldn't it be more helpful to also say "Use the file:///blabla syntax
-instead" or just automatically fall back to that protocol when --depth
-is used?
+> Could you compile the old compat/regex library on the same system?
 
---=20
-Mikael Magnusson
+Did I ever say this was a regression?
