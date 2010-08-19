@@ -1,70 +1,66 @@
 From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: t9155 fails since "git-svn: fix fetch with deleted tag" with
-	svn < 1.5
-Date: Thu, 19 Aug 2010 12:14:25 -0700
-Message-ID: <20100819191425.GA1543@dcvr.yhbt.net>
-References: <4C6D6274.90009@web.de> <AANLkTiky8qn_PSgXSn=0h07cb4VmCFiFXmD9WrpO1z6z@mail.gmail.com>
+Subject: [PATCH] t9155: fix compatibility with older SVN
+Date: Thu, 19 Aug 2010 12:15:52 -0700
+Message-ID: <20100819191552.GB1543@dcvr.yhbt.net>
+References: <4C6D6274.90009@web.de> <AANLkTiky8qn_PSgXSn=0h07cb4VmCFiFXmD9WrpO1z6z@mail.gmail.com> <20100819191425.GA1543@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
 	"David D. Kilzer" <ddkilzer@kilzer.net>,
 	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Aug 19 21:14:32 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 19 21:15:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmAZM-0004oO-Cf
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 21:14:32 +0200
+	id 1OmAaj-00068M-Oa
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 21:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754488Ab0HSTO1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 15:14:27 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:57733 "EHLO dcvr.yhbt.net"
+	id S1754490Ab0HSTPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Aug 2010 15:15:53 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:57752 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753319Ab0HSTO0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Aug 2010 15:14:26 -0400
+	id S1753319Ab0HSTPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Aug 2010 15:15:52 -0400
 Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 9D7C71F4FC;
-	Thu, 19 Aug 2010 19:14:25 +0000 (UTC)
+	by dcvr.yhbt.net (Postfix) with ESMTP id 580001F4FC;
+	Thu, 19 Aug 2010 19:15:52 +0000 (UTC)
 Content-Disposition: inline
-In-Reply-To: <AANLkTiky8qn_PSgXSn=0h07cb4VmCFiFXmD9WrpO1z6z@mail.gmail.com>
+In-Reply-To: <20100819191425.GA1543@dcvr.yhbt.net>
 User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153949>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> wrote:
-> On Thu, Aug 19, 2010 at 16:57, Jens Lehmann <Jens.Lehmann@web.de> wro=
-te:
-> > t9155 fails on current next when running the testsuite on a Fedora
-> > Core 7 system. The reason is that FC7 comes with svn 1.4.4, while
-> > in commit 3235b70 the --parents option was introduced into t9155
-> > which was added in svn 1.5.
+The "--parents" option did not appear until SVN 1.5.x
+and is completely unnecessary in this case.
 
-The --parents option appears completely unnecessary in this case,
-so removing it should be safe.  Patch coming...
+Reported-by: Jens Lehmann <Jens.Lehmann@web.de>
+Signed-off-by: Eric Wong <normalperson@yhbt.net>
+---
 
-> > What minimum svn version is required for git svn? I didn't find any
-> > information about that, but I might have overlooked something ...
->=20
-> We currently require >=3D 1.1.0 of SVN::Core for the git-svn tests at=
- least.
+ Also pushed up to git://git.bogomips.org/git-svn
 
-That's still the only hard requirement I know of.  While I haven't had =
-a
-1.1.x installation in years, reports of incompatibility have been few.
-So either people find it easier to upgrade to newer versions of SVN,
-don't care, or there just aren't that many incompatibilities.
+ t/t9155-git-svn-fetch-deleted-tag.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I'd say we will continue to do our best to support whatever versions
-people care to report (preferably with patches :) incompatibilities for=
-=2E
-
---=20
+diff --git a/t/t9155-git-svn-fetch-deleted-tag.sh b/t/t9155-git-svn-fetch-deleted-tag.sh
+index ef0ac87..a486a98 100755
+--- a/t/t9155-git-svn-fetch-deleted-tag.sh
++++ b/t/t9155-git-svn-fetch-deleted-tag.sh
+@@ -12,7 +12,7 @@ test_expect_success 'setup svn repo' '
+ 	svn_cmd import -m "import for git svn" import "$svnrepo" &&
+ 	rm -rf import &&
+ 
+-	svn_cmd mkdir --parents -m "create mybranch directory" "$svnrepo/branches/mybranch" &&
++	svn_cmd mkdir -m "create mybranch directory" "$svnrepo/branches/mybranch" &&
+ 	svn_cmd cp -m "create branch mybranch" "$svnrepo/trunk" "$svnrepo/branches/mybranch/trunk" &&
+ 
+ 	svn_cmd co "$svnrepo/trunk" svn_project &&
+-- 
 Eric Wong
