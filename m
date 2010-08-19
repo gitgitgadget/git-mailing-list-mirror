@@ -1,58 +1,103 @@
-From: "Angela" <angelgeorg@gmx.com>
-Subject: Hello.
-Date: Thu, 19 Aug 2010 10:38:47 +0100
-Message-ID: <201008190938.o7J9brdQ022435@levitateyoga.com>
-Reply-To: <angelageorg@gmx.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] mergetool: Skip autoresolved paths
+Date: Thu, 19 Aug 2010 12:02:36 +0200
+Message-ID: <201008191202.36508.trast@student.ethz.ch>
+References: <7veie0gy3r.fsf@alter.siamese.dyndns.org> <1282036966-26799-1-git-send-email-davvid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="Windows-1251"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: angelageorg@gmx.com
-X-From: git-owner@vger.kernel.org Thu Aug 19 11:43:20 2010
+Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
+	Magnus =?iso-8859-1?q?B=E4ck?= <magnus.back@sonyericsson.com>,
+	Charles Bailey <charles@hashpling.org>,
+	Avery Pennarun <apenwarr@gmail.com>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 19 12:03:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Om1eZ-00076Y-SJ
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 11:43:20 +0200
+	id 1Om1xr-0000cg-HF
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 12:03:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752040Ab0HSJnM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Aug 2010 05:43:12 -0400
-Received: from levitateyoga.com ([69.36.178.252]:40868 "EHLO levitateyoga.com"
+	id S1752164Ab0HSKDB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Aug 2010 06:03:01 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:10493 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750902Ab0HSJnL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Aug 2010 05:43:11 -0400
-Received: from User ([218.249.93.76])
-	(authenticated bits=0)
-	by levitateyoga.com (8.13.1/8.13.1) with ESMTP id o7J9brdQ022435;
-	Thu, 19 Aug 2010 03:38:00 -0600
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2800.1081
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2800.1081
+	id S1751608Ab0HSKC7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Aug 2010 06:02:59 -0400
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 19 Aug
+ 2010 12:03:00 +0200
+Received: from thomas.site (129.132.149.163) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Thu, 19 Aug
+ 2010 12:02:37 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <1282036966-26799-1-git-send-email-davvid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.6 points;
- *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
- *      [Blocked - see <http://www.spamcop.net/bl.shtml?218.249.93.76>]
- *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
- *      [218.249.93.76 listed in dnsbl.sorbs.net]
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4686]
- *  1.0 XMAILER_MIMEOLE_OL_1ECD5 XMAILER_MIMEOLE_OL_1ECD5
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153913>
 
-Hi
-How are you today? I hope everything is moving smoothly.
-my name is Angela,I am a very simple honest and kind girl.
-I am interested to know more about you and if ever,become 
-more than friends because Love is as beautiful as two people 
-choose to make it so if you have the desire with me,I will tell 
-you more about myself as soon as I hear from you.
-Have a nice day.
-Angela.
+David Aguilar wrote:
+> When mergetool is run without path limiters it loops
+> over each entry in 'git ls-files -u'.  This includes
+> autoresolved paths.
+[...]
+> +test_expect_success 'mergetool merges all from subdir' '
+> +    cd subdir && (
+> +    git config rerere.enabled false &&
+> +    test_must_fail git merge master &&
+> +    git mergetool --no-prompt &&
+> +    test "$(cat ../file1)" = "master updated" &&
+> +    test "$(cat ../file2)" = "master new" &&
+> +    test "$(cat file3)" = "master new sub" &&
+> +    git add ../file1 ../file2 file3 &&
+> +    git commit -m "branch2 resolved by mergetool from subdir") &&
+> +    cd ..
+> +'
+
+This test never worked in my automatic testing (it fails and bisects
+to this commit).
+
+It might be because the cronjob doesn't have a tty, as I'm seeing the
+output below (note the error at the end).  Any insights?
+
+expecting success: 
+    cd subdir && (
+    git config rerere.enabled false &&
+    test_must_fail git merge master &&
+    git mergetool --no-prompt &&
+    test "$(cat ../file1)" = "master updated" &&
+    test "$(cat ../file2)" = "master new" &&
+    test "$(cat file3)" = "master new sub" &&
+    git add ../file1 ../file2 file3 &&
+    git commit -m "branch2 resolved by mergetool from subdir") &&
+    cd ..
+
+Merging:
+a8bf666 branch1 changes
+virtual master
+found 1 common ancestor(s):
+775c381 added file1
+Auto-merging file1
+CONFLICT (content): Merge conflict in file1
+Auto-merging file2
+CONFLICT (add/add): Merge conflict in file2
+Auto-merging subdir/file3
+CONFLICT (content): Merge conflict in subdir/file3
+Automatic merge failed; fix conflicts and then commit the result.
+Merging:
+file1
+file2
+subdir/file3
+
+/local/home/trast/git/t/valgrind/bin/git-mergetool: line 302: /dev/tty: No such device
+ or address
+/local/home/trast/git/t/valgrind/bin/git-mergetool: line 299: /dev/tty: No such device
+ or address
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
