@@ -1,112 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2010, #04; Wed, 18)
-Date: Wed, 18 Aug 2010 22:02:37 -0500
-Message-ID: <20100819030237.GE18922@burratino>
-References: <7vfwyb8skr.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH re-roll] Do not display 'Switched to a new branch' when
+ the branch existed
+Date: Thu, 19 Aug 2010 11:21:31 +0800
+Message-ID: <AANLkTi=fkgmx4+oYO71OiaayEpehcmxb5aOeR6WvU7DL@mail.gmail.com>
+References: <AANLkTimaZF1Q6BPB7CN0Wa5-Ov2ejVfPsmL34vps2VqK@mail.gmail.com>
+	<AANLkTi=3z9gJdT8LL3NANFyppUjvOVcrszjf5J5zAKPe@mail.gmail.com>
+	<20100818091603.GA6263@burratino>
+	<AANLkTikHbj4zA6Kj0wUp6uQUY3w6cM_z0=Pes1jLLTky@mail.gmail.com>
+	<AANLkTimU75krdgQFvw0fEvAPqJb-eKaPXHg_5Hv2A8wh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 19 05:04:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 19 05:21:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OlvQX-0002os-55
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 05:04:25 +0200
+	id 1OlvhK-0007Gv-P9
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 05:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751149Ab0HSDEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 18 Aug 2010 23:04:20 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:51543 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750970Ab0HSDES (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 18 Aug 2010 23:04:18 -0400
-Received: by gyd8 with SMTP id 8so490004gyd.19
-        for <git@vger.kernel.org>; Wed, 18 Aug 2010 20:04:18 -0700 (PDT)
+	id S1751323Ab0HSDVe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 18 Aug 2010 23:21:34 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34281 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751050Ab0HSDVc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 18 Aug 2010 23:21:32 -0400
+Received: by eyg5 with SMTP id 5so919879eyg.19
+        for <git@vger.kernel.org>; Wed, 18 Aug 2010 20:21:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=4gqtGRJM7V3Fxgq6bU6S5HfphCJ1WFc2W5UzLVllO60=;
-        b=xHzQP2jDw2patGaOVouC2MHayyoVNLyM0Vh6xF9DteAE/I3lgfEoCYqADKDZIXtYbF
-         WMhpCqVE72d5otwe5kciMx+IV9MbZ9CJLBimfSMhfQBPoMbJPUliOqMWZXcw9OwOPXV5
-         HkZo6R4dNE5dnSf+0Vqz+sCVuOUftQUM0W2+c=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Bwvk0WCdXQBz31svsDLj7sBfnE5WgVqMTZx7FhfinqA=;
+        b=iX6iX7hmi6p7TbZ1ufzGtUXoWlabzhqviI7Uv8N7IYDThSTR2i3OEUVntUd+ZPX+Lg
+         nN1z0Ybc27+Es4OmydgwTIOmzd8sH6TL56T4UwrlVqwMj7UZO/fu0/yiuGSjwk2lNolZ
+         knu2hXezW2nqnhwpYLKdJDBf+AmgTlh/PpY1s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=puRJFRPD8G7xjqsDgHiBAv2uuJVMkCWsI+bJCCkluIl0Lrp0REKqo9zycOzaib77CB
-         jCRQip/Nr5gJ+PMrBJumRrHmTxt+sM+Rv+jfQ72px1VSLzimZaN5DusZdPPePaIRW0sJ
-         thnumC8rqyoL9xQ1/DdXlmkfCiJcUP3poV1yA=
-Received: by 10.150.53.13 with SMTP id b13mr1078149yba.419.1282187057893;
-        Wed, 18 Aug 2010 20:04:17 -0700 (PDT)
-Received: from burratino (ip-64-32-208-34.chi.megapath.net [64.32.208.34])
-        by mx.google.com with ESMTPS id m12sm2058451ybn.7.2010.08.18.20.04.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 18 Aug 2010 20:04:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vfwyb8skr.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=QYZLhuyxq88PSMnG20NRaWPKmC1m2OpdZiUJLdoZ4ld9tbr47B8CQvztHWxqUkjfpY
+         iW+NDEzyTgdzsOqKlhaeZlFWLG40lVwUTdNweFJKpnSI23julmQfgFdJRviIr3k3+7Ox
+         TD5kbbvfnRgzjegZ5S933Gwb6epUxyN9hdE00=
+Received: by 10.213.33.130 with SMTP id h2mr981665ebd.78.1282188091496; Wed,
+ 18 Aug 2010 20:21:31 -0700 (PDT)
+Received: by 10.213.22.134 with HTTP; Wed, 18 Aug 2010 20:21:31 -0700 (PDT)
+In-Reply-To: <AANLkTimU75krdgQFvw0fEvAPqJb-eKaPXHg_5Hv2A8wh@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153906>
 
-Junio C Hamano wrote:
+Hi,
 
-> * ab/compat-regex (2010-08-17) 5 commits
->  - autoconf: don't use platform regex if it lacks REG_STARTEND
->  - t/t7008-grep-binary.sh: un-TODO a test that needs REG_STARTEND
->  - Change regerror() declaration from K&R style to ANSI C (C89)
->  - compat/regex: get the gawk regex engine to compile within git
->  - compat/regex: use the regex engine from gawk for compat
+oops, seems like you dropped everyone from the Cc list, including the
+mailing list. Try using the "Reply to all" next time.
 
-As Hannes noticed, the tip commit is bogus and the configure
-test gives the wrong result on platforms with missing or inferior
-regex.  Sorry about that.  Replacement is at $gmane/153782.
+On Wed, Aug 18, 2010 at 9:56 PM, Knittl <knittl89@googlemail.com> wrote:
+> [snip
+> yes, i branched off of your bad commit (or rather the commit after
+> your bad commit "fix detached head usage") and created the commit with
+> git commit -c HEAD^ to have the same heading and similar wording
+> without opening a second terminal to copy it over. so i accidentally
+> sent the patch with your name as author, which i then fixed with git
+> amend --reset-author
 
-> * jn/update-contrib-example-merge (2010-08-17) 25 commits
-[...]
-> A series like this may update scripted Porcelains with
-> recent new features, but the result will never be as solidly battle tested
-> implementations (admittedly with only subset of features and without later
-> fixes) like we had there so far.
+Why copy over the old commit message? You should be writing one that
+fits what you're did, not what *I* did.
 
-I was similarly nervous about that.  But as you say, it is always possible
-to search through history for the older version.
-
-Administrivia:
-
- - patch 1 (do not mistake ancestor of tag for branch) is a separate fix.
-   It probably should have been sent separately.
-
- - patch 9-11 (merge-base --octopus, merge-base --independent, and especially
-   fmt-merge-msg -m) which expose library functions to scripts might be
-   independently useful.
-
- - patch 24 (merge script: learn --[no-]rerere-autoupdate) requires a
-   working rerere --rerere-autoupdate, which means the patch for commit
-   672d1b78 (rerere: migrate to parse-options API, 2010-08-05).  I can
-   make a more targetted fix if that would be helpful for testing.
-
-> * jn/commit-no-change-wo-status (2010-08-11) 10 commits
-[...]
-> There seemed to be some doubts on removal of the "no changes" line?
-
-I'm happy to drop this series for now; the resulting output is just
-not very good.
-
-> * jn/paginate-fix (2010-08-16) 14 commits
->   (merged to 'next' on 2010-08-18 at bb04a13)
-
-I am happy to see this get more exposure.  Thanks.
-
-> There were heavy merge conflicts in t4200; I tried to be careful when
-> merging this, but extra sets of eyeballs from parties involved (Jonathan
-> and Szeder) would always be a good idea.
-
-Looks good (and agrees with what I got from manually applying Szeder's
-patch on top of the topic).
+-- 
+Cheers,
+Ray Chuan
