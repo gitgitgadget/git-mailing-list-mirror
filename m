@@ -1,90 +1,79 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] tests: fix syntax error in "Use advise() for hints" test
-Date: Thu, 19 Aug 2010 12:22:31 +0000
-Message-ID: <AANLkTikDq4eJfm2RnbGDuJMHCR8_4cn6NfJpoYWHbWWN@mail.gmail.com>
-References: <20100811083100.GA16495@burratino>
-	<1282142204-14720-1-git-send-email-avarab@gmail.com>
-	<20100819043036.GD25649@burratino>
+Subject: Re: What's cooking in git.git (Aug 2010, #04; Wed, 18)
+Date: Thu, 19 Aug 2010 12:48:25 +0000
+Message-ID: <AANLkTi=z6rs5U8N_piUUzR=t6oSNNF02RxVCws-1YRS1@mail.gmail.com>
+References: <7vfwyb8skr.fsf@alter.siamese.dyndns.org>
+	<20100819030237.GE18922@burratino>
+	<4C6CE61F.7060305@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 19 14:22:43 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Aug 19 14:48:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Om48o-0003Vj-21
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 14:22:42 +0200
+	id 1Om4Xt-0000D9-R6
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 14:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752792Ab0HSMWe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 08:22:34 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43862 "EHLO
+	id S1752560Ab0HSMs2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 19 Aug 2010 08:48:28 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48609 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752072Ab0HSMWd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 19 Aug 2010 08:22:33 -0400
-Received: by fxm13 with SMTP id 13so961846fxm.19
-        for <git@vger.kernel.org>; Thu, 19 Aug 2010 05:22:32 -0700 (PDT)
+	with ESMTP id S1750890Ab0HSMs0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Aug 2010 08:48:26 -0400
+Received: by fxm13 with SMTP id 13so979321fxm.19
+        for <git@vger.kernel.org>; Thu, 19 Aug 2010 05:48:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=X3XK+cSpLv1+RRgFhrw5n3L/X2XfWQGjpBllJQozLBA=;
-        b=MZ08EZ+x9QwX+XY9OpwEAsJGpLOLq/Ja+/g6+xcLoLVlEwGqBLJZtsxTYGcfzVqR3N
-         GY9fD6HUACUHMt4laf83uel3zvFJQX6AimzKBU+EcYuyUgWgvDVv3HxzlUZdocDz9TFH
-         Zq+itfVT0zSF32GiG44wsHUD8QzeIZBnA06a8=
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=XDLUEbd/bgHStz4p9vq4cXmvjYuLsb1mgHGDCFp3Loo=;
+        b=dO/HmYXn0fIDSmypapLst/dhCzeY+67+yRA98TTPNJjBCCrL77SJLdFq5OfdefP+40
+         Yobdvz2xOZZ8z+uHAauWxOFs5xFV5CPuyj0i5TZc8xSmhTKRT786Vs/RFTWIgdFt7KoO
+         6wl4zdYWCx8g4R4W49J91GfYgSXMuCFwxVevo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sJZDFprGSVxYxELhYRa6zQ4XJJrKqDTQyjKq+IYB1hjIO4n7gUml445mGz8wYRIPJt
-         mFEn1x0syXbLlg5FwI+ptKMMKovWfeixjxjOLp5asY8GTJPFfPrTq1BCeg9lhLFHU9dT
-         f1Yjuvr1k35Mo1hM8kcHNJjEV5G2G574Czhq0=
-Received: by 10.223.110.212 with SMTP id o20mr9288111fap.27.1282220551721;
- Thu, 19 Aug 2010 05:22:31 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Thu, 19 Aug 2010 05:22:31 -0700 (PDT)
-In-Reply-To: <20100819043036.GD25649@burratino>
+         :cc:content-type;
+        b=wKx/rmcXbJXgzXfP9e5a91iLkPl3JLd25rvQRINJmRNhAfB/xzHbTPtx5FnoCQIvjZ
+         VgyNpGRFk0luimnm4aj4RrySXydVyRl2B/F7S+IXUkrzs3T6JHnWBeJ62c2QRziqUwON
+         +OY/gdxDSV6IoLVME897PpzavpKC5fTZ1RyLc=
+Received: by 10.223.105.76 with SMTP id s12mr9211472fao.107.1282222105319;
+ Thu, 19 Aug 2010 05:48:25 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Thu, 19 Aug 2010 05:48:25 -0700 (PDT)
+In-Reply-To: <4C6CE61F.7060305@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153919>
 
-On Thu, Aug 19, 2010 at 04:30, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Thu, Aug 19, 2010 at 08:06, Johannes Sixt <j.sixt@viscovery.net> wrote:
+
+> and I see these warnings:
 >
->> Change the test introduced in the "Use advise() for hints" patch by
->> Jonathan Nieder not to use '' for quotes inside '' delimited code.
+> In file included from compat/regex/regex.c:71:
+> compat/regex/regex_internal.c: In function 're_string_reconstruct':
+> compat/regex/regex_internal.c:696: warning: unused variable 'prev_valid_len'
+> In file included from compat/regex/regex.c:78:
+> compat/regex/regexec.c: In function 'check_arrival_add_next_nodes':
+> compat/regex/regexec.c:3062: warning: unused variable 'err'
 >
-> Yikes. =C2=A0Thanks for catching this.
+> This happens because RE_ENABLE_I18N is not defined by regex_internal.h. Is
+> this how it is supposed to be?
 
-=46WIW prove flagged it:
+I noted these in <1282015548-19074-1-git-send-email-avarab@gmail.com>,
+although I was off by one.
 
-    $ prove ./t35*.sh
-    ./t3500-cherry.sh .................... ok
-    ./t3501-revert-cherry-pick.sh ........ ok
-    ./t3502-cherry-pick-merge.sh ......... ok
-    ./t3503-cherry-pick-root.sh .......... ok
-    ./t3504-cherry-pick-rerere.sh ........ ok
-    ./t3505-cherry-pick-empty.sh ......... ok
-    ./t3506-cherry-pick-ff.sh ............ ok
-    ./t3507-cherry-pick-conflict.sh ...... 1/?
-=2E/t3507-cherry-pick-conflict.sh: 59: cannot open paths: No such file
-    ./t3507-cherry-pick-conflict.sh ...... ok
-    ./t3508-cherry-pick-many-commits.sh .. ok
-    ./t3509-cherry-pick-merge-df.sh ...... ok
-    All tests successful.
-    Files=3D10, Tests=3D62,  4 wallclock secs ( 0.08 usr  0.06 sys +  0=
-=2E65
-cusr  2.91 csys =3D  3.70 CPU)
-    Result: PASS
+I haven't read all the relevant code, but we almost definitely do not
+want RE_ENABLE_I18N, since we aren't doing the relevant setlocale()
+things (and doing so breaks git, see the fix in the ab/i18n series in
+pu).
 
-> Although the style you chose is arguably the least ugly, nested shell
-> interpolation can be hard to follow. =C2=A0How about this?
-
-I think '\'' is harder to follow than \" and \$, but each to his own
-:)
+I was going to report this upstream once I got around to finding out
+what upstream *is*, I don't *think* gawk itself is the canonical
+upstream, they just copy it from somewhere else (again, I *think*).
