@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v3 0/4] Support for running tests outside t/ + don't run a TODO test
-Date: Thu, 19 Aug 2010 16:08:08 +0000
-Message-ID: <1282234092-27429-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH v3 1/4] test-lib: Use $TEST_DIRECTORY or $GIT_BUILD_DIR instead of $(pwd) and ../
+Date: Thu, 19 Aug 2010 16:08:09 +0000
+Message-ID: <1282234092-27429-2-git-send-email-avarab@gmail.com>
 References: <1282138473-15613-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,78 +11,118 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 19 18:08:33 2010
+X-From: git-owner@vger.kernel.org Thu Aug 19 18:08:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Om7fM-0001LY-2O
-	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 18:08:32 +0200
+	id 1Om7fj-0001ab-NM
+	for gcvg-git-2@lo.gmane.org; Thu, 19 Aug 2010 18:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751419Ab0HSQIZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 12:08:25 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:34318 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080Ab0HSQIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Aug 2010 12:08:24 -0400
-Received: by wwf26 with SMTP id 26so4268384wwf.1
-        for <git@vger.kernel.org>; Thu, 19 Aug 2010 09:08:22 -0700 (PDT)
+	id S1751655Ab0HSQIg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 12:08:36 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:58575 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751080Ab0HSQIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Aug 2010 12:08:35 -0400
+Received: by wwi17 with SMTP id 17so2639812wwi.1
+        for <git@vger.kernel.org>; Thu, 19 Aug 2010 09:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=5QWGRv4pw3mgS4xiVKN8casOhwHEt9R6X8nzuL5QUuM=;
-        b=ryTTBs8VaJ+VuVdsFHwwCZIloBsRL7hcCEoZFdy918pCtj6iRNUbcDVDJyWt/GeHFY
-         jNPuPCrsQPRQnj3WvsfrunTAlQNrvLDu3r9P9tjPmKN/5GB9MEQBCsupwI4L+/zOeZHk
-         4aV1enufKD3+lG0m7CXS3gUZSyCSCzmNWRFzw=
+        bh=QGa5Hi0EF7z2CKs19UmzIjSTjw5VFyWNYNgQCMstoRk=;
+        b=i8m0i0rivAZLXBiLnlqQyuk0FMmWzeRDAjxmEpSL2G7Ne9SKmwkDZpg4oFUaGEz4oU
+         D8fpH4wsRqgOJzN/soruylXc6dLgPjgEHLTMLE8csfVwGUJra4n7+6gArRwk371JNwQd
+         p1Ki62qPrJOHKIbp2CT2kPU5a8e7Bzgoey5Jc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=UU8Ky0B8T2wdgYnCAQRcsev8yC6h9XoBl8DycvqKDot27srw53xjmp3O+kCCC2IcF0
-         hguH5D6zUDT7uPmHwVKIN6hN2BxOmJQbYF+tMxYy+NAHdTiSB9LKG7W/+HebVehmxcdb
-         UNuONLBM3W4HiNxDEG/RK7txWw9jwG9Pkzbvk=
-Received: by 10.227.155.20 with SMTP id q20mr37992wbw.98.1282234102722;
-        Thu, 19 Aug 2010 09:08:22 -0700 (PDT)
+        b=jPasBLLJifb+U7qa2NzXKyfxjD+m0hIoDxWaOAdmobkQrylkEIDrVH+Zx+mcGUEr9C
+         xfJpJLBrrUYqQYryvVMJ4mv/mOKbZDrval1ThFE4J/YNrL+2zV1gC9QSXuI5RjTKdOKE
+         Z845GPJ7us6SrZwE6Nf9wNxnDiPBd3oQN87S0=
+Received: by 10.216.162.72 with SMTP id x50mr872276wek.3.1282234114038;
+        Thu, 19 Aug 2010 09:08:34 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id e8sm1118781wej.46.2010.08.19.09.08.21
+        by mx.google.com with ESMTPS id e8sm1118781wej.46.2010.08.19.09.08.32
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 19 Aug 2010 09:08:21 -0700 (PDT)
+        Thu, 19 Aug 2010 09:08:33 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.446.g168052
 In-Reply-To: <1282138473-15613-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153937>
 
-This *really* v3, I just sent another copy of v2 unchanged
-accidentally (this is really not my day). This one:
+Change the redundant calls to $(pwd) to use $TEST_DIRECTORY
+instead. None of these were being executed after we cd'd somewhere
+else so they weren't actually needed.
 
- * Fixes a trivial shell syntax error in the last patch (oops!)
+This also makes it easier to add support for overriding the test
+library location and run tests in a different directory than t/.
 
- * Uses #!$SHELL_PATH for a shebang instead of #!/bin/sh in the file
-   we're about to write out. This now passes e.g. on Solaris which has
-   an insane /bin/sh.
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ t/test-lib.sh |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
-As an aside there's a bunch of other things in our tests that are
-writing out shellscripts with a #!/bin/sh shebang instead of
-#!$SHELL_PATH. These are passing purely by accident since they just
-happen to use shell syntax that doesn't run afoul of grumpy old shells
-like Solaris's /bin/sh.
-
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (4):
-  test-lib: Use $TEST_DIRECTORY or $GIT_BUILD_DIR instead of $(pwd) and
-    ../
-  test-lib: Use "$GIT_BUILD_DIR" instead of "$TEST_DIRECTORY"/../
-  test-lib: Allow overriding of TEST_DIRECTORY
-  t/t0000-basic.sh: Run the passing TODO test inside its own test-lib
-
- t/t0000-basic.sh |   31 +++++++++++++++++++++++++++++++
- t/test-lib.sh    |   39 +++++++++++++++++++++++----------------
- 2 files changed, 54 insertions(+), 16 deletions(-)
-
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 5bb7662..0e460f9 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -830,14 +830,14 @@ else # normal case, use ../bin-wrappers only unle=
+ss $with_dashes:
+ 		PATH=3D"$TEST_DIRECTORY/..:$PATH"
+ 	fi
+ fi
+-GIT_BUILD_DIR=3D$(pwd)/..
+-GIT_TEMPLATE_DIR=3D$(pwd)/../templates/blt
++GIT_BUILD_DIR=3D"$TEST_DIRECTORY"/..
++GIT_TEMPLATE_DIR=3D"$TEST_DIRECTORY"/../templates/blt
+ unset GIT_CONFIG
+ GIT_CONFIG_NOSYSTEM=3D1
+ GIT_CONFIG_NOGLOBAL=3D1
+ export PATH GIT_EXEC_PATH GIT_TEMPLATE_DIR GIT_CONFIG_NOSYSTEM GIT_CON=
+=46IG_NOGLOBAL
+=20
+-. ../GIT-BUILD-OPTIONS
++. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+=20
+ if test -z "$GIT_TEST_CMP"
+ then
+@@ -849,22 +849,22 @@ then
+ 	fi
+ fi
+=20
+-GITPERLLIB=3D$(pwd)/../perl/blib/lib:$(pwd)/../perl/blib/arch/auto/Git
++GITPERLLIB=3D"$TEST_DIRECTORY"/../perl/blib/lib:"$TEST_DIRECTORY"/../p=
+erl/blib/arch/auto/Git
+ export GITPERLLIB
+-test -d ../templates/blt || {
++test -d "$TEST_DIRECTORY"/../templates/blt || {
+ 	error "You haven't built things yet, have you?"
+ }
+=20
+ if test -z "$GIT_TEST_INSTALLED" && test -z "$NO_PYTHON"
+ then
+-	GITPYTHONLIB=3D"$(pwd)/../git_remote_helpers/build/lib"
++	GITPYTHONLIB=3D"$TEST_DIRECTORY/../git_remote_helpers/build/lib"
+ 	export GITPYTHONLIB
+-	test -d ../git_remote_helpers/build || {
++	test -d "$TEST_DIRECTORY"/../git_remote_helpers/build || {
+ 		error "You haven't built git_remote_helpers yet, have you?"
+ 	}
+ fi
+=20
+-if ! test -x ../test-chmtime; then
++if ! test -x "$TEST_DIRECTORY"/../test-chmtime; then
+ 	echo >&2 'You need to build test-chmtime:'
+ 	echo >&2 'Run "make test-chmtime" in the source (toplevel) directory'
+ 	exit 1
 --=20
 1.7.2.1.446.g168052
