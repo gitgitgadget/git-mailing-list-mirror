@@ -1,70 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] xmalloc: include size in the failure message
-Date: Fri, 20 Aug 2010 09:31:44 -0700
-Message-ID: <7vd3tdckjz.fsf@alter.siamese.dyndns.org>
-References: <7vhbipcpe1.fsf@alter.siamese.dyndns.org>
- <1282316991-23320-1-git-send-email-Matthieu.Moy@imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Fri Aug 20 18:32:16 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH v2 0/4] fmt-merge-msg improvements
+Date: Fri, 20 Aug 2010 22:24:48 +0530
+Message-ID: <1282323292-11412-1-git-send-email-artagnon@gmail.com>
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Yaroslav Halchenko <debian@onerussian.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 20 18:57:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmUVk-0000Jk-QJ
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 18:32:09 +0200
+	id 1OmUtz-0004QD-Mb
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 18:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751783Ab0HTQby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 12:31:54 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33749 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750994Ab0HTQbw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 12:31:52 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AC441CD408;
-	Fri, 20 Aug 2010 12:31:51 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=iJ1lHutsSwjqs9o0kVOrJbgkYIU=; b=XNLYAM
-	Vpn3bdleS5Eb1oID02Obitdu0E7oPvG6A5Hiutehylto6CjuFIee27lXwtxnUsjI
-	tenROcTJYKobUumkDP+MOj5kj1k6ezPkT5DZa3MugNEpKGX7ogg8arpQGocjG0LX
-	wDtS1b9kMtMiB8fKrWR3ARZ/dIxCSxLoASKUA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I3FY76xOCxxIe3u/wW6WY8q8WcC0zV80
-	snb+QUe5wrBougVZefKV/lMtHSirDLHZPImy6TEjTffQObz6OXLZFTw5LPNWKxxI
-	uARE2yGm1qUN2aSs5cVvT1acRIugDN/tVQRPJnDWk3li2PCvaLO6g1VRqix+hP/r
-	KkJxhVuoR9A=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78CFCCD401;
-	Fri, 20 Aug 2010 12:31:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B2111CD3F4; Fri, 20 Aug
- 2010 12:31:46 -0400 (EDT)
-In-Reply-To: <1282316991-23320-1-git-send-email-Matthieu.Moy@imag.fr>
- (Matthieu Moy's message of "Fri\, 20 Aug 2010 17\:09\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6E843DE2-AC78-11DF-82DE-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752158Ab0HTQ5G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 12:57:06 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:52010 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751397Ab0HTQ5E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 12:57:04 -0400
+Received: by yxg6 with SMTP id 6so1324303yxg.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 09:57:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=bqdU0s8gmSoHvi1s3rS39DoA9Vq6UzRYgowwtZN3210=;
+        b=AmvZkPqoFaYiLPxmLjVXuqc43Cx8CB3ccOi122Y+JnEkVF2kzvlOiMGa08YZZH8/EQ
+         hQtU8sygZNlUZPEZsO/JHEioaGgbmOU+Cer5fuXz5cHsCvDcBAosxhJ3olnUUu2eC4ki
+         /HAw2kdIqd3nDTlKCN6z8timYj30pvpabx7Kc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=MvKM2OOnOvHIhp1j0bJaVmkKpa8Qeezpv+Gi2GDlpPS+K4M1+7Jv9yW56/m6bMoqC6
+         sK60tIeeeucttrzicCil20RJvoOi2HpQUSgsx57hcx99Dhc46eWXF3d+Hz9yjc4FhURP
+         SheEwDb+cdddRO7m1RoEZGOvw8kY0ANeOS7nw=
+Received: by 10.100.171.16 with SMTP id t16mr1937470ane.83.1282323423670;
+        Fri, 20 Aug 2010 09:57:03 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id e8sm2761091ibb.20.2010.08.20.09.56.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Aug 2010 09:57:01 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.408.g7357
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154053>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+What changed since last time: Brought `--no-log` option back.
 
->> Under NO_C99_FORMAT the format and the argument would not match if size_t
->> is not the same size as uint.  As the one in sha1_file.c seems to be done
->> in a better way, let's use that one.
->
-> Sounds good. Not sure why we don't basically use the %lu version
-> everywhere though.
+Ramkumar Ramachandra (4):
+  fmt-merge-msg: Make the number of log entries in commit message
+    configurable
+  fmt-merge-msg: Update command line options to sync with config
+    options
+  fmt-merge-msg: Remove deprecated --summary option
+  fmt-merge-msg: Update fmt-merge-msg and merge-config documentation
 
-I have been wondering about the same thing, but perhaps because we won't
-have to worry too much about size_t needing to be unsigned long long on
-older platforms where %z is not supported, while we expect %z will be
-available on larger where using %lu may become an issue?
+ Documentation/git-fmt-merge-msg.txt |   24 +++++++------------
+ Documentation/merge-config.txt      |    8 +++++-
+ builtin/fmt-merge-msg.c             |   42 ++++++++++++++++------------------
+ 3 files changed, 35 insertions(+), 39 deletions(-)
+
+-- 
+1.7.2.2.408.g7357
