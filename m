@@ -1,79 +1,106 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] builtin/checkout: Fix message when switching to an
- existing branch
-Date: Fri, 20 Aug 2010 23:19:50 +0530
-Message-ID: <20100820174946.GA6211@kytes>
-References: <1282326107-2139-1-git-send-email-artagnon@gmail.com>
- <AANLkTine1mi0AiCL+ezwNpFs4_y_szSwJd+Enux5G26Y@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] fmt-merge-msg: Update fmt-merge-msg and
+ merge-config documentation
+Date: Fri, 20 Aug 2010 23:36:56 +0530
+Message-ID: <20100820180654.GB6211@kytes>
+References: <1282323292-11412-1-git-send-email-artagnon@gmail.com>
+ <1282323292-11412-5-git-send-email-artagnon@gmail.com>
+ <m31v9tp4pv.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 19:51:57 2010
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Yaroslav Halchenko <debian@onerussian.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 20:09:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmVks-0006EF-UB
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 19:51:51 +0200
+	id 1OmW1Z-0005nB-0z
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 20:09:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752206Ab0HTRvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 13:51:46 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:37168 "EHLO
+	id S1752714Ab0HTSJA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 14:09:00 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:63761 "EHLO
 	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098Ab0HTRvo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 13:51:44 -0400
-Received: by pvg2 with SMTP id 2so1298319pvg.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 10:51:44 -0700 (PDT)
+	with ESMTP id S1752304Ab0HTSI6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 14:08:58 -0400
+Received: by pvg2 with SMTP id 2so1303676pvg.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 11:08:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=AGJPpOZboaR0bJ63sRbUlEps+//ZxgoKue7HX7nX984=;
-        b=gFZnxwLOTBqpycmeBa3gFrUFGu5JUs0uQJK7n7IiJEgMVrOrAi7ceE8Br+olXPFqJy
-         78BF8DwDlaLhM4z8/Hg9hsrYs7tsZji1olWQpV6vzERDEFYbbqx9w+ebSAz25pwiwZlf
-         0SWA2FrRKgx6fU3fGHnsjgUbGPnq4KQzemEc4=
+        bh=V+NO3bR6kncqLneRWLoVm52GI11NWcbIkkY6Z7NSgXo=;
+        b=swUToFkctSgodViaCyCOb00btbBnsBrXSk6hMHaSUGbtT25HLwr87tbcPJ+0AYIyYq
+         vGcJPRLa44sL7Lyu++AZvRVOgHcgiBZRSAQUUpHjtg/8zAioOiaGjGFFpDckR2g0vr33
+         R1YzGIPXIrLPCBhDY0YuXPQDKN1RjweQ5a9p0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=ObWclYM4+o9CMKgHkNeTnPARmVL6NuXzgpRRQp0nPVXiXxYMByxWI6R1gfJbGAbR0m
-         V9H+2c8ezgUSRo523w38PURRs1tTGO03kKEPvlJGeklmgkm+mCg9+UxlPMfddXRXMUEi
-         A2rCzU9SQgT+6Zx9KgFRJTAgWTlrKCfRkqOMM=
-Received: by 10.142.201.6 with SMTP id y6mr1360069wff.78.1282326704261;
-        Fri, 20 Aug 2010 10:51:44 -0700 (PDT)
+        b=EUs+TDN/bYnHEAkIhsEb3mXCnVTdZgjNFEnDxzakwNxNFgp49ItwnP8ZGmiHf0LJhf
+         m6pEmouF5wGXNwaQFGlGbIeF0xva4n2BIT54t0ytmoHLq7PGgRsdtd3ximDPA2XxIJIO
+         nVNFq+qM0QxqFZjboSDLPB5AOz1tEVMpNovAg=
+Received: by 10.142.132.18 with SMTP id f18mr1297057wfd.196.1282327736474;
+        Fri, 20 Aug 2010 11:08:56 -0700 (PDT)
 Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id n2sm3526991wfl.1.2010.08.20.10.51.41
+        by mx.google.com with ESMTPS id g4sm5318754wae.2.2010.08.20.11.08.52
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 10:51:43 -0700 (PDT)
+        Fri, 20 Aug 2010 11:08:55 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTine1mi0AiCL+ezwNpFs4_y_szSwJd+Enux5G26Y@mail.gmail.com>
+In-Reply-To: <m31v9tp4pv.fsf@localhost.localdomain>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154064>
 
-Hi Tay,
+Hi Jakub,
 
-Tay Ray Chuan writes:
-> On Sat, Aug 21, 2010 at 1:41 AM, Ramkumar Ramachandra
-> <artagnon@gmail.com> wrote:
-> > Fix "Switched to a new branch <name>" to read "Switched to branch
-> > <name>" when <name> corresponds to an existing branch. This bug was
-> > introduced in 02ac983 while introducing the `-B` switch.
-> >
-> > Cc: Tay Ray Chuan <rctay89@gmail.com>
+Jakub Narebski writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> 
+> > Update the documentation of fmt-merge-msg and merge-config to reflect
+> > the fact that `merge.log` can either be a boolean or integer option
+> > now, instead of just a boolean.
+> > 
 > > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> > ---
+> >  Documentation/git-fmt-merge-msg.txt |   20 +++++++++-----------
+> >  Documentation/merge-config.txt      |    8 ++++++--
+> >  2 files changed, 15 insertions(+), 13 deletions(-)
+> > 
+> > diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
+> > index 78c8a6d..720af64 100644
+> > --- a/Documentation/git-fmt-merge-msg.txt
+> > +++ b/Documentation/git-fmt-merge-msg.txt
+> > @@ -9,8 +9,8 @@ git-fmt-merge-msg - Produce a merge commit message
+> >  SYNOPSIS
+> >  --------
+> >  [verse]
+> > -'git fmt-merge-msg' [-m <message>] [--log | --no-log] <$GIT_DIR/FETCH_HEAD
+> > -'git fmt-merge-msg' [-m <message>] [--log | --no-log] -F <file>
+> > +'git fmt-merge-msg' [-m <message>] [--log=<n> | --no-log] < $GIT_DIR/FETCH_HEAD
+> > +'git fmt-merge-msg' [-m <message>] [--log=<n> | --no-log] -F <file>
 > 
-> Please see
+> Shouldn't it be
 > 
->   <AANLkTi=3z9gJdT8LL3NANFyppUjvOVcrszjf5J5zAKPe@mail.gmail.com>
+>   +'git fmt-merge-msg' [-m <message>] [--log[=<n>] | --no-log] -F <file>
+> 
+> i.e. isn't <n> in '--log' optional?
 
-Ah yes. It looks like I missed this earlier. Sorry for the noise.
+Hm, I think I found a bug in the option parser. Currently writing a patch.
+
+$ git fmt-merge-msg --log < .git/FETCH_HEAD
+error: option `log' requires a value
+
+$ git fmt-merge-msg --log= < .git/FETCH_HEAD
+$ # Works
 
 -- Ram
