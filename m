@@ -1,7 +1,7 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v2 2/4] fmt-merge-msg: Update command line options to sync with config options
-Date: Fri, 20 Aug 2010 22:24:50 +0530
-Message-ID: <1282323292-11412-3-git-send-email-artagnon@gmail.com>
+Subject: [PATCH v2 4/4] fmt-merge-msg: Update fmt-merge-msg and merge-config documentation
+Date: Fri, 20 Aug 2010 22:24:52 +0530
+Message-ID: <1282323292-11412-5-git-send-email-artagnon@gmail.com>
 References: <1282323292-11412-1-git-send-email-artagnon@gmail.com>
 Cc: Johannes Sixt <j.sixt@viscovery.net>,
 	Jonathan Nieder <jrnieder@gmail.com>,
@@ -13,138 +13,123 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmUuN-0004cf-Is
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 18:57:35 +0200
+	id 1OmUuO-0004cf-KE
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 18:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752509Ab0HTQ5O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 12:57:14 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:49051 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752453Ab0HTQ5N (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 12:57:13 -0400
-Received: by iwn5 with SMTP id 5so999518iwn.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 09:57:13 -0700 (PDT)
+	id S1752922Ab0HTQ5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 12:57:22 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:53675 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752453Ab0HTQ5U (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 12:57:20 -0400
+Received: by mail-gy0-f174.google.com with SMTP id 8so1331630gyd.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 09:57:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=nspt+EiHeb/09N6k7XCY3Dv60+h/v84DGJsiYyqD4SE=;
-        b=YgEPwctnRPmBIhKdQ4ziArov1zPgNf7fSxoa9aGUGstievhQF/jaXuC7UsSxCUmSU1
-         LDcyihTsbXnboDaVjXn8w1pogQq9vHAmCI2VcgXo2NTvKAY44SAPZFj58j+8lWGQWU8s
-         TLBjtC5NLFNXyaLOfAE018eazpbXOVS1pZugM=
+        bh=8nxx7sgDQaAtgCi9iitp3J/16TR+2l7NgQVFBB05qTw=;
+        b=JhPnDo1H0OskxnscmQfw4xi7veR6gs+PInouJKRzc+UACbGoZKBLmSA8GU8Vtgebqn
+         smbGW52bJOXAVZnEU36MyRQ16mzzm4mycdxnbhBHIDC9/gsvKretAbdH2VO/suwso+Dw
+         VvpTPywaDAiPmNaZRDJO0F0JvM5/BrFuyn4BA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=WsaN5iLfPJdrDVg1ZLnKIqTe4MqCOkxXN2x8BBgKU/6OIlvk8t2h/QXhCBQGUSpS5n
-         yG50WdxWv4Ef2MO4xa4kMLbWfWFOYMyHh4C1y9yhnA9ewx+uREXdnYd7o6hx9t4KmBZQ
-         h15NZ1eEtiXQ+K71Vqt3CXLq2FVvOk4TS5B5M=
-Received: by 10.231.191.6 with SMTP id dk6mr1988402ibb.51.1282323432907;
-        Fri, 20 Aug 2010 09:57:12 -0700 (PDT)
+        b=JXqf5oGvs6uB86/A3d3z9hfdRe2/UZAeVjj0qpWfVlovzCTkAib0Mm3BFxcI4yAy6j
+         NEapa32BnUNb5l1UAV9Wq8SPccTOzutqSpfa+34sE54Ie4wCDjaNcGCKVISPnSQLY1qd
+         iIO6JVLCshaSQ4MtXFkE9q2PYwjIF1aP+XbJ0=
+Received: by 10.101.180.20 with SMTP id h20mr1873987anp.223.1282323440427;
+        Fri, 20 Aug 2010 09:57:20 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id e8sm2761091ibb.20.2010.08.20.09.57.08
+        by mx.google.com with ESMTPS id e8sm2761091ibb.20.2010.08.20.09.57.17
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 09:57:11 -0700 (PDT)
+        Fri, 20 Aug 2010 09:57:19 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.2.408.g7357
 In-Reply-To: <1282323292-11412-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154056>
 
-Update the `--log` and `--summary` command line options to be integers
-and have the same effect as the `merge.log` and `merge.summary`
-configuration options.
+Update the documentation of fmt-merge-msg and merge-config to reflect
+the fact that `merge.log` can either be a boolean or integer option
+now, instead of just a boolean.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Cc: Johannes Sixt <j.sixt@viscovery.net>
-Cc: Jonathan Nieder <jrnieder@gmail.com>
 ---
- builtin/fmt-merge-msg.c |   22 +++++++++++-----------
- 1 files changed, 11 insertions(+), 11 deletions(-)
+ Documentation/git-fmt-merge-msg.txt |   20 +++++++++-----------
+ Documentation/merge-config.txt      |    8 ++++++--
+ 2 files changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index e967a05..b10658b 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -11,7 +11,6 @@ static const char * const fmt_merge_msg_usage[] = {
- 	NULL
- };
+diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
+index 78c8a6d..720af64 100644
+--- a/Documentation/git-fmt-merge-msg.txt
++++ b/Documentation/git-fmt-merge-msg.txt
+@@ -9,8 +9,8 @@ git-fmt-merge-msg - Produce a merge commit message
+ SYNOPSIS
+ --------
+ [verse]
+-'git fmt-merge-msg' [-m <message>] [--log | --no-log] <$GIT_DIR/FETCH_HEAD
+-'git fmt-merge-msg' [-m <message>] [--log | --no-log] -F <file>
++'git fmt-merge-msg' [-m <message>] [--log=<n> | --no-log] < $GIT_DIR/FETCH_HEAD
++'git fmt-merge-msg' [-m <message>] [--log=<n> | --no-log] -F <file>
  
--static int merge_summary;
- static int log_limit = 0;
+ DESCRIPTION
+ -----------
+@@ -24,19 +24,14 @@ automatically invoking 'git merge'.
+ OPTIONS
+ -------
  
- static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
-@@ -27,7 +26,6 @@ static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
+---log::
++--log=<n>::
+ 	In addition to branch names, populate the log message with
+-	one-line descriptions from the actual commits that are being
+-	merged.
+-
+ --no-log::
+ 	Do not list one-line descriptions from the actual commits being
+ 	merged.
  
- 	if (is_bool && log_limit)
- 		log_limit = 20;
--	merge_summary = log_limit ? 1 : 0;
+---summary::
+---no-summary::
+-	Synonyms to --log and --no-log; these are deprecated and will be
+-	removed in the future.
++	one-line descriptions from at most <n> actual commits that are
++	being merged.
  
- 	return 0;
- }
-@@ -262,7 +260,7 @@ static void do_fmt_merge_msg_title(struct strbuf *out,
- 		strbuf_addf(out, " into %s\n", current_branch);
- }
+ -m <message>::
+ --message <message>::
+@@ -53,7 +48,10 @@ CONFIGURATION
  
--static int do_fmt_merge_msg(int merge_title, int merge_summary,
-+static int do_fmt_merge_msg(int merge_title, int log_limit,
- 	struct strbuf *in, struct strbuf *out) {
- 	int i = 0, pos = 0;
- 	unsigned char head_sha1[20];
-@@ -295,7 +293,7 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
- 	if (merge_title)
- 		do_fmt_merge_msg_title(out, current_branch);
+ merge.log::
+ 	Whether to include summaries of merged commits in newly
+-	merge commit messages. False by default.
++	created merge commit messages.  Optionally, an integer can be
++	used to specify how many merged commits to summarize (at
++	maxmium) in the merge message. Specifying "true" is equivalent
++	to specifying 20. Defaults to false.
  
--	if (merge_summary) {
-+	if (log_limit) {
- 		struct commit *head;
- 		struct rev_info rev;
+ SEE ALSO
+ --------
+diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
+index b72f533..f63f7cb 100644
+--- a/Documentation/merge-config.txt
++++ b/Documentation/merge-config.txt
+@@ -7,8 +7,12 @@ merge.conflictstyle::
+ 	marker and the original text before the `=======` marker.
  
-@@ -315,8 +313,8 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
- 	return 0;
- }
+ merge.log::
+-	Whether to include summaries of merged commits in newly created
+-	merge commit messages. False by default.
++	Whether to include summaries of merged commits in newly
++	created merge commit messages.  Optionally, an integer can be
++	used to specify how many merged commits to summarize (at
++	maxmium) in the merge message. Specifying "true" is equivalent
++	to specifying 20.  Defaults to false. See also
++	linkgit:git-fmt-merge-msg[1].
  
--int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
--	return do_fmt_merge_msg(1, merge_summary, in, out);
-+int fmt_merge_msg(int log_limit, struct strbuf *in, struct strbuf *out) {
-+	return do_fmt_merge_msg(1, log_limit, in, out);
- }
- 
- int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out) {
-@@ -328,10 +326,12 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 	const char *inpath = NULL;
- 	const char *message = NULL;
- 	struct option options[] = {
--		OPT_BOOLEAN(0, "log",     &merge_summary, "populate log with the shortlog"),
--		{ OPTION_BOOLEAN, 0, "summary", &merge_summary, NULL,
-+		{ OPTION_INTEGER, 0, "log", &log_limit, "n",
-+		  "populate log with <n> entries from shortlog",
-+		  PARSE_OPT_NOARG, NULL, 20 },
-+		{ OPTION_INTEGER, 0, "summary", &log_limit, "n",
- 		  "alias for --log (deprecated)",
--		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
-+		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN, NULL, 20 },
- 		OPT_STRING('m', "message", &message, "text",
- 			"use <text> as start of message"),
- 		OPT_FILENAME('F', "file", &inpath, "file to read from"),
-@@ -347,7 +347,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 			     0);
- 	if (argc > 0)
- 		usage_with_options(fmt_merge_msg_usage, options);
--	if (message && !merge_summary) {
-+	if (message && !log_limit) {
- 		char nl = '\n';
- 		write_in_full(STDOUT_FILENO, message, strlen(message));
- 		write_in_full(STDOUT_FILENO, &nl, 1);
-@@ -366,7 +366,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 		strbuf_addstr(&output, message);
- 		ret = fmt_merge_msg_shortlog(&input, &output);
- 	} else {
--		ret = fmt_merge_msg(merge_summary, &input, &output);
-+		ret = fmt_merge_msg(log_limit, &input, &output);
- 	}
- 	if (ret)
- 		return ret;
+ merge.renameLimit::
+ 	The number of files to consider when performing rename detection
 -- 
 1.7.2.2.408.g7357
