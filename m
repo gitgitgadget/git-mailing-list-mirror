@@ -1,95 +1,121 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: wishlist bugreport: make limit configurable for
- do_fmt_merge_msg (merge.log)
-Date: Fri, 20 Aug 2010 14:49:28 +0530
-Message-ID: <20100820091925.GE12794@kytes>
-References: <20100820020127.GG22469@onerussian.com>
- <20100820064741.GC12794@kytes>
- <20100820081641.GA32127@burratino>
- <4C6E468F.3000800@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 3/3] {fetch,upload}-pack: allow --depth=0 to deepen into full repo again
+Date: Fri, 20 Aug 2010 11:22:08 +0200
+Message-ID: <201008201122.09392.jnareb@gmail.com>
+References: <201008180854.18474.ComputerDruid@gmail.com> <m362z6pact.fsf@localhost.localdomain> <AANLkTinQZxpLdFiCFH3kDTFVQ-ZLjJ1PEdmmsJSb=0YD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Yaroslav Halchenko <debian@onerussian.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Fri Aug 20 11:21:25 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, computerdruid <computerdruid@gmail.com>,
+	joey <joey@kitenet.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 11:22:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmNmu-0004pC-FA
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 11:21:24 +0200
+	id 1OmNnw-0005LT-NV
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 11:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751811Ab0HTJVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 05:21:19 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:44596 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751178Ab0HTJVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 05:21:18 -0400
-Received: by pvg2 with SMTP id 2so1121464pvg.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 02:21:18 -0700 (PDT)
+	id S1752341Ab0HTJWR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Aug 2010 05:22:17 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52310 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186Ab0HTJWQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 05:22:16 -0400
+Received: by fxm13 with SMTP id 13so1668585fxm.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 02:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=AfAyIZMoiJtL1Ksi8/aScBLLbHA22dBQnBtzydlDFMs=;
-        b=pq/u2jRSFkNjvDeurAB7/5ZK4WySzDMxmun9U+sb2uSM452ZR/s2kqJnOEt6vlwu8c
-         mgluLG2k4ixmsZhaO9NiwtYUx3pitrMiNp26pvXx4sMeT3OrVmWL+F7geNsjp6lVkFZh
-         Zqe+owtvkPMLmXGbkwVX3cRTxa/kp1TCJElwE=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=tcRg8xfmyCSh9rsyuYPZ0qtTwzOC5fw9xrcRHFpvY2Q=;
+        b=UAvBCUYnxcj+509Qh0pYjiZthh9scD1oGTslPLnznIIhdmR2Em9jhZXtNRXmbXinZQ
+         I0gPsyUeij+aiJcY+nOFhoyBCcZlPcQVCw6gZV/l8d5Ovu47wljFJQBoF76BtnLVf62h
+         N7jMY8KuL42ZWYCVct20BDJ5nOxeOdU4B5xA4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=vJ2IJP4OKVnzpX3j1imeT5l6zAnIvK/N3WhinMd66XzlbwW78KJZTeSL8wNdpkpxw3
-         Zorp1GGfeHpsConRhzP9MSoAAoRS1yhNuHQ5iI6ouT83B6yx1+c81j29PdOdHs7zzpHn
-         C3G7I0gg/wq0k8hYFzgfNjaudnGGi4fAlrCRU=
-Received: by 10.114.102.11 with SMTP id z11mr1289157wab.13.1282296078384;
-        Fri, 20 Aug 2010 02:21:18 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 33sm4467747wad.6.2010.08.20.02.21.12
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=WC6iVX9LxeLAQptxowySbz7AqEY1KTsXlXnryLz72jHdfttftX8rFBPtF7n7Bx/kex
+         GJqc9T7nA3SHo+XWxxMpnIDiLemKAa1JUvL0BpjH8GB3Kmd/kdnN5no04cwGd0PWr5gE
+         bJGjDvTNQym+2jsJpRnKZo20bis3Ss1kQZn7k=
+Received: by 10.223.119.210 with SMTP id a18mr852969far.52.1282296134693;
+        Fri, 20 Aug 2010 02:22:14 -0700 (PDT)
+Received: from [192.168.1.13] (abvr199.neoplus.adsl.tpnet.pl [83.8.215.199])
+        by mx.google.com with ESMTPS id 5sm1105484fat.23.2010.08.20.02.22.11
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 02:21:15 -0700 (PDT)
+        Fri, 20 Aug 2010 02:22:12 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTinQZxpLdFiCFH3kDTFVQ-ZLjJ1PEdmmsJSb=0YD@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4C6E468F.3000800@viscovery.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153990>
 
-Hi Johannes,
+On Fri, Aug 20, 2010, Nguyen Thai Ngoc Duy wrote:
+> On Fri, Aug 20, 2010 at 7:22 AM, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> =
+writes:
+>>
+>>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>>> ---
+>>> =C2=A0The funny thing is, even with --depth=3D0, I still have two c=
+ommit grafts
+>>> =C2=A0in $GIT_DIR/shallow, which are grafts of tags. I think there =
+is a bug
+>>> somewhere..
+>>>
+>>> =C2=A0builtin/fetch-pack.c | =C2=A0 =C2=A02 +-
+>>> =C2=A0shallow.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=
+=A02 +-
+>>> =C2=A0upload-pack.c =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A08 +++=
++----
+>>> =C2=A03 files changed, 6 insertions(+), 6 deletions(-)
+>>>
+>>
+>> Fist, it lacks documentation update that --depth=3D0 means infinite
+>> depth (making repository not-shallow).
+>=20
+> Yeah. I would do documentation and tests later once I figured out why
+> --depth=3D0 did not give me full repo. It turns out I need --tags to
+> (refetch?) tags and have full repo.
 
-Johannes Sixt writes:
-> Am 8/20/2010 10:16, schrieb Jonathan Nieder:
-> > This also provides --log-limit=0 / "[merge] loglimit = 0" to not limit
-> > the number of commits summarized at all, which I would expect to
-> ...
-> >  [verse]
-> > -'git fmt-merge-msg' [--log | --no-log] <$GIT_DIR/FETCH_HEAD
-> > -'git fmt-merge-msg' [--log | --no-log] -F <file>
-> > +'git fmt-merge-msg' [--log | --no-log] [--log-limit=<n>] <$GIT_DIR/FETCH_HEAD
-> > +'git fmt-merge-msg' [--log | --no-log] [--log-limit=<n>] -F <file>
-> 
-> Do we need --log-limit? Why not just --log=42 and --no-log equals --log=0?
-> 
-> Ditto for the config option:
-> 
->   merge.log=42
->   merge.log=0
+Perhaps --depth=3D0 should also work as if --tags were specified on
+command line?  BTW. shouldn't git fetch tags that point to commits
+that got doenloaded because of deepening the clone?
 
-Ah, just when I was about to post the series. Excellent idea! I'll
-drop Jonathan's patch and fixup the series to do this in a few
-minutes.
+>=20
+>> Second, it would be nice (though probably not easy with parseopt, as
+>> it would require hacks/extensions) to be able to use --depth=3Dinf
+>> (like wget supports '-l inf') to mean infinite depth...
+>=20
+> Hmm.. make --depth a string parameter and fetch-pack should parse the
+> parameter itself, like git-clone. Good idea.
 
-> and for backwards compatibility:
-> 
->   merge.log=false  ===  merge.log=0
->   merge.log=true   ===  merge.log=20
+If there were more options that use <n> =3D=3D 0 to actually mean unlim=
+ited
+(infinity), perhaps it would be better to extend parseopt to provide fo=
+r
+such situation, e.g. OPT_INT_INF or something.  This way we would avoid
+code duplication.
 
-I'll use git_config_bool_or_int for this -- we've traded off the
-ability to say "infinite" though.
+=2E.. oh, wait, the newly introduced[1] git-merge `--log-limit' option
+uses --log-limit=3D0 to mean unlimited.
 
--- Ram
+[1] http://permalink.gmane.org/gmane.comp.version-control.git/153984
+    Message-ID: <20100820081641.GA32127@burratino>
+    Subject: Re: wishlist bugreport: make limit configurable for do_fmt=
+_merge_msg (merge.log)
+
+--=20
+Jakub Narebski
+Poland
