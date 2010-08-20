@@ -1,92 +1,109 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/3] {fetch,upload}-pack: allow --depth=0 to deepen
- into full repo again
-Date: Fri, 20 Aug 2010 14:58:51 +0530
-Message-ID: <20100820092847.GF12794@kytes>
-References: <201008180854.18474.ComputerDruid@gmail.com>
- <m362z6pact.fsf@localhost.localdomain>
- <AANLkTinQZxpLdFiCFH3kDTFVQ-ZLjJ1PEdmmsJSb=0YD@mail.gmail.com>
- <201008201122.09392.jnareb@gmail.com>
+From: Charles Bailey <charles@hashpling.org>
+Subject: Re: [PATCH] mergetool: Skip autoresolved paths
+Date: Fri, 20 Aug 2010 10:57:50 +0100
+Message-ID: <4C6E519E.1080700@hashpling.org>
+References: <7veie0gy3r.fsf@alter.siamese.dyndns.org> <1282036966-26799-1-git-send-email-davvid@gmail.com> <201008191202.36508.trast@student.ethz.ch> <20100820035236.GA18267@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>,
-	computerdruid <computerdruid@gmail.com>, joey <joey@kitenet.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 11:30:52 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	=?UTF-8?B?TWFnbnVzIELDpGNr?= <magnus.back@sonyericsson.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Theodore Ts'o <tytso@mit.edu>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 12:07:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmNw4-0000RR-0t
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 11:30:52 +0200
+	id 1OmOVl-0000IP-Sk
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 12:07:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039Ab0HTJas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 05:30:48 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:60451 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751791Ab0HTJaq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 05:30:46 -0400
-Received: by pwi7 with SMTP id 7so945556pwi.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 02:30:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7CZbUhc9n9TVxpEbelNkDBmDhzqg8iLpiDlaLia1LC4=;
-        b=j++TMK+i2ukW83moSnizqmb1xe6Ua9z4cMz9QhyrHy3O/IHrR8ZKcJnlMAbnaK70vZ
-         +F8ZFcj9DpIcR8/3ZDzMkyMZ56oh21KZosaLll6F7nCd5v06hHI+9jDilzuZ14k0FTnQ
-         RSpmS3f6N8PaInw0fFn8Z2vPY6HGGOFvGVvj4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=CrX8xAT4sLh/3K3mXZJaeMVZXMe7MIRAFFqQV4vNjXIOUjrHklO/Xj7CNSNPjGqKtr
-         lCO3iXT1XfmdHCgxA0MbBE6TtO08Ny2NNM0FKGAZB7MCOEiK7e4HIXVLrxJd8XXJdmid
-         Wf3As76E3Vs13lryH5jIPoTCbfTupD99ZlVaI=
-Received: by 10.114.120.4 with SMTP id s4mr1202511wac.212.1282296646030;
-        Fri, 20 Aug 2010 02:30:46 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id x9sm4484579waj.3.2010.08.20.02.30.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 02:30:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201008201122.09392.jnareb@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751763Ab0HTKHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 06:07:39 -0400
+Received: from relay.pcl-ipout01.plus.net ([212.159.7.99]:42576 "EHLO
+	relay.pcl-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751467Ab0HTKHh (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Aug 2010 06:07:37 -0400
+X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Aug 2010 06:07:37 EDT
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EAErubUxUXebr/2dsb2JhbACDGJ1EcahUkhWBIoMicwQ
+Received: from outmx07.plus.net ([84.93.230.235])
+  by relay.pcl-ipout01.plus.net with ESMTP; 20 Aug 2010 10:57:47 +0100
+Received: from hashpling.plus.com ([212.159.69.125])
+	 by outmx07.plus.net with esmtp (Exim) id 1OmOM7-0004R3-2Q; Fri, 20 Aug 2010 10:57:47 +0100
+Received: from heisenberg2.hashpling.org ([192.168.76.29])
+	by hashpling.plus.com with esmtps (TLSv1:CAMELLIA256-SHA:256)
+	(Exim 4.72)
+	(envelope-from <charles@hashpling.org>)
+	id 1OmOM6-0001jE-1v; Fri, 20 Aug 2010 10:57:46 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-GB; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <20100820035236.GA18267@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153992>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153993>
 
-Hi Jakub,
+On 20/08/2010 04:52, David Aguilar wrote:
+>
+> git-mergetool lines 295-307:
+>
+>      files_to_merge |
+>      while IFS= read i
+>      do
+> 	if test $last_status -ne 0; then
+> 	    prompt_after_failed_merge<  /dev/tty || exit 1
+> 	fi
+> 	printf "\n"
+> 	merge_file "$i"<  /dev/tty>  /dev/tty
+> 	last_status=$?
+> 	if test $last_status -ne 0; then
+> 	    rollup_status=1
+> 	fi
+>      done
+>
+> The reason the test fails without a tty is that we've never
+> exercised this code in the past.
+>
+> This commit did not introduce the "<  /dev/tty>  /dev/tty"
+> idiom.  It was introduced in b0169d84 by Charles Bailey.
+> What this commit did do was add test coverage to it,
+> which is good because it uncovered this problem :-)
+>
+> Charles, is there another way we can write this?
+> Is there a reason why we need the tty redirection?
+> Can we drop it or is there a portability concern?
+>
+> FWIW, the merge_file call in the else clause that follows
+> this section does not use tty redirection.
+>
 
-Jakub Narebski writes:
-> >> Second, it would be nice (though probably not easy with parseopt, as
-> >> it would require hacks/extensions) to be able to use --depth=inf
-> >> (like wget supports '-l inf') to mean infinite depth...
-> > 
-> > Hmm.. make --depth a string parameter and fetch-pack should parse the
-> > parameter itself, like git-clone. Good idea.
-> 
-> If there were more options that use <n> == 0 to actually mean unlimited
-> (infinity), perhaps it would be better to extend parseopt to provide for
-> such situation, e.g. OPT_INT_INF or something.  This way we would avoid
-> code duplication.
-> 
-> ... oh, wait, the newly introduced[1] git-merge `--log-limit' option
-> uses --log-limit=0 to mean unlimited.
-> 
-> [1] http://permalink.gmane.org/gmane.comp.version-control.git/153984
->     Message-ID: <20100820081641.GA32127@burratino>
->     Subject: Re: wishlist bugreport: make limit configurable for do_fmt_merge_msg (merge.log)
+Actually, it's been like this since c4b4a5af which is when mergetool was 
+introduced.
 
-Just outdated by a few seconds. Johannes suggested that we reuse
-merge.log, making it a bool_or_int option. I What about using -1 to
-mean infinity and reserving 0 for false instead?
+(b0169d84 didn't change this line, 0eea3451 but made only whitespace 
+changes, it comes from the original mergetool code.)
 
--- Ram
+When you say "drop it" what are you proposing to replace it with? We're 
+in the middle of a shell pipe which has replaced stdin and merge_file 
+needs access to the human on it's stdin; hence the </dev/tty. Strictly. 
+I believe that the >/dev/tty isn't needed.
+
+Is there some way of juggling file descriptors in shell? I had a quick 
+play with this but suspect it's a bashism (and it might make mergetool 
+less readable!).
+
+echo hidden | { echo lost | cat 0<&3- ; } 3<&0
+
+mergetool has never really been very approachable for automatic testing 
+as it's fundamentally an interactive script. It would be nice if 
+sufficient of the guts of mergetool were in testable library code and 
+mergetool was just an obviously correct slim shell UI.
+
+merge_file in the 'else' doesn't need the redirection as nobody has 
+redirected the original stdin.
+
+Charles.
