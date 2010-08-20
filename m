@@ -1,60 +1,61 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Out of memory error during git push
-Date: Fri, 20 Aug 2010 16:59:58 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1008201327120.622@xanadu.home>
-References: <4C6E46A4.8050502@kinet.ch> <20100820125119.GA9762@burratino>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: t7610-mergetool.sh -q isn't quiet
+Date: Fri, 20 Aug 2010 21:03:01 +0000
+Message-ID: <AANLkTink1HaOWCYsr5+Q+JAi_zA_gEHmOU1J3fvq8jnd@mail.gmail.com>
+References: <E395511F-ACF9-4390-A081-4AC4C072C7CC@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Thomas Jampen <jampen@kinet.ch>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 23:00:10 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Charles Bailey <charles@hashpling.org>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 23:03:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmYh7-0001Dx-Aw
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 23:00:09 +0200
+	id 1OmYk1-0002X9-QT
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 23:03:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751178Ab0HTVAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 17:00:00 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:41854 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751152Ab0HTU77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 16:59:59 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L7G00BPQYBY1S50@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 20 Aug 2010 16:59:58 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20100820125119.GA9762@burratino>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751038Ab0HTVDE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Aug 2010 17:03:04 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58873 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750828Ab0HTVDD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Aug 2010 17:03:03 -0400
+Received: by fxm13 with SMTP id 13so2005425fxm.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 14:03:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dF3crXWgvelKwzsQ3KYx2K1VFYQZdWd6FfUmGfk5nHQ=;
+        b=RtaYZx4LfkphzdLazR7NC4BRt1aK7OqMF9TYrqp+C35jDARPEnYfMSQTesGdAlIpt4
+         ysaTI9qIHoS9Kvo71AQihjBT+ZzAw6DLGXQvcl2J+bmSj90ilK0EpU0iMOjQ9565XdVg
+         QTf2IG0B8Mntt8SzemlEz9n5wSnT6IYSWBU6o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=xe8u+1t8LZUi0dnGGhp87HhkXIrDwssBedo6RiftAgSwhFnpbvahkX3euYtldj0ZSi
+         91hqF4BnWRu3bFU1LuhDq01QRP2a1EUNgwTIHllrrAKGYhetpyNpXrTnzhw6hOa1H5oU
+         f8xSaFhEV+B1feya/HmdFcW2QqyFP7iEXfHjs=
+Received: by 10.223.126.84 with SMTP id b20mr1532898fas.98.1282338181178; Fri,
+ 20 Aug 2010 14:03:01 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Fri, 20 Aug 2010 14:03:01 -0700 (PDT)
+In-Reply-To: <E395511F-ACF9-4390-A081-4AC4C072C7CC@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154081>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154082>
 
-On Fri, 20 Aug 2010, Jonathan Nieder wrote:
+On Fri, Aug 20, 2010 at 06:50, Brian Gernhardt
+<brian@gernhardtsoftware.com> wrote:
 
-> (+cc: Nicolas, who knows the packing code pretty well)
-> 
-> Hi,
-> 
-> Thomas Jampen wrote:
-> 
-> > I'm experiencing the following error while pushing a git repo (home
-> > directory) to my QNAP TS-210:
-> > 
-> > user@mypc:~$ git push origin master
-> > Counting objects: 12532, done.
-> > Delta compression using up to 2 threads.
-> > Compressing objects: 100% (8974/8974), done.
-> > fatal: Out of memory, malloc failed, 986.06 MiB | 1.65 MiB/s
-> > error: pack-objects died of signal 13
+> =C2=A0 =C2=A0test "$(cat ../file1)" =3D "master updated" &&
+> =C2=A0 =C2=A0test "$(cat ../file2)" =3D "master new" &&
 
-How much memory is there on the machine where the pushed data is going?
-
-
-Nicolas
+That should also use test_cmp.
