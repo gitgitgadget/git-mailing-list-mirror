@@ -1,89 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: fix syntax error in "Use advise() for hints" test
-Date: Fri, 20 Aug 2010 10:51:37 -0700
-Message-ID: <7v8w41cguu.fsf@alter.siamese.dyndns.org>
-References: <20100811083100.GA16495@burratino>
- <1282142204-14720-1-git-send-email-avarab@gmail.com>
- <20100819043036.GD25649@burratino>
- <AANLkTikDq4eJfm2RnbGDuJMHCR8_4cn6NfJpoYWHbWWN@mail.gmail.com>
- <87aaohwq0r.fsf@hariville.hurrynot.org>
- <AANLkTi=WoMFYU6rDggyB+-s6F_LasUnc-N+gk9v+=C_r@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] builtin/checkout: Fix message when switching to an
+ existing branch
+Date: Fri, 20 Aug 2010 23:19:50 +0530
+Message-ID: <20100820174946.GA6211@kytes>
+References: <1282326107-2139-1-git-send-email-artagnon@gmail.com>
+ <AANLkTine1mi0AiCL+ezwNpFs4_y_szSwJd+Enux5G26Y@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Raja R Harinath <harinath@hurrynot.org>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 19:51:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 19:51:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmVkt-0006EF-Eh
+	id 1OmVks-0006EF-UB
 	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 19:51:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752304Ab0HTRvs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Aug 2010 13:51:48 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33298 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752238Ab0HTRvr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Aug 2010 13:51:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 42E8BCE20B;
-	Fri, 20 Aug 2010 13:51:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=eg0liJJKjfMf
-	LF4otisb/jvFwfg=; b=UHP8GKpTwehbPb0vIR1Ln2PG2/1iRMnbolFCKbz6ZDWh
-	aO487dAZxkUpzMm2VbLh8InYXGNZNgH5E4SL5vChvMkoWyU28O/GnxPXrfJVCb4P
-	kGvcKeB1ZFT7zAi0EJpl3QgWO09g7TbRp4uzZhWS4GXt69pPoUYsxEUAitUdupg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=LQaRMK
-	vVl71HQNjgglwcCILQBRHySCvA9yj7nwO64M7mz9IOZKfiaPVm5bNpozMOjlipTm
-	kIu8blw2bwPCiycABlhqHEmfezKnpgTyOqBmFQG4cRwNO4pDsR6TUb0n68WQdExT
-	Kg0H8wXG7Ss2uKZqBwzFGw/rIxV0qjPIlPsh8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0FBC3CE203;
-	Fri, 20 Aug 2010 13:51:43 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 40778CE201; Fri, 20 Aug
- 2010 13:51:39 -0400 (EDT)
-In-Reply-To: <AANLkTi=WoMFYU6rDggyB+-s6F_LasUnc-N+gk9v+=C_r@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri\, 20 Aug
- 2010 14\:22\:02 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 97B57EAA-AC83-11DF-85BB-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752206Ab0HTRvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 13:51:46 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:37168 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752098Ab0HTRvo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 13:51:44 -0400
+Received: by pvg2 with SMTP id 2so1298319pvg.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 10:51:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=AGJPpOZboaR0bJ63sRbUlEps+//ZxgoKue7HX7nX984=;
+        b=gFZnxwLOTBqpycmeBa3gFrUFGu5JUs0uQJK7n7IiJEgMVrOrAi7ceE8Br+olXPFqJy
+         78BF8DwDlaLhM4z8/Hg9hsrYs7tsZji1olWQpV6vzERDEFYbbqx9w+ebSAz25pwiwZlf
+         0SWA2FrRKgx6fU3fGHnsjgUbGPnq4KQzemEc4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ObWclYM4+o9CMKgHkNeTnPARmVL6NuXzgpRRQp0nPVXiXxYMByxWI6R1gfJbGAbR0m
+         V9H+2c8ezgUSRo523w38PURRs1tTGO03kKEPvlJGeklmgkm+mCg9+UxlPMfddXRXMUEi
+         A2rCzU9SQgT+6Zx9KgFRJTAgWTlrKCfRkqOMM=
+Received: by 10.142.201.6 with SMTP id y6mr1360069wff.78.1282326704261;
+        Fri, 20 Aug 2010 10:51:44 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id n2sm3526991wfl.1.2010.08.20.10.51.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Aug 2010 10:51:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTine1mi0AiCL+ezwNpFs4_y_szSwJd+Enux5G26Y@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154063>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Hi Tay,
 
-> On Fri, Aug 20, 2010 at 10:13, Raja R Harinath <harinath@hurrynot.org=
-> wrote:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>
->>> On Thu, Aug 19, 2010 at 04:30, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
->> [snip]
->>>> Although the style you chose is arguably the least ugly, nested sh=
-ell
->>>> interpolation can be hard to follow. =C2=A0How about this?
->>>
->>> I think '\'' is harder to follow than \" and \$, but each to his ow=
-n
->>> :)
->>
->> There's also the slightly longer but somewhat prettier '"'"'.
->
-> I must say, you guys have an odd sense of aesthetics :)
+Tay Ray Chuan writes:
+> On Sat, Aug 21, 2010 at 1:41 AM, Ramkumar Ramachandra
+> <artagnon@gmail.com> wrote:
+> > Fix "Switched to a new branch <name>" to read "Switched to branch
+> > <name>" when <name> corresponds to an existing branch. This bug was
+> > introduced in 02ac983 while introducing the `-B` switch.
+> >
+> > Cc: Tay Ray Chuan <rctay89@gmail.com>
+> > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+> 
+> Please see
+> 
+>   <AANLkTi=3z9gJdT8LL3NANFyppUjvOVcrszjf5J5zAKPe@mail.gmail.com>
 
-I'd have to agree.  If I were writing this I would probably use '\''
-myself but that is not because it looks good (it does not) but in my
-experience it tends to be the least error prone.
+Ah yes. It looks like I missed this earlier. Sorry for the noise.
 
-But your original is just fine.
+-- Ram
