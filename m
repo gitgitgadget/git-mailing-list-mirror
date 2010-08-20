@@ -1,74 +1,70 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] tests: fix syntax error in "Use advise() for hints" test
-Date: Fri, 20 Aug 2010 14:22:02 +0000
-Message-ID: <AANLkTi=WoMFYU6rDggyB+-s6F_LasUnc-N+gk9v+=C_r@mail.gmail.com>
-References: <20100811083100.GA16495@burratino>
-	<1282142204-14720-1-git-send-email-avarab@gmail.com>
-	<20100819043036.GD25649@burratino>
-	<AANLkTikDq4eJfm2RnbGDuJMHCR8_4cn6NfJpoYWHbWWN@mail.gmail.com>
-	<87aaohwq0r.fsf@hariville.hurrynot.org>
+From: Thomas Jampen <jampen@kinet.ch>
+Subject: Re: Out of memory error during git push
+Date: Fri, 20 Aug 2010 16:26:17 +0200 (CEST)
+Message-ID: <23639398.583.1282314377177.JavaMail.root@hermes>
+References: <20100820125119.GA9762@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Raja R Harinath <harinath@hurrynot.org>
-X-From: git-owner@vger.kernel.org Fri Aug 20 16:22:15 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 16:33:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmSTy-00038z-P9
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 16:22:11 +0200
+	id 1OmSfG-0002Px-6Y
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 16:33:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752692Ab0HTOWF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Aug 2010 10:22:05 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53376 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752401Ab0HTOWE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 20 Aug 2010 10:22:04 -0400
-Received: by fxm13 with SMTP id 13so1800337fxm.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 07:22:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ps808tqensiPhs0qTH8B9sWFvUUzNP2g8pcRgDTuDzQ=;
-        b=CLmMDb3bXQToaJXRmzv8KhzFlQbxJuLzvXQpgFXjBijca1hdxFjaKyn7RYiICU4ObE
-         yUmQUk+LGzR1uPMTMbBbbuDDSuEiGcKNKPfp9oRLWhR7NDW4an5HuBqfdO/ZuUP7AxbV
-         JH3crKP3KbfBGC8m+yQLLH+884Jf/2WNJxkX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=D3Z3btYG8/zREByv7A1J5fYqONnuILCB3Ou264EGNPHkC+aG63tR4opskzBzch2ung
-         ocw/IVhdaqDao3JNnaxDeCCO256v/8lljXiAVC0XA+HwbSWjjG1tY5WGHvfuHYMrGpLI
-         X2HdcQt64TU7qRrr24kRPIpYIy08fwaSgQRJQ=
-Received: by 10.223.98.66 with SMTP id p2mr1261687fan.18.1282314122678; Fri,
- 20 Aug 2010 07:22:02 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Fri, 20 Aug 2010 07:22:02 -0700 (PDT)
-In-Reply-To: <87aaohwq0r.fsf@hariville.hurrynot.org>
+	id S1752972Ab0HTOdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 10:33:45 -0400
+Received: from hermes.gymkirchenfeld.ch ([86.118.137.202]:47438 "EHLO
+	hermes.gymkirchenfeld.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752437Ab0HTOdn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 10:33:43 -0400
+X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Fri, 20 Aug 2010 10:33:43 EDT
+Received: from localhost (localhost [127.0.0.1])
+	by hermes.gymkirchenfeld.ch (Postfix) with ESMTP id 499E38C432A;
+	Fri, 20 Aug 2010 16:26:18 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at hermes.gymkirchenfeld.ch
+Received: from hermes.gymkirchenfeld.ch ([127.0.0.1])
+	by localhost (hermes.gymkirchenfeld.ch [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id wIJhc+1PmVA0; Fri, 20 Aug 2010 16:26:17 +0200 (CEST)
+Received: from hermes.gymkirchenfeld.ch (localhost [127.0.0.1])
+	by hermes.gymkirchenfeld.ch (Postfix) with ESMTP id 53A2B8C4328;
+	Fri, 20 Aug 2010 16:26:17 +0200 (CEST)
+In-Reply-To: <20100820125119.GA9762@burratino>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - FF3.0 (Win)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154044>
 
-On Fri, Aug 20, 2010 at 10:13, Raja R Harinath <harinath@hurrynot.org> =
-wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->
->> On Thu, Aug 19, 2010 at 04:30, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> [snip]
->>> Although the style you chose is arguably the least ugly, nested she=
-ll
->>> interpolation can be hard to follow. =C2=A0How about this?
+Hi
+
+>> I'm experiencing the following error while pushing a git repo (home
+>> directory) to my QNAP TS-210:
 >>
->> I think '\'' is harder to follow than \" and \$, but each to his own
->> :)
->
-> There's also the slightly longer but somewhat prettier '"'"'.
+>> user@mypc:~$ git push origin master
+>> Counting objects: 12532, done.
+>> Delta compression using up to 2 threads.
+>> Compressing objects: 100% (8974/8974), done.
+>> fatal: Out of memory, malloc failed, 986.06 MiB | 1.65 MiB/s
+>> error: pack-objects died of signal 13
+> 
+> What version of git are you using?  Do you have overcommit accounting
+> enabled?
 
-I must say, you guys have an odd sense of aesthetics :)
+I'm using git version 1.7.0.4 on my Kubuntu 10.04 Laptop and git version
+1.7.1.1 on my QNAP NAS.
+
+On my Laptop and on the NAS, when I execute: sudo sysctl vm.overcommit_memory
+I get:
+vm.overcommit_memory = 0
+
+Do you propose to set this to '2' in order to disable overcommitting? If yes, where (on the Laptop and/or on the NAS)?
+
+Thanks,
+Tom
