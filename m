@@ -1,111 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] xmalloc: include size in the failure message
-Date: Fri, 20 Aug 2010 17:09:51 +0200
-Message-ID: <1282316991-23320-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <7vhbipcpe1.fsf@alter.siamese.dyndns.org>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 20 17:13:45 2010
+From: Charles Bailey <charles@hashpling.org>
+Subject: [PATCH v2] mergetool: Remove explicit references to /dev/tty
+Date: Fri, 20 Aug 2010 16:25:09 +0100
+Message-ID: <1282317909-13628-1-git-send-email-charles@hashpling.org>
+References: <20100820122724.GS10407@burratino>
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Magnus=20B=C3=A4ck?= <magnus.back@sonyericsson.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Charles Bailey <charles@hashpling.org>
+To: David Aguilar <davvid@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 20 17:26:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmTHs-0000pq-UZ
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 17:13:45 +0200
+	id 1OmTTk-0008GO-3F
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 17:26:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199Ab0HTPNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 11:13:36 -0400
-Received: from imag.imag.fr ([129.88.30.1]:49572 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752692Ab0HTPNf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 11:13:35 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7KF9tqA012894
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 20 Aug 2010 17:09:55 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OmTEB-0006Aq-ED; Fri, 20 Aug 2010 17:09:55 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OmTEB-00064u-D2; Fri, 20 Aug 2010 17:09:55 +0200
-X-Mailer: git-send-email 1.7.2.1.83.ge0227
-In-Reply-To: <7vhbipcpe1.fsf@alter.siamese.dyndns.org>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 20 Aug 2010 17:09:56 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1753283Ab0HTPZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 11:25:50 -0400
+Received: from relay.ptn-ipout01.plus.net ([212.159.7.35]:4764 "EHLO
+	relay.ptn-ipout01.plus.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752824Ab0HTPZt (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Aug 2010 11:25:49 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAOQ7bkzUnw4T/2dsb2JhbACgUHG8J4U3BA
+Received: from outmx04.plus.net ([212.159.14.19])
+  by relay.ptn-ipout01.plus.net with ESMTP; 20 Aug 2010 16:25:36 +0100
+Received: from hashpling.plus.com ([212.159.69.125])
+	 by outmx04.plus.net with esmtp (Exim) id 1OmTTL-0001Gq-I5; Fri, 20 Aug 2010 16:25:35 +0100
+Received: from charles by hashpling.plus.com with local (Exim 4.72)
+	(envelope-from <charles@hashpling.org>)
+	id 1OmTTK-0003Yg-7v; Fri, 20 Aug 2010 16:25:34 +0100
+X-Mailer: git-send-email 1.7.2.2.110.gf04b9.dirty
+In-Reply-To: <20100820122724.GS10407@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154049>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154050>
 
-Out-of-memory errors can either be actual lack of memory, or bugs (like
-code trying to call xmalloc(-1) by mistake). A little more information
-may help tracking bugs reported by users.
+mergetool used /dev/tty to switch back to receiving input from the user
+via inside a block with a redirected stdin.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+This harms testability, so change mergetool to save its original stdin
+to an alternative fd in this block and restore it for those sub-commands
+that need the original stdin.
+
+Includes additional compatibility fix from Jonathan Nieder.
+
+Tested-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Charles Bailey <charles@hashpling.org>
 ---
-Junio C Hamano <gitster@pobox.com> writes:
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> Out-of-memory errors can either be actual lack of memory, or bugs (like
->> code trying to call xmalloc(-1) by mistake). A little more information
->> may help tracking bugs reported by users.
->>
->> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
->> ---
->> This kind of thing may help for cases like
->>
->> Subject: Out of memory error during git push
->> http://thread.gmane.org/gmane.comp.version-control.git/153988
->
-> Unless a single allocation try to grab unreasonably amount of memory,
-> probably a failure from a specific single failure may not help much.
+Now works on ksh as well as bash and dash.
 
-I don't promise miracle ;-). But at least, the diagnosis allows one to
-distinguish small allocations, huge ones, and silly errors like small
-negative numbers turned into unreasonably big ones.
+ git-mergetool--lib.sh |    2 +-
+ git-mergetool.sh      |    7 +++++--
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
->>  		if (!ret)
->> -			die("Out of memory, malloc failed");
->> +			die("Out of memory, malloc failed (tried to allocate %u bytes)", size);
->
-> Perhaps use %lu format with cast to ulong?
-
-Will do.
-
-> alloc.c: fix formatting size_t to string
->
-> Under NO_C99_FORMAT the format and the argument would not match if size_t
-> is not the same size as uint.  As the one in sha1_file.c seems to be done
-> in a better way, let's use that one.
-
-Sounds good. Not sure why we don't basically use the %lu version
-everywhere though.
-
- wrapper.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index afb4f6f..fd8ead3 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -40,7 +40,8 @@ void *xmalloc(size_t size)
- 		if (!ret && !size)
- 			ret = malloc(1);
- 		if (!ret)
--			die("Out of memory, malloc failed");
-+			die("Out of memory, malloc failed (tried to allocate %lu bytes)",
-+			    (unsigned long)size);
- 	}
- #ifdef XMALLOC_POISON
- 	memset(ret, 0xA5, size);
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 51dd0d6..b5e1943 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -35,7 +35,7 @@ check_unchanged () {
+ 		while true; do
+ 			echo "$MERGED seems unchanged."
+ 			printf "Was the merge successful? [y/n] "
+-			read answer < /dev/tty
++			read answer
+ 			case "$answer" in
+ 			y*|Y*) status=0; break ;;
+ 			n*|N*) status=1; break ;;
+diff --git a/git-mergetool.sh b/git-mergetool.sh
+index bd7ab02..165b700 100755
+--- a/git-mergetool.sh
++++ b/git-mergetool.sh
+@@ -279,6 +279,9 @@ files_to_merge() {
+ if test $# -eq 0 ; then
+     cd_to_toplevel
+ 
++    # Save original stdin
++    exec 3<&0
++
+     if test -e "$GIT_DIR/MERGE_RR"
+     then
+ 	rerere=true
+@@ -296,10 +299,10 @@ if test $# -eq 0 ; then
+     while IFS= read i
+     do
+ 	if test $last_status -ne 0; then
+-	    prompt_after_failed_merge < /dev/tty || exit 1
++	    prompt_after_failed_merge <&3 || exit 1
+ 	fi
+ 	printf "\n"
+-	merge_file "$i" < /dev/tty > /dev/tty
++	merge_file "$i" <&3
+ 	last_status=$?
+ 	if test $last_status -ne 0; then
+ 	    rollup_status=1
 -- 
-1.7.2.1.83.ge0227
+1.7.2.2.110.gf04b9.dirty
