@@ -1,59 +1,107 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Tags, Grafts, and Clones, oh my!
-Date: Thu, 19 Aug 2010 20:54:29 -0400 (EDT)
-Message-ID: <15347445.117294.1282265669453.JavaMail.root@mail.hq.genarts.com>
-References: <29380346.117285.1282264933599.JavaMail.root@mail.hq.genarts.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/3] clone: do not accept --depth on local clones
+Date: Fri, 20 Aug 2010 11:51:05 +1000
+Message-ID: <1282269067-5527-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 20 02:54:43 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>, mikachu@gmail.com,
+	computerdruid@gmail.com, Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Aug 20 03:51:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmFsY-00086Q-Pn
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 02:54:43 +0200
+	id 1OmGlY-0007EH-P5
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 03:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751242Ab0HTAyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 19 Aug 2010 20:54:38 -0400
-Received: from hq.genarts.com ([173.9.65.1]:8627 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750898Ab0HTAyg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 19 Aug 2010 20:54:36 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id A17581E26344
-	for <git@vger.kernel.org>; Thu, 19 Aug 2010 20:54:35 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id XT895qtSEZ3G for <git@vger.kernel.org>;
-	Thu, 19 Aug 2010 20:54:29 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 8A8A11E262F3
-	for <git@vger.kernel.org>; Thu, 19 Aug 2010 20:54:29 -0400 (EDT)
-In-Reply-To: <29380346.117285.1282264933599.JavaMail.root@mail.hq.genarts.com>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1751504Ab0HTBvY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 19 Aug 2010 21:51:24 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:55333 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750849Ab0HTBvX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 19 Aug 2010 21:51:23 -0400
+Received: by pzk26 with SMTP id 26so1019216pzk.19
+        for <git@vger.kernel.org>; Thu, 19 Aug 2010 18:51:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=/j8kzhKj1S1eIxZp0S5VjBcOv+hLPb3gwETmti65Vlc=;
+        b=s+3oQnpo9WnxmLHhxwH7cBieEINDYM+SoKEMN2nNq+6iejnLuRvb1OwXzddMVrWC5V
+         tFN04c58F9NkjiBV9UWkrIFx9y6RUDPBiwvS7hg3X6qiCzhAkwtBUYtgFlVKxHbmBKNu
+         LQYvl041OGPP+jDU4GWaJwFIJ7385mS9gHY00=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=apaOf4tgVF3A9jp8eoCEao96b4jfElzQfrDh/MsjCJP/WfQnozXuMCEU9H1Py/A/qD
+         3OLEdw/0GOKFK+AnyamK3ybq82b2dqncXDCUT2elRlW3ej7VBWQDwO3jfkOq2O5LO2kp
+         O+213qLT043DcfptlAlZ/LWLn6qWRmhpZGJaY=
+Received: by 10.114.121.16 with SMTP id t16mr762092wac.169.1282269082802;
+        Thu, 19 Aug 2010 18:51:22 -0700 (PDT)
+Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
+        by mx.google.com with ESMTPS id q6sm3778247waj.22.2010.08.19.18.51.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 19 Aug 2010 18:51:21 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Fri, 20 Aug 2010 11:51:10 +1000
+X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153968>
 
-Hi all-
+clone_local() function disregards --depth. Make it more apparent.
+Also hint users that file:// works with --depth.
 
-I'm currently working on migrating my company's SVN repository to git.  Based on a conversation with Ram at the beginning of the summer, I'm using svn-fe plus a couple of my own scripts.  To create the git branches and tags from the svn-fe generated repo I clone a bunch of "mini-repos", which I subdirectory-filter, then git fetch the branches/tags from the mini-repos into a "fusion" repo where I graft everything back together, and finally one last filter-branch to permanently commit the grafts.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ builtin/clone.c |    8 ++++++--
+ 1 files changed, 6 insertions(+), 2 deletions(-)
 
-Unfortunately I'm running into a problem with cloning the resulting repository.  Any git tags that are not associated with a live branch are declared invalid:
-
-   error: refs/tags/tagFoo does not point to a valid object!
-
-I've now reproduced this issue in micro (much easier to work with than the 20k commits in the real repo), and it does go away if I git checkout -b branchFoo tagFoo before cloning the repository.  I've examined the source repository, and the tag appears valid to me, as does the commit it points to.  The first error I see is during the clone.
-
-Does this situation make sense to anyone?  If it's a potential bug (rather than user error), I can submit my testcase.  I'm currently working with git 1.7.2.1 on MacOS 10.6.4.
-
-Any ideas will be greatly appreciated!
-
-Thanks,
-Stephen
+diff --git a/builtin/clone.c b/builtin/clone.c
+index efb1e6f..e787cf2 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -361,7 +361,7 @@ static void write_remote_refs(const struct ref *loc=
+al_refs)
+=20
+ int cmd_clone(int argc, const char **argv, const char *prefix)
+ {
+-	int is_bundle =3D 0;
++	int is_bundle =3D 0, is_local;
+ 	struct stat buf;
+ 	const char *repo_name, *repo, *work_tree, *git_dir;
+ 	char *path, *dir;
+@@ -414,6 +414,10 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 		repo =3D xstrdup(make_absolute_path(repo_name));
+ 	else
+ 		repo =3D repo_name;
++	is_local =3D path && !is_bundle;
++	if (is_local && option_depth)
++		die("local clone with --depth does not make sense\n"
++		    "hint: use file:// instead");
+=20
+ 	if (argc =3D=3D 2)
+ 		dir =3D xstrdup(argv[1]);
+@@ -514,7 +518,7 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+=20
+ 	strbuf_reset(&value);
+=20
+-	if (path && !is_bundle) {
++	if (is_local) {
+ 		refs =3D clone_local(path, git_dir);
+ 		mapped_refs =3D wanted_peer_refs(refs, refspec);
+ 	} else {
+--=20
+1.7.1.rc1.69.g24c2f7
