@@ -1,84 +1,111 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 3/4] fmt-merge-msg: Update fmt-merge-msg and
- merge-config documentation
-Date: Fri, 20 Aug 2010 20:30:21 +0530
-Message-ID: <20100820150019.GF9448@kytes>
-References: <1282307041-19681-1-git-send-email-artagnon@gmail.com>
- <1282307041-19681-4-git-send-email-artagnon@gmail.com>
- <20100820123935.GB9448@kytes>
- <4C6E78CB.1090907@viscovery.net>
- <20100820131218.GC9448@kytes>
- <20100820141035.GD16190@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>,
-	Yaroslav Halchenko <debian@onerussian.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 17:02:36 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] xmalloc: include size in the failure message
+Date: Fri, 20 Aug 2010 17:09:51 +0200
+Message-ID: <1282316991-23320-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7vhbipcpe1.fsf@alter.siamese.dyndns.org>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 20 17:13:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmT72-0002mC-UB
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 17:02:33 +0200
+	id 1OmTHs-0000pq-UZ
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 17:13:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752475Ab0HTPCK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 11:02:10 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:35674 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752200Ab0HTPCJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 11:02:09 -0400
-Received: by pzk26 with SMTP id 26so1256127pzk.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 08:02:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=REKIWhUzAuweDW+/82SNFcKVT6rbb2hUPG1mPa0mecY=;
-        b=Xg/XIKkmjTySI2Wt7HjkSY7j3t6OtyYEWYDHW/43okBS3If1jNusGByTG5UiHGfLST
-         sRCqU8MzPdS4ezvd1JbB+ZC7gk/7QYBqhY1MdIRrFwMu2NM6T7fwePzWuuwymi0OkDUU
-         X5xZP8TXqB4CWiufPN1pQE6x/3pmVTY2okRCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=WmEZuZrQZ33+8sNxiRAU9afK0MfawdVAp6v87+n71sGNcE/iNOnJFnX9Eq4hhEuJoj
-         LInGEdrBSnAxpDBWKoH17ji8WhTHK4fQ27KcpBzeOEBB9ottBUif17e00nOYT2QYWVQy
-         8T8OPMP4vUyex/RAOfrPudWn3GomDvLQakCvs=
-Received: by 10.114.126.2 with SMTP id y2mr1644635wac.57.1282316529212;
-        Fri, 20 Aug 2010 08:02:09 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id s5sm5044749wak.0.2010.08.20.08.02.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 08:02:07 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100820141035.GD16190@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753199Ab0HTPNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 11:13:36 -0400
+Received: from imag.imag.fr ([129.88.30.1]:49572 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752692Ab0HTPNf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 11:13:35 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7KF9tqA012894
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 20 Aug 2010 17:09:55 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OmTEB-0006Aq-ED; Fri, 20 Aug 2010 17:09:55 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OmTEB-00064u-D2; Fri, 20 Aug 2010 17:09:55 +0200
+X-Mailer: git-send-email 1.7.2.1.83.ge0227
+In-Reply-To: <7vhbipcpe1.fsf@alter.siamese.dyndns.org>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 20 Aug 2010 17:09:56 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154049>
 
-Hi Jonathan,
+Out-of-memory errors can either be actual lack of memory, or bugs (like
+code trying to call xmalloc(-1) by mistake). A little more information
+may help tracking bugs reported by users.
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
-> 
-> > I noticed that the command-line parsing framework has only OPT_BOOLEAN
-> > and OPT_INTEGER, but no OPT_BOOLEAN_OR_INTEGER.
-> 
-> --no-<foo> works already with OPT_INTEGER.  But for --<foo>, one
-> needs the
-> 
->  { OPTION_INTEGER, short, long, &var, "n", description,
->    PARSE_OPT_OPTARG, NULL, 20 },
-> 
-> form.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks, I'll re-roll with this fix.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> Out-of-memory errors can either be actual lack of memory, or bugs (like
+>> code trying to call xmalloc(-1) by mistake). A little more information
+>> may help tracking bugs reported by users.
+>>
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>> This kind of thing may help for cases like
+>>
+>> Subject: Out of memory error during git push
+>> http://thread.gmane.org/gmane.comp.version-control.git/153988
+>
+> Unless a single allocation try to grab unreasonably amount of memory,
+> probably a failure from a specific single failure may not help much.
 
--- Ram
+I don't promise miracle ;-). But at least, the diagnosis allows one to
+distinguish small allocations, huge ones, and silly errors like small
+negative numbers turned into unreasonably big ones.
+
+>>  		if (!ret)
+>> -			die("Out of memory, malloc failed");
+>> +			die("Out of memory, malloc failed (tried to allocate %u bytes)", size);
+>
+> Perhaps use %lu format with cast to ulong?
+
+Will do.
+
+> alloc.c: fix formatting size_t to string
+>
+> Under NO_C99_FORMAT the format and the argument would not match if size_t
+> is not the same size as uint.  As the one in sha1_file.c seems to be done
+> in a better way, let's use that one.
+
+Sounds good. Not sure why we don't basically use the %lu version
+everywhere though.
+
+ wrapper.c |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
+
+diff --git a/wrapper.c b/wrapper.c
+index afb4f6f..fd8ead3 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -40,7 +40,8 @@ void *xmalloc(size_t size)
+ 		if (!ret && !size)
+ 			ret = malloc(1);
+ 		if (!ret)
+-			die("Out of memory, malloc failed");
++			die("Out of memory, malloc failed (tried to allocate %lu bytes)",
++			    (unsigned long)size);
+ 	}
+ #ifdef XMALLOC_POISON
+ 	memset(ret, 0xA5, size);
+-- 
+1.7.2.1.83.ge0227
