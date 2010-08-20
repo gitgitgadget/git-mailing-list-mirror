@@ -1,99 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 1/5] parse-options: Allow PARSE_OPT_NOARG in integer
- arguments
-Date: Fri, 20 Aug 2010 12:49:51 -0700
-Message-ID: <7vlj81awtc.fsf@alter.siamese.dyndns.org>
-References: <1282331702-5115-1-git-send-email-artagnon@gmail.com>
- <1282331702-5115-2-git-send-email-artagnon@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] shell: Rewrite documentation and improve error message
+Date: Sat, 21 Aug 2010 01:21:41 +0530
+Message-ID: <20100820195139.GD6211@kytes>
+References: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Yaroslav Halchenko <debian@onerussian.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 21:50:26 2010
+Cc: Greg Brockman <gdb@MIT.EDU>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 20 21:53:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmXbe-0007HU-Dw
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 21:50:26 +0200
+	id 1OmXeo-0000Se-8Z
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 21:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753609Ab0HTTuV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 15:50:21 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58435 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752354Ab0HTTuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 15:50:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 59D7FCF3B4;
-	Fri, 20 Aug 2010 15:50:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=I8UNdpDCRzWnFYpnLuEDlI1OYLQ=; b=GA7cYk
-	owHlu4QNYL95nVTTiGib3zJ5s2MJX0ucSiIUVTgjbJKsNY5D+w+oelalsYhTgo3L
-	LEHRLk+Tb7g4HJlrcIxAhBkPzk1mqvti0+lkiwcS2W+8qzfmow8YGIn3N2+CwOXM
-	xdDvifRCds2kpL2BaPQYmjE2eotvVNmvHgTcs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=kwDzhQekK3+Oj+HOkUKRDciWaNYd4X26
-	yiSUyExyjqzXa/OAiCdKAfZ8gdgE47mRdMSJcqR/VH9GArfZnVeTfuk1npOOlAy0
-	7Z93B84AMRaHf1iKqeyRNb6qefMwlkMYCdjLmzjFK4kZa8DUm1KkHxFQsR6xbBUX
-	K00Ao5vvkyM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C82C0CF3AF;
-	Fri, 20 Aug 2010 15:50:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1F487CF3AA; Fri, 20 Aug
- 2010 15:49:53 -0400 (EDT)
-In-Reply-To: <1282331702-5115-2-git-send-email-artagnon@gmail.com> (Ramkumar
- Ramachandra's message of "Sat\, 21 Aug 2010 00\:44\:58 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2441148C-AC94-11DF-A543-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753537Ab0HTTxi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 15:53:38 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:39560 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750814Ab0HTTxh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 15:53:37 -0400
+Received: by pxi10 with SMTP id 10so1340611pxi.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 12:53:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=/iLrJnV+GctqQF8lAKjk7TfycgnlVSOl1PiAWniiSqA=;
+        b=LSjlabJdqxkGGjKdboUoUbxNSJyQzQdvSxq3Cns6WgBqO5i73gUu5PvAxgz50RbmY8
+         Ddki0lHN/7FEhIkf1sbTQKLMQQjNWBftv+Jdene+VSWCOyPgDET8E5aBUgsP8iwf3kOh
+         T7X3jEY7VQ1eymYbK0fUfyPwsxC8SrbHwIKXI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kAVXjoAMy2qPO7KgQipbh88GWI8VjvdWHlgH4srQ7H6HPDj5eNj4igJ58iCt4zdJLd
+         LHzV4p910VUIL7gknZgTFBfyJiHd5lU4lfXbO36qYCy/Eyc6PXyjuqQjyntvxyraMN2D
+         hTb4TxNhKqB+SM7dp0FpITu+Hgy4aDCIjrl0k=
+Received: by 10.142.254.21 with SMTP id b21mr1308443wfi.305.1282334016544;
+        Fri, 20 Aug 2010 12:53:36 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id 23sm3648855wfa.10.2010.08.20.12.53.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Aug 2010 12:53:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154077>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Hi,
 
-> When the option parser encounters an OPTION_INTEGER argument,
-> PARSE_OPT_NOARG should imply that the default value should be used.
-
-Sorry but why?
-
-Doesn't NOARG mean "Do not take an argument, if you give me an argument
-that is an error"?
-
-I would understand if this were OPT_OPTARG, though.
-
-Confused...
-
->
+Ramkumar Ramachandra writes:
+> Update the documentation of 'git shell' to mention the interactive
+> mode and COMMAND_DIR. Also provide a hint when interactive mode is not
+> available in the shell.
+> 
 > Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> Cc: Jakub Narebski <jnareb@gmail.com>
+> Cc: Greg Brockman <gdb@MIT.EDU>
+> Cc: Petr Baudis <pasky@suse.cz>
 > ---
->  parse-options.c |    3 +++
->  1 files changed, 3 insertions(+), 0 deletions(-)
->
-> diff --git a/parse-options.c b/parse-options.c
-> index e0c3641..7ec9886 100644
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -138,6 +138,9 @@ static int get_value(struct parse_opt_ctx_t *p,
->  			*(int *)opt->value = 0;
->  			return 0;
->  		}
-> +		if (opt->flags & PARSE_OPT_NOARG)
-> +			*(int *)opt->value = opt->defval;
-> +			return 0;
->  		if (opt->flags & PARSE_OPT_OPTARG && !p->opt) {
->  			*(int *)opt->value = opt->defval;
->  			return 0;
-> -- 
-> 1.7.2.2.409.gdbb11.dirty
+>  Documentation/git-receive-pack.txt |    2 +-
+
+I'm sorry this stray change crept in. It's not relevant to this patch.
+
+> diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+> index 2790eeb..2b07e44 100644
+> --- a/Documentation/git-receive-pack.txt
+> +++ b/Documentation/git-receive-pack.txt
+> @@ -8,7 +8,7 @@ git-receive-pack - Receive what is pushed into the repository
+>  
+>  SYNOPSIS
+>  --------
+> -'git-receive-pack' <directory>
+> +'git receive-pack' <directory>
+
+Quick fixup:
+-- 8< --
+diff --git a/Documentation/git-receive-pack.txt b/Documentation/git-receive-pack.txt
+index 2b07e44..2790eeb 100644
+--- a/Documentation/git-receive-pack.txt
++++ b/Documentation/git-receive-pack.txt
+@@ -8,7 +8,7 @@ git-receive-pack - Receive what is pushed into the repository
+ 
+ SYNOPSIS
+ --------
+-'git receive-pack' <directory>
++'git-receive-pack' <directory>
+ 
+ DESCRIPTION
+ -----------
