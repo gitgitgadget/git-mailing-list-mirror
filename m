@@ -1,95 +1,120 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [RFC/PATCH 1/2] commit: add parse_commit_repl() to replace commits at parsing time
-Date: Fri, 20 Aug 2010 06:04:41 +0200
-Message-ID: <201008200604.41631.chriscool@tuxfamily.org>
-References: <20100817015901.5592.25471.chriscool@tuxfamily.org> <201008180607.54675.chriscool@tuxfamily.org> <7vr5hw9dqn.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: user-manual.html invalid HTML
+Date: Fri, 20 Aug 2010 00:04:02 -0500
+Message-ID: <20100820050401.GC25013@burratino>
+References: <20081212023003.GD23128@sigill.intra.peff.net>
+ <87hc5ahzy8.fsf@jidanni.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 06:04:58 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: peff@peff.net, git@vger.kernel.org
+To: jidanni@jidanni.org
+X-From: git-owner@vger.kernel.org Fri Aug 20 07:06:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmIqf-00071H-PU
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 06:04:58 +0200
+	id 1OmJno-0004L2-Rp
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 07:06:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750905Ab0HTEEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 00:04:51 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:35897 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750787Ab0HTEEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 00:04:50 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 297E8818043;
-	Fri, 20 Aug 2010 06:04:42 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <7vr5hw9dqn.fsf@alter.siamese.dyndns.org>
+	id S1751227Ab0HTFFr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 20 Aug 2010 01:05:47 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:49547 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751207Ab0HTFFp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 20 Aug 2010 01:05:45 -0400
+Received: by yxg6 with SMTP id 6so1070182yxg.19
+        for <git@vger.kernel.org>; Thu, 19 Aug 2010 22:05:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=guiw/jeQldVhWjqp+GhFsI4jhX3f9tziLLwlI3lXREM=;
+        b=Fu/cHAe9rMbun2eF5AV2sSBM9B2ry58+/5kmrIKAZRX23pbmjXpsfL8QNtyvJpwmnX
+         R8vaO7aEGYLFne4iRpEC54l+1IV7hAN2WknuFAaU4wj4FgnZA1GTsA+w5gECkPtmayHz
+         DhjmCQlRY93aY40pVlXo1a2TwX6CXa1+QOmdE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=glcwxo+/HtzePUatDWoPqy96gHQnaFmKDIrCbVyibPybOxXfnOnd55chsTdWcJXo6N
+         EF9VB4xEv1RBUDtB+JeEIRhCJ9rPh5KPHz8hALPLE9ImoKyIofBRUauK68ycqcKAPI0f
+         0yZjBA9YYteo+ehs9lg/b9Kk0IYRWkeMCd28s=
+Received: by 10.150.157.7 with SMTP id f7mr383618ybe.153.1282280744622;
+        Thu, 19 Aug 2010 22:05:44 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id 36sm410794ybr.20.2010.08.19.22.05.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 19 Aug 2010 22:05:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87hc5ahzy8.fsf@jidanni.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153974>
 
-On Wednesday 18 August 2010 16:50:24 Junio C Hamano wrote:
-> Christian Couder <chriscool@tuxfamily.org> writes:
-> > On Wednesday 18 August 2010 05:17:52 Nguyen Thai Ngoc Duy wrote:
-> >> On Wed, Aug 18, 2010 at 7:18 AM, Junio C Hamano <gitster@pobox.com> 
-wrote:
-> >> > Christian Couder <chriscool@tuxfamily.org> writes:
-> >> >> The function parse_commit() is not safe regarding replaced commits
-> >> >> because it uses the buffer of the replacement commit but the object
-> >> >> part of the commit struct stay the same. Especially the sha1 is not
-> >> >> changed so it doesn't match the content of the commit.
-> >> > 
-> >> > This all sounds backwards to me, if I am reading the discussion
-> >> > correctly.
-> >> > 
-> >> > If a replace record says commit 0123 is replaced by commit 4567 (iow,
-> >> > 0123 was a mistake, and pretend that its content is what is recorded
-> >> > in 4567), and when we are honoring the replace records (iow, we are
-> >> > not fsck), shouldn't read_sha1("0123") give us a piece of memory that
-> >> > stores what is recorded in 4567, parse_object("0123") return a struct
-> >> > commit whose buffer points at a block of memory that has what is
-> >> > recorded in 4567 _while_ its object.sha1[] say "0 123"?
-> >> 
-> >> 1. parse_object() as it is now would return object.sha1[] = "4567".
-> >> 2. lookup_commit(), then parse_commit() would return object.sha1[] =
-> >> "0123".
-> >> 
-> >> > What problem are you trying to solve?
-> >> 
-> >> Inconsistency in replacing objects. I have no comments whether #1 or
-> >> #2 is expected behavior. But at least it should stick to one behavior
-> >> only.
-> > 
-> > We discussed this inconsistency in this thread:
-> > 
-> > http://thread.gmane.org/gmane.comp.version-control.git/152321/
-> > 
-> > So we can resolve the inconsistency with Duy's patch to make
-> > parse_object() return object.sha1[] = "0123".
-> > 
-> > It's simpler and probably safer. The downside is that the sha1 will not
-> > be consistent with the content anymore and that it will be more
-> > difficult to realize that an object has been replaced as there will be
-> > no sha1 change to be seen.
-> 
-> I do not see it as a downside at all.
-> 
-> If the user wants to take replaced objects, they should be shown just like
-> an ordinary objects at the machinery level.
-> 
-> Of course, the user is free to add comments on the commit log to note the
-> fact that a new commit is replacing some other commit and for what
-> purpose.  Also if somebody really wants to, cat-file piped to hash-object
-> can be used to see the difference.
+Hi,
 
-Ok so please apply Duy's patch perhaps with an improved commit message.
+Sorry for the long silence.
 
-Thanks,
-Christian.
+Jeff King wrote:
+> On Fri, Dec 12, 2008 at 04:32:15AM +0800, jidanni@jidanni.org wrote:
+
+[user-manual.html lacks a !DOCTYPE declaration]
+>=20
+> The versions I build locally have:
+>=20
+> <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+>     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+>=20
+> in each HTML file, which is added by asciidoc.  Maybe the package you
+> are looking at was built with an older version of asciidoc that doesn=
+'t
+> do this (I don't actually know the history of this feature, but it se=
+ems
+> to me that this is something asciidoc should be doing, not git).
+
+It looks like the HTML for user-manual.html (unlike the reference
+manual and other articles) is not generated by asciidoc after all;
+instead, the rule in Documentation/Makefile uses xsltproc directly to
+convert the asciidoc-generated XML to HTML.
+
+Apparently the caller is supposed to set the
+chunker.output.doctype-public parameter.
+http://www.sagehill.net/docbookxsl/Chunking.html#OutputDoctype
+
+Maybe something as simple as this would work.
+
+-- 8< --
+Subject: Documentation: set a !DOCTYPE for user manual
+
+asciidoc already takes care of including a doctype for most of the
+HTML documentation, but the user manual which is processed with
+docbook-xsl directly lacks one (at least with Debian docbook-xsl
+1.75.2+dfsg-5).  This makes it harder to automatically validate the
+HTML.
+
+Reported-by: =E7=A9=8D=E4=B8=B9=E5=B0=BC <jidanni@jidanni.org>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+diff --git a/Documentation/docbook.xsl b/Documentation/docbook.xsl
+index 9a6912c..da8b05b 100644
+--- a/Documentation/docbook.xsl
++++ b/Documentation/docbook.xsl
+@@ -1,5 +1,8 @@
+ <xsl:stylesheet xmlns:xsl=3D"http://www.w3.org/1999/XSL/Transform"
+ 		version=3D'1.0'>
+  <xsl:import href=3D"http://docbook.sourceforge.net/release/xsl/curren=
+t/html/docbook.xsl"/>
+- <xsl:output method=3D"html" encoding=3D"UTF-8" indent=3D"no" />
++ <xsl:output method=3D"html"
++     encoding=3D"UTF-8" indent=3D"no"
++     doctype-public=3D"-//W3C//DTD HTML 4.01//EN"
++     doctype-system=3D"http://www.w3.org/TR/html4/strict.dtd" />
+ </xsl:stylesheet>
+--=20
