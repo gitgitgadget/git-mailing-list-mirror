@@ -1,88 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 17/17] Documentation: remove stray backslashes from
- "Fighting regressions" article
-Date: Fri, 20 Aug 2010 05:40:31 -0500
-Message-ID: <20100820104031.GQ10407@burratino>
-References: <20100820101902.GA10356@burratino>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Proposal for new Git Wiki admin
+Date: Fri, 20 Aug 2010 14:12:01 +0300
+Message-ID: <AANLkTi=cFf+DPzMw=BV6979ATMP4Z1845sFVmLSJy33=@mail.gmail.com>
+References: <20100810162602.GG3921@kytes>
+	<m3y6ce2kdz.fsf@localhost.localdomain>
+	<20100811050056.GA3715@kytes>
+	<4C62494A.2030805@drmicha.warpmail.net>
+	<AANLkTimuHzC_brw2bBDTvc=-Cj+70AMFEj7nzspW5mGq@mail.gmail.com>
+	<20100811134640.GA10888@kytes>
+	<20100811142359.GB10888@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	=?utf-8?B?RnLDqWTDqXJpYyBCcmnDqHJl?= <fbriere@fbriere.net>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Thomas Rast <trast@student.ethz.ch>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 20 12:42:24 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: John Warthog Hawley <warthog9@kernel.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 13:12:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmP3H-0007Er-Da
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 12:42:23 +0200
+	id 1OmPW6-00037a-I9
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 13:12:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752697Ab0HTKmU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 06:42:20 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61333 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752686Ab0HTKmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 06:42:18 -0400
-Received: by ywe9 with SMTP id 9so505665ywe.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 03:42:17 -0700 (PDT)
+	id S1752719Ab0HTLME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 07:12:04 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40788 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751608Ab0HTLMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 07:12:03 -0400
+Received: by iwn5 with SMTP id 5so721555iwn.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 04:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=xhY06RIeT6q3xDDcw1z2P4tU9fsiyhDps1ZliC77h5o=;
-        b=qewUhoQmuCWu80egbaAihLRQguJnrTF5uU87853oOr6IhaLgpUnYFT4ETYVS8YzIkx
-         nhl4xlR6MhX93NSSbwVAkTqo7/rNyKOX+SyPBimNxJWYVM1TRmDlEHJzzYD89VnRcnu8
-         D+cY43mcoPo1aTwPneraPmL02EJ4SlZSuC20w=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=yD56YNI4TmLmQAOXvTNNoIN2KBcXSzCYtYZRz9ayvpM=;
+        b=iOQaoXHGIzGO779Rrs5D3eLRXWX5OzLFTsKc66+HAw0NIwAxpvmZ5xXu5tBsYq87Gc
+         a/Kcs9YhRPpusVWIJxlqEo1HRTbYPxXmgPJ8ABp47Sqi5BMXoXUG7eMU/m4o9ZCf/WyQ
+         hJyQlhb39Lb5xe0d5fQ22TAQv23+lHA7X27RA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wBXIG+N7vxhPi66u7JvUKCF/8aDzT2VhjPt596gc6WxVznkg19kdMxACs6lQaqQf5a
-         J4IeX/wGgeWYAFHxkmYtlpaK/KXqd/QRKjl1+tfk8eWe9yHA7dsz94OEqrRYcF+5KJH6
-         utOTqqZO2TogKjU+nryCv3VtU9ijcV3h+H0Ho=
-Received: by 10.90.82.5 with SMTP id f5mr998585agb.110.1282300937543;
-        Fri, 20 Aug 2010 03:42:17 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id j2sm2502212iba.18.2010.08.20.03.42.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 03:42:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100820101902.GA10356@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=tnWew5cuW9YHVYjqpBYkvHzhc6JFIT5+oxpN88JImH44/zetQTifoPaa/7QuDREB8/
+         Rznlab5SiPeI/8VNlri38nawG5OQuQGG5rOjCIb7pQVDtTEJufZTZWqtcmRvPoyUetHs
+         oLkCufEHKPVdHq9UrIgsOFuZz0eyV7d87ry+o=
+Received: by 10.231.59.83 with SMTP id k19mr1386550ibh.178.1282302721617; Fri,
+ 20 Aug 2010 04:12:01 -0700 (PDT)
+Received: by 10.231.161.136 with HTTP; Fri, 20 Aug 2010 04:12:01 -0700 (PDT)
+In-Reply-To: <20100811142359.GB10888@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154013>
 
-The intended text is "it's O(N * T) vs O(N * T * M)".  Asciidoc
-notices the spaces around the asterisks so there is no need to
-escape them (and if you try, it passes the backslashes through).
+On Wed, Aug 11, 2010 at 5:24 PM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Could you make 'Artagnon' and 'JakubNarebski' administrators on
+> git.wiki.kernel.org?
 
-Cc: Christian Couder <chriscool@tuxfamily.org>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-That's the end of the series.  Thanks for reading.
+Why hasn't this been done?
 
- Documentation/git-bisect-lk2009.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Also, Johannes can give admin rights too.
 
-diff --git a/Documentation/git-bisect-lk2009.txt b/Documentation/git-bisect-lk2009.txt
-index 86b3015..ed5ea29 100644
---- a/Documentation/git-bisect-lk2009.txt
-+++ b/Documentation/git-bisect-lk2009.txt
-@@ -873,7 +873,7 @@ c * N * T + b * M * log2(M) tests
- where c is the number of rounds of test (so a small constant) and b is
- the ratio of bug per commit (hopefully a small constant too).
- 
--So of course it's much better as it's O(N \* T) vs O(N \* T \* M) if
-+So of course it's much better as it's O(N * T) vs O(N * T * M) if
- you would test everything after each commit.
- 
- This means that test suites are good to prevent some bugs from being
 -- 
-1.7.2.2.536.g42dab.dirty
+Felipe Contreras
