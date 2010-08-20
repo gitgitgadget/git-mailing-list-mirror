@@ -1,70 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: git commands
-Date: Fri, 20 Aug 2010 02:51:11 -0500
-Message-ID: <20100820075111.GC24678@burratino>
+Date: Fri, 20 Aug 2010 09:57:18 +0200
+Message-ID: <vpq39u97m3l.fsf@bauges.imag.fr>
 References: <1282288658094-5443370.post@n2.nabble.com>
+	<5F6739C3-B537-4694-BC63-F3F74962A47C@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Joshua Juran <jjuran@gmail.com>
-To: sandy2010 <sandeeptt@yahoo.com>
-X-From: git-owner@vger.kernel.org Fri Aug 20 09:53:00 2010
+Cc: sandy2010 <sandeeptt@yahoo.com>, git@vger.kernel.org
+To: Joshua Juran <jjuran@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 10:00:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmMPK-0006az-48
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 09:52:58 +0200
+	id 1OmMWo-0001QJ-Sg
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 10:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751210Ab0HTHwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 03:52:53 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58300 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750905Ab0HTHww (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 03:52:52 -0400
-Received: by iwn5 with SMTP id 5so541120iwn.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 00:52:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=hD+dnBXGqWiR3bhcgzCCivXY1Cg7y1KNzGWBt/qd//k=;
-        b=xFRyHI/xlAQGyzh5geXFQl40RZk37jhxCcqjonkSbGiW1XCxupRxhZ0XTfY5JlDJvm
-         0Y7agSq65SvJ/zP0/5qoOjmEX/VU/+lMjej/wvZdmUPY5dMmPO2PnY/dQKtu8Hsg6FTm
-         ayiqBCGDpnCxv2JuZm4lDlMwrq9Rg4pcdIFew=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ppPPO90w+uFhFNUMNur7XFa1Cimq0wosSDqHkCrYkR1NaU/+WNtXdzJ82nSZR/hWJA
-         SfppeSLIC+bdHNvdJPosHFq5Ww/6SxGKixS8mZOR7LKZlY8BYPCEeKed0OUkxE5nCXS5
-         cATB0LtQEvbWM/zXMn7aJG6ADVq+TW+NvWGWk=
-Received: by 10.231.10.132 with SMTP id p4mr1262378ibp.67.1282290771772;
-        Fri, 20 Aug 2010 00:52:51 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id j2sm2352878iba.18.2010.08.20.00.52.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 20 Aug 2010 00:52:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1282288658094-5443370.post@n2.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751288Ab0HTIAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 04:00:37 -0400
+Received: from imag.imag.fr ([129.88.30.1]:34940 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750935Ab0HTIAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 04:00:36 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7K7vJ1g017155
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 20 Aug 2010 09:57:21 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OmMTX-0000zJ-7y; Fri, 20 Aug 2010 09:57:19 +0200
+In-Reply-To: <5F6739C3-B537-4694-BC63-F3F74962A47C@gmail.com> (Joshua Juran's message of "Fri\, 20 Aug 2010 00\:32\:18 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 20 Aug 2010 09:57:21 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153982>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/153983>
 
-sandy2010 wrote:
+Joshua Juran <jjuran@gmail.com> writes:
 
-> I'm new to git and I wonder what is the difference between two commands:
-> 
-> "git clone" and "git-clone" and which one should be use?
+> On Aug 20, 2010, at 12:17 AM, sandy2010 wrote:
+>
+>> I'm new to git and I wonder what is the difference between two
+>> commands:
+>>
+>> "git clone" and "git-clone" and which one should be use?
+>
+> They're the same command.
 
-By the way, when documentation points to the latter (and is not
-pointing to some man page like git-clone(1)), please feel free to let
-us know, preferrably with a patch. :)  There is a history that might
-have left some of the documentation inconsistent.
+Except that "git-clone" doesn't work with Git >= 1.6. If you ask the
+question, I suspect you have a rather old version of Git and you're a
+beginner.
 
-Regards,
-Jonathan
+Git's user-friendlyness to newbies greatly improved over the last
+versions, so I'd suggest upgrading.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
