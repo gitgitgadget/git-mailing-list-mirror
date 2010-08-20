@@ -1,87 +1,78 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Wrap up of Line Level History Browser
-Date: Fri, 20 Aug 2010 21:51:20 +0800
-Message-ID: <AANLkTikORUbVA+AJNT-Z1d+KJ-j1xxRdBN4hzLuXBXX5@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/4] fmt-merge-msg: Update fmt-merge-msg and
+ merge-config documentation
+Date: Fri, 20 Aug 2010 09:10:35 -0500
+Message-ID: <20100820141035.GD16190@burratino>
+References: <1282307041-19681-1-git-send-email-artagnon@gmail.com>
+ <1282307041-19681-4-git-send-email-artagnon@gmail.com>
+ <20100820123935.GB9448@kytes>
+ <4C6E78CB.1090907@viscovery.net>
+ <20100820131218.GC9448@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git Mailing List <git@vger.kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Aug 20 15:51:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Git Mailing List <git@vger.kernel.org>,
+	Yaroslav Halchenko <debian@onerussian.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 20 16:12:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmS0E-0000YR-Kk
-	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 15:51:26 +0200
+	id 1OmSKh-0005QD-7l
+	for gcvg-git-2@lo.gmane.org; Fri, 20 Aug 2010 16:12:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185Ab0HTNvW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 20 Aug 2010 09:51:22 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:57832 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752068Ab0HTNvV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 20 Aug 2010 09:51:21 -0400
-Received: by qwh6 with SMTP id 6so3002436qwh.19
-        for <git@vger.kernel.org>; Fri, 20 Aug 2010 06:51:20 -0700 (PDT)
+	id S1751826Ab0HTOMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 20 Aug 2010 10:12:19 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:36855 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751499Ab0HTOMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 20 Aug 2010 10:12:18 -0400
+Received: by pxi10 with SMTP id 10so1215628pxi.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 07:12:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=wwfJpThZb6H+SNpGm5pPtX5LZMxE9vlxcw7UsImPidY=;
-        b=rMAPw97EwfTXsIZyj5eW93OU1R0Jq50hPe7oDQQA37sJKRu6U2aOKp2yx9/3DO+zvv
-         Py8OVi+a/I82l6pTjvchye5YlgNFFAlpmzmtruCjlbgrCGdoHVPQ2WA9AuMCe7iTHXrn
-         Jwx41rIarc5IgnmtTwnHtAhQYXPM1eYJGqjnw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=nw+TFWTCnplS8feZKahywhE03iPALO9KqMP+C0h/qyQ=;
+        b=NrP9oWkP1KwocVJcltqmUw4CCR2b4Z4VKNT9TySZLpDyLshiTQUSE/5FgsLhOMldAD
+         WJZsXjeumYhWMDpWSn21N7SocHh9pDjiwyL7j2dTnWJsrHVcD8hdgtj+Xqt4gfD0hvge
+         D9hVckBjArfUbH8qBlvZKs5F4UlPSaKkmPe4g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=PZIVh2yDQZHMZVNpZ7nPJvTZkOiGrdDSE2jDi5ed1J3FgsCS3lfk2aCWrpa5L7L+St
-         NlgawM/0rWULBNl23xj01900X/59JnTjM4ivjy4wk4zi9bQPAV1fE/ouAfhis5YXNTBM
-         xVZryjEDYUQcoKY4icBeWqSkSz9XCMSXZCQ+k=
-Received: by 10.229.1.228 with SMTP id 36mr368720qcg.289.1282312280362; Fri,
- 20 Aug 2010 06:51:20 -0700 (PDT)
-Received: by 10.229.226.77 with HTTP; Fri, 20 Aug 2010 06:51:20 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Px577uyxMHx/E4XcR4j0/FiAA5zIpJeqdZOuTeK8Lt+NEH3yh3Wq7N2QckK17jkE5L
+         TuF4/IeW3Jk4lsuNA8DB38jn4pfc9jrsh+2h2wurGbd9QdHYXsjBDc8IcXlYFedaJwVO
+         sl4gi/Ru/FZwGf+UEJZCKckjtAHZPjP7e3dwg=
+Received: by 10.114.102.11 with SMTP id z11mr1584942wab.13.1282313537583;
+        Fri, 20 Aug 2010 07:12:17 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id i8sm1056673vcr.9.2010.08.20.07.12.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 20 Aug 2010 07:12:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100820131218.GC9448@kytes>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154041>
 
-Hi,
+Hi Ram,
 
-Today is the last day of GSoC, here is a wrap up of the whole work of
-this summer from Line Level History Browser.
+Ramkumar Ramachandra wrote:
 
-Generally, the goal of this project is to:
-1. 'git log -L' to trace multiple ranges from multiple files;
-2. move/copy detect when we reach the end of some lines(where lines
-are added from scratch).
+> I noticed that the command-line parsing framework has only OPT_BOOLEAN
+> and OPT_INTEGER, but no OPT_BOOLEAN_OR_INTEGER.
 
-And now, we have supports in detail:
-1. 'git log -L' can trace multiple ranges from multiple files;
-2. we support the same syntax with 'git blame' '-L' options;
-3. we integrate the 'git log -L' with '--graph' options with
-parent-rewriting to make the history looks better and clear;
-4. move/copy detect is in its half way. We get a nearly workable
-version of it, and now it is in a phrase of refactor, so in the scope
-of GSoC, move/copy detect only partly complete.
+--no-<foo> works already with OPT_INTEGER.  But for --<foo>, one
+needs the
 
-Now, the first series of patches of core 'git log -L' functionality is
-cooked in 'pu' and the move/code detect code is in a refactor. That's
-the general status of my project.
+ { OPTION_INTEGER, short, long, &var, "n", description,
+   PARSE_OPT_OPTARG, NULL, 20 },
 
-In the following days, some more work will be put into the refactor
-and I hope I can make the re-written version appear in next week. :)
-
-Finally, many thanks to my mentor Thomas, he helped me on designing
-how to implement things and was very patient to point out the flaw of
-various version of 'git log -L' and this make me improve my code
-continuously. And thanks to Jens, Junio to provide so many valuable
-comments. Thanks a lot!
-
--- 
-Regards!
-Bo
-----------------------------
-My blog: http://blog.morebits.org
-Why Git: http://www.whygitisbetterthanx.com/
+form.
