@@ -1,128 +1,89 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH v4 4/5] fmt-merge-msg: Remove deprecated --summary option
-Date: Sat, 21 Aug 2010 15:28:18 +0530
-Message-ID: <1282384699-16477-5-git-send-email-artagnon@gmail.com>
-References: <1282384699-16477-1-git-send-email-artagnon@gmail.com>
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Yaroslav Halchenko <debian@onerussian.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 21 12:00:52 2010
+From: Johan Herland <johan@herland.net>
+Subject: Re: [feature request] git: tags instead of commit IDs in blame output
+Date: Sat, 21 Aug 2010 12:10:22 +0200
+Message-ID: <201008211210.23280.johan@herland.net>
+References: <20100821095352.604a2b85@hyperion.delvare>
+Mime-Version: 1.0
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: Jean Delvare <khali@linux-fr.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 21 12:10:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Omksd-0004zP-D3
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Aug 2010 12:00:51 +0200
+	id 1Oml20-0007bI-9R
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Aug 2010 12:10:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751822Ab0HUKAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Aug 2010 06:00:38 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:39425 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751751Ab0HUKAh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Aug 2010 06:00:37 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 26so1588171pzk.19
-        for <git@vger.kernel.org>; Sat, 21 Aug 2010 03:00:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=2R9m3AMy2UvZEN7qLRxz7UjTcjc6yXLlaGL6sNRvtXg=;
-        b=cEWH/UbCyIpdMy+M0MHq6SDEpGqEiGsyQAdf4cP89YlO/juue4KLPgT9GSnTtqzLFY
-         T25SCIRhaUfLSNLzy0RuHXFjtXUYga4nM8bfZgdiYuTGHho/QApCHo7gEuApLDZJpiEU
-         7wddY/sY6B7mVlZHCSwjRf3vRmtzCc7OXr97w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=gqgyC+cE670aWX1kHbe00J77ne8wYac3CH7Ml8d4YaVCtXOImIoIgqzuXYSfkE3lX2
-         CBnySZ2IsyAEe5cOnjLZpr1Voq4sFkpuUieReMwA53v0LpYKKO3tsxonB+RJBEuOacyP
-         CMroeRgQU1A+VxwEJ94JKY3cFAjBCVp0oRECM=
-Received: by 10.142.185.7 with SMTP id i7mr2124206wff.68.1282384836830;
-        Sat, 21 Aug 2010 03:00:36 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id b19sm4641270wff.7.2010.08.21.03.00.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 21 Aug 2010 03:00:35 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
-In-Reply-To: <1282384699-16477-1-git-send-email-artagnon@gmail.com>
+	id S1751718Ab0HUKK2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Aug 2010 06:10:28 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:54313 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751289Ab0HUKK0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Aug 2010 06:10:26 -0400
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L7H00E0VYXCJOB0@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 21 Aug 2010 12:10:24 +0200 (MEST)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 320411EA59A3_C6FA610B	for <git@vger.kernel.org>; Sat,
+ 21 Aug 2010 10:10:24 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 1A03E1EA5301_C6FA610F	for <git@vger.kernel.org>; Sat,
+ 21 Aug 2010 10:10:24 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L7H003H8YXC4400@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 21 Aug 2010 12:10:24 +0200 (MEST)
+User-Agent: KMail/1.13.5 (Linux/2.6.34-ARCH; KDE/4.4.5; x86_64; ; )
+In-reply-to: <20100821095352.604a2b85@hyperion.delvare>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154134>
 
-Remove the deprecated --summary option that served as a syonym to the
---log option.
+On Saturday 21 August 2010, Jean Delvare wrote:
+> Hi there,
+> 
+> I have a feature request for git. In the output of "git blame", I would
+> like to be able to see tags instead of commit IDs in front of each
+> line. Basically, I would like to know the first tag which was added
+> after the last change of every line. Icing on the cake would be the
+> possibility to filter out some tags (for example to ignore release
+> candidate tags) but I could easily live without that.
+> 
+> Does it make sense?
+> Would it be difficult to implement?
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-fmt-merge-msg.txt |    9 ---------
- builtin/fmt-merge-msg.c             |   13 ++-----------
- 2 files changed, 2 insertions(+), 20 deletions(-)
+To me, it seems what you want to do is convert the commit ID in front of 
+every blame-line into the result of running 'git name-rev' (or 'git 
+describe') on that line.
 
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index 9499322..5a5c318 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -33,11 +33,6 @@ OPTIONS
- 	Do not list one-line descriptions from the actual commits being
- 	merged.
- 
----summary::
----no-summary::
--	Synonyms to --log and --no-log; these are deprecated and will be
--	removed in the future.
--
- -m <message>::
- --message <message>::
- 	Use <message> instead of the branch names for the first line
-@@ -58,10 +53,6 @@ merge.log::
- 	maxmium) in the merge message. Specifying "true" is equivalent
- 	to specifying 20. Defaults to false.
- 
--merge.summary::
--	Synonym to `merge.log`; this is deprecated and will be removed in
--	the future.
--
- SEE ALSO
- --------
- linkgit:git-merge[1]
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index cad9ed4..1e969f2 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -15,18 +15,12 @@ static int log_limit = 0;
- 
- static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
- {
--	static int found_merge_log = 0;
- 	int is_bool;
- 	if (!strcmp("merge.log", key)) {
--		found_merge_log = 1;
- 		log_limit = git_config_bool_or_int(key, value, &is_bool);
-+		if (is_bool && log_limit)
-+			log_limit = 20;
- 	}
--	if (!found_merge_log && !strcmp("merge.summary", key))
--		log_limit = git_config_bool_or_int(key, value, &is_bool);
--
--	if (is_bool && log_limit)
--		log_limit = 20;
--
- 	return 0;
- }
- 
-@@ -329,9 +323,6 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 		{ OPTION_INTEGER, 0, "log", &log_limit, "n",
- 		  "populate log with <n> entries from shortlog",
- 		  PARSE_OPT_OPTARG, NULL, 20 },
--		{ OPTION_INTEGER, 0, "summary", &log_limit, "n",
--		  "alias for --log (deprecated)",
--		  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, NULL, 20 },
- 		OPT_STRING('m', "message", &message, "text",
- 			"use <text> as start of message"),
- 		OPT_FILENAME('F', "file", &inpath, "file to read from"),
+To that effect something like this should work:
+
+  git blame <file> |
+  while read sha1 rest
+  do
+      tag=$(git name-rev --tags --name-only $sha1) &&
+      echo "$tag $rest"
+  done
+
+Of course, if you're doing this at a bigger scale, you want to wrap this in 
+a script that (1) caches commitID -> tag mappings, and that (2) runs 'git 
+name-rev in its --stdin mode'.
+
+
+Have fun! :)
+
+...Johan
+
 -- 
-1.7.2.2.409.gdbb11.dirty
+Johan Herland, <johan@herland.net>
+www.herland.net
