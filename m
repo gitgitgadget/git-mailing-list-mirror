@@ -1,85 +1,76 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH] fix >4GiB source delta assertion failure
-Date: Sat, 21 Aug 2010 01:00:13 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1008202349500.622@xanadu.home>
-References: <20100721231635.GA6387@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v3 4/5] fmt-merge-msg: Remove deprecated --summary
+ option
+Date: Sat, 21 Aug 2010 11:19:05 +0530
+Message-ID: <20100821054903.GG6211@kytes>
+References: <1282331702-5115-1-git-send-email-artagnon@gmail.com>
+ <1282331702-5115-5-git-send-email-artagnon@gmail.com>
+ <20100821040421.GB2636@burratino>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Aug 21 07:00:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Yaroslav Halchenko <debian@onerussian.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 21 07:51:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmgC4-0002wm-3h
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Aug 2010 07:00:36 +0200
+	id 1Omgyw-0000o9-UG
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Aug 2010 07:51:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751099Ab0HUFAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 21 Aug 2010 01:00:15 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:12243 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750777Ab0HUFAO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 21 Aug 2010 01:00:14 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L7H001JRKKD33E0@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 21 Aug 2010 01:00:13 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20100721231635.GA6387@LK-Perkele-V2.elisa-laajakaista.fi>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751242Ab0HUFvB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Aug 2010 01:51:01 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:65257 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751099Ab0HUFu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Aug 2010 01:50:59 -0400
+Received: by pwi7 with SMTP id 7so1322798pwi.19
+        for <git@vger.kernel.org>; Fri, 20 Aug 2010 22:50:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=4NqG0Rmo0kU3NjCHmBg6isTwMBjbaFP4z8FrSnxOkks=;
+        b=nuY59csrd7ixt8mPbcyyWiDssvZMlPgC0C1N1sYy+GmJwb9fpOM15HpgkwFBoa0WQl
+         IBjgEaXgAqXKWNs6jDcNG5ZdIW8Ym8Hysx8XvRgTz/Eu/N7KwqA7VwnlAo1JdyNSh4ZV
+         nHFfyGP+JdiizJC1GSpOxY8NMPhODxzbxWUdg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=CZDmcDmQNvlHV/ClUS5E5bEMyQ3qnwpWeLNFpHgOrTzN+Xs1Nit5dZuNLiL8WaMahi
+         G2+OzkRze2M4aDiKjQCcUQXqA+M0rUz0fyCT0MBDGTA7b0v+n0m1BRXIrcBH46KxMofj
+         UbqjeEW/Rm14MPG+16DDCTdzfFU+RUPJJyjsA=
+Received: by 10.114.92.3 with SMTP id p3mr2659546wab.77.1282369859245;
+        Fri, 20 Aug 2010 22:50:59 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id x9sm6445153waj.15.2010.08.20.22.50.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 20 Aug 2010 22:50:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100821040421.GB2636@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154110>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154111>
 
-When people try insane things such as delta-compressing 4GiB files, they
-get this assertion:
+Hi Jonathan,
 
-diff-delta.c:285: create_delta_index: Assertion `packed_entry - (struct index_entry *)mem == entries' failed.
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+> 
+> > Remove the deprecated --summary option
+> 
+> We stopped advertising it in v1.7.1-rc0~3^2, right?  That would make
+> this v1.8 or later material, I think.
 
-This happens because:
+Oh. I should drop this patch while re-rolling?
 
-1) the 'entries' variable is an unsigned int
-
-2) it is assigned with entries = (bufsize - 1) / RABIN_WINDOW
-   (that itself is not a problem unless bufsize > 4G * RABIN_WINDOW)
-
-3) the buffer is indexed from top to bottom starting at
-   "data = buffer + entries * RABIN_WINDOW" and the multiplication
-   here does indeed overflows, making the resulting top of the buffer 
-   much lower than expected.
-
-This makes the number of actually produced index entries smaller than 
-what was computed initially, hence the assertion.
-
-Furthermore, the current delta encoding format cannot represent offsets
-into a reference buffer with more than 32 bits anyway.  So let's just 
-limit the number of entries to what the delta format can encode.
-
-Reported-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
----
-diff --git a/diff-delta.c b/diff-delta.c
-index 464ac3f..73acf8a 100644
---- a/diff-delta.c
-+++ b/diff-delta.c
-@@ -146,7 +146,14 @@ struct delta_index * create_delta_index(const void *buf, unsigned long bufsize)
- 	/* Determine index hash size.  Note that indexing skips the
- 	   first byte to allow for optimizing the Rabin's polynomial
- 	   initialization in create_delta(). */
--	entries = (bufsize - 1)  / RABIN_WINDOW;
-+	entries = (bufsize - 1) / RABIN_WINDOW;
-+	if (bufsize >= 0xffffffffUL) {
-+		/* 
-+		 * Current delta format can't encode offsets into
-+		 * reference buffer with more than 32 bits.
-+		 */
-+		entries = 0xfffffffeU / RABIN_WINDOW;
-+	}
- 	hsize = entries / 4;
- 	for (i = 4; (1u << i) < hsize && i < 31; i++);
- 	hsize = 1 << i;
+-- Ram
