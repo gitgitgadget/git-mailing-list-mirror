@@ -1,113 +1,102 @@
-From: Tarmigan <tarmigan+git@gmail.com>
-Subject: Re: t5560-http-backend-noserver.sh fails on FreeBSD 8.1-STABLE
-Date: Sat, 21 Aug 2010 12:07:25 -0600
-Message-ID: <AANLkTi=JgwjfbBus23M3Kw8-cksparsFKvfOs3fMx6MR@mail.gmail.com>
-References: <AANLkTin8KvXBn4R3-_2_wG3B3QU9F1X0Ax69Rrb1cw1y@mail.gmail.com>
- <AANLkTimPpiO2RBbNNo0Z8mFm1VH_Ujk7HVskYvh=X2Fc@mail.gmail.com> <AANLkTimm9uXRxcwL=o1JE_voOOYVNo-1V-+Sx78votJO@mail.gmail.com>
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: using git-svn with --no-metadata
+Date: Sat, 21 Aug 2010 18:37:11 +0000
+Message-ID: <20100821183711.GA14986@dcvr.yhbt.net>
+References: <E1OmnCj-0001Z7-2U@smtp.tt-solutions.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 21 20:07:53 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Vadim Zeitlin <vz-git@zeitlins.org>
+X-From: git-owner@vger.kernel.org Sat Aug 21 20:37:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OmsTx-0002FM-52
-	for gcvg-git-2@lo.gmane.org; Sat, 21 Aug 2010 20:07:53 +0200
+	id 1OmswV-0003oo-8r
+	for gcvg-git-2@lo.gmane.org; Sat, 21 Aug 2010 20:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752015Ab0HUSHs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 21 Aug 2010 14:07:48 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:46894 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751151Ab0HUSHr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 21 Aug 2010 14:07:47 -0400
-Received: by ewy23 with SMTP id 23so2746808ewy.19
-        for <git@vger.kernel.org>; Sat, 21 Aug 2010 11:07:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=VlnB0XatLALSJf+suUZaZRhekJBdfLY41zlgPGKx+mU=;
-        b=SStpdGqzQRKs8NJ8m4UZ275Y7s7iH/41GmyCtpIcwbTPtiKJJ5HD9A80C7psYEoDkH
-         ZlaEgKUr31Y/tQI2QD8r8QOoQ5LvGt2D+SMw0Du8Y4qQiIeIUYkQ2zt/kFcMncFipY1r
-         VsL5o7Vfhiw2bmlV98DnPCQVv3Ea/2T+S3f5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=P4v5KY91+61QWDrhfnrC40RxA3DcjilISYyX6mgBsvP9PcUXu544TwR+B+Xcw7EQ0Y
-         eD1Q2n/xrdTxwWWNDXuxK8X68LCpiOA7pEZSjSXAoFnMludr2DSyicgnxsbEHOPvDMJ1
-         WfU1N9xotQ9bcSxCekd3TJR/LaZMkTng3QJa8=
-Received: by 10.213.7.76 with SMTP id c12mr1673428ebc.39.1282414065130; Sat,
- 21 Aug 2010 11:07:45 -0700 (PDT)
-Received: by 10.14.45.13 with HTTP; Sat, 21 Aug 2010 11:07:25 -0700 (PDT)
-In-Reply-To: <AANLkTimm9uXRxcwL=o1JE_voOOYVNo-1V-+Sx78votJO@mail.gmail.com>
-X-Google-Sender-Auth: k69OYp6SHR-ciUimKN8j-NLee3U
+	id S1751866Ab0HUShO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 21 Aug 2010 14:37:14 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:34963 "EHLO dcvr.yhbt.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751768Ab0HUShN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 21 Aug 2010 14:37:13 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 9AA471F514;
+	Sat, 21 Aug 2010 18:37:11 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <E1OmnCj-0001Z7-2U@smtp.tt-solutions.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154150>
 
-On Sat, Aug 21, 2010 at 2:06 AM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Sat, Aug 21, 2010 at 07:57, Tarmigan <tarmigan+git@gmail.com> wrot=
-e:
->> On Thu, Aug 19, 2010 at 9:56 AM, =C6var Arnfj=F6r=F0 Bjarmason
->> <avarab@gmail.com> wrote:
->>> I haven't investigate this, but here's the failure output:
->>>
->>> ok 7 - static file if http.getanyfile false fails
->>>
->>> expecting success:
->>> =A0 =A0 =A0 =A0log_div "uploadpack default"
->>> =A0 =A0 =A0 =A0GET info/refs?service=3Dgit-upload-pack "200 OK" =A0=
-&&
->>> =A0 =A0 =A0 =A0POST git-upload-pack 0000 "200 OK"
->>>
->>> --- exp 2010-08-19 15:56:14.000000000 +0000
->>> +++ act 2010-08-19 15:56:14.000000000 +0000
->>> @@ -1 +1 @@
->>> -Status: 200 OK
->>> +Status: 404 Not Found
->>> not ok - 8 http.uploadpack default enabled
->>> #
->>> # =A0 =A0 =A0 =A0 =A0 =A0 =A0 log_div "uploadpack default"
->>> # =A0 =A0 =A0 =A0 =A0 =A0 =A0 GET info/refs?service=3Dgit-upload-pa=
-ck "200 OK" =A0&&
->>> # =A0 =A0 =A0 =A0 =A0 =A0 =A0 POST git-upload-pack 0000 "200 OK"
->>> #
->>>
->>
->> Thanks for the report. =A0Is this a new breakage and what version is=
- it
->> failing on?
->>
->> Do you ever test with GIT_TEST_HTTPD set? =A0If not, can you please =
-try this
->> =A0 =A0 export GIT_TEST_HTTPD=3D1 && ./t5561-http-backend.sh -d -i -=
-v
->> and report back? =A0Hopefully the test suite will automatically find
->> apache on FreeBSD, otherwise you may need to give it some hints (see
->> lib-httpd.sh).
->
-> Here are the outputs of:
->
-> $ GIT_TEST_HTTPD=3D ./t5560-http-backend-noserver.sh -d -i -v >
-> /tmp/no-httpd.txt 2>&1
-> $ GIT_TEST_HTTPD=3D1 ./t5560-http-backend-noserver.sh -d -i -v >
-> /tmp/with-httpd.txt 2>&1
+Vadim Zeitlin <vz-git@zeitlins.org> wrote:
+>  Hello,
+> 
+>  First of all, let me use this opportunity to thank you for writing
+> git-svn, it's the best thing since, well, probably git itself! Second,
+> I'm sorry to bother you directly but I simply couldn't find any mailing
+> list for git-svn and I wasn't sure if this was appropriate for the git
+> mailing list itself. If I was wrong about not posting this there, please
+> feel free to redirect/reply to git list if you prefer to discuss it there
+> (I'd appreciate if you could still cc me in this case though).
 
-Oops, sorry for not being more clear.  Test t5560 runs the same tests
-as t5561, but t5561 runs through the httpd server while t5560 tries to
-run without the httpd server.  t5561 is probably a better test, but
-depends on GIT_TEST_HTTPD.  t5560 will run by default if you just run
-all the tests.  So please try to run t5561 if you have the chance.
+Hello Vadim, you're welcome!
 
-Thanks,
-Tarmigan
+git-svn has always used the git mailing list.  Feel free to Cc
+maintainers of particular subsections even when posting to the mailing
+list, too.  The mailing list gets a lot of traffic, so we always
+Cc folks who are relevant to the discussion.
+
+>  Now to my question: I thought it would be a good idea to import an svn
+> repository with --no-metadata option as I hoped that this would avoid the
+> rewriting of commits which happen when git topic branches are checked in
+> into svn with "git svn dcommit". The documentation (for my 1.7.1 version)
+> did say that:
+
+dcommit would have to rewrite commits anyways, since we sync the
+usernames and commit times from SVN.  You can't avoid rewriting commits
+unless you use "git svn set-tree" (on the other hand, set-tree can be
+unfriendly to other SVN users).
+
+> 	If you lose your .git/svn/git-svn/.rev_db file, git svn will not be
+> 	able to rebuild it and you won't be able to fetch again, either.
+
+> but I understood it as meaning that I wouldn't be able to fetch again if
+> the file was lost (the file name appears to be wrong BTW, since the switch
+> to rev_map from rev_db some time ago) and thought that it was ok as long as
+> I took care to backup the .git/svn contents regularly. Apparently I was
+> wrong as "git svn fetch" doesn't work even immediately after the import and
+> looking at the code I see that working_head_info() only ever uses
+> git-svn-id: lines in the commit messages and never rev_{db,map} files.
+> 
+>  So -- finally -- the questions are:
+> 
+> 1. Is this indeed the case, i.e. is importing from svn really impossible
+>    with --no-metadata even if no files are lost? If so, I think it would
+>    be nice to make the property description in the man page more clear.
+
+rev_map (and rev_db before it) are designed for mapping SVN revision
+numbers into git SHA1 identifiers.  rev_db used a simple but
+space-inefficient offset lookup based on the SVN revision number.
+rev_map uses a binary search also based on the SVN revision number.
+
+> 2. Is it possible to implement getting the working head info from the
+>    cached revision mappings instead of extracting it from the comments?
+>    If so, would it be worth looking into doing this or is it something
+>    that is doomed to fail anyhow?
+
+It's possible to do a reverse mapping inefficiently (O(n)) by scanning
+the values of the SHA1 commits.  You can add a hash database on disk,
+too.  I don't think either is worth the effort in maintenance, though.
+Nowadays git-filter-branch is in mainline git, and I recommend
+using that for projects ready to drop SVN/git-svn entirely for git.
+
+I'll update the docs accordingly.
+
+-- 
+Eric Wong
