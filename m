@@ -1,125 +1,70 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] optionally disable overwriting of ignored files
-Date: Sun, 22 Aug 2010 10:20:56 +0200
-Message-ID: <20100822082056.GA5156@localhost>
-References: <4C6A1C5B.4030304@workspacewhiz.com>
- <7viq39avay.fsf@alter.siamese.dyndns.org>
- <20100818233900.GA27531@localhost>
- <7v4oepaup7.fsf@alter.siamese.dyndns.org>
- <20100821080512.GA30141@localhost>
- <7viq335ct0.fsf@alter.siamese.dyndns.org>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
+From: Lin Mac <mkl0301@gmail.com>
+Subject: Re: git commands
+Date: Sun, 22 Aug 2010 18:41:35 +0800
+Message-ID: <AANLkTimRpwLZHve_cAY0JxLGKC4202i-V_Soq=m1_JsY@mail.gmail.com>
+References: <1282288658094-5443370.post@n2.nabble.com>
+	<5F6739C3-B537-4694-BC63-F3F74962A47C@gmail.com>
+	<vpq39u97m3l.fsf@bauges.imag.fr>
+	<1282294163263-5443609.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TB36FDmn/VVEgNH/"
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 22 10:21:12 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: sandy2010 <sandeeptt@yahoo.com>
+X-From: git-owner@vger.kernel.org Sun Aug 22 12:41:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1On5nk-0001z5-3h
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 10:21:12 +0200
+	id 1On7zj-0004E8-8S
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 12:41:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751994Ab0HVIVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Aug 2010 04:21:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38392 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751727Ab0HVIU7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Aug 2010 04:20:59 -0400
-Received: by fxm13 with SMTP id 13so2467190fxm.19
-        for <git@vger.kernel.org>; Sun, 22 Aug 2010 01:20:58 -0700 (PDT)
+	id S1752102Ab0HVKli (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Aug 2010 06:41:38 -0400
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:44548 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751698Ab0HVKlg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Aug 2010 06:41:36 -0400
+Received: by wwf26 with SMTP id 26so2935413wwf.1
+        for <git@vger.kernel.org>; Sun, 22 Aug 2010 03:41:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=/w6tGwUjSGqI2RmPhKOLOPOqB/GBZAYrxh5ffHLfnLU=;
-        b=w5bX+u12USZYQJZWXvnSJuAndhpO1kscuGemkoQIeGcm44W4/6iRc/SBQTSosFAzGx
-         BXi5/4gaK7mLbbBY/pmdd4B1AlIYdS6wBW0DWSzWNyl/9h7dmu/0xd2CL5+B+vaGxpWC
-         4e+V/Gv6G9P/AalJQOWW6va2XM5umn9kyG2eU=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=vCW9BG6zGM8aLiR6Nuc6aAP2tji8tYitXtbSUOEjwJk=;
+        b=UbbC/z8jEb+Xi+vYvyHhNt7//fHZN7wqVLUPQbriPHzcbIYJdYIF3ht9bZRXuysogC
+         zVKgNdrIT2B8gPhufXedKP45wtEcvg1bgk3y3yFy/GP7hDElrYVRU55u8k/3K7KC4WI4
+         LiFDyYsmjfyndR/ce5icPo9MJ/dGIPp+QzYx0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=Niv3BnW/JckjwHpT9Slxoax8hM+5AftKlPiIDRGaW43u6oK4v1EphnDKc+3m33CBe5
-         VUDfOx69HITTblFC2XcfDpIqSi5tWy0TNbQn8Y1BGSJxrdEmpn0+QcP2HpyUQ9SVY5HP
-         SFhWDsBD/B79WIPMKBaWdtBAd7GVm5dQKTQG8=
-Received: by 10.223.110.83 with SMTP id m19mr2880518fap.26.1282465258586;
-        Sun, 22 Aug 2010 01:20:58 -0700 (PDT)
-Received: from darc.lan (p549A79A2.dip.t-dialin.net [84.154.121.162])
-        by mx.google.com with ESMTPS id f28sm1937807faa.0.2010.08.22.01.20.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Aug 2010 01:20:58 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1On5nU-0001MX-SV; Sun, 22 Aug 2010 10:20:56 +0200
-Content-Disposition: inline
-In-Reply-To: <7viq335ct0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=APIAszX8QfPxQCOMaefZuX5/yhTF+qIGkZF4TclX7BZs3p/1PqWRRvDX7FHFmno49c
+         7LuOUDuhBkv7qyQDY1M4iP2zuDLfi01mRJeU1zF1gEeYnHdP+9GvadUPkj8HfwtHmM3C
+         8jZXip7bO9l5tcG10FtM9kFMNdoNVx8fnQy1E=
+Received: by 10.216.1.17 with SMTP id 17mr1325798wec.99.1282473695611; Sun, 22
+ Aug 2010 03:41:35 -0700 (PDT)
+Received: by 10.216.36.15 with HTTP; Sun, 22 Aug 2010 03:41:35 -0700 (PDT)
+In-Reply-To: <1282294163263-5443609.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154179>
 
+Hi,
 
---TB36FDmn/VVEgNH/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+2010/8/20 sandy2010 <sandeeptt@yahoo.com>:
+> Yeah.. Actually, we were using git-15.6 and the command we used was
+> 'git-clone'. Later, I upgraded to git-1.7.1 and I found that in the
+> installation directory, there was only 4 binaries including git. I was
+> wondering were are the rest commands like git-clone, etc? Hence, I asked
+> this question.
+I have the same question regarding the installation here. I'm trying
+to upgrade from v1.5.x to the newest. But found that there are only a
+few files installed. Where are the rest? Should I uninstall the old
+version before I install? And is there any issues for the newer
+version works in respository made by v1.5.x, like git-svn?
 
-On Sun, Aug 22, 2010 at 12:25:31AM -0700, Junio C Hamano wrote:
->=20
-> Traditionally (think "git status" output without "-s") the way to remind
-> oneself that some day these paths need to be added when they are ready has
-> been to keep them untracked but _not_ ignored, so that they will be listed
-> in the output.
-
-But they do not have to be added. I may never want to add them. So
-I do not want git status to keep reminding me. That's why I add
-them to .git/info/exclude. And with the current behavior, I do not
-see anything wrong with that, because git does not consider them
-trashable.
-
-> Quite contrary to what you earlier said in another message, adding
-> such a path that is not trashable does defeat the point of the "ignore"
-> mechanism.
-
-If I understand correctly, the reason for considering ignored paths
-trashable is because they are likely to have been tracked in other
-versions of the project, and would therefore frequently get in the
-way of commands like checkout or merge.
-
-But the same is not true for private ignores in .git/info/exclude.
-Such paths most likely never were tracked and never will be. And in
-the rare case that an ignored path turns out to be a nuisance, it's
-easy enough to remove it from .git/info/exclude.
-
-So I see only advantages if such a path is not considered
-trashable.
-
-Clemens
-
---TB36FDmn/VVEgNH/
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJMcN3oAAoJELKdZexG8uqM8ZIH/0hCX9UAxvhvQGwy6aM5OzGZ
-HElD+x+9Kv58LgKYg2yfNaCM1tCxE2KNGOMH3EudGep7vq2hWVyTb4mnVx/F82pB
-KlC02WFZ2BH5kf4+fI20HUZB2ZHM3PqMcreZeGJR/Qi4ASaHYMn4rUlum1E48EA+
-F6OqVOENVRaE3Dgr8AQalhEBG7fW2pvExXcxO3iYGcBI6MVb6uXw10i0pDaCt5VV
-MJg0q8QeaGpyOruJQR13QEilr7PURDQH+SXAu9antVWA9kuSCTRnojv+HTsoBOGd
-O1wFT5oGj8UURBcMVRF8Y0Y4MlYrxivYbMyEFIbuJUAT771sP6FuIPhN2vGI5ZQ=
-=2bwJ
------END PGP SIGNATURE-----
-
---TB36FDmn/VVEgNH/--
+Best Regards,
+Mac Lin.
