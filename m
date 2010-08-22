@@ -1,107 +1,102 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: git commands
-Date: Sun, 22 Aug 2010 14:19:23 -0700
-Message-ID: <20100822211921.GA27048@gmail.com>
-References: <1282288658094-5443370.post@n2.nabble.com>
- <5F6739C3-B537-4694-BC63-F3F74962A47C@gmail.com>
- <vpq39u97m3l.fsf@bauges.imag.fr>
- <1282294163263-5443609.post@n2.nabble.com>
- <AANLkTimRpwLZHve_cAY0JxLGKC4202i-V_Soq=m1_JsY@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] disallow branch names that start with a hyphen
+Date: Sun, 22 Aug 2010 14:20:17 -0700
+Message-ID: <7vsk262vla.fsf@alter.siamese.dyndns.org>
+References: <20100822140801.GA6574@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: sandy2010 <sandeeptt@yahoo.com>, git@vger.kernel.org
-To: Lin Mac <mkl0301@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 22 23:12:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Aug 22 23:20:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnHq4-0000x4-Ew
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 23:12:24 +0200
+	id 1OnHy1-0005Vt-Qs
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 23:20:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752731Ab0HVVMT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Aug 2010 17:12:19 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:36026 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752424Ab0HVVMS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Aug 2010 17:12:18 -0400
-Received: by pvg2 with SMTP id 2so2034773pvg.19
-        for <git@vger.kernel.org>; Sun, 22 Aug 2010 14:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pXWALGcgPY3yIY9t4+XOiNOA+XRGL/8gdHRTwgDOhsI=;
-        b=ayf0wWe7klJGN6kmttHHkcuTCf2mbGpB3YTdFk0p6jYK6hc8Hwrppt7LI9sRr+mwAq
-         avFDugj4IUrhgzmz76Hukxq81fshcAP2LtJzOBWVE04a5ww9UXiab1VnF/9myil2e9BI
-         Pi2q8COwXGHrn9wdGZyy8480qXhBGez60MGl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UebGhPgkx8Biz39eLaUyF/oesR5vsGjKsYnI4GL75DKWclzNEO3Cp4UMjIQbgCSiOX
-         zRjUm3AXxOOdlAvcf6wPdxs3RVeYeroPkCW7CqnrkzhH+7gGXLkNCNuzOHdf2TFjxMct
-         rDkyf5y4qnMCq+jcpyeWyrPdH69956Yy+XAQw=
-Received: by 10.142.132.15 with SMTP id f15mr3619920wfd.14.1282511538383;
-        Sun, 22 Aug 2010 14:12:18 -0700 (PDT)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id d4sm7457404wfh.23.2010.08.22.14.12.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Aug 2010 14:12:16 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimRpwLZHve_cAY0JxLGKC4202i-V_Soq=m1_JsY@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752756Ab0HVVU0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Aug 2010 17:20:26 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55983 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752729Ab0HVVU0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Aug 2010 17:20:26 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B9FB9CFD7E;
+	Sun, 22 Aug 2010 17:20:25 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=d58ELzRjrgn+XhDDqhevxmsTU8Q=; b=oKiDpzcG+Igmv0uqFSbt5yk
+	QqwMS21OTjlEx21lZ76bBJ/1J8qsrhjrVIyrOucQdibhCCRE0QdgJXpBIik17Fzd
+	38fkLAWzKzW5KnP4tKvRAczsirwJl1gtl5EAMYv93ATR+p4XZTyGvM/Sfuzd24do
+	C0K5Iw+Bdjv27L1axFbo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=ij7jK9xzRzl+YheJAepI9LXVA5ryJKuV5MkSvJD1zBYn4S0X3
+	EmskseELnzAJFgkihkwzW098suG4bQkc7zA+/B2iA1LDnguUm0XuDbVKaxK44BTn
+	Q27tzrY+Wfwkv4tTrWjEeWF4Vx+6R7W/29G/T46CJ1Sfb8jiA4nn9mKU1M=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 84BFBCFD7C;
+	Sun, 22 Aug 2010 17:20:22 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE779CFD7A; Sun, 22 Aug
+ 2010 17:20:18 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 12BA550C-AE33-11DF-ACD4-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154193>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154194>
 
-On Sun, Aug 22, 2010 at 06:41:35PM +0800, Lin Mac wrote:
-> Hi,
-> 
-> 2010/8/20 sandy2010 <sandeeptt@yahoo.com>:
-> > Yeah.. Actually, we were using git-15.6 and the command we used was
-> > 'git-clone'. Later, I upgraded to git-1.7.1 and I found that in the
-> > installation directory, there was only 4 binaries including git. I was
-> > wondering were are the rest commands like git-clone, etc? Hence, I asked
-> > this question.
-> I have the same question regarding the installation here. I'm trying
-> to upgrade from v1.5.x to the newest. But found that there are only a
-> few files installed. Where are the rest? Should I uninstall the old
-> version before I install? And is there any issues for the newer
-> version works in respository made by v1.5.x, like git-svn?
-> 
-> Best Regards,
-> Mac Lin.
+Clemens Buchacher <drizzd@aon.at> writes:
 
-Uninstall the old one and install the new one.
-All the same commands are there, they're just organized
-nicer so that they don't have to necessarily live in your $PATH.
+> Branch names such as "-", "--" or even "---" do
+> not work with git checkout. Anything that starts
+> with a hyphen is also potentially ambiguous with a
+> command option.
+>
+> In order to avoid mistakes, do not allow such
+> branch names.
+>
+> Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+> ---
+>  refs.c |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
 
-The old version provided commands like 'git-clone' in /usr/bin.
-You cannot use them like that anymore.
-These days we say 'git clone' (no dashes).
+While the inconsistency between "git branch -- -foo" (which succeeds and
+creates refs/heads/-foo) and "git checkout -foo" (whcih does not work) is
+a valid issue to address, I think this patch does so at a wrong level of
+abstraction.  The abstractions implemented by refs.c and friends are at
+the plumbing layer that is accessible by Porcelain scripts other people
+write, and we should try not to break them with policy decisions the
+Porcelains (e.g. "git checkout") we ship as part of the core git (e.g. we
+do not like a branch whose name begins with a dash).
 
-Here's a blurb from http://lkml.org/lkml/2008/8/17/174
+Currently these succeed:
 
-GIT v1.6.0 Release Notes
-========================
-User visible changes
---------------------
-With the default Makefile settings, most of the programs are now
-installed outside your $PATH, except for "git", "gitk" and
-some server side programs that need to be accessible for technical
-reasons.  Invoking a git subcommand as "git-xyzzy" from the command
-line has been deprecated since early 2006 (and officially announced in
-1.5.4 release notes); use of them from your scripts after adding
-output from "git --exec-path" to the $PATH is still supported in this
-release, but users are again strongly encouraged to adjust their
-scripts to use "git xyzzy" form, as we will stop installing
-"git-xyzzy" hardlinks for built-in commands in later releases.
+    git update-ref refs/mine/-foo HEAD
+    git update-ref -d refs/mine/-foo
 
--- 
+so it is reasonable to expect that somebody has a Porcelain that uses a
+convention to use its own refs namespace "mine" with leading dash to mean
+something to it.  Your patch would break such a Porcelain rather badly,
+but I do not think we have to break this to fix your problem.
 
-	David
+Two valid approaches would be: (1) teach a syntax to checkout to allow
+checking out such a branch; or (2) forbid "checkout -b" and "branch" from
+creating such a branch.
+
+I do not think in the context of the core git Porcelain it is necessary
+to start allowing checking out "-foo" which we didn't before, so how about
+fixing this by tightening the command line parsing rules for Porcelain
+commands that create a new branch?
+
+Note that either way update-ref should be kept as is, to allow third party
+Porcelains to keep doing what they have been doing, _and_ to allow
+unfortunate users who ran a broken "git branch" command with "-- -foo" as
+its arguments to recover from it.
+
+Hmm?
