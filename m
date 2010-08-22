@@ -1,79 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Wrap up of Line Level History Browser [long]
-Date: Sun, 22 Aug 2010 14:57:06 -0600
-Message-ID: <AANLkTi=R54C8xQGnPW3VPFnyL+784nG8RMEcHF9s_THD@mail.gmail.com>
-References: <AANLkTikORUbVA+AJNT-Z1d+KJ-j1xxRdBN4hzLuXBXX5@mail.gmail.com>
-	<201008222247.45600.trast@student.ethz.ch>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Exhibit merge bug that clobbers index&WT
+Date: Sun, 22 Aug 2010 23:06:29 +0200
+Message-ID: <49ac8bd95d88739f2fd9b37619ecf1c471b3a04f.1282510960.git.trast@student.ethz.ch>
+References: <201008170945.31850.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bo Yang <struggleyb.nku@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>, david@lang.hm
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Aug 22 22:57:17 2010
+Content-Type: text/plain
+Cc: <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Aug 22 23:06:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnHbQ-0001bM-4i
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 22:57:16 +0200
+	id 1OnHkf-0006UC-Cn
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 23:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752742Ab0HVU5K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Aug 2010 16:57:10 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:57701 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752594Ab0HVU5J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 22 Aug 2010 16:57:09 -0400
-Received: by iwn5 with SMTP id 5so2907374iwn.19
-        for <git@vger.kernel.org>; Sun, 22 Aug 2010 13:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Uc/3R7qgAf//QgnLJ42jEsJxtHX2ni9WSBhBaTlZwRE=;
-        b=PDuKQLcIRsIFmh49uxdE4yvjJX3ygGYzrZzbnSLkFGa14O+IU7+1vIchsu6vwaoA8d
-         TpwzyBN4yxTXXYmbNLPaE55qYMhJKJ2kaXqGC9x7rVZJb4CMnAm7g15yz98PdF0DMjuU
-         yEYibPB9mCsTx4hqEOSlXLRsncCgPaaObpSqM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DdtuU5wqT9FolwzXhH8Xx5oUJXOYeq7SWFjX9V4P2A5jdVLhH+k/GAFayk4IiNVFNE
-         LdtIXeu0AEG0WcibFW5EqzYJ+sWXYS9FF9hLaaHh4nlWcTPAvX5NNxn3/G/7Va4gTDkL
-         WWuMtgxnZolc8ROv/9yxDpJv13kJBsR6VdYFU=
-Received: by 10.231.40.9 with SMTP id i9mr5569722ibe.5.1282510626640; Sun, 22
- Aug 2010 13:57:06 -0700 (PDT)
-Received: by 10.231.19.74 with HTTP; Sun, 22 Aug 2010 13:57:06 -0700 (PDT)
-In-Reply-To: <201008222247.45600.trast@student.ethz.ch>
+	id S1752716Ab0HVVGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 22 Aug 2010 17:06:45 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:54354 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752521Ab0HVVGo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Aug 2010 17:06:44 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 22 Aug
+ 2010 23:06:42 +0200
+Received: from localhost.localdomain (129.132.208.152) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.0.702.0; Sun, 22 Aug
+ 2010 23:06:34 +0200
+X-Mailer: git-send-email 1.7.2.2.479.g07acc
+In-Reply-To: <201008170945.31850.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154192>
 
-Thomas Rast wrote:
+Running git-merge on an unborn branch is supposed to do an index-level
+merge with the other side, and then update the branch name there.  In
+the common case where the index was empty at the start, this makes
+'git pull otherrepo branch' a convenient way to populate the history
+after 'git init'.
 
-> For me it replaces a manual iterative process to find out in what way=
-s
-> a function was patched until it came to have its current shape:
->
-> =C2=A0git-blame the area, find the most recent commit C
-> =C2=A0while 1:
-> =C2=A0 =C2=A0git show C
-> =C2=A0 =C2=A0if that explains the code: break
-> =C2=A0 =C2=A0git-blame the area in C^
-> =C2=A0 =C2=A0find the most recent commit and call it C again
-[...]
-> All of this can now be replaced by a simple
->
-> =C2=A0git log -L <range> <filename>
->
-> A good example that I did a lot of testing with:
->
-> =C2=A0git log --graph be58e70d^ -L /builtin_funcname_pattern/,/^}/ di=
-ff.c
+However, if the index was *not* empty, git-merge silently discards
+*both index and worktree* copies of all files that were tracked,
+leading to data loss.  Exhibit this bug.
 
-Thanks. (And thanks to Bo for implementing it!)
+Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+
+Here's a less lazy approach at a bug report.
+
+I'm not too happy that noone went for a fix though; this is a real
+data loss scenario and from his complaints on IRC, Dscho actually hit
+it and had to reconstruct from the blobs.
+
+
+ t/t7607-merge-overwrite.sh |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
+
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index d82349a..ff08ebf 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -84,4 +84,20 @@ test_expect_success 'will not overwrite removed file with staged changes' '
+ 	test_cmp important c1.c
+ '
+ 
++test_expect_success 'set up unborn branch and content' '
++	git symbolic-ref HEAD refs/heads/unborn &&
++	rm -f .git/index &&
++	echo foo > tracked-file &&
++	git add tracked-file &&
++	echo bar > untracked-file
++'
++
++test_expect_failure 'will not clobber WT/index when merging into unborn' '
++	git merge master &&
++	grep foo tracked-file &&
++	git show :tracked-file >expect &&
++	grep foo expect &&
++	grep bar untracked-file
++'
++
+ test_done
+-- 
+1.7.2.2.479.g07acc
