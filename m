@@ -1,181 +1,108 @@
-From: Justin Frankel <justin@cockos.com>
-Subject: [PATCH 2/2] git-merge: ignore space support
-Date: Sat, 21 Aug 2010 22:46:31 -0700
-Message-ID: <20100822054631.GC64856@ns1.cockos.com>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [PATCH] shell: Rewrite documentation and improve error message
+Date: Sun, 22 Aug 2010 01:00:22 -0500
+Message-ID: <AANLkTi=u7VUhz4VrU2hdd3SXK7rMvMrijL-X9qXCG1vs@mail.gmail.com>
+References: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 22 07:57:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 22 08:00:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1On3Ye-0001ba-Ee
-	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 07:57:28 +0200
+	id 1On3ba-0002Bi-Q5
+	for gcvg-git-2@lo.gmane.org; Sun, 22 Aug 2010 08:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751485Ab0HVF5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 22 Aug 2010 01:57:24 -0400
-Received: from ns1.cockos.com ([204.11.104.229]:63979 "EHLO ns1.blorp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751368Ab0HVF5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 22 Aug 2010 01:57:23 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ns1.blorp.com (Postfix) with ESMTP id E404E1259C08
-	for <git@vger.kernel.org>; Sat, 21 Aug 2010 22:46:35 -0700 (PDT)
-Received: from ns1.blorp.com ([127.0.0.1])
-	by localhost (ns1.cockos.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id VCZNOC1+ZFgk for <git@vger.kernel.org>;
-	Sat, 21 Aug 2010 22:46:31 -0700 (PDT)
-Received: by ns1.blorp.com (Postfix, from userid 1000)
-	id CF4C31259C09; Sat, 21 Aug 2010 22:46:31 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.4.2.3i
+	id S1751368Ab0HVGA0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 22 Aug 2010 02:00:26 -0400
+Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:47075 "EHLO
+	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751329Ab0HVGAZ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 22 Aug 2010 02:00:25 -0400
+X-AuditID: 12074424-b7b2bae000005b3f-be-4c70bce82507
+Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
+	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id C7.5D.23359.8ECB07C4; Sun, 22 Aug 2010 02:00:09 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7M60NFU003171
+	for <git@vger.kernel.org>; Sun, 22 Aug 2010 02:00:24 -0400
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7M60MQV014048
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Sun, 22 Aug 2010 02:00:23 -0400 (EDT)
+Received: by iwn5 with SMTP id 5so2404486iwn.19
+        for <git@vger.kernel.org>; Sat, 21 Aug 2010 23:00:22 -0700 (PDT)
+Received: by 10.231.59.83 with SMTP id k19mr4381849ibh.178.1282456822286; Sat,
+ 21 Aug 2010 23:00:22 -0700 (PDT)
+Received: by 10.231.154.212 with HTTP; Sat, 21 Aug 2010 23:00:22 -0700 (PDT)
+In-Reply-To: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
+X-Brightmail-Tracker: AAAAAxWs/CYVrch4Fa3v2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154168>
 
-(this patch is for the next branch, specifically af7f2b0e6225e5d9faa54bc30e96669b4c706de8)
+Warning: the following email contains lots of nitpicks.  Proceed at
+your own risk.
 
----
- builtin/merge-recursive.c |    9 +++++++++
- builtin/merge.c           |    9 +++++++++
- ll-merge.c                |    1 +
- ll-merge.h                |   15 ++++++++++++++-
- merge-recursive.c         |    2 +-
- merge-recursive.h         |    1 +
- 6 files changed, 35 insertions(+), 2 deletions(-)
+> +A login shell for SSH accounts to provide restricted Git access. Whe=
+n
+> +'-c' is given, the program executes <command> non-interactively;
+> +<command> can be one of 'git receive-pack', 'git upload-pack', 'git
+> +upload-archive', 'cvs server', or a command in COMMAND_DIR. The shel=
+l
+> +is started in interactive mode when no arguments are given; in this
+> +case, COMMAND_DIR must exist, and any of the executables in them can
+s/in them/in it/
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index c2d4677..6606bb8 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -2,6 +2,7 @@
- #include "commit.h"
- #include "tag.h"
- #include "merge-recursive.h"
-+#include "xdiff-interface.h"
- 
- static const char *better_branch_name(const char *branch)
- {
-@@ -49,6 +50,14 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 				o.renormalize = 1;
- 			else if (!strcmp(arg+2, "no-renormalize"))
- 				o.renormalize = 0;
-+                        else if (!strcmp(arg+2, "ignore-all-space"))
-+                                o.xdl_opts |= XDF_IGNORE_WHITESPACE;
-+                        else if (!strcmp(arg+2, "ignore-space-change"))
-+                                o.xdl_opts |= XDF_IGNORE_WHITESPACE_CHANGE;
-+                        else if (!strcmp(arg+2, "ignore-space-at-eol"))
-+                                o.xdl_opts |= XDF_IGNORE_WHITESPACE_AT_EOL;
-+                        else if (!strcmp(arg+2, "patience"))
-+                                o.xdl_opts |= XDF_PATIENCE_DIFF;
- 			else
- 				die("Unknown option %s", arg);
- 			continue;
-diff --git a/builtin/merge.c b/builtin/merge.c
-index da26cd6..98c04b7 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -25,6 +25,7 @@
- #include "help.h"
- #include "merge-recursive.h"
- #include "resolve-undo.h"
-+#include "xdiff-interface.h"
- 
- #define DEFAULT_TWOHEAD (1<<0)
- #define DEFAULT_OCTOPUS (1<<1)
-@@ -646,6 +647,14 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
- 				o.renormalize = 1;
- 			else if (!strcmp(xopts[x], "no-renormalize"))
- 				o.renormalize = 0;
-+		        else if (!strcmp(xopts[x], "ignore-all-space"))
-+		                o.xdl_opts |= XDF_IGNORE_WHITESPACE;
-+		        else if (!strcmp(xopts[x], "ignore-space-change"))
-+		                o.xdl_opts |= XDF_IGNORE_WHITESPACE_CHANGE;
-+		        else if (!strcmp(xopts[x], "ignore-space-at-eol"))
-+		                o.xdl_opts |= XDF_IGNORE_WHITESPACE_AT_EOL;
-+		        else if (!strcmp(xopts[x], "patience"))
-+		                o.xdl_opts |= XDF_PATIENCE_DIFF;
- 			else
- 				die("Unknown option for merge-recursive: -X%s", xopts[x]);
- 		}
-diff --git a/ll-merge.c b/ll-merge.c
-index 6bb3095..4e56665 100644
---- a/ll-merge.c
-+++ b/ll-merge.c
-@@ -80,6 +80,7 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
- 	memset(&xmp, 0, sizeof(xmp));
- 	xmp.level = XDL_MERGE_ZEALOUS;
- 	xmp.favor = ll_opt_favor(flag);
-+        xmp.xpp.flags = ll_opt_xdl_opt(flag);
- 	if (git_xmerge_style >= 0)
- 		xmp.style = git_xmerge_style;
- 	if (marker_size > 0)
-diff --git a/ll-merge.h b/ll-merge.h
-index ff7ca87..cf2d7b9 100644
---- a/ll-merge.h
-+++ b/ll-merge.h
-@@ -7,19 +7,32 @@
- 
- #define LL_OPT_VIRTUAL_ANCESTOR	(1 << 0)
- #define LL_OPT_FAVOR_MASK	((1 << 1) | (1 << 2))
--#define LL_OPT_FAVOR_SHIFT 1
-+#define LL_OPT_FAVOR_SHIFT 	1
- #define LL_OPT_RENORMALIZE	(1 << 3)
-+#define LL_OPT_XDL_MASK 	(0x3F << 4)
-+#define LL_OPT_XDL_SHIFT 	4
- 
- static inline int ll_opt_favor(int flag)
- {
- 	return (flag & LL_OPT_FAVOR_MASK) >> LL_OPT_FAVOR_SHIFT;
- }
- 
-+static inline int ll_opt_xdl_opt(int flag)
-+{
-+	return ((flag & LL_OPT_XDL_MASK) >> LL_OPT_XDL_SHIFT);
-+}
-+
- static inline int create_ll_flag(int favor)
- {
- 	return ((favor << LL_OPT_FAVOR_SHIFT) & LL_OPT_FAVOR_MASK);
- }
- 
-+static inline int create_ll_flag_xdl_opt(int favor, int xdl_opt)
-+{
-+	return ((favor << LL_OPT_FAVOR_SHIFT) & LL_OPT_FAVOR_MASK) |
-+		((xdl_opt << LL_OPT_XDL_SHIFT) & LL_OPT_XDL_MASK);
-+}
-+
- int ll_merge(mmbuffer_t *result_buf,
- 	     const char *path,
- 	     mmfile_t *ancestor, const char *ancestor_label,
-diff --git a/merge-recursive.c b/merge-recursive.c
-index aadd48c..506c9db 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -646,7 +646,7 @@ static int merge_3way(struct merge_options *o,
- 				&src1, name1, &src2, name2,
- 				((o->call_depth ? LL_OPT_VIRTUAL_ANCESTOR : 0) |
- 				 (o->renormalize ? LL_OPT_RENORMALIZE : 0) |
--				 create_ll_flag(favor)));
-+				 create_ll_flag_xdl_opt(favor,o->xdl_opts)));
- 
- 	free(name1);
- 	free(name2);
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 196f053..33ab9d3 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -13,6 +13,7 @@ struct merge_options {
- 		MERGE_RECURSIVE_THEIRS
- 	} recursive_variant;
- 	const char *subtree_shift;
-+        int xdl_opts;
- 	unsigned buffer_output : 1;
- 	unsigned renormalize : 1;
- 	int verbosity;
--- 
-1.7.2.2.333.gec5bc.dirty
+> +COMMAND_DIR is the path 'git-shell-commands' in the user's home
+> +directory. The user must have read and execute permissions to the
+- Maybe instead 'COMMAND_DIR is the path "$HOME/git-shell-commands"'?
+> +directory for it to be useful.
+- I would be more specific here, and instead change this insertion to
+something like: "directory in order to execute commands in it."
+- What about adding something like 'Commands in COMMAND_DIR are run
+with a cwd of $HOME'
+- Perhaps note that if a COMMAND_DIR program is invoked, 'argument' is
+parsed as a command-line?
+
+>
+> =A0Author
+> =A0------
+> diff --git a/shell.c b/shell.c
+> index ffed615..3fb804e 100644
+> --- a/shell.c
+> +++ b/shell.c
+> @@ -152,8 +152,11 @@ int main(int argc, char **argv)
+> =A0 =A0 =A0 =A0} else if (argc =3D=3D 1) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/* Allow the user to run an interactiv=
+e shell */
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd_to_homedir();
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (access(COMMAND_DIR, R_OK | X_OK) =3D=
+=3D -1)
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("Sorry, the interac=
+tive git-shell is not enabled");
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (access(COMMAND_DIR, R_OK | X_OK) =3D=
+=3D -1) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("Inteactive git she=
+ll is not enabled.\n"
+s/Inteactive/Interactive/
+
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "hint: " COMMAN=
+D_DIR " should exist "
+I would recommend displaying ~/$COMMAND_DIR instead, or
+$HOME/COMMAND_DIR.  The latter could be considered an information leak
+though.
+
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "and have read =
+and execute access.");
+
+Sounds fine to me otherwise.  Thanks for starting on this.
