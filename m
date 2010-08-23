@@ -1,76 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] optionally disable overwriting of ignored files
-Date: Mon, 23 Aug 2010 08:57:38 -0700
-Message-ID: <7veidp2ufh.fsf@alter.siamese.dyndns.org>
-References: <4C6A1C5B.4030304@workspacewhiz.com>
- <7viq39avay.fsf@alter.siamese.dyndns.org> <20100818233900.GA27531@localhost>
- <vpqd3t9656k.fsf@bauges.imag.fr> <4C727E17.5070707@ira.uka.de>
- <20100823151146.GA15379@localhost>
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: HTML help files are broken
+Date: Mon, 23 Aug 2010 10:59:04 -0500
+Message-ID: <AANLkTimMZGswhWXyDMaFa9N1ipzoBXT7RptHMq2TYhmv@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Aug 23 17:58:03 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 23 17:59:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnZPO-0007c1-2D
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 17:58:02 +0200
+	id 1OnZQZ-0000gx-4F
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 17:59:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754215Ab0HWP55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Aug 2010 11:57:57 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59228 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754190Ab0HWP5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Aug 2010 11:57:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CF501CF902;
-	Mon, 23 Aug 2010 11:57:50 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=DSLf6ueYU1nU5gBXWJmtBp/JAK0=; b=K0cRBV
-	TArciHjyBoi9GOBPliEpZKf2xw2LqGN4e7TFCmBA6kwldCJgL3lLiRfHtgRp5lnH
-	bJXHEEA558LOVlYuTq5W+lQrBTN7PwmzFD1nMf1nVKi3KXXTvYiq7HLj1sN3GA66
-	AzSbBT0XMGyT7LXfwLIxCBF/OmSVQ7nIB9ss0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Im8NyKXVpHDqYE+AhwC8XaV1B9doU1Mw
-	VYiYSpE7cLpt3YTBfxEVW9cHt/loxnS8MLXz5n/eSemCGnSqwXZ9/jyQw4ndru9L
-	T+1RjTO9yObzKW0mbBLqIs4FZ2doskPo+BoV+LEyC7yo52QTgHtM5mhqS4ysvtDD
-	TtYtIpHKknE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CF89CF901;
-	Mon, 23 Aug 2010 11:57:45 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8D042CF900; Mon, 23 Aug
- 2010 11:57:39 -0400 (EDT)
-In-Reply-To: <20100823151146.GA15379@localhost> (Clemens Buchacher's message
- of "Mon\, 23 Aug 2010 17\:11\:46 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2B73406C-AECF-11DF-B712-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754322Ab0HWP7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 11:59:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61093 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754317Ab0HWP7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 11:59:06 -0400
+Received: by wwe15 with SMTP id 15so285408wwe.1
+        for <git@vger.kernel.org>; Mon, 23 Aug 2010 08:59:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=kU8MSdXp1ui8L3mUMK1YCmOqWw7EJmL4NdXF+qcYMKU=;
+        b=PXrx2vHwFRandZ+XSWY6FhRn9/8rhn0nlACMKerEt/A7hYyJIoUaYLrc3rZJzCALnl
+         SJa5QmTXXAJysltrxac3fZn5tswZBEOilm0BoBPoDYtnhF8G2TADEzxW531WcuNkwWL4
+         yDsSVr7slMALfMvsK9RydXC68qK1Z7Hmxurrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=rWUsFQxZaXWX+f4vcuybgO8M5nEWMUk+igWqvbGjl9aC8qDURO9b1aXFfbBQKePcm2
+         ngztVVdJYjVuPC1nc6kPlupJ0BY0BC+LrEhwRQkTgQf+pFrZ2InTFb55NFO01NNlocKl
+         vecTMEpP4CwIcL/7chh6om3gTQORn1tq+qj4s=
+Received: by 10.216.45.16 with SMTP id o16mr2715867web.45.1282579144353; Mon,
+ 23 Aug 2010 08:59:04 -0700 (PDT)
+Received: by 10.216.68.16 with HTTP; Mon, 23 Aug 2010 08:59:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154231>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Some of the HTML manual files produced on my machine (Ubuntu 10.04)
+from the git source are broken: in git-help.html, I get the following
+for the link to the git-web--browse manual page:
 
-> On Mon, Aug 23, 2010 at 03:56:39PM +0200, Holger Hellmuth wrote:
->> 
->> You've got my vote. This is the only option that combines safety with
->> minimal configuration hassle.
->> 
->> I didn't know about this subtle difference between .gitignore and
->> .git/info/exclude. And while this makes sense I expect a sizable
->> percentage of users will never even know that .git/info/exclude exists.
->
-> I don't know if this subtle difference was even intentional.
+<a href="git-web&#8212;browse.html">git-web&#8212;browse(1)</a>
 
-I am sorry, what difference are you talking about?
+where the &#8212; (en-dash) replaces the "--" (dash-dash) that is on
+the filesystem.  How does one fix it, so that the line above would be
+
+<a href="git-web--browse.html">git-web--browse(1)</a>?
+
+The command line I am using is a simple
+
+make doc.
+
+I checked the git repository origin/html, and the correct link is
+produced there, so something in my configuration is messed up.
+
+Nathan Panike
