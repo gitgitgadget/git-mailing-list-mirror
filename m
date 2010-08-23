@@ -1,141 +1,239 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: git strangeness
-Date: Mon, 23 Aug 2010 19:43:19 +0000
-Message-ID: <AANLkTinwK0R4BGUn_ehBOvO7HrwUZZ6Va3okoiu=eu7P@mail.gmail.com>
-References: <AANLkTikrJ+hizEicws8PZAry-WOzOYoXAEW9b1L8OYcR@mail.gmail.com>
-	<AANLkTim27gLuAwxrNZFmayufF3ctKDU5vmUSN4v4bQPY@mail.gmail.com>
-	<AANLkTi=JQ0rAYmAz=uJc5riZC+UwxhEvsXCvzQ6310O8@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] added possibility to supply more than one --listen
+ argument to git-daemon
+Date: Mon, 23 Aug 2010 12:56:06 -0700
+Message-ID: <7v4oel14tl.fsf@alter.siamese.dyndns.org>
+References: <1282582475-3545-1-git-send-email-alexander@sulfrian.net>
+ <1282582475-3545-2-git-send-email-alexander@sulfrian.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Perl5 Porteros <perl5-porters@perl.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 23 21:43:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexander Sulfrian <alexander@sulfrian.net>
+X-From: git-owner@vger.kernel.org Mon Aug 23 21:56:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OncvW-0008Ho-Vk
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 21:43:27 +0200
+	id 1Ond86-0002hy-U2
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 21:56:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754304Ab0HWTnW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Aug 2010 15:43:22 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64627 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752509Ab0HWTnV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Aug 2010 15:43:21 -0400
-Received: by fxm13 with SMTP id 13so3268518fxm.19
-        for <git@vger.kernel.org>; Mon, 23 Aug 2010 12:43:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rjjk/D+4gBQvpAJ0Mr3pUpHfqPCDbizHHuI3BVV/0BA=;
-        b=AzxX+wVcldzdafzHGERD3KOl/nFhSgTEwNC0a57mNtZcUgQCFvPCahq8XniEHnHOCr
-         FV2MUGEWf0tLQRhnXd9oPh7J4uEjjVMoYm7vuSn58+2hZAk4YkQg2DOkP4vsvJJIHMSm
-         pDksb/Y157rUQxO9kdXZsrNmNaRJnEMYf9meY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uJhuhZi4KoKhf1UIBUMyaiTCveuYJ570Of7qUoZ/EqFm6NGCWzTjM8VjEEjpV/tGLd
-         TCqMIEj2XzpDMygpWf7qzBRkpjCLEjKadcIH3ejqnxnEOIKq4caLu+XDe6dYvHhK6FdO
-         QKtwzglx43cCmaNdR7paC0B4HbRW+0G583ZTs=
-Received: by 10.223.115.194 with SMTP id j2mr4945995faq.47.1282592599141; Mon,
- 23 Aug 2010 12:43:19 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Mon, 23 Aug 2010 12:43:19 -0700 (PDT)
-In-Reply-To: <AANLkTi=JQ0rAYmAz=uJc5riZC+UwxhEvsXCvzQ6310O8@mail.gmail.com>
+	id S1754554Ab0HWT4Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 15:56:16 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65145 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754400Ab0HWT4P (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 15:56:15 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D854CF1F8;
+	Mon, 23 Aug 2010 15:56:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VhgSQ8ohEn7S7G5stGgdHlawDD0=; b=xZYZro
+	CG33LapS0vnnNphElrtmPFjD8A7Bo4yMwTY3vPdQy7sNghkHuuad6z7h1bDPBho1
+	qNsXp9KCnfcCCPJPIIVxPr/pRPd0PC66iyIvwD5H7fm+uWPntqnuxCNfdjbKKQTa
+	I2cBzZe2F2bnHY6eIZCbRAlrPp8Q5NNK25H74=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=stNiqc4cyUWhJQ6v8rsiw7qers7Jmb08
+	6vSe/1iT9f8ZYU/c8bX7OUAmP90d/0vQK+S3MSopxSEQU+llBRqSv3hbq7iNUR/T
+	zc8xUoSgUHIgABCCminRDb2Oxj0ai23dMpmBdP+q7k8k0/9rgWQdygDqlH4ymkqf
+	QIHznRZdjDw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4A1ECCF1F0;
+	Mon, 23 Aug 2010 15:56:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DE2DCF1E9; Mon, 23 Aug
+ 2010 15:56:08 -0400 (EDT)
+In-Reply-To: <1282582475-3545-2-git-send-email-alexander@sulfrian.net>
+ (Alexander Sulfrian's message of "Mon\, 23 Aug 2010 18\:54\:35 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7A5DCDAC-AEF0-11DF-B656-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154248>
 
-On Mon, Aug 23, 2010 at 19:33, demerphq <demerphq@gmail.com> wrote:
-> On 23 August 2010 19:59, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
->> On Sat, Aug 21, 2010 at 11:54, demerphq <demerphq@gmail.com> wrote:
->>> Today I was trying to pull some updates over my wlan connection at =
-the
->>> hotel I'm in right now.
->>>
->>> For some reason it repeatedly hung. I tried using the git protocol,
->>> and using ssh, each time it hung at the same point (object transfer=
- -
->>> and after the same number of objects).
->>>
->>> Eventually I opened a tunnel, with control master enabled to camel
->>> (obviously not everybody can do this), and then tried to pull using
->>> the established tunnel. At which point it pulled just fine - and da=
-mn
->>> fast.
->>>
->>> Anybody else experienced strangeness like this? Could we have a gli=
-tch
->>> somewhere?
->>
->> It would help to clarify what the strangeness is, but obviously you
->> can't debug it *now*.
->>
->> If you have issues like this one useful thing is to try to use the
->> plumbing tools to see if you can reproduce the issue. E.g. use
->> git-fetch, and stuff like git-receive-pack / git-send-pack if you ca=
-n.
+Alexander Sulfrian <alexander@sulfrian.net> writes:
+
+> --listen arguments are gathered in a string_list
+> serve and socksetup get listen_addr as string_list
+> socketsetup creates a listen socket for each host in that string_list
 >
-> I actually did use git-fetch. Same thing. It was weird. I had about
-> 1200 objects to transfer, after, i think, 345 objects it just hung.
-> For minutes, after which i killed it. I tried again, and it hung
-> again, etc, and like I said until I had opened a tunnel to camel and
-> switched to ssh it huing every time, with ssh as the protocol and wit=
-h
-> git as the protocol.
+> Signed-off-by: Alexander Sulfrian <alexander@sulfrian.net>
+> ---
+
+Thanks for a resend/reminder.  I've been meaning to look at this patch
+after somebody who actually runs the daemon commented on it.
+
+A few administravia:
+
+ - Please begin the subject line with affected-area and a colon;
+
+ - Please place more stress on what problem the patch tries to solve and
+   less on how the patch solves it, because the latter can be read from
+   the patch text itself, when writing a proposed log message;
+
+ - We tend to write the log message in imperative mood, to order either the
+   person who applies the patch or the codebase what new things to do.
+
+ - We need to also update the documentation (e.g. just add "Can be given
+   more than one times" before "Incompatible with '--inetd' option." in
+   Documentation/git-daemon.txt).
+
+So...
+
+    Subject: [PATCH] daemon: allow more than one host addresses given via --listen
+
+    When the host has more than one interfaces, daemon can listen to all
+    of them by not giving any --listen option, or listen to only one.
+    Teach it to accept more than one --listen options.
+
+    Signed-off-by: ...
+
+>  daemon.c |  183 ++++++++++++++++++++++++++++++++++++--------------------------
+>  1 files changed, 107 insertions(+), 76 deletions(-)
 >
-> I actually still have the repo in unpulled form, so ill try again,
-> what exactly should I do to obtain better diagnostics?
+> diff --git a/daemon.c b/daemon.c
+> index e22a2b7..f4492fe 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -3,6 +3,7 @@
+>  #include "exec_cmd.h"
+>  #include "run-command.h"
+>  #include "strbuf.h"
+> +#include "string-list.h"
+>  
+>  #include <syslog.h>
+>  
+> @@ -736,7 +737,7 @@ static int set_reuse_addr(int sockfd)
+>  
+>  #ifndef NO_IPV6
+>  
+> -static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
+> +static int socksetup(struct string_list *listen_addr, int listen_port, int **socklist_p)
+>  {
+>  	int socknum = 0, *socklist = NULL;
+>  	int maxfd = -1;
+> @@ -744,6 +745,7 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
+>  	struct addrinfo hints, *ai0, *ai;
+>  	int gai;
+>  	long flags;
+> +	int i;
+>  
+>  	sprintf(pbuf, "%d", listen_port);
+>  	memset(&hints, 0, sizeof(hints));
+> @@ -752,57 +754,69 @@ static int socksetup(char *listen_addr, int listen_port, int **socklist_p)
+>  	hints.ai_protocol = IPPROTO_TCP;
+>  	hints.ai_flags = AI_PASSIVE;
+>  
+> -	gai = getaddrinfo(listen_addr, pbuf, &hints, &ai0);
+> -	if (gai)
+> -		die("getaddrinfo() failed: %s", gai_strerror(gai));
+> +	i = 0;
+> +	do {
+> +		if (listen_addr->nr > 0) {
+> +			gai = getaddrinfo(listen_addr->items[i].string, pbuf,
+> +					  &hints, &ai0);
+> +		}
+> +		else {
+> +			gai = getaddrinfo(NULL, pbuf, &hints, &ai0);
+> +		}
 
-To start with, add the Git mailing list to the CC-list, which I've
-just done.
+Style: neither of these if/else body need braces around it.
 
-I don't know what you should do exactly, but...:
+But more importantly, wouldn't it make the patch and the result easier to
+read if you split the part of the code that now is one iteration of the
+loop over listen_addr list into a separate helper function?
 
- * If you rsync the perl.git repository from camel to somewhere else
-   and use ssh+git to *there* does it still hang? Maybe you can make
-   both copies of perl.git available online for others to try?
+Then socksetup would look something like:
 
- * How does it hang? Run it with GIT_TRACE=3D1 <your commands>, What
-   process hangs exactly? Is it using lots of CPU or memory in top?
-   How about if you strace it, is it hanging on something there?
+        static int socksetup(...)
+        {
+		...
+		if (!listen_addr_list->nr)
+		    	setup_named_sock(NULL, listen_port, socklist_p);
+		else {
+			int i;
+			for (i = 0; i < listen_addr_list->nr; i++)
+                        	setup_named_sock(listen_addr_list->items[i].string,
+                                	listen_port, socklist_p);
+                }
+		...
+    	}
 
- * Does this all go away if you you upgrade git (e.g. build from
-   master git.git) on either the client or server?
+If such a refactoring results in more readable code (I haven't tried doing
+the refactoring myself, so I don't know if it is worth it), then I would
+suggest making this into a two-patch series, one that creates the helper
+function, and then another that adds multiple-listen support on top.
 
- * If not, maybe run it under gdb with tracing and see where it hangs?
+> @@ -946,14 +970,14 @@ static void store_pid(const char *path)
+>  		die_errno("failed to write pid file '%s'", path);
+>  }
+>  
+> -static int serve(char *listen_addr, int listen_port, struct passwd *pass, gid_t gid)
+> +static int serve(struct string_list *listen_addr, int listen_port, struct passwd *pass, gid_t gid)
+>  {
+>  	int socknum, *socklist;
+>  
+>  	socknum = socksetup(listen_addr, listen_port, &socklist);
+>  	if (socknum == 0)
+> -		die("unable to allocate any listen sockets on host %s port %u",
+> -		    listen_addr, listen_port);
+> +		die("unable to allocate any listen sockets on port %u",
+> +		    listen_port);
 
-=2E.would seem like good places to start.
+Here we are losing "host" information; does it matter?
 
->>> Also, I noticed that git-web, or perhaps our config of it, has a
->>> glitch when using pick-axe. It seems to die in mid processing
->>> (probably a timeout) and thus returns broken XML/HTML to the browse=
-r,
->>> which in turn inconveniently means that firefox shows an XML error =
-and
->>> doesn't show the results that it /has/ found. Im wondering if there=
- is
->>> anything we should do about this?
->>
->> What were you looking at when you got the XML error? There was a
->> recent report about this to the git list and it's been solved upstre=
-am
->> IIRC. It was a simple matter of a missing escape_binary_crap()
->> somewhere.
->
-> I was doing a pick-axe search for PERL_STRING_ROUNDUP (however it is
-> actually spelled), after about 5 minutes the connection terminated an=
-d
-> resulted in broken output...
+Earlier socksetup() died only when getaddrinfo died, as in that case we
+know there won't be any socket prepared.  You removed that die (which is
+sensible---as you may have one unavailable and another available interface
+and dying only when there is no socket listening has been the design of
+the program, and you are not changing that with this patch).
 
-What's the gitweb link for that? I'm not familiar with how to make it
-do a blame search.
+Also I have to wonder what would have happened in the original code if
+there were no --listen given (presumably we got NULL in the argument in
+that case).
+
+My gut feeling is that this change is Ok, as this die() would trigger only
+when no interface out of either all interface or the ones specified on the
+command line with --listen options, can be listened to at the port, either
+given by --listen_port option or the default 9418; and the user does know
+which "host" was asked anyway.  But the change needs to be mentioned in
+the proposed log message.
+
+It might be an improvement if we reported addresses that cannot be
+listened to (you can use listen_addr_list->items[i].util for that--- when
+setup_named_sock() helper finds that no new socket was added by the loop
+over the list resulting from getaddrinfo, it can mark the item's util
+field, and then instead of dying the caller of socksetup() can warn on
+such names.  If we were to do so, however, that should be done as a
+separate patch on top of this change.
+
+> @@ -966,14 +990,17 @@ static int serve(char *listen_addr, int listen_port, struct passwd *pass, gid_t
+>  int main(int argc, char **argv)
+>  {
+>  	int listen_port = 0;
+> -	char *listen_addr = NULL;
+>  	int inetd_mode = 0;
+> +	struct string_list listen_addr;
+>  	const char *pid_file = NULL, *user_name = NULL, *group_name = NULL;
+>  	int detach = 0;
+>  	struct passwd *pass = NULL;
+>  	struct group *group;
+>  	gid_t gid = 0;
+>  	int i;
+> +	int return_value;
+> +
+> +	memset(&listen_addr, 0, sizeof(struct string_list));
+
+Don't we have STRING_LIST_INIT macro these days?
+
+I also have to wonder if we eventually want to take --listen=host:port so
+that you can listen only to two interfaces out of three avaiable on your
+host, but on different ports.  Again, if we were to do so, however, that
+should be done as a separate patch on top of this change.
+
+Thanks.
