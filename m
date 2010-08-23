@@ -1,115 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2010, #05; Sat, 21)
-Date: Mon, 23 Aug 2010 18:51:49 +0000
-Message-ID: <AANLkTin-3d6mDvW3ET1wGyTwvSOaL8CTKK0uZiFiEkz_@mail.gmail.com>
-References: <7v4oen5clj.fsf@alter.siamese.dyndns.org>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: "git -c web.browser=w3m help -w help" still kicks firefox
+Date: Mon, 23 Aug 2010 21:02:36 +0200
+Message-ID: <AANLkTi=R6ZdD9GUO6T6uCUkF+KVPbG1FGrieOfeusKct@mail.gmail.com>
+References: <7viq3119yn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Jonathan Nieder <jrnieder@gmail.com>, Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 23 20:51:56 2010
+X-From: git-owner@vger.kernel.org Mon Aug 23 21:02:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onc7g-00015m-Bf
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 20:51:56 +0200
+	id 1OncI8-0003IO-JP
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 21:02:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab0HWSvv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Aug 2010 14:51:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53095 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751107Ab0HWSvu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Aug 2010 14:51:50 -0400
-Received: by fxm13 with SMTP id 13so3217929fxm.19
-        for <git@vger.kernel.org>; Mon, 23 Aug 2010 11:51:49 -0700 (PDT)
+	id S1753548Ab0HWTCk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Aug 2010 15:02:40 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:42953 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab0HWTCi convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Aug 2010 15:02:38 -0400
+Received: by gxk23 with SMTP id 23so2250596gxk.19
+        for <git@vger.kernel.org>; Mon, 23 Aug 2010 12:02:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=kN6Qtk7shedMQhZQkf+JGUYTAiTJ740wKRE67yddZfM=;
-        b=KSgiDKz3kdLBd8VWV93v7tpWh5x77Prn0VbHPzzpLD6PDzHgg8j5Z3XmkVP501JObv
-         zJxjv9dwhSyRROdn5EcCrybjUVMAanOKLGPO4QtKwX9kHfSDdo1VGsv3P6FkpBSBXLbZ
-         P2TZY8pSPMk/NC/gZ4vLEVJaLASUUrf0yCCME=
+        bh=X2C8kxGXGX1dvF4OQF4H2npUw0MPhDsmGJ42qE4wwSs=;
+        b=hkeP1hMe/ClxuyN137cBPOOtMY8e4EflBm7ugJTWXermWFtTGj+YW3fZTxcMrZSsyb
+         gfH8rwAhv3gKCqu0/V+uLRQ/g5aTXWRjA2hwHlHFconZidjuGpjZcljtkNd5G6gfjstK
+         NgyQM/OLgRsx51sZuDbuR5kNpjXiXFFCvLLb4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=d+EpIGsY7I8SdA7FTamSGKdvZtEBIEKonfCo/P+E9qt/G/ZsNN042Ey0w7cNc3osp3
-         NFasBRw7/z78IL1g7QFXDipqjkNa5ug1iZcqROg5350p9vSqj46XcSD3ylVoemedrdL4
-         9rNiEeEBzhfzEMARysZIexN8mcprDcG8wcjPU=
-Received: by 10.223.109.2 with SMTP id h2mr4787333fap.95.1282589509217; Mon,
- 23 Aug 2010 11:51:49 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Mon, 23 Aug 2010 11:51:49 -0700 (PDT)
-In-Reply-To: <7v4oen5clj.fsf@alter.siamese.dyndns.org>
+        b=PaGJHcFnR/BpCKWUOMexXgOLOtpN3P6oaozQnF2iYRM7k2H4EnxFB/dikDy+iwGnux
+         7wIMKqMmXPlRM8KpWhCXPgP2bHHFe7/B57I9Xmyvk+6G3k7ltuKvfFHTSI+Pg1xgWwPR
+         nXD+gVxBtyOHnF5aoQgpBr6bBBSrC15xzdqXw=
+Received: by 10.90.118.19 with SMTP id q19mr3776226agc.89.1282590157048; Mon,
+ 23 Aug 2010 12:02:37 -0700 (PDT)
+Received: by 10.231.186.213 with HTTP; Mon, 23 Aug 2010 12:02:36 -0700 (PDT)
+In-Reply-To: <7viq3119yn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154244>
 
-On Sun, Aug 22, 2010 at 07:30, Junio C Hamano <gitster@pobox.com> wrote=
+On Mon, Aug 23, 2010 at 20:05, Junio C Hamano <gitster@pobox.com> wrote=
 :
-
-> * ab/test (2010-08-16) 43 commits
-> =C2=A0(merged to 'next' on 2010-08-18 at f88bdb1)
-> =C2=A0+ cvs tests: do not touch test CVS repositories shipped with so=
-urce
-> =C2=A0+ t/t9602-cvsimport-branches-tags.sh: Add a PERL prerequisite
-> =C2=A0+ t/t9601-cvsimport-vendor-branch.sh: Add a PERL prerequisite
-> =C2=A0+ t/t7105-reset-patch.sh: Add a PERL prerequisite
-> =C2=A0+ t/t9001-send-email.sh: convert setup code to tests
-> =C2=A0+ t/t9001-send-email.sh: change from skip_all=3D* to prereq ski=
-p
-> =C2=A0+ t/t9001-send-email.sh: Remove needless PROG=3D* assignment
-> =C2=A0+ t/t9600-cvsimport.sh: change from skip_all=3D* to prereq skip
-> =C2=A0+ lib-patch-mode tests: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t3701-add-interactive.sh: change from skip_all=3D* to prere=
-q skip
-> =C2=A0+ tests: Move FILEMODE prerequisite to lib-prereq-FILEMODE.sh
-> =C2=A0+ t/Makefile: Create test-results dir for smoke target
-> =C2=A0+ git-notes: Run partial expensive test everywhere
-> =C2=A0+ t/t3300-funny-names: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t3902-quoted: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t4016-diff-quote: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t5503-tagfollow: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t7005-editor: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t5705-clone-2gb: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/t1304-default-acl: change from skip_all=3D* to prereq skip
-> =C2=A0+ t/README: Update "Skipping tests" to align with best practice=
-s
-> =C2=A0+ t/t7800-difftool.sh: Skip with prereq on no PERL
-> =C2=A0+ t/t5800-remote-helpers.sh: Skip with prereq on python <2.4
-> =C2=A0+ t/t4004-diff-rename-symlink.sh: use three-arg <prereq>
-> =C2=A0+ tests: implicitly skip SYMLINKS tests using <prereq>
-> =C2=A0+ Makefile: make gcov invocation configurable
-> =C2=A0+ t/README: Add a note about the dangers of coverage chasing
-> =C2=A0+ t/README: A new section about test coverage
-> =C2=A0+ Makefile: Add cover_db_html target
-> =C2=A0+ Makefile: Add cover_db target
-> =C2=A0+ Makefile: Split out the untested functions target
-> =C2=A0+ Makefile: Include subdirectories in "make cover" reports
-> =C2=A0+ gitignore: Ignore files generated by "make coverage"
-> =C2=A0+ t/README: Add SMOKE_{COMMENT,TAGS}=3D to smoke_report target
-> =C2=A0+ t/Makefile: Can't include GIT-BUILD-OPTIONS, it's a .sh
-> =C2=A0+ t/README: Document the Smoke testing
-> =C2=A0+ tests: Infrastructure for Git smoke testing
-> =C2=A0+ test-lib: Multi-prereq support only checked the last prereq
-> =C2=A0+ tests: A SANITY test prereq for testing if we're root
-> =C2=A0+ t/README: Document the predefined test prerequisites
-> =C2=A0+ test-lib: Print missing prerequisites in test output
-> =C2=A0+ test-lib: Add support for multiple test prerequisites
-> =C2=A0+ test-lib: Don't write test-results when HARNESS_ACTIVE
-> =C2=A0(this branch is used by ab/test-1.)
+> I know exactly why this happens---we save the config from the command=
+ line
+> on a list only so that we can apply them in the correct order after i=
+tems
+> coming from files, but we do not use the saved values to pass them ar=
+ound
+> to sub-git invocations.
 >
-> Previously many individual topic branches from the same author, all
-> regarding tests. =C2=A0I thought it probably was ready for 'next' but=
- was
-> holding off as we seem to still keep getting many fixes on top.
+> =C2=A08b1fa77 (Allow passing of configuration parameters in the comma=
+nd line, 2010-03-26)
+>
+> A "trivial fix" would be to pass this info through the execv_git_cmd(=
+)
+> interface by either exporting it via an environment variable or by
+> modifying the command line options, but I am not sure about the possi=
+ble
+> fallouts from such a change. =C2=A0For example, does "git -c var=3Dva=
+lue config ..."
+> work sensibly when what "config" is told to do (say, remove a section=
+)
+> contradicts with having the named var with a given value?
+>
+> I am wondering if this is worth fixing it in the first place.
+>
+> Opinions? =C2=A0Patches ;-)?
+>
 
-=46WIW I won't be submitting new stuff on top of this for a while. So a=
-s
-far as that's concerned it can go into next.
+Maybe it is worth fixing, but on a case-by-case basis?
+
+I mean changing the execv_git_cmd interface (or create a new execv func=
+tion),
+so that it can get the list of config vars to pass down to the callee. =
+A trivial
+case of its use would be to just pass the current config (or, more
+likely, none).
+Or, one could give it its own list of config parameters.
