@@ -1,142 +1,81 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: [PATCH 2/4] rev-parse: suppress duplicate log limit exceeded message.
-Date: Tue, 24 Aug 2010 00:59:58 +1000
-Message-ID: <AANLkTi=3=sumzcSFoCN6FUPQPzfQvfSim8KPRoXoT3tL@mail.gmail.com>
-References: <AANLkTi=m7+h0nVg+EAmiir-rnrjoBwbpLtztcNNBVxiz@mail.gmail.com>
-	<1282355022-17795-3-git-send-email-jon.seymour@gmail.com>
-	<7vy6by2vlf.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git-svn mirror in bare repo
+Date: Mon, 23 Aug 2010 17:05:16 +0200
+Message-ID: <4C728E2C.8080003@drmicha.warpmail.net>
+References: <20100823122425.GB12810@nibiru.local> <4C72708B.202@drmicha.warpmail.net> <20100823131348.GC12810@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 23 17:00:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: weigelt@metux.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 23 17:05:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnYVi-0002aC-AI
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 17:00:30 +0200
+	id 1OnYaT-00079m-Ea
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 17:05:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753973Ab0HWPAM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Aug 2010 11:00:12 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:59071 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753951Ab0HWO77 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Aug 2010 10:59:59 -0400
-Received: by qyk9 with SMTP id 9so2757543qyk.19
-        for <git@vger.kernel.org>; Mon, 23 Aug 2010 07:59:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=z1q71bihQJfkecQd33LQXwUrYn5/I8ZWF+rCrWfsK0g=;
-        b=de/zpuU+6pNAh2nzSz+uBQOVJfifeH916EiUu/xEmBdnE95YRmCs9Mt+mIHpFJ9SWg
-         6q08Z8tY7bCkjjraIOoC2V3iRc53xG+D29h/qRCPa5p3r0+gGs6Os84POm5JVxc+ZxGK
-         MPuaqmR1F4vAb4jjL0lbrcjRQd7ioIQQLni5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LL6VzjhJsxVmdJqRQD0kuZvOSk13W+JmQGWg3+W47tJZ1hCXjsJvIUJyDwMw2i+64g
-         3rv+kmZGEngYYwak9HFqHrM37aG49TD6dSk01t+oxY4vwmoc4/KNWdUY0mxCUmIqV/0c
-         XxEyXQL+0qpzn93RI3n6apDfYKcySaNWuwcj0=
-Received: by 10.229.184.21 with SMTP id ci21mr3750896qcb.116.1282575599099;
- Mon, 23 Aug 2010 07:59:59 -0700 (PDT)
-Received: by 10.229.231.199 with HTTP; Mon, 23 Aug 2010 07:59:58 -0700 (PDT)
-In-Reply-To: <7vy6by2vlf.fsf@alter.siamese.dyndns.org>
+	id S1753918Ab0HWPFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 11:05:19 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43959 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751589Ab0HWPFS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 23 Aug 2010 11:05:18 -0400
+Received: from compute3.internal (compute3.internal [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EBF563B4;
+	Mon, 23 Aug 2010 11:05:17 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Mon, 23 Aug 2010 11:05:17 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OM8q/Qd+ZqnjEzySdowN/3lkZdM=; b=AYAYdiURwWEL2eFu6GCfFQAzL4msORNLFuYkxQeoUbisFgtye3aL1ZdnaRV4Rl92nlA08iAdB/gGoHo9QQB5BBiXDJwdnptP7WeLhqdDtSUhZxfby0QWPke+18SowNWnvg/LgkBO2tUdZ6CaT4TGuHqNGwM1DONsutWxNUplgIg=
+X-Sasl-enc: d4bwdqP/teBW30Qpn3ujmGyazSFN0sZHufk0WnXJYp4o 1282575917
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6F9935EC83E;
+	Mon, 23 Aug 2010 11:05:17 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9pre) Gecko/20100806 Lightning/1.0b2pre Lanikai/3.1.2
+In-Reply-To: <20100823131348.GC12810@nibiru.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154227>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154228>
 
-On Mon, Aug 23, 2010 at 7:20 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Jon Seymour <jon.seymour@gmail.com> writes:
->
->> With this change, git rev-parse master@{99999} reports:
+Enrico Weigelt venit, vidit, dixit 23.08.2010 15:13:
+> * Michael J Gruber <git@drmicha.warpmail.net> wrote:
+>> Enrico Weigelt venit, vidit, dixit 23.08.2010 14:24:
+>>>
+>>> Hi folks,
+>>>
+>>> is it possible to use git-svn w/ an bare repository (eg. using
+>>> an temporary workdir when necessary or directly creating tree
+>>> and commit objects w/o going through workdir at all) ?
 >>
->> =C2=A0 master@{99999}
->> =C2=A0 error: Log for 'master' only has 166 entries.
->> =C2=A0 fatal: ambiguous argument 'master@{99999}': unknown revision =
-or path not in the working tree.
->> =C2=A0 Use '--' to separate paths from revisions
->
-> If we are going to say "fatal:" and die at the end, I think we probab=
-ly do
-> not want to say a separate "error" message. =C2=A0Instead of adding a=
- boolean
-> parameter "fail silently or warn?", it may be better to make it a poi=
-nter
-> to a strbuf and have it filled with error details (or a machine reada=
-ble
-> struct and make it responsibility of the caller to generate a message=
-).
->
+>> No.
+> 
+> hmm, can it work with an external workdir ?
 
-I agree that it is not ideal that we have an error message and a fatal
-message in this case.
+You can have the workdir anywhere you like by using the core.worktree
+setting. So, if you mind the size requirements you can put it onto some
+fast tempdir (tmpfs, say). In fact, if all you do is "git svn fetch"
+then git svn may not even notice a missing worktree (would have to try).
+"git svn rebase" does need a worktree.
 
-Ideally,  I think we should simply be reporting the log limit exceeded
-condition as a fatal condition on its own, and not reporting the
-ambiguous ref catch all at all in this case. We have already decided
-that the argument is a reference at this point and as such it is not
-really ambiguous, it just happens to be out of bounds.
+> 
+>>> I'm running a dozen of mirrors (also from cvs), some from fairly
+>>> large and I'd like to get rid of the working copies.
+>>
+>> Your only option is a different conversion tool. GSoC resulted in a lot
+>> of code in this direction, but I'm not sure it can do without a workdir.
+>> It is based on svndump
+> 
+> I guess that requires access to the raw repository (on the server),
+> not just unprivileged svn client access, right ?
 
-> Then die_verify_filename can become, e.g.:
->
-> static void NORETURN die_verify_filename(const char *prefix, const ch=
-ar *arg)
-> {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned char sha1[20];
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned mode;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct strbuf e;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* learn in what way is it bad? */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0get_sha1_with_mode_1(arg, sha1, &mode, &e,=
- prefix);
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0/* ... or fall back the most general messa=
-ge. */
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0die("ambiguous argument '%s': unknown revi=
-sion or path not in the working tree.\n"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"%s"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"Use '--' to separate paths =
-from revisions", arg, e.buf);
-> }
->
-> and we can later reuse the same mechanism to cover other kind of erro=
-rs,
-> not just "the log does not have that many entries" error. =C2=A0With =
-your
-> "gently" approach it may not be easy to do that without adding more
-> parameters to all the functions in the codepath, no?
->
+In fact, Ram's GSoC project started off with svnrdump which is now part
+of the subversion code base (i.e. in their trunk). It is basically
+"svndump remote", i.e. a client outputting svn dump format.
 
-I agree that the gently approach used here doesn't generalise to other
-cases. It seemed like the smallest change I could make that was
-reasonably consistent with existing code. I am happy to look at a more
-general solution.
+Michael
 
-> I also wonder if this can simply become part of "struct object_contex=
-t",
-> which is to pass extra information in addition to the SHA-1 (which th=
-e
-> original API returned) back to the caller.
->
-
-I'll have a look at this. object_context seems like a reasonably
-coherent structure at the moment - do we risk diluting that coherence
-by attaching error reporting state to it?
-
-Should we consider passing an error callback function (+ struct)
-around so that the calling context can decide whether to directly
-report errors at the point of detection or defer them until later?
-Calling contexts that don't care about reporting immediately can do
-so, calling contexts that do care can choose how to record errors into
-the struct, as required.
-
-jon.
+P.S.: We usually keep cc's when replying here.
