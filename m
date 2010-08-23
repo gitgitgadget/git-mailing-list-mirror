@@ -1,65 +1,98 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Re: git-describe --contains fails on given tree
-Date: Mon, 23 Aug 2010 13:26:04 +0200 (CEST)
-Message-ID: <alpine.LNX.2.01.1008231324280.17348@obet.zrqbmnf.qr>
-References: <alpine.LSU.2.01.1008212145520.14934@obet.zrqbmnf.qr> <m3occvoi5c.fsf@localhost.localdomain> <alpine.LSU.2.01.1008212241410.23864@obet.zrqbmnf.qr> <201008222358.04504.trast@student.ethz.ch>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 13/17] Documentation: remove stray backslash in
+ show-branch discussion
+Date: Mon, 23 Aug 2010 17:06:21 +0530
+Message-ID: <20100823113618.GA14959@kytes>
+References: <20100820101902.GA10356@burratino>
+ <20100820103706.GM10407@burratino>
+ <201008231318.30768.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	=?iso-8859-1?B?RnLpZOlyaWMgQnJp6HJl?= <fbriere@fbriere.net>,
+	Christian Couder <chriscool@tuxfamily.org>
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Aug 23 13:26:13 2010
+X-From: git-owner@vger.kernel.org Mon Aug 23 13:38:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnVAL-0005w0-7J
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 13:26:13 +0200
+	id 1OnVM8-00062C-BK
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 13:38:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116Ab0HWL0I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Aug 2010 07:26:08 -0400
-Received: from borg.medozas.de ([188.40.89.202]:51902 "EHLO borg.medozas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751575Ab0HWL0F (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Aug 2010 07:26:05 -0400
-Received: by borg.medozas.de (Postfix, from userid 25121)
-	id D7175F0C32A80; Mon, 23 Aug 2010 13:26:04 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by borg.medozas.de (Postfix) with ESMTP id B885754A4;
-	Mon, 23 Aug 2010 13:26:04 +0200 (CEST)
-In-Reply-To: <201008222358.04504.trast@student.ethz.ch>
-User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
+	id S1751470Ab0HWLiT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 07:38:19 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:64337 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329Ab0HWLiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 07:38:17 -0400
+Received: by pvg2 with SMTP id 2so2217239pvg.19
+        for <git@vger.kernel.org>; Mon, 23 Aug 2010 04:38:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=srquQUJDIEbDuqzBCNL7XdVQYt3XBAltp3Ec3RLqFOw=;
+        b=vTdaBv24bQCKK5BK6bldIgtWK9TaLQZuXEnuLjcWmSNOTXuPv/UweqiAkm3wJMpNOo
+         UKDkfpviKfMZXapD6o/YBI+qs/CYm+oxMj+VlU9j4CfIBH4nYBcjqYu8+apA1vPi/uFP
+         deXfV+iYtlZ9HIl0L2vV7nUvYiD/OHcXlqC28=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=gk9n8aTe9J1S/wmnZhRyayaUYOZeRtgszajtAsgnJBgA034XlJ0R0In6SJFG0macs5
+         nUy71Yuc4n96dwWnOYQ3b4jEJwHUsGXfXBaIBPG5occksTaOYvY/ry3gTGyaeOP9Sxlx
+         z1RSTjTW+axEJSj4hUPm0w1uCGWOuum99OMn4=
+Received: by 10.142.222.8 with SMTP id u8mr3793284wfg.214.1282563497555;
+        Mon, 23 Aug 2010 04:38:17 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id v38sm8392642wfh.0.2010.08.23.04.38.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 23 Aug 2010 04:38:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201008231318.30768.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154217>
 
-On Sunday 2010-08-22 23:58, Thomas Rast wrote:
->> On Saturday 2010-08-21 21:55, Jakub Narebski wrote:
->> >> for some reason, git-describe cannot figure out v1.17~15^2^2 in
->> >> the pam_mount tree, despite me being able to actually give
->> >> a description that would fit the contains syntax:
->> >What does
->> >
->> >  $ git describe --contains --tags v1.17~15^2^2
->> 
->> "Cannot describe 95ce..."
->> 
->> Funny thing is, describing "v1.17~15^2" does work, as does "v1.17~15^1".
->
->That's clock skew:
->
->  $ git show -s --format="%cd" v1.17~15^2 
->  Fri Jan 9 04:35:59 2009 +0100
->
->  $ git show -s --format="%cd" v1.17~15^2^2
->  Sat Jan 24 16:35:34 2009 +0100
+Hi,
 
-Thanks for pointing that out.
-(Ah the joy of BSD-inside-VMware.)
+Thomas Rast writes:
+> Jonathan Nieder wrote:
+> > diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+> > index 81ba296..01fc157 100644
+> > --- a/Documentation/git-show-branch.txt
+> > +++ b/Documentation/git-show-branch.txt
+> > @@ -168,7 +168,7 @@ $ git show-branch master fixes mhf
+> >  ------------------------------------------------
+> >  
+> >  These three branches all forked from a common commit, [master],
+> > -whose commit message is "Add \'git show-branch\'". The "fixes"
+> > -branch adds one commit "Introduce "reset type" flag to "git reset"".
+> > -The "mhf" branch adds many other commits. The current branch
+> > -is "master".
+> > +whose commit message is "Add {apostrophe}git show-branch{apostrophe}".
+> > +The "fixes" branch adds one commit "Introduce "reset type" flag to
+> > +"git reset"". The "mhf" branch adds many other commits.
+> > +The current branch is "master".
+> 
+> What does this apply on?  I tried 'git am -3' but it says
+> 
+>   Applying: Documentation: remove stray backslash in show-branch discussion
+>   Using index info to reconstruct a base tree...
+>   error: patch failed: Documentation/git-show-branch.txt:168
+>   error: Documentation/git-show-branch.txt: patch does not apply
+>   Did you hand edit your patch?
+>   It does not apply to blobs recorded in its index.
+>   Cannot fall back to three-way merge.
+>   Patch failed at 0013 Documentation: remove stray backslash in show-branch discussion
 
->Interestingly, --stdin disables this optimization:
->
->  $ git rev-parse v1.17~15^2^2 | git name-rev --stdin
->  95ce932690dfce8cbe50b6a3a8949e41a54c8966 (tags/v1.17~15^2^2)
+This series has already been merged into 'pu': jn/doc-backslash in
+d4394935b3. Did you try applying to 'master'?
+
+-- Ram
