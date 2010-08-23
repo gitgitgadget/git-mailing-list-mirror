@@ -1,81 +1,139 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git-svn mirror in bare repo
-Date: Mon, 23 Aug 2010 17:05:16 +0200
-Message-ID: <4C728E2C.8080003@drmicha.warpmail.net>
-References: <20100823122425.GB12810@nibiru.local> <4C72708B.202@drmicha.warpmail.net> <20100823131348.GC12810@nibiru.local>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] optionally disable overwriting of ignored files
+Date: Mon, 23 Aug 2010 17:11:46 +0200
+Message-ID: <20100823151146.GA15379@localhost>
+References: <4C6A1C5B.4030304@workspacewhiz.com>
+ <7viq39avay.fsf@alter.siamese.dyndns.org>
+ <20100818233900.GA27531@localhost>
+ <vpqd3t9656k.fsf@bauges.imag.fr>
+ <4C727E17.5070707@ira.uka.de>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: weigelt@metux.de
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 23 17:05:26 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="CE+1k2dSO48ffgeK"
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Holger Hellmuth <hellmuth@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Aug 23 17:11:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnYaT-00079m-Ea
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 17:05:25 +0200
+	id 1OnYgg-0004xR-QZ
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 17:11:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753918Ab0HWPFT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Aug 2010 11:05:19 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43959 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751589Ab0HWPFS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 23 Aug 2010 11:05:18 -0400
-Received: from compute3.internal (compute3.internal [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id EBF563B4;
-	Mon, 23 Aug 2010 11:05:17 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 23 Aug 2010 11:05:17 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OM8q/Qd+ZqnjEzySdowN/3lkZdM=; b=AYAYdiURwWEL2eFu6GCfFQAzL4msORNLFuYkxQeoUbisFgtye3aL1ZdnaRV4Rl92nlA08iAdB/gGoHo9QQB5BBiXDJwdnptP7WeLhqdDtSUhZxfby0QWPke+18SowNWnvg/LgkBO2tUdZ6CaT4TGuHqNGwM1DONsutWxNUplgIg=
-X-Sasl-enc: d4bwdqP/teBW30Qpn3ujmGyazSFN0sZHufk0WnXJYp4o 1282575917
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6F9935EC83E;
-	Mon, 23 Aug 2010 11:05:17 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9pre) Gecko/20100806 Lightning/1.0b2pre Lanikai/3.1.2
-In-Reply-To: <20100823131348.GC12810@nibiru.local>
+	id S1753974Ab0HWPLn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 11:11:43 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61183 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753680Ab0HWPLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 11:11:41 -0400
+Received: by fxm13 with SMTP id 13so2999823fxm.19
+        for <git@vger.kernel.org>; Mon, 23 Aug 2010 08:11:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=89eiItCROkuaEes9J79wN8303my22xLiiaetTF6kZLE=;
+        b=MSHetv6cxsg80aAxsx7w/eTSyjKUlPG/qylCQFAnDm571Xjp2zW8PExR4TVIT3wiUO
+         CUBMhzfZq2PYOXItNgsPC0hLzQZ6yLTvhHhjGrgA7aR0R7TNs6j+cfcbVnay+7dNvK20
+         S9aYlk80qCVZFvrYsqKvIVdPTA6z+L8nDa7oQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=iQgyNr5stqfjnGPn30Wj8mB/oJAF/jMKvCmsLpmNjpGknHb069jbzkdL6ZSvBHIz+a
+         lYdvfmC0VovrjOXqXre3zEXOXEZwBjAwIlb2B2PiPYw2Vmyc2j17vgJOvjaWmGYZOnyJ
+         zI0U01eJo3RIqPMRJ6PqhLeww1S6dCVOnEZjw=
+Received: by 10.223.113.13 with SMTP id y13mr4478633fap.37.1282576299988;
+        Mon, 23 Aug 2010 08:11:39 -0700 (PDT)
+Received: from darc.lan (p549A60D7.dip.t-dialin.net [84.154.96.215])
+        by mx.google.com with ESMTPS id f28sm2518183faa.24.2010.08.23.08.11.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 23 Aug 2010 08:11:37 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OnYgc-00042Q-Ei; Mon, 23 Aug 2010 17:11:46 +0200
+Content-Disposition: inline
+In-Reply-To: <4C727E17.5070707@ira.uka.de>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154229>
 
-Enrico Weigelt venit, vidit, dixit 23.08.2010 15:13:
-> * Michael J Gruber <git@drmicha.warpmail.net> wrote:
->> Enrico Weigelt venit, vidit, dixit 23.08.2010 14:24:
->>>
->>> Hi folks,
->>>
->>> is it possible to use git-svn w/ an bare repository (eg. using
->>> an temporary workdir when necessary or directly creating tree
->>> and commit objects w/o going through workdir at all) ?
->>
->> No.
-> 
-> hmm, can it work with an external workdir ?
 
-You can have the workdir anywhere you like by using the core.worktree
-setting. So, if you mind the size requirements you can put it onto some
-fast tempdir (tmpfs, say). In fact, if all you do is "git svn fetch"
-then git svn may not even notice a missing worktree (would have to try).
-"git svn rebase" does need a worktree.
+--CE+1k2dSO48ffgeK
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> 
->>> I'm running a dozen of mirrors (also from cvs), some from fairly
->>> large and I'd like to get rid of the working copies.
->>
->> Your only option is a different conversion tool. GSoC resulted in a lot
->> of code in this direction, but I'm not sure it can do without a workdir.
->> It is based on svndump
-> 
-> I guess that requires access to the raw repository (on the server),
-> not just unprivileged svn client access, right ?
+On Mon, Aug 23, 2010 at 03:56:39PM +0200, Holger Hellmuth wrote:
+>=20
+> You've got my vote. This is the only option that combines safety with
+> minimal configuration hassle.
+>=20
+> I didn't know about this subtle difference between .gitignore and
+> .git/info/exclude. And while this makes sense I expect a sizable
+> percentage of users will never even know that .git/info/exclude exists.
 
-In fact, Ram's GSoC project started off with svnrdump which is now part
-of the subversion code base (i.e. in their trunk). It is basically
-"svndump remote", i.e. a client outputting svn dump format.
+I don't know if this subtle difference was even intentional. But it
+makes sense, and we simply need to make it explicit by documenting
+it and by making it optional.
 
-Michael
+And in many cases, that behavior makes sense. Imagine a generated
+file is accidentally added to git, later removed from version
+control and added to .gitignore instead. A common scenario, I am
+sure.
 
-P.S.: We usually keep cc's when replying here.
+Now if you start merging, rebasing or bisecting with such a
+history, you _will_ run into this problem all the time.
+
+Renaming is certainly a possibility, but it does not really solve
+the problem. We will end up with a bunch of renamed, possibly
+precious files in our work tree, which means we have to clean up
+manually anyways.
+
+So I think it is better to make the decision whether or not a file
+is precious at the time it is added to .gitignore. In other words,
+never add precious files to .gitignore, but add them to
+=2Egit/info/exclude instead.
+
+> And in practice I guess a lot of files will get added to
+> .gitignore even though they only are relevant to one user (out of
+> carelessness or ignorance). I know I have added patterns without
+> making a conscious decision about their relevance to others.
+
+Then you have been using it wrong, just like I have.
+Ignorant/careless users may still make that mistake, but if git
+does not overwrite such files by default, at least they made a
+conscious decision at some point to take that risk.
+
+That is if we can make it the default.
+
+Clemens
+
+--CE+1k2dSO48ffgeK
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMco+yAAoJELKdZexG8uqMxIUIAIYC5GJoJrgvS4UvdttSIDL+
+DvsV1mqCQ4R4m38GZFJFUhqbQ8QPmBZUxdIwtToLI6WSXJrQ/R9WRa0LUuduDTRw
+NtzQg8HpgK+vMxQH9+L7x4Xb8W81bikkq5Ba2b5Ed9BJ+Pj++zXsWf7D5twilh8x
+sD+OxdsFGNspti3FRGqIXuWebTDkq298Dt3WfE2jfkqu0Ar+zhBdvevKC4sxgwCn
+KgVsXI1BC1Y1cDbNmL+xLbVBIQH7LXEWEdkyTbfbDFKfy20Vo8OCQ+Ya2uHGD1lH
+t5Qola+V4QEi2V9ZQoRd+rmea8rr0nEbTO6ll/y7k1I5tTFZYhbdqJVij/Cz6KM=
+=nfNE
+-----END PGP SIGNATURE-----
+
+--CE+1k2dSO48ffgeK--
