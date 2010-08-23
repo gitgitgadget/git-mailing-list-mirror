@@ -1,77 +1,73 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] optionally disable overwriting of ignored files
-Date: Mon, 23 Aug 2010 11:37:07 +0200
-Message-ID: <vpqd3t9656k.fsf@bauges.imag.fr>
-References: <4C6A1C5B.4030304@workspacewhiz.com>
-	<7viq39avay.fsf@alter.siamese.dyndns.org>
-	<20100818233900.GA27531@localhost>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 13/17] Documentation: remove stray backslash in show-branch discussion
+Date: Mon, 23 Aug 2010 13:18:30 +0200
+Message-ID: <201008231318.30768.trast@student.ethz.ch>
+References: <20100820101902.GA10356@burratino> <20100820103706.GM10407@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Mon Aug 23 11:40:47 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Ramkumar Ramachandra <artagnon@gmail.com>,
+	=?iso-8859-1?q?Fr=E9d=E9ric_Bri=E8re?= <fbriere@fbriere.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 23 13:18:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnTWH-0004vL-R2
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 11:40:46 +0200
+	id 1OnV34-000105-6U
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 13:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753701Ab0HWJkk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Aug 2010 05:40:40 -0400
-Received: from imag.imag.fr ([129.88.30.1]:63026 "EHLO imag.imag.fr"
+	id S1751869Ab0HWLSg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 07:18:36 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:57949 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753685Ab0HWJkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Aug 2010 05:40:39 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7N9b71T023637
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 23 Aug 2010 11:37:07 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OnTSl-0005AI-LM; Mon, 23 Aug 2010 11:37:07 +0200
-In-Reply-To: <20100818233900.GA27531@localhost> (Clemens Buchacher's message of "Thu\, 19 Aug 2010 01\:39\:00 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 23 Aug 2010 11:37:08 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1751666Ab0HWLSe (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 07:18:34 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 23 Aug
+ 2010 13:18:34 +0200
+Received: from thomas.site (129.132.246.171) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 23 Aug
+ 2010 13:18:32 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <20100820103706.GM10407@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154215>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Jonathan Nieder wrote:
+> diff --git a/Documentation/git-show-branch.txt b/Documentation/git-show-branch.txt
+> index 81ba296..01fc157 100644
+> --- a/Documentation/git-show-branch.txt
+> +++ b/Documentation/git-show-branch.txt
+> @@ -168,7 +168,7 @@ $ git show-branch master fixes mhf
+>  ------------------------------------------------
+>  
+>  These three branches all forked from a common commit, [master],
+> -whose commit message is "Add \'git show-branch\'". The "fixes"
+> -branch adds one commit "Introduce "reset type" flag to "git reset"".
+> -The "mhf" branch adds many other commits. The current branch
+> -is "master".
+> +whose commit message is "Add {apostrophe}git show-branch{apostrophe}".
+> +The "fixes" branch adds one commit "Introduce "reset type" flag to
+> +"git reset"". The "mhf" branch adds many other commits.
+> +The current branch is "master".
 
-> By default, checkout and fast-forward merge will overwrite ignored
-> files. Make this behavior configurable.
+What does this apply on?  I tried 'git am -3' but it says
 
-Just mentionning an alternative, or complementary approach:
-
-Instead of overwritting completely a .gitignore-d file, Git could
-rename it, and warn the user kindly. For example:
-
-$ git merge
-...
-Warning: existing ignored file 'foo' renamed to 'foo~'
-
-(in case foo~ already exists, it's possible to use numbered backups
-just like "mv --backup=existing" does for example)
-
-
-That could complement your patch if core.overwriteignored is a
-multiple-choice option instead of a Boolean:
-
-- "overwrite" => current behavior
-- "refuse" => your proposal
-- "rename" => my proposal
+  Applying: Documentation: remove stray backslash in show-branch discussion
+  Using index info to reconstruct a base tree...
+  error: patch failed: Documentation/git-show-branch.txt:168
+  error: Documentation/git-show-branch.txt: patch does not apply
+  Did you hand edit your patch?
+  It does not apply to blobs recorded in its index.
+  Cannot fall back to three-way merge.
+  Patch failed at 0013 Documentation: remove stray backslash in show-branch discussion
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Thomas Rast
+trast@{inf,student}.ethz.ch
