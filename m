@@ -1,128 +1,82 @@
 From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v2 1/2] rev-parse: exit with non-zero status if ref@{n} is not valid.
-Date: Tue, 24 Aug 2010 09:11:42 +1000
-Message-ID: <1282605103-8320-2-git-send-email-jon.seymour@gmail.com>
+Subject: [PATCH v2 0/2] rev-parse: strengthen validation of ref@{n} references
+Date: Tue, 24 Aug 2010 09:11:41 +1000
+Message-ID: <1282605103-8320-1-git-send-email-jon.seymour@gmail.com>
 References: <7vr5hp1e6i.fsf@alter.siamese.dyndns.org>
 Cc: gitster@pobox.com, Jon Seymour <jon.seymour@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 24 01:12:06 2010
+X-From: git-owner@vger.kernel.org Tue Aug 24 01:12:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OngBS-00056u-4P
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 01:12:06 +0200
+	id 1OngBR-00056u-JZ
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 01:12:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751603Ab0HWXMD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Aug 2010 19:12:03 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:46184 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751540Ab0HWXMB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Aug 2010 19:12:01 -0400
-Received: by pwi7 with SMTP id 7so2273366pwi.19
-        for <git@vger.kernel.org>; Mon, 23 Aug 2010 16:12:01 -0700 (PDT)
+	id S1751531Ab0HWXL7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 23 Aug 2010 19:11:59 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:54476 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751207Ab0HWXL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 19:11:58 -0400
+Received: by pxi10 with SMTP id 10so2456871pxi.19
+        for <git@vger.kernel.org>; Mon, 23 Aug 2010 16:11:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ZbCcQHWeCbWtWXz89I8ADR36NOkn/7fCdfDJib3tuu4=;
-        b=nQnS/homLC2SIA0V9azgVBUd2dVOtgppJmCD8C0E7EG2i/cMkDGquEIY/aFAt5Jw5v
-         KWymTFDSCmQ5Nlw4zJZeUtlLoaK6dC0GFWudzw5iZmHy3JtzDp/P3XA4SLnNIqUxyRpT
-         Moqs9XUulLzLWPJIMM4c4pWMmjtYhlbCvUzIw=
+        bh=BPBrmjIAQBRhDDJt8P8v+7UukbShkH4bto/OQKpsmdE=;
+        b=w+vWlDFuB6fjInzLU6Ietg1eB9fXa64O+HkyZtUV5rqTtGVWn16vG5zKEZDkTuWs3A
+         9Xv7oZ2ubgOUlK00b5beIKDVfdIUR8LYmDEydMjMv7HUo8XK4O4kD7xyTDYbW4VbRjYv
+         i7GFNgwR8JwoCe5TFdecvbfNQuAOzOguZVQrc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=p/673e9dO1cU+oXHjopWnORYWUnJ9lJinP0dWEG+WdStJUBdXR5Bd+6LVC90Hp2vuW
-         CdwfafhTjWa96Az+GNdPufSkyVrdd50JWSSqxMA7KYqYtgBeIpDJn9VwlaipV7NWrjuh
-         JNGW27z2W60z/n59xErlInhOpCUMUfmXV3a9c=
-Received: by 10.142.128.13 with SMTP id a13mr3431306wfd.273.1282605120969;
-        Mon, 23 Aug 2010 16:12:00 -0700 (PDT)
+        b=WMMmIbLUw2FqwOLvx0Mm1+g5XynGyEn8XI0oyfBz/1EhrahDq1Qv5V/aFMgwMhTqVf
+         QoUf2n7ri0K3LAQ2Bm5SSRF/jRcc0CnBnKPWhxrNjbr612yru1hwDHq9KPS+ZbjMoWRl
+         7VEAYbyXnyNSBlOB0zyDvOh1HhKgFfG4zDIPo=
+Received: by 10.142.218.12 with SMTP id q12mr3856867wfg.144.1282605118075;
+        Mon, 23 Aug 2010 16:11:58 -0700 (PDT)
 Received: from localhost.localdomain (124-169-135-9.dyn.iinet.net.au [124.169.135.9])
-        by mx.google.com with ESMTPS id v13sm9081625wfv.5.2010.08.23.16.11.58
+        by mx.google.com with ESMTPS id v13sm9081625wfv.5.2010.08.23.16.11.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 23 Aug 2010 16:12:00 -0700 (PDT)
+        Mon, 23 Aug 2010 16:11:57 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.99.geab11
 In-Reply-To: <7vr5hp1e6i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154271>
 
->From Junio's e-mail:
+This series changes git rev-parse so that references of the form:
 
-"The current behaviour of ref@{...} syntax parser is suboptimal:
+	ref@{n}
 
-    $ git rev-parse --verify jch@{99999} && echo true
-    warning: Log for 'jch' only has 1368 entries.
-    cfb88e9a8d4926b0011ae2dd67e1f57a98f4b768
-    true
+cause rev-parse to fail with a non-zero status code if n >= size of the 
+reference log for ref.
 
-It even knows that it is running off the cut-off point; it should just
-cause the caller to notice that fact.  I don't think changing it to error
-out should cause any harm to existing callers."
+The first commit implements the changed behaviour, the second commit 
+updates the tests to include tests for the changed behaviour.
 
-With this change:
+This is the second revision of this series. It differs from the first
+in that it uses die rather than error to report the condition
+and thus exits early, without generating any output on stdout
+for the failing argument. It also reports just a single fatal
+message instead of both an error message and a fatal message.
 
-   $ git rev-parse --verify jch@{99999} || echo false
-   fatal: Log for 'jch' only has 1368 entries.
-   false
+The original patch and this revision are both based on suggestions
+from Junio.
 
-   $ git rev-parse jch@{99999} || echo false
-   fatal: Log for 'jch' only has 1368 entries.
-   false
+Jon Seymour (2):
+  rev-parse: exit with non-zero status if ref@{n} is not valid.
+  rev-parse: tests git rev-parse --verify master@{n}, for various n
 
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
----
- sha1_name.c |   20 +++++++++++---------
- 1 files changed, 11 insertions(+), 9 deletions(-)
+ sha1_name.c                    |   20 +++++++++++---------
+ t/t1503-rev-parse-verify.sh    |   11 +++++++++++
+ t/t1506-rev-parse-diagnosis.sh |    9 +++++++++
+ 3 files changed, 31 insertions(+), 9 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 4af94fa..d40ae48 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -342,7 +342,7 @@ static int get_sha1_1(const char *name, int len, unsigned char *sha1);
- 
- static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- {
--	static const char *warning = "warning: refname '%.*s' is ambiguous.\n";
-+	static const char *warn_msg = "warning: refname '%.*s' is ambiguous.";
- 	char *real_ref = NULL;
- 	int refs_found = 0;
- 	int at, reflog_len;
-@@ -390,7 +390,7 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 		return -1;
- 
- 	if (warn_ambiguous_refs && refs_found > 1)
--		fprintf(stderr, warning, len, str);
-+		fprintf(stderr, warn_msg, len, str);
- 
- 	if (reflog_len) {
- 		int nth, i;
-@@ -426,14 +426,16 @@ static int get_sha1_basic(const char *str, int len, unsigned char *sha1)
- 		if (read_ref_at(real_ref, at_time, nth, sha1, NULL,
- 				&co_time, &co_tz, &co_cnt)) {
- 			if (at_time)
--				fprintf(stderr,
--					"warning: Log for '%.*s' only goes "
--					"back to %s.\n", len, str,
-+				warning("Log for '%.*s' only goes "
-+					"back to %s.", len, str,
- 					show_date(co_time, co_tz, DATE_RFC2822));
--			else
--				fprintf(stderr,
--					"warning: Log for '%.*s' only has "
--					"%d entries.\n", len, str, co_cnt);
-+			else {
-+				free(real_ref);
-+				die("Log for '%.*s' only has %d entries.",
-+						len,
-+						str,
-+						co_cnt);
-+			}
- 		}
- 	}
- 
 -- 
 1.7.2.1.99.geab11
