@@ -1,97 +1,64 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] disallow branch names that start with a hyphen
-Date: Mon, 23 Aug 2010 06:37:01 +0200
-Message-ID: <20100823043701.GA11822@localhost>
-References: <20100822140801.GA6574@localhost>
- <7vsk262vla.fsf@alter.siamese.dyndns.org>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="OXfL5xGRrasGEqWY"
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 23 06:37:03 2010
+From: Charles Brossollet <chbrosso@lltech.fr>
+Subject: Re: git diff shows no output
+Date: Mon, 23 Aug 2010 08:34:47 +0200
+Message-ID: <5A25561B-B643-4203-82B7-BCED02EAFC61@lltech.fr>
+References: <EBCC0FEA-1FF2-4909-BE80-DE280C9D6487@lltech.fr> <20100820133856.GC15736@burratino>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 23 08:35:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnOmN-0008L4-6S
-	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 06:37:03 +0200
+	id 1OnQcj-0004iY-CJ
+	for gcvg-git-2@lo.gmane.org; Mon, 23 Aug 2010 08:35:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751943Ab0HWEgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 23 Aug 2010 00:36:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50441 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751869Ab0HWEgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 23 Aug 2010 00:36:54 -0400
-Received: by fxm13 with SMTP id 13so2674897fxm.19
-        for <git@vger.kernel.org>; Sun, 22 Aug 2010 21:36:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=iq+WIKwyh74B/FO3JHUwC9+/adF/2xYVcaOtAK08ORA=;
-        b=gYma5ocz8UhEBEXf6ajFbXvnigeAKtXrBoCUA1hsxkcVJEo2eoMymlwQmC63LXzOUM
-         BMtvnpe0XIpCUkzlZhAo3nOFie1vRGECZpzp/1pM1g/xU4cocb5wx9Az+sRvFZyWJv3d
-         h29JNfAbP5vU+3i5WWUVkvIcBjY3TSwjj8e/w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=WWyKEjX9dVUfvEgARUSHzUfQIMwXe6a46IcZ5ELbSpTu6gGfSbOwN6aySHcy/uCGsN
-         pRs5umI4kUR0GL5RJFZ0nOMKzcPP3MYgBSsLUHMm48IYH3Lpcu/z6L6Ekga/s2gNZCcL
-         LZzFdmZKi2U/w7OZTTokRkNaQy2868zPHKkXo=
-Received: by 10.223.103.134 with SMTP id k6mr3673635fao.5.1282538212740;
-        Sun, 22 Aug 2010 21:36:52 -0700 (PDT)
-Received: from darc.lan (p549A60D7.dip.t-dialin.net [84.154.96.215])
-        by mx.google.com with ESMTPS id q17sm2278376faa.45.2010.08.22.21.36.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 22 Aug 2010 21:36:51 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OnOmL-00035q-8D; Mon, 23 Aug 2010 06:37:01 +0200
-Content-Disposition: inline
-In-Reply-To: <7vsk262vla.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753273Ab0HWGfI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 23 Aug 2010 02:35:08 -0400
+Received: from zimbra-ne01.network-studio.com ([62.93.225.49]:60893 "EHLO
+	zimbra-ne01.network-studio.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751978Ab0HWGfG convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 23 Aug 2010 02:35:06 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra-ne01.network-studio.com (Postfix) with ESMTP id 70E658610EF;
+	Mon, 23 Aug 2010 08:34:48 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at zimbra-ne01.network-studio.com
+Received: from zimbra-ne01.network-studio.com ([127.0.0.1])
+	by localhost (zimbra-ne01.network-studio.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id BCNWaKs2KF2g; Mon, 23 Aug 2010 08:34:48 +0200 (CEST)
+Received: from [192.168.0.2] (bne75-2-82-67-188-234.fbx.proxad.net [82.67.188.234])
+	by zimbra-ne01.network-studio.com (Postfix) with ESMTPSA id 2D630860866;
+	Mon, 23 Aug 2010 08:34:48 +0200 (CEST)
+In-Reply-To: <20100820133856.GC15736@burratino>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154204>
 
+That's right, nice guess!! thanks a lot!
 
---OXfL5xGRrasGEqWY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Best
+--=20
+Charles
 
-On Sun, Aug 22, 2010 at 02:20:17PM -0700, Junio C Hamano wrote:
+Le 20 ao=FBt 2010 =E0 15:38, Jonathan Nieder a =E9crit :
+
+> Hi!
 >=20
-> forbid "checkout -b" and "branch" from creating such a branch.
-
-Sounds good to me. I will have limited access to email this week.
-I'll revisit this when I am back.
-
-Clemens
-
---OXfL5xGRrasGEqWY
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJMcfrtAAoJELKdZexG8uqMIOQH/AtIWcGlSBbrA+38lmCUIx4H
-3ZQ6lpDlbF8nBIOwixtmkovOEXRPJ701cnTwBnKpBc/t2/Y62ot4JFg302oVtuVS
-iLr16HkIKrMwS5FyTrUwh5kSFjLOX12Pa0/jUJK9mQIIftXYoTofxRm/ee2XysNi
-cUGgPjrTO4Mgpmdv+o5v0yl4k22wVj83MijP1yd4Fn5BOb128syKcYnt8d/zk3vr
-HvYG78OPEJ9dTrUnlCou77+BXGQ9KJvO2KBjPcfOw5uX+N1IPLSH4xJgQk+QdubE
-aJh/RPkT46tSWOm4kvJTjdvEY13f+qEdZ2dTjV3rihtpZr2nAe8uG7x5cAMcCYU=
-=VZKG
------END PGP SIGNATURE-----
-
---OXfL5xGRrasGEqWY--
+> Charles Brossollet wrote:
+>=20
+>> "git diff" shows nothing, while "git diff | cat" shows the diff, as
+>> well as "git diff>output.txt" puts diff in output.txt.
+>=20
+> "git diff" paginates its output by default.  Perhaps your $LESS
+> contains -F but not -X?
+>=20
+> Hope that helps,
+> Jonathan
