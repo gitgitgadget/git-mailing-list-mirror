@@ -1,89 +1,101 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: reducing object store size with remote alternates or shallow
- clone?
-Date: Tue, 24 Aug 2010 09:45:33 -0700
-Message-ID: <7vhbikx8lu.fsf@alter.siamese.dyndns.org>
-References: <14526ED4-F65C-4DF2-ABDD-BF1E76DAC2B0@kernel.crashing.org>
+Subject: Re: [PATCH v2] git-notes: Run partial expensive test everywhere
+Date: Tue, 24 Aug 2010 09:46:19 -0700
+Message-ID: <7vd3t8x8kk.fsf@alter.siamese.dyndns.org>
+References: <1281470164-27008-1-git-send-email-avarab@gmail.com>
+ <1281483468-24388-1-git-send-email-avarab@gmail.com>
+ <AANLkTikfwbtKt2WrxzRyKHnP3ySGtBF33=z_rJwjPx5Y@mail.gmail.com>
+ <20100824071453.GA3064@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Kumar Gala <galak@kernel.crashing.org>
-X-From: git-owner@vger.kernel.org Tue Aug 24 18:45:52 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 24 18:46:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnwdE-0006yp-Gh
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 18:45:52 +0200
+	id 1Onwdw-0007i5-OE
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 18:46:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755741Ab0HXQpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 12:45:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54428 "EHLO
+	id S1755746Ab0HXQqc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 12:46:32 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55208 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755734Ab0HXQpo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 12:45:44 -0400
+	with ESMTP id S1755736Ab0HXQqa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 12:46:30 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 53098D0811;
-	Tue, 24 Aug 2010 12:45:40 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5BE79D084C;
+	Tue, 24 Aug 2010 12:46:30 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2eOvO1xyTvQCqzOOg4Wj27C0Qdo=; b=FcW5Ht
-	QK4ME10ORRPh47VxF0E4ohZTnQlhGdwvPrPD/aA1u3xKc/hC157uyrQZv0jDQ+RE
-	HsyW8LlXTFH2d+EhUimD1VFG1z8ozoYdfJkPT+T5rjcZRI0b1lCLNmIki3oTq70i
-	9AN5Mq079BQ6TBt+qnStolU2UI84DPoTOwVxw=
+	:content-type:content-transfer-encoding; s=sasl; bh=RYQS7BK91tl2
+	pg5I8RmxvOqqEi0=; b=R9MI97QCPMI5IFFCJwKVVvqrTeM7iLX0tcl4gpmPIZSr
+	HySgrMp48oNZ4fyTXu9BxBkdCvUNBo2LyjGU51ajvHJfuXugdl93NGqOH9UAUWM6
+	eCRdXoqlOkMJkikPKHqlgHfIICjDzrt6nTFzl5soElf6XTHlWVD8lSWj2gH2n6Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gpa8NufY7zD/cvTLUuzP1Pghvw/Z4ydS
-	rM01N5r+Jps0eh0RPRfx5888SWLvhGc4B6eKf7FBf/nUMfebt6Zac9JAlD/ZrLYh
-	I31Hs0OnlZb+0Bn8NI7ICBBueBLIwOnFi2dWfMGm0eQU9jWqgwfQnWSjVECPz+NM
-	cO2zGOrg9Ho=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=hsSyvW
+	6aA0CRwKnLmezAgqT6FidyOrGiIvHUjgUIJNLLLsGjiQ2G4Hf345GOn0SjKgI/NU
+	VmTQV1peRYN2PKaq7GZ3lXWY0PCNAwcIIo17Jk3l/XOlkrVsdA1BIbg+22aEQyeb
+	8WXCJwot2ej+huyTtglGn0KZCahZ+bwFQ/+K8=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 28E92D080F;
-	Tue, 24 Aug 2010 12:45:38 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 12B03D0845;
+	Tue, 24 Aug 2010 12:46:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54191D080E; Tue, 24 Aug
- 2010 12:45:35 -0400 (EDT)
-In-Reply-To: <14526ED4-F65C-4DF2-ABDD-BF1E76DAC2B0@kernel.crashing.org>
- (Kumar Gala's message of "Tue\, 24 Aug 2010 01\:59\:11 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2494FD083D; Tue, 24 Aug
+ 2010 12:46:20 -0400 (EDT)
+In-Reply-To: <20100824071453.GA3064@burratino> (Jonathan Nieder's message of
+ "Tue\, 24 Aug 2010 02\:14\:53 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 06183A5E-AF9F-11DF-A40B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 22A7DBE8-AF9F-11DF-BC2A-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154323>
 
-Kumar Gala <galak@kernel.crashing.org> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I'm trying to package a linux kernel source tree and would like to just
-> tar up a tree with .git/.  However this is a bit problematic as the size
-> of tgz is about 500M which exceeds the limit of the image I'm trying to
-> produce.
+> Odd.  Different how?  As far as I can tell, all that test asks
+> of time is to execv() its arguments and pass on a 0 exit status.
 >
-> I was wondering if anyone had a means to reduce the size drastically.
-> I'm ok if a post processing step is required to get full git support.
-> One idea I had was doing a shallow clone and if there was some means to
-> "reconnect" it to a full work state after the fact.
+> Ah, maybe this is it: perhaps /usr/bin/time sh runs /bin/sh.  Does th=
+e
+> following help?
+>
+> Patch is against next.  Untested except on Linux where it wouldn't
+> make a difference.
 
-Although your message body does not state your design constraints clearly,
-your subject line hints that you are fine with a solution that involves
-use of remote alternates by the recipient of your tarball.
+Makes sense, although I don't have access to Solaris boxes right now...
 
-I am _guessing_ that you have a fork from some well known tree and want to
-sneakernet it to your recipients (iow, they do not "git pull" from your
-repository).
-
-How about doing
-
-    $ LINUS=git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-    $ git fetch $LINUS
-    $ git bundle create myfork.bundle HEAD..master
-
-and sending the thing over?  The recipient would then do something like:
-
-    $ LINUS=git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-    $ git clone $LINUS linux
-    $ cd linux
-    $ git pull /tmp/myfork.bundle master
+> -- 8< --
+> Subject: t3302 (notes): Port to Solaris
+>
+> The time_notes script, which uses POSIX shell features, is
+> currently sometimes run with a non-POSIX /bin/sh.
+>
+> Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> diff --git a/t/t3302-notes-index-expensive.sh b/t/t3302-notes-index-e=
+xpensive.sh
+> index 7c08e99..e35d781 100755
+> --- a/t/t3302-notes-index-expensive.sh
+> +++ b/t/t3302-notes-index-expensive.sh
+> @@ -96,7 +96,7 @@ time_notes () {
+>  	for mode in no-notes notes
+>  	do
+>  		echo $mode
+> -		/usr/bin/time sh ../time_notes $mode $1
+> +		/usr/bin/time "$SHELL_PATH" ../time_notes $mode $1
+>  	done
+>  }
+> =20
+> --=20
