@@ -1,112 +1,80 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 25/32] merge: prepare commit properly in narrow mode
-Date: Wed, 25 Aug 2010 08:20:15 +1000
-Message-ID: <1282688422-7738-26-git-send-email-pclouds@gmail.com>
-References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH v2 3/3] {fetch,upload}-pack: allow --depth=0 for infinite depth
+Date: Wed, 25 Aug 2010 08:12:06 +1000
+Message-ID: <AANLkTimqwXmRYVZLkYtGLd5=e1B0hKKePA0XzOYPrifd@mail.gmail.com>
+References: <1282565304-3122-1-git-send-email-pclouds@gmail.com>
+	<1282565304-3122-3-git-send-email-pclouds@gmail.com>
+	<20100824135341.GA6457@coredump.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Wed Aug 25 00:24:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo1uR-00030j-I1
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 00:23:59 +0200
+	id 1Oo1uQ-00030j-Ei
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 00:23:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756117Ab0HXWXn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 18:23:43 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:49107 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756150Ab0HXWXj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 18:23:39 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 2so2814108pvg.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 15:23:39 -0700 (PDT)
+	id S1756138Ab0HXWXd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 18:23:33 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:37323 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756091Ab0HXWXb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 18:23:31 -0400
+Received: by eyg5 with SMTP id 5so3822632eyg.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 15:23:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=ZDiqZdkNuhu77nakzQGmQdRzN+qqpRpMYhEPrfQs89Y=;
-        b=E/ifm3RXAygYOMYQFF0RFLQ8bL/Ppqh3JYsxzn4hJT41A5Qw8oCLhsM2wMblEHYs/w
-         BUSE6r+hrCUMhSrbidr7xHqx6OIYEedVaimjxHEemKyecfSMvU5Rnqrx/VzBaxxHwnfT
-         VYzpYkQc9h4j+E7HQZ8qGnzkfDNZdEpUdkU4E=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=99uKXdL2LW96FfRznjA+7oJ6Zy2X23wjxN08UIwI2eA=;
+        b=dQrINnp37Jgmxf1kevYqj8YaaNJMroSX1uLnx4VaeYgADQ9V+B4YHEAraAJyqgI39d
+         fnMTHpGOyevNO8Peqh8tNbv3XDIRxoq+lVxzdEnfXyIVVsUXxfQYqiZJ6sHp6d1hNX36
+         nALBWT0DlB6Csk/Dq8GGKLSEzSV1ht61RmAQ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=aEFnJ2+yj49Z+1+6fpL7qzg3Q53ir8Qhd6erpfjTjyMBB2FHj/YxMQC3U5UvmlP/8y
-         F9nHFa6U+GThmlTSdbe1HHcSgjqCgu7NWnJHZ/SgngpCUJY/f4JWJdoLmGhYuQM3eSYf
-         aLjnOKEuPT/33isNRx2O7ittVmFa2lxSQjCc0=
-Received: by 10.142.47.17 with SMTP id u17mr6179614wfu.260.1282688618771;
-        Tue, 24 Aug 2010 15:23:38 -0700 (PDT)
-Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id z1sm645041wfd.3.2010.08.24.15.23.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 15:23:37 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Wed, 25 Aug 2010 08:23:32 +1000
-X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
-In-Reply-To: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=AxZQpUkrBEQ41Yb7v8vAKtrOB1AOXAQUT6zLQ1scXBNTOoZBGXLFU3QQ4B5h4REsdw
+         FLSWpxymdM41iMe2eFixi252ViJBcvh5IEYByWg8CH2aSHpc5t00cfDW4GdjdGbtqhlO
+         VHXJoivNOOI9m/kwvlu3T5RjlUyrH+upnzzKU=
+Received: by 10.216.1.17 with SMTP id 17mr16641wec.99.1282687927199; Tue, 24
+ Aug 2010 15:12:07 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Tue, 24 Aug 2010 15:12:06 -0700 (PDT)
+In-Reply-To: <20100824135341.GA6457@coredump.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154368>
 
+On Tue, Aug 24, 2010 at 11:53 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Aug 23, 2010 at 10:08:24PM +1000, Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy wrote:
+>
+>> Users can do --depth=3D2147483648 for infinite depth now. It just lo=
+oks
+>> ugly. So make "0" special (i.e. infinite depth) at plumbing/protocol
+>> level.
+>
+> What happens if I connect to an older server? Shouldn't "I understand
+> depth=3D0 is infinite" be a server capability, and we hack around it =
+by
+> sending depth=3D2^32-1 when we have a modern client but an older serv=
+er?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- builtin/merge.c |    8 ++++++--
- 1 files changed, 6 insertions(+), 2 deletions(-)
+Older servers won't accept depth=3D0, dying with "Invalid deepen"
+message. I don't really want to send a large number as a workaround,
+it just does not feel safe. Users can either play around with
+--depth=3D2^32-1, or upgrade servers.
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index c70d39d..d05c528 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -57,6 +57,7 @@ static size_t xopts_nr, xopts_alloc;
- static const char *branch;
- static int verbosity;
- static int allow_rerere_auto;
-+static unsigned char narrow_base[20];
-=20
- static struct strategy all_strategy[] =3D {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -780,7 +781,8 @@ static int merge_trivial(void)
- 	parent->next =3D xmalloc(sizeof(*parent->next));
- 	parent->next->item =3D remoteheads->item;
- 	parent->next->next =3D NULL;
--	commit_tree(merge_msg.buf, result_tree, parent, result_commit, NULL);
-+	commit_narrow_tree(merge_msg.buf, result_tree, narrow_base,
-+			   parent, result_commit, NULL);
- 	finish(result_commit, "In-index merge");
- 	drop_save();
- 	return 0;
-@@ -809,7 +811,8 @@ static int finish_automerge(struct commit_list *com=
-mon,
- 	}
- 	free_commit_list(remoteheads);
- 	strbuf_addch(&merge_msg, '\n');
--	commit_tree(merge_msg.buf, result_tree, parents, result_commit, NULL)=
-;
-+	commit_narrow_tree(merge_msg.buf, result_tree, narrow_base,
-+			   parents, result_commit, NULL);
- 	strbuf_addf(&buf, "Merge made by %s.", wt_strategy);
- 	finish(result_commit, buf.buf);
- 	strbuf_release(&buf);
-@@ -1064,6 +1067,7 @@ int cmd_merge(int argc, const char **argv, const =
-char *prefix)
- 		}
- 		if (item)
- 			die("Different narrow base, couldn't do merge (yet)");
-+		hashcpy(narrow_base, lookup_commit(head)->tree->object.sha1);
- 	}
-=20
- 	if (!remoteheads->next)
+And in case of modern server and old client, old fetch-pack would
+never send "deepen 0", so it's safe too, at least for current
+fetch-pack.
 --=20
-1.7.1.rc1.69.g24c2f7
+Duy
