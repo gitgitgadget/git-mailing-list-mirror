@@ -1,93 +1,91 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v3] shell: Rewrite documentation and improve error
- message
-Date: Tue, 24 Aug 2010 18:05:27 +0530
-Message-ID: <20100824123525.GA18641@kytes>
-References: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
- <AANLkTi=u7VUhz4VrU2hdd3SXK7rMvMrijL-X9qXCG1vs@mail.gmail.com>
- <20100822080359.GB15561@kytes>
- <AANLkTintw7=25nsr-7NjE_-xJqMab_HggjPOtSHBf109@mail.gmail.com>
- <20100824053647.GA2037@kytes>
- <AANLkTikeZTF5zZyRDtLfnPrtCYFH0WayXrJeCj8_VuC1@mail.gmail.com>
+From: Jean Delvare <khali@linux-fr.org>
+Subject: Re: [feature request] git: tags instead of commit IDs in blame
+ output
+Date: Tue, 24 Aug 2010 14:54:26 +0200
+Message-ID: <20100824145426.38b1fb15@hyperion.delvare>
+References: <20100821095352.604a2b85@hyperion.delvare>
+	<201008211210.23280.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>,
-	Junio C Hamano <gitster@pobox.com>
-To: Greg Brockman <gdb@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Aug 24 14:37:28 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Aug 24 14:54:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onskq-0001x4-9m
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 14:37:28 +0200
+	id 1Ont1X-0000pn-0r
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 14:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752211Ab0HXMhX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 08:37:23 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:48902 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507Ab0HXMhW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 08:37:22 -0400
-Received: by pwi7 with SMTP id 7so2437201pwi.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 05:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vDafTNQPozdqo1McEYIqlNJpGapLLo2lh7Wt9x5BTmw=;
-        b=wnUVmiQHWFjaMI/UgQZm6RxvJNXDJ8/zp2iqDS6RX4T1SFpWW+pyQywppaFuS1+LdM
-         tBEMkASt5VRIGGtg8N56EE84z8Fh7FYTnlRj8md/1j84coiD0t8tiR+Z6nEEB4EA8jpz
-         TZPC9BcI6lwGNGlYrfTWsljnywKd7pJlimouU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=vLAeMUk5gjDepWP6Mg11/8KuYw7Ht2Fk41OHAyg3N0MVkEIHuoeQZLGgwlTmBIyZBS
-         15QqTggNlLyIRoJAOCEIQ7uAakDMOmwzO6W4JFuIVlumxJ0oh9hoBadhH+i6ptZ0AQYJ
-         MH80tXnnZQjFzx8b8d5zoT6pfP6/3d+0GxnEY=
-Received: by 10.142.232.13 with SMTP id e13mr5614537wfh.133.1282653441602;
-        Tue, 24 Aug 2010 05:37:21 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id v13sm58613wfv.17.2010.08.24.05.37.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 05:37:20 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikeZTF5zZyRDtLfnPrtCYFH0WayXrJeCj8_VuC1@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753313Ab0HXMyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 08:54:38 -0400
+Received: from zone0.gcu-squad.org ([212.85.147.21]:30747 "EHLO
+	services.gcu-squad.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751375Ab0HXMyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 08:54:37 -0400
+Received: from jdelvare.pck.nerim.net ([62.212.121.182] helo=hyperion.delvare)
+	by services.gcu-squad.org (GCU Mailer Daemon) with esmtpsa id 1Ont0R-0005lJ-7A
+	(TLSv1:AES256-SHA:256)
+	(envelope-from <khali@linux-fr.org>)
+	; Tue, 24 Aug 2010 14:53:35 +0200
+In-Reply-To: <201008211210.23280.johan@herland.net>
+X-Mailer: Claws Mail 3.5.0 (GTK+ 2.14.4; i586-suse-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154311>
 
-Hi Greg,
+Hi Johan,
 
-Greg Brockman writes:
-> > =A0- =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"hint: ~/$C=
-OMMAND_DIR should exist "
-> > =A0+ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"hint: ~/" =
-$COMMAND_DIR " should exist "
-> There's still a floating $.  (Recall, you're in C land here, not shel=
-l.)
+On Sat, 21 Aug 2010 12:10:22 +0200, Johan Herland wrote:
+> On Saturday 21 August 2010, Jean Delvare wrote:
+> > Hi there,
+> > 
+> > I have a feature request for git. In the output of "git blame", I would
+> > like to be able to see tags instead of commit IDs in front of each
+> > line. Basically, I would like to know the first tag which was added
+> > after the last change of every line. Icing on the cake would be the
+> > possibility to filter out some tags (for example to ignore release
+> > candidate tags) but I could easily live without that.
+> > 
+> > Does it make sense?
+> > Would it be difficult to implement?
+> 
+> To me, it seems what you want to do is convert the commit ID in front of 
+> every blame-line into the result of running 'git name-rev' (or 'git 
+> describe') on that line.
+> 
+> To that effect something like this should work:
+> 
+>   git blame <file> |
+>   while read sha1 rest
+>   do
+>       tag=$(git name-rev --tags --name-only $sha1) &&
+>       echo "$tag $rest"
+>   done
+> 
+> Of course, if you're doing this at a bigger scale, you want to wrap this in 
+> a script that (1) caches commitID -> tag mappings, and that (2) runs 'git 
+> name-rev in its --stdin mode'.
 
-Ugh. So sorry about this- I've been suffering from insomnia over the
-last few days.
+Thanks for the very valuable suggestion. Obviously, the fact that the
+above command took over an hour to complete on a 1000-line file as kind
+of an issue ;) I did suspect this performance issue originally, which is
+why I thought it would be better if git itself would implement the
+feature. That being said... git name-rev's --stdin option seems to be
+doing all the hard caching work already:
 
--- 8< --
-diff --git a/shell.c b/shell.c
-index 6aade3d..b539cdf 100644
---- a/shell.c
-+++ b/shell.c
-@@ -154,7 +154,7 @@ int main(int argc, char **argv)
- 		cd_to_homedir();
- 		if (access(COMMAND_DIR, R_OK | X_OK) =3D=3D -1) {
- 			die("Interactive git shell is not enabled.\n"
--			    "hint: ~/" $COMMAND_DIR " should exist "
-+			    "hint: ~/" COMMAND_DIR " should exist "
- 			    "and have read and execute access.");
- 		}
- 		run_shell();
+git blame -l <file> | git name-rev --tags --name-only --stdin
+
+does almost what I want, and is reasonably fast (13 seconds for the
+same file.) I'll need to do some reformatting work to extract the tag
+from the symbolic names (which in turn should almost fix the
+alignment), but this is nothing a few lines of shell scripting can't do.
+
+So, thanks a lot again!
+
+-- 
+Jean Delvare
