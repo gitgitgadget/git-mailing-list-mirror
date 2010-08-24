@@ -1,144 +1,80 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Fix 'git log' early pager startup error case
-Date: Tue, 24 Aug 2010 10:33:59 -0700 (PDT)
-Message-ID: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/3] {fetch,upload}-pack: allow --depth=0 for infinite
+ depth
+Date: Tue, 24 Aug 2010 10:39:46 -0700
+Message-ID: <7vvd6zx63h.fsf@alter.siamese.dyndns.org>
+References: <1282565304-3122-1-git-send-email-pclouds@gmail.com>
+ <1282565304-3122-3-git-send-email-pclouds@gmail.com>
+ <20100824135341.GA6457@coredump.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 24 19:34:22 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 24 19:40:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnxO2-0007U2-84
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 19:34:14 +0200
+	id 1OnxTd-0004On-Vh
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 19:40:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932174Ab0HXReH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 13:34:07 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:60231 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932130Ab0HXReF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 13:34:05 -0400
-Received: by pwi7 with SMTP id 7so2549358pwi.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 10:34:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:x-x-sender
-         :to:subject:message-id:user-agent:mime-version:content-type;
-        bh=bzBjjWEXMWDVeesuz+YmnLm0coBarOkhAapKqITQ6M8=;
-        b=eHSNnzZDRwt4fxf8vfTI8x5YSg4OUgTMajJTE/beCEc0PqijfxExomZ3S84KOoxcSA
-         17cWXcY/FCk6S4Qim2vSu0Mxac3TOfu+dUhBAcqDYpDnXSw7f9aCFe/9mWGkB3htkJ5y
-         RZjbpSjHusi3+f5E2aiumiu99S6zJdFLGbgfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:x-x-sender:to:subject:message-id:user-agent
-         :mime-version:content-type;
-        b=uqvtTGy0DNNYMROh7PCNqM5tArcG33yv8h+cC69sT3KNSmgBeTwg3DHaUolrKuTwz2
-         dMbKafz9xkAv1t2XQoCkFVP1/K64MeVT8BhGTIInijelvrCkomOaSJa9ZiOgF9w3cra1
-         wdZhf0aS17J240hgnBeeJss18bioXcYS/cPDg=
-Received: by 10.142.147.7 with SMTP id u7mr5864584wfd.218.1282671244805;
-        Tue, 24 Aug 2010 10:34:04 -0700 (PDT)
-Received: from [192.168.1.87] (c-24-22-22-194.hsd1.or.comcast.net [24.22.22.194])
-        by mx.google.com with ESMTPS id 23sm361307wfa.22.2010.08.24.10.34.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 10:34:04 -0700 (PDT)
-X-X-Sender: torvalds@i5.linux-foundation.org
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1755214Ab0HXRj5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 13:39:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61740 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752171Ab0HXRj4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 13:39:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C776AD0FA5;
+	Tue, 24 Aug 2010 13:39:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JU7gV1/N18ph
+	s8f8AeUlElXVGNU=; b=k18JoCC0K5uhkJ4gdpUqMw8wzY6FrkUJHEooGJPYJP+v
+	udTBcgCd8WB75HHX7eEXKRseZxeXo4+eaH7PCVf/1Y7jQUQ0svsKIUpDbOGBxTYU
+	WEb3PeHyca7GJJlI6WnwFD3IwnTf8j0nG2RqCBRtyudVYj9WVYO4BRS7AdUEXq4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=IXNdwQ
+	5sKbV1iwOz4WZiaPt1GGuxdHNVE/I+zvovS64ptadfHdQW6jYloPxI0F4WtwEf6q
+	Z7AUrxpEQU7rwzptKI3z9eXSCa1h/X2i396lKqrUtO6Vk3fNQzDquxTHsSb6YWh5
+	bkAUwyumjjipk5yCiBY44OCMEVCFHf3PSZLL4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 90AC5D0FA2;
+	Tue, 24 Aug 2010 13:39:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDBFAD0F99; Tue, 24 Aug
+ 2010 13:39:47 -0400 (EDT)
+In-Reply-To: <20100824135341.GA6457@coredump.intra.peff.net> (Jeff King's
+ message of "Tue\, 24 Aug 2010 09\:53\:41 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 994A1ED0-AFA6-11DF-BD5C-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154327>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154328>
 
+Jeff King <peff@peff.net> writes:
 
-We start the pager too early for several git commands, which results in 
-the errors sometimes going to the pager rather than show up as errors.
+> On Mon, Aug 23, 2010 at 10:08:24PM +1000, Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy wrote:
+>
+>> Users can do --depth=3D2147483648 for infinite depth now. It just lo=
+oks
+>> ugly. So make "0" special (i.e. infinite depth) at plumbing/protocol
+>> level.
+>
+> What happens if I connect to an older server? Shouldn't "I understand
+> depth=3D0 is infinite" be a server capability, and we hack around it =
+by
+> sending depth=3D2^32-1 when we have a modern client but an older serv=
+er?
 
-This is often hidden by the fact that we pass in '-X' to less by default, 
-which causes 'less' to exit for small output, but if you do
-
-  export LESS=-S
-
-you can then clearly see the problem by doing
-
-  git log --prretty
-
-which shows the error message ("fatal: unrecognized argument: --prretty") 
-being sent to the pager.
-
-This happens for pretty much all git commands that use USE_PAGER, and then 
-check arguments separately. But "git diff" does it too early too (even 
-though it does an explicit setup_pager() call)
-
-This only fixes it for the trivial "git log" family case.
-
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
----
-
-I dunno. I noticed this as a result of a typo, and some (un)happy timing 
-("less" will still start up as a pager if the input is delayed a bit). I 
-think this is the right thing to do, but as mentioned, I only fixed a 
-particular small error case.
-
- builtin/log.c |    7 +------
- git.c         |    6 +++---
- 2 files changed, 4 insertions(+), 9 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index 08b8722..eaa1ee0 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -125,6 +125,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
- 		rev->show_decorations = 1;
- 		load_ref_decorations(decoration_style);
- 	}
-+	setup_pager();
- }
- 
- /*
-@@ -491,12 +492,6 @@ int cmd_log_reflog(int argc, const char **argv, const char *prefix)
- 	rev.use_terminator = 1;
- 	rev.always_show_header = 1;
- 
--	/*
--	 * We get called through "git reflog", so unlike the other log
--	 * routines, we need to set up our pager manually..
--	 */
--	setup_pager();
--
- 	return cmd_log_walk(&rev);
- }
- 
-diff --git a/git.c b/git.c
-index 6fc07a5..12d2952 100644
---- a/git.c
-+++ b/git.c
-@@ -337,7 +337,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "index-pack", cmd_index_pack },
- 		{ "init", cmd_init_db },
- 		{ "init-db", cmd_init_db },
--		{ "log", cmd_log, RUN_SETUP | USE_PAGER },
-+		{ "log", cmd_log, RUN_SETUP },
- 		{ "ls-files", cmd_ls_files, RUN_SETUP },
- 		{ "ls-tree", cmd_ls_tree, RUN_SETUP },
- 		{ "ls-remote", cmd_ls_remote },
-@@ -381,7 +381,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "send-pack", cmd_send_pack, RUN_SETUP },
- 		{ "shortlog", cmd_shortlog, USE_PAGER },
- 		{ "show-branch", cmd_show_branch, RUN_SETUP },
--		{ "show", cmd_show, RUN_SETUP | USE_PAGER },
-+		{ "show", cmd_show, RUN_SETUP },
- 		{ "status", cmd_status, RUN_SETUP | NEED_WORK_TREE },
- 		{ "stripspace", cmd_stripspace },
- 		{ "symbolic-ref", cmd_symbolic_ref, RUN_SETUP },
-@@ -396,7 +396,7 @@ static void handle_internal_command(int argc, const char **argv)
- 		{ "var", cmd_var },
- 		{ "verify-tag", cmd_verify_tag, RUN_SETUP },
- 		{ "version", cmd_version },
--		{ "whatchanged", cmd_whatchanged, RUN_SETUP | USE_PAGER },
-+		{ "whatchanged", cmd_whatchanged, RUN_SETUP },
- 		{ "write-tree", cmd_write_tree, RUN_SETUP },
- 		{ "verify-pack", cmd_verify_pack },
- 		{ "show-ref", cmd_show_ref, RUN_SETUP },
+Good point.  Do we also need to find out how wide an int is on the othe=
+r
+end in that case?
