@@ -1,95 +1,120 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/32] move do_compress() from pack-objects.c to
- pack-write.c
-Date: Tue, 24 Aug 2010 18:25:54 -0500
-Message-ID: <20100824232554.GF2376@burratino>
-References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
- <1282688422-7738-5-git-send-email-pclouds@gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: reducing object store size with remote alternates or shallow
+ clone?
+Date: Tue, 24 Aug 2010 18:29:42 -0500
+Message-ID: <pzml8liT3RErVlMrdxbSkHmhBs1RMvwYma9UXgvG6WY@cipher.nrlssc.navy.mil>
+References: <14526ED4-F65C-4DF2-ABDD-BF1E76DAC2B0@kernel.crashing.org> <7vhbikx8lu.fsf@alter.siamese.dyndns.org> <2dePxmEZeCbs4IkjGd-Ig2cma8lknd0XEwVdaypeAxtQDY3EZeSEPA@cipher.nrlssc.navy.mil> <7vfwy3vnti.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 01:28:07 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kumar Gala <galak@kernel.crashing.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 01:30:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo2uU-0004jH-FV
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 01:28:06 +0200
+	id 1Oo2wy-0006ny-5z
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 01:30:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933404Ab0HXX1w convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 19:27:52 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:39891 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932346Ab0HXX1h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 19:27:37 -0400
-Received: by qwh6 with SMTP id 6so6632626qwh.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 16:27:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=wDic0IDLmVOjSQ+1BBCbghBZoSoSVuio3zwMJZ+hQDA=;
-        b=MFf/Z8azBqDbCTrHvZgOny1/6YjKG+WwJUo4As6T5gg5umtMv6CmtAIq4619Ncm6pA
-         hOFlAz1ErsqVrPA8DweCjkRmLhdP0HVAaBNpXuX5itwVZ22R2a+TGEWi0q+aXQNpV6B2
-         4xkKay2UdGYfWwdioSNAgzEmBVDG6bU8WjvhQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=sXDxUKG+R/UEE4CdlEXAioL3++sHEvyC2t5fjbul/J9u6O1zC7Q6jZmH2ZxNPyPqu3
-         8BXIAeQrBTzwCBMIQBOISZBQ7u259z7mhk6v21hW5Ekg9hfz4vhnva4zP5E1EMee2jyp
-         6NnM2X2E939hLA8sbd6S8iTvbl8sEAuxbyc5Q=
-Received: by 10.229.211.21 with SMTP id gm21mr3307202qcb.135.1282692456912;
-        Tue, 24 Aug 2010 16:27:36 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id e6sm749484qcr.5.2010.08.24.16.27.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 16:27:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1282688422-7738-5-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933062Ab0HXX3x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 19:29:53 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:52508 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933068Ab0HXX3u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 19:29:50 -0400
+Received: by mail.nrlssc.navy.mil id o7ONTh20009064; Tue, 24 Aug 2010 18:29:43 -0500
+In-Reply-To: <7vfwy3vnti.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 24 Aug 2010 23:29:43.0822 (UTC) FILETIME=[3B643AE0:01CB43E4]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154383>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On 08/24/2010 01:59 PM, Junio C Hamano wrote:
+> Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
+> 
+>> On 08/24/2010 11:45 AM, Junio C Hamano wrote:
+>>
+>>> How about doing
+>>>
+>>>     $ LINUS=git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+>>
+>>>     $ git fetch $LINUS
+>>>     $ git bundle create myfork.bundle HEAD..master
+>>
+>> I think you mean
+>>
+>>       $ git fetch $LINUS master
+>>       $ git bundle create myfork.bundle FETCH_HEAD..master
+> 
+> Thanks, of course you are right.
+> 
+> Strictly speaking, as I know there is only one branch in the repository of
+> Linus, there is no need to say "master" when fetching
 
-> Subject: [PATCH 04/32] move do_compress() from pack-objects.c to pack=
--write.c
+Hmm.  It appears that if the current checked-out branch has a configured
+merge ref, then a fetch that supplies a repository url (not a remote name)
+and no fetch refspec, will not fall back to fetch HEAD from the remote
+repository.
 
-exposing it as internal API.  Makes sense.
+i.e. the following fetch does not retrieve any objects nor update FETCH_HEAD
 
-> +unsigned long compress_object(void **pptr, unsigned long size)
-> +{
-> +	z_stream stream;
-> +	void *in, *out;
-> +	unsigned long maxsize;
-> +
-> +	memset(&stream, 0, sizeof(stream));
-> +	deflateInit(&stream, Z_DEFAULT_COMPRESSION);
-> +	maxsize =3D deflateBound(&stream, size);
-> +
-> +	in =3D *pptr;
-> +	out =3D xmalloc(maxsize);
-> +	*pptr =3D out;
-> +
-> +	stream.next_in =3D in;
-> +	stream.avail_in =3D size;
-> +	stream.next_out =3D out;
-> +	stream.avail_out =3D maxsize;
-> +	while (deflate(&stream, Z_FINISH) =3D=3D Z_OK)
-> +		; /* nothing */
-> +	deflateEnd(&stream);
-> +
-> +	return stream.total_out;
-> +}
+   $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git linux
+   $ cd linux
+   $ git fetch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
 
-However, there is nothing particularly specialized to git objects
-about this.  e.g. deflate_it() from diff.c could use this.
+but, if you create a new branch, that has no merge ref configuration, then
+git behaves as expected:
+
+   $ git branch foo
+   $ git checkout foo
+   $ git fetch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+
+Namely we retrieve new objects and update FETCH_HEAD:
+
+   From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
+   * branch            HEAD       -> FETCH_HEAD
+
+
+I think the problem is in builtin/fetch.c: get_ref_map().
+
+When fetch is called as above, with a repository url but no refspec,
+we get this call sequence:
+
+   cmd_fetch -> fetch_one
+     fetch_one -> do_fetch(argc = 0)
+       do_fetch -> get_ref_map(ref_count = 0)
+         line 148: has_merge is assigned 1 since the current checked out
+                   branch has a merge ref configured
+         The 'if' branch is entered, the 'for' loop is not entered,
+         ref_map retains its NULL initialization value and
+         get_ref_map() returns NULL
+       do_fetch -> fetch_refs(ref_map = NULL)
+         and the transports do nothing since no refs have been requested
+
+Perhaps the fix should look something like this (warning copy/paste):
+
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index fab3fce..218e71d 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -146,7 +146,8 @@ static struct ref *get_ref_map(struct transport *transport,
+                struct remote *remote = transport->remote;
+                struct branch *branch = branch_get(NULL);
+                int has_merge = branch_has_merge_config(branch);
+-               if (remote && (remote->fetch_refspec_nr || has_merge)) {
++               if (remote && (remote->fetch_refspec_nr || (has_merge &&
++                               !strcmp(branch->remote_name, remote->name)))) {
+                        for (i = 0; i < remote->fetch_refspec_nr; i++) {
+                                get_fetch_map(remote_refs, &remote->fetch[i], &tail, 0);
+                                if (remote->fetch[i].dst &&
+
+
+-Brandon
