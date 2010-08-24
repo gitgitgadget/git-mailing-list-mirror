@@ -1,211 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 1/5] fmt_merge_msg: Change fmt_merge_msg API to accept
- shortlog_len
-Date: Tue, 24 Aug 2010 10:16:18 -0700
-Message-ID: <7vzkwcvsm5.fsf@alter.siamese.dyndns.org>
-References: <1282494398-20542-1-git-send-email-artagnon@gmail.com>
- <1282494398-20542-2-git-send-email-artagnon@gmail.com>
- <20100823220031.GA1308@burratino>
+From: Jared Hance <jaredhance@gmail.com>
+Subject: Re: coding process
+Date: Tue, 24 Aug 2010 13:28:00 -0400
+Message-ID: <20100824172800.GA4347@localhost.localdomain>
+References: <AANLkTi=Aei+-nbNFqY4CNjx5E+nNaOSp7-j+ruuK4kMN@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Yaroslav Halchenko <debian@onerussian.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 24 19:16:44 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 24 19:28:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onx74-0008U2-8Q
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 19:16:42 +0200
+	id 1OnxIH-00024u-7v
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 19:28:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755214Ab0HXRQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 13:16:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35710 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755192Ab0HXRQe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 13:16:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C72DD0C9A;
-	Tue, 24 Aug 2010 13:16:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g6QVumsNPRVIa5AoIVfQKWw+VIQ=; b=fQX56w
-	hYVRdp0Pig6vjj1lrj0dAIJvlnf+jRXfqlN6MTtObGRTVQoMGqwh60y7atIlDmjM
-	UsKCoE4Sn/wNTmLeA+YCa2a4a1/GPGJpJN70EXUQIgmK031u9M2lleUoM0qMX+6Z
-	EVSBVne1OJ2fJF/j+9SfVCtHfvwHCowy1Qq1U=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HHlVqTUjN/XW9eUwrw5Lx98wybmu1eVa
-	MjfHXqV/N8oEHAYMwwneTg7Y44PfarW5BbEQVNwANdZJwZuWeWDJs30M+pNKqz6o
-	OKgXkRTbvAUhDXz7qF99FXC36yP4AgpMqUr02/gUbvQ5zp4Rdm9Gx6ITjgqKTrSr
-	Td8NaGvXCto=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C44D0C99;
-	Tue, 24 Aug 2010 13:16:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C41CD0C90; Tue, 24 Aug
- 2010 13:16:20 -0400 (EDT)
-In-Reply-To: <20100823220031.GA1308@burratino> (Jonathan Nieder's message of
- "Mon\, 23 Aug 2010 17\:00\:31 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 53FA9704-AFA3-11DF-9FD8-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932130Ab0HXR2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 13:28:11 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:47677 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932081Ab0HXR2J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 13:28:09 -0400
+Received: by vws3 with SMTP id 3so668248vws.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 10:28:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=HAyZ1nkQuSSuiPZT79VNs3lBAK2JSaqJzlG+qtM5SR8=;
+        b=RaqCpi4DG/Xj4tHkCtdnGcSx7ZOTs/la/hieAskh/EHJaexqfmpXtbPH3oXsGS6OAa
+         4fy4PspoODHaz4cqK9DQiTWzdBPMrGNJoVO2wGI30K4XZPvMHIAwCnFu4yYzzVggBjhT
+         PZ3jHDb2C3wDYeH1yR8HxPlSmJzkI0/ow1slw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=CbhKYtCDo4+cuMDctc1WecFBXmRLeqbR4K7jrm889W5WiJFFVRBYckvf4vMZQNwo7X
+         ERKy3JIrpX/Nahbs7zRw/VnYR3YTFbFX3/lmJBdBA797UirRnXbq+cg6J6QWqbmE2yEi
+         TuZtxH/W0lQlAZNO6LGBr8YuQZsEFbc4KdFwU=
+Received: by 10.220.161.203 with SMTP id s11mr4353221vcx.195.1282670888276;
+        Tue, 24 Aug 2010 10:28:08 -0700 (PDT)
+Received: from localhost.localdomain (cpe-174-101-213-29.cinci.res.rr.com [174.101.213.29])
+        by mx.google.com with ESMTPS id b8sm163224vci.45.2010.08.24.10.28.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Aug 2010 10:28:07 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=Aei+-nbNFqY4CNjx5E+nNaOSp7-j+ruuK4kMN@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-12-10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154326>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, Aug 24, 2010 at 09:31:21AM -0600, Wes James wrote:
+> I am working with git and I'm wondering if coding like the following
+> is a good way to manage code:
+> 
+> create code then commit
+> when a good set up code is ready push to master
+> create a branch
+> create code then commit
+> when code is good, merge and push to master
+> go back to create branch
+> 
+> Anyone else have a procedure they go through when managing code?
+> 
+> thx,
+> 
+> -wes
 
-> The rest looks good.  So except for the commit message,
->
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>From what you say, it sounds like you are using topic branches, which
+are always a good way to manage code. You might want to consider using
+release branches (like how git.git has "master", "next", and "maint").
 
-Thanks; all of your comments make sense.  Here is what I'll queue.
+I'm not sure what you mean by "push to master". You don't push to a
+branch. You push to a repository. I guess you mean pushing to the
+"official" or "blessed" repository?
 
--- >8 --
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Date: Sun, 22 Aug 2010 21:56:34 +0530
-Subject: [PATCH] fmt_merge_msg: Change fmt_merge_msg API to accept shortlog_len
-
-Give "shortlog_len" parameter to the fmt_merge_msg(), remove its
-"merge_summary" parameter, and remove fmt_merge_msg_shortlog() function.
-In the updated API, shortlog_len == 0 means no shortlog is given.
-
-The parameter "merge_title" controls if the title of the merge commit is
-autogenerated (it reads something like "Merge branch ..."), and typically
-it is set to true when the caller does not give its own message.
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Helped-and-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin.h               |    7 ++++---
- builtin/fmt-merge-msg.c |   30 ++++++++++++++----------------
- builtin/merge.c         |   14 ++++++--------
- 3 files changed, 24 insertions(+), 27 deletions(-)
-
-diff --git a/builtin.h b/builtin.h
-index ed6ee26..09b94ea 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -7,6 +7,8 @@
- #include "commit.h"
- #include "notes.h"
- 
-+#define DEFAULT_MERGE_LOG_LEN 20
-+
- extern const char git_version_string[];
- extern const char git_usage_string[];
- extern const char git_more_info_string[];
-@@ -14,9 +16,8 @@ extern const char git_more_info_string[];
- extern void list_common_cmds_help(void);
- extern const char *help_unknown_cmd(const char *cmd);
- extern void prune_packed_objects(int);
--extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
--	struct strbuf *out);
--extern int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out);
-+extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
-+			 int merge_title, int shortlog_len);
- extern int commit_notes(struct notes_tree *t, const char *msg);
- 
- struct notes_rewrite_cfg {
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 937d5a7..42021d3 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -255,9 +255,9 @@ static void do_fmt_merge_msg_title(struct strbuf *out,
- 		strbuf_addf(out, " into %s\n", current_branch);
- }
- 
--static int do_fmt_merge_msg(int merge_title, int merge_summary,
--	struct strbuf *in, struct strbuf *out) {
--	int limit = 20, i = 0, pos = 0;
-+static int do_fmt_merge_msg(int merge_title, struct strbuf *in,
-+	struct strbuf *out, int shortlog_len) {
-+	int i = 0, pos = 0;
- 	unsigned char head_sha1[20];
- 	const char *current_branch;
- 
-@@ -288,7 +288,7 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
- 	if (merge_title)
- 		do_fmt_merge_msg_title(out, current_branch);
- 
--	if (merge_summary) {
-+	if (shortlog_len) {
- 		struct commit *head;
- 		struct rev_info rev;
- 
-@@ -303,17 +303,14 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
- 
- 		for (i = 0; i < origins.nr; i++)
- 			shortlog(origins.items[i].string, origins.items[i].util,
--					head, &rev, limit, out);
-+					head, &rev, shortlog_len, out);
- 	}
- 	return 0;
- }
- 
--int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
--	return do_fmt_merge_msg(1, merge_summary, in, out);
--}
--
--int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out) {
--	return do_fmt_merge_msg(0, 1, in, out);
-+int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
-+		  int merge_title, int shortlog_len) {
-+	return do_fmt_merge_msg(merge_title, in, out, shortlog_len);
- }
- 
- int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
-@@ -355,12 +352,13 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 
- 	if (strbuf_read(&input, fileno(in), 0) < 0)
- 		die_errno("could not read input file");
--	if (message) {
-+
-+	if (message)
- 		strbuf_addstr(&output, message);
--		ret = fmt_merge_msg_shortlog(&input, &output);
--	} else {
--		ret = fmt_merge_msg(merge_summary, &input, &output);
--	}
-+	ret = fmt_merge_msg(&input, &output,
-+			    message ? 0 : 1,
-+			    merge_summary ? DEFAULT_MERGE_LOG_LEN : 0);
-+
- 	if (ret)
- 		return ret;
- 	write_in_full(STDOUT_FILENO, output.buf, output.len);
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 2207f79..b2c0984 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -998,14 +998,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		for (i = 0; i < argc; i++)
- 			merge_name(argv[i], &merge_names);
- 
--		if (have_message && option_log)
--			fmt_merge_msg_shortlog(&merge_names, &merge_msg);
--		else if (!have_message)
--			fmt_merge_msg(option_log, &merge_names, &merge_msg);
--
--
--		if (!(have_message && !option_log) && merge_msg.len)
--			strbuf_setlen(&merge_msg, merge_msg.len-1);
-+		if (!have_message || option_log) {
-+			fmt_merge_msg(&merge_names, &merge_msg, !have_message,
-+				      option_log ? DEFAULT_MERGE_LOG_LEN : 0);
-+			if (merge_msg.len)
-+				strbuf_setlen(&merge_msg, merge_msg.len - 1);
-+		}
- 	}
- 
- 	if (head_invalid || !argc)
--- 
-1.7.2.2.426.g2251a
+Also, sending patches to an email before merging to master is a
+good idea to get code review.
