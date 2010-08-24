@@ -1,61 +1,115 @@
-From: Luben Tuikov <ltuikov@yahoo.com>
-Subject: Problem in fetch (kernel)
-Date: Tue, 24 Aug 2010 00:18:51 -0700 (PDT)
-Message-ID: <82733.7134.qm@web31806.mail.mud.yahoo.com>
-Reply-To: ltuikov@yahoo.com
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] optionally disable overwriting of ignored files
+Date: Tue, 24 Aug 2010 09:28:54 +0200
+Message-ID: <20100824072854.GA22951@localhost>
+References: <4C6A1C5B.4030304@workspacewhiz.com>
+ <7viq39avay.fsf@alter.siamese.dyndns.org>
+ <20100818233900.GA27531@localhost>
+ <vpqd3t9656k.fsf@bauges.imag.fr>
+ <4C727E17.5070707@ira.uka.de>
+ <20100823151146.GA15379@localhost>
+ <7veidp2ufh.fsf@alter.siamese.dyndns.org>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Aug 24 09:25:41 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="6c2NcOVqGQ03X4Wi"
+Cc: Holger Hellmuth <hellmuth@ira.uka.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 24 09:28:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onnt5-0002B2-GQ
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 09:25:39 +0200
+	id 1OnnwA-00056G-KF
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 09:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404Ab0HXHZf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 03:25:35 -0400
-Received: from web31806.mail.mud.yahoo.com ([68.142.207.69]:46720 "HELO
-	web31806.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751128Ab0HXHZe (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 03:25:34 -0400
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Aug 2010 03:25:33 EDT
-Received: (qmail 8836 invoked by uid 60001); 24 Aug 2010 07:18:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1282634331; bh=ilAEhOk+twyK1uVYM6fFm/z6DSGPR+ZNC01025i64wk=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type; b=VXmrcbEehruHmPBRizuPLIScpdNtXogblA9jozdtYfUSG18Q8KmGFvRPjFZuhVbVag5tzIri797I/IGo9kx1mYGbZ08E9OrEabfzcnNAmiB1XxADWTvQ6YlK3tEGww9KODAijVszLqrBenBa09asvyoaIl8D37X07sysbZwpkeY=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Reply-To:Subject:To:MIME-Version:Content-Type;
-  b=ftI+AV757O+pOddxEv4dphKq76lte58hPE9SQmkwm0uZ7JU+wWGJ4yXTDNgB4chyzcdcIPTSBCk4w1bAzzU6BmXtD3yd3XGwlhK+p/nSv96lhYcQAu/ilkJRuW0HN7KwrHPXusecvqVQ2mGQ61kSwPOupCaDfG6qXNUdLyrtq+E=;
-X-YMail-OSG: GnFvIuEVM1lj0gSPKiBVSCeqH2ylkdalwJshU67h6uV64Um
- 7EVmEJXfGcG2NV0nru0CsEpWuOyUurgYa7fXxdio9Z2SzDUPDK9HevB8xDat
- 1YtCvm6z_Yx4r2LyHfGk_W4WVDO3dqzBHHYFwbT3P2atrsDOn2KHyGux2dQS
- vantxxzzKdL7nQeZS_q9GF6jKG05k6gjUOtIvCo0LuUNO2WHWrBpqUrW4TV7
- SfUe_b2xZSSzx._4GXh5RxY.QID_YiM3WAMSZ8DrkauELfGkG660MnCuqPL0
- 1r0wyTBHj6v0vIjueBJsdX8gOC4PyxSyLJ7ZOV.Vy3i280MDa.8Wq1l78IbL
- vE57ZiZLFc3UleVEPi6gahMTf_WM-
-Received: from [71.132.202.60] by web31806.mail.mud.yahoo.com via HTTP; Tue, 24 Aug 2010 00:18:51 PDT
-X-Mailer: YahooMailClassic/11.3.2 YahooMailWebService/0.8.105.279950
+	id S1751470Ab0HXH2q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 03:28:46 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43376 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751128Ab0HXH2p (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 03:28:45 -0400
+Received: by fxm13 with SMTP id 13so3588377fxm.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 00:28:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=3BOtvEXXjjwEfZPhoYXb3Qq4BinKv8Tkds+GcjCOUTc=;
+        b=YBdtLG2pxRDyc2lMAHABTdv5QgTHn+dqcSBlsvGrA/ZBct/xNIJGYtyn+CfwLU/T57
+         ojmEfRHL7OEXIgkB/WhPGloIiRV/gQsjR8jjlpqp34lIpfeIr8TmjFMBiO/fI2BxscND
+         9djOHNwRz1Azs+y4I+N6V2Qu538aE1YNtwAfs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=B0fuZg67y6/moVo3MO/di+N9V8r1Eltpm71ErPD+sXbb33aduWtE8ANK9Ax66o+/Lh
+         XsA1ksBKCnE4hxMAo8icGuUv/zdWKd2rsr3ivD1oAdPCklBnltUof025UzMFKLVsgWx2
+         c65166amsnvMFP14xZveGLiJWtkT4JdZ2b3kM=
+Received: by 10.223.126.68 with SMTP id b4mr5437534fas.96.1282634924173;
+        Tue, 24 Aug 2010 00:28:44 -0700 (PDT)
+Received: from darc.lan (p549A7EA0.dip.t-dialin.net [84.154.126.160])
+        by mx.google.com with ESMTPS id b11sm2953669faq.30.2010.08.24.00.28.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Aug 2010 00:28:43 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OnnwE-0005ys-5Q; Tue, 24 Aug 2010 09:28:54 +0200
+Content-Disposition: inline
+In-Reply-To: <7veidp2ufh.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154304>
 
-Hi guys,
 
-While trying to pull the kernel I get this:
+--6c2NcOVqGQ03X4Wi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-git pull -v --progress linus
-error: Unable to find 8faa6c02b39ec3896bd4e989c82ce7f6dbdaf04a under http://kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
-Cannot obtain needed blob 8faa6c02b39ec3896bd4e989c82ce7f6dbdaf04a
-while processing commit cca77b7c81876d819a5806f408b3c29b5b61a815.
-error: Fetch failed.
+On Mon, Aug 23, 2010 at 08:57:38AM -0700, Junio C Hamano wrote:
+> Clemens Buchacher <drizzd@aon.at> writes:
+>=20
+> > On Mon, Aug 23, 2010 at 03:56:39PM +0200, Holger Hellmuth wrote:
+> >>=20
+> >> You've got my vote. This is the only option that combines safety with
+> >> minimal configuration hassle.
+> >>=20
+> >> I didn't know about this subtle difference between .gitignore and
+> >> .git/info/exclude. And while this makes sense I expect a sizable
+> >> percentage of users will never even know that .git/info/exclude exists.
+> >
+> > I don't know if this subtle difference was even intentional.
+>=20
+> I am sorry, what difference are you talking about?
 
-This is with git 1.7.1.
+The fact that files in .gitignore are considered trashable, and the
+ones in .git/info/exclude are not.
 
-How can I resolve this?
+--6c2NcOVqGQ03X4Wi
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
-Thanks,
-   Luben
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMc3S2AAoJELKdZexG8uqMqeUIAKyxs02qc/twiVYWTO0YrAGn
+gxPweKJAuHdBmr0afraGqbr+9NIkG/KUdmwDt7syvos6Qc/s7bN3GJjg/zhsNF8c
+OY9ltFolM8P7vE+w2MuZmVMCwm1bDNxToG7z2UgW4zxi9I2j1IK/p8PqZA+/bIyE
+r7vLkBhdZKdpJZamwGFeiHG7rV2ph1oWHKRQSjB0kp0bILZDT17KLgsJxqOI+DTB
+7w9rAvPjTqRuB7I0L9E6g2Ny6UDHmes/aGRvLEWB8D3D8FdixNZY02CyfvoRDknt
+8To9wGx71ih84RbHpkZDqs65y6UfefOIeaaP+pzH83/SPm3LfoteY2gJ4wNwW4k=
+=gclC
+-----END PGP SIGNATURE-----
+
+--6c2NcOVqGQ03X4Wi--
