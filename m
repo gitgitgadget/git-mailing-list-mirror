@@ -1,70 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5 3/5] merge: Make 'merge.log' an integer or boolean
- option
-Date: Tue, 24 Aug 2010 12:01:40 -0700
-Message-ID: <7vmxsbu963.fsf@alter.siamese.dyndns.org>
-References: <1282494398-20542-1-git-send-email-artagnon@gmail.com>
- <1282494398-20542-4-git-send-email-artagnon@gmail.com>
+From: Eric Raible <raible@gmail.com>
+Subject: Re: [PATCH 2/1] do not pass &quot;git -c foo=bar&quot; params to transport helpers
+Date: Tue, 24 Aug 2010 19:07:30 +0000 (UTC)
+Message-ID: <loom.20100824T210316-895@post.gmane.org>
+References: <7viq3119yn.fsf@alter.siamese.dyndns.org> <20100823183857.GA22386@coredump.intra.peff.net> <20100823191600.GA2523@coredump.intra.peff.net> <20100824064114.GA20724@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Yaroslav Halchenko <debian@onerussian.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 24 21:02:03 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 24 21:07:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onyku-0003HW-BX
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 21:01:56 +0200
+	id 1OnyqY-000082-U3
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 21:07:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755159Ab0HXTBz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 15:01:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41078 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755138Ab0HXTBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 15:01:53 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 34742D0B35;
-	Tue, 24 Aug 2010 15:01:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=FQYXCj0vTAA6h+XsiFpAWLKca5I=; b=rU+b55T8mWUEGrdH6Q1iAzG
-	BmgSwAQf7QDyF+IUiyQI9RbN8lU7lcRhhNJlb0YVpdNwyVCaj9RDN6+hIw6ChGev
-	VS7KV/sSO1Zor+aGDk8kmaBDIlB8qRGRChGZ6Ow6p4GHl5KlN5WTnvLsJ2tHJSvW
-	YG6eMcs5woOPpM4X0F0I=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=MF9s4u83bEF1wkXngutuHuUDS50C956Sbq/KLN2386m0xyJ8Q
-	uhl8zWwyMS8yFJTDj0LdTCtxKES+Ojc1skGTr/zlYaTd+cEVS5OKgWyGpRhOrM3s
-	TK8YIH+zUfTeBqk8QcVK5Uf3d/qciiahFWlWk9lk8cb8i5+kfjRjXyxJIs=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AD0A3D0B2B;
-	Tue, 24 Aug 2010 15:01:47 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3068D0B25; Tue, 24 Aug
- 2010 15:01:41 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0B84E1B4-AFB2-11DF-990A-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755024Ab0HXTHl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 15:07:41 -0400
+Received: from lo.gmane.org ([80.91.229.12]:51956 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753138Ab0HXTHj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 15:07:39 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OnyqQ-0008S3-Fx
+	for git@vger.kernel.org; Tue, 24 Aug 2010 21:07:38 +0200
+Received: from mail.nextest.com ([12.96.234.114])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 21:07:38 +0200
+Received: from raible by mail.nextest.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 21:07:38 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 12.96.234.114 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/533.4 (KHTML, like Gecko) Chrome/5.0.375.126 Safari/533.4)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154339>
 
-This makes sense, but I agree with Jonathan's reviews on 1/5 and 2/5, I'll
-ask you to reroll this on top of what I'll push out shortly.
+Jonathan Nieder <jrnieder <at> gmail.com> writes:
 
-As to 4/5, I think we should proceed a lot more carefully than what your
-patch does, just like we were extra careful when we went to v1.7.0 than
-when we went to v1.6.0 (see release notes to 1.6.6 for a summary,
-especially paying attention to the third and the fourth paragraph in
-"Preparing yourselves" section).
+>  #define GRAFT_ENVIRONMENT "GIT_GRAFT_FILE"
+>  #define TEMPLATE_DIR_ENVIRONMENT "GIT_TEMPLATE_DIR"
+>  #define CONFIG_ENVIRONMENT "GIT_CONFIG"
+> +#define CONFIG_DATA_ENVIRONMENT "GIT_CONFIG_PARAMETERS"
+>  #define EXEC_PATH_ENVIRONMENT "GIT_EXEC_PATH"
+>  #define CEILING_DIRECTORIES_ENVIRONMENT "GIT_CEILING_DIRECTORIES"
+>  #define NO_REPLACE_OBJECTS_ENVIRONMENT "GIT_NO_REPLACE_OBJECTS"
 
-I've queued 5/5 directly on maint.
+Given that the pattern is:
+#define foo_ENVIRONMENT "GIT_foo"
 
-Thanks.
+Your addition should be:
+#define CONFIG_PARAMETERS_ENVIRONMENT "GIT_CONFIG_PARAMETERS"
+
+Not only that, but the first one should be:
+
+#define GRAFT_FILE_ENVIRONMENT "GIT_GRAFT_FILE"
