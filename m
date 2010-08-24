@@ -1,108 +1,91 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [feature request] git: tags instead of commit IDs in blame output
-Date: Tue, 24 Aug 2010 16:53:49 +0200
-Message-ID: <201008241653.50225.johan@herland.net>
-References: <20100821095352.604a2b85@hyperion.delvare> <201008211210.23280.johan@herland.net> <20100824145426.38b1fb15@hyperion.delvare>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [PATCH v3] shell: Rewrite documentation and improve error message
+Date: Tue, 24 Aug 2010 11:22:07 -0400
+Message-ID: <AANLkTikqoELMOxjdtzvrFTgyHK0dLCZLrwt2NhCSUDL5@mail.gmail.com>
+References: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
+	<AANLkTi=u7VUhz4VrU2hdd3SXK7rMvMrijL-X9qXCG1vs@mail.gmail.com>
+	<20100822080359.GB15561@kytes>
+	<AANLkTintw7=25nsr-7NjE_-xJqMab_HggjPOtSHBf109@mail.gmail.com>
+	<20100824053647.GA2037@kytes>
+	<AANLkTikeZTF5zZyRDtLfnPrtCYFH0WayXrJeCj8_VuC1@mail.gmail.com>
+	<20100824123525.GA18641@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jean Delvare <khali@linux-fr.org>
-X-From: git-owner@vger.kernel.org Tue Aug 24 17:02:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 24 17:22:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onv0i-0005tl-6i
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 17:02:00 +0200
+	id 1OnvKS-00083c-Sa
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 17:22:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753138Ab0HXPBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 11:01:54 -0400
-Received: from smtp.opera.com ([213.236.208.81]:34105 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751470Ab0HXPBx (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 11:01:53 -0400
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Tue, 24 Aug 2010 11:01:53 EDT
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	id S1754873Ab0HXPWM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 11:22:12 -0400
+Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:58791 "EHLO
+	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752185Ab0HXPWL convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 11:22:11 -0400
+X-AuditID: 12074425-b7cccae000005f17-6b-4c73e39ba537
+Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
+	by dmz-mailsec-scanner-8.mit.edu (Symantec Brightmail Gateway) with SMTP id 1F.EE.24343.B93E37C4; Tue, 24 Aug 2010 11:22:03 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id o7OFMAEU021778
+	for <git@vger.kernel.org>; Tue, 24 Aug 2010 11:22:10 -0400
+Received: from mail-px0-f174.google.com (mail-px0-f174.google.com [209.85.212.174])
 	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o7OErofx006860
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 24 Aug 2010 14:53:50 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <20100824145426.38b1fb15@hyperion.delvare>
-Content-Disposition: inline
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7OFM8pr026679
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Tue, 24 Aug 2010 11:22:10 -0400 (EDT)
+Received: by pxi10 with SMTP id 10so2680248pxi.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 08:22:08 -0700 (PDT)
+Received: by 10.114.123.9 with SMTP id v9mr301932wac.130.1282663327923; Tue,
+ 24 Aug 2010 08:22:07 -0700 (PDT)
+Received: by 10.231.154.212 with HTTP; Tue, 24 Aug 2010 08:22:07 -0700 (PDT)
+In-Reply-To: <20100824123525.GA18641@kytes>
+X-Brightmail-Tracker: AAAABBWs/CYVrZJ9Fa3IeBWt44Q=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154317>
 
-On Tuesday 24 August 2010, Jean Delvare wrote:
-> On Sat, 21 Aug 2010 12:10:22 +0200, Johan Herland wrote:
-> > To me, it seems what you want to do is convert the commit ID in
-> > front of every blame-line into the result of running 'git name-rev'
-> > (or 'git describe') on that line.
-> >
-> > To that effect something like this should work:
-> >
-> >   git blame <file> |
-> >   while read sha1 rest
-> >   do
-> >       tag=$(git name-rev --tags --name-only $sha1) &&
-> >       echo "$tag $rest"
-> >   done
-> >
-> > Of course, if you're doing this at a bigger scale, you want to wrap
-> > this in a script that (1) caches commitID -> tag mappings, and that
-> > (2) runs 'git name-rev in its --stdin mode'.
+>> > =A0- =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"hint: ~/$=
+COMMAND_DIR should exist "
+>> > =A0+ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"hint: ~/"=
+ $COMMAND_DIR " should exist "
+>> There's still a floating $. =A0(Recall, you're in C land here, not s=
+hell.)
 >
-> Thanks for the very valuable suggestion. Obviously, the fact that the
-> above command took over an hour to complete on a 1000-line file as
-> kind of an issue ;) I did suspect this performance issue originally,
-> which is why I thought it would be better if git itself would
-> implement the feature.
+> Ugh. So sorry about this- I've been suffering from insomnia over the
+> last few days.
+No worries :).
 
-Yes, everything would be easier and faster if git itself implemented it. 
-Aka. infinite feature creep... This obviously does not scale.
+> -- 8< --
+> diff --git a/shell.c b/shell.c
+> index 6aade3d..b539cdf 100644
+> --- a/shell.c
+> +++ b/shell.c
+> @@ -154,7 +154,7 @@ int main(int argc, char **argv)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0cd_to_homedir();
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (access(COMMAND_DIR, R_OK | X_OK) =3D=
+=3D -1) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die("Interactive git s=
+hell is not enabled.\n"
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "hint: ~/" $COM=
+MAND_DIR " should exist "
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "hint: ~/" COMM=
+AND_DIR " should exist "
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"and have read=
+ and execute access.");
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0run_shell();
+LGTM.
 
-Instead, Git tries to provide the building blocks that you can string 
-together to produce the exact result you're looking for.
-
-> That being said... git name-rev's --stdin 
-> option seems to be doing all the hard caching work already:
->
-> git blame -l <file> | git name-rev --tags --name-only --stdin
->
-> does almost what I want, and is reasonably fast (13 seconds for the
-> same file.)
-
-I did the same experiment on a much larger file (~19000 lines), and got:
-
-  27.94s git blame -l <file>
-
-  28.31s git blame -l <file> | git name-rev --tags --name-only --stdin
-
-which suggests that the git name-rev process only adds ~1% to the total 
-runtime.
-
-> I'll need to do some reformatting work to extract the tag 
-> from the symbolic names (which in turn should almost fix the
-> alignment),
-
-...only if all the tag names happen to have the same length.
-
-> but this is nothing a few lines of shell scripting can't do.
-
-I don't see why you need to remove the suffix from the tag name. You're 
-simply removing information that could be used to look up the exact 
-commit resposible for each line. And it's not like the tag name is 
-completely unreadable unless you remove the suffix...
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Reviewed-by: Greg Brockman <gdb@mit.edu>
