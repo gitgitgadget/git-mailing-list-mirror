@@ -1,94 +1,87 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 32/32] daemon: support upload-narrow-base
-Date: Wed, 25 Aug 2010 08:20:22 +1000
-Message-ID: <1282688422-7738-33-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFD PATCH 00/32] subtree clone v2
+Date: Tue, 24 Aug 2010 17:37:42 -0500
+Message-ID: <20100824223741.GB2376@burratino>
 References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 25 00:25:20 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 00:39:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo1vg-0004Dg-1m
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 00:25:16 +0200
+	id 1Oo29b-0007fZ-PY
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 00:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171Ab0HXWYh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 18:24:37 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:60997 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755720Ab0HXWYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 18:24:36 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 26so2825579pzk.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 15:24:35 -0700 (PDT)
+	id S1756219Ab0HXWjd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 18:39:33 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37317 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753283Ab0HXWj3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 18:39:29 -0400
+Received: by vws3 with SMTP id 3so923647vws.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 15:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=WwCiXZowEBr36jkycqZcMWDCra5EbL253DOE+qOgYaM=;
-        b=YJkq2ghIIPsMAFc7tFy/mVRTnizsytK0CkCz7g+YaMtc9JRn4ow+usiIm6exgOrucr
-         XAsMpmOFYaxjp76MwZwCWlNhVTG8iCyysqTswnz6ym0XTUMX6PWNpqTEQsleh4g36Eh+
-         XdqQkmfy3EkeLTQnjXEazO+PB01MhURks/d0E=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=I3mks1Ck90Q15NR3b/BaoV35VqKlZpf1ooKtSNITDY8=;
+        b=B2q6aMPpPQQJmLv0MUSk1ukck6FP5WMX4tn5JpFIreI3Lvg8GKY7ZGC4ACJ3GPVqWy
+         oA/VotWFiA86uRBNw0nzpGhR+dOkpKxFp7NDSEelyNV7xgN8lfsuYVxwdyk8XnpFdvGL
+         pbps7mXfWswHipDcUMmYlHPN60supnS7z1Ld0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=nRgCI43rtWuPO3UfdRnrfJ9vmAb75huTeXtQimwreihb7Cu9Lv1ynsgJJnP7f7HvFx
-         Xu9XBIpCeWBiGTJ7gZTdemX8PQgnP2YXFovtnZJPDRDqxnCc/6Z060fWKag0oWQyh8Jj
-         iP76u1ep1fm57Z3R/m1xJJ4kNuQae023eDZpE=
-Received: by 10.114.12.14 with SMTP id 14mr8537408wal.23.1282688675932;
-        Tue, 24 Aug 2010 15:24:35 -0700 (PDT)
-Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id q6sm951790waj.10.2010.08.24.15.24.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 15:24:34 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Wed, 25 Aug 2010 08:24:28 +1000
-X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=HUGVckIatA4hEbTqY82y8p0OQuBOMhg3O1PA7tFxlFBA5tUsnvdwlZU+vAHU8WoM46
+         iecwyrnn8t7puHDi3CMQLTve4a9+wULhgOqyInD6YH0bkt+c/FzT0nQDOeEpXzzcpLK9
+         CHOERE2wOEhcKfYXMDeur/BZHRi9JQjpzvveY=
+Received: by 10.220.127.37 with SMTP id e37mr4272526vcs.171.1282689568947;
+        Tue, 24 Aug 2010 15:39:28 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id n9sm343594vch.19.2010.08.24.15.39.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 24 Aug 2010 15:39:28 -0700 (PDT)
+Content-Disposition: inline
 In-Reply-To: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154377>
 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- daemon.c |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+> Patches 26..30
+>   Add upload-narrow-base command
+>   rev-list: traverse some more trees to make upload-narrow-base happy
+>   narrow-tree: add oldest_narrow_base()
+>   Add command fetch-narrow-base
+>   merge: support merging when narrow bases are different
+>=20
+> Remote merge part.
+>=20
+> Split a merge operation into two parts, the real merge will be done
+> within narrow tree. Conflicts can happen and be resolved in the narro=
+w
+> index, locally.
+>=20
+> Everything outside narrow tree will be merged (trivially) by
+> server. Then server sends the base tree back, so join_narrow_tree() i=
+n
+> patch 20 can be used to create proper commit.
+>=20
+> Server can disable this remote merge feature, which means users are
+> forced to do rebase/fast-forward. Not too bad.
 
-diff --git a/daemon.c b/daemon.c
-index e22a2b7..58794b7 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -356,6 +356,12 @@ static int upload_archive(void)
- 	return run_service_command(argv);
- }
-=20
-+static int upload_narrow_base(void)
-+{
-+	static const char *argv[] =3D { "upload-narrow-base", ".", NULL };
-+	return run_service_command(argv);
-+}
-+
- static int receive_pack(void)
- {
- 	static const char *argv[] =3D { "receive-pack", ".", NULL };
-@@ -364,6 +370,7 @@ static int receive_pack(void)
-=20
- static struct daemon_service daemon_service[] =3D {
- 	{ "upload-archive", "uploadarch", upload_archive, 0, 1 },
-+	{ "upload-narrow-base", "narrowbase", upload_narrow_base, 0, 1 },
- 	{ "upload-pack", "uploadpack", upload_pack, 1, 1 },
- 	{ "receive-pack", "receivepack", receive_pack, 0, 1 },
- };
---=20
-1.7.1.rc1.69.g24c2f7
+Yikes.  Na=C3=AFve question (please forgive my laziness): is it possibl=
+e to
+merge without remote contact in the boring case, when no changes have
+occured outside the narrow tree?
