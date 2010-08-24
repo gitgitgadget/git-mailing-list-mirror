@@ -1,69 +1,93 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] tests: simplify "missing PREREQ" message
-Date: Tue, 24 Aug 2010 12:16:02 +0200
-Message-ID: <4C739BE2.5060200@viscovery.net>
-References: <20100811014325.GA4169@burratino> <1281528278-15659-1-git-send-email-avarab@gmail.com> <20100824073410.GA5562@burratino>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v3] shell: Rewrite documentation and improve error
+ message
+Date: Tue, 24 Aug 2010 18:05:27 +0530
+Message-ID: <20100824123525.GA18641@kytes>
+References: <1282333452-25278-1-git-send-email-artagnon@gmail.com>
+ <AANLkTi=u7VUhz4VrU2hdd3SXK7rMvMrijL-X9qXCG1vs@mail.gmail.com>
+ <20100822080359.GB15561@kytes>
+ <AANLkTintw7=25nsr-7NjE_-xJqMab_HggjPOtSHBf109@mail.gmail.com>
+ <20100824053647.GA2037@kytes>
+ <AANLkTikeZTF5zZyRDtLfnPrtCYFH0WayXrJeCj8_VuC1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 24 12:16:20 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Petr Baudis <pasky@suse.cz>,
+	Junio C Hamano <gitster@pobox.com>
+To: Greg Brockman <gdb@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Aug 24 14:37:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnqYD-0008Fe-6U
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 12:16:17 +0200
+	id 1Onskq-0001x4-9m
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 14:37:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754741Ab0HXKQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 06:16:10 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:54120 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754453Ab0HXKQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 06:16:09 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OnqY1-0005UL-3j; Tue, 24 Aug 2010 12:16:05 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id B83DF1660F;
-	Tue, 24 Aug 2010 12:16:02 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.11) Gecko/20100711 Thunderbird/3.0.6
-In-Reply-To: <20100824073410.GA5562@burratino>
-X-Spam-Score: -1.4 (-)
+	id S1752211Ab0HXMhX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 08:37:23 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:48902 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751507Ab0HXMhW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 08:37:22 -0400
+Received: by pwi7 with SMTP id 7so2437201pwi.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 05:37:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=vDafTNQPozdqo1McEYIqlNJpGapLLo2lh7Wt9x5BTmw=;
+        b=wnUVmiQHWFjaMI/UgQZm6RxvJNXDJ8/zp2iqDS6RX4T1SFpWW+pyQywppaFuS1+LdM
+         tBEMkASt5VRIGGtg8N56EE84z8Fh7FYTnlRj8md/1j84coiD0t8tiR+Z6nEEB4EA8jpz
+         TZPC9BcI6lwGNGlYrfTWsljnywKd7pJlimouU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=vLAeMUk5gjDepWP6Mg11/8KuYw7Ht2Fk41OHAyg3N0MVkEIHuoeQZLGgwlTmBIyZBS
+         15QqTggNlLyIRoJAOCEIQ7uAakDMOmwzO6W4JFuIVlumxJ0oh9hoBadhH+i6ptZ0AQYJ
+         MH80tXnnZQjFzx8b8d5zoT6pfP6/3d+0GxnEY=
+Received: by 10.142.232.13 with SMTP id e13mr5614537wfh.133.1282653441602;
+        Tue, 24 Aug 2010 05:37:21 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id v13sm58613wfv.17.2010.08.24.05.37.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 24 Aug 2010 05:37:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikeZTF5zZyRDtLfnPrtCYFH0WayXrJeCj8_VuC1@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154309>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154310>
 
-Am 8/24/2010 9:34, schrieb Jonathan Nieder:
-> @@ -417,8 +417,14 @@ test_skip () {
->  	fi
->  	case "$to_skip" in
->  	t)
-> +		of_prereq=
-> +		if test "$missing_prereq" != "$prereq"
-> +		then
-> +			of_prereq=" of $prereq"
-> +		fi
-> +
->  		say_color skip >&3 "skipping test: $@"
-> -		say_color skip "ok $test_count # skip $1 (missing $missing_prereq of $prereq)"
-> +		say_color skip "ok $test_count # skip $1 (missing $missing_prereq${of_prereq})"
->  		: true
->  		;;
->  	*)
+Hi Greg,
 
-While you are touching this area, would also fix messages like these:
+Greg Brockman writes:
+> > =A0- =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"hint: ~/$C=
+OMMAND_DIR should exist "
+> > =A0+ =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0"hint: ~/" =
+$COMMAND_DIR " should exist "
+> There's still a floating $.  (Recall, you're in C land here, not shel=
+l.)
 
-ok 70 # skip set --path (missing  of )
-ok 71 # skip get --path (missing  of HOMEVAR)
-ok 72 # skip get --path copes with unset $HOME (missing  of )
+Ugh. So sorry about this- I've been suffering from insomnia over the
+last few days.
 
-which are due to GIT_SKIP_TESTS=t1300.7[012]
-
--- Hannes
+-- 8< --
+diff --git a/shell.c b/shell.c
+index 6aade3d..b539cdf 100644
+--- a/shell.c
++++ b/shell.c
+@@ -154,7 +154,7 @@ int main(int argc, char **argv)
+ 		cd_to_homedir();
+ 		if (access(COMMAND_DIR, R_OK | X_OK) =3D=3D -1) {
+ 			die("Interactive git shell is not enabled.\n"
+-			    "hint: ~/" $COMMAND_DIR " should exist "
++			    "hint: ~/" COMMAND_DIR " should exist "
+ 			    "and have read and execute access.");
+ 		}
+ 		run_shell();
