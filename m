@@ -1,71 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/3] fetch-pack: use args.shallow to detect shallow
- clone instead of args.depth
-Date: Tue, 24 Aug 2010 09:31:08 -0700
-Message-ID: <7vlj7wx99v.fsf@alter.siamese.dyndns.org>
-References: <1282565304-3122-1-git-send-email-pclouds@gmail.com>
- <1282565304-3122-2-git-send-email-pclouds@gmail.com>
+Subject: Re: reducing object store size with remote alternates or shallow
+ clone?
+Date: Tue, 24 Aug 2010 09:45:33 -0700
+Message-ID: <7vhbikx8lu.fsf@alter.siamese.dyndns.org>
+References: <14526ED4-F65C-4DF2-ABDD-BF1E76DAC2B0@kernel.crashing.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 24 18:31:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Kumar Gala <galak@kernel.crashing.org>
+X-From: git-owner@vger.kernel.org Tue Aug 24 18:45:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OnwPF-0002jg-Qi
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 18:31:26 +0200
+	id 1OnwdE-0006yp-Gh
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 18:45:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755545Ab0HXQbU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 12:31:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41768 "EHLO
+	id S1755741Ab0HXQpq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 12:45:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54428 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755523Ab0HXQbT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 12:31:19 -0400
+	with ESMTP id S1755734Ab0HXQpo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 12:45:44 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 821C7D05C1;
-	Tue, 24 Aug 2010 12:31:16 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 53098D0811;
+	Tue, 24 Aug 2010 12:45:40 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=FZ0rXc45zS8c
-	px6QfJ9o78QcOTg=; b=acpyXo2SqkyOBJp6N/OcNMsrZIYxM6inx7QTDlONoGUO
-	dA/UsVDgm6WdEkqWEDlNUx0yJwLwDKuKVASwKynMN4C083WwKx3a+FLYCOn9UZ7E
-	vpKj4QFCPv2HizD81iqvsBwlDfnf834A4hBik/U5sFI7PQMTrrFJtIYt8sejxn8=
+	:content-type; s=sasl; bh=2eOvO1xyTvQCqzOOg4Wj27C0Qdo=; b=FcW5Ht
+	QK4ME10ORRPh47VxF0E4ohZTnQlhGdwvPrPD/aA1u3xKc/hC157uyrQZv0jDQ+RE
+	HsyW8LlXTFH2d+EhUimD1VFG1z8ozoYdfJkPT+T5rjcZRI0b1lCLNmIki3oTq70i
+	9AN5Mq079BQ6TBt+qnStolU2UI84DPoTOwVxw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=sd0K60
-	m3lHCkewmltILDTxubTSanaALliOPHRyM09TeqAtem4+S7z7HKV9a11z+dAPW50X
-	GD+Ng7vHbrzR8WRHNKykK07Kf9mYEnfmPlbkxBO4hPVEKA3P/mmVAOqWTsg0FYcE
-	LOrQEMT+3VjTdC/8tM96fT0uN49s55iV3GRvA=
+	:content-type; q=dns; s=sasl; b=Gpa8NufY7zD/cvTLUuzP1Pghvw/Z4ydS
+	rM01N5r+Jps0eh0RPRfx5888SWLvhGc4B6eKf7FBf/nUMfebt6Zac9JAlD/ZrLYh
+	I31Hs0OnlZb+0Bn8NI7ICBBueBLIwOnFi2dWfMGm0eQU9jWqgwfQnWSjVECPz+NM
+	cO2zGOrg9Ho=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5F3EED05BF;
-	Tue, 24 Aug 2010 12:31:14 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 28E92D080F;
+	Tue, 24 Aug 2010 12:45:38 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFD12D05AF; Tue, 24 Aug
- 2010 12:31:09 -0400 (EDT)
-In-Reply-To: <1282565304-3122-2-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Mon\, 23 Aug
- 2010 22\:08\:23 +1000")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54191D080E; Tue, 24 Aug
+ 2010 12:45:35 -0400 (EDT)
+In-Reply-To: <14526ED4-F65C-4DF2-ABDD-BF1E76DAC2B0@kernel.crashing.org>
+ (Kumar Gala's message of "Tue\, 24 Aug 2010 01\:59\:11 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 02DFB2C4-AF9D-11DF-AEB6-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 06183A5E-AF9F-11DF-A40B-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154322>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+Kumar Gala <galak@kernel.crashing.org> writes:
 
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
+> I'm trying to package a linux kernel source tree and would like to just
+> tar up a tree with .git/.  However this is a bit problematic as the size
+> of tgz is about 500M which exceeds the limit of the image I'm trying to
+> produce.
+>
+> I was wondering if anyone had a means to reduce the size drastically.
+> I'm ok if a post processing step is required to get full git support.
+> One idea I had was doing a shallow clone and if there was some means to
+> "reconnect" it to a full work state after the fact.
 
-Isn't there any rationale for this change?  "args.depth > 0 does not
-necessarily mean we are in a shallow clone situation, because ..." or
-"using args.depth > 0 to check if we are in a shallow clone breaks unde=
-r
-such and such conditions and here is a test case to reproduce the bug"?
+Although your message body does not state your design constraints clearly,
+your subject line hints that you are fine with a solution that involves
+use of remote alternates by the recipient of your tarball.
+
+I am _guessing_ that you have a fork from some well known tree and want to
+sneakernet it to your recipients (iow, they do not "git pull" from your
+repository).
+
+How about doing
+
+    $ LINUS=git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+    $ git fetch $LINUS
+    $ git bundle create myfork.bundle HEAD..master
+
+and sending the thing over?  The recipient would then do something like:
+
+    $ LINUS=git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+    $ git clone $LINUS linux
+    $ cd linux
+    $ git pull /tmp/myfork.bundle master
