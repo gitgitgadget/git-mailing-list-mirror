@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 10/32] rev-list: support traversing in narrow repository mode
-Date: Wed, 25 Aug 2010 08:20:00 +1000
-Message-ID: <1282688422-7738-11-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 12/32] pack-objects: support --narrow-tree
+Date: Wed, 25 Aug 2010 08:20:02 +1000
+Message-ID: <1282688422-7738-13-git-send-email-pclouds@gmail.com>
 References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -16,160 +16,129 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo1sy-0001Xh-Gi
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 00:22:28 +0200
+	id 1Oo1sz-0001Xh-J2
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 00:22:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932331Ab0HXWWG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 18:22:06 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:37012 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932270Ab0HXWWB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 18:22:01 -0400
-Received: by mail-px0-f174.google.com with SMTP id 10so2813054pxi.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 15:22:01 -0700 (PDT)
+	id S932268Ab0HXWWT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 18:22:19 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:43052 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932270Ab0HXWWP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 18:22:15 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 7so50255pwi.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 15:22:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=XwXrGCNOfuyxvXL/fHS9cdhc0tW9lxqePRBpq2aMJMo=;
-        b=iC3JHU0qId/cT7zT3xFQeSJgncw5asfhSi2gBT1IErSFDE5xtPcHs+vgYCEKpzGSLU
-         ZIkYaPAN1ifgk+XbPkNEa0Bi9p4O1nNuh1+wiCcBIsaVEmpbkoocu9r6cObadMiuRU4X
-         /SbbC6J1ZVQNhmNPRTVXlXYHo5QtRbTDl5xAA=
+        bh=xNY6tuqW10+5ean3VnV4M4KgLkE9UQ5M7KL8u+zJLqc=;
+        b=CICJwQAcs8XG18p+Dg5shGyy6JGuKp9U2oQNO1FJqFLCqKIfAibdp264Z2F7kMiVVJ
+         phTJdFe8WTBSKkLukq3qn1ADvLV2r5RT4QyUxG+AqvMAbtDxLi29SXvt36OW3L3VXK0C
+         WO6GIgeUrOVAvVMM0on6CRi+wrENX4GeQaye8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=cqRyVFF0f+IseXF84UdR4wKDSSCS90wxqFUJp//7d3XYCJ0Y4OVt0XAhbV4QE0LGp0
-         OCIaQp/MjSCZUxmiNj5Ay2koaQ/q2nlqcxa8vbrjeIUFa6eZhE3j/DYH9E8Pc/vswR5s
-         HjvY5FvhelblDwh3lHEhvJu3GWHhrti6HBrIM=
-Received: by 10.143.1.16 with SMTP id d16mr6155616wfi.295.1282688521735;
-        Tue, 24 Aug 2010 15:22:01 -0700 (PDT)
+        b=wPdffVV2tNLpV4OMaRTY6MU/rfvcOc6AuC1OPmQz4ZrLUDtnX8/mut6gosLGnoIkx9
+         a/pTUhVOajr5CZ97B1aPe69/KATCEaSeXnI05s5wFqfkpGoxpAVRMK/RS77tM+VtJuM1
+         cvnilXaG4lc2ov6V9Ah3OyyXttkXWi3Ovw6hY=
+Received: by 10.114.74.7 with SMTP id w7mr8416729waa.85.1282688535752;
+        Tue, 24 Aug 2010 15:22:15 -0700 (PDT)
 Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id y16sm643516wff.2.2010.08.24.15.21.58
+        by mx.google.com with ESMTPS id x9sm952820waj.3.2010.08.24.15.22.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 15:22:00 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Wed, 25 Aug 2010 08:21:56 +1000
+        Tue, 24 Aug 2010 15:22:14 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Wed, 25 Aug 2010 08:22:10 +1000
 X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 In-Reply-To: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154354>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154355>
 
-In this mode, only trees within revs->narrow_prefix is traversed. This
-narrows down the whole repository to the given subtree. This mode will
-be used by upload-pack/pack-objects to create a narrow pack, and by
-all git operations in narrow repository (i.e. $GIT_DIR/narrow exists).
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- list-objects.c |   36 +++++++++++++++++++++++++++++++++---
- revision.h     |    4 +++-
- 2 files changed, 36 insertions(+), 4 deletions(-)
+ builtin/pack-objects.c     |    9 +++++++++
+ t/t6061-rev-list-narrow.sh |   27 +++++++++++++++++++++++++++
+ 2 files changed, 36 insertions(+), 0 deletions(-)
 
-diff --git a/list-objects.c b/list-objects.c
-index 8953548..7014926 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -61,12 +61,15 @@ static void process_tree(struct rev_info *revs,
- 			 struct tree *tree,
- 			 show_object_fn show,
- 			 struct name_path *path,
--			 const char *name)
-+			 const char *name,
-+			 const char *subtree)
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index a664223..36ab350 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -106,6 +106,7 @@ static int object_ix_hashsz;
+ static uint32_t written, written_delta;
+ static uint32_t reused, reused_delta;
+=20
++const char *narrow_prefix;
+=20
+ static void *get_delta(struct object_entry *entry)
  {
- 	struct object *obj =3D &tree->object;
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	struct name_path me;
-+	const char *slash =3D NULL;
-+	int subtree_len;
-=20
- 	if (!revs->tree_objects)
- 		return;
-@@ -82,13 +85,34 @@ static void process_tree(struct rev_info *revs,
- 	me.elem =3D name;
- 	me.elem_len =3D strlen(name);
-=20
-+	if (subtree) {
-+		slash =3D strchr(subtree, '/');
-+		subtree_len =3D slash ? slash - subtree : strlen(subtree);
+@@ -2055,6 +2056,10 @@ static void get_object_list(int ac, const char *=
+*av)
+ 	init_revisions(&revs, NULL);
+ 	save_commit_buffer =3D 0;
+ 	setup_revisions(ac, av, &revs, NULL);
++	if (narrow_prefix) {
++		revs.narrow_tree =3D 1;
++		revs.narrow_prefix =3D narrow_prefix;
 +	}
-+
- 	init_tree_desc(&desc, tree->buffer, tree->size);
 =20
- 	while (tree_entry(&desc, &entry)) {
-+		/*
-+		 * FIXME, does not follow tree rename
-+		 * some sort of rename hints would be nice
-+		 * (because diff machinery should not be used
-+		 * here for detecting renames)
-+		 */
-+		if (!subtree)
-+			; 	/* no subtree restriction, go on */
-+		else if (S_ISDIR(entry.mode) &&
-+			 !strncmp(entry.path, subtree, subtree_len) &&
-+			 entry.path[subtree_len] =3D=3D '\0')
-+			;	/* inside subtree, go on */
-+		else
-+			continue; /* stop */
-+
- 		if (S_ISDIR(entry.mode))
- 			process_tree(revs,
- 				     lookup_tree(entry.sha1),
--				     show, &me, entry.path);
-+				     show, &me, entry.path,
-+				     slash ? slash+1 : NULL);
- 		else if (S_ISGITLINK(entry.mode))
- 			process_gitlink(revs, entry.sha1,
- 					show, &me, entry.path);
-@@ -147,6 +171,11 @@ void traverse_commit_list(struct rev_info *revs,
- 	int i;
- 	struct commit *commit;
-=20
-+	if (get_narrow_prefix() && !revs->narrow_tree) {
-+		revs->narrow_tree =3D 1;
-+		revs->narrow_prefix =3D get_narrow_prefix();
-+	}
-+
- 	while ((commit =3D get_revision(revs)) !=3D NULL) {
- 		add_pending_tree(revs, commit->tree);
- 		show_commit(commit, data);
-@@ -164,7 +193,8 @@ void traverse_commit_list(struct rev_info *revs,
- 		}
- 		if (obj->type =3D=3D OBJ_TREE) {
- 			process_tree(revs, (struct tree *)obj, show_object,
--				     NULL, name);
-+				     NULL, name,
-+				     revs->narrow_tree ? revs->narrow_prefix : NULL);
+ 	while (fgets(line, sizeof(line), stdin) !=3D NULL) {
+ 		int len =3D strlen(line);
+@@ -2259,6 +2264,10 @@ int cmd_pack_objects(int argc, const char **argv=
+, const char *prefix)
+ 			grafts_replace_parents =3D 0;
  			continue;
  		}
- 		if (obj->type =3D=3D OBJ_BLOB) {
-diff --git a/revision.h b/revision.h
-index 36fdf22..ccdf28a 100644
---- a/revision.h
-+++ b/revision.h
-@@ -33,6 +33,7 @@ struct rev_info {
++		if (!prefixcmp(arg, "--narrow-tree=3D")) {
++			narrow_prefix =3D arg + 14;
++			continue;
++		}
+ 		usage(pack_usage);
+ 	}
 =20
- 	/* Basic information */
- 	const char *prefix;
-+	const char *narrow_prefix;
- 	const char *def;
- 	void *prune_data;
- 	unsigned int early_output;
-@@ -68,7 +69,8 @@ struct rev_info {
- 			cherry_pick:1,
- 			bisect:1,
- 			ancestry_path:1,
--			first_parent_only:1;
-+			first_parent_only:1,
-+			narrow_tree:1;
+diff --git a/t/t6061-rev-list-narrow.sh b/t/t6061-rev-list-narrow.sh
+index e489347..30ef46f 100755
+--- a/t/t6061-rev-list-narrow.sh
++++ b/t/t6061-rev-list-narrow.sh
+@@ -155,4 +155,31 @@ test_expect_success 'rev-list --narrow-tree=3Dt1/t=
+12 with merges' '
+ 	test_cmp merge.expected result
+ '
 =20
- 	/* Diff flags */
- 	unsigned int	diff:1,
++cat <<EOF >pack.expected
++04156ae83e615fa5b6019170928bc131539f9996
++0da28f8308e336bd4b2c26b61c7fc44e41a30e49
++3b52e9990a52d9ea46b25199b5810566324759f4
++4fc1656b01ce8b21987c55a2870b8c9a431ec772
++52bd8e43afb01d0c9747f1fedf2fc94684ee4cc4
++72e05e456b9ff4c01ccf6178ce60d9b52b41aae4
++7475cb8a389b36ce238b9ee6cbfdfa26a1b67e35
++74a398027f0b59183db54ca8c67dc30b5aeed0ff
++aa0602ee56ea4cb5e5bfff8713bb8a9a6ab4303e
++ab246f7eb05e94f695d2a0e30093d94fde7b837e
++af9c31c0e217154296d93d66b9a5a41892c7b321
++ba7a30916c792624a8372cb26da50f5594098222
++d77d258d806b2aa7cdb5a301e6a54f023d9bdcfe
++d81015b2a1c40fc6cbc5bf5a8b16949018c3aede
++fa0bba1767985729582729a12a5459cd041d6cf6
++EOF
++
++test_expect_success 'pack-object --narrow-tree=3Dt1/t12' '
++	echo $MERGE|git pack-objects --revs --narrow-tree=3Dt1/t12 --stdout >=
+p.pack &&
++	git index-pack -o p.idx p.pack &&
++	git verify-pack -v p.pack |
++		grep "^[0-9a-f][0-9a-f][0-9a-f][0-9a-f]" |
++		cut -d " " -f 1 >result &&
++	test_cmp pack.expected result
++'
++
+ test_done
 --=20
 1.7.1.rc1.69.g24c2f7
