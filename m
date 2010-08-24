@@ -1,70 +1,211 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t2017: redo physical reflog existance check
-Date: Tue, 24 Aug 2010 09:57:24 -0700
-Message-ID: <7v8w3wx823.fsf@alter.siamese.dyndns.org>
-References: <1279763190-32757-1-git-send-email-erick.mattos@gmail.com>
- <7vlj93h120.fsf@alter.siamese.dyndns.org>
- <AANLkTilt5gx3Wj4eANfkIFm869Olns1rsMpCS81hS2BV@mail.gmail.com>
- <7vsk3bey1e.fsf@alter.siamese.dyndns.org>
- <AANLkTin76s-ONFuP+OWdxB5LJNf2D1Du+hKxB2s_WhTa@mail.gmail.com>
- <20100824040347.GA19817@burratino>
+Subject: Re: [PATCH v5 1/5] fmt_merge_msg: Change fmt_merge_msg API to accept
+ shortlog_len
+Date: Tue, 24 Aug 2010 10:16:18 -0700
+Message-ID: <7vzkwcvsm5.fsf@alter.siamese.dyndns.org>
+References: <1282494398-20542-1-git-send-email-artagnon@gmail.com>
+ <1282494398-20542-2-git-send-email-artagnon@gmail.com>
+ <20100823220031.GA1308@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Erick Mattos <erick.mattos@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Yaroslav Halchenko <debian@onerussian.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 24 18:57:44 2010
+X-From: git-owner@vger.kernel.org Tue Aug 24 19:16:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Onwoh-0000K0-NA
-	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 18:57:44 +0200
+	id 1Onx74-0008U2-8Q
+	for gcvg-git-2@lo.gmane.org; Tue, 24 Aug 2010 19:16:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755747Ab0HXQ5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 12:57:39 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:65070 "EHLO
+	id S1755214Ab0HXRQg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 13:16:36 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35710 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755545Ab0HXQ5h (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 12:57:37 -0400
+	with ESMTP id S1755192Ab0HXRQe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 13:16:34 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1E9CD09E5;
-	Tue, 24 Aug 2010 12:57:34 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3C72DD0C9A;
+	Tue, 24 Aug 2010 13:16:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=qn9Y1RUlqpEskjyOrfNbzW5O8Mo=; b=KTU3mW
-	yccWRksW3mcIaRnWEanvOMGl4tifQXCHLJ6LbyshhTWiZoRjR8pjwX7kAFTXOdMP
-	dVu+CeNKv2JopLOTMQA702Vz+p5mIJZM+12zXNEATgBaTd8WnvYqxEPkSva3dG3q
-	VktqRiEwjkyE40MNZnAbFoeXlt/HwpgSMa52w=
+	:content-type; s=sasl; bh=g6QVumsNPRVIa5AoIVfQKWw+VIQ=; b=fQX56w
+	hYVRdp0Pig6vjj1lrj0dAIJvlnf+jRXfqlN6MTtObGRTVQoMGqwh60y7atIlDmjM
+	UsKCoE4Sn/wNTmLeA+YCa2a4a1/GPGJpJN70EXUQIgmK031u9M2lleUoM0qMX+6Z
+	EVSBVne1OJ2fJF/j+9SfVCtHfvwHCowy1Qq1U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mC5XzkSw7lHIAsCxBVBbsM5yr19EbIw2
-	kRnwDD9s+k6F4MkEbBpWmIrvHspNJ+MIOgCxYSwHkot8nboYb/G0gY8HapqzGjsf
-	Jp81rto24+AwIOilTf68smLO3tXmfJzHm0+vDh3mdRyNvK2PnOMVTmbuOIQgwlyy
-	uiX5VlLJu/k=
+	:content-type; q=dns; s=sasl; b=HHlVqTUjN/XW9eUwrw5Lx98wybmu1eVa
+	MjfHXqV/N8oEHAYMwwneTg7Y44PfarW5BbEQVNwANdZJwZuWeWDJs30M+pNKqz6o
+	OKgXkRTbvAUhDXz7qF99FXC36yP4AgpMqUr02/gUbvQ5zp4Rdm9Gx6ITjgqKTrSr
+	Td8NaGvXCto=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A8CD1D09E4;
-	Tue, 24 Aug 2010 12:57:31 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C6C44D0C99;
+	Tue, 24 Aug 2010 13:16:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC753D09DF; Tue, 24 Aug
- 2010 12:57:26 -0400 (EDT)
-In-Reply-To: <20100824040347.GA19817@burratino> (Jonathan Nieder's message of
- "Mon\, 23 Aug 2010 23\:03\:47 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C41CD0C90; Tue, 24 Aug
+ 2010 13:16:20 -0400 (EDT)
+In-Reply-To: <20100823220031.GA1308@burratino> (Jonathan Nieder's message of
+ "Mon\, 23 Aug 2010 17\:00\:31 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AF64061E-AFA0-11DF-A4FE-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 53FA9704-AFA3-11DF-9FD8-9056EE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154325>
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> The principle (though we do not always adhere to it) is that test
-> scripts should pass or fail based only on advertised behavior, not
-> implementation details.  That way, _later_ any person who wants to
-> improve the implementation will not be impeded by tests.
+> The rest looks good.  So except for the commit message,
+>
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Well and 'nuff said ;-)  Thanks.
+Thanks; all of your comments make sense.  Here is what I'll queue.
+
+-- >8 --
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Date: Sun, 22 Aug 2010 21:56:34 +0530
+Subject: [PATCH] fmt_merge_msg: Change fmt_merge_msg API to accept shortlog_len
+
+Give "shortlog_len" parameter to the fmt_merge_msg(), remove its
+"merge_summary" parameter, and remove fmt_merge_msg_shortlog() function.
+In the updated API, shortlog_len == 0 means no shortlog is given.
+
+The parameter "merge_title" controls if the title of the merge commit is
+autogenerated (it reads something like "Merge branch ..."), and typically
+it is set to true when the caller does not give its own message.
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Helped-and-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin.h               |    7 ++++---
+ builtin/fmt-merge-msg.c |   30 ++++++++++++++----------------
+ builtin/merge.c         |   14 ++++++--------
+ 3 files changed, 24 insertions(+), 27 deletions(-)
+
+diff --git a/builtin.h b/builtin.h
+index ed6ee26..09b94ea 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -7,6 +7,8 @@
+ #include "commit.h"
+ #include "notes.h"
+ 
++#define DEFAULT_MERGE_LOG_LEN 20
++
+ extern const char git_version_string[];
+ extern const char git_usage_string[];
+ extern const char git_more_info_string[];
+@@ -14,9 +16,8 @@ extern const char git_more_info_string[];
+ extern void list_common_cmds_help(void);
+ extern const char *help_unknown_cmd(const char *cmd);
+ extern void prune_packed_objects(int);
+-extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
+-	struct strbuf *out);
+-extern int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out);
++extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
++			 int merge_title, int shortlog_len);
+ extern int commit_notes(struct notes_tree *t, const char *msg);
+ 
+ struct notes_rewrite_cfg {
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 937d5a7..42021d3 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -255,9 +255,9 @@ static void do_fmt_merge_msg_title(struct strbuf *out,
+ 		strbuf_addf(out, " into %s\n", current_branch);
+ }
+ 
+-static int do_fmt_merge_msg(int merge_title, int merge_summary,
+-	struct strbuf *in, struct strbuf *out) {
+-	int limit = 20, i = 0, pos = 0;
++static int do_fmt_merge_msg(int merge_title, struct strbuf *in,
++	struct strbuf *out, int shortlog_len) {
++	int i = 0, pos = 0;
+ 	unsigned char head_sha1[20];
+ 	const char *current_branch;
+ 
+@@ -288,7 +288,7 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
+ 	if (merge_title)
+ 		do_fmt_merge_msg_title(out, current_branch);
+ 
+-	if (merge_summary) {
++	if (shortlog_len) {
+ 		struct commit *head;
+ 		struct rev_info rev;
+ 
+@@ -303,17 +303,14 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
+ 
+ 		for (i = 0; i < origins.nr; i++)
+ 			shortlog(origins.items[i].string, origins.items[i].util,
+-					head, &rev, limit, out);
++					head, &rev, shortlog_len, out);
+ 	}
+ 	return 0;
+ }
+ 
+-int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
+-	return do_fmt_merge_msg(1, merge_summary, in, out);
+-}
+-
+-int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out) {
+-	return do_fmt_merge_msg(0, 1, in, out);
++int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
++		  int merge_title, int shortlog_len) {
++	return do_fmt_merge_msg(merge_title, in, out, shortlog_len);
+ }
+ 
+ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+@@ -355,12 +352,13 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 
+ 	if (strbuf_read(&input, fileno(in), 0) < 0)
+ 		die_errno("could not read input file");
+-	if (message) {
++
++	if (message)
+ 		strbuf_addstr(&output, message);
+-		ret = fmt_merge_msg_shortlog(&input, &output);
+-	} else {
+-		ret = fmt_merge_msg(merge_summary, &input, &output);
+-	}
++	ret = fmt_merge_msg(&input, &output,
++			    message ? 0 : 1,
++			    merge_summary ? DEFAULT_MERGE_LOG_LEN : 0);
++
+ 	if (ret)
+ 		return ret;
+ 	write_in_full(STDOUT_FILENO, output.buf, output.len);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 2207f79..b2c0984 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -998,14 +998,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		for (i = 0; i < argc; i++)
+ 			merge_name(argv[i], &merge_names);
+ 
+-		if (have_message && option_log)
+-			fmt_merge_msg_shortlog(&merge_names, &merge_msg);
+-		else if (!have_message)
+-			fmt_merge_msg(option_log, &merge_names, &merge_msg);
+-
+-
+-		if (!(have_message && !option_log) && merge_msg.len)
+-			strbuf_setlen(&merge_msg, merge_msg.len-1);
++		if (!have_message || option_log) {
++			fmt_merge_msg(&merge_names, &merge_msg, !have_message,
++				      option_log ? DEFAULT_MERGE_LOG_LEN : 0);
++			if (merge_msg.len)
++				strbuf_setlen(&merge_msg, merge_msg.len - 1);
++		}
+ 	}
+ 
+ 	if (head_invalid || !argc)
+-- 
+1.7.2.2.426.g2251a
