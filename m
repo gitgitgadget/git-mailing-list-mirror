@@ -1,131 +1,140 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [RFD PATCH 00/32] subtree clone v2
-Date: Tue, 24 Aug 2010 22:37:07 -0600
-Message-ID: <AANLkTinsNvVup43B6nQtU6dvJy789n8kQm6N6na0J9oa@mail.gmail.com>
-References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
-	<20100824223741.GB2376@burratino>
-	<AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] git-merge: ignore space support
+Date: Tue, 24 Aug 2010 23:40:06 -0500
+Message-ID: <20100825044006.GJ11619@burratino>
+References: <20100823205915.GA4484@ns1.cockos.com>
+ <20100824022820.GE17406@burratino>
+ <5F681E95-9369-490A-84FE-55B99EA8FE63@cockos.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 06:37:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, eyvind.bernhardsen@gmail.com,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+To: Justin Frankel <justin@cockos.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 06:42:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo7jf-0007Ve-4S
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 06:37:15 +0200
+	id 1Oo7oQ-0002Zm-Ro
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 06:42:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751844Ab0HYEhK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 00:37:10 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41243 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751510Ab0HYEhI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Aug 2010 00:37:08 -0400
-Received: by fxm13 with SMTP id 13so84074fxm.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 21:37:07 -0700 (PDT)
+	id S1752147Ab0HYElz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Aug 2010 00:41:55 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:65090 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751869Ab0HYEly (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Aug 2010 00:41:54 -0400
+Received: by ywe9 with SMTP id 9so70774ywe.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 21:41:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rGM4PWYyB8eH4UU1sEmWHMyXnLXp8kYO20HcALlb6b4=;
-        b=LNL2Pi1nn6oNhT+iU38BLRYF3HqOQaoj1ZK0SC7p4kkgj8SXGDuGE/+gwFFrqKyfR+
-         D59Id88XwCk3NgdrBTL0LflngqEWHL1CgqUPXA2PZn/bpmExfvA04ngK1/qQCmwnIkuu
-         +oG+9WG8QixqZ0TG1SoVRXZdEXUHKSVJu2nl8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ba44C1Nu6nMEHX8kVde25+sMPxIFB+pPIKutb1n9J1M=;
+        b=UGMhifNAkFLelf3E0ucCnxVMgrXg0fUhHktdzPy51SXb5H7I0TJQJlqrjASnGQ47yH
+         tUOw4ZFDbFR8T8FrpQbBuxk4e2jtVSZEX1BtrnMxB8ioFmuuZ7ZDZSjeQGKmpYPTLSBr
+         zNXMi7fy4LD0NXQJyeippNYFM9bACtobyXrjE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=H4J074CtVIpJEDIJWeCeJ0H2z8HzHPpqczAoHfwI+JWwJN/vV9ePt9zYWh3Xf9/QwD
-         X5F209Xrm0hme6BNGKcEdN+OOXKhZle1tjE1w54K7dxBr8iLrvm4uoUwHXrS04DniZU8
-         W41aw66Vax2U92dbPVB+vXsFiN7nFNVzAoPvg=
-Received: by 10.223.119.203 with SMTP id a11mr6922624far.42.1282711027400;
- Tue, 24 Aug 2010 21:37:07 -0700 (PDT)
-Received: by 10.223.50.154 with HTTP; Tue, 24 Aug 2010 21:37:07 -0700 (PDT)
-In-Reply-To: <AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=lQtcOztOmgVtRxc9QHK7BpmS+ml5bdEYjWC5zirBkQajsdHCfvDJnmF+e9v4TevSY2
+         bw9hCLhi6vIdu3fJ/iL8LC01Sz5nTIyhPPtTPfHnZ+7m8Ek3mcxcUe4Son6o2pZAJ8OJ
+         Qk+r93wqA29nesHqim0yid+Rzv7StOWR7wZQo=
+Received: by 10.100.153.5 with SMTP id a5mr8527909ane.112.1282711311017;
+        Tue, 24 Aug 2010 21:41:51 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h5sm1305497anb.28.2010.08.24.21.41.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 24 Aug 2010 21:41:47 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <5F681E95-9369-490A-84FE-55B99EA8FE63@cockos.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154415>
 
-On Tue, Aug 24, 2010 at 4:47 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
-> On Wed, Aug 25, 2010 at 8:37 AM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
->>
->>> Patches 26..30
->>> =C2=A0 Add upload-narrow-base command
->>> =C2=A0 rev-list: traverse some more trees to make upload-narrow-bas=
-e happy
->>> =C2=A0 narrow-tree: add oldest_narrow_base()
->>> =C2=A0 Add command fetch-narrow-base
->>> =C2=A0 merge: support merging when narrow bases are different
->>>
->>> Remote merge part.
->>>
->>> Split a merge operation into two parts, the real merge will be done
->>> within narrow tree. Conflicts can happen and be resolved in the nar=
-row
->>> index, locally.
->>>
->>> Everything outside narrow tree will be merged (trivially) by
->>> server. Then server sends the base tree back, so join_narrow_tree()=
- in
->>> patch 20 can be used to create proper commit.
->>>
->>> Server can disable this remote merge feature, which means users are
->>> forced to do rebase/fast-forward. Not too bad.
->>
->> Yikes. =C2=A0Na=C3=AFve question (please forgive my laziness): is it=
- possible to
->> merge without remote contact in the boring case, when no changes hav=
-e
->> occured outside the narrow tree?
->
-> That's possible (and is implemented in my series). But I guess as soo=
-n
-> as you do "git pull", the boring case is likely not applicable
-> anymore.
+Justin Frankel wrote:
 
-I'm not sure I follow.  Are you allowing changes outside the narrow
-tree to occur?  If you're not, I would have assumed that repeated
-pulls just work, without any need to talk to the server, using a
-resolve-like strategy (with no special rename detection).
+> Fine by me... (ok if I were to nitpick I would probably make most of
+> the internal static functions check that opts was non-NULL before
+> dereferencing, in case the calling code ever changed
 
-Here's my understanding, though it might have holes:
+Not a bad idea.  I'll squash in something like this.
 
-If you have a narrow/subtree clone, it means that you only have the
-data for a certain paths.  I'm assuming that also meant you would only
-allow modifying those paths.  In other words, you have no changes
-outside the narrow tree.  Because of that, I think you can handle
-paths outside the narrow region using trivial-merge logic:  From
-Documentation/technical/trivial-merge.txt, I think the relevant cases
-are 2, 3, 8, 10, 13, or 14.  13 & 14 already have a specified
-resolution.  There's already a comment in the file that cases 8 & 10
-could validly be resolved as (empty), it just hasn't been done in the
-code as it tends to happen with the follow-up automatic merge anyway.
-That only leaves cases 2 & 3 as being slightly tricky -- if a path on
-one side of the merge started empty and ended empty, it would seem to
-make sense that the non-empty path on the other side would be the
-resolution.  We can't do that in the non-narrow clone case because the
-non-empty path may have been created due to a rename and we'd like to
-have changes follow the rename appropriately.  However, in the narrow
-clone case, one can't rename from a path you don't have to a path you
-do, so this possibility is eliminated.
+A real BUG_ON macro would make this less ugly.
 
+-- 8< --
+Subject: ll-merge: BUG_ON(!opts) in internal functions
 
-So, if my understanding is correct, then if you have no changes from
-upstream outside the sparse/narrow/whatever paths (where "paths"
-currently means a single tree in your current patches), I think you
-should be able to do a merge locally in that sparse clone.  The end
-result will also have no changes from upstream outside those paths.
-Thus, you should be able to merge again.
+If one of the functions used to implement ll_merge() gets exposed,
+callers would be likely to pass a NULL options argument, resulting in
+segfaults.  Die with a more meaningful message in that case.
 
+Suggested-by: Justin Frankel <justin@cockos.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ ll-merge.c |   18 ++++++++++++++++--
+ 1 files changed, 16 insertions(+), 2 deletions(-)
 
-Does that seem reasonable?  Am I missing anything?
+diff --git a/ll-merge.c b/ll-merge.c
+index 98f353a..8ff0b27 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -42,12 +42,17 @@ static int ll_binary_merge(const struct ll_merge_driver *drv_unused,
+ 			   const struct ll_merge_options *opts,
+ 			   int marker_size)
+ {
++	mmfile_t *stolen;
++
++	if (!opts)
++		die("BUG: !opts in binary merge driver");
++
+ 	/*
+ 	 * The tentative merge result is "ours" for the final round,
+ 	 * or common ancestor for an internal merge.  Still return
+ 	 * "conflicted merge" status.
+ 	 */
+-	mmfile_t *stolen = opts->virtual_ancestor ? orig : src1;
++	stolen = opts->virtual_ancestor ? orig : src1;
+ 
+ 	result->ptr = stolen->ptr;
+ 	result->size = stolen->size;
+@@ -66,6 +71,9 @@ static int ll_xdl_merge(const struct ll_merge_driver *drv_unused,
+ {
+ 	xmparam_t xmp;
+ 
++	if (!opts)
++		die("BUG: !opts in xdiff merge driver");
++
+ 	if (buffer_is_binary(orig->ptr, orig->size) ||
+ 	    buffer_is_binary(src1->ptr, src1->size) ||
+ 	    buffer_is_binary(src2->ptr, src2->size)) {
+@@ -102,7 +110,10 @@ static int ll_union_merge(const struct ll_merge_driver *drv_unused,
+ 			  int marker_size)
+ {
+ 	/* Use union favor */
+-	struct ll_merge_options o = *opts;
++	struct ll_merge_options o;
++	if (!opts)
++		die("BUG: !opts in union merge driver");
++	o = *opts;
+ 	o.variant = XDL_MERGE_FAVOR_UNION;
+ 	return ll_xdl_merge(drv_unused, result, path_unused,
+ 			    orig, NULL, src1, NULL, src2, NULL,
+@@ -149,6 +160,9 @@ static int ll_ext_merge(const struct ll_merge_driver *fn,
+ 	int status, fd, i;
+ 	struct stat st;
+ 
++	if (!opts)
++		die("BUG: !opts in custom merge driver");
++
+ 	dict[0].placeholder = "O"; dict[0].value = temp[0];
+ 	dict[1].placeholder = "A"; dict[1].value = temp[1];
+ 	dict[2].placeholder = "B"; dict[2].value = temp[2];
+-- 
+1.7.2.2
