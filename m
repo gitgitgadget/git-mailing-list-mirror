@@ -1,106 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH rr/fmt-merge-msg] merge, fmt_merge_msg --log: default value
- is DEFAULT_MERGE_LOG_LEN
-Date: Tue, 24 Aug 2010 21:44:40 -0500
-Message-ID: <20100825024440.GD11619@burratino>
-References: <1282494398-20542-1-git-send-email-artagnon@gmail.com>
- <1282494398-20542-2-git-send-email-artagnon@gmail.com>
- <20100823220031.GA1308@burratino>
- <7vzkwcvsm5.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Yaroslav Halchenko <debian@onerussian.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 04:46:47 2010
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCH 1/7] Add testcase showing how pathspecs are ignored with rev-list --objects
+Date: Tue, 24 Aug 2010 20:53:09 -0600
+Message-ID: <1282704795-29661-2-git-send-email-newren@gmail.com>
+References: <1282704795-29661-1-git-send-email-newren@gmail.com>
+Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Aug 25 04:52:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo60l-00047X-9r
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 04:46:47 +0200
+	id 1Oo65q-0007sX-BI
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 04:52:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932571Ab0HYCqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 22:46:30 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:47657 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932545Ab0HYCq2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 22:46:28 -0400
-Received: by qyk9 with SMTP id 9so4407728qyk.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 19:46:27 -0700 (PDT)
+	id S1756413Ab0HYCvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 22:51:51 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:33622 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755819Ab0HYCvq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 22:51:46 -0400
+Received: by mail-vw0-f46.google.com with SMTP id 3so180848vws.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 19:51:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=9i0ume44s2Ux1qhwCM7cPGqLfE81I3LTly0iN7/r9xk=;
-        b=oFZiMKolpBfHO5wWiSSlcYhSQ7yeWE0HpQD3wYDfWwVkBKMfQkjfMitSL3tLi/YdbA
-         CbfLSy5WuFMEKbha2pzhHxIgs4Dz+XyXj/nvbnzQeqBqTKvPr1CyclL2B8DR3+e0pidv
-         YMY+ag4PEjsvJjUURDoSAGrozUfYl30b/UzA0=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=47RgC91/XYInPbLX1dHqEYeEaCl8As+PPxARk98CjJ4=;
+        b=kfONjC3kk9pkszGTcFy4u0UdJ6PT05DFHS0o1O32mnrPDKGDiejqJ76XBTTy2M1n0T
+         U8IvXeltGxG9bFEhpFVoJGZIWqpyLlZKOP80cmt/MUsnDwoWeZbkIhmnZc7wZyDNFAsM
+         T0AffouoswD9ergTNoMTZqKtaAxkKjafSD6ao=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wq6D9obeT10DeQ9HBsKDoS84uG2YPqXc64wk44cGu6Fqxus41b2TmK1cCKOcFf3Y7d
-         2ge+4hDFei6KWA+QTllp2oxGKiFzUkeSx6fOvCOlmY08sWZQMrcldqDrPL0EtAN3mv9D
-         JdD2dlwesS6V2VV0bXXT8W5Lp4kYoZ/iDkEOY=
-Received: by 10.224.65.228 with SMTP id k36mr5139065qai.35.1282704387873;
-        Tue, 24 Aug 2010 19:46:27 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r1sm972344qcq.22.2010.08.24.19.46.26
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=PqZHlBigifH2oHfKqfN7H9C8SLAJPAkFdtLp8q3/Iym4PB6FpznrD+a+XVaWwIr7ke
+         H6QBAP9ceJmJjLznc83CvZxfbtKUFS1WbamXsWIKU4s0TAp+tjDMvVbbHYb70oSLy5g3
+         6jWvPjNNUT6LA3odlQ1jNPVvCouEo/kC8NGSM=
+Received: by 10.220.88.22 with SMTP id y22mr4771486vcl.12.1282704706419;
+        Tue, 24 Aug 2010 19:51:46 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
+        by mx.google.com with ESMTPS id v11sm577473vbb.3.2010.08.24.19.51.44
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 19:46:27 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzkwcvsm5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Tue, 24 Aug 2010 19:51:45 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.39.gf7e23
+In-Reply-To: <1282704795-29661-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154394>
 
-Most references to the DEFAULT_MERGE_LOG_LEN were changed to use that
-symbolic constant, but a few uses of hardcoded "20" remain.
 
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
-Noticed this while looking over ab6beee (merge: Make '--log' an
-integer option) from pu.  Maybe something like it could be squashed in
-in the next round.
+It looks like the 19 rev-list testcases (t6000*-t6019*) are all fairly
+specific, and I didn't see one where this testcase seemed to make sense;
+or perhaps I just missed it.  I just created this 20th file to hold all
+other miscellaneous rev-list testcases; if it does make more sense in
+one of the other existing files, just let me know.
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 425900d..bc7c30f 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -323,10 +323,11 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 	struct option options[] = {
- 		{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
- 		  "populate log with <n> entries from shortlog",
--		  PARSE_OPT_OPTARG, NULL, 20 },
-+		  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
- 		{ OPTION_INTEGER, 0, "summary", &shortlog_len, "n",
- 		  "alias for --log (deprecated)",
--		  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, NULL, 20 },
-+		  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, NULL,
-+		  DEFAULT_MERGE_LOG_LEN },
- 		OPT_STRING('m', "message", &message, "text",
- 			"use <text> as start of message"),
- 		OPT_FILENAME('F', "file", &inpath, "file to read from"),
-diff --git a/builtin/merge.c b/builtin/merge.c
-index bf550a6..9e4733d 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -177,7 +177,7 @@ static struct option builtin_merge_options[] = {
- 	OPT_BOOLEAN(0, "summary", &show_diffstat, "(synonym to --stat)"),
- 	{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
- 	  "add (at most <n>) entries from shortlog to merge commit message",
--	  PARSE_OPT_OPTARG, NULL, 20 },
-+	  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
- 	OPT_BOOLEAN(0, "squash", &squash,
- 		"create a single commit instead of doing a merge"),
- 	OPT_BOOLEAN(0, "commit", &option_commit,
+ t/t6000-rev-list-misc.sh |   23 +++++++++++++++++++++++
+ 1 files changed, 23 insertions(+), 0 deletions(-)
+ create mode 100755 t/t6000-rev-list-misc.sh
+
+diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+new file mode 100755
+index 0000000..2c403ac
+--- /dev/null
++++ b/t/t6000-rev-list-misc.sh
+@@ -0,0 +1,23 @@
++#!/bin/sh
++
++test_description='miscellaneous rev-list tests'
++
++. ./test-lib.sh
++
++test_expect_success setup '
++
++	echo content1 > wanted_file &&
++	echo content2 > unwanted_file &&
++	git add wanted_file unwanted_file &&
++	git commit -mone
++'
++
++test_expect_failure 'rev-list --objects heeds pathspecs' '
++
++	git rev-list --objects HEAD -- wanted_file >output &&
++	grep wanted_file output &&
++	! grep unwanted_file output
++
++'
++
++test_done
 -- 
+1.7.2.2.39.gf7e23
