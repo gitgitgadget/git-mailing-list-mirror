@@ -1,108 +1,85 @@
 From: Daniel Pfeiffer <occitan@t-online.de>
 Subject: Re: Compiling git with makepp patch
-Date: Wed, 25 Aug 2010 22:58:03 +0200
-Message-ID: <4C7583DB.6010001@t-online.de>
-References: <84FD9808A65CDF4C959FDB41FC3D134CBCF306D6@MSSRVS4.atlas.de>	<4C71A53F.2020108@t-online.de> <AANLkTinbTph=cggp4V=avorzrf9BT7vPtpanDtDtXm=q@mail.gmail.com>
+Date: Wed, 25 Aug 2010 23:08:46 +0200
+Message-ID: <4C75865E.5050804@t-online.de>
+References: <84FD9808A65CDF4C959FDB41FC3D134CBCF306D6@MSSRVS4.atlas.de> <4C71A53F.2020108@t-online.de> <201008230947.06777.trast@student.ethz.ch>
 Reply-To: occitan@esperanto.org
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8;
 	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: occitan@esperanto.org, git@vger.kernel.org,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 22:58:24 2010
+Cc: occitan@esperanto.org, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Aug 25 23:09:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoN36-0003dw-GF
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 22:58:20 +0200
+	id 1OoNDQ-0005ez-Mi
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 23:09:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753685Ab0HYU6Q convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 16:58:16 -0400
-Received: from mailout02.t-online.de ([194.25.134.17]:48883 "EHLO
-	mailout02.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752507Ab0HYU6O (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Aug 2010 16:58:14 -0400
-Received: from fwd07.aul.t-online.de (fwd07.aul.t-online.de )
-	by mailout02.t-online.de with smtp 
-	id 1OoN2y-0008Vt-DA; Wed, 25 Aug 2010 22:58:12 +0200
-Received: from [192.168.0.10] (bVwS44ZCrh1DXlanVHcY7PklwWAoyEEf-oeace+Z-8eQuBZrpMHQ8U2aEDweIChZ0W@[84.177.184.117]) by fwd07.aul.t-online.de
-	with esmtp id 1OoN2r-0mRdDM0; Wed, 25 Aug 2010 22:58:05 +0200
+	id S1753699Ab0HYVI4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 17:08:56 -0400
+Received: from mailout10.t-online.de ([194.25.134.21]:40620 "EHLO
+	mailout10.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752654Ab0HYVIy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Aug 2010 17:08:54 -0400
+Received: from fwd04.aul.t-online.de (fwd04.aul.t-online.de )
+	by mailout10.t-online.de with smtp 
+	id 1OoNDI-0002V2-6V; Wed, 25 Aug 2010 23:08:52 +0200
+Received: from [192.168.0.10] (bNDycyZ68hI5KS5iyinFoDUWIWRGuXFphF3jv6+v+rsi+ZnGpdZOP75MoOwA7xHZ3y@[84.177.184.117]) by fwd04.aul.t-online.de
+	with esmtp id 1OoNDD-1PmAvQ0; Wed, 25 Aug 2010 23:08:47 +0200
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.4) Gecko/20100608 Mnenhy/0.8.3 Thunderbird/3.1
-In-Reply-To: <AANLkTinbTph=cggp4V=avorzrf9BT7vPtpanDtDtXm=q@mail.gmail.com>
-X-ID: bVwS44ZCrh1DXlanVHcY7PklwWAoyEEf-oeace+Z-8eQuBZrpMHQ8U2aEDweIChZ0W
-X-TOI-MSGID: 6775b493-6b56-48bf-898c-f69e5983268b
+In-Reply-To: <201008230947.06777.trast@student.ethz.ch>
+X-ID: bNDycyZ68hI5KS5iyinFoDUWIWRGuXFphF3jv6+v+rsi+ZnGpdZOP75MoOwA7xHZ3y
+X-TOI-MSGID: 77c75dce-0c12-428b-8f88-6719f8a067b2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154475>
 
-  la 08/23/2010 10:27 PM =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason skribis=
-:
-> On Sun, Aug 22, 2010 at 22:31, Daniel Pfeiffer<occitan@t-online.de>  =
-wrote:
->
->> Git has been giving our promise of Gnu make compatibility a hard
->> time.
-> Aside from our bugs you can't make that promise if projects like Git
-> need patches to work with makepp :)
-Just two little things in your big makefiles.  The compatibility is jus=
-t an=20
-added bonus, we have many other real strengths in makepp.
-
->> The other thing caused me quite a headache before I understood:
->>
->> PERL_PATH_SQ  =3D $(subst ','\'',$(PERL_PATH))#'
->>
->> I suppose you added the comment for Emacs' syntax highlighting, to h=
-ave an
->> even number of unescaped quotes.
-> That was added by John 'Warthog9' Hawley, I wonder if that also came
-> with a M-x report-emacs-bug, e.g. cperl-mode deals with that case,
-> sounds like an easy-to-fix bug in makefile-gmake-mode.
-Hardly, if you look at my example below!
-
->> The problem is makepp parses this line
->> just like Emacs, so it doesn't find the comment, adding in the #' at=
- the
->> point of use, which completely screws the sed command.  (You might w=
-ant to
->> apply my fix to a few other makefiles, which have SQ variables, albe=
-it
->> without the syntax highlighting workaround, so they are only visuall=
-y
->> defect.)
-> The reason Emacs has issues is because it uses an ad-hoc regexp based
-> parser that favours speed above correctness for syntax
-> highlighting.
-Well, gmake rules are very twisted:  a and b don't do the same thing, b=
-ecause=20
-file functions shall respect quoting (though to my mind that should the=
-n be=20
-only one funny file name, which gmake gets wrong, splitting it up anywa=
-y), and=20
-c causes gmake to choke:
-
-all: a b
-a:
-     echo : $(dir 'a # b/c/d') :
-
-B =3D 'a # b/c/d'
-b:
-     echo : $(dir $B) :
-
-C =3D $(dir 'a # b/c/d')
-c:
-     echo : $C :
-
-> I'm surprised you've gotten this far with makepp if you don't tokeniz=
+  la 08/23/2010 09:47 AM Thomas Rast skribis:
+> Daniel Pfeiffer wrote:
+>>   # Shell quote;
+>> -bindir_SQ =3D $(subst ','\'',$(bindir))#'
+>> -gitwebdir_SQ =3D $(subst ','\'',$(gitwebdir))#'
+>> -gitwebstaticdir_SQ =3D $(subst ','\'',$(gitwebdir)/static)#'
+>> -SHELL_PATH_SQ =3D $(subst ','\'',$(SHELL_PATH))#'
+>> -PERL_PATH_SQ  =3D $(subst ','\'',$(PERL_PATH))#'
+>> -DESTDIR_SQ    =3D $(subst ','\'',$(DESTDIR))#'
+>> +Q=3D'
+>> +# ' This comment is only to appease IDEs like Emacs.
+>> +# The comment is on a new line, else makepp would see it as a quote=
+d hash.
+>> +bindir_SQ =3D $(subst $Q,'\'',$(bindir))
+>> +gitwebdir_SQ =3D $(subst $Q,'\'',$(gitwebdir))
+>> +gitwebstaticdir_SQ =3D $(subst $Q,'\'',$(gitwebdir)/static)
+>> +SHELL_PATH_SQ =3D $(subst $Q,'\'',$(SHELL_PATH))
+>> +PERL_PATH_SQ  =3D $(subst $Q,'\'',$(PERL_PATH))
+>> +DESTDIR_SQ    =3D $(subst $Q,'\'',$(DESTDIR))
+> Confusingly, you talk about comments above, but the real issue is tha=
+t
+> your makepp apparently gives the ' special meaning.  For once "info
+> make" and "man 1p make" on my system agree on the semantics of ': non=
 e
-> comments and throw their contents away.
-There are a few subtle differences, which mostly don't hurt.
+> at all.  From the latter:
+>
+>    Early proposals stated that an "unquoted" number sign  was  treate=
+d  as  the
+>    start of a comment. The make utility does not pay any attention to=
+ quotes. A
+>    number sign starts a comment regardless of its surroundings.
+If you look at the example I just sent to =C3=86var, that contains exam=
+ples of how=20
+crazy the situation really is in gmake.  What you cite here is wrong!
+
+> So can you quote chapter and verse to show that there is anything to
+> fix?
+Well, I pointed you to makepp, which is subtly different from gmake, wh=
+ich you=20
+could.  If you choose not to use it, please yourself!
 
 coralament / best Gr=C3=B6tens / liebe Gr=C3=BC=C3=9Fe / best regards /=
  elkorajn salutojn
