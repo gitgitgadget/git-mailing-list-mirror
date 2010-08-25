@@ -1,115 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 09/32] index: make narrow index incompatible with older
- git
-Date: Tue, 24 Aug 2010 18:43:01 -0500
-Message-ID: <20100824234301.GG2376@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFD PATCH 00/32] subtree clone v2
+Date: Wed, 25 Aug 2010 10:20:57 +1000
+Message-ID: <AANLkTimKEtkjM-sXrqa=LHTKzUb78TZBXA5siDPyfB_h@mail.gmail.com>
 References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
- <1282688422-7738-10-git-send-email-pclouds@gmail.com>
+	<20100824223741.GB2376@burratino>
+	<AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
+	<20100824230907.GD2376@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 01:46:01 2010
+Cc: git <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 02:21:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo3Bk-0002MM-Qm
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 01:45:57 +0200
+	id 1Oo3jo-0003za-4Z
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 02:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932434Ab0HXXoy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 19:44:54 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:49187 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754302Ab0HXXot convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 19:44:49 -0400
-Received: by qyk9 with SMTP id 9so4291923qyk.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 16:44:48 -0700 (PDT)
+	id S1755207Ab0HYAVA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 20:21:00 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62645 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754350Ab0HYAU7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 20:20:59 -0400
+Received: by wwb34 with SMTP id 34so22581wwb.1
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 17:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=IZDHQ60FlTvWSWS/0qc77boJ+12YmiQaafAj766ozFM=;
-        b=sheGE5sT7yavdD3PePTKjzPogpLjdConZsxkz7I6EGuGhfJgBBfCTfi4imBHrZ4ha+
-         s072Gdx5dmjnYxm/1sdCTfNval0CEq1jrpyBClIpvem2eTBReGB/Ugl1I7XMskriEQpy
-         E5rOx+0nIV/6CdCMJxMdRp3OdoU9ogDPh50wI=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AIw1UvEDtb3eh6M3ctO660AWcybSI67alUpX03LJFh8=;
+        b=eOU4OpneLxD7S/0sJkifMp3MymxaG8KsvNtl2e7zDzoPvxnGQzcS/cWhmKvEIPg0NH
+         oey0TapYyrH0AWd87/6wGu/3b2be0JJeK658OlkJ9AJpdWujj/8Md0GCXWJ/7bJVVSHl
+         rCFYzSFPutdFuvzFCJF0WiT5HdatzkKkCD0U4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=daNMA/CDgudVHwbxew+dk51djjqOzeGPgi2lGFd5QIRghlwHHssu3h0ed3XT/BRIWg
-         QTSrzcWSAk7EfSzDA7Wl3/dpbb4rXsbXycngVPtaF2ikzDxEBLSp73g4kF8YHdTxEC3D
-         GE3ZY6RKh0nc02FNYC6AwYeB/EWkSXASLEzgk=
-Received: by 10.229.237.130 with SMTP id ko2mr5403346qcb.121.1282693488775;
-        Tue, 24 Aug 2010 16:44:48 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r36sm768520qcs.3.2010.08.24.16.44.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 16:44:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1282688422-7738-10-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=q8j3LXglLzq/CNfOyk4BoT3Q54xoqLd/sHXwivuiFz7H5jG7yPNw67q0iV82WA3xWd
+         fmeE4UpC0fdWXhmHa+0XeBezhu4v1radNAGJSiF62+Q/gU48Gs3njcZvgDOSAXaznPu6
+         3NikdrS0pWSanFvL42FXx653unmagkPXJeQKY=
+Received: by 10.216.1.12 with SMTP id 12mr1581769wec.1.1282695657844; Tue, 24
+ Aug 2010 17:20:57 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Tue, 24 Aug 2010 17:20:57 -0700 (PDT)
+In-Reply-To: <20100824230907.GD2376@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154385>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+On Wed, Aug 25, 2010 at 9:09 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Nguyen Thai Ngoc Duy wrote:
+>> On Wed, Aug 25, 2010 at 8:37 AM, Jonathan Nieder <jrnieder@gmail.com=
+>
+>> wrote:
+>
+>>> is it possible to
+>>> merge without remote contact in the boring case, when no changes ha=
+ve
+>>> occured outside the narrow tree?
+>>
+>> That's possible (and is implemented in my series). But I guess as so=
+on
+>> as you do "git pull", the boring case is likely not applicable
+>> anymore.
+>
+> Makes sense.
+>
+> One slightly less boring case. =C2=A0Is it possible to merge when the
+> simplified history, looking only at changes outside the narrow tree,
+> would have permitted a fast-forward?
 
-> Index in narrow repos is not a full index and should not be used
-> to create commits without modification (to be explained later on).
-[...]
-> +++ b/read-cache.c
-> @@ -25,8 +25,9 @@ static struct cache_entry *refresh_cache_entry(stru=
-ct cache_entry *ce, int reall
->   */
-> =20
->  #define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
-> -#define CACHE_EXT_TREE 0x54524545	/* "TREE" */
-> +#define CACHE_EXT_TREE 0x54524545	  /* "TREE" */
->  #define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
-> +#define CACHE_EXT_NARROW 0x4e415257	  /* "NARW" */
+Yes, as long as there is no changes outside narrow tree.
 
-Just curious: why aren't we using
+>
+> If so, a git contributor who is only interested in Documentation/
+> could work on "next" between releases and keep up with "maint" and
+> "master" longer term, without the help of a full-tree-merging machine=
+=2E
+>
+> More realistically, a linux-2.6 contributor only interested in one
+> subsystem could always keep up with "master". =C2=A0Which would be ni=
+ce.
+>
 
- #define CACHE_EXT_TREE CACHE_EXT("TREE")
- #define CACHE_EXT_RESOLVE_UNDO CACHE_EXT("REUC")
- #define CACHE_EXT_NARROW CACHE_EXT("NARW")
 
-Are they invalid case labels?
 
-I think non-optional extensions might need to be lowercase ("narw")
-though I am not sure.
-
-> @@ -1168,7 +1169,9 @@ static int verify_hdr(struct cache_header *hdr,=
- unsigned long size)
-> =20
->  	if (hdr->hdr_signature !=3D htonl(CACHE_SIGNATURE))
->  		return error("bad signature");
-> -	if (hdr->hdr_version !=3D htonl(2) && hdr->hdr_version !=3D htonl(3=
-))
-> +	if (hdr->hdr_version !=3D htonl(2) &&
-> +	    hdr->hdr_version !=3D htonl(3) &&
-> +	    hdr->hdr_version !=3D htonl(4))
->  		return error("bad index version");
-[...]
-> @@ -1568,7 +1584,11 @@ int write_index(struct index_state *istate, in=
-t newfd)
-[...]
-> +	if (get_narrow_prefix() && ver < 4)
-> +		ver =3D 4;	/* narrow-unaware git should to touch this index */
-> +
-> +	hdr.hdr_version =3D htonl(ver);
->  	hdr.hdr_entries =3D htonl(entries - removed);
-> =20
->  	git_SHA1_Init(&c);
-
-Oh, or you can do this. :)
-
-Thanks for a pleasant read.  Looks good so far, though I didn't read
-the tests.
+--=20
+Duy
