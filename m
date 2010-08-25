@@ -1,63 +1,120 @@
-From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
-Subject: Re: Bug report: %h for abbreviated hashes broken after 1.7.1
-Date: Wed, 25 Aug 2010 08:16:44 +0200
-Message-ID: <20100825061643.GB2938@atjola.homenet>
-References: <AANLkTinR6_DFD_MbFRbtyJKPhZG1Os0ro=4TcC2h_xZo@mail.gmail.com>
- <20100825041440.GH11619@burratino>
- <AANLkTi=+tGLfs-t6+fjRu68Mt76dJw4sbNCoO9q9+uyp@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFD PATCH 00/32] subtree clone v2
+Date: Wed, 25 Aug 2010 16:21:25 +1000
+Message-ID: <AANLkTikCa_Yfw4t1=JAOkZPE3_txof67C4CfgrELoPsh@mail.gmail.com>
+References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
+	<20100824223741.GB2376@burratino>
+	<AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
+	<AANLkTinsNvVup43B6nQtU6dvJy789n8kQm6N6na0J9oa@mail.gmail.com>
+	<AANLkTikkybj784PHoVCkVZyxo40q6BhdkOzFho-xBS6G@mail.gmail.com>
+	<AANLkTikOtinR1EjzrzMqzR8Pn2hpDRVJrWDmx5b5tGQ_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: "Todd A. Jacobs" <tjacobs@si2services.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 08:16:59 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 08:21:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo9I6-0006Vw-II
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 08:16:54 +0200
+	id 1Oo9Mb-0001pC-4B
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 08:21:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752039Ab0HYGQt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 02:16:49 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:42949 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751380Ab0HYGQs (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Aug 2010 02:16:48 -0400
-Received: (qmail invoked by alias); 25 Aug 2010 06:16:46 -0000
-Received: from i59F5723D.versanet.de (EHLO atjola.homenet) [89.245.114.61]
-  by mail.gmx.net (mp071) with SMTP; 25 Aug 2010 08:16:46 +0200
-X-Authenticated: #5039886
-X-Provags-ID: V01U2FsdGVkX1/DnTBUBaDD8XBQuJW1LOlVokQgqMbHPHzjHVd4G5
-	my7qdKUgxTEjfd
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=+tGLfs-t6+fjRu68Mt76dJw4sbNCoO9q9+uyp@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1752125Ab0HYGV1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 02:21:27 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:49576 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751380Ab0HYGV0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Aug 2010 02:21:26 -0400
+Received: by wyb35 with SMTP id 35so275526wyb.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 23:21:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TcTW22IuWrQ8Rpf3R2cHDmTArgrShQVnawxcN/ANWyI=;
+        b=BS6kWyRKuNN77AfEfEeEk4vd62ZJa6qdPMhdqEPO+mZtTIc9lq8FNUFCkzawCUPs0O
+         QU5rLCHWXdeTIx9Z155V77+QCz4lpgYtVZDe2lV077PsiIMpXd1pUwUoiUrosz81ONSK
+         U4pDJp2Ovo2fQaZ3liOdNOZulecbq6/LmP1JE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=h90RAPew/0XxEk3OEBGaW2OySF1naCwRkwBW/WJuMQuS2fNCopN2LtVtvchOcIau63
+         B7Q9l8xVG9JU8pwIkEVWqWgXnyVjvEBKdmVaFxM4RoZf4SEY8H04l9XDd/PmT4vyglaB
+         VRy+f58f4Cc+3YSN5kJlx6oT3geL0FSbs3vN8=
+Received: by 10.216.132.166 with SMTP id o38mr4785518wei.16.1282717285037;
+ Tue, 24 Aug 2010 23:21:25 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Tue, 24 Aug 2010 23:21:25 -0700 (PDT)
+In-Reply-To: <AANLkTikOtinR1EjzrzMqzR8Pn2hpDRVJrWDmx5b5tGQ_@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154425>
 
-[Added Jonathan back to Cc...]
+On Wed, Aug 25, 2010 at 3:31 PM, Elijah Newren <newren@gmail.com> wrote=
+:
+> Sure, they will modify paths outside your subtree, but you know that
+> you didn't do so. =C2=A0So if you neglect renames then the situation =
+is
+> pretty simple:
+>
+> Merge-side: ancestor =C2=A0 =C2=A0you =C2=A0 =C2=A0 =C2=A0 =C2=A0 ups=
+tream
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-------- =C2=A0 =C2=A0------=
+-- =C2=A0 =C2=A0--------------
+> Sha1sum: =C2=A0 =C2=A0ancestor =C2=A0 =C2=A0ancestor =C2=A0 =C2=A0new=
+-stuff
+>
+> Which could be true for either a file or a tree. =C2=A0Either way, if=
+ you
+> ignore renames, then the trivial merge is 'new-stuff' for any such
+> blob/tree. =C2=A0(Yeah, you'd have to create a new merge algorithm th=
+at
+> does 'trivial' merges at tree levels in addition to file levels, but
+> the concept is relatively simple at least.)
+>
+> After your merge, a subsequent pull would look like this at the same
+> file/tree path:
+>
+> Merge-side: ancestor =C2=A0 =C2=A0you =C2=A0 =C2=A0 =C2=A0 =C2=A0 ups=
+tream
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-------- =C2=A0 =C2=A0------=
+-- =C2=A0 =C2=A0--------------
+> Sha1sum: =C2=A0 =C2=A0new-stuff =C2=A0 new-stuff =C2=A0 newer-stuff
+>
+> For which the resolution would be 'newer-stuff' (again, ignoring the
+> problems that renames could cause, which I discussed elsewhere).
+>
+> Unless, of course, I'm missing something still...
 
-On 2010.08.25 01:07:28 -0400, Todd A. Jacobs wrote:
-> On Wed, Aug 25, 2010 at 12:14 AM, Jonathan Nieder <jrnieder@gmail.com=
-> wrote:
-> > $ git log --oneline v1.7.2.2..35039ced9296786bc0971bf5385c0d6f6ea5e=
-a1e
-> > 35039ce archive: abbreviate substituted commit ids again
+OK here is the story. And I could be wrong on this merge stuff.
 
-That shows that the commit is not in the tag's ancestry.
+I was deep in merge-tree.c code (which was the base for my narrow
+merge) and was stuck at
 
-> Tag v1.7.2.2 is almost a month after 35039ce, so I'm not sure where
-> you're going with that, either. It should definitely be part of the
-> 1.7.2.2 tarball, but the problem persists.
+"If either "you" or "upstream" is as same as ancestor (all as dirs),
+then it's easy. What if neither of them is the same as ancestor? If we
+have more trees, we could just descend and figure out. But we don't
+because it's outside narrow area. It could be that "you" added a new
+file and "upstream" added another file, which is trivial at file
+level."
 
-Maybe it should be, but it isn't. With non-linear histories, commit
-dates don't tell you whether one commit is an ancestor of another
-commit.
+I was deep in code and forgot that in narrow repo, I did not allow to
+change outside narrow area, so it "you" must be as same as ancestor.
+But the question was, what if user decides to branch from some commit
+in history? If he/she does, "you" might not be as same as ancestor. If
+it's non trivial merge, merge should fail (expected).
 
-Bj=F6rn
+But the "it could be that "you" added ... at file level" above
+bothered me. I had a feeling that I could miss a trivial merge (at
+file level) because I could not make a judgement at (shallow) tree
+level. And I did not have all trees to do merge at file level.
+
+Still puzzling thinking about this.. Did I make wrong assumptions?
+--=20
+Duy
