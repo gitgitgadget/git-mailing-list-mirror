@@ -1,96 +1,89 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFD PATCH 00/32] subtree clone v2
-Date: Wed, 25 Aug 2010 10:20:57 +1000
-Message-ID: <AANLkTimKEtkjM-sXrqa=LHTKzUb78TZBXA5siDPyfB_h@mail.gmail.com>
+Subject: Re: [PATCH 03/32] cache-tree: ignore CE_REMOVE entries in verify_cache()
+Date: Wed, 25 Aug 2010 10:23:44 +1000
+Message-ID: <AANLkTi=P-PoBWwDbfGs7v1BTwvJ7uwfe7hd7A+Y7M361@mail.gmail.com>
 References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
-	<20100824223741.GB2376@burratino>
-	<AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
-	<20100824230907.GD2376@burratino>
+	<1282688422-7738-4-git-send-email-pclouds@gmail.com>
+	<20100824231536.GE2376@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git <git@vger.kernel.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 02:21:08 2010
+X-From: git-owner@vger.kernel.org Wed Aug 25 02:23:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo3jo-0003za-4Z
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 02:21:08 +0200
+	id 1Oo3mT-0006A7-5z
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 02:23:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755207Ab0HYAVA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 20:21:00 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62645 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754350Ab0HYAU7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 20:20:59 -0400
-Received: by wwb34 with SMTP id 34so22581wwb.1
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 17:20:57 -0700 (PDT)
+	id S1755362Ab0HYAXr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 24 Aug 2010 20:23:47 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50352 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751985Ab0HYAXq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 24 Aug 2010 20:23:46 -0400
+Received: by wyb35 with SMTP id 35so1167260wyb.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 17:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=AIw1UvEDtb3eh6M3ctO660AWcybSI67alUpX03LJFh8=;
-        b=eOU4OpneLxD7S/0sJkifMp3MymxaG8KsvNtl2e7zDzoPvxnGQzcS/cWhmKvEIPg0NH
-         oey0TapYyrH0AWd87/6wGu/3b2be0JJeK658OlkJ9AJpdWujj/8Md0GCXWJ/7bJVVSHl
-         rCFYzSFPutdFuvzFCJF0WiT5HdatzkKkCD0U4=
+        bh=b8XUZUnzVnm33AMvAng+8d1YYP1mtRuHmdpcqhzghbo=;
+        b=v2IoNhn/6Zfx1aQmxqb7MXR/PqyRqkpI6huYAByUZqFlyIdK9T+SGEbdsT5LfSzJL8
+         Una+Z7df9e1DSCM4vBLBaNEmYgadusgC3ifqi6IQr32iak3nfea5/E3P8qEKwgWrTpTQ
+         NMmKWXQB0mi600mvy4UsBspvqAudwQcSEgC/4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=q8j3LXglLzq/CNfOyk4BoT3Q54xoqLd/sHXwivuiFz7H5jG7yPNw67q0iV82WA3xWd
-         fmeE4UpC0fdWXhmHa+0XeBezhu4v1radNAGJSiF62+Q/gU48Gs3njcZvgDOSAXaznPu6
-         3NikdrS0pWSanFvL42FXx653unmagkPXJeQKY=
-Received: by 10.216.1.12 with SMTP id 12mr1581769wec.1.1282695657844; Tue, 24
- Aug 2010 17:20:57 -0700 (PDT)
-Received: by 10.216.184.17 with HTTP; Tue, 24 Aug 2010 17:20:57 -0700 (PDT)
-In-Reply-To: <20100824230907.GD2376@burratino>
+        b=GBegiTgLXDFvHWmQV9yuF8KuFy5ndxY30eCs7p0TeTrkK0kvNhr30YjRi5xgSJOrAU
+         heBKT8bkpcoogD5SVi629xuVQA8uvfhM8vNH1SYMiZcQlxRfzqo93SaY8bdT4BHB0Wuk
+         /MOBQ67uLbpLl6aqTEFCxS/cPZC4yaK06SaQw=
+Received: by 10.227.153.208 with SMTP id l16mr6654779wbw.57.1282695824909;
+ Tue, 24 Aug 2010 17:23:44 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Tue, 24 Aug 2010 17:23:44 -0700 (PDT)
+In-Reply-To: <20100824231536.GE2376@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154386>
 
-On Wed, Aug 25, 2010 at 9:09 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+On Wed, Aug 25, 2010 at 9:15 AM, Jonathan Nieder <jrnieder@gmail.com> w=
 rote:
-> Nguyen Thai Ngoc Duy wrote:
->> On Wed, Aug 25, 2010 at 8:37 AM, Jonathan Nieder <jrnieder@gmail.com=
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
->> wrote:
+>> --- a/cache-tree.c
+>> +++ b/cache-tree.c
+>> @@ -156,6 +156,8 @@ static int verify_cache(struct cache_entry **cac=
+he,
+>> =C2=A0 =C2=A0 =C2=A0 funny =3D 0;
+>> =C2=A0 =C2=A0 =C2=A0 for (i =3D 0; i < entries; i++) {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct cache_entry =
+*ce =3D cache[i];
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ce->ce_flags & CE_RE=
+MOVE)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 continue;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ce_stage(ce) ||=
+ (ce->ce_flags & CE_INTENT_TO_ADD)) {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 if (10 < ++funny) {
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fprintf(stderr, "...\n");
 >
->>> is it possible to
->>> merge without remote contact in the boring case, when no changes ha=
-ve
->>> occured outside the narrow tree?
->>
->> That's possible (and is implemented in my series). But I guess as so=
-on
->> as you do "git pull", the boring case is likely not applicable
->> anymore.
+> In other words, this teaches internal write-tree callers to ignore
+> unmerged and intent-to-add entries marked with CE_REMOVE.
 >
-> Makes sense.
->
-> One slightly less boring case. =C2=A0Is it possible to merge when the
-> simplified history, looking only at changes outside the narrow tree,
-> would have permitted a fast-forward?
+> Why? =C2=A0When does this come up?
 
-Yes, as long as there is no changes outside narrow tree.
-
->
-> If so, a git contributor who is only interested in Documentation/
-> could work on "next" between releases and keep up with "maint" and
-> "master" longer term, without the help of a full-tree-merging machine=
-=2E
->
-> More realistically, a linux-2.6 contributor only interested in one
-> subsystem could always keep up with "master". =C2=A0Which would be ni=
-ce.
->
-
-
-
+I was lazy. In patch 26, upload-narrow-merge do three way merge and
+drop staged entries within narrow tree (this is at server side,
+conflicts within narrow tree will be handled at client side later).
+Instead of removing staged entries, I mark them CE_REMOVE.
 --=20
 Duy
