@@ -1,84 +1,106 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Fix 'git log' early pager startup error case
-Date: Tue, 24 Aug 2010 20:36:25 -0500
-Message-ID: <20100825013625.GC10423@burratino>
-References: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org>
+Subject: [PATCH rr/fmt-merge-msg] merge, fmt_merge_msg --log: default value
+ is DEFAULT_MERGE_LOG_LEN
+Date: Tue, 24 Aug 2010 21:44:40 -0500
+Message-ID: <20100825024440.GD11619@burratino>
+References: <1282494398-20542-1-git-send-email-artagnon@gmail.com>
+ <1282494398-20542-2-git-send-email-artagnon@gmail.com>
+ <20100823220031.GA1308@burratino>
+ <7vzkwcvsm5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthias Lederhofer <matled@gmx.net>,
-	=?utf-8?B?SsO8cmdlbiBSw7xobGU=?= <j-r@online.de>,
-	Eric Blake <eblake@redhat.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Aug 25 03:38:23 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Yaroslav Halchenko <debian@onerussian.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 04:46:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo4wX-0004RF-2C
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 03:38:21 +0200
+	id 1Oo60l-00047X-9r
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 04:46:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755938Ab0HYBiP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 24 Aug 2010 21:38:15 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:37735 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755872Ab0HYBiN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 24 Aug 2010 21:38:13 -0400
-Received: by qwh6 with SMTP id 6so38068qwh.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 18:38:13 -0700 (PDT)
+	id S932571Ab0HYCqa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 24 Aug 2010 22:46:30 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:47657 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932545Ab0HYCq2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 24 Aug 2010 22:46:28 -0400
+Received: by qyk9 with SMTP id 9so4407728qyk.19
+        for <git@vger.kernel.org>; Tue, 24 Aug 2010 19:46:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=f79Wc8kbNQNWipXgjQwjGnTxLPnaFaqPv9oMhVLqQjo=;
-        b=TPbbUgyCGhkyhrAwnrC4KA/IYZRh83lyhRMVsDFNoEKpFdy4EizvMofLFMqYCK7L9x
-         DS8ZE5lKSlT+JG9omF2rvk0lEh1V5tbmLHSdxognyMpDjipbo8oZWTEb5fGvEE565Htg
-         OpPuIo/c3Cg3xSYwX2PYSBvjDFmeG4Jq4wapk=
+        bh=9i0ume44s2Ux1qhwCM7cPGqLfE81I3LTly0iN7/r9xk=;
+        b=oFZiMKolpBfHO5wWiSSlcYhSQ7yeWE0HpQD3wYDfWwVkBKMfQkjfMitSL3tLi/YdbA
+         CbfLSy5WuFMEKbha2pzhHxIgs4Dz+XyXj/nvbnzQeqBqTKvPr1CyclL2B8DR3+e0pidv
+         YMY+ag4PEjsvJjUURDoSAGrozUfYl30b/UzA0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=VC3mbc6lQMSB5ODx0v0co2Sp5m4D9lHPeNzMJAp4AH+8hYGbS6IFU0rDl/JgxhOXDQ
-         8YAd13iedla0kn/Kb0/EZsOm3bQKKzjTuTyGKFAYamDpWxiqYa/Gz9jJQggi7+cJh6if
-         wuYssCVkDMV6mcd1HZUUrRCYW/HGqPX0ItZfc=
-Received: by 10.224.28.137 with SMTP id m9mr5041034qac.207.1282700292991;
-        Tue, 24 Aug 2010 18:38:12 -0700 (PDT)
+        b=wq6D9obeT10DeQ9HBsKDoS84uG2YPqXc64wk44cGu6Fqxus41b2TmK1cCKOcFf3Y7d
+         2ge+4hDFei6KWA+QTllp2oxGKiFzUkeSx6fOvCOlmY08sWZQMrcldqDrPL0EtAN3mv9D
+         JdD2dlwesS6V2VV0bXXT8W5Lp4kYoZ/iDkEOY=
+Received: by 10.224.65.228 with SMTP id k36mr5139065qai.35.1282704387873;
+        Tue, 24 Aug 2010 19:46:27 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id l8sm888827qck.42.2010.08.24.18.38.11
+        by mx.google.com with ESMTPS id r1sm972344qcq.22.2010.08.24.19.46.26
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 24 Aug 2010 18:38:12 -0700 (PDT)
+        Tue, 24 Aug 2010 19:46:27 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org>
+In-Reply-To: <7vzkwcvsm5.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154393>
 
-Linus Torvalds wrote:
+Most references to the DEFAULT_MERGE_LOG_LEN were changed to use that
+symbolic constant, but a few uses of hardcoded "20" remain.
 
-> I dunno. I noticed this as a result of a typo, and some (un)happy timing 
-> ("less" will still start up as a pager if the input is delayed a bit). I 
-> think this is the right thing to do, but as mentioned, I only fixed a 
-> particular small error case.
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Noticed this while looking over ab6beee (merge: Make '--log' an
+integer option) from pu.  Maybe something like it could be squashed in
+in the next round.
 
-I like it.
-
-FWIW the change this undoes is v1.4.2-rc3~25^2~1 (Builtins: control
-the use of pager from the command table., 2006-07-31). [1]
-
- > AFAICS Matthias' patch has the added benefit of moving setup_pager to
- > before large files (i.e. packs) are mapped. This helps non-COW-fork
- > (i.e. cygwin) tremendously. Actually with Linus' setup refactoring
- > this could probably be easily moved to the wrapper,...
-
-Mingw Git uses spawnvpe now, but Cygwin users might still suffer from
-fork() troubles.  I think it should be possible to work around that by
-using posix_spawn() from start_command() on such platforms (or
-someting similar).
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/24438/focus=24507
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 425900d..bc7c30f 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -323,10 +323,11 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 	struct option options[] = {
+ 		{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
+ 		  "populate log with <n> entries from shortlog",
+-		  PARSE_OPT_OPTARG, NULL, 20 },
++		  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
+ 		{ OPTION_INTEGER, 0, "summary", &shortlog_len, "n",
+ 		  "alias for --log (deprecated)",
+-		  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, NULL, 20 },
++		  PARSE_OPT_OPTARG | PARSE_OPT_HIDDEN, NULL,
++		  DEFAULT_MERGE_LOG_LEN },
+ 		OPT_STRING('m', "message", &message, "text",
+ 			"use <text> as start of message"),
+ 		OPT_FILENAME('F', "file", &inpath, "file to read from"),
+diff --git a/builtin/merge.c b/builtin/merge.c
+index bf550a6..9e4733d 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -177,7 +177,7 @@ static struct option builtin_merge_options[] = {
+ 	OPT_BOOLEAN(0, "summary", &show_diffstat, "(synonym to --stat)"),
+ 	{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
+ 	  "add (at most <n>) entries from shortlog to merge commit message",
+-	  PARSE_OPT_OPTARG, NULL, 20 },
++	  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
+ 	OPT_BOOLEAN(0, "squash", &squash,
+ 		"create a single commit instead of doing a merge"),
+ 	OPT_BOOLEAN(0, "commit", &option_commit,
+-- 
