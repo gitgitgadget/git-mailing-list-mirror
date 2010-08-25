@@ -1,61 +1,56 @@
-From: Edmond Halley <halleyinvent@gmail.com>
-Subject: How to query the version of a file?
-Date: Wed, 25 Aug 2010 14:33:30 +0800
-Message-ID: <AANLkTi=upbiD5EBumxNxG0YvSRZN0mDfvu7LeU0y0Zpw@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Fix 'git log' early pager startup error case
+Date: Wed, 25 Aug 2010 09:00:55 +0200
+Message-ID: <4C74BFA7.1090907@viscovery.net>
+References: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org> <20100825013625.GC10423@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Aug 25 08:33:51 2010
+Content-Transfer-Encoding: 7bit
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthias Lederhofer <matled@gmx.net>,
+	=?ISO-8859-1?Q?J=FCrgen_R=FChle?= <j-r@online.de>,
+	Eric Blake <eblake@redhat.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 09:01:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo9YR-0003Su-2a
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 08:33:47 +0200
+	id 1Oo9zB-00018R-0v
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 09:01:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515Ab0HYGdc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Aug 2010 02:33:32 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38308 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750821Ab0HYGdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Aug 2010 02:33:31 -0400
-Received: by iwn5 with SMTP id 5so326066iwn.19
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 23:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=i+CMuCxEx23RUmkf4Zr9oB4Ox1sdccUVQZKSLDspPkY=;
-        b=PwV48wUL+bYAGFvZSlzj8c9ZZIJLBhClI/XPYvPpA7luBAcyVT86nUcb17lHxL/cQh
-         cPG4JVvKghNGrPu8viO4nC3nOBoIWH3qE7bFjD0HI+TyOlSD3tnRrHACF75cy2jeqTr9
-         NqAX9Wrs9+xe6tusC/krMBPZdngpvSYQgV4u8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=ABDalXRWLgrqVIsrssAdjdvDgoDEh8ArYy/xqi8rUW5LU9mUggPLRfZmxNDS4L6EQi
-         LgtpXus+jjnG+lGggy3D75WViKihLjkgZ1hIC3yPTZpgXJKA6WU750BWp/EdjnEKL/KO
-         zQ2TOSgKxjD/aMosyOF6qNKGqfl8BPu928o7c=
-Received: by 10.231.32.75 with SMTP id b11mr8839918ibd.162.1282718010563; Tue,
- 24 Aug 2010 23:33:30 -0700 (PDT)
-Received: by 10.231.119.140 with HTTP; Tue, 24 Aug 2010 23:33:30 -0700 (PDT)
+	id S1751837Ab0HYHBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Aug 2010 03:01:03 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:43765 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750881Ab0HYHBB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Aug 2010 03:01:01 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1Oo9yi-0007K7-1d; Wed, 25 Aug 2010 09:00:56 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id B34A51660F;
+	Wed, 25 Aug 2010 09:00:55 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.11) Gecko/20100711 Thunderbird/3.0.6
+In-Reply-To: <20100825013625.GC10423@burratino>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154428>
 
-Hi,
+Am 8/25/2010 3:36, schrieb Jonathan Nieder:
+> Mingw Git uses spawnvpe now, but Cygwin users might still suffer from
+> fork() troubles.  I think it should be possible to work around that by
+> using posix_spawn() from start_command() on such platforms (or
+> someting similar).
 
-I have a standalone repository.
-File a.cpp has 3 versions.
-For example, I checked out version2(HEAD^).
-> git checkout HEAD^ a.cpp
-After a few days, I forget which version I have checked out.
-Is there a git command that can query which version is checked out?
-"git status" will show there is "changes to be committed", but with no
-the version information.
-Thank you!
+Just FYI, posix_spawn() is not sufficiently capable for the demands of
+start_command(): It doesn't allow to set a new CWD for the spawned process.
 
-Best regards,
-Halley
+-- Hannes
