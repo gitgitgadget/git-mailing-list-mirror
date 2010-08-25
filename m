@@ -1,93 +1,74 @@
-From: Justin Frankel <justin@cockos.com>
-Subject: Re: [PATCH v2] git-merge: ignore space support
-Date: Wed, 25 Aug 2010 08:51:25 -0700
-Organization: Cockos Incorporated
-Message-ID: <4C753BFD.5060807@cockos.com>
-References: <20100823205915.GA4484@ns1.cockos.com>	<20100824022820.GE17406@burratino>	<5F681E95-9369-490A-84FE-55B99EA8FE63@cockos.com>	<20100825044006.GJ11619@burratino> <AANLkTimRyeMbLKLmbKJEqgGPDFo3OCsz=QwVzkSaP5n8@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Makefile: Add help target
+Date: Wed, 25 Aug 2010 11:27:48 -0500
+Message-ID: <AANLkTi=+f4Q6JJHfX75A57-gzBxqsdr+CrCf9Z9fqrEq@mail.gmail.com>
+References: <1282729913-25114-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	eyvind.bernhardsen@gmail.com, Junio C Hamano <gitster@pobox.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 17:52:07 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 18:28:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoIGk-00021F-Cm
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 17:52:06 +0200
+	id 1OoIpi-0007WE-QP
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 18:28:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751940Ab0HYPv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Aug 2010 11:51:59 -0400
-Received: from ns1.cockos.com ([204.11.104.229]:51609 "EHLO ns1.blorp.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751444Ab0HYPv6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Aug 2010 11:51:58 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by ns1.blorp.com (Postfix) with ESMTP id B4F971259C02;
-	Wed, 25 Aug 2010 08:51:48 -0700 (PDT)
-Received: from ns1.blorp.com ([127.0.0.1])
-	by localhost (ns1.cockos.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id NZZ4yM2ICNz7; Wed, 25 Aug 2010 08:51:26 -0700 (PDT)
-Received: from [10.10.10.69] (poo.cockos.com [204.11.104.242])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by ns1.blorp.com (Postfix) with ESMTPSA id 8221E1259C01;
-	Wed, 25 Aug 2010 08:51:26 -0700 (PDT)
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <AANLkTimRyeMbLKLmbKJEqgGPDFo3OCsz=QwVzkSaP5n8@mail.gmail.com>
+	id S1752986Ab0HYQ2L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 12:28:11 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:39095 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752955Ab0HYQ2J convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 25 Aug 2010 12:28:09 -0400
+Received: by yxg6 with SMTP id 6so249722yxg.19
+        for <git@vger.kernel.org>; Wed, 25 Aug 2010 09:28:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3NnBQlHmjKOzxtwQX967Jooac2sc+Um47Riep7J4zZs=;
+        b=WRIRtTqpzqhfH6c+S5AgHQ25BIQ3QKjzGwlMjpgws+mOymkFSbWT0hRRyEnRcrlivh
+         yQ579DJJ68vdBOld52ipDhfY9Y6u4cf4EdGbJ6v2xu1vDmk2a620LG1uTRKJ6tZaKy9G
+         YwAt+3mYV75cNFg/u0Lvd7H0nzlhxIcT9vrQU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Jr8iYAhsx/AMstGksSKKl0w+d9BkHDpaL55d8LVOpDdM3+nThfICkllx2v5qHCrt3A
+         hB5zjs0+U0YEz2AwWwzReRFor+wQUidLPYYt+xr0wfA6FfJvNdfiZWjzjRzCq/RhMEr2
+         tJ4JPnpptvziUtzscoRwCFoBgD7G+vxV2uR74=
+Received: by 10.150.31.13 with SMTP id e13mr8581801ybe.302.1282753688302; Wed,
+ 25 Aug 2010 09:28:08 -0700 (PDT)
+Received: by 10.151.49.17 with HTTP; Wed, 25 Aug 2010 09:27:48 -0700 (PDT)
+In-Reply-To: <1282729913-25114-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154448>
 
-Bert Wesarg wrote:
-> Hi,
+Heya,
+
+On Wed, Aug 25, 2010 at 04:51, Stephen Boyd <bebarino@gmail.com> wrote:
+> Today I forgot whether the target was quick-install-doc or
+> install-quick-doc and had to open the Makefile again to find out. I'd
+> rather not do that and just use:
 >
-> On Wed, Aug 25, 2010 at 06:40, Jonathan Nieder <jrnieder@gmail.com> wrote:
->   
->> Justin Frankel wrote:
->>
->>     
->>> Fine by me... (ok if I were to nitpick I would probably make most of
->>> the internal static functions check that opts was non-NULL before
->>> dereferencing, in case the calling code ever changed
->>>       
->> Not a bad idea.  I'll squash in something like this.
->>
->> A real BUG_ON macro would make this less ugly.
->>     
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ make help
 >
-> I think exactly because of this there is no prior art of using NULL as
-> 'use the default options'. Without this all these NULL pointer checks
-> wont be necessary.
->   
+> to get a quick summary of the interesting targets when my brain fails=
+ to
+> refresh. Add a help target, but don't add uninteresting things like
+> strip, install-gitweb, or targets which alias (install-man).
 
-The only danger is that ll_merge()'s signature didn't change in such a 
-way to break compilation, i.e:
+Yes please, it would be even better if you're willing to make sure
+that this stays up to date ;).
 
-int ll_merge(mmbuffer_t *result_buf,
-             const char *path,
-             mmfile_t *ancestor, const char *ancestor_label,
-             mmfile_t *ours, const char *our_label,
-             mmfile_t *theirs, const char *their_label,
-             int flag);
+--=20
+Cheers,
 
-becomes:
-
-int ll_merge(mmbuffer_t *result_buf,
-             const char *path,
-             mmfile_t *ancestor, const char *ancestor_label,
-             mmfile_t *ours, const char *our_label,
-             mmfile_t *theirs, const char *their_label,
-             struct whatever *conf);
-
-In this case, passing 0 as the last parameter will compile either way.
-
-Sure, we can grep all of the source, but who knows when something else 
-will get merged in...
-
--Justin
+Sverre Rabbelier
