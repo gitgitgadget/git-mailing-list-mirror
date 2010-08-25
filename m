@@ -1,72 +1,123 @@
-From: Knittl <knittl89@googlemail.com>
-Subject: Re: [PATCH re-roll] Do not display 'Switched to a new branch' when
- the branch existed
-Date: Wed, 25 Aug 2010 13:51:31 +0200
-Message-ID: <AANLkTi=1dRw_rkaAV174r2SVLbxE6v9Wu2NjjzZCZ63T@mail.gmail.com>
-References: <AANLkTimaZF1Q6BPB7CN0Wa5-Ov2ejVfPsmL34vps2VqK@mail.gmail.com>
- <AANLkTi=3z9gJdT8LL3NANFyppUjvOVcrszjf5J5zAKPe@mail.gmail.com>
- <20100818091603.GA6263@burratino> <AANLkTikHbj4zA6Kj0wUp6uQUY3w6cM_z0=Pes1jLLTky@mail.gmail.com>
- <AANLkTim7DNasVmaBxWBcUGyGBCZq_HXNdq_=4uKRdxE-@mail.gmail.com> <AANLkTinXKwUwfXuCzghUgiyck=JBoQLrUn=kPRe0X+a5@mail.gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [RFD PATCH 00/32] subtree clone v2
+Date: Wed, 25 Aug 2010 07:06:36 -0600
+Message-ID: <AANLkTi=sPL4mAH=_Fba8Er6BQvq=NDO+-GF+MaGc8yAm@mail.gmail.com>
+References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
+	<20100824223741.GB2376@burratino>
+	<AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
+	<AANLkTinsNvVup43B6nQtU6dvJy789n8kQm6N6na0J9oa@mail.gmail.com>
+	<AANLkTikkybj784PHoVCkVZyxo40q6BhdkOzFho-xBS6G@mail.gmail.com>
+	<AANLkTikOtinR1EjzrzMqzR8Pn2hpDRVJrWDmx5b5tGQ_@mail.gmail.com>
+	<AANLkTikCa_Yfw4t1=JAOkZPE3_txof67C4CfgrELoPsh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 13:52:05 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 15:06:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoEWO-0002T2-AT
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 13:52:00 +0200
+	id 1OoFgj-0007Si-0m
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 15:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753127Ab0HYLvx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 25 Aug 2010 07:51:53 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:47648 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752289Ab0HYLvw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 25 Aug 2010 07:51:52 -0400
-Received: by vws3 with SMTP id 3so498340vws.19
-        for <git@vger.kernel.org>; Wed, 25 Aug 2010 04:51:51 -0700 (PDT)
+	id S1753535Ab0HYNGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 25 Aug 2010 09:06:40 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60773 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753093Ab0HYNGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Aug 2010 09:06:38 -0400
+Received: by fxm13 with SMTP id 13so242916fxm.19
+        for <git@vger.kernel.org>; Wed, 25 Aug 2010 06:06:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=mBQJKiouLR811P7Mpg/g2J6jQrXKDesjDGeRStCSB3s=;
-        b=S5oI9nyNz6pBxCGS4EKAEngXT6eAjotvEuLWr7i9uc7hg+3COxYgvERCn9edAkafY0
-         j37pMvzb89ChUAqp5OvmKwxF5YD+APkEkgXkysrG33mgEJyKzTGTkgN5x1FZLRTGNAI7
-         NqxwSmCTByGLXW5AkSeOHjvbzW97nhJE8O1Ac=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=B4+Xz8qylKEsygr7tIB5zo64LuWbVG/w9gxvV7Ipwk8=;
+        b=cErpexi2WTO3QEjSPPEr17EEUaI9h2vf98kv4ZPk4hx00cjYGbxbCTFyLrxzEl1SaH
+         cDcdA47MwD2umkYYShf8u89yJ4oCCbPVgyKeRxf1PZUKulxPM/G9w0yjVaYV51M/qYtd
+         AZwPK+NHGVvydxegMmf5yERto4r7Exx4ZSCTI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=URj9SE0veK/XFeGTgZfuV0+lJ7hrfT8i15UJeZNv0d/4nSCXsqAZ/ckuLf6JQeFybB
-         DGUWGy0MV5Gya5k/awDuW5yJ+qq2AzlBm0ga+NBsB7Sd2bM34yCv1cRJ96d1tO/PwawY
-         kzchpClg2IwtkFPMVoct3PQKvbWCAuXNC0fLU=
-Received: by 10.220.62.72 with SMTP id w8mr5216222vch.172.1282737111223; Wed,
- 25 Aug 2010 04:51:51 -0700 (PDT)
-Received: by 10.220.181.10 with HTTP; Wed, 25 Aug 2010 04:51:31 -0700 (PDT)
-In-Reply-To: <AANLkTinXKwUwfXuCzghUgiyck=JBoQLrUn=kPRe0X+a5@mail.gmail.com>
+        b=f3MU4gBwMQvMCSidrZkxWbDyLLkhm4rINq0mpDlSSQLGzkCzSLQ8EKHD2t/OOATUtK
+         kGfnLGM+YLjyUTNzOKCh++n8ebrYKGnX/vqfIC8PP0Yhqv5KFHKMNAOLymNmS/gNtmyo
+         +uAfoI4hQYZaE+NeTl0gJGAq/sz0SMiSsnyJM=
+Received: by 10.223.113.12 with SMTP id y12mr7494081fap.36.1282741596843; Wed,
+ 25 Aug 2010 06:06:36 -0700 (PDT)
+Received: by 10.223.50.154 with HTTP; Wed, 25 Aug 2010 06:06:36 -0700 (PDT)
+In-Reply-To: <AANLkTikCa_Yfw4t1=JAOkZPE3_txof67C4CfgrELoPsh@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154444>
 
-On Tue, Aug 24, 2010 at 3:06 PM, Tay Ray Chuan <rctay89@gmail.com> wrote:
-> Hi,
+Hi,
+
+On Wed, Aug 25, 2010 at 12:21 AM, Nguyen Thai Ngoc Duy
+<pclouds@gmail.com> wrote:
+> OK here is the story. And I could be wrong on this merge stuff.
 >
-> On Tue, Aug 24, 2010 at 2:50 PM, Knittl <knittl89@googlemail.com> wrote:
->> sorry for the late reply, i hadn't had access to internet for the last
->> week and as it turns i sent my response only to tay
+> I was deep in merge-tree.c code (which was the base for my narrow
+> merge) and was stuck at
 >
-> just a heads-up - this has already been fixed since 09a0ec5 in master.
+> "If either "you" or "upstream" is as same as ancestor (all as dirs),
+> then it's easy. What if neither of them is the same as ancestor? If we
+> have more trees, we could just descend and figure out. But we don't
+> because it's outside narrow area. It could be that "you" added a new
+> file and "upstream" added another file, which is trivial at file
+> level."
+>
+> I was deep in code and forgot that in narrow repo, I did not allow to
+> change outside narrow area, so it "you" must be as same as ancestor.
+> But the question was, what if user decides to branch from some commit
+> in history? If he/she does, "you" might not be as same as ancestor. If
+> it's non trivial merge, merge should fail (expected).
+
+If you branch from some older commit, then naturally the common
+ancestor between you and upstream changes as well (namely, to that
+older commit).  Since you don't/can't change anything outside your
+subtree, that puts you in the following situation for paths outside
+your subtree when you try to merge:
+
+Merge-side: ancestor    you         upstream
+            --------    --------    --------------
+Sha1sum:    old-stuff   old-stuff   newest-stuff
+
+> But the "it could be that "you" added ... at file level" above
+> bothered me. I had a feeling that I could miss a trivial merge (at
+> file level) because I could not make a judgement at (shallow) tree
+> level. And I did not have all trees to do merge at file level.
+>
+> Still puzzling thinking about this.. Did I make wrong assumptions?
+
+I'm not sure I understand why there would be any issue with you adding
+one file in your subtree, and upstream adding (another/the same?) file
+outside your subtree.  The only problematic case I see is when files
+are renamed upstream from within the subtree to outside the subtree
+and subsequently changed.  If on your side of history you modify one
+of these files that were renamed from upstream, there's no way to
+apply your changes to the new file.  It'd look something like this:
+
+Merge-side: ancestor    you         upstream
+            --------    --------    --------------
+old-file:   original    modify1     (missing)
+new-file:   (missing)   (missing)   modify2
+
+The correct resolution is a three-way merge between original, modify1,
+and modify2, stored in new-file with old-file being deleted.  However,
+you don't have access to new-file/modify2 since it's outside your
+subtree.  All you'd see is a modify/delete conflict in old-file and
+the 'trivial merge' logic I suggested above (which ignores renames)
+would result in new-file still having contents of modify2.
+
+Hopefully the modify/delete conflict would be enough to trigger the
+user to ask rather than just randomly pick some resolution and
+proceed, which makes me think it should be okay to have a renaming
+ignoring 'trivial' merge algorithm for subtrees.
 
 
-oh. good :)
-
-
--- 
-typed with http://neo-layout.org
-myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
+Elijah
