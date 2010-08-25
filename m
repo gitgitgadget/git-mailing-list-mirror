@@ -1,115 +1,63 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 15/32] unpack_trees: only unpack $GIT_DIR/narrow subtree
- in narrow repository
-Date: Wed, 25 Aug 2010 15:38:54 +1000
-Message-ID: <AANLkTikiazizLaXtotxL2UcuJ64KgWwGCwy+E6rv42_G@mail.gmail.com>
-References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
-	<1282688422-7738-16-git-send-email-pclouds@gmail.com>
-	<AANLkTinaF6e+bfVqRRThuZ=2PjpOs4P88RKFsxOTVSJR@mail.gmail.com>
+From: =?iso-8859-1?Q?Bj=F6rn?= Steinbrink <B.Steinbrink@gmx.de>
+Subject: Re: Bug report: %h for abbreviated hashes broken after 1.7.1
+Date: Wed, 25 Aug 2010 08:16:44 +0200
+Message-ID: <20100825061643.GB2938@atjola.homenet>
+References: <AANLkTinR6_DFD_MbFRbtyJKPhZG1Os0ro=4TcC2h_xZo@mail.gmail.com>
+ <20100825041440.GH11619@burratino>
+ <AANLkTi=+tGLfs-t6+fjRu68Mt76dJw4sbNCoO9q9+uyp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Aug 25 07:39:07 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: "Todd A. Jacobs" <tjacobs@si2services.com>
+X-From: git-owner@vger.kernel.org Wed Aug 25 08:16:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oo8hW-0002MQ-Jl
-	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 07:39:06 +0200
+	id 1Oo9I6-0006Vw-II
+	for gcvg-git-2@lo.gmane.org; Wed, 25 Aug 2010 08:16:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751515Ab0HYFi5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 01:38:57 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:39005 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751128Ab0HYFiz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 25 Aug 2010 01:38:55 -0400
-Received: by wwb34 with SMTP id 34so399270wwb.1
-        for <git@vger.kernel.org>; Tue, 24 Aug 2010 22:38:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NyANL5pQvzXTrRk5t6otNQXEBx6Q1ovxgej1iefGynI=;
-        b=MJEtfOR4XkC0UKOFWfTymA5yOdKHFQjHVQ84p6esbwkF+Y0daRBXdgvTfBfqvSwJ8A
-         gZJgJhQ429tFT5oPJMWlh57RW4tgHvUxFznY5aJ2QIFBQMR+luD+c63wYNCi1KkjD2Y4
-         EbTBbkPsDLNgwZ8FZ67z9E8RWIlzS6Zx7/Ims=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=DWyPlkaQVau6qjJ+KwCZQtKxQQ1bY5yltOS8IaoBS942b5tTQUgNVQ9PweQqsTLZmG
-         d6+xoX6/XtfHqh1pWlK0wSbIOL484NPEAWyN8dv/rhcU1pviYvwXTvn+ugExFEJKCi6T
-         XDBUjXMoMW/o7nfG6RFw12kxzZU56dkgrGyPI=
-Received: by 10.216.231.73 with SMTP id k51mr6930424weq.5.1282714734398; Tue,
- 24 Aug 2010 22:38:54 -0700 (PDT)
-Received: by 10.216.184.17 with HTTP; Tue, 24 Aug 2010 22:38:54 -0700 (PDT)
-In-Reply-To: <AANLkTinaF6e+bfVqRRThuZ=2PjpOs4P88RKFsxOTVSJR@mail.gmail.com>
+	id S1752039Ab0HYGQt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 25 Aug 2010 02:16:49 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:42949 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751380Ab0HYGQs (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 25 Aug 2010 02:16:48 -0400
+Received: (qmail invoked by alias); 25 Aug 2010 06:16:46 -0000
+Received: from i59F5723D.versanet.de (EHLO atjola.homenet) [89.245.114.61]
+  by mail.gmx.net (mp071) with SMTP; 25 Aug 2010 08:16:46 +0200
+X-Authenticated: #5039886
+X-Provags-ID: V01U2FsdGVkX1/DnTBUBaDD8XBQuJW1LOlVokQgqMbHPHzjHVd4G5
+	my7qdKUgxTEjfd
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=+tGLfs-t6+fjRu68Mt76dJw4sbNCoO9q9+uyp@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154424>
 
-On Wed, Aug 25, 2010 at 3:04 PM, Elijah Newren <newren@gmail.com> wrote=
-:
-> Hi,
->
-> 2010/8/24 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.co=
-m>:
->> By definition, narrow repository is incomplete. It does not even hav=
-e
->> enough tree for a single commit. So populating a full index is
->> impossible.
->>
->> Because of this, unpack_trees() is modified to only unpack trees
->> within $GIT_DIR/narrow, which narrow repo has all needed trees. This
->> makes the resulting index unsuitable for creating commits later on.
->> This is the reason index version is increased to 4, to avoid older
->> git from using it.
->>
->> The resulting tree objects created from the index is only part of th=
-e
->> full tree. Manipulation will be needed at commit time to create prop=
-er
->> tree for commits.
->
-> I spent a while thinking about this a couple weeks ago and never came
-> to a strong conclusion about which of two alternatives should be
-> preferred; I'm curious why you decided to go for this solution. =C2=A0=
-An
-> alternative I thought of was having the index have entries for missin=
-g
-> files (whose contents did not exist in the repository or the working
-> copy; rather all we know is the filename and its sha1sum) and also
-> gain the ability to have entries for missing trees (which behave
-> similarly; all we know is their name and their sha1sum, but the
-> contents of that sha1sum are not in the repository or the working
-> directory) =C2=A0Is there a reason to prefer one alternative over the
-> other? =C2=A0Does the alternative I thought of even make sense?
+[Added Jonathan back to Cc...]
 
-That was nightmare. I had to deal with unpack_callback() and skip
-uninterested paths. And that function is, I think, quite optimized. I
-tried another approach, putting directories in index with hope that it
-would cut down the number of code path I'd have to touch. It did, but
-then index sorting order is just weird and I couldn't get it right
-(felt to risky).
+On 2010.08.25 01:07:28 -0400, Todd A. Jacobs wrote:
+> On Wed, Aug 25, 2010 at 12:14 AM, Jonathan Nieder <jrnieder@gmail.com=
+> wrote:
+> > $ git log --oneline v1.7.2.2..35039ced9296786bc0971bf5385c0d6f6ea5e=
+a1e
+> > 35039ce archive: abbreviate substituted commit ids again
 
-unpack_trees() is used by diff (all diffs except diff_tree_sha1).
-traverse_trees()/unpack_trees() is also used by merge strategy. All
-those code is really complicated that I'd rather stay away from them.
+That shows that the commit is not in the tag's ancestry.
 
-That was before I went with tree rewrites. Soon after I realized the
-nice effect of tree rewrites is that the index is narrowed down. So I
-can get rid of tree rewrites as long as the index is still narrow.
-That's how I come to this approach.
+> Tag v1.7.2.2 is almost a month after 35039ce, so I'm not sure where
+> you're going with that, either. It should definitely be part of the
+> 1.7.2.2 tarball, but the problem persists.
 
-Back to your questions. I think the alternative makes sense, it just
-looks a lot of work and quite intrusive. On the other hand, my current
-approach is quite simple (but it probably won't work for more than a
-single narrow tree)
---=20
-Duy
+Maybe it should be, but it isn't. With non-linear histories, commit
+dates don't tell you whether one commit is an ancestor of another
+commit.
+
+Bj=F6rn
