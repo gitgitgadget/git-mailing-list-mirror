@@ -1,58 +1,72 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Jon Seymour <jon.seymour@gmail.com>
 Subject: Re: Does anyone use git-notes?
-Date: Thu, 26 Aug 2010 10:09:27 +0200
-Message-ID: <4C762137.1090801@drmicha.warpmail.net>
+Date: Thu, 26 Aug 2010 18:26:27 +1000
+Message-ID: <AANLkTi=jNPtvpO_gVKyS0U_0qRLtKZ84p=B+8zStxvkX@mail.gmail.com>
 References: <AANLkTin=VXp2BU0vhTLUy6MpJ7spXRs1dZC1wygoN6T-@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git list <git@vger.kernel.org>
 To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 10:09:38 2010
+X-From: git-owner@vger.kernel.org Thu Aug 26 10:26:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoXWj-0002AM-Lj
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 10:09:38 +0200
+	id 1OoXn9-0008OU-Fw
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 10:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752903Ab0HZIJa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 04:09:30 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42132 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752363Ab0HZIJ2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 04:09:28 -0400
-Received: from compute1.internal (compute1.internal [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 2D508351;
-	Thu, 26 Aug 2010 04:09:28 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 26 Aug 2010 04:09:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=apXEjt+MNVZlLAiSUwNkn2Fms0M=; b=c+/fuVv0gg4uvVC8AKDVx5chByzvdLe2owiWARAvi+22jhnE1TbqOUb60c6tvs92bzGKci25L0xbP6BRj/insfAxE3k8Z/tk6Z6HCN67/ZILEZbJBQ9ZV634rAmubri5JPL2CCFpc3mK5hornotOQ/bNUVOfsx/dJrotUEg1ohk=
-X-Sasl-enc: dDo1A7sos3fNdrzET0i2BGIUZ2cOwuSfrs8Ats++kddY 1282810167
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4EA8F40201B;
-	Thu, 26 Aug 2010 04:09:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Lightning/1.0b2pre Thunderbird/3.1.2
+	id S1753160Ab0HZI03 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Aug 2010 04:26:29 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:55157 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753104Ab0HZI02 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 04:26:28 -0400
+Received: by qyk33 with SMTP id 33so1451472qyk.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 01:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ajEWGGqbn/acJknybVgNVBjo098nFu4QxatedNxlM5s=;
+        b=FFU6ep3GhGyF/fXZ3u8vHmqLST33z6v/Wi8cnbjQBnb0UawwYpWz42i/PAQ38MCueL
+         /zNFZnBnHxP0qWPmwEXgggDRAd1wtdLR87U7RagfqTazpoup7SeCqlyhnKjqDE4ZtBAb
+         xE5YChTwmyv9FNEKxekelzG/x7ViznLEo3u84=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=O8q9yEQvIPZEhEL9si2dhXjwIE3IinNAFHigcTHfy5pg2L+pSu/Ghq0064NIKa+d6x
+         RO6Qyf/+BgdXm6K/Ans0dtqgOjqaIorZkXM7XkGC4w//eIhe/wrBTqUG6QjUPxJ9nU22
+         M/b/6fMA2GxBfmjHcFWvjHk8ok/RVCj+FKaa0=
+Received: by 10.229.239.7 with SMTP id ku7mr1372862qcb.189.1282811187173; Thu,
+ 26 Aug 2010 01:26:27 -0700 (PDT)
+Received: by 10.229.114.222 with HTTP; Thu, 26 Aug 2010 01:26:27 -0700 (PDT)
 In-Reply-To: <AANLkTin=VXp2BU0vhTLUy6MpJ7spXRs1dZC1wygoN6T-@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154531>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154532>
 
-Scott Chacon venit, vidit, dixit 25.08.2010 20:15:
+On Thu, Aug 26, 2010 at 4:15 AM, Scott Chacon <schacon@gmail.com> wrote=
+:
 > I would like to write a post on how to use them, but I'm a bit
-> confused as to how people actually use them on a day to day basis.  I
+> confused as to how people actually use them on a day to day basis. =C2=
+=A0I
 > appears to me in trying to work out a flow for them that the lack of
-> an ability to merge them makes them very difficult to use for anything
-> practical.  Can someone share with me how they use them and what the
+> an ability to merge them makes them very difficult to use for anythin=
+g
+> practical. =C2=A0Can someone share with me how they use them and what=
+ the
 > cycle is?
+>
 
-I use it to store the patch comments (the part that goes after the
-"---", before the diff) along with my commits so that I have them in my
-git.git tree, not only in my mbox. This makes it also easier to redo a
-patch and keep the comment when regenerating the patch e-mail with
-format-patch. (I don't have a good solution for the cover letter yet.)
+I use them to store test execution output.
 
-Michael
+By post-processing, then diffing such notes, I can work out what was
+regressed or fixed between two commits.
+
+jon.
