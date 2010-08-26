@@ -1,95 +1,85 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFD PATCH 00/32] subtree clone v2
-Date: Thu, 26 Aug 2010 14:45:35 +1000
-Message-ID: <AANLkTinZk-cF6ksN2UhAyHNwJAS=fm6eLKJEP+evdJGU@mail.gmail.com>
-References: <1282688422-7738-1-git-send-email-pclouds@gmail.com>
-	<20100824223741.GB2376@burratino>
-	<AANLkTikipryFVf_XvvbHopWSo5Ey_mvgTevY2NAvhygQ@mail.gmail.com>
-	<AANLkTinsNvVup43B6nQtU6dvJy789n8kQm6N6na0J9oa@mail.gmail.com>
-	<AANLkTikkybj784PHoVCkVZyxo40q6BhdkOzFho-xBS6G@mail.gmail.com>
-	<AANLkTikOtinR1EjzrzMqzR8Pn2hpDRVJrWDmx5b5tGQ_@mail.gmail.com>
-	<AANLkTi=02T+60AjJON8MFt7DSbtA=bx39YKigZHq_b_u@mail.gmail.com>
-	<AANLkTinQYfpWYJ8Lr3=VX+x2Xj+eQfYztT1GHh2AQKff@mail.gmail.com>
-	<AANLkTi=3tGf=Gw6SnRLOSaURw7JX=qEPtLCzLhZN1D+y@mail.gmail.com>
-	<AANLkTinH8UWbkCUBFa1yr1fOQJgs9rLOj_kcp2UR3iua@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v6 0/3] rr/fmt-merge-msg replacement
+Date: Thu, 26 Aug 2010 10:42:38 +0530
+Message-ID: <20100826051235.GA9407@kytes>
+References: <1282733330-32334-1-git-send-email-artagnon@gmail.com>
+ <7vhbiiqv8p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 06:46:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 26 07:14:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoULb-0007ui-No
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 06:45:56 +0200
+	id 1OoUnP-0005mo-0m
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 07:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753015Ab0HZEph convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Aug 2010 00:45:37 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:44543 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103Ab0HZEpg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 00:45:36 -0400
-Received: by wwb28 with SMTP id 28so1009221wwb.1
-        for <git@vger.kernel.org>; Wed, 25 Aug 2010 21:45:35 -0700 (PDT)
+	id S1753451Ab0HZFOb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 01:14:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50087 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752816Ab0HZFO3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 01:14:29 -0400
+Received: by iwn5 with SMTP id 5so1255741iwn.19
+        for <git@vger.kernel.org>; Wed, 25 Aug 2010 22:14:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=emwz92sbpeBfRMgHOVohoKEVnheYxPOeJBaq0udRQjI=;
-        b=wGOKxEavZLkJGHT/6Ta/GCQXSfXP7nPFz/phMLSBVhJc8/deLYvPHYEjrkJ0Q6kcdb
-         4sYRjciWEIJEsOu98W4NcxARV6ubyYFFEKLh948vgrBOYTwoV4zDON5AvzMF6N1wiRol
-         UIeHMXY+Mx3RjHblIiTc5KobKNSImEKcK/JG0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=PfUD4zAjraK5MgNTEWVnZN0RjmPt4F5clFoCsbUaNaE=;
+        b=HRkg+NV1iJY3obzsn0RG5ToWU8Ez1hOh24gl/nHJEw0CB/Vbzn72ng8ZMju+BeBzdB
+         VmQ1r9k7+VVhTsdXgb6luiaUjlLJqLgx+jILnxnrsdyN10lzm5I/Kzk/pV1/8ZgT1GuK
+         movHbpRU2H/xPXe1YIwl84qiBu04b6sgkPYS0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EDFn5g5ueXvZ25aR+YYZ6PHx295i7OoLHOxXnCQX7w6n3GiIE5kZxTQdcZ5Ev9q2W6
-         pje3izq7sSaq16IXtLC2fs2MnyqVQ7OzatBAzcOA3GL7QZNpvfFiRD7//SCwNmghrCgJ
-         RDRy24NMzpcc/YZ6SBhkpNOEWn4rRFVF71+yE=
-Received: by 10.216.11.202 with SMTP id 52mr8327326wex.28.1282797935519; Wed,
- 25 Aug 2010 21:45:35 -0700 (PDT)
-Received: by 10.216.184.17 with HTTP; Wed, 25 Aug 2010 21:45:35 -0700 (PDT)
-In-Reply-To: <AANLkTinH8UWbkCUBFa1yr1fOQJgs9rLOj_kcp2UR3iua@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=es8usmU2rQklk5DnAgLTEi3hLxvHSsfLENSh9he9r6mfxikOTgBt4QNGbFpIte5V9R
+         TrKtiwff4PFV5lR6FCj5byeZcL5rQom6+0AY2wCwh1F+2n4QTqwGFMXRKj0bg3nAPOpC
+         pnNSeZ0Sy1FLKcWVzD++1TIO4Mi3j8fNDOWGU=
+Received: by 10.231.146.135 with SMTP id h7mr11423105ibv.149.1282799668908;
+        Wed, 25 Aug 2010 22:14:28 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id e8sm2095017ibb.20.2010.08.25.22.14.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 25 Aug 2010 22:14:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vhbiiqv8p.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154507>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154508>
 
-On Thu, Aug 26, 2010 at 2:39 PM, Elijah Newren <newren@gmail.com> wrote=
-:
-> On Wed, Aug 25, 2010 at 9:52 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.=
-com> wrote:
->> Let's say in "ancestor" tree, we have
->>
->> t1/f0
->> t2/t3/f0
->>
->> In "you" tree, we have
->>
->> t1/f0
->> t2/t3/f0
->> t2/t3/f1
->>
->> In "upstream" tree, we have
->>
->> t1/f0
->> t2/t3/f0
->> t2/t3/f2
->>
->> The narrow tree is t1, so we the trees we have are toplevel tree and
->
-> How would you get the "you" tree? =C2=A0Since you don't have the data=
- for
-> t2 or t2/t3, there's no way you can create and commit this tree.
+Hi Junio,
 
-"you" tree does not create that file. It's been there. It's the
-"ancestor" tree that did not have that file. So if you happen to
-choose an "upstream" tree that git-merge-base would give you that
-particular "ancestor" tree, we're in this situation.
---=20
-Duy
+Junio C Hamano writes:
+> Ramkumar Ramachandra <artagnon@gmail.com> writes:
+> 
+> > This is a replacement for rr/fmt-merge-msg. It corrects the problems
+> > pointed out by Jonathan and adds one extra patch. Additionally, I've
+> > rebased it so there's no merge conflict when you merge it into `pu`
+> > (see: jn/merge-renormalize). 4/5 from v5 has been dropped.
+> 
+> Thanks, 
+> 
+> Just as a future reference, in a case like this that results in trivial
+> conflict, I'd prefer to see a patch that can be used independently from
+> other unrelated branches.
+
+Oh, okay. I think I realize why- if the dependent topics are ejected,
+you'll have more trouble taking this forward to `next` and `master`,
+right?
+
+> Maybe you'd want a new test or two in t6200?
+
+Good idea! It'll give me the chance to familiarize myself with
+test-lib.sh :)
+
+-- Ram
