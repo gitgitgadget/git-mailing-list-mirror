@@ -1,88 +1,96 @@
-From: Emil Sit <sit@emilsit.net>
-Subject: Regression in git log with multiple authors
-Date: Thu, 26 Aug 2010 13:39:45 -0400
-Message-ID: <AANLkTikONxneEgF5m+m6100pwzThTnaiAB+OFzYufcC2@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 0/2] log/ format-patch improvements
+Date: Thu, 26 Aug 2010 23:22:38 +0530
+Message-ID: <20100826175234.GB25754@kytes>
+References: <1282422531-29673-1-git-send-email-artagnon@gmail.com>
+ <20100825084416.GC3280@kytes>
+ <20100825205416.GB2319@burratino>
+ <20100826053439.GB9407@kytes>
+ <20100826054659.GC9708@burratino>
+ <7vk4ndo05p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Aug 26 19:39:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Aug 26 19:54:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OogQc-00026i-G3
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 19:39:54 +0200
+	id 1OogfA-0002JO-Pt
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 19:54:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752900Ab0HZRjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 13:39:49 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33551 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752825Ab0HZRjr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 13:39:47 -0400
-Received: from compute3.internal (compute3.internal [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3BBA63B2;
-	Thu, 26 Aug 2010 13:39:47 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Thu, 26 Aug 2010 13:39:47 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=mime-version:date:message-id:subject:from:to:cc:content-type; s=smtpout; bh=I/HuGH83UEccZQBU2yQCIdpqU6c=; b=od/2cn513OXffTRjyN6BLz3sYsFZyrQQj1UTYocTRnnyGL4UW4Ijoy6jrerLC2NAhC4xtEG3QaFq3IzzLACj3y//qFe174mnWM9JyMxr+I8QHsD1rkC8KhlghqlapwS5cptDhr2U9wvO8bJqj5a3qH2p2Y+77f/W5xxvd4QPdiE=
-X-Sasl-enc: Q7F9I64AqADwy34kNIcxYoQqV4SuJw7UKPqqY7GlJDEV 1282844387
-Received: from mail-bw0-f46.google.com (mail-bw0-f46.google.com [209.85.214.46])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DE90F5E2669
-	for <git@vger.kernel.org>; Thu, 26 Aug 2010 13:39:46 -0400 (EDT)
-Received: by bwz11 with SMTP id 11so1279183bwz.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 10:39:46 -0700 (PDT)
-Received: by 10.204.102.141 with SMTP id g13mr6410290bko.200.1282844385961;
- Thu, 26 Aug 2010 10:39:45 -0700 (PDT)
-Received: by 10.204.114.140 with HTTP; Thu, 26 Aug 2010 10:39:45 -0700 (PDT)
+	id S1752504Ab0HZRyq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 13:54:46 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:40885 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752380Ab0HZRyp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 13:54:45 -0400
+Received: by pwi7 with SMTP id 7so816148pwi.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 10:54:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=dBJNSLlz5f4hoNVr0xGLLzeILqAFawIE+JiCZRdaezI=;
+        b=ARpy032NofrTIsuT62VP49dMbjmJM8fWqSatafE70WqnJEX+msWvPCUM/0SEEG6JBT
+         gOTJSpbQNH3A316xXRJGpabj7/SixC5kPwKC4TmVROIWoE3ISfN/JWekAs9dJPnyUtk/
+         oobHTNuIepSgHZvMcJ46wHtQ2Sb++MtCFio78=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xJB80RUBP+MZCXrI+xSgsSZQZlVh9F0CPF1aL/hpw0ml8k+lQi8gNNMYr4BG20aL3r
+         R9KcqZRy0ncBsCpsZ2KN4zJ+vtBcqXCszek8CQPD0I+t381niVRYafI/Xk5l/n4Jn2hK
+         0CeI9fuYJBrqXim5X4WOK/q7cBMYZJDTE/6Lw=
+Received: by 10.114.131.15 with SMTP id e15mr11551317wad.178.1282845283738;
+        Thu, 26 Aug 2010 10:54:43 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id n32sm4858139wag.11.2010.08.26.10.54.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Aug 2010 10:54:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vk4ndo05p.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154550>
 
-Commit 80235ba79ef43349f455cce869397b3e726f4058 introduced a
-regression in a corner case for git log --author when multiple authors
-are specified.  Prior to 1.7.0.3, if I wanted to find all commits done
-by a series of authors, I could simply specify "git log --author=a1
---author=a2" to get all commits done by a1 and a2.  However, in the
-latest releases, this finds nothing.
+Hi Junio,
 
-Here's a simple test case that demonstrates this:
+Junio C Hamano writes:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+> 
+> > Ramkumar Ramachandra wrote:
+> > ...
+> >> Good idea. I'll write a patch. Do we also want people to be able to
+> >> turn off `--no-merges`?
+> >
+> > I don't see a need for it.
+> >
+> > However, if you can think of good names for --undo-no-merges and
+> > --undo-merges options to "git log", that might be a nice independent
+> > change for the revision option parser.
+> 
+> Wait a bit.  How would you represent a merge in a patch form that can be
+> read by "git apply" (and "patch") in the first place?
 
-diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
-index 023f225..587069c 100755
---- a/t/t7810-grep.sh
-+++ b/t/t7810-grep.sh
-@@ -372,6 +372,14 @@ test_expect_success 'log --grep --author
-implicitly uses all-match' '
-        test_cmp expect actual
- '
+Oh, I'm not attempting that. I merely wanted people to be able to turn
+off `--no-merges` so they can get the current functionality.
 
-+test_expect_success 'log --author --author matches both authors' '
-+       # author matches only initial and third
-+       # frotz matches only second
-+       git log --author="A U Thor" --author="frotz\.com>$"
---format=%s >actual &&
-+        ( echo third ; echo second ; echo initial ) >expect &&
-+       test_cmp expect actual
-+'
-+
- test_expect_success 'grep with CE_VALID file' '
-        git update-index --assume-unchanged t/t &&
-        rm t/t &&
+As far as represeting merge commits go, I'm still thinking about it. I
+talked to Thomas about it briefly on IRC. The main issues:
+1. What's the point? When there's no conflict resolution, a merge
+   commit would be empty.
+2. How do we uniquely specify what to merge? We can't use branch names
+   or commit SHA1s, because they can change.
 
-This fails against master, but if you revert 80235ba, this will pass
-(whereas obviously 'log --grep --author implicitly uses all-match'
-will then fail).
-
-It doesn't seem like I can work-around this with 'git log --author a1
---or --author a2'.  Is there some other way to find commits by a set
-of authors? I don't think it makes sense to treat multiple --author
-flags with "and' logic since a commit can only have one author.  So
-maybe all --authors should be grouped with ors and then anded against
-all --committers?
-
--- 
-Emil Sit / http://www.emilsit.net/
+-- Ram
