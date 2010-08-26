@@ -1,101 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: setting working dir in posix_spawn() (Re: Fix 'git log' early
- pager startup error case)
-Date: Thu, 26 Aug 2010 01:18:15 -0500
-Message-ID: <20100826061815.GH9708@burratino>
-References: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org>
- <20100825013625.GC10423@burratino>
- <4C74BFA7.1090907@viscovery.net>
- <4C752739.3010808@redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthias Lederhofer <matled@gmx.net>,
-	=?utf-8?B?SsO8cmdlbiBSw7xobGU=?= <j-r@online.de>,
-	austin-group-futures-l@opengroup.org
-To: Eric Blake <eblake@redhat.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 08:20:04 2010
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCHv2 0/8] Make rev-list --objects work with pathspecs; minor optimizations
+Date: Thu, 26 Aug 2010 00:21:43 -0600
+Message-ID: <1282803711-10253-1-git-send-email-newren@gmail.com>
+Cc: gitster@pobox.com, pclouds@gmail.com,
+	Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 26 08:20:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoVog-0001tJ-6J
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 08:20:02 +0200
+	id 1OoVp6-0002DN-Be
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 08:20:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752092Ab0HZGT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 02:19:57 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52393 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762Ab0HZGT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 02:19:56 -0400
-Received: by iwn5 with SMTP id 5so1298236iwn.19
-        for <git@vger.kernel.org>; Wed, 25 Aug 2010 23:19:55 -0700 (PDT)
+	id S1752120Ab0HZGUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 02:20:23 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:34823 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751762Ab0HZGUV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 02:20:21 -0400
+Received: by yxg6 with SMTP id 6so511700yxg.19
+        for <git@vger.kernel.org>; Wed, 25 Aug 2010 23:20:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=9J8qByNW6y74CuWzEwJndjQaq6Pu8kwxpp7TntO60y0=;
-        b=Z2Aa47VmHWQKpziRDr4zmUOs61boISxhRvPlVQ2p+LIIvbZknVbekZgcO+iMR2pJHy
-         1ta/mSLbsT/q6QFmW2tWH2+6fQNi0gGuRvexDB7fv1izWeWjYL1Egi/l/85YENPDaek7
-         HdJDCNgDvUTjfsnOEKiCkim+46nlGmE5/6sIo=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=Y9xjgVTipLtIcgxOmTOECf3vzIe+26jUz+2gx2hUVZo=;
+        b=g2aFsot6SStX7J/3FQd2kSQRCYzHZ8pArIsXQdZwblvwjoiJ5NzstgBNTKBssqOSt2
+         3DJtSej2SrZY4toNXXrsVgPg6IMPA270CfGNhexxnOdqk5J3gOC0Ar2Abvbtnj49+rK1
+         eMnSsx7n3x04nT8xfchnza6mKQwi3kBCAryb8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Z9nyIxPhygkj4SCAi0fSLKRlhRK8mfN1iqB84NSgs16vJerA94xKRopEaFMe2ewetH
-         pR1PAPx0U5AraM9mNM22pIiC78Cq4KE5IKipaFL8/TZaHQ7zvBfpws1bueEXM/TWEFpo
-         FVfPasebouZKTOj65FiYv5dTN14M47UUMnhgo=
-Received: by 10.231.35.202 with SMTP id q10mr11340089ibd.138.1282803595867;
-        Wed, 25 Aug 2010 23:19:55 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id e8sm2172503ibb.8.2010.08.25.23.19.54
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=WJSkmAbi+WsJIU+G7C0yWibvALRjCYK9Jj/7hf70bm5K8kW+rIieOM8e/ZpAXS2j2Y
+         8DdsQ/RZ/v2nfY/EfoYlXdAy6D3xT0vZiBDADVSOWoQxgn0uiS348vcuidqCC8YHwPc+
+         IrTf+lFSva6JTYT4m/D2+zloXiQaPPOMjWCpg=
+Received: by 10.151.69.21 with SMTP id w21mr9708362ybk.428.1282803621317;
+        Wed, 25 Aug 2010 23:20:21 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
+        by mx.google.com with ESMTPS id t20sm7160156ybm.5.2010.08.25.23.20.18
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 25 Aug 2010 23:19:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4C752739.3010808@redhat.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Wed, 25 Aug 2010 23:20:20 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.45.ga60f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154517>
 
-(+cc: austin-group-futures)
+This series enables rev-list to produce a list of objects that is path
+limited, when the user requests it.  It also provides a few small code
+cleanups and some small optimizations.
 
-Eric Blake wrote:
-> On 08/25/2010 01:00 AM, Johannes Sixt wrote:
+Changes since last round:
+  * Patch 1 has two new testcase; one that triggered a bug I found,
+    and an interesting case Junio mentioned needed to work.
+  * Patch 2 will have fewer mallocs/frees in some cases (a suggestion
+    from Nguyen Thai Ngoc Duy), and corrects an issue from the first
+    series with how it calls tree_entry_interesting.
+  * Patch 3 is new; it adds a simple code comment that would have
+    alerted me to avoiding the bug in the first round of the series.
+  * Patches 4-8 are unchanged.
 
->> Just FYI, posix_spawn() is not sufficiently capable for the demands of
->> start_command(): It doesn't allow to set a new CWD for the spawned process.
->
-> And even if posix_spawn() were capable, cygwin doesn't yet implement it.
+As before, the last two patches are weatherballons.  They can be
+silently dropped.
 
-Hmm, okay.  You have access to win32api, though, right?  So it should
-be possible to reuse code from compat/mingw.c::mingw_spawnvpe.
+Updated timings, for the curious:
+ A git rev-list --quiet HEAD
+ B git rev-list --quiet HEAD -- Documentation/
+ C git rev-list --quiet HEAD -- t/
+ D git rev-list --objects HEAD > /dev/null
+ E git rev-list --objects HEAD -- Documentation/ > /dev/null
+ F git rev-list --objects HEAD -- t/t9350-fast-export.sh > /dev/null
+Results:
+             A      B      C      D      E      F
+maint       0.34   0.68   1.33   1.90   1.39   0.65
+Patch-1     0.34   0.68   1.33   1.90   1.38   0.65
+Patch-2     0.34   0.68   1.33   1.88   0.97   0.66
+Patch-3     0.34   0.68   1.33   1.88   0.97   0.65
+Patch-4     0.34   0.67   1.33   1.87   0.97   0.65
+Patch-5     0.34   0.68   1.33   1.88   0.97   0.65
+Patch-6     0.34   0.65   1.28   1.87   0.93   0.65
+Patch-7     0.34   0.65   1.29   1.86   0.94   0.65
+Patch-8     0.34   0.65   1.28   1.85   0.93   0.65
 
-Do you think there would be any interest in a posix_spawn() variant
-that takes a dir parameter?  I am imagining something like this:
 
- int posix_spawn2(pid_t *restrict pid, const char *restrict path,
-	const posix_spawn_file_actions_t *file_actions,
-	const posix_spawnattr_t *restrict attrp,
-	char *const argv[restrict], char *const envp[restrict],
-	const char *dir);
 
-or this:
+Elijah Newren (8):
+  Add testcases showing how pathspecs are ignored with rev-list
+    --objects
+  Make rev-list --objects work together with pathspecs
+  Document pre-condition for tree_entry_interesting
+  tree-walk: Correct bitrotted comment about tree_entry()
+  tree_entry_interesting(): Make return value more specific
+  diff_tree(): Skip skip_uninteresting() when all remaining paths
+    interesting
+  list-objects.c: Avoid recomputing interesting-ness for subtrees when
+    possible
+  tree-diff.c: Avoid recomputing interesting-ness for subtrees when
+    possible
 
- int posix_spawn2(pid_t *restrict pid, const char *restrict path,
-	const posix_spawn_file_actions_t *file_actions,
-	const posix_spawnattr_t *restrict attrp,
-	char *const argv[restrict], char *const envp[restrict],
-	int dirfd);
+ diff.h                   |    1 +
+ list-objects.c           |   34 +++++++++++++++++++++++---
+ revision.c               |    8 ++++-
+ revision.h               |    3 +-
+ t/t6000-rev-list-misc.sh |   51 +++++++++++++++++++++++++++++++++++++++
+ tree-diff.c              |   60 +++++++++++++++++++++++----------------------
+ tree-walk.h              |    4 ++-
+ 7 files changed, 124 insertions(+), 37 deletions(-)
+ create mode 100755 t/t6000-rev-list-misc.sh
 
-or this:
-
- int posix_spawn_file_actions_addchdir(posix_spawn_file_actions_t
-	*file_actions, int dirfd);
+-- 
+1.7.2.2.45.ga60f
