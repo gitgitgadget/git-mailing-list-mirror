@@ -1,56 +1,68 @@
-From: Tomas Carnecky <tom@dbservice.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: Storing notes refs outside of refs/
-Date: Thu, 26 Aug 2010 20:47:43 +0200
-Message-ID: <4C76B6CF.8040808@dbservice.com>
+Date: Thu, 26 Aug 2010 13:51:56 -0500
+Message-ID: <AANLkTim=P6GwnhuaJrixCZB_USD0NrKT0nN4t6XyEY+6@mail.gmail.com>
 References: <4C7681F1.3070205@workspacewhiz.com> <7vy6btl2yo.fsf@alter.siamese.dyndns.org>
+ <4C76B6CF.8040808@dbservice.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 20:48:25 2010
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Thu Aug 26 20:52:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OohUt-0001TV-5m
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 20:48:23 +0200
+	id 1OohYy-0003qm-1P
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 20:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752278Ab0HZSsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 14:48:18 -0400
-Received: from office.neopsis.com ([78.46.209.98]:60114 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561Ab0HZSsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 14:48:16 -0400
-X-Spam-Status: No, hits=0.0 required=5.0
-	tests=AWL: 0.067,BAYES_00: -1.665,TOTAL_SCORE: -1.598,autolearn=ham
-X-Spam-Level: 
-Received: from calvin.caurea.org ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Thu, 26 Aug 2010 20:47:44 +0200
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-In-Reply-To: <7vy6btl2yo.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.1
+	id S1754394Ab0HZSwS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 14:52:18 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58429 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753774Ab0HZSwQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 14:52:16 -0400
+Received: by yxg6 with SMTP id 6so782707yxg.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 11:52:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=2/NG2bLIzABzVzZFjwTrnlFXdGIFTcqN/AMr0GHltHY=;
+        b=MYmm+mM65IaHeXuJxYMgkpA20HkEXxQobhm/3pRJFxtpEaVEhuoMysxUXBEJwpeutz
+         j/YUxNAMQZntGZa0kYizBEa9wHJDUI6S0cMc/zGbOIpIzrO3LH68XAmsIrRmOB1j+Kd3
+         YPMDZBODiteKQXU4GvA595qp2OIEOBcugaaQs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Kyjjk1vM1097rpBR7GjEjh5L9aaozvKqFJKvRlPQKnTqHie2KbtdDIhB9Eo0LDyDjX
+         soV+3HxGisxDdjI9gnlyvwpCr+JA75+5RpPCM5f/2Ss4liMMlhxFOnQOfcGA3zLAsBP0
+         jcjKJutpUdrep1hnpC4TQUbhAIGOo5xAQUVdo=
+Received: by 10.151.156.4 with SMTP id i4mr546733ybo.370.1282848736123; Thu,
+ 26 Aug 2010 11:52:16 -0700 (PDT)
+Received: by 10.151.49.17 with HTTP; Thu, 26 Aug 2010 11:51:56 -0700 (PDT)
+In-Reply-To: <4C76B6CF.8040808@dbservice.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154554>
 
-On 8/26/10 7:05 PM, Junio C Hamano wrote:
-> Joshua Jensen <jjensen@workspacewhiz.com> writes:
-> 
->> I tried manually moving .git/refs/notes/p4notes to .git/p4/p4notes.
-> 
-> Bad idea.  Your notes no longer are protected from fsck and prune.
+Heya,
 
-Hm, so storing no longer needed branches outside of the refs/heads
-namespace (so that they don't show up in git branch) is a bad idea? This
-suggestion was made in #git today or yesterday and I'd like to know if I
-should advise people against doing that.
+On Thu, Aug 26, 2010 at 13:47, Tomas Carnecky <tom@dbservice.com> wrote:
+> Hm, so storing no longer needed branches outside of the refs/heads
+> namespace (so that they don't show up in git branch) is a bad idea?
 
-tom
+You can store them outside refs/heads just fine, as long as they're
+somewhere under refs. For example, refs/attic/ would be perfectly
+safe.
+
+-- 
+Cheers,
+
+Sverre Rabbelier
