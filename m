@@ -1,96 +1,88 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: setting working dir in posix_spawn() (Re: Fix 'git log' early pager startup error case)
-Date: Thu, 26 Aug 2010 00:16:06 -0700
-Message-ID: <65AAB642-0AEB-40F3-8C33-81AA2C110D3E@gmail.com>
-References: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org> <20100825013625.GC10423@burratino> <4C74BFA7.1090907@viscovery.net> <4C752739.3010808@redhat.com> <20100826061815.GH9708@burratino>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Eric Blake <eblake@redhat.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthias Lederhofer <matled@gmx.net>,
-	=?ISO-8859-1?Q?J=FCrgen_R=FChle?= <j-r@online.de>,
-	austin-group-futures-l@opengroup.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 09:16:17 2010
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: Does anyone use git-notes?
+Date: Thu, 26 Aug 2010 09:56:55 +0200
+Message-ID: <AANLkTim01==of5ce07F4MFVazevNiRQLBMv38ferSgKB@mail.gmail.com>
+References: <AANLkTin=VXp2BU0vhTLUy6MpJ7spXRs1dZC1wygoN6T-@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git list <git@vger.kernel.org>
+To: Scott Chacon <schacon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 26 09:57:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoWh6-00024r-8e
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 09:16:16 +0200
+	id 1OoXKY-0007aT-AZ
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 09:57:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753036Ab0HZHQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 03:16:12 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:39062 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752841Ab0HZHQK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 03:16:10 -0400
-Received: by pxi10 with SMTP id 10so511751pxi.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 00:16:10 -0700 (PDT)
+	id S1753027Ab0HZH45 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Aug 2010 03:56:57 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51775 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752058Ab0HZH44 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 03:56:56 -0400
+Received: by qyk9 with SMTP id 9so5734912qyk.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 00:56:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=66V+IW9haAzOFp2JM049OmOWiP6plKC3y8Jz3RylpRE=;
-        b=UnBBW9OhXqlk+9meCXRypPE1UtT9EatiZk0xwDLHaHojmn7E1SpkEM+4BeYaOJzO/3
-         dAUve5wsh/j1dxhwoNZzHIj8AGCTzlNdzaeVsyOxLa8s6KQk1nHxxDw46s0JR/CfNal/
-         jcMmQhSlTJDMmNfoq2XG0K8GqOsNmWj4SI2DE=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=ZL678qYHAARSQa1m7BdbWQQhpmnmT40/MxPsHIqgQOI=;
+        b=tk0IwAjC7ya52exWCD4JdyAeifitIzFIqDqgm/DAXeYXSo3LUAWczkzSDcuynKEJAU
+         Ib/F/AxkHE/+9qQuqxNkKykoLX1KzYck7WDgMGPDwzd9IoH/OV2ymjVZgZrOqn66Lk2T
+         +tlH93BLA5uXOenS9o8WGxODCJoaicZTZXMOs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=hTF01NCIZMZYcE2AOhyQsEWTEh0ac0n9Bt/O2XWt4MITcny01xPzsEzwlMky6Y1YC6
-         6PRQvvPIH23byOds93TLoj4PHKif/Wk+KyIXNGuNfmx7p+MTWLi8oXoMSB/sSQDKQF6b
-         NqaOA7idyGiJ0kz4n4Jcpvcq9t7ibGqk/+MzE=
-Received: by 10.142.232.13 with SMTP id e13mr7959437wfh.117.1282806969756;
-        Thu, 26 Aug 2010 00:16:09 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id y16sm2555743wff.14.2010.08.26.00.16.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Aug 2010 00:16:08 -0700 (PDT)
-In-Reply-To: <20100826061815.GH9708@burratino>
-X-Mailer: Apple Mail (2.936)
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=IMpIKbDZ38l7YmNYhmhNFePV5ybAs6ddjFz4wajdcFdGmkTKZ+QXwnpq4Q3KfCFw18
+         onuLzogbIm4ackuOqCgiApgG3MQlb542TlUcKfJzBBi89GEj8ZQtW73lyiNriYeGDI4o
+         RXdMcdZvmokpqMokamcl6N7AZDbD0gZZTs+hM=
+Received: by 10.224.28.71 with SMTP id l7mr6426986qac.387.1282809415531; Thu,
+ 26 Aug 2010 00:56:55 -0700 (PDT)
+Received: by 10.229.100.18 with HTTP; Thu, 26 Aug 2010 00:56:55 -0700 (PDT)
+In-Reply-To: <AANLkTin=VXp2BU0vhTLUy6MpJ7spXRs1dZC1wygoN6T-@mail.gmail.com>
+X-Google-Sender-Auth: _bBBwp__7GfBtisECn8AYq_eJxQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154529>
 
-On Aug 25, 2010, at 11:18 PM, Jonathan Nieder wrote:
+On Wed, Aug 25, 2010 at 20:15, Scott Chacon <schacon@gmail.com> wrote:
+> I would like to write a post on how to use them, but I'm a bit
+> confused as to how people actually use them on a day to day basis. =A0=
+I
+> appears to me in trying to work out a flow for them that the lack of
+> an ability to merge them makes them very difficult to use for anythin=
+g
+> practical. =A0Can someone share with me how they use them and what th=
+e
+> cycle is?
 
-> Eric Blake wrote:
->> On 08/25/2010 01:00 AM, Johannes Sixt wrote:
->
->>> Just FYI, posix_spawn() is not sufficiently capable for the  
->>> demands of
->>> start_command(): It doesn't allow to set a new CWD for the spawned  
->>> process.
->>
->> And even if posix_spawn() were capable, cygwin doesn't yet  
->> implement it.
->
-> Hmm, okay.  You have access to win32api, though, right?  So it should
-> be possible to reuse code from compat/mingw.c::mingw_spawnvpe.
->
-> Do you think there would be any interest in a posix_spawn() variant
-> that takes a dir parameter?
+I use Notes in a very simplistic way. For example, with an emulator
+I'm writing I have two or three ways of using git-notes:
+1: I commit fixes and changes with a commit message describing the
+fix. Later I may find out that the fix made a couple more programs of
+the set I have run in the emulator, so I add a note to the commit
+saying 'This change makes X and Y work'.
+2: I add test cases to the instruction validator I wrote for the
+emulator, if the test currently fails I say so in the commit message.
+At some later point I may commit a fix that lets the test pass, then I
+go back to the original commit message (which said the test currently
+failed) and add a note saying 'Fixed by [commit] nnnnnnn'.
+3: Occasionally I just use notes as a reminder. If a commit adds a new
+feature I may later (after using the feature) add a 'todo'-note about
+what improvements I should add.
 
-Another option would be a variant of vfork() where munging file  
-descriptors, cwd, etc. prior to exec is well defined.  In Lamp (Lamp  
-ain't Mac POSIX), vfork() does this already; in Linux you'd just use  
-fork().  The problem is that currently no common interface exists  
-which guarantees behavior which is both sufficient and cheap --  
-vfork() promises nothing at all, and fork() is expensive (if available  
-at all) on some platforms, guaranteeing much more than is often needed.
+One use case I have thought of for the company case is to add notes to
+a release commit with information that wasn't  or couldn't be added at
+the time of the commit, e.g. a list of problem reports closed by the
+release.  But I haven't actually figured out how I can get Notes
+transferred over a pull yet.. although I haven't tried since 1.7.0.
 
-It would be useful to have something in between vfork() and fork(),  
-though I'm not sure what it should be called.
-
-Josh
+-Tor
