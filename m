@@ -1,106 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] bundle: detect if bundle file cannot be created
-Date: Thu, 26 Aug 2010 10:26:51 -0700
-Message-ID: <7vpqx5l1yc.fsf@alter.siamese.dyndns.org>
-References: <20100826092333.GB32617@acharya.in.gluster.com>
+From: Emil Sit <sit@emilsit.net>
+Subject: Regression in git log with multiple authors
+Date: Thu, 26 Aug 2010 13:39:45 -0400
+Message-ID: <AANLkTikONxneEgF5m+m6100pwzThTnaiAB+OFzYufcC2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Csaba Henk <csaba@gluster.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 19:27:05 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Aug 26 19:39:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OogED-0002vW-Bb
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 19:27:05 +0200
+	id 1OogQc-00026i-G3
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 19:39:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752346Ab0HZR1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 13:27:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41649 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752113Ab0HZR06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 13:26:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 28575D09EF;
-	Thu, 26 Aug 2010 13:26:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SLweDLwTv/LKYm0x8mdHhIDCeuA=; b=SSm4gF
-	TGm1sVN5uM33XQIImpgrovrtmE4XZoXWclndDaiZZMSH/g6R5ZAT4H/VcOMFCFIi
-	GkREaHbqYGlNkSz1IQeoVl/6NP4+E6md59SP8uRKYNBqkDtMf7Ixkz3LFPT07/6C
-	i0lWl59cUl2ZZqOOvu3GTpcbtFzrKUwM5H2UU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OGZPzm//L+hJP0aN7ssbHUDDBcYwkBGW
-	TFkDlov3Y5T1iFXH6QCzAogEDkgjkupB8SYW8msEWf1BnUMn8KeYMeL6oRktjowW
-	HV79o7Mwz37HBme6uGgtNGnBkMhCK9/aI32phqiARYj1zyaeqQifMhqHBkXr3Alk
-	WDYs0Q1IdE0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04FA1D09ED;
-	Thu, 26 Aug 2010 13:26:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 10F28D09E9; Thu, 26 Aug
- 2010 13:26:52 -0400 (EDT)
-In-Reply-To: <20100826092333.GB32617@acharya.in.gluster.com> (Csaba Henk's
- message of "Thu\, 26 Aug 2010 14\:53\:33 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1FD72150-B137-11DF-80E2-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752900Ab0HZRjt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 13:39:49 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33551 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752825Ab0HZRjr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 13:39:47 -0400
+Received: from compute3.internal (compute3.internal [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3BBA63B2;
+	Thu, 26 Aug 2010 13:39:47 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Thu, 26 Aug 2010 13:39:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=mime-version:date:message-id:subject:from:to:cc:content-type; s=smtpout; bh=I/HuGH83UEccZQBU2yQCIdpqU6c=; b=od/2cn513OXffTRjyN6BLz3sYsFZyrQQj1UTYocTRnnyGL4UW4Ijoy6jrerLC2NAhC4xtEG3QaFq3IzzLACj3y//qFe174mnWM9JyMxr+I8QHsD1rkC8KhlghqlapwS5cptDhr2U9wvO8bJqj5a3qH2p2Y+77f/W5xxvd4QPdiE=
+X-Sasl-enc: Q7F9I64AqADwy34kNIcxYoQqV4SuJw7UKPqqY7GlJDEV 1282844387
+Received: from mail-bw0-f46.google.com (mail-bw0-f46.google.com [209.85.214.46])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id DE90F5E2669
+	for <git@vger.kernel.org>; Thu, 26 Aug 2010 13:39:46 -0400 (EDT)
+Received: by bwz11 with SMTP id 11so1279183bwz.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 10:39:46 -0700 (PDT)
+Received: by 10.204.102.141 with SMTP id g13mr6410290bko.200.1282844385961;
+ Thu, 26 Aug 2010 10:39:45 -0700 (PDT)
+Received: by 10.204.114.140 with HTTP; Thu, 26 Aug 2010 10:39:45 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154549>
 
-Csaba Henk <csaba@gluster.com> writes:
+Commit 80235ba79ef43349f455cce869397b3e726f4058 introduced a
+regression in a corner case for git log --author when multiple authors
+are specified.  Prior to 1.7.0.3, if I wanted to find all commits done
+by a series of authors, I could simply specify "git log --author=a1
+--author=a2" to get all commits done by a1 and a2.  However, in the
+latest releases, this finds nothing.
 
-> bundle command silently died with no sign of failure if it
-> could not create the bundle file. (Eg.: its path resovles to a directory,
-> or the parent dir is sticky while file already exists and is owned
-> by someone else.)
-> ---
+Here's a simple test case that demonstrates this:
 
-Sign-off?
+diff --git a/t/t7810-grep.sh b/t/t7810-grep.sh
+index 023f225..587069c 100755
+--- a/t/t7810-grep.sh
++++ b/t/t7810-grep.sh
+@@ -372,6 +372,14 @@ test_expect_success 'log --grep --author
+implicitly uses all-match' '
+        test_cmp expect actual
+ '
 
-> diff --git a/bundle.c b/bundle.c
-> index ff97adc..3eb4ca2 100644
-> --- a/bundle.c
-> +++ b/bundle.c
-> @@ -372,8 +372,10 @@ int create_bundle(struct bundle_header *header, const char *path,
->  	close(rls.in);
->  	if (finish_command(&rls))
->  		return error ("pack-objects died");
-> -	if (!bundle_to_stdout)
-> -		commit_lock_file(&lock);
-> +	if (!bundle_to_stdout) {
-> +		if (commit_lock_file(&lock))
-> +			die_errno("cannot create bundle file");
-> +	}
++test_expect_success 'log --author --author matches both authors' '
++       # author matches only initial and third
++       # frotz matches only second
++       git log --author="A U Thor" --author="frotz\.com>$"
+--format=%s >actual &&
++        ( echo third ; echo second ; echo initial ) >expect &&
++       test_cmp expect actual
++'
++
+ test_expect_success 'grep with CE_VALID file' '
+        git update-index --assume-unchanged t/t &&
+        rm t/t &&
 
-You would want to parrot the path given by the caller, perhaps like this?
+This fails against master, but if you revert 80235ba, this will pass
+(whereas obviously 'log --grep --author implicitly uses all-match'
+will then fail).
 
-	die_errno("cannot create '%s'", path)
+It doesn't seem like I can work-around this with 'git log --author a1
+--or --author a2'.  Is there some other way to find commits by a set
+of authors? I don't think it makes sense to treat multiple --author
+flags with "and' logic since a commit can only have one author.  So
+maybe all --authors should be grouped with ors and then anded against
+all --committers?
 
-This function tries to report error to the caller in some places but
-rudely dies in some other places, so dying here is not a serious offence.
-
-> diff --git a/t/t5704-bundle.sh b/t/t5704-bundle.sh
-> index ddc3dc5..728ccd8 100755
-> --- a/t/t5704-bundle.sh
-> +++ b/t/t5704-bundle.sh
-> @@ -30,6 +30,13 @@ test_expect_success 'tags can be excluded by rev-list options' '
->  
->  '
->  
-> +test_expect_success 'die if bundle file cannot be created' '
-> +
-> +	mkdir adir &&
-> +	test_must_fail git bundle create adir --all
-> +
-> +'
-
-I like it ;-)
-
-Thanks.
+-- 
+Emil Sit / http://www.emilsit.net/
