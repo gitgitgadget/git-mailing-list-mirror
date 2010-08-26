@@ -1,59 +1,77 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Storing notes refs outside of refs/
-Date: Thu, 26 Aug 2010 09:02:09 -0600
-Message-ID: <4C7681F1.3070205@workspacewhiz.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] log/ format-patch improvements
+Date: Thu, 26 Aug 2010 08:37:22 -0700
+Message-ID: <7vk4ndo05p.fsf@alter.siamese.dyndns.org>
+References: <1282422531-29673-1-git-send-email-artagnon@gmail.com>
+ <20100825084416.GC3280@kytes> <20100825205416.GB2319@burratino>
+ <20100826053439.GB9407@kytes> <20100826054659.GC9708@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Aug 26 17:02:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Aug 26 17:37:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oody7-0004VT-Mk
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 17:02:20 +0200
+	id 1OoeWT-0001GL-VX
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 17:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab0HZPCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 11:02:11 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:34419 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752012Ab0HZPCK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 11:02:10 -0400
-Received: (qmail 4705 invoked by uid 399); 26 Aug 2010 09:02:09 -0600
-Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.220.39.54)
-  by hsmail.qwknetllc.com with ESMTPAM; 26 Aug 2010 09:02:09 -0600
-X-Originating-IP: 75.220.39.54
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.8) Gecko/20100802 Lightning/1.0b2 Thunderbird/3.1.2
+	id S1754080Ab0HZPhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 11:37:41 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50810 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752658Ab0HZPhk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 11:37:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D4A8D08E8;
+	Thu, 26 Aug 2010 11:37:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WLNgUCez22S0E5EVUwYBtsa5jbs=; b=Fbqh9n
+	y7ZoWalTbmIKG+A//GibGmczre5VWQQYOP401hbL7DYEK1Dx1C9p7A5DXMI46KDu
+	ewVn515hCLY+uaoyLTMwFdL7WfbMNkN8SyPfJFB1nFtzMPJf7tmSMhMN1NZmfbQq
+	FxuikSa3qYQMSEsK2dJq4zg38btO7Rk9hEsSs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qbLhtUsGaCEEZR7hyv07hnXpb/JYuU9/
+	pflnPpMl+4jWj0dVKEtG3t4+28DvlD72nHIxTBHGl7lxu6zwr6bzhZI+bVlOghOB
+	98EIokURUj9i6+aqVlTcAMx0MPZyrDKu9Uo22yksOaak+4C4yS4dsCbQ9m7I1hew
+	2b6CUJrhUXU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D7D54D08E3;
+	Thu, 26 Aug 2010 11:37:31 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C94BED08E1; Thu, 26 Aug
+ 2010 11:37:24 -0400 (EDT)
+In-Reply-To: <20100826054659.GC9708@burratino> (Jonathan Nieder's message of
+ "Thu\, 26 Aug 2010 00\:46\:59 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D74E4008-B127-11DF-8F35-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154542>
 
-  Every push to our server creates a note at .git/refs/notes/p4notes 
-with the equivalent Perforce changelist number, so Git-controlled code 
-and Perforce-controlled content can stay in sync.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-gitk --all and Git Extensions (out of box) show all entries in the 
-.git/refs/.  The p4notes entries are intermixed with the regular branch 
-content.  This creates a HORRID visual mess.
+> Ramkumar Ramachandra wrote:
+> ...
+>> Good idea. I'll write a patch. Do we also want people to be able to
+>> turn off `--no-merges`?
+>
+> I don't see a need for it.
+>
+> However, if you can think of good names for --undo-no-merges and
+> --undo-merges options to "git log", that might be a nice independent
+> change for the revision option parser.
 
-I tried manually moving .git/refs/notes/p4notes to .git/p4/p4notes.
-
-"git log --show-notes=p4/p4notes" fails, but assigning 
-core.notesDisplayRef=p4/p4notes succeeds.
-
-The best part is, the refs/* namespace is no longer cluttered with junk!
-
-However, "git push origin p4/p4notes:p4/p4notes" fails with the error: 
-Unable to push to unqualified destination: p4/p4notes.  The destination 
-refspec neither matches an existing ref on the remote nor begins with 
-refs/, and we are unable to guess a prefix based on the source ref.
-
-Is there a way to make the "git push" work?
-
-Thanks!
-
-Josh
+Wait a bit.  How would you represent a merge in a patch form that can be
+read by "git apply" (and "patch") in the first place?
