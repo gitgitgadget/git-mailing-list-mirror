@@ -1,65 +1,59 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: Re: setting working dir in posix_spawn() (Re: Fix 'git log' early
- pager startup error case)
-Date: Thu, 26 Aug 2010 08:13:22 -0600
-Organization: Red Hat
-Message-ID: <4C767682.7030700@redhat.com>
-References: <alpine.LFD.2.00.1008241029530.1046@i5.linux-foundation.org> <20100825013625.GC10423@burratino> <4C74BFA7.1090907@viscovery.net> <4C752739.3010808@redhat.com> <20100826061815.GH9708@burratino>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Storing notes refs outside of refs/
+Date: Thu, 26 Aug 2010 09:02:09 -0600
+Message-ID: <4C7681F1.3070205@workspacewhiz.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Matthias Lederhofer <matled@gmx.net>,
-	=?ISO-8859-1?Q?J=FCrgen_R=FChle?= <j-r@online.de>,
-	austin-group-futures-l@opengroup.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 16:16:47 2010
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Aug 26 17:02:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OodFx-0000gx-MM
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 16:16:42 +0200
+	id 1Oody7-0004VT-Mk
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 17:02:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753813Ab0HZOPB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 10:15:01 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:25136 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753512Ab0HZOPA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 10:15:00 -0400
-Received: from int-mx01.intmail.prod.int.phx2.redhat.com (int-mx01.intmail.prod.int.phx2.redhat.com [10.5.11.11])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o7QEDPaq011405
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Thu, 26 Aug 2010 10:13:25 -0400
-Received: from [10.3.113.81] (ovpn-113-81.phx2.redhat.com [10.3.113.81])
-	by int-mx01.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o7QEDNr3022080;
-	Thu, 26 Aug 2010 10:13:23 -0400
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Mnenhy/0.8.3 Thunderbird/3.1.2
-In-Reply-To: <20100826061815.GH9708@burratino>
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.11
+	id S1753946Ab0HZPCL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 11:02:11 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:34419 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752012Ab0HZPCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 11:02:10 -0400
+Received: (qmail 4705 invoked by uid 399); 26 Aug 2010 09:02:09 -0600
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.220.39.54)
+  by hsmail.qwknetllc.com with ESMTPAM; 26 Aug 2010 09:02:09 -0600
+X-Originating-IP: 75.220.39.54
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.8) Gecko/20100802 Lightning/1.0b2 Thunderbird/3.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154541>
 
-On 08/26/2010 12:18 AM, Jonathan Nieder wrote:
-> Do you think there would be any interest in a posix_spawn() variant
-> that takes a dir parameter?  I am imagining something like this:
+  Every push to our server creates a note at .git/refs/notes/p4notes 
+with the equivalent Perforce changelist number, so Git-controlled code 
+and Perforce-controlled content can stay in sync.
 
-Of your variants, I would most prefer:
+gitk --all and Git Extensions (out of box) show all entries in the 
+.git/refs/.  The p4notes entries are intermixed with the regular branch 
+content.  This creates a HORRID visual mess.
 
->   int posix_spawn_file_actions_addchdir(posix_spawn_file_actions_t
-> 	*file_actions, int dirfd);
+I tried manually moving .git/refs/notes/p4notes to .git/p4/p4notes.
 
-For that matter, it may also be worth adding 
-posix_spawn_file_actions_addopenat, which mirrors the recent addition of 
-openat() semantics.
+"git log --show-notes=p4/p4notes" fails, but assigning 
+core.notesDisplayRef=p4/p4notes succeeds.
 
--- 
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
+The best part is, the refs/* namespace is no longer cluttered with junk!
+
+However, "git push origin p4/p4notes:p4/p4notes" fails with the error: 
+Unable to push to unqualified destination: p4/p4notes.  The destination 
+refspec neither matches an existing ref on the remote nor begins with 
+refs/, and we are unable to guess a prefix based on the source ref.
+
+Is there a way to make the "git push" work?
+
+Thanks!
+
+Josh
