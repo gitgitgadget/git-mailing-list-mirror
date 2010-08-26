@@ -1,72 +1,97 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Does anyone use git-notes?
-Date: Thu, 26 Aug 2010 18:26:27 +1000
-Message-ID: <AANLkTi=jNPtvpO_gVKyS0U_0qRLtKZ84p=B+8zStxvkX@mail.gmail.com>
-References: <AANLkTin=VXp2BU0vhTLUy6MpJ7spXRs1dZC1wygoN6T-@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Aug 26 10:26:43 2010
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: [PATCH v2] t7610 (mergetool): more nitpicks
+Date: Thu, 26 Aug 2010 01:38:21 -0700
+Message-ID: <A5048FBD-FF49-4635-812F-9FF36C6BA01D@gmail.com>
+References: <1282617444-641-1-git-send-email-brian@gernhardtsoftware.com> <20100824030524.GF17406@burratino> <20100825002552.GI2376@burratino> <20100825074034.GA4058@gmail.com> <20100825075650.GB18308@hashpling.org>
+Mime-Version: 1.0 (iPhone Mail 7D11)
+Content-Type: text/plain;
+	charset=us-ascii;
+	format=flowed;
+	delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Charles Bailey <charles@hashpling.org>
+X-From: git-owner@vger.kernel.org Thu Aug 26 10:38:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoXn9-0008OU-Fw
-	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 10:26:35 +0200
+	id 1OoXyq-0002Px-Rl
+	for gcvg-git-2@lo.gmane.org; Thu, 26 Aug 2010 10:38:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753160Ab0HZI03 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Aug 2010 04:26:29 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:55157 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753104Ab0HZI02 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 04:26:28 -0400
-Received: by qyk33 with SMTP id 33so1451472qyk.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 01:26:27 -0700 (PDT)
+	id S1753441Ab0HZIig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 04:38:36 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:40443 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753254Ab0HZIic (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 04:38:32 -0400
+Received: by pxi10 with SMTP id 10so532053pxi.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 01:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ajEWGGqbn/acJknybVgNVBjo098nFu4QxatedNxlM5s=;
-        b=FFU6ep3GhGyF/fXZ3u8vHmqLST33z6v/Wi8cnbjQBnb0UawwYpWz42i/PAQ38MCueL
-         /zNFZnBnHxP0qWPmwEXgggDRAd1wtdLR87U7RagfqTazpoup7SeCqlyhnKjqDE4ZtBAb
-         xE5YChTwmyv9FNEKxekelzG/x7ViznLEo3u84=
+        h=domainkey-signature:received:received:references:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:x-mailer
+         :mime-version:subject:date:cc;
+        bh=burqxgeDxMOJKhXiL6wJigiA6QtcqOgp7qgoI0sFSmM=;
+        b=f4ZtON8xdr/r+RWVoHQ8G2iWw1sWbk/5o7oqgkqURy2Di4Rk8373EFSB3Ted8setAT
+         AmdseXCIz1r5II/HRWqRlJYouzyvTOUHxswUSTC1e2t0qMKeePPvtfo7/hQgcro5ufpY
+         wNnNA/U3DNbHBMd+251poDFPF4k9vHjDf2N0g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=O8q9yEQvIPZEhEL9si2dhXjwIE3IinNAFHigcTHfy5pg2L+pSu/Ghq0064NIKa+d6x
-         RO6Qyf/+BgdXm6K/Ans0dtqgOjqaIorZkXM7XkGC4w//eIhe/wrBTqUG6QjUPxJ9nU22
-         M/b/6fMA2GxBfmjHcFWvjHk8ok/RVCj+FKaa0=
-Received: by 10.229.239.7 with SMTP id ku7mr1372862qcb.189.1282811187173; Thu,
- 26 Aug 2010 01:26:27 -0700 (PDT)
-Received: by 10.229.114.222 with HTTP; Thu, 26 Aug 2010 01:26:27 -0700 (PDT)
-In-Reply-To: <AANLkTin=VXp2BU0vhTLUy6MpJ7spXRs1dZC1wygoN6T-@mail.gmail.com>
+        h=references:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
+        b=PmI6O3WnPQwT3ZCr+tnggvFtwhWLrzcdwVKR7SsZTH+78zzumlkhJIxF7pu/EHjoPg
+         nuWHTuHn/pHbQJ4ydNnW43lC/HB/ORpt9ZBBgj7L2rBIiwjyeosfz+xk5Cnxh04r5oH1
+         zm2XOg5xsAczxtfsA1WzI3hL8EZPS8+3RWZPw=
+Received: by 10.142.127.12 with SMTP id z12mr1229498wfc.78.1282811911924;
+        Thu, 26 Aug 2010 01:38:31 -0700 (PDT)
+Received: from [10.89.218.73] ([166.205.139.222])
+        by mx.google.com with ESMTPS id v38sm2649804wfh.12.2010.08.26.01.38.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Aug 2010 01:38:30 -0700 (PDT)
+In-Reply-To: <20100825075650.GB18308@hashpling.org>
+X-Mailer: iPhone Mail (7D11)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154533>
 
-On Thu, Aug 26, 2010 at 4:15 AM, Scott Chacon <schacon@gmail.com> wrote=
-:
-> I would like to write a post on how to use them, but I'm a bit
-> confused as to how people actually use them on a day to day basis. =C2=
-=A0I
-> appears to me in trying to work out a flow for them that the lack of
-> an ability to merge them makes them very difficult to use for anythin=
-g
-> practical. =C2=A0Can someone share with me how they use them and what=
- the
-> cycle is?
+On Aug 25, 2010, at 12:56 AM, Charles Bailey <charles@hashpling.org>  
+wrote:
+
+> On Wed, Aug 25, 2010 at 12:40:38AM -0700, David Aguilar wrote:
+>> On Tue, Aug 24, 2010 at 07:25:52PM -0500, Jonathan Nieder wrote:
+>>> - use tabs to indent
+>>> [...]
+>>
+>> Cool.  I'd like to do the same to git-mergetool.sh too.
+>> Until now I've stuck to the existing style.
+>> My editor is setup to display tabs visually which makes it easy
+>> for me to emulate existing code but not everyone does that.
+>>
+>> Any objections to a patch that replaces the mixed 4-space+tab
+>> indents with pure tabs?
 >
+> Just the same objection as the last time:
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/115069/focus=115192
+>
+> We've already tidyied up mergetool to be consistent, I don't see what
+> touching 90% of the lines achieves other than getting yourself
+> 'blamed' for everything in mergetool.
+>
+> Charles.
 
-I use them to store test execution output.
+Too true.
 
-By post-processing, then diffing such notes, I can work out what was
-regressed or fixed between two commits.
+Instead of that I should probably get around to factoring out the tool- 
+specific parts like we discussed in the past.
 
-jon.
+Thanks Charles,
+-- 
+         David
