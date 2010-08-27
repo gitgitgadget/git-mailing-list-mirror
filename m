@@ -1,70 +1,90 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Reduce zlib deflate code duplication
-Date: Thu, 26 Aug 2010 18:56:40 -0700
-Message-ID: <AANLkTikxxxxZwty156XG13QsOoimzYzuxSuTcf5KonTE@mail.gmail.com>
-References: <1282856164-5126-1-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Treating similar blank lines between hunks as part of the hunks
+Date: Thu, 26 Aug 2010 21:13:10 -0500
+Message-ID: <20100827021310.GA23924@burratino>
+References: <AANLkTikZFYSSNMENC5SmKSVt49a+WxXdO0mP=V7Mbi-Q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Niedier <jrnieder@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 27 03:57:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git <git@vger.kernel.org>
+To: Timur Tabi <timur@freescale.com>
+X-From: git-owner@vger.kernel.org Fri Aug 27 04:15:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OooBw-0002zu-Hc
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 03:57:16 +0200
+	id 1OooT9-000124-PP
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 04:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab0H0B5C convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Aug 2010 21:57:02 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:41332 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753930Ab0H0B5B convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 21:57:01 -0400
-Received: by iwn5 with SMTP id 5so2106238iwn.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 18:57:00 -0700 (PDT)
-Received: by 10.231.80.213 with SMTP id u21mr191153ibk.173.1282874220085; Thu,
- 26 Aug 2010 18:57:00 -0700 (PDT)
-Received: by 10.231.179.143 with HTTP; Thu, 26 Aug 2010 18:56:40 -0700 (PDT)
-In-Reply-To: <1282856164-5126-1-git-send-email-pclouds@gmail.com>
+	id S1752132Ab0H0CO7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 22:14:59 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58869 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752768Ab0H0CO5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 22:14:57 -0400
+Received: by yxg6 with SMTP id 6so913776yxg.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 19:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=bWC8jCAYPdqyF2MP6OIZMg6odZj1AEh3L+11RBVTdP0=;
+        b=mJ7BUIfy1NoqmyITthPRGb2eYmyRy7zFCzWHpHXvOUpD9D4UxHK/WevsERmHxGkHAp
+         0/NcC3z4nRUIfsoBRHqVfke/ClX1J5m+i3pTsoYfiY+rbXyWNiXlesPVD2vACVgWx1Tz
+         ItlYDUNSjONgytS/7VgFBG3y15/OocpKmqqfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=EpXVPdInc5WDy2nSyggo4YcACmkwL4pBn42qpr7X0VMRngr+M1UhDc/cJFpFqUUbfG
+         gXTYJXfNb2+3O69BWCRxA2np1X8l31fPAGC8+VB79fW9TVLbTt8uMPd5X63e9n46In+U
+         YuI3S1GlbVuHVozVwTe8w535bLlqnDwVz+HlU=
+Received: by 10.150.54.1 with SMTP id c1mr1199094yba.141.1282875296783;
+        Thu, 26 Aug 2010 19:14:56 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id v6sm8245622ybm.23.2010.08.26.19.14.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 26 Aug 2010 19:14:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikZFYSSNMENC5SmKSVt49a+WxXdO0mP=V7Mbi-Q@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154572>
 
-2010/8/26 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>=
-:
-> Most of deflation code is simply "given this buffer, just deflate
-> it". Make a common routine and reuse it instead.
->
-> Exceptions include index-pack, http-push, fast-import,
-> write_sha1_file, which either make multiple zlib streams, or compress
-> and calculate sha1/checksum in parallel.
->
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> =C2=A0There is possibly a regression here. remote-curl.c/post_rpc()
-> =C2=A0specifies more compression options, although I doubt it affects
-> =C2=A0performance. It also reveals places where deflation is expected
-> =C2=A0to be always successful.
+Timur Tabi wrote:
 
-It is a regression.
+> git-diff will do this:
+> 
+>  A
+> -B
+> -C
+> +F
+> +G
+> 
+> -D
+> +H
+>  E
+> 
+> Instead, I would prefer it did this:
+> 
+>  A
+> -B
+> -C
+> -
+> -D
+> +F
+> +G
+> +
+> +H
+> E
+> 
+> This second diff is easier to read, especially when the number of
+> hunks is large, but the size of each hunk is small.  This can happen
+> in source code when one function is replaced with a completely
+> different function.
 
-The compression options in remote-curl.c are to setup a gzip style
-stream, because that is what the servers expect.  Your new common
-routine is using the bare deflation stream, which isn't the same
-header/footer formatting, and thus servers will choke with your change
-and smart HTTP payloads that are compressed by the client.
-
-So yea, you can't get rid of all of those options for the remote-curl
-init.  You'll need to still let remote-curl setup its options itself,
-and then pass you the zlib structure to deflate on.
-
---=20
-Shawn.
+Not sure if it would help in your example, but have you tried
+"git diff --patience"?
