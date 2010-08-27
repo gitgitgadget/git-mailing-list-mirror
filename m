@@ -1,66 +1,66 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Git-SVN & subdirectory branches
-Date: Fri, 27 Aug 2010 12:37:42 -0400
-Message-ID: <F393D37F-9BDE-4F29-94E9-806AF88D1A30@gernhardtsoftware.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 0/8] Make rev-list --objects work with pathspecs; minor
+ optimizations
+Date: Fri, 27 Aug 2010 10:28:24 -0700
+Message-ID: <7vr5hkhsnb.fsf@alter.siamese.dyndns.org>
+References: <1282803711-10253-1-git-send-email-newren@gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Eric Wong <normalperson@yhbt.net>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 27 18:37:59 2010
+Cc: git@vger.kernel.org, pclouds@gmail.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 27 19:28:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Op1wD-0006rb-L3
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 18:37:57 +0200
+	id 1Op2jN-0001AX-R1
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 19:28:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753769Ab0H0Qhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Aug 2010 12:37:51 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:53492 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752696Ab0H0Qhu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 12:37:50 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id CA2B71FFC054; Fri, 27 Aug 2010 16:37:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 684FE1FFC054;
-	Fri, 27 Aug 2010 16:37:40 +0000 (UTC)
-X-Mailer: Apple Mail (2.1081)
+	id S1754929Ab0H0R2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 13:28:36 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64060 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754799Ab0H0R2e (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Aug 2010 13:28:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FC0AD0181;
+	Fri, 27 Aug 2010 13:28:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=iMYURt9uhXzWkr9ZRDQMP83UXYg=; b=yIaCAQ2x95DUXun+Mw6i2WT
+	YHa1aSiDUkH7h2u1Ok1cwaUeDPlR/ceLpmr+/v2AIVYR+BWRzblVxdUJVdhnvGJP
+	gJixG6aBfuHBxcP/nvrJfwYmfa5Q+tdhg3ZCKh/yFp/mjmeuLSUKwWKIsGpvUbvA
+	PExhrw1f/89eCWp2aevc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=hZV+2hgGEil57f5xtRReY3HycEfKw1nd7Yqi53/AXYu4C0x8M
+	lHAOWTgneX2eJRLTHQEid0JSK0gqdx49W3SZ4S5iiqPEX7uR8ZAVNDP4GwLnWDC1
+	Ks1u/pMbLJpB00Y0HSsoBZy1ERjIOFaiaRiPsw0WG4LXDnM5w11rrByW8g=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C42FD017F;
+	Fri, 27 Aug 2010 13:28:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50133D017A; Fri, 27 Aug
+ 2010 13:28:26 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 824D0B14-B200-11DF-9F54-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154606>
 
-I'm working on creating a git mirror of the MINIX 3 repository.  I'm encountering a problem with the fact that the branches and tags often but not always are based on a subdirectory of trunk.  It appears that when git-svn encounters one of these branches it starts over from revision 1.  Is there a good way to deal with this or should I just let git-svn clone it as it will and use something like filter-branch to clean it up?  (Note that I intend this to be an ongoing mirror so any solution has to let git-svn work properly afterwords.)
+Elijah Newren <newren@gmail.com> writes:
 
-In particular, MINIX's trunk contains a bigports and a src subdirectory and some branches (and tags) have both subdirectories, but more often they branch just the src (kernel and servers) directory.
+> This series enables rev-list to produce a list of objects that is path
+> limited, when the user requests it.  It also provides a few small code
+> cleanups and some small optimizations.
 
-For visual learners:
+A cursory look didn't spot anything glaringly wrong ;-)
 
-/trunk
-  /bigports
-  /src
-    /boot
-    /commands
-    ...
-/branches
-  /R3.1.0
-    /bigports
-    /src
-  /R3.1.7
-    /boot
-    /commands
-    ...
+I'd split 3-6 into a separate "tree-walk-optim" topic and keep the first
+two as "object-list-with-pathspec" topic.  They really look independent.
 
-The SVN repo can be browsed at https://gforge.cs.vu.nl/gf/project/minix/scmsvn/?action=browse&path=/ but people should be careful trying to clone it fully using git-svn due to the issue above.  I finally just used svnsync to create a local copy to clone from.
-
-~~ Brian
+Thanks.
