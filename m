@@ -1,77 +1,76 @@
-From: Greg Brockman <gdb@MIT.EDU>
-Subject: Re: [PATCH] shell: Display errors from improperly-formatted command lines
-Date: Fri, 27 Aug 2010 13:32:05 -0400
-Message-ID: <AANLkTim9Dbqt2Bs5F-PMYFrAwo4mAL6iVxmvYX1x4UYE@mail.gmail.com>
-References: <1282887373-25618-1-git-send-email-gdb@mit.edu>
-	<7vlj7shsn5.fsf@alter.siamese.dyndns.org>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: =?UTF-8?Q?=5BPATCH=5D_gitweb=3A_Don=E2=80=99t_die=5Ferror_in_git=5Ftag_after_already_printing_headers?=
+Date: Fri, 27 Aug 2010 13:38:16 -0400 (EDT)
+Message-ID: <alpine.DEB.2.00.1008271337310.25632@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; charset=US-ASCII
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 27 19:32:16 2010
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 27 19:38:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Op2ml-0003Ag-T3
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 19:32:16 +0200
+	id 1Op2si-00066N-Rc
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 19:38:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754944Ab0H0RcK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 13:32:10 -0400
-Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:63130 "EHLO
-	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754820Ab0H0RcI convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Aug 2010 13:32:08 -0400
-X-AuditID: 1209190d-b7b38ae000006976-be-4c77f69a4572
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id 57.BF.26998.A96F77C4; Fri, 27 Aug 2010 13:32:10 -0400 (EDT)
+	id S1754929Ab0H0RiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 13:38:20 -0400
+Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:54797 "EHLO
+	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754836Ab0H0RiS (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 13:38:18 -0400
+X-AuditID: 1209190e-b7b91ae0000068d0-66-4c77f80b75fd
+Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
+	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id FE.6F.26832.B08F77C4; Fri, 27 Aug 2010 13:38:19 -0400 (EDT)
 Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7RHW7mv024045
-	for <git@vger.kernel.org>; Fri, 27 Aug 2010 13:32:07 -0400
-Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
+	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o7RHcHnu007772;
+	Fri, 27 Aug 2010 13:38:17 -0400
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
 	(authenticated bits=0)
-        (User authenticated as gdb@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7RHW5SW017879
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Fri, 27 Aug 2010 13:32:06 -0400 (EDT)
-Received: by gxk23 with SMTP id 23so1200702gxk.19
-        for <git@vger.kernel.org>; Fri, 27 Aug 2010 10:32:05 -0700 (PDT)
-Received: by 10.151.84.16 with SMTP id m16mr2097496ybl.354.1282930325575; Fri,
- 27 Aug 2010 10:32:05 -0700 (PDT)
-Received: by 10.231.139.75 with HTTP; Fri, 27 Aug 2010 10:32:05 -0700 (PDT)
-In-Reply-To: <7vlj7shsn5.fsf@alter.siamese.dyndns.org>
-X-Brightmail-Tracker: AAAAAhXElZUVxU3W
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7RHcGUM018959
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Fri, 27 Aug 2010 13:38:17 -0400 (EDT)
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154611>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154612>
 
->> =A0shell.c | =A0 16 +++++++++++++---
->> =A01 files changed, 13 insertions(+), 3 deletions(-)
->
-> Forgot to sign-off?
-Yes, sorry:
-Signed-off-by: Greg Brockman <gdb@mit.edu>
+This fixes an XML error when visiting a nonexistent tag
+(?p=git.git;a=tag;h=refs/tags/BADNAME).
 
->> The error behavior of split_cmdline was changed in the patch =A0'spl=
-it_cmdline: Allow
->> caller to access error string'. =A0This updates git-shell to deal wi=
-th printing out
->> split_cmdline errors itself.
->
-> Thanks for being careful. =A0I'll merge gb/split-cmdline-errmsg topic=
- (which
-> already is in master) to gb/shell-ext topic (which is cooking in next=
-) and
-> then apply this on top. =A0With this update I suppose the topic is re=
-ady to
-> be in the next release?
-Yep, I believe it's ready.
+Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+---
+ gitweb/gitweb.perl |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-Thanks,
-
-Greg
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 84261bb..5dab825 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -5192,15 +5192,15 @@ sub git_summary {
+ }
+ 
+ sub git_tag {
+-	my $head = git_get_head_hash($project);
+-	git_header_html();
+-	git_print_page_nav('','', $head,undef,$head);
+ 	my %tag = parse_tag($hash);
+ 
+ 	if (! %tag) {
+ 		die_error(404, "Unknown tag object");
+ 	}
+ 
++	my $head = git_get_head_hash($project);
++	git_header_html();
++	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('commit', esc_html($tag{'name'}), $hash);
+ 	print "<div class=\"title_text\">\n" .
+ 	      "<table class=\"object_header\">\n" .
+-- 
+1.7.2.2
