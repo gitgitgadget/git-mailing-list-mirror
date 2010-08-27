@@ -1,143 +1,116 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: how to change permissions of git repo
-Date: Thu, 26 Aug 2010 22:03:30 -0500
-Message-ID: <i57a0n$vm2$5@dough.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 27 05:05:32 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Test the interaction of --bool and --get-regexp on a
+ key with no explicit value
+Date: Thu, 26 Aug 2010 22:15:11 -0500
+Message-ID: <20100827031511.GC23924@burratino>
+References: <1282844716-30591-1-git-send-email-alex@chmrr.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alex Vandiver <alex@chmrr.net>
+X-From: git-owner@vger.kernel.org Fri Aug 27 05:17:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OopFz-0007JM-EM
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 05:05:31 +0200
+	id 1OopR8-0002RF-Ko
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 05:17:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752526Ab0H0DFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 23:05:12 -0400
-Received: from lo.gmane.org ([80.91.229.12]:45209 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750774Ab0H0DFK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 23:05:10 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OopFa-00078h-Mf
-	for git@vger.kernel.org; Fri, 27 Aug 2010 05:05:06 +0200
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Aug 2010 05:05:06 +0200
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 27 Aug 2010 05:05:06 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1752691Ab0H0DQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 23:16:57 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60502 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511Ab0H0DQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 23:16:56 -0400
+Received: by yxg6 with SMTP id 6so928775yxg.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 20:16:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=2ECHGJ0Xmsh7cTDymWlg8znxh2Qn9WGitZhqqMn1bTU=;
+        b=GkEtJHnc4q7/X19xq0iiVh4MmWrWBPZCEseFKrqBj9jhmU9HuaHVjFIxS7mQaWKZ4L
+         GBOOluSY7HSh/3LuoBrSJVwSj3bFlfrX1/U7ed/z/zGVEGjYp2HfsXp0qpCc0SUyI0Do
+         DUvB/1IFlSJ9ROHJ9C105M9xmNcEhgV28KmIs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=YUsK62+VsTqmVFHt6mw8fxscgpN4Ewl8x0UzJKtg55178jFpjWDUmpeWXFIzLjyd7I
+         NHx3MTAhUOkU3AJ7JJHuA8O5S0EsVhJpO7Q/VOGdAwK26B7+HSH4rwAg7r+LZLsYS6H5
+         4UPr8zl7GBr+Tj6L1RGWuOftwcX16vw+XsApM=
+Received: by 10.151.100.10 with SMTP id c10mr1039627ybm.425.1282879015333;
+        Thu, 26 Aug 2010 20:16:55 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id q21sm8298282ybk.3.2010.08.26.20.16.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 26 Aug 2010 20:16:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1282844716-30591-1-git-send-email-alex@chmrr.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154578>
 
-Here is the technique I devised to change permissions on a git repo.  I 
-needed to lock down a repo so only the integration manager has write access. 
-This method ensures that git sets the permissions according to gits rules. 
-Please let me know if you know of an easier/better way to do this.
+Alex Vandiver wrote:
 
-Change Permissions on an Existing Git Repo:
+> Signed-off-by: Alex Vandiver <alex@chmrr.net>
+> ---
+> 
+> This test currently fails -- I don't have time to track down the fix,
+> but I figured that at least I could provide a failing test.  Note that
+> --null isn't necessary for the failure; without it, one gets
+> "section.sub=section.val5true", with no spacing between the key and
+> value.
 
-Check System for Users who may be using the Repo:
-# w  (see who's logged in)
-# ps -A |grep git-menu-scriptname  (where scriptname is some unique string 
-in the name of the main script your users use to access that repo, if 
-applicable)
-# skill -KILL pts/99  (where 99 = the pts/# from w command, log the user 
-off)
+This is useful info (the motivation!) for the log mesage I think,
+though it might be even better to squash the patch with the fix. :)
 
-Change Shared=group to Shared=0644  (change group read+write to group read 
-only):
-Create Template for permissions:
-login as fsngit0
-$ cd /path/to/template
-$ cat config
-[core]
-        sharedRepository = 0644
+> --- a/t/t1300-repo-config.sh
+> +++ b/t/t1300-repo-config.sh
+> @@ -816,6 +816,16 @@ echo >>result
+>  
+>  test_expect_success '--null --get-regexp' 'cmp result expect'
+>  
+> +cat > expect <<\EOF
+> +section.sub=section.val5
+> +trueQ
+> +EOF
+> +
+> +git config --null --bool --get-regexp 'val5' | perl -pe 'y/\000/Q/' > result
+> +echo >>result
+> +
+> +test_expect_success '--null --get-regexp --bool' 'cmp result expect'
 
-Clone repo to set permissions via git:
-$ cd /path/to/repo-parent-dir
-$ git clone --bare --template=/path/to/template file:///path/to/REPO.git 
-REPOMOD.git
+Style nitpicks (based on the "Do's, don'ts &" c section of t/README):
 
-Compare old and new versions:
-$ diff -r REPO.git REPOMOD.git
-Only in REPO.git: branches  (empty, keep the old version)
-diff -r REPO.git/config REPOMOD.git/config  (merge the old and new together)
-1a2
->       sharedrepository = 0644
-6,7c7
-<         denyDeletes = true
-<         denyNonFastForwards = true
----
->       denyNonFastforwards = true
-Only in REPO.git: description  (keep the old version)
-Only in REPO.git: gitk.cache  (gitk will recreate this)
-Only in REPO.git: hooks  (contains sample scripts only or whatever scripts 
-your using, keep the old version)
-Only in REPO.git: info  (keep the old version: contains attributes, exclude, 
-or whatever you've setup)
-Only in REPO.git/objects: aa (keep new version, loose object have been 
-packed)
-Only in REPO.git/objects/pack: 
-pack-A5735e9b894dce1498ec1c776dcabc97fd8ceAfc.idx
-diff -r REPO.git/packed-refs REPOMOD.git/packed-refs  (keep the new version 
-because fresh clone has been optimized)
-2c2
-< Xa8b7b8c8fd3920b89770f2e8356f4ecb71a58cX refs/heads/master
----
-> Ya69744e46276a37932d5f0755a53f76cdf83e0dY refs/heads/master
-Only in REPO.git/refs/heads: master  (old version not needed because fresh 
-clone has been optimized)
+ - setup code (cat >expect) belongs in the body of tests.
+   That way, it is clearer when each test begins and ends, and
+   unexpected failures and output from setup code will be
+   automatically noticed and suppressed, respectively.
 
-Copy over REPO.git files that the clone didn't replicate, but that you need 
-in order to retain all settings:
-$ cp -rv /path/to/REPO.git/info .
-repeat as needed...
+ - there is no public nul_to_q () function but I still think it
+   is clearer to use one;
 
-change permissions to g-w or whatever your core.sharedRepository new value 
-is supposed to be:
-$ chmod -R g-w info
-repeat as needed...
+ - test_cmp is guaranteed to work just as well as cmp and produces
+   nicer output when tests run with "-v" fail.
 
-Validate your changes:
-$ diff -r REPO.git REPOMOD.git
-diff -r REPO.git/config REPOMOD.git/config
-1a2
->       sharedrepository = 0644
-7c8
-<         denyNonFastForwards = true
----
->       denyNonFastforwards = true
-Only in REPO.git: gitk.cache
-Only in REPO.git/objects: aa
-Only in REPO.git/objects/pack: 
-pack-A5735e9b894dce1498ec1c776dcabc97fd8ceAfc.idx
-diff -r REPO.git/packed-refs REPOMOD.git/packed-refs
-2c2
-< Xa8b7b8c8fd3920b89770f2e8356f4ecb71a58cX refs/heads/master
----
-> Y69744e46276a37932d5f0755a53f76cdf83e0dY refs/heads/master
-Only in REPO.git/refs/heads: master
+So maybe:
 
-Backup REPO.git and rename REPOMOD.git to REPO.git:
-$ cp -rvp REPO.git REPO.git-old
-$ diff -r REPO.git REPO.git-old
-$ rm -rf REPO.git
-$ cp -rvp REPOMOD.git REPO.git
-$ diff -r REPO.git REPOMOD.git
-$ diff -r REPO.git REPO.git-old
+ test_expect_failure '--get-regexp --bool still separates key and value' '
+	echo 'section.sub=section.val5 true' >expected &&
+	git config --bool --get-regexp val5 >actual &&
+	test_cmp expected acutal
+ '
 
-v/r,
-Neal 
+ test_expect_failure '--get-regexp --bool --null' '
+	printf "%s\n%s\0" "section.sub=section.val5" "true" >expected &&
+	git config -z --bool --get-regexp val5 >actual &&
+	test_cmp expected actual
+ '
+
+Thanks for reporting.
