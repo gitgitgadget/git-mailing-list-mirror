@@ -1,86 +1,65 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/7] Fix ignoring of pathspecs with rev-list --objects
-Date: Thu, 26 Aug 2010 16:41:20 -0700
-Message-ID: <7v7hjdkkm7.fsf@alter.siamese.dyndns.org>
-References: <1282704795-29661-1-git-send-email-newren@gmail.com>
- <1282704795-29661-3-git-send-email-newren@gmail.com>
- <AANLkTimguNHXSFyO1EvS+dHbHiXU-dXTNwkWfEsVUbVC@mail.gmail.com>
- <AANLkTimCv-fn-h21pM8L9NiGg3w7OXBJ-kfiC+HJLsTP@mail.gmail.com>
- <AANLkTi=Y5tbdxc4f2j_1D1gib2gwEzNw6_Az3Ag9T1nn@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 27 01:41:37 2010
+From: Robert Zeh <robert.allan.zeh@gmail.com>
+Subject: SVN->GIT conversion question: how to make git svn not rebase some git commits
+Date: Thu, 26 Aug 2010 19:47:34 -0500
+Message-ID: <D153FFD0-67BA-4E1E-BB04-2A6D01EF00C3@gmail.com>
+Mime-Version: 1.0 (iPhone Mail 8A400)
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Aug 27 02:47:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oom4f-0005lG-C1
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 01:41:37 +0200
+	id 1Oon6s-0003VR-0V
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 02:47:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753955Ab0HZXld (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 26 Aug 2010 19:41:33 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56564 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753297Ab0HZXlb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 26 Aug 2010 19:41:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB0B5D0295;
-	Thu, 26 Aug 2010 19:41:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xjlceKoF/4LxNR9YMa5Qwtar7+E=; b=cDCgOx
-	OwDeWeiouKDqmggEVy2PUu81H6UePxZ4ehgVMX+9lsvBX05VGKuej7F5IN/JlEoV
-	ocPVcESQu4cHBGR762SHDOdPIKPCe3C8Hm4dMifDHJjjbfaw//NOX3k/X0QJEgGM
-	MLLn/a5qkuukYuHV0JgtcXHEEfcYbPeOBu5V0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=NlfizoDqmguYa9vB8+wbJrAvLVNjeevc
-	S1YIX/0V2UyHYHYS90MEqPDB4sAQFZG4BRtXm2N1mf+I1k1VWqfpLHUC1ejTjVLB
-	FpgcqMIvNMKIIwhCVL8HTkjrCdzHrFyY0dYY+mKWVMywkRQoDGbbGm0+/LMXfg/a
-	nsRm84w23iI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7E7EFD0294;
-	Thu, 26 Aug 2010 19:41:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ACD37D0291; Thu, 26 Aug
- 2010 19:41:22 -0400 (EDT)
-In-Reply-To: <AANLkTi=Y5tbdxc4f2j_1D1gib2gwEzNw6_Az3Ag9T1nn@mail.gmail.com>
- (Nguyen Thai Ngoc Duy's message of "Fri\, 27 Aug 2010 09\:15\:29 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 714D3C0C-B16B-11DF-8A3F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752132Ab0H0Arx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 20:47:53 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61472 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751671Ab0H0Arv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 20:47:51 -0400
+Received: by iwn5 with SMTP id 5so2053753iwn.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 17:47:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:from:content-type
+         :x-mailer:message-id:date:to:content-transfer-encoding:mime-version;
+        bh=KZSREalb5gNVLmfVesmCFntPpxtlIHfX8dM25M48vTU=;
+        b=qvlhrKtR7u5FlCHO1ehM2PeFmnsekkuykCCPFgWyZdqapsILPKiFy9gA7zH4H/xM2N
+         GuQDwto9umfrsO2qwKDs1SNQwKUW1qbsXcHkWhzFQqBhCJh8Y++P73ncRCHeR+7UR4wI
+         wm6xxgmSlwPOX2HWg545mYFP0b7/ZgfbmgloE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:from:content-type:x-mailer:message-id:date:to
+         :content-transfer-encoding:mime-version;
+        b=lOWp78YqZ/8hFyYOY6EdGaH64Dg0hs7ZW4BIytNyXB3+QJKWJQGByvq54qqOulNHvk
+         ruhtTZ/Fn78/h/EgfzYrNuJp8Jk6nPgj++WLkDaHGZ7W8W+Dj3BQee9/1NQRroyoBfw4
+         9qimrrVS1suAYQFSzJDPDPlxn0hfu/O/8EQHQ=
+Received: by 10.231.13.133 with SMTP id c5mr144064iba.73.1282870070266;
+        Thu, 26 Aug 2010 17:47:50 -0700 (PDT)
+Received: from [10.45.160.126] (mobile-166-137-141-005.mycingular.net [166.137.141.5])
+        by mx.google.com with ESMTPS id h8sm3048071ibk.15.2010.08.26.17.47.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Aug 2010 17:47:49 -0700 (PDT)
+X-Mailer: iPhone Mail (8A400)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154571>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+I am porting a medium size (2GB) subversion repository to git. I have already done an initial git svn fetch with generous filters, to filter out directories for which I do not want history. 
 
-> On Thu, Aug 26, 2010 at 9:50 AM, Elijah Newren <newren@gmail.com> wrote:
->>> While at it, can you please also fix its comments? The comments say
->>> pathspec while what it uses is actually path prefix...
->>> ...
->>> - * Is a tree entry interesting given the pathspec we have?
->>> + * Is a tree entry interesting given the path prefix we have?
->>
->> I believe the comment is parsed thus: "tree entry" == combination of
->> desc, base, and baselen... So I believe the original was
->> correct, though I can see how it's confusing at first.
->
-> Pathspec as in match_pathspec() in dir.c allows wildcards...
->
-> There is also a GSoC suggestion about this [1] and I posted a related
-> patch a while back [2] but forgot it until now.
->
-> [1] https://git.wiki.kernel.org/index.php/SoC2010Ideas#Unify_Pathspec_Semantics
->
-> [2] http://mid.gmane.org/1243240924-5981-1-git-send-email-pclouds@gmail.com
+However, I would like to import a snapshot of the filtered directories and, here is the tricky part for me, continue using svn fetch without rebasing the snapshot commit. I would like the history to look like:
 
-As [1] you quoted says, both are called pathspecs and because our longer
-term goal is to unify them, I think the original comment is fine.
+S1 -> S2 -> G1 -> S3
 
-I wonder why I was Cc'ed on this shed-coloring committee, though...
+Where Sx is a Subversion commit and G1 contains the snapshot. 
+
+I want to maintain this strange history so that I can gradually introduce git as a read only repository in parts of my environment, and then do a full switch over. 
+
+Robert
