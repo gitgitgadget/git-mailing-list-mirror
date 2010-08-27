@@ -1,131 +1,169 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] t6200-fmt-merge-msg: Exercise '--log' to configure shortlog length
-Date: Fri, 27 Aug 2010 19:44:50 +0530
-Message-ID: <1282918490-5190-3-git-send-email-artagnon@gmail.com>
-References: <1282918490-5190-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Aug 27 16:17:24 2010
+From: Dan Loewenherz <dloewenherz@gmail.com>
+Subject: Re: Does changing filename case breaks git's rename heuristic?
+Date: Fri, 27 Aug 2010 07:52:11 -0700
+Message-ID: <AANLkTikN_PbNNH2f4zWuk1FH+LgpKzkoZ6mYOdT9ANBj@mail.gmail.com>
+References: <AANLkTinxvj85Jzb-ykK0=MmRHkz8aQzmVxexC8H+Xgno@mail.gmail.com> <4C777090.2000107@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Fri Aug 27 16:52:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OozkC-0005po-4N
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 16:17:24 +0200
+	id 1Op0II-0003Ee-31
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 16:52:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754056Ab0H0ORL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Aug 2010 10:17:11 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54476 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753769Ab0H0ORK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Aug 2010 10:17:10 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 7so1153741pwi.19
-        for <git@vger.kernel.org>; Fri, 27 Aug 2010 07:17:10 -0700 (PDT)
+	id S1753357Ab0H0Owd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 10:52:33 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:39678 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751643Ab0H0Owb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 10:52:31 -0400
+Received: by qwh6 with SMTP id 6so2814458qwh.19
+        for <git@vger.kernel.org>; Fri, 27 Aug 2010 07:52:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=+nntP2SZaIDixxV1pSuChvPbnagtPN/H2J091BEEURU=;
-        b=aur0pODwq2kua8NCASJ9hoGug6oTj7S/8J6w7gwchPzhgSy4Z/8cogf6eEpMAceMlP
-         upGmhAOfRff7PiTmESgW+VIF4mkui0mw4LvEjAh5+OCoeTgaXu08bMJ5cD4w7LOQ9hbA
-         +XXfgIXu8EpRtrAi9it8hLDBriwPT5bwPQc6g=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HVcI57KH0gedfbmuSDUElGJFn3TE2D5RK1aV4wZkBfM=;
+        b=oH7HveHnqMGK8HBD6B7XttZcoHVEMwufXcfSVZB4FPQm1jn/Q9jJ0JcA3xNhX4ONK3
+         /Ch+YI2Q3IN5vlsGAK8K0xKJrFJxoXXGVXZwFZf3OLlvNQlsEZtXDUsTdXO59ykeKW5l
+         XKfGgwN5wnxsGEvIKA8yweD23Ts0SswauNDxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cVnpVpuuvOPadbSk7G9V1gqmbx2BCMr5rztW4+z1Gn95rHh8Xrp4tuO4GeI5Nh0Xi/
-         /mmibQ64CMBBvXlsIRy6/3XPvIBuiBtPHWVUi/Cb56kh/nHEN/jSDCrHUcG8hT08t4st
-         1Rf3B4aN71kZIaRhzJT7rEKXDhV/19LOdzQp8=
-Received: by 10.114.66.5 with SMTP id o5mr478041waa.219.1282918630075;
-        Fri, 27 Aug 2010 07:17:10 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id o17sm525142wal.21.2010.08.27.07.17.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 27 Aug 2010 07:17:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
-In-Reply-To: <1282918490-5190-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=N/QxmqvpPcTnYTWgcY1MbpCKeEnBBJYAxUhcfMDEgXWl3UKzqU0sUbrgVNeZ04JtP8
+         2a1qCuj1t40VGiUfQ2CMjQNqbbbu+Qr2ew4PA+Mz/4ltxcHdgpAva5hEUigy6B2OXns/
+         3nLm+W8aiDg/2hVKl4xPcVS0eIObSabxHMpjM=
+Received: by 10.224.114.89 with SMTP id d25mr496442qaq.132.1282920751131; Fri,
+ 27 Aug 2010 07:52:31 -0700 (PDT)
+Received: by 10.224.73.140 with HTTP; Fri, 27 Aug 2010 07:52:11 -0700 (PDT)
+In-Reply-To: <4C777090.2000107@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154600>
 
-Add a test to exercise the '--log' command-line option of 'git
-fmt-merge-msg'. It controls the number of shortlog entries to display
-in merge commit messages.
+On Fri, Aug 27, 2010 at 1:00 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Dan Loewenherz venit, vidit, dixit 27.08.2010 06:57:
+>> Hi all,
+>>
+>> I may be mistaking a design decision as a bug, but I wanted to throw
+>> this out to the list to make sure. I think that re-enacting it will =
+be
+>> the best way to explain it.
+>>
+>> $ mkdir test
+>> $ cd test
+>> $ git init
+>> $ cat > readme
+>> This is a test file.
+>> ^D
+>> $ git commit -am "first commit"
+>> [master (root-commit) fae0d05] first commit
+>> =C2=A01 files changed, 1 insertions(+), 0 deletions(-)
+>
+> ? You have not added any file, so git won't commit anything (not even
+> with -a). The above can't be a complete transcription. I assume you'v=
+e
+> added readme with the content above.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- t/t6200-fmt-merge-msg.sh |   56 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 56 insertions(+), 0 deletions(-)
+Yep, that was my mistake. I left out 'git add readme'.
 
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index 750568e..b308c3b 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -184,6 +184,62 @@ test_expect_success 'configurable shortlog length: merge.log' '
- 	test_cmp expected_b actual4
- '
- 
-+test_expect_success 'configurable shortlog length: --log' '
-+	cat >expected1 <<-EOF &&
-+	Merge branch ${apos}left${apos}
-+
-+	* left: (5 commits)
-+	  Left #5
-+	  Left #4
-+	  Left #3
-+	  ...
-+	EOF
-+
-+	test_might_fail git config --unset-all merge.log &&
-+	test_might_fail git config --unset-all merge.summary &&
-+
-+	git checkout master &&
-+	test_tick &&
-+	git fetch . left &&
-+
-+	git fmt-merge-msg --log=3 <.git/FETCH_HEAD >actual1 &&
-+
-+	cat >expected_b <<-EOF &&
-+	Merge branch ${apos}left${apos}
-+
-+	* left:
-+	  Left #5
-+	  Left #4
-+	  Left #3
-+	  Common #2
-+	  Common #1
-+	EOF
-+
-+	test_might_fail git config --unset-all merge.log &&
-+	test_might_fail git config --unset-all merge.summary &&
-+
-+	git checkout master &&
-+	test_tick &&
-+	git fetch . left &&
-+
-+	git fmt-merge-msg --log <.git/FETCH_HEAD >actual2 &&
-+
-+	echo "Merge branch ${apos}left${apos}" >expected_c &&
-+
-+	test_might_fail git config --unset-all merge.log &&
-+	test_might_fail git config --unset-all merge.summary &&
-+
-+	git checkout master &&
-+	test_tick &&
-+	git fetch . left &&
-+
-+	git fmt-merge-msg --no-log <.git/FETCH_HEAD >actual3 &&
-+
-+	test_cmp expected_a actual1 &&
-+	test_cmp expected_b actual2 &&
-+	test_cmp expected_c actual3
-+'
-+
- test_expect_success 'fmt-merge-msg -m' '
- 	echo "Sync with left" >expected &&
- 	cat >expected.log <<-EOF &&
--- 
-1.7.2.2.409.gdbb11.dirty
+>
+>>
+>> For personal reasons, I now want readme to be uppercase.
+>>
+>> $ mv readme README
+>
+> Here's where using "git mv" would have been the easier choice, follow=
+ed
+> by commit.
+
+I agree. The instance where this actually occurred was that I had
+received an updated binary file to put into my repository. icon.png ->
+Icon.png. I suppose I could've run 'git mv' but I didn't realize what
+would happen if I didn't!
+
+>
+>> $ cat > README
+>> This is the revised README.
+>
+> Renaming and changing the content completely in one step will always
+> trip up git's rename detection. You should rename, commit, change,
+> commit, unless the change affects a small portion of the file only.
+
+Agreed.
+
+>
+>> $ git status -sb
+>> ## master
+>> =C2=A0M readme
+>
+> Again, this can't be a complete transcript. The above would lead to
+>
+> =C2=A0D readme
+> ?? README
+
+This is where I didn't botch up the transcript, and where I was
+actually surprised at what was going on. I'll insert a full one at the
+bottom of this email that can actually be run to get the same results.
+
+>
+>> $ git add README
+>> $ git status -sb
+>> ## master
+>> =C2=A0M readme
+>>
+>> At this point, I'm thinking that git is confused. Even though I've
+>
+> Are you possibly using a case-challenged file system? Is this maybe o=
+n a
+> Mac with HFS or Win with NTFS?
+
+I'm using a Mac with a journaled filesystem and Git version 1.7.2.1.
+
+>
+> Michael
+>
+
+Transcript
+
+dan ~ $ mkdir test
+dan ~ $ cd test/
+dan test $ git init
+Initialized empty Git repository in /Users/dan/test/.git/
+dan test (master #) $ cat > readme
+This is a test file.
+dan test (master #%) $ git add readme
+dan test (master #) $ git ci -m "first commit"
+[master (root-commit) 3237fcb] first commit
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 readme
+dan test (master) $ mv readme README
+dan test (master) $ cat > README
+This is the revised README.
+dan test (master *) $ git s
+## master
+ M readme
+dan test (master *) $ git add README
+dan test (master *) $ git s
+## master
+ M readme
+dan test (master *) $ git add readme
+dan test (master +) $ git s
+## master
+M  readme
+dan test (master +) $ git ci -m "change filename"
+[master 587f3f8] change filename
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+dan test (master) $ git --version
+git version 1.7.2.1
