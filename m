@@ -1,92 +1,75 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Does changing filename case breaks git's rename heuristic?
-Date: Fri, 27 Aug 2010 11:06:32 +0530
-Message-ID: <20100827053629.GC22527@kytes>
-References: <AANLkTinxvj85Jzb-ykK0=MmRHkz8aQzmVxexC8H+Xgno@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] for-each-ref: fix objectname:short bug
+Date: Fri, 27 Aug 2010 09:08:02 +0200
+Message-ID: <4C776452.8020200@drmicha.warpmail.net>
+References: <AANLkTikhcAC6Nf=jWQN40ascodaCte6v6e1JPfv-=To-@mail.gmail.com> <1282858469-22116-1-git-send-email-jaysoffian@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Dan Loewenherz <dloewenherz@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 27 07:38:28 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Sam Vilain <sam.vilain@catalyst.net.nz>,
+	Jeff King <peff@peff.net>, Junio C Hamano <junio@kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 27 09:08:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oordx-0003rw-FW
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 07:38:25 +0200
+	id 1Oot2n-0007Pz-N1
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 09:08:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100Ab0H0FiU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 01:38:20 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:37254 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204Ab0H0FiT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Aug 2010 01:38:19 -0400
-Received: by pvg2 with SMTP id 2so939946pvg.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 22:38:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=eOwNv9GPD25bAxgOL7cLj9GlPns134GfDzSRAy525rA=;
-        b=CXY7mwGhCNypiZt2laJpsLdlE6Gir6QyQEeDmTxYIxljn46Ihvfdet/rVNbPlvZ61z
-         HDarBEa7muCCPfFX6km7PKjlvzBAOWNo8xnnPtuERziOofPpZ2YaMAwZ5bVjDhhyNV9l
-         JXe2ETPuTaeDM5zcedCJqmMhytz/A5L1J2vXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=whFVcBVT/c1hWMDCTOKav6VDJpm7hCSUQkXjDWFaRHbR+S6iWPAdBXxVEWgt738oZI
-         pwClnifzIHKRa+hH0MIpAkrhmOG88mitdhSMWbFsFQsIGYleiuolthMBGFx8RQ7kGNiy
-         kGO2SflSRBb51tPpTtaH31TVyZ1X7jcVlBjSA=
-Received: by 10.142.172.10 with SMTP id u10mr789147wfe.213.1282887499407;
-        Thu, 26 Aug 2010 22:38:19 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 33sm3904510wfg.9.2010.08.26.22.38.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 26 Aug 2010 22:38:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinxvj85Jzb-ykK0=MmRHkz8aQzmVxexC8H+Xgno@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752268Ab0H0HIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 03:08:04 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:59948 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752092Ab0H0HID (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 03:08:03 -0400
+Received: from compute3.internal (compute3.internal [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id DE367425;
+	Fri, 27 Aug 2010 03:08:01 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 27 Aug 2010 03:08:01 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=fCYRolSHrPzuQJX/ouwPJ+SuzTw=; b=g9lAU/9lfFU2A+Hk66gegvAyaYDAdQgSBw1WG4HG5ZBaznUy3W6HSlCp5gjkwKN9Xz6HJnGycHWrDIQUofI0HnjEKW127J0W0FM1skLYZrTelLLQ7zmXwPyk3ZbFlaaVrQIuMxROMQ5CqlwR8XVa1d8afOzaNNdjatvoVSirhcY=
+X-Sasl-enc: VzlpxsEEI1u4laHmI37KWrSwzbMHA7nVutuHxpZehrTb 1282892881
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 114B25E235F;
+	Fri, 27 Aug 2010 03:08:00 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Lightning/1.0b2pre Thunderbird/3.1.2
+In-Reply-To: <1282858469-22116-1-git-send-email-jaysoffian@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154585>
 
-Hi Dan,
+Jay Soffian venit, vidit, dixit 26.08.2010 23:34:
+> When objectname:short was introduced, it forgot to copy the result of
+> find_unique_abbrev. Because the result of find_unique_abbrev is a
+> pointer to static buffer, this resulted in the same value being
+> substituted in for each ref.
+> 
+> Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
+> ---
+>  builtin/for-each-ref.c |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+> 
+> diff --git a/builtin/for-each-ref.c b/builtin/for-each-ref.c
+> index a2b28c6..89e75c6 100644
+> --- a/builtin/for-each-ref.c
+> +++ b/builtin/for-each-ref.c
+> @@ -228,7 +228,8 @@ static void grab_common_values(struct atom_value *val, int deref, struct object
+>  			v->s = s;
+>  		}
+>  		else if (!strcmp(name, "objectname:short")) {
+> -			v->s = find_unique_abbrev(obj->sha1, DEFAULT_ABBREV);
+> +			v->s = xstrdup(find_unique_abbrev(obj->sha1,
+> +							  DEFAULT_ABBREV));
+>  		}
+>  	}
+>  }
 
-Dan Loewenherz writes:
-> I may be mistaking a design decision as a bug, but I wanted to throw
-> this out to the list to make sure. I think that re-enacting it will b=
-e
-> the best way to explain it.
->=20
-> $ mkdir test
-> $ cd test
-> $ git init
-> $ cat > readme
-> This is a test file.
-> ^D
-> $=A0git commit -am "first commit"
-> [master (root-commit) fae0d05] first commit
->  1 files changed, 1 insertions(+), 0 deletions(-)
->=20
-> For personal reasons, I now want readme to be uppercase.
->=20
-> $ mv readme README
-> $ cat > README
-> This is the revised README.
-> $ git status -sb
-> ## master
->  M readme
-[...]
+3 words:
 
-Thanks for taking the time to explain! Unfortunately, I'm not able to
-reproduce this. Which version of Git are you using, and which platform
-are you on?
+embarrassing - sorry - thanks!
 
--- Ram
+Michael
