@@ -1,76 +1,89 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: =?UTF-8?Q?=5BPATCH=5D_gitweb=3A_Don=E2=80=99t_die=5Ferror_in_git=5Ftag_after_already_printing_headers?=
-Date: Fri, 27 Aug 2010 13:38:16 -0400 (EDT)
-Message-ID: <alpine.DEB.2.00.1008271337310.25632@dr-wily.mit.edu>
+From: Dave Olszewski <cxreg@pobox.com>
+Subject: Re: [PATCH] push: disallow fast-forwarding tags without --force
+Date: Fri, 27 Aug 2010 11:01:16 -0700 (PDT)
+Message-ID: <alpine.DEB.2.00.1008271046080.20874@narbuckle.genericorp.net>
+References: <1282893284-17829-1-git-send-email-cxreg@pobox.com> <7vfwy0hsn1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Aug 27 19:38:25 2010
+Cc: Dave Olszewski <cxreg@pobox.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 27 20:04:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Op2si-00066N-Rc
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 19:38:25 +0200
+	id 1Op3HY-0003nK-PD
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 20:04:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754929Ab0H0RiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Aug 2010 13:38:20 -0400
-Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:54797 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754836Ab0H0RiS (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 13:38:18 -0400
-X-AuditID: 1209190e-b7b91ae0000068d0-66-4c77f80b75fd
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id FE.6F.26832.B08F77C4; Fri, 27 Aug 2010 13:38:19 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id o7RHcHnu007772;
-	Fri, 27 Aug 2010 13:38:17 -0400
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	id S1755181Ab0H0SD5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 14:03:57 -0400
+Received: from 62.f9.1243.static.theplanet.com ([67.18.249.98]:39793 "EHLO
+	62.f9.1243.static.theplanet.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755175Ab0H0SDy (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 14:03:54 -0400
+X-Envelope-From: cxreg@pobox.com
+Received: from localhost (count@narbuckle [127.0.0.1])
 	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7RHcGUM018959
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 27 Aug 2010 13:38:17 -0400 (EDT)
+	by 62.f9.1243.static.theplanet.com (8.13.8/8.13.8/Debian-3) with ESMTP id o7RI1GVY032529
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 27 Aug 2010 13:01:17 -0500
+X-X-Sender: count@narbuckle.genericorp.net
+In-Reply-To: <7vfwy0hsn1.fsf@alter.siamese.dyndns.org>
 User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154613>
 
-This fixes an XML error when visiting a nonexistent tag
-(?p=git.git;a=tag;h=refs/tags/BADNAME).
+On Fri, 27 Aug 2010, Junio C Hamano wrote:
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- gitweb/gitweb.perl |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+> Dave Olszewski <cxreg@pobox.com> writes:
+> 
+> > Generally, tags are considered a write-once ref (or object), and updates
+> > to them are the exception to the rule.  This is evident from the
+> > behavior of "git fetch", which will not update a tag it already has
+> > unless --tags is specified, and from the --force option to "git tag".
+> 
+> The title and what you describe later in your proposed log message do not
+> match.  This is about "push: disallow updating an existing tag by default"
+> isn't it?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 84261bb..5dab825 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -5192,15 +5192,15 @@ sub git_summary {
- }
- 
- sub git_tag {
--	my $head = git_get_head_hash($project);
--	git_header_html();
--	git_print_page_nav('','', $head,undef,$head);
- 	my %tag = parse_tag($hash);
- 
- 	if (! %tag) {
- 		die_error(404, "Unknown tag object");
- 	}
- 
-+	my $head = git_get_head_hash($project);
-+	git_header_html();
-+	git_print_page_nav('','', $head,undef,$head);
- 	git_print_header_div('commit', esc_html($tag{'name'}), $hash);
- 	print "<div class=\"title_text\">\n" .
- 	      "<table class=\"object_header\">\n" .
--- 
-1.7.2.2
+I don't see a major difference in meaning, since only fast-forwards are
+allowed without --force, but you're right about my intent.  I'm happy to
+change the commit message.
+
+> This proposes a big change in the policy, and I do not like it starting
+> out as the new default to forbid people from doing something they have
+> been allowed to do for a long time.  I recall hearing some people auto
+> tagging the latest version their autobuilder/tester tested successfully
+> and updating the same tag nightly---your change will break their cron
+> script, no?
+> 
+> If you ship the feature disabled by default first, it will still allow
+> people to take advantage of it by simply flipping the feature on, instead
+> of having to install their own update hook.  In a later version, if and
+> when enough people agree that this should be on by default, we can do so
+> at a version bump.
+
+Yes that's true.  I suspected based on the lack of any documentation or
+tests promising such behavior, the inclination for git to want to
+pretend that changed tags haven't changed, and the social stigma against
+it, that this was a bug.
+
+It's trivial for someone to update build software from "git push remote
+tag" to "git push remote +tag" or "git push -f remote tag", but I can
+understand your objection.  It's the reason I didn't also add
+receive.denyMovingTags to the default config for bare repositories.
+
+It seems unlikely that many people are ever going to "flip on" this
+feature; either they won't know about it (and for them, it should be
+on), or they'll have a reason to move a tag, and want it off.  That, and
+my perception that this was unintentional behavior, is the reason I
+patched it to be default.
+
+However, If you still feel strongly about this, I can rework it to be
+optional.  Thanks for your feedback!
+
+    Dave
