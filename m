@@ -1,184 +1,196 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Reduce zlib deflate code duplication
-Date: Thu, 26 Aug 2010 21:37:54 -0500
-Message-ID: <20100827023754.GB23924@burratino>
-References: <1282856164-5126-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Aug 27 04:40:00 2010
+From: Mark Lodato <lodatom@gmail.com>
+Subject: [PATCHv2] completion: make compatible with zsh
+Date: Thu, 26 Aug 2010 22:45:56 -0400
+Message-ID: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
+Cc: git@vger.kernel.org, avarab@gmail.com,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Aug 27 04:46:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OoorD-00005O-Kd
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 04:39:55 +0200
+	id 1Oooxq-0001ve-Cp
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 04:46:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752381Ab0H0Cjk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 26 Aug 2010 22:39:40 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:40476 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab0H0Cjj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 26 Aug 2010 22:39:39 -0400
-Received: by gyd8 with SMTP id 8so933919gyd.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 19:39:38 -0700 (PDT)
+	id S1752109Ab0H0Cqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 26 Aug 2010 22:46:42 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:38451 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751511Ab0H0Cqk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 26 Aug 2010 22:46:40 -0400
+Received: by qwh6 with SMTP id 6so2300327qwh.19
+        for <git@vger.kernel.org>; Thu, 26 Aug 2010 19:46:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=ZEzt6I30/2wJhHCaCDnFH3BNFKqoWB1HU0LiWd2/qxc=;
-        b=OisHO7iOZ2p/nvRGrqN6jf/9SHCR0wKr03R4lkdV/5eY6Rw8qNooceof0mTRBOUKH2
-         R26OQDrXoarLWLaiNRWOfqYvws5iVT+GEpi1Nw6kqiKfMEaKnpzIJlgdDTSDF2U0Mq47
-         ou2joBnOd7YYnZlMOk3kgQHa4DFIGaaMl2PAA=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=VYZCUU1+AGhVCb7d4hopQCxzrqNcCzNm9IPaolAie5s=;
+        b=n4DNwDZ/zKW0qLTM6HKcQgX3RBiEC3lziqiw7k2Bv03u8i9RIRjZSz9I6hE5+qHecM
+         fgivSWxuTUyOE3QcFW+WKRQoAWbhgFzbpXxexEfuUHTU2uhNStJlvuNHPiSrELhDwMeG
+         qM6h42108D0NVQI25/ARAFFTwM5pOasOrK8hs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kriep40nUr1pTMH2vh4+YNR/XYAYHdsgQ77BeIcBo80iqLBNCTIqcJJbs38uRMlKcU
-         XKbTJqU/0CxchdI4rUrwpywy526cR7tLFxbw7hWFqsiT8+U55q7c/IXHMan8Sa/wGSLZ
-         GyPBWQhEe6Dw6jAIjWTkNz8zcrF4dde2ntgR0=
-Received: by 10.101.72.4 with SMTP id z4mr132840ank.77.1282876778767;
-        Thu, 26 Aug 2010 19:39:38 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t24sm5220015ano.12.2010.08.26.19.39.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 26 Aug 2010 19:39:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1282856164-5126-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ULx063rfFqHhGISceb7tXfxGjqAZ7TC/Ch26IZbWnr0edicd07qFphnLBX1xXDC/F5
+         xe/UcBSIrz6c5OLAT2ppM1nV6PuI8XYm3WA3pmWYCywzNSMudW/UX9HS5uXCVutiyebU
+         JWbTPk27P0W0e7slhLHKVdMt2xq7prQRneB0g=
+Received: by 10.224.45.141 with SMTP id e13mr7357927qaf.59.1282877199945;
+        Thu, 26 Aug 2010 19:46:39 -0700 (PDT)
+Received: from localhost.localdomain (c-69-137-229-191.hsd1.dc.comcast.net [69.137.229.191])
+        by mx.google.com with ESMTPS id f15sm3915852qcr.1.2010.08.26.19.46.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 26 Aug 2010 19:46:39 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154575>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Modify git-completion.bash so that it also works with zsh when using
+bashcompinit.  In particular:
 
-> Most of deflation code is simply "given this buffer, just deflate
-> it". Make a common routine and reuse it instead.=20
+declare -F
+    Zsh doesn't have the same 'declare -F' as bash, but 'declare -f'
+    is the same, and it works just as well for our purposes.
 
-I like this idea.  But:
+${var:2}
+    Zsh does not implement ${var:2} to skip the first 2 characters, but
+    ${var#??} works in both shells to replace the first 2 characters
+    with nothing.  Thanks to Jonathan Nieder for the suggestion.
 
->  There is possibly a regression here.
+for (( n=1; "$n" ... ))
+    Zsh does not allow "$var" in arithmetic loops.  Instead, pre-compute
+    the endpoint and use the variables without $'s or quotes.
 
-Right.
+shopt
+    Zsh uses 'setopt', which has a different syntax than 'shopt'.  Since
+    'shopt' is used infrequently in git-completion, we provide
+    a bare-bones emulation.
 
-> --- a/archive-zip.c
-> +++ b/archive-zip.c
+emulate -L bash
+KSH_TYPESET
+    Zsh offers bash emulation, which turns on a set of features to
+    closely resemble bash. In particular, this enables SH_WORDSPLIT,
+    which splits scalar variables on word boundaries in 'for' loops.
+    We also need to set KSH_TYPESET, to fix "local var=$(echo foo bar)"
+    issues.
 
-Looks good.
+The last set of options are turned on only in _git and _gitk.  Some of
+the sub-functions may not work correctly if called directly.
 
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -130,28 +130,10 @@ static void *get_delta(struct object_entry *ent=
-ry)
-> =20
->  static unsigned long do_compress(void **pptr, unsigned long size)
->  {
-> -	z_stream stream;
-> -	void *in, *out;
-> -	unsigned long maxsize;
-> -
-> -	memset(&stream, 0, sizeof(stream));
-> -	deflateInit(&stream, pack_compression_level);
-> -	maxsize =3D deflateBound(&stream, size);
-> -
-> -	in =3D *pptr;
-> -	out =3D xmalloc(maxsize);
-> +	void *out =3D git_deflate(*pptr, &size, pack_compression_level);
-> +	free(*pptr);
->  	*pptr =3D out;
+Signed-off-by: Mark Lodato <lodatom@gmail.com>
+---
 
-On error, previously *pptr and size would reflect a truncated result,
-but now *pptr is NULL and size is 0.  Both results are silly.
+Those on the CC list either responded to the original patch or are the authors
+of the lines affected by this patch:
+    - Andrew wrote __git_ps1_show_upstream().
+    - SZEDER wrote the part using 'declare -F'.
 
-It would be nicer if the caller (or do_compress itself) could check
-for errors and report them.
+ contrib/completion/git-completion.bash |   50 +++++++++++++++++++++++++++++--
+ 1 files changed, 46 insertions(+), 4 deletions(-)
 
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1713,7 +1689,8 @@ static void emit_binary_diff_body(FILE *file, m=
-mfile_t *one, mmfile_t *two, char
->  	 * whichever is smaller.
->  	 */
->  	delta =3D NULL;
-> -	deflated =3D deflate_it(two->ptr, two->size, &deflate_size);
-> +	deflate_size =3D two->size;
-> +	deflated =3D git_deflate(two->ptr, &deflate_size, zlib_compression_=
-level);
-[...]
-> @@ -1721,7 +1698,7 @@ static void emit_binary_diff_body(FILE *file, m=
-mfile_t *one, mmfile_t *two, char
->  		if (delta) {
->  			void *to_free =3D delta;
->  			orig_size =3D delta_size;
-> -			delta =3D deflate_it(delta, delta_size, &delta_size);
-> +			delta =3D git_deflate(delta, &delta_size, zlib_compression_level)=
-;
-[...]
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -1025,24 +1025,13 @@ static int store_object(
-[...]
-> -	while (deflate(&s, Z_FINISH) =3D=3D Z_OK)
-> -		/* nothing */;
-> -	deflateEnd(&s);
-> +	compressed_size =3D delta ? deltalen : dat->len;
-> +	out =3D git_deflate(delta ? delta : dat->buf, &compressed_size,
-> +			  pack_compression_level);
-[...]
-> @@ -1053,15 +1042,10 @@ static int store_object(
-[...]
-> -			s.next_out =3D out =3D xrealloc(out, s.avail_out);
-> -			while (deflate(&s, Z_FINISH) =3D=3D Z_OK)
-> -				/* nothing */;
-> -			deflateEnd(&s);
-> +			free(out);
-> +			compressed_size =3D dat->len;
-> +			out =3D git_deflate(dat->buf, &compressed_size,
-> +					  pack_compression_level);
-
-Likewise.
-
-> --- a/remote-curl.c
-> +++ b/remote-curl.c
-> @@ -420,33 +420,10 @@ static int post_rpc(struct rpc_state *rpc)
->  		 * we can try to deflate it ourselves, this may save on.
->  		 * the transfer time.
->  		 */
-> -		size_t size;
-> -		z_stream stream;
-> -		int ret;
-> -
-> -		memset(&stream, 0, sizeof(stream));
-> -		ret =3D deflateInit2(&stream, Z_BEST_COMPRESSION,
-> -				Z_DEFLATED, (15 + 16),
-
-As Shawn mentioned, this requests gzip encoding with the default
-window size.
-
-> -		ret =3D deflate(&stream, Z_FINISH);
-> -		if (ret !=3D Z_STREAM_END)
-> -			die("cannot deflate request; zlib deflate error %d", ret);
-> -
-> -		ret =3D deflateEnd(&stream);
-> -		if (ret !=3D Z_OK)
-> -			die("cannot deflate request; zlib end error %d", ret);
-> -
-> -		size =3D stream.total_out;
-> +		unsigned long size =3D rpc->len;
-> +		gzip_body =3D git_deflate(rpc->buf, &size, Z_BEST_COMPRESSION);
-> +		if (!gzip_body)
-> +			die("cannot deflate request; zlib deflate error");
-
-The zlib error codes are very helpful for debugging, so I would be sad
-to see them go.
-
-Thanks,
-Jonathan
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 6756990..6a7aae6 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -21,6 +21,11 @@
+ #    2) Added the following line to your .bashrc:
+ #        source ~/.git-completion.sh
+ #
++#       Or, add the following lines to your .zshrc:
++#        autoload bashcompinit
++#        bashcompinit
++#        source ~/.git-completion.sh
++#
+ #    3) Consider changing your PS1 to also show the current branch:
+ #        PS1='[\u@\h \W$(__git_ps1 " (%s)")]\$ '
+ #
+@@ -138,11 +143,12 @@ __git_ps1_show_upstream ()
+ 		# get the upstream from the "git-svn-id: ..." in a commit message
+ 		# (git-svn uses essentially the same procedure internally)
+ 		local svn_upstream=($(git log --first-parent -1 \
+-					--grep="^git-svn-id: \(${svn_url_pattern:2}\)" 2>/dev/null))
++					--grep="^git-svn-id: \(${svn_url_pattern#??}\)" 2>/dev/null))
+ 		if [[ 0 -ne ${#svn_upstream[@]} ]]; then
+ 			svn_upstream=${svn_upstream[ ${#svn_upstream[@]} - 2 ]}
+ 			svn_upstream=${svn_upstream%@*}
+-			for ((n=1; "$n" <= "${#svn_remote[@]}"; ++n)); do
++			local n_stop="${#svn_remote[@]}"
++			for ((n=1; n <= n_stop; ++n)); do
+ 				svn_upstream=${svn_upstream#${svn_remote[$n]}}
+ 			done
+ 
+@@ -2339,6 +2345,11 @@ _git ()
+ {
+ 	local i c=1 command __git_dir
+ 
++	if [[ -n $ZSH_VERSION ]]; then
++		emulate -L bash
++		setopt KSH_TYPESET
++	fi
++
+ 	while [ $c -lt $COMP_CWORD ]; do
+ 		i="${COMP_WORDS[c]}"
+ 		case "$i" in
+@@ -2372,17 +2383,22 @@ _git ()
+ 	fi
+ 
+ 	local completion_func="_git_${command//-/_}"
+-	declare -F $completion_func >/dev/null && $completion_func && return
++	declare -f $completion_func >/dev/null && $completion_func && return
+ 
+ 	local expansion=$(__git_aliased_command "$command")
+ 	if [ -n "$expansion" ]; then
+ 		completion_func="_git_${expansion//-/_}"
+-		declare -F $completion_func >/dev/null && $completion_func
++		declare -f $completion_func >/dev/null && $completion_func
+ 	fi
+ }
+ 
+ _gitk ()
+ {
++	if [[ -n $ZSH_VERSION ]]; then
++		emulate -L bash
++		setopt KSH_TYPESET
++	fi
++
+ 	__git_has_doubledash && return
+ 
+ 	local cur="${COMP_WORDS[COMP_CWORD]}"
+@@ -2417,3 +2433,29 @@ if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
+ complete -o bashdefault -o default -o nospace -F _git git.exe 2>/dev/null \
+ 	|| complete -o default -o nospace -F _git git.exe
+ fi
++
++if [[ -z $ZSH_VERSION ]]; then
++	shopt () {
++		local option
++		if [ $# -ne 2 ]; then
++			echo "USAGE: $0 (-q|-s|-u) <option>" >&2
++			return 1
++		fi
++		case "$2" in
++		nullglob)
++			option="$2"
++			;;
++		*)
++			echo "$0: invalid option: $2" >&2
++			return 1
++		esac
++		case "$1" in
++		-q)	setopt | grep -q "$option" ;;
++		-u)	unsetopt "$option" ;;
++		-s)	setopt "$option" ;;
++		*)
++			echo "$0: invalid flag: $1" >&2
++			return 1
++		esac
++	}
++fi
+-- 
+1.7.2.2
