@@ -1,92 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Allow core.askpass to override SSH_ASKPASS.
-Date: Fri, 27 Aug 2010 10:28:43 -0700
-Message-ID: <7v4oeghsms.fsf@alter.siamese.dyndns.org>
-References: <201008271251.23136.k.franke@science-computing.de>
- <AANLkTik5eMLCKK7muBW9k8-0ZAxraATCs5hHVcX-Zutn@mail.gmail.com>
- <201008271445.26098.k.franke@science-computing.de>
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: Re: [PATCH] shell: Display errors from improperly-formatted command lines
+Date: Fri, 27 Aug 2010 13:32:05 -0400
+Message-ID: <AANLkTim9Dbqt2Bs5F-PMYFrAwo4mAL6iVxmvYX1x4UYE@mail.gmail.com>
+References: <1282887373-25618-1-git-send-email-gdb@mit.edu>
+	<7vlj7shsn5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: kusmabite@gmail.com, git@vger.kernel.org,
-	Frank Li <lznuaa@gmail.com>
-To: Knut Franke <k.franke@science-computing.de>
-X-From: git-owner@vger.kernel.org Fri Aug 27 19:29:10 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Aug 27 19:32:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Op2jm-0001NU-7W
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 19:29:10 +0200
+	id 1Op2ml-0003Ag-T3
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 19:32:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754997Ab0H0R24 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 27 Aug 2010 13:28:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64285 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754966Ab0H0R2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 27 Aug 2010 13:28:54 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 794E9D01A9;
-	Fri, 27 Aug 2010 13:28:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=6XzF6eHhzuv2ruUumVTkAuB23l4=; b=Q/61+dfgOLcgdvMkJgoS6Ss
-	Zpx/aMf6JFizCTnsKYwomRMZPqGhAQt1DYV3oCIIT3Eh5EziQM0V7KbemTDTBgTt
-	dMUvSugyVo+EKLaAbsLZn0BY8JCdgLGAdVeuN/qiBMbsFT1Q5JwPWkFyh0B4YVm1
-	MKW+8vVx6XLxCHbeXuGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=bUNfpuFFcyih+BrynfvDmkZtw4g4rxcfNWVnIftN5OyGy+mId
-	G6fe85YMZvVwLEknZhrDhhOsISfGHp1AX0EMDuVufliF8nKQ9j9esZfojnYqsmH2
-	TFAnWfPjzJQ1jtnN3wpKg/3yFx/DDOLL0HXq0qKUPCz8I4KGfsIeCPbnNA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 32E3FD01A4;
-	Fri, 27 Aug 2010 13:28:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4374FD01A0; Fri, 27 Aug
- 2010 13:28:45 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8E5095DE-B200-11DF-B58D-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754944Ab0H0RcK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 13:32:10 -0400
+Received: from DMZ-MAILSEC-SCANNER-2.MIT.EDU ([18.9.25.13]:63130 "EHLO
+	dmz-mailsec-scanner-2.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754820Ab0H0RcI convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Aug 2010 13:32:08 -0400
+X-AuditID: 1209190d-b7b38ae000006976-be-4c77f69a4572
+Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
+	by dmz-mailsec-scanner-2.mit.edu (Symantec Brightmail Gateway) with SMTP id 57.BF.26998.A96F77C4; Fri, 27 Aug 2010 13:32:10 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id o7RHW7mv024045
+	for <git@vger.kernel.org>; Fri, 27 Aug 2010 13:32:07 -0400
+Received: from mail-gx0-f174.google.com (mail-gx0-f174.google.com [209.85.161.174])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7RHW5SW017879
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=NOT)
+	for <git@vger.kernel.org>; Fri, 27 Aug 2010 13:32:06 -0400 (EDT)
+Received: by gxk23 with SMTP id 23so1200702gxk.19
+        for <git@vger.kernel.org>; Fri, 27 Aug 2010 10:32:05 -0700 (PDT)
+Received: by 10.151.84.16 with SMTP id m16mr2097496ybl.354.1282930325575; Fri,
+ 27 Aug 2010 10:32:05 -0700 (PDT)
+Received: by 10.231.139.75 with HTTP; Fri, 27 Aug 2010 10:32:05 -0700 (PDT)
+In-Reply-To: <7vlj7shsn5.fsf@alter.siamese.dyndns.org>
+X-Brightmail-Tracker: AAAAAhXElZUVxU3W
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154611>
 
-Knut Franke <k.franke@science-computing.de> writes:
-
->> > diff --git a/connect.c b/connect.c
->> > index e296bfc..f97b84c 100644
->> > --- a/connect.c
->> > +++ b/connect.c
->> > @@ -627,9 +627,13 @@ char *git_getpass(const char *prompt)
->> >        static struct strbuf buffer = STRBUF_INIT;
->> >
->> >        askpass = getenv("GIT_ASKPASS");
->> > +
->>
->> Why?
+>> =A0shell.c | =A0 16 +++++++++++++---
+>> =A01 files changed, 13 insertions(+), 3 deletions(-)
 >
-> Considering the check for SSH_ASKPASS added below, I believe this improves 
-> legibilty since all of the "if (!askpass..." blocks are similar in intention.
+> Forgot to sign-off?
+Yes, sorry:
+Signed-off-by: Greg Brockman <gdb@mit.edu>
 
-I think Erik is asking about the extra blank line.  You could have
-achieved the same consistency by removing, no?
+>> The error behavior of split_cmdline was changed in the patch =A0'spl=
+it_cmdline: Allow
+>> caller to access error string'. =A0This updates git-shell to deal wi=
+th printing out
+>> split_cmdline errors itself.
+>
+> Thanks for being careful. =A0I'll merge gb/split-cmdline-errmsg topic=
+ (which
+> already is in master) to gb/shell-ext topic (which is cooking in next=
+) and
+> then apply this on top. =A0With this update I suppose the topic is re=
+ady to
+> be in the next release?
+Yep, I believe it's ready.
 
-diff --git a/connect.c b/connect.c
-index e296bfc..f97b84c 100644
---- a/connect.c
-+++ b/connect.c
-@@ -627,9 +627,10 @@ char *git_getpass(const char *prompt)
- 	static struct strbuf buffer = STRBUF_INIT;
- 
- 	askpass = getenv("GIT_ASKPASS");
- 	if (!askpass)
- 		askpass = askpass_program;
--
-+	if (!askpass)
-+		askpass = getenv("SSH_ASKPASS");
- 	if (!askpass || !(*askpass))
- 		return getpass(prompt);
- 
+Thanks,
+
+Greg
