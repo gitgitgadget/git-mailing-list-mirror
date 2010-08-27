@@ -1,112 +1,109 @@
-From: Dan Loewenherz <dloewenherz@gmail.com>
-Subject: Does changing filename case breaks git's rename heuristic?
-Date: Thu, 26 Aug 2010 21:57:43 -0700
-Message-ID: <AANLkTinxvj85Jzb-ykK0=MmRHkz8aQzmVxexC8H+Xgno@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Aug 27 06:58:11 2010
+From: Greg Brockman <gdb@MIT.EDU>
+Subject: [PATCH] shell: Display errors from improperly-formatted command lines
+Date: Fri, 27 Aug 2010 01:36:13 -0400
+Message-ID: <1282887373-25618-1-git-send-email-gdb@mit.edu>
+Cc: Greg Brockman <gdb@mit.edu>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Fri Aug 27 07:36:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oor10-0002Bx-Pi
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 06:58:11 +0200
+	id 1Oorc3-0003Ln-DV
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 07:36:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753368Ab0H0E6E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 00:58:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42954 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753267Ab0H0E6D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 00:58:03 -0400
-Received: by iwn5 with SMTP id 5so2241191iwn.19
-        for <git@vger.kernel.org>; Thu, 26 Aug 2010 21:58:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=brXi6u4SFlbk5t3z0vpeLz9st0PZDH/wREJ3uiUmfPk=;
-        b=iuqNarDZlxxkco1uIJKBhFXOEwVQy+lj0S4B8PfCqxKAJLNpdxb0u2PHHHmCGlMd1b
-         lyrqvPjXmSME0k3SjJ5XYopKGPUbjAJo0RPPVJiF56uEftpMnn9HwGRAF0AnkGWSxLCA
-         vzRm4Ydo02P87XERb6TnNlKRJJdariy9r2A9Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=xQVHdVE9tMMMeQdaKESHPdWFHM3TODPa50rW/mUdHzabndJY+eR/995tTZDOA6c3F0
-         oQL50sZnaINRDEJqLYXg7SHWpcGT6GPWUuf8TM1xVITT9pDJLgp8sylUGhQIxK3JMXp8
-         2XTA7YReCAt8qt64kKUAICANaJ/nWX3iaUA7I=
-Received: by 10.231.172.75 with SMTP id k11mr560866ibz.4.1282885083176; Thu,
- 26 Aug 2010 21:58:03 -0700 (PDT)
-Received: by 10.231.190.19 with HTTP; Thu, 26 Aug 2010 21:57:43 -0700 (PDT)
+	id S1751996Ab0H0FgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 01:36:21 -0400
+Received: from DMZ-MAILSEC-SCANNER-1.MIT.EDU ([18.9.25.12]:62105 "EHLO
+	dmz-mailsec-scanner-1.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751685Ab0H0FgT (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 01:36:19 -0400
+X-AuditID: 1209190c-b7c9cae00000753f-0b-4c774ed213a2
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+	by dmz-mailsec-scanner-1.mit.edu (Symantec Brightmail Gateway) with SMTP id 74.A9.30015.2DE477C4; Fri, 27 Aug 2010 01:36:18 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o7R5aHGt012756;
+	Fri, 27 Aug 2010 01:36:17 -0400
+Received: from localhost (dhcp-18-111-101-135.dyn.mit.edu [18.111.101.135])
+	(authenticated bits=0)
+        (User authenticated as gdb@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o7R5aFDm023277;
+	Fri, 27 Aug 2010 01:36:16 -0400 (EDT)
+X-Mailer: git-send-email 1.7.0.4
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154583>
 
-Hi all,
+The interface for split_cmdline has changed such that the caller holds
+responsibility for printing any error messages.  This patch changes
+the git shell to print these error messages as appropriate.
+---
+ shell.c |   16 +++++++++++++---
+ 1 files changed, 13 insertions(+), 3 deletions(-)
 
-I may be mistaking a design decision as a bug, but I wanted to throw
-this out to the list to make sure. I think that re-enacting it will be
-the best way to explain it.
+The error behavior of split_cmdline was changed in the patch  'split_cmdline: Allow
+caller to access error string'.  This updates git-shell to deal with printing out
+split_cmdline errors itself.
 
-$ mkdir test
-$ cd test
-$ git init
-$ cat > readme
-This is a test file.
-^D
-$=C2=A0git commit -am "first commit"
-[master (root-commit) fae0d05] first commit
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-=46or personal reasons, I now want readme to be uppercase.
-
-$ mv readme README
-$ cat > README
-This is the revised README.
-$ git status -sb
-## master
- M readme
-$ git add README
-$ git status -sb
-## master
- M readme
-
-At this point, I'm thinking that git is confused. Even though I've
-added the README file, it still isn't staged. I follow up with the
-obvious:
-
-$ git add readme
-$ git status -sb
-## master
-M  readme
-$ git commit -m "change filename"
-[master ecc009f] change filename
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-It kind of works, but not quite, since git still thinks the file is
-called readme. I'd like to rename it, but whenever I run:
-
-$ git mv readme README
-fatal: destination exists, source=3Dreadme, destination=3DREADME
-
-How about this:
-
-$ mv README README.temp
-$ git mv readme README
-fatal: bad source, source=3Dreadme, destination=3DREADME
-
-The only workable solution was this:
-
-$ git mv readme readme.temp
-$ git mv readme.temp README
-
-I'm guessing this all has to do in some part with the logic behind
-git's strategy for detecting renames. This case probably slipped under
-the radar.
-
--Dan
+diff --git a/shell.c b/shell.c
+index b539cdf..7be826d 100644
+--- a/shell.c
++++ b/shell.c
+@@ -74,8 +74,10 @@ static void run_shell(void)
+ 		const char *prog;
+ 		char *full_cmd;
+ 		char *rawargs;
++		char *split_args;
+ 		const char **argv;
+ 		int code;
++		int count;
+ 
+ 		fprintf(stderr, "git> ");
+ 		if (strbuf_getline(&line, stdin, '\n') == EOF) {
+@@ -85,7 +87,12 @@ static void run_shell(void)
+ 		}
+ 		strbuf_trim(&line);
+ 		rawargs = strbuf_detach(&line, NULL);
+-		if (split_cmdline(rawargs, &argv) == -1) {
++		split_args = xstrdup(rawargs);
++		count = split_cmdline(split_args, &argv);
++		if (count < 0) {
++			fprintf(stderr, "invalid command format '%s': %s\n", rawargs,
++				split_cmdline_strerror(count));
++			free(split_args);
+ 			free(rawargs);
+ 			continue;
+ 		}
+@@ -129,6 +136,7 @@ int main(int argc, char **argv)
+ 	const char **user_argv;
+ 	struct commands *cmd;
+ 	int devnull_fd;
++	int count;
+ 
+ 	git_setup_gettext();
+ 
+@@ -193,7 +201,8 @@ int main(int argc, char **argv)
+ 	}
+ 
+ 	cd_to_homedir();
+-	if (split_cmdline(prog, &user_argv) != -1) {
++	count = split_cmdline(prog, &user_argv);
++	if (count >= 0) {
+ 		if (is_valid_cmd_name(user_argv[0])) {
+ 			prog = make_cmd(user_argv[0]);
+ 			user_argv[0] = prog;
+@@ -204,6 +213,7 @@ int main(int argc, char **argv)
+ 		die("unrecognized command '%s'", argv[2]);
+ 	} else {
+ 		free(prog);
+-		die("invalid command format '%s'", argv[2]);
++		die("invalid command format '%s': %s", argv[2],
++		    split_cmdline_strerror(count));
+ 	}
+ }
+-- 
+1.7.0.4
