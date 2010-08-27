@@ -1,69 +1,133 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Aug 2010, #06; Thu, 26)
-Date: Fri, 27 Aug 2010 15:33:50 +0000
-Message-ID: <AANLkTinYUjjL7FP8PnNX4jkQL7QuALmQYLF8bu+XUDxD@mail.gmail.com>
-References: <7vzkw8k6wv.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Does changing filename case breaks git's rename heuristic?
+Date: Fri, 27 Aug 2010 17:46:36 +0200
+Message-ID: <4C77DDDC.8070407@drmicha.warpmail.net>
+References: <AANLkTinxvj85Jzb-ykK0=MmRHkz8aQzmVxexC8H+Xgno@mail.gmail.com> <4C777090.2000107@drmicha.warpmail.net> <AANLkTikN_PbNNH2f4zWuk1FH+LgpKzkoZ6mYOdT9ANBj@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Aug 27 17:33:57 2010
+To: Dan Loewenherz <dloewenherz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Aug 27 17:46:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Op0wH-00046i-Cb
-	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 17:33:57 +0200
+	id 1Op18c-0002t4-LL
+	for gcvg-git-2@lo.gmane.org; Fri, 27 Aug 2010 17:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754610Ab0H0Pdx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 11:33:53 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61579 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754525Ab0H0Pdv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 11:33:51 -0400
-Received: by iwn5 with SMTP id 5so2701838iwn.19
-        for <git@vger.kernel.org>; Fri, 27 Aug 2010 08:33:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8cvMQCUHWoOL+mtbcIu3PMJN+B9GkpjsA5t67F7jpgk=;
-        b=uuzk4XfCCYATGKpxABkwIoC/xei5brGVofi3B5vK3LA93oZRlRqNa6IKdeT0MwpmsS
-         tn9SIM3Q2GhukYeBzmitPSNVhRK/9QjIDMGyk0SvdlVrnaUHc3ZPqWr0Msi8+vmgCFJm
-         r7FaW9O01dn61lESDf04uiyniHxN4d2x869qk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xqm9dxWS4QKUfJNMV5yrpB0n3QBecrfnGVLnHHpPgm7vzrr+u6pHm+4ogj6zENaQmy
-         kCfarOaxF3vwHvW3rkHEofwYg8plq/7tLSGWCEqiV2aktVQARd3QBhUnD/mp0V/kPON5
-         SokeYPsDHCCgkmJUy7RNRx7/YWtDJcTvhhQPM=
-Received: by 10.231.15.195 with SMTP id l3mr1221245iba.188.1282923230809; Fri,
- 27 Aug 2010 08:33:50 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Fri, 27 Aug 2010 08:33:50 -0700 (PDT)
-In-Reply-To: <7vzkw8k6wv.fsf@alter.siamese.dyndns.org>
+	id S1752100Ab0H0Pqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 11:46:37 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40631 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751603Ab0H0Pqg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 11:46:36 -0400
+Received: from compute3.internal (compute3.internal [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 9DBCA436;
+	Fri, 27 Aug 2010 11:46:35 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Fri, 27 Aug 2010 11:46:35 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=h1UsVp5ngiA9RTEiwE8S3rV3LgQ=; b=ehxf2bGp69rqgnlin7dwF4v+Yd/JYrIFCRwcCMjLcL5dRECjK5TNEckHvAM0S64lZbAutu2LsnxiFTJw95xjMoV5U2p370UkZB2ggP2bfDRF4YYX9i1CAacl+GHBY/Xm/UsKBXc+1I15h7zw3T2GeD1gbRij6AlLXGB0V90+mxs=
+X-Sasl-enc: sbQwojJuoTbw2ZVm6DdHXAvxKPnqcSBvP7u7BjiYqvFy 1282923995
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 22FED409906;
+	Fri, 27 Aug 2010 11:46:35 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Lightning/1.0b2pre Thunderbird/3.1.2
+In-Reply-To: <AANLkTikN_PbNNH2f4zWuk1FH+LgpKzkoZ6mYOdT9ANBj@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154602>
 
-On Fri, Aug 27, 2010 at 04:37, Junio C Hamano <gitster@pobox.com> wrote=
-:
+Dan Loewenherz venit, vidit, dixit 27.08.2010 16:52:
+> On Fri, Aug 27, 2010 at 1:00 AM, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> Dan Loewenherz venit, vidit, dixit 27.08.2010 06:57:
+>>> Hi all,
+>>>
+>>> I may be mistaking a design decision as a bug, but I wanted to throw
+>>> this out to the list to make sure. I think that re-enacting it will be
+>>> the best way to explain it.
+>>>
+>>> $ mkdir test
+>>> $ cd test
+>>> $ git init
+>>> $ cat > readme
+>>> This is a test file.
+>>> ^D
+>>> $ git commit -am "first commit"
+>>> [master (root-commit) fae0d05] first commit
+>>>  1 files changed, 1 insertions(+), 0 deletions(-)
+>>
+>> ? You have not added any file, so git won't commit anything (not even
+>> with -a). The above can't be a complete transcription. I assume you've
+>> added readme with the content above.
+> 
+> Yep, that was my mistake. I left out 'git add readme'.
+> 
+>>
+>>>
+>>> For personal reasons, I now want readme to be uppercase.
+>>>
+>>> $ mv readme README
+>>
+>> Here's where using "git mv" would have been the easier choice, followed
+>> by commit.
+> 
+> I agree. The instance where this actually occurred was that I had
+> received an updated binary file to put into my repository. icon.png ->
+> Icon.png. I suppose I could've run 'git mv' but I didn't realize what
+> would happen if I didn't!
+> 
+>>
+>>> $ cat > README
+>>> This is the revised README.
+>>
+>> Renaming and changing the content completely in one step will always
+>> trip up git's rename detection. You should rename, commit, change,
+>> commit, unless the change affects a small portion of the file only.
+> 
+> Agreed.
+> 
+>>
+>>> $ git status -sb
+>>> ## master
+>>>  M readme
+>>
+>> Again, this can't be a complete transcript. The above would lead to
+>>
+>>  D readme
+>> ?? README
+> 
+> This is where I didn't botch up the transcript, and where I was
+> actually surprised at what was going on. I'll insert a full one at the
+> bottom of this email that can actually be run to get the same results.
+> 
+>>
+>>> $ git add README
+>>> $ git status -sb
+>>> ## master
+>>>  M readme
+>>>
+>>> At this point, I'm thinking that git is confused. Even though I've
+>>
+>> Are you possibly using a case-challenged file system? Is this maybe on a
+>> Mac with HFS or Win with NTFS?
+> 
+> I'm using a Mac with a journaled filesystem and Git version 1.7.2.1.
 
-> * ab/i18n (2010-07-25) 4 commits
-> =C2=A0+ tests: locate i18n lib&data correctly under --valgrind
-> =C2=A0+ gettext: setlocale(LC_CTYPE, "") breaks Git's C function assu=
-mptions
-> =C2=A0+ tests: rename test to work around GNU gettext bug
-> =C2=A0+ Add infrastructure for translating Git with gettext
-> =C2=A0(this branch is used by ab/test.)
+The journalling is no problem, but HFS is. I'm no Macxpert but if I
+remember correctly, then under HFS "readme" and "README" are the same
+file, i.e. HFS only remembers how you want it spelled. People will
+correct me where I'm wrong.
 
-Thanks for merging this into next!
+Your test script should produce the expected result if you use, say,
+"readme" and "RAEDME" , i.e. names which differ by more than just case.
 
-I'll start submitting patches to gettext-ize some of the Git source
-soon. I'm going to start with the common mainporcelain commands like
-git-init, git-clone etc.
+Cheers,
+Michael
+
+> Transcript
+[snipped]
