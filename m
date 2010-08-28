@@ -1,100 +1,63 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] fmt-merge-msg: Disallow '--log', 'merge.log' < 0
-Date: Sat, 28 Aug 2010 16:05:32 +0530
-Message-ID: <1282991734-3368-2-git-send-email-artagnon@gmail.com>
-References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Aug 28 12:40:18 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCHv2] completion: make compatible with zsh
+Date: Sat, 28 Aug 2010 10:43:13 +0000
+Message-ID: <AANLkTin7rARxLbCUvKOgQUG0s8KhVYZmYxhs+ZafTPW8@mail.gmail.com>
+References: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+To: Mark Lodato <lodatom@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 28 12:43:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpIpb-0004Mo-Gl
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 12:40:15 +0200
+	id 1OpIse-0005R8-L5
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 12:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748Ab0H1KkJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Aug 2010 06:40:09 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:63990 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752095Ab0H1KkI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Aug 2010 06:40:08 -0400
-Received: by pzk9 with SMTP id 9so1398513pzk.19
-        for <git@vger.kernel.org>; Sat, 28 Aug 2010 03:40:07 -0700 (PDT)
+	id S1752749Ab0H1KnT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Aug 2010 06:43:19 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34448 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752095Ab0H1KnT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Aug 2010 06:43:19 -0400
+Received: by iwn5 with SMTP id 5so3404201iwn.19
+        for <git@vger.kernel.org>; Sat, 28 Aug 2010 03:43:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=VT/5CaTOODQds/s48+SsyWz29T309M3fJD3ckShkyIU=;
-        b=U33AapMqAq82wflx6evbcwRgZVfQFI8ln0HeyRgVGTdtzAAILA4lA45zgy60BUOAFQ
-         GKHVwtbFpi0+a1k7if1QnP9mOu6cdi/yC4ThbafNDLNAjPMiTXgbm8fOTgvhU2VKGubd
-         Xm0Fp02QErlD95r1OBVKfeyW12Q6KT+LhpxbI=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QuAMX6zg692JXbBE/Jh/VrNw2PfwLj21Td1g9lmu61A=;
+        b=ZHEX8Stk298FXsNnfJau1t78lrt+NhvuMqKyGSnA7pXrRfg9XmwwBZew2U8aVe2kgG
+         5+ME9HnrbaA0CkQn94R5QtN6kPdWo2qnS7SXdnaC1xhkr2DnqLsBVf4kkZURWNXt/6zb
+         yiET4hCiBmMs3bCcDkDLkSjeC/JI5LnobUJ8k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Q/JAJPtgXoqOyt2qm0la1G+qrl/sLQA+iea1xQfKRCpmaLa7l5/UlNDq71D7rWVmyc
-         ayYp3q2E2fCt/g9+KGq2tJJAoi2GcjfzeICkZLMc6cAXIKvNNyJeMejMMU8TlPO3Vj5d
-         1vkJW4Ndj3pBDNKrr7rOWiNShozA4eEbdhYlQ=
-Received: by 10.142.191.12 with SMTP id o12mr2387821wff.10.1282991901255;
-        Sat, 28 Aug 2010 03:38:21 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id t11sm5855798wfc.4.2010.08.28.03.38.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 28 Aug 2010 03:38:20 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
-In-Reply-To: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PPEfpCBDf8Ou2kYUaUl92Iq2BPDeSZEI+UjrHYPYTOM1PkIoRuv0H2E2zcxQvpzXrS
+         5XWqO+L/t0jXy4zALoJZh3E4ghOmIYHkep1JT3oBWaIFE3yq6W1bSLhavP29ZJ3H/ME1
+         s9F80SVePfJW9yUPZtMWGYl/TTdx4mo67chFg=
+Received: by 10.231.161.73 with SMTP id q9mr2597787ibx.70.1282992193772; Sat,
+ 28 Aug 2010 03:43:13 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sat, 28 Aug 2010 03:43:13 -0700 (PDT)
+In-Reply-To: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154642>
 
-Explicitly check for the case when '--log' or 'merge.log' is passed a
-negative integer argument. Handle the case by making it look as if
-such an argument was never parsed.
+On Fri, Aug 27, 2010 at 02:45, Mark Lodato <lodatom@gmail.com> wrote:
+> Modify git-completion.bash so that it also works with zsh when using
+> bashcompinit. =C2=A0In particular:
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- builtin/fmt-merge-msg.c |    4 +++-
- builtin/merge.c         |    2 +-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+=46WIW:
 
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index d3b8297..0684179 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -18,7 +18,7 @@ static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
- 	if (!strcmp(key, "merge.log") || !strcmp(key, "merge.summary")) {
- 		int is_bool;
- 		shortlog_len = git_config_bool_or_int(key, value, &is_bool);
--		if (is_bool && shortlog_len)
-+		if ((is_bool && shortlog_len) || shortlog_len < 0)
- 			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 	}
- 	return 0;
-@@ -345,6 +345,8 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
- 		write_in_full(STDOUT_FILENO, &nl, 1);
- 		return 0;
- 	}
-+	if (shortlog_len < 0)
-+		shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 
- 	if (inpath && strcmp(inpath, "-")) {
- 		in = fopen(inpath, "r");
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 55dc571..affa197 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -510,7 +510,7 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 	else if (!strcmp(k, "merge.log") || !strcmp(k, "merge.summary")) {
- 		int is_bool;
- 		shortlog_len = git_config_bool_or_int(k, v, &is_bool);
--		if (is_bool && shortlog_len)
-+		if ((is_bool && shortlog_len) || shortlog_len < 0)
- 			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 		return 0;
- 	} else if (!strcmp(k, "merge.renormalize"))
--- 
-1.7.2.2.409.gdbb11.dirty
+Reviewed-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
