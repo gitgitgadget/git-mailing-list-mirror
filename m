@@ -1,125 +1,122 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] core.attributesfile: a fix, a simplification, and a test
-Date: Sat, 28 Aug 2010 20:41:10 +0200
-Message-ID: <1283020870-24888-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqy6bqr3ep.fsf@bauges.imag.fr>
-Cc: Petr Onderka <gsvick@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Aug 28 20:41:36 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
+Date: Sat, 28 Aug 2010 21:17:00 +0000
+Message-ID: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marcin Cieslak <saper@saper.info>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Aug 28 23:17:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpQLP-0004S8-TT
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 20:41:36 +0200
+	id 1OpSmB-0006wR-6x
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 23:17:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753413Ab0H1Slb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Aug 2010 14:41:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44271 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753143Ab0H1Sla (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Aug 2010 14:41:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7SIc3XM018773
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 28 Aug 2010 20:38:03 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OpQLF-0008AC-J4; Sat, 28 Aug 2010 20:41:25 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OpQLF-0006Tz-Ho; Sat, 28 Aug 2010 20:41:25 +0200
-X-Mailer: git-send-email 1.7.2.2.175.ga619d.dirty
-In-Reply-To: <vpqy6bqr3ep.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 28 Aug 2010 20:38:03 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7SIc3XM018773
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1283625486.50658@9ZR1vgk6b8eZd76yaHne0w
+	id S1752694Ab0H1VRB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Aug 2010 17:17:01 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33227 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752422Ab0H1VRA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Aug 2010 17:17:00 -0400
+Received: by iwn5 with SMTP id 5so3649734iwn.19
+        for <git@vger.kernel.org>; Sat, 28 Aug 2010 14:17:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=zi0xKDyHEhTQdjTbVuwsRzWbO20rD/zzOGd7GgWFx6o=;
+        b=psB3gNSBU2cmw4MVIs4P5OOpf0s5NEtvhxtk9RYR8syDSNK1b/0tXkMOQfWGraL2U7
+         LrhidjkovfCsc0mXpFSfg6FOQl7hr6tjTOFgcMORSPJnt5Yjh6lOUNSLpm7U4W8vWtU/
+         esAKywKwiON1nN2KKAY0JsSYjEaW6pjQl7mBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=KsRtN5VLwyQNRwQKgzwmdG6br4/38BnRpIXJRYAhkXbpfGCMxjYYhruJeiyFkypB0V
+         TGcsOKjRpYttvs5K4uYd2HEB7pjYcigARbJodQQRvsG4ThiZTvO4mzh7aYNX2YR/1FLz
+         A4HsdKZ3pplC0Lv4ORYKaoYiuBfo2b/FWVdTw=
+Received: by 10.231.35.77 with SMTP id o13mr2924398ibd.92.1283030220137; Sat,
+ 28 Aug 2010 14:17:00 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sat, 28 Aug 2010 14:17:00 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154657>
 
-Patch meant to be squashed into the core.attributesfile.
+I'm having an odd encoding issue with gettext on my
+gettextize-git-mainporcelain branch that hadn't been turned up before
+because none of the existing messages used non-ASCII translations.
 
-* attributes_file won't be set unless one calls git_config before => do
-  this.
+With this in is.po (full version at [is.po]):
 
-* There was a useless xstrdup/free in the code.
+    "Content-Type: text/plain; charset=3DUTF-8\n"
+    "Content-Transfer-Encoding: 8bit\n
 
-* This really deserves a test, so I added one in t0003-attributes.sh.
-  (I've been too lazy to check the system-wide attributes file, though)
+I do:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- attr.c                |    6 ++----
- t/t0003-attributes.sh |   14 ++++++++++++++
- 2 files changed, 16 insertions(+), 4 deletions(-)
+    $ msgfmt -o /opt/git/next-gettext/share/locale/is/LC_MESSAGES/git.m=
+o is.po
 
-diff --git a/attr.c b/attr.c
-index 068e13b..342791a 100644
---- a/attr.c
-+++ b/attr.c
-@@ -500,11 +500,9 @@ static void bootstrap_attr_stack(void)
- 			}
- 		}
- 
-+		git_config(git_default_config, NULL);
- 		if (git_attr_global() && attributes_file) {
--			char *user_attr = xstrdup(attributes_file);
--
--			elem = read_attr_from_file(user_attr, 1);
--			free(user_attr);
-+			elem = read_attr_from_file(attributes_file, 1);
- 			if (elem) {
- 				elem->origin = NULL;
- 				elem->prev = attr_stack;
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index de38c7f..24286e5 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -15,6 +15,7 @@ attr_check () {
- 
- }
- 
-+HOME=$(pwd)
- 
- test_expect_success 'setup' '
- 
-@@ -36,6 +37,9 @@ test_expect_success 'setup' '
- 		echo "d/* test=a/b/d/*"
- 		echo "d/yes notest"
- 	) >a/b/.gitattributes
-+	(
-+		echo "global test=global"
-+	) >$HOME/global-gitattributes
- 
- '
- 
-@@ -57,6 +61,16 @@ test_expect_success 'attribute test' '
- 
- '
- 
-+test_expect_success 'core.attributesfile' '
-+	attr_check global unspecified &&
-+	git config core.attributesfile "$HOME/global-gitattributes" &&
-+	attr_check global global &&
-+	git config core.attributesfile "~/global-gitattributes" &&
-+	attr_check global global &&
-+	echo "global test=precedence" >> .gitattributes &&
-+	attr_check global precedence
-+'
-+
- test_expect_success 'attribute test: read paths from stdin' '
- 
- 	cat <<EOF > expect
--- 
-1.7.2.2.175.ga619d.dirty
+Which, under an Icelandic locale gives me:
+
+    $ rm -rf /tmp/meh; LANGUAGE=3D LC_ALL=3D LANG=3Dis_IS.UTF-8 git ini=
+t /tmp/meh
+    Bj? til t?ma Git lind ? /tmp/meh/.git/
+
+Those "?" characters are actual ASCII question marks.
+
+But if I don't specify an encoding msgfmt will complain:
+
+    $ msgfmt -o /opt/git/next-gettext/share/locale/is/LC_MESSAGES/git.m=
+o is.po
+    is.po: warning: Charset missing in header.
+                    Message conversion to user's charset will not work.
+
+But git will now emit the non-ASCII characters from its message
+catalogue. Probably because some component now doesn't try to be smart
+about encoding.
+
+    $ rm -rf /tmp/meh; LANGUAGE=3D LC_ALL=3D LANG=3Dis_IS.UTF-8 git ini=
+t /tmp/meh
+    Bj=C3=B3 til t=C3=B3ma Git lind =C3=AD /tmp/meh/.git/
+
+That'd probably break under a non-UTF-8 locale, like an ISO-8859-1 one
+though.
+
+A `hexdump -C` of the two `.mo` files is exactly the same, aside from
+the charset header. I.e. both contain valid UTF-8 sequences, so the
+issue is somewhere between the `*.mo` file being read and it being
+emitted by `libintl` and the `gettext` function.
+
+We're not doing anything odd in our [gettext.c] that I can see that
+could explain this.
+
+To reproduce it, do:
+
+    git clone --reference ~/g/git git://github.com/avar/git.git next-ge=
+ttext
+    cd next-gettext
+    git checkout -t origin/gettextize-git-mainporcelain
+    make -j 4 prefix=3D/tmp/git all install
+    rm -rf /tmp/meh; LANGUAGE=3D LANG=3Dis_IS.utf8 /tmp/git/bin/git ini=
+t /tmp/meh
+
+Which'll give (as mentioned above):
+
+    Bj? til t?ma Git lind ? /tmp/meh/.git/
+
+But editing out the Content-Type line gives:
+
+    Bj=C3=B3 til t=C3=B3ma Git lind =C3=AD /tmp/meh/.git/
+
+[gettextize-git-mainporcelain]:
+http://github.com/avar/git/tree/gettextize-git-mainporcelain]
+[is.po]: http://github.com/avar/git/blob/gettextize-git-mainporcelain/p=
+o/is.po
+[gettext.c]: http://github.com/avar/git/blob/gettextize-git-mainporcela=
+in/gettext.c
