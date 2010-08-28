@@ -1,84 +1,105 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] Add global and system-wide gitattributes
-Date: Sat, 28 Aug 2010 19:33:22 +0200
-Message-ID: <vpqbp8mskv1.fsf@bauges.imag.fr>
-References: <AANLkTi=2tRjGicxJxnJ3xccCGxcP3bLUy8u0O7q85D=R@mail.gmail.com>
-	<1281977813-6528-1-git-send-email-gsvick@gmail.com>
-	<87d3t7ow39.fsf@gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 2/3] Makefile: provide a --msgid-bugs-address to xgettext(1)
+Date: Sat, 28 Aug 2010 17:54:22 +0000
+Message-ID: <1283018063-4256-3-git-send-email-avarab@gmail.com>
+References: <1283018063-4256-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Henrik Grubbstrm <grubba@grubba.org>
-To: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Aug 28 19:35:33 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Aug 28 19:54:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpPJS-0001By-EE
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 19:35:30 +0200
+	id 1OpPcE-0001Lz-OT
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 19:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753095Ab0H1RfZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Aug 2010 13:35:25 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57711 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752601Ab0H1RfY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 28 Aug 2010 13:35:24 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7SHU1ag008573
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 28 Aug 2010 19:30:01 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OpPHO-0007nK-VI; Sat, 28 Aug 2010 19:33:22 +0200
-In-Reply-To: <87d3t7ow39.fsf@gmail.com> (=?utf-8?B?IsWgdMSbcMOhbiBOxJtt?=
- =?utf-8?B?ZWMiJ3M=?= message of "Wed\, 25 Aug 2010 11\:55\:22 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 28 Aug 2010 19:30:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7SHU1ag008573
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1283621401.8471@yHrTMIXGDX10cPiZfjt2ug
+	id S1753378Ab0H1Rys convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Aug 2010 13:54:48 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:39604 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753290Ab0H1Ryf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Aug 2010 13:54:35 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 35so5021859wyb.19
+        for <git@vger.kernel.org>; Sat, 28 Aug 2010 10:54:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=qyqa7RtWlDXmDW8TPBkVqn/CR5RTyLRgf9c+37oILiA=;
+        b=bYxgmHtAVgtdapScntItt6ptvHug4uRHmHxnXRH6WaJSRbr9cZPssSeG8iClf8uhxl
+         rVClHYVKZIeQws0dQbTaIHt040agRx2lpSeQL7lr2+kkX0H7PP9HLDUexYdbNYgyenmb
+         GrDhWEqAd7dSAi9+8QrifD/mqJof+vH2u23FM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=om7JI4Tv86rNh6Y7RwOBtBenHDO780lVCEDg/g/iFFBc4h0i70znJfKVUp9bsfkFED
+         PLLYffRYw77bFMkiq06+5bmnxAWACKQGMrUSkWJo99UkZExSzCYfwbimyD+i5Q0pcEfw
+         4q7gGG5Y2v+e90uMkRqNitBdW+km2C2K/NQYI=
+Received: by 10.216.188.1 with SMTP id z1mr2631106wem.57.1283018074815;
+        Sat, 28 Aug 2010 10:54:34 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id o15sm78280wer.39.2010.08.28.10.54.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Aug 2010 10:54:33 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.513.g82b8
+In-Reply-To: <1283018063-4256-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154650>
 
-=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com> writes:
+Change the invocations of xgettext to use the --msgid-bugs-address
+option. This has the effect of adding a Report-Msgid-Bugs-To header to
+the git.pot and the derived *.po files. Doing so is recommended by the
+gettext manual.
 
-> Petr Onderka <gsvick@gmail.com> writes:
+If this isn't added the Report-Msgid-Bugs-To already in po/is.po will
+be removed by msgmerge(1).
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
->> Allow gitattributes to be set globally and system wide. This way, se=
-ttings
->> for particular file types can be set in one place and apply for all =
-user's
->> repositories.
->
-> [...]
->
-> I really can't wait till this gets into Git and I'm certainly not the
-> only one (thank you so much for working on it, Petr!).
+---
+ Makefile |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Same here ;-).
-
-> Any reason the patch still hasn't been applied?
-
-Usually, patches are applied if either
-
-1) Junio has personal interest in it, or
-
-2) Other people review the code and show interest for it.
-
-I guess none of the conditions were met here (and Junio was very busy
-these days). I'm sure you can help about point 2) ;-)
-
+diff --git a/Makefile b/Makefile
+index 62d526a..155b69b 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2008,10 +2008,11 @@ cscope:
+ 	$(RM) cscope*
+ 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
+=20
++POT_BUGS =3D Git Mailing List <git@vger.kernel.org>
+ pot:
+-	$(XGETTEXT) --add-comments --keyword=3D_ --keyword=3DN_ --output=3Dpo=
+/git.pot --language=3DC $(C_OBJ:o=3Dc) t/t0200/test.c
+-	$(XGETTEXT) --add-comments --join-existing --output=3Dpo/git.pot --la=
+nguage=3DShell $(SCRIPT_SH) t/t0200/test.sh
+-	$(XGETTEXT) --add-comments --join-existing --keyword=3D__ --output=3D=
+po/git.pot --language=3DPerl $(SCRIPT_PERL) t/t0200/test.perl
++	$(XGETTEXT) --msgid-bugs-address=3D"$(POT_BUGS)" --add-comments --key=
+word=3D_ --keyword=3DN_ --output=3Dpo/git.pot --language=3DC $(C_OBJ:o=3D=
+c) t/t0200/test.c
++	$(XGETTEXT) --msgid-bugs-address=3D"$(POT_BUGS)" --add-comments --joi=
+n-existing --output=3Dpo/git.pot --language=3DShell $(SCRIPT_SH) t/t020=
+0/test.sh
++	$(XGETTEXT) --msgid-bugs-address=3D"$(POT_BUGS)" --add-comments --joi=
+n-existing --keyword=3D__ --output=3Dpo/git.pot --language=3DPerl $(SCR=
+IPT_PERL) t/t0200/test.perl
+=20
+ POFILES :=3D $(wildcard po/*.po)
+ MOFILES :=3D $(patsubst po/%.po,share/locale/%/LC_MESSAGES/git.mo,$(PO=
+=46ILES))
 --=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.2.2.513.g82b8
