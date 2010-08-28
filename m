@@ -1,89 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
-Date: Sat, 28 Aug 2010 17:16:55 -0500
-Message-ID: <20100828221655.GB5777@burratino>
-References: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
- <AANLkTikHbxrmj3R1LDghVvMA1KNEdfeiXj44cq1KRN7M@mail.gmail.com>
- <20100828214641.GA5515@burratino>
- <20100828215956.GB5515@burratino>
- <alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
+From: Simeon Maxein <smaxein@googlemail.com>
+Subject: Problems with extra files on git filter-branch when core.ignorecase
+ is true
+Date: Sun, 29 Aug 2010 00:21:41 +0200
+Message-ID: <AANLkTinEYNxKAAhq2O3joNYYrAmr=zRrUR3BakircnJW@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Marcin Cieslak <saper@saper.info>
-X-From: git-owner@vger.kernel.org Sun Aug 29 00:19:00 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Aug 29 00:21:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpTjo-00054n-A0
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 00:19:00 +0200
+	id 1OpTmV-00062S-B8
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 00:21:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752907Ab0H1WSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Aug 2010 18:18:45 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64193 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125Ab0H1WSo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Aug 2010 18:18:44 -0400
-Received: by iwn5 with SMTP id 5so3679580iwn.19
-        for <git@vger.kernel.org>; Sat, 28 Aug 2010 15:18:44 -0700 (PDT)
+	id S1753051Ab0H1WVm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 28 Aug 2010 18:21:42 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:51222 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752958Ab0H1WVm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 28 Aug 2010 18:21:42 -0400
+Received: by vws3 with SMTP id 3so4004400vws.19
+        for <git@vger.kernel.org>; Sat, 28 Aug 2010 15:21:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=DyeN2wECh35uYWeSoFm14Is+X6h1z55Cn/5ZR+oXEms=;
-        b=CrbES52kSi2Zbvd7DXTvUXFMt6QeqssuHnkD0HvZ5GOMztfZt4yf6QflvhmyIt1pV7
-         aKYmluEyM3bL98a94n8Cl28iaEHrT9YsNwQQnVx5nycWL98lVCaLkROnCEu2/t1i+iVk
-         AY31ifm+S9lPVXSveX9TEselUP6Dstscqdyqs=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=qKT9Uy8wxTIoaXBXrUEJvysdHoHPMGu7wov6N7ZTqqY=;
+        b=T5dIKNQSoY/yDBCt2VVHF3rgPhpNQU7lhcmg6YmImUimKWgcfrj8WnLORT0X12lGZA
+         Vjqz+25isnatqqHdk3uHNlouIojMVmn1+wW9QX/OZeIvUkHcYQhLvb9w76/UAA1A/oe6
+         korp+VAAuXpepKeXqzPTyXdCAxLJNSKlJIRKM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XNAgwmAK8R0d40dFYf+wdXStU4z8vzEh19W+L2jpBIKBcuZSYzVKgvl+ZDR12w7bvm
-         V+4oPSWon0bY8+GN+FkB+01GiGAs9NEk7aqRgZPHTzod1n7B9hMtzHra/3yYGCHblV02
-         jGR4jqcyQzezEkeMjUBYStXBK2hD9tMIZXq6c=
-Received: by 10.231.130.145 with SMTP id t17mr2935118ibs.144.1283033923688;
-        Sat, 28 Aug 2010 15:18:43 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id n20sm5362365ibe.17.2010.08.28.15.18.42
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 28 Aug 2010 15:18:43 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=OReIWw/DmvxbQE98Vrj3j7PZIzH9hRh7CEbWibmxgEjsXJ/IBgoNKf4RY1CvufqlDd
+         6RRcOjxFhbsZoqt5SbOr5LPbJoc2tYTGCFrVAGSci9Et1OQkgSSONWIWWX+zNyk7iZBm
+         85FAmbDy8pZrO03Zn4VS0U9kP6Wbv5Y9qqvcQ=
+Received: by 10.220.49.28 with SMTP id t28mr1525525vcf.93.1283034101406; Sat,
+ 28 Aug 2010 15:21:41 -0700 (PDT)
+Received: by 10.220.164.137 with HTTP; Sat, 28 Aug 2010 15:21:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154662>
 
-Marcin Cieslak wrote:
+Today when trying to change the contents of a repository with git
+filter-branch, a tool that was run on a part of the working tree for
+each version reported an extra file that couldn't be accounted for.
+After some testing and a small discussion on the irc channel, I was
+able to come up with the following scenario to reproduce the issue.
+The test was performed under Ubuntu with Git 1.7.0.4 on a case
+sensitive file system:
 
-> What's wrong?
+> ~$ mkdir gittest
+> ~$ cd gittest
+> ~/gittest$ git init
+> Initialized empty Git repository in /home/user/gittest/.git/
+> ~/gittest$ git config core.ignorecase true
+> ~/gittest$ echo 'foo' > testfile.txt
+> ~/gittest$ git add testfile.txt
+> ~/gittest$ git commit -m "initial commit"
+> [master (root-commit) 794888c] initial commit
+> =C2=A01 files changed, 1 insertions(+), 0 deletions(-)
+> =C2=A0create mode 100644 testfile.txt
+> ~/gittest$ git rm testfile.txt
+> rm 'testfile.txt'
+> ~/gittest$ echo 'bar' > testFile.txt
+> ~/gittest$ git add testFile.txt
+> ~/gittest$ git commit -m "additional commit"
+> [master a669956] additional commit
+> =C2=A02 files changed, 1 insertions(+), 1 deletions(-)
+> =C2=A0create mode 100644 testFile.txt
+> =C2=A0delete mode 100644 testfile.txt
+> ~/gittest$ git filter-branch --tree-filter 'ls' master
+> Rewrite 794888cdbe107aa7408cc5ed4132dcd3bc2753c8 (1/2)testfile.txt
+> Rewrite a66995628af5710828a6a59628553938bc30ee37 (2/2)testfile.txt=C2=
+=A0 testFile.txt
+>
+> WARNING: Ref 'refs/heads/master' is unchanged
 
-$ /lib/libc.so.6  |head -1
-GNU C Library (Debian EGLIBC 2.11.2-2) stable release version 2.11.2, by Roland McGrath et al.
-$ cat test.c
-#include <stdio.h>
-#include <locale.h>
+In the second rewrite line, I would only expect testFile.txt to
+appear, regardless of the core.ignorecase setting. On a case
+insensitive filesystem the above example works correctly.
 
-int main(void)
-{
-        int n;
+It might seem strange to set core.ignorecase to true on a case
+sensitive filesystem, however, this issue also appears when using a
+(case sensitive) tmpfs temp directory to filter a case insensitive
+repository.
 
-        setlocale(LC_CTYPE, "");
-        n = printf("%.11s\n", "Author: \277");
-        perror("printf");
-        fprintf(stderr, "return value: %d\n", n);
-        return 0;
-}
-$ make test
-cc     test.c   -o test
-$ ./test
-printf: Invalid or incomplete multibyte or wide character
-return value: -1
+Thanks in advance for your help.
 
-glibc bug?
+Simeon
