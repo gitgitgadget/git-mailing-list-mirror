@@ -1,78 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] t0003: add missing && at end of lines
-Date: Sat, 28 Aug 2010 20:18:36 +0200
-Message-ID: <1283019516-24135-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Aug 28 20:19:08 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] Add global and system-wide gitattributes
+Date: Sat, 28 Aug 2010 20:35:42 +0200
+Message-ID: <vpqy6bqr3ep.fsf@bauges.imag.fr>
+References: <AANLkTi=2tRjGicxJxnJ3xccCGxcP3bLUy8u0O7q85D=R@mail.gmail.com>
+	<1281977813-6528-1-git-send-email-gsvick@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Henrik Grubbstrm <grubba@grubba.org>
+To: Petr Onderka <gsvick@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 28 20:36:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpPzc-0003VI-Lk
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 20:19:05 +0200
+	id 1OpQGO-0002Ov-98
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 20:36:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753430Ab0H1SS6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Aug 2010 14:18:58 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:57941 "EHLO rominette.imag.fr"
+	id S1753378Ab0H1SgD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Aug 2010 14:36:03 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59622 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753095Ab0H1SS5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Aug 2010 14:18:57 -0400
+	id S1753143Ab0H1SgC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Aug 2010 14:36:02 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7SIFI69015690
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7SIWKGP018012
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 28 Aug 2010 20:15:20 +0200
+	Sat, 28 Aug 2010 20:32:20 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OpPzE-000848-3w; Sat, 28 Aug 2010 20:18:40 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OpPzE-0006Hu-0y; Sat, 28 Aug 2010 20:18:40 +0200
-X-Mailer: git-send-email 1.7.2.2.175.ga619d.dirty
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 28 Aug 2010 20:15:20 +0200 (CEST)
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OpQFi-00087i-Ev; Sat, 28 Aug 2010 20:35:42 +0200
+In-Reply-To: <1281977813-6528-1-git-send-email-gsvick@gmail.com> (Petr Onderka's message of "Mon\, 16 Aug 2010 16\:56\:53 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 28 Aug 2010 20:32:20 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7SIFI69015690
+X-MailScanner-ID: o7SIWKGP018012
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1283624124.55246@CX7BmyKBspi5f5ycQXnK2A
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1283625141.04847@OaurF0ZOtfDZe5rlssK5vQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154655>
 
+Petr Onderka <gsvick@gmail.com> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-Trivial fix fond while testing the core.attributesfile patch.
+> Allow gitattributes to be set globally and system wide. This way, settings
+> for particular file types can be set in one place and apply for all user's
+> repositories.
+>
+> The location of system-wide attributes file is $(prefix)/etc/gitattributes.
+> The location of the global file can be configured by setting
+> core.attributesfile.
 
- t/t0003-attributes.sh |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+Good, I like this :-)
 
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 53bd7fc..de38c7f 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -48,11 +48,11 @@ test_expect_success 'attribute test' '
- 	attr_check a/b/g a/b/g &&
- 	attr_check b/g unspecified &&
- 	attr_check a/b/h a/b/h &&
--	attr_check a/b/d/g "a/b/d/*"
--	attr_check onoff unset
--	attr_check offon set
--	attr_check no unspecified
--	attr_check a/b/d/no "a/b/d/*"
-+	attr_check a/b/d/g "a/b/d/*" &&
-+	attr_check onoff unset &&
-+	attr_check offon set &&
-+	attr_check no unspecified &&
-+	attr_check a/b/d/no "a/b/d/*" &&
- 	attr_check a/b/d/yes unspecified
- 
- '
+> Some parts of the code were copied from the implementation of the same
+> functionality in config.c.
+
+(maybe you could say quickly which ones and why)
+
+> +		if (git_attr_global() && attributes_file) {
+
+I tried this, and attributes_file was NULL here. I don't know how it
+worked for you, but there should be a call to git_config here.
+
+> +			char *user_attr = xstrdup(attributes_file);
+> +
+> +			elem = read_attr_from_file(user_attr, 1);
+> +			free(user_attr);
+
+Any reason for this xstrdup/free?
+
+Patch follows for these two points + a test, to be squashed into
+yours.
+
 -- 
-1.7.2.2.175.ga619d.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
