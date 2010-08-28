@@ -1,102 +1,102 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: git pull --rebase differs in behavior from git fetch + git rebase
-Date: Fri, 27 Aug 2010 17:40:21 -0600
-Message-ID: <AANLkTimBv3EVWaEnateD95sUi_LkmNw8RKJZYrW4dUFy@mail.gmail.com>
-References: <4C772A01.5030207@workspacewhiz.com>
-	<alpine.DEB.2.00.1008270124450.20874@narbuckle.genericorp.net>
-	<4C77DE60.6020809@workspacewhiz.com>
-	<AANLkTimEO==c7Pzi99VfvDp7S9HN=V2j6t0kk--w1kb9@mail.gmail.com>
-	<4C783C66.3000008@workspacewhiz.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] push: disallow fast-forwarding tags without --force
+Date: Fri, 27 Aug 2010 20:21:01 -0500
+Message-ID: <20100828012101.GB2004@burratino>
+References: <1282893284-17829-1-git-send-email-cxreg@pobox.com>
+ <7vfwy0hsn1.fsf@alter.siamese.dyndns.org>
+ <alpine.DEB.2.00.1008271046080.20874@narbuckle.genericorp.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dave Olszewski <cxreg@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Sat Aug 28 01:40:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Dave Olszewski <cxreg@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Aug 28 03:23:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Op8X7-0004nm-Kw
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 01:40:29 +0200
+	id 1OpA8V-0003vX-7V
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 03:23:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752147Ab0H0XkX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 27 Aug 2010 19:40:23 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49485 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751893Ab0H0XkW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 27 Aug 2010 19:40:22 -0400
-Received: by fxm13 with SMTP id 13so2322666fxm.19
-        for <git@vger.kernel.org>; Fri, 27 Aug 2010 16:40:21 -0700 (PDT)
+	id S1752288Ab0H1BXE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 27 Aug 2010 21:23:04 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:40726 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751922Ab0H1BXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 27 Aug 2010 21:23:03 -0400
+Received: by gwj17 with SMTP id 17so1356158gwj.19
+        for <git@vger.kernel.org>; Fri, 27 Aug 2010 18:23:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=UzeAJcfNznlH6mIwWC3ONJS5pFnHRtJkO26CGTRc0mM=;
-        b=SXglVofnjMVPtBMjeedV36RaWjhvLJX2XC7KdWYumH+lCvx+aJi336FM0ggMuyEi+z
-         cJp4uvBhQOJOd1ykOBFnFlAD1+DmM7fT+oUWixUZ/VBZv2Q76x1sthaP7k34Y3wL/xaL
-         qbs9cxrXsu92BVcAQNlNUpVtY3XuOajeIhkuc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=xfEDqez3f+ht1XmqJrmSf7FZP111oPG3Gdrl9aUlAzg=;
+        b=iwLZTUGC1bnSjHr+rKucz74XYpBlT2/KVEGN344rZeSUc2GoK7KgOY3ZHWBM6bauuN
+         eH6s3Wk49t8C2RVsImA9pn/1TxRSrZbiqiNGgh0Q0elwyDJ96pMJIEmHJsa5tj+OUHKb
+         Uq4bi5hEiNpORkB71Qw2wUGSCgqO03uqCNr0g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iMLGPFh0aoVyCOEuAepBTR9G4/u+cYmoUfyBiUquh+VQr+HUQICARsAmTrUcFkozpp
-         iqYtfsoqQr+SHUK5LTaEvLSxeukKt/XPFDe4ubGLrYitDycNbf4Q+NlHB7pIQ3xTaRzd
-         2msJTTv6u/ZYk66cPW/RX+JUAXh1cIrJ/K8S0=
-Received: by 10.223.119.147 with SMTP id z19mr1206443faq.64.1282952421370;
- Fri, 27 Aug 2010 16:40:21 -0700 (PDT)
-Received: by 10.223.50.154 with HTTP; Fri, 27 Aug 2010 16:40:21 -0700 (PDT)
-In-Reply-To: <4C783C66.3000008@workspacewhiz.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XbP7k8on4ihl8b4rfyzRpBMuf9ls9+qE4BM2ogOXZePAlf0nTjSgZQQak0gNeBaWQF
+         GDCZu30Ex38OdusQhNnw3hWZZnSrZ4W8XVpklqVRhUP1tD3AMy96168FYySzseGaRmv8
+         YBoFvgHj9pAlTLiVoL0pj6wGuEe6wiC/IRyzk=
+Received: by 10.100.33.14 with SMTP id g14mr1736284ang.180.1282958582008;
+        Fri, 27 Aug 2010 18:23:02 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id u14sm7243395ann.20.2010.08.27.18.22.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 27 Aug 2010 18:23:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.2.00.1008271046080.20874@narbuckle.genericorp.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154625>
 
-On Fri, Aug 27, 2010 at 4:29 PM, Joshua Jensen
-<jjensen@workspacewhiz.com> wrote:
-> It reports to me 'git-rebase --onto XXXX XXXX'.
->
-> And it reports nothing to do.
->
-> XXXX is properly the origin/master in this case.
->
-> git rebase origin/master =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 works.
-> git rebase --onto origin/master origin/master =C2=A0 =C2=A0 =C2=A0 do=
-es not work.
->
-> Thoughts?
+Hi,
 
-It's too bad you can't make this repository public; I thought rebase
-should behave the same for those two commands.  We could certainly
-just modify git-pull.sh to avoid using the --onto flag when
-oldremoteref is not defined (and perhaps that makes sense independent
-of anything else), but I'm curious now about rebase.
+Dave Olszewski wrote:
 
-Can you insert an echo statement right before where git-rebase calls
-format-patch to see what arguments it is passing in those two cases?
-=46or me it's around line 568; insert an echo statement so that it look=
-s
-like:
- if test -z "$do_merge"
- then
-        echo git format-patch -k --stdout --full-index --ignore-if-in-u=
-pstream \
-               --no-renames $root_flag "$revisions"
-        git format-patch -k --stdout --full-index --ignore-if-in-upstre=
-am \
-                --no-renames $root_flag "$revisions" |
-        git am $git_am_opt --rebasing --resolvemsg=3D"$RESOLVEMSG" &&
-Make that change, and then run it with both your rebase commands and
-see what you get.
+> It's trivial for someone to update build software from "git push remote
+> tag" to "git push remote +tag" or "git push -f remote tag", but I can
+> understand your objection.
 
-=46or me, in both cases, I get:
-  git format-patch ... --no-renames origin/master..HEAD
-(except sha1sums of what origin/master and HEAD were rather than that
-literal text), which means the same patches are being applied in both
-cases for me.
+Right.  The thing to prevent is unhappy surprises: it is best if
+users upgrading get a chance to update their scripts before it matters.
 
-Elijah
+> It seems unlikely that many people are ever going to "flip on" this
+> feature; either they won't know about it (and for them, it should be
+> on), or they'll have a reason to move a tag, and want it off.
+
+This is why a switch of some kind is useful: after reading the release
+notes, a user can flip the switch for a glimpse of the future, forsee
+the upcoming disaster, and fix everything up before it really matters.
+After the default changes, the switch has the opposite purpose: users
+who were not prepared can use it to turn back time and avoid having
+to change their code.
+
+So the deprecation process for unwanted features tends to look like
+this:
+
+ 1. complain about use of the feature, with an option to suppress
+    the warnings.  or: loudly proclaim that the feature is going
+    away in release notes
+
+ 2. add an option to disable the feature, to help people transition
+
+ 3. change the default to true
+
+ 4. remove the option
+
+Step 1 is the most important one imho.  See
+Documentation/RelNotes-1.6.6.txt for an example.
+
+I don't think we've ever reached step 4, but we should try it some
+time.
+
+Hope that helps,
+Jonathan
