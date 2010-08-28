@@ -1,68 +1,82 @@
-From: "Wesley J. Landaker" <wjl@icecavern.net>
-Subject: Re: git-svn mirror in bare repo
-Date: Sat, 28 Aug 2010 09:45:14 -0700
-Message-ID: <4C793D1A.8050200@icecavern.net>
-References: <20100823122425.GB12810@nibiru.local>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] t6200-fmt-merge-msg: Exercise 'merge.log' to
+ configure shortlog length
+Date: Sat, 28 Aug 2010 12:09:26 -0500
+Message-ID: <20100828170926.GA1945@burratino>
+References: <1282918490-5190-1-git-send-email-artagnon@gmail.com>
+ <1282918490-5190-2-git-send-email-artagnon@gmail.com>
+ <20100828020018.GD2004@burratino>
+ <20100828103536.GA12205@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, weigelt@metux.de
-X-From: git-owner@vger.kernel.org Sat Aug 28 18:56:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Aug 28 19:11:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpOhH-0007SD-8O
-	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 18:56:03 +0200
+	id 1OpOw5-0006V0-Ud
+	for gcvg-git-2@lo.gmane.org; Sat, 28 Aug 2010 19:11:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752992Ab0H1Qz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Aug 2010 12:55:58 -0400
-Received: from rinoa.icecavern.net ([92.243.7.152]:47343 "EHLO icecavern.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752119Ab0H1Qz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Aug 2010 12:55:57 -0400
-X-Greylist: delayed 637 seconds by postgrey-1.27 at vger.kernel.org; Sat, 28 Aug 2010 12:55:57 EDT
-Received: from [10.0.0.14] (c-76-113-110-228.hsd1.nm.comcast.net [76.113.110.228])
-	by icecavern.net (Postfix) with ESMTPSA id 7482935B25;
-	Sat, 28 Aug 2010 10:45:16 -0600 (MDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.11) Gecko/20100713 Thunderbird/3.0.6
-In-Reply-To: <20100823122425.GB12810@nibiru.local>
-X-Enigmail-Version: 1.0.1
+	id S1753373Ab0H1RLT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Aug 2010 13:11:19 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:57112 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752992Ab0H1RLS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Aug 2010 13:11:18 -0400
+Received: by qwh6 with SMTP id 6so3750216qwh.19
+        for <git@vger.kernel.org>; Sat, 28 Aug 2010 10:11:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=HbLZw0lGNUPKrewUEG3DzpkgaOPWPkWV4dtwyWRkKwI=;
+        b=bHa9cNL6HM5d3YVMzNaXqxvs6ZwsLevJKpUU/7rVkV7SyKF0UHa134bCOuQ80gW5m1
+         A1I47Drgii3BZ6FygPbDTpbmkUplPdn9h+Y+LRR9/9PrySe9wn+c+GZvvP68wihC+sBw
+         gLKzMQIXhz2JNpE3ak/DvkYWUGEHi2qK7Oozg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=na2HRuEo9xNnv+amBb2K8GUWmptH82NfhO7BndpGu5vmARmmBKb49rXH5wJ6iOduiT
+         O8jTPjBA936K89jDcME/OQwgpgaVbgqMh+RsmFZnUP6RXHj1Y3FappNkoxwyvxKrQ47J
+         RpdERTdEimx9OwFagAPHGsCCt6gjoA+nHPgOQ=
+Received: by 10.224.29.3 with SMTP id o3mr1410106qac.215.1283015477557;
+        Sat, 28 Aug 2010 10:11:17 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id z6sm3337835ibc.6.2010.08.28.10.11.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 28 Aug 2010 10:11:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100828103536.GA12205@kytes>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154648>
 
-On 08/23/2010 05:24 AM, Enrico Weigelt wrote:
-> is it possible to use git-svn w/ an bare repository (eg. using
-> an temporary workdir when necessary or directly creating tree
-> and commit objects w/o going through workdir at all) ?
-> 
-> I'm running a dozen of mirrors (also from cvs), some from fairly
-> large and I'd like to get rid of the working copies.
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder writes:
 
-When I have a large repository with git-svn that I only occasionally
-want to use the working copy of it, here is what I do:
+>> 		cat >expected <<-\EOF &&
+>> 		  Left #3
+>> 		  ...
+>> 		EOF
+>> 		git -c merge.log=3 fmt-merge-msg <.git/FETCH_HEAD >msg &&
+>> 
+>> 		tail -n 2 msg >actual &&
+>> 		test_cmp expected actual
+>> 	'
+>
+> Ok. I don't like the `tail` thing. Why are you doing it instead of
+> comparing full outputs like the tests in the rest of the file?
 
-1) git svn clone the SVN repository normally
-2) Create an "empty" branch with no files ("git checkout --orphan")
+No good reason. :)
 
-When I want to update SVN, I do:
-
-  git checkout trunk
-  git svn rebase
-  git checkout empty
-
-When I want to push something to SVN I do:
-
-  git checkout trunk
-  git svn dcommit
-  git checkout empty
-
-This makes it work sort of like a bare repository, but it still works
-with git-svn. I use this when I have a bunch of SVN repositories I need
-to be able to work with quickly at any time, but I don't want to waste
-the disk space having all of their working copies checked out
-simultaneously.
+Thanks,
+Jonathan
