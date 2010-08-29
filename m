@@ -1,78 +1,68 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v2] git-notes: Run partial expensive test everywhere
-Date: Sun, 29 Aug 2010 19:20:15 +0000
-Message-ID: <AANLkTi=PdF4VodZDHimq3XpxaYJBuZ0aXb+VU6hUsx3+@mail.gmail.com>
-References: <1281470164-27008-1-git-send-email-avarab@gmail.com>
-	<1281483468-24388-1-git-send-email-avarab@gmail.com>
-	<AANLkTikfwbtKt2WrxzRyKHnP3ySGtBF33=z_rJwjPx5Y@mail.gmail.com>
-	<20100824071453.GA3064@burratino>
-	<7vd3t8x8kk.fsf@alter.siamese.dyndns.org>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 07/13] transport-helper: change import semantics
+Date: Sun, 29 Aug 2010 15:29:18 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1008291521350.14365@iabervon.org>
+References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com> <1283053540-27042-8-git-send-email-srabbelier@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Aug 29 21:25:18 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 29 21:29:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpnVF-0000Ul-IQ
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 21:25:17 +0200
+	id 1OpnZO-0002cv-Tb
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 21:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753906Ab0H2TZH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 15:25:07 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47439 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753591Ab0H2TZG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 15:25:06 -0400
-Received: by iwn5 with SMTP id 5so4291892iwn.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 12:25:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nCB7zs7my9S932INKaDZR9OYNo5s7/R0XoKrN3Vqq9o=;
-        b=GaEWddUKIbTsF/nk1ZVkED1gwzM6g8IIeCdmKIYdcoX3LZEeD/3HIDe5lWit8mHVf8
-         X6m5Ig6EBeCCgAyv6yedcgkFE+aWZy3sCzNm69aAyVsG+VX292295Ret36/D7nlECZzx
-         U3YtppLwYsDLbh9TNZn/VY/JssIQN67BIi2kg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=x/xITHdVEp9PYY5eEO2Q2Rq90P9dmm1RTjw7f12HDhuMy7MoajPCQ0BndKfmGlHv1H
-         CJd6WLyThGsWDuE52URpVmkHql84jUqAyztboq4ULC+5fLKuxOmi8dpkNofSmPcfj0s5
-         4+qvoPwFDHc/D0ai7IQ3RPoeS3JvTgkZLoH5Q=
-Received: by 10.231.145.16 with SMTP id b16mr4238365ibv.198.1283109615918;
- Sun, 29 Aug 2010 12:20:15 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sun, 29 Aug 2010 12:20:15 -0700 (PDT)
-In-Reply-To: <7vd3t8x8kk.fsf@alter.siamese.dyndns.org>
+	id S1753959Ab0H2T3a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 15:29:30 -0400
+Received: from iabervon.org ([66.92.72.58]:52252 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753591Ab0H2T33 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 15:29:29 -0400
+Received: (qmail 3021 invoked by uid 1000); 29 Aug 2010 19:29:18 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Aug 2010 19:29:18 -0000
+In-Reply-To: <1283053540-27042-8-git-send-email-srabbelier@gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154704>
 
-On Tue, Aug 24, 2010 at 16:46, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> Odd. =C2=A0Different how? =C2=A0As far as I can tell, all that test =
-asks
->> of time is to execv() its arguments and pass on a 0 exit status.
->>
->> Ah, maybe this is it: perhaps /usr/bin/time sh runs /bin/sh. =C2=A0D=
-oes the
->> following help?
->>
->> Patch is against next. =C2=A0Untested except on Linux where it would=
-n't
->> make a difference.
->
-> Makes sense, although I don't have access to Solaris boxes right now.=
-=2E.
+On Sat, 28 Aug 2010, Sverre Rabbelier wrote:
 
-I tested it FWIW. It works, thanks both.
+> Currently the helper must somehow guess how many import statements to
+> read before it starts outputting its fast-export stream. This is
+> because the remote helper infrastructure runs fast-import only once,
+> so the helper is forced to output one stream for all import commands
+> it will receive. The only reason this worked in the past was because
+> only one ref was imported at a time.
+
+I think your reasons for this change could be worked around, but the 
+protocol is cleaner with your change, which is justification enough, given 
+that it shouldn't be too big a deal to change. This also lets the helper 
+consider all of the refs it is expected to update before producing the 
+stream, which may simplify the stream (particularly if the history has 
+merges involving branches that may or may not be imported are aren't 
+listed first).
+
+> Change the semantics of the import statement such that it matches
+> that of the list statement. That is, 'import\n' is followed by a list
+> of refs that should be exported, followed by '\n'.
+> ---
+> 
+>   This changes the protcol a bit, but I don't think we have many
+>   users of the 'import' command yet, and if we do I would assume
+>   they're paying attention to development in the remote helper space.
+
+I don't think "import" has gotten to the point where people could really 
+use it in helpers not packaged with git, anyway, so I agree.
+
+	-Daniel
+*This .sig left intentionally blank*
