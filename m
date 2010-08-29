@@ -1,73 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 08/13] transport-helper: export should disconnect too
-Date: Sun, 29 Aug 2010 15:28:13 -0500
-Message-ID: <AANLkTi=EkmEeMUx=sSFjnvkVzhUyxtGv4-TL6SsKuBsA@mail.gmail.com>
-References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
- <1283053540-27042-9-git-send-email-srabbelier@gmail.com> <alpine.LNX.2.00.1008291529510.14365@iabervon.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: RFC: Adding an option to log-like commands to call an external
+ command for each revision
+Date: Sun, 29 Aug 2010 20:30:15 +0000
+Message-ID: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Sun Aug 29 22:28:40 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 29 22:30:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpoUZ-00024d-6o
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 22:28:39 +0200
+	id 1OpoWF-0003AX-1Y
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 22:30:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753292Ab0H2U2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 16:28:34 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:39453 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753177Ab0H2U2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 16:28:33 -0400
-Received: by yxp4 with SMTP id 4so61711yxp.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 13:28:33 -0700 (PDT)
+	id S1753357Ab0H2UaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 16:30:18 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:53926 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753177Ab0H2UaQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 16:30:16 -0400
+Received: by gxk23 with SMTP id 23so1735341gxk.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 13:30:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=MGkAtL/ogRKODUsmaCZOv5eVo/+ERgmtoWwOJoaZskY=;
-        b=VqLBAVOAwm5vGTaJBc29snWyZBx8LQyQKsv2RrFo7LQ302YA42r5L4KJsTT+nCFFqo
-         Uhys9+UEMWDIuMNdh8+xH4EpZlrCCxAwWpdGAHz/b7L6XWfBSTkUCVZ74Dr1PT7S2Xzn
-         wGMa/o7oNQsedrS94CQzZD+w9ByIrsDUd7UW8=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=TdXw8hUW97EVZvdsgtEiwQtcnlZ2dqEoDXCOJ6l75TU=;
+        b=KykwqXyi6OawmrmIsM+3kgZnt2t+on88XgPPdoTZIjyakNl+8nhkFmuDbgXPBEMado
+         FFPF7OEbcN8rXNuEVtrWjcuUYiEBzfVjk698suEk+/Vpid95ON5/WrJLvUPdTEfuBmQ+
+         7JbzVUEzpPgxElq9yRXMfkyPuXqO9Gt6nwhnw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=mPIAOj7miyU7M4rU9SII50Gqi/5XpsiEwg35gXyqo2hrQwx98WbP4iPRd50Ms93lof
-         wkZFbtpESyKBa1CNhXLKJtzQKpxxyXWcdRDSI0LqWe3jUrCK3hHnEMoVy7/O7nDlj5Q0
-         f7TrYAUq1TaQiWhjHjorUvvQqMAkMK+r0s3XA=
-Received: by 10.151.145.16 with SMTP id x16mr4394720ybn.342.1283113713227;
- Sun, 29 Aug 2010 13:28:33 -0700 (PDT)
-Received: by 10.151.49.17 with HTTP; Sun, 29 Aug 2010 13:28:13 -0700 (PDT)
-In-Reply-To: <alpine.LNX.2.00.1008291529510.14365@iabervon.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=vFMXEfLmnC/SprG7772/QjPoQ+ch5Dx2eIU87tHyEUpwiR/XCPTYRdVFRtzESo1hCQ
+         X8tsD9QYdSSDpRyvt/XSJQaMGYAR7kX9YkhvqHrIA1s0rFJ/OBwIvRUD2nf8NEqpH00o
+         vMQqubOrjNWTUG9AHB1/WX+fqC9RgFBoKCubw=
+Received: by 10.101.144.8 with SMTP id w8mr3504059ann.231.1283113816089; Sun,
+ 29 Aug 2010 13:30:16 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sun, 29 Aug 2010 13:30:15 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154714>
 
-Heya,
+I have this alias in my .gitconfig:
 
-On Sun, Aug 29, 2010 at 14:32, Daniel Barkalow <barkalow@iabervon.org> wrote:
-> Yup; this is a big improvement, and I'dhave done it this way in the first
-> place, had I realized how easy it would be to get fast-import to have a
-> "done" command. Your subject is backwards, I think, though; export won't
-> require a disconnect.
+    review = "!f() { for rev in $(git rev-list --reverse \"$@\"); do
+git show $rev; done; }; f"
 
-Depends on how you look at it, the line this patch removes tells the
-remote helper infrastructure not to issue a newline when disconnecting
-(which was needed because the helper was already disconnected by that
-time). On the other side though, you are right in that now the export
-command no longer requires the helper to disconnect as part of the
-export command.
+I use it after I "git pull" to see what changed, e.g.:
 
--- 
-Cheers,
+    git review 49ea7b8..e1ef3c1
 
-Sverre Rabbelier
+But sometimes I find that I want to do that for other things too, so I
+have these hacks:
+
+    review-grep = "!f() { for rev in $(git log --reverse
+--pretty=format:%H --grep=\"$@\"); do git show $rev; done; }; f"
+    review-file = "!f() { for rev in $(git log --reverse
+--pretty=format:%H \"$@\"); do git show $rev; done; }; f"
+
+But just now I wanted to use -S instead of grep, but adding aliases
+like this is a bit silly.
+
+Maybe we should have something like:
+
+    git log --for-each=less a..b
+
+To call "less" for each commit, what do you think?
