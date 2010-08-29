@@ -1,73 +1,79 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: RFC: Adding an option to log-like commands to call an external
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: RFC: Adding an option to log-like commands to call an external
  command for each revision
-Date: Sun, 29 Aug 2010 20:30:15 +0000
-Message-ID: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
+Date: Sun, 29 Aug 2010 15:39:05 -0500
+Message-ID: <20100829203905.GA1890@burratino>
+References: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 29 22:30:23 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 29 22:40:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpoWF-0003AX-1Y
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 22:30:23 +0200
+	id 1OpogT-0001oH-Ks
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 22:40:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753357Ab0H2UaS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 16:30:18 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:53926 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753177Ab0H2UaQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 16:30:16 -0400
-Received: by gxk23 with SMTP id 23so1735341gxk.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 13:30:16 -0700 (PDT)
+	id S1753606Ab0H2Ukv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 16:40:51 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:40409 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753238Ab0H2Ukv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 16:40:51 -0400
+Received: by ywh1 with SMTP id 1so1426014ywh.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 13:40:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=TdXw8hUW97EVZvdsgtEiwQtcnlZ2dqEoDXCOJ6l75TU=;
-        b=KykwqXyi6OawmrmIsM+3kgZnt2t+on88XgPPdoTZIjyakNl+8nhkFmuDbgXPBEMado
-         FFPF7OEbcN8rXNuEVtrWjcuUYiEBzfVjk698suEk+/Vpid95ON5/WrJLvUPdTEfuBmQ+
-         7JbzVUEzpPgxElq9yRXMfkyPuXqO9Gt6nwhnw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ufa0Z5O3V+IKl8/qOJ9qC+EiDjkyM7qx9HNy337v55M=;
+        b=uHSzMOXwDmEamiCsbqiEWBUvmOFb6nJa7ndhBSHU0IOIGH5Z3MZ1UIcU79Ox9vmCs6
+         OwOiN/mU5Y/H/+YaDcifhyt318bTDqspdb9/k615a3Fw8AMI57PK40MTS8346pcdwSqD
+         9GUx+jfoF4bREpf8/cO4LEJEYv6kcxqyQL40s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=vFMXEfLmnC/SprG7772/QjPoQ+ch5Dx2eIU87tHyEUpwiR/XCPTYRdVFRtzESo1hCQ
-         X8tsD9QYdSSDpRyvt/XSJQaMGYAR7kX9YkhvqHrIA1s0rFJ/OBwIvRUD2nf8NEqpH00o
-         vMQqubOrjNWTUG9AHB1/WX+fqC9RgFBoKCubw=
-Received: by 10.101.144.8 with SMTP id w8mr3504059ann.231.1283113816089; Sun,
- 29 Aug 2010 13:30:16 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sun, 29 Aug 2010 13:30:15 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Xd4eFadyV9YRt9Kxjua404mVEC+hEvOAfBEghlsnATRFjYQHWWN86jwmtlsXjqR99S
+         Or8BmuzPf8dYO3nLiNrnCRmCxhksMeoWV5YTJ1HxhbYGOS2bhUp4drN7dlQWlaYiQHvi
+         4X9HDPcRIgO5+0xoEVhly0JV1Dbk+Uj88SFxY=
+Received: by 10.90.55.19 with SMTP id d19mr3129777aga.54.1283114449996;
+        Sun, 29 Aug 2010 13:40:49 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id g31sm6562045ibh.4.2010.08.29.13.40.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 29 Aug 2010 13:40:49 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154715>
 
-I have this alias in my .gitconfig:
+Hi =C3=86var,
 
-    review = "!f() { for rev in $(git rev-list --reverse \"$@\"); do
-git show $rev; done; }; f"
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-I use it after I "git pull" to see what changed, e.g.:
+> I have this alias in my .gitconfig:
+>=20
+>     review =3D "!f() { for rev in $(git rev-list --reverse \"$@\"); d=
+o
+> git show $rev; done; }; f"
+>=20
+> I use it after I "git pull" to see what changed, e.g.:
+>=20
+>     git review 49ea7b8..e1ef3c1
 
-    git review 49ea7b8..e1ef3c1
+Hmm,
 
-But sometimes I find that I want to do that for other things too, so I
-have these hacks:
+ git show --reverse 49ea7b8..e1ef3c1
 
-    review-grep = "!f() { for rev in $(git log --reverse
---pretty=format:%H --grep=\"$@\"); do git show $rev; done; }; f"
-    review-file = "!f() { for rev in $(git log --reverse
---pretty=format:%H \"$@\"); do git show $rev; done; }; f"
-
-But just now I wanted to use -S instead of grep, but adding aliases
-like this is a bit silly.
-
-Maybe we should have something like:
-
-    git log --for-each=less a..b
-
-To call "less" for each commit, what do you think?
+doesn't work because cmd_show() bypasses the get_revision() magic. :(
