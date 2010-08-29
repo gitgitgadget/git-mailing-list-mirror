@@ -1,78 +1,85 @@
-From: AlexanderS <alexander@sulfrian.net>
-Subject: Re: [PATCHv2 2/2] daemon: allow more than one host address given
- via --listen
-Date: Sun, 29 Aug 2010 17:17:07 +0200
-Message-ID: <20100829171707.2bb43a97@laptop.localhost>
-References: <7v4oel14tl.fsf@alter.siamese.dyndns.org>
- <1283094462-5184-3-git-send-email-alexander@sulfrian.net>
- <AANLkTi==kDW7FbTZ7P6nF+k8_jGTJsFvwkcRijR=jex4@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC PATCH 0/2] Teach fetch and pull to recursively fetch submodules
+ too
+Date: Sun, 29 Aug 2010 17:49:47 +0200
+Message-ID: <4C7A819B.3000403@web.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA1;
- boundary="Sig_/4eDT0gPRFzec_Pp3OrxnlU="; protocol="application/pgp-signature"
-To: gitster@pobox.com, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 29 17:17:26 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Aug 29 17:50:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpjdO-0003mg-4e
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 17:17:26 +0200
+	id 1Opk8r-0002KQ-Bp
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 17:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab0H2PRV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 11:17:21 -0400
-Received: from animux.de ([78.46.93.45]:33348 "EHLO mail.sulfrian.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752087Ab0H2PRV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 11:17:21 -0400
-Received: from laptop.localhost (p5DD62732.dip.t-dialin.net [93.214.39.50])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by mail.sulfrian.net (Postfix) with ESMTPSA id 0A85380DFFAF;
-	Sun, 29 Aug 2010 17:17:31 +0200 (CEST)
-In-Reply-To: <AANLkTi==kDW7FbTZ7P6nF+k8_jGTJsFvwkcRijR=jex4@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i686-pc-linux-gnu)
+	id S1753725Ab0H2Ptu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 11:49:50 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:60522 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753707Ab0H2Ptu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 11:49:50 -0400
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 3A0F5166D950A;
+	Sun, 29 Aug 2010 17:49:48 +0200 (CEST)
+Received: from [93.246.33.247] (helo=[192.168.178.29])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1Opk8i-0001ro-00; Sun, 29 Aug 2010 17:49:48 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18J8I8yh4Zcsay6/0o8+XeLn2NGa+liUQYdTd1U
+	OHmT8LRSM4fqHXErEKyo7p8GpSTqQilUDSNPn0Yn+rhq5wd1/b
+	Bp6c9f/vU/xBN6MNOMpQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154694>
 
---Sig_/4eDT0gPRFzec_Pp3OrxnlU=
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Before we can take advantage of a recursive checkout for
+submodules, we have to make sure that new commits are
+present in the submodules. And even now after a fetch in the
+superproject one sees "(commits not present)" output from
+"git diff --submodule" (and thus in "git gui" and "gitk")
+when the superproject recorded new submodule commits that
+are not yet fetched there. Currently the time they do get
+fetched is when the user does a "git submodule update". But
+that makes it really hard to see beforehand what changes in
+the submodule you will get by running that command, you have
+to do something like "git submodule foreach git fetch" to
+achieve that.
 
-On Sun, 29 Aug 2010 17:11:54 +0200
-Erik Faye-Lund <kusmabite@gmail.com> wrote:
+So I extended the fetch command to fetch populated submodules
+too. I also added a command line option to fetch and pull and
+the second patch introduces a per submodule config option to
+give users the chance to control that behavior.
 
-<snip>
-> > @@ -1174,5 +1185,7 @@ int main(int argc, char **argv)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0if (pid_file)
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0store_pid(pid_fi=
-le);
-> >
-> > - =C2=A0 =C2=A0 =C2=A0 return serve(listen_addr, listen_port, pass, gid=
-);
-> > + =C2=A0 =C2=A0 =C2=A0 return_value =3D serve(&listen_addr, listen_port=
-, pass, gid);
-> > +
-> > + =C2=A0 =C2=A0 =C2=A0 return return_value;
-> > =C2=A0}
->=20
-> Uhm, why? I can't find any other uses for "return_value"...
+And maybe we need a config option to customize that behavior
+for all submodules or all repos too?
 
-See v3, I missed string_list_clear this time...
+Opinions?
 
---Sig_/4eDT0gPRFzec_Pp3OrxnlU=
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.16 (GNU/Linux)
+Jens Lehmann (2):
+  fetch/pull: Recursively fetch populated submodules
+  Submodules: Add the new "fetch" config option for fetch and pull
 
-iEYEARECAAYFAkx6efcACgkQ1SSUxvEq73w+iQCfQlAxkLlPex168q6JFpcVDmtW
-ADUAoI6Yhi4+ZJZvTrQDDibK3A6cVgBW
-=rxvM
------END PGP SIGNATURE-----
+ Documentation/config.txt        |    6 ++
+ Documentation/fetch-options.txt |    6 ++
+ Documentation/gitmodules.txt    |    8 +++
+ builtin/fetch.c                 |   17 ++++++-
+ git-pull.sh                     |   10 +++-
+ submodule.c                     |   60 ++++++++++++++++++++++-
+ submodule.h                     |    2 +
+ t/t5526-fetch-submodules.sh     |  104 +++++++++++++++++++++++++++++++++++++++
+ t/t7403-submodule-sync.sh       |    2 +-
+ 9 files changed, 210 insertions(+), 5 deletions(-)
+ create mode 100755 t/t5526-fetch-submodules.sh
 
---Sig_/4eDT0gPRFzec_Pp3OrxnlU=--
+-- 
+1.7.2.2.527.gdf3084
