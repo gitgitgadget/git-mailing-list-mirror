@@ -1,124 +1,115 @@
 From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: [PATCH 05/13] transport-helper: use the new done feature to properly do imports
-Date: Sat, 28 Aug 2010 22:45:32 -0500
-Message-ID: <1283053540-27042-6-git-send-email-srabbelier@gmail.com>
-References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
-Cc: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: [PATCH 00/13] remote helper improvements
+Date: Sat, 28 Aug 2010 22:45:27 -0500
+Message-ID: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
 To: "Git List" <git@vger.kernel.org>,
 	"Daniel Barkalow" <barkalow@iabervon.org>,
 	"Ramkumar Ramachandra" <artagnon@gmail.com>,
 	"Jonathan Nieder" <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 29 05:46:36 2010
+X-From: git-owner@vger.kernel.org Sun Aug 29 05:46:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpYqn-0006e4-VD
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 05:46:34 +0200
+	id 1OpYqm-0006e4-DA
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 05:46:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158Ab0H2Dqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 28 Aug 2010 23:46:31 -0400
+	id S1752857Ab0H2DqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 28 Aug 2010 23:46:10 -0400
 Received: from mail-iw0-f174.google.com ([209.85.214.174]:38975 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753071Ab0H2DqS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 28 Aug 2010 23:46:18 -0400
-Received: by mail-iw0-f174.google.com with SMTP id 5so3824467iwn.19
-        for <git@vger.kernel.org>; Sat, 28 Aug 2010 20:46:18 -0700 (PDT)
+	with ESMTP id S1752766Ab0H2DqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 28 Aug 2010 23:46:09 -0400
+Received: by iwn5 with SMTP id 5so3824467iwn.19
+        for <git@vger.kernel.org>; Sat, 28 Aug 2010 20:46:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=X+Ivfa3wM8gLieiW4dbDGk3T5LfetUK0t2eWKzd8j6c=;
-        b=sRpDs/0Yo3FaYPJ4b9Sl4UkDmciTcCnhoUCz+BKCqxeZREy6Ik0UP9rdD5FuWtqfNX
-         Ru84dGL4GiFM8dKtonwRyad5YMPkYS5TRnyESGUCcVcZXdwBmYahWNEB7CwVK85SKpoj
-         zxgzlaTFjcyvliElDaSZgngm3VRp5xefpUUGo=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=fjt4RcSx417ZDlKF2iyHgJVm86aG8agxilFnx1iNImY=;
+        b=oGEHTfKgR4RHApAS+vRK1R8HXNX78cg1ZZPVosYFoQrYpRyCCuDvYTSIBBZWP/U2FK
+         hGDFYjqCTi+tE3GV+LjqebateKpCcgUtxWZiwCEIvdWRLXSlwtCKELnSXhIvPXfQdJlk
+         pBTC0kOAIzKxeXaOPjeDeHmXzsSFbKRJQxvzQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=XX+665+tmpcffu5zYRtyCUap1YONq72VGb+ZGqf2lYnRJrcEjrhqdU4P61HWejapwd
-         MxiHnBPzyBVsO6o/PZy39fz5AqWTqe0w8M831QVuM3k3nMhMWYEsilERocnQ/t0FIKH1
-         lPY9YVmUZmeH/ieH0Oo0wuPrMfuUfOXfEZL/o=
-Received: by 10.231.34.70 with SMTP id k6mr3328695ibd.25.1283053578632;
-        Sat, 28 Aug 2010 20:46:18 -0700 (PDT)
+        h=from:to:subject:date:message-id:x-mailer;
+        b=hTbSfRvPrx7aVnpzg/jkUQii0UIQUmYspCVoY5+YRbuBDnhq7UGAn6wZuuUlAuUl2H
+         er4L3pPk3eSZiGmisSm7Jan1GumtSGelQSVoyqrrYOGc3nSzQv7HyIv907qG2VXUjrti
+         fBMwYCD1AlIsF5IjiwSdBnAm6Er1kixUbBx7o=
+Received: by 10.231.10.132 with SMTP id p4mr3322761ibp.67.1283053568143;
+        Sat, 28 Aug 2010 20:46:08 -0700 (PDT)
 Received: from localhost.localdomain (adsl-76-237-184-184.dsl.chcgil.sbcglobal.net [76.237.184.184])
-        by mx.google.com with ESMTPS id n20sm5647049ibe.17.2010.08.28.20.46.16
+        by mx.google.com with ESMTPS id n20sm5647049ibe.17.2010.08.28.20.46.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 28 Aug 2010 20:46:18 -0700 (PDT)
+        Sat, 28 Aug 2010 20:46:07 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1.240.g6a95c3
-In-Reply-To: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154668>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154669>
 
-Previously, the helper code would disconnect the helper before
-starting fast-import. This was needed because there was no way to signal
-that the helper was done other than to close stdout (which it would
-do after importing iff the helper noticed it had been disconnected).
+I had a week and then some stray days here and there to do some more
+work on git-remote-hg, the result of which is this series. It takes
+the 'import' and 'export' commands out of their 'toy' stage, and gets
+them ready for real usage. Although 'git-remote-testgit' is still the
+only thing using them, 'git-remote-hg' is nearing completion, I hope
+to send out an RFC for it Real Soon Now (TM).
 
-Instead, request that the fast-export uses the 'done' command to
-signal when it is done exporting, so that we can disconnect the
-helper at a time of our choosing.
----
+Sverre Rabbelier (13):
+      fast-import: add the 'done' command
+      fast-export: support done feature
 
-  I really like what this does for the sanity of the import
-  implementation, it makes it much more like a regular (re-entrant)
-  command, rather than the "sorry, you're done now" way it is now.
+These two are very important to the rest of the series, most of the
+clean up relies on the 'done' command to make 'import/export' part of
+the remote helper protocol not suck.
 
- git-remote-testgit.py |    2 ++
- transport-helper.c    |    8 ++------
- 2 files changed, 4 insertions(+), 6 deletions(-)
+      transport-helper: check status code of finish_command
+      remote-curl: accept empty line as terminator
 
-diff --git a/git-remote-testgit.py b/git-remote-testgit.py
-index df9d512..612cb5a 100644
---- a/git-remote-testgit.py
-+++ b/git-remote-testgit.py
-@@ -124,6 +124,8 @@ def do_import(repo, args):
-     repo = update_local_repo(repo)
-     repo.exporter.export_repo(repo.gitdir)
- 
-+    print "done"
-+
- 
- def do_export(repo, args):
-     """Imports a fast-import stream from git to testgit.
-diff --git a/transport-helper.c b/transport-helper.c
-index 4a2826d..5647595 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -375,8 +375,9 @@ static int get_exporter(struct transport *transport,
- 	/* we need to duplicate helper->in because we want to use it after
- 	 * fastexport is done with it. */
- 	fastexport->out = dup(helper->in);
--	fastexport->argv = xcalloc(4 + revlist_args->nr, sizeof(*fastexport->argv));
-+	fastexport->argv = xcalloc(5 + revlist_args->nr, sizeof(*fastexport->argv));
- 	fastexport->argv[argc++] = "fast-export";
-+	fastexport->argv[argc++] = "--use-done-feature";
- 	if (export_marks)
- 		fastexport->argv[argc++] = export_marks;
- 	if (import_marks)
-@@ -412,11 +413,8 @@ static int fetch_with_import(struct transport *transport,
- 		sendline(data, &buf);
- 		strbuf_reset(&buf);
- 	}
--	if(disconnect_helper(transport))
--		die("Error while disconnecting helper");
- 	if (finish_command(&fastimport))
- 		die("Error while running fast-import");
--
- 	free(fastimport.argv);
- 	fastimport.argv = NULL;
- 
-@@ -758,8 +756,6 @@ static int push_refs_with_export(struct transport *transport,
- 	data->no_disconnect_req = 1;
- 	if(finish_command(&exporter))
- 		die("Error while running fast-export");
--	if(disconnect_helper(transport))
--		die("Error while disconnecting helper");
- 	return 0;
- }
- 
--- 
-1.7.2.1.240.g6a95c3
+If nothing else is applied, these two should be taken out together
+and applied separately.
+
+      transport-helper: factor out push_update_refs_status
+      transport-helper: update ref status after push with export
+
+This is not very fleshed out yet, (the second patch in particular),
+but without this 'git push' to a remote that uses the 'export'
+capability will always say 'everything up-to-date'.
+
+      transport-helper: use the new done feature to properly do imports
+      transport-helper: export should disconnect too
+
+These two make the 'import' and 'export' command re-entrant. That is,
+now the remote helper infrastructure could issue other commands after
+issuing an 'import' or 'export' command.
+
+      transport-helper: change import semantics
+
+This is another cleanup to the protocol, without this it is more or
+less impossible to import multiple refs.
+
+      transport-helper: Use capname for gitdir capability too
+
+This is a candidate for for maint, the current implementation is just
+plain wrong.
+
+      transport-helper: implement marks location as capability
+
+Another protocol cleanup.
+
+      git-remote-testgit: only push for non-local repositories
+      git-remote-testgit: fix error handling
+
+Both of these are maint candidates, they are bugfixes.
+
+ Documentation/git-fast-export.txt  |    4 ++
+ Documentation/git-fast-import.txt  |   17 ++++++-
+ builtin/fast-export.c              |    9 +++
+ fast-import.c                      |    5 ++
+ git-remote-testgit.py              |   50 +++++++++++++------
+ git_remote_helpers/git/importer.py |    5 +-
+ remote-curl.c                      |    3 +
+ transport-helper.c                 |   97 +++++++++++++++++++----------------
+ 8 files changed, 127 insertions(+), 63 deletions(-)
