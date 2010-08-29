@@ -1,125 +1,105 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH] builtin/merge_recursive.c: Add a usage string and make use of it.
-Date: Sun, 29 Aug 2010 14:39:19 -0300
-Message-ID: <c9d88eb8cbd5b025b0c0112be05d3c0fe993de25.1283103426.git.tfransosi@gmail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Aug 29 19:39:34 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
+Date: Sun, 29 Aug 2010 18:12:05 +0000
+Message-ID: <AANLkTimn+-5Vys+jg=ryDfwdJ=WZfGwgZ+065M_=TF8r@mail.gmail.com>
+References: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
+	<AANLkTikHbxrmj3R1LDghVvMA1KNEdfeiXj44cq1KRN7M@mail.gmail.com>
+	<20100828214641.GA5515@burratino>
+	<20100828215956.GB5515@burratino>
+	<alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
+	<20100828221655.GB5777@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marcin Cieslak <saper@saper.info>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 29 20:15:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oplqw-00076I-1D
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 19:39:34 +0200
+	id 1OpmPm-0007rE-Ga
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 20:15:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753844Ab0H2Rj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 13:39:28 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50552 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753686Ab0H2Rj2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 13:39:28 -0400
-Received: by ywh1 with SMTP id 1so1393167ywh.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 10:39:27 -0700 (PDT)
+	id S1753600Ab0H2SPM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 14:15:12 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33151 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753119Ab0H2SPL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 14:15:11 -0400
+Received: by iwn5 with SMTP id 5so4257666iwn.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 11:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=h5kJGG16z3+yidK0CzHPfYa3CtFfMaDeP5fMosIbaZM=;
-        b=X1AqdTGrotQ1XqUooJJ/1cpotOj1gVoiQK+nTk2kNXVur6+icCcxUwXiX2Ldj5Nl3R
-         efp0vcvNDBYYpZuH9ldEomaDAjGuRF6wB6TeVZzRtsVwdRa+exfCGuMh+tPrDDnxZZ+f
-         /1H1E8/1z7MFNzc4bHmumz+b7ly/Z7yXESeSU=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=F2t+Fs6rvv3OMR5r7AqsUVGibRpVwyx47Er2ctVhR2I=;
+        b=P5N4i2MV3+aYOA5YiiZlDNYiaHdm8OVJp+ipVtfHoji5F1AvD3XF3ZfjyD9hSD0Gvo
+         vByKsTlr8AtQaNF7Dvm/hno6+sB/nxca3FifuerMPntEiThrK/zVDEy+bNeYvks8TeIg
+         /vNMSLifsJydXAPRPSnJz7Ain1ZG5TjVdxFsM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=tjlbuJ7C/DKZRAfkhHqXNOy4U5TFjOX7DNPK22NZkBOlRWx+Y/2++dNJJcjPSYk56B
-         tjBiIQvDPSEs61aD9OJ1itcdvFubhz0UncAPJDAtyNyeq14BCyXru26oL9Ummwa0yhPv
-         F53two+YItA/2JKah1/iomuzUaZxOSp5NmtDg=
-Received: by 10.101.154.30 with SMTP id g30mr3399361ano.256.1283103567400;
-        Sun, 29 Aug 2010 10:39:27 -0700 (PDT)
-Received: from localhost ([186.205.0.204])
-        by mx.google.com with ESMTPS id w1sm10918965ana.16.2010.08.29.10.39.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Aug 2010 10:39:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.95.g3d045
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=iZCWL6AF7jE47/UkvYjxlrZwAYjHf/Vht7Tn1obOz92GJx0fIp95htZ7erlF+4r5Q3
+         GA4enFtYfhI+zw3+QI/VkUWnl87qK+ASY58A1AnfA7wuKqliR7m2mbPkSaHJVm/1TqYX
+         Y+vWW5oiHBv1O7/RI0m/R9eHLV8IpZTkELOTs=
+Received: by 10.231.153.5 with SMTP id i5mr4189854ibw.105.1283105526006; Sun,
+ 29 Aug 2010 11:12:06 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sun, 29 Aug 2010 11:12:05 -0700 (PDT)
+In-Reply-To: <20100828221655.GB5777@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154699>
 
-This improves the usage output by adding builtin_merge_recursive_usage string
-that follows the same pattern used by the other builtin commands.
+On Sat, Aug 28, 2010 at 22:16, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
 
-Also it uses usage() function instead of the usagef() function.
+> $ /lib/libc.so.6 =C2=A0|head -1
+> GNU C Library (Debian EGLIBC 2.11.2-2) stable release version 2.11.2,=
+ by Roland McGrath et al.
+> $ cat test.c
+> #include <stdio.h>
+> #include <locale.h>
+>
+> int main(void)
+> {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int n;
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0setlocale(LC_CTYPE, "");
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0n =3D printf("%.11s\n", "Author: \277");
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0perror("printf");
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fprintf(stderr, "return value: %d\n", n);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
+> }
+> $ make test
+> cc =C2=A0 =C2=A0 test.c =C2=A0 -o test
+> $ ./test
+> printf: Invalid or incomplete multibyte or wide character
+> return value: -1
 
-The previous output for git merger-recursive was:
-usage: merge-recursive <base>... -- <head> <remote> ...
+So, my plan of attack is:
 
-Now the output is:
-usage: git merge-recursive <base>... -- <head> <remote> ...
+ * Add compat/printf from Free, Open or NetBSD. Maybe make
+   compat/snprintf.c use that while I'm at it.
+ * Use that instead of the GNU libc printf on systems that have glibc.
+ * Add a configure check for that.
+ * Revert 107880a
+ * Get gettext goodness with LC_CTYPE
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
----
- builtin/merge-recursive.c |   17 ++++++++++-------
- 1 files changed, 10 insertions(+), 7 deletions(-)
+Does anyone see a problem with that? The potential issue is that
+LC_CTYPE is for:
 
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index d8875d5..46c2a85 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -3,6 +3,9 @@
- #include "tag.h"
- #include "merge-recursive.h"
- 
-+static const char builtin_merge_recursive_usage[] =
-+	"git merge-recursive <base>... -- <head> <remote> ...";
-+
- static const char *better_branch_name(const char *branch)
- {
- 	static char githead_env[8 + 40 + 1];
-@@ -29,7 +32,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		o.subtree_shift = "";
- 
- 	if (argc < 4)
--		usagef("%s <base>... -- <head> <remote> ...", argv[0]);
-+		usage(builtin_merge_recursive_usage);
- 
- 	for (i = 1; i < argc; ++i) {
- 		const char *arg = argv[i];
-@@ -37,19 +40,19 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		if (!prefixcmp(arg, "--")) {
- 			if (!arg[2])
- 				break;
--			if (!strcmp(arg+2, "ours"))
-+			if (!strcmp(arg + 2, "ours"))
- 				o.recursive_variant = MERGE_RECURSIVE_OURS;
--			else if (!strcmp(arg+2, "theirs"))
-+			else if (!strcmp(arg + 2, "theirs"))
- 				o.recursive_variant = MERGE_RECURSIVE_THEIRS;
--			else if (!strcmp(arg+2, "subtree"))
-+			else if (!strcmp(arg + 2, "subtree"))
- 				o.subtree_shift = "";
--			else if (!prefixcmp(arg+2, "subtree="))
-+			else if (!prefixcmp(arg + 2, "subtree="))
- 				o.subtree_shift = arg + 10;
- 			else
- 				die("Unknown option %s", arg);
- 			continue;
- 		}
--		if (bases_count < ARRAY_SIZE(bases)-1) {
-+		if (bases_count < ARRAY_SIZE(bases) - 1) {
- 			unsigned char *sha = xmalloc(20);
- 			if (get_sha1(argv[i], sha))
- 				die("Could not parse object '%s'", argv[i]);
-@@ -58,7 +61,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		else
- 			warning("Cannot handle more than %d bases. "
- 				"Ignoring %s.",
--				(int)ARRAY_SIZE(bases)-1, argv[i]);
-+				(int)ARRAY_SIZE(bases) - 1, argv[i]);
- 	}
- 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
- 		die("Not handling anything other than two heads merge.");
--- 
-1.7.2.1.95.g3d045
+    "regular expression matching, character classification,
+    conversion, case-sensitive comparison, and wide character
+    functions."
+
+So it might have unintended side-effects. But the only other
+workaround I can see is to decree that all consumers of the localized
+messages must have a UTF-8 locale.
