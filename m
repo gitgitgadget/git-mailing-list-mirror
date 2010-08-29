@@ -1,125 +1,88 @@
 From: Thiago Farina <tfransosi@gmail.com>
-Subject: [PATCH v2] builtin/merge_recursive.c: Add an usage string and make use of it.
-Date: Sun, 29 Aug 2010 19:20:21 -0300
-Message-ID: <9e0261a0eebe275e2ed1fa651e5ab80c35f6048c.1283120150.git.tfransosi@gmail.com>
-References: <20100829214648.GE1890@burratino>
-Cc: gitster@pobox.com, jrnieder@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 30 00:20:39 2010
+Subject: Re: [PATCH] builtin/merge_recursive.c: Add a usage string and make
+ use of it.
+Date: Sun, 29 Aug 2010 19:24:31 -0300
+Message-ID: <AANLkTimopOKiq1ef1YvbR28ArcEZ4nV+P_-DcfSKsJyO@mail.gmail.com>
+References: <c9d88eb8cbd5b025b0c0112be05d3c0fe993de25.1283103426.git.tfransosi@gmail.com>
+	<20100829214648.GE1890@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 00:24:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpqEv-0008HW-7N
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 00:20:37 +0200
+	id 1OpqIn-0001cm-Fy
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 00:24:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905Ab0H2WUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 18:20:32 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:63992 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753618Ab0H2WUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 18:20:31 -0400
-Received: by gwj17 with SMTP id 17so1782498gwj.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 15:20:31 -0700 (PDT)
+	id S1753942Ab0H2WYd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 18:24:33 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:34105 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753618Ab0H2WYc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 18:24:32 -0400
+Received: by qyk33 with SMTP id 33so4641753qyk.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 15:24:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=WQQY/w5HjKbC4lxb8b1RwY3IqnMChTJ7CGaytyI9/Jo=;
-        b=cCgEdYT687D71bk1NIavfQaGrat376kGX+7DgF3Cgm3WalkS/8n53+8yEhGYHisW4o
-         72arqF7VZ/NSk8f1v/TguML6tXnFrJvr7NSMDIiL17nDmJH2z7vKWagY/GG+7Dcrs/mP
-         JiftGZBk714aJr7+dUxdBKjs/PhJaO1gwDYKU=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=qOFIfJUuCW0vS9mHKA6btpqSabdmxSFLPraz5ef0+W4=;
+        b=MeLv6ozVIMyFseL2eVLiA1qCv7UlFevXs7qU6aC1dFb4atY9dgvjhUVLOwx0oqR2J0
+         +MsiUd4zWlSVncD5FzTTaso6kX780Q3+s+FW42jBaQSSWnUle3YlUu3U0ZTqdDmA4x83
+         UNk9Tub85+mx7mmE0Wmk55xUx4kzJ8L9+tnsg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=DKcbmVdOAZ7a1LB345zoVU7W/y0DXS7G8I7/2c90fMHulukORyZsEMeXyRERoTgRSx
-         8IBcJXDrSDAZsbWeufvOXBAtdMXx/meJ5gTE5uLS3O5KDW2Jh+AyQmeubB0E0MVtNziK
-         uag773wXXiHUFsNyB7RazA8PtAXJokR/1KUuc=
-Received: by 10.150.218.1 with SMTP id q1mr4497851ybg.202.1283120430373;
-        Sun, 29 Aug 2010 15:20:30 -0700 (PDT)
-Received: from localhost ([186.205.0.204])
-        by mx.google.com with ESMTPS id d5sm2741648ybi.21.2010.08.29.15.20.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 29 Aug 2010 15:20:29 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.95.g3d045
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fVygfFpDypicZ/f/ISrYh3T7yCjH6y4vdsfIkMWalEDxnGL+HrrTCa9HSavLu/Mk3+
+         O5VbM3+GLmsWzUBRgeJhGy04evAZFmW1RZw0j0ziMz0+25tNwuaT6qg6m5yfhaY+Clk0
+         KaunqWCpaxS1X98ioqMstVKbcCGpJE1Vj+2jc=
+Received: by 10.224.124.80 with SMTP id t16mr2284054qar.204.1283120671340;
+ Sun, 29 Aug 2010 15:24:31 -0700 (PDT)
+Received: by 10.229.245.202 with HTTP; Sun, 29 Aug 2010 15:24:31 -0700 (PDT)
 In-Reply-To: <20100829214648.GE1890@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154727>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154728>
 
-This improves the usage output by adding builtin_merge_recursive_usage string
-that follows the same pattern used by the other builtin commands.
-
-The previous output for git merger-recursive was:
-usage: merge-recursive <base>... -- <head> <remote> ...
-
-Now the output is:
-usage: git merge-recursive <base>... -- <head> <remote> ...
-
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
----
- builtin/merge-recursive.c |   17 ++++++++++-------
- 1 files changed, 10 insertions(+), 7 deletions(-)
-
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index d8875d5..189ba42 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -3,6 +3,9 @@
- #include "tag.h"
- #include "merge-recursive.h"
- 
-+static const char builtin_merge_recursive_usage[] =
-+	"git %s <base>... -- <head> <remote> ...";
-+
- static const char *better_branch_name(const char *branch)
- {
- 	static char githead_env[8 + 40 + 1];
-@@ -29,7 +32,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		o.subtree_shift = "";
- 
- 	if (argc < 4)
--		usagef("%s <base>... -- <head> <remote> ...", argv[0]);
-+		usagef(builtin_merge_recursive_usage, argv[0]);
- 
- 	for (i = 1; i < argc; ++i) {
- 		const char *arg = argv[i];
-@@ -37,19 +40,19 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		if (!prefixcmp(arg, "--")) {
- 			if (!arg[2])
- 				break;
--			if (!strcmp(arg+2, "ours"))
-+			if (!strcmp(arg + 2, "ours"))
- 				o.recursive_variant = MERGE_RECURSIVE_OURS;
--			else if (!strcmp(arg+2, "theirs"))
-+			else if (!strcmp(arg + 2, "theirs"))
- 				o.recursive_variant = MERGE_RECURSIVE_THEIRS;
--			else if (!strcmp(arg+2, "subtree"))
-+			else if (!strcmp(arg + 2, "subtree"))
- 				o.subtree_shift = "";
--			else if (!prefixcmp(arg+2, "subtree="))
-+			else if (!prefixcmp(arg + 2, "subtree="))
- 				o.subtree_shift = arg + 10;
- 			else
- 				die("Unknown option %s", arg);
- 			continue;
- 		}
--		if (bases_count < ARRAY_SIZE(bases)-1) {
-+		if (bases_count < ARRAY_SIZE(bases) - 1) {
- 			unsigned char *sha = xmalloc(20);
- 			if (get_sha1(argv[i], sha))
- 				die("Could not parse object '%s'", argv[i]);
-@@ -58,7 +61,7 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
- 		else
- 			warning("Cannot handle more than %d bases. "
- 				"Ignoring %s.",
--				(int)ARRAY_SIZE(bases)-1, argv[i]);
-+				(int)ARRAY_SIZE(bases) - 1, argv[i]);
- 	}
- 	if (argc - i != 3) /* "--" "<head>" "<remote>" */
- 		die("Not handling anything other than two heads merge.");
--- 
-1.7.2.1.95.g3d045
+On Sun, Aug 29, 2010 at 6:46 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Hi Thiago,
+>
+> Thiago Farina wrote:
+>
+>> This improves the usage output by adding builtin_merge_recursive_usa=
+ge string
+>> that follows the same pattern used by the other builtin commands.
+>>
+>> Also it uses usage() function instead of the usagef() function.
+>
+> FWIW cmd_merge_recursive is used to handle four different commands.
+>
+> $ git grep -F -e cmd_merge_recursive
+> builtin.h:extern int cmd_merge_recursive(int argc, const char **argv,=
+ const char *prefix);
+> builtin/merge-recursive.c:int cmd_merge_recursive(int argc, const cha=
+r **argv, const char *prefix)
+> git.c: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ "merge-recursive", cmd_mer=
+ge_recursive, RUN_SETUP | NEED_WORK_TREE },
+> git.c: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ "merge-recursive-ours", cm=
+d_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+> git.c: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ "merge-recursive-theirs", =
+cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+> git.c: =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{ "merge-subtree", cmd_merge=
+_recursive, RUN_SETUP | NEED_WORK_TREE },
+>
+> What will be the output from
+>
+> =C2=A0$ git merge-subtree -h
+>
+Thanks for catching this, fixed in the v2 patch.
