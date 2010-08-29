@@ -1,116 +1,225 @@
-From: Geert Bosch <bosch@gnat.com>
-Subject: How to deal with removal/addition of submodules?
-Date: Sun, 29 Aug 2010 21:38:59 +0200
-Message-ID: <5AC1B4DE-62F7-4439-9F2C-72DFC32CEEC1@gnat.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Aug 29 21:48:34 2010
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [PATCH 10/13] transport-helper: implement marks location as
+ capability
+Date: Sun, 29 Aug 2010 15:52:48 -0400 (EDT)
+Message-ID: <alpine.LNX.2.00.1008291536030.14365@iabervon.org>
+References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com> <1283053540-27042-11-git-send-email-srabbelier@gmail.com>
+Mime-Version: 1.0
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Git List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 29 21:53:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Opnrl-0005BX-U9
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 21:48:34 +0200
+	id 1OpnwB-0007Sc-Dv
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 21:53:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753907Ab0H2Ts2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 15:48:28 -0400
-Received: from rock.gnat.com ([205.232.38.15]:36415 "EHLO rock.gnat.com"
+	id S1753960Ab0H2TxC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 15:53:02 -0400
+Received: from iabervon.org ([66.92.72.58]:59868 "EHLO iabervon.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753725Ab0H2Ts1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 15:48:27 -0400
-X-Greylist: delayed 565 seconds by postgrey-1.27 at vger.kernel.org; Sun, 29 Aug 2010 15:48:27 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by filtered-rock.gnat.com (Postfix) with ESMTP id 662362BAC14
-	for <git@vger.kernel.org>; Sun, 29 Aug 2010 15:39:01 -0400 (EDT)
-X-Virus-Scanned: Debian amavisd-new at gnat.com
-Received: from rock.gnat.com ([127.0.0.1])
-	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id oCsfojDjo-dw for <git@vger.kernel.org>;
-	Sun, 29 Aug 2010 15:39:01 -0400 (EDT)
-Received: from potomac.lan (ip5454b6a1.adsl-surfen.hetnet.nl [84.84.182.161])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by rock.gnat.com (Postfix) with ESMTPSA id D7F302BAB7B
-	for <git@vger.kernel.org>; Sun, 29 Aug 2010 15:39:00 -0400 (EDT)
-X-Mailer: Apple Mail (2.1081)
+	id S1753685Ab0H2TxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 15:53:00 -0400
+Received: (qmail 5095 invoked by uid 1000); 29 Aug 2010 19:52:48 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 29 Aug 2010 19:52:48 -0000
+In-Reply-To: <1283053540-27042-11-git-send-email-srabbelier@gmail.com>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154708>
 
-I'm making an integration project that includes submodules for various
-components and each day makes a commit in the super-project with all
-desired versions of the components. Because many components come from
-Subversion repositories, I typically import them directly using git 
-svn clone, and then add the submodule using a relative path, such as
-git submodule add ./some_module.
+On Sat, 28 Aug 2010, Sverre Rabbelier wrote:
 
-The idea is that at any super-project checkout will automatically fetch
-all the correct versions of the components. This seems the ideal use of
-submodules. For the most part, this works correctly.
+> While this requires the helper to flush stdout after listing 'gitdir'
+> as capability, and read a command (the 'gitdir' response from the
+> remote helper infrastructure) right after that, this is more elegant
+> and does not require an ad-hoc exchange of values.
+> 
+> CC: Daniel Barkalow <barkalow@iabervon.org>
+> ---
+> 
+>   Daniel made some fuss about the ad-hoc exchange when I first sent
+>   the 'export command' series for review, and it's been nagging me.
+> 
+>   As you can see in the remote-testgit implementation, it's a bit
+>   icky on the helper side (you have to flush sdout and read another
+>   command in the middle of responding to 'capabilities'), but I think
+>   it's better than the alternative.
 
-However, when creating new submodules, moving submodules around, or
-deleting submodules, there are problems checking out old versions
-of the project. Basically, when I delete a submodule, git seems to force
-me to remove the entire subdirectory including .git files, which essentially
-gets rid of all its history too. If I would leave the .git files around,
-I wouldn't be able to treat the subdirectory as a regular subdirectory.
+I think I was annoyed by it being ad-hoc, rather than having the exchange 
+of values. I think if you need to get more information to the helper, you 
+should have a generic mechanism for that, rather than anything that cares 
+about the particular information involved.
 
-Probably I could work around the issue by having separate independent
-git repositories for each component, so there would be no conflict
-between working tree and submodule repository. However, this makes it
-much more cumbersome and script-intensive to do automatic nightly updates 
-of all component repositories and generally results in an extra level of
-indirection.
+I'm a bit unclear on what change you're making here; it looks like the 
+helper side is reading another line, but that transport-helper isn't 
+writing anything new, and you don't have any changes to the documentation 
+here. Did this change get mixed into a different patch or something?
 
-If submodules would just be able to share the master .git directory
-for their storage, it would seem that most of these problems would
-disappear. It would still be possible to selectively initialize and
-clone submodules; resulting packs would just share the same .git 
-directory. They might even be in their own subdirectories of .git,
-they just need to be found for resolving submodule references.
-
-With this improved organization it would be trivial to check out
-any old version of the super project, because the commits referenced
-by these versions would be easy to find.
-
-It seems that currently git itself, apart from its configuration files,
-really adheres to the "content is king" credo, but for submodules we
-are thrown back to making path names special. We have persistent identities
-for submodules and they cause problems.
-
-My question: how do I manage submodules without falling in these traps?
-
-  -Geert
-
-PS. Below is a script that shows a problematic chain of events to replace
-    a submodule by a regular subdirectory.
-
-git init super
-cd super
-git remote add origin $(pwd)
-git init sub
-cd sub
-echo submodule>txt
-git add txt
-git commit -m "Initial subproject revision"
-cd ..
-git submodule add ./sub
-git commit -m "Initial super project commit"
-# The following line is problematic, but what to do instead?
-rm -rf sub
-git rm sub
-mkdir sub
-echo subdirectory>sub/txt
-cd sub
-git add txt
-git commit -m "Sub is now a subdirectory" txt
-cd ..
-# Repository all done now, let's go back to last revision
-git checkout HEAD~1
-git submodule update
-cd ..
+>  git-remote-testgit.py |   29 ++++++++++++++++-------------
+>  transport-helper.c    |   47 ++++++++++++++++++-----------------------------
+>  2 files changed, 34 insertions(+), 42 deletions(-)
+> 
+> diff --git a/git-remote-testgit.py b/git-remote-testgit.py
+> index 50341ce..e2b213d 100644
+> --- a/git-remote-testgit.py
+> +++ b/git-remote-testgit.py
+> @@ -71,8 +71,24 @@ def do_capabilities(repo, args):
+>      print "import"
+>      print "export"
+>      print "gitdir"
+> +
+> +    sys.stdout.flush()
+> +    if not read_one_line(repo):
+> +        die("Expected gitdir, got empty line")
+> +
+>      print "refspec refs/heads/*:%s*" % repo.prefix
+>  
+> +    dirname = repo.get_base_path(repo.gitdir)
+> +
+> +    if not os.path.exists(dirname):
+> +        os.makedirs(dirname)
+> +
+> +    path = os.path.join(dirname, 'testgit.marks')
+> +
+> +    print "*export-marks %s" % path
+> +    if os.path.exists(path):
+> +        print "*import-marks %s" % path
+> +
+>      print # end capabilities
+>  
+>  
+> @@ -142,19 +158,6 @@ def do_export(repo, args):
+>      if not repo.gitdir:
+>          die("Need gitdir to export")
+>  
+> -    dirname = repo.get_base_path(repo.gitdir)
+> -
+> -    if not os.path.exists(dirname):
+> -        os.makedirs(dirname)
+> -
+> -    path = os.path.join(dirname, 'testgit.marks')
+> -    print path
+> -    if os.path.exists(path):
+> -        print path
+> -    else:
+> -        print ""
+> -    sys.stdout.flush()
+> -
+>      update_local_repo(repo)
+>      repo.importer.do_import(repo.gitdir)
+>      repo.non_local.push(repo.gitdir)
+> diff --git a/transport-helper.c b/transport-helper.c
+> index 82bdad3..0edc1d5 100644
+> --- a/transport-helper.c
+> +++ b/transport-helper.c
+> @@ -23,6 +23,8 @@ struct helper_data
+>  		push : 1,
+>  		connect : 1,
+>  		no_disconnect_req : 1;
+> +	char *export_marks;
+> +	char *import_marks;
+>  	/* These go from remote name (as in "list") to private name */
+>  	struct refspec *refspecs;
+>  	int refspec_nr;
+> @@ -179,6 +181,16 @@ static struct child_process *get_helper(struct transport *transport)
+>  			strbuf_addf(&gitdir, "gitdir %s\n", get_git_dir());
+>  			sendline(data, &gitdir);
+>  			strbuf_release(&gitdir);
+> +		} else if (!prefixcmp(capname, "export-marks ")) {
+> +			struct strbuf arg = STRBUF_INIT;
+> +			strbuf_addstr(&arg, "--export-marks=");
+> +			strbuf_addstr(&arg, capname + strlen("export-marks "));
+> +			data->export_marks = strbuf_detach(&arg, NULL);
+> +		} else if (!prefixcmp(capname, "import-marks")) {
+> +			struct strbuf arg = STRBUF_INIT;
+> +			strbuf_addstr(&arg, "--import-marks=");
+> +			strbuf_addstr(&arg, capname + strlen("import-marks "));
+> +			data->import_marks = strbuf_detach(&arg, NULL);
+>  		} else if (mandatory) {
+>  			die("Unknown mandatory capability %s. This remote "
+>  			    "helper probably needs newer version of Git.\n",
+> @@ -364,10 +376,9 @@ static int get_importer(struct transport *transport, struct child_process *fasti
+>  
+>  static int get_exporter(struct transport *transport,
+>  			struct child_process *fastexport,
+> -			const char *export_marks,
+> -			const char *import_marks,
+>  			struct string_list *revlist_args)
+>  {
+> +	struct helper_data *data = transport->data;
+>  	struct child_process *helper = get_helper(transport);
+>  	int argc = 0, i;
+>  	memset(fastexport, 0, sizeof(*fastexport));
+> @@ -378,10 +389,10 @@ static int get_exporter(struct transport *transport,
+>  	fastexport->argv = xcalloc(5 + revlist_args->nr, sizeof(*fastexport->argv));
+>  	fastexport->argv[argc++] = "fast-export";
+>  	fastexport->argv[argc++] = "--use-done-feature";
+> -	if (export_marks)
+> -		fastexport->argv[argc++] = export_marks;
+> -	if (import_marks)
+> -		fastexport->argv[argc++] = import_marks;
+> +	if (data->export_marks)
+> +		fastexport->argv[argc++] = data->export_marks;
+> +	if (data->import_marks)
+> +		fastexport->argv[argc++] = data->import_marks;
+>  
+>  	for (i = 0; i < revlist_args->nr; i++)
+>  		fastexport->argv[argc++] = revlist_args->items[i].string;
+> @@ -708,7 +719,6 @@ static int push_refs_with_export(struct transport *transport,
+>  	struct ref *ref;
+>  	struct child_process *helper, exporter;
+>  	struct helper_data *data = transport->data;
+> -	char *export_marks = NULL, *import_marks = NULL;
+>  	struct string_list revlist_args = { NULL, 0, 0 };
+>  	struct strbuf buf = STRBUF_INIT;
+>  
+> @@ -716,26 +726,6 @@ static int push_refs_with_export(struct transport *transport,
+>  
+>  	write_constant(helper->in, "export\n");
+>  
+> -	recvline(data, &buf);
+> -	if (debug)
+> -		fprintf(stderr, "Debug: Got export_marks '%s'\n", buf.buf);
+> -	if (buf.len) {
+> -		struct strbuf arg = STRBUF_INIT;
+> -		strbuf_addstr(&arg, "--export-marks=");
+> -		strbuf_addbuf(&arg, &buf);
+> -		export_marks = strbuf_detach(&arg, NULL);
+> -	}
+> -
+> -	recvline(data, &buf);
+> -	if (debug)
+> -		fprintf(stderr, "Debug: Got import_marks '%s'\n", buf.buf);
+> -	if (buf.len) {
+> -		struct strbuf arg = STRBUF_INIT;
+> -		strbuf_addstr(&arg, "--import-marks=");
+> -		strbuf_addbuf(&arg, &buf);
+> -		import_marks = strbuf_detach(&arg, NULL);
+> -	}
+> -
+>  	strbuf_reset(&buf);
+>  
+>  	for (ref = remote_refs; ref; ref = ref->next) {
+> @@ -754,8 +744,7 @@ static int push_refs_with_export(struct transport *transport,
+>  
+>  	}
+>  
+> -	if (get_exporter(transport, &exporter,
+> -			 export_marks, import_marks, &revlist_args))
+> +	if (get_exporter(transport, &exporter, &revlist_args))
+>  		die("Couldn't run fast-export");
+>  
+>  	if(finish_command(&exporter))
+> -- 
+> 1.7.2.1.240.g6a95c3
+> 
+> 
