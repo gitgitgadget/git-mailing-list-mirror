@@ -1,98 +1,97 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 03/13] transport-helper: factor out push_update_refs_status
-Date: Sun, 29 Aug 2010 16:45:21 -0500
-Message-ID: <AANLkTikP_Mm4C2C_TC57Adi9egPMdv83htc1J8ZJ4mN-@mail.gmail.com>
-References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
- <1283053540-27042-4-git-send-email-srabbelier@gmail.com> <20100829213618.GD1890@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] builtin/merge_recursive.c: Add a usage string and make
+ use of it.
+Date: Sun, 29 Aug 2010 16:46:48 -0500
+Message-ID: <20100829214648.GE1890@burratino>
+References: <c9d88eb8cbd5b025b0c0112be05d3c0fe993de25.1283103426.git.tfransosi@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Aug 29 23:45:53 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Aug 29 23:48:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpphC-0002OC-Vr
-	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 23:45:47 +0200
+	id 1Oppjy-0003ZG-2N
+	for gcvg-git-2@lo.gmane.org; Sun, 29 Aug 2010 23:48:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753935Ab0H2Vpm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 17:45:42 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:40779 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753256Ab0H2Vpl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 17:45:41 -0400
-Received: by gwj17 with SMTP id 17so1774527gwj.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 14:45:41 -0700 (PDT)
+	id S1753959Ab0H2Vsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 17:48:33 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47794 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753256Ab0H2Vsc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 17:48:32 -0400
+Received: by gxk23 with SMTP id 23so1753705gxk.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 14:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XoMOE4yFuZUsiGHLdAAj0QIABOhTaRSZ+0lONEE3Fcc=;
-        b=mNqFGcsxHKGZgix/Pm+YDR1KeqcrjYDGYrsx9kjeyPrinnPbRXJJAQ7rFLLcx3qR0I
-         G/iYlwnA+WidAwb7a1ArO5TGnloXlwWasRjFEWn4wSMuhBLkf9jVcSkv+DRu5ck6yUwy
-         RN9DkVwhBM04N/tCswTCXdRi7dCTyzeUnxxL4=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=AUIu67tX/kydWknvmdBVMbczvnOZqTBjyfLgSkuGDx0=;
+        b=A6GOg/C3CSE5tlsrYOohpFCrjWtxF/N0xkocmLVdtU5mCLeN7WCQlBtynU6INdhTnI
+         49d3RwBqcaf/Q9YZG1HYaDrJ6zSlNwEgyLp1fsxUy9JhYFQWCBnfvfvoTojHTKWWstoC
+         8u2ppyVgCsiauGoSXf9u2Z5r0W3xglrzfBfIo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Rizn+gmDASWgkb+Z2sKHvoR4Ik114TSHzmrL4Qp3Oft89TXWDRoS1fSFCkGrIpC1+2
-         7cJEW3MzJWIc+c2GN4g4OZmvHwnF008sjfIoXCMLjDiqTiOiH/Nq6YMl8Iyk8Oxuqqwb
-         U5Ewvu2PFxgf8TO5HcXAdeYFvQd4liMUpN36c=
-Received: by 10.150.52.11 with SMTP id z11mr4246166ybz.149.1283118341168; Sun,
- 29 Aug 2010 14:45:41 -0700 (PDT)
-Received: by 10.151.49.17 with HTTP; Sun, 29 Aug 2010 14:45:21 -0700 (PDT)
-In-Reply-To: <20100829213618.GD1890@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pp4IPoazOUCRpuu92/z4JqGPy1AGF6JOFa3DVMAZutpQrXtKKrQPgMRqwSf5SuRcbe
+         327jx8KhpPDLe+3q5nemZbl+YuQqDp8RKDNCD9xOmB5qQwXVlHIb9nTXXygjVtczhnl9
+         Q2zlDdGb+f98hZ8Tj3rIE2R6HDNZ3isNdsgg8=
+Received: by 10.100.112.20 with SMTP id k20mr3592044anc.234.1283118511698;
+        Sun, 29 Aug 2010 14:48:31 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm6620619ibk.3.2010.08.29.14.48.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 29 Aug 2010 14:48:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <c9d88eb8cbd5b025b0c0112be05d3c0fe993de25.1283103426.git.tfransosi@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154722>
 
-Heya,
+Hi Thiago,
 
-On Sun, Aug 29, 2010 at 16:36, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Hmm, I am not too happy with the long loop without explicit condition=
-=2E
-> Maybe it would make sense to split out the loop body as its own funct=
-ion?
-> Something like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct ref *ref =3D remote_refs;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0for (;;) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0recvline(data,=
- &buf);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!buf.len)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0break;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0push_update_re=
-f_status(&buf, &ref, remote_refs);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+Thiago Farina wrote:
 
-Ok, will fix.
+> This improves the usage output by adding builtin_merge_recursive_usage string
+> that follows the same pattern used by the other builtin commands.
+> 
+> Also it uses usage() function instead of the usagef() function.
 
->> =C2=A0 =C2=A0 =C2=A0 strbuf_release(&buf);
->> - =C2=A0 =C2=A0 return 0;
->> + =C2=A0 =C2=A0 return;
->
-> Not necessary, I think.
+FWIW cmd_merge_recursive is used to handle four different commands.
 
-Removed the return.
+$ git grep -F -e cmd_merge_recursive
+builtin.h:extern int cmd_merge_recursive(int argc, const char **argv, const char *prefix);
+builtin/merge-recursive.c:int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+git.c:          { "merge-recursive", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+git.c:          { "merge-recursive-ours", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+git.c:          { "merge-recursive-theirs", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
+git.c:          { "merge-subtree", cmd_merge_recursive, RUN_SETUP | NEED_WORK_TREE },
 
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> Thanks for a pleasant read.
+What will be the output from
 
-Thanks for reading :).
+ $ git merge-subtree -h
 
---=20
-Cheers,
+after this change?
 
-Sverre Rabbelier
+> --- a/builtin/merge-recursive.c
+> +++ b/builtin/merge-recursive.c
+> @@ -37,19 +40,19 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
+>  		if (!prefixcmp(arg, "--")) {
+>  			if (!arg[2])
+>  				break;
+> -			if (!strcmp(arg+2, "ours"))
+> +			if (!strcmp(arg + 2, "ours"))
+
+Changes like these, while nice, would make more sense as a separate
+patch.
+
+Hope that helps,
+Jonathan
