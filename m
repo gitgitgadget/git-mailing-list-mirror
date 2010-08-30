@@ -1,81 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 10/13] transport-helper: implement marks location as
- capability
-Date: Sun, 29 Aug 2010 20:31:56 -0500
-Message-ID: <20100830013156.GD2305@burratino>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 10/13] transport-helper: implement marks location as capability
+Date: Sun, 29 Aug 2010 20:35:51 -0500
+Message-ID: <AANLkTinyuCoC7P2kSS7epgfO3xjJ8mTEQ+P8qtsEmAct@mail.gmail.com>
 References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
- <1283053540-27042-11-git-send-email-srabbelier@gmail.com>
+ <1283053540-27042-11-git-send-email-srabbelier@gmail.com> <20100830013156.GD2305@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 03:33:50 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 03:36:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OptFt-00059s-Mr
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 03:33:50 +0200
+	id 1OptIJ-0006H9-Vh
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 03:36:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754226Ab0H3Bdl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 21:33:41 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:35431 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753588Ab0H3Bdk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 21:33:40 -0400
-Received: by ywh1 with SMTP id 1so1483771ywh.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 18:33:40 -0700 (PDT)
+	id S1754381Ab0H3BgN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 21:36:13 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:40429 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754236Ab0H3BgM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 21:36:12 -0400
+Received: by gyd8 with SMTP id 8so1807842gyd.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 18:36:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=/klnFOD6nfhpXnfdAkPwsy5AwEpEJaMHlctcu8qcKb4=;
-        b=MF+4OboDkbaTDsyFS9GrVt9RowSdkEOk4I9TOJ684OtxATBilCxdAic5ZdSpFq1xRd
-         xhgCqOMvHcUBtdQne7iklLLwEiB5JbMjILKmjipHBd/tEu/v1XxaHGBD65CC8Ks4CjQf
-         mock86Im2JAFzPQshYSV4OZWXZciFFKA4O+Ng=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=x5LDt2O4bLVLFE6wEGP3/vfW4CorXtQ+6np8xVvV974=;
+        b=WVv/MW67UmSfztHvQOnTGOGRhZYQqulx0O30j67epr5bYWQUxWhdrnF3jiAPrhLzTr
+         Ehz4E7knm94Ci8hp3DQlnFvk82PuqqFGc/HL2IzgUmuKSpIHMVC7I4oEL5ak9WeM+mnw
+         9Hq2f/fRhA5KjE4frAT68QijlsGlA36Erl8RY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XFKJ+X6c733KK3yvr8ZeF9ILFu/4rfI9bgCKfAFAbrab1LZcI+WtWNBA5hy1ZOCCox
-         eG5QNBFO8D+U9cVde9YcRLeottaNmBBY1osYVaK4GeI510tS/HRVB00L7Nux1uV8rads
-         yON06k1DXeq+MA5qGaSEbIR6/E+ul2DOzIkxY=
-Received: by 10.100.31.15 with SMTP id e15mr3787034ane.119.1283132020018;
-        Sun, 29 Aug 2010 18:33:40 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t30sm11631487ann.7.2010.08.29.18.33.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 29 Aug 2010 18:33:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1283053540-27042-11-git-send-email-srabbelier@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=cvKk3JOlCpCXhuEyBrKcYPf4QjAeB5OgadDkGM/05K1W6t/98c7VY0VKp2XbjxXZh5
+         00qJxV+6o6xZ2g+QuhmfApuQpXpK2GnMVvnMATsi3UIPJ4EJcgs5mUrggwoHOXNV5weU
+         deaPnypL8hiSHUjoUpsXlIuZnhH2Qm26aN1iY=
+Received: by 10.150.51.4 with SMTP id y4mr4661417yby.340.1283132171248; Sun,
+ 29 Aug 2010 18:36:11 -0700 (PDT)
+Received: by 10.151.49.17 with HTTP; Sun, 29 Aug 2010 18:35:51 -0700 (PDT)
+In-Reply-To: <20100830013156.GD2305@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154740>
 
-Sverre Rabbelier wrote:
+Heya,
 
-> --- a/git-remote-testgit.py
-> +++ b/git-remote-testgit.py
-> @@ -71,8 +71,24 @@ def do_capabilities(repo, args):
->      print "import"
->      print "export"
->      print "gitdir"
-> +
-> +    sys.stdout.flush()
-> +    if not read_one_line(repo):
-> +        die("Expected gitdir, got empty line")
+On Sun, Aug 29, 2010 at 20:31, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> This seems fragile to me: shouldn't the remote helper check somehow
+> that the line it read was actually a gitdir line?
 
-This seems fragile to me: shouldn't the remote helper check somehow
-that the line it read was actually a gitdir line?
+You're probably right, the simplest way would be to check if repo.gitdi=
+r is set.
 
-No other complaint on my part.  Requiring a flush seems entirely
-appropriate to me, and if someone comes up with something nicer than
-the "capabilities" sequence for requesting information, it would not
-be the end of the world to have two ways to discover the .git dir.
+> No other complaint on my part. =C2=A0Requiring a flush seems entirely
+> appropriate to me, and if someone comes up with something nicer than
+> the "capabilities" sequence for requesting information, it would not
+> be the end of the world to have two ways to discover the .git dir.
+
+Agreed.
+
+--=20
+Cheers,
+
+Sverre Rabbelier
