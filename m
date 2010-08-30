@@ -1,71 +1,96 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/6] Add string comparison functions that respect the
- ignore_case variable.
-Date: Mon, 30 Aug 2010 09:52:20 -0500
-Message-ID: <20100830145220.GI2315@burratino>
-References: <cover.1281985411.git.j6t@kdbg.org>
- <4C6C01A9.4080306@workspacewhiz.com>
- <AANLkTinwQqwjmeNfiUE6LiZtbBhEEFyisZXUgF9_b+2Q@mail.gmail.com>
- <201008182032.40375.j6t@kdbg.org>
- <AANLkTimtmudtWccRS==LrO_JrPmAJ7HzA6CU0ALbDZcV@mail.gmail.com>
- <4C7BC344.9020500@workspacewhiz.com>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
+Date: Mon, 30 Aug 2010 11:00:23 -0400
+Message-ID: <AANLkTimFx0DQb0Bq=00O5jSwbFpxU6TE53fMoiJd4Rdy@mail.gmail.com>
+References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
+	<4C7B8E1E.6050708@drmicha.warpmail.net>
+	<AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
+	<20100830141602.GF2315@burratino>
+	<4C7BC068.7030909@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 16:54:15 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Aug 30 17:00:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq5kT-0002PT-Fe
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 16:54:13 +0200
+	id 1Oq5qY-0006Nb-U5
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 17:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755136Ab0H3OyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 10:54:06 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57329 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754651Ab0H3OyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 10:54:05 -0400
-Received: by vws3 with SMTP id 3so5067264vws.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 07:54:04 -0700 (PDT)
+	id S1753638Ab0H3PA0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 11:00:26 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50507 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752869Ab0H3PAZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 11:00:25 -0400
+Received: by bwz11 with SMTP id 11so3752263bwz.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 08:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=/J0RrFap0ORY4uVKQJ1+uhHAfEeogmZ8EDc2edcwLBM=;
-        b=hqJL5PrqKCoGqOwCJth+DZyvqMyMzzwJiOKewCm0NeYhPX0LiWHCGuJi35UXjhtfl6
-         aeIoloTDCtp8S83lgqkwBv7uBRXZsdPxfd0FLG5SKq4sXIC7ndb4EuUcyTvCh7Q0bbon
-         nKdd3hKnm0WzkSWAwUGWLL/g7LTPUuDO88B1s=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=s5ytgMKmhY8gA9GqTuNCRcSa9ZWwS917b3gZn5vKPP8=;
+        b=BL6HoficZNKTnCEQeIwL2dnI7DHBSa+F9IDelzdLd5j4+fA4t1eoj1tCTBkjiFkzE+
+         eIw/gh+ZwxJoQWHEzFrOUX0i73k9DhmbeFOahzy4M5Mzf12bIWjaJmd6EqS13/fJCDkN
+         6pZ7Qwmb8pMbXjOSCgk1G5/PAb5Y0FZvAregg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=k5S+4RBzRLVR47RxWNF128iM0kSo4mNskX1qP3I3LBQEcCz2Vx4MzpN1aLT74wlSAp
-         65AZqkdzbvfIan18bmFH6Ptl+3nLao9KrT3d/wncWkmMqhtkgQrMoFs73ClNHf0pc08g
-         8GXTNyqCEr8cfcW7zEhcTRJf/Hb7tj+Ir5HO0=
-Received: by 10.220.49.204 with SMTP id w12mr2696651vcf.243.1283180044115;
-        Mon, 30 Aug 2010 07:54:04 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id m30sm4253063vbr.9.2010.08.30.07.54.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 30 Aug 2010 07:54:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4C7BC344.9020500@workspacewhiz.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=mQpZFlLrDmjQ8X3azbUTQH1OxL0T8BsvXatdebcdM5z/hJsHXmg00z3grvP3JRl+/I
+         SRBjlocQos0t59YDK9XI6hdu6F5y+/Ah8OJMFveWvC610AmjLLlYjfiP2C8cq/tV71qo
+         GEaTMd7g4uQQFHbvAfv9v3ZtkW6oyJPjmqUJY=
+Received: by 10.204.84.230 with SMTP id k38mr3399735bkl.160.1283180423736;
+ Mon, 30 Aug 2010 08:00:23 -0700 (PDT)
+Received: by 10.204.66.196 with HTTP; Mon, 30 Aug 2010 08:00:23 -0700 (PDT)
+In-Reply-To: <4C7BC068.7030909@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154819>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154820>
 
-Joshua Jensen wrote:
+On Mon, Aug 30, 2010 at 10:30 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Jonathan Nieder venit, vidit, dixit 30.08.2010 16:16:
+>> Chris Patti wrote:
+>>
+>>> That's great, thanks! =C2=A0That gets me the file names. =C2=A0Now,=
+ how do I get
+>>> to the contents of each file?
+>>
+>> Why not "git diff --raw" (or its plumbing equivalent "git diff-tree"=
+)?
+>
+> That's what I meant by "diff family" ;)
+> In fact, "git diff --raw --name-only oldrev newrev" gives the nicest
+> listing.
+>
+> It seems Chris has to check full file contents, i.e. he'll have to lo=
+op
+> over this list (as before), but I guess he'll need to replace his "sh=
+ow
+> $blob" by "show newrev:$filename" (or, alternatively, parse the outpu=
+t
+> of "diff --raw" without "--name-only" for the blob sha1).
+>
+> Michael
+>
 
-> I don't like the idea of
-> a double memory allocation/free combo per each call to this
-> function, but it would work.
+Exactly, I'm writing a regex to parse the diff --raw output and
+extract the needed bits.  I was already doing this with ls-tree so I
+don't expect any difficulties.
 
-Maybe the caller can provide a (strbuf) buffer?
+-Chris
+
+
+--=20
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, =
+Pixar
