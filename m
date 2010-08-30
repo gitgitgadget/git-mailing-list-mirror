@@ -1,139 +1,175 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v3?] Add global and system-wide gitattributes
-Date: Mon, 30 Aug 2010 10:26:16 +0200
-Message-ID: <vpqvd6sik0n.fsf@bauges.imag.fr>
-References: <vpqy6bqr3ep.fsf@bauges.imag.fr>
-	<1283020870-24888-1-git-send-email-Matthieu.Moy@imag.fr>
-	<87fwxxhfpp.fsf_-_@gmail.com>
-	<7vzkw4edc5.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
+Date: Mon, 30 Aug 2010 08:57:34 +0000
+Message-ID: <AANLkTin4A6B9zqSYHsWQ+GLWRqLvzJWAQ0F2WC85zDqC@mail.gmail.com>
+References: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
+	<AANLkTikHbxrmj3R1LDghVvMA1KNEdfeiXj44cq1KRN7M@mail.gmail.com>
+	<20100828214641.GA5515@burratino>
+	<20100828215956.GB5515@burratino>
+	<alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
+	<20100828221655.GB5777@burratino>
+	<AANLkTimn+-5Vys+jg=ryDfwdJ=WZfGwgZ+065M_=TF8r@mail.gmail.com>
+	<20100829204519.GB1890@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>,
-	git@vger.kernel.org, Petr Onderka <gsvick@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 10:26:41 2010
+Cc: Marcin Cieslak <saper@saper.info>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 10:57:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpzhR-00084S-0y
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 10:26:41 +0200
+	id 1Oq0BV-0006Ms-O6
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 10:57:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786Ab0H3I0Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 04:26:25 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:46711 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750867Ab0H3I0Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 04:26:24 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7U8MnsA025409
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 30 Aug 2010 10:22:49 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Opzh2-0005WR-Mu; Mon, 30 Aug 2010 10:26:16 +0200
-In-Reply-To: <7vzkw4edc5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 30 Aug 2010 01\:04\:10 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 30 Aug 2010 10:22:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7U8MnsA025409
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1283761373.0996@PSyH7V9JkDYArHQ5SBOh/g
+	id S1754683Ab0H3I5i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 04:57:38 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53413 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751676Ab0H3I5g convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 04:57:36 -0400
+Received: by iwn5 with SMTP id 5so4746265iwn.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 01:57:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=n+ONT1nYNqkRB6lEdDFiXpBp89zkY89zDUWdrwMJ/yg=;
+        b=V6kaV4PVlux5oGS9SsRfHgLumciaBSGEcTE6HgOq9wUIij2LZqdRMDmqopplET+yy7
+         euJrqq0cBKovmdXJKeO9YzJpYkfzJBvweSLnhTUjh71VrAXapxvmHv8Y35WAcs+9H+oL
+         VeV6XVP9HVX2RVQRAnkD/4s6mOcTiPJqj+0yg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cymYz961ubimY4gRgaky6s6OjFRfpW3l+WTJl0XFg3t3jYLW1PxW61f2e5xytXV3Fr
+         7BrD4OfxqYOPQdxNIg5gslkQesXLTml9N11k42XS/M4HQIv9JuyoK4ReAh96tzIUdQvb
+         mtvdN7sWXNv/1KwVUQCahkEqBtBaKIFxmfdA4=
+Received: by 10.231.32.130 with SMTP id c2mr4819734ibd.194.1283158654953; Mon,
+ 30 Aug 2010 01:57:34 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Mon, 30 Aug 2010 01:57:34 -0700 (PDT)
+In-Reply-To: <20100829204519.GB1890@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154777>
 
-Junio C Hamano <gitster@pobox.com> writes:
-
-> =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com> writes:
+On Sun, Aug 29, 2010 at 20:45, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
->> Thanks, Matthieu!
+>> So, my plan of attack is:
 >>
->> Petr's original patch doesn't apply cleanly due to a bogus context l=
-ine
->> after a recent change in Makefile. For convenience, below is the upd=
-ated
->> patch including Matthieu's changes applicable to current master.
->>
->> And FWIW (I didn't try to build the documentation, though):
->>
->> Tested-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
+>> =C2=A0* Add compat/printf from Free, Open or NetBSD. Maybe make
+>> =C2=A0 =C2=A0compat/snprintf.c use that while I'm at it.
 >
-> Thanks, but this seems to break t8005 for whatever reason.
+> I would prefer to get this fixed in glibc, but of course that
+> has nothing to do with git.
 
-The guilty line is
+Yeah, but even if it's fixed there everyone's glibc won't be updated
+for at least ten years as far as the glibc's we have to support go.
 
-  git_config(git_default_config, NULL);
+So even if the bug were fixed upstream today we'd still need a
+workaround.
 
-(t8005 passes if I remove it).
+>> =C2=A0* Use that instead of the GNU libc printf on systems that have=
+ glibc.
+>> =C2=A0* Add a configure check for that.
+>> =C2=A0* Revert 107880a
+>> =C2=A0* Get gettext goodness with LC_CTYPE
+>>
+>> Does anyone see a problem with that? The potential issue is that
+>> LC_CTYPE is for:
+>>
+>> =C2=A0 =C2=A0 "regular expression matching,
+>
+> should be okay, I think (unless http-backend is a problem)
 
-I don't understand why this breaks the test. It seems blame
---encoding=3DUTF-8 relies on the fact that the i18n section of the
-configuration is not loaded.
+User-level commands that take regexes would have different semantics
+based on the locale though, e.g. git log --grep=3D<regex>.
 
-An obvious fix on our side is to squash the patch below into the
-previous ones, to make sure the attributes code loads only the core
-configuration. OTOH, it seems to me that the blame code is very
-fragile, but I'm not familiar with this code to say whether and how it
-should be fixed.
+>> character classification,
+>
+> worked around (see git-compat-util.h)
 
-Any other thoughts?
+Yay sane_istest!
 
-diff --git a/attr.c b/attr.c
-index 342791a..793a835 100644
---- a/attr.c
-+++ b/attr.c
-@@ -500,7 +500,7 @@ static void bootstrap_attr_stack(void)
-                        }
-                }
-=20
--               git_config(git_default_config, NULL);
-+               git_config(git_core_config, NULL);
-                if (git_attr_global() && attributes_file) {
-                        elem =3D read_attr_from_file(attributes_file, 1=
-);
-                        if (elem) {
-diff --git a/cache.h b/cache.h
-index 28d9497..2d0bfa0 100644
---- a/cache.h
-+++ b/cache.h
-@@ -972,6 +972,7 @@ extern int update_server_info(int);
-=20
- typedef int (*config_fn_t)(const char *, const char *, void *);
- extern int git_default_config(const char *, const char *, void *);
-+extern int git_core_config(const char *, const char *, void *);
- extern int git_config_from_file(config_fn_t fn, const char *, void *);
- extern int git_config_parse_parameter(const char *text);
- extern int git_config_from_parameters(config_fn_t fn, void *data);
-diff --git a/config.c b/config.c
-index f602cd4..a2d1df9 100644
---- a/config.c
-+++ b/config.c
-@@ -602,6 +602,14 @@ static int git_default_core_config(const char *var=
-, const char *value)
-        return 0;
- }
-=20
-+/*=20
-+ * Wrapper around git_default_core_config, with type acceptable as
-+ * argument to git_config(...)
-+ */
-+int git_core_config(const char *var, const char *value, void *dummy) {
-+       return git_default_core_config(var, value);
-+}
-+
- static int git_default_user_config(const char *var, const char *value)
- {
-        if (!strcmp(var, "user.name")) {
+>> =C2=A0 =C2=A0 conversion,
+>
+> I don't know what this means; iconv() is not affected by LC_CTYPE,
+> is it?
 
+I think it's only to do with functions like btowc, see:
+http://www.gnu.org/s/libc/manual/html_node/Restartable-multibyte-conver=
+sion.html#Restartable-multibyte-conversion
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+>> case-sensitive comparison,
+>
+> Could be a problem: we use strcasecmp() heavily.
+
+Yeah, strcasecmp is affected by LC_CTYPE.
+
+>> and wide character
+>> =C2=A0 =C2=A0 functions."
+>
+> no problem. :)
+
+Nope.
+
+>> So it might have unintended side-effects. But the only other
+>> workaround I can see is to decree that all consumers of the localize=
+d
+>> messages must have a UTF-8 locale.
+>
+> And that is no workaround at all; the problem is still seen with UTF-=
+8
+> locales, no?
+
+No, it'll be seen with all non-UTF-8 locales. Here's the issue:
+
+When we add non-ASCII to the po/*.po files we'll write it in UTF-8 as
+a matter of policy, simply because that's all the rave these days.
+
+However, unless we put "Content-Type: text/plain; charset=3DUTF-8\n" in
+the file the gettext utilities won't *know* that it's in UTF-8, if
+it's not there then to them it'll just be a raw stream of bytes. So
+they won't do the right conversion under non-UTF-8 locales.
+
+But users using a gettext translation under a UTF-8 locale won't tell
+the difference, since the *.po encoding and their expected encoding
+don't differ they don't need any conversion anyway.
+
+We can even keep the "Content-Type: text/plain; charset=3DUTF-8\n" and
+*not* use LC_CTYPE if we add a bind_textdomain_codeset("git", "UTF-8")
+call to gettext.c. That call declares that the *.po file is in UTF-8
+(but without LC_CTYPE there still won't be any conversion), see
+http://www.gnu.org/s/libc/manual/html_node/Charset-conversion-in-gettex=
+t.html#Charset-conversion-in-gettext
+
+Here's a table explaining the various approaches:
+
+    A: [correctness] LC_CTYPE + *.po charset=3DUTF-8
+    B: [UTF-8-only hack] no LC_CTYPE + no *.po charset=3DUTF-8
+    C: [UTF-8-only hack] no LC_CTYPE + A *.po charset=3DUTF-8 +
+bind_textdomain_codeset("git", "UTF-8")
+
+    | Approach | Correct *.po encoding header | GNU printf() issue |
+LANG=3Dis_IS.utf8 OK | LANG=3Dis_IS.iso88591 OK  |
+    |----------+------------------------------+--------------------+---=
+-----------------+-------------------------|
+    | A        | X                            | X                  | X
+                 | X                       |
+    | B        | No                           | No, no LC_CTYPE    | X
+                 | No, still outputs UTF-8 |
+    | C        | X                            | No, no LC_CTYPE    | X
+                 | No, still outputs UTF-8 |
+
+A would be preferred for correctness, and with a fallback BSD printf()
+we can avoid the GNU libc bug, however that'll mean using LC_CTYPE,
+which'll have some small side-effects for the rest of the code.
