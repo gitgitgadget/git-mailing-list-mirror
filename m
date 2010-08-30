@@ -1,107 +1,79 @@
-From: Knut Franke <k.franke@science-computing.de>
-Subject: Re: [PATCHv2 3/3] Extend documentation of core.askpass and GIT_ASKPASS.
-Date: Mon, 30 Aug 2010 15:40:29 +0200
-Organization: science + computing ag
-Message-ID: <201008301540.30323.k.franke@science-computing.de>
-References: <201008301536.20414.k.franke@science-computing.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
+Date: Mon, 30 Aug 2010 08:41:36 -0500
+Message-ID: <20100830134136.GA2315@burratino>
+References: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
+ <AANLkTikHbxrmj3R1LDghVvMA1KNEdfeiXj44cq1KRN7M@mail.gmail.com>
+ <20100828214641.GA5515@burratino>
+ <20100828215956.GB5515@burratino>
+ <alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
+ <20100828221655.GB5777@burratino>
+ <AANLkTimn+-5Vys+jg=ryDfwdJ=WZfGwgZ+065M_=TF8r@mail.gmail.com>
+ <20100829204519.GB1890@burratino>
+ <AANLkTin4A6B9zqSYHsWQ+GLWRqLvzJWAQ0F2WC85zDqC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Frank Li <lznuaa@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 30 15:40:40 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marcin Cieslak <saper@saper.info>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 15:48:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq4bI-0007y4-2l
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 15:40:40 +0200
+	id 1Oq4ik-0004yO-DU
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 15:48:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754843Ab0H3Nkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 09:40:33 -0400
-Received: from smtp2.belwue.de ([129.143.2.15]:47096 "EHLO smtp2.belwue.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753742Ab0H3Nkd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 09:40:33 -0400
-Received: from mx4.science-computing.de (mx4.science-computing.de [193.197.16.30])
-	by smtp2.belwue.de with ESMTP id o7UDeVHs013323
-	for <git@vger.kernel.org>; Mon, 30 Aug 2010 15:40:31 +0200 (MEST)
-	env-from (prvs=851ee50e4=k.franke@science-computing.de)
-Received: from localhost (localhost [127.0.0.1])
-	by scmail.science-computing.de (Postfix) with ESMTP id 738DEAC00A;
-	Mon, 30 Aug 2010 15:40:31 +0200 (CEST)
-X-Virus-Scanned: amavisd-new
-Received: from scmail.science-computing.de ([127.0.0.1])
-	by localhost (guinesstest.science-computing.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 1cBJBnpVy9we; Mon, 30 Aug 2010 15:40:30 +0200 (CEST)
-Received: from sirmione.science-computing.de (sirmione.science-computing.de [10.10.24.2])
-	by scmail.science-computing.de (Postfix) with ESMTP id DA706AC001;
-	Mon, 30 Aug 2010 15:40:30 +0200 (CEST)
-Received: from sirmione.localnet (localhost [127.0.0.1])
-	by sirmione.science-computing.de (Postfix) with ESMTP id CB72AAE3C9;
-	Mon, 30 Aug 2010 15:40:30 +0200 (CEST)
-User-Agent: KMail/1.10.3 (Linux/2.6.27.29-0.1-pae; KDE/4.1.3; i686; ; )
-In-Reply-To: <201008301536.20414.k.franke@science-computing.de>
+	id S1754831Ab0H3NsP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 09:48:15 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:56233 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754676Ab0H3NsP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 09:48:15 -0400
+Received: by pzk9 with SMTP id 9so2052966pzk.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 06:48:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=bXow1mp8ceEim9+f+mTOIZi5RTDlHPfcrWpI7eET8yI=;
+        b=vvra+phQioFyP011fIFOZmcLpphzR/OcykOtoV5ysSwF2WML6XZeF0l79H68mbLIGz
+         iIlcom93ZTw42It3k5OF26OeHiqbgcthvZfdtg0pitAFV4/y4rI9nIiXk5E1xT/8QruQ
+         2YcGs67oZegcnP1w6bx6o7YD4706L/fpmCmB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=kkhC5fwmWxpxvt62JzR5wtKU6DhpbaDDTb2VJQINFBX4dvU1Yo2MZGHsJqOumhdv7N
+         Ul0Tio3OEQJIaGTDQpcafDV4OOG5N89DtZV/lMJEwEfGiXnH9rzDPd9iOMTLm9gyg4bE
+         ErdEzCPmhtR0v9ExrIDxUhu5+Co3CTgf7hOwU=
+Received: by 10.142.161.3 with SMTP id j3mr4570166wfe.145.1283175804492;
+        Mon, 30 Aug 2010 06:43:24 -0700 (PDT)
+Received: from burratino ([128.135.11.176])
+        by mx.google.com with ESMTPS id a16sm2384599vcm.42.2010.08.30.06.43.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 30 Aug 2010 06:43:21 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <AANLkTin4A6B9zqSYHsWQ+GLWRqLvzJWAQ0F2WC85zDqC@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154801>
 
-Signed-off-by: Knut Franke <k.franke@science-computing.de>
----
- Documentation/config.txt |    7 +++++--
- Documentation/git.txt    |    7 +++++++
- 2 files changed, 12 insertions(+), 2 deletions(-)
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 38678db..80bc815 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -453,8 +453,11 @@ core.excludesfile::
- core.askpass::
- 	Some commands (e.g. svn and http interfaces) that interactively
- 	ask for a password can be told to use an external program given
--	via the value of this variable when it is set, and the
--	environment variable `GIT_ASKPASS` is not set.
-+	via the value of this variable. Can be overridden by the 'GIT_ASKPASS'
-+	environment variable. If not set, fall back to the value of the
-+	'SSH_ASKPASS' environment variable or, failing that, a simple password
-+	prompt. The external program shall be given a suitable prompt as
-+	command line argument and write the password on its STDOUT.
- 
- core.editor::
- 	Commands such as `commit` and `tag` that lets you edit
-diff --git a/Documentation/git.txt b/Documentation/git.txt
-index 5317893..1879746 100644
---- a/Documentation/git.txt
-+++ b/Documentation/git.txt
-@@ -638,6 +638,13 @@ Usually it is easier to configure any desired options through your
- personal `.ssh/config` file.  Please consult your ssh documentation
- for further details.
- 
-+'GIT_ASKPASS'::
-+	If this environment variable is set, then git commands which need to
-+	acquire passwords or passphrases (e.g. for HTTP or IMAP authentication)
-+	will call this program with a suitable prompt as command line argument
-+	and read the password from its STDOUT. See also the 'core.askpass'
-+	option in linkgit:git-config[1].
-+
- 'GIT_FLUSH'::
- 	If this environment variable is set to "1", then commands such
- 	as 'git blame' (in incremental mode), 'git rev-list', 'git log',
--- 
-1.7.2.1
+> We can even keep the "Content-Type: text/plain; charset=3DUTF-8\n" an=
+d
+> *not* use LC_CTYPE if we add a bind_textdomain_codeset("git", "UTF-8"=
+)
+> call to gettext.
 
--- 
-Vorstand/Board of Management:
-Dr. Bernd Finkbeiner, Dr. Roland Niemeier, 
-Dr. Arno Steitz, Dr. Ingrid Zech
-Vorsitzender des Aufsichtsrats/
-Chairman of the Supervisory Board:
-Michel Lepert
-Sitz/Registered Office: Tuebingen
-Registergericht/Registration Court: Stuttgart
-Registernummer/Commercial Register No.: HRB 382196 
+Oh!  I'd personally prefer to do that for now. :)  (Not because of the
+known printf problem but because I like to reduce possible unknowns.)
