@@ -1,76 +1,74 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
-Date: Sun, 29 Aug 2010 21:22:25 -0500
-Message-ID: <20100830022225.GK2305@burratino>
-References: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
- <AANLkTikHbxrmj3R1LDghVvMA1KNEdfeiXj44cq1KRN7M@mail.gmail.com>
- <20100828214641.GA5515@burratino>
- <20100828215956.GB5515@burratino>
- <alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
- <20100828221655.GB5777@burratino>
- <AANLkTimKQO1MQASvQCz=gpz8FTs3h6FSvm12oFUe7WFD@mail.gmail.com>
+Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
+Date: Sun, 29 Aug 2010 21:38:12 -0500
+Message-ID: <20100830023812.GA4010@burratino>
+References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Marcin Cieslak <saper@saper.info>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 04:24:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 04:40:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Opu2u-0008Aj-1T
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 04:24:28 +0200
+	id 1OpuIU-0007HP-8W
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 04:40:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754430Ab0H3CYK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 22:24:10 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60569 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754351Ab0H3CYJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 22:24:09 -0400
-Received: by gwj17 with SMTP id 17so1825095gwj.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 19:24:08 -0700 (PDT)
+	id S1754210Ab0H3CkE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 22:40:04 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:34145 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753959Ab0H3CkC (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 22:40:02 -0400
+Received: by gxk23 with SMTP id 23so1806636gxk.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 19:40:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=GuPScMCIcAiNVW6jySUHCtuCVB5siyHLPEnmrxWuGgw=;
-        b=IrpJ5beLluvQbvvwwSWEMZufgAoKogkoGnMuX4mXCZX5e4OC/lOKoOv+ycpd7+sNP2
-         Hk+kEOvwBv8XhiUD/AwE+sbxAI3hc8QGVneq9X/PAxX9XvXF5czOMD87edlDo/XKoqNB
-         pqnEqb8wUo15Hv140d7tGrZYcCAoIU2ogJkEc=
+         :in-reply-to:user-agent;
+        bh=NPU+YWPWZ0iE7JKhsLe2q6WK3/ZDJEvJ6VdQBlktoHs=;
+        b=mGZNNnI1d5XG18dk+p5Uwp+OdfC0Efo3EMmtAS/5PbvXYk5T3ooNy3/Tq9eVwChoh+
+         qpXM3Z7tpxFp/GeBaePHJPqS8s7JLQycntGlQ1sR+j+L4jgI/vhm0XIjPjeEnt7CzbxU
+         YWhsKDb3Vx5nZEgHOV7DqW8T87Q9kmVUY6uJA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=SFmN1VzMS1LxTrCPv+gqn1JFt/jIIsf6EDG8V6UaX/0AlPpq9wTFLiJEdRpY9JVhDU
-         r53Os74E37eJeL57X+ngJeWGvg8OrAK6rZnX3I05CyM9ZEIsx8p+n8dIXPfpaOUWMMHz
-         i6p+Sm4v7cMGDziYoM+bNbk10sAwhZqu0H304=
-Received: by 10.150.181.8 with SMTP id d8mr4599735ybf.440.1283135048660;
-        Sun, 29 Aug 2010 19:24:08 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pb54e8knOMc0S3+oBohXwthAHHruYzWL122aYm/oWpVG1sirY7HJYyLEReMnGcoXYT
+         sm9t5CdN1nxBBPpB7q9JVXQ6/qXau8HfXS53K0u3Gb5a8bPaej7RWU9wJx8RDNum+8rq
+         7/T7RnLjX1wvoZN0iFSd6UtWEtNAeJuT2Tr2s=
+Received: by 10.100.153.15 with SMTP id a15mr3848276ane.179.1283136001935;
+        Sun, 29 Aug 2010 19:40:01 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id m11sm7025630ybn.16.2010.08.29.19.24.07
+        by mx.google.com with ESMTPS id e18sm8887676ana.15.2010.08.29.19.40.00
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 29 Aug 2010 19:24:08 -0700 (PDT)
+        Sun, 29 Aug 2010 19:40:01 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTimKQO1MQASvQCz=gpz8FTs3h6FSvm12oFUe7WFD@mail.gmail.com>
+In-Reply-To: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154753>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Thiago Farina wrote:
 
-> We also have another bug, compiling git with
-> SNPRINTF_RETURNS_BOGUS=3DYesGNuIsBuggy and running "git show v0.99.6~=
-1"
-> on our own repository causes a segfault
+> Promote cmd_version to a builtin, by moving it to its own file
+> in builtin/version.c
 
-That's because the glibc bug is not the bug SNPRINTF_RETURNS_BOGUS is
-meant to guard against.  Hopefully no printf implementation has both
-bugs. :)
+Could you explain further?  If the goal is "one command per source
+file", then we already violate that in a number of places:
+
+ - "git blame" and "git pickaxe" are both cmd_blame() in
+   builtin/blame.c.
+
+ - "git whatchanged", "git show", "git reflog", and "git log" are
+   separate builtins in builtin/log.c.
+
+ - etc
+
+What does this make easier?
