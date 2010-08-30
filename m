@@ -1,78 +1,84 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 12/13] git-remote-testgit: only push for non-local
- repositories
-Date: Sun, 29 Aug 2010 21:09:40 -0500
-Message-ID: <20100830020940.GI2305@burratino>
+Subject: Re: [PATCH 01/13] fast-import: add the 'done' command
+Date: Sun, 29 Aug 2010 21:12:05 -0500
+Message-ID: <20100830021205.GJ2305@burratino>
 References: <1283053540-27042-1-git-send-email-srabbelier@gmail.com>
- <1283053540-27042-13-git-send-email-srabbelier@gmail.com>
- <20100830014821.GF2305@burratino>
- <AANLkTimf1S_1Y=E+3bCv6CgoChrxY3gT32crwDGdhbeN@mail.gmail.com>
+ <1283053540-27042-2-git-send-email-srabbelier@gmail.com>
+ <20100829212419.GC1890@burratino>
+ <AANLkTik_kPy8p-OTy8E7fcLFMfKFHex2ppw4Oy7BesUX@mail.gmail.com>
+ <20100829223218.GL1890@burratino>
+ <AANLkTik3H6hVgViAX5ur9Tq4tFQ9mJEPuTmAwcrLStvU@mail.gmail.com>
+ <20100830020236.GH2305@burratino>
+ <AANLkTimNsVeGLB5=y8WyLqdkiQFwoBkdp_YrfuuT_5Ec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Git List <git@vger.kernel.org>,
 	Daniel Barkalow <barkalow@iabervon.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <david.barr@cordelta.com>
 To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 04:11:30 2010
+X-From: git-owner@vger.kernel.org Mon Aug 30 04:13:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OptqL-00036P-9O
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 04:11:29 +0200
+	id 1Optsh-00049l-1J
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 04:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754566Ab0H3CLZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 22:11:25 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:38926 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754203Ab0H3CLY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 29 Aug 2010 22:11:24 -0400
-Received: by ywh1 with SMTP id 1so1490531ywh.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 19:11:23 -0700 (PDT)
+	id S1754580Ab0H3CNu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 29 Aug 2010 22:13:50 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:38433 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754203Ab0H3CNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 22:13:49 -0400
+Received: by gwj17 with SMTP id 17so1823321gwj.19
+        for <git@vger.kernel.org>; Sun, 29 Aug 2010 19:13:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Y8X1q0m4tZJmLTI8ERoLI03Q7ORl+u87SONHEmREr3M=;
-        b=VhupyaYbnDJ/bl7PSGTFM6EJK99I08HF2qydOqW8aQP0fc5cUu/OkTTQ2rsD55xpZ3
-         ggLV7IQyGNtjPbIpOSMVq3ZDKK5Kg89TkvOiJZnU4KsH4Zm6jEk0RMLYZqYi8ha/O/r1
-         h3x9SCEGtTzt9zD5SHe4H7Wv08BwNOCvZyHNY=
+         :in-reply-to:user-agent;
+        bh=z/gHpQqvZF8dXCQJT0W0GMopGbpqWkOCmKb+dPQE83I=;
+        b=IsnD2rX+FHHJOFbJvDcxViy5f6AqctDOHBI2SoHnOx7ryOSjipaKc869UfH+Sv6/ww
+         uvZ1g9tCYOfYnD28G0r/IwMOzEgSsTBKAsSz4wK1cdf3IQ59k2FftyPURbyNwGOKU808
+         9lWqtFfD2XelIurd2aDG4iH/O7IlU7kh3iPSs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=st0nkQYX99uOQs3VXtVtLIunsOV13dqOujS+T8IOARlcy96tZS2Bz6nJXLt4X2PbNW
-         IBhAWnbpVlr8LsKTuxK79jKAaFvYw9+YVqg3e8XWD8EaNzz45uPKRewJE97Y0RyXFiIm
-         +pdGZ6L2SDahdYU74FKfcUFcCe62F4O6zg/nY=
-Received: by 10.100.196.19 with SMTP id t19mr3739266anf.209.1283134283552;
-        Sun, 29 Aug 2010 19:11:23 -0700 (PDT)
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=qK14ZdaxOtLm3WpKSlDo7hc9IhWKOLdDMPwthinly7tySLl+x3CDQ4UOA5sc6+BhSt
+         w3wbyzUzeXGdktMethSFLfpLMU3xjwX0S6frcWzf76ueL1iFGIovVpa8xnK8rXvBJh4D
+         JLWua2BA/wmVBUplkKHKcrZCutB6on2/9QmNw=
+Received: by 10.100.168.11 with SMTP id q11mr3779854ane.178.1283134429057;
+        Sun, 29 Aug 2010 19:13:49 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t30sm11688886ann.7.2010.08.29.19.11.22
+        by mx.google.com with ESMTPS id x19sm7591716anc.25.2010.08.29.19.13.48
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 29 Aug 2010 19:11:23 -0700 (PDT)
+        Sun, 29 Aug 2010 19:13:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTimf1S_1Y=E+3bCv6CgoChrxY3gT32crwDGdhbeN@mail.gmail.com>
+In-Reply-To: <AANLkTimNsVeGLB5=y8WyLqdkiQFwoBkdp_YrfuuT_5Ec@mail.gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154751>
 
+[out of order for convenience]
 Sverre Rabbelier wrote:
-> On Sun, Aug 29, 2010 at 20:48, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
 
->> or why we would
->> not want to do the equivalent of
->>
->> =C2=A0git push . refs/testgit/origin/refs/heads/master:refs/heads/ma=
-ster
->
-> That isn't needed since the importer has already done that.
+> Does it matter much which way the importer is called? If it ends early
+> at a valid point nobody will know regardless of how it is called, no?
 
-Got it.  Thanks for the explanation.
+If the importer calls fast-import itself, it can
+
+ 1. close the pipe to fast-import
+ 2. wait for fast-import to exit
+ 3. print a relevant message
+ 4. exit
+
+> I think it makes sense to say that if you issue a 'feature done', we
+> change the code that checks for EOF to error instead of quit.
+
+Ok. :)
