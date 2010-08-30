@@ -1,57 +1,98 @@
-From: Alexander Sulfrian <alexander@sulfrian.net>
-Subject: daemon: allow more than one host address given via --listen
-Date: Mon, 30 Aug 2010 13:30:49 +0200
-Message-ID: <1283167851-18331-1-git-send-email-alexander@sulfrian.net>
-References: <7vwrr8ftjj.fsf@alter.siamese.dyndns.org>
-To: gitster@pobox.com, git@vger.kernel.org
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: git peer-to-peer project: info needed
+Date: Mon, 30 Aug 2010 12:31:11 +0100
+Message-ID: <AANLkTi=Fr02G6u0tEhJvaZNhG=WGdQeJacH7XuJXkgaP@mail.gmail.com>
+References: <AANLkTi=xLJ4w1D4=p40f8nUQfLu5hpEfNORnjroffM1v@mail.gmail.com>
+	<vpq39twpp0e.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 X-From: git-owner@vger.kernel.org Mon Aug 30 13:31:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq2a6-0001XO-ET
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 13:31:18 +0200
+	id 1Oq2a8-0001XO-06
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 13:31:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755203Ab0H3La5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 07:30:57 -0400
-Received: from animux.de ([78.46.93.45]:55751 "EHLO mail.sulfrian.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754676Ab0H3La5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 07:30:57 -0400
-Received: by mail.sulfrian.net (Postfix, from userid 65534)
-	id 53C3380CC3A7; Mon, 30 Aug 2010 13:31:10 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5-gr2 (2008-06-10) on mail.intern
-X-Spam-Level: 
-X-Spam-Status: No, score=0.4 required=7.0 tests=ALL_TRUSTED,AWL,
-	DNS_FROM_OPENWHOIS autolearn=no version=3.2.5-gr2
-Received: from laptop (unknown [87.77.143.183])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.sulfrian.net (Postfix) with ESMTPSA id ED92380CC38F;
-	Mon, 30 Aug 2010 11:31:08 +0000 (UTC)
-Received: by laptop (sSMTP sendmail emulation); Mon, 30 Aug 2010 13:30:54 +0200
-X-Mailer: git-send-email 1.7.1
-In-Reply-To: <7vwrr8ftjj.fsf@alter.siamese.dyndns.org>
+	id S1755371Ab0H3LbO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Aug 2010 07:31:14 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:46494 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755363Ab0H3LbM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 07:31:12 -0400
+Received: by vws3 with SMTP id 3so4897343vws.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 04:31:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=ta4K6srzI/fVfrX7hILv0KOvgxfULl3M0Nw5XTiDgaA=;
+        b=NDAuBcZbZ1ZtJ9gP573P2A6tYJjC/p8c5K9Y94K3gn6249rTgkchKvwiOl/jkFesfT
+         MknKOhd1wMg/v4+m2sbwBKKx7czPnha/DP5r1GYZkw2eeCntntIARPFQpDrb131CrSh+
+         3ZXImC7T1nVO8Vh60pXCrXyPbLe0M0oqj4v5I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=uvh0nYBKPlV8SwX3AlHBzmbDNl4Tc0h4+9iUBSyIcsHM3CK6IW+SSkXejZFlc1DSCT
+         PsKJlUDEICArz8pfI82UcKblyPrp4VCMdEL8BcyvNmM0nI1zpYRdJsoR8PmtZjkDvYHB
+         6azD0vDpHfetC4JVnPNUKmDuUsd0Pr+UjAlII=
+Received: by 10.220.59.202 with SMTP id m10mr2826496vch.56.1283167871658; Mon,
+ 30 Aug 2010 04:31:11 -0700 (PDT)
+Received: by 10.220.98.14 with HTTP; Mon, 30 Aug 2010 04:31:11 -0700 (PDT)
+In-Reply-To: <vpq39twpp0e.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154786>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154787>
 
+On Mon, Aug 30, 2010 at 7:56 AM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> Luke Kenneth Casson Leighton <luke.leighton@gmail.com> writes:
+>
+>> hi folks,
+>>
+>> [please could you kindly cc on responses because i am subscribed with
+>> "no mail" set]
+>>
+>> i need some guidance on what i should be doing, to add peer-to-peer
+>> networking to "git fetch".
+>
+> There have already been some attempts at a "gittorrent" mechanism.
+> Google will tell you more about that.
 
-Hi,
-here is a new version of the two patches. The sockets are now in a
-socketlist structure that is compatible with ALLOC_GROW().
-Also if no socket could be created for one host/ip, git daemon prints
-now an error but continues (in both ipv6 and noipv6 builds). Only if
-no socket could be created at all, it will die.
+ i know.
 
-Also I removed the string_list_clear (it leave back memory leaks form
-the xstrdup'ed-strings). It would be happen just before the exit of the
-application and just before the operating system cleans the memory. So
-I hope, that it is okay to remove it. If not i will change it, to
-really free all lists before exit.
+ it's best to assume that i've been following those, given that i
+wrote the advogato and slashdot articles which brought sam and jonas'
+efforts to peoples' attention, but for the sake of brevity in
+contacting the git list i didn't want to mention that, so i apologise
+for not mentioning that i'm aware of gittorrent.
 
-Thanks
-Alex
+ sam has already ruled out the bittorrent protocol as a means to
+create "mirrorsync".  mirrorsync is, as it stands, a lower-level
+protocol requiring the addition of DHT and other peer-to-peer
+infrastucture (NAT-busting), and sam is designing mirrorsync to be
+part of git-daemon (i.e. it requires an HTTP port).
+
+i believe that the use of HTTP is a mistake, and i believe that a
+proper peer to peer git distribution protocol _requires_
+bittorrent-like features, in order to have a chance of success (i.e.
+be "simple" enough to use i.e. _not_ require knowledge of firewall
+configuration etc.)
+
+ so whilst this is all way outside of the scope of the git mailing
+list, i'm describing the rough plan here in case anyone's interested:
+the rough plan is to create a VFS layer into which i can then work
+"pack objects" into quotes torrents quotes, named by filename after
+the SHA1 hash.  the bittorrent protocol is perfectly capable of
+supporting multiple files; thus it should not be too hard a job to rip
+out the hard-coded filesystem access in the bittornado source code -
+os.listdir, open(fname, "r"/"w"), osstat etc - and then redirect the
+file/directory operations onto underlying git operations.
+
+l.
