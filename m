@@ -1,67 +1,84 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-import-tarball
-Date: Mon, 30 Aug 2010 08:49:22 -0500
-Message-ID: <20100830134922.GB2315@burratino>
-References: <20100830063421.GA797@nibiru.local>
+Subject: Re: [PATCH 1/2] Add a new option 'core.askpass'.
+Date: Mon, 30 Aug 2010 08:56:58 -0500
+Message-ID: <20100830135658.GC2315@burratino>
+References: <201008271251.19754.k.franke@science-computing.de>
+ <7vaao8hsmx.fsf@alter.siamese.dyndns.org>
+ <201008301344.22983.k.franke@science-computing.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Aug 30 15:57:31 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Frank Li <lznuaa@gmail.com>
+To: Knut Franke <k.franke@science-computing.de>
+X-From: git-owner@vger.kernel.org Mon Aug 30 15:58:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq4rW-0004TC-P3
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 15:57:27 +0200
+	id 1Oq4sy-0005bp-CY
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 15:58:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754911Ab0H3NvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 09:51:13 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:63005 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754676Ab0H3NvM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 09:51:12 -0400
-Received: by qyk33 with SMTP id 33so5150188qyk.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 06:51:12 -0700 (PDT)
+	id S1755276Ab0H3N6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Aug 2010 09:58:48 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:37492 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753718Ab0H3N6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 09:58:47 -0400
+Received: by pvg2 with SMTP id 2so2085430pvg.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 06:58:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
+        h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=PsvIT2ZvHUa29N5vUWmHVl3sBwitjDuAW6iVqt0i4Mc=;
-        b=PjOuamzSadSvl73u/61SaNnlnA3o03pwe966dTrgkcXfvCdSYBKQBZ4NdsI8NvnPIE
-         V1SbNeWEmSBBiz5A5EJ8pucmOu532oc7yIZBJ4/ck+hL/pqm088MIrEts0mhd2AZCMPP
-         3lov8cG2OnMroddlDl5NYug11O5twmUoMhBOg=
+        bh=acft9gKLprlv+8rKevtzKhHrIA/oWAkYXtot2Xa13Y4=;
+        b=HaakVp4WBLBXVEQm4JSnDQca+4WfR9C4fK8ZyIHsHHfqoRODkn2Sig78tzdbmAs8Rm
+         46ODeuwgcDVFcaiNZSYsVfVnFPuKmZS8tURtH1TTQqv3yTRifQwv9pmXrwSgSnFESpRy
+         yFQSqetdtByO3NgioYSl8ztyRBSz0fYiXiqyM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
+        h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=oxO4ZBg6fR9hKYI/4xF6uE3qQlN0DGb++eKxQ1wt7AySI8iQBOyjG4rxx1ePX8rZGF
-         JceFm4TM9qbchNWerDdya5sJ0z+Uy5/Ta3Pn1K1A4i90p/e/RJoRFGFZAAMmXPetaxOE
-         AZrw4iIoiVobJU/OGSC4dTXtRPrRlJzq40SZ0=
-Received: by 10.224.10.204 with SMTP id q12mr2874030qaq.192.1283176270678;
-        Mon, 30 Aug 2010 06:51:10 -0700 (PDT)
+        b=DJXQrNieU3ZSKSBUGhyP6k848RXB+PTFess3N/KcHN+6W2CqyvPODLhfzL3Vqk6WfU
+         G4oBpe5rX0XCLKP0fd9BoC3tqQeKvZ2GdzpAOxAnrZv2Fo65MOSeqKnBe9MPHARX4iEi
+         Vy+RZQxPOA6dTQwLPAEIir2J+3xz6MibOl6uY=
+Received: by 10.114.136.19 with SMTP id j19mr108740wad.54.1283176726299;
+        Mon, 30 Aug 2010 06:58:46 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r1sm8334023qcq.10.2010.08.30.06.51.09
+        by mx.google.com with ESMTPS id g31sm7555853ibh.4.2010.08.30.06.58.45
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 30 Aug 2010 06:51:09 -0700 (PDT)
+        Mon, 30 Aug 2010 06:58:45 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100830063421.GA797@nibiru.local>
+In-Reply-To: <201008301344.22983.k.franke@science-computing.de>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154802>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154803>
 
-Hi Enrico,
+Knut Franke wrote:
+> On Friday 27 August 2010 19:28:38 Junio C Hamano wrote:
 
-Enrico Weigelt wrote:
+>> Also this
+>> does not feel like a "core." thing, but it may be just me.
+>
+> Where else could it go? It's not entirely http specific:
+>
+> $ grep git_getpass *.c
+> connect.c:char *git_getpass(const char *prompt)
+> http.c:                 user_pass = xstrdup(git_getpass("Password: "));
+> http.c: ssl_cert_password = git_getpass("Certificate Password: ");
+> http.c:                          * git_getpass is needed here because its very likely stdin/stdout are
+> http.c:                          * but that is non-portable.  Using git_getpass() can at least be stubbed
+> http.c:                         user_name = xstrdup(git_getpass("Username: "));
+> imap-send.c:                    arg = git_getpass(prompt);
+>
+> Nor does it relate to a single command.
 
-> written a little shellscript which imports an existing
-> tarball as new commit into a git repo.
+Perhaps "push.askpass" and "imap.askpass", maybe with the latter
+defaulting to the former or something?  This would help preserve
+the illusion that the git commands are sort of independent tools.
 
-You might also like contrib/fast-import/import-tars.perl. :)
-
-Cheers,
-Jonathan
+Haven't thought deeply about it at all, though.
