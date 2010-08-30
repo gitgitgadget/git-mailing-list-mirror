@@ -1,91 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] builtin/merge_recursive.c: Add an usage string and
- make use of it.
-Date: Sun, 29 Aug 2010 21:42:59 -0500
-Message-ID: <20100830024259.GC4010@burratino>
-References: <20100829214648.GE1890@burratino>
- <9e0261a0eebe275e2ed1fa651e5ab80c35f6048c.1283120150.git.tfransosi@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC: Adding an option to log-like commands to call an external
+ command for each revision
+Date: Sun, 29 Aug 2010 23:08:19 -0400
+Message-ID: <20100830030819.GA25415@sigill.intra.peff.net>
+References: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 04:44:50 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 05:08:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OpuMb-0000js-BX
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 04:44:49 +0200
+	id 1OpujE-0001pQ-2E
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 05:08:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754463Ab0H3Coo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 29 Aug 2010 22:44:44 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:36292 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754299Ab0H3Coo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 29 Aug 2010 22:44:44 -0400
-Received: by ywh1 with SMTP id 1so1496506ywh.19
-        for <git@vger.kernel.org>; Sun, 29 Aug 2010 19:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=/+BLbOznhtxSlvVbE3kChlDDIndkcwpsrYwmenPjPQM=;
-        b=xQRq9mw4hEXnBWreKN06mWJCyWIjgiyx3YZYkegfLlvkT/4qDuzhnFlB7nfn+94a5+
-         g9bliW3icfSWmmk9M71mqddtvHdQYCTHsqPD0PFEMA3DiqY4z5WuKTENtV3vIf+y6Ivv
-         UOb/Kwmm+tsHo7SBS2lwoUa2fz+2ybcqLCJ4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=WsBgFVE0mCJ3ZgWnUQ+XUR8dx8JZhZDipJxMCfWn0yiPU9ric6x4UAL40LVZbPMQyE
-         wrQspn60+CF+w/UzXxgJUFLkBl/ulNBgDRE356jNac5fpbSEfrHJvv14SNGH2sqv6PIV
-         yWh0m17kKbdRY9AVzqzSQo6WDpvrFlPG2D3PI=
-Received: by 10.150.215.17 with SMTP id n17mr4847467ybg.44.1283136283210;
-        Sun, 29 Aug 2010 19:44:43 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id d5sm3016340ybi.21.2010.08.29.19.44.42
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 29 Aug 2010 19:44:42 -0700 (PDT)
+	id S1754582Ab0H3DIG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 29 Aug 2010 23:08:06 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:51457 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754390Ab0H3DIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 29 Aug 2010 23:08:05 -0400
+Received: (qmail 16747 invoked by uid 111); 30 Aug 2010 03:08:03 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 30 Aug 2010 03:08:03 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 29 Aug 2010 23:08:19 -0400
 Content-Disposition: inline
-In-Reply-To: <9e0261a0eebe275e2ed1fa651e5ab80c35f6048c.1283120150.git.tfransosi@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154755>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154756>
 
-Thiago Farina wrote:
+On Sun, Aug 29, 2010 at 08:30:15PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> The previous output for git merger-recursive was:
-> usage: merge-recursive <base>... -- <head> <remote> ...
-> 
-> Now the output is:
-> usage: git merge-recursive <base>... -- <head> <remote> ...
-[...]
+> I have this alias in my .gitconfig:
+>=20
+>     review =3D "!f() { for rev in $(git rev-list --reverse \"$@\"); d=
+o
+> git show $rev; done; }; f"
+>=20
+> I use it after I "git pull" to see what changed, e.g.:
+>=20
+>     git review 49ea7b8..e1ef3c1
 
-> --- a/builtin/merge-recursive.c
-> +++ b/builtin/merge-recursive.c
-> @@ -3,6 +3,9 @@
->  #include "tag.h"
->  #include "merge-recursive.h"
->  
-> +static const char builtin_merge_recursive_usage[] =
-> +	"git %s <base>... -- <head> <remote> ...";
+It took me a minute of reading this to see why you would want to call
+"git show" in a loop when you could have the same data from "git log"
+all at once (and much faster, too). But I guess you like having an
+individual less invocation for each commit. Have you tried "tig", which
+might suit your purpose even better?
 
-Now that you've researched it, wouldn't it make sense to include an
-explanation for this %s in the log message?
+> But sometimes I find that I want to do that for other things too, so =
+I
+> have these hacks:
+>=20
+>     review-grep =3D "!f() { for rev in $(git log --reverse
+> --pretty=3Dformat:%H --grep=3D\"$@\"); do git show $rev; done; }; f"
+>     review-file =3D "!f() { for rev in $(git log --reverse
+> --pretty=3Dformat:%H \"$@\"); do git show $rev; done; }; f"
+>=20
+> But just now I wanted to use -S instead of grep, but adding aliases
+> like this is a bit silly.
 
-Still, ack on this part.
+I don't understand why you have these at all. Just use "git log
+--format=3D%H" in your git review above (instead of rev-list), and then
+you can just do:
 
-> @@ -37,19 +40,19 @@ int cmd_merge_recursive(int argc, const char **argv, const char *prefix)
->  		if (!prefixcmp(arg, "--")) {
->  			if (!arg[2])
->  				break;
-> -			if (!strcmp(arg+2, "ours"))
-> +			if (!strcmp(arg + 2, "ours"))
+  git review --grep=3Dwhatever
+  git review -Sfoo
+  git review file
 
-My comment on the rest still applies: it is best if patches do not
-contain unrelated changes to unrelated parts of the files they touch.
+Or am I missing something subtle?
+
+You wouldn't even need to switch to log over rev-list, except that
+rev-list misses log's useful "default to HEAD if no revisions given"
+behavior.
+
+> Maybe we should have something like:
+>=20
+>     git log --for-each=3Dless a..b
+>=20
+> To call "less" for each commit, what do you think?
+
+I think it is not very Unix-y. We already have many ways to to call a
+command once per commit, including:
+
+  - for i in `git rev-list "$@"`; do git show $i; done
+
+  - git rev-list "$@" | xargs -n 1 git show
+
+  - git log -z "$@" | perl -0ne 'open(LESS, "|less"); print LESS'
+
+What does your solution offer that the other do not? Because you are
+actually reinvoking git for each commit, it is more efficient than the
+first two (as you seem to assume that the --for-each command will
+receive the entire log output). But the third one should be more or les=
+s
+equivalent to what you want (though note: if you want tty-ish things
+like color on, you should set GIT_PAGER_IN_USE=3D1 so git knows output =
+is
+eventually going to a pager). Sure, yours is slightly less typing, but
+it's _way_ less flexible, and that typing should probably be hidden
+behind an alias anyway.
+
+-Peff
