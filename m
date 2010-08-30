@@ -1,78 +1,170 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] Submodules: Add the new "fetch" config option
-Date: Mon, 30 Aug 2010 00:34:13 -0700
-Message-ID: <7vsk1wftai.fsf@alter.siamese.dyndns.org>
-References: <4C7A819B.3000403@web.de> <4C7A81F0.4090209@web.de>
+Subject: Re: [PATCH] push: warn users about updating existing tags on push
+Date: Mon, 30 Aug 2010 01:03:39 -0700
+Message-ID: <7v7hj8frxg.fsf@alter.siamese.dyndns.org>
+References: <20100828012101.GB2004@burratino>
+ <1282983736-3233-1-git-send-email-cxreg@pobox.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Mon Aug 30 09:34:30 2010
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Dave Olszewski <cxreg@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 10:03:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Opyst-00078e-GA
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 09:34:27 +0200
+	id 1OpzLR-0004vw-Py
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 10:03:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751920Ab0H3HeW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 03:34:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54870 "EHLO
+	id S1753956Ab0H3IDv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Aug 2010 04:03:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37255 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751551Ab0H3HeW (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 03:34:22 -0400
+	with ESMTP id S1751812Ab0H3IDt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 04:03:49 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 93F6DD17F1;
-	Mon, 30 Aug 2010 03:34:21 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A440D1AC3;
+	Mon, 30 Aug 2010 04:03:48 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=1FONMtH5w94gjzvqxdpp8qg0unU=; b=m5j+70
-	cXcK+oyd/4h36cDuU5edTxOtuOM4CAFe/K4AzP9QnDSGLefOqJyx4lMfEUgLS1eK
-	pSx5CaZAaoHF1psROlai5n6ebVrO9ZQohtNQifds2R9u2Czqdk9B/j5uK/0fXqME
-	ZHh5C3OSVeELLxy97685EuL+sV+nm74T5j1Cc=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=3asuUzPOz1nRJTJ/kel7M/uGs2s=; b=bdxpzmtYA5isSXNJhR/2TAL
+	S1eIGkAf0w/Mg2H1kf2gygJSNjfi60j1xi0PCqMWmQ/a83xR/O+9BUO1PzXc/csO
+	46swjyQcmihjoniCDxVax7T+UCPrk22h0ODib2SOyNSgI3jXw1gV+phqXZxVFxlr
+	xhECuYFTivntVvRU8j7M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tKJMOS+dJRr9ZChKAcogbPBC2O3H2wyT
-	jSr37KQTuFVCQb7SOjPq3Cq61ZKuJYE+zvkOtdcKRLxyUFXgRO6PbOEKezxJxxPs
-	DngOJTVuk2M4zEOmFOr98VmbiZ0psyMPIgagUK7EoQWHmGydh3wjmUMPb1ELO9WC
-	HfVOkGjUyeA=
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=QIkX3h7UqOeLQvovlKV2uRnTvpFdIB/2JVBWy6xs+h7IuKTKD
+	K6Pzmf5+xO9bIS4Jtyd1amZ3Lodv4e0Sf60FQ+hFTyoAkSZpNz2daBlukbx76/t3
+	qFHdpn+eXU2y+EJ+qbh4izcaS3V3MzljvgA1ODEl/nsF91ewIam3Ei7MHQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 322FBD17ED;
-	Mon, 30 Aug 2010 03:34:18 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EBB2AD1ABB;
+	Mon, 30 Aug 2010 04:03:44 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 74DD0D17EA; Mon, 30 Aug
- 2010 03:34:14 -0400 (EDT)
-In-Reply-To: <4C7A81F0.4090209@web.de> (Jens Lehmann's message of "Sun\, 29
- Aug 2010 17\:51\:12 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BD7B4D1ABA; Mon, 30 Aug
+ 2010 04:03:40 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FF6273D2-B408-11DF-B582-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1C736DBA-B40D-11DF-B2CC-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154774>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Dave Olszewski <cxreg@pobox.com> writes:
 
-> diff --git a/submodule.c b/submodule.c
-> index e4f2419..8c98fad 100644
-> --- a/submodule.c
-> +++ b/submodule.c
-> @@ -100,6 +101,14 @@ int parse_submodule_config_option(const char *var, const char *value)
->  			config = string_list_append(&config_name_for_path, xstrdup(value));
->  		config->util = strbuf_detach(&submodname, NULL);
->  		strbuf_release(&submodname);
-> +	} else if ((len > 5) && !strcmp(var + len - 6, ".fetch")) {
-> +		strbuf_add(&submodname, var, len - 6);
-> +		config = unsorted_string_list_lookup(&config_fetch_for_name, submodname.buf);
-> +		if (!config)
-> +			config = string_list_append(&config_fetch_for_name,
-> +						    strbuf_detach(&submodname, NULL));
-> +		config->util = (void *)git_config_bool(var, value);
+> Generally, tags are considered a write-once ref (or object), and updates
+> to them are the exception to the rule.
 
-Hmm?  We get this here...
+This may be just the naming issue and you could say "moving them",
+"updates to them" or "changing them" interchangeably in the above;
+among them, "updates to them" sounds the most natural.
 
-    submodule.c:110: error: cast to pointer from integer of different size
+Can you change the "moving" in the patch to make them consistent with the
+above description?
+
+> However, there is presently nothing preventing a tag from being
+> fast-forwarded, which can happen intentionally or accidentally.
+> ... the user should be aware that they are changing something that is
+> expected to be immutable and stable.
+
+I actually think prevention of non-fast-forward updates for tags actually
+is a misfeature that didn't even come from any concious design; the check
+for fast-forwarding refs was to make sure we do not lose histories from
+branches.  IOW, I would say this would have been a good feature if things
+were like this from day one.
+
+> diff --git a/remote.c b/remote.c
+> index 9143ec7..fbca1e6 100644
+> --- a/remote.c
+> +++ b/remote.c
+> @@ -50,6 +50,8 @@ static int explicit_default_remote_name;
+>  static struct rewrites rewrites;
+>  static struct rewrites rewrites_push;
+>  
+> +static int deny_moving_tags;
+> +
+>  #define BUF_SIZE (2048)
+>  static char buffer[BUF_SIZE];
+>  
+> @@ -385,6 +387,10 @@ static int handle_config(const char *key, const char *value, void *cb)
+>  			add_instead_of(rewrite, xstrdup(value));
+>  		}
+>  	}
+> +	if (!strcmp(key, "push.denymovingtags")) {
+> +		deny_moving_tags = git_config_bool(key, value);
+> +		return 0;
+> +	}
+
+Hmm, shouldn't this be per-remote (rather, shouldn't a per-remote variant
+be allowed to override this)?
+
+> @@ -1266,6 +1272,31 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+>  			continue;
+>  		}
+>  
+> +		/* If a tag already exists on the remote and points to
+> +		 * a different object, we don't want to push it again
+> +		 * without requiring the user to indicate that they know
+> +		 * what they are doing.
+> +		 */
+
+	/*
+         * We try to format
+         * multi-line comment
+         * like this.
+         */
+
+> +		if (!prefixcmp(ref->name, "refs/tags/") &&
+> +		    !ref->deletion &&
+> +		    !is_null_sha1(ref->old_sha1)) {
+> +			if (deny_moving_tags) {
+> +				/* Set `nonfastforward` for the sake of displaying
+> +				 * this update as forced
+> +				 */
+> +				ref->nonfastforward = 1;
+
+I think you are propagating this bit to print_ok_ref_status() in
+transport.c; it indicates that after your change, "nonfastforward" does
+not mean non-fast-forward anymore, doesn't it?
+
+Perhaps the bit needs to be renamed to "update_forced" or something?
+
+> +				if (!ref->force && !force_update) {
+> +					ref->status = REF_STATUS_REJECT_MOVING_TAG;
+> +				}
+> +			} else {
+> +				if (!ref->force && !force_update)
+> +					warning("You are changing the value of an upstream tag.  This may\n"
+> +						"be deprecated in a future version of Git.  Please use --force\n"
+> +						"if this was intentional, and consider setting push.denyMovingTags.");
+> +			}
+> +			continue;
+> +		}
+> +
+>  		/* This part determines what can overwrite what.
+>  		 * The rules are:
+>  		 *
+
+You are changing the rule that determine what can overwrite what, aren't
+you?  It is Ok (although it is in general frowned upon if you do so when
+you do not have to) to add your new rule before an existing rule, but your
+rule should be added as a new rule to the enumeration in the comment, and
+the code that implements the new rule after the comment, no?
+
+> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+> index c718253..7906ba5 100755
+> --- a/t/t5400-send-pack.sh
+> +++ b/t/t5400-send-pack.sh
+> @@ -106,6 +106,20 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+>  	test "$victim_orig" = "$victim_head"
+>  '
+>  
+> +test_expect_success 'denyMovingTags trumps --force' '
+> +	(
+> +	    cd victim &&
+> +	    ( git tag moving_tag master^ || : ) &&
+
+In which circumstance is it allowed for this "git tag" command to
+fail and the entire test to succeed?
