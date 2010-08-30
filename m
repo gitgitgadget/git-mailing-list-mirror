@@ -1,88 +1,96 @@
-From: Tim Mazid <timmazid@hotmail.com>
-Subject: RE: Detection of relocations within a file
-Date: Tue, 31 Aug 2010 03:13:16 +1000
-Message-ID: <SNT124-W40BFB8E681711F9CD33D9AC4890@phx.gbl>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
+Date: Mon, 30 Aug 2010 13:37:27 -0400
+Message-ID: <AANLkTi=VPf9CWNJcce6d20HQChi0mHgTG1F=jakzNT-O@mail.gmail.com>
+References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
+	<4C7B8E1E.6050708@drmicha.warpmail.net>
+	<AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
+	<20100830141602.GF2315@burratino>
+	<AANLkTim+S87KjFBstBineR02hQHzG=X2VDqgiGNbPQGS@mail.gmail.com>
+	<20100830163302.GA13336@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: <git@vger.kernel.org>, <jnareb@gmail.com>,
-	<struggleyb.nku@gmail.com>
-To: <matthieu.moy@grenoble-inp.fr>, <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 19:13:25 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 19:37:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq7v9-0004PL-Am
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 19:13:23 +0200
+	id 1Oq8Ia-0004Rq-EC
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 19:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756072Ab0H3RNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 13:13:18 -0400
-Received: from snt0-omc4-s17.snt0.hotmail.com ([65.55.90.220]:18832 "EHLO
-	snt0-omc4-s17.snt0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756011Ab0H3RNR convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 13:13:17 -0400
-Received: from SNT124-W40 ([65.55.90.199]) by snt0-omc4-s17.snt0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 30 Aug 2010 10:13:17 -0700
-X-Originating-IP: [60.241.190.75]
-Importance: Normal
-X-OriginalArrivalTime: 30 Aug 2010 17:13:17.0453 (UTC) FILETIME=[A35853D0:01CB4866]
+	id S1756326Ab0H3Rha convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 13:37:30 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:65031 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756077Ab0H3Rh2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 13:37:28 -0400
+Received: by bwz11 with SMTP id 11so3889211bwz.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 10:37:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mP7VLf7n0EllvkKQXsj5DyqfjRGPax7prSwNBCUITr8=;
+        b=uzwfJfGkO4MPf9EoGWLbZ4YHfG8I4nwf1FA9SWv1/fxC2jwHz3Sa/dAB98tNw/LD46
+         VI4B3z73XkTzduvypEV9gPKiHoFxCjXuOSm8OEiVCaVF9K2L6nQtRQp8htXfdb68PCaM
+         w9BkNBNMoEa6yiwnN5XyBR45aa2X6fPFRa/9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Izx6NGuuE8aWg56x0sX6QBeAuOwWJJrq/s8vJywWxqCjJZ/suYKRolKEFDdaDrW0sV
+         V6FkiwzlVxecIzkl8lIkzE4CuPH3PAiIuUki1EH1d1SFKEIvkl6rR45IWFbTdWupNPFL
+         Vg1xAw9n7Qg0RA6AXXg0UWhRmfXAkATio7YHo=
+Received: by 10.204.68.136 with SMTP id v8mr3594798bki.88.1283189847117; Mon,
+ 30 Aug 2010 10:37:27 -0700 (PDT)
+Received: by 10.204.66.196 with HTTP; Mon, 30 Aug 2010 10:37:27 -0700 (PDT)
+In-Reply-To: <20100830163302.GA13336@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154834>
 
-
-Hi guys,
-
->> I was just wondering if git can/does detect relocations of sections of code/text within a file.
->>
->> For example, moving a function from the top of a file to the end.
+On Mon, Aug 30, 2010 at 12:33 PM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> Chris Patti wrote:
 >
-> Depends what you are trying to do.
->...
-> 4. I want a simple, easy-to-review patch representing a code movement.
-> No one I know of has worked on this, and if you have ideas for it,
-> that would be very neat.
+>> What if this is the
+>> first time a new ref is being pushed? =C2=A0Then, old-ref is 000000 =
+and git
+>> diff --raw throws up a hairball :)
 >
-> 5. I have a history with a lot of code movement, someone branched from
-> me a while ago, modified various pieces of code which moved in the
-> meantime, and we want to merge.
+> Can't you check for 0{40} and use $(git hash-object -t tree </dev/nul=
+l)
+> in its place?
 >
-> Unfortunately, I don't think any VCS does a really good job here
-> either.
+> In general, the "LOW-LEVEL COMMANDS (PLUMBING)" listed on the git man
+> page are meant to be useful for scripts. =C2=A0They have simple input=
+ and
+> output formats, they don't try to introduce weird exceptions for user
+> convenience, the git developers are more conservative about changing
+> them, and so on.
+>
 
-Yeah, go figure, the ones I'm after are the one that don't exist. :P
+Maybe I'm not understanding your intent here, but, this is a
+pre-receive hook, where you get handed two refs, the old (pre-push)
+ref, and the new (after push) ref.
 
-As for ideas, all I can really think of is that git detects that the '-' lines and the '+' lines are actually the same thing, and so instead of actually showing the changes as deletions and insertions, actually shows the change in the context surrounding the lines.
+git hash-object computes a hash from the file's contents.  That's my
+whole point, I don't *have* the file to compute! All I have is those
+two refs.
 
-This should also be able to be mixed in with insertion and deletion lines.
-For example, if you move a chunk of code, and then stick a comment (or code) line in the middle, or, conversely delete one, it should still see it as a movement patch, with an insertion or deletion.
-
-I *think* that this *might* also work to "solve" or at least help with point 5, made by Matthieu (sorry if I misspelt your name).
-
-However, as I haven't delved into the insides of git, I don't know how this would be represented internally, how it would differ from a normal patch, or exactly how horribly painful it would be to implement.
-
-
-> 2. I am mystified not by some particular piece of code but by an
-> entire file.  The command
-> $ git gui blame -- git.c
-> works okay.
-
-It does, to an extent.
-
-The specific case I was thinking of is when, as a function grows larger, you decide to break it down and move a section of it to a new function.
-Now, if the two lines remain exactly the same, there is no problem and git gui blame does the job.
-However, if there is any change in the line at all, even leading whitespace, as moving code around usually changes its "tabbage", then git gui blame will not detect that as being the same line of code sitting somewhere else, as it sees the two as "different".
-Is there any way to get around this?
-
-Further, in the previous point regarding a movement patch, it too should not be overly sensitive to leading whitespace.
-
-Actually, git in general shouldn't be too sensitive to leading whitespace (or at least should have an option to turn this on/off).
+Thanks,
+-Chris
 
 
-Well, yeah, that's my ramblings, what do you guys think?
- 		 	   		  
+--=20
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, =
+Pixar
