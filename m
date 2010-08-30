@@ -1,80 +1,90 @@
-From: Chris Patti <cpatti@gmail.com>
-Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
-Date: Mon, 30 Aug 2010 10:03:15 -0400
-Message-ID: <AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
-References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
-	<4C7B8E1E.6050708@drmicha.warpmail.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Odd encoding issue with UTF-8 + gettext yields ? on non-ASCII
+Date: Mon, 30 Aug 2010 14:04:10 +0000
+Message-ID: <AANLkTi=otZ-mxoaPJ3Mg9EFb5+jy1A=DS3w73weB5EJ=@mail.gmail.com>
+References: <AANLkTi=cb5zyKyogdunB6NzWDk99V2hSg-c0vQpwKM-Z@mail.gmail.com>
+	<AANLkTikHbxrmj3R1LDghVvMA1KNEdfeiXj44cq1KRN7M@mail.gmail.com>
+	<20100828214641.GA5515@burratino>
+	<20100828215956.GB5515@burratino>
+	<alpine.BSF.2.00.1008282213420.67930@x.fncre.vasb>
+	<20100828221655.GB5777@burratino>
+	<AANLkTimn+-5Vys+jg=ryDfwdJ=WZfGwgZ+065M_=TF8r@mail.gmail.com>
+	<20100829204519.GB1890@burratino>
+	<AANLkTin4A6B9zqSYHsWQ+GLWRqLvzJWAQ0F2WC85zDqC@mail.gmail.com>
+	<20100830134136.GA2315@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Aug 30 16:03:31 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Marcin Cieslak <saper@saper.info>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 16:04:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq4xO-0000Cg-Hq
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 16:03:30 +0200
+	id 1Oq4yD-0000em-9e
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 16:04:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755513Ab0H3ODU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 10:03:20 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:43325 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753506Ab0H3ODT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 10:03:19 -0400
-Received: by bwz11 with SMTP id 11so3694342bwz.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 07:03:18 -0700 (PDT)
+	id S1755514Ab0H3OEN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 10:04:13 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:32946 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755276Ab0H3OEM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 10:04:12 -0400
+Received: by fxm13 with SMTP id 13so3216208fxm.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 07:04:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=gwRvYZIz3oU0MeddAvd00P/TrYDyPB99T8ehnIRec24=;
-        b=fEQrKEbgIh0E/1rY/TAgUwkdVK9Z0gsNPBW0frilXtr4XxZzWOnGFgXkM+3lQPoTDN
-         e4AG60J5ifnchCk38l7KsFknFaT/zRSW5MotlKbmyRJhRLuQRuyiAKhMBYOx1Ighshc8
-         4lPaXt1cTjnXZRg9TO4zYkjrWNvt2mKa8Jh1g=
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+noqoA8zkZsZpwl2HGj6p4tUn2Dfh+VBvO1ahEUDLD8=;
+        b=Tr1dBqivs/Dyff+OyEqVYDTzaoLezG9UQ8cEtw/kHtm0ZTWhx280qVUFVrr42Y2eW2
+         Sab0PJwJLwbU1zQNFwiBY0Rs6o3YT5RkorrCFhNxh9DGZEwDOjBYyLojEzHaAfM49V0L
+         FQbfo70PJnUROvPCyPbkpb9W45JwmYkBGQDSQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=bxe2imjZMxz6E0Bu5ErmPVOSBaTD2BrFWgmAiX0idyCisBmQZ2ro0crdyL/ewW9kjy
-         2B5KJr3iNQokIDMnxbmRz/mj49jRkFg2b9NxiBfBlUtPUcOJ8mBpy0W5LWOsL6yt1ur/
-         8RboT2u1WQLU6di7DWNHkE+ommj5pbzjBEgWI=
-Received: by 10.204.11.13 with SMTP id r13mr3288982bkr.96.1283176995595; Mon,
- 30 Aug 2010 07:03:15 -0700 (PDT)
-Received: by 10.204.66.196 with HTTP; Mon, 30 Aug 2010 07:03:15 -0700 (PDT)
-In-Reply-To: <4C7B8E1E.6050708@drmicha.warpmail.net>
+         :cc:content-type:content-transfer-encoding;
+        b=lH98K7Cc2w/V6ffQUPSJHoDFYS5MeuWa224DtIzWjn4ipBhgZ88w6TufzorQZ+/jLB
+         hsrGqCvVlbLJkmNCqR39BF1yhGrrUA5l8syquZBTuvtIlhonDFKFMYl1rK7WGw42GUKF
+         KuTp9g88UTPE75bRcbnE8MrKGbj8f4guGGAQE=
+Received: by 10.223.122.211 with SMTP id m19mr2536274far.72.1283177050627;
+ Mon, 30 Aug 2010 07:04:10 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Mon, 30 Aug 2010 07:04:10 -0700 (PDT)
+In-Reply-To: <20100830134136.GA2315@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154806>
 
-On Mon, Aug 30, 2010 at 6:55 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
+On Mon, Aug 30, 2010 at 13:41, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 >
-> ...because "ls-tree" lists the complete tree at the given revision, not
-> just the files changed in a commit. In fact, strictly speaking "ls-tree"
-> does not even operate on revisions but tree identifiers - given a
-> revision, it is resolved into a tree.
+>> We can even keep the "Content-Type: text/plain; charset=3DUTF-8\n" a=
+nd
+>> *not* use LC_CTYPE if we add a bind_textdomain_codeset("git", "UTF-8=
+")
+>> call to gettext.
 >
-> You want to use something like "git diff --name-only oldrev newrev" or
-> another variant from the diff family.
->
-> Michael
+> Oh! =C2=A0I'd personally prefer to do that for now. :) =C2=A0(Not bec=
+ause of the
+> known printf problem but because I like to reduce possible unknowns.)
 
-That's great, thanks!  That gets me the file names.  Now, how do I get
-to the contents of each file?
+By now I want to do that too. I've been experimenting with including
+*printf*.c from OpenBSD, NetBSD or FreeBSD and the uClibc and in all
+those cases it's a major PITA to wade through the OS-specific code
+that deep in the libc.
 
-Do I have to do a git ls-tree and parse the contents, paying attention
-to only the files listed out with the git diff --name-only? I'm
-guessing there's a simpler way.   Git show <newref> prints out all the
-diffs for that commit, but I need to examine the entire file.
+Even if I could get that sorted it'll be non-trivial to audit all the
+code whose semantics will change with LC_CTYPE, and there's a good
+chance I'll miss something and cause an embarrasing bug in some
+unrelated component.
 
-Thanks so much for the response!
--Chris
-
--- 
-Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
-chrisfeohpatti | P: (260) 54PATTI
-"Technology challenges art, art inspires technology." - John Lasseter, Pixar
+Better to just document this limitation for now and decree that
+gettext users must have a UTF-8 locale.
