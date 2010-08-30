@@ -1,78 +1,253 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git peer-to-peer project: info needed
-Date: Mon, 30 Aug 2010 22:22:03 +0100
-Message-ID: <AANLkTinjow-aRmNB7rSgq17ww00csN82tWBM+6Nv350k@mail.gmail.com>
-References: <AANLkTi=xLJ4w1D4=p40f8nUQfLu5hpEfNORnjroffM1v@mail.gmail.com>
-	<20100830173905.GA9955@fearengine.rdu.redhat.com>
-	<20100830174506.GB9955@fearengine.rdu.redhat.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC 05/17] gettext: make the simple parts of git-init localizable
+Date: Mon, 30 Aug 2010 21:28:11 +0000
+Message-ID: <1283203703-26923-6-git-send-email-avarab@gmail.com>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Casey Dahlin <cdahlin@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 23:22:14 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Marcin Cieslak <saper@saper.info>,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Aug 30 23:29:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqBny-0004C5-Bn
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 23:22:14 +0200
+	id 1OqBuU-0008Ah-SB
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 23:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754458Ab0H3VWG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 17:22:06 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60713 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754422Ab0H3VWE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 17:22:04 -0400
-Received: by ywh1 with SMTP id 1so1831685ywh.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 14:22:04 -0700 (PDT)
+	id S1755956Ab0H3V24 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 17:28:56 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45001 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755900Ab0H3V2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 17:28:54 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 35so7081766wyb.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 14:28:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=fVnDbu+CA5NsH4qTcsxqr83tr/KfLkNL3p5BQH6D86A=;
-        b=WtSy1D4ORTMn9D6Jk1s/mG2NnOML+jKaqN1STiX/Y2jGjvUQeaxemJXYPqJ/nEOxu+
-         cYljObuHMs8c75u9IG2Q3E9gg7xncauAtmL81sM9pvUi6/u9N+PI+qQ/nI3qcHkzt/EV
-         JiovtHOrl9kZc2biKpBAMI2jKBbn6wjHDEcUE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=oMlvsQqtKTTCSGZere8bj/+E6pWYT67mPCKw18L0iJU=;
+        b=ZLbKFG1I8NpwRFGwNIPaSZGXxsZM5daFNNld4LcJzQiZZG42PBmECYaX0m6cCEOxlD
+         nz8TEu69KOt6vMNiYpfHGup7DDxWFTVX0ne9Y7UF1hYBggBP5rSIdPhOQdDN28Y6KAXQ
+         FQyktI9F0t+D7gjQ8FbuwktI2IGLls3p/Temc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=jRBCZtj62YlmWM36DghvdeML3DhISchaWUtkBNahGYlq5PjJS0M4tQAiJuI+FyVB78
-         QjSthHLastSF/PtPWyYxHGFkKI9pSp/4Jo4gqelTIZ95DfgkOgwglJ8pfmEnEGV0nmdE
-         eJmggB+lrRIEqY1U6QUdOVKzYaMfgtahi2w7w=
-Received: by 10.220.89.68 with SMTP id d4mr3195556vcm.98.1283203323982; Mon,
- 30 Aug 2010 14:22:03 -0700 (PDT)
-Received: by 10.220.98.14 with HTTP; Mon, 30 Aug 2010 14:22:03 -0700 (PDT)
-In-Reply-To: <20100830174506.GB9955@fearengine.rdu.redhat.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=U9iBMWrdgsm8HrD+KOgpr8rDJyEFIsac1X3FeyAleLiDQFRPxQoy+zr1PLRh1oxf8t
+         E/gXyKd011ZDydsojzAFTNtX14InGRhXT7RXrQO9AAr5Oi5McmU+FTiURnOESV/q3Mnh
+         IKNDysXbyYvHgOmcyy+V8wKsWNyC7yJ+RusNA=
+Received: by 10.227.129.4 with SMTP id m4mr5671828wbs.123.1283203733639;
+        Mon, 30 Aug 2010 14:28:53 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id b23sm6923116wbb.22.2010.08.30.14.28.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 30 Aug 2010 14:28:52 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.536.g3f548
+In-Reply-To: <1283203703-26923-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154849>
 
-On Mon, Aug 30, 2010 at 6:45 PM, Casey Dahlin <cdahlin@redhat.com> wrote:
+Change the user visible strings in init-db.c to use gettext
+localizations. This only converts messages which needed to be changed
+from "foo" to _("foo"), and didn't need any TRANSLATORS comments.
 
-> On further review you seem to be talking more about making fetch itself
-> peer-to-peer,
+I haven't marked the messages in init_db_usage or init_db_options for
+translation, since that would require additional changes in
+parse-options.c. Those can be done later.
 
- only on the basis that that's what i believed would be a good start,
-lacking any experience or advice :)
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ builtin/init-db.c |   46 +++++++++++++++++++++++----------------------=
+-
+ 1 files changed, 23 insertions(+), 23 deletions(-)
 
-> where my patchset is more of a peer-to-peer branch-sharing
-> mechanism.
-
- what's the difference?  i did look at making "blobs / trees"
-available but i figured that that would just get you a snapshot (not
-helpful).  i'm afraid i don't actually know the difference between
-fetch sharing and branch sharing, as my knowledge of git internals is
-a bit "swiss cheese".
-
-
-> Complementary but not necessarily conflicting. Still I'll
-> hurry up and get it online :)
-
- commented already.  was a bit of a bit message in the inbox, with an
-inline thingy rather than attachment, but i'll cope.
-
-l.
+diff --git a/builtin/init-db.c b/builtin/init-db.c
+index 0271285..9c08985 100644
+--- a/builtin/init-db.c
++++ b/builtin/init-db.c
+@@ -31,7 +31,7 @@ static void safe_create_dir(const char *dir, int shar=
+e)
+ 		}
+ 	}
+ 	else if (share && adjust_shared_perm(dir))
+-		die("Could not make %s writable by group", dir);
++		die(_("Could not make %s writable by group"), dir);
+ }
+=20
+ static void copy_templates_1(char *path, int baselen,
+@@ -58,25 +58,25 @@ static void copy_templates_1(char *path, int basele=
+n,
+ 		namelen =3D strlen(de->d_name);
+ 		if ((PATH_MAX <=3D baselen + namelen) ||
+ 		    (PATH_MAX <=3D template_baselen + namelen))
+-			die("insanely long template name %s", de->d_name);
++			die(_("insanely long template name %s"), de->d_name);
+ 		memcpy(path + baselen, de->d_name, namelen+1);
+ 		memcpy(template + template_baselen, de->d_name, namelen+1);
+ 		if (lstat(path, &st_git)) {
+ 			if (errno !=3D ENOENT)
+-				die_errno("cannot stat '%s'", path);
++				die_errno(_("cannot stat '%s'"), path);
+ 		}
+ 		else
+ 			exists =3D 1;
+=20
+ 		if (lstat(template, &st_template))
+-			die_errno("cannot stat template '%s'", template);
++			die_errno(_("cannot stat template '%s'"), template);
+=20
+ 		if (S_ISDIR(st_template.st_mode)) {
+ 			DIR *subdir =3D opendir(template);
+ 			int baselen_sub =3D baselen + namelen;
+ 			int template_baselen_sub =3D template_baselen + namelen;
+ 			if (!subdir)
+-				die_errno("cannot opendir '%s'", template);
++				die_errno(_("cannot opendir '%s'"), template);
+ 			path[baselen_sub++] =3D
+ 				template[template_baselen_sub++] =3D '/';
+ 			path[baselen_sub] =3D
+@@ -93,20 +93,20 @@ static void copy_templates_1(char *path, int basele=
+n,
+ 			int len;
+ 			len =3D readlink(template, lnk, sizeof(lnk));
+ 			if (len < 0)
+-				die_errno("cannot readlink '%s'", template);
++				die_errno(_("cannot readlink '%s'"), template);
+ 			if (sizeof(lnk) <=3D len)
+-				die("insanely long symlink %s", template);
++				die(_("insanely long symlink %s"), template);
+ 			lnk[len] =3D 0;
+ 			if (symlink(lnk, path))
+-				die_errno("cannot symlink '%s' '%s'", lnk, path);
++				die_errno(_("cannot symlink '%s' '%s'"), lnk, path);
+ 		}
+ 		else if (S_ISREG(st_template.st_mode)) {
+ 			if (copy_file(path, template, st_template.st_mode))
+-				die_errno("cannot copy '%s' to '%s'", template,
++				die_errno(_("cannot copy '%s' to '%s'"), template,
+ 					  path);
+ 		}
+ 		else
+-			error("ignoring template %s", template);
++			error(_("ignoring template %s"), template);
+ 	}
+ }
+=20
+@@ -129,7 +129,7 @@ static void copy_templates(const char *template_dir=
+)
+ 		return;
+ 	template_len =3D strlen(template_dir);
+ 	if (PATH_MAX <=3D (template_len+strlen("/config")))
+-		die("insanely long template path %s", template_dir);
++		die(_("insanely long template path %s"), template_dir);
+ 	strcpy(template_path, template_dir);
+ 	if (template_path[template_len-1] !=3D '/') {
+ 		template_path[template_len++] =3D '/';
+@@ -137,7 +137,7 @@ static void copy_templates(const char *template_dir=
+)
+ 	}
+ 	dir =3D opendir(template_path);
+ 	if (!dir) {
+-		warning("templates not found %s", template_dir);
++		warning(_("templates not found %s"), template_dir);
+ 		return;
+ 	}
+=20
+@@ -150,8 +150,8 @@ static void copy_templates(const char *template_dir=
+)
+=20
+ 	if (repository_format_version &&
+ 	    repository_format_version !=3D GIT_REPO_VERSION) {
+-		warning("not copying templates of "
+-			"a wrong format version %d from '%s'",
++		warning(_("not copying templates of "
++			"a wrong format version %d from '%s'"),
+ 			repository_format_version,
+ 			template_dir);
+ 		closedir(dir);
+@@ -188,7 +188,7 @@ static int create_default_files(const char *templat=
+e_path)
+ 	int filemode;
+=20
+ 	if (len > sizeof(path)-50)
+-		die("insane git directory %s", git_dir);
++		die(_("insane git directory %s"), git_dir);
+ 	memcpy(path, git_dir, len);
+=20
+ 	if (len && path[len-1] !=3D '/')
+@@ -369,7 +369,7 @@ static int guess_repository_type(const char *git_di=
+r)
+ 	if (!strcmp(".", git_dir))
+ 		return 1;
+ 	if (!getcwd(cwd, sizeof(cwd)))
+-		die_errno("cannot tell cwd");
++		die_errno(_("cannot tell cwd"));
+ 	if (!strcmp(git_dir, cwd))
+ 		return 1;
+ 	/*
+@@ -443,18 +443,18 @@ int cmd_init_db(int argc, const char **argv, cons=
+t char *prefix)
+ 					errno =3D EEXIST;
+ 					/* fallthru */
+ 				case -1:
+-					die_errno("cannot mkdir %s", argv[0]);
++					die_errno(_("cannot mkdir %s"), argv[0]);
+ 					break;
+ 				default:
+ 					break;
+ 				}
+ 				shared_repository =3D saved;
+ 				if (mkdir(argv[0], 0777) < 0)
+-					die_errno("cannot mkdir %s", argv[0]);
++					die_errno(_("cannot mkdir %s"), argv[0]);
+ 				mkdir_tried =3D 1;
+ 				goto retry;
+ 			}
+-			die_errno("cannot chdir to %s", argv[0]);
++			die_errno(_("cannot chdir to %s"), argv[0]);
+ 		}
+ 	} else if (0 < argc) {
+ 		usage(init_db_usage[0]);
+@@ -476,8 +476,8 @@ int cmd_init_db(int argc, const char **argv, const =
+char *prefix)
+ 	git_dir =3D getenv(GIT_DIR_ENVIRONMENT);
+ 	if ((!git_dir || is_bare_repository_cfg =3D=3D 1)
+ 	    && getenv(GIT_WORK_TREE_ENVIRONMENT))
+-		die("%s (or --work-tree=3D<directory>) not allowed without "
+-		    "specifying %s (or --git-dir=3D<directory>)",
++		die(_("%s (or --work-tree=3D<directory>) not allowed without "
++			  "specifying %s (or --git-dir=3D<directory>)"),
+ 		    GIT_WORK_TREE_ENVIRONMENT,
+ 		    GIT_DIR_ENVIRONMENT);
+=20
+@@ -502,10 +502,10 @@ int cmd_init_db(int argc, const char **argv, cons=
+t char *prefix)
+ 		if (!git_work_tree_cfg) {
+ 			git_work_tree_cfg =3D xcalloc(PATH_MAX, 1);
+ 			if (!getcwd(git_work_tree_cfg, PATH_MAX))
+-				die_errno ("Cannot access current working directory");
++				die_errno (_("Cannot access current working directory"));
+ 		}
+ 		if (access(get_git_work_tree(), X_OK))
+-			die_errno ("Cannot access work tree '%s'",
++			die_errno (_("Cannot access work tree '%s'"),
+ 				   get_git_work_tree());
+ 	}
+=20
+--=20
+1.7.2.2.536.g3f548
