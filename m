@@ -1,96 +1,285 @@
-From: Chris Patti <cpatti@gmail.com>
-Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
-Date: Mon, 30 Aug 2010 13:37:27 -0400
-Message-ID: <AANLkTi=VPf9CWNJcce6d20HQChi0mHgTG1F=jakzNT-O@mail.gmail.com>
-References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
-	<4C7B8E1E.6050708@drmicha.warpmail.net>
-	<AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
-	<20100830141602.GF2315@burratino>
-	<AANLkTim+S87KjFBstBineR02hQHzG=X2VDqgiGNbPQGS@mail.gmail.com>
-	<20100830163302.GA13336@burratino>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH 2/2 v2] Submodules: Add the new "fetch" config option for
+ fetch and pull
+Date: Mon, 30 Aug 2010 19:37:47 +0200
+Message-ID: <4C7BEC6B.8000607@web.de>
+References: <4C7A819B.3000403@web.de> <4C7A81F0.4090209@web.de> <7vsk1wftai.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 19:37:41 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 19:38:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq8Ia-0004Rq-EC
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 19:37:36 +0200
+	id 1Oq8JF-0004zc-DP
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 19:38:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756326Ab0H3Rha convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 13:37:30 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:65031 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756077Ab0H3Rh2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 13:37:28 -0400
-Received: by bwz11 with SMTP id 11so3889211bwz.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 10:37:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=mP7VLf7n0EllvkKQXsj5DyqfjRGPax7prSwNBCUITr8=;
-        b=uzwfJfGkO4MPf9EoGWLbZ4YHfG8I4nwf1FA9SWv1/fxC2jwHz3Sa/dAB98tNw/LD46
-         VI4B3z73XkTzduvypEV9gPKiHoFxCjXuOSm8OEiVCaVF9K2L6nQtRQp8htXfdb68PCaM
-         w9BkNBNMoEa6yiwnN5XyBR45aa2X6fPFRa/9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Izx6NGuuE8aWg56x0sX6QBeAuOwWJJrq/s8vJywWxqCjJZ/suYKRolKEFDdaDrW0sV
-         V6FkiwzlVxecIzkl8lIkzE4CuPH3PAiIuUki1EH1d1SFKEIvkl6rR45IWFbTdWupNPFL
-         Vg1xAw9n7Qg0RA6AXXg0UWhRmfXAkATio7YHo=
-Received: by 10.204.68.136 with SMTP id v8mr3594798bki.88.1283189847117; Mon,
- 30 Aug 2010 10:37:27 -0700 (PDT)
-Received: by 10.204.66.196 with HTTP; Mon, 30 Aug 2010 10:37:27 -0700 (PDT)
-In-Reply-To: <20100830163302.GA13336@burratino>
+	id S1756341Ab0H3Rhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Aug 2010 13:37:51 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:45270 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756091Ab0H3Rht (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 13:37:49 -0400
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 1A87415E54785;
+	Mon, 30 Aug 2010 19:37:48 +0200 (CEST)
+Received: from [93.240.103.177] (helo=[192.168.178.29])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1Oq8Il-0000nR-00; Mon, 30 Aug 2010 19:37:47 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <7vsk1wftai.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/tXxWY/JVvgOtSq2iEquJ2OpGh6mNgFiQ7r5Mt
+	WxhIIAI1T1phWYjmfsuA0EOReW2lWy2gm3FxcuKvt0sXPma4SB
+	V0ATVzYgJvYx7ooaaK0Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154835>
 
-On Mon, Aug 30, 2010 at 12:33 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> Chris Patti wrote:
+The new boolean "fetch" config option controls the default behavior for
+"git fetch" and "git pull". It specifies if these commands should recurse
+into submodules and fetch new commits there too and can be set separately
+for each submodule.
+
+The .gitmodules file is parsed for "submodule.<name>.fetch" entries before
+looking for them in .git/config. Thus settings found in .git/config will
+override those from .gitmodules, thereby allowing the local developer to
+ignore settings given by the remote side while also letting upstream set
+defaults for those users who don't have special needs.
+
+This configuration can be overridden by the command line option
+"--[no-]recursive" of "git fetch" and "git pull".
+
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
+
+Am 30.08.2010 09:34, schrieb Junio C Hamano:
+> Hmm?  We get this here...
 >
->> What if this is the
->> first time a new ref is being pushed? =C2=A0Then, old-ref is 000000 =
-and git
->> diff --raw throws up a hairball :)
->
-> Can't you check for 0{40} and use $(git hash-object -t tree </dev/nul=
-l)
-> in its place?
->
-> In general, the "LOW-LEVEL COMMANDS (PLUMBING)" listed on the git man
-> page are meant to be useful for scripts. =C2=A0They have simple input=
- and
-> output formats, they don't try to introduce weird exceptions for user
-> convenience, the git developers are more conservative about changing
-> them, and so on.
->
+>     submodule.c:110: error: cast to pointer from integer of different size
 
-Maybe I'm not understanding your intent here, but, this is a
-pre-receive hook, where you get handed two refs, the old (pre-push)
-ref, and the new (after push) ref.
-
-git hash-object computes a hash from the file's contents.  That's my
-whole point, I don't *have* the file to compute! All I have is those
-two refs.
-
-Thanks,
--Chris
+Grmpf, sorry for messing up 64bit builds. This version of the patch
+compiles cleanly for me under 32 and 64 bits.
 
 
---=20
-Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
-chrisfeohpatti | P: (260) 54PATTI
-"Technology challenges art, art inspires technology." - John Lasseter, =
-Pixar
+ Documentation/config.txt        |    6 +++++
+ Documentation/fetch-options.txt |    3 +-
+ Documentation/gitmodules.txt    |    8 +++++++
+ builtin/fetch.c                 |   14 +++++++++---
+ submodule.c                     |   19 +++++++++++++++++-
+ submodule.h                     |    2 +-
+ t/t5526-fetch-submodules.sh     |   40 +++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 85 insertions(+), 7 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 0510ac7..048465f 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1769,6 +1769,12 @@ submodule.<name>.update::
+ 	URL and other values found in the `.gitmodules` file.  See
+ 	linkgit:git-submodule[1] and linkgit:gitmodules[5] for details.
+
++submodule.<name>.fetch::
++	A boolean to enable/disable recursive fetching of this submodule. It can
++	be overriden by using the --[no-]recursive command line option to "git
++	fetch" and "git pull".	This setting overrides any setting made in
++	.gitmodules for this submodule.
++
+ submodule.<name>.ignore::
+ 	Defines under what circumstances "git status" and the diff family show
+ 	a submodule as modified. When set to "all", it will never be considered
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 1d875be..aff4daf 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -67,7 +67,8 @@ endif::git-pull[]
+ --[no-]recursive::
+ 	By default new commits of all populated submodules will be fetched
+ 	too. This option can be used to disable/enable recursive fetching of
+-	submodules.
++	submodules regardless of the 'fetch' configuration setting (see
++	linkgit:git-config[1] or linkgit:gitmodules[5]).
+
+ -u::
+ --update-head-ok::
+diff --git a/Documentation/gitmodules.txt b/Documentation/gitmodules.txt
+index bcffd95..febfef4 100644
+--- a/Documentation/gitmodules.txt
++++ b/Documentation/gitmodules.txt
+@@ -44,6 +44,14 @@ submodule.<name>.update::
+ 	This config option is overridden if 'git submodule update' is given
+ 	the '--merge' or '--rebase' options.
+
++submodule.<name>.fetch::
++	A boolean to enable/disable recursive fetching of this submodule.
++	If this option is also present in the submodules entry in .git/config of
++	the superproject, the setting there will override the one found in
++	.gitmodules.
++	Both settings can be overriden on the command line by using the
++	"--[no-]recursive" option to "git fetch" and "git pull"..
++
+ submodule.<name>.ignore::
+ 	Defines under what circumstances "git status" and the diff family show
+ 	a submodule as modified. When set to "all", it will never be considered
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index da5fc9a..17759b5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -28,7 +28,13 @@ enum {
+ 	TAGS_SET = 2
+ };
+
+-static int all, append, dry_run, force, keep, multiple, prune, recursive = -1, update_head_ok, verbosity;
++enum {
++	RECURSIVE_UNSET = 0,
++	RECURSIVE_DEFAULT = 1,
++	RECURSIVE_SET = 2
++};
++
++static int all, append, dry_run, force, keep, multiple, prune, recursive = RECURSIVE_DEFAULT, update_head_ok, verbosity;
+ static int progress;
+ static int tags = TAGS_DEFAULT;
+ static const char *depth;
+@@ -54,8 +60,8 @@ static struct option builtin_fetch_options[] = {
+ 		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
+ 	OPT_BOOLEAN('p', "prune", &prune,
+ 		    "prune tracking branches no longer on remote"),
+-	OPT_BOOLEAN(0, "recursive", &recursive,
+-		    "control recursive fetching of submodules"),
++	OPT_SET_INT(0, "recursive", &recursive,
++		    "control recursive fetching of submodules", RECURSIVE_SET),
+ 	OPT_BOOLEAN(0, "dry-run", &dry_run,
+ 		    "dry run"),
+ 	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
+@@ -927,7 +933,7 @@ int cmd_fetch(int argc, const char **argv, const char *prefix)
+ 	if (!result && recursive) {
+ 		gitmodules_config();
+ 		git_config(submodule_config, NULL);
+-		result = fetch_populated_submodules();
++		result = fetch_populated_submodules(recursive == RECURSIVE_SET);
+ 	}
+
+ 	/* All names were strdup()ed or strndup()ed */
+diff --git a/submodule.c b/submodule.c
+index e4f2419..2380638 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -10,6 +10,7 @@
+ #include "string-list.h"
+
+ struct string_list config_name_for_path;
++struct string_list config_fetch_for_name;
+ struct string_list config_ignore_for_name;
+
+ static int add_submodule_odb(const char *path)
+@@ -100,6 +101,14 @@ int parse_submodule_config_option(const char *var, const char *value)
+ 			config = string_list_append(&config_name_for_path, xstrdup(value));
+ 		config->util = strbuf_detach(&submodname, NULL);
+ 		strbuf_release(&submodname);
++	} else if ((len > 5) && !strcmp(var + len - 6, ".fetch")) {
++		strbuf_add(&submodname, var, len - 6);
++		config = unsorted_string_list_lookup(&config_fetch_for_name, submodname.buf);
++		if (!config)
++			config = string_list_append(&config_fetch_for_name,
++						    strbuf_detach(&submodname, NULL));
++		config->util = git_config_bool(var, value) ? (void *)1 : NULL;
++		strbuf_release(&submodname);
+ 	} else if ((len > 7) && !strcmp(var + len - 7, ".ignore")) {
+ 		if (strcmp(value, "untracked") && strcmp(value, "dirty") &&
+ 		    strcmp(value, "all") && strcmp(value, "none")) {
+@@ -229,7 +238,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 	strbuf_release(&sb);
+ }
+
+-int fetch_populated_submodules()
++int fetch_populated_submodules(int forced)
+ {
+ 	int result = 0;
+ 	struct child_process cp;
+@@ -253,6 +262,14 @@ int fetch_populated_submodules()
+ 		struct strbuf submodule_path = STRBUF_INIT;
+ 		struct strbuf submodule_git_dir = STRBUF_INIT;
+ 		const char *git_dir;
++
++		if (!forced) {
++			struct string_list_item *fetch_option;
++			fetch_option = unsorted_string_list_lookup(&config_fetch_for_name, name_for_path->util);
++			if (fetch_option && !fetch_option->util)
++				continue;
++		}
++
+ 		strbuf_addf(&submodule_path, "%s/%s", work_tree, name_for_path->string);
+ 		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
+ 		git_dir = read_gitfile_gently(submodule_git_dir.buf);
+diff --git a/submodule.h b/submodule.h
+index 380878c..9e6257e 100644
+--- a/submodule.h
++++ b/submodule.h
+@@ -13,7 +13,7 @@ void show_submodule_summary(FILE *f, const char *path,
+ 		unsigned char one[20], unsigned char two[20],
+ 		unsigned dirty_submodule,
+ 		const char *del, const char *add, const char *reset);
+-int fetch_populated_submodules();
++int fetch_populated_submodules(int forced);
+ unsigned is_submodule_modified(const char *path, int ignore_untracked);
+ int merge_submodule(unsigned char result[20], const char *path, const unsigned char base[20],
+ 		    const unsigned char a[20], const unsigned char b[20]);
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index da5d5fd..489ef1a 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -52,6 +52,46 @@ test_expect_success "fetch recurses into submodules" '
+ '
+
+ test_expect_success "fetch --no-recursive only fetches superproject" '
++	(
++		cd downstream &&
++		git fetch --no-recursive >../actual.out 2>../actual.err
++	) &&
++	! test -s actual.out &&
++	! test -s actual.err
++'
++
++test_expect_success "using fetch=false in .gitmodules only fetches superproject" '
++	(
++		cd downstream &&
++		git config -f .gitmodules submodule.submodule.fetch false &&
++		git fetch >../actual.out 2>../actual.err
++	) &&
++	! test -s actual.out &&
++	! test -s actual.err
++'
++
++test_expect_success "--recursive overrides .gitmodules config" '
++	add_upstream_commit &&
++	(
++		cd downstream &&
++		git fetch --recursive >../actual.out 2>../actual.err
++	) &&
++	test_cmp expect.out actual.out &&
++	test_cmp expect.err actual.err
++'
++
++test_expect_success "using fetch=true in .git/config overrides setting in .gitmodules" '
++	add_upstream_commit &&
++	(
++		cd downstream &&
++		git config submodule.submodule.fetch true &&
++		git fetch >../actual.out 2>../actual.err
++	) &&
++	test_cmp expect.out actual.out &&
++	test_cmp expect.err actual.err
++'
++
++test_expect_success "--no-recursive overrides fetch setting from .git/config" '
+ 	add_upstream_commit &&
+ 	(
+ 		cd downstream &&
+-- 
+1.7.2.2.527.gacca9
