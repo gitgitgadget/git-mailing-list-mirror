@@ -1,73 +1,82 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] tests: factor HOME=$(pwd) in test-lib.sh
-Date: Mon, 30 Aug 2010 10:22:50 +0000
-Message-ID: <AANLkTi=81oEPHko45Mo2d1qn+qWy-TVLvrFcXaVKd8Lu@mail.gmail.com>
+Date: Mon, 30 Aug 2010 12:54:20 +0200
+Message-ID: <vpqtymcs74z.fsf@bauges.imag.fr>
 References: <7vzkw4edc5.fsf@alter.siamese.dyndns.org>
 	<1283161842-22689-1-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTi=81oEPHko45Mo2d1qn+qWy-TVLvrFcXaVKd8Lu@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Aug 30 12:23:02 2010
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 12:54:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq1W2-0008Gy-Dh
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 12:23:02 +0200
+	id 1Oq20Z-0007JC-If
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 12:54:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755289Ab0H3KWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 06:22:51 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:37164 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754889Ab0H3KWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 06:22:50 -0400
-Received: by iwn5 with SMTP id 5so4804020iwn.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 03:22:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=0f0UAQ6Y6RUjjkw3afV95WonJ8CGLdxfuAyOT4DwTwo=;
-        b=Wftv2VlF14qD7/gXJTXSA+fu2bHhaULl+I+YwlrPmTWc1DCQBSvcPZRjMtA5RodzVu
-         CEjar2+cvJN1GW/Li+DKZ0I/QXlR0RtfSV9CgaAXwiBzo4r4AxFR00kjME2LEwMygrTi
-         3N84AbmbOCQPSn08QNULVnzwaJ2c2khlld/Vo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=fUG5VqxVR1HdTJqn+KZ3fn1pdFgkC+cOl1HCJ3vYMczAHCbmfG7jHkJc+TVccRvWbn
-         A+Z9ikgNV5OEFMvsLIaB64hEvXMysaGp8UGbmzJ1yZY9HBl0rBzz5oCIs9FUyTmk07C3
-         cKjdyJ+GGAlYO6TT64YEhSIpy4TlEtUyUNtDM=
-Received: by 10.231.155.206 with SMTP id t14mr5220917ibw.34.1283163770070;
- Mon, 30 Aug 2010 03:22:50 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Mon, 30 Aug 2010 03:22:50 -0700 (PDT)
-In-Reply-To: <1283161842-22689-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1754889Ab0H3Kya convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 06:54:30 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:58368 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753663Ab0H3Kya (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 06:54:30 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7UAgWc0011669
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 30 Aug 2010 12:42:32 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oq20K-0007xM-No; Mon, 30 Aug 2010 12:54:20 +0200
+In-Reply-To: <AANLkTi=81oEPHko45Mo2d1qn+qWy-TVLvrFcXaVKd8Lu@mail.gmail.com>
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Mon\, 30
+ Aug 2010 10\:22\:50 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 30 Aug 2010 12:42:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o7UAgWc0011669
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1283769753.05908@xBeMZ6xkRRhBUW8c/mYWSw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154783>
 
-On Mon, Aug 30, 2010 at 09:50, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> The same pattern is used in many tests, and makes it easy for new ones to
-> rely on $HOME being a trashable, clean, directory.
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 
-Looks good, but why not:
+> On Mon, Aug 30, 2010 at 09:50, Matthieu Moy <Matthieu.Moy@imag.fr> wr=
+ote:
+>> The same pattern is used in many tests, and makes it easy for new on=
+es to
+>> rely on $HOME being a trashable, clean, directory.
+>
+> Looks good, but why not:
+>
+>> +HOME=3D$(pwd)
+>> +export HOME
+>
+> This instead:
+>
+> HOME=3D$TRASH_DIRECTORY
+> export HOME
+>
+> Looks like it might be more correct given this (always an absolute
+> path), but I haven't tested:
 
-> +HOME=$(pwd)
-> +export HOME
+That should work too, but with your version, I have to think harder to
+make sure $TRASH_DIRECTORY is absolute (that should be OK), and won't
+make any issue with symlinks (I have no idea whether it is OK or not),
+while it's trivially correct with mine (pwd is absolute, and the -P
+option of the cd command right above prevents issue with symlinks).
 
-This instead:
-
-HOME=$TRASH_DIRECTORY
-export HOME
-
-Looks like it might be more correct given this (always an absolute
-path), but I haven't tested:
-
-case "$test" in
-/*) TRASH_DIRECTORY="$test" ;;
- *) TRASH_DIRECTORY="$TEST_DIRECTORY/$test" ;;
-esac
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
