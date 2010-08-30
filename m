@@ -1,96 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] test-lib: use subshell instead of cd $new && .. && cd
- $old
-Date: Mon, 30 Aug 2010 11:04:44 -0500
-Message-ID: <20100830160444.GE3292@burratino>
-References: <1283169642-21917-1-git-send-email-avarab@gmail.com>
- <20100830155723.GC3292@burratino>
- <AANLkTi=z9uUB_YZ9Sb0O8JzaEjazKDzqB=ZVtqTTDf2K@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Detection of relocations within a file
+Date: Mon, 30 Aug 2010 18:24:30 +0200
+Message-ID: <vpqk4n81329.fsf@bauges.imag.fr>
+References: <SNT124-W57C91CBC3A362218ACA23DC4890@phx.gbl>
+	<20100830154427.GB3292@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Carl Worth <cworth@cworth.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 18:07:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tim Mazid <timmazid@hotmail.com>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Bo Yang <struggleyb.nku@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 18:24:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq6sy-0001UQ-RG
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 18:07:05 +0200
+	id 1Oq7AB-0004nc-BD
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 18:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755863Ab0H3QGc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 12:06:32 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38803 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755693Ab0H3QGb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 12:06:31 -0400
-Received: by wyb35 with SMTP id 35so6759459wyb.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 09:06:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=GKRwUrsa1BSD36bfp1lMx1Xwf9UnqeY+thuRzlSuGGo=;
-        b=g+AvR9gWeUVjp4IHJkTg6tbZ0HUESaPnXqeRlxYXN8bFa24CZmGb6nK3Tt9/6UKP+j
-         iJXr7ufWJT0U/SUjjpjYmMUjCT8O32Hywq1QgHBcWIscJDdUk6elJUcOzmaSy2tlwx3I
-         T5tNx97jIYN/AQMbW11R+GJ4+RCxnz0/Q3uGw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=IxoAVXveOUDMyBqL7Qscq7JS/uUAGQtnT1+rOCu8qjSlaiQHc315Fo0j/obf5L5LiU
-         JzwOf1a5LNFV31s3sWeP86eRTXfcEGxybioHKuWpbOelgZ8GaaEetbr9f74yBcWZ9WnB
-         XdGlrkps92bslOBajKZGKejU3XVE+4m8lo5lg=
-Received: by 10.227.138.5 with SMTP id y5mr4927756wbt.204.1283184390532;
-        Mon, 30 Aug 2010 09:06:30 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id u11sm4555033weq.7.2010.08.30.09.06.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 30 Aug 2010 09:06:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=z9uUB_YZ9Sb0O8JzaEjazKDzqB=ZVtqTTDf2K@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755923Ab0H3QYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Aug 2010 12:24:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:41922 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753825Ab0H3QYo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 12:24:44 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o7UGCgfB031284
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 30 Aug 2010 18:12:42 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oq79r-0006UD-28; Mon, 30 Aug 2010 18:24:31 +0200
+In-Reply-To: <20100830154427.GB3292@burratino> (Jonathan Nieder's message of "Mon\, 30 Aug 2010 10\:44\:27 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 30 Aug 2010 18:12:42 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o7UGCgfB031284
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1283789562.65295@DZ4oFb+HyPp+JeykMGLw0w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154827>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Mon, Aug 30, 2010 at 15:57, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>> - =C2=A0 =C2=A0 cd "$repo" || error "Cannot setup test environment"
->>> + =C2=A0 =C2=A0 (cd "$repo" || error "Cannot setup test environment=
-"
->>> =C2=A0 =C2=A0 =C2=A0 "$GIT_EXEC_PATH/git-init" "--template=3D$GIT_B=
-UILD_DIR/templates/blt/" >&3 2>&4 ||
->>> =C2=A0 =C2=A0 =C2=A0 error "cannot run git init -- have you built t=
-hings yet?"
->>> - =C2=A0 =C2=A0 mv .git/hooks .git/hooks-disabled
->>> - =C2=A0 =C2=A0 cd "$owd"
->>> + =C2=A0 =C2=A0 mv .git/hooks .git/hooks-disabled)
->>
->> Style: why not use
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0(
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cd "$repo" ..=
-=2E
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0... .git/hook=
-s-disabled
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0)
->>
->
-> I've seen both used and I don't know which is preferred.
+> 4. I want a simple, easy-to-review patch representing a code movement.
+> No one I know of has worked on this, and if you have ideas for it,
+> that would be very neat.
 
-Okay.  I maintain that the latter is way more readable.  Is there any
-advantage to the former?
+5. I have a history with a lot of code movement, someone branched from
+me a while ago, modified various pieces of code which moved in the
+meantime, and we want to merge.
 
-Whichever the project chooses can be enshrined in
-Documentation/CodingGuidelines, of course.
+Unfortunately, I don't think any VCS does a really good job here
+either.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
