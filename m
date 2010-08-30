@@ -1,110 +1,82 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: [PATCHv2] completion: make compatible with zsh
-Date: Mon, 30 Aug 2010 16:19:27 +0200
-Message-ID: <20100830141927.GA16495@neumann>
-References: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
+Date: Mon, 30 Aug 2010 10:24:18 -0400
+Message-ID: <AANLkTi=GUrnH87faWH8G0tD7_KAynVf_ig0KpQRwnsaE@mail.gmail.com>
+References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
+	<4C7B8E1E.6050708@drmicha.warpmail.net>
+	<AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
+	<20100830141602.GF2315@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	avarab@gmail.com, Jonathan Nieder <jrnieder@gmail.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Aug 30 16:19:45 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Aug 30 16:24:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oq5D7-0002y1-9q
-	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 16:19:45 +0200
+	id 1Oq5Hh-0006er-O1
+	for gcvg-git-2@lo.gmane.org; Mon, 30 Aug 2010 16:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755668Ab0H3OTc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 10:19:32 -0400
-Received: from francis.fzi.de ([141.21.7.5]:22696 "EHLO exchange.fzi.de"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755652Ab0H3OTb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 10:19:31 -0400
-Received: from [127.0.1.1] ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 30 Aug 2010 16:19:28 +0200
-Content-Disposition: inline
-In-Reply-To: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-OriginalArrivalTime: 30 Aug 2010 14:19:28.0338 (UTC) FILETIME=[5B1BAB20:01CB484E]
+	id S1755729Ab0H3OYV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 10:24:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36274 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755722Ab0H3OYU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 30 Aug 2010 10:24:20 -0400
+Received: by bwz11 with SMTP id 11so3715827bwz.19
+        for <git@vger.kernel.org>; Mon, 30 Aug 2010 07:24:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wG02+yrLIWj/o5iLqE5JPQEEyR90vzTgFxzVWJ2S6i8=;
+        b=OeK11Rfxw+xMbOqu9y1UMMnSNT5XsrjSNkvkgjVphD8EjMlOnmal6AyLl8gzdxWlTJ
+         bqyIloCKEIhaMqDNzMZXD0aXJnbpwCZGOZVyUhBY0qQeUWNA8OvfsbZyAwR7xA3aQU/x
+         QX6Mjokw1r8QfcGC++ohwNz4ct+J/txpwB8DY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=xD4jaCkbXGgIwfGSrBzl3lQWDvjzxqLuPmlqo9C3a+d4M2jFI65EIOJLUaYUTl+vgA
+         Yz3gsASQxCtPAMFvU6CGiCW8kSipmLymKXx9pSFCpNHAjWCX6/7MP4ihbEAR+QkiGus+
+         BcUJt+eAJF/FZnaKjdgQgIQhPm9SO/DHeNICs=
+Received: by 10.204.45.213 with SMTP id g21mr3347602bkf.11.1283178258636; Mon,
+ 30 Aug 2010 07:24:18 -0700 (PDT)
+Received: by 10.204.66.196 with HTTP; Mon, 30 Aug 2010 07:24:18 -0700 (PDT)
+In-Reply-To: <20100830141602.GF2315@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154812>
 
-Hi,
+On Mon, Aug 30, 2010 at 10:16 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> Chris Patti wrote:
+>
+>> That's great, thanks! =C2=A0That gets me the file names. =C2=A0Now, =
+how do I get
+>> to the contents of each file?
+>
+> Why not "git diff --raw" (or its plumbing equivalent "git diff-tree")=
+?
+>
 
+That is absolutely *perfect* sir, thank you very much! That gets me
+the blobs I can 'git show' as well as the filenames so I can cherry
+pick only PHP files to check.
 
-On Thu, Aug 26, 2010 at 10:45:56PM -0400, Mark Lodato wrote:
-> Modify git-completion.bash so that it also works with zsh when using
-> bashcompinit.  In particular:
-> 
-> declare -F
->     Zsh doesn't have the same 'declare -F' as bash, but 'declare -f'
->     is the same, and it works just as well for our purposes.
+-Chris
+(P.S. Is there a canonical 'example Git hooks' location I could
+publish this to when it's working? I think there's a dearth of this
+kind of example for people out there right now)
 
-> @@ -2372,17 +2383,22 @@ _git ()
->  	fi
->  
->  	local completion_func="_git_${command//-/_}"
-> -	declare -F $completion_func >/dev/null && $completion_func && return
-> +	declare -f $completion_func >/dev/null && $completion_func && return
->  
->  	local expansion=$(__git_aliased_command "$command")
->  	if [ -n "$expansion" ]; then
->  		completion_func="_git_${expansion//-/_}"
-> -		declare -F $completion_func >/dev/null && $completion_func
-> +		declare -f $completion_func >/dev/null && $completion_func
->  	fi
->  }
-
-I chose -F back then because it does not print the definition of the
-completion function, so there is less stuff to throw away immediately.
-However, the run-time difference seems to be barely measureable (i.e.
-'time declare -f _git_config >/dev/null' vs. 'declare -F _git_config
- >/dev/null' sometimes shows 0.001s difference), so I'm fine with this
-change.
-
-
-> @@ -2417,3 +2433,29 @@ if [ Cygwin = "$(uname -o 2>/dev/null)" ]; then
->  complete -o bashdefault -o default -o nospace -F _git git.exe 2>/dev/null \
->  	|| complete -o default -o nospace -F _git git.exe
->  fi
-> +
-> +if [[ -z $ZSH_VERSION ]]; then
-
--z?  I think you wanted to use -n here, like at the other places.
-
-Nit: why "if [[ ... ]]"?  FWIW "if [ ... ]" would be enough.
-
-> +	shopt () {
-> +		local option
-> +		if [ $# -ne 2 ]; then
-> +			echo "USAGE: $0 (-q|-s|-u) <option>" >&2
-> +			return 1
-> +		fi
-> +		case "$2" in
-> +		nullglob)
-> +			option="$2"
-> +			;;
-> +		*)
-> +			echo "$0: invalid option: $2" >&2
-> +			return 1
-> +		esac
-> +		case "$1" in
-> +		-q)	setopt | grep -q "$option" ;;
-> +		-u)	unsetopt "$option" ;;
-> +		-s)	setopt "$option" ;;
-> +		*)
-> +			echo "$0: invalid flag: $1" >&2
-> +			return 1
-> +		esac
-> +	}
-> +fi
-> -- 
-> 1.7.2.2
-> 
+--=20
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, =
+Pixar
