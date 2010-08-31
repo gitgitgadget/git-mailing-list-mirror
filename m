@@ -1,97 +1,110 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC 15/17] po/is.po: add Icelandic translation
-Date: Tue, 31 Aug 2010 21:14:37 +0200
-Message-ID: <AANLkTimGSEVLOjTLt2yntXaDfyUkj=mY46evfRx517MC@mail.gmail.com>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
- <1283203703-26923-16-git-send-email-avarab@gmail.com> <20100831152959.GH2315@burratino>
- <AANLkTimYETJcHuKBBRKJ0zbkRBR-K2VAXRLizFQxa-pr@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number
+ of shortlog entries
+Date: Wed, 1 Sep 2010 00:43:37 +0530
+Message-ID: <20100831191324.GA27381@kytes>
+References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
+ <1283226800-28980-1-git-send-email-artagnon@gmail.com>
+ <20100831143236.GC2315@burratino>
+ <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Marcin Cieslak <saper@saper.info>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 21:15:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 21:15:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqWIS-0000vL-0j
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:15:04 +0200
+	id 1OqWJF-0001Xf-3G
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:15:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754109Ab0HaTO7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 15:14:59 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:49410 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752363Ab0HaTO6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 15:14:58 -0400
-Received: by vws3 with SMTP id 3so5670408vws.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:14:57 -0700 (PDT)
+	id S1752555Ab0HaTPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 15:15:48 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:63755 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750720Ab0HaTPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 15:15:47 -0400
+Received: by pxi10 with SMTP id 10so2580275pxi.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:15:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=GH/lImdlWCgRChLO2ZnPASXS7rQpjxNYmolUT/IG4rg=;
-        b=PpvYoBFBDm1PQTKIbSSX1y4WPfB3qHUVzsgM78Oglwa+y08Kw71/y/0oDCfaWWrvVr
-         xtS8j6K4AKKYGgUI14qM7QxTC1H9v3QDR4I1dBLb+LayiieO75e5Psxl6GV+7F6DzAIM
-         eeSIPileEr+ocJ0ahWSFAOo7NsCeG3dwUUDzg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=gpkiRZ/w0RDjCyd7lctz2RDJOAREZJqruUJX8Qqx3cA=;
+        b=VFCI1Vtds5M10wVT208Ed2sxx8uvvKwh2v3cZY8IDOqi8PJOxps10mDZ+9z5Rp26XU
+         +Wv9v0EMG83/Nf+EiUAQ0AlKF+YJkSujQJyDAUJ2cjx+bH+WUbQywZa8fLMVIG/OMdFX
+         6WJZyECJ/2NuEfryNYB+yOMwNSiMCZAMu/Xms=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=L1sGP3hlhKbX95OvEPjxPCd2Y1fDCCjgj8eXopARQO9MCycya4sFN9/RRvd4WeQS/L
-         bRdYsbe1Teqy/wZxAv1a5tMGXvLZMb26514fjklXLk71PGwzlyA4i0t7SnR4hDYVSygy
-         /tm0+xpzEmf132iG8mZdUeauHTkTjalFclH7k=
-Received: by 10.220.158.9 with SMTP id d9mr3574764vcx.245.1283282097505; Tue,
- 31 Aug 2010 12:14:57 -0700 (PDT)
-Received: by 10.220.180.76 with HTTP; Tue, 31 Aug 2010 12:14:37 -0700 (PDT)
-In-Reply-To: <AANLkTimYETJcHuKBBRKJ0zbkRBR-K2VAXRLizFQxa-pr@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Lx6SDjv/njnd1zdk3fQMcIaG/MojfTK1YudMqk9ZLBwG9mj2+QTA4UpgP6A5NrGYb5
+         RWwLD6Eq/HkljB1nIafzYOQGAoVwyAk1LhvjmhS3mmsbxNvbzYuIoiHfdLhCWrSrUZu0
+         Chr5q799W/1vrK4BoH6nHUJIU8AWKnNuTPht0=
+Received: by 10.142.180.1 with SMTP id c1mr6417803wff.59.1283282147429;
+        Tue, 31 Aug 2010 12:15:47 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id t11sm11423739wfc.16.2010.08.31.12.15.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 31 Aug 2010 12:15:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154967>
 
-On Tue, Aug 31, 2010 at 7:01 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, Aug 31, 2010 at 15:29, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
->> =C6var Arnfj=F6r=F0 Bjarmason wrote:
->>
->>> --- a/po/is.po
->>> +++ b/po/is.po
->>> @@ -11,35 +11,154 @@ msgstr ""
->>> =A0"Content-Type: text/plain; charset=3DUTF-8\n"
->>> =A0"Content-Transfer-Encoding: 8bit\n"
->>>
->>> -#: t/t0200/test.c:4
->>> +#: builtin/init-db.c:34
->>
->> Is there a diff driver that will ignore these --add-location lines?
->>
->> Alternatively, would it be possible to get msgmerge and xgettext to
->> provide the filenames without the line numbers? =A0My experience is
->> that most translation diffs are very hard to read because about 80%
->> noise. :(
->>
->> Aside from that, this looks good and sane (well, the English part
->> I can read does).
->
-> Some context, an earlier discussion on this:
-> http://kerneltrap.org/mailarchive/git/2010/5/30/31415/thread#mid-3141=
-5
->
+Hi,
 
-msgmerge and xgettext does seem to have the --no-location flag to
-avoid these annotations from being generated. The documentation does
-say "Note that using this option makes it harder for technically
-skilled translators to understand each message's context. ", though.
-But perhaps the annotated versions could be generated when needed and
-never checked-in (similar to what you suggested in that e-mail)? It
-sounds to me like that would give us the best of all worlds. If it's
-possible, that is.
+Junio C Hamano writes:
+> Hmm, do we plan on that?  It sounds a little bit insane.  Erroring it out
+> would be Ok.  How about doing this on top?
+
+> @@ -350,7 +350,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+>  		return 0;
+>  	}
+>  	if (shortlog_len < 0)
+> -		shortlog_len = DEFAULT_MERGE_LOG_LEN;
+> +		die("Negative --log=%d???", shortlog_len);
+>  
+>  	if (inpath && strcmp(inpath, "-")) {
+>  		in = fopen(inpath, "r");
+
+It's a little asymmetric- the program won't error out when 'merge.log'
+is set to -1. Then again, it's probably nicer to simply pretend that
+we didn't see that invalid configuration.
+
+Also, to avoid breaking the '--log=-1' test, either drop the test
+altogether or use something like this:
+
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+
+diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
+index 395c23e..3bfdebc 100755
+--- a/t/t6200-fmt-merge-msg.sh
++++ b/t/t6200-fmt-merge-msg.sh
+@@ -236,7 +236,7 @@ test_expect_success '--log=0 disables shortlog' '
+ 	test_cmp expected actual
+ '
+ 
+-test_expect_success '--log=-1 does something sane' '
++test_expect_code 128 '--log=-1 errors out' '
+ 	cat >expected <<-EOF &&
+ 	Merge branch ${apos}left${apos}
+ 
+@@ -248,8 +248,7 @@ test_expect_success '--log=-1 does something sane' '
+ 	  Common #1
+ 	EOF
+ 
+-	git fmt-merge-msg --log=-1 <.git/FETCH_HEAD >actual &&
+-	test_cmp expected actual
++	git fmt-merge-msg --log=-1 <.git/FETCH_HEAD >actual
+ '
+ 
+ test_expect_success 'fmt-merge-msg -m' '
