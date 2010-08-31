@@ -1,94 +1,134 @@
-From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-Subject: RE: [PATCHv2] completion: make compatible with zsh
-Date: Tue, 31 Aug 2010 09:52:02 +0200
-Message-ID: <A612847CFE53224C91B23E3A5B48BAC749BF0BEBB9@xmail3.se.axis.com>
-References: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
- <20100830141927.GA16495@neumann>
- <AANLkTimNULQNVZ4hzaNY1ZobPRtj_zj545Xi29guGu4g@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git strangeness
+Date: Tue, 31 Aug 2010 00:55:00 -0700 (PDT)
+Message-ID: <m3bp8jnrnh.fsf@localhost.localdomain>
+References: <AANLkTikrJ+hizEicws8PZAry-WOzOYoXAEW9b1L8OYcR@mail.gmail.com>
+	<AANLkTim27gLuAwxrNZFmayufF3ctKDU5vmUSN4v4bQPY@mail.gmail.com>
+	<AANLkTi=JQ0rAYmAz=uJc5riZC+UwxhEvsXCvzQ6310O8@mail.gmail.com>
+	<AANLkTinwK0R4BGUn_ehBOvO7HrwUZZ6Va3okoiu=eu7P@mail.gmail.com>
+	<AANLkTina6iVO4Ekv1gVOoBFTV3t1F55sqEkwvf-Rrm_6@mail.gmail.com>
+	<AANLkTinPizD8JECut5Yc2pgzne4=QL6arcHiG8iUUcKB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"avarab@gmail.com" <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Andrew Sayers <andrew-git@pileofstuff.org>
-To: Mark Lodato <lodatom@gmail.com>,
-	=?utf-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Aug 31 09:56:48 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: demerphq <demerphq@gmail.com>,
+	Perl5 Porteros <perl5-porters@perl.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 09:56:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqLi3-0000yG-RD
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 09:56:48 +0200
+	id 1OqLi4-0000yG-TH
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 09:56:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756889Ab0HaHw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 03:52:27 -0400
-Received: from miranda.se.axis.com ([193.13.178.8]:36246 "EHLO
-	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756832Ab0HaHw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 03:52:26 -0400
-Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
-	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o7V7q319018263;
-	Tue, 31 Aug 2010 09:52:03 +0200
-Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
- ([10.0.5.75]) with mapi; Tue, 31 Aug 2010 09:52:03 +0200
-Thread-Topic: [PATCHv2] completion: make compatible with zsh
-Thread-Index: ActIp9sRHSS9VklmSa6fr0fGMp3AdwAOAsUw
-In-Reply-To: <AANLkTimNULQNVZ4hzaNY1ZobPRtj_zj545Xi29guGu4g@mail.gmail.com>
-Accept-Language: en-US, sv-SE
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US, sv-SE
+	id S1756905Ab0HaHzF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 03:55:05 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49515 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756897Ab0HaHzC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 03:55:02 -0400
+Received: by fxm13 with SMTP id 13so3752771fxm.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 00:55:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=NgjYBx27LChObUC1dd246yPohXlG/3as0V/5IXYUz04=;
+        b=iY1WlXuF+ad1we5VgbjRZwTRrFeZdzuITT/iDXVpcO7U7G+GgbMDj3CZsBiDCEXP/C
+         7dkU35WzZE7UGoOyv0epG/cf27e9AHC0ypyQ+Z5KL13huG4A2UaR3XY0jYSXQ6mlYqog
+         oqdZCon7mIcsl9t+HsHLm+uxsmvO5UvGta7hg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=io4RnLZ5mXe6B1YD4G6MqdxAPD2qMStFF5fDqZQ4O2yLEmcgUHedc/1eDfSE/rthmz
+         eNZ72iTUA54iKhWQ6uYlCNWQgSCoHKXqUDlC+sR1DlIC4Rx/tIQQHbQrzKB3BO/4tyit
+         /JPSJvopDgrgeI8/tXD3osI0sFBYsGn10p2HE=
+Received: by 10.223.116.3 with SMTP id k3mr4941714faq.81.1283241301363;
+        Tue, 31 Aug 2010 00:55:01 -0700 (PDT)
+Received: from localhost.localdomain (abws159.neoplus.adsl.tpnet.pl [83.8.242.159])
+        by mx.google.com with ESMTPS id t6sm3821434faa.27.2010.08.31.00.54.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 31 Aug 2010 00:55:00 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o7V7sxar017394;
+	Tue, 31 Aug 2010 09:55:04 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o7V7shcl017383;
+	Tue, 31 Aug 2010 09:54:43 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTinPizD8JECut5Yc2pgzne4=QL6arcHiG8iUUcKB@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154886>
 
-PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJu
-ZWwub3JnIFttYWlsdG86Z2l0LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9m
-IE1hcmsgTG9kYXRvDQo+IFNlbnQ6IGRlbiAzMSBhdWd1c3RpIDIwMTAgMDI6NTYNCj4gVG86IFNa
-RURFUiBHw6Fib3INCj4gQ2M6IFNoYXduIE8uIFBlYXJjZTsgZ2l0QHZnZXIua2VybmVsLm9yZzsg
-YXZhcmFiQGdtYWlsLmNvbTsgSm9uYXRoYW4NCj4gTmllZGVyOyBBbmRyZXcgU2F5ZXJzDQo+IFN1
-YmplY3Q6IFJlOiBbUEFUQ0h2Ml0gY29tcGxldGlvbjogbWFrZSBjb21wYXRpYmxlIHdpdGggenNo
-DQo+IA0KPiAyMDEwLzgvMzAgU1pFREVSIEfDoWJvciA8c3plZGVyQGlyYS51a2EuZGU+DQo+ID4g
-T24gVGh1LCBBdWcgMjYsIDIwMTAgYXQgMTA6NDU6NTZQTSAtMDQwMCwgTWFyayBMb2RhdG8gd3Jv
-dGU6DQo+ID4gPiBAQCAtMjQxNywzICsyNDMzLDI5IEBAIGlmIFsgQ3lnd2luID0gIiQodW5hbWUg
-LW8gMj4vZGV2L251bGwpIiBdOyB0aGVuDQo+ID4gPiDCoGNvbXBsZXRlIC1vIGJhc2hkZWZhdWx0
-IC1vIGRlZmF1bHQgLW8gbm9zcGFjZSAtRiBfZ2l0IGdpdC5leGUgMj4vZGV2L251bGwgXA0KPiA+
-ID4gwqAgwqAgwqAgfHwgY29tcGxldGUgLW8gZGVmYXVsdCAtbyBub3NwYWNlIC1GIF9naXQgZ2l0
-LmV4ZQ0KPiA+ID4gwqBmaQ0KPiA+ID4gKw0KPiA+ID4gK2lmIFtbIC16ICRaU0hfVkVSU0lPTiBd
-XTsgdGhlbg0KPiA+DQo+ID4gLXo/IMKgSSB0aGluayB5b3Ugd2FudGVkIHRvIHVzZSAtbiBoZXJl
-LCBsaWtlIGF0IHRoZSBvdGhlciBwbGFjZXMuDQo+IA0KPiBPaCwgeWVzLCBzb3JyeS4gIFRoaXMg
-d2FzIGEgbWlzdGFrZS4gIFRoYW5rcyBmb3IgY2F0Y2hpbmcgaXQuDQo+IA0KPiANCj4gPiBOaXQ6
-IHdoeSAiaWYgW1sgLi4uIF1dIj8gwqBGV0lXICJpZiBbIC4uLiBdIiB3b3VsZCBiZSBlbm91Z2gu
-DQo+IA0KPiBCZWNhdXNlIHlvdSBkb24ndCBuZWVkIHRvIHF1b3RlIHZhcmlhYmxlcyB3aXRoIFtb
-IC4uLiBdXSAtLS0gZS5nLiBbDQo+ICRsaW5lcyA9IDAgXSBmYWlscywgdGhvdWdoIGluIHRoaXMg
-Y2FzZSB0aGlzIGZlYXR1cmUgZG9lcyBub3QgbWF0dGVyDQo+IC0tLSBhbmQgYmVjYXVzZSBbWyAu
-Li4gXV0gaXMgZmFzdGVyLg0KPiANCj4gQmFzaCA0LjEuNToNCj4gPiB0aW1lIChmb3IgKCggaSA9
-IDA7IGkgPCAyMDAwMDA7IGkrKyApKTsgZG8gWyAteiAkZm9vIF07IGRvbmUpDQo+IHJlYWwgICAg
-MG0zLjQzMHMNCj4gdXNlciAgICAwbTMuMjQwcw0KPiBzeXMgICAgIDBtMC4xODBzDQo+ID4gdGlt
-ZSAoZm9yICgoIGkgPSAwOyBpIDwgMjAwMDAwOyBpKysgKSk7IGRvIFtbIC16ICRmb28gXV07IGRv
-bmUpDQo+IHJlYWwgICAgMG0yLjIxOXMNCj4gdXNlciAgICAwbTIuMDkwcw0KPiBzeXMgICAgIDBt
-MC4xMDBzDQo+IA0KPiBac2ggNC4zLjEwOg0KPiA+IHRpbWUgKGZvciAoKCBpID0gMDsgaSA8IDIw
-MDAwMDA7IGkrKyApKTsgZG8gWyAteiAkZm9vIF07IGRvbmUpDQo+ICg7IGZvciAoKGkgPSAwOyBp
-IDwgMjAwMDAwMDsgaSsrICkpIGRvOyBbIC16ICRmb28gXTsgZG9uZTsgKSAgMTMuNTZzDQo+IHVz
-ZXIgMS42NHMgc3lzdGVtIDk5JSBjcHUgMTUuMzI3IHRvdGFsDQo+ID4gdGltZSAoZm9yICgoIGkg
-PSAwOyBpIDwgMjAwMDAwMDsgaSsrICkpOyBkbyBbWyAteiAkZm9vIF1dOyBkb25lKQ0KPiAoOyBm
-b3IgKChpID0gMDsgaSA8IDIwMDAwMDA7IGkrKyApKSBkbzsgW1sgLXogJGZvbyBdXTsgZG9uZTsg
-KSAgNC42MnMNCj4gdXNlciAwLjAxcyBzeXN0ZW0gOTklIGNwdSA0LjY0NCB0b3RhbA0KPiANCj4g
-SXMgdGhlcmUgYSByZWFzb24gdG8gcHJlZmVyIFsgLi4uIF0gPw0KDQpUaGUgWyBjb21tYW5kIGlz
-IGRlZmluZWQgYnkgUE9TSVgsIHdoaWxlIFtbIGlzIGFuIGV4dGVuc2lvbiB0byB0aGUgDQpzaGVs
-bCBsYW5ndWFnZSBpbXBsZW1lbnRlZCBieSBiYXNoIChhbmQgenNoKS4gVGh1cyB0aGUgW1sgY29u
-c3RydWN0IA0Kd291bGQgZmFpbCBvbiBhIHN0cmljdGVyIFBPU0lYIGltcGxlbWVudGF0aW9uIG9m
-IHRoZSBzaGVsbCBsYW5ndWFnZSwgDQplLmcuLCBhcyBpbXBsZW1lbnRlZCBieSBkYXNoLiBUaHVz
-IHRvIGJlIFBPU0lYIGNvbXBsaWFudCAod2hpY2ggaXMNCnJlcXVpcmVkIGZvciBzaGVsbCBzY3Jp
-cHRzIGluc3RhbGxlZCBieSBhIG11bHRpIHN5c3RlbSBzdXBwb3J0aW5nIA0KYXBwbGljYXRpb24g
-bGlrZSBnaXQpLCB0aGUgW1sgY29uc3RydWN0IGNhbm5vdCBiZSB1c2VkLiANCg0KT2YgY291cnNl
-LCB0aGlzIGRvZXMgbm90IHJlYWxseSBhcHBseSB0byBhIHNjcmlwdCBleHBsaWNpdGx5IHdyaXR0
-ZW4gDQpmb3IgYmFzaCwgYnV0IHRoYXQgaXMgdGhlIGNvbW1vbiByZWFzb24gdG8gcHJlZmVyIFsg
-b3ZlciBbWyBpbiBzaGVsbCANCnNjcmlwdHMuDQoNCi8vUGV0ZXINCg0K
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+
+> On Mon, Aug 23, 2010 at 19:58, demerphq <demerphq@gmail.com> wrote:
+
+> > Select "pickaxe" in the drop down on the perl5 gitweb, and then sea=
+rch
+> > for PERL_STRLEN_ROUNDUP
+> >
+> > The url generated is:
+> >
+> > http://perl5.git.perl.org/perl.git?a=3Dsearch&h=3DHEAD&st=3Dpickaxe=
+&s=3DPERL_STRLEN_ROUNDUP
+> >
+> > Currently its running for me, and obviously wed prefer that we dont
+> > have N-gazillion people doing the search at once....
+> >
+> > Ah, it just finished... Same problem. I get the error:
+> >
+> > XML Parsing Error: no element found
+> > Location: http://perl5.git.perl.org/perl.git?a=3Dsearch&h=3DHEAD&st=
+=3Dpickaxe&s=3DPERL_STRLEN_ROUNDUP
+> > Line Number 81, Column 1:
+> >
+> > And the last couple of lines of the HTML are:
+> >
+> > </td>
+> > <td class=3D"link"><a
+> > href=3D"/perl.git/commit/7a9b70e91d2c0aa19f8cec5b0f8c133492a19280">=
+commit</a>
+> > | <a href=3D"/perl.git/tree/7a9b70e91d2c0aa19f8cec5b0f8c133492a1928=
+0">tree</a></td>
+> > </tr>
+> > <tr class=3D"light">
+> >
+> > seems to me like it timed out while searching....
+> >
+> > Makes me think the search logic would work better as an incremental
+> > asynchronous fetch....
+>=20
+> Ah, sounds like it's running a really expensive operation and then
+> running into the cgi time execution limit on the webserver (or maybe
+> in gitweb), so when the connection closes the browser ends up with
+> invalid XHTML.
+>=20
+> An async fetch would only make sense in that case if your gitweb and
+> webserver timeouts made sense, i.e. the gitweb timeout was say 1-2 se=
+c
+> less than the webserver timeout.
+
+Ah, modern gitweb supports incremental blame, in that it seeds the
+view with file contents, then runs "git blame --incremental" in
+background on server and updates 'blame_incremental' view with
+JavaScript, but does not support incremental pickaxe.  Perhaps we
+could borrow code from git-browser?
+
+By the way, gitweb should have caching real soon now (TM)... :-)
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
