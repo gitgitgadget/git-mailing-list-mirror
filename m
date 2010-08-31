@@ -1,84 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
-Date: Tue, 31 Aug 2010 14:02:35 +0200
-Message-ID: <vpqk4n7rnvo.fsf@bauges.imag.fr>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
-	<alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se>
-	<AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
+From: Matt McCormick <mbmccormick@gmail.com>
+Subject: Re: Gitweb: 500 - Open git-rev-list failed
+Date: Tue, 31 Aug 2010 08:30:52 -0400
+Message-ID: <AANLkTinJnw-CigSTSnP32PAYf=Awp3mmv33DtDxrNqd4@mail.gmail.com>
+References: <AANLkTinjFNMH+ocDuxx=tkj_pe70RZMkfxBLW4wcLzPF@mail.gmail.com> <AANLkTimnz103yX_8YZO4RbmOqdvA-sET78EL5g5LrK+a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 14:02:50 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 31 14:31:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqPY9-0001xP-Bn
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 14:02:49 +0200
+	id 1OqPzr-0004zN-Eq
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 14:31:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753404Ab0HaMCo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 08:02:44 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44322 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752800Ab0HaMCn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 08:02:43 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7VBx47R020197
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 31 Aug 2010 13:59:04 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OqPXv-0002NM-FQ; Tue, 31 Aug 2010 14:02:35 +0200
-In-Reply-To: <AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
- (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue\, 31
- Aug 2010 11\:42\:38 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 31 Aug 2010 13:59:05 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o7VBx47R020197
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1283860745.71292@Jkk6hjzSCTko6qQBjj4fbw
+	id S1757308Ab0HaMbY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 08:31:24 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:55611 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756743Ab0HaMbX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 08:31:23 -0400
+Received: by vws3 with SMTP id 3so5261960vws.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 05:31:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=6A0Dd0ZUtVLa+tVyTT8f4gS393Y0NglGjBGJufwNCwE=;
+        b=HzlzJRAVRNoyjC9OxJ6f6+K0RVzPRjo3v6cNZJRlbPXVtsOUjRPHJWL7ZRCOAq7JxE
+         vf64wgTCnrZhbITfF65o0+wmvuwYgIcNlnk9VQzI8M/o6NfDommXbpHHERuMFO71VHZm
+         iPgrGtXHTTPrGmWPVmhJ1YVjg2QEnu00A12C0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=Oa7GdwXB//2XhFD3Huy5wWoK7YG/c6aARlHKan3FZXYj4pIqzqS/T16yuOe6lVjquy
+         2e5N5GIXnSFcsD+IRDz/r8HWjZFTAEEPWs4B6s9O7GvNHSl2S4/UY93c0s2oV5K0nA4s
+         ryWtqUUSY0QduGALZWEJE7Qkr0GsSGDTQaTSY=
+Received: by 10.220.157.139 with SMTP id b11mr3524210vcx.180.1283257882440;
+ Tue, 31 Aug 2010 05:31:22 -0700 (PDT)
+Received: by 10.220.163.9 with HTTP; Tue, 31 Aug 2010 05:30:52 -0700 (PDT)
+In-Reply-To: <AANLkTimnz103yX_8YZO4RbmOqdvA-sET78EL5g5LrK+a@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154895>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154896>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+Another interesting item to point out is that when I visit
+http://code.mbmccormick.com/ to access gitweb, when I click on the
+"txt" button I get the list of git repositories, you can try that out
+here:
 
-> I've used Launchpad somewhat for translating and it's friendly to
-> contributors & has an active community, but it seems to require that
-> we BSD-license our translations[1], which would be a showstopper sinc=
-e
-> we'd have to contact everyone who's been submitting GPL-2-only string=
-s
-> to Git for the last 5 years.
+http://code.mbmccormick.com/?a=project_index
 
-I don't think so:
+However, the main page of gitweb still shows that I don't have any
+projects because of the "500 - Open git-rev-list failed" error.
 
-,----[ https://help.launchpad.net/Translations/LicensingFAQ ]
-| I have no problem with BSD myself, but I also uploaded translations
-| from upstream. What do I do?
-|=20
-| As long as the uploads were marked as translations that were publishe=
-d
-| elsewhere, they fall under a separate copyright regime: those imports
-| will retain their original copyright license. The BSD licence only
-| applies to translations that are (as far as the system knows) origina=
-l
-| to Launchpad.
-`----
+Any ideas?
 
-So, my understanding is: Git's code, and strings, would remain what
-they are, but things contributed _through launchpad_ would be BSD.
+--
+Matt McCormick
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+
+On Mon, Aug 30, 2010 at 11:33 PM, Matt McCormick <mbmccormick@gmail.com> wrote:
+> Hello,
+>
+> I just recently installed git and gitosis on my server. I am able to
+> pull, push, etc. to my repositories that I have setup using gitosis
+> without any problem. However, when I try to access gitweb, my list of
+> projects is empty. My configuration files for gitosis all have "gitweb
+> = yes" specified and my configuration files for gitweb are properly
+> set for the right project root, etc.
+>
+> When I manually enter the URL for my project, like the one below, I
+> receive "500 - Open git-rev-list failed". You can visit the URL below
+> for a demonstration.
+>
+> http://code.mbmccormick.com/?p=mccormicktechnologies.com.git
+>
+> Any help that you have is appreciated. Thanks!
+>
+> --
+> Matt McCormick
+>
