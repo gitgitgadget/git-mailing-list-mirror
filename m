@@ -1,110 +1,91 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: Re: Large pack causes git clone failures ... what to do?
-Date: Wed, 1 Sep 2010 07:33:14 +0930
-Message-ID: <AANLkTi=O5SbLRttzR0YwrHVEMz5gxtdTo9Z5C6V1yE1e@mail.gmail.com>
-References: <AANLkTi=1iLx=-9gxkGzuhrbpA005VPSp0itkAkOG4D4z@mail.gmail.com>
-	<20100831180247.GF32601@spearce.org>
-Reply-To: geoffrey.russell@gmail.com
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] Technical details about the index file format.
+Date: Wed, 1 Sep 2010 08:12:03 +1000
+Message-ID: <AANLkTiktRqX+fhFW3mN_b5tnbKzDJY86fLpKVth7RpY9@mail.gmail.com>
+References: <1202711335-12026-1-git-send-email-robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Sep 01 00:03:23 2010
+Cc: gitster <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 00:12:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqYvL-0006kq-1o
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 00:03:23 +0200
+	id 1OqZ42-0003DS-7S
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 00:12:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754982Ab0HaWDR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 18:03:17 -0400
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:61585 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751430Ab0HaWDQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 18:03:16 -0400
-Received: by wwb39 with SMTP id 39so251881wwb.1
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 15:03:15 -0700 (PDT)
+	id S1753934Ab0HaWMH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 18:12:07 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43184 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753273Ab0HaWMG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 18:12:06 -0400
+Received: by wyb35 with SMTP id 35so8409146wyb.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 15:12:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=PwpDKNbfUbU4Avj68Egbbx90SbySY4ANZ5B7nm2R388=;
-        b=Z6+653VjRmK/dj89m9ptfY5C7Fg5KMHUmAjRSewElSUty/TtAmSxt69I9Rmx+ieqXT
-         Zgrd0EK8jIuXpUVCCSEJlXFieHlcPD9XJltgYjJLYbDRB0prcP9x6NLrBlmTRNKELE6a
-         8ocLpNsDsA7LkT8VXn7B26tRSzOV49GN9PWeg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kJbjG04JZM+cfOAgh2cLFdBk9NadnwdGmPCIxRFBVLY=;
+        b=tGrU5rbsFNJS9wmC9gFiOPJjNsooUklCASSdRFUOkCmxRoPN25WDne6o7308Fudt2g
+         Vay41CEEAqge3Y43djGf1wd3RZ/LkJAqoPsceTd5Wn0WeFVIDUZR74qU1kMCZF5Tm8pM
+         XfanFhmI0YMpASh/h79GWoKrWsDOn1YEbxWBM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=akrONbUTpxfOpnGNE/7U2dNjNIn+oehtyZnS9SB9Hd4Xe+/YMUifgI8P6QtBKffNNE
-         PgwQdXl2Yrg8yq2pUjMKJgMeQb1a94UajxqLeqv3JNYwpkT27m+a5PYaWaeEYX6ptg72
-         BuxAUc1n+ADpsxcD5Ps70sv/V94nFDNZ51UjU=
-Received: by 10.227.143.198 with SMTP id w6mr7058074wbu.124.1283292195110;
- Tue, 31 Aug 2010 15:03:15 -0700 (PDT)
-Received: by 10.216.164.19 with HTTP; Tue, 31 Aug 2010 15:03:14 -0700 (PDT)
-In-Reply-To: <20100831180247.GF32601@spearce.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EGvVnMiFSt93gTf76dOPgz1NGSBRF8LHvXhdIqyieM5urfLt9TcqsGOycprCDXo6A3
+         zEVdlQopcaB8Vgi2wEHqji+G71gurizFl+/gjV9ePDEl5uMSi1x3dWVt5mTQnkPvhuwA
+         Y1R21f8xo/2Uk93ssFgGy9gyaLU3sk2kYhOvQ=
+Received: by 10.216.174.7 with SMTP id w7mr7025628wel.21.1283292724395; Tue,
+ 31 Aug 2010 15:12:04 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Tue, 31 Aug 2010 15:12:03 -0700 (PDT)
+In-Reply-To: <1202711335-12026-1-git-send-email-robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154987>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154988>
 
-Thanks Shawn,
+On Mon, Feb 11, 2008 at 5:28 PM, Robin Rosenberg
+<robin.rosenberg@dewire.com> wrote:
+> + =C2=A0 =C2=A0 4 byte version number:
+> + =C2=A0 =C2=A0 =C2=A0 The current version is 2
 
-On Wed, Sep 1, 2010 at 3:32 AM, Shawn O. Pearce <spearce@spearce.org> w=
-rote:
-> Geoff Russell <geoffrey.russell@gmail.com> wrote:
->> I did a "git gc" on a repository and ended up with a 4GB pack ... no=
-w I
->> can't clone the repository and get the following:
->> ...
->
-> Are you on a 32 bit Linux system? =A0Or 64 bit? =A0Git should be auto
-> selecting a unit that would allow it to mmap slices of that 4GB pack.
+The version could be 3 if extended flags are used.
 
-32bit
+> + =C2=A0 =C2=A0 A 16-bit field split into (high to low bits)
+> +
+> + =C2=A0 =C2=A0 =C2=A0 1-bit assume-valid flag
+> +
+> + =C2=A0 =C2=A0 =C2=A0 1-bit update-needed flag
 
->
->> I've looked at "git repack --max-pack-size", but which that
->> created new packs it didn't delete the old monster.
->
-> You really needed to run:
->
-> =A0git repack --max-pack-size=3D.. -a -d
->
-> The -d flag tells it to remove the old packs once the new packs
-> are ready, and the -a flag tells it to reconsider every object
-> in the repository, rather than just those that are loose.
+I think this bit is CE_EXTENDED, an indication that this entry has
+extended flags
 
-Ok, will try.
+> +
+> + =C2=A0 =C2=A0 =C2=A0 2-bit stage (during merge)
+> +
+> + =C2=A0 =C2=A0 =C2=A0 12-bit name length
 
->
-> But if you can't clone it, you probably can't repack it. =A0Clone wor=
-ks
+     A 16-bit field additional flags (high to low bits), only
+applicable to version 3
 
-The cloning fails at different points in the process and the server is =
-normally
-under some load, so perhaps load is a factor.
+       1-bit reserved for future
 
-> by creating a pack file on the server, just like repack does.
-> Except it sends the pack out to the network stream instead of to
-> local disk.
+       1-bit skip-worktree flag
 
-Does clone from a client take note of the pack.packSizeLimit if I set i=
-t
-on the server? Or does it use the client value?
+       1-bit intent-to-add flag (aka "git add -N")
 
-Cheers and many thanks, annoying problems like this always happen at re=
-ally
-inconvenient times :)
+> + =C2=A0- Extensions
+> +
+> + =C2=A0 =C2=A0The only know index extension today is a tree cache.
 
-Geoff.
-
->
-> --
-> Shawn.
->
+There's also "REUC" extension from read-cache.c. I personally have
+never touched it, so no comments.
+--=20
+Duy
