@@ -1,67 +1,69 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number of
- shortlog entries
-Date: Tue, 31 Aug 2010 12:53:37 -0700
-Message-ID: <7vfwxua79a.fsf@alter.siamese.dyndns.org>
-References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
- <1283226800-28980-1-git-send-email-artagnon@gmail.com>
- <20100831143236.GC2315@burratino> <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
- <20100831191324.GA27381@kytes>
+From: Craig de Stigter <craig.destigter@koordinates.com>
+Subject: merging branches with separate but identical history
+Date: Wed, 1 Sep 2010 09:01:09 +1200
+Message-ID: <AANLkTikTzZe=c=RaEYSr_wjfHht4PZihggnV9vEOehvy@mail.gmail.com>
+References: <AANLkTikoDkhKTRmob=B_NYJSYoby0J3Zo-Qp43AU9WfZ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 21:53:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 31 23:01:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqWu0-0001TM-Id
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:53:52 +0200
+	id 1OqXxF-00047g-Ld
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 23:01:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755376Ab0HaTxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 15:53:48 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39905 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753158Ab0HaTxr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 15:53:47 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 32B81D2F99;
-	Tue, 31 Aug 2010 15:53:46 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=XLDYgyR9uqVNMKA0o00K1db9kjM=; b=s8UA9y
-	TzheLTAVIubGw9+aCqQHS3iuJbPw7scl++IXZo5WtN6Snu0oXw+2GyVJdv+ciVIY
-	Q/HcJJNQFfoY3n/eZVvWHiq1Olc3uO66cZLem5QvDQuHI1wAlMiSIIhheq+dE3Cs
-	YetfivVoRwSH5p/JG4wgHZMcGLvrAAboO5MW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UsRdF3Tv8As1DcZta/mg4QCTyzD7x+WR
-	E1zqS8IJHnV4YVPlVdZGON8/L3c1yr9G8wK0L+3CCuZTmmzC4sIK8tnvclCbREbS
-	xzLLAi/iYQwd8JVVCRhzxMGxKimlV6L3Rp4vFsbiRztYf7eN8xaqM6NpQUyHF6z5
-	v7WHt/xFSVw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F2890D2F95;
-	Tue, 31 Aug 2010 15:53:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3558AD2F94; Tue, 31 Aug
- 2010 15:53:39 -0400 (EDT)
-In-Reply-To: <20100831191324.GA27381@kytes> (Ramkumar Ramachandra's message
- of "Wed\, 1 Sep 2010 00\:43\:37 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 75459198-B539-11DF-BE20-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755539Ab0HaVBM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 17:01:12 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:56223 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754084Ab0HaVBL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 17:01:11 -0400
+Received: by eyb6 with SMTP id 6so224335eyb.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 14:01:10 -0700 (PDT)
+Received: by 10.216.159.195 with SMTP id s45mr6856693wek.43.1283288469957;
+ Tue, 31 Aug 2010 14:01:09 -0700 (PDT)
+Received: by 10.216.195.131 with HTTP; Tue, 31 Aug 2010 14:01:09 -0700 (PDT)
+In-Reply-To: <AANLkTikoDkhKTRmob=B_NYJSYoby0J3Zo-Qp43AU9WfZ@mail.gmail.com>
+X-Google-Sender-Auth: yaoBc4E_FxEW0z2Dt0NBINTrVuM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154980>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Hi list
 
-> It's a little asymmetric- the program won't error out when 'merge.log'
-> is set to -1.
+I have two branches which start with the same commits, and I want to me=
+rge them.
+I believe the two branches were individually pulled from the same SVN
+repo, so they look like this:
 
-And what is the reason you do not want to diagnose that as an error?
+branch1: a--b--c--d--e--f--1--3--5
+branch2: a--b--c--d--e--f--2--4--6
+
+If I do:
+> git checkout branch1
+> git merge branch2
+Merge made by recursive
+
+The merge succeeds but the commits in each branch aren't squashed
+together (git log shows two commits for each actual commit)
+=A0i.e., now my history looks like this:
+
+a--a--b--b--c--c--d--d--e--e--f--f--1--2--3--4--5--6
+
+Is there a way to do this without the duplicates? (perhaps a way to
+mark the branch as merged up to 'f', without actually performing a
+merge?)
+
+Thanks
+Craig de Stigter
+--
+Koordinates Ltd
+PO Box 1604, Shortland St, Auckland, New Zealand
+Phone +64-9-966 0433 Fax +64-9-969 0045
+Web http://www.koordinates.com
