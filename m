@@ -1,94 +1,150 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number
- of shortlog entries
-Date: Tue, 31 Aug 2010 13:21:20 -0500
-Message-ID: <20100831182120.GR2315@burratino>
-References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
- <1283226800-28980-1-git-send-email-artagnon@gmail.com>
- <20100831143236.GC2315@burratino>
- <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
+Date: Tue, 31 Aug 2010 18:24:54 +0000
+Message-ID: <AANLkTikk8nVyvp0hTycMY9bjMub38msxrOHMMLNER_DS@mail.gmail.com>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
+	<7v39tveq0j.fsf@alter.siamese.dyndns.org>
+	<AANLkTinKgOdgTpORf-NSJ1wpURw9xOkQ3rXZvmV6XtBb@mail.gmail.com>
+	<20100831180832.GQ2315@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 20:23:20 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Marcin Cieslak <saper@saper.info>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 20:25:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqVUN-0008Ik-3H
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 20:23:19 +0200
+	id 1OqVW1-0000nG-VP
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 20:25:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754823Ab0HaSXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 14:23:13 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:48328 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752119Ab0HaSXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 14:23:13 -0400
-Received: by wyb35 with SMTP id 35so8182236wyb.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 11:23:11 -0700 (PDT)
+	id S1754667Ab0HaSY4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 14:24:56 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53186 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751786Ab0HaSY4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 14:24:56 -0400
+Received: by fxm13 with SMTP id 13so4159323fxm.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 11:24:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=KCtdjO2asMzvh6XlcHk6fTeG/OX8UHLhSfdCstrM1RA=;
-        b=i2FDmNkns7vlyNXa8r6K1tCyqtnfqUJwe8Dlobo7F0PNJ1JbjKu2Sg5tra7Omi0qZ/
-         xTUjDrMxHFxHZyTz8ZPPUtzR4kOzgKPObE5xS9aTwdvZnTasnmRgolQpiZpXnw/SRJ4C
-         4sTb5ZbJiaVx6XP9txmPAQCpuvyjFdvJzEaCY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7af4t/Jmr0W9uvMA+Sfu5V8RpITksBFTCtrMbKacEmE=;
+        b=N2Om5qwOo0uNnLQphhohKV38x74evd+o3FUnPWRODkORsiE7hfQEDyuPbr70zBbwg9
+         pR/yOquWWa7i6rYTE9zMtCsn5Yo7ycnyzdO7r7rVinCK463mkKRxM7ZEDGNjClw6yroA
+         7yUnPovFq6lS4gWyDWe6LpVaEjGQabzccZoGY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bbfC+A+kuBJnrldKc2KYMADAbyG7RM1MFDcZ806TboxDpn4LCJtAJP3R5PM8IZs0BT
-         YroiFTBwLx75EI4WKdPDRKP7Z9W/ShOZ8kZgf6ipL7nJ4OJvNfvKn2KNGvKbsKp2K88F
-         +B/R+Iit2WSk3DNa8xrwVuAhCUIEeXVF3L3sA=
-Received: by 10.227.134.136 with SMTP id j8mr6428974wbt.206.1283278991667;
-        Tue, 31 Aug 2010 11:23:11 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id i14sm7893407wbe.12.2010.08.31.11.23.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 11:23:10 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RdkpZEe0xmE5Sh5gsCUFDTXrBq/FC7SDn2aG9ZPqB/ibEcV3G3+t26HOZQVISkzWEx
+         2ZpSIvRvSIiQjqOnTQat0ZtCmXGE8zXfYaU7xjarB0TcXnHnRA/SzAYriVtOKkAJcIQ2
+         EiKRQ0xKeOlxi1YqAaqMEDMFgG0SY6VIoa60Q=
+Received: by 10.223.116.6 with SMTP id k6mr5899976faq.49.1283279094424; Tue,
+ 31 Aug 2010 11:24:54 -0700 (PDT)
+Received: by 10.223.109.195 with HTTP; Tue, 31 Aug 2010 11:24:54 -0700 (PDT)
+In-Reply-To: <20100831180832.GQ2315@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154956>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154957>
 
-Junio C Hamano wrote:
+On Tue, Aug 31, 2010 at 18:08, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>
+>> Or: git://github.com/avar/git.git gettextize-git-mainporcelain-v2
+>
+> Is that against "next"? =C2=A0For an RFC that's okay, but for a serie=
+s
+> that will be part of a release it can be tedious to separate out
+> (not all topics in "next" necessarily are released, and "next"
+> traditionally gets rewound after each release).
 
-> Hmm, do we plan on that?  It sounds a little bit insane.
+Yes it's against next since it had the gettext series merged and next
+is about to be released isn't it? I could base it on something else if
+that's appropriate.
 
-I sent an RFC patch with -1 as internal representation for "git grep
--Cinfinity".  Infinity was the length Yaroslav was most interested in
-for merge.log (not sure why, really).
+> Comments on the patches:
+>
+> =C2=A0Makefile: use variables and shorter lines for xgettext
+>
+> The -o<whatever> passed to cc isn't usually included in CFLAGS,
+> and a part of me is similarly uncomfortable with including it in
+> XGETTEXT_OPTIONS. =C2=A0Isn't that parameter something that should be
+> possible to change in the build system independently from the
+> user's XGETTEXT_OPTIONS preferences?
 
-Regardless, it's true that that would probably not be a detail to
-expose.
+Maybe, but it'll always be --output=3Dpo/git.pot so I saw no reason to
+seperate it. Should it be? The -o for the C compiler changes, but the
+"make pot" target will always write to po/git.pot.
 
-> How about doing this on top?
-[...]
-> --- a/builtin/fmt-merge-msg.c
-> +++ b/builtin/fmt-merge-msg.c
-> @@ -322,7 +322,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
->  	const char *message = NULL;
->  	struct option options[] = {
->  		{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
-> -		  "populate log with <n> entries from shortlog",
-> +		  "populate log with at most <n> entries from shortlog",
->  		  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
->  		{ OPTION_INTEGER, 0, "summary", &shortlog_len, "n",
->  		  "alias for --log (deprecated)",
-> @@ -350,7 +350,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
->  		return 0;
->  	}
->  	if (shortlog_len < 0)
-> -		shortlog_len = DEFAULT_MERGE_LOG_LEN;
-> +		die("Negative --log=%d???", shortlog_len);
+> =C2=A0gettext.c: work around us not using setlocale(LC_CTYPE, "")
+>
+> The perror() problem shows up with strerror(), too, of course.
+> (perror just made for an easier demo.)
 
-Looks good to me (modulo punctuation :)).
+Yeah, and everything external like that, unfortunately.
+
+> =C2=A0gettext: Make NO_GETTEXT=3DYesPlease the default in releases
+>
+> Copy-edits for the notes in INSTALL:
+>
+>> + =C2=A0 =C2=A0 =C2=A0 - Git includes EXPERIMENTAL support for local=
+ization with gettext
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 which is currently disabled by default=
+ in official Git
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 releases.
+>
+> s/EXPERIMENTAL/experimental/? =C2=A0No need to shout.
+
+OKEY THEN!
+
+> I'd also s/currently // since this will not be current after a while.
+
+ok.
+
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 If you really want to build it you hav=
+e to specify NO_GETTEXT=3D
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 as a Makefile argument. If you're a do=
+wnstream distributor
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 please don't do so without consulting =
+with the Git Mailing List
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 first about the stability of this feat=
+ure.
+>
+> Similarly I'd s/really //. =C2=A0If we want to dissuade people from t=
+rying
+> it out, we should probably do that with more explicit statements.
+
+Thanks.
+
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 It's only being included in releases s=
+o that source messages can
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 be marked for translation without resu=
+lting in painful and
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 inevitable merge conflicts between Git=
+'s pu branch and the
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 rest. END WARNING.
+>
+> Not sure what this means. =C2=A0Maybe:
+>
+> =C2=A0The infrastructure is only included in this release to avoid
+> =C2=A0complications in building other work on top of it. =C2=A0If you=
+ turn
+> =C2=A0it on, expect breakage.
+
+Yes, that's better. I've worked all these into a
+gettextize-git-mainporcelain-v3 branch at the same repository:
+
+    http://github.com/avar/git/compare/gettextize-git-mainporcelain-v2.=
+=2E.gettextize-git-mainporcelain-v3
+
+Or: git://github.com/avar/git.git gettextize-git-mainporcelain-v3
