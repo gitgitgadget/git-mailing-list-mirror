@@ -1,142 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] tests: make test_must_fail more verbose
-Date: Tue, 31 Aug 2010 12:10:55 -0500
-Message-ID: <20100831171055.GO2315@burratino>
-References: <20100831155457.GB11014@sigill.intra.peff.net>
- <20100831155636.GA11530@sigill.intra.peff.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
+Date: Tue, 31 Aug 2010 17:18:51 +0000
+Message-ID: <AANLkTinKgOdgTpORf-NSJ1wpURw9xOkQ3rXZvmV6XtBb@mail.gmail.com>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
+	<7v39tveq0j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 31 19:12:49 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Marcin Cieslak <saper@saper.info>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 19:19:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqUO8-0002X7-A0
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 19:12:48 +0200
+	id 1OqUU8-0006VC-E8
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 19:19:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754226Ab0HaRMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 13:12:43 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:53829 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767Ab0HaRMm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 13:12:42 -0400
-Received: by vws3 with SMTP id 3so5562862vws.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 10:12:41 -0700 (PDT)
+	id S1754612Ab0HaRS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 13:18:57 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:64386 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754349Ab0HaRS4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 13:18:56 -0400
+Received: by pzk9 with SMTP id 9so2525092pzk.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 10:18:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=soFegvQbD6sCqIalFGm7868x3WiXvG2ozxPmB/NDuEQ=;
-        b=r3oFK2Xv11TwsonkWitY+qzJDW9WAbZnZfSpOZlyu4Gd27gDrLke2datztP8kbF4N2
-         UUSU/WZ8xtimsfpCEu7yeI8kbcHPvx6t1lqPcMFy1ZFMjBj76WLTTrYXFoWL6N5aAHoF
-         na5qlx22ji/nXWMS2RGN7jKtjxyFVQf0M03RA=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=eaY12tuhyFFt1LoGbj5XsiQTHXMv3tFfo0GHA4fHVbU=;
+        b=vS06yfZKhUC98QVyCAQ4J6n+P/hhKaM5lIjvyuCSlKHJZFmhHl6N+32xgw5X+l0wve
+         F5nJasinScWCEnac7mg/PvAeC7ZwpSWTN5uN+yGZWS2W9iXEo4OlqemPmVhXnDtme0I2
+         Ep37ygZRkjlZJktRgfr5CAFDs9vK8qDxO17Nc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=kXH5UYAGneACizz4OJIhLPYbpqFIixgqg8wvmdNwZWKLJaQe7tZtSETLOoP22GdLqD
-         nIJovv47Md9I2kXr//Z3kmq9F5I4AgzXvRyiW/T9kvEl9XVcaCeTcDmLSq1uDaKej/hD
-         A7oVQicMVnFkAwUHqrF8AsokRJ/SexX4o0fwE=
-Received: by 10.220.123.132 with SMTP id p4mr3566251vcr.46.1283274760164;
-        Tue, 31 Aug 2010 10:12:40 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id b8sm2954807vci.21.2010.08.31.10.12.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 10:12:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100831155636.GA11530@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=OaNGscPemK0mOJi7Io2fjQA8CfOSIcDsI02xxhy1ZB0rkI2gs/FzQvM/RLXzLB5E8Z
+         9JNcYUaTKp2FqvzkbZaXHZyVXfxDUL8yBI7m+C+bgeB9qptEgiVp7rVQCtld6m5qgpMq
+         Hkrx1BVKz2c4hpp4zuXV8S98sN9v/fcEa7Yk8=
+Received: by 10.114.127.18 with SMTP id z18mr7294425wac.171.1283275131550;
+ Tue, 31 Aug 2010 10:18:51 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Tue, 31 Aug 2010 10:18:51 -0700 (PDT)
+In-Reply-To: <7v39tveq0j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154943>
 
-Jeff King wrote:
+On Mon, Aug 30, 2010 at 21:42, Junio C Hamano <gitster@pobox.com> wrote:
 
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -591,7 +591,15 @@ test_path_is_missing () {
->  
->  test_must_fail () {
->  	"$@"
-> -	test $? -gt 0 -a $? -le 129 -o $? -gt 192
-> +	exit_code=$?
-> +	if test $exit_code = 0; then
-> +		echo >&2 "test_must_fail: command succeeded: $*"
-> +		return 1
-> +	elif test $exit_code -gt 129 -a $exit_code -le 192; then
-> +		echo >&2 "test_must_fail: died by signal: $*"
-> +		return 1
-> +	fi
-> +	return 0
->  }
+> Thanks; will queue them.
 
-Can the exit status (e.g. from a shell function) be negative?
+There's a v2 available here:
+http://github.com/avar/git/tree/gettextize-git-mainporcelain-v2
 
-Though your patch does not affect this, a command interrupted by a
-signal will receive exit status > 192 in shells like ksh93.  Posix
-says:
+Or: git://github.com/avar/git.git gettextize-git-mainporcelain-v2
 
-	As explained in other sections, certain exit status values
-	have been reserved for special uses and should be used by
-	applications only for those purposes:
+It:
 
-	126
-		A file to be executed was found, but it was not an
-		executable utility.
-	127
-		A utility to be executed was not found.
-	>128
-		A command was interrupted by a signal.
+ * contains the "gettext: Make NO_GETTEXT=YesPlease the default in
+   releases" patch. Please only apply that to next, not pu.
 
-Unfortunately that does not agree with git usage.
+ * A "Makefile: use variables and shorter lines for xgettext" patch,
+   which implements Jonathan's suggestion of using more variables for
+   the xgettext invocation.
 
-	129
-		Incorrect command-line usage, or help requested
-		(rather than SIGHUP).
-	255
-		Failed to create pipe for child process, fork
-		failed, execvp failed, wait failed, invalid
-		pathspec for add --patch, "git archive" or
-		"git daemon" failure (rather than signal 127).
+ * Elaborates on the issues facing us in the "gettext.c: work around
+   us not using setlocale(LC_CTYPE, "")" commit message, and mentions
+   the perror(3) issue.
 
-Here's a test_might_fail patch for consistency.
+I didn't send it to the list because it's a huge series and this is a
+little fixup, and I rebased it to inject the Makefile patch early in
+the series, which isn't easy to express in a v2 PATCH.
 
--- 8< --
-Subject: tests: make test_might_fail more verbose
+Thanks.
 
-Let test_might_fail say something about its failures for consistency
-with test_must_fail.
-
-Cc: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/test-lib.sh |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 285bfd8..506787c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -615,7 +615,12 @@ test_must_fail () {
- 
- test_might_fail () {
- 	"$@"
--	test $? -ge 0 -a $? -le 129 -o $? -gt 192
-+	exit_code=$?
-+	if test $exit_code -gt 129 -a $exit_code -le 192; then
-+		echo >&2 "test_might_fail: died by signal: $*"
-+		return 1
-+	fi
-+	return 0
- }
- 
- # test_cmp is a helper function to compare actual and expected output.
--- 
-1.7.2.2
+I can also send it to list if you want, but I suspect this is better.
