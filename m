@@ -1,147 +1,76 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 2/2] merge: Make 'merge.log' an integer or boolean option
-Date: Tue, 31 Aug 2010 09:23:20 +0530
-Message-ID: <1283226800-28980-2-git-send-email-artagnon@gmail.com>
-References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 05:55:56 2010
+Subject: Re: [PATCH] Technical details about the index file format.
+Date: Tue, 31 Aug 2010 12:38:53 +0530
+Message-ID: <20100831070851.GA7543@kytes>
+References: <1202711335-12026-1-git-send-email-robin.rosenberg@dewire.com>
+ <loom.20100831T025714-111@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 09:11:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqHww-0007Hi-5Y
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 05:55:54 +0200
+	id 1OqKzt-0006ut-G7
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 09:11:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932102Ab0HaDzu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 30 Aug 2010 23:55:50 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:43639 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932086Ab0HaDzt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 23:55:49 -0400
-Received: by mail-gy0-f174.google.com with SMTP id 8so2296638gyd.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 20:55:49 -0700 (PDT)
+	id S1756831Ab0HaHLD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 03:11:03 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:36914 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756582Ab0HaHLB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 03:11:01 -0400
+Received: by pxi10 with SMTP id 10so2344916pxi.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 00:11:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=e6PmuGRw6X0hJ4HtC8pqwCjH6b+zjv2OOWdEq9+hfNE=;
-        b=S8flFvZPtDz6vX043nACO01LepuTjdYT+EjWtK+Ax10YmDm92z5sr+0Vx6LPTe/AmK
-         Dq60jo4NzFOEPlxTemTX8F5sRb7Nzu6KxQOrz2femD9VnL5TyjJaq2fNx1Qche3W7/gA
-         F3qSjki1l4yU/eS873a6HCP9KYZpoHRlqRupI=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=DOYtUtyy4Rkxmr33wvEuuFlz7P0g/0UHDuZ07+UwrrY=;
+        b=Y8fkoHEFEMBZUFbu1UwiJMkTB6vFJhKISPMOwsA72x5Mr6Pn/cmws+tI8APd4KxPdP
+         sz/tUPlwg9snOOOzBXY67lTBiXcEeqJV1CrendflX5Y8VGL5//etAToh8DcV9HVQNuib
+         R4lH/bL9MfMzHk1u4HciE1jvxh/Teg4NrZMdQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nXHWc+lq+GOpgA2O7y3hRckStdhIK7eGmDd+X/ReP675Q6LyvTDScjxHQcsuhXdJBZ
-         lXRDln/t8KJSv9tqyW53vFCHiIvz+k487Ht6wML4gqTsttoGCIVTOefYh/pJY9rMj8bD
-         PEqmuc2rPPZiann9vCAeG1nA3GA5icvul4KHI=
-Received: by 10.101.75.5 with SMTP id c5mr5757144anl.190.1283226949324;
-        Mon, 30 Aug 2010 20:55:49 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id w10sm8825175ank.34.2010.08.30.20.55.46
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=aPv7SWHIEeHS/iW37IFovdGSX/2flXhKchyjk4l10vFLLlIpR1eLjHU6Pew64XjPxy
+         7gQsw1vhUHOa4+7rqGxyE3uklgUcx7ped8mHsO82Lp/GllfRZg9Z5KYhYiDSxEVbfqCx
+         1F3cVzMpfBEuPzeHfF5xjEPZn9dt/Uf+rNbJ8=
+Received: by 10.114.36.4 with SMTP id j4mr6508801waj.176.1283238660247;
+        Tue, 31 Aug 2010 00:11:00 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id s5sm15809302wak.12.2010.08.31.00.10.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Aug 2010 20:55:48 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
-In-Reply-To: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
+        Tue, 31 Aug 2010 00:10:58 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <loom.20100831T025714-111@post.gmane.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154881>
 
-Make 'merge.log' an integer or boolean option to set the number of
-shortlog entries to display in the merge commit. Note that it defaults
-to false, and that true means a default value of 20. Also update
-corresponding documentation.
+Hi Sverre,
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
-Thanks-to: Johannes Sixt <j.sixt@viscovery.net>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Replacement for afdcbdc.
+Sverre Rabbelier writes:
+> Robin Rosenberg <robin.rosenberg <at> dewire.com> writes:
+> > 
+> > Signed-off-by: Robin Rosenberg <robin.rosenberg <at> dewire.com>
+> > ---
+> >  Documentation/technical/index-format.txt |   91 ++++++++++++++++++++++++++++++
+> >  1 files changed, 91 insertions(+), 0 deletions(-)
+> >  create mode 100644 Documentation/technical/index-format.txt
+> 
+> This pretty much got a LGTM from Junio back when it was sent [0], Robin, can you 
+> be persuaded to resend this? I think it'd be very good if we had some 
+> documentation on the index format.
 
- Documentation/git-fmt-merge-msg.txt |    6 ++++--
- Documentation/merge-config.txt      |    6 ++++--
- builtin/fmt-merge-msg.c             |   14 +++++---------
- builtin/merge.c                     |    5 ++++-
- 4 files changed, 17 insertions(+), 14 deletions(-)
+Don't we already have this in Documentation/technical/pack-format.txt?
 
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index f04a9ff..40dba8c 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -54,8 +54,10 @@ CONFIGURATION
- -------------
- 
- merge.log::
--	Whether to include summaries of merged commits in newly
--	merge commit messages. False by default.
-+	In addition to branch names, populate the log message with at
-+	most the specified number of one-line descriptions from the
-+	actual commits that are being merged.  Defaults to false, and
-+	true is a synoym for 20.
- 
- merge.summary::
- 	Synonym to `merge.log`; this is deprecated and will be removed in
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index a403155..acbe1e1 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -7,8 +7,10 @@ merge.conflictstyle::
- 	marker and the original text before the `=======` marker.
- 
- merge.log::
--	Whether to include summaries of merged commits in newly created
--	merge commit messages. False by default.
-+	In addition to branch names, populate the log message with at
-+	most the specified number of one-line descriptions from the
-+	actual commits that are being merged.  Defaults to false, and
-+	true is a synoym for 20.
- 
- merge.renameLimit::
- 	The number of files to consider when performing rename detection
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 0997c26..975ef6a 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -15,15 +15,11 @@ static int shortlog_len;
- 
- static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
- {
--	static int found_merge_log = 0;
--	if (!strcmp("merge.log", key)) {
--		found_merge_log = 1;
--		shortlog_len = git_config_bool(key, value) ? DEFAULT_MERGE_LOG_LEN : 0;
--		return 0;
--	}
--	if (!found_merge_log && !strcmp("merge.summary", key)) {
--		shortlog_len = git_config_bool(key, value) ? DEFAULT_MERGE_LOG_LEN : 0;
--		return 0;
-+	if (!strcmp(key, "merge.log") || !strcmp(key, "merge.summary")) {
-+		int is_bool;
-+		shortlog_len = git_config_bool_or_int(key, value, &is_bool);
-+		if (is_bool && shortlog_len || shortlog_len < 0)
-+			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 	}
- 	return 0;
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9e4733d..57ea8d7 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -503,7 +503,10 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 	else if (!strcmp(k, "pull.octopus"))
- 		return git_config_string(&pull_octopus, k, v);
- 	else if (!strcmp(k, "merge.log") || !strcmp(k, "merge.summary")) {
--		shortlog_len = git_config_bool(k, v) ? DEFAULT_MERGE_LOG_LEN : 0;
-+		int is_bool;
-+		shortlog_len = git_config_bool_or_int(k, v, &is_bool);
-+		if (is_bool && shortlog_len || shortlog_len < 0)
-+			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 		return 0;
- 	}
- 	return git_diff_ui_config(k, v, cb);
--- 
-1.7.2.2.409.gdbb11.dirty
+-- Ram
