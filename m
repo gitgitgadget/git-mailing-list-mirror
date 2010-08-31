@@ -1,98 +1,139 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] tests: make test_must_fail fail on missing commands
-Date: Tue, 31 Aug 2010 12:26:57 -0500
-Message-ID: <20100831172657.GP2315@burratino>
-References: <20100831155457.GB11014@sigill.intra.peff.net>
- <20100831155652.GB11530@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Reduce zlib deflate code duplication
+Date: Tue, 31 Aug 2010 10:46:59 -0700
+Message-ID: <7vpqwybros.fsf@alter.siamese.dyndns.org>
+References: <1282856164-5126-1-git-send-email-pclouds@gmail.com>
+ <1283132815-3277-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 31 19:28:51 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Niedier <jrnieder@gmail.com>, git@vger.kernel.org,
+	spearce@spearce.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 19:47:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqUdd-0004vL-V8
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 19:28:50 +0200
+	id 1OqUvX-0001FI-1z
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 19:47:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753483Ab0HaR2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 13:28:45 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61459 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751309Ab0HaR2o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 13:28:44 -0400
-Received: by fxm13 with SMTP id 13so4108635fxm.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 10:28:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Y7zxD29mXcgLj1EQwa8WyrT92MHrctNWx1EuEDWKM54=;
-        b=AM8cF0nCdtkAkxGoUOVuTMWshEQk6M3KA8ZieQiFTmx+bWijVENoiGeizweFCJVePK
-         LhwPTuLSiTaCG4G4NutDbHWR8Dox3/kkLrNk8VxnlVMw2thvGP6ndX0EHFUISeDUXOYu
-         gJLpHXQgj/RjsDlYOivfjgt66AJ7z0QfolDFY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=c8pCjjGpdfl1m2TFz0BFjj3nN4monU5c90c6IcAfSHEQbhbXCYedP+cea/KbImmFj5
-         ZQVxT3/ozuYhMKNJBG0c5G7Ys7mgRArsjYpLiELIplrI+pX4Ba0zhMYNP46jhxeEDgqj
-         MwRfi4LoEiPH2JGqNtDfEvy9JFDCf96ALmJ1M=
-Received: by 10.223.104.141 with SMTP id p13mr2526399fao.64.1283275723070;
-        Tue, 31 Aug 2010 10:28:43 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id k25sm4102252fac.17.2010.08.31.10.28.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 10:28:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100831155652.GB11530@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752330Ab0HaRrN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 13:47:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64607 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751869Ab0HaRrM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 13:47:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E7929D2B92;
+	Tue, 31 Aug 2010 13:47:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=+3x1kTe0ns0y
+	js641APL8YfbM3o=; b=veWBflBzlaBhYG9PQ3nMlVagekBgDaqDBkzlchGCpc7H
+	yjQAjiCzBUnhoWJDcaBG19af+oOXeJ14FTc0yKKD0qD1FoSA8Li/KdGTNBjmJe5G
+	g0PJxmdOw98oKwovE97cWB3bR6ymP22yRbOni5cQw5owKRkPANR6vPMT2We7mzo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Rc9Jnm
+	55US0MM7OG8D8tUM1xQlAMPRGYlrChai569syvpT/0ZJacJju5D2NT7ib4QbeN6t
+	Tdm00+UvwAFFyl0znJVx9nsYBRUiaBY8L0opCnm9ukJjJ9pr41EYrUtW1zAfqFSA
+	GaTnEG6HnzJwuFBCgB2JkQoOqzpWkFxPfdonI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A694BD2B91;
+	Tue, 31 Aug 2010 13:47:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92BD7D2B90; Tue, 31 Aug
+ 2010 13:47:01 -0400 (EDT)
+In-Reply-To: <1283132815-3277-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Mon\, 30 Aug
+ 2010 11\:46\:55 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C5849C38-B527-11DF-840E-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154947>
 
-Jeff King wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> The point of it is to run a command that produces failure. A
-> missing command is more likely an error in the test script
+> diff --git a/archive-zip.c b/archive-zip.c
+> index cf28504..ed176ca 100644
+> --- a/archive-zip.c
+> +++ b/archive-zip.c
+> @@ -87,39 +87,6 @@ static void copy_le32(unsigned char *dest, unsigne=
+d int n)
+>  	dest[3] =3D 0xff & (n >> 030);
+>  }
+> =20
+> -static void *zlib_deflate(void *data, unsigned long size,
+> -		int compression_level, unsigned long *compressed_size)
+> -{
 
-Makes sense.  Here's the corresponding change for test_might_fail.
+This name makes more sense than git_deflate() as it is about "deflating=
+ by
+calling zlib".  For a common library routine "frotz", git_frotz tends t=
+o
+be used to name our own replacement for it, but with this patch we are =
+not
+creating our own implementation of deflate algorithm.
 
--- 8< --
-Subject: tests: make test_might_fail fail on missing commands
+> - ...
+> -	deflateEnd(&stream);
 
-Detect and report hard-to-notice spelling mistakes like
+We used not to check the return value of this call here; the new functi=
+on
+in wrapper.c insists that this returns Z_OK.  I think it is an improvem=
+ent
+that deserves to be mentioned in the proposed log message.
 
- test_might_fail "git config --unset whatever"
+> @@ -164,8 +131,8 @@ static int write_zip_entry(struct archiver_args *=
+args,
+>  	}
+> =20
+>  	if (method =3D=3D 8) {
+> -		deflated =3D zlib_deflate(buffer, size, args->compression_level,
+> -				&compressed_size);
+> +		compressed_size =3D size;
 
-(the extra quotes prevent the shell from running git as intended;
-instead, the shell looks for a "git config --unset whatever" file).
+Isn't it awkward that you have to assign the size of the uncompressed
+input to a variable you are planning to use to hold the compressed size
+with your API?  I do not see a compelling reason that we would want to =
+use
+an in-out parameter here.
 
-Cc: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/test-lib.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
+> @@ -1708,12 +1684,19 @@ static void emit_binary_diff_body(FILE *file,=
+ mmfile_t *one, mmfile_t *two, char
+>  	unsigned long delta_size;
+>  	unsigned long deflate_size;
+>  	unsigned long data_size;
+> +	int zlib_error;
+> =20
+>  	/* We could do deflated delta, or we could do just deflated two,
+>  	 * whichever is smaller.
+>  	 */
+>  	delta =3D NULL;
+> -	deflated =3D deflate_it(two->ptr, two->size, &deflate_size);
+> +	deflate_size =3D two->size;
+> +	deflated =3D git_deflate(two->ptr, &deflate_size, zlib_compression_=
+level, &zlib_error);
+> +	if (!deflated) {
+> +		error("failed to compress for binary diff prefix %s, zlib error %d=
+",
+> +		      prefix, zlib_error);
 
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 16ceb53..7da490d 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -622,6 +622,9 @@ test_might_fail () {
- 	if test $exit_code -gt 129 -a $exit_code -le 192; then
- 		echo >&2 "test_might_fail: died by signal: $*"
- 		return 1
-+	elif test $exit_code = 127; then
-+		echo >&2 "test_might_fail: command not found: $*"
-+		return 1
- 	fi
- 	return 0
- }
--- 
-1.7.2.2
+What is this "prefix" about?
+
+I think the callchain here is that builtin_diff() sets its local variab=
+le
+line_prefix according to the o->output_prefix (used by graphing cruft) =
+and
+it is passed to emit_binary_diff().  It certainly shouldn't be in the
+middle of any line, and I don't think you want it in the error message =
+in
+the first place.  Likewise for another error message nearby.
+
+Thanks.
