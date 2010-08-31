@@ -1,110 +1,59 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number
- of shortlog entries
-Date: Wed, 1 Sep 2010 00:43:37 +0530
-Message-ID: <20100831191324.GA27381@kytes>
-References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
- <1283226800-28980-1-git-send-email-artagnon@gmail.com>
- <20100831143236.GC2315@burratino>
- <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
+From: Casey Dahlin <cdahlin@redhat.com>
+Subject: Re: [RFC PATCH] Introduce git-hive
+Date: Tue, 31 Aug 2010 15:19:09 -0400
+Message-ID: <20100831191909.GF16034@foucault.redhat.com>
+References: <1283198367-11440-1-git-send-email-cdahlin@redhat.com>
+ <AANLkTikcV6f=bUBa-F44JCEFOT0dHrvgrLY-j9hvvOyX@mail.gmail.com>
+ <AANLkTinx_Y1iUt9tj4io=GskwRyvK2EdWv9cO9gAbxBS@mail.gmail.com>
+ <20100831143839.GC16034@foucault.redhat.com>
+ <AANLkTinF1o0RZSKYEL9Qc=uwXx6fBBXh6wRx2CTULBSE@mail.gmail.com>
+ <20100831155159.GD16034@foucault.redhat.com>
+ <815C806E-E7DC-4B7D-9B45-4C9B289DFEEF@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 21:15:59 2010
+Cc: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue Aug 31 21:19:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqWJF-0001Xf-3G
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:15:53 +0200
+	id 1OqWMb-000464-0j
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:19:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752555Ab0HaTPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 15:15:48 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:63755 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750720Ab0HaTPr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 15:15:47 -0400
-Received: by pxi10 with SMTP id 10so2580275pxi.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:15:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=gpkiRZ/w0RDjCyd7lctz2RDJOAREZJqruUJX8Qqx3cA=;
-        b=VFCI1Vtds5M10wVT208Ed2sxx8uvvKwh2v3cZY8IDOqi8PJOxps10mDZ+9z5Rp26XU
-         +Wv9v0EMG83/Nf+EiUAQ0AlKF+YJkSujQJyDAUJ2cjx+bH+WUbQywZa8fLMVIG/OMdFX
-         6WJZyECJ/2NuEfryNYB+yOMwNSiMCZAMu/Xms=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Lx6SDjv/njnd1zdk3fQMcIaG/MojfTK1YudMqk9ZLBwG9mj2+QTA4UpgP6A5NrGYb5
-         RWwLD6Eq/HkljB1nIafzYOQGAoVwyAk1LhvjmhS3mmsbxNvbzYuIoiHfdLhCWrSrUZu0
-         Chr5q799W/1vrK4BoH6nHUJIU8AWKnNuTPht0=
-Received: by 10.142.180.1 with SMTP id c1mr6417803wff.59.1283282147429;
-        Tue, 31 Aug 2010 12:15:47 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id t11sm11423739wfc.16.2010.08.31.12.15.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 12:15:46 -0700 (PDT)
+	id S1752579Ab0HaTTP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 15:19:15 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:41228 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751969Ab0HaTTO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 15:19:14 -0400
+Received: from int-mx02.intmail.prod.int.phx2.redhat.com (int-mx02.intmail.prod.int.phx2.redhat.com [10.5.11.12])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o7VJJC8o004527
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 31 Aug 2010 15:19:12 -0400
+Received: from foucault.redhat.com (vpn-11-196.rdu.redhat.com [10.11.11.196])
+	by int-mx02.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o7VJJ965022127
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 31 Aug 2010 15:19:11 -0400
 Content-Disposition: inline
-In-Reply-To: <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <815C806E-E7DC-4B7D-9B45-4C9B289DFEEF@sb.org>
+User-Agent: Mutt/1.5.20 (2009-12-10)
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.12
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154968>
 
-Hi,
+On Tue, Aug 31, 2010 at 12:15:39PM -0700, Kevin Ballard wrote:
+> What about using Bonjour (a.k.a. DNS-SD) on OSes that provide this functionality? A lot of us already have local networks that are designed to let Bonjour propagate across the entire network, but hasn't been tested on simple UDP multicast. And with Bonjour you can even get wide-area Bonjour domains, so for example I could set up git hive on my desktop at home, and then get at it via my MobileMe wide-area Bonjour domain from anywhere else in the world.
+> 
+> -Kevin Ballard
+> 
 
-Junio C Hamano writes:
-> Hmm, do we plan on that?  It sounds a little bit insane.  Erroring it out
-> would be Ok.  How about doing this on top?
+Avahi is Linux's Bonjour implementation ;)
 
-> @@ -350,7 +350,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
->  		return 0;
->  	}
->  	if (shortlog_len < 0)
-> -		shortlog_len = DEFAULT_MERGE_LOG_LEN;
-> +		die("Negative --log=%d???", shortlog_len);
->  
->  	if (inpath && strcmp(inpath, "-")) {
->  		in = fopen(inpath, "r");
-
-It's a little asymmetric- the program won't error out when 'merge.log'
-is set to -1. Then again, it's probably nicer to simply pretend that
-we didn't see that invalid configuration.
-
-Also, to avoid breaking the '--log=-1' test, either drop the test
-altogether or use something like this:
-
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-
-diff --git a/t/t6200-fmt-merge-msg.sh b/t/t6200-fmt-merge-msg.sh
-index 395c23e..3bfdebc 100755
---- a/t/t6200-fmt-merge-msg.sh
-+++ b/t/t6200-fmt-merge-msg.sh
-@@ -236,7 +236,7 @@ test_expect_success '--log=0 disables shortlog' '
- 	test_cmp expected actual
- '
- 
--test_expect_success '--log=-1 does something sane' '
-+test_expect_code 128 '--log=-1 errors out' '
- 	cat >expected <<-EOF &&
- 	Merge branch ${apos}left${apos}
- 
-@@ -248,8 +248,7 @@ test_expect_success '--log=-1 does something sane' '
- 	  Common #1
- 	EOF
- 
--	git fmt-merge-msg --log=-1 <.git/FETCH_HEAD >actual &&
--	test_cmp expected actual
-+	git fmt-merge-msg --log=-1 <.git/FETCH_HEAD >actual
- '
- 
- test_expect_success 'fmt-merge-msg -m' '
+--CJD
