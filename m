@@ -1,106 +1,85 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC 05/17] gettext: make the simple parts of git-init localizable
-Date: Tue, 31 Aug 2010 15:37:19 +0000
-Message-ID: <AANLkTikd7mc4DjTVaKip_WFqVdezE13ZbL+Vmfqd8yCu@mail.gmail.com>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
-	<1283203703-26923-6-git-send-email-avarab@gmail.com>
-	<20100831150301.GE2315@burratino>
+From: Marcin Cieslak <saper@saper.info>
+Subject: Re: [PATCH/RFC 07/17] gettext.c: work around us not using
+ setlocale(LC_CTYPE, "")
+Date: Tue, 31 Aug 2010 15:37:47 +0000
+Message-ID: <alpine.BSF.2.00.1008311534390.12745@x.fncre.vasb>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com> <1283203703-26923-8-git-send-email-avarab@gmail.com> <20100831151800.GG2315@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Marcin Cieslak <saper@saper.info>,
+Content-Type: MULTIPART/MIXED; BOUNDARY="1730125533-378104593-1283269068=:12745"
+Cc: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jens Lehmann <Jens.Lehmann@web.de>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 17:37:31 2010
+X-From: git-owner@vger.kernel.org Tue Aug 31 17:38:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqStt-0002o1-OC
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 17:37:30 +0200
+	id 1OqSui-0003NP-4k
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 17:38:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757509Ab0HaPhW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 11:37:22 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62758 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757441Ab0HaPhV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 11:37:21 -0400
-Received: by fxm13 with SMTP id 13so3996075fxm.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 08:37:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Adl8VPQAAxbhmxVyTIWUK8lqgOErRuhY/cFkwPGFCBE=;
-        b=liBxmqZSfSWgtXqwaecrXCutzplI0IvUMBA+Vs9krackGoE9g5onqXUFDMDT+J5w/K
-         8K8xcaiPu3+yaD6uYfN5VjJAGVZw1FHpg6BR5s4daJApA6H4fzX8NhtyqQ91Wa3EOSg2
-         OS4783K0/wbvyH7c3H8qzTTvxZS7afgLkujv0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YHWKahd2iLXHLWu81pkDQPxYP9GfeszSVdUtWEUirKXcdNgrW/SeZkfpSBXlEIbqGr
-         9cA+QnBPCGmPDBw26wVUG9zWJ1zDDuW0yEZ2FGwK+6tB2uVlrNSSfqKyRpm2n2AvnomB
-         NiRs655upFLZQPKbi2uTo0Z3bQqdLsiatE0GA=
-Received: by 10.223.108.80 with SMTP id e16mr2486967fap.16.1283269039685; Tue,
- 31 Aug 2010 08:37:19 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Tue, 31 Aug 2010 08:37:19 -0700 (PDT)
-In-Reply-To: <20100831150301.GE2315@burratino>
+	id S1757556Ab0HaPiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 11:38:14 -0400
+Received: from k.saper.info ([91.121.151.35]:39320 "EHLO k.saper.info"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757441Ab0HaPiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 11:38:13 -0400
+Received: from k.saper.info (localhost [127.0.0.1])
+	by k.saper.info (8.14.4/8.14.4) with ESMTP id o7VFbmgw012927
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Tue, 31 Aug 2010 15:37:48 GMT
+	(envelope-from saper@saper.info)
+Received: from localhost (saper@localhost)
+	by k.saper.info (8.14.4/8.14.4/Submit) with ESMTP id o7VFbl9p012924;
+	Tue, 31 Aug 2010 15:37:48 GMT
+	(envelope-from saper@saper.info)
+X-Authentication-Warning: k.saper.info: saper owned process doing -bs
+In-Reply-To: <20100831151800.GG2315@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154915>
 
-On Tue, Aug 31, 2010 at 15:03, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
+
+--1730125533-378104593-1283269068=:12745
+Content-Type: TEXT/PLAIN; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Tue, 31 Aug 2010, Jonathan Nieder wrote:
+
+> Ævar Arnfjörð Bjarmason wrote:
 >
->> --- a/builtin/init-db.c
->> +++ b/builtin/init-db.c
->> @@ -31,7 +31,7 @@ static void safe_create_dir(const char *dir, int s=
-hare)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 else if (share && adjust_shared_perm(dir))
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("Could not make %s w=
-ritable by group", dir);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die(_("Could not make %s=
- writable by group"), dir);
+>> In 107880a I removed our use of setlocale(LC_CTYPE, "") because of a
+>> bug in the GNU C Library [1]
 >
-> Sensible.
+> Future readers might benefit from a reminder that it is vsnprintf that
+> is broken.
 >
-> I wonder if die() should not just be taught to automatically look up
-> translations for its format string (could gettext handle that?).
+> Aside, not about this patch: glibc printf can be very convenient for
+> translators, because of format strings like "%4$s".  Do other common
+> platforms like FreeBSD and Mingw have something similar?
 
-It's always a two step process. First you have to mark the messages
-for translation, then you have to call gettext() (or _())on them to
-make a lookup in the message catalog.
+Speaking for FreeBSD:
 
-The only way that could work is if I taught xgettext to extract
-strings passed to die(), but then managing the false positives would
-probably be more effort than just marking them manually, and it would
-be a big load on the translators:
+% svn log -r21674 printf.3 
+------------------------------------------------------------------------
+r21674 | jkh | 1997-01-14 08:31:39 +0100 (wto) | 8 linii
 
-    $ ack 'die\("(.*?)"' --output '$1' *[ch] builtin/*[ch] | sort -u | =
-wc -l
-    1153
+The following patch to lib/libc/stdio implements positional arguments in
+a manner consistent with other implementations.  Its done in a way that
+adds only a tiny amount of overhead when positional arguments are not used.
+I also have a test program to go with this, but don't know where it belongs
+in the tree.
 
-> Although we try not to change plumbing error messages without good
-> reason, details of error messages change often enough that imvho
-> scripts should not be relying on them.
->
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die_errno("cannot stat '%s'", path);
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die_errno(_("cannot stat '%s'"), path);
->
-> Will strerror() cope correctly without LC_CTYPE set up? =C2=A0(Not pa=
-rt
-> of this series, just something I was reminded of.)
+Submitted-By: Bill Fenner <fenner@FreeBSD.ORG>
 
-My GNU/Linux strerror(3) claims to use LC_MESSAGES, but I didn't test
-it.
+------------------------------------------------------------------------
+
+Solaris 9 has it, too.
+
+--Marcin
+--1730125533-378104593-1283269068=:12745--
