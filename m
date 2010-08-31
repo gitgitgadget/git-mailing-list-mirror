@@ -1,87 +1,68 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: Q. about usage of notes
-Date: Tue, 31 Aug 2010 12:15:59 +0200
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4C7CD65F.10509@atlas-elektronik.com>
-References: <4C7CB8AF.5080008@atlas-elektronik.com> <201008311107.32278.johan@herland.net> <4C7CD5B8.20602@atlas-elektronik.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
+Date: Tue, 31 Aug 2010 12:08:13 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Aug 31 12:16:19 2010
+Content-Type: TEXT/PLAIN; charset=ISO-8859-15;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 13:14:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqNt1-0003du-OS
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 12:16:16 +0200
+	id 1OqOmq-0004ve-1X
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 13:13:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756551Ab0HaKQK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 06:16:10 -0400
-Received: from lxsrv96.atlas.de ([194.156.172.86]:43404 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753345Ab0HaKQJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 06:16:09 -0400
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id 43377138A0
-	for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:16:08 +0200 (CEST)
-X-AuditID: 0ac86512-000004c0000005d0-93-4c7cd6671602
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 31 Aug 2010 12:16:07 +0200
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id B29422717A;
-	Tue, 31 Aug 2010 12:16:07 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id A031F2716A;
-	Tue, 31 Aug 2010 12:16:07 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <4C7CD5B8.20602@atlas-elektronik.com>
-X-Enigmail-Version: 1.1.1
-X-Brightmail-Tracker: AAAAAA==
+	id S1757148Ab0HaLNt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 07:13:49 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:60584 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756743Ab0HaLNt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 07:13:49 -0400
+X-Greylist: delayed 331 seconds by postgrey-1.27 at vger.kernel.org; Tue, 31 Aug 2010 07:13:48 EDT
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o7VB8D4u010820
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 31 Aug 2010 13:08:13 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o7VB8Dqx010816;
+	Tue, 31 Aug 2010 13:08:13 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <1283203703-26923-1-git-send-email-avarab@gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 31 Aug 2010 13:08:13 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154891>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154892>
 
-On 8/31/2010 12:13 PM, Stefan Naewe wrote:
-> 
-> But if I do:
-> 
-> $ touch file ; git add file ; git commit -m"add file"
-> 
-> and then 
-> 
-> $ for n in 1 2 3; do git rm file; git commit -m"rm file"; done
->  
-> I get:
-> 
-> rm 'file'
-> [master 5b24511] rm file
->  0 files changed, 0 insertions(+), 0 deletions(-)
->  delete mode 100644 file
-> fatal: pathspec 'file' did not match any files
-> # On branch master
-> nothing to commit (working directory clean)
-> fatal: pathspec 'file' did not match any files
-> # On branch master
-> nothing to commit (working directory clean)
-> 
-> I don't get 4 commits. That's the part I don't understand :-(
+=C6var Arnfj=F6r=F0 Bjarmason:
 
-Just to be clear:
+> With it applied git-init is the one and only utility of the porcelain=
+=20
+> that's translatable. The series includes a translation of it into=20
+> Icelandic and Polish.
 
-Of course I do understand why I don't get 4 commits here - I just don't
-understand why I get a commit for every 'git notes remove' even if there's
-nothing to remove.
+Very interesting. I would like to contribute a Swedish translation as t=
+ime=20
+permits.
 
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: This tagl ineh asto oman yfou rlet terw ords.
+Any chance the translations could be co-ordinated through Translation=20
+Project <URL:http://translationproject.org/>? I know I suggested this, =
+and=20
+was turned down, for gitk and git-gui, but this translation is potentia=
+lly=20
+larger and could benefit from the co-ordinated effort.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
