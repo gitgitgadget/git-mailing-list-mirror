@@ -1,72 +1,102 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
-Date: Tue, 31 Aug 2010 16:05:49 +0000
-Message-ID: <AANLkTimrsiqCOKKQ6+GFdk8Z_A65mjFT0O2SB4PZ8Keo@mail.gmail.com>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
-	<20100831153214.GI2315@burratino>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [RFC] notes: avoid recommitting identical trees
+Date: Tue, 31 Aug 2010 18:08:11 +0200
+Message-ID: <201008311808.11203.johan@herland.net>
+References: <4C7CD65F.10509@atlas-elektronik.com> <bc44b3393db4018487bb956d00a12fa73f04ca9e.1283267564.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Marcin Cieslak <saper@saper.info>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 18:05:59 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, stefan.naewe@atlas-elektronik.com
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Aug 31 18:08:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqTLS-0005v8-Uc
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 18:05:59 +0200
+	id 1OqTNn-0007iW-A8
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 18:08:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751527Ab0HaQFv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 12:05:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41193 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751183Ab0HaQFv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 12:05:51 -0400
-Received: by fxm13 with SMTP id 13so4024698fxm.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 09:05:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vVmTvoeUCcXEKVSVHLjxa4RjXhzVqOeWF7VczvAk/Pk=;
-        b=xv6QXBqQVIwGlRlCT+SCRJZdkugAkEUYPzqWJEPJqIkfQp7go8gHTcC30pAAiXH5Ve
-         XZaYxPTxU2LDoAGoxaDK+geUfAztmM3x3RYgl9D4srsdw0UvKvrDpoDKwSJG4gYlti53
-         SA5u+a/fZ+iw8IZYUqQgHnctBsMf9mif6cI/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Yi3puvj0NMEFq000xrVt8f8KcWDrbHIfzsTazSBlaCMrrHlv977Fp657LZTjBKTFhB
-         NQmoQypxPwryyXfsW8UeL2j6f55MHb2y3uye2LsfIsb3/kFBa2YYj2QA+uqVdZmU3cXX
-         6ap+LiRee3qzx/W8W5kyGXNEMbpXRiZhKUZhQ=
-Received: by 10.223.117.14 with SMTP id o14mr1089471faq.5.1283270749908; Tue,
- 31 Aug 2010 09:05:49 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Tue, 31 Aug 2010 09:05:49 -0700 (PDT)
-In-Reply-To: <20100831153214.GI2315@burratino>
+	id S1751777Ab0HaQIR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 12:08:17 -0400
+Received: from smtp.opera.com ([213.236.208.81]:44508 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751654Ab0HaQIR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 12:08:17 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o7VG8BLf022680
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 31 Aug 2010 16:08:11 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <bc44b3393db4018487bb956d00a12fa73f04ca9e.1283267564.git.git@drmicha.warpmail.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154930>
 
-On Tue, Aug 31, 2010 at 15:32, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Tuesday 31 August 2010, Michael J Gruber wrote:
+> Currently, "git notes" behaves like "git commit --allow-empty" when
+> committing notes trees. In particular, removing nonexisting notes
+> leads to empty commits "commits with no diff".
 >
->> Now that Git has the infrastructure for translation in next I'm goin=
-g
->> to start submitting patches to make the main porcelain translatable.
+> Change this to avoid unnecessary notes commits.
 >
-> I've written some comments on specific patches; the rest looks good
-> to me.
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-I'll try to reply to them all.
+I just posted a patch with the same objective, but with a different 
+approach. Instead of parsing the previous commit and comparing tree 
+object SHA1s, I add a few lines of notes code to let remove_note() 
+report whether it removed a note or not (thus determining whether a 
+commit is necessary or not).
 
-> Thanks for moving this forward.
+In general, the notes_tree.dirty flag should be sufficient to determine 
+whether a commit is needed or not (remove_note()'s unconditional 
+setting of this flag is also fixed in my patch).
 
-And thanks for your continuing efforts in reviewing all of this.
+
+...Johan
+
+> ---
+> I can't believe there's no easier way to lookup the sha1 of a tree of
+> a commit but I didn't find any, and I did not want to employ the diff
+> machinery for diffing the trees when their sha1 is (should be) known.
+>
+>  builtin/notes.c |   14 +++++++++-----
+>  1 files changed, 9 insertions(+), 5 deletions(-)
+>
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index fbc347c..48da228 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -303,11 +303,15 @@ int commit_notes(struct notes_tree *t, const
+> char *msg) hashclr(prev_commit);
+>  		parent = NULL;
+>  	}
+> -	if (commit_tree(buf.buf + 7, tree_sha1, parent, new_commit, NULL))
+> -		die("Failed to commit notes tree to database");
+> -
+> -	/* Update notes ref with new commit */
+> -	update_ref(buf.buf, t->ref, new_commit, prev_commit, 0,
+> DIE_ON_ERR); +	if (!parent || parse_commit(parent->item) ||
+> parse_tree(parent->item->tree) ||
+> +		hashcmp(parent->item->tree->object.sha1, tree_sha1)) {
+> +		/* avoid recommitting the same tree */
+> +		if (commit_tree(buf.buf + 7, tree_sha1, parent, new_commit, NULL))
+> +			die("Failed to commit notes tree to database");
+> +
+> +		/* Update notes ref with new commit */
+> +		update_ref(buf.buf, t->ref, new_commit, prev_commit, 0,
+> DIE_ON_ERR); +	}
+>
+>  	strbuf_release(&buf);
+>  	return 0;
+
+
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
