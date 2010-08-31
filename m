@@ -1,103 +1,95 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
 Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
-Date: Tue, 31 Aug 2010 11:42:38 +0000
-Message-ID: <AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
-	<alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se>
+Date: Tue, 31 Aug 2010 12:48:19 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1008311244420.28446@ds9.cixit.se>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com> <alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se> <AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Tue Aug 31 13:42:54 2010
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 13:48:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqPEs-0006Dt-70
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 13:42:54 +0200
+	id 1OqPKH-0001Em-VH
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 13:48:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757224Ab0HaLmk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 07:42:40 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49732 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753550Ab0HaLmj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 07:42:39 -0400
-Received: by gwj17 with SMTP id 17so2465016gwj.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 04:42:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nsenphk3LUnv1aGtpCwue2qctb2RSwLLAMCOycQsDLk=;
-        b=uOKieSMFB/55B31PXGBkKpnQDKKjRfe0aoUPBDpHhjpiqZowvWNe87dL9rzulyNjVX
-         4aykNRmxO8rsI4bWsgwX1ib7CeY8TQfFUnBUJM7MDELF3RxO+6G7jYB1BNHS9JO8RGQh
-         IlbjPrMd6CUKN7ayfAKlsEqqpaP1i4rOL7sFw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jFk+EJs34zjJn5JsNyRTAgdBmc8JsI6G0np6QQwRbk2EhhF5KF7txj8emIS5S3VJJj
-         IEFGybB6xtLy0YmAEwzcM2Qz7x4Pka36XjU4gR/Hxlvpkovb8kRUfYpURCyz9iJpuFu2
-         w2r49YFixWeFaWTONTEfoGXhwo5W9Na/AN1fQ=
-Received: by 10.101.165.35 with SMTP id s35mr6211501ano.258.1283254958761;
- Tue, 31 Aug 2010 04:42:38 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Tue, 31 Aug 2010 04:42:38 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se>
+	id S932115Ab0HaLsX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 07:48:23 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:54926 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1757197Ab0HaLsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 07:48:22 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o7VBmJrL013446
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 31 Aug 2010 13:48:19 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o7VBmJPM013442;
+	Tue, 31 Aug 2010 13:48:19 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 31 Aug 2010 13:48:19 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154894>
 
-On Tue, Aug 31, 2010 at 11:08, Peter Krefting <peter@softwolves.pp.se> =
-wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
->
->> With it applied git-init is the one and only utility of the porcelai=
-n
->> that's translatable. The series includes a translation of it into Ic=
-elandic
->> and Polish.
->
-> Very interesting. I would like to contribute a Swedish translation as=
- time
-> permits.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 
-Great!
+> Something like that would be welcome. Personally I'm happy with editi=
+ng=20
+> *.po files locally with Emacs's po-mode, but to get more translators =
+we=20
+> probably want a friendly web interface like that at some point.
 
-> Any chance the translations could be co-ordinated through Translation
-> Project <URL:http://translationproject.org/>? I know I suggested this=
-, and
-> was turned down, for gitk and git-gui, but this translation is potent=
-ially
-> larger and could benefit from the co-ordinated effort.
+Well, it's not a web interface for translating, currently, just for kee=
+ping=20
+track on what needs to be translated by whom (and for language teams to=
+ find=20
+what to translate). You still edit the PO files in whatever you prefer.
 
-Something like that would be welcome. Personally I'm happy with
-editing *.po files locally with Emacs's po-mode, but to get more
-translators we probably want a friendly web interface like that at
-some point. Preferably with an active translation community.
+> Preferably with an active translation community.
 
-I meant to look at this myself at some point, but if you could help
-that'd be great!
+Translation Project is indeed very active.
 
-The only reference I could find to a previous git +
-translationproject.org discussion was this:
-http://kerneltrap.org/mailarchive/git/2008/3/14/1163164 Is that the
-one you're talking about?
+> http://kerneltrap.org/mailarchive/git/2008/3/14/1163164 Is that the
+> one you're talking about?
 
-I've used Launchpad somewhat for translating and it's friendly to
-contributors & has an active community, but it seems to require that
-we BSD-license our translations[1], which would be a showstopper since
-we'd have to contact everyone who's been submitting GPL-2-only strings
-to Git for the last 5 years.
+Yes.
 
-Translationproject seems to have a similar requirement[2], but they
-seem require you to send a letter to the FSF through snail mail before
-you can contribute (maybe not, I didn't read all their docs
-carefully). That would be a major hurdle to casual contributors.
+> Translationproject seems to have a similar requirement[2], but they s=
+eem=20
+> require you to send a letter to the FSF through snail mail before you=
+ can=20
+> contribute (maybe not, I didn't read all their docs carefully).
 
-1. https://help.launchpad.net/Translations/LicensingFAQ
-2. http://translationproject.org/disclaim.txt
+Only when you translate FSF software for which you need to send one of =
+the=20
+letters that claim that you are handing over copyright to the FSF. That=
+ is=20
+not needed in this case, and translators working on such projects do no=
+t=20
+need to send one.
+
+
+=46or the project side, you bascially send a POT file every now and the=
+n,=20
+between string-freeze and release, and update the PO files that come ba=
+ck=20
+from the project every now and then. I've been using the system from bo=
+th=20
+sides and it's lightweight enough to be workable.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
