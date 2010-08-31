@@ -1,70 +1,94 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/3 v2] tests: factor HOME=$(pwd) in test-lib.sh
-Date: Tue, 31 Aug 2010 07:42:53 +0000
-Message-ID: <AANLkTik7d9Rhx5NudeKvVMFAYvVhGxoYzK2y+g3CP=Zj@mail.gmail.com>
-References: <vpqhbibbthi.fsf@bauges.imag.fr>
-	<1283210123-19752-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+Subject: RE: [PATCHv2] completion: make compatible with zsh
+Date: Tue, 31 Aug 2010 09:52:02 +0200
+Message-ID: <A612847CFE53224C91B23E3A5B48BAC749BF0BEBB9@xmail3.se.axis.com>
+References: <1282877156-16149-1-git-send-email-lodatom@gmail.com>
+ <20100830141927.GA16495@neumann>
+ <AANLkTimNULQNVZ4hzaNY1ZobPRtj_zj545Xi29guGu4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Aug 31 09:43:11 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	"avarab@gmail.com" <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Andrew Sayers <andrew-git@pileofstuff.org>
+To: Mark Lodato <lodatom@gmail.com>,
+	=?utf-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Aug 31 09:56:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqLUr-0001Qj-Hv
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 09:43:10 +0200
+	id 1OqLi3-0000yG-RD
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 09:56:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756882Ab0HaHm7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 03:42:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61483 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756096Ab0HaHm7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 03:42:59 -0400
-Received: by iwn5 with SMTP id 5so5638604iwn.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 00:42:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BLhhaA62SI37kx6NhxJjA7zhEfKIyE5g4gM3kZ8yX+0=;
-        b=cIwFFYrTxnG2c1VhsYESfq2cCI6OOwMuikCBGRoCUr2sUNgeUYzGBtREArTw0zd0aN
-         XjH9ewk9oCCwGiMvPUfWKOsEmVvjaUMmnduw5syHtjJu4GWxUaXm+zMuOZ2iIubv5PdP
-         7sUXrXakEXcFR4nJA+pjXkvWI/Zko35xOVN3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Y+7VmBSt8cDWN8uiPjyJvw1zxwpBDsFXtGzxbypYh9vqq6/fDxA1BekToAb52Rl6di
-         WvVnu/YCkmYQTFnmYv3IcGh37RLK6hORHnF7JM8htJfyt3JeA1J72+y7ECjTi690+wL9
-         IUvDpfKV6/dnS7eXT/B3jeaJ2RCtjKtBwyILg=
-Received: by 10.231.33.73 with SMTP id g9mr6413484ibd.117.1283240574783; Tue,
- 31 Aug 2010 00:42:54 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Tue, 31 Aug 2010 00:42:53 -0700 (PDT)
-In-Reply-To: <1283210123-19752-1-git-send-email-Matthieu.Moy@imag.fr>
+	id S1756889Ab0HaHw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 03:52:27 -0400
+Received: from miranda.se.axis.com ([193.13.178.8]:36246 "EHLO
+	miranda.se.axis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756832Ab0HaHw0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 03:52:26 -0400
+Received: from xmail3.se.axis.com (xmail3.se.axis.com [10.0.5.75])
+	by miranda.se.axis.com (8.13.4/8.13.4/Debian-3sarge3) with ESMTP id o7V7q319018263;
+	Tue, 31 Aug 2010 09:52:03 +0200
+Received: from xmail3.se.axis.com ([10.0.5.75]) by xmail3.se.axis.com
+ ([10.0.5.75]) with mapi; Tue, 31 Aug 2010 09:52:03 +0200
+Thread-Topic: [PATCHv2] completion: make compatible with zsh
+Thread-Index: ActIp9sRHSS9VklmSa6fr0fGMp3AdwAOAsUw
+In-Reply-To: <AANLkTimNULQNVZ4hzaNY1ZobPRtj_zj545Xi29guGu4g@mail.gmail.com>
+Accept-Language: en-US, sv-SE
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US, sv-SE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154885>
 
-On Mon, Aug 30, 2010 at 23:15, Matthieu Moy <Matthieu.Moy@imag.fr> wrot=
-e:
-> The same pattern is used in many tests, and makes it easy for new one=
-s to
-> rely on $HOME being a trashable, clean, directory.
->
-> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
-> ---
-> Just re-ordered the patch to make this one the first.
->
-> I took =C3=86var's suggestion of using $TRASH_DIRECTORY instead of $(=
-pwd).
-
-Thanks,
-
-Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiBGcm9tOiBnaXQtb3duZXJAdmdlci5rZXJu
+ZWwub3JnIFttYWlsdG86Z2l0LW93bmVyQHZnZXIua2VybmVsLm9yZ10gT24NCj4gQmVoYWxmIE9m
+IE1hcmsgTG9kYXRvDQo+IFNlbnQ6IGRlbiAzMSBhdWd1c3RpIDIwMTAgMDI6NTYNCj4gVG86IFNa
+RURFUiBHw6Fib3INCj4gQ2M6IFNoYXduIE8uIFBlYXJjZTsgZ2l0QHZnZXIua2VybmVsLm9yZzsg
+YXZhcmFiQGdtYWlsLmNvbTsgSm9uYXRoYW4NCj4gTmllZGVyOyBBbmRyZXcgU2F5ZXJzDQo+IFN1
+YmplY3Q6IFJlOiBbUEFUQ0h2Ml0gY29tcGxldGlvbjogbWFrZSBjb21wYXRpYmxlIHdpdGggenNo
+DQo+IA0KPiAyMDEwLzgvMzAgU1pFREVSIEfDoWJvciA8c3plZGVyQGlyYS51a2EuZGU+DQo+ID4g
+T24gVGh1LCBBdWcgMjYsIDIwMTAgYXQgMTA6NDU6NTZQTSAtMDQwMCwgTWFyayBMb2RhdG8gd3Jv
+dGU6DQo+ID4gPiBAQCAtMjQxNywzICsyNDMzLDI5IEBAIGlmIFsgQ3lnd2luID0gIiQodW5hbWUg
+LW8gMj4vZGV2L251bGwpIiBdOyB0aGVuDQo+ID4gPiDCoGNvbXBsZXRlIC1vIGJhc2hkZWZhdWx0
+IC1vIGRlZmF1bHQgLW8gbm9zcGFjZSAtRiBfZ2l0IGdpdC5leGUgMj4vZGV2L251bGwgXA0KPiA+
+ID4gwqAgwqAgwqAgfHwgY29tcGxldGUgLW8gZGVmYXVsdCAtbyBub3NwYWNlIC1GIF9naXQgZ2l0
+LmV4ZQ0KPiA+ID4gwqBmaQ0KPiA+ID4gKw0KPiA+ID4gK2lmIFtbIC16ICRaU0hfVkVSU0lPTiBd
+XTsgdGhlbg0KPiA+DQo+ID4gLXo/IMKgSSB0aGluayB5b3Ugd2FudGVkIHRvIHVzZSAtbiBoZXJl
+LCBsaWtlIGF0IHRoZSBvdGhlciBwbGFjZXMuDQo+IA0KPiBPaCwgeWVzLCBzb3JyeS4gIFRoaXMg
+d2FzIGEgbWlzdGFrZS4gIFRoYW5rcyBmb3IgY2F0Y2hpbmcgaXQuDQo+IA0KPiANCj4gPiBOaXQ6
+IHdoeSAiaWYgW1sgLi4uIF1dIj8gwqBGV0lXICJpZiBbIC4uLiBdIiB3b3VsZCBiZSBlbm91Z2gu
+DQo+IA0KPiBCZWNhdXNlIHlvdSBkb24ndCBuZWVkIHRvIHF1b3RlIHZhcmlhYmxlcyB3aXRoIFtb
+IC4uLiBdXSAtLS0gZS5nLiBbDQo+ICRsaW5lcyA9IDAgXSBmYWlscywgdGhvdWdoIGluIHRoaXMg
+Y2FzZSB0aGlzIGZlYXR1cmUgZG9lcyBub3QgbWF0dGVyDQo+IC0tLSBhbmQgYmVjYXVzZSBbWyAu
+Li4gXV0gaXMgZmFzdGVyLg0KPiANCj4gQmFzaCA0LjEuNToNCj4gPiB0aW1lIChmb3IgKCggaSA9
+IDA7IGkgPCAyMDAwMDA7IGkrKyApKTsgZG8gWyAteiAkZm9vIF07IGRvbmUpDQo+IHJlYWwgICAg
+MG0zLjQzMHMNCj4gdXNlciAgICAwbTMuMjQwcw0KPiBzeXMgICAgIDBtMC4xODBzDQo+ID4gdGlt
+ZSAoZm9yICgoIGkgPSAwOyBpIDwgMjAwMDAwOyBpKysgKSk7IGRvIFtbIC16ICRmb28gXV07IGRv
+bmUpDQo+IHJlYWwgICAgMG0yLjIxOXMNCj4gdXNlciAgICAwbTIuMDkwcw0KPiBzeXMgICAgIDBt
+MC4xMDBzDQo+IA0KPiBac2ggNC4zLjEwOg0KPiA+IHRpbWUgKGZvciAoKCBpID0gMDsgaSA8IDIw
+MDAwMDA7IGkrKyApKTsgZG8gWyAteiAkZm9vIF07IGRvbmUpDQo+ICg7IGZvciAoKGkgPSAwOyBp
+IDwgMjAwMDAwMDsgaSsrICkpIGRvOyBbIC16ICRmb28gXTsgZG9uZTsgKSAgMTMuNTZzDQo+IHVz
+ZXIgMS42NHMgc3lzdGVtIDk5JSBjcHUgMTUuMzI3IHRvdGFsDQo+ID4gdGltZSAoZm9yICgoIGkg
+PSAwOyBpIDwgMjAwMDAwMDsgaSsrICkpOyBkbyBbWyAteiAkZm9vIF1dOyBkb25lKQ0KPiAoOyBm
+b3IgKChpID0gMDsgaSA8IDIwMDAwMDA7IGkrKyApKSBkbzsgW1sgLXogJGZvbyBdXTsgZG9uZTsg
+KSAgNC42MnMNCj4gdXNlciAwLjAxcyBzeXN0ZW0gOTklIGNwdSA0LjY0NCB0b3RhbA0KPiANCj4g
+SXMgdGhlcmUgYSByZWFzb24gdG8gcHJlZmVyIFsgLi4uIF0gPw0KDQpUaGUgWyBjb21tYW5kIGlz
+IGRlZmluZWQgYnkgUE9TSVgsIHdoaWxlIFtbIGlzIGFuIGV4dGVuc2lvbiB0byB0aGUgDQpzaGVs
+bCBsYW5ndWFnZSBpbXBsZW1lbnRlZCBieSBiYXNoIChhbmQgenNoKS4gVGh1cyB0aGUgW1sgY29u
+c3RydWN0IA0Kd291bGQgZmFpbCBvbiBhIHN0cmljdGVyIFBPU0lYIGltcGxlbWVudGF0aW9uIG9m
+IHRoZSBzaGVsbCBsYW5ndWFnZSwgDQplLmcuLCBhcyBpbXBsZW1lbnRlZCBieSBkYXNoLiBUaHVz
+IHRvIGJlIFBPU0lYIGNvbXBsaWFudCAod2hpY2ggaXMNCnJlcXVpcmVkIGZvciBzaGVsbCBzY3Jp
+cHRzIGluc3RhbGxlZCBieSBhIG11bHRpIHN5c3RlbSBzdXBwb3J0aW5nIA0KYXBwbGljYXRpb24g
+bGlrZSBnaXQpLCB0aGUgW1sgY29uc3RydWN0IGNhbm5vdCBiZSB1c2VkLiANCg0KT2YgY291cnNl
+LCB0aGlzIGRvZXMgbm90IHJlYWxseSBhcHBseSB0byBhIHNjcmlwdCBleHBsaWNpdGx5IHdyaXR0
+ZW4gDQpmb3IgYmFzaCwgYnV0IHRoYXQgaXMgdGhlIGNvbW1vbiByZWFzb24gdG8gcHJlZmVyIFsg
+b3ZlciBbWyBpbiBzaGVsbCANCnNjcmlwdHMuDQoNCi8vUGV0ZXINCg0K
