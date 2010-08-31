@@ -1,103 +1,124 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Detection of relocations within a file
-Date: Tue, 31 Aug 2010 03:43:03 +0200
-Message-ID: <201008310343.05280.jnareb@gmail.com>
-References: <SNT124-W40BFB8E681711F9CD33D9AC4890@phx.gbl>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: Example git hooks (Re: Odd results writing a Git pre-receive
+ hook to syntax check PHP files.)
+Date: Mon, 30 Aug 2010 21:57:12 -0400
+Message-ID: <20100831015712.GT4925@inocybe.localdomain>
+References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
+ <4C7B8E1E.6050708@drmicha.warpmail.net>
+ <AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
+ <20100830141602.GF2315@burratino>
+ <AANLkTi=GUrnH87faWH8G0tD7_KAynVf_ig0KpQRwnsaE@mail.gmail.com>
+ <20100830143411.GH2315@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Bo Yang <struggleyb.nku@gmail.com>
-To: Tim Mazid <timmazid@hotmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 03:43:00 2010
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="sEXf5qLefa2bWrwX"
+Cc: Chris Patti <cpatti@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 03:57:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqFsJ-00050o-Lr
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 03:43:00 +0200
+	id 1OqG6L-0003BQ-9r
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 03:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756594Ab0HaBmu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 30 Aug 2010 21:42:50 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47434 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756544Ab0HaBmt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 30 Aug 2010 21:42:49 -0400
-Received: by fxm13 with SMTP id 13so3676842fxm.19
-        for <git@vger.kernel.org>; Mon, 30 Aug 2010 18:42:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=FGyySzIThdTUoOMZgN3qdYhm3ic/9ACuRd9solevENA=;
-        b=pqhL2TylmZnLfg0eppBywY8DSJ2KOut7f8ZXhV/bHpU5sXq5CAJtmQ1he5QO8AUP0I
-         CgHl1AjC3rUg5Ln0uiWolouM5PnGku8VAbuVWAfGsCs5HzXiRvpwkm0tzW7yFTUpQ9mV
-         RusjFPQXV1cTl3lftemf5m8oNvCpJV1a+sfnc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=MU+YKJy2OYD0vWhFiSxWDnwSh2jineIyt5hGiEPHuVV1dHxMTjOkU+BI1pRY/bCOPz
-         l+YvGtJtVIl+SSJHB260DwoDNNB8zlgq3IqhHRHyQ2GHvdUkLKv3IbbUbqtKTuvV1NLC
-         6PqpqlfCnOvh37l1MzF/WCCcToMZYOPj/cdac=
-Received: by 10.223.103.72 with SMTP id j8mr4711499fao.4.1283218968209;
-        Mon, 30 Aug 2010 18:42:48 -0700 (PDT)
-Received: from [192.168.1.13] (abws159.neoplus.adsl.tpnet.pl [83.8.242.159])
-        by mx.google.com with ESMTPS id r5sm3714134faq.32.2010.08.30.18.42.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 30 Aug 2010 18:42:45 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <SNT124-W40BFB8E681711F9CD33D9AC4890@phx.gbl>
+	id S1756591Ab0HaB5X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 30 Aug 2010 21:57:23 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54847 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756548Ab0HaB5X (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 30 Aug 2010 21:57:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C4A1D1117;
+	Mon, 30 Aug 2010 21:57:21 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=cpZxOtvlwsvcU7ksL2n5Wf7fWI0=; b=Ai7hXTN
+	jfcty9sIlaIzPtpbEWxJUIBwFRjApB0kc6R6p3P1DybgLmtKwmnUMMBusAFGG0S9
+	B3T0QuZ3VSe1qgu6Paa976eEQqF/PHfKTuhAcx/vNQey6chXlvIjENZ0CmXXWf3e
+	zgZAuFWJktev1N9ZWJmq24c0V5wJ0PlS+Ff8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=Wk5osLEBnfW5NpJK6x7HmcM+G+W5vn2EA
+	fRS/5Mh8afKf3K8x4vRbbkCehtMVUv2WUl+d7P+CG/qLf5Rx8TRze9rfsucS8MyR
+	G5MELZ8s7s7gdBtmj72ZcV0rbYVrwH6zqiBSm0aNACJ7buyebVz/unCODLPkw/dn
+	g37M4H91lI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 462B9D1116;
+	Mon, 30 Aug 2010 21:57:18 -0400 (EDT)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A0021D1113; Mon, 30 Aug
+ 2010 21:57:14 -0400 (EDT)
 Content-Disposition: inline
+In-Reply-To: <20100830143411.GH2315@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: 15C8794C-B4A3-11DF-93BD-030CEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154877>
 
-On Mon, 30 Aug 2010, Tim Mazid wrote:
-> Matthieu Moy wrote:
 
-> > 2. I am mystified not by some particular piece of code but by an
-> > entire file. =A0The command
-> > $ git gui blame -- git.c
-> > works okay.
->=20
-> It does, to an extent.
->=20
-> The specific case I was thinking of is when, as a function grows
-> larger, you decide to break it down and move a section of it to a new
-> function.  Now, if the two lines remain exactly the same, there is no
-> problem and git gui blame does the job.
+--sEXf5qLefa2bWrwX
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Jonathan Nieder wrote:
+> Chris Patti wrote:
 >
-> However, if there is any change in the line at all, even leading
-> whitespace, as moving code around usually changes its "tabbage", then
-> "git gui blame" will not detect that as being the same line of code
-> sitting somewhere else, as it sees the two as "different".  =20
-> Is there any way to get around this?
->=20
-> Further, in the previous point regarding a movement patch, it too
-> should not be overly sensitive to leading whitespace.=20
->=20
-> Actually, git in general shouldn't be too sensitive to leading
-> whitespace (or at least should have an option to turn this on/off).=20
+>> (P.S. Is there a canonical 'example Git hooks' location I could
+>> publish this to when it's working? I think there's a dearth of this
+>> kind of example for people out there right now)
+>
+> Try the git wiki (git.wiki.kernel.org).  There is a page for aliases
+> but no page for example hooks yet (though there are some examples
+> under InterfacesFrontendsAndTools).  You could be the trailblazer.
+>
+> There are also a few examples in git templates/ and contrib/hooks,
+> of course.
 
-You can always pass `-w' option to git-blame:
+This reminds me a little of a discussion that came up a while back
+regarding syntax checking of puppet manifests.  The resulting hook is
+here:
 
-  -w   Ignore whitespace when comparing the parent's version and the
-       child's to find where the lines came from.
+http://projects.puppetlabs.com/projects/puppet/wiki/Puppet_Version_Control#=
+Git+Update+Hook
 
-I'm not sure if you can pass other diff whitespace options to git-blame
-(-b, -w, --ignore-space-at-eol).
+The git list discussion:
 
+http://thread.gmane.org/gmane.comp.version-control.git/118626
 
-Note that "git gui blame" shows *two* blames: ordinary and '-C -C -w',
-i.e. with copy detection and ignoring whitespace changes.
+Dunno if that'll help you at all or not Chris.  Hopefully it doesn't
+hurt at least. :)
 
 --=20
-Jakub Narebski
-Poland
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Every side I get up on is the wrong side of bed.
+If it weren't so expensive, I'd wish I were dead.
+    -- signed Unhappy
+
+
+--sEXf5qLefa2bWrwX
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBCAAtBQJMfGFzJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzj74EIAKnvVeXVCfQDXuntbIIxezxa/JwrXmQ3brIE
+z9rvSke9L5ytIXSgANEQCErkg2WuaMygFzjfqhMTpBATt/cR5j9yvKNEC6YH2OZ4
+2/7eI7hF1GTY4DeBEDIQSOZPXSlbaSeozMUcUxCcVMwvDbbMhNUeM2uZ1dKjyEPK
+v8h5AzroN0TIAjq6flw0K+m+7pCQytruSDBw4u4vEeI7Vv75HcLqWgWAJanPQgGV
+S8MkgKZRse7f7CmVQRZEAIGnZuFvv4ZhdQdEKRj1xTnMyIbQXDRjUBPdtzhKCs4W
+fSrbhYwcFAutjM+0CLNJvF+9pbv8Jfm82ZzitP1+dsbKsIjjeVQ=
+=Liay
+-----END PGP SIGNATURE-----
+
+--sEXf5qLefa2bWrwX--
