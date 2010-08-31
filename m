@@ -1,74 +1,140 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number
- of shortlog entries
-Date: Tue, 31 Aug 2010 09:32:36 -0500
-Message-ID: <20100831143236.GC2315@burratino>
-References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
- <1283226800-28980-1-git-send-email-artagnon@gmail.com>
+From: Casey Dahlin <cdahlin@redhat.com>
+Subject: Re: [RFC PATCH] Introduce git-hive
+Date: Tue, 31 Aug 2010 10:38:39 -0400
+Message-ID: <20100831143839.GC16034@foucault.redhat.com>
+References: <1283198367-11440-1-git-send-email-cdahlin@redhat.com>
+ <AANLkTikcV6f=bUBa-F44JCEFOT0dHrvgrLY-j9hvvOyX@mail.gmail.com>
+ <AANLkTinx_Y1iUt9tj4io=GskwRyvK2EdWv9cO9gAbxBS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 16:34:31 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 16:38:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqRuw-0005ZO-Ij
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 16:34:30 +0200
+	id 1OqRzD-00007n-JS
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 16:38:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757459Ab0HaOeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 10:34:25 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:56674 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757414Ab0HaOeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 10:34:25 -0400
-Received: by pxi10 with SMTP id 10so2451076pxi.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 07:34:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=CJ0MSVwBvvav6/6EM0ciHaeDxtAbkIPChuiMRYZXato=;
-        b=WYHF1SMOfdGR8P1MqIXjydebMWIiDNQYQrQLwhvdY5o+TQsdq4eEn22hStCK3u5U3F
-         +2NAKjJlA+tvFskXfB0xUmsM5e0R1bgNvlA0hprPun/NP1vxKQj8WMSYzLkgD1Ol52Yo
-         /jldW0RGDZ108xumzz5tJrRITb7fFdONOtzIE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=DfmZHR/yJGB209Pycw6mp/UG/dvKQj4Av3vXCW9JeIkE0qalqY5B2oYqbyaauqvKjx
-         gGGGdXiyGHysUYQSFlXry1P910oMN3itTUxAgC1mLN3SVzihUPhfwmtFQ5oG9OU0V+a4
-         lcc4E0U8wIlBHgzQoHm9+tHUc3YmmMX3pWyJQ=
-Received: by 10.142.136.10 with SMTP id j10mr6072140wfd.62.1283265264553;
-        Tue, 31 Aug 2010 07:34:24 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id n20sm8853980ibe.11.2010.08.31.07.34.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 07:34:23 -0700 (PDT)
+	id S1757525Ab0HaOiu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 10:38:50 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:3340 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757522Ab0HaOit (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 10:38:49 -0400
+Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o7VEcg2S001257
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Tue, 31 Aug 2010 10:38:42 -0400
+Received: from foucault.redhat.com (vpn-11-196.rdu.redhat.com [10.11.11.196])
+	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o7VEcdV6025543
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Tue, 31 Aug 2010 10:38:41 -0400
 Content-Disposition: inline
-In-Reply-To: <1283226800-28980-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <AANLkTinx_Y1iUt9tj4io=GskwRyvK2EdWv9cO9gAbxBS@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-12-10)
+X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154902>
 
-Ramkumar Ramachandra wrote:
+On Tue, Aug 31, 2010 at 11:29:02AM +1000, Nguyen Thai Ngoc Duy wrote:
+> On Tue, Aug 31, 2010 at 7:17 AM, Luke Kenneth Casson Leighton
+> <luke.leighton@gmail.com> wrote:
+> > On Mon, Aug 30, 2010 at 8:59 PM, =A0<cdahlin@redhat.com> wrote:
+> >> From: Casey Dahlin <cdahlin@redhat.com>
+> >>
+> >> This isn't really what I'd normally call ready for public consumpt=
+ion, but
+> >> since there's been some minimal list chatter on a similar subject =
+I figured I'd
+> >> put this out there early.
+> >>
+> >> git-hive is a peer to peer service for exchanging branches. When s=
+tarted it
+> >> runs a small daemon to publish your repository on a random (or spe=
+cified) port.
+> >> Two hive daemons connected to oneanother can exchange branch lists=
+ and
+> >> introduce eachother to more hive daemons to widen the network.
+> >
+> > =A0p.s. is there any location where, in diagrammatic form, the
+> > protocol's described?
+>=20
+> Also a short tutorial how to use it would be nice.
+>=20
+> I take it I can put different repositories (say wine.git and git.git)
+> in the hive. When I fetch git.git from the hive, it won't fetch
+> wine.git?
 
-> Change the command-line '--log' option from a boolean option to an
-> integer option
+=46irst step to using hive is to set the project uri for your repo (may=
+ change
+this to a different mechanism later).
 
-What does "git merge --log=-1" do?
+	casey@host_a$ git config --add hive.uri http://myproject.org
 
-It looks like you have made "git fmt-merge-msg --log=-1" equivalent to
---log=20, but it might be better to error out or use INT_MAX or
-something (especially because of plans to make -1 mean "infinity"
-later).
+This is what prevents the scenario you describe; repos with the same pr=
+oject
+URI are assumed to be compatible. It can be given as a command line arg=
+ument to
+'git hive start', but this way is much more usable.
 
-Thanks for your perseverance.  Aside from those two nits, the patch
-looks good.
+Next we start the service for our repo.
+
+	casey@host_a$ git hive start --listen-port 21121
+
+Normally the listen port is selected randomly. We specify it here so th=
+at other
+hive users can explicitly connect to us and "bootstrap" themselves into=
+ the
+hive network.
+
+Now to have someone join.
+
+	nguyen@host_b$ git config --add hive.uri http://myproject.org
+	nguyen@host_b$ git hive start host_a.com:21121
+
+So from host_b we specify host_a's address and listen port, and we join=
+ the
+network. From here on out anyone who also connects to host_a will get h=
+ost_b's
+(randomly selected) listen port automatically and be able to connect to=
+ it as
+well.
+
+So now our two peers can see each other.
+
+	casey@host_a$ git hive show --branches
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+		master
+		for_casey
+=09
+	---
+
+	nguyen@host_b$ git hive show --branches
+	Casey Dahlin <cdahlin@redhat.com>
+		master
+		stable
+		v2.1
+
+And we can exchange them
+
+	casey@host_a$ git hive fetch nguyen for_casey
+	casey@host_a$ git branch
+	* master
+	  stable
+	  for_casey
+
+Note that the two arguments in fetch are a regex which searches through=
+ user
+IDs and a branch name, which is why I can abbreviate to just "nguyen" i=
+n all
+lower case.
+
+--CJD
