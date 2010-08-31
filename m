@@ -1,92 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC 05/17] gettext: make the simple parts of git-init
- localizable
-Date: Tue, 31 Aug 2010 11:09:57 -0500
-Message-ID: <20100831160957.GN2315@burratino>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
- <1283203703-26923-6-git-send-email-avarab@gmail.com>
- <20100831150301.GE2315@burratino>
- <AANLkTikd7mc4DjTVaKip_WFqVdezE13ZbL+Vmfqd8yCu@mail.gmail.com>
- <20100831154446.GJ2315@burratino>
- <AANLkTimPndcAu7RTnzpB0LZ1bHpFC5-QxNkPPAkoD5Hc@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC] notes: avoid recommitting identical trees
+Date: Tue, 31 Aug 2010 18:15:42 +0200
+Message-ID: <4C7D2AAE.9000701@drmicha.warpmail.net>
+References: <4C7CD65F.10509@atlas-elektronik.com> <bc44b3393db4018487bb956d00a12fa73f04ca9e.1283267564.git.git@drmicha.warpmail.net> <20100831160145.GC11014@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Marcin Cieslak <saper@saper.info>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 18:11:58 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johan Herland <johan@herland.net>,
+	stefan.naewe@atlas-elektronik.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 31 18:15:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqTRF-0001nP-W5
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 18:11:58 +0200
+	id 1OqTUx-0004V4-Nx
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 18:15:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751969Ab0HaQLv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 12:11:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:44428 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750909Ab0HaQLu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 12:11:50 -0400
-Received: by fxm13 with SMTP id 13so4030859fxm.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 09:11:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=detdJYdeA4q73wTS7dKcAIL6r2vEcYwg2/FVLFQqKAY=;
-        b=du2/Lz5Rr2caQovftcKyFHidq1EV3F1iK6BDaqrkUrypXCYlpSmWnqoVKNPNbPgANr
-         lIICBjaz5q4wvn0Rr+ChXK+GHNo/kIQVZJeQ7c8yo9WhVYImeW8GgqvNyKeoFt8wSGtU
-         IsjekJLnLHOfrDzdhzRZXf5RvI4WMtkhsuDl8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=eMz58EOpMkXXq0eT5Mu/w8qDBBkKRXGZD0peYd047eQ0XihEZ+jlMj39FSzqngpNUg
-         Fj/MbSy06rc85zXtYMBPNnoWq7jeDEJjdyRn4FUnT+qhDBds1gDhIEjYCnz3M9Pg+sLu
-         htho1Q3lvPeDf9mLyEdMH6sfPKUnDbu2E2pXE=
-Received: by 10.223.106.132 with SMTP id x4mr5685406fao.15.1283271108285;
-        Tue, 31 Aug 2010 09:11:48 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id 2sm4047236faz.38.2010.08.31.09.11.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 09:11:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimPndcAu7RTnzpB0LZ1bHpFC5-QxNkPPAkoD5Hc@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752246Ab0HaQPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 12:15:41 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:53839 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751183Ab0HaQPl (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 12:15:41 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D1E39415;
+	Tue, 31 Aug 2010 12:15:40 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Tue, 31 Aug 2010 12:15:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Pa9r7/6ga9rmyicGHKQLf7uMN0I=; b=NWj1Yie4v/2FweX3zyN7DtCaRh2aAcDcBODh6UE6OiZBji8mZduwcZARNexNFyr0VxIyP6FUY6R956twXsVhj05aGL+tiZUVehIL1jOgHOxL984opGAvJZTVDjEXLF4YdWJV3U5cuV7vjrsDkD6Ytox7zELHB1pJ39SSWQfS4pg=
+X-Sasl-enc: h6009iQJ0lwCdRgYNrRWM3oJE/h5bhb5ldwdFD9e+viK 1283271340
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 19BAD406676;
+	Tue, 31 Aug 2010 12:15:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Lightning/1.0b2pre Thunderbird/3.1.2
+In-Reply-To: <20100831160145.GC11014@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154932>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Tue, Aug 31, 2010 at 15:44, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+Jeff King venit, vidit, dixit 31.08.2010 18:01:
+> On Tue, Aug 31, 2010 at 05:16:17PM +0200, Michael J Gruber wrote:
+> 
+>> Currently, "git notes" behaves like "git commit --allow-empty" when
+>> committing notes trees. In particular, removing nonexisting notes leads
+>> to empty commits "commits with no diff".
+>>
+>> Change this to avoid unnecessary notes commits.
+> 
+> Is this a sufficient check in the case of notes? Is it possible that we
+> re-balanced the fanout of the notes tree and got a different tree sha1,
+> even though there is nothing interesting to commit?
 
->> int main(void)
->> {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0setlocale(LC_ALL, "");
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0setlocale(LC_CTYPE, "C");
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0errno =3D ENODEV;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0perror("test");
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
->> }
->> $ make foo
->> cc =C2=A0 =C2=A0 foo.c =C2=A0 -o foo
->> $ ./foo
->> test: No such device
->> $ LANG=3Dde_DE.UTF-8 ./foo
->> test: Kein passendes Ger?t gefunden
->
-> What about with MESSAGES instead of ALL, like we're doing?
->=20
->     setlocale(LC_MESSAGES, "");
->     setlocale(LC_CTYPE, "C");
+Yes, but I don't think this hurts. The main thrust here is to catch the
+case of repeated "git notes remove". Also, we might even want to record
+the history when there is rebalancing since this is indeed a tree change.
 
-Same result, alas.
+Johan's (later ;) ) approach, while being more intrusive, catches this
+at the point of removal - if there's nothing to remove, nothing gets
+rewritten.
+
+> 
+>> +	if (!parent || parse_commit(parent->item) || parse_tree(parent->item->tree) ||
+>> +		hashcmp(parent->item->tree->object.sha1, tree_sha1)) {
+> 
+> I didn't check, but I can imagine you can drop the parse_tree here. We
+> should know the object sha1 once the commit is parsed.
+
+parse_commit() does a lookup_tree() but I don't think that it parses the
+tree, i.e. I don't hink it fills in tree->object.sha1. At least it
+segfaulted without that ;)
+
+Michael
