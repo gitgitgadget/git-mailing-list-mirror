@@ -1,82 +1,102 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] tests: make test_must_fail fail on missing commands
-Date: Tue, 31 Aug 2010 18:14:14 +0000
-Message-ID: <AANLkTimpaD7gW56sLqFzHOe+32QkXMOCkpQqJuaZNZav@mail.gmail.com>
-References: <20100831155457.GB11014@sigill.intra.peff.net>
-	<20100831155652.GB11530@sigill.intra.peff.net>
-	<20100831172657.GP2315@burratino>
-	<20100831180847.GC15020@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number of
+ shortlog entries
+Date: Tue, 31 Aug 2010 11:17:12 -0700
+Message-ID: <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
+References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
+ <1283226800-28980-1-git-send-email-artagnon@gmail.com>
+ <20100831143236.GC2315@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Aug 31 20:14:22 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 20:17:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqVLi-0001iZ-4g
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 20:14:22 +0200
+	id 1OqVOj-0004AS-Ax
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 20:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753934Ab0HaSOQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 14:14:16 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45365 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752207Ab0HaSOP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 14:14:15 -0400
-Received: by fxm13 with SMTP id 13so4150403fxm.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 11:14:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IAkbh6b3aBpWB/D/YaBrBMg2wmMrjaKHJcoX12whVoU=;
-        b=UOITpEnLtEJjiXV972TdB/bk+kHYeCPbShXB38hWO/RjuyBpCWbwQNda2iBzNASb3k
-         UJUoWJW16ps3ArHokAmw63dGmbcvr96ZdcWoGzAT/toPapg8BG8DE9q5mvdajRb51ovG
-         NTsDCOIXWZv39BB+Ca/CxJGdBZ40KBPnf/gxw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FHwCOXPUsnFftWgZWnVpKCzMhfPvFXu06pFtAieZxoMo47wvqqn094/iYYE2349sAl
-         t9w1fesXDa464DP63/uqdwvBxXQOw6hQXWm2B+XSsoP860wrqwYRoMiGeOs0UWkNzVBN
-         vzYTCzFEiXDN1G/huqLq+aQwdX2r9akL8OIcI=
-Received: by 10.223.117.14 with SMTP id o14mr1304063faq.5.1283278454189; Tue,
- 31 Aug 2010 11:14:14 -0700 (PDT)
-Received: by 10.223.109.195 with HTTP; Tue, 31 Aug 2010 11:14:14 -0700 (PDT)
-In-Reply-To: <20100831180847.GC15020@sigill.intra.peff.net>
+	id S1754501Ab0HaSRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 14:17:24 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36919 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753237Ab0HaSRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 14:17:23 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 061C1D20CD;
+	Tue, 31 Aug 2010 14:17:22 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6oUKj3FqkCbaI6X0wzunx7fBHjQ=; b=o83tl9
+	U4IQBCJRJgJ5MzVbOgvapt4NUUonUOwnXOnM/O3k9nFNojOmHKrZhAw6LN6/3Y4n
+	Qs3pAvikQqTKPHVSd1oK0J6KrSs4Nf6vJIa9jPVWKZki/GVN4gMz7ZKMqxIMidXi
+	dQ0Df63VgfrSMeeecyu7b+eobgQ2TZZbUhqxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tHbFPfvr4nCLbKdBEDqLRxjDGrKI0IRq
+	2G449o0eeTMKOByp4tlvrhfwSJvUHIuuPHmiCzopanu6hiyriPQa0QvIr9JMYMLc
+	jLDLrPvbCVsmxCeg/VH7SqG2dwtoRINFT/PK7VZt6y1qejbw0d9fT7INMBbyb/fu
+	aJuwNKyu1pM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C654FD20CB;
+	Tue, 31 Aug 2010 14:17:18 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C0076D20CA; Tue, 31 Aug
+ 2010 14:17:14 -0400 (EDT)
+In-Reply-To: <20100831143236.GC2315@burratino> (Jonathan Nieder's message of
+ "Tue\, 31 Aug 2010 09\:32\:36 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FDA12290-B52B-11DF-82B2-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154954>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154955>
 
-On Tue, Aug 31, 2010 at 18:08, Jeff King <peff@peff.net> wrote:
-> On Tue, Aug 31, 2010 at 12:26:57PM -0500, Jonathan Nieder wrote:
->
->> Jeff King wrote:
->>
->> > The point of it is to run a command that produces failure. A
->> > missing command is more likely an error in the test script
->>
->> Makes sense. =C2=A0Here's the corresponding change for test_might_fa=
-il.
->
-> I think this is probably worth doing. Unless somebody is doing someth=
-ing
-> silly like:
->
-> =C2=A0test_might_fail command_that_might_exist
->
-> But that seems a pretty contrived scenario (I am imagining something
-> like "call sync now, but if we don't have it, don't fail". But in the
-> test scripts that seems unlikely).
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Yes, test_must_fail is only for git commands, not external stuff like
-sync, although some naughty people have gone and used it for grep/test
-in a few places instead of using "!" it seems.
+> Ramkumar Ramachandra wrote:
+>
+>> Change the command-line '--log' option from a boolean option to an
+>> integer option
+>
+> What does "git merge --log=-1" do?
+>
+> It looks like you have made "git fmt-merge-msg --log=-1" equivalent to
+> --log=20, but it might be better to error out or use INT_MAX or
+> something (especially because of plans to make -1 mean "infinity"
+> later).
+
+Hmm, do we plan on that?  It sounds a little bit insane.  Erroring it out
+would be Ok.  How about doing this on top?
+
+ builtin/fmt-merge-msg.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 0997c26..7c6e226 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -322,7 +322,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 	const char *message = NULL;
+ 	struct option options[] = {
+ 		{ OPTION_INTEGER, 0, "log", &shortlog_len, "n",
+-		  "populate log with <n> entries from shortlog",
++		  "populate log with at most <n> entries from shortlog",
+ 		  PARSE_OPT_OPTARG, NULL, DEFAULT_MERGE_LOG_LEN },
+ 		{ OPTION_INTEGER, 0, "summary", &shortlog_len, "n",
+ 		  "alias for --log (deprecated)",
+@@ -350,7 +350,7 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 		return 0;
+ 	}
+ 	if (shortlog_len < 0)
+-		shortlog_len = DEFAULT_MERGE_LOG_LEN;
++		die("Negative --log=%d???", shortlog_len);
+ 
+ 	if (inpath && strcmp(inpath, "-")) {
+ 		in = fopen(inpath, "r");
