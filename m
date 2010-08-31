@@ -1,107 +1,126 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
-Date: Tue, 31 Aug 2010 14:42:04 -0500
-Message-ID: <20100831194204.GW2315@burratino>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC 15/17] po/is.po: add Icelandic translation
+Date: Tue, 31 Aug 2010 21:49:34 +0200
+Message-ID: <AANLkTi=4U2_ascHbC77Rbrb8FGtT7hiOr0MUqfbeWztS@mail.gmail.com>
 References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
- <7v39tveq0j.fsf@alter.siamese.dyndns.org>
- <AANLkTinKgOdgTpORf-NSJ1wpURw9xOkQ3rXZvmV6XtBb@mail.gmail.com>
- <20100831180832.GQ2315@burratino>
- <AANLkTikk8nVyvp0hTycMY9bjMub38msxrOHMMLNER_DS@mail.gmail.com>
- <20100831192247.GU2315@burratino>
- <AANLkTinVFvv2J4z36zc9LAs+_-Pp2_+bYeLVxVeavWtJ@mail.gmail.com>
+ <1283203703-26923-16-git-send-email-avarab@gmail.com> <20100831152959.GH2315@burratino>
+ <AANLkTimYETJcHuKBBRKJ0zbkRBR-K2VAXRLizFQxa-pr@mail.gmail.com>
+ <AANLkTimGSEVLOjTLt2yntXaDfyUkj=mY46evfRx517MC@mail.gmail.com> <AANLkTin5+Sdx3MRrERpFUD04=CSmNyPoB3zRvNxKLLpj@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
 	Marcin Cieslak <saper@saper.info>,
 	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 21:43:57 2010
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 21:50:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqWkP-0003Dj-6s
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:43:57 +0200
+	id 1OqWqZ-0007Wl-UP
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:50:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755326Ab0HaTnv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 15:43:51 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53106 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752351Ab0HaTnu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 15:43:50 -0400
-Received: by qwh6 with SMTP id 6so5543201qwh.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:43:50 -0700 (PDT)
+	id S1755363Ab0HaTt7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 15:49:59 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:46725 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751782Ab0HaTt6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 15:49:58 -0400
+Received: by vws3 with SMTP id 3so5705725vws.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:49:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=0OUNc37DJmYFWLs+oJRbZuTQFwLZ5sqVvW6LT0yw9Bk=;
-        b=jsblCk/ZsJhaY/KBbUyrC9FU4W05Mvv0wcrwi8t9OQjQSVyQ4pCc3UTAarkl4rKUJo
-         RMAmUtfUYYIyyRuFr1kn2WLOE2dbfrO1OVlx2oUKe1GI7tQal6tSjnvQ3jAA8B4stVmW
-         /IGi5PopkQinGZDHfdydh6y6ZHSamUbzMm1WE=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=ZZu0SQq2eIP4ltjw1mSdzfLrftbxPVesyeRx5T9KpHM=;
+        b=jY4zrmiKeqCqijP3vuQqeMypFJkqamlMJ+6q5GsTBYQffxrDw8RK+V9N9obxXZDCmA
+         jD8Qea0m8O+23iweJeotrHrQwJKDR/I0drwMCKeo3D9IjCk9f5XiVUw/7u2ximKUEW+X
+         eFJ8i5tPkl9NauyFYgYObZx75OksXPHk3TxKc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=r3Z+xj06ZMN+UdccWGBWIohk61AqMWvu9A8/uArZInvxoVGdv5YE2hbiRd3LbBA6xN
-         c9N/oRe/6jP9SPfeo0CClln6zCH7iV6iNLMlQSnYPxr4lDdgUKN7KUe0loBbBxNK/a0x
-         kuzqa7+xyIa55dAB1cFq8bNqAyRui4vbkEtRc=
-Received: by 10.224.11.6 with SMTP id r6mr4320010qar.210.1283283829131;
-        Tue, 31 Aug 2010 12:43:49 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id f15sm10082016qcr.13.2010.08.31.12.43.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 12:43:48 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinVFvv2J4z36zc9LAs+_-Pp2_+bYeLVxVeavWtJ@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=P0uKkio3RJI9OQm3ajyO5m3GMD/AbM/4Cjda9TNiy7p5XVuWUtRZ634Gidgt4/g4Ya
+         vQ1cK2lLcABSfBHGjjN9ntoqPQHymFurs+wZmpKlNnL1qt6FHVNGD6JQKvAYsgX/HHZa
+         Agpk0mZjNhLg3pqOA0BfrMDPkKxd1lGoweGjE=
+Received: by 10.220.60.204 with SMTP id q12mr3598760vch.183.1283284194278;
+ Tue, 31 Aug 2010 12:49:54 -0700 (PDT)
+Received: by 10.220.180.76 with HTTP; Tue, 31 Aug 2010 12:49:34 -0700 (PDT)
+In-Reply-To: <AANLkTin5+Sdx3MRrERpFUD04=CSmNyPoB3zRvNxKLLpj@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154978>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Tue, Aug 31, 2010 at 19:22, Jonathan Nieder <jrnieder@gmail.com> w=
+On Tue, Aug 31, 2010 at 9:32 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Aug 31, 2010 at 19:14, Erik Faye-Lund <kusmabite@gmail.com> w=
 rote:
+>> On Tue, Aug 31, 2010 at 7:01 PM, =C6var Arnfj=F6r=F0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> On Tue, Aug 31, 2010 at 15:29, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
+>>>> =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>>>>
+>>>>> --- a/po/is.po
+>>>>> +++ b/po/is.po
+>>>>> @@ -11,35 +11,154 @@ msgstr ""
+>>>>> =A0"Content-Type: text/plain; charset=3DUTF-8\n"
+>>>>> =A0"Content-Transfer-Encoding: 8bit\n"
+>>>>>
+>>>>> -#: t/t0200/test.c:4
+>>>>> +#: builtin/init-db.c:34
+>>>>
+>>>> Is there a diff driver that will ignore these --add-location lines=
+?
+>>>>
+>>>> Alternatively, would it be possible to get msgmerge and xgettext t=
+o
+>>>> provide the filenames without the line numbers? =A0My experience i=
+s
+>>>> that most translation diffs are very hard to read because about 80=
+%
+>>>> noise. :(
+>>>>
+>>>> Aside from that, this looks good and sane (well, the English part
+>>>> I can read does).
+>>>
+>>> Some context, an earlier discussion on this:
+>>> http://kerneltrap.org/mailarchive/git/2010/5/30/31415/thread#mid-31=
+415
+>>>
+>>
+>> msgmerge and xgettext does seem to have the --no-location flag to
+>> avoid these annotations from being generated. The documentation does
+>> say "Note that using this option makes it harder for technically
+>> skilled translators to understand each message's context. ", though.
+>> But perhaps the annotated versions could be generated when needed an=
+d
+>> never checked-in (similar to what you suggested in that e-mail)? It
+>> sounds to me like that would give us the best of all worlds. If it's
+>> possible, that is.
+>
+> It's certainly possible. But each time you worked with these files
+> you'd have add the line numbers yourself to generate the context, the=
+n
+> translate, then remove them again, then submit your patch.
+>
+> I just think it's overly tedious work for getting smaller diffs.
+>
 
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0if test -f po/git.pot &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0remove_creati=
-on_date <po/git.pot >po/git.1po+ &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0remove_creati=
-on_date <po/git.po >po/git.2po+ &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmp po/git.1p=
-o+ po/git.2po+; \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0then \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rm -f po/git.=
-1po+ po/git.2po+ po/git.po; \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0else \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rm -f po/git.=
-1po+ po/git.2po+ po/git.pot; \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0mv po/git.po =
-po/git.pot; \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
-[...]
-> I don't know what they usually do. But that looks like a lot of work
-> to work around a very rare potential edge case.
+You know, computers are pretty good at automating tedious jobs ;)
 
-Ah, to work around the interrupted build case is simpler.  grepping for
-"mv" in Documentation/Makefile would show some examples.
+I was thinking something along the lines of having po/is.po etc, and
+generating po/is.ann.po (or something) from these (+source) so
+translators can see the text in the context of the code. That is, they
+edit is.po, and generate is.ann.po when they want to see the context.
+Then we can put *.ann.po in .gitignore, and it's really just a matter
+of editing, doing "make po/is.ann.po", and voila.
 
-The above incantation is to avoid changing the timestamp on the .pot
-file when it does not change.
-
-> "make pot" is only
-> ever run manually by a translator right before msgmerge.
-
-I don't know enough about translation workflows.  Don't people
-sometimes automatically run msgmerge at build time to get some okay
-fuzzy messages when the translation team is off on vacation?
-
-> Thanks for checking it out.
-
-Thanks for doing the hard work.
+But I dunno, I haven't been using these tools much myself.
