@@ -1,65 +1,173 @@
-From: "Schalk, Ken" <ken.schalk@intel.com>
-Subject: RE: [PATCH] Avoid rename/add conflict when contents are identical
-Date: Tue, 31 Aug 2010 14:05:51 -0700
-Message-ID: <EF9FEAB3A4B7D245B0801936B6EF4A2533CEF8@azsmsx503.amr.corp.intel.com>
-References: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
-	<7vd3tnmht0.fsf@alter.siamese.dyndns.org>
-	<EF9FEAB3A4B7D245B0801936B6EF4A25262E13@azsmsx503.amr.corp.intel.com>
- <AANLkTik2op0_Cq13EGit17ja+zCdmbM6WXJ=rfhQMnOQ@mail.gmail.com>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
+Date: Tue, 31 Aug 2010 17:06:50 -0400
+Message-ID: <AANLkTimiSBjifxtDoFXAEAEpYM8bJ18SwJ5Fj8zqh_G6@mail.gmail.com>
+References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
+	<4C7B8E1E.6050708@drmicha.warpmail.net>
+	<AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
+	<20100830141602.GF2315@burratino>
+	<AANLkTim+S87KjFBstBineR02hQHzG=X2VDqgiGNbPQGS@mail.gmail.com>
+	<20100830163302.GA13336@burratino>
+	<AANLkTi=VPf9CWNJcce6d20HQChi0mHgTG1F=jakzNT-O@mail.gmail.com>
+	<4C7C020C.6090907@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 23:06:04 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Aug 31 23:06:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqY1r-0006nF-Cc
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 23:06:03 +0200
+	id 1OqY2j-0007JP-CG
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 23:06:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116Ab0HaVF5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 17:05:57 -0400
-Received: from mga03.intel.com ([143.182.124.21]:33077 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753970Ab0HaVF4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 17:05:56 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 31 Aug 2010 14:05:55 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.56,300,1280732400"; 
-   d="scan'208";a="319341296"
-Received: from azsmsx603.amr.corp.intel.com ([10.2.161.23])
-  by azsmga001.ch.intel.com with ESMTP; 31 Aug 2010 14:05:55 -0700
-Received: from azsmsx503.amr.corp.intel.com ([10.2.121.76]) by
- azsmsx603.amr.corp.intel.com ([10.2.161.23]) with mapi; Tue, 31 Aug 2010
- 14:05:54 -0700
-Thread-Topic: [PATCH] Avoid rename/add conflict when contents are identical
-Thread-Index: ActGmXtlhO/RuxD6TZ+oQKm+74+9cgCtcdNg
-In-Reply-To: <AANLkTik2op0_Cq13EGit17ja+zCdmbM6WXJ=rfhQMnOQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1755539Ab0HaVGx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 17:06:53 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:58504 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753970Ab0HaVGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 17:06:52 -0400
+Received: by bwz11 with SMTP id 11so4816106bwz.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 14:06:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=+d3md8EhkmUAwrdffRpnca82fpQCkJ8yiqjG0f+9ZUA=;
+        b=djpOlKBz3+EK+hRRDKc20HESILjMEkrjTPsFc+D18g4I+J/fEwdzsGx5UPQmfAOhL+
+         U548maYA1PkpA7sSsEvcwwcgggkiwXFzEnnNzSgXdzRsQa1d6y0O9x658cCa0lkOS6e6
+         q+5Crr2naC7K3TqPQ4EYghfle3YiE+iDiZDms=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=aHJtP7uoM9q1eBKfTBXgXdHdTL7e3p4rWgiqOnPz9rqs6iAuQOIvljOQ5UYpDt9qg6
+         pMPLGAl1X5f426vRo2e3A3SJoW+HBhyf1qYdl2wr/J6pL3C5t4d1DYw11tkXbcbxawUo
+         UNLvQYRwXfDfSfI/GSIh4EfFDURFqI4S/dKZc=
+Received: by 10.204.6.75 with SMTP id 11mr4892316bky.95.1283288810573; Tue, 31
+ Aug 2010 14:06:50 -0700 (PDT)
+Received: by 10.204.66.196 with HTTP; Tue, 31 Aug 2010 14:06:50 -0700 (PDT)
+In-Reply-To: <4C7C020C.6090907@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154982>
 
->On Fri, Aug 27, 2010 at 22:14, Schalk, Ken <ken.schalk@intel.com> wrote:
+On Mon, Aug 30, 2010 at 3:10 PM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+>
+> git diff-tree --root $newrev
+>
+> will take care of this.
+>
+> Michael
+>
 
->> +       ln -s e a &&
+Thank you sir! You are a scholar and a gentleman, and I sincerely
+appreciate the help.
 
->Due to this this (and maybe all the tests) need to depend on the
->SYMLINKS prereq.
+Here is the completed hook for anyone who is curious, this turned into
+a more complex project than I thought it would be, but I learned a
+heck of a lot along the way so that's a good thing!
 
-I used a symlink here to try and duplicate the original problem case that a git user at Intel brought to me.  I admit I didn't consider the problem of testing on platforms without symlink support.
+-Chris
+----
+#!/home/php/bin/php
+<?php
 
-I'm having a little difficulty generating a rename/add conflict inside this test without using a symlink, which seems odd to me as the symlink doesn't seem to be necessary in an experiment I did by hand.  I'll either re-submit with this portion of the test conditional on symlink support, or with an alternate test that doesn't use symlinks (if I can get that to work in the test).
+function parseHookInput() {
+        $fpstdin = fopen("php://stdin","r");
 
---Ken
+        $line = fgets($fpstdin);
+
+        list($old_sha1,$new_sha1,$refname)=explode(" ",$line);
+
+        #echo "ns: $new_sha1\n";
+        #echo "os: $old_sha1\n";
+        #echo "refname: $refname\n";
+        return array($old_sha1,$new_sha1);
+}
+
+function detectNewBranch($old_sha1,$new_sha1) {
+        if ($old_sha1 == "0000000000000000000000000000000000000000") {
+                return true;
+        }
+        else {
+                return false;
+        }
+}
+
+
+function parseDiff($old_sha1,$new_sha1,$diffcmd,$regex) {
+        $diff = array();
+
+        exec($diffcmd,$diff,$diffrcval);
+        if ($diffrcval != 0) {
+                echo "Syntax checker hook is malfunctioning.  Can't
+execute git ls-tree.  Failing gracefully and allowing this push.\n";
+                exit(0);
+        }
+        # If we can execute the git diff I'm assuming we have access
+to a working git.
+
+        foreach ($diff as &$diffline) {
+                preg_match($regex,$diffline,$matches);
+                $blob = $matches[1];
+                $filename = $matches[2];
+                #echo "Blob: $blob Filename: $filename\n";
+                SyntaxCheckFile($blob,$filename);
+        }
+}
+
+function syntaxCheckFile($blob,$filename) {
+        $needle = '/(\.php|\.module|\.install)$/';
+        if (preg_match($needle,$filename)) {
+                #echo "Checking $filename\n";
+                $dummy = array();
+                exec("git show $blob|/home/php/bin/php -l",$dummy,$checkrcval);
+                if ($checkrcval != 0) {
+                        echo "There was a syntax error in '$filename'.
+ Rejecting this attempted merge!\n";
+                        exit(1);
+                }
+        }
+}
+
+function parseCommit($old_sha1,$new_sha1) {
+        # if this is the first commit on a new branch, $old_sha1 will
+be a bunch of zeroes, and so
+        # git diff --raw will fail, since there's no old ref to
+compare against.  So, we parse the
+        # results of git diff-tree -root=$new_sha1 instead to get the
+blob and filename we'll need.
+        if (detectNewBranch($old_sha1,$new_sha1)) {
+                $diffcmd="git diff-tree --root $new_sha1";
+                $regex="/\:\w+ \w+ \w+ (\w+) \w (.+)/";
+        }
+        else {
+                $diffcmd="git diff --raw $old_sha1 $new_sha1";
+                $regex="/\:\d+ \d+ \w+... (\w+)... \w\t(.+)/";
+        }
+        parseDiff($old_sha1,$new_sha1,$diffcmd,$regex);
+}
+
+# End function definitions.  Main code body starts here.
+
+# This pre-receive git hook gets passed the ref before the push, and
+the ref that would be
+# created if the push succeeds.
+list($old_sha1,$new_sha1) = parseHookInput();
+
+parseCommit($old_sha1,$new_sha1);
+
+exit(0);
+
+
+
+-- 
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, Pixar
