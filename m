@@ -1,65 +1,304 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/3 v4] Add global and system-wide gitattributes
-Date: Wed, 01 Sep 2010 00:41:11 +0200
-Message-ID: <vpqbp8i2yns.fsf@bauges.imag.fr>
-References: <vpqhbibbthi.fsf@bauges.imag.fr>
-	<1283210123-19752-3-git-send-email-Matthieu.Moy@imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, Petr Onderka <gsvick@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 01 00:44:26 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] Add global and system-wide gitattributes
+Date: Wed,  1 Sep 2010 00:42:43 +0200
+Message-ID: <1283294563-3013-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqbp8i2yns.fsf@bauges.imag.fr>
+Cc: gsvick@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Sep 01 00:45:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqZZ2-0002o8-GD
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 00:44:24 +0200
+	id 1OqZaS-0003Vp-7W
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 00:45:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755427Ab0HaWoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 18:44:19 -0400
-Received: from imag.imag.fr ([129.88.30.1]:35047 "EHLO imag.imag.fr"
+	id S1754759Ab0HaWpr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 18:45:47 -0400
+Received: from imag.imag.fr ([129.88.30.1]:35082 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754313Ab0HaWoS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 18:44:18 -0400
+	id S1753562Ab0HaWpq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 18:45:46 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7VMfCsH020067
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o7VMgjQT020145
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 1 Sep 2010 00:41:12 +0200 (CEST)
+	Wed, 1 Sep 2010 00:42:45 +0200 (CEST)
 Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OqZVv-0004Zi-Sy; Wed, 01 Sep 2010 00:41:11 +0200
-In-Reply-To: <1283210123-19752-3-git-send-email-Matthieu.Moy@imag.fr> (Matthieu Moy's message of "Tue\, 31 Aug 2010 01\:15\:23 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 01 Sep 2010 00:41:12 +0200 (CEST)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OqZXR-0004a5-JV; Wed, 01 Sep 2010 00:42:45 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OqZXR-0000n9-F3; Wed, 01 Sep 2010 00:42:45 +0200
+X-Mailer: git-send-email 1.7.2.2.175.ga619d.dirty
+In-Reply-To: <vpqbp8i2yns.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 01 Sep 2010 00:42:46 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154990>
 
-Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+From: Petr Onderka <gsvick@gmail.com>
 
-> This version doesn't touch config.c, and calls git_config with a
-> trivial callback reading only the core.attributesfile variable.
+Allow gitattributes to be set globally and system wide. This way, settings
+for particular file types can be set in one place and apply for all user's
+repositories.
 
-I see that pu has a variant of my fix:
+The location of system-wide attributes file is $(prefix)/etc/gitattributes.
+The location of the global file can be configured by setting
+core.attributesfile.
 
-  17cd572 fixup! Add global and system-wide gitattributes
+Some parts of the code were copied from the implementation of the same
+functionality in config.c.
 
-(is the fixup! here on purpose, or is it a failed rebase -i?)
+Signed-off-by: Petr Onderka <gsvick@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Here it is!
 
-Junio: your fixup fixes the git_config issue, but doesn't have the
-test that my patch have. The difference is that your fixup moves the
-global variable attributes_file in attr.c, which sounds like a good
-idea. I'm resending my patch with this change for conveinience.
+ Documentation/config.txt        |    6 ++++
+ Documentation/gitattributes.txt |   13 +++++++--
+ Makefile                        |    6 ++++
+ attr.c                          |   52 ++++++++++++++++++++++++++++++++++++++-
+ configure.ac                    |   10 ++++++-
+ t/t0003-attributes.sh           |   13 +++++++++
+ 6 files changed, 95 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 05ec3fe..0e15e72 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -450,6 +450,12 @@ core.excludesfile::
+ 	to the value of `$HOME` and "{tilde}user/" to the specified user's
+ 	home directory.  See linkgit:gitignore[5].
+ 
++core.attributesfile::
++	In addition to '.gitattributes' (per-directory) and
++	'.git/info/attributes', git looks into this file for attributes
++	(see linkgit:gitattributes[5]). Path expansions are made the same
++	way as for `core.excludesfile`.
++
+ core.editor::
+ 	Commands such as `commit` and `tag` that lets you edit
+ 	messages by launching an editor uses the value of this
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 2e2370c..ebd4852 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -62,14 +62,21 @@ consults `$GIT_DIR/info/attributes` file (which has the highest
+ precedence), `.gitattributes` file in the same directory as the
+ path in question, and its parent directories up to the toplevel of the
+ work tree (the further the directory that contains `.gitattributes`
+-is from the path in question, the lower its precedence).
++is from the path in question, the lower its precedence). Finally
++global and system-wide files are considered (they have the lowest
++precedence).
+ 
+ If you wish to affect only a single repository (i.e., to assign
+-attributes to files that are particular to one user's workflow), then
++attributes to files that are particular to
++one user's workflow for that repository), then
+ attributes should be placed in the `$GIT_DIR/info/attributes` file.
+ Attributes which should be version-controlled and distributed to other
+ repositories (i.e., attributes of interest to all users) should go into
+-`.gitattributes` files.
++`.gitattributes` files. Attributes that should affect all repositories
++for a single user should be placed in a file specified by the
++`core.attributesfile` configuration option (see linkgit:git-config[1]).
++Attributes for all users on a system should be placed in the
++`$(prefix)/etc/gitattributes` file.
+ 
+ Sometimes you would need to override an setting of an attribute
+ for a path to `unspecified` state.  This can be done by listing
+diff --git a/Makefile b/Makefile
+index b4745a5..fdb7b4e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -268,6 +268,7 @@ STRIP ?= strip
+ #   infodir
+ #   htmldir
+ #   ETC_GITCONFIG (but not sysconfdir)
++#   ETC_GITATTRIBUTES
+ # can be specified as a relative path some/where/else;
+ # this is interpreted as relative to $(prefix) and "git" at
+ # runtime figures out where they are based on the path to the executable.
+@@ -286,9 +287,11 @@ htmldir = share/doc/git-doc
+ ifeq ($(prefix),/usr)
+ sysconfdir = /etc
+ ETC_GITCONFIG = $(sysconfdir)/gitconfig
++ETC_GITATTRIBUTES = $(sysconfdir)/gitattributes
+ else
+ sysconfdir = $(prefix)/etc
+ ETC_GITCONFIG = etc/gitconfig
++ETC_GITATTRIBUTES = etc/gitattributes
+ endif
+ lib = lib
+ # DESTDIR=
+@@ -1502,6 +1505,7 @@ endif
+ 
+ SHA1_HEADER_SQ = $(subst ','\'',$(SHA1_HEADER))
+ ETC_GITCONFIG_SQ = $(subst ','\'',$(ETC_GITCONFIG))
++ETC_GITATTRIBUTES_SQ = $(subst ','\'',$(ETC_GITATTRIBUTES))
+ 
+ DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+ bindir_SQ = $(subst ','\'',$(bindir))
+@@ -1873,6 +1877,8 @@ builtin/init-db.s builtin/init-db.o: EXTRA_CPPFLAGS = \
+ 
+ config.s config.o: EXTRA_CPPFLAGS = -DETC_GITCONFIG='"$(ETC_GITCONFIG_SQ)"'
+ 
++attr.s attr.o: EXTRA_CPPFLAGS = -DETC_GITATTRIBUTES='"$(ETC_GITATTRIBUTES_SQ)"'
++
+ http.s http.o: EXTRA_CPPFLAGS = -DGIT_HTTP_USER_AGENT='"git/$(GIT_VERSION)"'
+ 
+ ifdef NO_EXPAT
+diff --git a/attr.c b/attr.c
+index 8ba606c..c94211a 100644
+--- a/attr.c
++++ b/attr.c
+@@ -1,5 +1,6 @@
+ #define NO_THE_INDEX_COMPATIBILITY_MACROS
+ #include "cache.h"
++#include "exec_cmd.h"
+ #include "attr.h"
+ 
+ const char git_attr__true[] = "(builtin)true";
+@@ -10,6 +11,8 @@ static const char git_attr__unknown[] = "(builtin)unknown";
+ #define ATTR__UNSET NULL
+ #define ATTR__UNKNOWN git_attr__unknown
+ 
++static const char *attributes_file;
++
+ /*
+  * The basic design decision here is that we are not going to have
+  * insanely large number of attributes.
+@@ -462,6 +465,32 @@ static void drop_attr_stack(void)
+ 	}
+ }
+ 
++const char *git_etc_gitattributes(void)
++{
++	static const char *system_wide;
++	if (!system_wide)
++		system_wide = system_path(ETC_GITATTRIBUTES);
++	return system_wide;
++}
++
++int git_attr_system(void)
++{
++	return !git_env_bool("GIT_ATTR_NOSYSTEM", 0);
++}
++
++int git_attr_global(void)
++{
++	return !git_env_bool("GIT_ATTR_NOGLOBAL", 0);
++}
++
++static int git_attr_config(const char *var, const char *value, void *dummy)
++{
++	if (!strcmp(var, "core.attributesfile"))
++		return git_config_pathname(&attributes_file, var, value);
++	
++	return 0;
++}
++
+ static void bootstrap_attr_stack(void)
+ {
+ 	if (!attr_stack) {
+@@ -472,6 +501,25 @@ static void bootstrap_attr_stack(void)
+ 		elem->prev = attr_stack;
+ 		attr_stack = elem;
+ 
++		if (git_attr_system()) {
++			elem = read_attr_from_file(git_etc_gitattributes(), 1);
++			if (elem) {
++				elem->origin = NULL;
++				elem->prev = attr_stack;
++				attr_stack = elem;
++			}
++		}
++
++		git_config(git_attr_config, NULL);
++		if (git_attr_global() && attributes_file) {
++			elem = read_attr_from_file(attributes_file, 1);
++			if (elem) {
++				elem->origin = NULL;
++				elem->prev = attr_stack;
++				attr_stack = elem;
++			}
++		}
++
+ 		if (!is_bare_repository() || direction == GIT_ATTR_INDEX) {
+ 			elem = read_attr(GITATTRIBUTES_FILE, 1);
+ 			elem->origin = strdup("");
+@@ -499,7 +547,9 @@ static void prepare_attr_stack(const char *path, int dirlen)
+ 
+ 	/*
+ 	 * At the bottom of the attribute stack is the built-in
+-	 * set of attribute definitions.  Then, contents from
++	 * set of attribute definitions, followed by the contents
++	 * of $(prefix)/etc/gitattributes and a file specified by
++	 * core.attributesfile.  Then, contents from
+ 	 * .gitattribute files from directories closer to the
+ 	 * root to the ones in deeper directories are pushed
+ 	 * to the stack.  Finally, at the very top of the stack
+diff --git a/configure.ac b/configure.ac
+index 5601e8b..c5b3a41 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -282,7 +282,15 @@ GIT_PARSE_WITH(iconv))
+ GIT_PARSE_WITH_SET_MAKE_VAR(gitconfig, ETC_GITCONFIG,
+ 			Use VALUE instead of /etc/gitconfig as the
+ 			global git configuration file.
+-			If VALUE is not fully qualified it will be interpretted
++			If VALUE is not fully qualified it will be interpreted
++			as a path relative to the computed prefix at runtime.)
++
++#
++# Allow user to set ETC_GITATTRIBUTES variable
++GIT_PARSE_WITH_SET_MAKE_VAR(gitattributes, ETC_GITATTRIBUTES,
++			Use VALUE instead of /etc/gitattributes as the
++			global git attributes file.
++			If VALUE is not fully qualified it will be interpreted
+ 			as a path relative to the computed prefix at runtime.)
+ 
+ #
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 114967a..b884bb7 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -35,6 +35,9 @@ test_expect_success 'setup' '
+ 		echo "d/* test=a/b/d/*"
+ 		echo "d/yes notest"
+ 	) >a/b/.gitattributes
++	(
++		echo "global test=global"
++	) >$HOME/global-gitattributes
+ 
+ '
+ 
+@@ -56,6 +59,16 @@ test_expect_success 'attribute test' '
+ 
+ '
+ 
++test_expect_success 'core.attributesfile' '
++	attr_check global unspecified &&
++	git config core.attributesfile "$HOME/global-gitattributes" &&
++	attr_check global global &&
++	git config core.attributesfile "~/global-gitattributes" &&
++	attr_check global global &&
++	echo "global test=precedence" >> .gitattributes &&
++	attr_check global precedence
++'
++
+ test_expect_success 'attribute test: read paths from stdin' '
+ 
+ 	cat <<EOF > expect
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.2.2.175.ga619d.dirty
