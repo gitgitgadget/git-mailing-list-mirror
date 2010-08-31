@@ -1,95 +1,84 @@
-From: Peter Krefting <peter@softwolves.pp.se>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH/RFC 00/17] Begin gettextizing Git
-Date: Tue, 31 Aug 2010 12:48:19 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1008311244420.28446@ds9.cixit.se>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com> <alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se> <AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
+Date: Tue, 31 Aug 2010 14:02:35 +0200
+Message-ID: <vpqk4n7rnvo.fsf@bauges.imag.fr>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
+	<alpine.DEB.2.00.1008311205280.28446@ds9.cixit.se>
+	<AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 13:48:30 2010
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Git Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 14:02:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqPKH-0001Em-VH
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 13:48:30 +0200
+	id 1OqPY9-0001xP-Bn
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 14:02:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932115Ab0HaLsX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 07:48:23 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:54926 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1757197Ab0HaLsW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 07:48:22 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o7VBmJrL013446
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 31 Aug 2010 13:48:19 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o7VBmJPM013442;
-	Tue, 31 Aug 2010 13:48:19 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+	id S1753404Ab0HaMCo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 08:02:44 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:44322 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752800Ab0HaMCn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 08:02:43 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o7VBx47R020197
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 31 Aug 2010 13:59:04 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OqPXv-0002NM-FQ; Tue, 31 Aug 2010 14:02:35 +0200
 In-Reply-To: <AANLkTikuQZpOjddgHtpSpw-P4AeL1swsrzJzd5cE7e8F@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Tue, 31 Aug 2010 13:48:19 +0200 (CEST)
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue\, 31
+ Aug 2010 11\:42\:38 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 31 Aug 2010 13:59:05 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o7VBx47R020197
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1283860745.71292@Jkk6hjzSCTko6qQBjj4fbw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154895>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 
-> Something like that would be welcome. Personally I'm happy with editi=
-ng=20
-> *.po files locally with Emacs's po-mode, but to get more translators =
-we=20
-> probably want a friendly web interface like that at some point.
+> I've used Launchpad somewhat for translating and it's friendly to
+> contributors & has an active community, but it seems to require that
+> we BSD-license our translations[1], which would be a showstopper sinc=
+e
+> we'd have to contact everyone who's been submitting GPL-2-only string=
+s
+> to Git for the last 5 years.
 
-Well, it's not a web interface for translating, currently, just for kee=
-ping=20
-track on what needs to be translated by whom (and for language teams to=
- find=20
-what to translate). You still edit the PO files in whatever you prefer.
+I don't think so:
 
-> Preferably with an active translation community.
+,----[ https://help.launchpad.net/Translations/LicensingFAQ ]
+| I have no problem with BSD myself, but I also uploaded translations
+| from upstream. What do I do?
+|=20
+| As long as the uploads were marked as translations that were publishe=
+d
+| elsewhere, they fall under a separate copyright regime: those imports
+| will retain their original copyright license. The BSD licence only
+| applies to translations that are (as far as the system knows) origina=
+l
+| to Launchpad.
+`----
 
-Translation Project is indeed very active.
-
-> http://kerneltrap.org/mailarchive/git/2008/3/14/1163164 Is that the
-> one you're talking about?
-
-Yes.
-
-> Translationproject seems to have a similar requirement[2], but they s=
-eem=20
-> require you to send a letter to the FSF through snail mail before you=
- can=20
-> contribute (maybe not, I didn't read all their docs carefully).
-
-Only when you translate FSF software for which you need to send one of =
-the=20
-letters that claim that you are handing over copyright to the FSF. That=
- is=20
-not needed in this case, and translators working on such projects do no=
-t=20
-need to send one.
-
-
-=46or the project side, you bascially send a POT file every now and the=
-n,=20
-between string-freeze and release, and update the PO files that come ba=
-ck=20
-from the project every now and then. I've been using the system from bo=
-th=20
-sides and it's lightweight enough to be workable.
+So, my understanding is: Git's code, and strings, would remain what
+they are, but things contributed _through launchpad_ would be BSD.
 
 --=20
-\\// Peter - http://www.softwolves.pp.se/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
