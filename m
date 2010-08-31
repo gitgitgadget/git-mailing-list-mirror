@@ -1,114 +1,75 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: =?iso-8859-7?b?UmU6IFtQQVRDSF0gZ2l0?=
- =?iso-8859-7?b?d2ViOiBEb26idCBkaWVf?=
- =?iso-8859-7?b?ZXJyb3IgaW4gZ2l0X3Rh?=
- =?iso-8859-7?b?ZyBhZnRlciBhbHJlYWR5?=
- =?iso-8859-7?b?IHByaW50aW5nIGhlYWRl?=
- =?iso-8859-7?b?cnM=?=
-Date: Tue, 31 Aug 2010 09:19:35 -0700 (PDT)
-Message-ID: <m37hj6oivq.fsf@localhost.localdomain>
-References: <alpine.DEB.2.00.1008271337310.25632@dr-wily.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC 05/17] gettext: make the simple parts of git-init
+ localizable
+Date: Tue, 31 Aug 2010 09:27:27 -0700
+Message-ID: <7vk4n6d9xs.fsf@alter.siamese.dyndns.org>
+References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
+ <1283203703-26923-6-git-send-email-avarab@gmail.com>
+ <20100831150301.GE2315@burratino>
+ <AANLkTikd7mc4DjTVaKip_WFqVdezE13ZbL+Vmfqd8yCu@mail.gmail.com>
+ <20100831154446.GJ2315@burratino>
+ <AANLkTimPndcAu7RTnzpB0LZ1bHpFC5-QxNkPPAkoD5Hc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gitster@pobox.com, git@vger.kernel.org
-To: Anders Kaseorg <andersk@MIT.EDU>
-X-From: git-owner@vger.kernel.org Tue Aug 31 18:19:47 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Marcin Cieslak <saper@saper.info>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 18:27:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqTYn-0007RE-EE
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 18:19:45 +0200
+	id 1OqTga-0004XS-A3
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 18:27:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752714Ab0HaQTj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 12:19:39 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57905 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752555Ab0HaQTi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 12:19:38 -0400
-Received: by bwz11 with SMTP id 11so4591726bwz.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 09:19:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=2nDsU0oH7Wj9EUBodtd3cqavHbEpkyMLyKSXBC+sXgs=;
-        b=Jsjb4ivjCpxYcqYG3ZvCj5g89NAmj7tXDEI0V1jU4fmjEcMBEFh0KRdDgUAbv0ULM/
-         yWFCk03SyVqWft22kzpp+Y8ZvSBBofnhEbAp2Hcd9wbvGi+BIaBWIYJVNTf5TsBVDUdF
-         BVs25IXjJ2cdx+hMA5x+8vGdrc61H8nyqKyko=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Gm/7qvRuJVak9GvcqbBuq+/62EqLUAq84/9VZcYMb1WDHf7B4wusyEQA/RKs1jWkfk
-         fEXGu5r+DlSrD4a9LAdt9Y6LnlcY7cPZIC05M+DGhiXCpm2V0ZrpcEUcKpRg+WOR3pZT
-         LJoDnNPEAhjoZdD4xu10VjauXBjcHt2QLZ+g0=
-Received: by 10.204.65.145 with SMTP id j17mr4398503bki.209.1283271577417;
-        Tue, 31 Aug 2010 09:19:37 -0700 (PDT)
-Received: from localhost.localdomain (abve217.neoplus.adsl.tpnet.pl [83.8.202.217])
-        by mx.google.com with ESMTPS id f18sm6382928bkf.15.2010.08.31.09.19.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 09:19:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o7VGJJF6003215;
-	Tue, 31 Aug 2010 18:19:30 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o7VGInpA003106;
-	Tue, 31 Aug 2010 18:18:49 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.DEB.2.00.1008271337310.25632@dr-wily.mit.edu>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752767Ab0HaQ1n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 12:27:43 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40167 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752246Ab0HaQ1m convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 12:27:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E5E41D2FFA;
+	Tue, 31 Aug 2010 12:27:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=JYesd3k3wg/+
+	MC3dN+0bSXU12cs=; b=WONdV7ILlU54SSTPRqjUIaiVUh8jp+qz+enWfGgGp6/3
+	8CPB2VoprnY4RTDqUm5K63A0BN+JaIlJC1b65z7ekwVTYS6hgbp9NV38c1ks+BZM
+	B0QuxuWlcPvn5PCXyzjU7Ue+ji/gjoTaQT6p21ZVfYyl6TclTCr6WYJk+vTiH44=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fk/ekf
+	EDtL9xujfuCNt74E/K498r3YNg5fsQroBQWhq6RlH1eCrgQbTvyhnPBCPp99KDGK
+	fyS/eXuq0Lz4x19sA4gsv271RzHzG+4bf3KR69jzb+9sgPf0fkGvW3jIhbHBCeVF
+	5OIh+gVem2CxqRege32InhG1Muam1/GW8foI0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9501CD2FF9;
+	Tue, 31 Aug 2010 12:27:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AC32FD2FF5; Tue, 31 Aug
+ 2010 12:27:29 -0400 (EDT)
+In-Reply-To: <AANLkTimPndcAu7RTnzpB0LZ1bHpFC5-QxNkPPAkoD5Hc@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue\, 31 Aug
+ 2010 16\:05\:16 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A9BC9C9A-B51C-11DF-82DA-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154934>
 
-Anders Kaseorg <andersk@MIT.EDU> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> This fixes an XML error when visiting a nonexistent tag
-> (?p=git.git;a=tag;h=refs/tags/BADNAME).
-> 
-> Signed-off-by: Anders Kaseorg <andersk@mit.edu>
+> Maybe we should have die_plumbing() and die_porcelain() functions to
+> indicate the nature of the message, although we could get the same
+> thing with die() and die(_()) once I'm done.
 
-Good catch!
+To me, die() vs die(_()) feels like the lessor of two evils ;-).
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
-
-> ---
->  gitweb/gitweb.perl |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 84261bb..5dab825 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5192,15 +5192,15 @@ sub git_summary {
->  }
->  
->  sub git_tag {
-> -	my $head = git_get_head_hash($project);
-> -	git_header_html();
-> -	git_print_page_nav('','', $head,undef,$head);
->  	my %tag = parse_tag($hash);
->  
->  	if (! %tag) {
->  		die_error(404, "Unknown tag object");
->  	}
->  
-> +	my $head = git_get_head_hash($project);
-> +	git_header_html();
-> +	git_print_page_nav('','', $head,undef,$head);
->  	git_print_header_div('commit', esc_html($tag{'name'}), $hash);
->  	print "<div class=\"title_text\">\n" .
->  	      "<table class=\"object_header\">\n" .
-> -- 
-> 1.7.2.2
-> 
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Thanks.
