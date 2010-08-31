@@ -1,140 +1,80 @@
-From: Casey Dahlin <cdahlin@redhat.com>
-Subject: Re: [RFC PATCH] Introduce git-hive
-Date: Tue, 31 Aug 2010 10:38:39 -0400
-Message-ID: <20100831143839.GC16034@foucault.redhat.com>
-References: <1283198367-11440-1-git-send-email-cdahlin@redhat.com>
- <AANLkTikcV6f=bUBa-F44JCEFOT0dHrvgrLY-j9hvvOyX@mail.gmail.com>
- <AANLkTinx_Y1iUt9tj4io=GskwRyvK2EdWv9cO9gAbxBS@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
-	git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 16:38:59 2010
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH 1/2] maint-reflog-beyond-horizon: fix broken test_must_fail calls
+Date: Wed,  1 Sep 2010 00:49:19 +1000
+Message-ID: <1283266160-11665-2-git-send-email-jon.seymour@gmail.com>
+References: <1283266160-11665-1-git-send-email-jon.seymour@gmail.com>
+Cc: gitster@pobox.com, Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Aug 31 16:49:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqRzD-00007n-JS
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 16:38:55 +0200
+	id 1OqS99-0007VP-C1
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 16:49:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757525Ab0HaOiu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 10:38:50 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:3340 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757522Ab0HaOit (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 10:38:49 -0400
-Received: from int-mx08.intmail.prod.int.phx2.redhat.com (int-mx08.intmail.prod.int.phx2.redhat.com [10.5.11.21])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id o7VEcg2S001257
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Tue, 31 Aug 2010 10:38:42 -0400
-Received: from foucault.redhat.com (vpn-11-196.rdu.redhat.com [10.11.11.196])
-	by int-mx08.intmail.prod.int.phx2.redhat.com (8.13.8/8.13.8) with ESMTP id o7VEcdV6025543
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
-	Tue, 31 Aug 2010 10:38:41 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTinx_Y1iUt9tj4io=GskwRyvK2EdWv9cO9gAbxBS@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-12-10)
-X-Scanned-By: MIMEDefang 2.67 on 10.5.11.21
+	id S1757509Ab0HaOtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 10:49:06 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:43669 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757431Ab0HaOtE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 10:49:04 -0400
+Received: by pwi3 with SMTP id 3so384996pwi.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 07:49:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=u2lRMk8t3QCW/2Ct9/iWIb5hqx95CE1QYNVnVIK6iKU=;
+        b=bo+pSDPpzYNWDrS3+gN+3jOsBfb2KXlaxAU53gTvkiUEJZNR+yG2/ZKGSF3HC52kkm
+         HoCEnNddeOAwwdn0m6Uazdz6s9dj+kGlJlBTaGtIa4GLyd/Gf5Bg361n9ooMR4IyWsQR
+         RuW43fqDuo2m6MN2+5qGBh+YK8eqhqNHta2Mg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=Nt72wcPadJIE9cRaxPommVg2E0+WY2vuZdsKE7t/MWwq1kGztbPymy2r1fG4Sltw7/
+         uRc7DXmwFeEVn0LIUuoZ72zL6JzSZQHLxRrysu7eqH6m3Elqqfn8x6sSMH/i/L0RB15A
+         mZSVbvJ4h7ngFREwV2Qtb1g+lC8Vyo8p6kC/I=
+Received: by 10.114.173.5 with SMTP id v5mr7054454wae.79.1283266143566;
+        Tue, 31 Aug 2010 07:49:03 -0700 (PDT)
+Received: from localhost.localdomain (124-169-135-9.dyn.iinet.net.au [124.169.135.9])
+        by mx.google.com with ESMTPS id d39sm16562703wam.16.2010.08.31.07.49.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 31 Aug 2010 07:49:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.82.g9d57.dirty
+In-Reply-To: <1283266160-11665-1-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154903>
 
-On Tue, Aug 31, 2010 at 11:29:02AM +1000, Nguyen Thai Ngoc Duy wrote:
-> On Tue, Aug 31, 2010 at 7:17 AM, Luke Kenneth Casson Leighton
-> <luke.leighton@gmail.com> wrote:
-> > On Mon, Aug 30, 2010 at 8:59 PM, =A0<cdahlin@redhat.com> wrote:
-> >> From: Casey Dahlin <cdahlin@redhat.com>
-> >>
-> >> This isn't really what I'd normally call ready for public consumpt=
-ion, but
-> >> since there's been some minimal list chatter on a similar subject =
-I figured I'd
-> >> put this out there early.
-> >>
-> >> git-hive is a peer to peer service for exchanging branches. When s=
-tarted it
-> >> runs a small daemon to publish your repository on a random (or spe=
-cified) port.
-> >> Two hive daemons connected to oneanother can exchange branch lists=
- and
-> >> introduce eachother to more hive daemons to widen the network.
-> >
-> > =A0p.s. is there any location where, in diagrammatic form, the
-> > protocol's described?
->=20
-> Also a short tutorial how to use it would be nice.
->=20
-> I take it I can put different repositories (say wine.git and git.git)
-> in the hive. When I fetch git.git from the hive, it won't fetch
-> wine.git?
+Some tests in maint-reflog-beyond-horizon are calling test_must_fail
+in such a way that the arguments to test_must_fail do, indeed, fail
+but not in the manner expected by the test.
 
-=46irst step to using hive is to set the project uri for your repo (may=
- change
-this to a different mechanism later).
+This patch removes the unnecessary and unhelpful double quotes.
 
-	casey@host_a$ git config --add hive.uri http://myproject.org
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ t/t1503-rev-parse-verify.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-This is what prevents the scenario you describe; repos with the same pr=
-oject
-URI are assumed to be compatible. It can be given as a command line arg=
-ument to
-'git hive start', but this way is much more usable.
-
-Next we start the service for our repo.
-
-	casey@host_a$ git hive start --listen-port 21121
-
-Normally the listen port is selected randomly. We specify it here so th=
-at other
-hive users can explicitly connect to us and "bootstrap" themselves into=
- the
-hive network.
-
-Now to have someone join.
-
-	nguyen@host_b$ git config --add hive.uri http://myproject.org
-	nguyen@host_b$ git hive start host_a.com:21121
-
-So from host_b we specify host_a's address and listen port, and we join=
- the
-network. From here on out anyone who also connects to host_a will get h=
-ost_b's
-(randomly selected) listen port automatically and be able to connect to=
- it as
-well.
-
-So now our two peers can see each other.
-
-	casey@host_a$ git hive show --branches
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-		master
-		for_casey
-=09
-	---
-
-	nguyen@host_b$ git hive show --branches
-	Casey Dahlin <cdahlin@redhat.com>
-		master
-		stable
-		v2.1
-
-And we can exchange them
-
-	casey@host_a$ git hive fetch nguyen for_casey
-	casey@host_a$ git branch
-	* master
-	  stable
-	  for_casey
-
-Note that the two arguments in fetch are a regex which searches through=
- user
-IDs and a branch name, which is why I can abbreviate to just "nguyen" i=
-n all
-lower case.
-
---CJD
+diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
+index 61092f7..100f857 100755
+--- a/t/t1503-rev-parse-verify.sh
++++ b/t/t1503-rev-parse-verify.sh
+@@ -111,8 +111,8 @@ test_expect_success 'master@{n} for various n' '
+ 	git rev-parse --verify master@{0} &&
+ 	git rev-parse --verify master@{1} &&
+ 	git rev-parse --verify master@{$Nm1} &&
+-	test_must_fail "git rev-parse --verify master@{$N}" &&
+-	test_must_fail "git rev-parse --verify master@{$Np1}"
++	test_must_fail git rev-parse --verify master@{$N} &&
++	test_must_fail git rev-parse --verify master@{$Np1}
+ '
+ 
+ test_done
+-- 
+1.7.2.80.g22196.dirty
