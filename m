@@ -1,66 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/2] fix quotes in maint-reflog-beyond-horizon and
- detached-stash
-Date: Tue, 31 Aug 2010 10:03:08 -0700
-Message-ID: <7vzkw2btpv.fsf@alter.siamese.dyndns.org>
-References: <1283266160-11665-1-git-send-email-jon.seymour@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] tests: make test_must_fail more verbose
+Date: Tue, 31 Aug 2010 12:10:55 -0500
+Message-ID: <20100831171055.GO2315@burratino>
+References: <20100831155457.GB11014@sigill.intra.peff.net>
+ <20100831155636.GA11530@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 19:03:26 2010
+Cc: Jon Seymour <jon.seymour@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Aug 31 19:12:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqUEz-0004QG-23
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 19:03:21 +0200
+	id 1OqUO8-0002X7-A0
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 19:12:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754127Ab0HaRDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 13:03:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57486 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753770Ab0HaRDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 13:03:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44596D259A;
-	Tue, 31 Aug 2010 13:03:15 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=PAAhiS6tYhxGzbThYuszwmNuHng=; b=MJ2+zDcWt42dYjfpr3c4LA7
-	2JazsR18KYjT5MDmU38HX5v1TZ59m5HjixUZrMUpDxj2uEUXxf0ysbNm69WlCQ7x
-	aZ4j/ZtyL8erMJI9xVv50fi9JY36677x5KGxci1lKqXjrvCow2fTnHRIzz9kI8m5
-	rnVPsQrF63oHM09vS/XU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=IA1qVPPfe1nBXJ5OugioWEdOo3p1oxtVH0engfwSIByMcLUPl
-	d/JfqEwDBVcJisMXpITYRBOUjWNIfe8ptuhvXnSVBT1rJhF2BRz3tYOXrnuuXryg
-	K3rCzAoZUS+B7e1sFNnFmOJUc62QclLTUrd4FZhY6jdC16g3Or8Js3418s=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 07461D2596;
-	Tue, 31 Aug 2010 13:03:13 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C874AD2592; Tue, 31 Aug
- 2010 13:03:09 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A3BA5FC6-B521-11DF-A3A6-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754226Ab0HaRMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 13:12:43 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53829 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752767Ab0HaRMm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 13:12:42 -0400
+Received: by vws3 with SMTP id 3so5562862vws.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 10:12:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=soFegvQbD6sCqIalFGm7868x3WiXvG2ozxPmB/NDuEQ=;
+        b=r3oFK2Xv11TwsonkWitY+qzJDW9WAbZnZfSpOZlyu4Gd27gDrLke2datztP8kbF4N2
+         UUSU/WZ8xtimsfpCEu7yeI8kbcHPvx6t1lqPcMFy1ZFMjBj76WLTTrYXFoWL6N5aAHoF
+         na5qlx22ji/nXWMS2RGN7jKtjxyFVQf0M03RA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kXH5UYAGneACizz4OJIhLPYbpqFIixgqg8wvmdNwZWKLJaQe7tZtSETLOoP22GdLqD
+         nIJovv47Md9I2kXr//Z3kmq9F5I4AgzXvRyiW/T9kvEl9XVcaCeTcDmLSq1uDaKej/hD
+         A7oVQicMVnFkAwUHqrF8AsokRJ/SexX4o0fwE=
+Received: by 10.220.123.132 with SMTP id p4mr3566251vcr.46.1283274760164;
+        Tue, 31 Aug 2010 10:12:40 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id b8sm2954807vci.21.2010.08.31.10.12.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 31 Aug 2010 10:12:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100831155636.GA11530@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154942>
 
-Jon Seymour <jon.seymour@gmail.com> writes:
+Jeff King wrote:
 
-> In two recent series, I introduced tests that use test_must_fail incorrectly.
->
-> In effect, I was calling:
->
->    test_must_fail "foo bar"
->
-> but this was failing because "foo bar" is not comamnd and not because
-> the command "foo" fails with arguments "bar".
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -591,7 +591,15 @@ test_path_is_missing () {
+>  
+>  test_must_fail () {
+>  	"$@"
+> -	test $? -gt 0 -a $? -le 129 -o $? -gt 192
+> +	exit_code=$?
+> +	if test $exit_code = 0; then
+> +		echo >&2 "test_must_fail: command succeeded: $*"
+> +		return 1
+> +	elif test $exit_code -gt 129 -a $exit_code -le 192; then
+> +		echo >&2 "test_must_fail: died by signal: $*"
+> +		return 1
+> +	fi
+> +	return 0
+>  }
 
-Blush; sorry for not noticing them earlier, and thanks for the fix.
+Can the exit status (e.g. from a shell function) be negative?
+
+Though your patch does not affect this, a command interrupted by a
+signal will receive exit status > 192 in shells like ksh93.  Posix
+says:
+
+	As explained in other sections, certain exit status values
+	have been reserved for special uses and should be used by
+	applications only for those purposes:
+
+	126
+		A file to be executed was found, but it was not an
+		executable utility.
+	127
+		A utility to be executed was not found.
+	>128
+		A command was interrupted by a signal.
+
+Unfortunately that does not agree with git usage.
+
+	129
+		Incorrect command-line usage, or help requested
+		(rather than SIGHUP).
+	255
+		Failed to create pipe for child process, fork
+		failed, execvp failed, wait failed, invalid
+		pathspec for add --patch, "git archive" or
+		"git daemon" failure (rather than signal 127).
+
+Here's a test_might_fail patch for consistency.
+
+-- 8< --
+Subject: tests: make test_might_fail more verbose
+
+Let test_might_fail say something about its failures for consistency
+with test_must_fail.
+
+Cc: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/test-lib.sh |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 285bfd8..506787c 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -615,7 +615,12 @@ test_must_fail () {
+ 
+ test_might_fail () {
+ 	"$@"
+-	test $? -ge 0 -a $? -le 129 -o $? -gt 192
++	exit_code=$?
++	if test $exit_code -gt 129 -a $exit_code -le 192; then
++		echo >&2 "test_might_fail: died by signal: $*"
++		return 1
++	fi
++	return 0
+ }
+ 
+ # test_cmp is a helper function to compare actual and expected output.
+-- 
+1.7.2.2
