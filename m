@@ -1,126 +1,67 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC 15/17] po/is.po: add Icelandic translation
-Date: Tue, 31 Aug 2010 21:49:34 +0200
-Message-ID: <AANLkTi=4U2_ascHbC77Rbrb8FGtT7hiOr0MUqfbeWztS@mail.gmail.com>
-References: <1283203703-26923-1-git-send-email-avarab@gmail.com>
- <1283203703-26923-16-git-send-email-avarab@gmail.com> <20100831152959.GH2315@burratino>
- <AANLkTimYETJcHuKBBRKJ0zbkRBR-K2VAXRLizFQxa-pr@mail.gmail.com>
- <AANLkTimGSEVLOjTLt2yntXaDfyUkj=mY46evfRx517MC@mail.gmail.com> <AANLkTin5+Sdx3MRrERpFUD04=CSmNyPoB3zRvNxKLLpj@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] merge: Make '--log' an integer option for number of
+ shortlog entries
+Date: Tue, 31 Aug 2010 12:53:37 -0700
+Message-ID: <7vfwxua79a.fsf@alter.siamese.dyndns.org>
+References: <1282991734-3368-1-git-send-email-artagnon@gmail.com>
+ <1283226800-28980-1-git-send-email-artagnon@gmail.com>
+ <20100831143236.GC2315@burratino> <7vzkw2abpz.fsf@alter.siamese.dyndns.org>
+ <20100831191324.GA27381@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Marcin Cieslak <saper@saper.info>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Aug 31 21:50:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Aug 31 21:53:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqWqZ-0007Wl-UP
-	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:50:20 +0200
+	id 1OqWu0-0001TM-Id
+	for gcvg-git-2@lo.gmane.org; Tue, 31 Aug 2010 21:53:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755363Ab0HaTt7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 15:49:59 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:46725 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751782Ab0HaTt6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 15:49:58 -0400
-Received: by vws3 with SMTP id 3so5705725vws.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 12:49:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=ZZu0SQq2eIP4ltjw1mSdzfLrftbxPVesyeRx5T9KpHM=;
-        b=jY4zrmiKeqCqijP3vuQqeMypFJkqamlMJ+6q5GsTBYQffxrDw8RK+V9N9obxXZDCmA
-         jD8Qea0m8O+23iweJeotrHrQwJKDR/I0drwMCKeo3D9IjCk9f5XiVUw/7u2ximKUEW+X
-         eFJ8i5tPkl9NauyFYgYObZx75OksXPHk3TxKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=P0uKkio3RJI9OQm3ajyO5m3GMD/AbM/4Cjda9TNiy7p5XVuWUtRZ634Gidgt4/g4Ya
-         vQ1cK2lLcABSfBHGjjN9ntoqPQHymFurs+wZmpKlNnL1qt6FHVNGD6JQKvAYsgX/HHZa
-         Agpk0mZjNhLg3pqOA0BfrMDPkKxd1lGoweGjE=
-Received: by 10.220.60.204 with SMTP id q12mr3598760vch.183.1283284194278;
- Tue, 31 Aug 2010 12:49:54 -0700 (PDT)
-Received: by 10.220.180.76 with HTTP; Tue, 31 Aug 2010 12:49:34 -0700 (PDT)
-In-Reply-To: <AANLkTin5+Sdx3MRrERpFUD04=CSmNyPoB3zRvNxKLLpj@mail.gmail.com>
+	id S1755376Ab0HaTxs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 15:53:48 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39905 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753158Ab0HaTxr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 15:53:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 32B81D2F99;
+	Tue, 31 Aug 2010 15:53:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XLDYgyR9uqVNMKA0o00K1db9kjM=; b=s8UA9y
+	TzheLTAVIubGw9+aCqQHS3iuJbPw7scl++IXZo5WtN6Snu0oXw+2GyVJdv+ciVIY
+	Q/HcJJNQFfoY3n/eZVvWHiq1Olc3uO66cZLem5QvDQuHI1wAlMiSIIhheq+dE3Cs
+	YetfivVoRwSH5p/JG4wgHZMcGLvrAAboO5MW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UsRdF3Tv8As1DcZta/mg4QCTyzD7x+WR
+	E1zqS8IJHnV4YVPlVdZGON8/L3c1yr9G8wK0L+3CCuZTmmzC4sIK8tnvclCbREbS
+	xzLLAi/iYQwd8JVVCRhzxMGxKimlV6L3Rp4vFsbiRztYf7eN8xaqM6NpQUyHF6z5
+	v7WHt/xFSVw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F2890D2F95;
+	Tue, 31 Aug 2010 15:53:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3558AD2F94; Tue, 31 Aug
+ 2010 15:53:39 -0400 (EDT)
+In-Reply-To: <20100831191324.GA27381@kytes> (Ramkumar Ramachandra's message
+ of "Wed\, 1 Sep 2010 00\:43\:37 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 75459198-B539-11DF-BE20-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154979>
 
-On Tue, Aug 31, 2010 at 9:32 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Tue, Aug 31, 2010 at 19:14, Erik Faye-Lund <kusmabite@gmail.com> w=
-rote:
->> On Tue, Aug 31, 2010 at 7:01 PM, =C6var Arnfj=F6r=F0 Bjarmason
->> <avarab@gmail.com> wrote:
->>> On Tue, Aug 31, 2010 at 15:29, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
->>>> =C6var Arnfj=F6r=F0 Bjarmason wrote:
->>>>
->>>>> --- a/po/is.po
->>>>> +++ b/po/is.po
->>>>> @@ -11,35 +11,154 @@ msgstr ""
->>>>> =A0"Content-Type: text/plain; charset=3DUTF-8\n"
->>>>> =A0"Content-Transfer-Encoding: 8bit\n"
->>>>>
->>>>> -#: t/t0200/test.c:4
->>>>> +#: builtin/init-db.c:34
->>>>
->>>> Is there a diff driver that will ignore these --add-location lines=
-?
->>>>
->>>> Alternatively, would it be possible to get msgmerge and xgettext t=
-o
->>>> provide the filenames without the line numbers? =A0My experience i=
-s
->>>> that most translation diffs are very hard to read because about 80=
-%
->>>> noise. :(
->>>>
->>>> Aside from that, this looks good and sane (well, the English part
->>>> I can read does).
->>>
->>> Some context, an earlier discussion on this:
->>> http://kerneltrap.org/mailarchive/git/2010/5/30/31415/thread#mid-31=
-415
->>>
->>
->> msgmerge and xgettext does seem to have the --no-location flag to
->> avoid these annotations from being generated. The documentation does
->> say "Note that using this option makes it harder for technically
->> skilled translators to understand each message's context. ", though.
->> But perhaps the annotated versions could be generated when needed an=
-d
->> never checked-in (similar to what you suggested in that e-mail)? It
->> sounds to me like that would give us the best of all worlds. If it's
->> possible, that is.
->
-> It's certainly possible. But each time you worked with these files
-> you'd have add the line numbers yourself to generate the context, the=
-n
-> translate, then remove them again, then submit your patch.
->
-> I just think it's overly tedious work for getting smaller diffs.
->
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-You know, computers are pretty good at automating tedious jobs ;)
+> It's a little asymmetric- the program won't error out when 'merge.log'
+> is set to -1.
 
-I was thinking something along the lines of having po/is.po etc, and
-generating po/is.ann.po (or something) from these (+source) so
-translators can see the text in the context of the code. That is, they
-edit is.po, and generate is.ann.po when they want to see the context.
-Then we can put *.ann.po in .gitignore, and it's really just a matter
-of editing, doing "make po/is.ann.po", and voila.
-
-But I dunno, I haven't been using these tools much myself.
+And what is the reason you do not want to diagnose that as an error?
