@@ -1,93 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Thiago Farina <tfransosi@gmail.com>
 Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
-Date: Tue, 31 Aug 2010 23:11:21 -0700
-Message-ID: <7v1v9e803a.fsf@alter.siamese.dyndns.org>
+Date: Wed, 1 Sep 2010 03:22:56 -0300
+Message-ID: <AANLkTinHJHzcoFFjv-TaQ+DYVyqn46fqA802m8Lq5anp@mail.gmail.com>
 References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
- <20100830023812.GA4010@burratino> <20100830024020.GB4010@burratino>
- <AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
+	<20100830023812.GA4010@burratino>
+	<20100830024020.GB4010@burratino>
+	<AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
+	<7v1v9e803a.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 08:11:44 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 08:23:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqgXv-0005l1-L8
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 08:11:43 +0200
+	id 1Oqgiu-0003BK-0d
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 08:23:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751828Ab0IAGLj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 02:11:39 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49916 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280Ab0IAGLi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 02:11:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A6A7D20AE;
-	Wed,  1 Sep 2010 02:11:35 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LUGFikVJvdxvJ6yO9EK8qOw0RVY=; b=SORP6x
-	Z35Kf/q5mf0mcaFCCqgqj1RGsKKO57bu7XCqgRB4btii6vgVxjf/hVU0Ssw68YML
-	rF4Vn5PO35DKQ+3Cs6s3HUwUlSR7+xflmsQTe9/sZ8Gh3InpC30x7v8GSQtfDqfO
-	9f6IeKSndymEESwjoDzSHvCF7RpqgZ6pHJ7rc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bf3DaxxhLfkLU0X8j9Br9W8NrgWYQ/co
-	0aqo3sIBH/uJ71zKAzrtvVxqh+vtw1UEEEgbsLZFCekP+aMK+fKCB5O3fZgYr7na
-	5yQhjPd+dhsM0DiNpAL06kjInSnM+qGOrM6hcjI0pAbGLUMs9tpLZ7pk38mC+Pd5
-	8nfz9DGV/Ag=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B116BD20AD;
-	Wed,  1 Sep 2010 02:11:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AD544D20AC; Wed,  1 Sep
- 2010 02:11:26 -0400 (EDT)
-In-Reply-To: <AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
- (Thiago Farina's message of "Tue\, 31 Aug 2010 23\:38\:57 -0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C35B326A-B58F-11DF-8EAC-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752155Ab0IAGW6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 02:22:58 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:32831 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751269Ab0IAGW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 02:22:57 -0400
+Received: by qyk33 with SMTP id 33so7465419qyk.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 23:22:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=kVx2GAks+Uo3P1CbHrNfHVyFUOqcolA6/UztXBFRT3c=;
+        b=EkCV/CLCll4TSGQHnnIjwafqp+6qxZsDTg8MMmN3fcq5WlklzzKEXoxWQvIZupUPLg
+         EcSSKRkjGpitexwYHRv+tilflFImSkhc9pg5i60bXHUuJGc+XkfGsZteWm5y08isGEzF
+         vhDSoMmii/5sjBCMOtv+oDSD1UpvDdJ2F4+lE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VncmKXQl8dA/pNbF9EpDUyMD6nL2uO1mILGi8Xn7KIWdVGf9Szf6CyM22p2vKZ/6fE
+         C/fjxP3MnOc5oPrkRj+Hnb4OyB7MQWgAuNprHkikV79JhYrGLARqT8BivumjcBmRG3ks
+         /JrP2C7OwDJhkVK+wjm8Po95gZ/wzKAXMkhNY=
+Received: by 10.229.71.225 with SMTP id i33mr4971888qcj.195.1283322176498;
+ Tue, 31 Aug 2010 23:22:56 -0700 (PDT)
+Received: by 10.229.245.202 with HTTP; Tue, 31 Aug 2010 23:22:56 -0700 (PDT)
+In-Reply-To: <7v1v9e803a.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155019>
 
-Thiago Farina <tfransosi@gmail.com> writes:
-
-> On Sun, Aug 29, 2010 at 11:40 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Jonathan Nieder wrote:
->>> Thiago Farina wrote:
->>>
->>>> Promote cmd_version to a builtin, by moving it to its own file
->>>> in builtin/version.c
->> [...]
->> So for what it's worth,
->>
->> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+On Wed, Sep 1, 2010 at 3:11 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> If the patch were to also move git_version_string[] from git.c to this new
+> file, whose sole purpose will be to give the version information, then it
+> might be worth it, as we would need to recompile a file with only 10 lines
+> instead of git.c with 570 lines, but what the patch does is not even that.
 >
-> Ping Junio.
+It doesn't do that, but if you suggest that, I can fix it up later and
+resend it.
 
-If the patch were to also move git_version_string[] from git.c to this new
-file, whose sole purpose will be to give the version information, then it
-might be worth it, as we would need to recompile a file with only 10 lines
-instead of git.c with 570 lines, but what the patch does is not even that.
+>risk causing broken builds?
+Hum, how such trivial change can cause that?
 
-Not that I would be happy to see such a change that affects dependency and
-risk causing broken builds this late in the cycle, though.
+>What did we gain through this exercise?  Did we fix any real problem?
+All patches should just fix real problems?
 
-I ended up spending 10+ minutes re-checking how the dependency between the
-version string and the resulting binaries work.  The patch probably would
-cause "git clean" to report a new unignored file, too.
-
-What did we gain through this exercise?  Did we fix any real problem?
-
-"git grep" sees directory boundaries through just fine, and I do not find
-Jonathan's explanation very satisfactory.
-
-
-		Junio, who gets a lot more grumpy than necessary at night...
+I think it just makes more sense, since *all* other commands are in
+builtin/ and it's own files.
