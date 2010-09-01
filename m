@@ -1,119 +1,75 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: git send-email doesn't take To: addresses from the patch
-Date: Wed, 01 Sep 2010 00:50:13 -0700
-Message-ID: <4C7E05B5.1050805@gmail.com>
-References: <4C7B5853.7010001@st.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 1/3 v2] tests: factor HOME=$(pwd) in test-lib.sh
+Date: Wed, 1 Sep 2010 07:56:47 +0000
+Message-ID: <AANLkTim6Cb4vegGYG0ZtJxXvAwBxHYGOY7bQFbGSAcXV@mail.gmail.com>
+References: <vpqhbibbthi.fsf@bauges.imag.fr>
+	<1283210123-19752-1-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTik7d9Rhx5NudeKvVMFAYvVhGxoYzK2y+g3CP=Zj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: viresh kumar <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 09:50:29 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Wed Sep 01 09:57:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqi5U-0005tW-Dv
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 09:50:28 +0200
+	id 1OqiC0-0001Z3-0g
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 09:57:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752933Ab0IAHuX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 03:50:23 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:37337 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751706Ab0IAHuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 03:50:20 -0400
-Received: by pxi10 with SMTP id 10so2746183pxi.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 00:50:20 -0700 (PDT)
+	id S1751274Ab0IAH4t convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 03:56:49 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57504 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751199Ab0IAH4s convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 03:56:48 -0400
+Received: by iwn5 with SMTP id 5so6589855iwn.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 00:56:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=f0vfZNYTg8YzjxkjD4hFCcNDKFDctKnvqh1t0otGJig=;
-        b=yIPrV1NGwTPUafqFWgF6riB8IFqToEDEsIvXu+U1z+76Jf5unyJN0dlW0XxIbxN+pZ
-         tPTqv+cUoky4rSRv+WingOANfv7Mz0rWXTLqT7ah8ow5Z7OqLuMV0BGTibi5KmB/Sxsu
-         7Z+xRugBoSTphz333g+PRWb6X9pVAeu1mVjsE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ratytwe0NNxfOlgi6IfuheoyGbtBFeXVKCTGvAuYeCU=;
+        b=afWPur2/eCU/lbO0ePhGAD77rqnssPCkgr63SawmKVbEiNWNeapwd+fiGFgOJIo5pR
+         b+oOdb87ryMkbBPDEFnwxctLWwhE0XJWUiIKkiqwDpgrktGmPUfUAVXI+XbRBpfTWUbq
+         njdl1tMmS2zyUWCW4Owk15LayTdT52oo8UimY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=Gh99nMvWmDLuB9zHzJAJOzYqbrCKQ1ol5CQ6CmLT1/M1TmMRhFQU/6et+lcsdC89nT
-         p2Ee5XL15rRUGGweJuxL8uHHBizc8iTZIQz050eyKRux9oJwlWaA8WwixsWBhTQhXTSI
-         uOOqyxs9SEDS6v2hOaM/8QnRRlqWsG9LB5dU4=
-Received: by 10.114.127.10 with SMTP id z10mr8396073wac.62.1283327420431;
-        Wed, 01 Sep 2010 00:50:20 -0700 (PDT)
-Received: from [192.168.1.101] ([75.85.182.25])
-        by mx.google.com with ESMTPS id k23sm18030288waf.5.2010.09.01.00.50.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Sep 2010 00:50:19 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.7) Gecko/20100805 Lightning/1.0b2pre Thunderbird/3.1.1
-In-Reply-To: <4C7B5853.7010001@st.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kpHivWFvmF4/Yj2AfxQvONFZMh4T1VxctNdkwgBzf5rlOuDxOzbsrzRGa8/L8vMQ9N
+         JkiQ03NPVr0El2t8c71S/MPaLCy9w2mCcrtvXpYn2x9V09ccJjjjOcl8XCyxp49uSCvV
+         wtAQ0n73VHq6SdQ8F4dD+XbhL2Z2pBG80sTxw=
+Received: by 10.231.39.196 with SMTP id h4mr8308478ibe.64.1283327807193; Wed,
+ 01 Sep 2010 00:56:47 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 1 Sep 2010 00:56:47 -0700 (PDT)
+In-Reply-To: <AANLkTik7d9Rhx5NudeKvVMFAYvVhGxoYzK2y+g3CP=Zj@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155022>
 
-  On 08/30/2010 12:05 AM, viresh kumar wrote:
-> Hi,
+On Tue, Aug 31, 2010 at 07:42, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> On Mon, Aug 30, 2010 at 23:15, Matthieu Moy <Matthieu.Moy@imag.fr> wr=
+ote:
+>> The same pattern is used in many tests, and makes it easy for new on=
+es to
+>> rely on $HOME being a trashable, clean, directory.
+>>
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>> Just re-ordered the patch to make this one the first.
+>>
+>> I took =C3=86var's suggestion of using $TRASH_DIRECTORY instead of $=
+(pwd).
 >
-> I am using git-1.7.2 and use following command to generate a patch
+> Thanks,
 >
-> $ git format-patch --to abc@xyz.com HEAD^
->
-> Now when I use git send-email to send this patch, it is not taking the
-> To: embedded in the patch as its destination, instead it asks for one
-> and if not provided it keeps this field empty.
-> On the other hand git send-email is taking the Cc addresses from
-> the patch perfectly in to account.
->
-> How can I use git send-email to pick To: addresses directly from the
-> patch.
+> Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
 
-You can't. Nobody has bothered to make git-send-email consider the To: field. Can you try this patch out? I think it will mostly work, except I haven't bothered to look at --compose yet and I'm halfway stumbling through this code right now.
-
----->8-----
-
-Subject: [PATCH] send-email: Use To: headers in patch files
-
-It's a minor annoyance when you take the painstaking time to setup To:
-headers for each patch in a large series, and then go out to send the
-series with git-send-email and watch git ignore the To: headers in the
-patch files.
-
-Therefore, always add To: headers from a patch file to the To: headers
-for that message. Keep the prompt for the blanket To: header so as to
-not break scripts (and user expectations). This means even if a patch has a
-To: header, git will prompt for the To: address. Otherwise, we'll need to
-introduce interface breakage to either request the header for each patch
-missing a To: header or default the header to whatever To: address is found
-first (be it in a patch or from user input). Both of these options don't seem
-very obvious/useful.
-
-Reported-by: viresh kumar<viresh.kumar@st.com>
-Signed-off-by: Stephen Boyd<bebarino@gmail.com>
----
-  git-send-email.perl |    7 +++++++
-  1 files changed, 7 insertions(+), 0 deletions(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 6dab3bf..06373ed 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1176,6 +1176,13 @@ foreach my $t (@files) {
-  					$1, $_) unless $quiet;
-  				push @cc, $1;
-  			}
-+			elsif (/^To:\s+(.*)$/) {
-+				foreach my $addr (parse_address_line($1)) {
-+					printf("(mbox) Adding to: %s from line '%s'\n",
-+						$addr, $_) unless $quiet;
-+					push @to, sanitize_address($addr);
-+				}
-+			}
-  			elsif (/^Cc:\s+(.*)$/) {
-  				foreach my $addr (parse_address_line($1)) {
-  					if (unquote_rfc2047($addr) eq $sender) {
--- 
-1.7.2.2.178.gd8a94
+Junio: FYI you picked up v1 of this for next/pu, not this v2.
