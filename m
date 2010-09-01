@@ -1,102 +1,96 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: Bug: git-hooks documentation should note that if you are using
- git-daemon you will *not* see stdout and stderr output from hooks.
-Date: Wed, 1 Sep 2010 13:41:03 -0400
-Message-ID: <20100901174103.GA23445@gnu.kitenet.net>
-References: <AANLkTi=H-W2zVcW_qK-BR8hRZvrv2EhY06Z_JfYYLFQR@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin: use builtin.h for all builtin/ commands
+Date: Wed, 01 Sep 2010 10:43:19 -0700
+Message-ID: <7vmxs15phk.fsf@alter.siamese.dyndns.org>
+References: <AANLkTinHtvHt0q=dK9KHtCX6JzymB5dx1NuaAZN_uu2R@mail.gmail.com>
+ <1283358207-3165-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yrj/dFKFPuw6o+aM"
-Cc: git@vger.kernel.org
-To: Chris Patti <cpatti@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 19:41:20 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 19:43:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqrJH-0001BO-4s
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 19:41:19 +0200
+	id 1OqrLS-0002oD-OV
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 19:43:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755024Ab0IARlK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 13:41:10 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:54052 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754770Ab0IARlJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 13:41:09 -0400
-Received: from gnu.kitenet.net (tn-76-5-154-89.dhcp.embarqhsd.net [76.5.154.89])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 27DD611955E;
-	Wed,  1 Sep 2010 13:41:07 -0400 (EDT)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 477C043358; Wed,  1 Sep 2010 13:41:03 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=H-W2zVcW_qK-BR8hRZvrv2EhY06Z_JfYYLFQR@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755789Ab0IARn3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 13:43:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45664 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755300Ab0IARn3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 13:43:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CCC50D2695;
+	Wed,  1 Sep 2010 13:43:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=2duMZ1rxMi14
+	jZZEMB/Wo8OkY+U=; b=IqBJUkObKVkQ2AX5HGCEnN+OMCVXmQQFTLh72tVHogbv
+	4/lucaZAA0kIJuKe0QnE4Wm9mlU6NElJRv7p+N0eVQrF4R3lhTPhzu7LzfHovClj
+	46hJrTALyqoYfVczpHigSViz8f3nd5nrv3296burNFo8XYUd2oz31wWCs6NzpP8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=BulTd9
+	LlOcoz9jvO/RITFJw7tJWfavah5KscvMtKN8TY+OaTwUajo20YJyjFBA9DKXU83B
+	hClrmhEGWEgYXigSSnc6WoMigMcMlv8oNMuYdDKQ/MTdyeDUwA8p9KpTDGEQ6Ej1
+	d9ol8S2zqRQoriWiDky7bzVqAPz7OzxGwkeig=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 968D7D2694;
+	Wed,  1 Sep 2010 13:43:24 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B3D5AD2693; Wed,  1 Sep
+ 2010 13:43:20 -0400 (EDT)
+In-Reply-To: <1283358207-3165-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed\,  1 Sep
+ 2010 16\:23\:27 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6B90EE7E-B5F0-11DF-9DED-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155066>
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
 
---yrj/dFKFPuw6o+aM
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Some builtin/*.c commands weren't using the builtin.h header, but
+> instead manually imported headers like cache.h and commit.h which
+> builtin.h would include for them.
 
-Chris Patti wrote:
-> How can I go about submitting a bug or a change request or a diff or
-> whatever to get this fixed please?
->=20
-> It's exceedingly confusing for someone just learning about hook
-> development, and wasted a few hours of my time I'd rather have spent
-> getting my hook running :)
+> diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+> index dbd8b7b..03abc30 100644
+> --- a/builtin/fetch-pack.c
+> +++ b/builtin/fetch-pack.c
+> @@ -1,7 +1,6 @@
+> -#include "cache.h"
+> +#include "builtin.h"
+>  #include "refs.h"
+>  #include "pkt-line.h"
+> -#include "commit.h"
+>  #include "tag.h"
+>  #include "exec_cmd.h"
+>  #include "pack.h"
 
-For stderr, git-daemon used to not propigate it, but=20
-that was fixed (in 5d87dd4fcac808fc0f0b993b470644ba7d2d62a2 / 1.6.4),
-at least for git-daemon started with --detach or --inetd.
+Leveraging the fact that builtin.h includes git-compat-util.h and cache=
+=2Eh
+is fine and I think strbuf is also generic and pervasive enough to be
+included in the mix, but in the longer term we would probably want to f=
+ix
+builtin.h not to include it itself does not need, notably commit.h and
+notes.h.
 
-IIRC, all it took to get it fixed was me complaining on this list and
-the wonderful git developers seeing it. :)
+=46or example, the header currently defines notes related stuff, such a=
+s
+notes_rewrite_cfg parse_combine_notes_fn, etc.  Shouldn't they belong t=
+o
+notes.h?  And if we lose them, do we still need to include commit.h and
+notes.h in builtin.h?
 
-For example:
-
-joey@gnu:~/src/ikiwiki/doc>git push git://ikiwiki.info/
-Counting objects: 10, done.
-Delta compression using up to 2 threads.
-Compressing objects: 100% (6/6), done.
-Writing objects: 100% (6/6), 599 bytes, done.
-Total 6 (delta 4), reused 0 (delta 0)
-remote: removal of attachments is not allowed  <-- stderr from my hook
-To git://ikiwiki.info/
- ! [remote rejected] master -> master (pre-receive hook declined)
-
---=20
-see shy jo
-
---yrj/dFKFPuw6o+aM
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBTH6QLskQ2SIlEuPHAQhs7xAAmP1N5ghEB7VhOYWmMNFF3A0C9E/5pY2k
-07Au1irHInX6W9b9M8wMpATQUq1xpumkU0ixS3XXbl/3B7jHnh/8+XPbjhL1ySYf
-lM4xnqeVQuI/eZuu/pk8Z4x3i2Yd0GdLFznPCNcg8ZJaEkKIAk41PYbQCo+AZE84
-s1KBqat6YTe/iHSBYBUQo1jQVENVFCLY9HYPhnjcfT7RHGLn7wVxZgJRkf2vnPjT
-hUl2WUyJYKK7pzmNZwhqWD4RNI1hDez09Mo0d18GYYRsTSCMBg/sobpCdPJp5w6V
-T5FtDZ39k36EmniWowh9/6TtFe3U4tf2tMe57AzVqJxD0iYJyA+2nAJlY9ecXDPH
-jJqadSMccJa9/AbhX6EB5QrZD5YgIHSpkb5bEQKqENp2so3p7wO/b/8jpVkVJ/+X
-3M7XQwAcg4NnJNsB11kspjRp0PgT9uAl3AcYDO2V+hKXdueSPEE6qQL5pNnEhV8/
-h374zdM7tidInh/v6hzu9XpZxcFoTxlmPJRvFVWuklkKhdTZqE3ghJXbgBCxc9D9
-Ju4DTnfWMCJBZfiTTnofWudIA6RwwcdJJOUe8ofKuoFFf8ndtuZC/8RDUgJh/5Sx
-dI9nEXiQ8qI42C0+NN1AyWeo00e1v3XJJqrugnH36JrJ/6Aq9UMjinsd+T/Cr6KE
-AAI/INk6kE8=
-=la0G
------END PGP SIGNATURE-----
-
---yrj/dFKFPuw6o+aM--
+And when that happens, the inclusion of commit.h needs to come back to
+this file, I think.
