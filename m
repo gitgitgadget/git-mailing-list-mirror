@@ -1,80 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3 v4] Add global and system-wide gitattributes
-Date: Tue, 31 Aug 2010 16:56:26 -0700
-Message-ID: <7vfwxu8hg5.fsf@alter.siamese.dyndns.org>
-References: <vpqhbibbthi.fsf@bauges.imag.fr>
- <1283210123-19752-3-git-send-email-Matthieu.Moy@imag.fr>
- <vpqbp8i2yns.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH for next] insert missing newline in a diagnostic
+Date: Tue, 31 Aug 2010 19:17:29 -0500
+Message-ID: <20100901001729.GG6747@burratino>
+References: <87iq2s4ewn.fsf@meyering.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Petr Onderka <gsvick@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 01 01:56:46 2010
+Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Jim Meyering <jim@meyering.net>
+X-From: git-owner@vger.kernel.org Wed Sep 01 02:19:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqah3-0003ZM-Lk
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 01:56:46 +0200
+	id 1Oqb2x-0005jh-6d
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 02:19:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753528Ab0HaX4j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 19:56:39 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48698 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752353Ab0HaX4i (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 19:56:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 755EAD212E;
-	Tue, 31 Aug 2010 19:56:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ky5uLu4DcJvXYDxbIbC6s3BrNZs=; b=fZZFyK
-	BEUuqUaVXVAE6V4tmlMRXak3VSA/i62TBRQg8zWms6Yg/n1s33w/XUXMcW5Jol3L
-	JEENvHVE5bjtAfusUvl35ndfn3tDc6LtyGPcrsC40HACwkXw8ik5w96Aq2gYcJSI
-	XqUCPShizdk1lUKNc9cF/ee2psEWL8awIPijk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v0/TcmY11AQLIcDt8PUYeAka0SXnjKbX
-	KwYhaEbrIMaW2+R/LTilJNi+AtJIQoUQKORxE8hQC5d6r+aoQMXNmG7pEv/ySlbd
-	TP9kaadXec1kBQyNfaDIwxiA+qD2Vo9ziR25XOlxPIcppuurAYIKrSM9PziCf2K5
-	vjJ04F4Vt9I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 09CD6D212D;
-	Tue, 31 Aug 2010 19:56:32 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0FB72D2129; Tue, 31 Aug
- 2010 19:56:27 -0400 (EDT)
-In-Reply-To: <vpqbp8i2yns.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed\, 01 Sep 2010 00\:41\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 61176DAA-B55B-11DF-BB6B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752155Ab0IAATR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 20:19:17 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:50801 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750721Ab0IAATQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 20:19:16 -0400
+Received: by qwh6 with SMTP id 6so5771508qwh.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 17:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=3Ry5Ka0y0Xbf2RxXeCIcC+Z7KtDJRiGJqOdFJFBTnf0=;
+        b=d+0eVuI4vPmykkgjXcoAm1ZmGMwGwlaSdOf/D1tOXKGbqBY4HZ/qCq37M2R2mFiAiY
+         8E/3lJBFXk5+SSyRi0Heb8B2hz24I76f+Z6fs5Ea4JU3aGrADYw8FkXK58bMPqp8ZF/C
+         DfiqTpR092OlrRGrl2B5Z68zAS8jOp0QyWsXI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KcH4vMCLuFGdXObF0yk5pIoJHGXWqsjAisLvTQS3DJ4RUBh/PLRGVVzDw7G69Rrklz
+         MisbuB6e+ZMgvNBQet4beH4pSib1b2TXiHxUo8gXz9udyX6gVnLF9qZI1/2PurXEx5Jp
+         f1O7MBYZzwKJZ/WjkyWgSV7WVIRMNrX2J2ZLE=
+Received: by 10.229.183.20 with SMTP id ce20mr1024184qcb.203.1283300355786;
+        Tue, 31 Aug 2010 17:19:15 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id t4sm10379445qcs.28.2010.08.31.17.19.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 31 Aug 2010 17:19:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <87iq2s4ewn.fsf@meyering.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154999>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+(+cc: Matthieu, Junio)
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> This version doesn't touch config.c, and calls git_config with a
->> trivial callback reading only the core.attributesfile variable.
->
-> I see that pu has a variant of my fix:
->
->   17cd572 fixup! Add global and system-wide gitattributes
->
-> (is the fixup! here on purpose, or is it a failed rebase -i?)
+Hi Jim,
 
-It wasn't a failed "rebase -i" but was a reminder to myself.  I didn't
-want to squash that in before discussing on the list.
+Jim Meyering wrote:
 
-> ... I'm resending my patch with this change for conveinience.
+> When merging, I would get a message like this:
+> 
+>   error: The following untracked working tree files would be overwritten by merge:
+>   FILE_NAMEPlease move or remove them before you can merge.
+> 
+> This change inserts the newline after FILE_NAME.
 
-Will take a look; it will have to wait until my git Wednesday this week to
-be pushed out, though.
+I fear it is more complicated.  With your patch, in some situations
+(e.g., when running t7609-merge-co-error-msgs.sh) I get a leading tab
+and extra newline:
 
-Thanks.
+ error: The following untrack...
+	FILE_NAME
+
+ Please move or remove them before you can merge.
+
+In unpack-trees, display_error_msgs() prints the version with a tab
+but you are getting the message from add_rejected_path which suggests
+to me that o->show_all_errors is unset.
+
+Was there some other error before then?
+
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/152965/focus=153211
