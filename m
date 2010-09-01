@@ -1,231 +1,100 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] doc: technical details about the index file format
-Date: Wed,  1 Sep 2010 19:53:45 +1000
-Message-ID: <1283334825-18309-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+From: Joshua Juran <jjuran@gmail.com>
+Subject: Re: html page display via cgit
+Date: Wed, 1 Sep 2010 03:00:20 -0700
+Message-ID: <9D2F75AD-B25E-4730-82FA-E8C5F73FCE1B@gmail.com>
+References: <AANLkTinJx0ZKjCtpq9k6nwigodnu42EvqchpgQtwGp5S@mail.gmail.com> <AANLkTik-02dJZF_0m=xccg4N5Mdaj=b2JzZaMKp=vuww@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	robin.rosenberg@dewire.com, srabbelier@gmail.com
-X-From: git-owner@vger.kernel.org Wed Sep 01 11:54:13 2010
+Cc: Shivdas Gujare <shivdas.tech@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 12:00:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqk1E-0007lt-G7
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 11:54:13 +0200
+	id 1Oqk7K-0003HQ-Vn
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:00:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754352Ab0IAJyI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 05:54:08 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:45777 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751870Ab0IAJyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 05:54:05 -0400
-Received: by pzk9 with SMTP id 9so2763015pzk.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 02:54:03 -0700 (PDT)
+	id S1753964Ab0IAKAY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 06:00:24 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:35417 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752571Ab0IAKAX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 06:00:23 -0400
+Received: by pwi3 with SMTP id 3so699646pwi.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:00:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=qFUmv8e7JI3zWR8YYhAGZiwvAUPz6gBTd64oIldP7z0=;
-        b=dlxPONvtXgEU75nqk7xJs+r/tRzUVUhGe1420gDAxsd9zy2jW9IYV2eBaRVlZcRNAs
-         tL/DJEbJm6gvgdEB7o/rXlpw8z9W1KDOJhuEglFW8A4Z1IVpwGpU8onu1clHQIJP4O84
-         drMj25jv4PgaFji6CUyaJGWRmLQ1aOnrOE21w=
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=7NVGAxhi+cTaNqP00YBevSesEdVogwn6w0UIEnmnMoU=;
+        b=sMHMLkK7tg4dIXv+nmIbP8XZhZCevBntN+AxGgA4Ht3gLu9urIPUtofBHJCBilQyjQ
+         IIsJeOJvBrT830TJqNjmkpiD5jwNe3I66toQI7kqNvRuETrKW+ICxns3MSp33brZ7kDo
+         y9cRnA97QDRH0sadboZQVpBJYFL5+2EJgutVc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=MBdsIAYV433ZZwhil1Irt04FF4sFEhjFz7DUb/ojvRk7LvSa9inadX7zF4bozbu9lO
-         nKx3pPxtq/QViclINqWFYn6q7BRGyJobl4lrQ5+BfPijUl3ya5BHXrRVgI9FKV8iWCAp
-         hY7WXZJitsRU4JPGzayGdwBhPnZ33aoCvxFvg=
-Received: by 10.142.135.2 with SMTP id i2mr7000964wfd.279.1283334843657;
-        Wed, 01 Sep 2010 02:54:03 -0700 (PDT)
-Received: from dektop ([119.12.250.225])
-        by mx.google.com with ESMTPS id j5sm3485200wff.20.2010.09.01.02.53.58
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=cr00gKnvhdX8kfvOCTcIXetHg4iWWhZi/f/SSW4jfXzJtlPOHnYLQBKyu6DcYVJUKo
+         IEQ/oNVlfqIubLtUhTTqnlz2cz1LrJl20bt7ZAiJgdZcYcZqt28LGwMOB5vyVf4fSY74
+         QsZ47CKDGo+HxuI4OoV7WF1nRYQEBKJq0xHi4=
+Received: by 10.142.230.10 with SMTP id c10mr7007355wfh.289.1283335223500;
+        Wed, 01 Sep 2010 03:00:23 -0700 (PDT)
+Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id 33sm18238788wad.6.2010.09.01.03.00.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Sep 2010 02:54:02 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Wed,  1 Sep 2010 19:53:52 +1000
-X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
+        Wed, 01 Sep 2010 03:00:22 -0700 (PDT)
+In-Reply-To: <AANLkTik-02dJZF_0m=xccg4N5Mdaj=b2JzZaMKp=vuww@mail.gmail.com>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155030>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155031>
 
-This bases on the original work by Robin Rosenberg:
+On Sep 1, 2010, at 2:46 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-http://thread.gmane.org/gmane.comp.version-control.git/73471
+> On Wed, Sep 1, 2010 at 09:32, Shivdas Gujare =20
+> <shivdas.tech@gmail.com> wrote:
+>
+>> I hope, this is the right mailing list for cgit as well.
+>> I am trying to add some "html logs" inside cgit, but I can't open
+>> these logs via cgit inside firefox, i.e. cgit open every files in
+>> "plain" format,
+>> would like to know if it is possible to open "html" pages inside cgi=
+t
+>> so that if I click on html page added into git, it opens in html and
+>> not in plain format.
+>>
+>> for example:
+>> if I click on "download.html" from
+>> "http://cgit.freedesktop.org/~lb/mesa/tree/docs" it shows a raw file
+>> as "http://cgit.freedesktop.org/~lb/mesa/tree/docs/download.html"
+>> and if I click on "plain" it opens in firefox like
+>> "http://cgit.freedesktop.org/~lb/mesa/plain/docs/download.html"
+>> but here I am trying to open this "download.html" inside cgit so tha=
+t
+>> I can view it like html web page and not as "plain" text file.
+>>
+>> Thanks for any help or pointers.
+>
+> I don't know, but that's probably deliberate. You're viewing a /plain=
+/
+> link, which should be the equivalent of "git show".
+>
+> There's also XSS security implications to serving things as text/html
+> on a shared hosting site if the main site serves cookies or otherwise
+> has user logins.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- I split index entry out so the overall format is clearer.
+One solution is parse the content server-side and re-render as =20
+sanitized HTML.  In addition to stripping out scripts and frames, this =
+=20
+would avoid sending broken markup produced by someone else under your =20
+name, or serving up otherwise well-formed XHTML as text/html.
 
- Other changes:
- - mention of version 3
- - added ino and mode
- - added extended flags (v3)
- - entry sort order
-
- Again I don't realy know REUC extension, so only placeholder
-
- Documentation/technical/index-format.txt |  139 ++++++++++++++++++++++=
-++++++++
- 1 files changed, 139 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/technical/index-format.txt
-
-diff --git a/Documentation/technical/index-format.txt b/Documentation/t=
-echnical/index-format.txt
-new file mode 100644
-index 0000000..3e113ca
---- /dev/null
-+++ b/Documentation/technical/index-format.txt
-@@ -0,0 +1,139 @@
-+GIT index format
-+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
-+
-+=3D The git index file has the following format
-+
-+  All binary numbers are in network byte order. Version 2 is described
-+  here unless stated otherwise.
-+
-+   - A 12-byte header consisting of
-+
-+     4-byte signature:
-+       The signature is { 'D', 'I', 'R', 'C' }
-+
-+     4-byte version number:
-+       The current supported versions are 2 and 3.
-+
-+     32-bit number of index entries.
-+
-+   - A number of sorted index entries
-+
-+   - Extensions
-+
-+     Extensions are identified by signature. Optional extensions can
-+     be ignored if GIT does not understand them.
-+
-+     GIT currently supports tree cache and resolve undo extensions.
-+
-+     4-byte extension signature. If the first byte is 'A'..'Z' the
-+     extension is optional and can be ignored.
-+
-+     32-bit size of the extension
-+
-+     Extension data
-+
-+   - 160-bit SHA-1 over the content of the index file before this
-+     checksum.
-+
-+=3D=3D Index entry
-+
-+  Index entries are sorted with memcmp() by entry name. Entries with
-+  the same name are sorted by their stage.
-+
-+  32-bit ctime seconds, the last time a file's metadata changed
-+    this is stat(2) data
-+
-+  32-bit ctime nanoseconds (modulo 1G)
-+    this is stat(2) data
-+
-+  32-bit mtime seconds, the last time a file's data changed
-+    this is stat(2) data
-+
-+  32-bit mtime nanoseconds (modulo 1G)
-+    this is stat(2) data
-+
-+  32-bit dev
-+    this is stat(2) data
-+
-+  32-bit ino
-+    this is stat(2) data
-+
-+  32-bit mode, split into (high to low bits)
-+
-+    4-bit object type
-+      valid values in binary are 1000 (blob), 1010 (symbolic link)
-+      and 1110 (gitlink)
-+
-+    3-bit unused
-+
-+    9-bit unix permission (only 0755 and 0644 are valid)
-+
-+  32-bit uid
-+    this is stat(2) data
-+
-+  32-bit gid
-+    this is stat(2) data
-+
-+  32-bit file size
-+    This is the on-disk size from stat(2)
-+
-+  160-bit SHA-1 for the represented object
-+
-+  A 16-bit field split into (high to low bits)
-+
-+    1-bit assume-valid flag
-+
-+    1-bit extended flag (must be zero in version 2)
-+
-+    2-bit stage (during merge)
-+
-+    12-bit name length if the length is less than 0x0FFF
-+
-+  (Version 3) A 16-bit field, only applicable if the "extended flag"
-+  above is 1, split into (high to low bits).
-+
-+    1-bit reserved for future
-+
-+    1-bit skip-worktree flag (used by sparse checkout)
-+
-+    1-bit intent-to-add flag (used by "git add -N")
-+
-+    13-bit unused, must be zero
-+
-+  Entry path name (variable length) relative to top-level directory
-+    (without leading slash). '/' is used as path separator. Special
-+    paths ".", ".." and ".git" (without quotes) are disallowed.
-+    Trailing slash is also disallowed.
-+
-+  1-8 nul bytes as necessary to pad the entry to a multiple ot eight b=
-ytes
-+  while keeping the name NUL-terminated.
-+
-+=3D=3D Extensions
-+
-+=3D=3D=3D Tree cache
-+
-+  Tree cache extension contains pre-computes hashes for all trees that
-+  can be derived from the index
-+
-+  - Extension tag { 'T', 'R', 'E', 'E' }
-+
-+  - 32-bit size
-+
-+  - A number of entries
-+
-+     NUL-terminated tree name
-+
-+     Blank-terminated ASCII decimal number of entries in this tree
-+
-+     Newline-terminated position of this tree in the parent tree. 0 fo=
-r
-+     the root tree
-+
-+     160-bit SHA-1 for this tree and it's children
-+
-+=3D=3D=3D Resolve undo
-+
-+  TODO
-+
-+  - Extension tag { 'R', 'E', 'U', 'C' }
-+
-+  - 32-bit size
---=20
-1.7.1.rc1.69.g24c2f7
+Josh
