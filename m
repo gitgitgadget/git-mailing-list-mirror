@@ -1,116 +1,61 @@
 From: Thiago Farina <tfransosi@gmail.com>
-Subject: [Patch v2] help.c: Pull cmd_version out of this file.
-Date: Wed,  1 Sep 2010 00:10:32 -0300
-Message-ID: <dc636803969cfa958d76ec2461ebdbe79b335ee3.1283310520.git.tfransosi@gmail.com>
-Cc: jrnieder@gmail.com, gitster@pobox.com, pclouds@gmail.com,
-	Thiago Farina <tfransosi@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 01 05:11:07 2010
+Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
+Date: Wed, 1 Sep 2010 00:11:47 -0300
+Message-ID: <AANLkTim-onah671F=9sr4wfQFPBb-vWzjD9YKY5O7f2J@mail.gmail.com>
+References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
+	<20100830023812.GA4010@burratino>
+	<20100830024020.GB4010@burratino>
+	<AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
+	<AANLkTik7P2nC9zMp5+srrRNEAOKLcXnsJA5+_43S9A3=@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 05:11:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqdj9-0000Lc-BE
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 05:11:07 +0200
+	id 1Oqdju-0000f7-07
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 05:11:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744Ab0IADKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 23:10:51 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49554 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751828Ab0IADKu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 23:10:50 -0400
-Received: by gyd8 with SMTP id 8so2823680gyd.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 20:10:49 -0700 (PDT)
+	id S1753071Ab0IADLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 31 Aug 2010 23:11:50 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:48290 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751828Ab0IADLt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 31 Aug 2010 23:11:49 -0400
+Received: by bwz11 with SMTP id 11so4992808bwz.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 20:11:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=9Z5HDAECNPfaQ8uwgVsF3NdrD2Unst52/oMLHxp7Vpc=;
-        b=pyivMhfUbJk2E9KVOu5jeZvYVixSr+IaTvyFi6E2jC3kn8ZVVx8SZP/WbPO8h9SKTS
-         cBxmB5l0hh402mh27sIrEL52HWLxgtx65uM3kdYocTchRwwTMz3tOw0zQNokhcaPTyrv
-         07sxB0O8M0XfGgYKKgI544xRWjMFHHPzH0sgs=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=wzeOlGcJn948teg/h8EjvSo6hAgvvTiBVmkLSOhRJlc=;
+        b=xWfbIy2e8F9BZ8kzk4JnHfAcBXMNMICeVzRqNjV5Kavi+K3Mdk1wk1mEcodUxKpdZ2
+         t+KkgByWZ92ujqw6CeU+eIpa/hNo020W06Gs3IZV9IQpJ0YnmBb/51NIbp9J7rBO4Yho
+         NPP2QwqmWLn+3OtolBmCHlaiwgpIcmb5OCghA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=SBGoGzR3BsJ1mymV4mCgHpSrKZj5VDAIPXDZjN764nZ3owmVAxR7XGSQCTZHBD0PEL
-         la4wRKT1cgB3KXpB5EjHc/fj/C4NdYaxW5j+lbl6qIMum0BekTWM1sVl6kzZNZXwuDNj
-         e/+fIk5d8GQLJTkwnvGTsDJ3Wy6woug50h2po=
-Received: by 10.150.58.5 with SMTP id g5mr245799yba.340.1283310648043;
-        Tue, 31 Aug 2010 20:10:48 -0700 (PDT)
-Received: from localhost ([186.205.0.204])
-        by mx.google.com with ESMTPS id f6sm273443yba.7.2010.08.31.20.10.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 20:10:46 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1.95.g3d045
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=HX/EmCUebAcGWYlL7z8OquSjH7JkLHGSJY5g//WMnpokrx7fTzQN2hSuQaidlhwhGM
+         VOtxPWNvSh/hqM+XN8QRB5Gx3Kl9K9N5CueUVt2toGqLOue0HRvKVXXt4M3lOnfbUyRd
+         +XPhArsGR8ZkXsceFWZjEevJ76q+47g8DdX7g=
+Received: by 10.204.72.209 with SMTP id n17mr5140500bkj.52.1283310707800; Tue,
+ 31 Aug 2010 20:11:47 -0700 (PDT)
+Received: by 10.204.25.84 with HTTP; Tue, 31 Aug 2010 20:11:47 -0700 (PDT)
+In-Reply-To: <AANLkTik7P2nC9zMp5+srrRNEAOKLcXnsJA5+_43S9A3=@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155010>
 
-Promote cmd_version to a builtin, by moving it to its own file
-in builtin/version.c
+On Wed, Sep 1, 2010 at 12:04 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> Not my call, but should you also update .gitignore to ignore git-version?
 
-Signed-off-by: Thiago Farina <tfransosi@gmail.com>
----
- .gitignore        |    1 +
- Makefile          |    1 +
- builtin/version.c |    7 +++++++
- help.c            |    6 ------
- 4 files changed, 9 insertions(+), 6 deletions(-)
- create mode 100644 builtin/version.c
-
-diff --git a/.gitignore b/.gitignore
-index fcdd822..5bdddc4 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -151,6 +151,7 @@
- /git-var
- /git-verify-pack
- /git-verify-tag
-+/git-version
- /git-web--browse
- /git-whatchanged
- /git-write-tree
-diff --git a/Makefile b/Makefile
-index b4745a5..0f3b6d8 100644
---- a/Makefile
-+++ b/Makefile
-@@ -738,6 +738,7 @@ BUILTIN_OBJS += builtin/upload-archive.o
- BUILTIN_OBJS += builtin/var.o
- BUILTIN_OBJS += builtin/verify-pack.o
- BUILTIN_OBJS += builtin/verify-tag.o
-+BUILTIN_OBJS += builtin/version.o
- BUILTIN_OBJS += builtin/write-tree.o
- 
- GITLIBS = $(LIB_FILE) $(XDIFF_LIB)
-diff --git a/builtin/version.c b/builtin/version.c
-new file mode 100644
-index 0000000..d98e260
---- /dev/null
-+++ b/builtin/version.c
-@@ -0,0 +1,7 @@
-+#include "builtin.h"
-+
-+int cmd_version(int argc, const char **argv, const char *prefix)
-+{
-+	printf("git version %s\n", git_version_string);
-+	return 0;
-+}
-diff --git a/help.c b/help.c
-index 7f4928e..ad4f923 100644
---- a/help.c
-+++ b/help.c
-@@ -362,9 +362,3 @@ const char *help_unknown_cmd(const char *cmd)
- 
- 	exit(1);
- }
--
--int cmd_version(int argc, const char **argv, const char *prefix)
--{
--	printf("git version %s\n", git_version_string);
--	return 0;
--}
--- 
-1.7.2.1.95.g3d045
+Thanks for the catch, fixed in patchset v2.
