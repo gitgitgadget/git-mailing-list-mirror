@@ -1,89 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH for next] insert missing newline in a diagnostic
-Date: Tue, 31 Aug 2010 19:17:29 -0500
-Message-ID: <20100901001729.GG6747@burratino>
-References: <87iq2s4ewn.fsf@meyering.net>
+From: Geoff Russell <geoffrey.russell@gmail.com>
+Subject: Re: Large pack causes git clone failures ... what to do?
+Date: Wed, 1 Sep 2010 11:23:23 +0930
+Message-ID: <AANLkTik2Ms6qjQAaa_H8GGwmTG1fsk+8GR2y7ZmLviY-@mail.gmail.com>
+References: <AANLkTi=1iLx=-9gxkGzuhrbpA005VPSp0itkAkOG4D4z@mail.gmail.com>
+	<20100831180247.GF32601@spearce.org>
+	<AANLkTi=O5SbLRttzR0YwrHVEMz5gxtdTo9Z5C6V1yE1e@mail.gmail.com>
+Reply-To: geoffrey.russell@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jim Meyering <jim@meyering.net>
-X-From: git-owner@vger.kernel.org Wed Sep 01 02:19:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Sep 01 03:53:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqb2x-0005jh-6d
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 02:19:23 +0200
+	id 1OqcW3-0007LX-C0
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 03:53:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752155Ab0IAATR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 20:19:17 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:50801 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750721Ab0IAATQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 20:19:16 -0400
-Received: by qwh6 with SMTP id 6so5771508qwh.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 17:19:15 -0700 (PDT)
+	id S1752587Ab0IABx0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 21:53:26 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64526 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752166Ab0IABxZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 21:53:25 -0400
+Received: by wyb35 with SMTP id 35so8613721wyb.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 18:53:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=3Ry5Ka0y0Xbf2RxXeCIcC+Z7KtDJRiGJqOdFJFBTnf0=;
-        b=d+0eVuI4vPmykkgjXcoAm1ZmGMwGwlaSdOf/D1tOXKGbqBY4HZ/qCq37M2R2mFiAiY
-         8E/3lJBFXk5+SSyRi0Heb8B2hz24I76f+Z6fs5Ea4JU3aGrADYw8FkXK58bMPqp8ZF/C
-         DfiqTpR092OlrRGrl2B5Z68zAS8jOp0QyWsXI=
+        h=domainkey-signature:mime-version:received:received:reply-to
+         :in-reply-to:references:date:message-id:subject:from:to:cc
+         :content-type:content-transfer-encoding;
+        bh=yS2vw29VDHXtzZlQVTY/K/sI3CTtfzpFo4RtwDDiE9I=;
+        b=G6rLlJu0NX3Gzl/FPnKq3V7RE81Ko3DnGj4u/SNnBjWBxoycLDGUtjy9TY0RcxJwUw
+         pZASB+VQNbV1s2qYONVV++d9D+ciBb2gXHlIyk3ol+fyiqJb4QrP3yjBZwq8XarMqIhf
+         gsppTQMwFp70oq0vBqMN3U/LjREJA8Km9IT4c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KcH4vMCLuFGdXObF0yk5pIoJHGXWqsjAisLvTQS3DJ4RUBh/PLRGVVzDw7G69Rrklz
-         MisbuB6e+ZMgvNBQet4beH4pSib1b2TXiHxUo8gXz9udyX6gVnLF9qZI1/2PurXEx5Jp
-         f1O7MBYZzwKJZ/WjkyWgSV7WVIRMNrX2J2ZLE=
-Received: by 10.229.183.20 with SMTP id ce20mr1024184qcb.203.1283300355786;
-        Tue, 31 Aug 2010 17:19:15 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t4sm10379445qcs.28.2010.08.31.17.19.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 31 Aug 2010 17:19:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <87iq2s4ewn.fsf@meyering.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:reply-to:in-reply-to:references:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        b=t4Mtqj3nQVSRgot0DKVv24mccdGC/0JT1wtPWJRtQ/gFIP1oTyrTbU/lPCO2oqUoca
+         PPIB8Mg5exOdopXGJHEhARDP+YAKyoiLyQMJtkK46/XRAV18xSrohK1aYyfLVtNb6unc
+         BbYuxNNVrLpFTuqyRMs7q0SXv9UGhBrR4eamg=
+Received: by 10.216.10.77 with SMTP id 55mr7213953weu.17.1283306003893; Tue,
+ 31 Aug 2010 18:53:23 -0700 (PDT)
+Received: by 10.216.164.19 with HTTP; Tue, 31 Aug 2010 18:53:23 -0700 (PDT)
+In-Reply-To: <AANLkTi=O5SbLRttzR0YwrHVEMz5gxtdTo9Z5C6V1yE1e@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/154999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155001>
 
-(+cc: Matthieu, Junio)
+On Wed, Sep 1, 2010 at 7:33 AM, Geoff Russell
+<geoffrey.russell@gmail.com> wrote:
+> Thanks Shawn,
+>
+>...
+>> You really needed to run:
+>>
+>> =A0git repack --max-pack-size=3D.. -a -d
+>>
+>> The -d flag tells it to remove the old packs once the new packs
+>> are ready, and the -a flag tells it to reconsider every object
+>> in the repository, rather than just those that are loose.
+>
+> Ok, will try.
 
-Hi Jim,
+The repack failed with a "fatal: Out of memory, malloc failed", perhaps=
+ I
+just need to try a machine with more memory!
 
-Jim Meyering wrote:
+I'm still interested in whether clone from a client take note of the
+pack.packSizeLimit if I set it
+on the server? Or does it use the client value?
 
-> When merging, I would get a message like this:
-> 
->   error: The following untracked working tree files would be overwritten by merge:
->   FILE_NAMEPlease move or remove them before you can merge.
-> 
-> This change inserts the newline after FILE_NAME.
-
-I fear it is more complicated.  With your patch, in some situations
-(e.g., when running t7609-merge-co-error-msgs.sh) I get a leading tab
-and extra newline:
-
- error: The following untrack...
-	FILE_NAME
-
- Please move or remove them before you can merge.
-
-In unpack-trees, display_error_msgs() prints the version with a tab
-but you are getting the message from add_rejected_path which suggests
-to me that o->show_all_errors is unset.
-
-Was there some other error before then?
-
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/152965/focus=153211
+Cheers,
+Geoff
