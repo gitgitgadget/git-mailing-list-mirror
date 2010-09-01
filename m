@@ -1,61 +1,105 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
-Date: Wed, 1 Sep 2010 00:11:47 -0300
-Message-ID: <AANLkTim-onah671F=9sr4wfQFPBb-vWzjD9YKY5O7f2J@mail.gmail.com>
-References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
-	<20100830023812.GA4010@burratino>
-	<20100830024020.GB4010@burratino>
-	<AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
-	<AANLkTik7P2nC9zMp5+srrRNEAOKLcXnsJA5+_43S9A3=@mail.gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH 1/2] tests: make test_must_fail more verbose
+Date: Wed, 1 Sep 2010 13:37:31 +1000
+Message-ID: <AANLkTi=aGdLj4vRKs8dR64JO=c8eC3SHj0_hkh6Wutaw@mail.gmail.com>
+References: <20100831155457.GB11014@sigill.intra.peff.net>
+	<20100831155636.GA11530@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 05:11:54 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 01 05:37:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqdju-0000f7-07
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 05:11:54 +0200
+	id 1Oqe8p-0003bq-HO
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 05:37:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753071Ab0IADLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 31 Aug 2010 23:11:50 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:48290 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751828Ab0IADLt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 31 Aug 2010 23:11:49 -0400
-Received: by bwz11 with SMTP id 11so4992808bwz.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 20:11:48 -0700 (PDT)
+	id S1752851Ab0IADhd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 23:37:33 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:57769 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750969Ab0IADhc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 23:37:32 -0400
+Received: by qwh6 with SMTP id 6so5900234qwh.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 20:37:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=wzeOlGcJn948teg/h8EjvSo6hAgvvTiBVmkLSOhRJlc=;
-        b=xWfbIy2e8F9BZ8kzk4JnHfAcBXMNMICeVzRqNjV5Kavi+K3Mdk1wk1mEcodUxKpdZ2
-         t+KkgByWZ92ujqw6CeU+eIpa/hNo020W06Gs3IZV9IQpJ0YnmBb/51NIbp9J7rBO4Yho
-         NPP2QwqmWLn+3OtolBmCHlaiwgpIcmb5OCghA=
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=e4EY9l3udxX4/L23dAqIGgwVNaSREAiRWu+pJikw/sQ=;
+        b=pAz0rMJVCMthxpFse8ttG8R24gPkE1LGWUbGTv4pFlZi6g87AX0zqzSuYR7JRxX5b5
+         b8Af2QUwGWH3WgkP4EKyLbC1s+ygF3Dr/yD3oe6rxAC5r8blWuj5ybbMerWBk5L2SCDP
+         QXfZLmF4TMaayCT5Xozc+H3rX+ufpgxK7lV4A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=HX/EmCUebAcGWYlL7z8OquSjH7JkLHGSJY5g//WMnpokrx7fTzQN2hSuQaidlhwhGM
-         VOtxPWNvSh/hqM+XN8QRB5Gx3Kl9K9N5CueUVt2toGqLOue0HRvKVXXt4M3lOnfbUyRd
-         +XPhArsGR8ZkXsceFWZjEevJ76q+47g8DdX7g=
-Received: by 10.204.72.209 with SMTP id n17mr5140500bkj.52.1283310707800; Tue,
- 31 Aug 2010 20:11:47 -0700 (PDT)
-Received: by 10.204.25.84 with HTTP; Tue, 31 Aug 2010 20:11:47 -0700 (PDT)
-In-Reply-To: <AANLkTik7P2nC9zMp5+srrRNEAOKLcXnsJA5+_43S9A3=@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=ejgKyaeqAX3GWyr8025HUas6FLDK2pzNVGoe5aITnVOu6IotQ7qyal8YxXBMbtGiEU
+         0NXH+OHqs782iGgNigjK8yUjM8PQxPXkQ5DXvkGyfM66kyWpnsvowzK+mDBJzDWGF7hV
+         Z4E/S1C83tey0dtdv1BoQfEOAB57OKi8iOSPc=
+Received: by 10.224.57.213 with SMTP id d21mr4702890qah.136.1283312251544;
+ Tue, 31 Aug 2010 20:37:31 -0700 (PDT)
+Received: by 10.229.96.7 with HTTP; Tue, 31 Aug 2010 20:37:31 -0700 (PDT)
+In-Reply-To: <20100831155636.GA11530@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155011>
 
-On Wed, Sep 1, 2010 at 12:04 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> Not my call, but should you also update .gitignore to ignore git-version?
+On Wed, Sep 1, 2010 at 1:56 AM, Jeff King <peff@peff.net> wrote:
+> Because test_must_fail fails when a command succeeds, the
+> command frequently does not produce any output (since, after
+> all, it thought it was succeeding). So let's have
+> test_must_fail itself report that a problem occurred.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
 
-Thanks for the catch, fixed in patchset v2.
+Jeff,
+
+Nice fix - thank you!
+
+It is nice to see that my initial sloppiness inspired a thoughtful
+remediation. I'll try not to rely of gitters being always so helpful
+:-)
+
+jon.
+
+> ---
+> =C2=A0t/test-lib.sh | =C2=A0 10 +++++++++-
+> =C2=A01 files changed, 9 insertions(+), 1 deletions(-)
+>
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 3a3d4c4..285bfd8 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -591,7 +591,15 @@ test_path_is_missing () {
+>
+> =C2=A0test_must_fail () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0"$@"
+> - =C2=A0 =C2=A0 =C2=A0 test $? -gt 0 -a $? -le 129 -o $? -gt 192
+> + =C2=A0 =C2=A0 =C2=A0 exit_code=3D$?
+> + =C2=A0 =C2=A0 =C2=A0 if test $exit_code =3D 0; then
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo >&2 "test_mus=
+t_fail: command succeeded: $*"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1
+> + =C2=A0 =C2=A0 =C2=A0 elif test $exit_code -gt 129 -a $exit_code -le=
+ 192; then
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo >&2 "test_mus=
+t_fail: died by signal: $*"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1
+> + =C2=A0 =C2=A0 =C2=A0 fi
+> + =C2=A0 =C2=A0 =C2=A0 return 0
+> =C2=A0}
+>
+> =C2=A0# Similar to test_must_fail, but tolerates success, too. =C2=A0=
+This is
+> --
+> 1.7.2.2.119.gf9c33
+>
+>
