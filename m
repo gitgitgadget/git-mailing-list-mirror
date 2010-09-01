@@ -1,147 +1,104 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2010, #01; Wed, 1)
-Date: Wed, 1 Sep 2010 20:22:49 +0000
-Message-ID: <AANLkTim6=OTwzRd2H0GzNO3T0JuJxox8-Hfs_iKV=Xxy@mail.gmail.com>
-References: <7vaao15jk2.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 00/13] gettextize the first 4 C mainporcelain common commands
+Date: Wed,  1 Sep 2010 20:43:52 +0000
+Message-ID: <1283373845-2022-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Knut Franke <k.franke@science-computing.de>,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 22:23:01 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 01 22:44:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqtpk-0002p7-Ox
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 22:23:01 +0200
+	id 1OquAc-0006jZ-IT
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 22:44:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753286Ab0IAUWv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 16:22:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48492 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752145Ab0IAUWv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 16:22:51 -0400
-Received: by fxm13 with SMTP id 13so5061241fxm.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 13:22:49 -0700 (PDT)
+	id S1752244Ab0IAUoS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 16:44:18 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54032 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751966Ab0IAUoR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 16:44:17 -0400
+Received: by wwj40 with SMTP id 40so478054wwj.1
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 13:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=HQ/jBROiaMWqrvf+QBuzoPJneVmCUojDiqe9v6mt5Fw=;
-        b=O9g4khhT7Yy8KGV4b/CGEt9LaWL7vEr8cKWqP6vFR2Rz15xO9Qk6UEdf3uB8+pzdMZ
-         9g1eZ4q3H+uoXYu0QSuAM2icGRGrXsxTCWlzFTuENeWbhB7CCOZMWf6fsgXv+Ik95NQO
-         karHEF9cW4UXw4AXk4kgo/WAhJu8alNkJUYck=
+        bh=mB9ynRa3q5JG0ddL/pffwijNtVLyB7TLyWwmyYOq6O8=;
+        b=MJpdKe9Mx8xn4/tH8+3VLMnB/cPHCtJUp4gB35C4KyTaCvJwTqkSsIIUKuB1pPdQD+
+         XjoP13sNmqXUrd4UWdPmZeSFE5LhFsO1HH+LuDhEspdZg0JRVxyImIBX7CiHXO49totK
+         n3m0XbgyMpdQ83pEJIMLTvCxb/7MU0hkgLKsI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HFa3ZnnPwsReE4QfIMtMaIcba/1xdZCl+TYHQq+R8+yCZkBedcgJVTcXcIftrEhC3p
-         hPUqkh5yI29LtZ0+62cD2OO35C7HmxF+TiHYGW0hg0punP31qtulco2RhP1x29T+ROZk
-         vUxzAQh9LjEXK7eDJ8xXhVP27A3izb3pW7xmo=
-Received: by 10.223.109.130 with SMTP id j2mr6076159fap.54.1283372569773; Wed,
- 01 Sep 2010 13:22:49 -0700 (PDT)
-Received: by 10.223.120.14 with HTTP; Wed, 1 Sep 2010 13:22:49 -0700 (PDT)
-In-Reply-To: <7vaao15jk2.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=FV2xovbqjFfyX8RDiTFWWpvnsUNDDKNbEgAIcpHrDFIXimGiD9A9W6iWBy9iYJDAcX
+         fqBnfW3bwzYOybTuEa+GcTTiBHOX90x63uXr6u7Kh8gV1WVr/a81N3LZ0PuKhmkiOoFy
+         b68NieWr6g/HZECBw/mUUPGZkC4FH8pxwy6MA=
+Received: by 10.227.157.17 with SMTP id z17mr8573638wbw.122.1283373856249;
+        Wed, 01 Sep 2010 13:44:16 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id v11sm6461150weq.16.2010.09.01.13.44.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Sep 2010 13:44:15 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.579.g2183d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155077>
 
-On Wed, Sep 1, 2010 at 19:51, Junio C Hamano <gitster@pobox.com> wrote:
+This series makes the first 4 C mainporcelain common commands
+translatable with gettext.
 
-> As I didn't want to worry about the early parts of ab/i18n topic, whi=
-ch
-> was accidentally merged to 'next' due to my lazyness (another topic,
-> ab/test, seemed to be ready for the upcoming release, but a patch to =
-that
-> topic had interaction with ab/i18n, which made ab/test unmergeable to
-> 'master' without dragging 'ab/i18n'), I reverted ab/i18n topic from '=
-next'
-> and merged a rebuilt ab/test topic to 'next'. =C2=A0The i18n topic is=
- merged
-> to 'pu'.
+I'm avoiding translating things like git-bisect for now simply because
+I have some scripts to make this easier that are currently aimed at
+the C code.
 
-Cool, whatever makes release engineering easy for you. But the
-"gettext: Make NO_GETTEXT=3DYesPlease the default in releases"
-monkeypatch should probably be ejected out of pu.
+    $ grep 'mainporcelain common' *txt
+  * git-add                                 mainporcelain common
+    git-bisect                              mainporcelain common
+  * git-branch                              mainporcelain common
+  * git-checkout                            mainporcelain common
+  * git-clone                               mainporcelain common
+    git-commit                              mainporcelain common
+    ...
 
-I only wrote it in case gettext wouldn't be ejected from next and
-would make it into 1.7.3, but since that won't be the case there's
-really no reason for it to exist anywhere but the mailing list
-archive.
+This is around 3 patches per command (so at this rate I should finish
+all 22 commands in ~63 patches).
 
-It's also broken as a proper way to disable gettext (in case we want
-to go that route). There's no way to re-enable it if you use the
-=2E/configure script.
+I'm making an effort to split these up into different types of
+messages for discussion.
 
-It's really only a monkeypatch.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (13):
+  git-clone: use builtin.h to get gettext.h
+  gettextize: git-clone basic messages
+  gettextize: git-clone "Cloning into" message
+  gettextize: git-add basic messages
+  gettextize: git-add refresh_index message
+  gettextize: git-branch basic messages
+  gettextize: git-branch "remote branch '%s' not found" message
+  gettextize: git-branch "git branch -v" messages
+  gettextize: git-branch "(no branch)" message
+  gettextize: git-checkout: our/their version message
+  gettextize: git-checkout basic messages
+  gettextize: git-checkout describe_detached_head messages
+  gettextize: git-checkout "Switched to a .. branch" message
 
-> * ab/test-2 (2010-08-30) 51 commits
-> =C2=A0(this branch is used by ab/test.)
->
-> As I'd like to have this in the upcoming release, the tip of old ab/t=
-est
-> topic has been rebuilt without the merge from ab/i18n topic.
+ builtin/add.c      |   46 +++++++++++++-------------
+ builtin/branch.c   |   69 +++++++++++++++++++-------------------
+ builtin/checkout.c |   93 +++++++++++++++++++++++++++-----------------=
+--------
+ builtin/clone.c    |   63 ++++++++++++++++++-----------------
+ 4 files changed, 138 insertions(+), 133 deletions(-)
 
-Thanks, and sorry for tangling them up.
-
-> * kf/askpass-config (2010-08-30) 3 commits
-> =C2=A0- Extend documentation of core.askpass and GIT_ASKPASS.
-> =C2=A0- Allow core.askpass to override SSH_ASKPASS.
-> =C2=A0- Add a new option 'core.askpass'.
->
-> Should be Ok to merge to 'next'; then will merge to 'master' shortly.
-
-Is this facility also used for the smtp password promt in
-git-send-email? Should it be?
-
-> * jj/icase-directory (2010-08-16) 6 commits
-> =C2=A0(merged to 'next' on 2010-08-26 at 9d8e1bc)
-> =C2=A0+ Support case folding in git fast-import when core.ignorecase=3D=
-true
-> =C2=A0+ Support case folding for git add when core.ignorecase=3Dtrue
-> =C2=A0+ Add case insensitivity support when using git ls-files
-> =C2=A0+ Add case insensitivity support for directories when using git=
- status
-> =C2=A0+ Case insensitivity support for .gitignore via core.ignorecase
-> =C2=A0+ Add string comparison functions that respect the ignore_case =
-variable.
->
-> Depends on GNU FNM_CASEFOLD.
-
-We're going to have to get this working on non-GNU if it's to make it
-into 1.7.3. I can probably help with that if jj doesn't have time.
-
-> * ab/compat-regex (2010-08-26) 9 commits
-> =C2=A0(merged to 'next' on 2010-08-26 at c5cc9d2)
-> =C2=A0+ Fix compat/regex ANSIfication on MinGW
-> =C2=A0(merged to 'next' on 2010-08-22 at 40bce7c)
-> =C2=A0+ autoconf: regex library detection typofix
-> =C2=A0(merged to 'next' on 2010-08-21 at 632d60f)
-> =C2=A0+ autoconf: don't use platform regex if it lacks REG_STARTEND
-> =C2=A0+ t/t7008-grep-binary.sh: un-TODO a test that needs REG_STARTEN=
-D
-> =C2=A0+ compat/regex: get rid of old-style definition
-> =C2=A0+ compat/regex: define out variables only used under RE_ENABLE_=
-I18N
-> =C2=A0+ Change regerror() declaration from K&R style to ANSI C (C89)
-> =C2=A0+ compat/regex: get the gawk regex engine to compile within git
-> =C2=A0+ compat/regex: use the regex engine from gawk for compat
->
-> Will merge to 'master' shortly.
-
-I'll try to recall to get these patches we have on top of it into
-gawk/glibc once it's settled a bit more.
-
-> * ab/i18n (2010-08-31) 23 commits
-> [...]
-> Kicked back to 'pu' to give it a bit more time to experiment with a
-> Porcelain command or a two, and an opportunity for a fresh restart if
-> necessary in the next cycle.
-
-Incidentally I'm just about to submit some more experiments :)
+--=20
+1.7.2.2.579.g2183d
