@@ -1,81 +1,81 @@
-From: Geoff Russell <geoffrey.russell@gmail.com>
-Subject: Re: Large pack causes git clone failures ... what to do?
-Date: Wed, 1 Sep 2010 11:23:23 +0930
-Message-ID: <AANLkTik2Ms6qjQAaa_H8GGwmTG1fsk+8GR2y7ZmLviY-@mail.gmail.com>
-References: <AANLkTi=1iLx=-9gxkGzuhrbpA005VPSp0itkAkOG4D4z@mail.gmail.com>
-	<20100831180247.GF32601@spearce.org>
-	<AANLkTi=O5SbLRttzR0YwrHVEMz5gxtdTo9Z5C6V1yE1e@mail.gmail.com>
-Reply-To: geoffrey.russell@gmail.com
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH v3] builtin/merge_recursive.c: Add an usage string and
+ make use of it.
+Date: Tue, 31 Aug 2010 23:20:08 -0300
+Message-ID: <AANLkTimRB5-kCfp9TRnRxQnNV6dapUXmSbRDCPBW93LC@mail.gmail.com>
+References: <20100830024259.GC4010@burratino>
+	<b58adc6cdfd6a5753fac1dde3371b3745b1f58b1.1283138840.git.tfransosi@gmail.com>
+	<7vk4n8hc05.fsf@alter.siamese.dyndns.org>
+	<20100831234226.GF6747@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Sep 01 03:53:31 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 04:20:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqcW3-0007LX-C0
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 03:53:31 +0200
+	id 1OqcwE-0002jD-A0
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 04:20:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752587Ab0IABx0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 21:53:26 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:64526 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752166Ab0IABxZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 21:53:25 -0400
-Received: by wyb35 with SMTP id 35so8613721wyb.19
-        for <git@vger.kernel.org>; Tue, 31 Aug 2010 18:53:24 -0700 (PDT)
+	id S1752753Ab0IACUK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 31 Aug 2010 22:20:10 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:37805 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863Ab0IACUJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 31 Aug 2010 22:20:09 -0400
+Received: by qyk36 with SMTP id 36so138648qyk.19
+        for <git@vger.kernel.org>; Tue, 31 Aug 2010 19:20:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:reply-to
-         :in-reply-to:references:date:message-id:subject:from:to:cc
-         :content-type:content-transfer-encoding;
-        bh=yS2vw29VDHXtzZlQVTY/K/sI3CTtfzpFo4RtwDDiE9I=;
-        b=G6rLlJu0NX3Gzl/FPnKq3V7RE81Ko3DnGj4u/SNnBjWBxoycLDGUtjy9TY0RcxJwUw
-         pZASB+VQNbV1s2qYONVV++d9D+ciBb2gXHlIyk3ol+fyiqJb4QrP3yjBZwq8XarMqIhf
-         gsppTQMwFp70oq0vBqMN3U/LjREJA8Km9IT4c=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=hC31hB1SA0UExZ56EBfP8HPVhE0XXNvgSkXAFMrmcA0=;
+        b=oHTm8dwiuSOJnlln9gPWcF4ANAn9y45vb7BsjJVfIQMt3LJDNJlmsLZ8YMALYaBgs0
+         qPSiJ1zoMiyURhf/17lPtlcz/AfAPs0NDhUCqKO3dLSQI7/hyPvD7yIqXUFK9zQA2s5H
+         lBbgeeQBb/3odn/GdGVbp8KOYQ1uYn3Puhxkg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        b=t4Mtqj3nQVSRgot0DKVv24mccdGC/0JT1wtPWJRtQ/gFIP1oTyrTbU/lPCO2oqUoca
-         PPIB8Mg5exOdopXGJHEhARDP+YAKyoiLyQMJtkK46/XRAV18xSrohK1aYyfLVtNb6unc
-         BbYuxNNVrLpFTuqyRMs7q0SXv9UGhBrR4eamg=
-Received: by 10.216.10.77 with SMTP id 55mr7213953weu.17.1283306003893; Tue,
- 31 Aug 2010 18:53:23 -0700 (PDT)
-Received: by 10.216.164.19 with HTTP; Tue, 31 Aug 2010 18:53:23 -0700 (PDT)
-In-Reply-To: <AANLkTi=O5SbLRttzR0YwrHVEMz5gxtdTo9Z5C6V1yE1e@mail.gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OiCqT7wsh1qOuI98ZqIQXu8QuekN36JPy5kmcQzrEYkfWomW2PuP1H5DwogiK9Szru
+         VczGcMMBVdx3s4ZxIMe4iJt6L8akz20zHoplnyEZcuIVSCksTkgeVTMcZBqFLzTEwpCs
+         4U997xwY7b8O8J9043gA8fEXziYZNkoWyP3Zw=
+Received: by 10.224.46.5 with SMTP id h5mr4588743qaf.201.1283307608137; Tue,
+ 31 Aug 2010 19:20:08 -0700 (PDT)
+Received: by 10.229.245.202 with HTTP; Tue, 31 Aug 2010 19:20:08 -0700 (PDT)
+In-Reply-To: <20100831234226.GF6747@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155002>
 
-On Wed, Sep 1, 2010 at 7:33 AM, Geoff Russell
-<geoffrey.russell@gmail.com> wrote:
-> Thanks Shawn,
+On Tue, Aug 31, 2010 at 8:42 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Junio C Hamano wrote:
 >
->...
->> You really needed to run:
+>> Hmm, why isn't this a single liner
 >>
->> =A0git repack --max-pack-size=3D.. -a -d
->>
->> The -d flag tells it to remove the old packs once the new packs
->> are ready, and the -a flag tells it to reconsider every object
->> in the repository, rather than just those that are loose.
+>>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0usagef("%s <base>... -- =
+<head> <remote> ...", argv[0]);
+>>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0usagef("git %s <base>...=
+ -- <head> <remote> ...", argv[0]);
 >
-> Ok, will try.
+> I can't speak for Thiago, but I assume it's for unity of style with
+> more complicated commands like "git fetch" that include a usage
+> message at the top of the file as:
+>
+> =C2=A0- a quick introduction for people who don't like to scroll
+>
+> =C2=A0- a variable that can be used from other functions when command=
+-line
+> =C2=A0 mistakes are noticed late.
+>
+Precise explanation :-)
 
-The repack failed with a "fatal: Out of memory, malloc failed", perhaps=
- I
-just need to try a machine with more memory!
-
-I'm still interested in whether clone from a client take note of the
-pack.packSizeLimit if I set it
-on the server? Or does it use the client value?
-
-Cheers,
-Geoff
+Thanks Jonathan.
