@@ -1,79 +1,119 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
+From: Joshua Juran <jjuran@gmail.com>
 Subject: Re: html page display via cgit
-Date: Wed, 01 Sep 2010 12:23:29 +0200
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4C7E29A1.8020304@atlas-elektronik.com>
-References: <AANLkTinJx0ZKjCtpq9k6nwigodnu42EvqchpgQtwGp5S@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Shivdas Gujare <shivdas.tech@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 12:23:37 2010
+Date: Wed, 1 Sep 2010 03:25:24 -0700
+Message-ID: <EB82F537-FB11-40F2-B6DB-2A7043C819CF@gmail.com>
+References: <AANLkTinJx0ZKjCtpq9k6nwigodnu42EvqchpgQtwGp5S@mail.gmail.com> <AANLkTik-02dJZF_0m=xccg4N5Mdaj=b2JzZaMKp=vuww@mail.gmail.com> <9D2F75AD-B25E-4730-82FA-E8C5F73FCE1B@gmail.com> <AANLkTinjVPAOJfmiHFOe3Pci_y-KwzGr5LzDryG8oN+A@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed	delsp=yes
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Shivdas Gujare <shivdas.tech@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 12:25:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqkTc-0000Lt-N5
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:23:33 +0200
+	id 1OqkVZ-0001jU-Tk
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754201Ab0IAKX1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 06:23:27 -0400
-Received: from lxsrv96.atlas.de ([194.156.172.86]:38889 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752379Ab0IAKX0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 06:23:26 -0400
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id E2070138AD
-	for <git@vger.kernel.org>; Wed,  1 Sep 2010 12:23:24 +0200 (CEST)
-X-AuditID: 0ac86512-00001794000005d0-1e-4c7e299c4ab2
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.4675);
-	 Wed, 1 Sep 2010 12:23:24 +0200
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id 34FF82717A;
-	Wed,  1 Sep 2010 12:23:24 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id 208842716A;
-	Wed,  1 Sep 2010 12:23:24 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <AANLkTinJx0ZKjCtpq9k6nwigodnu42EvqchpgQtwGp5S@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Brightmail-Tracker: AAAAAA==
+	id S1754451Ab0IAKZ2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 06:25:28 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:38748 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753964Ab0IAKZ1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 06:25:27 -0400
+Received: by pwi3 with SMTP id 3so705319pwi.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:25:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=4B/OEGpYM58VIycH0ia/q3wTwzZboljIfQ9JD/ND17A=;
+        b=DmE8BJmbjEkMpxqMWUfHd3rPlPxfd+98b3XEZHuFWLQyEzfsqh1RjphSkdT84TdrXo
+         HFn/E/wzmj6IFFLXICRkO3Z8n9ycZQAn5w3CVc/aQTyZrTNBFpgaGy13MSKXzChg02Hs
+         nQrEdXyNn3O1p9SG6DOVnRC1U7fYGtGW6XJgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=GkT6vBYTHZ7L1u2Fl0PoFTF3BwEfBn1rTbrO2qes/KXH3uUbFLJmU9MIyDphN9AO5z
+         lLd6tItFgrgJM3B/AGXoh/UDfuT6YayDhV4zJFWEY6NpBydcU0GnPUBEIGufGkHRGuCR
+         zq5GqKG44H0omCW0FcyGti2NLHFQw6iuqA1wI=
+Received: by 10.142.187.6 with SMTP id k6mr7192505wff.3.1283336727557;
+        Wed, 01 Sep 2010 03:25:27 -0700 (PDT)
+Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id d4sm12305146wfh.23.2010.09.01.03.25.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Sep 2010 03:25:26 -0700 (PDT)
+In-Reply-To: <AANLkTinjVPAOJfmiHFOe3Pci_y-KwzGr5LzDryG8oN+A@mail.gmail.com>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155034>
 
-On 9/1/2010 11:32 AM, Shivdas Gujare wrote:
-> Hi All,
-> 
-> I hope, this is the right mailing list for cgit as well.
-> I am trying to add some "html logs" inside cgit, but I can't open
-> these logs via cgit inside firefox, i.e. cgit open every files in
-> "plain" format,
-> would like to know if it is possible to open "html" pages inside cgit
-> so that if I click on html page added into git, it opens in html and
-> not in plain format.
+On Sep 1, 2010, at 3:06 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-Set this in /etc/cgitrc
+> On Wed, Sep 1, 2010 at 10:00, Joshua Juran <jjuran@gmail.com> wrote:
+>> On Sep 1, 2010, at 2:46 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>>
+>>> On Wed, Sep 1, 2010 at 09:32, Shivdas Gujare =20
+>>> <shivdas.tech@gmail.com>
+>>> wrote:
+>>>
+>>>> I hope, this is the right mailing list for cgit as well.
+>>>> I am trying to add some "html logs" inside cgit, but I can't open
+>>>> these logs via cgit inside firefox, i.e. cgit open every files in
+>>>> "plain" format,
+>>>> would like to know if it is possible to open "html" pages inside =20
+>>>> cgit
+>>>> so that if I click on html page added into git, it opens in html =20
+>>>> and
+>>>> not in plain format.
+>>>>
+>>>> for example:
+>>>> if I click on "download.html" from
+>>>> "http://cgit.freedesktop.org/~lb/mesa/tree/docs" it shows a raw =20
+>>>> file
+>>>> as "http://cgit.freedesktop.org/~lb/mesa/tree/docs/download.html"
+>>>> and if I click on "plain" it opens in firefox like
+>>>> "http://cgit.freedesktop.org/~lb/mesa/plain/docs/download.html"
+>>>> but here I am trying to open this "download.html" inside cgit so =20
+>>>> that
+>>>> I can view it like html web page and not as "plain" text file.
+>>>>
+>>>> Thanks for any help or pointers.
+>>>
+>>> I don't know, but that's probably deliberate. You're viewing a /=20
+>>> plain/
+>>> link, which should be the equivalent of "git show".
+>>>
+>>> There's also XSS security implications to serving things as text/=20
+>>> html
+>>> on a shared hosting site if the main site serves cookies or =20
+>>> otherwise
+>>> has user logins.
+>>
+>> One solution is parse the content server-side and re-render as =20
+>> sanitized
+>> HTML.  In addition to stripping out scripts and frames, this would =20
+>> avoid
+>> sending broken markup produced by someone else under your name, or =20
+>> serving
+>> up otherwise well-formed XHTML as text/html.
+>
+> Yes, but have you seen programs that try to secure arbitrary
+> user-supplied HTML like this? It isn't pretty, and very hard to get
+> right.
 
-mimetype.gif=image/gif
-mimetype.html=text/html
-mimetype.jpg=image/jpeg
-mimetype.jpeg=image/jpeg
-mimetype.pdf=application/pdf
-mimetype.png=image/png
-mimetype.svg=image/svg+xml
+I haven't looked at any.  I'm not suggesting tweaking the HTML, but =20
+replacing it outright.  Use a whitelist of elements and attributes; =20
+everything else gets dropped, including comments.  I'm not a security =20
+expert, but my assessment is that this does the job.
 
-HTH
-
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: Don't stop posting, a good laugh breaks up my day nicely
+Josh
