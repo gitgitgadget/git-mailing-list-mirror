@@ -1,72 +1,78 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH] doc: technical details about the index file format
-Date: Wed, 1 Sep 2010 16:06:51 +0530
-Message-ID: <20100901103647.GA17260@kytes>
-References: <1283334825-18309-1-git-send-email-pclouds@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 1/2] tests: make test_must_fail more verbose
+Date: Wed, 1 Sep 2010 10:55:54 +0000
+Message-ID: <AANLkTinU7nV09NMvsZ+u9JCzeDsLqw3gS-7Y=i0Eqk_X@mail.gmail.com>
+References: <20100831155457.GB11014@sigill.intra.peff.net>
+	<20100831155636.GA11530@sigill.intra.peff.net>
+	<AANLkTi=aGdLj4vRKs8dR64JO=c8eC3SHj0_hkh6Wutaw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	robin.rosenberg@dewire.com, srabbelier@gmail.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 12:39:27 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org, gitster@pobox.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 12:56:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqkj0-0002Ce-UU
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:39:27 +0200
+	id 1Oqkz3-0003wT-An
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:56:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754846Ab0IAKjD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 06:39:03 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:47994 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752571Ab0IAKjB (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 06:39:01 -0400
-Received: by pwi3 with SMTP id 3so708349pwi.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:39:01 -0700 (PDT)
+	id S1754298Ab0IAKz4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 06:55:56 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:52521 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753789Ab0IAKzz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 06:55:55 -0400
+Received: by gwj17 with SMTP id 17so2934980gwj.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:55:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=eU0gJcUIKcoyA8vna8yrLAttCY31Jzc8HpIR//ROlok=;
-        b=mJt+t851T+kGREL4kVep9XFVFloiuI4GC6B1MDf2MF/gvXk6aMaauEQGMOIwk6GD0w
-         Q6trosHUDIc6TQd8UnuOO4lWElzrtbo+1xlaTA4CMN06vtaY49a8c6QlS3wnaad4z+rm
-         jefhAlGllbaejRaBVAZSYw127X2ZPMUcU6ZCY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=4gJNH3sFEyHXxHf51yy5N+NowbWI2uz1szx9374VqHQ=;
+        b=oUf9zbRxMAUbgo1LqXAaMcMOv/aPU5lCX284s+4Rv0+DoQqIQ2l9wgO9B//TvgtIEl
+         NxJv1yEGB7f6VJVbFcSDAGmBjxRCxOzI5qhI+a8QTPnrBCRId1eUBK8S55LFkjN2v6E5
+         UczMJmAG92df7fnNnVOnywO98iqG9Tor+nCgQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=a7xOFvYGxpI0TirPNuNhBPDkY95wSRQcCxz/hhM6WK2wgxbFZYSrouph9fmRcNiZQ3
-         JEJkZ+aBRlEzwltqhYhYZKi1ZYOV0RyD/r4P1Ns4nVnpkfIQu4n+hhmHVSnfjBxhbB9+
-         EUeCK+YWjJCk8njsTd34uHcaq268LE648hW5E=
-Received: by 10.115.75.20 with SMTP id c20mr2400415wal.16.1283337540902;
-        Wed, 01 Sep 2010 03:39:00 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id d2sm8198178wam.14.2010.09.01.03.38.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Sep 2010 03:38:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1283334825-18309-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=xo7qnddk3n7zTvnQ9xQ33d7mo6/PaN5Mo4w6i52cH/70iX+yOPEEtUk7R26fTh1oVp
+         EUVEHzqoNtlAmIvTr58IsQqG76ybiQeX+E/1cQod9jxHODEjiTqPMdrRObRmbZKGlHJ5
+         qeo6Ha9e7eDRJBwdODn5Dwsp8i4Dy6yyoRTgU=
+Received: by 10.90.71.1 with SMTP id t1mr6209958aga.65.1283338554363; Wed, 01
+ Sep 2010 03:55:54 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 1 Sep 2010 03:55:54 -0700 (PDT)
+In-Reply-To: <AANLkTi=aGdLj4vRKs8dR64JO=c8eC3SHj0_hkh6Wutaw@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155037>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155038>
 
-Hi,
+On Wed, Sep 1, 2010 at 03:37, Jon Seymour <jon.seymour@gmail.com> wrote:
+> On Wed, Sep 1, 2010 at 1:56 AM, Jeff King <peff@peff.net> wrote:
+>> Because test_must_fail fails when a command succeeds, the
+>> command frequently does not produce any output (since, after
+>> all, it thought it was succeeding). So let's have
+>> test_must_fail itself report that a problem occurred.
+>>
+>> Signed-off-by: Jeff King <peff@peff.net>
+>
+> Jeff,
+>
+> Nice fix - thank you!
+>
+> It is nice to see that my initial sloppiness inspired a thoughtful
+> remediation. I'll try not to rely of gitters being always so helpful
+> :-)
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy writes:
-> This bases on the original work by Robin Rosenberg:
->=20
-> http://thread.gmane.org/gmane.comp.version-control.git/73471
-[...]
+FWIW I plan to make this sort of thing better for everything when I
+pick up my "WIP: Report intra-test progress with TAP subtests" series
+again. I.e. use >&5 instead of >&2 and turn this sort of thing into
+subtests.
 
-It might be more profitable to mention the Message-ID instead.
-<1202711335-12026-1-git-send-email-robin.rosenberg@dewire.com>
-
--- Ram
+But if you're interested in picking up someone else's slack it could
+use some help :) I don't know when I'll get around to fixing it up:
+http://github.com/avar/git/commit/e2ac35a8e49ceec98ca512bf106ce04c93c84b5c
