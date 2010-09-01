@@ -1,77 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Additional remote on a local clone. Where do the objects go?
-Date: Wed, 01 Sep 2010 03:34:19 -0700 (PDT)
-Message-ID: <m339ttoiqh.fsf@localhost.localdomain>
-References: <i5kudr$dp7$1@dough.gmane.org>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH] doc: technical details about the index file format
+Date: Wed, 1 Sep 2010 16:06:51 +0530
+Message-ID: <20100901103647.GA17260@kytes>
+References: <1283334825-18309-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 12:34:27 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	robin.rosenberg@dewire.com, srabbelier@gmail.com
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 12:39:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqkeB-0007HR-7K
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:34:27 +0200
+	id 1Oqkj0-0002Ce-UU
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:39:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754562Ab0IAKeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 06:34:21 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:62920 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753964Ab0IAKeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 06:34:21 -0400
-Received: by wyb35 with SMTP id 35so9071767wyb.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:34:20 -0700 (PDT)
+	id S1754846Ab0IAKjD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 06:39:03 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:47994 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752571Ab0IAKjB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 06:39:01 -0400
+Received: by pwi3 with SMTP id 3so708349pwi.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ioTnEpeqCqP2Yxus4gQ9a48DQxiQ9SeLJhyLinrdmIk=;
-        b=IQfY5f8otqeqkaSoJ2XmyRDNpjIQmL5VqM95b6Rv+wTXtWSqcABU+J91O+KODHzb3L
-         jdSWDGSjVgDjAMwzeV79a50LxuCviT0dGQ0yKc1VF6E30MBWeNqAwdkKK+lgr5SVzb8L
-         AiNcjTTDvqQWP/TzNvlbFB94EOoMRcYp9DayA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=eU0gJcUIKcoyA8vna8yrLAttCY31Jzc8HpIR//ROlok=;
+        b=mJt+t851T+kGREL4kVep9XFVFloiuI4GC6B1MDf2MF/gvXk6aMaauEQGMOIwk6GD0w
+         Q6trosHUDIc6TQd8UnuOO4lWElzrtbo+1xlaTA4CMN06vtaY49a8c6QlS3wnaad4z+rm
+         jefhAlGllbaejRaBVAZSYw127X2ZPMUcU6ZCY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=LEAqb5No7hjuQsGE8y9sk4XuI8xg6Piky7Pbp+6ds6jJOyxycT06ndAbMOwy25hoPS
-         qhCsrgj3VewcRwKWNIeqewNXTI9eyHvB//6n0oWJRBymLz3twQpH7KTQZqsUTT8euiMn
-         v8Sk+T6BN0IestcRNewJHlBTVNpxvxTKO8DCk=
-Received: by 10.216.159.6 with SMTP id r6mr129221wek.55.1283337259984;
-        Wed, 01 Sep 2010 03:34:19 -0700 (PDT)
-Received: from localhost.localdomain (abwf138.neoplus.adsl.tpnet.pl [83.8.229.138])
-        by mx.google.com with ESMTPS id o49sm6007163wej.19.2010.09.01.03.34.18
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=a7xOFvYGxpI0TirPNuNhBPDkY95wSRQcCxz/hhM6WK2wgxbFZYSrouph9fmRcNiZQ3
+         JEJkZ+aBRlEzwltqhYhYZKi1ZYOV0RyD/r4P1Ns4nVnpkfIQu4n+hhmHVSnfjBxhbB9+
+         EUeCK+YWjJCk8njsTd34uHcaq268LE648hW5E=
+Received: by 10.115.75.20 with SMTP id c20mr2400415wal.16.1283337540902;
+        Wed, 01 Sep 2010 03:39:00 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id d2sm8198178wam.14.2010.09.01.03.38.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Sep 2010 03:34:19 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o81AYKYk024533;
-	Wed, 1 Sep 2010 12:34:31 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o81AYFuK024530;
-	Wed, 1 Sep 2010 12:34:15 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <i5kudr$dp7$1@dough.gmane.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Wed, 01 Sep 2010 03:38:59 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1283334825-18309-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155037>
 
-Stephen Kelly <steveire@gmail.com> writes:
+Hi,
 
-> The aim is to have multiple local checkouts of different branches of Qt 
-> while sharing the same object store. [...]
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy writes:
+> This bases on the original work by Robin Rosenberg:
+>=20
+> http://thread.gmane.org/gmane.comp.version-control.git/73471
+[...]
 
-Why not use git-new-workdir shell script from contrib/worktree/ in
-git sources[1]?
+It might be more profitable to mention the Message-ID instead.
+<1202711335-12026-1-git-send-email-robin.rosenberg@dewire.com>
 
-[1] http://repo.or.cz/w/git.git/blob_plain/HEAD:/contrib/workdir/git-new-workdir
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-- Ram
