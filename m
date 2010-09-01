@@ -1,65 +1,75 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: next no longer compiles on non-gnu platforms
-Date: Wed, 1 Sep 2010 16:35:13 +0000
-Message-ID: <AANLkTi=5gz5pTZtV8y2d-XWfCCTSRqt0m11zke04t9bv@mail.gmail.com>
-References: <8DusojDb7VpklNHC3-7Gf5asKbh2H3Cql9FiAGL1ccyieG0lQClVow@cipher.nrlssc.navy.mil>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/3 v2] tests: factor HOME=$(pwd) in test-lib.sh
+Date: Wed, 01 Sep 2010 18:57:23 +0200
+Message-ID: <vpq7hj5xuz0.fsf@bauges.imag.fr>
+References: <vpqhbibbthi.fsf@bauges.imag.fr>
+	<1283210123-19752-1-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTik7d9Rhx5NudeKvVMFAYvVhGxoYzK2y+g3CP=Zj@mail.gmail.com>
+	<AANLkTim6Cb4vegGYG0ZtJxXvAwBxHYGOY7bQFbGSAcXV@mail.gmail.com>
+	<7vaao17ahi.fsf@alter.siamese.dyndns.org>
+	<AANLkTi=+_+62LqhnO6dee9fv=1_naGoNzsusNt9OpX_N@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>, jjensen@workspacewhiz.com
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Sep 01 18:35:31 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 19:02:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqqHW-0007R9-Px
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 18:35:27 +0200
+	id 1OqqhZ-0000Rb-Ov
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 19:02:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755964Ab0IAQfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 12:35:16 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40722 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755898Ab0IAQfP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 12:35:15 -0400
-Received: by fxm13 with SMTP id 13so4852091fxm.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 09:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=/NP9hP4xw1RnzN/mhvw3Gog9FokmPPVOY3yvks+SOQs=;
-        b=H8e3UtfSgxrPWmxV+N8ilFhfgPcsCgkWnpq+IbvUVSHJYsq80/xSt3bKOGNN3sM8rU
-         k7pgBN/rMwOcVeLCF+0Ycu0J2Hg+8TwkESZ+oYhAjnRCglnZJ6CkX5bClvoOi8oiEPOz
-         V9bKstecuIC0f8qzKVWAo69iTpKhWt84zSpy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=N6S7hK/kR9pYw57fSeRP3V3iZx/X8BpUGM7j11zp7f8j2KV3PojmZLCEBcuOIBBu4L
-         yS42z1/CFEv7ZilzA1bn5NZ5i/Lx5oL6+VHmDzWGY8cvRt+Du/xwS/JIieGR/Hnt/WBz
-         KhQEJu+oMOMzjfNGP24BVi8FEPlclx/zsKUnY=
-Received: by 10.223.109.130 with SMTP id j2mr5794997fap.54.1283358913498; Wed,
- 01 Sep 2010 09:35:13 -0700 (PDT)
-Received: by 10.223.120.14 with HTTP; Wed, 1 Sep 2010 09:35:13 -0700 (PDT)
-In-Reply-To: <8DusojDb7VpklNHC3-7Gf5asKbh2H3Cql9FiAGL1ccyieG0lQClVow@cipher.nrlssc.navy.mil>
+	id S1753059Ab0IARCQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 13:02:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:45591 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752743Ab0IARCQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 13:02:16 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o81Grnko006079
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 1 Sep 2010 18:53:49 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oqqcl-0003Ks-DM; Wed, 01 Sep 2010 18:57:23 +0200
+In-Reply-To: <AANLkTi=+_+62LqhnO6dee9fv=1_naGoNzsusNt9OpX_N@mail.gmail.com>
+ (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Wed\, 1
+ Sep 2010 15\:40\:50 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 01 Sep 2010 18:53:49 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o81Grnko006079
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1283964830.16636@CxpPmg7MpyNf1XyZI9pm9Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155061>
 
-On Wed, Sep 1, 2010 at 16:32, Brandon Casey
-<brandon.casey.ctr@nrlssc.navy.mil> wrote:
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 
-> Since 83c0e5ad 'Add string comparison functions that respect the
-> ignore_case variable.' was merged to next, it can't be compiled on
-> platforms without the GNU FNM_CASEFOLD extension to fnmatch.
+>> The originals all used $(pwd) as far as I saw, and it _is_ more fait=
+hful
+>> and correct refactoring not to use $TRASH_DIRECTORY in this patch, n=
+o?
+>> You can choose to change it to use $TRASH but that should be done in=
+ a
+>> separate patch.
 >
-> If we're going this route, then non-gnu platforms will need to
-> build with the fnmatch in compat/ and Makefile will need a
-> NO_FNMATCH define.
+> I just wanted to note it in case you didn't see it. It's a trivial
+> issue and I don't really care, I just wanted to note it in case the v=
+2
+> went past you.
 
-This is already known, and a fix is in the works, see the "[PATCH 1/6]
-Add string comparison functions that respect the ignore_case
-variable." thread.
+Just for the record: I don't care either ;-).
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
