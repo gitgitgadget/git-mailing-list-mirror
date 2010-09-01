@@ -1,156 +1,147 @@
-From: "Schalk, Ken" <ken.schalk@intel.com>
-Subject: RE: [PATCH] Avoid rename/add conflict when contents are identical
-Date: Wed, 1 Sep 2010 13:15:32 -0700
-Message-ID: <EF9FEAB3A4B7D245B0801936B6EF4A2533DBB8@azsmsx503.amr.corp.intel.com>
-References: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
-	<7vd3tnmht0.fsf@alter.siamese.dyndns.org>
-	<EF9FEAB3A4B7D245B0801936B6EF4A25262E13@azsmsx503.amr.corp.intel.com>
- <AANLkTik2op0_Cq13EGit17ja+zCdmbM6WXJ=rfhQMnOQ@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Sep 2010, #01; Wed, 1)
+Date: Wed, 1 Sep 2010 20:22:49 +0000
+Message-ID: <AANLkTim6=OTwzRd2H0GzNO3T0JuJxox8-Hfs_iKV=Xxy@mail.gmail.com>
+References: <7vaao15jk2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 22:16:11 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Knut Franke <k.franke@science-computing.de>,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 22:23:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oqtj8-0007Xp-PI
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 22:16:11 +0200
+	id 1Oqtpk-0002p7-Ox
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 22:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754648Ab0IAUQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 16:16:05 -0400
-Received: from mga01.intel.com ([192.55.52.88]:35793 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753055Ab0IAUQE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 16:16:04 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP; 01 Sep 2010 13:15:48 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.56,305,1280732400"; 
-   d="scan'208";a="833979178"
-Received: from azsmsx601.amr.corp.intel.com ([10.2.121.193])
-  by fmsmga001.fm.intel.com with ESMTP; 01 Sep 2010 13:15:37 -0700
-Received: from azsmsx604.amr.corp.intel.com (10.2.161.34) by
- azsmsx601.amr.corp.intel.com (10.2.121.193) with Microsoft SMTP Server (TLS)
- id 8.2.254.0; Wed, 1 Sep 2010 13:15:36 -0700
-Received: from azsmsx503.amr.corp.intel.com ([10.2.121.76]) by
- azsmsx604.amr.corp.intel.com ([10.2.161.34]) with mapi; Wed, 1 Sep 2010
- 13:15:36 -0700
-Thread-Topic: [PATCH] Avoid rename/add conflict when contents are identical
-Thread-Index: ActGmXtlhO/RuxD6TZ+oQKm+74+9cgDeLF8g
-In-Reply-To: <AANLkTik2op0_Cq13EGit17ja+zCdmbM6WXJ=rfhQMnOQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1753286Ab0IAUWv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 16:22:51 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48492 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752145Ab0IAUWv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 16:22:51 -0400
+Received: by fxm13 with SMTP id 13so5061241fxm.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 13:22:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HQ/jBROiaMWqrvf+QBuzoPJneVmCUojDiqe9v6mt5Fw=;
+        b=O9g4khhT7Yy8KGV4b/CGEt9LaWL7vEr8cKWqP6vFR2Rz15xO9Qk6UEdf3uB8+pzdMZ
+         9g1eZ4q3H+uoXYu0QSuAM2icGRGrXsxTCWlzFTuENeWbhB7CCOZMWf6fsgXv+Ik95NQO
+         karHEF9cW4UXw4AXk4kgo/WAhJu8alNkJUYck=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HFa3ZnnPwsReE4QfIMtMaIcba/1xdZCl+TYHQq+R8+yCZkBedcgJVTcXcIftrEhC3p
+         hPUqkh5yI29LtZ0+62cD2OO35C7HmxF+TiHYGW0hg0punP31qtulco2RhP1x29T+ROZk
+         vUxzAQh9LjEXK7eDJ8xXhVP27A3izb3pW7xmo=
+Received: by 10.223.109.130 with SMTP id j2mr6076159fap.54.1283372569773; Wed,
+ 01 Sep 2010 13:22:49 -0700 (PDT)
+Received: by 10.223.120.14 with HTTP; Wed, 1 Sep 2010 13:22:49 -0700 (PDT)
+In-Reply-To: <7vaao15jk2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155076>
 
->Due to this this (and maybe all the tests) need to depend on the
->SYMLINKS prereq.
+On Wed, Sep 1, 2010 at 19:51, Junio C Hamano <gitster@pobox.com> wrote:
 
-Here's a third attempt with no use of symlinks in the test:
+> As I didn't want to worry about the early parts of ab/i18n topic, whi=
+ch
+> was accidentally merged to 'next' due to my lazyness (another topic,
+> ab/test, seemed to be ready for the upcoming release, but a patch to =
+that
+> topic had interaction with ab/i18n, which made ab/test unmergeable to
+> 'master' without dragging 'ab/i18n'), I reverted ab/i18n topic from '=
+next'
+> and merged a rebuilt ab/test topic to 'next'. =C2=A0The i18n topic is=
+ merged
+> to 'pu'.
 
-Skip the entire rename/add conflict case if the file added on the
-other branch has the same contents as the file being renamed.  This
-avoids giving the user an extra copy of the same file and presenting a
-conflict that is confusing and pointless.
+Cool, whatever makes release engineering easy for you. But the
+"gettext: Make NO_GETTEXT=3DYesPlease the default in releases"
+monkeypatch should probably be ejected out of pu.
 
-A simple test of this case has been added in
-t/t3030-merge-recursive.sh.
+I only wrote it in case gettext wouldn't be ejected from next and
+would make it into 1.7.3, but since that won't be the case there's
+really no reason for it to exist anywhere but the mailing list
+archive.
 
-Signed-off-by: Ken Schalk <ken.schalk@intel.com>
----
- merge-recursive.c          |    6 ++++++
- t/t3030-merge-recursive.sh |   39 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 45 insertions(+), 0 deletions(-)
+It's also broken as a proper way to disable gettext (in case we want
+to go that route). There's no way to re-enable it if you use the
+=2E/configure script.
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fb6aa4a..a2fba84 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -955,6 +955,12 @@ static int process_renames(struct merge_options *o,
-                                                        ren1->pair->two : NULL,
-                                                        branch1 == o->branch1 ?
-                                                        NULL : ren1->pair->two, 1);
-+                       } else if ((dst_other.mode == ren1->pair->two->mode) &&
-+                                  sha_eq(dst_other.sha1, ren1->pair->two->sha1)) {
-+                               /* Added file on the other side
-+                                  identical to the file being
-+                                  renamed: clean merge */
-+                               update_file(o, 1, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
-                        } else if (!sha_eq(dst_other.sha1, null_sha1)) {
-                                const char *new_path;
-                                clean_merge = 0;
-diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
-index d541544..b23bd9f 100755
---- a/t/t3030-merge-recursive.sh
-+++ b/t/t3030-merge-recursive.sh
-@@ -23,6 +23,8 @@ test_expect_success 'setup 1' '
-        git branch df-3 &&
-        git branch remove &&
-        git branch submod &&
-+       git branch copy &&
-+       git branch rename &&
+It's really only a monkeypatch.
 
-        echo hello >>a &&
-        cp a d/e &&
-@@ -248,6 +250,24 @@ test_expect_success 'setup 7' '
-        git commit -m "make d/ a submodule"
- '
+> * ab/test-2 (2010-08-30) 51 commits
+> =C2=A0(this branch is used by ab/test.)
+>
+> As I'd like to have this in the upcoming release, the tip of old ab/t=
+est
+> topic has been rebuilt without the merge from ab/i18n topic.
 
-+test_expect_success 'setup 8' '
-+
-+       git checkout rename &&
-+       git mv a e &&
-+       git add e &&
-+       test_tick &&
-+       git commit -m "rename a->e"
-+'
-+
-+test_expect_success 'setup 9' '
-+
-+       git checkout copy &&
-+       cp a e &&
-+       git add e &&
-+       test_tick &&
-+       git commit -m "copy a->e"
-+'
-+
- test_expect_success 'merge-recursive simple' '
+Thanks, and sorry for tangling them up.
 
-        rm -fr [abcd] &&
-@@ -580,4 +600,23 @@ test_expect_failure 'merge-recursive simple w/submodule result' '
-        test_cmp expected actual
- '
+> * kf/askpass-config (2010-08-30) 3 commits
+> =C2=A0- Extend documentation of core.askpass and GIT_ASKPASS.
+> =C2=A0- Allow core.askpass to override SSH_ASKPASS.
+> =C2=A0- Add a new option 'core.askpass'.
+>
+> Should be Ok to merge to 'next'; then will merge to 'master' shortly.
 
-+test_expect_success 'merge-recursive copy vs. rename' '
-+
-+       git checkout -f copy &&
-+       git merge rename &&
-+       ( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
-+       (
-+               echo "100644 blob $o0   b"
-+               echo "100644 blob $o0   c"
-+               echo "100644 blob $o0   d/e"
-+               echo "100644 blob $o0   e"
-+               echo "100644 $o0 0      b"
-+               echo "100644 $o0 0      c"
-+               echo "100644 $o0 0      d/e"
-+               echo "100644 $o0 0      e"
-+       ) >expected &&
-+       test_cmp expected actual
-+'
-+
-+
- test_done
---
-1.7.0
+Is this facility also used for the smtp password promt in
+git-send-email? Should it be?
+
+> * jj/icase-directory (2010-08-16) 6 commits
+> =C2=A0(merged to 'next' on 2010-08-26 at 9d8e1bc)
+> =C2=A0+ Support case folding in git fast-import when core.ignorecase=3D=
+true
+> =C2=A0+ Support case folding for git add when core.ignorecase=3Dtrue
+> =C2=A0+ Add case insensitivity support when using git ls-files
+> =C2=A0+ Add case insensitivity support for directories when using git=
+ status
+> =C2=A0+ Case insensitivity support for .gitignore via core.ignorecase
+> =C2=A0+ Add string comparison functions that respect the ignore_case =
+variable.
+>
+> Depends on GNU FNM_CASEFOLD.
+
+We're going to have to get this working on non-GNU if it's to make it
+into 1.7.3. I can probably help with that if jj doesn't have time.
+
+> * ab/compat-regex (2010-08-26) 9 commits
+> =C2=A0(merged to 'next' on 2010-08-26 at c5cc9d2)
+> =C2=A0+ Fix compat/regex ANSIfication on MinGW
+> =C2=A0(merged to 'next' on 2010-08-22 at 40bce7c)
+> =C2=A0+ autoconf: regex library detection typofix
+> =C2=A0(merged to 'next' on 2010-08-21 at 632d60f)
+> =C2=A0+ autoconf: don't use platform regex if it lacks REG_STARTEND
+> =C2=A0+ t/t7008-grep-binary.sh: un-TODO a test that needs REG_STARTEN=
+D
+> =C2=A0+ compat/regex: get rid of old-style definition
+> =C2=A0+ compat/regex: define out variables only used under RE_ENABLE_=
+I18N
+> =C2=A0+ Change regerror() declaration from K&R style to ANSI C (C89)
+> =C2=A0+ compat/regex: get the gawk regex engine to compile within git
+> =C2=A0+ compat/regex: use the regex engine from gawk for compat
+>
+> Will merge to 'master' shortly.
+
+I'll try to recall to get these patches we have on top of it into
+gawk/glibc once it's settled a bit more.
+
+> * ab/i18n (2010-08-31) 23 commits
+> [...]
+> Kicked back to 'pu' to give it a bit more time to experiment with a
+> Porcelain command or a two, and an opportunity for a fresh restart if
+> necessary in the next cycle.
+
+Incidentally I'm just about to submit some more experiments :)
