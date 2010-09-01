@@ -1,101 +1,85 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] Make sure show_all_errors when using porcelain error messages
-Date: Wed,  1 Sep 2010 08:05:53 +0200
-Message-ID: <1283321153-24745-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqeide0zkx.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Sep 01 08:06:35 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH for next] insert missing newline in a diagnostic
+Date: Wed, 01 Sep 2010 08:04:14 +0200
+Message-ID: <vpqeide0zkx.fsf@bauges.imag.fr>
+References: <87iq2s4ewn.fsf@meyering.net> <20100901001729.GG6747@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 01 08:08:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqgSv-0003QJ-2s
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 08:06:33 +0200
+	id 1OqgUK-000454-G3
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 08:08:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751280Ab0IAGGR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 02:06:17 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:47282 "EHLO shiva.imag.fr"
+	id S1751430Ab0IAGHz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 02:07:55 -0400
+Received: from imag.imag.fr ([129.88.30.1]:45158 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751100Ab0IAGGQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 02:06:16 -0400
+	id S1751296Ab0IAGHy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 02:07:54 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o815s12E029571
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o8164EeQ023958
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 1 Sep 2010 07:54:01 +0200
+	Wed, 1 Sep 2010 08:04:14 +0200 (CEST)
 Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OqgSJ-0007gN-1B; Wed, 01 Sep 2010 08:05:55 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OqgSI-0006Rl-V6; Wed, 01 Sep 2010 08:05:54 +0200
-X-Mailer: git-send-email 1.7.2.2.175.ga619d.dirty
-In-Reply-To: <vpqeide0zkx.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 01 Sep 2010 07:54:01 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o815s12E029571
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OqgQg-0007fK-IG; Wed, 01 Sep 2010 08:04:14 +0200
+In-Reply-To: <20100901001729.GG6747@burratino> (Jonathan Nieder's message of "Tue\, 31 Aug 2010 19\:17\:29 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 01 Sep 2010 08:04:15 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1283925242.70965@rYeyNYnrZjNDBxwL3u/W9A
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155017>
 
-opts.show_all_errors controls the number of errors that can be displayed,
-and set_porcelain_error_msgs gives the format. But the formatting would
-be incorrect if set_porcelain_error_msgs is called without setting
-opts.show_all_errors.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-There was a missing opts.show_all_errors in merge-recursive.c, and a case
-where it was not obvious enough in merge.c.
+> Jim Meyering wrote:
+>
+>> When merging, I would get a message like this:
+>> 
+>>   error: The following untracked working tree files would be overwritten by merge:
+>>   FILE_NAMEPlease move or remove them before you can merge.
+>> 
+>> This change inserts the newline after FILE_NAME.
+>
+> I fear it is more complicated.  With your patch, in some situations
+> (e.g., when running t7609-merge-co-error-msgs.sh) I get a leading tab
+> and extra newline:
+>
+>  error: The following untrack...
+> 	FILE_NAME
+>
+>  Please move or remove them before you can merge.
+>
+> In unpack-trees, display_error_msgs() prints the version with a tab
+> but you are getting the message from add_rejected_path which suggests
+> to me that o->show_all_errors is unset.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-If this is the issue, we should probably change
-set_porcelain_error_msgs to set show_all_errors itself (but that
-requires changing the argument type)
+That sounds like an explanation. The patch series did two things:
+override plumbing error messages, and introducing show_all_errors. The
+two are meant to work together, and clearly, if you set one without
+the other, you get surprising results. A fix would be to make sure
+that we set both in the same places.
 
- builtin/checkout.c |    2 +-
- merge-recursive.c  |    1 +
- 2 files changed, 2 insertions(+), 1 deletions(-)
+Patch follows, untested. Jim, can you tell us whether it fixes the
+problem? If not, can your give us a reproduction script (preferably as
+a patch to t7609-merge-co-error-msgs.sh)?
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 7250e5c..8a7f994 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -376,6 +376,7 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		topts.src_index = &the_index;
- 		topts.dst_index = &the_index;
- 
-+		topts.show_all_errors = 1;
- 		set_porcelain_error_msgs(topts.msgs, "checkout");
- 
- 		refresh_cache(REFRESH_QUIET);
-@@ -395,7 +396,6 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		topts.dir = xcalloc(1, sizeof(*topts.dir));
- 		topts.dir->flags |= DIR_SHOW_IGNORED;
- 		topts.dir->exclude_per_dir = ".gitignore";
--		topts.show_all_errors = 1;
- 		tree = parse_tree_indirect(old->commit ?
- 					   old->commit->object.sha1 :
- 					   (unsigned char *)EMPTY_TREE_SHA1_BIN);
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 638076e..c7fc7a7 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -180,6 +180,7 @@ static int git_merge_trees(int index_only,
- 	opts.fn = threeway_merge;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
-+	opts.show_all_errors = 1;
- 	set_porcelain_error_msgs(opts.msgs, "merge");
- 
- 	init_tree_desc_from_tree(t+0, common);
+Thanks,
+
 -- 
-1.7.2.2.175.ga619d.dirty
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
