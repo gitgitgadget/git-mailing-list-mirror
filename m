@@ -1,75 +1,63 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/3 v2] tests: factor HOME=$(pwd) in test-lib.sh
-Date: Wed, 01 Sep 2010 18:57:23 +0200
-Message-ID: <vpq7hj5xuz0.fsf@bauges.imag.fr>
-References: <vpqhbibbthi.fsf@bauges.imag.fr>
-	<1283210123-19752-1-git-send-email-Matthieu.Moy@imag.fr>
-	<AANLkTik7d9Rhx5NudeKvVMFAYvVhGxoYzK2y+g3CP=Zj@mail.gmail.com>
-	<AANLkTim6Cb4vegGYG0ZtJxXvAwBxHYGOY7bQFbGSAcXV@mail.gmail.com>
-	<7vaao17ahi.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=+_+62LqhnO6dee9fv=1_naGoNzsusNt9OpX_N@mail.gmail.com>
+From: Chris Patti <cpatti@gmail.com>
+Subject: Bug: git-hooks documentation should note that if you are using
+ git-daemon you will *not* see stdout and stderr output from hooks.
+Date: Wed, 1 Sep 2010 13:05:41 -0400
+Message-ID: <AANLkTi=H-W2zVcW_qK-BR8hRZvrv2EhY06Z_JfYYLFQR@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 19:02:22 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 01 19:05:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqqhZ-0000Rb-Ov
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 19:02:22 +0200
+	id 1Oqql0-0002ZE-0M
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 19:05:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753059Ab0IARCQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 13:02:16 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:45591 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752743Ab0IARCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 13:02:16 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o81Grnko006079
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 1 Sep 2010 18:53:49 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Oqqcl-0003Ks-DM; Wed, 01 Sep 2010 18:57:23 +0200
-In-Reply-To: <AANLkTi=+_+62LqhnO6dee9fv=1_naGoNzsusNt9OpX_N@mail.gmail.com>
- (=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Wed\, 1
- Sep 2010 15\:40\:50 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 01 Sep 2010 18:53:49 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o81Grnko006079
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1283964830.16636@CxpPmg7MpyNf1XyZI9pm9Q
+	id S1755479Ab0IARFo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 13:05:44 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:34278 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755154Ab0IARFm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 13:05:42 -0400
+Received: by bwz11 with SMTP id 11so5488218bwz.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 10:05:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=W1L0GnDQcLG+rHFvC1F/Fp0tIoESyDDg9HRBsL4C+fw=;
+        b=t9c4/Vy9snrS7CDyEDkKojHu6pLNwl44IqOf6I0avCc/m/HEayuL4OC8LCEZawhf7u
+         Ewn/LDuiRXEhknMkL7NF1l/ttSNBHepO0l3xVjFTaf3HX9ay4jI5h8pDGfsKe4rsDh8K
+         tpgAw5+uu2j+I9TdQzfQQA4iQxar0Q+2BaUGY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=pOf32e6lJ/4afxD4nJVJr8sZMqGLqdw+4scbmp3vCJA4y/bvgE4wle03PSXCOHF75c
+         ZcPV3ygKDLJrmSDheHY4oWafXi03RMl1x9B/kq+tAIx/t1A0CfvX0TFyAsngBCqk7yz7
+         DJCqza+1uFS56l8iM12jad7slAyNxUbENTlbo=
+Received: by 10.204.76.138 with SMTP id c10mr3382593bkk.4.1283360741536; Wed,
+ 01 Sep 2010 10:05:41 -0700 (PDT)
+Received: by 10.204.66.196 with HTTP; Wed, 1 Sep 2010 10:05:41 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155062>
 
-=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+How can I go about submitting a bug or a change request or a diff or
+whatever to get this fixed please?
 
->> The originals all used $(pwd) as far as I saw, and it _is_ more fait=
-hful
->> and correct refactoring not to use $TRASH_DIRECTORY in this patch, n=
-o?
->> You can choose to change it to use $TRASH but that should be done in=
- a
->> separate patch.
->
-> I just wanted to note it in case you didn't see it. It's a trivial
-> issue and I don't really care, I just wanted to note it in case the v=
-2
-> went past you.
+It's exceedingly confusing for someone just learning about hook
+development, and wasted a few hours of my time I'd rather have spent
+getting my hook running :)
 
-Just for the record: I don't care either ;-).
+Thanks!
+-Chris
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+-- 
+Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
+chrisfeohpatti | P: (260) 54PATTI
+"Technology challenges art, art inspires technology." - John Lasseter, Pixar
