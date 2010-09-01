@@ -1,95 +1,77 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: Additional remote on a local clone. Where do the objects go?
-Date: Wed, 1 Sep 2010 18:32:39 +0800
-Message-ID: <AANLkTi=_uP_zFOV_k=cM8TXH16kTPAoPGpNkz+QUSzb-@mail.gmail.com>
+Date: Wed, 01 Sep 2010 03:34:19 -0700 (PDT)
+Message-ID: <m339ttoiqh.fsf@localhost.localdomain>
 References: <i5kudr$dp7$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 01 12:32:54 2010
+X-From: git-owner@vger.kernel.org Wed Sep 01 12:34:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqkcZ-0006Kn-OQ
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:32:48 +0200
+	id 1OqkeB-0007HR-7K
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 12:34:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754298Ab0IAKcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 06:32:42 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:60948 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752571Ab0IAKcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 06:32:41 -0400
-Received: by ewy23 with SMTP id 23so4186362ewy.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:32:40 -0700 (PDT)
+	id S1754562Ab0IAKeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 06:34:21 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62920 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753964Ab0IAKeV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 06:34:21 -0400
+Received: by wyb35 with SMTP id 35so9071767wyb.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 03:34:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=fojiSbTEXE7GujkDyHxaO7OkBxBe4ltFspe4chhTgCs=;
-        b=xwBMsZnb1ePlo1SrT5ky0ZjDDgTMZujWEHhDVC/7kzMOJa3PHymu8b9BmZthx7A9jl
-         wMaW1MBSjp7ki1ZxfdHIfBncTj9UI9FPPHnlyv0eVsEqhSaJSmJ9xwVeEdlIqZ6v0FOW
-         5+BE29agi8yjo/Xchl8BsTr+1jzWeamaEl2eg=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ioTnEpeqCqP2Yxus4gQ9a48DQxiQ9SeLJhyLinrdmIk=;
+        b=IQfY5f8otqeqkaSoJ2XmyRDNpjIQmL5VqM95b6Rv+wTXtWSqcABU+J91O+KODHzb3L
+         jdSWDGSjVgDjAMwzeV79a50LxuCviT0dGQ0yKc1VF6E30MBWeNqAwdkKK+lgr5SVzb8L
+         AiNcjTTDvqQWP/TzNvlbFB94EOoMRcYp9DayA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=c5QrIsiTbt3tk4ARnOQXeF8SUTr5aRd6R21/crDZiAl4npM720yZcoGhXD5OPalCwT
-         FR7q+EfZDofBZGtwM6gIoeoaWk6EXGVECkEGESeFs3ly58xJ1TJF3xpOf7FEw0cXj2gW
-         qzySW53fzc2eeUVa3Z3bkCbTtPenj3m7PWqO0=
-Received: by 10.213.59.76 with SMTP id k12mr131621ebh.13.1283337160008; Wed,
- 01 Sep 2010 03:32:40 -0700 (PDT)
-Received: by 10.213.105.73 with HTTP; Wed, 1 Sep 2010 03:32:39 -0700 (PDT)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=LEAqb5No7hjuQsGE8y9sk4XuI8xg6Piky7Pbp+6ds6jJOyxycT06ndAbMOwy25hoPS
+         qhCsrgj3VewcRwKWNIeqewNXTI9eyHvB//6n0oWJRBymLz3twQpH7KTQZqsUTT8euiMn
+         v8Sk+T6BN0IestcRNewJHlBTVNpxvxTKO8DCk=
+Received: by 10.216.159.6 with SMTP id r6mr129221wek.55.1283337259984;
+        Wed, 01 Sep 2010 03:34:19 -0700 (PDT)
+Received: from localhost.localdomain (abwf138.neoplus.adsl.tpnet.pl [83.8.229.138])
+        by mx.google.com with ESMTPS id o49sm6007163wej.19.2010.09.01.03.34.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Sep 2010 03:34:19 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o81AYKYk024533;
+	Wed, 1 Sep 2010 12:34:31 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o81AYFuK024530;
+	Wed, 1 Sep 2010 12:34:15 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
 In-Reply-To: <i5kudr$dp7$1@dough.gmane.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155036>
 
-Hi,
+Stephen Kelly <steveire@gmail.com> writes:
 
-On Wed, Sep 1, 2010 at 3:12 PM, Stephen Kelly <steveire@gmail.com> wrote:
-> git clone git://gitorious.org/qt/qt.git qtrepo
-> cd qtrepo
-> git checkout -b 4.7 origin/4.7
-> git checkout -b 4.6 origin/4.6
-> git clone qtrepo qt46
-> cd qt46 && git checkout -b 4.6 origin/4.6
-> cd ..
-> git clone qtrepo qt47
-> cd qt46 && git checkout -b 4.7 origin/4.7
-> cd ..
+> The aim is to have multiple local checkouts of different branches of Qt 
+> while sharing the same object store. [...]
 
-Two improvements: shared objects, and configuring git-pull:
+Why not use git-new-workdir shell script from contrib/worktree/ in
+git sources[1]?
 
-  git clone git://gitorious.org/qt/qt.git qtrepo
-  git init qt46
-  PARENT_GIT=$(pwd)/qtrepo/.git
-  cd qt46
-
-  # use of shared objects - tell git where to find the "missing" objects
-  cat $PARENT_GIT/objects > .git/objects/info/alternates
-
-  # setup of git pull
-  cat <<EOF >> .git/config
-[remote "parent"]
-  url = $PARENT_GIT
-[branch "master"]
-  remote = parent
-  merge = refs/remotes/origin/4.6
-EOF
-
-  # done!
-  git pull
-
-Repeat for 4.7.
-
-If you want to go one step further and track these repos, you could
-look at git-submodule or git-subtree.
+[1] http://repo.or.cz/w/git.git/blob_plain/HEAD:/contrib/workdir/git-new-workdir
 
 -- 
-Cheers,
-Ray Chuan
+Jakub Narebski
+Poland
+ShadeHawk on #git
