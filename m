@@ -1,79 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Make sure show_all_errors when using porcelain error
- messages
-Date: Wed, 01 Sep 2010 10:54:33 -0700
-Message-ID: <7vfwxt5oyu.fsf@alter.siamese.dyndns.org>
-References: <vpqeide0zkx.fsf@bauges.imag.fr>
- <1283321153-24745-1-git-send-email-Matthieu.Moy@imag.fr>
- <7vsk1t7bn2.fsf@alter.siamese.dyndns.org> <vpq39ttxumz.fsf@bauges.imag.fr>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: getting git to ignore modifications to specific files
+Date: Wed, 01 Sep 2010 11:57:03 -0700
+Message-ID: <4C7EA1FF.8030307@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 01 19:54:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 01 20:57:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqrWU-0002Sz-2E
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 19:54:58 +0200
+	id 1OqsUl-0000AV-8I
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Sep 2010 20:57:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755075Ab0IARyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Sep 2010 13:54:43 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54787 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754861Ab0IARym (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Sep 2010 13:54:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 79D65D28A2;
-	Wed,  1 Sep 2010 13:54:41 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=27FpG4+1HmH3++GF4wTsq6TGFck=; b=s/m3Si
-	+m95z/DqUnDMKPOog+qt74fwhCR3qpjnhEOxDCQsQsPAB7AEzvMv/NPOjcotZ66F
-	kabTS42q5+pbc0bMdPYWp7B69WW/drTA2239vR/cWG4sKz7mb4DCvgrfIVO073cs
-	2an39vKoG9gfMLoIdQIyRvFcd5MYxSHycGeqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ogM5koBcgEMUhXtxaG2fO34t+hmWVKav
-	ETNBLrmE8IiUsDtIYjteaUR9K2x3SLt48Et8NRfQmkstrwrnuYnJ0xZN20E+LvYm
-	mVGRnHuq9P/jRmKjuDYV3jOEHXPLA7T2qF7HZAX+OOzRoxcs0ZSHE5q1i8hGgas9
-	LSLPIrCbqyg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 54FB1D289F;
-	Wed,  1 Sep 2010 13:54:39 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8C0F4D289C; Wed,  1 Sep
- 2010 13:54:35 -0400 (EDT)
-In-Reply-To: <vpq39ttxumz.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Wed\, 01 Sep 2010 19\:04\:36 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FDBD4256-B5F1-11DF-8AAB-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754740Ab0IAS5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 14:57:04 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:54462 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754020Ab0IAS5C (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 14:57:02 -0400
+Received: by pzk9 with SMTP id 9so2963057pzk.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 11:57:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=dBL8M5xpJz1xwM+oNsdVC7qjrZmrqfl90lY5ayEAtIQ=;
+        b=oOl4y78zk3w+Fs7pDXu0nnljjBtlUTHuXantN33V0/tPOSSgcpP/eVb6t+IWkfwsLk
+         WkoPH5XAfn84emlZ+1sqfnE0vv88Jea2RLrig77/1pEq4qiyMQ9mv/1G12u0M/d5Y/AN
+         GF9zoS09ZPCT6qsH9QJ1n/BTQ1vk8Ct2y8MAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=xuYEdgEFGQAbvAxaR7wMlQDlOGggrJcJiqjyCJV/RsvfP1JxAXYNN5e/w9A2SKAY2x
+         ULkW750lDsU2hdTmibmwFDMfXQSp1d0DumDKi6isqSiWY+b48vObbkRk5/Xkw2YSCl6W
+         aKmhE8U+sH7i0e4a6nqyNrQ5iu9D9xFllbEwg=
+Received: by 10.114.136.19 with SMTP id j19mr4284163wad.170.1283367419767;
+        Wed, 01 Sep 2010 11:56:59 -0700 (PDT)
+Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id d39sm19062229wam.16.2010.09.01.11.56.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Sep 2010 11:56:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155068>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Hi,
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->>
->>> opts.show_all_errors controls the number of errors that can be displayed,
->>> and set_porcelain_error_msgs gives the format. But the formatting would
->>> be incorrect if set_porcelain_error_msgs is called without setting
->>> opts.show_all_errors.
->>
->> That makes it sound like a design bug of set_porcelain_error_msgs(), in
->> that the caller _cannot_ choose to stop at the first error if it wants to
->> use friendlier message than the plumbing one.
->
-> You're right that the caller cannot stop at the first error and get
-> friendly message, but I don't think this is a bug.
+We have a git repository that as some GNU build system (a.k.a.
+autotools) files, my current problem is with the INSTALL file but I
+suspect there may be some others. These can get modified if you are
+running a different version of autotools from when the files were created.
 
-I am not saying it is a bug.  The description makes it sound like it is a
-bug and I was wondering if it can be worded better not to do so.
+I've had various arguments about which autotools files should or
+shouldn't be included in our repositories. My general rule of thumb is
+that if it is automatically generated then it shouldn't go into the
+repository.
+
+There are a couple of repositories that are local clones of 3rd party
+repositories which have included the pesky auto-generated files so whle
+I can remove the offending files from repositories we control I need
+another solution for the 3rd part ones.
+
+I did a bit of googling and found
+  git update-index --assume-unchanged
+
+Which works locally to stop git status from complaining. Is there anyway
+for me to make a change to our clone (a .gitattribues entry?) so that
+everyone can get this by default?
+
+Thanks,
+Chris
