@@ -1,82 +1,65 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 10/25] gettextize: git-merge basic messages
-Date: Thu, 2 Sep 2010 22:45:22 +0000
-Message-ID: <AANLkTinvvZ9eVxQXafYBDfSe8ay11mFz4s1=mDozbs14@mail.gmail.com>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
-	<1283456446-22577-11-git-send-email-avarab@gmail.com>
-	<20100902200940.GB2531@burratino>
-	<AANLkTiksZykH4zDbdDReYYgJZk7gmZ_2g0v=9X_MP73p@mail.gmail.com>
-	<20100902203711.GE2531@burratino>
-	<AANLkTi=ZQAjA9SN1A3WDr-L2rFA6v-XH0mZAkhuUgdAg@mail.gmail.com>
-	<20100902211339.GA2801@burratino>
+Subject: Re: simple example for git hooks
+Date: Thu, 2 Sep 2010 22:49:45 +0000
+Message-ID: <AANLkTimEo=sV=bKHyuQ5Md_7uQ0jAFKx+=dv4+KK+oD7@mail.gmail.com>
+References: <i5p96s$u7q$1@dough.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 03 00:45:31 2010
+Cc: git@vger.kernel.org
+To: Gelonida <gelonida@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 03 00:50:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrIXC-0001ke-Kh
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 00:45:30 +0200
+	id 1OrIbw-0004BP-8i
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 00:50:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656Ab0IBWpY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 18:45:24 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60998 "EHLO
+	id S1756555Ab0IBWts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 18:49:48 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45144 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752900Ab0IBWpX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 18:45:23 -0400
-Received: by iwn5 with SMTP id 5so914705iwn.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 15:45:22 -0700 (PDT)
+	with ESMTP id S1756538Ab0IBWtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 18:49:46 -0400
+Received: by iwn5 with SMTP id 5so918475iwn.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 15:49:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VKDKsRWh4iOuz/bKDrji2wj8/lAXWLmsjvpv9fKWH0o=;
-        b=guUbuUUBJIqJ/nepXrJvmpuMCxeO84Jc/qZg09pLX6p+sR1YuOP9qjDYfYxRtHmTkj
-         hu6hBrpWnedxCwEwD+z62aqXfZ7poLUkutvKKoaaak7+ueILTwf2w6/Mz9gxE56MekTb
-         jsFyG3Nkc3xEc8VoJf+kYYRAYKcgv4wA9hACI=
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=gY/Ehn6KTM9wPlygZEC58JESSRRl7wctE45k9gGo5y4=;
+        b=H82TnvsiozNgI9Zg7Z+9ZG2nCrEMWdluGtq3m7qAwNzp0vsppvRMIzeohJ0jAKnQoK
+         qKrpsLp6fElF8L5KEj6i7iGNTk7aqIqqteq37C1nVkZQL/MRpG6iHeWQqZdISUBAzs+C
+         hOowbczqjyjGKfsCbfUbjUzVYwPxU5dJRUxV4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jBOgWK5K8fkWEOTdZ2m/MUyHOR2TJR1iIuTqj9Xn4RZzNuSzEeuPc1P3Oc3ggA+Vsf
-         aT1UOoIq5PQoglyrrr8X49Urs0w3Sqs0twiVAYZUyFs0s4Xb3uD+qjA52SMIDQb6C6lM
-         3UMKVz9yOqRpAn/nvS/jz9tYtb81j6EgP1R9w=
-Received: by 10.231.11.11 with SMTP id r11mr11306177ibr.135.1283467522681;
- Thu, 02 Sep 2010 15:45:22 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Thu, 2 Sep 2010 15:45:22 -0700 (PDT)
-In-Reply-To: <20100902211339.GA2801@burratino>
+         :cc:content-type;
+        b=YsDtMqUndAeWg5P9tRVP3Zb/8JbFeZmNy5OU9MIOU/EI4hr1csNMoIc9jVXy0axwsN
+         mhTFrMHdm1oM4PGK6zc9/F3S+gA6+OWRcnaQwy845/unXwyNFGbZGbUg4OnTGqmLScoH
+         qVEwk+bcSJiR0gvL/2pnf7/LPsTpv4cGFb7BE=
+Received: by 10.231.19.6 with SMTP id y6mr11448010iba.16.1283467786047; Thu,
+ 02 Sep 2010 15:49:46 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 2 Sep 2010 15:49:45 -0700 (PDT)
+In-Reply-To: <i5p96s$u7q$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155219>
 
-On Thu, Sep 2, 2010 at 21:13, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
+On Thu, Sep 2, 2010 at 22:41, Gelonida <gelonida@gmail.com> wrote:
 
-> Aside: maybe for translation (though not for gettextizing) the idea o=
-f
-> patches that get applied to the development tree is more trouble than
-> it's worth. =C2=A0GNU sed and some similar projects do not include
-> translations in the development tree but fetch them from
-> translationproject.org as part of the "bootstrap" procedure when
-> building a source tarball or binaries.
->
-> See autoboot in git://git.sv.gnu.org/sed.git for example.
+> Is there any clear documentation about hich git commands I'm allowed to
+> use during a trigger script and which ones I can't
 
-I'd prefer to be able to submit translations directly to git.git, and
-build a localized git with "make" and no network access. Most programs
-that use gettext do this, sed seems to be an exception, and actually
-I've never seen anyone do it like that. Some maintain their
-translations in some web interface, but I haven't seen a project that
-doesn't commit them *at all*.
+It's just a program that's run at a certain point, and its exit status
+determines if git proceeds.
 
-I can't see why translations in the tree (in po/) should be any
-trouble at all for us. What sort of issues do you see that the sed.git
-model might solve?
+So you can use any git command, but of course what you might affect
+what's about to be commited.
+
+For a pre-commit hook (IIRC) you should find the stuff to be commited
+in the index, finding a list of things that changed from a hook is
+just a matter of diffing HEAD against the contents of the index then.
