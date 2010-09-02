@@ -1,126 +1,129 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Thu, 2 Sep 2010 20:41:57 +0100
-Message-ID: <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
-	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
-	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 15/25] gettextize: git-mv "bad" messages
+Date: Thu,  2 Sep 2010 19:40:36 +0000
+Message-ID: <1283456446-22577-16-git-send-email-avarab@gmail.com>
+References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Sep 02 21:42:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrFgQ-0006jt-M4
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:42:51 +0200
+	id 1OrFgQ-0006jt-5T
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:42:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756664Ab0IBTmE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 15:42:04 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:32786 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756629Ab0IBTl7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 15:41:59 -0400
-Received: by ewy23 with SMTP id 23so593291ewy.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:41:58 -0700 (PDT)
+	id S1756661Ab0IBTmD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 15:42:03 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50195 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756658Ab0IBTmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 15:42:00 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 35so81343wyb.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=VF6vuu5UdSOldAQkmC0x5j0/t1Uou0A+uf/7fj+LyFM=;
-        b=HZuTTR/cX80256VWkO6BE8QcTdaP25eWltTextc9EfQTxG93ZHAscyOI1Wyst0+FNF
-         1lY4tIXp0JUCvuQ/Xj8V80oav4wR10yrLsEIS9XQ9uRmhkkUR4gwtGjhq+BnAibvFDI8
-         jekSjbVVK+VmjdinLuTcGgmR8Hp5B5NUTdDv0=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Xx/O0U7TD76XRbVTvIKfyYV71efG0Yp8hx1g+HLcA7k=;
+        b=uksrq7aJuo2/yUTHm+zFVMeBrF5LWdutccLCIglE5b9J0V1rPc/Rz5hNLxqdX21ovq
+         GxAD9fsLc3f09Au97BFVA7qTWo2+xaKtbeHYPcB/kbpAxmOA4vlmSrZQMGSCWqKql2Ti
+         LJqUu2mppc6zeqsnMGM5QPw33PWaijfZpXSf4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=kWFxGlrQQeI27uiiQ4EO8J7OJ6SvZdPH6GOBJlQUrMTkLWRZW15plzUmhTJLjdKsgT
-         +/RpXrGeGxZv6noiRf7zIUzoBSmKRem6HcL3SrSJ1YrhtKSTp/gJ25X782xfkWzr8pr+
-         0Y7l2nuKg6LCZQbw2HOrLmZVQwLXgl7xEIVTE=
-Received: by 10.213.28.8 with SMTP id k8mr593179ebc.55.1283456518138; Thu, 02
- Sep 2010 12:41:58 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Thu, 2 Sep 2010 12:41:57 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=WiV2TrIamFx3AcbpCAkhKnUxSkUKIQ1x6WQIkj3n2NtItMmRD8Nqr4suqiZQYssra0
+         m5GL3jkBU0jn9ui20jNZIeMPVemXfj5NqAhlCV6OFatFQh/D/snNw46Uzexgaaz7CLJn
+         n4KFDsFmordg7kBB8F0FLbrb+ADlZK5KPDIsE=
+Received: by 10.227.38.147 with SMTP id b19mr8571657wbe.150.1283456515152;
+        Thu, 02 Sep 2010 12:41:55 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id e31sm701885wbe.17.2010.09.02.12.41.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 02 Sep 2010 12:41:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.614.g1dc9
+In-Reply-To: <1283373845-2022-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155178>
 
-nicolas, thanks for responding: you'll see this some time in the
-future when you catch up, it's not a high priority, nothing new, just
-thinking out loud, for benefit of archives.
+Translate messages made by assigning to the "bad" char* variable.
 
-On Thu, Sep 2, 2010 at 6:21 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
->> =C2=A0* what _can_ be guaranteed?
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
-> You can guarantee that if the SHA1 name of different packs is the sam=
-e
-> then they contain the same set of objects. =C2=A0Obviously their pack=
-ed
-> encoding will be different, and even the pack sizes might be quite
-> different too.
+---
+ builtin/mv.c |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
 
- ack.  ok, so the idea of creating lots and lots of 2nd level
-=2Etorrents by name {ref}-{commitref}-{SHA-1}.torrent is about the only
-way to get around that.
-
-@begin lots of no, no and hell no...
-> [...]
-@end
-
- dang.  diffs, versions, threads and zlibs as well, all conspiring agai=
-nst me :)
-
->> * is it possible to _make_ the repository guaranteed to produce
->> identical pack objects?
->
-> Sure, but performance will suck.
-
- that's fiiine :)  as i've learned on the pyjamas project, it's rare
-that you have speed and interoperability at the same time...
-
-> The only way to get a bit-for-bit reproducible pack one one specific
-> system is to use 'git repack' with the -f switch, and limit it to onl=
-y
-> one thread.
-
- whew - a way out, at last.  you had me going, for a minute :)
-
->> * is it a versioning issue? =C2=A0is it because there are different
->> versions (2 and 3)? =C2=A0if so, that's ok, you just force people to=
- use
->> the same pack-object versions.
->
-> Not at all. =C2=A0FYI [....]
-
- appreciated.
-
-
-> I'm sorry as this isn't going to help you much unfortunately.
-
- neeh, i'm flexible.  it looks like i'm going to need to deviate from
-bittorrent, after all, start adding new commands over which the git
-rev-list gets transferred, rather than as a VFS layer.  the reason is
-that bittorrent depends on the files and the data in the files being
-all the same, so that a hash can be taken of the whole lot and the
-end-result verified.
-
- if the pack-objects are going to vary, then the VFS layer idea is
-blown completely out the water, except for the absolute basic
-meta-info such as "refs/heads/*".  so i might as well just use
-"actual" bittorrent to transfer packs via
-{ref}-{commitref}-{SHA-1}.torrent.
-
-ho hum, drawing board we come...
-
-
-l.
+diff --git a/builtin/mv.c b/builtin/mv.c
+index 5d99973..8c13096 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -104,13 +104,13 @@ int cmd_mv(int argc, const char **argv, const cha=
+r *prefix)
+=20
+ 		length =3D strlen(src);
+ 		if (lstat(src, &st) < 0)
+-			bad =3D "bad source";
++			bad =3D _("bad source");
+ 		else if (!strncmp(src, dst, length) &&
+ 				(dst[length] =3D=3D 0 || dst[length] =3D=3D '/')) {
+-			bad =3D "can not move directory into itself";
++			bad =3D _("can not move directory into itself");
+ 		} else if ((src_is_dir =3D S_ISDIR(st.st_mode))
+ 				&& lstat(dst, &st) =3D=3D 0)
+-			bad =3D "cannot move directory over file";
++			bad =3D _("cannot move directory over file");
+ 		else if (src_is_dir) {
+ 			const char *src_w_slash =3D add_slash(src);
+ 			int len_w_slash =3D length + 1;
+@@ -132,7 +132,7 @@ int cmd_mv(int argc, const char **argv, const char =
+*prefix)
+ 			free((char *)src_w_slash);
+=20
+ 			if (last - first < 1)
+-				bad =3D "source directory is empty";
++				bad =3D _("source directory is empty");
+ 			else {
+ 				int j, dst_len;
+=20
+@@ -163,9 +163,9 @@ int cmd_mv(int argc, const char **argv, const char =
+*prefix)
+ 				argc +=3D last - first;
+ 			}
+ 		} else if (cache_name_pos(src, length) < 0)
+-			bad =3D "not under version control";
++			bad =3D _("not under version control");
+ 		else if (lstat(dst, &st) =3D=3D 0) {
+-			bad =3D "destination exists";
++			bad =3D _("destination exists");
+ 			if (force) {
+ 				/*
+ 				 * only files can overwrite each other:
+@@ -175,10 +175,10 @@ int cmd_mv(int argc, const char **argv, const cha=
+r *prefix)
+ 					warning(_("%s; will overwrite!"), bad);
+ 					bad =3D NULL;
+ 				} else
+-					bad =3D "Cannot overwrite";
++					bad =3D _("Cannot overwrite");
+ 			}
+ 		} else if (string_list_has_string(&src_for_dst, dst))
+-			bad =3D "multiple sources for the same target";
++			bad =3D _("multiple sources for the same target");
+ 		else
+ 			string_list_insert(&src_for_dst, dst);
+=20
+--=20
+1.7.2.2.614.g1dc9
