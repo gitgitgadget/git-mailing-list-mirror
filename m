@@ -1,114 +1,126 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH 25/25] gettextize: git-status shortstatus messages
-Date: Thu,  2 Sep 2010 19:40:46 +0000
-Message-ID: <1283456446-22577-26-git-send-email-avarab@gmail.com>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Thu, 2 Sep 2010 20:51:32 +0100
+Message-ID: <AANLkTi=D7t+cNSdmZORwBEUU6wy-4QXHpw6YcXe61ADa@mail.gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+	<4C7FC3DC.3060907@gmail.com>
+	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+	<20100902155810.GB14508@sigill.intra.peff.net>
+	<alpine.LFD.2.00.1009021233190.19366@xanadu.home>
+	<4C7FDA32.5050009@gmail.com>
+	<alpine.LFD.2.00.1009021326290.19366@xanadu.home>
+	<AANLkTi=Q7EfeUDB6PuSa88PDtaBZSMMuaMqh8hU25ECb@mail.gmail.com>
+	<20100902192910.GJ32601@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 02 21:43:38 2010
+Cc: git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Sep 02 21:51:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrFh8-0007JQ-AI
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:43:34 +0200
+	id 1OrFou-0003s5-U1
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:51:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756700Ab0IBTnL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 15:43:11 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:57195 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754180Ab0IBTnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 15:43:09 -0400
-Received: by wwj40 with SMTP id 40so1284319wwj.1
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:43:08 -0700 (PDT)
+	id S1756748Ab0IBTve convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 15:51:34 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37279 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756726Ab0IBTvd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 15:51:33 -0400
+Received: by vws3 with SMTP id 3so636740vws.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=53xRH+MrqfZojk89IxpAmpF6WnICcr3bs/iKjlALO5s=;
-        b=FyR6xd+c21YJLn1mzR3SpmG2TVs08wbhq/i1ePz14j+idRH9ItRFXmJyuYSNkZtrEH
-         Ep2i0URayRg9s4ZmBfAXMHkCybkU5mA7kFX7s/I6Zf5V5MtNW7MVGavar0QTMrGuKqcT
-         b+/Y6WNpLEejd50rv8wqCs+29dGaJN7mjKrO8=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RjQYw7bQo8WVBFzS6XBrVOAa6asEzidJrXVjIjF3lKg=;
+        b=f5AFOQqH3obi5zSHAczlkr3t8bqXnmaPXqFu52G7sfXFTkVkAtTWxaJpaOE0dO/Qk2
+         DAVLEfTWMFWxscgSVTvb2X1xZIpRn8W2grbKb67Ud/QOoCqceNp9WCnLatJ8MdjMXev4
+         eNNOgSFW0hCXhGhwdnn9t+UV7/cCUDxHyMfiE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=dlXlj5e92VIQPQcGQuKySo+oOOLmkwQVUp84H1Yd5aDM5bR5xmLUxSuUZ8cstXhOU/
-         2IMgRZCTLUFgYhlZSxKG4abIRN0uOT3cXim9kJMRqu4YiNO/lwU431mC5qxWIHsnQKI+
-         DBtwPqMKKk2IKAXZzwdvHi9tVhsbp8obdyAVk=
-Received: by 10.227.135.15 with SMTP id l15mr9812174wbt.203.1283456588172;
-        Thu, 02 Sep 2010 12:43:08 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id e31sm701885wbe.17.2010.09.02.12.43.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 12:43:07 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.614.g1dc9
-In-Reply-To: <1283373845-2022-1-git-send-email-avarab@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=S4kZdDecNZcGntRlH+Xvl9hOVYjO176YEo3UnkaUMwUOxdK8FYyP/b4E2i5Nlkpfm4
+         DbuoAfRGKsrODafDG/RJsxFETITRvx2joaLMquI7K4vJKW+jyXM8jzvtLkQhfat8pA/2
+         LHireDMe7fqcbbljVB7cmQT7xLNr+F3lJ+yeQ=
+Received: by 10.220.88.84 with SMTP id z20mr5610968vcl.92.1283457092434; Thu,
+ 02 Sep 2010 12:51:32 -0700 (PDT)
+Received: by 10.220.98.8 with HTTP; Thu, 2 Sep 2010 12:51:32 -0700 (PDT)
+In-Reply-To: <20100902192910.GJ32601@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155188>
 
-Make the messages added in v1.7.2-rc0~54^2~1 translatable. Some of
-these could use the to be implemented plural support in the gettext
-library.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Thu, Sep 2, 2010 at 8:29 PM, Shawn O. Pearce <spearce@spearce.org> w=
+rote:
+> Luke Kenneth Casson Leighton <luke.leighton@gmail.com> wrote:
+>>
+>> =C2=A0* based on what you kindly mentioned about "git repack -f", wo=
+uld a
+>> (well-written!) patch to git pack-objects to add a
+>> "--single-thread-only" option be acceptable?
 >
----
- wt-status.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+> Probably not. =C2=A0I can't think of a good reason to limit the numbe=
+r
+> of threads that get used. =C2=A0We already have pack.threads as a
+> configuration variable to support controlling this for the system,
+> but that's about the only thing that really makes sense.
+>
+>> =C2=A0* would you, or anyone else with enough knowledge of how this =
+stuff
+>> reaallly works, be willing to put some low-priority back-of-mind
+>> thought into how to create a "canonical" pack format
+>
+> We have. =C2=A0We've even talked about it on the mailing list. =C2=A0=
+Multiple
+> times. =C2=A0Most times about how to support a p2p Git transport.
+> That whole Gittorrent thing you are ignoring,
 
-diff --git a/wt-status.c b/wt-status.c
-index 1c1a575..fc377f3 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -793,13 +793,13 @@ static void wt_shortstatus_print_tracking(struct =
-wt_status *s)
- 	if (!prefixcmp(branch_name, "refs/heads/"))
- 		branch_name +=3D 11;
- 	else if (!strcmp(branch_name, "HEAD")) {
--		branch_name =3D "HEAD (no branch)";
-+		branch_name =3D _("HEAD (no branch)");
- 		branch_color_local =3D color(WT_STATUS_NOBRANCH, s);
- 	}
-=20
- 	branch =3D branch_get(s->branch + 11);
- 	if (s->is_initial)
--		color_fprintf(s->fp, header_color, "Initial commit on ");
-+		color_fprintf(s->fp, header_color, _("Initial commit on "));
- 	if (!stat_tracking_info(branch, &num_ours, &num_theirs)) {
- 		color_fprintf_ln(s->fp, branch_color_local,
- 			"%s", branch_name);
-@@ -814,15 +814,15 @@ static void wt_shortstatus_print_tracking(struct =
-wt_status *s)
-=20
- 	color_fprintf(s->fp, header_color, " [");
- 	if (!num_ours) {
--		color_fprintf(s->fp, header_color, "behind ");
-+		color_fprintf(s->fp, header_color, _("behind "));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
- 	} else if (!num_theirs) {
--		color_fprintf(s->fp, header_color, "ahead ");
-+		color_fprintf(s->fp, header_color, _("ahead "));
- 		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
- 	} else {
--		color_fprintf(s->fp, header_color, "ahead ");
-+		color_fprintf(s->fp, header_color, _("ahead "));
- 		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
--		color_fprintf(s->fp, header_color, ", behind ");
-+		color_fprintf(s->fp, header_color, _(", behind "));
- 		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
- 	}
-=20
---=20
-1.7.2.2.614.g1dc9
+ i'm not ignoring it - it was abandoned and sam created mirrorsync
+instead!  and i can't ignore something when all the damn information
+on it has been withdrawn from the internet!  i _have_ been looking,
+and just can't darn well find anything.   fortunately, i'm reasonably
+bright, catch on fast, and listen well.  ok.  _sometimes_ i listen
+well :)
+
+> we put some effort
+> into coming up with a pack-like format that would be more stable,
+> at the expense of being larger in total size.
+
+ ahhh goood.
+
+> Nico, myself, and a whole lot of other very smart folks who really
+> understand how Git works today have failed to identify a way to do
+> this that we actually want to write, include in git, and maintain
+> long-term.
+
+ bugger.  *sigh* ok.  so, scratch that question, nico (the
+canonical-pack question but not the --single-thread one)
+
+ so, this, and...
+
+> In general pack files don't change that often, so there are fairly
+
+ ... this, all tend to point towards the idea of sharing packs by
+{ref}-{commitref}-{SHA1}.torrent as being a reasonabe and "good
+enough" idea.  on the basis that anyone who happens to be doing
+git-sharing _right now_ is likely to end up sharing the exact same
+pack object generated by the same one (original) seed.
+
+i'd better start looking at bittornado in more detail...
+
+ l.
+
+p.s. thank you to everyone who's responding, i dunno about you but
+this is fascinating.
