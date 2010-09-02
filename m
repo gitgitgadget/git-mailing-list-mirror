@@ -1,254 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 1/3] Move set_porcelain_error_msgs to unpack-trees.c and rename it
-Date: Thu,  2 Sep 2010 13:57:33 +0200
-Message-ID: <1283428655-12680-2-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpq39ttxumz.fsf@bauges.imag.fr>
-Cc: Jim Meyering <jim@meyering.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Thu Sep 02 13:59:37 2010
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Thu, 2 Sep 2010 14:37:30 +0100
+Message-ID: <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 15:37:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Or8S8-0007rM-3d
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 13:59:36 +0200
+	id 1Or9z0-0004LG-JA
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 15:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754219Ab0IBL7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 07:59:31 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60070 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752659Ab0IBL7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 07:59:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o82Bs036001994
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 2 Sep 2010 13:54:00 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Or8QD-0006mo-Av; Thu, 02 Sep 2010 13:57:37 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Or8QD-0003Jh-9Q; Thu, 02 Sep 2010 13:57:37 +0200
-X-Mailer: git-send-email 1.7.2.2.175.ga619d.dirty
-In-Reply-To: <vpq39ttxumz.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 02 Sep 2010 13:54:00 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o82Bs036001994
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1284033242.8667@fv4XBuGJo0ik8cEo6Welvw
+	id S1754627Ab0IBNhc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 09:37:32 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:38208 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752864Ab0IBNhb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 09:37:31 -0400
+Received: by pxi10 with SMTP id 10so102106pxi.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 06:37:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2FHcznd8tYsA+v2innVEgki3L4sBCMwgfJ/5sQOvwRw=;
+        b=fTc3wCA1w4nrTwB3XkvFWKDfXVhMMX4VGwc8vzotZnHHG3ijrtytT0rnizBCoIm3kg
+         c0zuOA2UBaG4qMezklBmJ19UiTFD1nsdzO9n6SUEKQFBNMeWM31M87jksVlcqR/Rl2vJ
+         lCVGXdryBys/oDSEpjyPm4LK0mOB+tJoV/Feg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=apuA8Ph7ZvgtcUPaVr0YnQn9A9rRw40QqTWxKl9aHqkXbBUuPXgvhHISNd3Wootmot
+         1Ak3fAamRVIAxIBRz0fKOluKfMz844EpNwAgLDs8aUHc50SQvq4E/KmMLiI54s/M7yLT
+         mAxFiAAdJv10mKnSAhRHQ8rvxWEJsaBVkw3+A=
+Received: by 10.114.61.1 with SMTP id j1mr3796339waa.76.1283434650859; Thu, 02
+ Sep 2010 06:37:30 -0700 (PDT)
+Received: by 10.220.98.8 with HTTP; Thu, 2 Sep 2010 06:37:30 -0700 (PDT)
+In-Reply-To: <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155127>
 
-The function is currently dealing only with error messages, but the
-intent of calling it is really to notify the unpack-tree mechanics that
-it is running in porcelain mode.
+On Wed, Sep 1, 2010 at 11:04 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
+m> wrote:
+> On Thu, Sep 2, 2010 at 12:36 AM, Luke Kenneth Casson Leighton
+> <luke.leighton@gmail.com> wrote:
+>> http://gitorious.org/python-libbittorrent/pybtlib
+>>
+>> hurrah - success! =C2=A0git fsck shows a "dangling commit"!
+>>
+>> so, as a proof-of-concept, 400 lines of python code plus a bittorren=
+t
+>> library shows that it's possible to create a peer-to-peer distribute=
+d
+>> version of "git fetch", by treating the pack objects as "files to be
+>> shared".
+>
+> You should have a look at gittorrent [1] (and finish it too if you ar=
+e
+> interested).
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- builtin/checkout.c |    2 +-
- builtin/merge.c    |    2 +-
- merge-recursive.c  |   46 +---------------------------------------------
- merge-recursive.h  |    6 ------
- unpack-trees.c     |   46 +++++++++++++++++++++++++++++++++++++++++++++-
- unpack-trees.h     |    6 ++++++
- 6 files changed, 54 insertions(+), 54 deletions(-)
+ it's in perl, and has been shelved afaik.  sam (hi sam, you still
+here? :) abandoned bittorrent as the underlying mechanism, and i
+disagree with that decision, hence why i created what i have, to prove
+that it's viable.
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 7250e5c..e5c0ef0 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -376,7 +376,7 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		topts.src_index = &the_index;
- 		topts.dst_index = &the_index;
- 
--		set_porcelain_error_msgs(topts.msgs, "checkout");
-+		setup_unpack_trees_porcelain(topts.msgs, "checkout");
- 
- 		refresh_cache(REFRESH_QUIET);
- 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 47e705b..da52b10 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -706,7 +706,7 @@ int checkout_fast_forward(const unsigned char *head, const unsigned char *remote
- 	opts.merge = 1;
- 	opts.fn = twoway_merge;
- 	opts.show_all_errors = 1;
--	set_porcelain_error_msgs(opts.msgs, "merge");
-+	setup_unpack_trees_porcelain(opts.msgs, "merge");
- 
- 	trees[nr_trees] = parse_tree_indirect(head);
- 	if (!trees[nr_trees++])
-diff --git a/merge-recursive.c b/merge-recursive.c
-index df90be4..61e237b 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -180,7 +180,7 @@ static int git_merge_trees(int index_only,
- 	opts.fn = threeway_merge;
- 	opts.src_index = &the_index;
- 	opts.dst_index = &the_index;
--	set_porcelain_error_msgs(opts.msgs, "merge");
-+	setup_unpack_trees_porcelain(opts.msgs, "merge");
- 
- 	init_tree_desc_from_tree(t+0, common);
- 	init_tree_desc_from_tree(t+1, head);
-@@ -1238,50 +1238,6 @@ static int process_df_entry(struct merge_options *o,
- 	return clean_merge;
- }
- 
--void set_porcelain_error_msgs(const char **msgs, const char *cmd)
--{
--	const char *msg;
--	char *tmp;
--	const char *cmd2 = strcmp(cmd, "checkout") ? cmd : "switch branches";
--	if (advice_commit_before_merge)
--		msg = "Your local changes to the following files would be overwritten by %s:\n%%s"
--			"Please, commit your changes or stash them before you can %s.";
--	else
--		msg = "Your local changes to the following files would be overwritten by %s:\n%%s";
--	tmp = xmalloc(strlen(msg) + strlen(cmd) + strlen(cmd2) - 2);
--	sprintf(tmp, msg, cmd, cmd2);
--	msgs[ERROR_WOULD_OVERWRITE] = tmp;
--	msgs[ERROR_NOT_UPTODATE_FILE] = tmp;
--
--	msgs[ERROR_NOT_UPTODATE_DIR] =
--		"Updating the following directories would lose untracked files in it:\n%s";
--
--	if (advice_commit_before_merge)
--		msg = "The following untracked working tree files would be %s by %s:\n%%s"
--			"Please move or remove them before you can %s.";
--	else
--		msg = "The following untracked working tree files would be %s by %s:\n%%s";
--	tmp = xmalloc(strlen(msg) + strlen(cmd) + strlen("removed") + strlen(cmd2) - 4);
--	sprintf(tmp, msg, "removed", cmd, cmd2);
--	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = tmp;
--	tmp = xmalloc(strlen(msg) + strlen(cmd) + strlen("overwritten") + strlen(cmd2) - 4);
--	sprintf(tmp, msg, "overwritten", cmd, cmd2);
--	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = tmp;
--
--	/*
--	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
--	 * cannot easily display it as a list.
--	 */
--	msgs[ERROR_BIND_OVERLAP] = "Entry '%s' overlaps with '%s'.  Cannot bind.";
--
--	msgs[ERROR_SPARSE_NOT_UPTODATE_FILE] =
--		"Cannot update sparse checkout: the following entries are not up-to-date:\n%s";
--	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =
--		"The following Working tree files would be overwritten by sparse checkout update:\n%s";
--	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
--		"The following Working tree files would be removed by sparse checkout update:\n%s";
--}
--
- int merge_trees(struct merge_options *o,
- 		struct tree *head,
- 		struct tree *merge,
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 08f9850..f79917c 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -23,12 +23,6 @@ struct merge_options {
- 	struct string_list current_directory_set;
- };
- 
--/*
-- * Sets the list of user-friendly error messages to be used by the
-- * command "cmd" (either merge or checkout)
-- */
--void set_porcelain_error_msgs(const char **msgs, const char *cmd);
--
- /* merge_trees() but with recursive ancestor consolidation */
- int merge_recursive(struct merge_options *o,
- 		    struct commit *h1,
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 3c7a7c9..4520aa0 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -14,7 +14,7 @@
-  * read-tree.  Non-scripted Porcelain is not required to use these messages
-  * and in fact are encouraged to reword them to better suit their particular
-  * situation better.  See how "git checkout" and "git merge" replaces
-- * them using set_porcelain_error_msgs(), for example.
-+ * them using setup_unpack_trees_porcelain(), for example.
-  */
- const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
- 	/* ERROR_WOULD_OVERWRITE */
-@@ -50,6 +50,50 @@ const char *unpack_plumbing_errors[NB_UNPACK_TREES_ERROR_TYPES] = {
- 	  ? ((o)->msgs[(type)])      \
- 	  : (unpack_plumbing_errors[(type)]) )
- 
-+void setup_unpack_trees_porcelain(const char **msgs, const char *cmd)
-+{
-+	const char *msg;
-+	char *tmp;
-+	const char *cmd2 = strcmp(cmd, "checkout") ? cmd : "switch branches";
-+	if (advice_commit_before_merge)
-+		msg = "Your local changes to the following files would be overwritten by %s:\n%%s"
-+			"Please, commit your changes or stash them before you can %s.";
-+	else
-+		msg = "Your local changes to the following files would be overwritten by %s:\n%%s";
-+	tmp = xmalloc(strlen(msg) + strlen(cmd) + strlen(cmd2) - 2);
-+	sprintf(tmp, msg, cmd, cmd2);
-+	msgs[ERROR_WOULD_OVERWRITE] = tmp;
-+	msgs[ERROR_NOT_UPTODATE_FILE] = tmp;
-+
-+	msgs[ERROR_NOT_UPTODATE_DIR] =
-+		"Updating the following directories would lose untracked files in it:\n%s";
-+
-+	if (advice_commit_before_merge)
-+		msg = "The following untracked working tree files would be %s by %s:\n%%s"
-+			"Please move or remove them before you can %s.";
-+	else
-+		msg = "The following untracked working tree files would be %s by %s:\n%%s";
-+	tmp = xmalloc(strlen(msg) + strlen(cmd) + strlen("removed") + strlen(cmd2) - 4);
-+	sprintf(tmp, msg, "removed", cmd, cmd2);
-+	msgs[ERROR_WOULD_LOSE_UNTRACKED_REMOVED] = tmp;
-+	tmp = xmalloc(strlen(msg) + strlen(cmd) + strlen("overwritten") + strlen(cmd2) - 4);
-+	sprintf(tmp, msg, "overwritten", cmd, cmd2);
-+	msgs[ERROR_WOULD_LOSE_UNTRACKED_OVERWRITTEN] = tmp;
-+
-+	/*
-+	 * Special case: ERROR_BIND_OVERLAP refers to a pair of paths, we
-+	 * cannot easily display it as a list.
-+	 */
-+	msgs[ERROR_BIND_OVERLAP] = "Entry '%s' overlaps with '%s'.  Cannot bind.";
-+
-+	msgs[ERROR_SPARSE_NOT_UPTODATE_FILE] =
-+		"Cannot update sparse checkout: the following entries are not up-to-date:\n%s";
-+	msgs[ERROR_WOULD_LOSE_ORPHANED_OVERWRITTEN] =
-+		"The following Working tree files would be overwritten by sparse checkout update:\n%s";
-+	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
-+		"The following Working tree files would be removed by sparse checkout update:\n%s";
-+}
-+
- static void add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
- 	unsigned int set, unsigned int clear)
- {
-diff --git a/unpack-trees.h b/unpack-trees.h
-index 6e049b0..d62bba9 100644
---- a/unpack-trees.h
-+++ b/unpack-trees.h
-@@ -22,6 +22,12 @@ enum unpack_trees_error_types {
- 	NB_UNPACK_TREES_ERROR_TYPES
- };
- 
-+/*
-+ * Sets the list of user-friendly error messages to be used by the
-+ * command "cmd" (either merge or checkout)
-+ */
-+void setup_unpack_trees_porcelain(const char **msgs, const char *cmd);
-+
- struct rejected_paths_list {
- 	char *path;
- 	struct rejected_paths_list *next;
--- 
-1.7.2.2.175.ga619d.dirty
+ so a) i don't do perl so would need to re-create what's been done
+(which i don't understand, and, because it's incomplete, i can't do a
+perl-to-python translation and "have something working") b) i don't
+believe in reinventing the wheel ESPECIALLY on something as complex as
+peer-to-peer file distribution.
+
+ cameron dale created apt-p2p which is a recreation of a peer-to-peer
+file distribution mechanism, and, not surprisingly, it's slow and
+problematic.
+
+> There were discussions whether a pack is stable enough to
+> be shared like this,
+
+ it seems to be.  as long as each version of git produces the exact
+same pack object, off of the command "git pack-objects --all --stdout
+--thin {ref} < {objref}"
+
+ is that what you're referring to?
+
+ because if it isn't, then yes, the sharing of files (named by a
+virtual filename of packs/{ref}/{objref} of course) which _might_ have
+differences, yeah, it becomes a bit of a fuck-up.
+
+> one of the reason "commit reel" was introduced.
+
+ ah _ha_.  i need to look that up.  will get back to you.
+
+ l.
