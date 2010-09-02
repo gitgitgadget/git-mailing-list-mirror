@@ -1,73 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 06/25] gettextize: git-fetch formatting messages
-Date: Thu, 2 Sep 2010 16:28:16 -0400
-Message-ID: <20100902202816.GA20362@sigill.intra.peff.net>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
- <1283456446-22577-7-git-send-email-avarab@gmail.com>
- <20100902195936.GA2531@burratino>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Thu, 02 Sep 2010 15:28:28 -0500
+Message-ID: <FyEIt68YHr11lsX_CGcHmYfITTgX-iSs9tVNIBMG7FQ_WhGc4ttvXw@cipher.nrlssc.navy.mil>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com> <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com> <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com> <4C7FC3DC.3060907@gmail.com> <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com> <20100902155810.GB14508@sigill.intra.peff.net> <alpine.LFD.2.00.1009021233190.19366@xanadu.home> <4C7FDA32.5050009@gmail.com> <alpine.LFD.2.00.1009021326290.19366@xanadu.home> <AANLkTi=Q7EfeUDB6PuSa88PDtaBZSMMuaMqh8hU25ECb@mail.gmail.com> <20100902192910.GJ32601@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 22:28:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Sep 02 22:29:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrGOX-00019q-QS
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:28:26 +0200
+	id 1OrGP0-0001aR-F3
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:28:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756956Ab0IBU2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 16:28:05 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47253 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756862Ab0IBU2E (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 16:28:04 -0400
-Received: (qmail 3978 invoked by uid 111); 2 Sep 2010 20:28:02 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 02 Sep 2010 20:28:02 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Sep 2010 16:28:16 -0400
-Content-Disposition: inline
-In-Reply-To: <20100902195936.GA2531@burratino>
+	id S1756991Ab0IBU2i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 16:28:38 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37518 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756864Ab0IBU2h (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 16:28:37 -0400
+Received: by mail.nrlssc.navy.mil id o82KSTbn027910; Thu, 2 Sep 2010 15:28:29 -0500
+In-Reply-To: <20100902192910.GJ32601@spearce.org>
+X-OriginalArrivalTime: 02 Sep 2010 20:28:29.0323 (UTC) FILETIME=[67671DB0:01CB4ADD]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155196>
 
-On Thu, Sep 02, 2010 at 02:59:37PM -0500, Jonathan Nieder wrote:
-
-> (+cc: some fetch ui authors, just as a heads up)
-
-Thanks. I think Nico actually did the fetch code, though, and I more or
-less copied it for push.
-
-> > @@ -249,8 +249,8 @@ static int update_local_ref(struct ref *ref,
-> >  		 * If this is the head, and it's not okay to update
-> >  		 * the head, and the old value of the head isn't empty...
-> >  		 */
-> > -		sprintf(display, "! %-*s %-*s -> %s  (can't fetch in current branch)",
-> > -			TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
-> > +		sprintf(display, _("! %-*s %-*s -> %s  (can't fetch in current branch)"),
-> > +			TRANSPORT_SUMMARY_WIDTH, _("[rejected]"), REFCOL_WIDTH, remote,
+On 09/02/2010 02:29 PM, Shawn O. Pearce wrote:
+> Luke Kenneth Casson Leighton <luke.leighton@gmail.com> wrote:
+>>
+>>  * based on what you kindly mentioned about "git repack -f", would a
+>> (well-written!) patch to git pack-objects to add a
+>> "--single-thread-only" option be acceptable?
 > 
-> Regardless of the answer, we should probably be either consistently
-> translating or not translating it within this patch.  e.g. for not
-> translating (though I suspect translating is the better choice):
-> 
-> 		sprintf(display, "! %-*s %-*s -> %s  %s",
-> 			TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
-> 			pretty_ref, _("(can't fetch in current branch)"));
+> Probably not.  I can't think of a good reason to limit the number
+> of threads that get used.  We already have pack.threads as a
+> configuration variable to support controlling this for the system,
+> but that's about the only thing that really makes sense.
 
-I think you can translate "[rejected]" here, too.
+I think pack-objects already has a --threads option allowing to
+specify the number of threads to use.
 
-However, do be aware of the --porcelain output for git-push. It was
-tacked on much later, and I fear it may use some of the same strings.
-Some of them are perhaps OK to translate (the human readable bit at the
-end, e.g.), but others maybe not. I haven't looked closely.
+   --threads=1
 
--Peff
+should do it.
+
+-Brandon
