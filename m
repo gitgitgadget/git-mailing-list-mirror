@@ -1,92 +1,106 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Thu, 2 Sep 2010 21:48:44 +0100
-Message-ID: <AANLkTin-gwN+QXjjwr7UPMi=QwSFdDjRBqmx9jgunhJM@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
-	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
-	<20100902155810.GB14508@sigill.intra.peff.net>
-	<alpine.LFD.2.00.1009021233190.19366@xanadu.home>
-	<4C7FDA32.5050009@gmail.com>
-	<alpine.LFD.2.00.1009021326290.19366@xanadu.home>
-	<AANLkTi=Q7EfeUDB6PuSa88PDtaBZSMMuaMqh8hU25ECb@mail.gmail.com>
-	<20100902192910.GJ32601@spearce.org>
-	<FyEIt68YHr11lsX_CGcHmYfITTgX-iSs9tVNIBMG7FQ_WhGc4ttvXw@cipher.nrlssc.navy.mil>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 06/25] gettextize: git-fetch formatting messages
+Date: Thu, 2 Sep 2010 20:48:47 +0000
+Message-ID: <AANLkTinZnaJDfhpec2UM-qVkQDc5Opif-GnUfnzP8f8Y@mail.gmail.com>
+References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
+	<1283456446-22577-7-git-send-email-avarab@gmail.com>
+	<20100902195936.GA2531@burratino>
+	<20100902202816.GA20362@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jeff King <peff@peff.net>
 X-From: git-owner@vger.kernel.org Thu Sep 02 22:48:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrGiJ-0005ce-C1
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:48:51 +0200
+	id 1OrGiJ-0005ce-Sw
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:48:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757152Ab0IBUsq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:48:46 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:39509 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753090Ab0IBUsp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:48:45 -0400
-Received: by ywh1 with SMTP id 1so396398ywh.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:48:45 -0700 (PDT)
+	id S932118Ab0IBUsu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:48:50 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49742 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932071Ab0IBUss convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:48:48 -0400
+Received: by fxm13 with SMTP id 13so623692fxm.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=jFLhXUTDCG90Ib4e9SpwoTzDZi1UH9iPlns0WW8T1mU=;
-        b=oshyg8cs9/ijjXWi7vsW3r/nCDgJsJpZmJObjTzHvhD5EPqKY6xd5L6txmEpoiVJRm
-         2Jpcb1vGG9e3oCae2rSmjH7ARA77yeApTjb5iKsnf5VAJoXYeIAYbUw7Cf5Kt8fGSX2H
-         E8LNy2ZdfGk85C7KShMImyX9fWrqf5T4DuOhA=
+        bh=lfKbYl5mIIFoHJZFhJdexhdc/P/3+aNqvHA9c4509Cc=;
+        b=d/Kv/8I6Xb0sIfIWj/hyzYabcZH1PUGrqhaK+vvYj0xhv/ntlNc+ThY6/x65aDTlWY
+         eb+eALccckeCl1vNIuZ2huGnLs91BAENZ/FA7pIDtLLLCphvoJ7QKEsMYrPsvv385jJz
+         OTZSzjMBIFNCwZT94nH3ElArqWZMXKhOOFacA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=FqGXJL0uwi08RUbuJJL912P8ZEQLhb+n7OcVXWfeB0NhOokWQVgoJJATmjrSz+pgVA
-         2Nj2uqt86Pt9cGr01D6/LymmW6q6xzQuG2ugRvgjEx0Rb/KEN0DeIT24D0FYHONMtsCf
-         QAw3+6Iii8N/+Qh8BRXbELMUqPAwN4DW1u+XE=
-Received: by 10.90.82.9 with SMTP id f9mr91824agb.3.1283460524413; Thu, 02 Sep
- 2010 13:48:44 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Thu, 2 Sep 2010 13:48:44 -0700 (PDT)
-In-Reply-To: <FyEIt68YHr11lsX_CGcHmYfITTgX-iSs9tVNIBMG7FQ_WhGc4ttvXw@cipher.nrlssc.navy.mil>
+        b=sCry6CqFgRWBBxUgkD3VDk+f0HPNQ/RX1jAd6ULwxgQrfkQ4xrNEMeU+/ahJdHWUvd
+         d2IDW6YHLBCT7QHrZ6sLKoNyNDW0ZNL9A8isQ5FHFyZbjdeKo2qG32ChLSE/LdVA7nq3
+         siG9YNZs7KJI5QvN7MOaA84LBlFuqnRfhP91c=
+Received: by 10.223.124.205 with SMTP id v13mr4238623far.24.1283460527548;
+ Thu, 02 Sep 2010 13:48:47 -0700 (PDT)
+Received: by 10.223.120.14 with HTTP; Thu, 2 Sep 2010 13:48:47 -0700 (PDT)
+In-Reply-To: <20100902202816.GA20362@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155204>
 
-On Thu, Sep 2, 2010 at 9:28 PM, Brandon Casey
-<brandon.casey.ctr@nrlssc.navy.mil> wrote:
-> I think pack-objects already has a --threads option allowing to
-> specify the number of threads to use.
+On Thu, Sep 2, 2010 at 20:28, Jeff King <peff@peff.net> wrote:
+> On Thu, Sep 02, 2010 at 02:59:37PM -0500, Jonathan Nieder wrote:
 >
-> =C2=A0 --threads=3D1
+>> (+cc: some fetch ui authors, just as a heads up)
 >
-> should do it.
+> Thanks. I think Nico actually did the fetch code, though, and I more =
+or
+> less copied it for push.
+>
+>> > @@ -249,8 +249,8 @@ static int update_local_ref(struct ref *ref,
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* If this is the h=
+ead, and it's not okay to update
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the head, and th=
+e old value of the head isn't empty...
+>> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
+>> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sprintf(display, "! %-*s %-*s=
+ -> %s =C2=A0(can't fetch in current branch)",
+>> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 T=
+RANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sprintf(display, _("! %-*s %-=
+*s -> %s =C2=A0(can't fetch in current branch)"),
+>> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 T=
+RANSPORT_SUMMARY_WIDTH, _("[rejected]"), REFCOL_WIDTH, remote,
+>>
+>> Regardless of the answer, we should probably be either consistently
+>> translating or not translating it within this patch. =C2=A0e.g. for =
+not
+>> translating (though I suspect translating is the better choice):
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sprintf(display, "!=
+ %-*s %-*s -> %s =C2=A0%s",
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 pretty_ref, _("(can't fetch in current branch)"));
+>
+> I think you can translate "[rejected]" here, too.
 
- git pack-objects --help
- ....
-  ....
-       --threads=3D<n>
-           Specifies the number of threads to spawn when searching for =
-best
-           delta matches.
+Thanks. I missed that one.
 
- wha-hey!  thank youuu brandon.
+> However, do be aware of the --porcelain output for git-push. It was
+> tacked on much later, and I fear it may use some of the same strings.
+> Some of them are perhaps OK to translate (the human readable bit at t=
+he
+> end, e.g.), but others maybe not. I haven't looked closely.
 
- okaay... so maaaybeee there's a workaround (not involving patches to g=
-it. whew)
-
-l.
+There's probably more potential issues like that because I didn't know
+the code well, but hopefully not too many.
