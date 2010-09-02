@@ -1,102 +1,82 @@
-From: Chris Patti <cpatti@gmail.com>
-Subject: Re: Odd results writing a Git pre-receive hook to syntax check PHP files.
-Date: Thu, 2 Sep 2010 10:34:18 -0400
-Message-ID: <AANLkTiks+y8edtpkbu+t=22rct_KXv9aOHaG88-MWapK@mail.gmail.com>
-References: <AANLkTikktdPoZN8MwJD+Gxus16xBGtScCAqT9W0eiWAb@mail.gmail.com>
-	<4C7B8E1E.6050708@drmicha.warpmail.net>
-	<AANLkTimqzDO49h40b16gQ_=X42NXN-wZNV7d7f3KYygt@mail.gmail.com>
-	<20100830141602.GF2315@burratino>
-	<AANLkTim+S87KjFBstBineR02hQHzG=X2VDqgiGNbPQGS@mail.gmail.com>
-	<20100830163302.GA13336@burratino>
-	<AANLkTi=VPf9CWNJcce6d20HQChi0mHgTG1F=jakzNT-O@mail.gmail.com>
-	<4C7C020C.6090907@drmicha.warpmail.net>
-	<AANLkTimiSBjifxtDoFXAEAEpYM8bJ18SwJ5Fj8zqh_G6@mail.gmail.com>
-	<7vk4n68hpk.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] doc: technical details about the index file format
+Date: Thu, 02 Sep 2010 07:50:44 -0700
+Message-ID: <7vlj7k42t7.fsf@alter.siamese.dyndns.org>
+References: <201009012054.20482.robin.rosenberg@dewire.com>
+ <1283351989-19426-1-git-send-email-pclouds@gmail.com>
+ <AANLkTi=wESk38u1XSTL1rd2__eQzHfSuq-EbqooxmcVw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 16:40:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, robin.rosenberg@dewire.com,
+	srabbelier@gmail.com
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 16:51:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrAxk-0006iE-A3
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 16:40:24 +0200
+	id 1OrB8E-0005wW-KL
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 16:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753744Ab0IBOeV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 10:34:21 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61823 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753460Ab0IBOeU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 10:34:20 -0400
-Received: by bwz11 with SMTP id 11so612519bwz.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 07:34:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pnCUCtWCjtl2LtrtgAPUEaXrYdt5eCejIa4PCVwx6g0=;
-        b=qfjM+7TD0cccXEu4pj1FQYg/eVzu/teWa0LlC/InUw67b13FcPOgfMkvFwvzfIoviY
-         3MpIQhjdEjQvMhs4sYJr5s6+VmYFVqrmhaYYGUYGsOME79XBYqbtr1PkBBeiJKut7S6D
-         fSQ/sqCc8HAGuWQMP/sjTAS2gdLdIyu86xJpg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=TvHadYW3aWr0wMKu2D12ExJhPO0MR3N+u0Wu8D7gmIPQCGM/WWMVGfEDQT76Y0EJMf
-         mqtVgt9M5J/s83Lnpk/ZuImCf9rg/10USn5BYNkADe98eZFwgyzcuw5GwiKgfKobXjLQ
-         Dq71/UxHP7dspm2R87Faa+sjgq6PHJwrwoka4=
-Received: by 10.204.39.203 with SMTP id h11mr6793390bke.8.1283438059449; Thu,
- 02 Sep 2010 07:34:19 -0700 (PDT)
-Received: by 10.204.66.196 with HTTP; Thu, 2 Sep 2010 07:34:18 -0700 (PDT)
-In-Reply-To: <7vk4n68hpk.fsf@alter.siamese.dyndns.org>
+	id S1755672Ab0IBOvC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 10:51:02 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50338 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755656Ab0IBOu7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 10:50:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8848DD2E21;
+	Thu,  2 Sep 2010 10:50:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=c5Ee9oNo3711N7SiRjUH8hve/F4=; b=iz2JhQ
+	UhqXuNy8Ykfd62j4Ikt1ldeWahEJ/LbHKQMtBhNr7HaprKdtYReJPB2o8I2lAXGp
+	vMWi/sTgmefx+YQAyw0q1gF9u4qSFq19O2QxXFbWVj7dU4U9Sxq06epP8IXyoU9z
+	BKe6VWobxakqDdnKxRNjUXQMfPk/GC2hUKj8Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LSJbImAUpOTfn7be6P35wXfLybQaTDHd
+	QFWqqWpyTfqpdEBnJb31ZMFzVynFp+tfAMCGYXf41NiF7/9/xvMZS3SQBFF0LQP3
+	9Oe2H9XTNlvTQ6oWnplaVo0XGdj1UYxpFj0eu1Dqt2B/QkO9ZIfySmyUgXR+SPip
+	ZV4/pX1+z3E=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1FE74D2E11;
+	Thu,  2 Sep 2010 10:50:52 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 22680D2E0B; Thu,  2 Sep
+ 2010 10:50:46 -0400 (EDT)
+In-Reply-To: <AANLkTi=wESk38u1XSTL1rd2__eQzHfSuq-EbqooxmcVw@mail.gmail.com>
+ (Alex Riesen's message of "Thu\, 2 Sep 2010 10\:56\:10 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7B6B5706-B6A1-11DF-BBBC-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155131>
 
-On Tue, Aug 31, 2010 at 7:50 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Chris Patti <cpatti@gmail.com> writes:
+Alex Riesen <raa.lkml@gmail.com> writes:
+
+>> +  32-bit ctime seconds, the last time a file's metadata changed
+>> +    this is stat(2) data
+>> +
+>> +  32-bit ctime nanoseconds (modulo 1G)
+>> +    this is stat(2) data
 >
->> function parseCommit($old_sha1,$new_sha1) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 # if this is the first commit on a new b=
-ranch, $old_sha1 will
->> be a bunch of zeroes, and so
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 # git diff --raw will fail, since there'=
-s no old ref to
->> compare against. =C2=A0So, we parse the
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 # results of git diff-tree -root=3D$new_=
-sha1 instead to get the
->> blob and filename we'll need.
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (detectNewBranch($old_sha1,$new_sha1)=
-) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $diffcmd=3D"=
-git diff-tree --root $new_sha1";
->
-> This somehow feels wrong. =C2=A0If the tree of the new commit is flat=
- without
-> subdirectory, the above would do, but don't you need "diff-tree -r" h=
-ere?
->
+> Maybe I'm missing something, but I failed to find where "modulo 1G" comes from.
 
-I tested with subdirectories, and subdirs with subdirs, and no
-failures, worked perfectly.  So, not sure what feels wrong to you, but
-for now, it works :) I will seek to better understand the internals
-I'm mucking with here so I can figure out why you see the current
-implementation as being suspect.
+I think the above wants to say "seconds and sub-seconds are stored in
+separate fields, and latter is purely sub-seconds, never reaching nor
+exceeding a whole second" (gig == 10^-9) times nano (== 10^+9) is 1).
 
--Chris
+I personally do not think it is a good idea to say " (modulo 1G)" there;
+it is more confusing than without.
 
-
---=20
-Christopher Patti - Geek At Large | GTalk: cpatti@gmail.com | AIM:
-chrisfeohpatti | P: (260) 54PATTI
-"Technology challenges art, art inspires technology." - John Lasseter, =
-Pixar
+Either the reader knows, from seeing "this is stat(2) data", what
+seconds/nanoseconds mean, in which case the comment gives redundant
+information in cryptic terms, or the reader doesn't, in which case the
+concept of storing the timestamp as a (second, subsecond) tuple needs to
+be explained a lot better than the above to be understood.
