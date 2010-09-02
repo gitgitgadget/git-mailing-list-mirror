@@ -1,115 +1,69 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
-Date: Wed, 1 Sep 2010 22:16:53 -0300
-Message-ID: <AANLkTim1tyTQEUHHo-AuF789v72ag=waqC_V5K77VS2a@mail.gmail.com>
-References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
-	<20100830023812.GA4010@burratino>
-	<20100830024020.GB4010@burratino>
-	<AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
-	<7v1v9e803a.fsf@alter.siamese.dyndns.org>
-	<AANLkTinHJHzcoFFjv-TaQ+DYVyqn46fqA802m8Lq5anp@mail.gmail.com>
-	<7v39tt552b.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: getting git to ignore modifications to specific files
+Date: Wed, 1 Sep 2010 23:09:09 -0500
+Message-ID: <20100902040909.GD29713@burratino>
+References: <4C7EA1FF.8030307@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 03:17:04 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 06:11:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqyQJ-0007JO-If
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 03:17:03 +0200
+	id 1Or193-0005Dm-Jy
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 06:11:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910Ab0IBBQz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 21:16:55 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61072 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751204Ab0IBBQz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 21:16:55 -0400
-Received: by qwh6 with SMTP id 6so7020504qwh.19
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 18:16:54 -0700 (PDT)
+	id S1750761Ab0IBELE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 00:11:04 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:49559 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750729Ab0IBELC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 00:11:02 -0400
+Received: by gwj17 with SMTP id 17so3309448gwj.19
+        for <git@vger.kernel.org>; Wed, 01 Sep 2010 21:11:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=S5Qh7FzEO8WbEjb4vC4rfDbmqwh55mdkePazn+T2X08=;
-        b=FDRc/6c7KdAqxagLTN+3C7vxU4SfAFn7t8Bd0U7aa5/jq/zRv1BAL3Krwk0hFfWdsO
-         8GFdPhj/rPtdE5BPv66yXvdhHOhSPzMb1hG4fYcdshRYHPxvRWg8QfIGaebqolkNZfJJ
-         a3ySJbIiMrQimbNvkFeudhfWMqkEjT4iUjKGQ=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=6SRRUk50n7NQlRVPxTnxZIpTI4Jtd/RKm1iZidFVdcw=;
+        b=CHeV+38ci92nm+eF9uA9VExIDjShs5rBIRE1WzPILsCE+BHLEy2IGUKwUbmtGO80BI
+         0VlGjQ3UBcNM/OjfZ1UNp53ezx/gaakpYuxKALzHEF1/H3qk6imS7D8wHT4pdq8dxTZH
+         ychshJAO/JsfGdIR6ZEdfhNNZI84jCZpH/zCE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=P8Kmng5UUHjRWzuberngGvEzlP4OFfw3bgWqbE1HFGQWwFVzHXUE9p3UnEy7itLfS4
-         mCvh0RER+HWfSb5eg7xMjmBK4fkAwtH7pueoXgru1Nd19bXENFcEwISbWPacOLJ0D8U3
-         iBHl5IG1ttWxf7i2cSkU7sQl3cPBicbxhTktI=
-Received: by 10.229.247.16 with SMTP id ma16mr6484519qcb.90.1283390214117;
- Wed, 01 Sep 2010 18:16:54 -0700 (PDT)
-Received: by 10.229.245.202 with HTTP; Wed, 1 Sep 2010 18:16:53 -0700 (PDT)
-In-Reply-To: <7v39tt552b.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=k186aG7Twz16S3aX507KIcceEvUvwR5LN9YAtYzIQ40zVe5fMIab0xgAcFxIMMCW/u
+         Pz3O2LtPEFN3Qxn87AFSXb/6YC5D7oiaZO4VZhnjcTaZbwz808yNsV4vIH4sxH8BBt6S
+         MB6zs/t6bI+5wqAgZx5NZiUDi/42T7/5yzsAU=
+Received: by 10.151.5.12 with SMTP id h12mr1081687ybi.73.1283400661392;
+        Wed, 01 Sep 2010 21:11:01 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id w24sm1617978ybk.13.2010.09.01.21.11.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Sep 2010 21:11:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4C7EA1FF.8030307@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155101>
 
-On Wed, Sep 1, 2010 at 10:04 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Thiago Farina <tfransosi@gmail.com> writes:
->
->>>risk causing broken builds?
->> Hum, how such trivial change can cause that?
->
-> Imagine if we had this in help.c:
->
-But we don't have.
+Chris Packham wrote:
 
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0int cmd_version(int argc, const char **arg=
-v, const char *prefix)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0printf("git ve=
-rsion %s\n", GIT_VERSION);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> which were compiled with this rule in Makefile:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0help.o: help.c GIT-VERSION-FILE
->
-But it's not.
+> There are a couple of repositories that are local clones of 3rd party
+> repositories which have included the pesky auto-generated files so whle
+> I can remove the offending files from repositories we control I need
+> another solution for the 3rd part ones.
 
-> and then you moved the function to a new file without touching the
-> dependency.
-That would be a mistake no?
+FWIW one half-solution that has worked well for me is to make a local
+clone without the autogenerated files and complain to upstream so the
+local clone becomes superfluous after a while.
 
-> =C2=A0Especially because the change is trivial (just moving a
-> function from here to there), you don't immediately notice the broken
-> dependency.
->
-As far as I know that does not go unnoticed.
-
-
-> I just spent 15+ minutes explaining this to you (and another 10+ minu=
-tes
-> checking that the above is _not_ the actual case before giving the sa=
-me
-> explanation to you last night).
-Thanks for being so careful.
-
-> =C2=A0Now is this still a trivial change that
-> costs nothing?
->
-Why you impose so much obstacles to a trivial change like this?
-
->>>What did we gain through this exercise? =C2=A0Did we fix any real pr=
-oblem?
->> All patches should just fix real problems?
->
-> There is a "cost vs benefit" ratio you need to consider.
->
-Thanks.
+Naturally another solutions might work better, though.
