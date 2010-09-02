@@ -1,78 +1,57 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: git send-email doesn't take To: addresses from the patch
-Date: Thu, 2 Sep 2010 11:36:38 -0700
-Message-ID: <AANLkTi=xQAoEFiB2zGz73ZwSwq16LOthkqd7w1GhnEup@mail.gmail.com>
-References: <4C7B5853.7010001@st.com> <4C7E05B5.1050805@gmail.com> <4C7E1537.9030405@st.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: viresh kumar <viresh.kumar@st.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 20:37:01 2010
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: How to "revert hunk" in git gui?
+Date: Thu, 2 Sep 2010 20:59:01 +0200
+Message-ID: <1jo7lrb.1oy1vn4mdqeedM%lists@haller-berlin.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 02 20:59:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrEej-0007yl-8H
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 20:37:01 +0200
+	id 1OrF0E-0004uW-4l
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 20:59:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753302Ab0IBSgz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 14:36:55 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40336 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752853Ab0IBSgy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 14:36:54 -0400
-Received: by wyb35 with SMTP id 35so18130wyb.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 11:36:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=vqELkyORgYE2tIZU6u++HWcYX78ItHvm/Sy4hat4Pvk=;
-        b=guZwFXC2FXRKw46kiGEaB3tAr+YzKIwYtCrDKziWLypIENu49GqqdkD5Hi3d0T8OG2
-         WCLjEyoGtzZP3zlTqAV5kHwl7/OEBxpU2oB7lfprAgYtKYb5WCxSsbC9WKAyYEO2TAaV
-         iU1YcWOJTFhYFTKS0t77evBLfnlklKsLyY4ZY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=RCzx7tR6pYCiT78PwNktBVNBCZOYuaptzSrhbT8oaLqNy6m/qQwAj1h/be1JS0ILfH
-         CndydRQWzX7SKlThX9GDVFryXtWylyAxZ5KIyuNcw2E3xDzLjd+q0oxoPV9nD4NKjzsW
-         9uzWKZ1NLEO3dPV2bnVvrX/fxQVnAQTnsmw1Q=
-Received: by 10.227.155.143 with SMTP id s15mr252650wbw.154.1283452613100;
- Thu, 02 Sep 2010 11:36:53 -0700 (PDT)
-Received: by 10.227.131.208 with HTTP; Thu, 2 Sep 2010 11:36:38 -0700 (PDT)
-In-Reply-To: <4C7E1537.9030405@st.com>
+	id S1756205Ab0IBS7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 14:59:07 -0400
+Received: from mail.ableton.net ([62.96.12.115]:41751 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751138Ab0IBS7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 14:59:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:To; bh=j9Gg/0BRtwRyJFighXOppiOsRHLIkN6OQvcCXKQjlvQ=;
+	b=i/uxas5YToBjmasfZGctfbiJq2NfTnZanQvzfAgijqkD++Rk7Ionkws/dXDmOfImXcJECLUHLUVnUxoY2RWt0soEu41wXGH38GTA+8Jx+JMRy7/H9DPIi6w7rSJH5GGMVSv+5l39E94Uu0O0ALQQxmYua92/3+2ou9o19869taM=;
+Received: from dslb-088-073-104-214.pools.arcor-ip.net ([88.73.104.214] helo=[192.168.42.92])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1OrF01-0003Qc-Kl
+	for git@vger.kernel.org; Thu, 02 Sep 2010 20:59:01 +0200
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155157>
 
-On Wed, Sep 1, 2010 at 1:56 AM, viresh kumar <viresh.kumar@st.com> wrote:
-> On 9/1/2010 1:20 PM, Stephen Boyd wrote:
->> Subject: [PATCH] send-email: Use To: headers in patch files
->>
->> It's a minor annoyance when you take the painstaking time to setup To:
->> headers for each patch in a large series, and then go out to send the
->> series with git-send-email and watch git ignore the To: headers in the
->> patch files.
->>
->> Therefore, always add To: headers from a patch file to the To: headers
->> for that message. Keep the prompt for the blanket To: header so as to
->> not break scripts (and user expectations). This means even if a patch has a
->> To: header, git will prompt for the To: address. Otherwise, we'll need to
->> introduce interface breakage to either request the header for each patch
->> missing a To: header or default the header to whatever To: address is found
->> first (be it in a patch or from user input). Both of these options don't seem
->> very obvious/useful.
->>
->> Reported-by: viresh kumar<viresh.kumar@st.com>
->> Signed-off-by: Stephen Boyd<bebarino@gmail.com>
->
-> Tested-by: Viresh Kumar <viresh.kumar@st.com>
->
+I always use git gui to make commits, and I like the way you can stage
+and unstage hunks easily.
 
-Cool. Junio, does this look good to you? I can squash in some tests
-later tonight if I get some git time.
+Often, when looking at the unstaged changes I come across some piece of
+debug code that I forgot to delete, and I can't seem to find an easy way
+to revert this hunk.  As a workaround, I can stage the entire file,
+unstage the hunk I want to revert, and then choose "Revert changes" from
+the Commit menu (which reverts just the unstaged hunks); but that's a
+bit inconvenient.
+
+I feel that this is such a common operation that I must be missing
+something.
+
+Thanks,
+   Stefan
+
+
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
