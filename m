@@ -1,78 +1,134 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Thu, 02 Sep 2010 13:09:06 -0400
-Message-ID: <4C7FDA32.5050009@gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com> <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com> <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com> <4C7FC3DC.3060907@gmail.com> <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com> <20100902155810.GB14508@sigill.intra.peff.net> <alpine.LFD.2.00.1009021233190.19366@xanadu.home>
-Reply-To: gitzilla@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>,
-	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Sep 02 19:09:28 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] Move "show_all_errors = 1" to setup_unpack_trees_porcelain()
+Date: Thu,  2 Sep 2010 18:08:15 +0200
+Message-ID: <1283443695-17004-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpq1v9cgmfe.fsf@bauges.imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 02 19:11:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrDHp-0007iD-Fq
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 19:09:17 +0200
+	id 1OrDKB-0001Dq-PI
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 19:11:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754682Ab0IBRJL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 13:09:11 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51138 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752921Ab0IBRJK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 13:09:10 -0400
-Received: by yxp4 with SMTP id 4so249362yxp.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 10:09:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=MXaIJSsB94UtcIvddmdGHFRWituZxKWwP7ukm/tIEtI=;
-        b=LS5z95iMj3MZsqbf4uM5VLsZZMl3B0KFjIDiC0Um794y312ZdwZxryOUop2g+JIcIF
-         DqrfnGlzob/JvJ7SSRPuhDuN1XNPVqWSN9DXPWSvyhIy+1AIPFhegohpxEXXUoeP8FX+
-         nsQu7TBLuH2+Gwa0oNmx9Kzdfi7XnnW9DUVqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=I9Y7xUo4bDRavpWkfZPrcaG+0izjgqJ4/MEvbJYZMITGUntVl7SS5zA7ssWL7tkb4U
-         g81se2A7xEDLuKs+qFHYYIJIxlEbdwv9veHV6ynbGPCaciNrpxk/trb2NpFEZiAUcwB2
-         mb9883rRavnxe+mbNJVTXJ0UBSxf5ce+98qX4=
-Received: by 10.100.105.10 with SMTP id d10mr10529651anc.158.1283447348875;
-        Thu, 02 Sep 2010 10:09:08 -0700 (PDT)
-Received: from [10.0.1.130] (c-24-129-111-166.hsd1.fl.comcast.net [24.129.111.166])
-        by mx.google.com with ESMTPS id x33sm1027809ana.13.2010.09.02.10.09.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 10:09:07 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100805 Icedove/3.0.6
-In-Reply-To: <alpine.LFD.2.00.1009021233190.19366@xanadu.home>
+	id S1753160Ab0IBRLl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 13:11:41 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:60623 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754103Ab0IBRLl (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 13:11:41 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o82FuIN5020724
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 2 Sep 2010 17:56:18 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OrCKm-0003g4-3d; Thu, 02 Sep 2010 18:08:16 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OrCKm-0004Qo-2a; Thu, 02 Sep 2010 18:08:16 +0200
+X-Mailer: git-send-email 1.7.2.2.175.ga619d.dirty
+In-Reply-To: <vpq1v9cgmfe.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 02 Sep 2010 17:56:18 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o82FuIN5020724
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1284047779.65058@l8SfSM47gxjjuiUL+iEDxQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155151>
 
-On 09/02/2010 12:41 PM, Nicolas Pitre wrote:
+Not only this makes the code clearer since setting up the porcelain error
+message is meant to work with show_all_errors, but this fixes a call to
+setup_unpack_trees_porcelain() in git_merge_trees() which did not set
+show_all_errors.
 
-[...]
+add_rejected_path() used to double-check whether it was running in
+plumbing mode. This check was ineffective since it was setting
+show_all_errors too late for traverse_trees() to see it, and is made
+useless by this patch. Remove it.
 
-> I would go as far as stating that this is never guaranteed by design.
-> And I will oppose any attempt to introduce such restrictions as this
-> will only prevent future enhancements to packing heuristics.
->
-> For example, right now you already can't rely on having the exact same
-> pack output even on the same machine using the same arguments and the
-> same inputs simply by using threads.  As soon as you're using more than
-> one thread (most people do these days) then your pack output becomes non
-> deterministic.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Just s/inefficient/ineffective/ compared to v1
 
-Finally, the real pack expert weighs in!
+ builtin/checkout.c |    1 -
+ builtin/merge.c    |    1 -
+ unpack-trees.c     |    8 ++------
+ unpack-trees.h     |    2 +-
+ 4 files changed, 3 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index b26dfd0..1532669 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -395,7 +395,6 @@ static int merge_working_tree(struct checkout_opts *opts,
+ 		topts.dir = xcalloc(1, sizeof(*topts.dir));
+ 		topts.dir->flags |= DIR_SHOW_IGNORED;
+ 		topts.dir->exclude_per_dir = ".gitignore";
+-		topts.show_all_errors = 1;
+ 		tree = parse_tree_indirect(old->commit ?
+ 					   old->commit->object.sha1 :
+ 					   (unsigned char *)EMPTY_TREE_SHA1_BIN);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 389e79c..bfd3d32 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -705,7 +705,6 @@ int checkout_fast_forward(const unsigned char *head, const unsigned char *remote
+ 	opts.verbose_update = 1;
+ 	opts.merge = 1;
+ 	opts.fn = twoway_merge;
+-	opts.show_all_errors = 1;
+ 	setup_unpack_trees_porcelain(&opts, "merge");
+ 
+ 	trees[nr_trees] = parse_tree_indirect(head);
+diff --git a/unpack-trees.c b/unpack-trees.c
+index 17501d3..803445a 100644
+--- a/unpack-trees.c
++++ b/unpack-trees.c
+@@ -94,6 +94,8 @@ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 		"The following Working tree files would be overwritten by sparse checkout update:\n%s";
+ 	msgs[ERROR_WOULD_LOSE_ORPHANED_REMOVED] =
+ 		"The following Working tree files would be removed by sparse checkout update:\n%s";
++
++	opts->show_all_errors = 1;
+ }
+ 
+ static void add_entry(struct unpack_trees_options *o, struct cache_entry *ce,
+@@ -123,12 +125,6 @@ static int add_rejected_path(struct unpack_trees_options *o,
+ 			     const char *path)
+ {
+ 	struct rejected_paths_list *newentry;
+-	int porcelain = o && (o)->msgs[e];
+-	/*
+-	 * simply display the given error message if in plumbing mode
+-	 */
+-	if (!porcelain)
+-		o->show_all_errors = 0;
+ 	if (!o->show_all_errors)
+ 		return error(ERRORMSG(o, e), path);
+ 
+diff --git a/unpack-trees.h b/unpack-trees.h
+index fad680d..7c0187d 100644
+--- a/unpack-trees.h
++++ b/unpack-trees.h
+@@ -24,7 +24,7 @@ enum unpack_trees_error_types {
+ 
+ /*
+  * Sets the list of user-friendly error messages to be used by the
+- * command "cmd" (either merge or checkout)
++ * command "cmd" (either merge or checkout), and show_all_errors to 1.
+  */
+ void setup_unpack_trees_porcelain(struct unpack_trees_options *opts,
+ 				  const char *cmd);
+-- 
+1.7.2.2.175.ga619d.dirty
