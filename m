@@ -1,76 +1,71 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 3/3] Move "show_all_errors = 1" to setup_unpack_trees_porcelain()
-Date: Thu, 02 Sep 2010 18:06:13 +0200
-Message-ID: <vpq1v9cgmfe.fsf@bauges.imag.fr>
-References: <vpq39ttxumz.fsf@bauges.imag.fr>
-	<1283428655-12680-4-git-send-email-Matthieu.Moy@imag.fr>
-	<7v8w3k2ldz.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Sep 2010, #01; Wed, 1)
+Date: Thu, 02 Sep 2010 09:26:30 -0700
+Message-ID: <7v1v9c2jt5.fsf@alter.siamese.dyndns.org>
+References: <7vaao15jk2.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=ma8MLssD_1YeSju7iJucRN9NFzYESJ2rGhyjv@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jim Meyering <jim@meyering.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 18:07:14 2010
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 18:26:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrCJl-0006S8-4Q
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 18:07:13 +0200
+	id 1OrCce-0003H7-RH
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 18:26:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752782Ab0IBQHF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 12:07:05 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:41436 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752322Ab0IBQHD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 12:07:03 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o82G2aRC023401
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 2 Sep 2010 18:02:36 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OrCIn-0003dw-Pk; Thu, 02 Sep 2010 18:06:13 +0200
-In-Reply-To: <7v8w3k2ldz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 02 Sep 2010 08\:52\:24 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 02 Sep 2010 18:02:37 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o82G2aRC023401
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1284048159.47518@qPV9XB0bjXr6QwFZexg/gQ
+	id S1755863Ab0IBQ0j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 12:26:39 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46218 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753082Ab0IBQ0j (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 12:26:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A4854D20C0;
+	Thu,  2 Sep 2010 12:26:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=kQOvKlzyo/yOjbIPpCOgwapec6A=; b=mrlo/h
+	Q91nHJtKLuGHvEPtOGO/MoCdLYCJP58Pjfl83oP97jrzMO8jzqpbijGa5Y26nCDn
+	WquGKMVlz+UPaqUMCv6Xukr2cz8gADLIOsdVaWH6EQIpVykoulU6DKrhHVo/BBca
+	Ck3M5LpwDZ/0FRVBGMIaknMrjPGM26iQV4jmM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tUHM9ge+ShEhRaPXh+Za1TBf6BAzvA0X
+	R55PC2hwcDrvKXmIl+bNA/KhP3fbzClDkhIavJ0V7CQLybiDIaua66TiG24o2ywy
+	ZYvR/8+b47DbM6R87WUVBxkwcq98+rhvI/wfrWFaIRfV5swtCqFFFIxlPknjndXs
+	qDbPD+fkY3s=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 78A37D20BF;
+	Thu,  2 Sep 2010 12:26:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C477CD20BB; Thu,  2 Sep
+ 2010 12:26:32 -0400 (EDT)
+In-Reply-To: <AANLkTi=ma8MLssD_1YeSju7iJucRN9NFzYESJ2rGhyjv@mail.gmail.com>
+ (Elijah Newren's message of "Wed\, 1 Sep 2010 14\:54\:45 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DABA71F8-B6AE-11DF-8E45-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155142>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Elijah Newren <newren@gmail.com> writes:
 
-> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->> Not only this makes the code clearer since setting up the porcelain error
->> message is meant to work with show_all_errors, but this fixes a call to
->> setup_unpack_trees_porcelain() in git_merge_trees() which did not set
->> show_all_errors.
+>> * en/object-list-with-pathspec (2010-08-26) 2 commits
+>>  - Make rev-list --objects work together with pathspecs
+>>  - Add testcases showing how pathspecs are ignored with rev-list --objects
 >>
->> add_rejected_path() used to double-check whether it was running in
->> plumbing mode. This check was inefficient since it was setting
->> show_all_errors too late for traverse_trees() to see it, and is made
->> useless by this patch. Remove it.
+>> Heard that this is still broken?
 >
-> Do you mean inefficient or ineffective?
+> Are you possibly remembering v1 of the series, which mis-used the
+> tree_entry_interesting() API, and was fixed by v2 including extra
+> testcases?  You merged the latter into pu, so there's no remaining
+> issue I know of.
 
-Ineffective, yes.
-
-<disgression>
-I should have listened better during my english courses ;-). Both
-words translate to "inefficace" in French, and it's a common mistake
-for french people.
-</disgression>
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Right about me misremembering things; thanks.
