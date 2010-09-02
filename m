@@ -1,105 +1,63 @@
-From: "J. Bakshi" <joydeep@infoservices.in>
-Subject: newbie problem - gitweb  and git over http
-Date: Thu, 2 Sep 2010 11:02:42 +0530
-Message-ID: <20100902110242.2da0c81d@debian>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH] doc: technical details about the index file format
+Date: Thu, 2 Sep 2010 07:59:19 +0200
+Message-ID: <201009020759.19417.robin.rosenberg@dewire.com>
+References: <1283334825-18309-1-git-send-email-pclouds@gmail.com> <201009012054.20482.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 02 07:43:22 2010
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	srabbelier@gmail.com
+To: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 08:00:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Or2a0-000617-S6
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 07:43:21 +0200
+	id 1Or2qB-0004Pz-83
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 08:00:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751632Ab0IBFnO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 01:43:14 -0400
-Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:57453
-	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751279Ab0IBFnN (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 01:43:13 -0400
-X-Greylist: delayed 636 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Sep 2010 01:43:13 EDT
-Received: from debian (unknown [122.176.30.116])
-	by Kolkata.infoservices.in (Postfix) with ESMTPSA id 4480D62C43D
-	for <git@vger.kernel.org>; Thu,  2 Sep 2010 07:32:33 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+	id S1754373Ab0IBF7X convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 01:59:23 -0400
+Received: from mail.dewire.com ([83.140.172.130]:21239 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754045Ab0IBF7X convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 01:59:23 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 0A9151469E2B;
+	Thu,  2 Sep 2010 07:59:20 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id eAskYt5vl0-B; Thu,  2 Sep 2010 07:59:20 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 446D880036D;
+	Thu,  2 Sep 2010 07:59:20 +0200 (CEST)
+User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; i686; ; )
+In-Reply-To: <201009012054.20482.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155105>
 
-Hello,
+onsdagen den 1 september 2010 20.54.20 skrev  Robin Rosenberg:
+> onsdagen den 1 september 2010 11.53.45 skrev  Nguy=E1=BB=85n Th=C3=A1=
+i Ng=E1=BB=8Dc Duy:
+> > This bases on the original work by Robin Rosenberg:
+> >=20
+> > http://thread.gmane.org/gmane.comp.version-control.git/73471
+>=20
+> No need for this. My name is enough
+>=20
+> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
+mail.com>
+>=20
 
-I am a newbie in git technology, please bear with me. I am interested to implement git over http along with  gitweb.
+Add this rather than then one I sent in the previus mail...
 
-At first I have already created a demo git repository in the server
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
 
-``````````````
-$ cd (project-directory)
-$ git init
-$ (add some files)
-$ git add .
-$ git commit -m 'Initial commit'
-````````````````
-
-Then I have set gitweb in apache
-
-```````````````
- Alias /gitweb  /var/gitdir/
-RewriteEngine On
-RewriteRule ^gitweb$ gitweb/ [R]
-SetEnv GITWEB_CONFIG /etc/gitweb.conf
-
-<Directory "/var/gitdir/">
-AllowOverride AuthConfig
-Options +ExecCGI +Indexes
-Order allow,deny
-Allow from all
-DirectoryIndex gitweb.cgi
-SetEnv GITWEB_CONFIG "/etc/gitweb.conf"
-AddHandler cgi-script .cgi
-</Directory>
-``````````````````````````
-
-After restating apache I can see gitweb at http://192.168.1.1/gitweb ; but clicking on the demo project, which I have created;  just gives an error as
-
-``````````````
-The requested URL /index.php was not found on this server
-```````````````````
-
-webdav is already running in this server for some other project. I have setup webdav for git like
-
-`````````
-<IfModule mod_dav_svn.c>
-<Location /myproject.git>
-Dav on
-AuthType Basic
-AuthName "My repo with git"
-AuthUserFile /home/svn/PASSWORD
-<Limitexcept GET HEAD PROPFIND OPTIONS REPORT>
-Require valid-user
-</Limitexcept>
-</Location>
-</IfModule>
-```````````````
-
-Now testing with cadaver
-
-`````````````````
-cadaver https://192.168.1.1/gitweb/test.git
-
-Authentication required for Write access requires a password on server `192.168.1.1':
-Username: svnadmin
-Password:
-Could not open collection:
-404 Not Found
-
-``````````````````````
-
-I think for both the cases there are some configuration problem which can't find the correct location/path. Could anyone kindly enlighten me, actually where the problem is ?
-
-Thanks for your time
+-- robin
