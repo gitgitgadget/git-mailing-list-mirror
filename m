@@ -1,105 +1,94 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 25/25] gettextize: git-status shortstatus messages
-Date: Thu, 2 Sep 2010 20:34:45 +0000
-Message-ID: <AANLkTikALp-JtWSnvG2qvQ3h06AZpXg1DOnMs9Pp6EoO@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 10/25] gettextize: git-merge basic messages
+Date: Thu, 2 Sep 2010 15:37:11 -0500
+Message-ID: <20100902203711.GE2531@burratino>
 References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
-	<1283456446-22577-26-git-send-email-avarab@gmail.com>
-	<20100902202537.GC2531@burratino>
+ <1283456446-22577-11-git-send-email-avarab@gmail.com>
+ <20100902200940.GB2531@burratino>
+ <AANLkTiksZykH4zDbdDReYYgJZk7gmZ_2g0v=9X_MP73p@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 22:34:57 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 22:39:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrGUq-0005sH-J6
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:34:56 +0200
+	id 1OrGYv-0008Jk-Q7
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:39:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757076Ab0IBUes convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:34:48 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57928 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756228Ab0IBUer convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:34:47 -0400
-Received: by fxm13 with SMTP id 13so610968fxm.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:34:46 -0700 (PDT)
+	id S932138Ab0IBUjE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:39:04 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49990 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932111Ab0IBUjC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:39:02 -0400
+Received: by wwj40 with SMTP id 40so1346787wwj.1
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:39:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sNRhP/GAXkAis4xh0LGRpYXLNLZTCWY4GcZPsWdEKUs=;
-        b=mf6jbweYK5PtQxABNMx0vGavJuCYz7I0bd+FKoApUuTt1PXqYeJD30XCb/VKmpVrNE
-         wN4mbNNdN8YhyNCZqPWZOqxZo379cqkB5v4JBAKW4kax/igKgbv9kYFPcK3+x33AN22l
-         GQIV2XjHDw+4OXP1qq7Kwi1WqHm+rf2Rc6ZSM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=pyj30dNQjf2IRk1ygWA5p2woFq90yctOsx6jzgH2VS4=;
+        b=caNYsOpvKj4Y8fGZOmcWmSDyM4WKcAKLEuXw050Q0OpiBuEXEvJAD09Dr+eTN/vVSx
+         pJu+wicpaNe+9NM6wHjIoSEttVcSWzw9tRUovvk+4bRVeutbqL08s1Sg8SXfzGwZ+L+W
+         fShoo1cWJWAhmApfy0XAJhYtfBU+b7M7n1l5A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OTOd2vqetHC38047YU+tDcUkH1xbXBstvIWeLvbIARhKz9tRY3C7tmOz6W6duKd3pe
-         zCx9gLLKMsGvDI53ofMR+lquO3pBJ/nf9LOWx4urtF29Ajt/eAOnqoGnBhKlJTFWYuM1
-         9xHYMq1dmEyxwEMQb1jnhAzh8tFVOeQeZLHHM=
-Received: by 10.223.109.130 with SMTP id j2mr7774149fap.54.1283459686126; Thu,
- 02 Sep 2010 13:34:46 -0700 (PDT)
-Received: by 10.223.120.14 with HTTP; Thu, 2 Sep 2010 13:34:45 -0700 (PDT)
-In-Reply-To: <20100902202537.GC2531@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=fv5uFmssJtmmQT+8ePBqe/nWIbx4S8Ck4bIGq5mGexR2eWEtDFXp060+p5jLgK8k6b
+         FNZQoXERdlVq7AuPLlXGwOsXLQBOa24zNHQxGN2SmqsUtEJKskQ8Ei/gzm5CJVsYJ5yO
+         mWCrRkZyLYhZIItIPrSN6ZnPO3IhhrZmyC/r4=
+Received: by 10.227.145.148 with SMTP id d20mr144576wbv.117.1283459940991;
+        Thu, 02 Sep 2010 13:39:00 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id m25sm751096wbc.13.2010.09.02.13.38.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 02 Sep 2010 13:39:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTiksZykH4zDbdDReYYgJZk7gmZ_2g0v=9X_MP73p@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155200>
 
-On Thu, Sep 2, 2010 at 20:25, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> --- a/wt-status.c
->> +++ b/wt-status.c
->> @@ -814,15 +814,15 @@ static void wt_shortstatus_print_tracking(stru=
-ct wt_status *s)
-> [...]
->> =C2=A0 =C2=A0 =C2=A0 } else {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp, hea=
-der_color, "ahead ");
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp, hea=
-der_color, _("ahead "));
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp=
-, branch_color_local, "%d", num_ours);
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp, hea=
-der_color, ", behind ");
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp, hea=
-der_color, _(", behind "));
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 color_fprintf(s->fp=
-, branch_color_remote, "%d", num_theirs);
->
-> What we make those translators suffer through. :) =C2=A0Would it be p=
-ossible to
-> (eventually) introduce an interface vaguely like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0color_fprintf2(s->fp, "%C(ahead )%C(%d)%C(=
-, behind )%C( %d)",
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0header_color,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0branch_color_local, num_ours,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0header_color,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0branch_color_remote, num_thei=
-rs);
->
-> ? =C2=A0I guess this would require using strbuf_expand instead of vsn=
-printf
-> for %d et al.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Yeah, that's my eventual master plan. This color_printf() interface
-really needs something like that so we can reasonably translate
-git-status et al.
+> It's on top of pu,
+[...]
+> But I was hoping that this would
+> make it into pu and after next gets released Any Day Now most of thos=
+e
+> other tips in pu would be folded into next along with gettext, or at
+> least the merge conflicts wouldn't be too painful.
 
-Aside from gettext that'd make using color_fprintf() much
-nicer. Assembling messages like this bit-by-bit is really hard to
-follow.
+Hmm.  That really constrains people trying to merge this series.
+
+As SubmittingPatches explains:
+
+ - In the exceptional case that a new feature depends on several topics
+   not in 'master', start working on 'next' or 'pu' privately and send
+   out patches for discussion. Before the final merge, you may have to
+   wait until some of the dependent topics graduate to 'master', and
+   rebase your work.
+
+so this is fine for discussion, but for merging, having to pull in
+_all_ topics from pu (or all topics from next for that matter) for
+the patches to apply really is a problem.
+
+Both next and pu get rewound from time to time.  They are not meant
+to be a stable basis for patches.
+
+Also worth mentioning is that topics in "next" are not guaranteed to
+be included in the next release.  The "next" branch has content
+matching the "jch" branch which I think has a better name: it is
+just the version of git that Junio uses for ordinary tasks (and
+hence topics in it cannot be completely broken for long).
