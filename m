@@ -1,87 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 25/25] gettextize: git-status shortstatus messages
-Date: Thu, 2 Sep 2010 15:25:37 -0500
-Message-ID: <20100902202537.GC2531@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 06/25] gettextize: git-fetch formatting messages
+Date: Thu, 2 Sep 2010 16:28:16 -0400
+Message-ID: <20100902202816.GA20362@sigill.intra.peff.net>
 References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
- <1283456446-22577-26-git-send-email-avarab@gmail.com>
+ <1283456446-22577-7-git-send-email-avarab@gmail.com>
+ <20100902195936.GA2531@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 22:27:47 2010
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Daniel Barkalow <barkalow@iabervon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 22:28:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrGNs-0000nO-R7
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:27:45 +0200
+	id 1OrGOX-00019q-QS
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756963Ab0IBU1l convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:27:41 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35286 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752356Ab0IBU1c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:27:32 -0400
-Received: by fxm13 with SMTP id 13so603712fxm.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:27:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=1UuzwykmkSF2iZ5aNlbI1NXLzl2nwTuuPrt1mHoPsGQ=;
-        b=s0tX02o+rMF2oVrFLggEnP2ChaKf97ChAkDmGPY8dMNlN5Dj/j5oAJH7L8AHkqRqqK
-         uX+4PunzWDQFk9ni875N9W7gpQq6zsgJ/WkP5JfpNq9sD+nGqYbg8LlacihXHIrwVVJ0
-         Z6PwZYcmILOYFwfwggGoXng3qhnxBBaSIlUvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=uviKQs/3YaRmV0Io6PiUjUn1nkeAuimCQm76Owrc50GQQNwamflSlDnOx7foXsdh6i
-         bUXWBp2NocbPKAJMzuqu8T4Y50geb84LNE8e07InNyRscsqkMLXYa0DEeZ64iMXAY+8y
-         zt64MpKeMbWAp8DSv16w4xle7dvDX934dSPgA=
-Received: by 10.223.118.15 with SMTP id t15mr517045faq.96.1283459251508;
-        Thu, 02 Sep 2010 13:27:31 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r5sm466760faq.32.2010.09.02.13.27.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 13:27:30 -0700 (PDT)
+	id S1756956Ab0IBU2F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 16:28:05 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47253 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756862Ab0IBU2E (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 16:28:04 -0400
+Received: (qmail 3978 invoked by uid 111); 2 Sep 2010 20:28:02 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 02 Sep 2010 20:28:02 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Sep 2010 16:28:16 -0400
 Content-Disposition: inline
-In-Reply-To: <1283456446-22577-26-git-send-email-avarab@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20100902195936.GA2531@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155195>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -814,15 +814,15 @@ static void wt_shortstatus_print_tracking(struc=
-t wt_status *s)
-[...]
->  	} else {
-> -		color_fprintf(s->fp, header_color, "ahead ");
-> +		color_fprintf(s->fp, header_color, _("ahead "));
->  		color_fprintf(s->fp, branch_color_local, "%d", num_ours);
-> -		color_fprintf(s->fp, header_color, ", behind ");
-> +		color_fprintf(s->fp, header_color, _(", behind "));
->  		color_fprintf(s->fp, branch_color_remote, "%d", num_theirs);
+On Thu, Sep 02, 2010 at 02:59:37PM -0500, Jonathan Nieder wrote:
 
-What we make those translators suffer through. :)  Would it be possible=
- to
-(eventually) introduce an interface vaguely like
+> (+cc: some fetch ui authors, just as a heads up)
 
-	color_fprintf2(s->fp, "%C(ahead )%C(%d)%C(, behind )%C( %d)",
-				header_color,
-				branch_color_local, num_ours,
-				header_color,
-				branch_color_remote, num_theirs);
+Thanks. I think Nico actually did the fetch code, though, and I more or
+less copied it for push.
 
-?  I guess this would require using strbuf_expand instead of vsnprintf
-for %d et al.
+> > @@ -249,8 +249,8 @@ static int update_local_ref(struct ref *ref,
+> >  		 * If this is the head, and it's not okay to update
+> >  		 * the head, and the old value of the head isn't empty...
+> >  		 */
+> > -		sprintf(display, "! %-*s %-*s -> %s  (can't fetch in current branch)",
+> > -			TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
+> > +		sprintf(display, _("! %-*s %-*s -> %s  (can't fetch in current branch)"),
+> > +			TRANSPORT_SUMMARY_WIDTH, _("[rejected]"), REFCOL_WIDTH, remote,
+> 
+> Regardless of the answer, we should probably be either consistently
+> translating or not translating it within this patch.  e.g. for not
+> translating (though I suspect translating is the better choice):
+> 
+> 		sprintf(display, "! %-*s %-*s -> %s  %s",
+> 			TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
+> 			pretty_ref, _("(can't fetch in current branch)"));
+
+I think you can translate "[rejected]" here, too.
+
+However, do be aware of the --porcelain output for git-push. It was
+tacked on much later, and I fear it may use some of the same strings.
+Some of them are perhaps OK to translate (the human readable bit at the
+end, e.g.), but others maybe not. I haven't looked closely.
+
+-Peff
