@@ -1,60 +1,90 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: git instaweb for Debian squeeze (Re: Bug#592733: git instaweb
-	broken)
-Date: Thu, 2 Sep 2010 15:36:24 -0700
-Message-ID: <20100902223624.GA9613@dcvr.yhbt.net>
-References: <20100812131152.2333.9604.reportbug@octopus.hi.pengutronix.de> <20100902221211.GA4789@burratino>
+From: Gelonida <gelonida@gmail.com>
+Subject: simple example for git hooks
+Date: Fri, 03 Sep 2010 00:41:31 +0200
+Message-ID: <i5p96s$u7q$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>, 592733@bugs.debian.org,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 03 00:36:31 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 03 00:41:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrIOU-00069k-Ig
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 00:36:30 +0200
+	id 1OrITh-00007M-9o
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 00:41:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753913Ab0IBWgZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 18:36:25 -0400
-Received: from dcvr.yhbt.net ([64.71.152.64]:50652 "EHLO dcvr.yhbt.net"
+	id S1754590Ab0IBWln (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 18:41:43 -0400
+Received: from lo.gmane.org ([80.91.229.12]:34576 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627Ab0IBWgY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 18:36:24 -0400
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 395AD1F4F3;
-	Thu,  2 Sep 2010 22:36:24 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <20100902221211.GA4789@burratino>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751053Ab0IBWlm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 18:41:42 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OrITU-0008TE-Os
+	for git@vger.kernel.org; Fri, 03 Sep 2010 00:41:40 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 00:41:40 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 00:41:40 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100713 ""
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155217>
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Uwe Kleine-K=F6nig wrote:
-> > when I start git instaweb on a git repository, I get a crippled vie=
-w
-> > (no style sheets, no images) that doesn't include the current proje=
-ct.
+Does anyone have a simple example of a git pre-commit hook
 
-> Eric, do you think it is worth duplicating the logo and favicon withi=
-n
-> pre-v1.7.2 instaweb?  The script already takes 252 KiB, so an extra
-> 10 KiB might not be such a big deal.
 
-The stylesheet is important and should be fixed.  I don't care about th=
-e
-logo and favicon (warning: I've never been a fan of logos/icons,
-needless noise IMHO), but if you're willing to help maintain it then
-it's fine by me.
+I have difficulties finding understandable tutorals about git hooks.
 
---=20
-Eric Wong
+
+
+
+What I am looking at is basic examples about
+
+
+precommit hooks
+================
+
+- how get the commit comment and check it's contents
+- how to get list of modified files
+
+The issue I'm currently blocked with is rather simple.
+
+I'd like to get a list aof all
+new or modified file names, such, that I can check, that for  example
+all .h files contain a project specific header.
+
+
+As soon as I have the file names I should be able to proceed.
+
+
+How could I do this best from a shell script.
+
+
+
+
+
+Is there any clear documentation about hich git commands I'm allowed to
+use during a trigger script and which ones I can't
+
+
+
+Lateron I would be interested to implement a small server script, that
+refuses a git push in case, that the most recent commit in a branch
+would contain .h files without a certain header text
+
+
+
+
+thanks for your help
