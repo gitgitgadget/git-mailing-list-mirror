@@ -1,129 +1,137 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 10/25] gettextize: git-merge basic messages
-Date: Thu, 2 Sep 2010 18:04:10 -0500
-Message-ID: <20100902230410.GA4850@burratino>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
- <1283456446-22577-11-git-send-email-avarab@gmail.com>
- <20100902200940.GB2531@burratino>
- <AANLkTiksZykH4zDbdDReYYgJZk7gmZ_2g0v=9X_MP73p@mail.gmail.com>
- <20100902203711.GE2531@burratino>
- <AANLkTi=ZQAjA9SN1A3WDr-L2rFA6v-XH0mZAkhuUgdAg@mail.gmail.com>
- <20100902211339.GA2801@burratino>
- <AANLkTinvvZ9eVxQXafYBDfSe8ay11mFz4s1=mDozbs14@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Thu, 02 Sep 2010 19:09:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+ <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+ <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+ <4C7FC3DC.3060907@gmail.com>
+ <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+ <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+ <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 03 01:06:16 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 03 01:10:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrIrG-0003Ju-2b
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 01:06:14 +0200
+	id 1OrIv5-000524-AS
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 01:10:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756700Ab0IBXGH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 19:06:07 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:38133 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754731Ab0IBXGF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 19:06:05 -0400
-Received: by qwh6 with SMTP id 6so1068626qwh.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 16:06:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=akKpSNaqBS4vO7pm6emq1gU/ptsrH9JvscxY1DjNrzU=;
-        b=No2eEyrVURFZAqOApHB6ZQ4OQG2ZxwQZsOCs5Cx2Qbs4UHCq9tv+wfzil1r51EXCBt
-         mW0FwSZ36JYcTAgvflaxlfZX2l7AyeiHao80bvIQfu7Nly2nYuqmhEFq2h+IGXVHeect
-         5eXZ+gGic78OUq0y+2OSR/wl2gpAwSAk0GPMU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=lLFJ/UR+w/E6jMaYWLTcsJNbVs93Rso+58FUr8z75bUhv7l6EiWLOJDIDauxU1/R8C
-         L7Zhp60BoUZkcDS37Cz+ppjY9D0fKOlkYYU1k4xSTqUF17/ZxqY6/tyIue5zgsUCz2dL
-         Bh4dnZpLNVgjBgvygWCywit33A6pT72DGuwKk=
-Received: by 10.229.2.35 with SMTP id 35mr6341465qch.271.1283468764836;
-        Thu, 02 Sep 2010 16:06:04 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r1sm1070501qcq.10.2010.09.02.16.06.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 16:06:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinvvZ9eVxQXafYBDfSe8ay11mFz4s1=mDozbs14@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753713Ab0IBXKE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 19:10:04 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:33390 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751891Ab0IBXKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 19:10:03 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR006.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L85007M97093W52@VL-MO-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 02 Sep 2010 19:09:45 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155222>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+On Thu, 2 Sep 2010, Luke Kenneth Casson Leighton wrote:
 
-> I can't see why translations in the tree (in po/) should be any
-> trouble at all for us. What sort of issues do you see that the sed.gi=
-t
-> model might solve?
+> nicolas, thanks for responding: you'll see this some time in the
+> future when you catch up, it's not a high priority, nothing new, just
+> thinking out loud, for benefit of archives.
 
-Only two: log noise and the problem of what to base patches on.
+Well, I might as well pay more attention to *you* now.  :-)
 
-As you noticed while gettextizing (which is pretty much a one-time
-thing), it is not much fun to do work on strings that aren't even
-going to be used.  So translators might want to work against "next",
-or at least "master".  How do the translations get back to "maint"?
-Someone has to backport them.  What happens when we merge back to
-"master"?
+> >> * is it possible to _make_ the repository guaranteed to produce
+> >> identical pack objects?
+> >
+> > Sure, but performance will suck.
+> 
+>  that's fiiine :)  as i've learned on the pyjamas project, it's rare
+> that you have speed and interoperability at the same time...
 
-Now multiply that by the number of translations.  Making messages
-merge up nicely with git tools as they drift from topic to topic if
-translators want to keep both "maint" and "master" translated would
-require at least a nice custom merge driver. =20
+Well, did you hear about this thing called Git?  It appears that those 
+Git developers are performance freaks.  :-)  Yet, Git is interoperable 
+across almost all versions ever released because we made sure that only 
+fundamental things are defined and relied upon.  And that excludes 
+actual delta pairing and pack object ordering.  That's why a pack file 
+may have many different byte sequences and yet still represent the same 
+canonical data.
 
-As we noticed before, the .po files are partially automatically
-generated anyway.  Merging them as text makes about as much sense
-as merging Word-generated .rtf files as text.  To avoid wasting time,
-one wants to be able to work with their _content_.
+>  if the pack-objects are going to vary, then the VFS layer idea is
+> blown completely out the water, except for the absolute basic
+> meta-info such as "refs/heads/*".  so i might as well just use
+> "actual" bittorrent to transfer packs via
+> {ref}-{commitref}-{SHA-1}.torrent.
 
-What is that content?
+For the archive benefit, here's what I think on the whole idea.
 
-It is a set of key/value pairs: for each string that appears in
-the codebase (maybe together with disambiguating translators' notes),
-what the translation is for it.  Merging that between branches of the
-code base is utterly trivial: take the union.  Actually "merging" as
-an operation here does not make sense.  It is not tied to the
-development history at all!
+The BitTorrent model is simply unappropriate for Git.  It doesn't fit to 
+the Git model at all as BitTorrent works on stable and static data, and 
+requires a lot of people wanting that same data.
 
-Imagine v6.0.0 of git has message "foo".  v6.0.1 changes it to "bar"
-because "foo" is not actually true yet, v6.1.0 changes it back to
-"foo".  Imagine a linear development history.  Do we want translation
-diffs like this:
+When you perform a fetch, Git does actually negociate with the server to 
+figure out what's missing locally, and the server does produce a custom 
+pack for you that is optimized so that only what's needed for you to be 
+up to date is transferred.
 
- commit v6.0.0
+Even if you try to cache a set of packs to suit the BitTorrent static 
+data model, you'll need so many packs to cover all the possible gaps 
+between a server and a random number of clients each with a random 
+repository state.  Of course it is possible to have bigger packs 
+covering larger gaps, but then you lose the biggest advantage that the 
+smart Git protocol has.  And with smaller, more fine grained packs, 
+you'll end up with so many of them that finding a live torrent for the 
+actual one you need is going to be difficult.
 
- +"foo" is "hello" in language X
+> ho hum, drawing board we come...
 
- commit v6.0.1
+Yep.  Instead of transferring packs, a BitTorrent-alike transfer should 
+be based on the transfer of _objects_.  Therefore you can make the 
+correspondance between file chunks in BitTorrent with objects in a Git 
+aware system.  So, when contacting a peer, you could negociate what is 
+the set of objects that the peer has that you don't, and vice versa.  
+Objects in Git are stable and immutable, and they all have a unique SHA1 
+signature.  And to optimize the negociation, the pack index content can 
+be used, first by exchanging the content of the first level 
+fan-out table and ignoring those entries that are equal.  This for each 
+peer.
 
- -"foo" is "hello" in language X
- +"bar" is "goodbye" in language X
+Then, each peer make requests to connected peers for objects that those 
+peers have but that isn't available locally, just like chunks in 
+BitTorrent.
 
- commit v6.1
+But here's the twist to make this scale well.  Since the object sender 
+knows what objects the receiver already has, it therefore can choose the 
+object encoding.  Meaning that the sender can simply *reuse* a delta 
+encoding for an object it is requested to send if the requestor already 
+has the base object for this delta.
 
- -"bar" is "goodbye" in language X
- +"foo" is "hello" in language X
+So in most cases, the object to send will be small, especially if it is 
+a delta object.  That should fit the 
+chunk model.  But if an object is bigger than a certain treshold, then 
+its transfer could be chunked across multiple peers just like classic 
+BitTorrent.  In this case, the chunking would need to be done on 
+the non delta uncompressed object data as this is the only thing that is 
+universally stable (doesn't mean that the _transfer_ of those chunks 
+can't be compressed).
 
-?  But what really happened is this:
+Now this design has many open questions, such as finding out what is the 
+latest set of refs amongst all the peers, whether or not what we have 
+locally are ancestors of the remote refs, etc.
 
- - add foo:hello to translation database
- - add bar:goodbye to translation database
+And of course, while this will make for a speedy object transfer, the 
+resulting mess on the receiver's end will have to be validated 
+and repacked in the end.  So overall this might not end up being faster 
+overall for the fetcher.
 
-I have been thinking about how to write a merge driver for .po files
-(and avoid the tedious merge problems that e.g. the dpkg project runs
-into periodically) but the idea of avoiding that altogether is very
-appealing to me.
+
+Nicolas
