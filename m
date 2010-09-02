@@ -1,101 +1,109 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: html page display via cgit
-Date: Thu, 02 Sep 2010 09:09:14 +0200
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4C7F4D9A.1050103@atlas-elektronik.com>
-References: <AANLkTinJx0ZKjCtpq9k6nwigodnu42EvqchpgQtwGp5S@mail.gmail.com>	<4C7E29A1.8020304@atlas-elektronik.com> <AANLkTimucGi-7QdxbP5iLs0h5=VWW55GCxug51V584UA@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] install-webdoc: quell diff output on stdout
+Date: Thu, 02 Sep 2010 09:29:43 +0200
+Message-ID: <4C7F5267.5030708@drmicha.warpmail.net>
+References: <2730e927194a15f708ea4c5ffa72353f793f2ed4.1283353628.git.git@drmicha.warpmail.net> <7vzkw15t50.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Shivdas Gujare <shivdas.tech@gmail.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 02 09:09:17 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 09:30:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Or3v8-0003vI-Es
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 09:09:14 +0200
+	id 1Or4FD-0005yg-HL
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 09:29:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752476Ab0IBHJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 03:09:08 -0400
-Received: from lxsrv96.atlas.de ([194.156.172.86]:48035 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751735Ab0IBHJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 03:09:07 -0400
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id 80FF4138A9
-	for <git@vger.kernel.org>; Thu,  2 Sep 2010 09:09:04 +0200 (CEST)
-X-AuditID: 0ac86512-00001794000005d0-16-4c7f4d8f7a9d
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 2 Sep 2010 09:09:03 +0200
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id C195B2717A;
-	Thu,  2 Sep 2010 09:09:03 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id A71192716A;
-	Thu,  2 Sep 2010 09:09:03 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <AANLkTimucGi-7QdxbP5iLs0h5=VWW55GCxug51V584UA@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Brightmail-Tracker: AAAAAA==
+	id S1752122Ab0IBH3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 03:29:42 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52125 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751483Ab0IBH3l (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 03:29:41 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id B8D4894;
+	Thu,  2 Sep 2010 03:29:40 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Thu, 02 Sep 2010 03:29:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=IghJiTUpvFV1xKi/hYVn4Koa96M=; b=hdDNruf179szvXg+G7n7bcOWd364UBG8fWKT+LpAOy+miuzYjzfyc6BNZyw0IUjnN32c2+RCWQvEd06G1nwJk56SiBcl5UCnpBFCCF2WU6bcu9huFvU3gx0vaSjL8DyVLA9EsIeY26rNO6uRKwSzzetdneuxFomXjCTFvpGQrC4=
+X-Sasl-enc: pBiMbxg3r0Q4QBzD4j9uvAd1dQl3QjMTDuAjtfVVvw6I 1283412580
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3C6695E60C3;
+	Thu,  2 Sep 2010 03:29:40 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Lightning/1.0b2pre Thunderbird/3.1.2
+In-Reply-To: <7vzkw15t50.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155108>
 
-On 9/1/2010 2:19 PM, Shivdas Gujare wrote:
-> Hi Stefan & All,
+Junio C Hamano venit, vidit, dixit 01.09.2010 18:24:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> Thanks for your replies.
+>> When installing html-doc, install-webdoc.sh compares the installed html
+>> with the version to be installed using diff. Currently, the diff output
+>> fills up stdout.
 > 
-> On Wed, Sep 1, 2010 at 3:53 PM, Stefan Naewe
-> <stefan.naewe@atlas-elektronik.com> wrote:
->> On 9/1/2010 11:32 AM, Shivdas Gujare wrote:
->>> Hi All,
->>>
->>> I hope, this is the right mailing list for cgit as well.
->>> I am trying to add some "html logs" inside cgit, but I can't open
->>> these logs via cgit inside firefox, i.e. cgit open every files in
->>> "plain" format,
->>> would like to know if it is possible to open "html" pages inside cgit
->>> so that if I click on html page added into git, it opens in html and
->>> not in plain format.
->>
->> Set this in /etc/cgitrc
->>
->> mimetype.gif=image/gif
->> mimetype.html=text/html
->> mimetype.jpg=image/jpeg
->> mimetype.jpeg=image/jpeg
->> mimetype.pdf=application/pdf
->> mimetype.png=image/png
->> mimetype.svg=image/svg+xml
->>
+> As I've been using this output as the final sanity check on k.org
+> environment, I personally do not want to lose the output from that
+> particular diff.
 > 
-> I did tried this, but it didn't made any difference on showing html
-> pages. 
+> When I push to the public repository, a hook is triggered to build and
+> install the documentation, sending its progress to a log file, and I have
+> a window open running "tail -f" on it.
 
-I use cgit v0.8.3.3-82-gaec9 and it works for me. You still have to use the
-'plain' link in the blob view, i.e. the URL looks like
+Sorry, isn't that a somewhat crazy type of sanity check? You're getting
+the complete diff for the generated htmls flying by. Wouldn't the actual
+"install..." be sufficient, or maybe, a QUIET_DIFF variant which
+displays the command line? And not only sufficient, but actually easier
+to check visually as you seem to do?
 
-http://host/cgit/repo/plain/file.html?h=branch
+[A more throrough check would be comparing the name-diff of
+Documentation/*.txt with that of the generated html.]
 
+> 
+> Actually why don't we do the attached instead as the first step?
+> 
+> The timestamp that follows "Last updated " is formatted differently
+> depending on the version of AsciiDoc.  Looking at 4604fe56 on "html"
+> branch, you can see that AsciiDoc 7.0.2 used to give "02-Jul-2008 03:02:14
+> UTC" but AsciiDoc 8.2.5 gave "2008-09-19 06:33:25 UTC".  We haven't been
+> correctly filtering out phantom changes that result from only the build
+> date for some time now, it seems.
+> 
+>     Side note:
+> 
+>     How can you find the above easily?  Here is one way, if you run git
+>     with f506b8e (git log/diff: add -G<regexp> that greps in the patch
+>     text, 2010-08-23) currently parked in 'pu':
+> 
+> 	git log -p -G"Last updated [0-9][0-9]-[A-Z][a-z][a-z]-" origin/html
+> 
+>  Documentation/install-webdoc.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/Documentation/install-webdoc.sh b/Documentation/install-webdoc.sh
+> index 34d02a2..37e67d1 100755
+> --- a/Documentation/install-webdoc.sh
+> +++ b/Documentation/install-webdoc.sh
+> @@ -12,7 +12,7 @@ do
+>  	then
+>  		: did not match
+>  	elif test -f "$T/$h" &&
+> -	   $DIFF -u -I'Last updated [0-9][0-9]-[A-Z][a-z][a-z]-' "$T/$h" "$h"
+> +		$DIFF -u -I'^Last updated ' "$T/$h" "$h"
+>  	then
+>  		:; # up to date
+>  	else
 
-> Does this work like adding a line "
-> mimetype.pdf=application/pdf" to /etc/cgitrc allows me
-> to open a pdf via cgit interface in browser?
+I think that is the right fix for the problem you mentioned, which is a
+different one ;)
 
-Works for me, too!
+With your fix, the problem I'm after occurs less often, of course, maybe
+to the extent of not being a real problem any more.
 
-
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: Nobody's ugly after 2 a.m.
+Michael
