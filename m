@@ -1,96 +1,99 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: [PATCH] doc: technical details about the index file format
-Date: Thu, 2 Sep 2010 02:08:57 -0700
-Message-ID: <E4DDD4F7-FEDB-49CE-9515-90D64B66D7D3@gmail.com>
-References: <201009012054.20482.robin.rosenberg@dewire.com> <1283351989-19426-1-git-send-email-pclouds@gmail.com> <AANLkTi=wESk38u1XSTL1rd2__eQzHfSuq-EbqooxmcVw@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed	delsp=yes
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	robin.rosenberg@dewire.com, srabbelier@gmail.com
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 11:09:30 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC PATCH] git-help: find library man pages again
+Date: Thu, 02 Sep 2010 11:09:43 +0200
+Message-ID: <4C7F69D7.9030304@drmicha.warpmail.net>
+References: <0b8d803551f495e2494b43c6d95163daca82f62b.1283356852.git.git@drmicha.warpmail.net> <20100902081646.GK29713@burratino> <4C7F6354.70108@drmicha.warpmail.net> <20100902085533.GL29713@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 11:09:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Or5nT-0002vd-DH
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 11:09:27 +0200
+	id 1Or5nu-00037d-95
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 11:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089Ab0IBJJD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 05:09:03 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36406 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754011Ab0IBJJC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 05:09:02 -0400
-Received: by iwn5 with SMTP id 5so332027iwn.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 02:09:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=TyEGEnECue/SYn0pooG2NKtJ18Hgtp3861tJeInA3Vg=;
-        b=i95ijMbqPyrhYWjUI2vjL79vUFNgLG8qJwKuCACVUzBkRyckTMOfDlxhMSSOxu/11l
-         s+MfD+YpxsVGOmr/bfy8kYY99mWEDOfnSLLHoah0bwHAmleLfyd1kAsIX1FnG7wFlM+j
-         32U/kIaegHR0nFbgS4hj4fK/DJJGBIJi3hbeQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=CiyRdJROPJZJtQpRGWDax++bW9SWxkNnPref5vAr4XlRZAe9uiiHkqj9TqQp4aFASx
-         PJrJwNACzqeAiK76SiGKTA+1bgl39c4tgR67p1KJvOZhUTroNcImz/7i84AF5U7MnxZh
-         +rO77edgjn1IC2KDDJJhBztEzCyXVN4ruBTRY=
-Received: by 10.231.17.11 with SMTP id q11mr10495973iba.63.1283418541521;
-        Thu, 02 Sep 2010 02:09:01 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id e8sm385271ibb.8.2010.09.02.02.08.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 02:09:00 -0700 (PDT)
-In-Reply-To: <AANLkTi=wESk38u1XSTL1rd2__eQzHfSuq-EbqooxmcVw@mail.gmail.com>
-X-Mailer: Apple Mail (2.936)
+	id S1752670Ab0IBJJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 05:09:41 -0400
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60845 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752146Ab0IBJJk (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 05:09:40 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 1081D369;
+	Thu,  2 Sep 2010 05:09:40 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 02 Sep 2010 05:09:40 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=saRk9jXJtUP9QKhGKA+GSEXPAgk=; b=OkxskB820ehO6c3/bOmBJ0JEpcxelVCymjET4/ik87mO5cwGYpDVLyfH9+CMfoyvndDoao3UKS4mYflwCsxCJBWd42tZ5JOH+4xaUmGzlHDzmRI6KHE4hwm/TdWYSU2+lDNAWHEMcYcvQCe+D30neO3896xTNbw+4UshxyCfOgY=
+X-Sasl-enc: 7M9XaVx9uPpjdHA1a73mTrD3faPBs700OQbkukUpEo6P 1283418579
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6FC494078BE;
+	Thu,  2 Sep 2010 05:09:39 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100806 Fedora/3.1.2-1.fc13 Lightning/1.0b2pre Thunderbird/3.1.2
+In-Reply-To: <20100902085533.GL29713@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155118>
 
-On Sep 2, 2010, at 1:56 AM, Alex Riesen wrote:
+Jonathan Nieder venit, vidit, dixit 02.09.2010 10:55:
+> Michael J Gruber wrote:
+>> Jonathan Nieder venit, vidit, dixit 02.09.2010 10:16:
+> 
+>>> Therefore this seems wrong to me (except as a backward-compatibility
+>>> measure).
+> [...]
+>> One heuristic, which I would have left for a later patch because of its
+>> radicality (and I think we're in some phase of some rc something), is to
+>> simply not do any checks when calling the viewers. This requires that
+>> everything is prepended with "git-", which I see you have done in
+>> builtin/help.c.
+> 
+> Yep, I agree with you in all respects, including the need to do
+> something else (like the patch you sent) for v1.7.3.
+> 
+>> Still, none-command help pages will not show up with
+>> "git help -a". So it's not a complete solution.
+> 
+> I think of "git --help -a" as a more complete version of the list
+> from "git --help" --- that is, it is explaining what subcommands are
+> available for git.
+> 
+> On the other hand, on platforms where "man -k git" is not available,
+> as you mention it is the index to the manual.  Maybe "git help" should
+> check GIT_HTML_PATH to provide a more complete index on such platforms.
+> 
+> Just musing.
+> 
+>> Alternatively, load_command_list() etc. could simply fill up a third
+>> list "other_pages" (with non-executables) so that "git help -a" could
+>> list "other help pages" in addition to the commands. I don't think this
+>> would require any renaming nor Documentation updates.
+> 
+> Looks like you had a similar thought.
+> 
+>> ??? I guess this patch makes sense only after a patch which renames all
+>> gitfoo.txt to git-foo.txt.
+> 
+> Well, there were ulterior motives to that patch: I keep on mistyping
+> half-hyphenated manpage names like gitcvs-migration.
 
-> 2010/9/1 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->:
->> +=3D=3D Index entry
->> +
->> +  Index entries are sorted in ascending order on the name field,
->> +  interpreted as a string of unsigned bytes. Entries with the same
->> +  name are sorted by their stage field.
->> +
->> +  32-bit ctime seconds, the last time a file's metadata changed
->> +    this is stat(2) data
->> +
->> +  32-bit ctime nanoseconds (modulo 1G)
->> +    this is stat(2) data
->
-> Maybe I'm missing something, but I failed to find where "modulo 1G" =20
-> comes from.
-> AFAICS (read-cache.c), the stat data are saved almost unmodified
-> (casted to unsigned int).
-> (BTW, is 1G the Gravitational Constant or what?)
+That's exactly why I use "git help foo" rather than "man git[-]?foo" and
+want it to Just Work (TM);)
 
-G stands for "giga-" meaning one billion, so 1G refers to one billion =20
-nanoseconds.
+> I should have included some appropriate Makefile magic for
+> compatibility symlinks for the old names.  Hopefully at least the idea
+> was clear.
 
-> I'm not sure it is safe to assume that  every system Git will be
-> ported to defines
-> "unsigned int" to be 32 bits. OTOH, never met one where it is =20
-> something else.
+I was just wondering what this patch applies to - you must have
+all-dashed documentation to begin with. And I actually think this would
+be fine, unless we want to differentiate between command man pages and
+other man pages by that. It's just that the shell libraries are half way
+in between, and "git-remote-helpers.txt" is misnamed by that convention.
 
-DOS and early Mac compilers have used 16-bit ints, but I don't think =20
-anyone cares.
-
-Josh
+Michael
