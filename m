@@ -1,106 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 06/25] gettextize: git-fetch formatting messages
-Date: Thu, 2 Sep 2010 20:48:47 +0000
-Message-ID: <AANLkTinZnaJDfhpec2UM-qVkQDc5Opif-GnUfnzP8f8Y@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 24/25] gettextize: git-status basic messages
+Date: Thu, 2 Sep 2010 15:47:21 -0500
+Message-ID: <20100902204721.GF2531@burratino>
 References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
-	<1283456446-22577-7-git-send-email-avarab@gmail.com>
-	<20100902195936.GA2531@burratino>
-	<20100902202816.GA20362@sigill.intra.peff.net>
+ <1283456446-22577-25-git-send-email-avarab@gmail.com>
+ <20100902202846.GD2531@burratino>
+ <AANLkTin1ew1nXLwEoyMqMRkZpr6xq2rebRDmVVgA2BLr@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Daniel Barkalow <barkalow@iabervon.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 02 22:48:55 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 22:49:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrGiJ-0005ce-Sw
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:48:52 +0200
+	id 1OrGil-0005uT-Py
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 22:49:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932118Ab0IBUsu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:48:50 -0400
+	id S932120Ab0IBUtM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 16:49:12 -0400
 Received: from mail-fx0-f46.google.com ([209.85.161.46]:49742 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932071Ab0IBUss convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:48:48 -0400
-Received: by fxm13 with SMTP id 13so623692fxm.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:48:47 -0700 (PDT)
+	with ESMTP id S1754832Ab0IBUtL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 16:49:11 -0400
+Received: by mail-fx0-f46.google.com with SMTP id 13so623692fxm.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 13:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=lfKbYl5mIIFoHJZFhJdexhdc/P/3+aNqvHA9c4509Cc=;
-        b=d/Kv/8I6Xb0sIfIWj/hyzYabcZH1PUGrqhaK+vvYj0xhv/ntlNc+ThY6/x65aDTlWY
-         eb+eALccckeCl1vNIuZ2huGnLs91BAENZ/FA7pIDtLLLCphvoJ7QKEsMYrPsvv385jJz
-         OTZSzjMBIFNCwZT94nH3ElArqWZMXKhOOFacA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=xbKjE134vqnoKyqY0ggaSu3/GjewV+fKie0hJLpLQGM=;
+        b=tCIIcTnuk3OnlWsb3MX70ckXhfXtbhaduFNONx3QGGZKK2VVacNksb4D6QRZQOqcla
+         bB4vUEaBrJJAdKvKmmqQu6knO3STWhK+VCc21INTWtCK2CsrPSj+DgQnVgpGSOUNsjGc
+         tla1saskhrHJjxkwZ7nDVNqRWjRqxibHFA4a4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=sCry6CqFgRWBBxUgkD3VDk+f0HPNQ/RX1jAd6ULwxgQrfkQ4xrNEMeU+/ahJdHWUvd
-         d2IDW6YHLBCT7QHrZ6sLKoNyNDW0ZNL9A8isQ5FHFyZbjdeKo2qG32ChLSE/LdVA7nq3
-         siG9YNZs7KJI5QvN7MOaA84LBlFuqnRfhP91c=
-Received: by 10.223.124.205 with SMTP id v13mr4238623far.24.1283460527548;
- Thu, 02 Sep 2010 13:48:47 -0700 (PDT)
-Received: by 10.223.120.14 with HTTP; Thu, 2 Sep 2010 13:48:47 -0700 (PDT)
-In-Reply-To: <20100902202816.GA20362@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=XWuiOK9eO8xKyFu6t2bF1oVBn/JZir25SsCjfp+gQNjHUk4vdJf7Neo897uYyhUnYO
+         CPfMaMvj3ihifXXZ+AgWkusms2mpF2yfgX3f1b6WRk8tCJ+Iiv53zr4FMkSxwvER0JPS
+         u+FM5QxyvwK6crjtfTozyq2KqPiA87Xu/3+zs=
+Received: by 10.223.112.212 with SMTP id x20mr7730793fap.89.1283460550456;
+        Thu, 02 Sep 2010 13:49:10 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id u8sm483901fah.12.2010.09.02.13.49.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 02 Sep 2010 13:49:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTin1ew1nXLwEoyMqMRkZpr6xq2rebRDmVVgA2BLr@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155205>
 
-On Thu, Sep 2, 2010 at 20:28, Jeff King <peff@peff.net> wrote:
-> On Thu, Sep 02, 2010 at 02:59:37PM -0500, Jonathan Nieder wrote:
->
->> (+cc: some fetch ui authors, just as a heads up)
->
-> Thanks. I think Nico actually did the fetch code, though, and I more =
-or
-> less copied it for push.
->
->> > @@ -249,8 +249,8 @@ static int update_local_ref(struct ref *ref,
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* If this is the h=
-ead, and it's not okay to update
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0* the head, and th=
-e old value of the head isn't empty...
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0*/
->> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sprintf(display, "! %-*s %-*s=
- -> %s =C2=A0(can't fetch in current branch)",
->> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 T=
-RANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sprintf(display, _("! %-*s %-=
-*s -> %s =C2=A0(can't fetch in current branch)"),
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 T=
-RANSPORT_SUMMARY_WIDTH, _("[rejected]"), REFCOL_WIDTH, remote,
->>
->> Regardless of the answer, we should probably be either consistently
->> translating or not translating it within this patch. =C2=A0e.g. for =
-not
->> translating (though I suspect translating is the better choice):
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sprintf(display, "!=
- %-*s %-*s -> %s =C2=A0%s",
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 TRANSPORT_SUMMARY_WIDTH, "[rejected]", REFCOL_WIDTH, remote,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 pretty_ref, _("(can't fetch in current branch)"));
->
-> I think you can translate "[rejected]" here, too.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Thanks. I missed that one.
+> Maybe, but my current mode of operation is "do it really simple and
+> stupid now, solicit complaints later".
+>=20
+> Eventually I'd rather just eliminate the need for tweaking stuff like
+> that by having some va_args function that spews out "16" for that
+> given a bunch of arguments, i.e. (pseudocode):
+>=20
+>     int width =3D gimme_longest(
+>         _("both deleted:"),
+>         _("added by us:"),
+>         _("deleted by them:"),
+>         _("added by them:"),
+>         _("deleted by us:"),
+>         _("both added:"),
+>         _("both modified:")
+>     );
+>=20
+>     char *fmt =3D concat("%-", width + 4, "s%s\n");
+>     printf(fmt, ...)
 
-> However, do be aware of the --porcelain output for git-push. It was
-> tacked on much later, and I fear it may use some of the same strings.
-> Some of them are perhaps OK to translate (the human readable bit at t=
-he
-> end, e.g.), but others maybe not. I haven't looked closely.
+Using %-*s%s like that does sound nice, but then I have to wonder
+about the 4.  Maybe the space-constrained translator would want to
+decrease the margin to 2.
 
-There's probably more potential issues like that because I didn't know
-the code well, but hopefully not too many.
+Which is why "when the output is intended for humans, let translators
+do whatever they want" seems to me like the simplest principle to
+follow.  But you're right that it doesn't matter much and we can
+always wait for bug reports.
