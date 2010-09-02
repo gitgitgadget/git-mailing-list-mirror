@@ -1,108 +1,113 @@
-From: "Shawn O. Pearce" <spearce@spearce.org>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Thu, 2 Sep 2010 12:29:10 -0700
-Message-ID: <20100902192910.GJ32601@spearce.org>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com> <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com> <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com> <4C7FC3DC.3060907@gmail.com> <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com> <20100902155810.GB14508@sigill.intra.peff.net> <alpine.LFD.2.00.1009021233190.19366@xanadu.home> <4C7FDA32.5050009@gmail.com> <alpine.LFD.2.00.1009021326290.19366@xanadu.home> <AANLkTi=Q7EfeUDB6PuSa88PDtaBZSMMuaMqh8hU25ECb@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: getting git to ignore modifications to specific files
+Date: Thu, 02 Sep 2010 12:40:04 -0700
+Message-ID: <4C7FFD94.90901@gmail.com>
+References: <4C7EA1FF.8030307@gmail.com> <4C7F7A57.4030504@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	A Large Angry SCM <gitzilla@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>
-To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 21:29:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Sep 02 21:40:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrFTO-0006Wv-6w
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:29:22 +0200
+	id 1OrFdt-0004wT-Gj
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:40:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756516Ab0IBT3Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 15:29:16 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:52117 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756495Ab0IBT3P (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 15:29:15 -0400
-Received: by qyk33 with SMTP id 33so979848qyk.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:29:15 -0700 (PDT)
-Received: by 10.224.37.134 with SMTP id x6mr261554qad.274.1283455754695;
-        Thu, 02 Sep 2010 12:29:14 -0700 (PDT)
-Received: from localhost (yellowpostit.mtv.corp.google.com [172.18.104.34])
-        by mx.google.com with ESMTPS id l8sm835400qck.6.2010.09.02.12.29.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 12:29:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=Q7EfeUDB6PuSa88PDtaBZSMMuaMqh8hU25ECb@mail.gmail.com>
-User-Agent: Mutt/1.5.17+20080114 (2008-01-14)
+	id S1755413Ab0IBTkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 15:40:06 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:36225 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753126Ab0IBTkF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 15:40:05 -0400
+Received: by pzk9 with SMTP id 9so285233pzk.19
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:40:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=UkBTzztm+wlzrKSO/XqFByyr7slwjAqSSyvWkXwIPyg=;
+        b=Bmz5+Y+864sxBNT3SOniMFNWzaYxocITxFJ58RnDuKonFejobGLaqf0SRgZGlFGGFD
+         uCYjwLlFw43qGc5usLYUt/Q7cJ+6DixTJlQwx1u9eRcLjiOe5kZDPwdN3yKACuKkzqtz
+         7VVgYCNIkxoTPsWp2uk+L+qvqVn5X2aKO1Vt4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=kGTKX9RQAIXdyrm5n6wdduxdtXDWrDtEyYvakucPkkUwvFxs1de3cEcqPUqz/16/OR
+         sepVeOWItvxJXsWuMeVDr9CzBfGvhx/rlDqEmgbLzd3S7yhpKtm0JPYhrwGISWq3mOPm
+         zpBsBcCHe1FfMQsw8fl9YvXNfKCTd1rSdS6SU=
+Received: by 10.114.92.3 with SMTP id p3mr225041wab.77.1283456399903;
+        Thu, 02 Sep 2010 12:39:59 -0700 (PDT)
+Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id x9sm1639549waj.15.2010.09.02.12.39.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 02 Sep 2010 12:39:58 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
+In-Reply-To: <4C7F7A57.4030504@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155160>
 
-Luke Kenneth Casson Leighton <luke.leighton@gmail.com> wrote:
+On 02/09/10 03:20, Michael J Gruber wrote:
+> Chris Packham venit, vidit, dixit 01.09.2010 20:57:
+>> Hi,
+>>
+>> We have a git repository that as some GNU build system (a.k.a.
+>> autotools) files, my current problem is with the INSTALL file but I
+>> suspect there may be some others. These can get modified if you are
+>> running a different version of autotools from when the files were created.
+>>
+>> I've had various arguments about which autotools files should or
+>> shouldn't be included in our repositories. My general rule of thumb is
+>> that if it is automatically generated then it shouldn't go into the
+>> repository.
+>>
+>> There are a couple of repositories that are local clones of 3rd party
+>> repositories which have included the pesky auto-generated files so whle
+>> I can remove the offending files from repositories we control I need
+>> another solution for the 3rd part ones.
+>>
+>> I did a bit of googling and found
+>>   git update-index --assume-unchanged
+>>
+>> Which works locally to stop git status from complaining. Is there anyway
+>> for me to make a change to our clone (a .gitattribues entry?) so that
+>> everyone can get this by default?
 > 
->  * based on what you kindly mentioned about "git repack -f", would a
-> (well-written!) patch to git pack-objects to add a
-> "--single-thread-only" option be acceptable?
+> For tracking my git configuration including .gitk, I used
+> 
+> [filter "dotgitk"]
+>         clean = fgrep -v geometry
+> 
+> together with an appropriate attribute for gitk.
+> 
+> I don't know how your autogenerated files differ, but maybe you can set
+> up a filter (or custom diff driver) which makes git think the files are
+> equal though they are not, just like in my case (ignoring window
+> geometry changes for gitk).
+> 
+> Michael
 
-Probably not.  I can't think of a good reason to limit the number
-of threads that get used.  We already have pack.threads as a
-configuration variable to support controlling this for the system,
-but that's about the only thing that really makes sense.
- 
->  * would you, or anyone else with enough knowledge of how this stuff
-> reaallly works, be willing to put some low-priority back-of-mind
-> thought into how to create a "canonical" pack format
+In my case the file differs quite a lot (GNU copyright statement has
+been updated) so a simple clean filter like that won't work.
 
-We have.  We've even talked about it on the mailing list.  Multiple
-times.  Most times about how to support a p2p Git transport.
-That whole Gittorrent thing you are ignoring, we put some effort
-into coming up with a pack-like format that would be more stable,
-at the expense of being larger in total size.
+One question is if I could come up with a filter, would it even work to
+stop git status from saying its modified?
 
->  questions (not necessarily for nicolas) - can anyone think of any
-> good reasons _other_ than for multiple file-sharing to have a
-> "canonical" pack-object?
+I tried the custom diff
 
-Yes, its called resuming a clone over git://.
+  [diff "ignoretracked"]
+          command = true
 
-Right now if you abort git:// you break the pack stream, and it
-cannot be restarted.  If we had a more consistent encoding we may
-be able to restart an aborted clone.
+but that didn't stop git status from saying it was modified. It did
+however make "git diff" show no differences as expected.
 
-But we can't solve it.  Its a _very_ hard problem.
-
-Nico, myself, and a whole lot of other very smart folks who really
-understand how Git works today have failed to identify a way to do
-this that we actually want to write, include in git, and maintain
-long-term.  Sure, anyone can come up with a specification that says
-"put this here, that there, break ties this way".  But we don't
-want to bind our hands and maintain those rules.
- 
-> off the top of my head i can think of one: rsync if the transfer is
-> interrupted.  if the pack-objects are large - and not guaranteed to be
-> the same - then an interrupted rsync transfer would be a bit of a
-> waste of bandwidth.  however if the pack-object could always be made
-> the same, the partial transfer could carry on.   musing a bit
-> further... mmm... i supooose the same thing applies equally to http
-> and ftp.  it's a bit lame, i know: can anyone think of any better
-> reasons?
-
-We already do with this http:// and ftp:// during fetch or clone.
-We try to resume with a byte range request, and validate the SHA-1
-trailer on the end of the pack file after download.  If it doesn't
-match, we throw the file away and restart the entire thing.
-
-In general pack files don't change that often, so there are fairly
-good odds that resuming an aborted clone only a few hours after
-it aborted would succeed by simply resuming the file download.
-But every week or two (or even nightly!) its common for packs to
-be completely rewritten (when the repository owner does `git gc`),
-so we really cannot rely on packs being stable long-term.
-
--- 
-Shawn.
+The best advice seems to be get the file removed. I've sent a patch
+upstream so hopefully that will fix the problem going forward.
