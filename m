@@ -1,90 +1,75 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Thu, 2 Sep 2010 16:51:46 +0100
-Message-ID: <AANLkTi=W3QwWSrNTie-K4QDDrucSVGQa5e3Ldy7m7ihy@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
-	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Move "show_all_errors = 1" to
+ setup_unpack_trees_porcelain()
+Date: Thu, 02 Sep 2010 08:52:24 -0700
+Message-ID: <7v8w3k2ldz.fsf@alter.siamese.dyndns.org>
+References: <vpq39ttxumz.fsf@bauges.imag.fr>
+ <1283428655-12680-4-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git <git@vger.kernel.org>
-To: gitzilla@gmail.com
-X-From: git-owner@vger.kernel.org Thu Sep 02 17:52:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jim Meyering <jim@meyering.net>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 02 17:53:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrC5D-000575-Aq
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 17:52:11 +0200
+	id 1OrC6O-0005y8-8u
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 17:53:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755860Ab0IBPvt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 11:51:49 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:33104 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752433Ab0IBPvs (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 11:51:48 -0400
-Received: by gwj17 with SMTP id 17so203164gwj.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 08:51:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=xzxOUFzOA473uYjnVIoTm96wY+YhFpN0VOHoxi7NEbA=;
-        b=RS6wnrr/fscAf3NYCsMwr2k27ohMbG09iTYUC/2p4oy9V3780r7RESr2gxuERBdOx2
-         E9u6jfIIwolxvXSMfuZieg/nIT2pCbj/R5kvdrNIH/y7mbygVV9++GHqj8XY/tOFJ8Qy
-         p2CpzPgs/6rSOQbcW0f7GCq7Pbb5J0daYPA3M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ricQj6LbdDK7En0frurhHH4jOE3Lcm/m7C2ZBulpXnDl64SUewA//fOH4evsrjYYoI
-         o6tnNATx7UF5ZjtjsVxFLiUvw4TRDRXV/vX1b4VmOMtZFIbSCv+nXKM27c0swbP+1vYd
-         LCufvItM3g0y/r1QClIyvjMon3W0U2PUKWCxg=
-Received: by 10.103.95.2 with SMTP id x2mr268246mul.32.1283442706737; Thu, 02
- Sep 2010 08:51:46 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Thu, 2 Sep 2010 08:51:46 -0700 (PDT)
-In-Reply-To: <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+	id S1756160Ab0IBPwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Sep 2010 11:52:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47026 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756133Ab0IBPwe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 11:52:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AB558D29CF;
+	Thu,  2 Sep 2010 11:52:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=1VYwSkESW+D161b1zAWx/11fA1I=; b=UKTTQX
+	69TUen+7iXc/mMQUdT9Y+Nm9Pu2EkhKjWeaimqJAkPVhT5QvfqjR14s7yiooRkCU
+	S8VnA0u7aqnXCovVttP4+Fp8EVQ6+HjixdohvWB1fLtXuTT5VWFleFiS/Lj+ROgd
+	zYPZXCuyZsDrZqyJqbX2maF97Q+HiGWYdByrY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oCaUCrzZRFjIJmDF6ASBSJXvqaytONT4
+	0ipxLH2vSLfBpYIu57/feIGPJW1pbrwbuZQYI5icavw7KZzYWPAVRfnSYlQZt9w7
+	EbbtP+7ZiN8ekrLedStX9Yakk3p2wbmerb07GD+cOwapkaqOkoJGTLAIEHif5XTk
+	Oa0Fs3Baxr4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71E1AD29CE;
+	Thu,  2 Sep 2010 11:52:30 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8E2C9D29CD; Thu,  2 Sep
+ 2010 11:52:26 -0400 (EDT)
+In-Reply-To: <1283428655-12680-4-git-send-email-Matthieu.Moy@imag.fr>
+ (Matthieu Moy's message of "Thu\,  2 Sep 2010 13\:57\:35 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 17C733CE-B6AA-11DF-A83E-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155139>
 
-On Thu, Sep 2, 2010 at 4:42 PM, Luke Kenneth Casson Leighton
-<luke.leighton@gmail.com> wrote:
-> On Thu, Sep 2, 2010 at 4:33 PM, A Large Angry SCM <gitzilla@gmail.com> wrote:
+Matthieu Moy <Matthieu.Moy@imag.fr> writes:
 
-> * is it possible to _make_ the repository guaranteed to produce
-> identical pack objects?
+> Not only this makes the code clearer since setting up the porcelain error
+> message is meant to work with show_all_errors, but this fixes a call to
+> setup_unpack_trees_porcelain() in git_merge_trees() which did not set
+> show_all_errors.
+>
+> add_rejected_path() used to double-check whether it was running in
+> plumbing mode. This check was inefficient since it was setting
+> show_all_errors too late for traverse_trees() to see it, and is made
+> useless by this patch. Remove it.
 
- i.e. looking at these options, listed from
-Documentation/technical/protocol.txt:
+Do you mean inefficient or ineffective?
 
-    00887217a7c7e582c46cec22a130adf4b9d7d950fba0 HEAD\0multi_ack
-thin-pack side-band side-band-64k ofs-delta shallow no-progress
-include-tag
+The code in this patch looks fine, though.
 
- is it possible to use shallow, thin-pack, side-band or side-band-64k
-to guarantee that the pack object will be identical?
-
- another important question:
-
-* if after performing a "git unpack" of one pack-object, can it be
-guaranteed that performing a "git pack-object" on the *exact* same ref
-and the *exact* same object-ref, will produce the *exact* same
-pack-object that was used by "git unpack", as long as the exact same
-arguments are used?  if not, why not, and if not under _some_
-circumstances, under what circumstances _can_ the exact same
-pack-object be retrieved that was just used?
-
-if there is absolutely absolutely no way to guarantee that the
-pack-objects can be the same, under no circumstances or combinations
-of arguments or by forcing only compatible versions to communicate
-etc. etc., a rather awful work-around can be applied which is to share
-and permanently cache every single pack-object, rather than use what's
-gone into the repo.
-
-l.
+Thanks.
