@@ -1,113 +1,165 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: getting git to ignore modifications to specific files
-Date: Thu, 02 Sep 2010 12:40:04 -0700
-Message-ID: <4C7FFD94.90901@gmail.com>
-References: <4C7EA1FF.8030307@gmail.com> <4C7F7A57.4030504@drmicha.warpmail.net>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 00/25] [CONTINUED] gettextize all C mainporcelain common commands
+Date: Thu,  2 Sep 2010 19:40:21 +0000
+Message-ID: <1283456446-22577-1-git-send-email-avarab@gmail.com>
+References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 02 21:40:15 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 02 21:41:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrFdt-0004wT-Gj
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:40:13 +0200
+	id 1OrFej-0005Oq-C2
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 21:41:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755413Ab0IBTkG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Sep 2010 15:40:06 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:36225 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753126Ab0IBTkF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Sep 2010 15:40:05 -0400
-Received: by pzk9 with SMTP id 9so285233pzk.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:40:04 -0700 (PDT)
+	id S1754472Ab0IBTlA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 15:41:00 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61967 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753126Ab0IBTk7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Sep 2010 15:40:59 -0400
+Received: by wwj40 with SMTP id 40so1282023wwj.1
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 12:40:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=UkBTzztm+wlzrKSO/XqFByyr7slwjAqSSyvWkXwIPyg=;
-        b=Bmz5+Y+864sxBNT3SOniMFNWzaYxocITxFJ58RnDuKonFejobGLaqf0SRgZGlFGGFD
-         uCYjwLlFw43qGc5usLYUt/Q7cJ+6DixTJlQwx1u9eRcLjiOe5kZDPwdN3yKACuKkzqtz
-         7VVgYCNIkxoTPsWp2uk+L+qvqVn5X2aKO1Vt4=
+        bh=YU3bujDYizb7EpO5hOiYhIpjnt5viCyPRMJ1ZOp+jsE=;
+        b=CxUaADmrefKqEunZoQlGSgsH7SRAtDanCWHsfRCjHHtOtKVO0dzTBWsqBhLqoiUnND
+         g1bbCFYBubq3qrvwpePTLkUXNxKfwgH6n5G2vuXzmGqnhIdKGEU+Uwx6VbUDnoCWmhKo
+         +UtMhoCneu7Ckwi5tFMPXjPa1wJeWz3OSCtts=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=kGTKX9RQAIXdyrm5n6wdduxdtXDWrDtEyYvakucPkkUwvFxs1de3cEcqPUqz/16/OR
-         sepVeOWItvxJXsWuMeVDr9CzBfGvhx/rlDqEmgbLzd3S7yhpKtm0JPYhrwGISWq3mOPm
-         zpBsBcCHe1FfMQsw8fl9YvXNfKCTd1rSdS6SU=
-Received: by 10.114.92.3 with SMTP id p3mr225041wab.77.1283456399903;
-        Thu, 02 Sep 2010 12:39:59 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id x9sm1639549waj.15.2010.09.02.12.39.58
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=QW11r5q6Bg0Diz1e3STl/bTUqTG5FwObT6qJ10+8XmriMo0pDNA/O51mtEaiKyYrOC
+         Cf2ok3p1R9qmzaY9W0l3FHR91XDgP6g2Ef3vc01z6zdhnw8dclLhaLj0e2fuTp9DFUqj
+         24bth/swYLu3ssFr4gflApV0WgchDOhj2BAzE=
+Received: by 10.227.156.143 with SMTP id x15mr157851wbw.39.1283456457650;
+        Thu, 02 Sep 2010 12:40:57 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id e31sm701885wbe.17.2010.09.02.12.40.56
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 12:39:58 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <4C7F7A57.4030504@drmicha.warpmail.net>
+        Thu, 02 Sep 2010 12:40:56 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.614.g1dc9
+In-Reply-To: <1283373845-2022-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155161>
 
-On 02/09/10 03:20, Michael J Gruber wrote:
-> Chris Packham venit, vidit, dixit 01.09.2010 20:57:
->> Hi,
->>
->> We have a git repository that as some GNU build system (a.k.a.
->> autotools) files, my current problem is with the INSTALL file but I
->> suspect there may be some others. These can get modified if you are
->> running a different version of autotools from when the files were created.
->>
->> I've had various arguments about which autotools files should or
->> shouldn't be included in our repositories. My general rule of thumb is
->> that if it is automatically generated then it shouldn't go into the
->> repository.
->>
->> There are a couple of repositories that are local clones of 3rd party
->> repositories which have included the pesky auto-generated files so whle
->> I can remove the offending files from repositories we control I need
->> another solution for the 3rd part ones.
->>
->> I did a bit of googling and found
->>   git update-index --assume-unchanged
->>
->> Which works locally to stop git status from complaining. Is there anyway
->> for me to make a change to our clone (a .gitattribues entry?) so that
->> everyone can get this by default?
-> 
-> For tracking my git configuration including .gitk, I used
-> 
-> [filter "dotgitk"]
->         clean = fgrep -v geometry
-> 
-> together with an appropriate attribute for gitk.
-> 
-> I don't know how your autogenerated files differ, but maybe you can set
-> up a filter (or custom diff driver) which makes git think the files are
-> equal though they are not, just like in my case (ignoring window
-> geometry changes for gitk).
-> 
-> Michael
+This series continues where "gettextize the first 4 C mainporcelain
+common commands" left off and translates all the C mainporcelain
+common commands (the only non-C ones left are bisect/pull/rebase).
 
-In my case the file differs quite a lot (GNU copyright statement has
-been updated) so a simple clean filter like that won't work.
+With this Git is up to 482 translatable messages.
 
-One question is if I could come up with a filter, would it even work to
-stop git status from saying its modified?
+=46or reviewing all the patches that say "basic messages" were (mostly)
+converted by an automated script and should be really
+straightforward. Most of these are just plain die/error/printf calls
+with a single message.
 
-I tried the custom diff
+See further comments on individual patches below. Most comment only
+apply to the patch immediately above them.
 
-  [diff "ignoretracked"]
-          command = true
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (25):
+  gettextize: git-commit basic messages
+  gettextize: git-commit formatting messages
 
-but that didn't stop git status from saying it was modified. It did
-however make "git diff" show no differences as expected.
+The message you get in the editor with git add . && git-commit
 
-The best advice seems to be get the file removed. I've sent a patch
-upstream so hopefully that will fix the problem going forward.
+  gettextize: git-commit advice messages
+
+An example of N_() and _() usage.
+
+  gettextize: git-diff basic messages
+  gettextize: git-fetch basic messages
+  gettextize: git-fetch formatting messages
+
+The status output you get on "git fetch" where it's telling you what
+changed.
+
+  gettextize: git-grep basic messages
+  gettextize: git-log basic messages
+
+This is more than just git-log actually, e.g. git-show too.
+
+  gettextize: git-format-patch --cover-letter message
+
+I think this should be made translatable.
+
+  gettextize: git-merge basic messages
+
+This need careful review. In many cases git-merge is writing out to
+some .git/* file and I *don't* want to translate that, but it could
+use a second set of eyes to see if I missed something.
+
+  gettextize: git-merge "In-index merge" message
+  gettextize: git-merge "Merge made by %s." message
+  gettextize: git-merge remaining cmd_merge messages
+
+These I reviewed carefully and they should be trivial.
+
+  gettextize: git-mv basic messages
+  gettextize: git-mv "bad" messages
+  gettextize: git-rm basic messages
+
+ditto, these should all be fine.
+
+  builtin: use builtin.h in git-reset
+
+as before, this is not needed if "builtin: use builtin.h for all
+builtin/ commands" is applied. But it's here for convenience. If the
+previously submitted builtin.h patch is applied this can be dropped.
+
+  gettextize: git-reset basic messages
+  gettextize: git-reset reset_type_names messages
+
+Another N_() and _() patch.
+
+  gettextize: git-tag basic messages
+  gettextize: git-tag tag_template message
+
+Another N_() and _() patch.
+
+  gettextize: git-push basic messages
+  builtin: use builtin.h in git-status
+
+This is *not* in my previously submitted "builtin: use builtin.h for
+all builtin/ commands" patch.
+
+  gettextize: git-status basic messages
+
+An old resurrected patch ...
+
+  gettextize: git-status shortstatus messages
+
+=2E.. but wt-status changed since then, so this was needed too.
+
+ builtin/commit.c |  156 +++++++++++++++++++++++++++-------------------=
+--------
+ builtin/diff.c   |   20 ++++----
+ builtin/fetch.c  |   74 +++++++++++++-------------
+ builtin/grep.c   |   34 ++++++------
+ builtin/log.c    |   76 +++++++++++++-------------
+ builtin/merge.c  |  136 +++++++++++++++++++++++-----------------------
+ builtin/mv.c     |   32 ++++++------
+ builtin/push.c   |   42 +++++++-------
+ builtin/reset.c  |   44 ++++++++--------
+ builtin/rm.c     |   22 ++++----
+ builtin/tag.c    |   66 +++++++++++-----------
+ wt-status.c      |  115 ++++++++++++++++++++--------------------
+ 12 files changed, 409 insertions(+), 408 deletions(-)
+
+--=20
+1.7.2.2.614.g1dc9
