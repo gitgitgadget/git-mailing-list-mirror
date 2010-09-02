@@ -1,79 +1,89 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2010, #01; Wed, 1)
-Date: Thu, 2 Sep 2010 09:39:39 +1000
-Message-ID: <AANLkTik7eBGJrQ3HEYjesvR9y1PpwUphVvpBmzVCiu6p@mail.gmail.com>
-References: <7vaao15jk2.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=ma8MLssD_1YeSju7iJucRN9NFzYESJ2rGhyjv@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
+Date: Wed, 01 Sep 2010 18:04:28 -0700
+Message-ID: <7v39tt552b.fsf@alter.siamese.dyndns.org>
+References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
+ <20100830023812.GA4010@burratino> <20100830024020.GB4010@burratino>
+ <AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
+ <7v1v9e803a.fsf@alter.siamese.dyndns.org>
+ <AANLkTinHJHzcoFFjv-TaQ+DYVyqn46fqA802m8Lq5anp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 02 01:39:51 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 02 03:05:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OqwuB-0002oX-8t
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 01:39:47 +0200
+	id 1OqyEi-0002uk-Ie
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Sep 2010 03:05:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753958Ab0IAXjl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Sep 2010 19:39:41 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58369 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752864Ab0IAXjl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Sep 2010 19:39:41 -0400
-Received: by wwj40 with SMTP id 40so680676wwj.1
-        for <git@vger.kernel.org>; Wed, 01 Sep 2010 16:39:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SuMHZ8I5pTnEILuVNt6Gjnh3cypsLJ2kUhN7Xi6bkfc=;
-        b=v4reZ6OloCMka74Pr106ea6o5/wiYaWtYngU9K6zOZ2BOO1CpOQcKhcwfPNjo4hXRg
-         DyGJfEr0uCS8vxRzv6u+QNAjHqtR5PpExkwMwlmNV2wBnYbkEMaJXzGegDLpx6NOOedW
-         d5wr7MgMUykVmHraPJlYMTGe+y4pp3NhC2imA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RVKBLI1SQE3mc4yZdqPAryGXa0/Fd4Z1WQhvuUJgUnlkPPQc+dHHJY3tCR3AOu72Zt
-         emwqYfOae78tGk1ItLB+8rMFdT2zCVcJILAHQBwc4rcLxUfVh+1WHTvoISc+YQJ70UUx
-         rpu4VvSVsBxRak2f5PKdxOLoOSM/s3eJw8JyE=
-Received: by 10.227.138.134 with SMTP id a6mr9024317wbu.68.1283384379566; Wed,
- 01 Sep 2010 16:39:39 -0700 (PDT)
-Received: by 10.216.184.17 with HTTP; Wed, 1 Sep 2010 16:39:39 -0700 (PDT)
-In-Reply-To: <AANLkTi=ma8MLssD_1YeSju7iJucRN9NFzYESJ2rGhyjv@mail.gmail.com>
+	id S1752348Ab0IBBEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Sep 2010 21:04:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40636 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751205Ab0IBBEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Sep 2010 21:04:39 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 35BF4D2D1B;
+	Wed,  1 Sep 2010 21:04:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=wnYdq8v3I9kqN6B0MDNsLPccMNk=; b=iw9b54Jf3fOQ+Lo8X3SND51
+	TCyIqe1xkFiBkkCHAVAECjXXQMWaDoc+AVDrsHLQXAg8NLMTqgJsoUGjGXkeYG6c
+	MW8K4zTK/x3+HTf7+5GnHgAG4rqHY8uTkRRo38v2PW5VIA3ouw9g1eODLEt7JXn4
+	AegvI6BkpI0sErbqhLLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=iSRP5l24nVViUwr5gaD99aEssrei5JeQx2oqNtp7R8ggWY/Uf
+	9ekn+zf5cxmfAYILEM/1p4lefmJjCfl4tHJ0/K3n01otqD9nQl//r9t2FbBnCBCF
+	lpdAjTEZdTgIm6O2cH8om8dzzNGqSxKk/l4cjatUNutOHCYeliI4s5DSPM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 01D2CD2D15;
+	Wed,  1 Sep 2010 21:04:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CF288D2D0B; Wed,  1 Sep
+ 2010 21:04:30 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D26B484-B62E-11DF-A74C-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155099>
 
-On Thu, Sep 2, 2010 at 6:54 AM, Elijah Newren <newren@gmail.com> wrote:
->> * en/object-list-with-pathspec (2010-08-26) 2 commits
->> =C2=A0- Make rev-list --objects work together with pathspecs
->> =C2=A0- Add testcases showing how pathspecs are ignored with rev-lis=
-t --objects
->>
->> Heard that this is still broken?
->
-> Are you possibly remembering v1 of the series, which mis-used the
-> tree_entry_interesting() API, and was fixed by v2 including extra
-> testcases? =C2=A0You merged the latter into pu, so there's no remaini=
-ng
-> issue I know of.
->
-> However, if I've missed some email or other report about any other
-> breakage, let me know and I'll take a look.
+Thiago Farina <tfransosi@gmail.com> writes:
 
-I haven't really used it recently since I'm redoing my series to
-support multiple subtree. Will let you know soon if it works (v2
-worked last time before the rework).
+>>risk causing broken builds?
+> Hum, how such trivial change can cause that?
 
-While at there, how about adding tree exclusion mechanism that you
-mentioned in sparse clone? That would be really cool.
---=20
-Duy
+Imagine if we had this in help.c:
+
+        int cmd_version(int argc, const char **argv, const char *prefix)
+        {
+                printf("git version %s\n", GIT_VERSION);
+                return 0;
+        }
+
+which were compiled with this rule in Makefile:
+
+	help.o: help.c GIT-VERSION-FILE
+
+and then you moved the function to a new file without touching the
+dependency.  Especially because the change is trivial (just moving a
+function from here to there), you don't immediately notice the broken
+dependency.
+
+I just spent 15+ minutes explaining this to you (and another 10+ minutes
+checking that the above is _not_ the actual case before giving the same
+explanation to you last night).  Now is this still a trivial change that
+costs nothing?
+
+>>What did we gain through this exercise?  Did we fix any real problem?
+> All patches should just fix real problems?
+
+There is a "cost vs benefit" ratio you need to consider.
