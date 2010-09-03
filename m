@@ -1,115 +1,167 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Fri, 3 Sep 2010 22:11:22 +0100
-Message-ID: <AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
-	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
-	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
-	<AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
-	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
-	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
-	<7voccezr7m.fsf@alter.siamese.dyndns.org>
-	<20100903183120.GA4887@thunk.org>
-	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+From: karsten.blees@dcon.de
+Subject: Re: [PATCH] Fix compat/regex ANSIfication on MinGW
+Date: Fri, 3 Sep 2010 23:23:32 +0200
+Message-ID: <OFF09696E1.DC0D98D7-ONC1257793.0070A82E-C1257793.00758522@DCON.DE>
+References: <4C761EA2.2060904@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Ted Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Sep 03 23:11:29 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: multipart/alternative; boundary="=_alternative 00758521C1257793_="
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	msysgit@googlegroups.com,
+	johannes.schindelin@gmx.de
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: msysgit+bncCAAQwdKF5AQaBAl8CBM@googlegroups.com Fri Sep 03 23:32:09 2010
+Return-path: <msysgit+bncCAAQwdKF5AQaBAl8CBM@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qy0-f186.google.com ([209.85.216.186])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrdXl-0001QA-Jx
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 23:11:29 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753549Ab0ICVLY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 17:11:24 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:41053 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752319Ab0ICVLX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Sep 2010 17:11:23 -0400
-Received: by vws3 with SMTP id 3so1633741vws.19
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 14:11:22 -0700 (PDT)
+	(envelope-from <msysgit+bncCAAQwdKF5AQaBAl8CBM@googlegroups.com>)
+	id 1Ordrl-0002a3-1x
+	for gcvm-msysgit@m.gmane.org; Fri, 03 Sep 2010 23:32:09 +0200
+Received: by qyk5 with SMTP id 5sf553059qyk.3
+        for <gcvm-msysgit@m.gmane.org>; Fri, 03 Sep 2010 14:32:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0V4HQsLG/tpBWmWEm9eDWkvriSobYe/GcyIqNvcgZgY=;
-        b=FsuMTgrknaHcxnNhERvND6ToF1mgSATDPhD3oVUAakRw613riwnATpEguE8ciqpHrU
-         JzovU78mTJFqPLdnNIK606tDvxxQ8cNQQjg7JyO2hjMznsYVbIVq/w3DnFVwAKOkib4t
-         WoMf3oVCSXozfI8/Lu6p1tvFekBu+NA4G/wug=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received:received-spf:in-reply-to:from:to:cc:subject
+         :mime-version:x-mailer:message-id:sender:date:x-mimetrack
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=chU3CCZahLwzD19iNcEWRtkXzKRtbzB11Ec9/mZoRwg=;
+        b=O25Juc2HN5J6uJECCw3IyWV1sIYZ5plkd3WIMgLCrzWKnfj2H08mzBeqMfxX3F6QOk
+         AH2Agq24UZjg1yxELfhc4F+ILlmUqDF/gCWROVyFmhUe1aLftTl9PAsi9XQ68n6rxNPG
+         va5XhgQcsr3d6oVcXebTzbVH3Gr3+TF7fzopU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Sli8jCo6Zuchf5ufjkKgD5cfqCm3d0t18auBnNEutJ4tqtHnEK8VcK5jArY+pJKrca
-         JlO/8fXJbKgSSABzUy85gv/Wb0cPpVl6qV8zT6JTYnGYsfRTER0P2uyC+YV/tSc8PzKg
-         CDlTHzqwsBAFuvBR8bwgGZqPAtTg+rFpo1Q74=
-Received: by 10.220.62.196 with SMTP id y4mr823602vch.97.1283548282468; Fri,
- 03 Sep 2010 14:11:22 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Fri, 3 Sep 2010 14:11:22 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155273>
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:in-reply-to:from:to:cc:subject
+         :mime-version:x-mailer:message-id:sender:date:x-mimetrack
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe:content-type;
+        b=Yxpyl4MknrySE6yv7NmXIGyy+rmXqEhsvc5Qz9oaiNA97PJ5RpdG0URU/+94D60x3i
+         1wLpjY8wLl8GL6LsXXD4QdpWNZQKrTTsG3v9lIG5QdAn13LrO3DZU3nECeeizo7Xw1zz
+         L37XdwSYAiCdOPXUDmkWPdmm4nK/QZ+8rpnAU=
+Received: by 10.224.75.78 with SMTP id x14mr28006qaj.18.1283549505320;
+        Fri, 03 Sep 2010 14:31:45 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.224.58.228 with SMTP id i36ls440956qah.4.p; Fri, 03 Sep 2010
+ 14:31:44 -0700 (PDT)
+Received: by 10.224.37.14 with SMTP id v14mr46382qad.3.1283549504487;
+        Fri, 03 Sep 2010 14:31:44 -0700 (PDT)
+Received: by 10.204.85.89 with SMTP id n25mr48954bkl.20.1283549014417;
+        Fri, 03 Sep 2010 14:23:34 -0700 (PDT)
+Received: by 10.204.85.89 with SMTP id n25mr48953bkl.20.1283549014382;
+        Fri, 03 Sep 2010 14:23:34 -0700 (PDT)
+Received: from DCON14.DCON.DE (231-068-043-212.ip-addr.inexio.net [212.43.68.231])
+        by gmr-mx.google.com with ESMTP id z25si1223663bku.1.2010.09.03.14.23.34;
+        Fri, 03 Sep 2010 14:23:34 -0700 (PDT)
+Received-SPF: pass (google.com: domain of karsten.blees@dcon.de designates 212.43.68.231 as permitted sender) client-ip=212.43.68.231;
+In-Reply-To: <4C761EA2.2060904@viscovery.net>
+X-Mailer: Lotus Notes Release 7.0.3 September 26, 2007
+Sender: msysgit@googlegroups.com
+X-MIMETrack: Serialize by Router on DCON14/DCon(Release 7.0.3FP1|February 24, 2008) at
+ 03.09.2010 23:23:33,
+	Serialize complete at 03.09.2010 23:23:33
+X-Original-Sender: karsten.blees@dcon.de
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of karsten.blees@dcon.de designates 212.43.68.231 as permitted sender) smtp.mail=karsten.blees@dcon.de
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155274>
 
-On Fri, Sep 3, 2010 at 8:41 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+This is a multipart message in MIME format.
+--=_alternative 00758521C1257793_=
+Content-Type: text/plain; charset="US-ASCII"
 
-> I still think that if someone really want to apply the P2P principle =
-=C3=A0
-> la BitTorrent to Git, then it should be based on the distributed
-> exchange of _objects_ as I outlined in a previous email, and not file
-> chunks like BitTorrent does. =C2=A0The canonical Git _objects_ are fu=
-lly
-> defined, while their actual encoding may change.
+Johannes Sixt <j.sixt@viscovery.net> wrote on 26.08.2010 09:58:26:
+> Am 8/25/2010 20:24, schrieb Karsten Blees:
+> > this doesn't compile if internal_function is #defined non-empty (e.g. 
+on
+> > mingw/msysgit). The old-style definitions work.
+> > 
+> > In file included from compat/regex/regex.c:78:
+> > compat/regex/regexec.c:357: error: conflicting types for 
+'re_search_2_stub'
+> > compat/regex/regexec.c:44: note: previous declaration of 
+> 're_search_2_stub' was
+> > here
+> 
+> Here's a fix.
+> 
 
-ok - missed it.  let's go back... ah _ha_ - with this:
+Sorry, I realize I should've cross-posted this to the msysgit list (adding 
+cc).
 
-"Yep.  Instead of transferring packs, a BitTorrent-alike transfer shoul=
-d
-be based on the transfer of _objects_.  Therefore you can make the
-correspondance between file chunks in BitTorrent with objects in a Git
-aware system.  So, when contacting a peer, you could negociate what is
-the set of objects that the peer has that you don't, and vice versa.
-Objects in Git are stable and immutable, and they all have a unique SHA=
-1
-signature.  And to optimize the negociation, the pack index content can
-be used, first by exchanging the content of the first level
-fan-out table and ignoring those entries that are equal.  This for each
-peer."
+In the meantime, Dscho has fixed the function definitions in the msysgit 
+fork like so:
+static int internal_function
+re_search_2_stub (struct re_pattern_buffer *bufp,...
 
-ok, so, great!  it does actually seem that, despite us using different
-terminologies, we're thinking along the same sort of lines.  i'm
-marginally hampered by being unfamiliar with git, for which i
-apologise.
+Your patch removes internal_function from the declaration, so now it 
+doesn't compile again...
 
-so, when i mentioned extracting the objects from the index file of
-"git pack-object", i was debating whether to then use that to
-re-create the pack object (in some nebulous way) - that's sort-of the
-same thing.  i was also debating whether to mention the idea of using
-git pack-object to extract one and only one object ( there is likely a
-more efficient way of doing that ).   but, yes: i was thinking of
-making the vfs-layer expose individual objects, i just hadn't
-mentioned it yet (and missed your earlier reply, nicolas, for which i
-apologise).
+There're basically three solutions:
+1. revert the whole ANSIfication stuff (stay in sync with glibc upstream)
+2. add internal_function before function definition (like everywhere else 
+in regexec.c - efe33c61 in git://repo.or.cz/git/mingw/4msysgit.git)
+3. remove internal_function from declaration (ce518bbd)
 
-btw the idea of parsing the fan-out table would not have occurred to
-me in a miiiilllion years :)
+As I don't think you plan active development on this (or push changes 
+upstream?), I'd opt for (1).
 
- i'll take a look at that.  but whilst i'm doing that, the main
-question i really need to know is: how do you get one single explicit
-object out of git?
+Bye,
+Karsten
 
-tia,
+--=_alternative 00758521C1257793_=
+Content-Type: text/html; charset="US-ASCII"
 
-l.
+
+<br><tt><font size=2>Johannes Sixt &lt;j.sixt@viscovery.net&gt; wrote on
+26.08.2010 09:58:26:<br>
+&gt; Am 8/25/2010 20:24, schrieb Karsten Blees:<br>
+&gt; &gt; this doesn't compile if internal_function is #defined non-empty
+(e.g. on<br>
+&gt; &gt; mingw/msysgit). The old-style definitions work.<br>
+&gt; &gt; <br>
+&gt; &gt; In file included from compat/regex/regex.c:78:<br>
+&gt; &gt; compat/regex/regexec.c:357: error: conflicting types for 're_search_2_stub'<br>
+&gt; &gt; compat/regex/regexec.c:44: note: previous declaration of <br>
+&gt; 're_search_2_stub' was<br>
+&gt; &gt; here<br>
+&gt; <br>
+&gt; Here's a fix.<br>
+&gt; <br>
+</font></tt>
+<br><tt><font size=2>Sorry, I realize I should've cross-posted this to
+the msysgit list (adding cc).</font></tt>
+<br>
+<br><tt><font size=2>In the meantime, Dscho has fixed the function definitions
+in the msysgit fork like so:</font></tt>
+<br><tt><font size=2>static int internal_function</font></tt>
+<br><tt><font size=2>re_search_2_stub (struct re_pattern_buffer *bufp,...</font></tt>
+<br>
+<br><tt><font size=2>Your patch removes internal_function from the declaration,
+so now it doesn't compile again...</font></tt>
+<br>
+<br><tt><font size=2>There're basically three solutions:</font></tt>
+<br><tt><font size=2>1. revert the whole ANSIfication stuff (stay in sync
+with glibc upstream)</font></tt>
+<br><tt><font size=2>2. add internal_function before function definition
+(like everywhere else in regexec.c - efe33c61 in git://repo.or.cz/git/mingw/4msysgit.git)</font></tt>
+<br><tt><font size=2>3. remove internal_function from declaration (ce518bbd)</font></tt>
+<br>
+<br><tt><font size=2>As I don't think you plan active development on this
+(or push changes upstream?), I'd opt for (1).</font></tt>
+<br>
+<br><tt><font size=2>Bye,</font></tt>
+<br><tt><font size=2>Karsten</font></tt>
+<br>
+--=_alternative 00758521C1257793_=--
