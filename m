@@ -1,106 +1,128 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 10/25] gettextize: git-merge basic messages
-Date: Fri, 3 Sep 2010 18:06:50 +0000
-Message-ID: <AANLkTimCZwLg6KvQKc5bhTkLRP_FAYd3TsJbf-S02ug6@mail.gmail.com>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com>
-	<1283456446-22577-11-git-send-email-avarab@gmail.com>
-	<20100902200940.GB2531@burratino>
-	<AANLkTiksZykH4zDbdDReYYgJZk7gmZ_2g0v=9X_MP73p@mail.gmail.com>
-	<20100902203711.GE2531@burratino>
-	<AANLkTi=ZQAjA9SN1A3WDr-L2rFA6v-XH0mZAkhuUgdAg@mail.gmail.com>
-	<20100902211339.GA2801@burratino>
-	<AANLkTinvvZ9eVxQXafYBDfSe8ay11mFz4s1=mDozbs14@mail.gmail.com>
-	<20100902230410.GA4850@burratino>
-	<AANLkTimBbSz5TF5CBa0us5oLQ-t=S9HNdBSVifUUSiqt@mail.gmail.com>
-	<20100903175142.GA2341@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/4] instaweb: ignore GITWEB_CONFIG_SYSTEM
+Date: Fri, 3 Sep 2010 13:20:42 -0500
+Message-ID: <20100903182042.GB2341@burratino>
+References: <20100812131152.2333.9604.reportbug@octopus.hi.pengutronix.de>
+ <20100902221211.GA4789@burratino>
+ <20100902223624.GA9613@dcvr.yhbt.net>
+ <20100902235237.GA6466@burratino>
+ <20100902235429.GB6466@burratino>
+ <7vfwxqzqoq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 03 20:07:14 2010
+Cc: Eric Wong <normalperson@yhbt.net>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
+	Jakub Narebski <jnareb@gmail.com>,
+	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 03 20:22:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrafO-000359-Gr
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 20:07:10 +0200
+	id 1OrauT-0003F4-Ur
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 20:22:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757240Ab0ICSGx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 14:06:53 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38205 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757217Ab0ICSGw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Sep 2010 14:06:52 -0400
-Received: by fxm13 with SMTP id 13so1341179fxm.19
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 11:06:51 -0700 (PDT)
+	id S1757189Ab0ICSWk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 14:22:40 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:41904 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757095Ab0ICSWj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Sep 2010 14:22:39 -0400
+Received: by wyf22 with SMTP id 22so133895wyf.19
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 11:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=S7s2jMPL0rdtzNzhqVVKpGTMoLeyGZ2HS1ROxTo0qQk=;
-        b=QDDkI1gFWakNoyTd5ySj9fn/+SHxjE//e4nITsfJ6gPn8lTA2r4JcHrGd1dIfMiK/i
-         zP6w7vTYahG23wMsUdUAURMRSkN0J1kRtF0F6jUY55U240d2ldc3niP1soWR4jhsrnKu
-         p2JI8ZWw4Fr05AooyuVnNFLe0GKUY1HLpy+1Y=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=YSq6hUl1PPR11a6yN+Wnosn2scwl4vo67ArV3GI05lU=;
+        b=Kde1E4i3nIsw8W4MQD6ClZo39eb0EbB1NEq7PVJ6Q5jHCc6A7fgoRVi7o9mJSOWfgz
+         ahA0x2jClbZDAv3QNXEykIJHZRmhlMLYNUo6wbywrL0dhZq2zxiQHkBdvd62z6ovUrUy
+         tGpb68QpNptQ22gPLIKIha+BqQIB80hiMXNtc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bFQwH/kj1Pu0LmOL7gbCf73ya5Io40FKtOu0PW4ZMZFG3urnqnSKWU+6Fj+n7Twi8I
-         WxnVrLSgCX28y+CnoK4HhaV0pMfBltABcRXntOjbWtI1k+1dg7aNrayXvDSzeP7KcFZM
-         8YaLbpbBoA4wxERbdA6KrJo7tRpVb0FtO6/lg=
-Received: by 10.223.104.199 with SMTP id q7mr191259fao.6.1283537210657; Fri,
- 03 Sep 2010 11:06:50 -0700 (PDT)
-Received: by 10.223.120.14 with HTTP; Fri, 3 Sep 2010 11:06:50 -0700 (PDT)
-In-Reply-To: <20100903175142.GA2341@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=GV0ZSyQmL4nA+YF+qlGWpCYSXJaxso3K5a15vcgafkxm5MglxAyaDPhXbRZXUmDFK0
+         IrGThjGPzp7xdfPK4Tmwb7iuJ9rIy0XRdNu6AwcTWya+iXQU4Z4eTX4BQdCAODr8KD4W
+         OsWnzD03dJR+dCJNbElZgRTThnI7zvvA7ZetU=
+Received: by 10.227.157.17 with SMTP id z17mr234540wbw.122.1283538158266;
+        Fri, 03 Sep 2010 11:22:38 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id m25sm1796519wbc.19.2010.09.03.11.22.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 03 Sep 2010 11:22:36 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vfwxqzqoq.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155257>
 
-On Fri, Sep 3, 2010 at 17:51, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> Those issues might be a bit hard, but I still can't really see how
->> managing these files outside of git.git would make things easier.
->
-> The translationproject.org thing was a red herring. =C2=A0As you noti=
-ced,
-> the relevant thing is "outside of git.git".
->
-> So imagine there is a git-translations.git project, perhaps. =C2=A0My
-> only point was that versioning of translations and versioning of
-> code can beneficially (in my opinion) be decoupled: with time,
-> the translations for even _old_ versions of git improve, too.
->
->> maybe we should just use
->> msgmerge with --no-location.
->
-> That would partially alleviate my concerns, and I think we might be
-> able to get the --add-location output back in actual checkouts with
-> a "smudge" filter.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-After looking at this all closer I found that these line messages
-really aren't that important to gettext's operation. So I'm in the
-process of removing them from the ab/i18n series.
-
-I documented the new process:
-http://github.com/avar/git/raw/ab/i18n/po/README
-
->> But I'd like to coordinate things on this mailing list
-> [...]
->> without some external service being mandatory.
+>> The configuration in /etc/gitweb.conf might specify any old
+>> layout; in particular, it is likely not to be identical to that
+>> which git instaweb sets up.  Noticed by Uwe Kleine-K=C3=B6nig.
 >
-> No objection here. :)
->
-> Of course, what is convenient for translators and maintainers (i.e.,
-> not me) takes precedence anyway; I am just throwing out ideas.
->
-> Thanks for your thoughtfulness.
+> I am not sure if this is a reasonable change by reading the above.  I=
+n
+> some cases, the file may stale, but in other cases, it may specify wh=
+at
+> the site administrator wants its users to be using, no?
 
-Sure, thanks for consistently commenting on all of this. It's great to
-get feedback like this.
+Yes, I should have mentioned this.
+
+By analogy with .gitconfig, one might want "git instaweb" to check
+GITWEB_CONFIG_LOCAL, GITWEB_CONFIG_GLOBAL, and GITWEB_CONFIG_SYSTEM in
+that order, taking values from all three.  A GITWEB_CONFIG envvar
+could override them all.
+
+But stepping back a moment, what would this accomplish?  The gitweb
+configuration specifies
+
+ - what git version to use;
+ - site branding;
+ - what directory projects are relative to (*);
+ - how deep to search for projects;
+ - where the list of projects is (*);
+ - how to demonstrate project consent to be shown (*);
+ - whether to be a stickler about hiding secrets;
+ - where gitweb.css, git-logo.png, git-favicon.png, and gitweb.js are (=
+*);
+ - base URI for relative paths used above (*);
+ - what extra features (e.g. "snapshot") to enable;
+ - MIME types, diff options, etc.
+
+The items marked with a (*) are, in the regime used by git 1.7.1,
+specific to the "git instaweb" instance, since it is all about showing
+the current git repo and provides its own copies of gitweb.cgi instead
+of relying on copies in /usr/share/gitweb.
+
+The items not marked with (*) might indeed benefit from some global
+site defaults.  But unfortunately, that is already not what
+/etc/gitweb.conf is: it is rather used as a unit as a fallback when a
+separate gitweb_config.perl is not present.
+
+In git 1.7.2 and later, "git instaweb" provides the gitweb_config.perl
+and this discussion becomes academic.
+
+>> -s#(my|our) \$git_temp =3D.*#$1 \$git_temp =3D "'$fqgitdir/gitweb/tm=
+p'";#;'
+>> +s#(my|our) \$git_temp =3D.*#$1 \$git_temp =3D "'$fqgitdir/gitweb/tm=
+p'";#;
+>> +s#(my|our) \$GITWEB_CONFIG_SYSTEM =3D.*#$1 \$GITWEB_CONFIG_SYSTEM =3D=
+ "";#;'
+>
+> Perhaps moving the last ' to its own line would help maintaining the
+> script in the longer term?
+
+Good idea; thanks.
