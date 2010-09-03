@@ -1,84 +1,105 @@
-From: Ted Ts'o <tytso@mit.edu>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Fri, 3 Sep 2010 14:31:20 -0400
-Message-ID: <20100903183120.GA4887@thunk.org>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
- <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
- <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
- <4C7FC3DC.3060907@gmail.com>
- <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
- <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
- <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
- <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
- <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
- <7voccezr7m.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [BUG?] rename patch accepted with --dry-run, rejected without (Re:
+ [PATCH V3] arm & sh: factorised duplicated clkdev.c)
+Date: Fri, 3 Sep 2010 13:43:51 -0500
+Message-ID: <20100903184351.GC2341@burratino>
+References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com>
+ <1283434786-26479-1-git-send-email-plagnioj@jcrosoft.com>
+ <AANLkTimRKCYYQmgwY0DHu5+e-ggT8grJbdjWFvUqTzH=@mail.gmail.com>
+ <20100903182323.GA17152@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
-	git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 03 20:31:31 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Magnus Damm <magnus.damm@gmail.com>,
+	Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
+	linux-arm-kernel@lists.infradead.org, linux-sh@vger.kernel.org,
+	git@vger.kernel.org, bug-patch@gnu.org
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+X-From: linux-sh-owner@vger.kernel.org Fri Sep 03 20:45:45 2010
+Return-path: <linux-sh-owner@vger.kernel.org>
+Envelope-to: glps-linuxsh-dev@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Orb2w-0007pt-EK
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 20:31:30 +0200
+	(envelope-from <linux-sh-owner@vger.kernel.org>)
+	id 1OrbGi-0006sk-V8
+	for glps-linuxsh-dev@lo.gmane.org; Fri, 03 Sep 2010 20:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932080Ab0ICSbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Sep 2010 14:31:25 -0400
-Received: from thunk.org ([69.25.196.29]:51958 "EHLO thunker.thunk.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757150Ab0ICSbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 14:31:25 -0400
-Received: from root (helo=tytso-glaptop)
-	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
-	id 1Orb2n-00066U-DL; Fri, 03 Sep 2010 14:31:21 -0400
-Received: from tytso by tytso-glaptop with local (Exim 4.71)
-	(envelope-from <tytso@thunk.org>)
-	id 1Orb2m-0002CU-PV; Fri, 03 Sep 2010 14:31:20 -0400
+	id S1753936Ab0ICSpn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glps-linuxsh-dev@m.gmane.org>);
+	Fri, 3 Sep 2010 14:45:43 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42740 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753915Ab0ICSpn convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-sh@vger.kernel.org>); Fri, 3 Sep 2010 14:45:43 -0400
+Received: by fxm13 with SMTP id 13so1376906fxm.19
+        for <multiple recipients>; Fri, 03 Sep 2010 11:45:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=iMieZydjl9UaGqGjgBUkUBOVmiT2rFgehbvT0Zufig8=;
+        b=v6dTb+UdB8qZBmam38BCUq6Y5QxTPfdjPywYK0LUN3aT/RTq5xyW3XE/zjqmEe2Obe
+         46pzswRLQ3k25oQTF0a557NvG+fVRDkG1rq4go0rs3V3Z9HSAWvw5a4kJxio2MDsQCz+
+         DyNSIsrqWI7XmxLuDsDpeXLGdpcrpZ8XEV+8s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=iyLO/nlELnWxaQVFQGlsH79sd7JxwB56DEroBjWYg4kVoVRtpHJcsAHPOWTQkidWOb
+         zAt6MC1+Yemlh6UFLm9z7RDUg/wriiFA5BWXVg+r7FVGe/yg29Ex1qpE2t54E2T2gmwa
+         1jSwVwHbYxxzgCna6XEgUCxodsrD3cYcO0J48=
+Received: by 10.103.191.20 with SMTP id t20mr218872mup.35.1283539541459;
+        Fri, 03 Sep 2010 11:45:41 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id a16sm896827vcm.18.2010.09.03.11.45.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 03 Sep 2010 11:45:40 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7voccezr7m.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20100903182323.GA17152@pengutronix.de>
 User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: <locally generated>
-X-SA-Exim-Mail-From: tytso@thunk.org
-X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
-Sender: git-owner@vger.kernel.org
+Sender: linux-sh-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155261>
+List-ID: <linux-sh.vger.kernel.org>
+X-Mailing-List: linux-sh@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155262>
 
-On Fri, Sep 03, 2010 at 10:12:29AM -0700, Junio C Hamano wrote:
-> Theodore Tso <tytso@MIT.EDU> writes:
-> 
-> > ...  So people who are willing
-> > to participate as part of the peer2peer network can download the
-> > instructions for how to make the canonical pack once a month, and use it
-> > to create the canonical pack.  If the "Gittorrent master" has spent a
-> > lot of time to carefully compute the most efficient set of delta
-> > pairings, they will get the slight benefit of a more efficient pack
-> > which they could use instead of th eir local one without having to use
-> > large values of --window and --depth to "git repack".
-> 
-> Hmm, is the idea essentially to tell people "Here is a snapshot of Linus
-> repository as of a few weeks ago, carefully repacked.  Instead of running
-> "git clone" yourself, please bootstrap your repository by copying it over
-> bittorrent and then "git pull" to update it"?
+(+cc: bug-patch)
 
-Essentially, yes.  I just don't think bittorrent makes sense for
-anything else, because the git protocol is so much more efficient for
-tiny incremental updates...
+Hi,
 
-So the only other part of my idea is that we could construct a special
-set of instructions that would allow them to recreate the carefully
-repacked snapshot of Linus's repository without having to download it
-from a central seed site.  Instead, they could download a small set of
-instructions, and use that in combination with the objects already in
-their repository, to create a bit-identical version of the carefully
-repacked Linus repository.  It's basically rip-off of jigdo, but
-applied to git repositories instead of Debian .iso files.
+Uwe Kleine-K=C3=B6nig wrote:
+> On Fri, Sep 03, 2010 at 07:18:43PM +0900, Magnus Damm wrote:
 
-	       		    	       - Ted
+>> Using --dry-run is fine, but omitting dry-run gives me:
+>>=20
+>> ...
+>> patching file arch/arm/common/clkdev.c
+>> patching file arch/sh/include/asm/clkdev.h
+>> Hunk #1 FAILED at 1.
+>> Hunk #2 FAILED at 11.
+>> 2 out of 2 hunks FAILED -- saving rejects to file
+>> arch/sh/include/asm/clkdev.h.rej
+>>=20
+>> I guess this is caused by the last "renaming" hunk, see below.
+
+Yep, I can reproduce this.  Patch applies with "git apply",
+"patch --dry-run -p1" accepts it, "patch -p1" fails.
+
+ $ patch --version | head -1
+ GNU patch 2.6.1.85-423d
+ $ cd ~/src/linux-2.6
+ $ git checkout 2bfc96a12
+ $ git clean -fd
+ $ wget http://download.gmane.org/gmane.linux.ports.sh.devel/8747/8748
+ $ patch -p1 --quiet --dry-run <8748=20
+ $ echo $?
+ 0
+ $ patch -p1 --quiet <8748=20
+ 2 out of 2 hunks FAILED -- saving rejects to file include/linux/clkdev=
+=2Eh.rej
+ $ echo $?
+ 1
+
+Andreas: ideas?
