@@ -1,118 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH v2 4/4] instaweb: disable logo and favicon by default
-Date: Thu, 2 Sep 2010 21:19:51 -0500
-Message-ID: <20100903021951.GC29302@burratino>
-References: <20100812131152.2333.9604.reportbug@octopus.hi.pengutronix.de>
- <20100902221211.GA4789@burratino>
- <20100902223624.GA9613@dcvr.yhbt.net>
- <20100902235237.GA6466@burratino>
- <20100902235722.GE6466@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Fri, 3 Sep 2010 12:48:21 +1000
+Message-ID: <AANLkTik1hfe3jVWy236611d7hdP=yt+d3vCBiGvDa26H@mail.gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+	<4C7FC3DC.3060907@gmail.com>
+	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+	<20100902155810.GB14508@sigill.intra.peff.net>
+	<alpine.LFD.2.00.1009021233190.19366@xanadu.home>
+	<4C7FDA32.5050009@gmail.com>
+	<alpine.LFD.2.00.1009021326290.19366@xanadu.home>
+	<AANLkTi=Q7EfeUDB6PuSa88PDtaBZSMMuaMqh8hU25ECb@mail.gmail.com>
+	<20100902192910.GJ32601@spearce.org>
+	<m3y6bjnadu.fsf@localhost.localdomain>
+	<AANLkTikSHXivniUk-1KU30Ws23ebnbDhOmjKmpmVH-Y9@mail.gmail.com>
+	<alpine.LFD.2.00.1009021931340.19366@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Sep 03 04:21:50 2010
+Cc: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Sep 03 04:48:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrLuV-0002zl-Ob
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 04:21:48 +0200
+	id 1OrMKL-0003ZL-43
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 04:48:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754869Ab0ICCVm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 22:21:42 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:44173 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754682Ab0ICCVm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 22:21:42 -0400
-Received: by qyk36 with SMTP id 36so2739715qyk.19
-        for <git@vger.kernel.org>; Thu, 02 Sep 2010 19:21:41 -0700 (PDT)
+	id S1755427Ab0ICCsX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Sep 2010 22:48:23 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:41791 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755003Ab0ICCsW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Sep 2010 22:48:22 -0400
+Received: by wwj40 with SMTP id 40so1780507wwj.1
+        for <git@vger.kernel.org>; Thu, 02 Sep 2010 19:48:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=YItKMOYmHJnUjHCmZuLBeSR5/ZiK6tEGsukMEwg2nGA=;
-        b=O75OYdCw5E4R1RzOBJn8NtfyJj/Vt+JCic1ezpxOgw+RnsS20PEK9QRORFGnRlkyRe
-         CZT1xkx2jSOmg0xBmwwIb9HyrSuRMHpYnNuF23FWfGCz2VWKZ+fRvlvP+W/W16y2LqvH
-         r7oT6yci2aw1w9MCt4GfD6OFdfQydsMVuJQF8=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=X0S4xdSomrb/jfvnCymoYFH86Eg98dVyxkBjkXjKb1s=;
+        b=TQXyS89oTEVUmmZwtlaJGD4E6iXvVET5g8l8fT59rnIlhWItMshH6dKZY43uCBEmoq
+         109QA1yywJjk8zwmzaXFAMadfO22RaOmFyCB3yM0QaJmPt+86Hd7TXX8LsjZKyH3trrc
+         YlYhyTwZHGygB/Ifp80EAZxkSdoNyX20qKpeU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=D/OuraZXDaIeY91P6d0ymuoGDiFOcVi51zzQ6MYrvD94cmF8UEdsUCVclj1OuXT09t
-         a7OaPs2r6noNCauynQo/aCV1oNTEv5VLoGdk3Ogw6WFSeok9wQ9GJfWAWnjkurNR5ZsU
-         7nq/nAcX9V+x4YxyUSyRxBIUNK98Pj6ruscXI=
-Received: by 10.224.54.140 with SMTP id q12mr685592qag.233.1283480501290;
-        Thu, 02 Sep 2010 19:21:41 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id f15sm1270019qcr.1.2010.09.02.19.21.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Sep 2010 19:21:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100902235722.GE6466@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=NEVMfILKCpKBzq1OfDIKdccUFGxm9XrC/ryUpH2ytI8rD6suot5QIDbERvG28m/whT
+         97yFlrtx2ChcApix327hf9KFYOwzxa83usDl827zTg7ZGLRC41XeMYayv+yi8ty1gKjn
+         IjouJcldDmYaG53P6CwB2rhG6Q15sz7WNd7dU=
+Received: by 10.227.146.143 with SMTP id h15mr61354wbv.149.1283482101372; Thu,
+ 02 Sep 2010 19:48:21 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Thu, 2 Sep 2010 19:48:21 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1009021931340.19366@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155233>
 
-Avoid 404 errors due to the missing git logo and favicon.
+On Fri, Sep 3, 2010 at 10:29 AM, Nicolas Pitre <nico@fluxnic.net> wrote=
+:
+> But usually the very first commit in a pack is huge as it typically
+> isn't delta compressed (a delta chain has to start somewhere). =C2=A0=
+And this
+> first commit will roughly represent the same size as a tarball for th=
+at
+> commit. =C2=A0And if you don't get at least that first commit then yo=
+u are
+> screwed. =C2=A0Or if you don't get a complete second commit when deep=
+ening a
+> clone you are still screwed.
 
-Reported-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
-Cc: Eric Wong <normalperson@yhbt.net>
-Cc: Jakub Narebski <jnareb@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Jonathan Nieder wrote:
+Elijah's recent work on "rev-list --objects -- pathspec" [1] may help
+split a commit into many parts that can be sent separately.
 
-> --- a/git-instaweb.sh
-> +++ b/git-instaweb.sh
-> @@ -376,7 +376,9 @@ s#^(my|our) \$projectroot =3D.*#$1 \$projectroot =
-=3D "'$(dirname "$fqgitdir")'";#;
->  s#(my|our) \$gitbin =3D.*#$1 \$gitbin =3D "'$GIT_EXEC_PATH'";#;
->  s#(my|our) \$projects_list =3D.*#$1 \$projects_list =3D \$projectroo=
-t;#;
->  s#(my|our) \$git_temp =3D.*#$1 \$git_temp =3D "'$fqgitdir/gitweb/tmp=
-'";#;
-> -s#(my|our) \$GITWEB_CONFIG_SYSTEM =3D.*#$1 \$GITWEB_CONFIG_SYSTEM =3D=
- "";#;'
-> +s#(my|our) \$GITWEB_CONFIG_SYSTEM =3D.*#$1 \$GITWEB_CONFIG_SYSTEM =3D=
- "";#;
-> +s#(my|our) \$favicon =3D.*#$1 \$favicon =3D undef;#;'
-> +s#(my|our) \$logo =3D.*#$1 \$logo =3D undef;#;'
+[1] http://mid.gmane.org/1282803711-10253-1-git-send-email-newren@gmail=
+=2Ecom
 
-Stray apostrophe; sorry about that.  Here's a replacement.
+> Another issue is what to do with objects that are themselves huge.
 
- git-instaweb.sh |    4 +++-
- 1 files changed, 3 insertions(+), 1 deletions(-)
-
-diff --git a/git-instaweb.sh b/git-instaweb.sh
-index 6279f4d..0725596 100755
---- a/git-instaweb.sh
-+++ b/git-instaweb.sh
-@@ -376,7 +376,9 @@ s#^(my|our) \$projectroot =3D.*#$1 \$projectroot =3D=
- "'$(dirname "$fqgitdir")'";#;
- s#(my|our) \$gitbin =3D.*#$1 \$gitbin =3D "'$GIT_EXEC_PATH'";#;
- s#(my|our) \$projects_list =3D.*#$1 \$projects_list =3D \$projectroot;=
-#;
- s#(my|our) \$git_temp =3D.*#$1 \$git_temp =3D "'$fqgitdir/gitweb/tmp'"=
-;#;
--s#(my|our) \$GITWEB_CONFIG_SYSTEM =3D.*#$1 \$GITWEB_CONFIG_SYSTEM =3D =
-"";#;'
-+s#(my|our) \$GITWEB_CONFIG_SYSTEM =3D.*#$1 \$GITWEB_CONFIG_SYSTEM =3D =
-"";#;
-+s#(my|our) \$favicon =3D.*#$1 \$favicon =3D undef;#;
-+s#(my|our) \$logo =3D.*#$1 \$logo =3D undef;#;'
-=20
- gitweb_cgi () {
- 	cat > "$1.tmp" <<\EOFGITWEB
+=46or big blobs, it's probably best sending them separately so they can
+be resumed.
 --=20
-1.7.2.2
+Duy
