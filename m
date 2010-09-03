@@ -1,211 +1,120 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: simple example for git hooks
-Date: Fri, 3 Sep 2010 15:37:00 -0500
-Message-ID: <i5rmb2$q4n$1@dough.gmane.org>
-References: <i5p96s$u7q$1@dough.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 03 22:38:23 2010
+From: Eric Wong <normalperson@yhbt.net>
+Subject: Re: [PATCH] Add unit test for check_cherry_pick
+Date: Fri, 3 Sep 2010 13:48:51 -0700
+Message-ID: <20100903204851.GA16831@dcvr.yhbt.net>
+References: <AANLkTikuY28wwccxekDXD1WGtaOoF3JG7ZBfm6vjapwt@mail.gmail.com> <1283539935-14672-1-git-send-email-stevenrwalter@gmail.com> <AANLkTikjGgzOxNz-Fepcg2ALqdWurzMyQUmRgqyxQN5L@mail.gmail.com> <AANLkTik5kcD1reuGfq4k_Oidkx00MY8E+Ucf+Ef_gCDD@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Sam Vilain <sam@vilain.net>, git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 03 22:48:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ord1e-0001hF-Lr
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 22:38:19 +0200
+	id 1OrdBx-0007Js-Bn
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 22:48:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756348Ab0ICUiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Sep 2010 16:38:06 -0400
-Received: from lo.gmane.org ([80.91.229.12]:40106 "EHLO lo.gmane.org"
+	id S1757335Ab0ICUsw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 16:48:52 -0400
+Received: from dcvr.yhbt.net ([64.71.152.64]:60707 "EHLO dcvr.yhbt.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754039Ab0ICUiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 16:38:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ord1P-0001Xl-FM
-	for git@vger.kernel.org; Fri, 03 Sep 2010 22:38:03 +0200
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 22:38:03 +0200
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 22:38:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1752874Ab0ICUsw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 16:48:52 -0400
+Received: from localhost (unknown [127.0.2.5])
+	by dcvr.yhbt.net (Postfix) with ESMTP id 7B4571F677;
+	Fri,  3 Sep 2010 20:48:51 +0000 (UTC)
+Content-Disposition: inline
+In-Reply-To: <AANLkTik5kcD1reuGfq4k_Oidkx00MY8E+Ucf+Ef_gCDD@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155271>
-
-"Gelonida" <gelonida@gmail.com> wrote in message 
-news:<i5p96s$u7q$1@dough.gmane.org>...
-
-> Does anyone have a simple example of a git pre-commit hook
-
->
-
-> I have difficulties finding understandable tutorals about git hooks.
-
->
-
-> What I am looking at is basic examples about
-
->
-
-> precommit hooks
-
-> ================
-
->
-
-> - how get the commit comment and check it's contents
-
-
-
-I think there is a special hook for this besides the pre-commit hook. 
-Haven't tried it myself, yet.  Look at githooks manpage in the reference 
-manual.
-
-
-
-> - how to get list of modified files
-
-
-
-I use this script to get modified files:
-
-
-
-ABORTMSG="Commit Aborted!"
-
-DIFFFILES=`git diff-index HEAD --cached --name-only SRC/*/* MYSRC/*` if [ 
-$? -ne 0 ]; then
-
-  echo "error running git diff-index command"
-
-  echo $ABORTMSG
-
-  exit 4
-
-fi
-
-
-
-Where SRC and MYSRC are the paths that contain the files I'm interested in. 
-If you really want to list every thing that changed then don't specify 
-paths.
-
-
-
->
-
-> The issue I'm currently blocked with is rather simple.
-
->
-
-> I'd like to get a list aof all
-
-> new or modified file names, such, that I can check, that for  example
-
-> all .h files contain a project specific header.
-
->
-
-
-
-I use this script to check the header:
-
-
-
-for FILES in ${DIFFFILES}
-
-  do
-
-  echo "checking header for keywords in working copy of:${FILES}"
-
-  if [ ! -r ${FILES} ]; then
-
-    echo "${FILES} needs read permission"
-
-    echo $ABORTMSG
-
-    exit 6
-
-  fi
-
-  CHKHEADER=$(/usr/bin/head -n 2 ${FILES} | /bin/egrep -c 'somekeyword')
-
-  if [ ${CHKHEADER} -ne 1 ]; then
-
-    echo "line 1 or 2 needs those special keywords in it:${FILES}"
-
-    echo $ABORTMSG
-
-    exit 7
-
-  fi
-
-  done
-
-
-
-THIS IS BASED ON THE ASSUMPTION THAT YOUR WORKING COPY AND INDEX ENTRY ARE 
-SUPPOSED TO MATCH!  Its based on a workflow in which you commit your current 
-work.  I you want to be able to git-add a file to the index and then modify 
-the file again and then only commit what's in the index while retaining a 
-working copy that differs from the index, THEN THIS SCRIPT WON'T WORK.
-
-
-
-> As soon as I have the file names I should be able to proceed.
-
->
-
-> How could I do this best from a shell script.
-
->
-
-> Is there any clear documentation about hich git commands I'm allowed
-
-> to use during a trigger script and which ones I can't
-
->
-
-
-
-Keep in mind that git hooks don't allow you to prompt the user in your 
-script.  However, the exception may be git commands that prompt the user. 
-Haven't tried that combination myself yet...
-
-
-
-> Lateron I would be interested to implement a small server script, that
-
-> refuses a git push in case, that the most recent commit in a branch
-
-> would contain .h files without a certain header text
-
->
-
-
-
-Your pre-commit hook will prevent this because you can only push commits. 
-Unless you don't have control over what hooks the push-er is using in their 
-repo...  In which case there is a hook that checks push-ed content before 
-committing it and will reject it if need be.  Can't remember what it is 
-offhand.  Look at the githooks refmanual entry 
-http://www.kernel.org/pub/software/scm/git/docs/v1.7.1.2/githooks.html for 
-whatever git version you're using and you should be able to find it.  These 
-scripts would probably work in that remote-side hook.
-
-
-
-v/r,
-
-Neal
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155272>
+
+Steven Walter <stevenrwalter@gmail.com> wrote:
+> On Fri, Sep 3, 2010 at 3:12 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+> > On Fri, Sep 3, 2010 at 18:52, Steven Walter <stevenrwalter@gmail.co=
+m> wrote:
+> >> +GIT_SVN_LC_ALL=3D${LC_ALL:-$LANG}
+> >
+> > What's this about?
+>=20
+> I'll admit that I copied these from t9100.  I assumed they were
+> necessary for correct operation.  If that's not the case, then they
+> can be removed.
+
+Hi Steven, I've squashed your test case along with the following change
+and pushed the original commit up to git://git.bogomips.org/git-svn
+
+Here's the intermediate diff -w of changes I made
+(all space indentations were convert to tabs, too):
+
+diff --git a/t/t9157-git-svn-fetch-merge.sh b/t/t9157-git-svn-fetch-mer=
+ge.sh
+index 1c87986..da582c5 100644
+--- a/t/t9157-git-svn-fetch-merge.sh
++++ b/t/t9157-git-svn-fetch-merge.sh
+@@ -4,27 +4,13 @@
+ #
+=20
+ test_description=3D'git svn merge detection'
+-
+-GIT_SVN_LC_ALL=3D${LC_ALL:-$LANG}
+-
+ . ./lib-git-svn.sh
+=20
+-say 'define NO_SVN_TESTS to skip git svn tests'
+-
+-case "$GIT_SVN_LC_ALL" in
+-*.UTF-8)
+-	test_set_prereq UTF8
+-	;;
+-*)
+-	say "UTF-8 locale not set, some tests skipped ($GIT_SVN_LC_ALL)"
+-	;;
+-esac
+-
+-test_expect_success \
+-    'initialize source svn repo' '
++test_expect_success 'initialize source svn repo' '
+         svn_cmd mkdir -m x "$svnrepo"/trunk &&
+         svn_cmd mkdir -m x "$svnrepo"/branches &&
+         svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
++	(
+ 	cd "$SVN_TREE" &&
+ 	touch foo &&
+ 	svn add foo &&
+@@ -49,17 +35,16 @@ test_expect_success \
+ 	svn switch "$svnrepo"/trunk &&
+ 	svn merge "$svnrepo"/branches/branch2 &&
+ 	svn resolved baz &&
+-	svn commit -m "merge branch2" &&
+-	cd .. &&
+-	rm -rf "$SVN_TREE"'
++		svn commit -m "merge branch2"
++	) &&
++	rm -rf "$SVN_TREE"
++'
+=20
+-test_expect_success \
+-    'clone svn repo' '
++test_expect_success 'clone svn repo' '
+         git svn init -s "$svnrepo" &&
+-	git svn fetch'
++	git svn fetch
++'
+=20
+-test_expect_success \
+-    'verify merge commit' '
+-        git rev-parse HEAD^2'
++test_expect_success 'verify merge commit' 'git rev-parse HEAD^2'
+=20
+ test_done
+
+--=20
+Eric Wong
