@@ -1,71 +1,211 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [BUG?] rename patch accepted with --dry-run, rejected without (Re: [PATCH V3] arm & sh: factorised duplicated clkdev.c)
-Date: Fri, 03 Sep 2010 21:45:37 +0200
-Message-ID: <m2r5ha7gri.fsf@igel.home>
-References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com>
-	<1283434786-26479-1-git-send-email-plagnioj@jcrosoft.com>
-	<AANLkTimRKCYYQmgwY0DHu5+e-ggT8grJbdjWFvUqTzH=@mail.gmail.com>
-	<20100903182323.GA17152@pengutronix.de>
-	<20100903184351.GC2341@burratino>
-	<20100903192907.GA2978@n2100.arm.linux.org.uk>
-	<20100903193309.GC29821@pengutronix.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Russell King - ARM Linux <linux@arm.linux.org.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>, linux-sh@vger.kernel.org,
-	bug-patch@gnu.org, Magnus Damm <magnus.damm@gmail.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
-	git@vger.kernel.org
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Fri Sep 03 21:45:46 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: simple example for git hooks
+Date: Fri, 3 Sep 2010 15:37:00 -0500
+Message-ID: <i5rmb2$q4n$1@dough.gmane.org>
+References: <i5p96s$u7q$1@dough.gmane.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 03 22:38:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrcCn-0004NL-Uu
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 21:45:46 +0200
+	id 1Ord1e-0001hF-Lr
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 22:38:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757107Ab0ICTpk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 15:45:40 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:32968 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756906Ab0ICTpj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 15:45:39 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id A41161C00217;
-	Fri,  3 Sep 2010 21:45:37 +0200 (CEST)
-Received: from igel.home (ppp-93-104-152-151.dynamic.mnet-online.de [93.104.152.151])
-	by mail.mnet-online.de (Postfix) with ESMTP id 93EB41C00166;
-	Fri,  3 Sep 2010 21:45:37 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 5B6F1CA29C; Fri,  3 Sep 2010 21:45:37 +0200 (CEST)
-X-Yow: ..  ich bin in einem dusenjet ins jahr 53 vor chr...
- ich lande im antiken Rom...  einige gladiatoren spielen scrabble...
- ich rieche PIZZA...
-In-Reply-To: <20100903193309.GC29821@pengutronix.de> ("Uwe =?utf-8?Q?Klein?=
- =?utf-8?Q?e-K=C3=B6nig=22's?=
-	message of "Fri, 3 Sep 2010 21:33:09 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1756348Ab0ICUiG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Sep 2010 16:38:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:40106 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754039Ab0ICUiF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 16:38:05 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Ord1P-0001Xl-FM
+	for git@vger.kernel.org; Fri, 03 Sep 2010 22:38:03 +0200
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 22:38:03 +0200
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 22:38:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155271>
 
-Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
+"Gelonida" <gelonida@gmail.com> wrote in message 
+news:<i5p96s$u7q$1@dough.gmane.org>...
 
-> Still GNU patch should then already fail in --dry-run mode.
+> Does anyone have a simple example of a git pre-commit hook
 
-Since --dry-run doesn't actually perform any changes it can easily be
-fooled when a file is patched twice.
+>
 
-Andreas.
+> I have difficulties finding understandable tutorals about git hooks.
 
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+>
+
+> What I am looking at is basic examples about
+
+>
+
+> precommit hooks
+
+> ================
+
+>
+
+> - how get the commit comment and check it's contents
+
+
+
+I think there is a special hook for this besides the pre-commit hook. 
+Haven't tried it myself, yet.  Look at githooks manpage in the reference 
+manual.
+
+
+
+> - how to get list of modified files
+
+
+
+I use this script to get modified files:
+
+
+
+ABORTMSG="Commit Aborted!"
+
+DIFFFILES=`git diff-index HEAD --cached --name-only SRC/*/* MYSRC/*` if [ 
+$? -ne 0 ]; then
+
+  echo "error running git diff-index command"
+
+  echo $ABORTMSG
+
+  exit 4
+
+fi
+
+
+
+Where SRC and MYSRC are the paths that contain the files I'm interested in. 
+If you really want to list every thing that changed then don't specify 
+paths.
+
+
+
+>
+
+> The issue I'm currently blocked with is rather simple.
+
+>
+
+> I'd like to get a list aof all
+
+> new or modified file names, such, that I can check, that for  example
+
+> all .h files contain a project specific header.
+
+>
+
+
+
+I use this script to check the header:
+
+
+
+for FILES in ${DIFFFILES}
+
+  do
+
+  echo "checking header for keywords in working copy of:${FILES}"
+
+  if [ ! -r ${FILES} ]; then
+
+    echo "${FILES} needs read permission"
+
+    echo $ABORTMSG
+
+    exit 6
+
+  fi
+
+  CHKHEADER=$(/usr/bin/head -n 2 ${FILES} | /bin/egrep -c 'somekeyword')
+
+  if [ ${CHKHEADER} -ne 1 ]; then
+
+    echo "line 1 or 2 needs those special keywords in it:${FILES}"
+
+    echo $ABORTMSG
+
+    exit 7
+
+  fi
+
+  done
+
+
+
+THIS IS BASED ON THE ASSUMPTION THAT YOUR WORKING COPY AND INDEX ENTRY ARE 
+SUPPOSED TO MATCH!  Its based on a workflow in which you commit your current 
+work.  I you want to be able to git-add a file to the index and then modify 
+the file again and then only commit what's in the index while retaining a 
+working copy that differs from the index, THEN THIS SCRIPT WON'T WORK.
+
+
+
+> As soon as I have the file names I should be able to proceed.
+
+>
+
+> How could I do this best from a shell script.
+
+>
+
+> Is there any clear documentation about hich git commands I'm allowed
+
+> to use during a trigger script and which ones I can't
+
+>
+
+
+
+Keep in mind that git hooks don't allow you to prompt the user in your 
+script.  However, the exception may be git commands that prompt the user. 
+Haven't tried that combination myself yet...
+
+
+
+> Lateron I would be interested to implement a small server script, that
+
+> refuses a git push in case, that the most recent commit in a branch
+
+> would contain .h files without a certain header text
+
+>
+
+
+
+Your pre-commit hook will prevent this because you can only push commits. 
+Unless you don't have control over what hooks the push-er is using in their 
+repo...  In which case there is a hook that checks push-ed content before 
+committing it and will reject it if need be.  Can't remember what it is 
+offhand.  Look at the githooks refmanual entry 
+http://www.kernel.org/pub/software/scm/git/docs/v1.7.1.2/githooks.html for 
+whatever git version you're using and you should be able to find it.  These 
+scripts would probably work in that remote-side hook.
+
+
+
+v/r,
+
+Neal
