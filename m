@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 0/3] ab/i18n: README and GETTEXT_POISON support
-Date: Fri,  3 Sep 2010 23:24:53 +0000
-Message-ID: <1283556296-7365-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH 1/3] gettext: Add po/README file documenting Git's gettext
+Date: Fri,  3 Sep 2010 23:24:54 +0000
+Message-ID: <1283556296-7365-2-git-send-email-avarab@gmail.com>
 References: <AANLkTi=6ctLp-8FeqOGMZuhwvM_7DbaEp7+LK4nXfCaE@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,121 +17,140 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrfdV-0004xM-RU
+	id 1OrfdW-0004xM-Bz
 	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 01:25:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753105Ab0ICXZM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 19:25:12 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:54452 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752752Ab0ICXZL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 19:25:11 -0400
-Received: by wwj40 with SMTP id 40so3265439wwj.1
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 16:25:10 -0700 (PDT)
+	id S1753861Ab0ICXZR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 19:25:17 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:43337 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752752Ab0ICXZN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 19:25:13 -0400
+Received: by wyf22 with SMTP id 22so436222wyf.19
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 16:25:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=rQD7+cxI7WvT9G0skK14SDHr1HPUAZSpUUE8AtKgXiI=;
-        b=Ys3/Ivj67GkhKb3Puqrspn8vHyFDAFha78rZ/TqH92T27ncrL2gYPMip0SxUB6LbEh
-         EQa9czwQ1vm7bv18guf3+K0SGtxBtHXlSid9nmEC+Xev/UIhanCrFvBkxvxY1oGeAPAB
-         uTRuYqnWUUhInu/FLR5lBbxri5FstPChZRvmY=
+        bh=jxOY/CMESpqtLgZIveaBx5Fq9/NKtQMnRjqz9mYIZyc=;
+        b=Pfa1syQ7OupW5YvLtZEnIKj2U1gyzQnyfWZ5s70XsB+QCb+bbZDLd1Yp72km7um8MW
+         PHEchiLzuXyvpbQ+j6k5X0pFLD1eySB67wCJus3AkOO3Ws68s6K0QGkgE6zf7avlgVtw
+         vgLpq7it3dLgOKIcBX/EqZI5d8Sp+aBePObQ4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=JDWzuywBczk2I2/Yp/++tYSdWf7jOGuyeTaIaSVTKf3aXXVPJ0QuWvFYvyi4AEAP4S
-         lNYL3Cd9kWL0pNiHMouJrYPH4caPTjNo/cnCpn7KcFE3H0RsGkWMcDh2TgMB3RDveLuC
-         SW2N46vhJeEmwWZamNpHcAc8IN9rsvgvCQVv0=
-Received: by 10.227.128.13 with SMTP id i13mr411972wbs.31.1283556309919;
-        Fri, 03 Sep 2010 16:25:09 -0700 (PDT)
+        b=guBLuiUzRvuk7NKiB4m7QiDPZ41/W/OV+zoxMJPonAc2E8XYCVXRcCuCoKWzWQSSQI
+         8ES/mHf6fCy8/IJGdV46WTiuxi7aYHuKbZ7JCXHCDwmveb8D9xruUnls0gOx/ccu4Ig1
+         DI083t2hBsC1qTMtjGAau9pNWCoYovOPcV/qk=
+Received: by 10.227.141.146 with SMTP id m18mr47525wbu.34.1283556312318;
+        Fri, 03 Sep 2010 16:25:12 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id a1sm2047451wbb.2.2010.09.03.16.25.08
+        by mx.google.com with ESMTPS id a1sm2047451wbb.2.2010.09.03.16.25.10
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Sep 2010 16:25:09 -0700 (PDT)
+        Fri, 03 Sep 2010 16:25:11 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.2.336.g704fc
 In-Reply-To: <AANLkTi=6ctLp-8FeqOGMZuhwvM_7DbaEp7+LK4nXfCaE@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155284>
 
-On Fri, Sep 3, 2010 at 18:22, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
-varab@gmail.com> wrote:
-> This is a pull request for an updated ab/i18n and the builtin.h
-> changes. I can also send this to list on request, but it's 25 patches
-> for what are trivial merge changes and a doc patch.
->
-> I've rebased the ab/i18n series on top of master. Now it looks like
-> this:
->
->    master
->    \
->     use-builtin-h-for-builtin-commands-v2
->     \
->      ab/i18n
->
-> The changes are:
->
-> [....]
->
->  1c7584b gettext: Add po/README file documenting Git's gettext
->
-> This is new, a README file describing how to deal with the po/
-> directory. See http://github.com/avar/git/raw/ab/i18n/po/README
+Add a po/README file. This documentation is targated at translators
+and maintainers of git.git.
 
-Here's the README patch at the tip of the new ab/i18n (for reference,
-because it wasn't on-list before), and the GETTEXT_POISON support I
-promised to implement.
+Currently it describes how to add new PO files and how to update
+them. But in the future we want to add more things to it, e.g. how and
+what to add in TRANSLATOR comments, how to make the source more
+gettext friendly etc.
 
-The poison support allows us to me much more sure that this gettext
-stuff is actually working as intended. For one it turned up a bug in
-the gettextization in builtin/fetch.c (I'll elaborate in a
-soon-to-follow series).
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (3):
-  gettext: Add po/README file documenting Git's gettext
-  gettext: Add GETTEXT_POISON=3DYesPlease Makefile parameter
-  gettext: add NO_GETTEXT_POISON prerequisite to tests
+Turns out we do just fine with --no-location.
 
- Makefile                      |    9 ++++
- gettext.h                     |    4 ++
- po/README                     |   68 ++++++++++++++++++++++++++++
- t/lib-gettext.sh              |   10 +++-
- t/lib-httpd.sh                |    2 +-
- t/t0001-init.sh               |    2 +-
- t/t1200-tutorial.sh           |    4 +-
- t/t2200-add-update.sh         |    2 +-
- t/t2204-add-ignored.sh        |    8 ++--
- t/t3030-merge-recursive.sh    |    2 +-
- t/t3200-branch.sh             |    2 +-
- t/t3203-branch-output.sh      |    2 +-
- t/t3700-add.sh                |    4 +-
- t/t4001-diff-rename.sh        |    4 +-
- t/t4014-format-patch.sh       |    2 +-
- t/t5541-http-push.sh          |    2 +-
- t/t5601-clone.sh              |    2 +-
- t/t6040-tracking-info.sh      |    2 +-
- t/t6200-fmt-merge-msg.sh      |   28 ++++++------
- t/t7004-tag.sh                |    6 ++-
- t/t7060-wtstatus.sh           |    2 +-
- t/t7102-reset.sh              |    2 +-
- t/t7110-reset-merge.sh        |    6 +-
- t/t7201-co.sh                 |   10 ++--
- t/t7500-commit.sh             |    9 +++-
- t/t7501-commit.sh             |   16 +++++--
- t/t7502-commit.sh             |   46 ++++++++++----------
- t/t7506-status-submodule.sh   |   28 ++++++------
- t/t7508-status.sh             |   98 ++++++++++++++++++++-------------=
--------
- t/t7600-merge.sh              |    2 +-
- t/t7602-merge-octopus-many.sh |    6 +-
- t/t7811-grep-open.sh          |    2 +-
- t/test-lib.sh                 |    1 +
- 33 files changed, 247 insertions(+), 146 deletions(-)
+ po/README |   68 +++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 68 insertions(+), 0 deletions(-)
  create mode 100644 po/README
 
+diff --git a/po/README b/po/README
+new file mode 100644
+index 0000000..cca8012
+--- /dev/null
++++ b/po/README
+@@ -0,0 +1,68 @@
++Core GIT Translations
++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
++
++This directory holds the translations for the core of Git. This
++document describes how to add to and maintain these translations.
++
++
++Generating a .pot file
++----------------------
++
++The po/git.pot file contains a message catalog extracted from Git's
++sources. You need to generate it to add new translations with
++msginit(1), or update existing ones with msgmerge(1).
++
++Since the file can be automatically generated it's not checked into
++git.git. To generate it do, at the top-level:
++
++    make pot
++
++
++Initializing a .po file
++-----------------------
++
++To add a new translation first generate git.pot (see above) and then
++in the po/ directory do:
++
++    msginit --locale=3DXX --no-translator
++
++Where XX is your locale, e.g. "is", "de" or "pt_BR".
++
++Then, because msginit(1) will include a lot of superfluous info we
++don't want run this on it:
++
++    perl -ni -e '
++        if (1 .. /^$/) {
++            s/^#.*\n//;
++            s/(?<=3DProject-Id-Version: )PACKAGE VERSION/Git/;
++            s/"(?:PO-Revision-Date|Language-Team|Last-Translator): .*\=
+n//;
++        }
++        s/^#: .*\n//;
++        print
++    ' XX.po
++
++We omit removing "POT-Creation-Date", because msgmerge(1) always adds
++it if it isn't present, and removing it after each msgmerge is harder
++than just including it to begin with.
++
++
++Updating a .po file
++-------------------
++
++If there's an existing *.po file for your language but you need to
++update the translation you first need to generate git.pot (see above)
++and then in the po/ directory do:
++
++    msgmerge --no-location --backup=3Doff -U XX.po git.pot
++
++Where XX.po is the file you want to update.
++
++If you want to generate location comments (it can be very useful to
++see the source for context while translating) do:
++
++    msgmerge --add-location --backup=3Doff -U XX.po git.pot
++
++But then you need remember to remove the comments before you submit
++the file upstream:
++
++    perl -pi -e 's/^#: .*\n//' XX.po
 --=20
 1.7.2.2.336.g704fc
