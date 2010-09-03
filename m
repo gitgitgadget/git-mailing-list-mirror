@@ -1,102 +1,62 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH V3] arm & sh: factorised duplicated clkdev.c
-Date: Fri, 3 Sep 2010 20:23:23 +0200
-Message-ID: <20100903182323.GA17152@pengutronix.de>
-References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com> <1283434786-26479-1-git-send-email-plagnioj@jcrosoft.com> <AANLkTimRKCYYQmgwY0DHu5+e-ggT8grJbdjWFvUqTzH=@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Avoid rename/add conflict when contents are identical
+Date: Fri, 03 Sep 2010 11:29:32 -0700
+Message-ID: <7vbp8eznn7.fsf@alter.siamese.dyndns.org>
+References: <5C4EA6C5B30E6B45A9164CB3A26A0D326F79D9AA04@azsmsx503.amr.corp.intel.com>
+ <7vd3tnmht0.fsf@alter.siamese.dyndns.org>
+ <EF9FEAB3A4B7D245B0801936B6EF4A25262E13@azsmsx503.amr.corp.intel.com>
+ <AANLkTik2op0_Cq13EGit17ja+zCdmbM6WXJ=rfhQMnOQ@mail.gmail.com>
+ <EF9FEAB3A4B7D245B0801936B6EF4A2533DBB8@azsmsx503.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
-	linux-arm-kernel@lists.infradead.org, linux-sh@vger.kernel.org,
-	git@vger.kernel.org
-To: Magnus Damm <magnus.damm@gmail.com>
-X-From: linux-sh-owner@vger.kernel.org Fri Sep 03 20:23:27 2010
-Return-path: <linux-sh-owner@vger.kernel.org>
-Envelope-to: glps-linuxsh-dev@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Schalk\, Ken" <ken.schalk@intel.com>
+X-From: git-owner@vger.kernel.org Fri Sep 03 20:29:53 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-sh-owner@vger.kernel.org>)
-	id 1Orav8-0003Np-7j
-	for glps-linuxsh-dev@lo.gmane.org; Fri, 03 Sep 2010 20:23:26 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Orb1I-0006wP-N4
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 20:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757215Ab0ICSXZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glps-linuxsh-dev@m.gmane.org>);
-	Fri, 3 Sep 2010 14:23:25 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:33434 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757153Ab0ICSXZ (ORCPT
-	<rfc822;linux-sh@vger.kernel.org>); Fri, 3 Sep 2010 14:23:25 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Orav5-0002Zt-IS; Fri, 03 Sep 2010 20:23:23 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Orav5-0005S4-Cs; Fri, 03 Sep 2010 20:23:23 +0200
-Content-Disposition: inline
-In-Reply-To: <AANLkTimRKCYYQmgwY0DHu5+e-ggT8grJbdjWFvUqTzH=@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: linux-sh@vger.kernel.org
-Sender: linux-sh-owner@vger.kernel.org
+	id S1757215Ab0ICS3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Sep 2010 14:29:43 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43123 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757082Ab0ICS3m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 14:29:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9F8F9D3BA2;
+	Fri,  3 Sep 2010 14:29:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wyorV5vKXiaHIGoC37xOcEV5zp8=; b=u1kpOZ
+	OgfYX2f+sTqfS7Q5mGktz+ueIQja2GSDCmOEw035HKmo7PzM435HQIcUsbvQXatp
+	pNaKkOyAaa19rXm0PCc1OalK4CjWT0GnqNPhtse32jGnXkqedJiDtGFEBVI9JDpH
+	kFS4TdQxfHVkV79STtQRAPWpbL+ugOunIPixs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=w9/vdH5FG+ysSb3kwjk1QWfBudfrTDFV
+	PH4rWqeMCgDeQuGXkdXpEViOcqsb9f5fHd+rzk4J8tJYqgraDHDNzxu6L3SdnKv2
+	WWQyqKierdzqct4gTHP6gYqE7n29PTBWVAVZsmVWvAm9wfgW2BykBHpn6VQn22rE
+	EfNgqKoJDJk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 67767D3B9D;
+	Fri,  3 Sep 2010 14:29:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 96BD3D3B9B; Fri,  3 Sep
+ 2010 14:29:34 -0400 (EDT)
+In-Reply-To: <EF9FEAB3A4B7D245B0801936B6EF4A2533DBB8@azsmsx503.amr.corp.intel.com> (Ken
+ Schalk's message of "Wed\, 1 Sep 2010 13\:15\:32 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 35B5E706-B789-11DF-A203-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-sh.vger.kernel.org>
-X-Mailing-List: linux-sh@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155259>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155260>
 
-Hello,
-
-[added git ML to Cc:]
-
-On Fri, Sep 03, 2010 at 07:18:43PM +0900, Magnus Damm wrote:
-> On Thu, Sep 2, 2010 at 10:39 PM, Jean-Christophe PLAGNIOL-VILLARD
-> <plagnioj@jcrosoft.com> wrote:
-> > factorise some generic infrastructure to assist looking up struct c=
-lks
-> > for the ARM & SH architecture.
-> >
-> > as the code is identical at 99%
-> >
-> > put the arch specific code for allocation as example in asm/clkdev.=
-h
-> >
-> > Signed-off-by: Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.=
-com>
-> > ---
-> > v3:
-> > =A0 =A0 =A0 =A0wrong comment removed
-> > =A0 =A0 =A0 =A0headers fixed
->=20
-> [snip]
->=20
-> I can't apply this patch using GNU patch. I've tested 2.5.9 and 2.6.1
-> from Gentoo.
->=20
-> Using --dry-run is fine, but omitting dry-run gives me:
->=20
-> ...
-> patching file arch/arm/common/clkdev.c
-> patching file arch/sh/include/asm/clkdev.h
-> Hunk #1 FAILED at 1.
-> Hunk #2 FAILED at 11.
-> 2 out of 2 hunks FAILED -- saving rejects to file
-> arch/sh/include/asm/clkdev.h.rej
->=20
-> I guess this is caused by the last "renaming" hunk, see below.
->=20
-> I thought these things were supposed to work out of the box...
-Yes, they work out of the box, but only for people using git :-)
-
-Maybe git-apply can be used instead of patch?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Thanks; the patch somehow had all tabs expanded, but I can fix it up.
