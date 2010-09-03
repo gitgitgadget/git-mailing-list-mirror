@@ -1,88 +1,84 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] t7609-merge-co-error-msgs: test non-fast forward case too.
-Date: Fri,  3 Sep 2010 17:25:33 +0200
-Message-ID: <1283527533-16736-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <8762ymewq5.fsf@meyering.net>
-Cc: Jim Meyering <jim@meyering.net>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Fri Sep 03 17:36:40 2010
+From: Simeon Maxein <smaxein@googlemail.com>
+Subject: git filter-branch can "forget" directories on case insensitive filesystems
+Date: Fri, 3 Sep 2010 18:36:17 +0200
+Message-ID: <AANLkTimOs9m==KaD3BNHcgkTTqNQF1yV0NLA_Ew+iS-N@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 03 18:36:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrYJh-0007h3-OR
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 17:36:38 +0200
+	id 1OrZFq-0000vH-K1
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 18:36:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104Ab0ICPgb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Sep 2010 11:36:31 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:41091 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751675Ab0ICPgb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 11:36:31 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o83FDeYS031219
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 3 Sep 2010 17:13:40 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OrY96-0006ql-T5; Fri, 03 Sep 2010 17:25:40 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1OrY96-0004Mc-PV; Fri, 03 Sep 2010 17:25:40 +0200
-X-Mailer: git-send-email 1.7.2.2.284.g95cc.dirty
-In-Reply-To: <8762ymewq5.fsf@meyering.net>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Sep 2010 17:13:40 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o83FDeYS031219
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1284131623.43887@gvQSBoiuvoVQNXu9uIB/7A
+	id S1755815Ab0ICQgc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Sep 2010 12:36:32 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:64402 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755226Ab0ICQgb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 12:36:31 -0400
+Received: by pzk9 with SMTP id 9so618196pzk.19
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 09:36:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=BtzRo2k/fjdMdpMnWu33YtKhchNBx3HoDmewBdshHTs=;
+        b=tE/WglDJ/5PQheOB0Atz1BR72srvUN6jeLKNacRPEeQsypsTFLOIyLW93LF+sqmtE9
+         poabJcP9htwPnWeaYW8X2haQO/dhYUiaKBiZi7+VazTNkabK9G7by6RAs8j3H8hhHnME
+         +7pjlThgKcVn1eX5f/jPjiJlmLKlZe9w7V/bs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=w/aVep21mCCAsYeX0B1fsdL/IUAU0r+p8QjCQBHl2grmQlM/oh4BAbGY6N7Dj8a2yH
+         80y16n6HMc8kqnNWp+35tvtqOuo5rutQHh+123xNxmu4Fnsy0n+vN8yRiuNOvJqxbWCD
+         QHux1QyzohsnLc43WGIZd/CvpfIwEPHfoDns0=
+Received: by 10.114.133.11 with SMTP id g11mr20287wad.213.1283531777640; Fri,
+ 03 Sep 2010 09:36:17 -0700 (PDT)
+Received: by 10.220.164.137 with HTTP; Fri, 3 Sep 2010 09:36:17 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155250>
 
+When running git filter-branch on a case insensitive filesystem, the
+working tree checked out for filtering is missing a directory in my
+project. This is probably related to the problem discussed here:
+http://article.gmane.org/gmane.comp.version-control.git/154662
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
-This comes on top of the patch serie, and adds a test to make sure the
-bug doesn't come back.
+In contrast to that report, this one affects repositories on
+case-insensitive filesystems, regardless of the setting of
+core.ignorecase.
 
-I did check manually that the git of git.git doesn't pass this (while
-the one after the patch serie does).
+To reproduce the problem, follow the steps below. I tested them with
+git 1.7.0.4 on a laptop running Ubuntu, with the repository on a Fat32
+USB drive.
 
- t/t7609-merge-co-error-msgs.sh |   12 ++++++++++--
- 1 files changed, 10 insertions(+), 2 deletions(-)
+mkdir gittest
+cd gittest
+git init
+mkdir testdir
+echo 'abc' >testdir/testfile
+git add testdir
+git commit -m foo
+git rm -r testdir
+mkdir testDir
+echo 'abc' >testDir/testfile
+git add testDir
+git commit -m bar
 
-diff --git a/t/t7609-merge-co-error-msgs.sh b/t/t7609-merge-co-error-msgs.sh
-index 1a109b4..6b58299 100755
---- a/t/t7609-merge-co-error-msgs.sh
-+++ b/t/t7609-merge-co-error-msgs.sh
-@@ -34,9 +34,17 @@ error: The following untracked working tree files would be overwritten by merge:
- Please move or remove them before you can merge.
- EOF
- 
--test_expect_success 'untracked files overwritten by merge' '
-+test_expect_success 'untracked files overwritten by merge (fast and non-fast forward)' '
- 	test_must_fail git merge branch 2>out &&
--	test_cmp out expect
-+	test_cmp out expect &&
-+	git commit --allow-empty -m empty &&
-+	(
-+		GIT_MERGE_VERBOSITY=0 &&
-+		export GIT_MERGE_VERBOSITY &&
-+		test_must_fail git merge branch 2>out2
-+	) &&
-+	test_cmp out2 expect &&
-+	git reset --hard HEAD^	
- '
- 
- cat >expect <<\EOF
--- 
-1.7.2.2.284.g95cc.dirty
+Now, check out master^1 and master to ensure the commits look as
+expected. Then, run this:
+
+git filter-branch --tree-filter 'ls' master
+
+You will notice that the directory vanishes when the second commit is filtered.
+
+The problem occurs whether core.ignorecase is set to true or false. It
+doesn't occur on case sensitive filesystems.
+
+Simeon
