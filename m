@@ -1,52 +1,57 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] parse_object: pass on the original sha1, not the replaced one
-Date: Fri, 3 Sep 2010 06:37:41 +0200
-Message-ID: <201009030637.41728.chriscool@tuxfamily.org>
-References: <20100902211321.18003.34601.chriscool@tuxfamily.org> <AANLkTikBau2-ggvZa2Zp35gTk_j8JEAY8nyVh3i0-ap7@mail.gmail.com>
+From: Gelonida <gelonida@gmail.com>
+Subject: create easy to parse list of added / ,odified files
+Date: Fri, 03 Sep 2010 08:36:52 +0200
+Message-ID: <i5q524$9fc$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 03 06:38:25 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 03 08:37:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrO2i-0000qG-Sl
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 06:38:25 +0200
+	id 1OrPto-0000LQ-IT
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 08:37:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287Ab0ICEiL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Sep 2010 00:38:11 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:34920 "EHLO smtp3-g21.free.fr"
+	id S1753095Ab0ICGhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Sep 2010 02:37:06 -0400
+Received: from lo.gmane.org ([80.91.229.12]:44729 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750955Ab0ICEiJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 00:38:09 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id D365A818047;
-	Fri,  3 Sep 2010 06:38:02 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <AANLkTikBau2-ggvZa2Zp35gTk_j8JEAY8nyVh3i0-ap7@mail.gmail.com>
+	id S1752124Ab0ICGhF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 02:37:05 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OrPtW-0000AY-Qs
+	for git@vger.kernel.org; Fri, 03 Sep 2010 08:37:02 +0200
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 08:37:02 +0200
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 08:37:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100713 ""
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155235>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155236>
 
-On Friday 03 September 2010 01:24:07 Nguyen Thai Ngoc Duy wrote:
-> On Fri, Sep 3, 2010 at 7:13 AM, Christian Couder
-> 
-> <chriscool@tuxfamily.org> wrote:
-> > Since no one resent the original patch with an improved commit
-> > message, here is my try.
-> 
-> My bad. I forgot something again. I will think of something to
-> demonstrate this. By the way, it breaks t6050.14, bisect and
-> replacements.
+Hi,
 
-Ooops, yeah, I will have a look at this.
 
-Thanks,
-Christian.
+for a pre-commit trigger I would like to retrieve the list of modified
+files, such, that I could analyze the contents prior to commit.
+
+what would be the best command for this
+
+
+I thought about using "git status", but wondered, which other command
+might return a nicer to parse list.
+
+TIA
