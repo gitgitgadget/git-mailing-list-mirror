@@ -1,76 +1,105 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Checking out a branch in another directory
-Date: Fri, 3 Sep 2010 17:23:51 -0500
-Message-ID: <20100903222351.GA26237@burratino>
-References: <800379.5243.qm@web31805.mail.mud.yahoo.com>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: Re: [bug-patch] [BUG?] rename patch accepted with --dry-run, rejected without (Re: [PATCH V3] arm & sh: factorised duplicated clkdev.c)
+Date: Sat, 4 Sep 2010 00:58:17 +0200
+Organization: SUSE Labs
+Message-ID: <201009040058.18028.agruen@suse.de>
+References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com> <20100903182323.GA17152@pengutronix.de> <20100903184351.GC2341@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Luben Tuikov <ltuikov@yahoo.com>
-X-From: git-owner@vger.kernel.org Sat Sep 04 00:25:54 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: bug-patch@gnu.org,
+	"Uwe =?utf-8?q?Kleine-K=C3=B6nig?=" <u.kleine-koenig@pengutronix.de>,
+	linux-sh@vger.kernel.org, Magnus Damm <magnus.damm@gmail.com>,
+	linux-arm-kernel@lists.infradead.org,
+	"Jean-Christophe PLAGNIOL-VILLARD" <plagnioj@jcrosoft.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: linux-sh-owner@vger.kernel.org Sat Sep 04 01:04:10 2010
+Return-path: <linux-sh-owner@vger.kernel.org>
+Envelope-to: glps-linuxsh-dev@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Orehh-0008Dv-4j
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 00:25:49 +0200
+	(envelope-from <linux-sh-owner@vger.kernel.org>)
+	id 1OrfIn-0005vR-Nm
+	for glps-linuxsh-dev@lo.gmane.org; Sat, 04 Sep 2010 01:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752985Ab0ICWZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Sep 2010 18:25:44 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:59169 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752133Ab0ICWZn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 18:25:43 -0400
-Received: by qyk33 with SMTP id 33so2419056qyk.19
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 15:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=orywGAGJ3CltiLLfGVTqFKBbm3QdoN9b2ez0vGCDPns=;
-        b=SEqzgV62fTymBJZxjG8d2MLwQnAoc/J68ZsinVdzXWOiYid742nOQrRWg03S9LBCOo
-         R9gzfk0qR8U5LQV6XuspAMII3mCJH7HVOcmW3PtxJWc8njIirIf5kJMycRVT5PPrE+fK
-         55qs7vNOBfgwPusp6PheLqaddp0HF/zN9v9GQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=VWVnmmdlKUbWWesnL4fKGf3j6yW1t0z6WBbgZrxAsC9jHvz/QtErOkGb4C0aVnadcI
-         M5bNLo4FFntwpp77wUuzrUuqmBnxrv9mG95AbAn4XxM1FxXfUrkETomJB/0aUrvBd2Ml
-         S4kStW1ELJLxVFJ56dSwT65xdImk06ohj/p8Y=
-Received: by 10.224.103.204 with SMTP id l12mr413441qao.351.1283552742469;
-        Fri, 03 Sep 2010 15:25:42 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r1sm2495847qcq.34.2010.09.03.15.25.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Sep 2010 15:25:41 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <800379.5243.qm@web31805.mail.mud.yahoo.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
+	id S1753105Ab0ICXEI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glps-linuxsh-dev@m.gmane.org>);
+	Fri, 3 Sep 2010 19:04:08 -0400
+Received: from cantor.suse.de ([195.135.220.2]:48509 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752399Ab0ICXEH convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-sh@vger.kernel.org>); Fri, 3 Sep 2010 19:04:07 -0400
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id EEC0F93987;
+	Sat,  4 Sep 2010 01:04:05 +0200 (CEST)
+User-Agent: KMail/1.12.4 (Linux/2.6.31.12-0.2-desktop; KDE/4.3.5; i686; ; )
+In-Reply-To: <20100903184351.GC2341@burratino>
+Sender: linux-sh-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155281>
+List-ID: <linux-sh.vger.kernel.org>
+X-Mailing-List: linux-sh@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155282>
 
-Hi Luben,
+Hi,
 
-Luben Tuikov wrote:
+On Friday 03 September 2010 20:43:51 Jonathan Nieder wrote:
+> Uwe Kleine-K=C3=B6nig wrote:
+> > On Fri, Sep 03, 2010 at 07:18:43PM +0900, Magnus Damm wrote:
+>=20
+> >> Using --dry-run is fine, but omitting dry-run gives me:
+> >>=20
+> >> ...
+> >> patching file arch/arm/common/clkdev.c
+> >> patching file arch/sh/include/asm/clkdev.h
+> >> Hunk #1 FAILED at 1.
+> >> Hunk #2 FAILED at 11.
+> >> 2 out of 2 hunks FAILED -- saving rejects to file
+> >> arch/sh/include/asm/clkdev.h.rej
+> >>=20
+> >> I guess this is caused by the last "renaming" hunk, see below.
+>=20
+> Yep, I can reproduce this.  Patch applies with "git apply",
+> "patch --dry-run -p1" accepts it, "patch -p1" fails.
+>=20
+>  $ patch --version | head -1
+>  GNU patch 2.6.1.85-423d
+>  $ cd ~/src/linux-2.6
+>  $ git checkout 2bfc96a12
+>  $ git clean -fd
+>  $ wget http://download.gmane.org/gmane.linux.ports.sh.devel/8747/874=
+8
+> [...]
 
-> For the last 4 years, I've been using a home-brewed
-> git-mkdir-of-branch.sh from a local branch, which basically creates
-> a bunch of symlinks and then runs git-read-tree HEAD;
-> git-checkout-index -u -q -f -a.
+something pretty bizarre is going on here.  The wget output modifies th=
+e same=20
+file twice, but both patches to this file have the same source sha1 (56=
+45f35):
 
-You might like contrib/workdir/git-new-workdir (shipped in
-/usr/share/doc/git by most distros).
+> diff --git a/arch/sh/include/asm/clkdev.h b/arch/sh/include/asm/clkde=
+v.h
+> dissimilarity index 69%
+> index 5645f35..6ba9186 100644
+> --- a/arch/sh/include/asm/clkdev.h
+> +++ b/arch/sh/include/asm/clkdev.h
 
-An occasional topic has been how to integrate this functionality
-into "git clone".  See [1], for example.
+> diff --git a/arch/sh/include/asm/clkdev.h b/include/linux/clkdev.h
+> similarity index 85%
+> rename from arch/sh/include/asm/clkdev.h
+> rename to include/linux/clkdev.h
+> index 5645f35..457bcb0 100644
 
-Good luck,
-Jonathan
+So "git apply" and "patch --dry-run" seem to work only by accident.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/150559/focus=151247
+How was this patch generated: with git itself?
+
+The fact that "patch --dry-run" may not work for patches that modify th=
+e same=20
+file twice is a known defect.  I don't know how to solve this in a reas=
+onably=20
+elegant way.  Luckily the problem only triggers when people are doing=20
+something "strange" such as concatenating patches.
+
+Andreas
