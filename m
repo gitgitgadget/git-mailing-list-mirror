@@ -1,81 +1,69 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Fri, 03 Sep 2010 10:12:29 -0700
-Message-ID: <7voccezr7m.fsf@alter.siamese.dyndns.org>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
- <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
- <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
- <4C7FC3DC.3060907@gmail.com>
- <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
- <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
- <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
- <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
- <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+Subject: Re: git send-email doesn't take To: addresses from the patch
+Date: Fri, 03 Sep 2010 10:18:24 -0700
+Message-ID: <7vk4n2zqxr.fsf@alter.siamese.dyndns.org>
+References: <4C7B5853.7010001@st.com> <4C7E05B5.1050805@gmail.com>
+ <4C7E1537.9030405@st.com>
+ <AANLkTi=xQAoEFiB2zGz73ZwSwq16LOthkqd7w1GhnEup@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
-	git <git@vger.kernel.org>
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Sep 03 19:12:54 2010
+Cc: viresh kumar <viresh.kumar@st.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 03 19:18:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrZok-0006Eg-Ty
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 19:12:47 +0200
+	id 1OrZuV-0001KI-7u
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Sep 2010 19:18:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756543Ab0ICRMl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Sep 2010 13:12:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58885 "EHLO
+	id S1756742Ab0ICRSe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Sep 2010 13:18:34 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33282 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756290Ab0ICRMk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Sep 2010 13:12:40 -0400
+	with ESMTP id S1755627Ab0ICRSd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Sep 2010 13:18:33 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 92013D30C4;
-	Fri,  3 Sep 2010 13:12:40 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D5BF5D3195;
+	Fri,  3 Sep 2010 13:18:32 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5lGTFmmUAzhW4Pd+snSm/EUd8RE=; b=VcCOrX
-	W2z8DcC5z5kgx/bw5hPCeXtFVohMS/RHl1zDo10TDfqEK8GWcHJXjZHhXYdwTYoV
-	EbqXHI66fbN59ztMWfibVB4vgeo/8AT2TlHKDBCFTNOPtJdr8KbYkSx9oao0c8ne
-	op/AmHYmsuNA+mwMyPxDt5ig239tGjSPGWA5k=
+	:content-type; s=sasl; bh=tVI5OcLu892Eds4fSgl/8VLF51U=; b=qYw3ZJ
+	A9W7rOTe2t7p6FjSAfLfa5DhOCt/tJUg/ptKC8CQEvdCuxiqv58HM6Pe3k4tDFqW
+	3KIcpEX8fNuE5eel8hLxgIVmn/t9WBQIX8TsJsMw2CCYREe9u/bRjNzZT2i3Qy4L
+	h4s0O51gpC8UJNdTVD8HDupFzuoX6cHlyMBiQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HThhZkXnZtVzV5ZfLWjliYzGy9EPRGGr
-	c/5rES6h5ojXv5QPnisXXyx6LUoUw4dBBGepKitvQrGPUIajW5aM8ya4TxQaQmW2
-	kwWVFWF8tVoRvx8MXCv8ItRG1jumekfkdLoWtCt0IGaYP9+Nk2Jwr76JtooAmM/t
-	uqlXHoFVldE=
+	:content-type; q=dns; s=sasl; b=V8wkH8uJB+Ji4aHN/B9d9+fsqmzPA/wM
+	W9eIcl7+yHOWB2VD041+LVrZSXi51FQQfpRvUX0vIARNJqhtiAnf+zHX8EUo2SZq
+	mrap3iUdNQyhtUyP+Yhl5x2BIEWFdkenty8vmOIMHvVRQTQer+Xw1/D1fWt4RzLv
+	z+omiN0XcXY=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3F237D30C3;
-	Fri,  3 Sep 2010 13:12:36 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7910DD318E;
+	Fri,  3 Sep 2010 13:18:29 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4D001D30BB; Fri,  3 Sep
- 2010 13:12:31 -0400 (EDT)
-In-Reply-To: <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu> (Theodore Tso's
- message of "Fri\, 3 Sep 2010 06\:37\:12 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B364DD318D; Fri,  3 Sep
+ 2010 13:18:25 -0400 (EDT)
+In-Reply-To: <AANLkTi=xQAoEFiB2zGz73ZwSwq16LOthkqd7w1GhnEup@mail.gmail.com>
+ (Stephen Boyd's message of "Thu\, 2 Sep 2010 11\:36\:38 -0700")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 72AE6576-B77E-11DF-8F63-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 453B93EC-B77F-11DF-B3B4-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155253>
 
-Theodore Tso <tytso@MIT.EDU> writes:
+Stephen Boyd <bebarino@gmail.com> writes:
 
-> ...  So people who are willing
-> to participate as part of the peer2peer network can download the
-> instructions for how to make the canonical pack once a month, and use it
-> to create the canonical pack.  If the "Gittorrent master" has spent a
-> lot of time to carefully compute the most efficient set of delta
-> pairings, they will get the slight benefit of a more efficient pack
-> which they could use instead of th eir local one without having to use
-> large values of --window and --depth to "git repack".
+> On Wed, Sep 1, 2010 at 1:56 AM, viresh kumar <viresh.kumar@st.com> wrote:
+>> On 9/1/2010 1:20 PM, Stephen Boyd wrote:
+>>> Subject: [PATCH] send-email: Use To: headers in patch files
+> ...
+> Cool. Junio, does this look good to you? I can squash in some tests
+> later tonight if I get some git time.
 
-Hmm, is the idea essentially to tell people "Here is a snapshot of Linus
-repository as of a few weeks ago, carefully repacked.  Instead of running
-"git clone" yourself, please bootstrap your repository by copying it over
-bittorrent and then "git pull" to update it"?
+Sounds sane; thanks.
