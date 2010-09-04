@@ -1,78 +1,80 @@
-From: Russell King - ARM Linux <linux@arm.linux.org.uk>
-Subject: Re: [BUG?] rename patch accepted with --dry-run, rejected without
-	(Re: [PATCH V3] arm & sh: factorised duplicated clkdev.c)
-Date: Sat, 4 Sep 2010 01:03:48 +0100
-Message-ID: <20100904000348.GA7498@n2100.arm.linux.org.uk>
-References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com> <1283434786-26479-1-git-send-email-plagnioj@jcrosoft.com> <AANLkTimRKCYYQmgwY0DHu5+e-ggT8grJbdjWFvUqTzH=@mail.gmail.com> <20100903182323.GA17152@pengutronix.de> <20100903184351.GC2341@burratino> <20100903192907.GA2978@n2100.arm.linux.org.uk> <20100903193309.GC29821@pengutronix.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Sat, 4 Sep 2010 10:24:24 +1000
+Message-ID: <AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+	<4C7FC3DC.3060907@gmail.com>
+	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+	<AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+	<7voccezr7m.fsf@alter.siamese.dyndns.org>
+	<20100903183120.GA4887@thunk.org>
+	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+	<AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, linux-sh@vger.kernel.org,
-	bug-patch@gnu.org, Magnus Damm <magnus.damm@gmail.com>,
-	linux-arm-kernel@lists.infradead.org,
-	Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
-	git@vger.kernel.org
-To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: linux-sh-owner@vger.kernel.org Sat Sep 04 02:04:08 2010
-Return-path: <linux-sh-owner@vger.kernel.org>
-Envelope-to: glps-linuxsh-dev@lo.gmane.org
+Cc: Nicolas Pitre <nico@fluxnic.net>, "Ted Ts'o" <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 04 02:24:48 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-sh-owner@vger.kernel.org>)
-	id 1OrgEp-000137-G1
-	for glps-linuxsh-dev@lo.gmane.org; Sat, 04 Sep 2010 02:04:07 +0200
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OrgYm-00070z-RC
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 02:24:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122Ab0IDAEG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glps-linuxsh-dev@m.gmane.org>);
-	Fri, 3 Sep 2010 20:04:06 -0400
-Received: from caramon.arm.linux.org.uk ([78.32.30.218]:37586 "EHLO
-	caramon.arm.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751091Ab0IDAEF (ORCPT
-	<rfc822;linux-sh@vger.kernel.org>); Fri, 3 Sep 2010 20:04:05 -0400
+	id S1752197Ab0IDAY0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 20:24:26 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46712 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750955Ab0IDAYZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Sep 2010 20:24:25 -0400
+Received: by wyf22 with SMTP id 22so491631wyf.19
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 17:24:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=arm.linux.org.uk; s=caramon; h=Date:From:To:Cc:Subject:
-	Message-ID:References:MIME-Version:Content-Type:
-	Content-Transfer-Encoding:In-Reply-To:Sender; bh=1xFjai+nsyX+7Q9
-	epuOt3K9CPHEki626EJOTlcpoMcE=; b=GO8dLN0JZXQFF74uVts7T8p24UtN3lc
-	VXjmMs9veQ5eGBuAQ7VAGMLupO2QaQYpKZ6akrz0IDz5ijgXX62XNynMW4mLFURV
-	AbJj8X/cLJTMb3wS+PFwBK1uwbA/8x7SIw/OTMEDfihyVB1gAq0ckq+6FMMs9Xgm
-	eCd78BbX5ocY=
-Received: from n2100.arm.linux.org.uk ([2002:4e20:1eda:1:214:fdff:fe10:4f86])
-	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <linux@arm.linux.org.uk>)
-	id 1OrgEY-0006z1-58; Sat, 04 Sep 2010 01:03:50 +0100
-Received: from linux by n2100.arm.linux.org.uk with local (Exim 4.69)
-	(envelope-from <linux@n2100.arm.linux.org.uk>)
-	id 1OrgEW-0001yr-Mm; Sat, 04 Sep 2010 01:03:48 +0100
-Content-Disposition: inline
-In-Reply-To: <20100903193309.GC29821@pengutronix.de>
-User-Agent: Mutt/1.5.19 (2009-01-05)
-Sender: linux-sh-owner@vger.kernel.org
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pNs3tSiMGVNMRqCb9BCHnFU97hAcZaiwfcRjrfMZ6fE=;
+        b=dXEiC7D7/g6wCspVFWL5u0yyA2JqhtmX2whxw6zJPcQ/iXtjJ5hq6VNdn/g1kw6b0Y
+         iIeoSP3egsTQGiray/+gm62TrKy/O4mQy2N7X3B4Hbvy1xUjmdaZBJfoHUu2JAfe65vE
+         a26E70hzEmMxyA+NNXgEBQe4CHJOclEE0iVCE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=f4khzccS5guz9QS3pol1EnUU/2k8hD9i9ZXxLYZXpBXxeYiTu/vys6qiyvaPM7TWcm
+         OSGhdrxjBDq/R6KgdEEj2GWCR/N4SUWfx3M4J6lkszDrc61ajHr0CkeI4zwGWkmNoUZu
+         vTI/cvcp+N05st9hxmlJJb8vNGW22MejEIV2M=
+Received: by 10.216.180.200 with SMTP id j50mr570243wem.36.1283559864694; Fri,
+ 03 Sep 2010 17:24:24 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Fri, 3 Sep 2010 17:24:24 -0700 (PDT)
+In-Reply-To: <AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-sh.vger.kernel.org>
-X-Mailing-List: linux-sh@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155290>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155291>
 
-On Fri, Sep 03, 2010 at 09:33:09PM +0200, Uwe Kleine-K=F6nig wrote:
-> > git patches include additional metadata for renaming files, which g=
-nu patch
-> > will not understand.
-> >=20
-> > If you want GNU patch compatible diffs, don't use -C or -M when gen=
-erating
-> > patches out of git.
-> Still GNU patch should then already fail in --dry-run mode.
+On Sat, Sep 4, 2010 at 7:11 AM, Luke Kenneth Casson Leighton
+<luke.leighton@gmail.com> wrote:
+> =C2=A0i'll take a look at that. =C2=A0but whilst i'm doing that, the =
+main
+> question i really need to know is: how do you get one single explicit
+> object out of git?
 
-And now look at the patch - it touches arch/sh/include/asm/clkdev.h twi=
-ce.
-Once to remove it and once as a rename.
+git cat-file <type> <sha-1>
 
-GNU patch not in --dry-run mode will first remove arch/sh/include/asm/c=
-lkdev.h,
-and then not have a file to deal with when it tries to patch the rename
-part.  Whereas with --dry-run, the file stays around.
-
-As I say, it's because GNU patch doesn't (currently) understand GIT
-patches.  I wouldn't call that a bug in GNU patch.
+However if you are going to send objects, one by one, it is extremely
+inefficient. I think Nico has pointed that out. Individual object
+sending should only be done for large blobs.
+--=20
+Duy
