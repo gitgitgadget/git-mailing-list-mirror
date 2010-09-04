@@ -1,101 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [RFC/PATCH] Avoid TAGS/tags warning from GNU Make
-Date: Sat, 4 Sep 2010 04:03:32 -0500
-Message-ID: <20100904090331.GA10903@burratino>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH] Avoid TAGS/tags warning from GNU Make
+Date: Sat, 04 Sep 2010 11:41:17 +0200
+Message-ID: <vpqeid97sn6.fsf@bauges.imag.fr>
+References: <20100904090331.GA10903@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Fredrik Kuivinen <frekui@gmail.com>,
+Cc: git@vger.kernel.org, Fredrik Kuivinen <frekui@gmail.com>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 04 11:05:36 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 04 11:44:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Orogp-0001N5-I0
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 11:05:35 +0200
+	id 1OrpIS-0007cw-LR
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 11:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751316Ab0IDJFa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 05:05:30 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60546 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750910Ab0IDJF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 05:05:29 -0400
-Received: by iwn5 with SMTP id 5so2297833iwn.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 02:05:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=j44NYiSts27/iRbRw1drcaV3mvWYrVtPdreg6iYJjVo=;
-        b=ppa+kLFs9m5TjM89ly6qNoKgrcnmUVJJi47F8/t8GoO6uuu1zkMgm0gjrtg1/JYydL
-         x4wonBt/hGgzUUcdzeBpb4c06xOCZU8O4Fv0K7uekpFxH6wGjATmQ5EOSsWyR0fVICbV
-         6i8uyNikKfp36FM02VejuU7bExtcfYPZLy/qE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=b+XXrjqh7GTVexWxZHu1RIvO6MIz7Rm+P6GD0g+ipMSGRfvLtNKo91xvP0997/qQHO
-         f2vTxOgSbbC2xobDq/1GUBgkbmNoEAy97nqGiUc4M0SbN3cmnbVeNme9teRsYVaNPgC/
-         tKqAkvg6A9cL6koTV+VknzC3FgXBLkeTuLt5I=
-Received: by 10.231.152.78 with SMTP id f14mr2501335ibw.60.1283591128151;
-        Sat, 04 Sep 2010 02:05:28 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id i6sm261182iba.14.2010.09.04.02.05.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 04 Sep 2010 02:05:27 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752114Ab0IDJoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 05:44:10 -0400
+Received: from imag.imag.fr ([129.88.30.1]:55576 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750746Ab0IDJoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 05:44:08 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o849fHEV027878
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 4 Sep 2010 11:41:17 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OrpFN-00086w-Cq; Sat, 04 Sep 2010 11:41:17 +0200
+In-Reply-To: <20100904090331.GA10903@burratino> (Jonathan Nieder's message of "Sat\, 4 Sep 2010 04\:03\:32 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 04 Sep 2010 11:41:18 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155314>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
-Date: Thu, 22 Oct 2009 19:04:17 +0200
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-MinGW make considers the TAGS and tags targets to refer to
-the same file:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Date: Thu, 22 Oct 2009 19:04:17 +0200
+>
+> MinGW make considers the TAGS and tags targets to refer to
+> the same file:
+>
+>  Makefile: warning: overriding commands for target `TAGS'
+>  Makefile: warning: ignoring old commands for target `TAGS'
+>
+> Suppress both targets on that platform.
 
- Makefile: warning: overriding commands for target `TAGS'
- Makefile: warning: ignoring old commands for target `TAGS'
+Wouldn't it be more sensible to rename them (like ETAGS/CTAGS) on
+mingw instead, in case someone wants to use these files on windows?
 
-Suppress both targets on that platform.
+Well, anyway, it doesn't harm much to remove them, they're just
+convenience targets to be used by text editors, not by the build
+system itself.
 
-Cc: Fredrik Kuivinen <frekui@gmail.com>
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-This is kind of ugly; I hope there is a better way.  Maybe mingw
-make ought to special-case the TAGS name, since this has come up in
-other projects[1], too.
-
-[1] e.g., http://thread.gmane.org/gmane.comp.video.mplayer.devel/51542/focus=51545
-
- Makefile |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 40fbcae..a1d4550 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1952,6 +1952,7 @@ info:
- pdf:
- 	$(MAKE) -C Documentation pdf
- 
-+ifeq (,$(findstring MINGW,$(uname_S)))
- TAGS:
- 	$(RM) TAGS
- 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
-@@ -1959,6 +1960,7 @@ TAGS:
- tags:
- 	$(RM) tags
- 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
-+endif
- 
- cscope:
- 	$(RM) cscope*
 -- 
-1.7.2.3
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
