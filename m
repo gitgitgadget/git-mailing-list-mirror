@@ -1,93 +1,82 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: git-fast-import doc problem and git-fast-export does not quote filenames
- correctly
-Date: Sat, 04 Sep 2010 08:17:05 +0200
-Message-ID: <4C81E461.7010704@alum.mit.edu>
+From: Mike Galbraith <efault@gmx.de>
+Subject: git semd-email - Unknown callback: 'authname'.
+ (user|auth|language|pass)
+Date: Sat, 04 Sep 2010 09:41:28 +0200
+Message-ID: <1283586088.7322.35.camel@marge.simson.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 04 08:17:18 2010
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 04 09:41:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Orm3u-00088x-Kw
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 08:17:14 +0200
+	id 1OrnNN-00045F-Bp
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 09:41:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752225Ab0IDGRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 02:17:09 -0400
-Received: from einhorn.in-berlin.de ([192.109.42.8]:44896 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751029Ab0IDGRI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 02:17:08 -0400
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.133] (p54BEAB5B.dip.t-dialin.net [84.190.171.91])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o846H6XA009074
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Sat, 4 Sep 2010 08:17:06 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.24) Gecko/20100317 Thunderbird/2.0.0.24 Mnenhy/0.7.6.666
-X-Enigmail-Version: 0.95.0
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1754066Ab0IDHlS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 03:41:18 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:59430 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1753814Ab0IDHlN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 03:41:13 -0400
+Received: (qmail invoked by alias); 04 Sep 2010 07:41:10 -0000
+Received: from p4FE1AC4C.dip0.t-ipconnect.de (EHLO [192.168.178.27]) [79.225.172.76]
+  by mail.gmx.net (mp009) with SMTP; 04 Sep 2010 09:41:10 +0200
+X-Authenticated: #14349625
+X-Provags-ID: V01U2FsdGVkX1/WUxk/bbfWU4G0TsyJvN9zNNEJZlq4+la9QtcMSd
+	U3uxpvSwqD0MAj
+X-Mailer: Evolution 2.24.1.1 
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155308>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155309>
 
-According to the git-fast-import manpage:
+Greetings,
 
-> A `<path>` string must use UNIX-style directory separators (forward
-> slash `/`), may contain any byte other than `LF`, and must not
-> start with double quote (`"`).
-> 
-> If an `LF` or double quote must be encoded into `<path>` shell-style
-> quoting should be used, e.g. `"path/with\n and \" in it"`.
-> 
-> The value of `<path>` must be in canonical form. That is it must not:
-> 
-> * contain an empty directory component (e.g. `foo//bar` is invalid),
-> * end with a directory separator (e.g. `foo/` is invalid),
-> * start with a directory separator (e.g. `/foo` is invalid),
-> * contain the special component `.` or `..` (e.g. `foo/./bar` and
->   `foo/../bar` are invalid).
-> 
-> It is recommended that `<path>` always be encoded using UTF-8.
+Trying to convince send-email to send a series isn't working out for me
+at all, and I'm wondering what I'm doing wrong.
 
-The first problem is that the doc seems to allow NUL bytes (which I
-suspect are not really allowed) or the backslash '\' character (which,
-if allowed, would logically have to be escaped, too).
+(using git 1.7.2.3 now , was 1.7.2.2 yesterday)
 
-The second problem is that "git fast-export" does not do even the
-specified quoting:
+git send-email --compose --from='Mike Galbraith <efault@gmx.de>' --to='Mike Galbraith <efault@gmx.de>' --subject='el-testo' --suppress-cc=all --thread v2.6.32.21...
 
-$ git init
-Initialized empty Git repository in /home/mhagger/tmp/gitfoo/.git/
-$ touch '"path with
- and " in it"'
-$ git add -u
-$ git commit -am 'Madness'
-[master (root-commit) 2472bdb] Madness
- 0 files changed, 0 insertions(+), 0 deletions(-)
- create mode 100644 "\"path with\n and \" in it\""
-$ git fast-export --all
-blob
-mark :1
-data 0
+From: Mike Galbraith <efault@gmx.de>
+To: Mike Galbraith <efault@gmx.de>
+Subject: [PATCH 01/50] sched: kill migration thread in CPU_POST_DEAD instead of CPU_DEAD
+Date: Sat,  4 Sep 2010 09:03:26 +0200
+Message-Id: <1283583855-23333-1-git-send-email-efault@gmx.de>
+X-Mailer: git-send-email 1.7.2.3
 
-reset refs/heads/master
-commit refs/heads/master
-mark :2
-author Michael Haggerty <mhagger@michael.localdomain> 1283580642 +0200
-committer Michael Haggerty <mhagger@michael.localdomain> 1283580642 +0200
-data 8
-Madness
-M 100644 :1 "path with
- and " in it"
+Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
+Unknown callback: 'authname'. (user|auth|language|pass)
 
-reset refs/heads/master
-from :2
+Also, with sendemail.smtpencryption = ssl
 
-Michael
+Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
+Can't locate Net/SMTP/SSL.pm in @INC (@INC contains: /usr/lib/perl5/site_perl/5.10.0/x86_64-linux-thread-multi /usr/lib/perl5/site_perl/5.10.0 /usr/lib/perl5/5.10.0/x86_64-linux-thread-multi /usr/lib/perl5/5.10.0 /usr/lib/perl5/vendor_perl/5.10.0/x86_64-linux-thread-multi /usr/lib/perl5/vendor_perl/5.10.0 /usr/lib/perl5/vendor_perl .) at /usr/lib/git/git-send-email line 1037.
+
+Linking /usr/lib/perl5/vendor_perl/5.10.0/x86_64-linux-thread-multi/Net/SSL.pm so it can find/include it didn't help much..
+
+From: Mike Galbraith <efault@gmx.de>
+To: Mike Galbraith <efault@gmx.de>
+Subject: [PATCH 01/50] sched: kill migration thread in CPU_POST_DEAD instead of CPU_DEAD
+Date: Sat,  4 Sep 2010 09:19:09 +0200
+Message-Id: <1283584798-23449-1-git-send-email-efault@gmx.de>
+X-Mailer: git-send-email 1.7.2.3
+
+Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
+Can't locate object method "new" via package "Net::SMTP::SSL" at /usr/lib/git/git-send-email line 1039.
+
+..so I _suppose_ I need newer perl toys.
+
+I had to git format-patch, and import 50 mbox files into evolution one
+by one to get the job done.
+
+TIA for any hints, tips, tricks.. kicks in the britches,
+
+	-Mike
