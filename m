@@ -1,111 +1,173 @@
-From: Kyle Moffett <kyle@moffetthome.net>
+From: Nicolas Pitre <nico@fluxnic.net>
 Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sat, 4 Sep 2010 01:23:54 -0400
-Message-ID: <AANLkTikVf=X8cLP9s6W9VGOt0EHE4J5MYsBpgKYhrAri@mail.gmail.com>
+Date: Sat, 04 Sep 2010 01:40:35 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1009040040030.19366@xanadu.home>
 References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
  <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
  <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
- <4C7FC3DC.3060907@gmail.com> <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
- <alpine.LFD.2.00.1009021249510.19366@xanadu.home> <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
- <alpine.LFD.2.00.1009021624170.19366@xanadu.home> <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+ <4C7FC3DC.3060907@gmail.com>
+ <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+ <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+ <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+ <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+ <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
  <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org>
- <alpine.LFD.2.00.1009031522590.19366@xanadu.home> <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+ <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+ <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Junio C Hamano <gitster@pobox.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>,
 	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
 	git <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sat Sep 04 07:24:25 2010
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Sat Sep 04 07:40:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrlEl-00084J-Bw
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 07:24:23 +0200
+	id 1OrlUk-0004qi-TC
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 07:40:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751145Ab0IDFYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 01:24:19 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:42684 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750772Ab0IDFYS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 01:24:18 -0400
-Received: by ewy23 with SMTP id 23so1567669ewy.19
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 22:24:16 -0700 (PDT)
-Received: by 10.213.31.79 with SMTP id x15mr74608ebc.60.1283577854500; Fri, 03
- Sep 2010 22:24:14 -0700 (PDT)
-Received: by 10.14.13.193 with HTTP; Fri, 3 Sep 2010 22:23:54 -0700 (PDT)
-In-Reply-To: <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+	id S1752279Ab0IDFkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 01:40:37 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:49942 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751340Ab0IDFkh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 01:40:37 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR006.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L8700BWGJRN0BZ3@VL-MO-MR006.ip.videotron.ca> for
+ git@vger.kernel.org; Sat, 04 Sep 2010 01:40:36 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155304>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155305>
 
-Ted,
+On Fri, 3 Sep 2010, Theodore Tso wrote:
 
-I think your "canonical pack" idea has value, but I'd be inclined to
-try to optimize more for the "common case" of developing on a fast
-local network with many local checkouts, where you occasionally
-push/fetch external sources via a slow link.
+> 
+> On Sep 3, 2010, at 3:41 PM, Nicolas Pitre wrote:
+> 
+> > 
+> > Let's see what such instructions for how to make the canonical pack 
+> > might look like:
+> 
+> But we don't need to replicate any particular pack.  We just need to 
+> provide instructions that can be replicated everywhere to provide *a* 
+> canonical pack.
 
-Specifically, let's look at the very reasonable scenario of a
-developer working over a slow DSL or dialup connection.  He's probably
-got many copies of various GIT repositories cloned all over the place
-(hey, disk is cheap!), but right now he just wants a fresh clean copy
-of somebody else's new tree with whatever its 3 feature branches are.
-Furthermore, he's probably even got 80% of the commit objects from
-that tree archived in his last clone from linux-next.
+But that canonical pack could be any particular pack.
 
-In theory he could very carefully arrange his repositories with
-judicious use of alternate object directories.  From personal
-experience, though, such arrangements are *VERY* prone to accidentally
-purging wanted objects; unless you *never* ever delete a branch in the
-"reference" repository.
+> > First you need the full ordered list of objects.  That's a 20-byte SHA1
+> > per object.  The current Linux repo has 1704556 objects, therefore this
+> > list is 33MB already.
+> 
+> Assume the people creating this "gitdo" pack (i.e., much like jigdo) 
+> have a superset of Linus's objects.  So if we have all of the branches 
+> in Linus's repository, we can construct all of the necessary objects 
+> going back in time to constitute his repository.  If Linus has only 
+> one branch in his repo, we only need a single 20-byte SHA1 branch 
+> identifier.  For git, presumbly we would need three (one for next, 
+> maint, and master).
 
-So I think the real problem to solve would be:  Given a collection of
-local computers each with many local repositories, what is the best
-way to optimize a clone of a "new" remote repository (over a slow
-link) by copying most of the data from other local repositories
-accessible via a fast link?
+Sure, but that's not sufficient.  All this 20-byte SHA1 gives you is a 
+set of objects.  That says nothing about their encoding.
 
-The goal would be to design a P2P protocol capable of rapidly and
-efficiently building distributed searchable indexes of ordered commits
-that identify which peer(s) contain that each commit.
+> What about the order of the objects in the pack?  Well, ordering 
+> doesn't matter, right?  So let's assume the pack is sorted by hash id.  
+> Is there any downside to that?  I can't think of any, but you're the 
+> pack expert...
 
-When you attempt to perform a "git fetch --peer" from a repository, it
-would quickly connect to a few of the metadata index nodes in the P2P
-network and use them to negotiate "have"s with the upstream server.
-The client would then sequentially perform the local "fetch"
-operations necessary to obtain all the objects it used to minimize the
-commit range with the server.  Once all of those "fetch" operations
-completed, it could proceed to fetch objects from the server normally.
+Ordering does matter a big deal.  Since object IDs are the SHA1 of their 
+content, those IDs are totally random.  So if you store objects 
+according to their sorted IDs, then the placement of objects belonging 
+to, say, the top commit will be totally random.  And since you are the 
+filesystem expert, I don't have to tell you what performance impacts 
+this random access of small segments of data scattered throughout a 
+400MB file will have on a checkout operation.
 
-Some amount of design and benchmarking would need to be done in order
-to figure out the most efficient indexing algorithm for finding a
-minimal set of "have"s of potentially thousands of refs, many with
-independent root commits.  For example if the index was grouped
-according to "root commit" (of which there may be more than one), you
-*should* be able to quickly ask the server about a small list of root
-commits and then only continue asking about commits whose roots are
-all known to the server.
+> If we do that, we would thus only need to send 20 bytes instead of 33MB.  
+> 
+> > Then you need to identify which of those objects are deltas, and against
+> > which object.  Assuming we can index in the list of objects, that means,
+> > say, one bit to identify a delta, and 31 bits for indexing the base. In
+> > my case this is currently 1393087 deltas, meaning 5.3 MB of additional
+> > information.
+> 
+> OK, this we'll need which means 5.3MB.
+> 
+> > 
+> > But then, the deltas themselves can have variations in their encoding.
+> > And we did change the heuristics for the actual delta encoding in the
+> > past too (while remaining backward compatible), but for a canonical pack
+> > creation we'd need to describe that in order to make things totally
+> > reproducible.
+> > 
+> > So there are 2 choices here: Either we specify the Git version to make 
+> > sure identical delta code is used, but that will put big pressure on 
+> > that code to remain stable and not improve anymore as any behavior 
+> > change will create a compatibility issue forcing people to upgrade their 
+> > Git version all at the same time.  That's not something I want to see 
+> > the world rely upon.
+> 
+> I don't think the choice is that stark.  It does mean that in addition 
+> to whatever pack encoding format is used by git natively, the code 
+> would also need to preserve one version of the delta hueristics for 
+> "Canonical pack version 1". After this version is declared, it's true 
+> that you might come up with a stunning new innovation that saves some 
+> disk space.  How much is that likely to be?  3%?  5%?  Worst case, it 
+> means that (1) the bittorent-distributed packs might not be as 
+> efficient, and (2) the code would be made more complex because we 
+> would either need to (a) keep multiple versions of the code, or (b) 
+> the code might need to have some conditionals:
+> 
+> 	if (canonical pack v1)
+> 		do_this_code;
+> 	else
+> 		do_this_more_clever_code;
+> 
+> Is that really that horrible?  And certainly we should be able to set things up so that it won't be a brake on innovation...
 
-The actual P2P software would probably involve 2 different daemon
-processes.  The first would communicate with each other and with the
-repositories, maintaining the ref and commit indexes.  These daemons
-would advertise themselves with Avahi, or alternatively in an
-enterprise environment they would be managed by your sysadmins and be
-automatically discovered using DNS-SD.  Clients looking to perform a
-P2P fetch would first ask these.
+Well, this would still be a non negligible maintenance cost.  And for 
+what purpose already? What is the real advantage?
 
-The second daemon would be a modified git-daemon that connects to the
-advertised "index" daemons and advertises its own refs and commit
-lists, as well as its IP address and port.
+> The advantages of sending a canonical pack is that it's relatively 
+> less code to write, since we can reuse the standard BitTorrent clients 
+> and servers to transmit the git repository.  The downsides are that 
+> it's mainly useful for downloading the entire repository, but I think 
+> that's the most useful place for peer2peer anyway.
 
-My apologies if there are any blatant typos or thinkos, it's a bit
-later here than I would normally be writing about technical topics.
+Sure.  But I don't think it is worth making Git less flexible just for 
+the purpose of ensuring that people could independently create identical 
+packs.  I'd advocate for "no code to write at all" instead, and simply 
+have one person create and seed the reference pack.
 
-Cheers,
-Kyle Moffett
+And if you are willing to participate in the seeding of such a torrent, 
+then you better not be bandwidth limited, meaning that you certainly can 
+afford to download that reference pack in the first place.
+
+And that reference pack doesn't have to change that often either.  If 
+you update it only on every major kernel releases, then you'll need to 
+fetch it about once every 3 months.  Incremental updates from those 
+points should be relatively small.
+
+Yet... it should be possible in practice to produce identical packs, 
+given that the Git version is specified, the zlib version is specified, 
+the number of threads for the repack is equal to 1, the -f flag is used 
+meaning a full repack is performed, the delta depth and window size is 
+specified, and the head branches are specified.  Given that torrents are 
+also identified by a hash of their content, it should be pretty easy to 
+see if the attempt to reproduce the reference pack worked, and start 
+seeding right away if it did.
+
+But again, I don't think it is worth freezing the pack format into a 
+canonical encoding for this purpose.
+
+
+Nicolas
