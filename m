@@ -1,238 +1,166 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [RFC PATCH] Teach checkout the -n|--dry-run option
-Date: Sat, 04 Sep 2010 22:19:50 +0200
-Message-ID: <4C82A9E6.6050407@web.de>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Sat, 04 Sep 2010 13:20:42 -0700 (PDT)
+Message-ID: <m3tym5mfce.fsf@localhost.localdomain>
+References: <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+	<7voccezr7m.fsf@alter.siamese.dyndns.org>
+	<20100903183120.GA4887@thunk.org>
+	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+	<04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+	<alpine.LFD.2.00.1009040040030.19366@xanadu.home>
+	<5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
+	<AANLkTi==yv2CkgKEPJbTLf0P2XMtLmny1t6Zqhwh8wbV@mail.gmail.com>
+	<20100904181405.GB4887@thunk.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 04 22:20:06 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "Ted Ts'o" <tytso@mit.edu>
+X-From: git-owner@vger.kernel.org Sat Sep 04 22:35:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrzDX-0001Jd-OK
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 22:20:04 +0200
+	id 1OrzSf-0000N2-42
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 22:35:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753475Ab0IDUT5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 16:19:57 -0400
-Received: from fmmailgate02.web.de ([217.72.192.227]:50962 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753336Ab0IDUT4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 16:19:56 -0400
-Received: from smtp06.web.de  ( [172.20.5.172])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 202A516F7233C;
-	Sat,  4 Sep 2010 22:19:55 +0200 (CEST)
-Received: from [93.246.50.160] (helo=[192.168.178.29])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1OrzDO-0007p9-00; Sat, 04 Sep 2010 22:19:54 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX19pRcB8c3sgeVKQOnQogjiQi08KzK1GOSFkSufr
-	Rj82cTU70O3ZRlnaUXrSHUtm1FDkRFCvOjx4JYoaiYDgshKC30
-	ecH7Ngk/BJip0tgwhImw==
+	id S1753575Ab0IDUfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 16:35:03 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:51851 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753515Ab0IDUe6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 16:34:58 -0400
+Received: by fxm13 with SMTP id 13so1908912fxm.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 13:34:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=N7SuvpBUY5nF7MpNHwSVXnfEBSM0w8VIFKNVuU8henQ=;
+        b=g6V7HNxvUaN5YSiOxI4mo9DDfUed9x3HTzNy7K2TOS2L5KWoP1QSrPSWhDeyA8dThN
+         j1mZd2/4M3ifZnqonuxLKlhZ9B2YTBuUqMYek09exHqBrl0feXz/SLgGlAPq5p6kekp8
+         N5y1QuwETbS1pcE04QeLA7P7JJwL3Av8ZQxDM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=dTPPwhwuUg3SdeMJFKkcTa9thy/6KqGOEpok/4wt6W2eNrCYacmFVMoQ8GM1aAmVCZ
+         uI7a4pHAegBB3BrEDsCrQo3YJ2Hho4loU9SUtGOkerDD5fENqEo5lePf3BHnN1IS8vOK
+         q/UajF77XPcGpIq9pDZ4/N4asDmlJ3TSADyZ4=
+Received: by 10.223.105.76 with SMTP id s12mr12894fao.107.1283631644492;
+        Sat, 04 Sep 2010 13:20:44 -0700 (PDT)
+Received: from localhost.localdomain (abwp23.neoplus.adsl.tpnet.pl [83.8.239.23])
+        by mx.google.com with ESMTPS id a6sm1564883faa.44.2010.09.04.13.20.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Sep 2010 13:20:42 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o84KJvUr015708;
+	Sat, 4 Sep 2010 22:20:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o84KJUET015697;
+	Sat, 4 Sep 2010 22:19:30 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20100904181405.GB4887@thunk.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155356>
 
-This option can be used to determine if checking out a branch or commit
-would touch files which are modified in the work tree. It doesn't change
-the work tree contents or the index, so it can only tell if the checkout
-would succeed using trivial merges.
+Ted Ts'o <tytso@mit.edu> writes:
+> On Sat, Sep 04, 2010 at 03:50:29PM +0100, Luke Kenneth Casson Leighton wrote:
+> > 
+> > :)  the legality or illegality isn't interesting - or is a... red
+> > herring, being one of the unfortunate anarchistic-word-associations
+> > with the concept of "file sharing".  the robustness and convenience
+> > aspects - to developers not users - is where it gets reaaally
+> > interesting.
+> 
+> I ask the question because I think being clear about what goals might
+> be are critically important.  If in fact the goals is to evade
+> detection be spreading out responsibility for code which is illegal in
+> some jurisdictions (even if they are commonly used and approved of by
+> people who aren't spending millions of dollars purchasing
+> congresscritters), there are many additional requirements that are
+> imposed on such a system.
+> 
+> If the goal is speeding up git downloads, then we need to be careful
+> about exactly what problem we are trying to solve.
+> 
+> >  i do not know of a single free software development tool - not a
+> > single one - which is peer-to-peer distributed.  just... none.  what
+> > does that say??  and we have people bitching about how great but
+> > non-free skype is.  there seems to be a complete lack of understanding
+> > of the benefits of peer-to-peer infrastructure in the free software
+> > community as a whole, and a complete lack of interest in the benefits,
+> > too...
 
-It can neither be used when checking out only certain paths nor together
-with the '-m' option.
+Luke, you don't have to be peer-to-peer to be decentralized and
+distributed.  People from what I understand bitch most about
+centralized (and closed) services.
+ 
+> Maybe it's because the benefits don't exist for many people?  At least
+> where I live, my local ISP (Comcast, which is very common internet
+> provider in the States) deliberately degrades the transfer of
+> peer2peer downloads.  As a result, it doesn't make sense for me to use
+> bittorrent to download the latest Ubuntu or Fedora iso image.  It's in
+> fact much faster for me to download it from an ftp site or a web site.
+> 
+> And git is *extremely* efficient about its network usage, since it
+> sends compressed deltas --- especially if you already have a base
+> responsitory established.  For example, I took a git repository which
+> I haven't touched since August 4th --- exactly one month ago --- and
+> did a "git fetch" to bring it up to date by downloading from
+> git.kernel.org.  How much network traffic was required, after being
+> one month behind?  2.8MB of bytes received, 133k of bytes transmitted.
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+I think the major problem git-p2p wants to solve is if base repository
+is *not* established, i.e. the initial fetch / full clone operation.
+ 
+Note that with --reference argument to git clone, if you have similar
+related repository, you don't have to do a full fetch cloning a fork
+of repository you already have (e.g. you have Linus repo, and want to
+fetch linux-next).
+
+> That's not a lot.  And it's well within the capabilities of even a
+> really busy server to handle.  Remember, peer2peer only helps if the
+> aggregate network bandwidth of the peers is greater than (a) your
+> download pipe, or (b) a central server's upload pipe.  And if we're
+> only transmitting 2.8MB, and a git.kernel.org has an aggregate
+> connection of over a gigabit per second to the internet --- it's not
+> likely that peer2peer would in fact result in a faster download.  Nor
+> is it likely that that git updates are likely to be something which
+> the kernel.org folks would even notice as a sizeable percentage of
+> their usable network bandwidth.  First of all, ISO image files are
+> much bigger, and secondly, there are many more users downloading ISO
+> files than there are developers downloading git updates, and certainly
+> relatively few developers downloading full git repositories (since
+> everybody genreally tries really hard to only do this once).
+
+Well, full initial clone of Linux kernel repository (or any other
+large project with long history) is quite large.  Also, not all
+projects have big upload pipe.
+
+Additional problem is that clone is currrently non-resumable (at all),
+so if you have flaky web connection it might be hard to do initial
+clone.
 
 
-I need this new option for the recursive submodule checkout. Denying a
-checkout inside a submodule just because it has modifications is a too
-limiting condition (and it is way too expensive to check the whole tree,
-just looking at those paths going to be changed by the checkout should
-be much faster, especially for large submodules).
+One way of solving this problem that (as I have heard some projects
+use) is to prepare "initial" bundle; this bundle can be downloaded via
+HTTP or FTP resumably, or be shared via ordinary P2P like BitTorrent.
 
-IMO the same behavior that applies for a checkout in the superproject
-should apply for the checkout inside the submodule: no local changes
-may be overwritten by the checkout (and the HEAD must match the commit
-recorded in the superproject, but that is handled elsewhere).
+The initial pack could be 'kept' (nt subject to repacking); with some
+code it could serve as canonical starting packfile for cloning, I
+think.
 
-To be able to test that, I added the -n|--dry-run option to checkout.
-I think I found all relevant places, but a few more eyeballs are highly
-appreciated as I am not very familiar with this part of the code.
-
-A thing I'm not so sure about is the output of show_local_changes(),
-with -n it doesn't show the changes as they would have been *after* the
-- not executed - checkout but *without* having done it.
-Is that a problem here?
-
-
- Documentation/git-checkout.txt |   13 +++++++++++--
- builtin/checkout.c             |   20 +++++++++++++++-----
- t/t2018-checkout-branch.sh     |   23 +++++++++++++++++++++++
- 3 files changed, 49 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index f88e997..32c5c77 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -8,8 +8,8 @@ git-checkout - Checkout a branch or paths to the working tree
- SYNOPSIS
- --------
- [verse]
--'git checkout' [-q] [-f] [-m] [<branch>]
--'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
-+'git checkout' [-q] [-f] [-m|-n] [<branch>]
-+'git checkout' [-q] [-f] [-m|-n] [[-b|-B|--orphan] <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
- 'git checkout' --patch [<tree-ish>] [--] [<paths>...]
-
-@@ -77,6 +77,13 @@ OPTIONS
- When checking out paths from the index, do not fail upon unmerged
- entries; instead, unmerged entries are ignored.
-
-+-n::
-+--dry-run::
-+	Don't really checkout the file(s), just check if it would succeed
-+	using only trivial merges. Using this option will not touch the work
-+	tree or the index. The command will fail when the checkout would change
-+	locally modified files. This option can not be used together with `-m`.
-+
- --ours::
- --theirs::
- 	When checking out paths from the index, check out stage #2
-@@ -158,6 +165,8 @@ should result in deletion of the path).
- +
- When checking out paths from the index, this option lets you recreate
- the conflicted merge in the specified paths.
-++
-+This option does not work together with '-n'.
-
- --conflict=<style>::
- 	The same as --merge option above, but changes the way the
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index f365169..ba6ca24 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -32,6 +32,7 @@ struct checkout_opts {
- 	int force;
- 	int writeout_stage;
- 	int writeout_error;
-+	int dry_run;
-
- 	/* not set by parse_options */
- 	int branch_exists;
-@@ -370,6 +371,8 @@ static int merge_working_tree(struct checkout_opts *opts,
-
- 	resolve_undo_clear();
- 	if (opts->force) {
-+		if (opts->dry_run)
-+			return 0;
- 		ret = reset_tree(new->commit->tree, opts, 1);
- 		if (ret)
- 			return ret;
-@@ -394,7 +397,7 @@ static int merge_working_tree(struct checkout_opts *opts,
-
- 		/* 2-way merge to the new branch */
- 		topts.initial_checkout = is_cache_unborn();
--		topts.update = 1;
-+		topts.update = !opts->dry_run;
- 		topts.merge = 1;
- 		topts.gently = opts->merge && old->commit;
- 		topts.verbose_update = !opts->quiet;
-@@ -469,8 +472,8 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		}
- 	}
-
--	if (write_cache(newfd, active_cache, active_nr) ||
--	    commit_locked_index(lock_file))
-+	if (!opts->dry_run && (write_cache(newfd, active_cache, active_nr) ||
-+			       commit_locked_index(lock_file)))
- 		die("unable to write new index file");
-
- 	if (!opts->force && !opts->quiet)
-@@ -603,7 +606,7 @@ static int switch_branches(struct checkout_opts *opts, struct branch_info *new)
- 	}
-
- 	ret = merge_working_tree(opts, &old, new);
--	if (ret)
-+	if (ret || opts->dry_run)
- 		return ret;
-
- 	/*
-@@ -704,6 +707,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN('m', "merge", &opts.merge, "merge"),
- 		OPT_STRING(0, "conflict", &conflict_style, "style",
- 			   "conflict style (merge or diff3)"),
-+		OPT_BOOLEAN('n', "dry-run", &opts.dry_run, "show if the checkout would fail because it touches locally modified files"),
- 		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively"),
- 		{ OPTION_BOOLEAN, 0, "guess", &dwim_new_local_branch, NULL,
- 		  "second guess 'git checkout no-such-branch'",
-@@ -731,7 +735,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	if (opts.new_branch_force)
- 		opts.new_branch = opts.new_branch_force;
-
--	if (patch_mode && (opts.track > 0 || opts.new_branch
-+	if (patch_mode && (opts.track > 0 || opts.new_branch || opts.dry_run
- 			   || opts.new_branch_log || opts.merge || opts.force))
- 		die ("--patch is incompatible with all other options");
-
-@@ -766,6 +770,9 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	if (opts.force && opts.merge)
- 		die("git checkout: -f and -m are incompatible");
-
-+	if (opts.merge && opts.dry_run)
-+		die("git checkout: -m and -n are incompatible");
-+
- 	/*
- 	 * case 1: git checkout <ref> -- [<paths>]
- 	 *
-@@ -890,6 +897,9 @@ no_reference:
- 		if (1 < !!opts.writeout_stage + !!opts.force + !!opts.merge)
- 			die("git checkout: --ours/--theirs, --force and --merge are incompatible when\nchecking out of the index.");
-
-+		if (opts.dry_run)
-+			die("git checkout: updating paths is incompatible with -n.");
-+
- 		return checkout_paths(source_tree, pathspec, &opts);
- 	}
-
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index fa69016..61c82ef 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -169,4 +169,27 @@ test_expect_success 'checkout -f -B to an existing branch with mergeable changes
- 	test_must_fail test_dirty_mergeable
- '
-
-+test_expect_success 'checkout -n/--dry-run does not change work tree or index' '
-+	echo precious >expect &&
-+	echo precious >file1 &&
-+	test_must_fail git checkout -n branch1 &&
-+	test_cmp expect file1 &&
-+	git checkout --dry-run -f branch1 &&
-+	test_cmp expect file1 &&
-+	test_must_fail git checkout -b new_branch --dry-run branch1 &&
-+	test_cmp expect file1 &&
-+	git checkout -b new_branch -n -f branch1 &&
-+	test_cmp expect file1 &&
-+	git checkout -f branch1 &&
-+	git status -s -uno > actual &&
-+	! test -s actual &&
-+	git checkout -n HEAD^ &&
-+	git status -s -uno > actual &&
-+	! test -s actual
-+'
-+
-+test_expect_success 'checkout -n/--dry-run is not allowed when checking out only certain paths' '
-+	test_must_fail git checkout -n branch1 file1 &&
-+	test_must_fail git checkout -n HEAD file1
-+'
- test_done
 -- 
-1.7.2.2.570.ga3f70
+Jakub Narebski
+Poland
+ShadeHawk on #git
