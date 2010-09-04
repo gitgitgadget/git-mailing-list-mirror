@@ -1,97 +1,112 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sat, 4 Sep 2010 15:50:29 +0100
-Message-ID: <AANLkTi==yv2CkgKEPJbTLf0P2XMtLmny1t6Zqhwh8wbV@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
-	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
-	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
-	<AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
-	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
-	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
-	<7voccezr7m.fsf@alter.siamese.dyndns.org>
-	<20100903183120.GA4887@thunk.org>
-	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
-	<04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
-	<alpine.LFD.2.00.1009040040030.19366@xanadu.home>
-	<5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: usage for git-p2p (was: git pack/unpack over bittorrent - works!)
+Date: Sat, 04 Sep 2010 17:08:28 +0200
+Message-ID: <4C8260EC.9000404@gmail.com>
+References: <AANLkTin0-Zjy7Chvntf2pNj5iCQ-4Y5u=bu8r7DSejeu@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>, Ted Ts'o <tytso@mit.edu>,
 	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Theodore Tso <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sat Sep 04 16:50:45 2010
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 04 17:08:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oru4r-0003e3-8R
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 16:50:45 +0200
+	id 1OruMD-0002xW-QS
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 17:08:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753542Ab0IDOuj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Sep 2010 10:50:39 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56589 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752982Ab0IDOui convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Sep 2010 10:50:38 -0400
-Received: by vws3 with SMTP id 3so2142461vws.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 07:50:30 -0700 (PDT)
+	id S1753755Ab0IDPIg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 11:08:36 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33063 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753443Ab0IDPIf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 11:08:35 -0400
+Received: by wwj40 with SMTP id 40so4189753wwj.1
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 08:08:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=7hvaaLvvUvQAg/6TCFGO3R93gJGG+tdhUpgBOYNZOoE=;
-        b=nFTnlOvIoC5K4aPbBVRN+TtN1Tw6ak+TPvh5Zrzhw8Zn3FFBpK3Uka6O9wpxAG4wCk
-         dELJuevIqJO6yf5evOTMDJGL69hgv8NMGczNg9ODLbb+9tRN7dw3x5YRrFNaKi730R8X
-         hf7v17hS+030QsCROiQzs8MjstSQO5Jil2tWc=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=4aTdqsUpV2mmxZzhLbES2Ypw013NTA0J+87BQjR3Wv0=;
+        b=yCVQCmSulTC1Q3KlFDuicFOpjgf64MKxopmPzQkVLy1lNxizsKRx9Q/cbB1ITsS/8c
+         BksRZvdWVMxvn+nSWwS2zLUmvhUVmEBzKGgS4DmjcmdajvU5l+ATjM0RFLA0qoz0tEbW
+         5VrdnE/lGKpRvllgC1ySNiXGLBUQ1P4/tS0+U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LoYEfJ8KrTjvNJ8+7dA0V3+SAMN+IsL/DmEWO0egE1X+zLchjWQrkbZKYBWGIjun8N
-         bw2EQlixDykRLIrPUcl+w/M1c8RcE/EUEEcCQibOgM+2X+XYc2p8+BXUVHHIksVH1NR6
-         pYc49hxEmsBiXacyEfLMrgyOaYJh1WD9l6tsM=
-Received: by 10.220.123.218 with SMTP id q26mr1379932vcr.107.1283611830060;
- Sat, 04 Sep 2010 07:50:30 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Sat, 4 Sep 2010 07:50:29 -0700 (PDT)
-In-Reply-To: <5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=oa8V4ZpT3DToaaPUPbiVwUip3bJ03vvQjPvrPTXPfAHg6uatd9P5E3oXIvuBo9LogT
+         NgksaZQpH1+deYTcTDY7R87nvlGbaEzFpb5N15t0e/HlPEJuwcgg4MxGwVFBoJngARr4
+         opzMtZmi5bGxKc0xzyt1aeZokTZzNUzV9lSE8=
+Received: by 10.216.154.133 with SMTP id h5mr1886714wek.93.1283612911559;
+        Sat, 04 Sep 2010 08:08:31 -0700 (PDT)
+Received: from [172.19.43.221] (ip-89-174-124-83.multimo.pl [89.174.124.83])
+        by mx.google.com with ESMTPS id w29sm2041616weq.42.2010.09.04.08.08.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Sep 2010 08:08:30 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.9pre) Gecko/20100819 Lightning/1.0b2 Lanikai/3.1.3pre
+In-Reply-To: <AANLkTin0-Zjy7Chvntf2pNj5iCQ-4Y5u=bu8r7DSejeu@mail.gmail.com>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155331>
 
-On Sat, Sep 4, 2010 at 1:00 PM, Theodore Tso <tytso@mit.edu> wrote:
+On 09/04/10 13:54, Luke Kenneth Casson Leighton wrote:
+> On Sat, Sep 4, 2010 at 2:52 AM, Artur Skawina <art.08.09@gmail.com> wrote:
+>> Hmm, taking a few steps back, what is the expected usage of git-p2p?
+>> Note it's a bit of a trick question; what i'm really asking is what _else_,
+>> other than pulling/tracking Linus' kernel tree will/can be done with it?
+> 
+>  i'm _so_ glad you asked :)  please note - for all of these i'm keenly
+> aware that GPG signing is required (and nicolas has pointed out that
+> you only need a 20-byte hash to be securely transferred by some OOB
+> mechanism)
+> 
+>  * distribution of large mailing lists and reduction of load on SMTP
 
-> such as ebook DRM liberation scripts (the kind which today
-> are typically distributed via pastebin's :-), my guess is that
-> zipping up a git repository and dropping it on a standard
-> bittorrent server run by the Swedish Pirate party is going to
-> be much more effective. =C2=A0 :-)
+>  * distributed wikis.  there are lots of wikis now using git: ikiwiki
 
-:)  the legality or illegality isn't interesting - or is a... red
-herring, being one of the unfortunate anarchistic-word-associations
-with the concept of "file sharing".  the robustness and convenience
-aspects - to developers not users - is where it gets reaaally
-interesting.
+>  * distributed bugtrackers.  the one that i know of which i believe
 
- i do not know of a single free software development tool - not a
-single one - which is peer-to-peer distributed.  just... none.  what
-does that say??  and we have people bitching about how great but
-non-free skype is.  there seems to be a complete lack of understanding
-of the benefits of peer-to-peer infrastructure in the free software
-community as a whole, and a complete lack of interest in the benefits,
-too - perhaps for reasons no more complex than the tools don't exist
-so it's catch-22, and the fact that the word "distributed" is
-_already_ associated with the likes of SMTP, DNS and "git" so
-everybody thinks "we're okay, jack, go play with your nice dreams of
-p2p networking, we're gonna write _real_ code now".
+>  * of course there's source management for other projects other than
+> linux-2.6 :)
 
-=2E.. mmmm :)
+I'm not sure that git fits well any of the above; it may be convenient
+to reuse git as it already exists and can be more or less easily plugged
+in, but it's probably not the best backend choice. The one that might
+map relatively closely to git is wikis, but there i'm not sure something
+more scalable wouldn't be better (eg how would wikipedia map onto git..)
 
-l.
+
+The one other use case for git-p2p that i can see is distributing the
+object store over a LAN. But it's really about a _remote_ object store,
+not so much a distributed one.
+IOW, having git-checkout trying to reach "/tmp/.git-unix/G0" and then any
+remote object store in addition to ".git/objects" would be very useful.
+But, do you actually want to spread the objects on _every_ developer
+desktop on the LAN? Wouldn't it much more make sense to have two or three
+dedicated "object servers", which would give you enough redundancy and,
+because of the higher chances of finding the required objects in cache,
+also perform better?
+
+For the case of an ad-hoc group of developers, the protocol described in
+my previous email would work well, they only need to find one peer and
+then can move objects back and forth in the swarm.
+
+
+One of the advantages that git-p2p could bring is better packing -- instead
+of everyone running git-repack with a limited window, each peer in the swarm
+could better use its resources by looking much deeper for the perfect delta
+candidate, but only for a subset of the objects, and then share the results
+with the rest. As a "git-repack -a -f" can eg shrink the gcc.git repo by ~15%
+(~100M) the savings could be noticeable.
+
+artur
