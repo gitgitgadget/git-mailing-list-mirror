@@ -1,85 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/4] instaweb: ignore GITWEB_CONFIG_SYSTEM
-Date: Fri, 3 Sep 2010 18:58:20 -0500
-Message-ID: <20100903235820.GC4471@burratino>
-References: <20100812131152.2333.9604.reportbug@octopus.hi.pengutronix.de>
- <20100902221211.GA4789@burratino>
- <20100902223624.GA9613@dcvr.yhbt.net>
- <20100902235237.GA6466@burratino>
- <20100902235429.GB6466@burratino>
- <7vfwxqzqoq.fsf@alter.siamese.dyndns.org>
+From: Russell King - ARM Linux <linux@arm.linux.org.uk>
+Subject: Re: [BUG?] rename patch accepted with --dry-run, rejected without
+	(Re: [PATCH V3] arm & sh: factorised duplicated clkdev.c)
+Date: Sat, 4 Sep 2010 01:03:48 +0100
+Message-ID: <20100904000348.GA7498@n2100.arm.linux.org.uk>
+References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com> <1283434786-26479-1-git-send-email-plagnioj@jcrosoft.com> <AANLkTimRKCYYQmgwY0DHu5+e-ggT8grJbdjWFvUqTzH=@mail.gmail.com> <20100903182323.GA17152@pengutronix.de> <20100903184351.GC2341@burratino> <20100903192907.GA2978@n2100.arm.linux.org.uk> <20100903193309.GC29821@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Wong <normalperson@yhbt.net>,
-	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>,
-	Pavan Kumar Sunkara <pavan.sss1991@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 04 02:00:32 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Cc: Jonathan Nieder <jrnieder@gmail.com>, linux-sh@vger.kernel.org,
+	bug-patch@gnu.org, Magnus Damm <magnus.damm@gmail.com>,
+	linux-arm-kernel@lists.infradead.org,
+	Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
+	git@vger.kernel.org
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: linux-sh-owner@vger.kernel.org Sat Sep 04 02:04:08 2010
+Return-path: <linux-sh-owner@vger.kernel.org>
+Envelope-to: glps-linuxsh-dev@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrgBM-0008QH-5J
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 02:00:32 +0200
+	(envelope-from <linux-sh-owner@vger.kernel.org>)
+	id 1OrgEp-000137-G1
+	for glps-linuxsh-dev@lo.gmane.org; Sat, 04 Sep 2010 02:04:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752088Ab0IDAAN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Sep 2010 20:00:13 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:55526 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751266Ab0IDAAM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Sep 2010 20:00:12 -0400
-Received: by qyk36 with SMTP id 36so564244qyk.19
-        for <git@vger.kernel.org>; Fri, 03 Sep 2010 17:00:11 -0700 (PDT)
+	id S1752122Ab0IDAEG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glps-linuxsh-dev@m.gmane.org>);
+	Fri, 3 Sep 2010 20:04:06 -0400
+Received: from caramon.arm.linux.org.uk ([78.32.30.218]:37586 "EHLO
+	caramon.arm.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751091Ab0IDAEF (ORCPT
+	<rfc822;linux-sh@vger.kernel.org>); Fri, 3 Sep 2010 20:04:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=cmOJLDy9E2fljJBQnOfS2SkpOheCIPGiXAM71Jia0Ag=;
-        b=DyRkMKHBhwYsPp3+RHOz1MZvWE+Wr2mYe3/WDFy+o5JiJ0buYjEHstvf9za8j6gKRc
-         yJETwo/hV6KrgNcueWuMOmlZj+Ec5KlkJrx8fWNxrs1b8nL8nb9C5UpIupLcnE8E5ILN
-         YKGuuY/T/9Y6DlGnW8igktIIjWoJL4c2UJKCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=cDUlaEDfBfGHzYnKzSCH2gcgercl0nNW1dJMGPc1W5bT5URwMMBQSGX+9oAiewDix5
-         lZ/8RUd+zKta9Kb0nLxXlYayk1QKhIKk5kSmRiwrYgkLp0cbzG620GfInEdbWT0Hz5K3
-         /6pL9GG9C3ncCJlvd0y5azDgrWLpnm6mQpoS4=
-Received: by 10.229.213.80 with SMTP id gv16mr1220439qcb.134.1283558411419;
-        Fri, 03 Sep 2010 17:00:11 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id q8sm2610385qcs.0.2010.09.03.17.00.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Sep 2010 17:00:10 -0700 (PDT)
+	d=arm.linux.org.uk; s=caramon; h=Date:From:To:Cc:Subject:
+	Message-ID:References:MIME-Version:Content-Type:
+	Content-Transfer-Encoding:In-Reply-To:Sender; bh=1xFjai+nsyX+7Q9
+	epuOt3K9CPHEki626EJOTlcpoMcE=; b=GO8dLN0JZXQFF74uVts7T8p24UtN3lc
+	VXjmMs9veQ5eGBuAQ7VAGMLupO2QaQYpKZ6akrz0IDz5ijgXX62XNynMW4mLFURV
+	AbJj8X/cLJTMb3wS+PFwBK1uwbA/8x7SIw/OTMEDfihyVB1gAq0ckq+6FMMs9Xgm
+	eCd78BbX5ocY=
+Received: from n2100.arm.linux.org.uk ([2002:4e20:1eda:1:214:fdff:fe10:4f86])
+	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <linux@arm.linux.org.uk>)
+	id 1OrgEY-0006z1-58; Sat, 04 Sep 2010 01:03:50 +0100
+Received: from linux by n2100.arm.linux.org.uk with local (Exim 4.69)
+	(envelope-from <linux@n2100.arm.linux.org.uk>)
+	id 1OrgEW-0001yr-Mm; Sat, 04 Sep 2010 01:03:48 +0100
 Content-Disposition: inline
-In-Reply-To: <7vfwxqzqoq.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
+In-Reply-To: <20100903193309.GC29821@pengutronix.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+Sender: linux-sh-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155289>
+List-ID: <linux-sh.vger.kernel.org>
+X-Mailing-List: linux-sh@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155290>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Fri, Sep 03, 2010 at 09:33:09PM +0200, Uwe Kleine-K=F6nig wrote:
+> > git patches include additional metadata for renaming files, which g=
+nu patch
+> > will not understand.
+> >=20
+> > If you want GNU patch compatible diffs, don't use -C or -M when gen=
+erating
+> > patches out of git.
+> Still GNU patch should then already fail in --dry-run mode.
 
->> The configuration in /etc/gitweb.conf might specify any old
->> layout; in particular, it is likely not to be identical to that
->> which git instaweb sets up.  Noticed by Uwe Kleine-K=C3=B6nig.
->
-> I am not sure if this is a reasonable change by reading the above.  I=
-n
-> some cases, the file may stale, but in other cases
+And now look at the patch - it touches arch/sh/include/asm/clkdev.h twi=
+ce.
+Once to remove it and once as a rename.
 
-Ah, I missed your point here.  By "any old layout", I meant "an
-arbitrary layout"[1].  Sorry for the lack of clarity.
+GNU patch not in --dry-run mode will first remove arch/sh/include/asm/c=
+lkdev.h,
+and then not have a file to deal with when it tries to patch the rename
+part.  Whereas with --dry-run, the file stays around.
 
-Jonathan
-
-[1] http://www.google.com/search?q=3Dany+old
+As I say, it's because GNU patch doesn't (currently) understand GIT
+patches.  I wouldn't call that a bug in GNU patch.
