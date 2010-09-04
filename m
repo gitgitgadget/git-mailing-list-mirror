@@ -1,98 +1,126 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] New send-email option smtpserveroptions.
-Date: Sat, 04 Sep 2010 09:21:02 -0700
-Message-ID: <7v4oe5xyxd.fsf@alter.siamese.dyndns.org>
-References: <1283616372-3340-1-git-send-email-pascal@obry.net>
- <1283616372-3340-3-git-send-email-pascal@obry.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] Avoid TAGS/tags warning from GNU Make
+Date: Sat, 4 Sep 2010 11:34:07 -0500
+Message-ID: <20100904163407.GA31513@burratino>
+References: <20100904090331.GA10903@burratino>
+ <vpqeid97sn6.fsf@bauges.imag.fr>
+ <7v8w3hxz81.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Pascal Obry <pascal@obry.net>
-X-From: git-owner@vger.kernel.org Sat Sep 04 18:21:23 2010
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Fredrik Kuivinen <frekui@gmail.com>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 04 18:36:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrvUS-0004Wr-GG
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 18:21:16 +0200
+	id 1Orviw-0004Nh-HU
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 18:36:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754108Ab0IDQVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 12:21:11 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45381 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753902Ab0IDQVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 12:21:09 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 55FCDD351D;
-	Sat,  4 Sep 2010 12:21:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AfIsVX4DOjcUalocS3r4s4PwsWw=; b=JSxAOg
-	COrJk8rbvhJ5x4wGDDVDorDu/Lp2pJseVmBaHX9QfgzbG8OqNIdJLqkxuyWlbSS5
-	PjAOkk9+2IGpxADNFgx8MGjXBMyG8v0Ve2IPkt3+ZLslCkHpBZOY+1Hy2dCsVWcI
-	9Rr+0SbvIKqn2G4cK0U3L/WE0ox5LMqZzwCvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XYPbD/rErW2IyI0OcJQupCHLpT9gQoxr
-	FMCtHl8+DzHAm6ag+Q24d7DRYkZuxnd1UCkkFMsFY3k56Cdi0u7mUoy7taMqWY09
-	bEJ9GBxvqTVRvh1/3WUR3xA8+DpQtjdFGpEo4Ff09tZjJz7XjoEmi6qpQ6fp2PKn
-	OdSTfuma1f0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2CFDAD3519;
-	Sat,  4 Sep 2010 12:21:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DA9BD3516; Sat,  4 Sep
- 2010 12:21:04 -0400 (EDT)
-In-Reply-To: <1283616372-3340-3-git-send-email-pascal@obry.net> (Pascal
- Obry's message of "Sat\,  4 Sep 2010 18\:06\:12 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6BDDC3E6-B840-11DF-8ED4-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754386Ab0IDQgJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 12:36:09 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50939 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754367Ab0IDQgH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 12:36:07 -0400
+Received: by iwn5 with SMTP id 5so2599071iwn.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 09:36:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=3cQsnCZH63SMnH32j2QTmbLzU3Us4diZAvOHD64DWmU=;
+        b=TKpTLXSUMb0RqDj2C8ClWQiq3bIbMt0mdvswsF0O6XMOgU+s8VQjHPQ1aKQWLlMv0O
+         0qxczOAB7vbLnp+VFIm1fFE6pdbYB0oklpl+zudS8z3mOZ44dp8ohyASBOzIPkgiM1Wu
+         q4EBi4FJBYrHsBq6VKvBG4FTcVaRPr8IzIM4k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KJJkFh2LtZNcSfSgv2mBoqlW43ymh0Yxpu5Cm1f921caCM40WKkMP3StbP0xZnDNHf
+         G4YCq9YqyDnFs07qwkZji19gb5he1Pdkqzz4UqIUIiKXhQHByT0WW+6kV2U7QghQfTsy
+         dXga9/hiN2cdItCm37rTEkBYNMx+z/g/U9J+o=
+Received: by 10.231.17.11 with SMTP id q11mr3071490iba.63.1283618167256;
+        Sat, 04 Sep 2010 09:36:07 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm3490714ibk.15.2010.09.04.09.36.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 04 Sep 2010 09:36:06 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8w3hxz81.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155339>
 
-Pascal Obry <pascal@obry.net> writes:
+Junio C Hamano wrote:
 
-> diff --git a/git-send-email.perl b/git-send-email.perl
-> index 0063606..e5cdda7 100755
-> --- a/git-send-email.perl
-> +++ b/git-send-email.perl
-> @@ -60,6 +60,7 @@ git send-email [options] <file | directory | rev-list options >
->      --envelope-sender       <str>  * Email envelope sender.
->      --smtp-server       <str:int>  * Outgoing SMTP server to use. The port
->                                       is optional. Default 'localhost'.
-> +    --smtp-server-options   <int>  * Outgoing SMTP server options to use.
-
-Is it really an int?
-
-> @@ -279,6 +282,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
-> ...
-> +		    "smtp-server-options=s" => \$smtp_server_options,
-> @@ -1015,6 +1019,9 @@ X-Mailer: git-send-email $gitversion
->  		}
->  	}
+> +++ b/Makefile
+> @@ -390,6 +390,8 @@ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+>  	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
+>  	  git-instaweb
 >  
-> +	unshift (@sendmail_parameters, $smtp_server_options)
-> +	    if (defined $smtp_server_options);
-> +
+> +ETAGS_TARGET = TAGS
+[...]
+> @@ -1954,9 +1957,9 @@ info:
+>  pdf:
+>  	$(MAKE) -C Documentation pdf
+>  
+> -TAGS:
+> -	$(RM) TAGS
+> -	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
+> +$(ETAGS_TARGET):
+> +	$(RM) $(ETAGS_TARGET)
+> +	$(FIND) . -name '*.[hcS]' -print | xargs etags -a -o $(ETAGS_TARGET)
 
-I suspect this would not work, unless you are aiming to add just a
-singular $smtp_server_option, as the actual program invocation looks like
-this later in the program:
+Nice.
 
-	} elsif ($smtp_server =~ m#^/#) {
-		my $pid = open my $sm, '|-';
-		defined $pid or die $!;
-		if (!$pid) {
-			exec($smtp_server, @sendmail_parameters) or die $!;
-		}
-		print $sm "$header\n$message";
+> @@ -2252,7 +2255,7 @@ endif
+>  
+>  .PHONY: all install clean strip
+>  .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
+> -.PHONY: FORCE TAGS tags cscope
+> +.PHONY: FORCE cscope
 
-Somebody in the code before this unshift needs to split the single string
-in $smtp_server_options into multiple parameters, or better yet, it needs
-to accept more than one --smtp-server-option=foo --smtp-server-option=bar
-and accumulate them in @smtp_server_options.
+make: `tags' is up to date.
+
+How about something like this squashed in or on top?
+
+-- 8< --
+Subject: Makefile: regenerate editor tag files when asked
+
+tags and TAGS depend on all source files, but it is easier to teach
+the Makefile to regenerate them every time the user asks than to
+declare that.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Makefile |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 52252d4..205fe58 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1955,11 +1955,11 @@ info:
+ pdf:
+ 	$(MAKE) -C Documentation pdf
+ 
+-$(ETAGS_TARGET):
++$(ETAGS_TARGET): FORCE
+ 	$(RM) $(ETAGS_TARGET)
+ 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a -o $(ETAGS_TARGET)
+ 
+-tags:
++tags: FORCE
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+ 
+-- 
+1.7.2.3
