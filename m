@@ -1,79 +1,78 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: inaccurate commit message message?
-Date: Sat, 4 Sep 2010 16:55:44 -0500
-Message-ID: <AANLkTinGNss5siAjpic07OB036y8K0kvBjSj=unDhQWs@mail.gmail.com>
-References: <AANLkTinbq8z-ygVUWPRq9PA95-+8O8SwOJCLkfMKCg9T@mail.gmail.com>
+From: Russell King - ARM Linux <linux@arm.linux.org.uk>
+Subject: Re: [bug-patch] Re: [BUG?] rename patch accepted with --dry-run,
+	rejected without (Re: [PATCH V3] arm & sh: factorised duplicated
+	clkdev.c)
+Date: Sat, 4 Sep 2010 23:01:52 +0100
+Message-ID: <20100904220152.GB20444@n2100.arm.linux.org.uk>
+References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com> <201009042333.51419.agruen@suse.de> <20100904214527.GA20444@n2100.arm.linux.org.uk> <201009042346.11787.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Ramana Kumar <ramana.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 04 23:56:12 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=us-ascii
+Cc: bug-patch@gnu.org,
+	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>, linux-sh@vger.kernel.org,
+	Magnus Damm <magnus.damm@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jean-Christophe PLAGNIOL-VILLARD <plagnioj@jcrosoft.com>,
+	linux-arm-kernel@lists.infradead.org
+To: Andreas Gruenbacher <agruen@suse.de>
+X-From: linux-sh-owner@vger.kernel.org Sun Sep 05 00:03:21 2010
+Return-path: <linux-sh-owner@vger.kernel.org>
+Envelope-to: glps-linuxsh-dev@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Os0ia-0006S6-2l
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 23:56:12 +0200
+	(envelope-from <linux-sh-owner@vger.kernel.org>)
+	id 1Os0pT-0007ro-TB
+	for glps-linuxsh-dev@lo.gmane.org; Sun, 05 Sep 2010 00:03:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753883Ab0IDV4G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 17:56:06 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:57609 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753689Ab0IDV4F (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 17:56:05 -0400
-Received: by ywh1 with SMTP id 1so1242660ywh.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 14:56:04 -0700 (PDT)
+	id S1753819Ab0IDWDT (ORCPT <rfc822;glps-linuxsh-dev@m.gmane.org>);
+	Sat, 4 Sep 2010 18:03:19 -0400
+Received: from caramon.arm.linux.org.uk ([78.32.30.218]:54103 "EHLO
+	caramon.arm.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753670Ab0IDWDS (ORCPT
+	<rfc822;linux-sh@vger.kernel.org>); Sat, 4 Sep 2010 18:03:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=RHEJyXJo8f2/7j5aplVsnY9jiKCb/nkObCM95scvifY=;
-        b=UoKoFIRGGoNVI+i4Ux+i2nFNGmG/1vVGvZfRfV3PmIflL576pxp/Itf3dC4HKsPrWk
-         NY2H1jaCq94OjhLj4OpNae84AyPm8qVbF/xn3jCjFTzJHZ1MvHDPa/bR3p+pyUewdPmi
-         H4oAOgyJ12IfhdpGjkf/A6NhgVcaD42VJt79E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=pvxojSx9Y8oEI25dOjuvW4rqvgGYhuthKsfzCrvykh5ogLcg6lZxQS3n/AuzLeN/i2
-         cYm2NA540IqzWsXh05AKrL7SkAbw3F65IyJOq98/q466IAX3O7pVemEyYTpXwL8qm69h
-         EScPNB3buTnJyyDb0fEHI5AKTB+G2+plHjDg8=
-Received: by 10.150.136.17 with SMTP id j17mr756889ybd.345.1283637364085; Sat,
- 04 Sep 2010 14:56:04 -0700 (PDT)
-Received: by 10.150.204.21 with HTTP; Sat, 4 Sep 2010 14:55:44 -0700 (PDT)
-In-Reply-To: <AANLkTinbq8z-ygVUWPRq9PA95-+8O8SwOJCLkfMKCg9T@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
+	d=arm.linux.org.uk; s=caramon; h=Date:From:To:Cc:Subject:
+	Message-ID:References:MIME-Version:Content-Type:In-Reply-To:
+	Sender; bh=8vL/ViLHpn9jtyQNdm7et/9wxmO6+RmRkgxeUi0EB/0=; b=M+1/m
+	cBECBQFJHJ6YePYcB1QWaEgWPmHVhl+MLqT607jDSFF5yhrmzTVFd3HyZ5+GtqQy
+	GUgz97PfCDxYh5dK4t2fp4raV0MXY+8TSXmv/Kje3DbC620UslqYkbsA+ZbvY4ay
+	xm/dyNSIYfvbXGiahsaZ+VquFb7TcWouxTy2Z4=
+Received: from n2100.arm.linux.org.uk ([2002:4e20:1eda:1:214:fdff:fe10:4f86])
+	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <linux@arm.linux.org.uk>)
+	id 1Os0o6-0007gL-Qf; Sat, 04 Sep 2010 23:01:55 +0100
+Received: from linux by n2100.arm.linux.org.uk with local (Exim 4.69)
+	(envelope-from <linux@n2100.arm.linux.org.uk>)
+	id 1Os0o5-0006NM-10; Sat, 04 Sep 2010 23:01:53 +0100
+Content-Disposition: inline
+In-Reply-To: <201009042346.11787.agruen@suse.de>
+User-Agent: Mutt/1.5.19 (2009-01-05)
+Sender: linux-sh-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155365>
+List-ID: <linux-sh.vger.kernel.org>
+X-Mailing-List: linux-sh@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155366>
 
-Heya,
+On Sat, Sep 04, 2010 at 11:46:11PM +0200, Andreas Gruenbacher wrote:
+> On Saturday 04 September 2010 23:45:27 Russell King - ARM Linux wrote:
+> > It also makes them incompatible with GNU patch, whether or not GNU patch
+> > understands the GIT headers.
+> 
+> Aha?  Then why do you think GNU patch tries to understand the GIt patch 
+> headers?  So that it can be incompatible with GIT?
 
-On Sat, Sep 4, 2010 at 16:37, Ramana Kumar <ramana.kumar@gmail.com> wrote:
-> The commit message message says "Lines starting with '#' will be
-> ignored", but fails to say "Lines below this message will be ignored,
-> even if they don't start with '#'".
+Read what you said last time around.  "In this case, the patch itself is
+broken."
 
-Because they're not. Only those starting with # are ignored.
+So, because GNU patch doesn't understand the patch file, the patch file
+must be broken?  No, the patch file is fine with GIT which can apply it
+correctly, but incompatible with GNU patch because of the way GNU patch
+works (as you yourself said, GNU patch doesn't keep the intermediate
+states.)
 
-> If the second sentence is true, I think it (or something equivalent)
-> should be said, especially because of the relevance during commit
-> --verbose.
+I repeat - if you want maximum compatibility, want GNU patch to be able
+to apply the patch with or without --dry-run, then don't use -C or -M
+when generating patches with git.
 
-It is not true.
-
-> In fact the documentation for commit --verbose explicitly says to note
-> that the diff lines won't start with '#'s, as if warning people that
-> those lines might show up in the commit message.
-> Yet they do not seem to show up... (and I don't think they should)
-
-Ah, you are apparently talking about 'git commit --verbose'. It works
-a little different there, all lines starting with # are ignored, as
-well as everything in and after the diff.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Simples.
