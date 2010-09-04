@@ -1,94 +1,81 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sat, 4 Sep 2010 21:00:56 +0100
-Message-ID: <AANLkTikAfSrfKRaK3ozXV_eT6Rd-VRbXQUQLk3SY8QnJ@mail.gmail.com>
-References: <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
-	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
-	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
-	<7voccezr7m.fsf@alter.siamese.dyndns.org>
-	<20100903183120.GA4887@thunk.org>
-	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
-	<04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
-	<alpine.LFD.2.00.1009040040030.19366@xanadu.home>
-	<5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
-	<AANLkTi==yv2CkgKEPJbTLf0P2XMtLmny1t6Zqhwh8wbV@mail.gmail.com>
-	<20100904181405.GB4887@thunk.org>
+From: Pascal Obry <pascal.obry@gmail.com>
+Subject: Re: [PATCH v2 3/3] New send-email option smtpserveroption.
+Date: Sat, 04 Sep 2010 22:09:48 +0200
+Organization: Home - http://www.obry.net
+Message-ID: <4C82A78C.6090602@obry.net>
+References: <1283630128-3472-1-git-send-email-pascal@obry.net> <1283630128-3472-4-git-send-email-pascal@obry.net>
+Reply-To: pascal@obry.net
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: "Ted Ts'o" <tytso@mit.edu>
-X-From: git-owner@vger.kernel.org Sat Sep 04 22:01:08 2010
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 04 22:09:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OryvD-000831-PN
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 22:01:08 +0200
+	id 1Orz3R-00049f-5a
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 22:09:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753362Ab0IDUA6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Sep 2010 16:00:58 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36073 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753096Ab0IDUA5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Sep 2010 16:00:57 -0400
-Received: by vws3 with SMTP id 3so2280778vws.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 13:00:56 -0700 (PDT)
+	id S1753430Ab0IDUJb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Sep 2010 16:09:31 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62061 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753096Ab0IDUJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 16:09:31 -0400
+Received: by wyf22 with SMTP id 22so1388377wyf.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 13:09:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id:date:from:reply-to
+         :organization:user-agent:mime-version:to:subject:references
+         :in-reply-to:x-enigmail-version:content-type
          :content-transfer-encoding;
-        bh=zZG8Nx6nFl0tClrFDz9rNVfCNiPYyHrJ/8d+ppjY94c=;
-        b=G8xdqi+5KXRGOeOisZH8nROEYrPKYppsRPC6DjSx9szAKgKEj7CRFvuz4jAPjfQEec
-         HE5iy7HiNRSrcSX0PXcH9JoxgIyIU99DXXNP65hoR8Cdv6eJF731N2kBfJhGmP33xtfM
-         kJpYhtxQH396yqbXiiFgW6eKWX0d+2PMcATCo=
+        bh=f4ItgMVwy2dmTyVDFDVczT82UVX++4rsBaQ8qOlHg+Y=;
+        b=g5qDoTbzJ7zgEPai/86AWOLcxNGdW+OTrTeYNnzh8lUaXnB9Wl9D9QNSx6UpIJuNSU
+         DeZZ3fanlQzEGgg/GbqDoQuulMMYP90ZZ6FuC/FhqTlapJ0Yq5+9jvT+q3EJGQj7K8h4
+         3O4sxdfasUiTDy0FvoyfcqrJ9Lg9tixeSy3Zs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=IE8dAE62SB4k3lIOUNSzh1sMQvLB4w3Pi+K9V10rB6qbv+wWAPiOx86Axoo9FLEKZG
-         zEAEu0rZHzwogcS7dYgSby+E718YqbIOjtfbdD6FEJFgisPOXoLzgPSL4aOXBHqbVKq6
-         NothaEU1aub2MU60vAALJ5gD+4l+u3evG/pY4=
-Received: by 10.220.129.13 with SMTP id m13mr971318vcs.132.1283630456403; Sat,
- 04 Sep 2010 13:00:56 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Sat, 4 Sep 2010 13:00:56 -0700 (PDT)
-In-Reply-To: <20100904181405.GB4887@thunk.org>
+        h=message-id:date:from:reply-to:organization:user-agent:mime-version
+         :to:subject:references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=ikJGtuR7s4ZwkWt4kfb/sH6DLru6/AV7bjahJOiVmLD9h4qHz93ewlhgSCMQ+TbF2h
+         s4xRCkNFKTTHi/RlYIe9xcZUBpF5nc6BVpYMi1BAr1HDG1JDb3ID8zFTzyvpvxQdq2kx
+         ha/Syhhuyzk2heVH+l3fvOS8Yiog/cJvHp/pM=
+Received: by 10.227.147.75 with SMTP id k11mr1043448wbv.161.1283630968271;
+        Sat, 04 Sep 2010 13:09:28 -0700 (PDT)
+Received: from [192.168.0.100] (AVelizy-154-1-100-4.w90-2.abo.wanadoo.fr [90.2.58.4])
+        by mx.google.com with ESMTPS id a1sm2918932wbb.14.2010.09.04.13.09.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 04 Sep 2010 13:09:27 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
+In-Reply-To: <1283630128-3472-4-git-send-email-pascal@obry.net>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155354>
 
-On Sat, Sep 4, 2010 at 7:14 PM, Ted Ts'o <tytso@mit.edu> wrote:
->=C2=A0At least
-> where I live, my local ISP (Comcast, which is very common internet
-> provider in the States) deliberately degrades the transfer of
-> peer2peer downloads.
+Le 04/09/2010 21:55, Pascal Obry a =E9crit :
+> +--smtp-server-option=3D<options>::
 
- if microsoft can add ncacn_http to MSRPC for the exact same sorts of
-reasons, and even skype likewise provides a user-config option to
-specify "port 80" or port "3128", then it's perfectly possible to do
-likewise. ncacn_http actually has HTTP 1.1 headers on it, and, once
-you've negotiated enough to look like HTTP, the raw socket is hander
-over to MSRPC for it to play with.
+should be:               ^
+                         option
 
-> Which brings me back to my original question --- what problem exactly
-> are you trying to solve? =C2=A0What's the scenario?
+Will issue another patch set (waiting for feedback on v2).
 
-i described those in prior messages.  to summarise: they're basically
-reduction of dependence on centralised infrastructure, and to allow
-developers to carry on doing code-sprints using bugtrackers, wikis and
-anything else that can be "git-able" as its back-end, _even_ in the
-cases where there is little or absolutely no bandwidth... and _still_
-sync up globally once any one of the developers gets back online.
+Pascal.
 
- so i'm _not_ just thinking of the "code, code, code" scenario, and
-i'm not just thinking in terms of the single developer "i code,
-therefore i am" scenario.  i'm thinking of scenarios which increase
-the productivity of collaborative development even in the face of
-unreliable or non-existent connectivity [carrier pigeons...]
+--=20
 
-l.
+--|------------------------------------------------------
+--| Pascal Obry                           Team-Ada Member
+--| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
+--|------------------------------------------------------
+--|    http://www.obry.net  -  http://v2p.fr.eu.org
+--| "The best way to travel is by means of imagination"
+--|
+--| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
