@@ -1,8 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 01/63] builtin: use builtin.h for all builtin commands
-Date: Sat,  4 Sep 2010 22:10:21 +0000
-Message-ID: <1283638229-14199-2-git-send-email-avarab@gmail.com>
+Subject: [PATCH 51/63] gettextize: git-merge basic messages
+Date: Sat,  4 Sep 2010 22:10:28 +0000
+Message-ID: <1283638229-14199-9-git-send-email-avarab@gmail.com>
 References: <1283638229-14199-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -20,292 +20,504 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Os0x2-0003Lx-29
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 00:11:08 +0200
+	id 1Os0x6-0003Lx-Hp
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 00:11:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754017Ab0IDWKq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Sep 2010 18:10:46 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:37424 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753819Ab0IDWKp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 18:10:45 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 40so4554637wwj.1
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 15:10:44 -0700 (PDT)
+	id S1754100Ab0IDWLJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Sep 2010 18:11:09 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:57357 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754064Ab0IDWLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 18:11:07 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 22so1463766wyf.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 15:11:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=NW6v11C72mMJUMgVcSitig95Unu0d5y7dY68eddILg8=;
-        b=PdAWqD1pogwlCqyi6fhaOpoOBZ5prowUfqEv8+SNiaxHSGx0D9iTttf/MH24pFu6WG
-         tmdRsfdED9W6ABXV0ZaX7G3D0bbsRwyBRGE3DUpFEPm4OoDLbLtEOihJ1MXT1+JQEzua
-         sT7ihW+Q/8HslZ77Vmd4n52V10wCJF9lHjTgc=
+        bh=NpC0WsHhHrQgBEi+ganFh9Q8WLSmNDfDkv1sNaQJvh0=;
+        b=coBvamhSysDqj+u6McGCwPbEVWA1PEMNmaZV6VnI7tRadi6mMqbPSPNkr/oIon2/3i
+         Wmi+BLm7D0Rv/KcXFomOpSShzyO7RWAOinR44PS2nNuMKblvDgcsHxARP6QdcXkXQTUY
+         1+nuuflHQFcjrpIfXseDO/Ba1RO51kJR+9E8g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=JK5+sqv5VdP3NuRXUCZ8LhPZLiBQaTCXs9rTedhaXpzmD1SwH00Y+B+4dI6TVioizK
-         qcjh8N+rYc29pWffDfMJH/FY9/zyfDlGMWSA8cltnbTl5X1joYBNiAP5KTfU4gU1tY3H
-         oaT6Tog0/tB6uCQH/3tWyCcbhwnSWkYwurysQ=
-Received: by 10.216.165.77 with SMTP id d55mr114963wel.23.1283638244419;
-        Sat, 04 Sep 2010 15:10:44 -0700 (PDT)
+        b=oQw6MCxFI78Vigs88o+fvm89HoV3UWV9Mtv5X4e+AGiuckOYEj33aTmVybABpxGwJ8
+         7dl3UjopS88ascmCaDXEEvmXigPDWIxFhpb95p7h29Ode6zYBVbTPvduvSPhT20ryIim
+         3S3o0Cugx9ALU8pGGa07Xs5Zw6+YWaFFiO8JI=
+Received: by 10.216.236.197 with SMTP id w47mr239459weq.114.1283638266465;
+        Sat, 04 Sep 2010 15:11:06 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id k15sm2261604wer.23.2010.09.04.15.10.42
+        by mx.google.com with ESMTPS id k15sm2261604wer.23.2010.09.04.15.11.04
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 04 Sep 2010 15:10:43 -0700 (PDT)
+        Sat, 04 Sep 2010 15:11:05 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.3.313.gcd15
 In-Reply-To: <1283638229-14199-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155373>
-
-Change the builtin/*.c files and wt-status.c files which weren't using
-builtin.h to use it, also remove any git-compat-util.h, strbuf.h and
-cache.h from those files. We can trust on builtin.h including them.
-
-builtin.h also includes commit.h and notes.h. But I haven't removed
-these includes. They're redundant now, but we may want to remove them
-from builtin.h in the future.
-
-This impeded my efforts to gettextize git, since I'd otherwise have to
-add gettext.h to all of these. Using builtin.h is a good idea in any
-case, since it's defining the prototypes for the cmd_* functions that
-these files define.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155374>
 
 Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
- builtin/clone.c           |    3 +--
- builtin/fetch-pack.c      |    2 +-
- builtin/hash-object.c     |    2 +-
- builtin/index-pack.c      |    2 +-
- builtin/merge-index.c     |    2 +-
- builtin/merge-recursive.c |    2 +-
- builtin/merge-tree.c      |    2 +-
- builtin/mktag.c           |    2 +-
- builtin/pack-redundant.c  |    2 +-
- builtin/pack-refs.c       |    2 +-
- builtin/patch-id.c        |    2 +-
- builtin/receive-pack.c    |    2 +-
- builtin/remote.c          |    3 +--
- builtin/reset.c           |    2 +-
- builtin/send-pack.c       |    2 +-
- builtin/unpack-file.c     |    2 +-
- builtin/var.c             |    2 +-
- wt-status.c               |    2 +-
- 18 files changed, 18 insertions(+), 20 deletions(-)
+ builtin/merge.c |  122 +++++++++++++++++++++++++++--------------------=
+-------
+ 1 files changed, 61 insertions(+), 61 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 19ed640..994d527 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -8,7 +8,7 @@
-  * Clone a repository into a different directory that does not yet exi=
-st.
-  */
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 5f65c0c..0ae2b51 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -79,7 +79,7 @@ static int option_parse_message(const struct option *=
+opt,
+ 		strbuf_addf(buf, "%s%s", buf->len ? "\n\n" : "", arg);
+ 		have_message =3D 1;
+ 	} else
+-		return error("switch `m' requires a value");
++		return error(_("switch `m' requires a value"));
+ 	return 0;
+ }
 =20
--#include "cache.h"
-+#include "builtin.h"
- #include "parse-options.h"
- #include "fetch-pack.h"
- #include "refs.h"
-@@ -16,7 +16,6 @@
- #include "tree-walk.h"
- #include "unpack-trees.h"
- #include "transport.h"
--#include "strbuf.h"
- #include "dir.h"
- #include "pack-refs.h"
- #include "sigchain.h"
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index dbd8b7b..fd70b4c 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "refs.h"
- #include "pkt-line.h"
- #include "commit.h"
-diff --git a/builtin/hash-object.c b/builtin/hash-object.c
-index 080af1a..8a5670f 100644
---- a/builtin/hash-object.c
-+++ b/builtin/hash-object.c
-@@ -4,7 +4,7 @@
-  * Copyright (C) Linus Torvalds, 2005
-  * Copyright (C) Junio C Hamano, 2005
-  */
--#include "cache.h"
-+#include "builtin.h"
- #include "blob.h"
- #include "quote.h"
- #include "parse-options.h"
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 2e680d7..9c5c9d6 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "delta.h"
- #include "pack.h"
- #include "csum-file.h"
-diff --git a/builtin/merge-index.c b/builtin/merge-index.c
-index 2c4cf5e..adc2a6d 100644
---- a/builtin/merge-index.c
-+++ b/builtin/merge-index.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "run-command.h"
- #include "exec_cmd.h"
+@@ -116,13 +116,13 @@ static struct strategy *get_strategy(const char *=
+name)
+ 		exclude_cmds(&main_cmds, &not_strategies);
+ 	}
+ 	if (!is_in_cmdlist(&main_cmds, name) && !is_in_cmdlist(&other_cmds, n=
+ame)) {
+-		fprintf(stderr, "Could not find merge strategy '%s'.\n", name);
+-		fprintf(stderr, "Available strategies are:");
++		fprintf(stderr, _("Could not find merge strategy '%s'.\n"), name);
++		fprintf(stderr, _("Available strategies are:"));
+ 		for (i =3D 0; i < main_cmds.cnt; i++)
+ 			fprintf(stderr, " %s", main_cmds.names[i]->name);
+ 		fprintf(stderr, ".\n");
+ 		if (other_cmds.cnt) {
+-			fprintf(stderr, "Available custom strategies are:");
++			fprintf(stderr, _("Available custom strategies are:"));
+ 			for (i =3D 0; i < other_cmds.cnt; i++)
+ 				fprintf(stderr, " %s", other_cmds.names[i]->name);
+ 			fprintf(stderr, ".\n");
+@@ -220,17 +220,17 @@ static void save_state(void)
+ 	cp.git_cmd =3D 1;
 =20
-diff --git a/builtin/merge-recursive.c b/builtin/merge-recursive.c
-index 78b9db7..ad2d77d 100644
---- a/builtin/merge-recursive.c
-+++ b/builtin/merge-recursive.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "commit.h"
- #include "tag.h"
- #include "merge-recursive.h"
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 9b25ddc..1991742 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "tree-walk.h"
- #include "xdiff-interface.h"
- #include "blob.h"
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 1cb0f3f..9148cc0 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "tag.h"
- #include "exec_cmd.h"
+ 	if (start_command(&cp))
+-		die("could not run stash.");
++		die(_("could not run stash."));
+ 	len =3D strbuf_read(&buffer, cp.out, 1024);
+ 	close(cp.out);
 =20
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 41e1615..a15e366 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -6,7 +6,7 @@
- *
- */
+ 	if (finish_command(&cp) || len < 0)
+-		die("stash failed");
++		die(_("stash failed"));
+ 	else if (!len)
+ 		return;
+ 	strbuf_setlen(&buffer, buffer.len-1);
+ 	if (get_sha1(buffer.buf, stash))
+-		die("not a valid object: %s", buffer.buf);
++		die(_("not a valid object: %s"), buffer.buf);
+ }
 =20
--#include "cache.h"
-+#include "builtin.h"
- #include "exec_cmd.h"
+ static void reset_hard(unsigned const char *sha1, int verbose)
+@@ -247,7 +247,7 @@ static void reset_hard(unsigned const char *sha1, i=
+nt verbose)
+ 	args[i] =3D NULL;
 =20
- #define BLKSIZE 512
-diff --git a/builtin/pack-refs.c b/builtin/pack-refs.c
-index 091860b..39a9d89 100644
---- a/builtin/pack-refs.c
-+++ b/builtin/pack-refs.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "parse-options.h"
- #include "pack-refs.h"
+ 	if (run_command_v_opt(args, RUN_GIT_CMD))
+-		die("read-tree failed");
++		die(_("read-tree failed"));
+ }
 =20
-diff --git a/builtin/patch-id.c b/builtin/patch-id.c
-index 5125300..33e9725 100644
---- a/builtin/patch-id.c
-+++ b/builtin/patch-id.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "exec_cmd.h"
+ static void restore_state(void)
+@@ -276,7 +276,7 @@ static void restore_state(void)
+ static void finish_up_to_date(const char *msg)
+ {
+ 	if (verbosity >=3D 0)
+-		printf("%s%s\n", squash ? " (nothing to squash)" : "", msg);
++		printf("%s%s\n", squash ? _(" (nothing to squash)") : "", msg);
+ 	drop_save();
+ }
 =20
- static void flush_current_id(int patchlen, unsigned char *id, git_SHA_=
-CTX *c)
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 760817d..f64b79c 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "pack.h"
- #include "refs.h"
- #include "pkt-line.h"
-diff --git a/builtin/remote.c b/builtin/remote.c
-index 48e0a6b..3cf3c6b 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -1,9 +1,8 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "parse-options.h"
- #include "transport.h"
- #include "remote.h"
- #include "string-list.h"
--#include "strbuf.h"
- #include "run-command.h"
- #include "refs.h"
+@@ -289,10 +289,10 @@ static void squash_message(void)
+ 	int fd;
+ 	struct pretty_print_context ctx =3D {0};
 =20
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 0037be4..c198b8e 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -7,7 +7,7 @@
-  *
-  * Copyright (c) 2005, 2006 Linus Torvalds and Junio C Hamano
-  */
--#include "cache.h"
-+#include "builtin.h"
- #include "tag.h"
- #include "object.h"
- #include "commit.h"
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 481602d..a55a517 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "commit.h"
- #include "refs.h"
- #include "pkt-line.h"
-diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
-index 608590a..c905d80 100644
---- a/builtin/unpack-file.c
-+++ b/builtin/unpack-file.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "blob.h"
- #include "exec_cmd.h"
+-	printf("Squash commit -- not updating HEAD\n");
++	printf(_("Squash commit -- not updating HEAD\n"));
+ 	fd =3D open(git_path("SQUASH_MSG"), O_WRONLY | O_CREAT, 0666);
+ 	if (fd < 0)
+-		die_errno("Could not write to '%s'", git_path("SQUASH_MSG"));
++		die_errno(_("Could not write to '%s'"), git_path("SQUASH_MSG"));
 =20
-diff --git a/builtin/var.c b/builtin/var.c
-index 0744bb8..1787771 100644
---- a/builtin/var.c
-+++ b/builtin/var.c
-@@ -3,7 +3,7 @@
-  *
-  * Copyright (C) Eric Biederman, 2005
-  */
--#include "cache.h"
-+#include "builtin.h"
- #include "exec_cmd.h"
+ 	init_revisions(&rev, NULL);
+ 	rev.ignore_merges =3D 1;
+@@ -307,7 +307,7 @@ static void squash_message(void)
 =20
- static const char var_usage[] =3D "git var (-l | <variable>)";
-diff --git a/wt-status.c b/wt-status.c
-index 54b6b03..b05c6db 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -1,4 +1,4 @@
--#include "cache.h"
-+#include "builtin.h"
- #include "wt-status.h"
- #include "object.h"
- #include "dir.h"
+ 	setup_revisions(0, NULL, &rev, NULL);
+ 	if (prepare_revision_walk(&rev))
+-		die("revision walk setup failed");
++		die(_("revision walk setup failed"));
+=20
+ 	ctx.abbrev =3D rev.abbrev;
+ 	ctx.date_mode =3D rev.date_mode;
+@@ -320,9 +320,9 @@ static void squash_message(void)
+ 		pretty_print_commit(rev.commit_format, commit, &out, &ctx);
+ 	}
+ 	if (write(fd, out.buf, out.len) < 0)
+-		die_errno("Writing SQUASH_MSG");
++		die_errno(_("Writing SQUASH_MSG"));
+ 	if (close(fd))
+-		die_errno("Finishing SQUASH_MSG");
++		die_errno(_("Finishing SQUASH_MSG"));
+ 	strbuf_release(&out);
+ }
+=20
+@@ -342,7 +342,7 @@ static void finish(const unsigned char *new_head, c=
+onst char *msg)
+ 		squash_message();
+ 	} else {
+ 		if (verbosity >=3D 0 && !merge_msg.len)
+-			printf("No merge message -- not updating HEAD\n");
++			printf(_("No merge message -- not updating HEAD\n"));
+ 		else {
+ 			const char *argv_gc_auto[] =3D { "gc", "--auto", NULL };
+ 			update_ref(reflog_message.buf, "HEAD",
+@@ -364,7 +364,7 @@ static void finish(const unsigned char *new_head, c=
+onst char *msg)
+ 		if (diff_use_color_default > 0)
+ 			DIFF_OPT_SET(&opts, COLOR_DIFF);
+ 		if (diff_setup_done(&opts) < 0)
+-			die("diff_setup_done failed");
++			die(_("diff_setup_done failed"));
+ 		diff_tree_sha1(head, new_head, "", &opts);
+ 		diffcore_std(&opts);
+ 		diff_flush(&opts);
+@@ -393,7 +393,7 @@ static void merge_name(const char *remote, struct s=
+trbuf *msg)
+ 	memset(branch_head, 0, sizeof(branch_head));
+ 	remote_head =3D peel_to_type(remote, 0, NULL, OBJ_COMMIT);
+ 	if (!remote_head)
+-		die("'%s' does not point to a commit", remote);
++		die(_("'%s' does not point to a commit"), remote);
+=20
+ 	if (dwim_ref(remote, strlen(remote), branch_head, &found_ref) > 0) {
+ 		if (!prefixcmp(found_ref, "refs/heads/")) {
+@@ -458,7 +458,7 @@ static void merge_name(const char *remote, struct s=
+trbuf *msg)
+=20
+ 		fp =3D fopen(git_path("FETCH_HEAD"), "r");
+ 		if (!fp)
+-			die_errno("could not open '%s' for reading",
++			die_errno(_("could not open '%s' for reading"),
+ 				  git_path("FETCH_HEAD"));
+ 		strbuf_getline(&line, fp, '\n');
+ 		fclose(fp);
+@@ -488,7 +488,7 @@ static int git_merge_config(const char *k, const ch=
+ar *v, void *cb)
+ 		buf =3D xstrdup(v);
+ 		argc =3D split_cmdline(buf, &argv);
+ 		if (argc < 0)
+-			die("Bad branch.%s.mergeoptions string: %s", branch,
++			die(_("Bad branch.%s.mergeoptions string: %s"), branch,
+ 			    split_cmdline_strerror(argc));
+ 		argv =3D xrealloc(argv, sizeof(*argv) * (argc + 2));
+ 		memmove(argv + 1, argv, sizeof(*argv) * (argc + 1));
+@@ -550,7 +550,7 @@ static int read_tree_trivial(unsigned char *common,=
+ unsigned char *head,
+ static void write_tree_trivial(unsigned char *sha1)
+ {
+ 	if (write_cache_as_tree(sha1, 0, NULL))
+-		die("git write-tree failed to write a tree");
++		die(_("git write-tree failed to write a tree"));
+ }
+=20
+ int try_merge_command(const char *strategy, struct commit_list *common=
+,
+@@ -591,7 +591,7 @@ int try_merge_command(const char *strategy, struct =
+commit_list *common,
+ 	free(args);
+ 	discard_cache();
+ 	if (read_cache() < 0)
+-		die("failed to read the cache");
++		die(_("failed to read the cache"));
+ 	resolve_undo_clear();
+=20
+ 	return ret;
+@@ -608,7 +608,7 @@ static int try_merge_strategy(const char *strategy,=
+ struct commit_list *common,
+ 	if (active_cache_changed &&
+ 			(write_cache(index_fd, active_cache, active_nr) ||
+ 			 commit_locked_index(lock)))
+-		return error("Unable to write index.");
++		return error(_("Unable to write index."));
+ 	rollback_lock_file(lock);
+=20
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree")) {
+@@ -621,7 +621,7 @@ static int try_merge_strategy(const char *strategy,=
+ struct commit_list *common,
+ 		struct commit_list *j;
+=20
+ 		if (remoteheads->next) {
+-			error("Not handling anything other than two heads merge.");
++			error(_("Not handling anything other than two heads merge."));
+ 			return 2;
+ 		}
+=20
+@@ -648,7 +648,7 @@ static int try_merge_strategy(const char *strategy,=
+ struct commit_list *common,
+ 			else if (!strcmp(xopts[x], "no-renormalize"))
+ 				o.renormalize =3D 0;
+ 			else
+-				die("Unknown option for merge-recursive: -X%s", xopts[x]);
++				die(_("Unknown option for merge-recursive: -X%s"), xopts[x]);
+ 		}
+=20
+ 		o.branch1 =3D head_arg;
+@@ -663,7 +663,7 @@ static int try_merge_strategy(const char *strategy,=
+ struct commit_list *common,
+ 		if (active_cache_changed &&
+ 				(write_cache(index_fd, active_cache, active_nr) ||
+ 				 commit_locked_index(lock)))
+-			die ("unable to write %s", get_index_file());
++			die (_("unable to write %s"), get_index_file());
+ 		rollback_lock_file(lock);
+ 		return clean ? 0 : 1;
+ 	} else {
+@@ -734,7 +734,7 @@ int checkout_fast_forward(const unsigned char *head=
+, const unsigned char *remote
+ 		return -1;
+ 	if (write_cache(fd, active_cache, active_nr) ||
+ 		commit_locked_index(lock_file))
+-		die("unable to write new index file");
++		die(_("unable to write new index file"));
+ 	return 0;
+ }
+=20
+@@ -788,7 +788,7 @@ static int merge_trivial(void)
+ 	struct commit_list *parent =3D xmalloc(sizeof(*parent));
+=20
+ 	write_tree_trivial(result_tree);
+-	printf("Wonderful.\n");
++	printf(_("Wonderful.\n"));
+ 	parent->item =3D lookup_commit(head);
+ 	parent->next =3D xmalloc(sizeof(*parent->next));
+ 	parent->next->item =3D remoteheads->item;
+@@ -837,7 +837,7 @@ static int suggest_conflicts(int renormalizing)
+=20
+ 	fp =3D fopen(git_path("MERGE_MSG"), "a");
+ 	if (!fp)
+-		die_errno("Could not open '%s' for writing",
++		die_errno(_("Could not open '%s' for writing"),
+ 			  git_path("MERGE_MSG"));
+ 	fprintf(fp, "\nConflicts:\n");
+ 	for (pos =3D 0; pos < active_nr; pos++) {
+@@ -853,8 +853,8 @@ static int suggest_conflicts(int renormalizing)
+ 	}
+ 	fclose(fp);
+ 	rerere(allow_rerere_auto);
+-	printf("Automatic merge failed; "
+-			"fix conflicts and then commit the result.\n");
++	printf(_("Automatic merge failed; "
++			"fix conflicts and then commit the result.\n"));
+ 	return 1;
+ }
+=20
+@@ -868,7 +868,7 @@ static struct commit *is_old_style_invocation(int a=
+rgc, const char **argv)
+ 			return NULL;
+ 		second_token =3D lookup_commit_reference_gently(second_sha1, 0);
+ 		if (!second_token)
+-			die("'%s' is not a commit", argv[1]);
++			die(_("'%s' is not a commit"), argv[1]);
+ 		if (hashcmp(second_token->object.sha1, head))
+ 			return NULL;
+ 	}
+@@ -918,10 +918,10 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 		 * add/rm <file>', just 'git commit'.
+ 		 */
+ 		if (advice_resolve_conflict)
+-			die("You have not concluded your merge (MERGE_HEAD exists).\n"
+-			    "Please, commit your changes before you can merge.");
++			die(_("You have not concluded your merge (MERGE_HEAD exists).\n"
++			    "Please, commit your changes before you can merge."));
+ 		else
+-			die("You have not concluded your merge (MERGE_HEAD exists).");
++			die(_("You have not concluded your merge (MERGE_HEAD exists)."));
+ 	}
+=20
+ 	resolve_undo_clear();
+@@ -948,12 +948,12 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+=20
+ 	if (squash) {
+ 		if (!allow_fast_forward)
+-			die("You cannot combine --squash with --no-ff.");
++			die(_("You cannot combine --squash with --no-ff."));
+ 		option_commit =3D 0;
+ 	}
+=20
+ 	if (!allow_fast_forward && fast_forward_only)
+-		die("You cannot combine --no-ff with --ff-only.");
++		die(_("You cannot combine --no-ff with --ff-only."));
+=20
+ 	if (!argc)
+ 		usage_with_options(builtin_merge_usage,
+@@ -981,16 +981,16 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 		 * We do the same for "git pull".
+ 		 */
+ 		if (argc !=3D 1)
+-			die("Can merge only exactly one commit into "
+-				"empty head");
++			die(_("Can merge only exactly one commit into "
++				"empty head"));
+ 		if (squash)
+-			die("Squash commit into empty head not supported yet");
++			die(_("Squash commit into empty head not supported yet"));
+ 		if (!allow_fast_forward)
+-			die("Non-fast-forward commit does not make sense into "
+-			    "an empty head");
++			die(_("Non-fast-forward commit does not make sense into "
++			    "an empty head"));
+ 		remote_head =3D peel_to_type(argv[0], 0, NULL, OBJ_COMMIT);
+ 		if (!remote_head)
+-			die("%s - not something we can merge", argv[0]);
++			die(_("%s - not something we can merge"), argv[0]);
+ 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+ 				DIE_ON_ERR);
+ 		reset_hard(remote_head->sha1, 0);
+@@ -1038,7 +1038,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+=20
+ 		o =3D peel_to_type(argv[i], 0, NULL, OBJ_COMMIT);
+ 		if (!o)
+-			die("%s - not something we can merge", argv[i]);
++			die(_("%s - not something we can merge"), argv[i]);
+ 		commit =3D lookup_commit(o->sha1);
+ 		commit->util =3D (void *)argv[i];
+ 		remotes =3D &commit_list_insert(commit, remotes)->next;
+@@ -1096,7 +1096,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 		strcpy(hex, find_unique_abbrev(head, DEFAULT_ABBREV));
+=20
+ 		if (verbosity >=3D 0)
+-			printf("Updating %s..%s\n",
++			printf(_("Updating %s..%s\n"),
+ 				hex,
+ 				find_unique_abbrev(remoteheads->item->object.sha1,
+ 				DEFAULT_ABBREV));
+@@ -1130,11 +1130,11 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+ 		if (allow_trivial && !fast_forward_only) {
+ 			/* See if it is really trivial. */
+ 			git_committer_info(IDENT_ERROR_ON_NO_NAME);
+-			printf("Trying really trivial in-index merge...\n");
++			printf(_("Trying really trivial in-index merge...\n"));
+ 			if (!read_tree_trivial(common->item->object.sha1,
+ 					head, remoteheads->item->object.sha1))
+ 				return merge_trivial();
+-			printf("Nope.\n");
++			printf(_("Nope.\n"));
+ 		}
+ 	} else {
+ 		/*
+@@ -1167,7 +1167,7 @@ int cmd_merge(int argc, const char **argv, const =
+char *prefix)
+ 	}
+=20
+ 	if (fast_forward_only)
+-		die("Not possible to fast-forward, aborting.");
++		die(_("Not possible to fast-forward, aborting."));
+=20
+ 	/* We are going to make a new commit. */
+ 	git_committer_info(IDENT_ERROR_ON_NO_NAME);
+@@ -1193,11 +1193,11 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+ 	for (i =3D 0; i < use_strategies_nr; i++) {
+ 		int ret;
+ 		if (i) {
+-			printf("Rewinding the tree to pristine...\n");
++			printf(_("Rewinding the tree to pristine...\n"));
+ 			restore_state();
+ 		}
+ 		if (use_strategies_nr !=3D 1)
+-			printf("Trying merge strategy %s...\n",
++			printf(_("Trying merge strategy %s...\n"),
+ 				use_strategies[i]->name);
+ 		/*
+ 		 * Remember which strategy left the state in the working
+@@ -1258,17 +1258,17 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+ 		restore_state();
+ 		if (use_strategies_nr > 1)
+ 			fprintf(stderr,
+-				"No merge strategy handled the merge.\n");
++				_("No merge strategy handled the merge.\n"));
+ 		else
+-			fprintf(stderr, "Merge with strategy %s failed.\n",
++			fprintf(stderr, _("Merge with strategy %s failed.\n"),
+ 				use_strategies[0]->name);
+ 		return 2;
+ 	} else if (best_strategy =3D=3D wt_strategy)
+ 		; /* We already have its result in the working tree. */
+ 	else {
+-		printf("Rewinding the tree to pristine...\n");
++		printf(_("Rewinding the tree to pristine...\n"));
+ 		restore_state();
+-		printf("Using the %s to prepare resolving by hand.\n",
++		printf(_("Using the %s to prepare resolving by hand.\n"),
+ 			best_strategy);
+ 		try_merge_strategy(best_strategy, common, head_arg);
+ 	}
+@@ -1284,35 +1284,35 @@ int cmd_merge(int argc, const char **argv, cons=
+t char *prefix)
+ 				sha1_to_hex(j->item->object.sha1));
+ 		fd =3D open(git_path("MERGE_HEAD"), O_WRONLY | O_CREAT, 0666);
+ 		if (fd < 0)
+-			die_errno("Could not open '%s' for writing",
++			die_errno(_("Could not open '%s' for writing"),
+ 				  git_path("MERGE_HEAD"));
+ 		if (write_in_full(fd, buf.buf, buf.len) !=3D buf.len)
+-			die_errno("Could not write to '%s'", git_path("MERGE_HEAD"));
++			die_errno(_("Could not write to '%s'"), git_path("MERGE_HEAD"));
+ 		close(fd);
+ 		strbuf_addch(&merge_msg, '\n');
+ 		fd =3D open(git_path("MERGE_MSG"), O_WRONLY | O_CREAT, 0666);
+ 		if (fd < 0)
+-			die_errno("Could not open '%s' for writing",
++			die_errno(_("Could not open '%s' for writing"),
+ 				  git_path("MERGE_MSG"));
+ 		if (write_in_full(fd, merge_msg.buf, merge_msg.len) !=3D
+ 			merge_msg.len)
+-			die_errno("Could not write to '%s'", git_path("MERGE_MSG"));
++			die_errno(_("Could not write to '%s'"), git_path("MERGE_MSG"));
+ 		close(fd);
+ 		fd =3D open(git_path("MERGE_MODE"), O_WRONLY | O_CREAT | O_TRUNC, 06=
+66);
+ 		if (fd < 0)
+-			die_errno("Could not open '%s' for writing",
++			die_errno(_("Could not open '%s' for writing"),
+ 				  git_path("MERGE_MODE"));
+ 		strbuf_reset(&buf);
+ 		if (!allow_fast_forward)
+ 			strbuf_addf(&buf, "no-ff");
+ 		if (write_in_full(fd, buf.buf, buf.len) !=3D buf.len)
+-			die_errno("Could not write to '%s'", git_path("MERGE_MODE"));
++			die_errno(_("Could not write to '%s'"), git_path("MERGE_MODE"));
+ 		close(fd);
+ 	}
+=20
+ 	if (merge_was_ok) {
+-		fprintf(stderr, "Automatic merge went well; "
+-			"stopped before committing as requested\n");
++		fprintf(stderr, _("Automatic merge went well; "
++			"stopped before committing as requested\n"));
+ 		return 0;
+ 	} else
+ 		return suggest_conflicts(option_renormalize);
 --=20
 1.7.2.3.313.gcd15
