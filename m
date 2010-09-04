@@ -1,66 +1,125 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] New send-email option smtpserveroptions.
-Date: Sat, 4 Sep 2010 17:57:32 +0000
-Message-ID: <AANLkTinnoBUp139iXxA=p1Q3bMJStk=a+FiZbzN9q6rv@mail.gmail.com>
-References: <1283616372-3340-1-git-send-email-pascal@obry.net>
-	<1283616372-3340-3-git-send-email-pascal@obry.net>
-	<7v4oe5xyxd.fsf@alter.siamese.dyndns.org>
-	<4C827657.3000508@obry.net>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Sat, 4 Sep 2010 14:14:05 -0400
+Message-ID: <20100904181405.GB4887@thunk.org>
+References: <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+ <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+ <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+ <7voccezr7m.fsf@alter.siamese.dyndns.org>
+ <20100903183120.GA4887@thunk.org>
+ <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+ <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+ <alpine.LFD.2.00.1009040040030.19366@xanadu.home>
+ <5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
+ <AANLkTi==yv2CkgKEPJbTLf0P2XMtLmny1t6Zqhwh8wbV@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: pascal@obry.net
-X-From: git-owner@vger.kernel.org Sat Sep 04 19:57:39 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 04 20:14:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Orwzi-00007g-QA
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 19:57:39 +0200
+	id 1OrxFy-0006tR-V9
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 20:14:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754402Ab0IDR5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 13:57:34 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:56648 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754198Ab0IDR5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 13:57:33 -0400
-Received: by iwn5 with SMTP id 5so2651868iwn.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 10:57:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=2z2KLPaddCsVnUdy4hVdgZJ3ash79owdRM2trtkdpio=;
-        b=VYeaczrcsgrnh6UEFgYuUCL99IthmrvWudcWXmhIts1YYPHAS2N3WsEgCw8r1OZw4A
-         Zh3t0kT8zfSPe51TnlaTAP+nZvZ1PESNghE6sTW+VbVLOjsOBP0AhePdEsQFRYCjA0re
-         Uepq6zLVrqncqHdIQsj2ZpSNEysHns4wZgltY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Cvvo5ku/5XX61Znha/EzUiySPXpyN/Hb072o/J+YEe1XXtnRqd8qGMAp1osUMxbp8d
-         OH7LlHrJgt6n8oiZ5X+bFDYxg+vE0OG7WUWFK2NwphqiGvHCprT7ZtGmWeE+7J8dOQvn
-         +4yLR7588N3j3x3vqW3hDFktA0jcce1SmOkzc=
-Received: by 10.231.85.206 with SMTP id p14mr3161038ibl.89.1283623052346; Sat,
- 04 Sep 2010 10:57:32 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sat, 4 Sep 2010 10:57:32 -0700 (PDT)
-In-Reply-To: <4C827657.3000508@obry.net>
+	id S1751029Ab0IDSOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 14:14:10 -0400
+Received: from THUNK.ORG ([69.25.196.29]:40102 "EHLO thunker.thunk.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750976Ab0IDSOJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 14:14:09 -0400
+Received: from root (helo=tytso-glaptop)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1OrxFe-0001fP-63; Sat, 04 Sep 2010 14:14:06 -0400
+Received: from tytso by tytso-glaptop with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1OrxFd-0006Jn-Hl; Sat, 04 Sep 2010 14:14:05 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTi==yv2CkgKEPJbTLf0P2XMtLmny1t6Zqhwh8wbV@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155345>
 
-On Sat, Sep 4, 2010 at 16:39, Pascal Obry <pascal.obry@gmail.com> wrote:
+On Sat, Sep 04, 2010 at 03:50:29PM +0100, Luke Kenneth Casson Leighton wrote:
+> 
+> :)  the legality or illegality isn't interesting - or is a... red
+> herring, being one of the unfortunate anarchistic-word-associations
+> with the concept of "file sharing".  the robustness and convenience
+> aspects - to developers not users - is where it gets reaaally
+> interesting.
 
-> For sure this is above my expertise in Perl. As I said I have never
-> worked with Perl. If someone gives me some pointers I can give it a try
-> otherwise I surrender :)
+I ask the question because I think being clear about what goals might
+be are critically important.  If in fact the goals is to evade
+detection be spreading out responsibility for code which is illegal in
+some jurisdictions (even if they are commonly used and approved of by
+people who aren't spending millions of dollars purchasing
+congresscritters), there are many additional requirements that are
+imposed on such a system.
 
-The best option, as Junio points out is to accumulate options with
---smtp-server-option=. The alternative is to to to parse shell
-syntax. E.g. --options='--foo="bar blah" --foo=..' means you can't
-split on \s+.
+If the goal is speeding up git downloads, then we need to be careful
+about exactly what problem we are trying to solve.
 
-See the \@to option in GetOptions for how to do that.
+>  i do not know of a single free software development tool - not a
+> single one - which is peer-to-peer distributed.  just... none.  what
+> does that say??  and we have people bitching about how great but
+> non-free skype is.  there seems to be a complete lack of understanding
+> of the benefits of peer-to-peer infrastructure in the free software
+> community as a whole, and a complete lack of interest in the benefits,
+> too...
+
+Maybe it's because the benefits don't exist for many people?  At least
+where I live, my local ISP (Comcast, which is very common internet
+provider in the States) deliberately degrades the transfer of
+peer2peer downloads.  As a result, it doesn't make sense for me to use
+bittorrent to download the latest Ubuntu or Fedora iso image.  It's in
+fact much faster for me to download it from an ftp site or a web site.
+
+And git is *extremely* efficient about its network usage, since it
+sends compressed deltas --- especially if you already have a base
+responsitory estlablished.  For example, I took a git repository which
+I haven't touched since August 4th --- exactly one month ago --- and
+did a "git fetch" to bring it up to date by downloading from
+git.kernel.org.  How much network traffic was required, after being
+one month behind?  2.8MB of bytes received, 133k of bytes transmitted.
+
+That's not a lot.  And it's well within the capabilities of even a
+really busy server to handle.  Remember, peer2peer only helps if the
+aggregate network bandwidth of the peers is greater than (a) your
+download pipe, or (b) a central server's upload pipe.  And if we're
+only transmitting 2.8MB, and a git.kernel.org has an aggregate
+connection of over a gigabit per second to the internet --- it's not
+likely that peer2peer would in fact result in a faster download.  Nor
+is it likely that that git updates are likely to be something which
+the kernel.org folks would even notice as a sizeable percentage of
+their usable network bandwidth.  First of all, ISO image files are
+much bigger, and secondly, there are many more users downloading ISO
+files than there are developers downloading git updates, and certainly
+relatively few developers downloading full git repositories (since
+everybody genreally tries really hard to only do this once).
+
+> - perhaps for reasons no more complex than the tools don't exist
+> so it's catch-22, and the fact that the word "distributed" is
+> _already_ associated with the likes of SMTP, DNS and "git" so
+> everybody thinks "we're okay, jack, go play with your nice dreams of
+> p2p networking, we're gonna write _real_ code now".
+
+Well, perhaps it's because what we have right now works pretty well.   :-)
+
+Which brings me back to my original question --- what problem exactly
+are you trying to solve?  What's the scenario?
+
+If the answer is "peer2peer is cool technology, and we want to play",
+that's fine.  Put it would confirm the hypothesis that in this case,
+peer2peer is a solution looking for a problem...
+
+					- Ted
