@@ -1,173 +1,103 @@
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Artur Skawina <art.08.09@gmail.com>
 Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sat, 04 Sep 2010 01:40:35 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1009040040030.19366@xanadu.home>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
- <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
- <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
- <4C7FC3DC.3060907@gmail.com>
- <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
- <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
- <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
- <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
- <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
- <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org>
- <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
- <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+Date: Sat, 04 Sep 2010 07:42:12 +0200
+Message-ID: <4C81DC34.2090800@gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com> <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com> <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com> <4C7FC3DC.3060907@gmail.com> <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com> <alpine.LFD.2.00.1009021249510.19366@xanadu.home> <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com> <alpine.LFD.2.00.1009021624170.19366@xanadu.home> <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu> <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org> <alpine.LFD.2.00.1009031522590.19366@xanadu.home> <AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com> <AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com> <4C81A67B.2060400@gmail.com> <alpine.LFD.2.00
+ .1009032304560.19366@xanadu.home>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	Ted Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
 	git <git@vger.kernel.org>
-To: Theodore Tso <tytso@MIT.EDU>
-X-From: git-owner@vger.kernel.org Sat Sep 04 07:40:55 2010
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Sep 04 07:42:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OrlUk-0004qi-TC
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 07:40:55 +0200
+	id 1OrlWA-0005NE-Sw
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 07:42:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752279Ab0IDFkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 01:40:37 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:49942 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751340Ab0IDFkh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 01:40:37 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR006.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0L8700BWGJRN0BZ3@VL-MO-MR006.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 04 Sep 2010 01:40:36 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752784Ab0IDFmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 01:42:18 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:51965 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752356Ab0IDFmR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 01:42:17 -0400
+Received: by eyb6 with SMTP id 6so1567469eyb.19
+        for <git@vger.kernel.org>; Fri, 03 Sep 2010 22:42:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:content-type:content-transfer-encoding;
+        bh=XjvKbO0zxH/AN23cibah4bV/kU4e32mhH97xxA1dLsg=;
+        b=dTADGeV5zgm9VYBwU5jwrj+CzdoXFs4P/K7HHWi860YBCTifldROstqHtvufdIvicu
+         l6rxKw7vt/sWUjIWlCsQoqLZvX0DRGqHTqp6CyR0uWyvU/wlJ0KjjVUw+sIbTLPNyKaR
+         Mn3udMKPJImz4moEw1jByl45F5OvtkF6wlDQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=PDLtWLcqUzJ/D3M7WIgonb2NgERJG7mtBJftrlhL1uyXhYbMVy9u592pD1WnKcbW30
+         cWK+EY50xOiWLRhtiQRmNcnkTED328xmCKFiv3CK3MiL6v16DEUW0Gb8tH6rXAI57B1l
+         hmaFXJQqFsdoc355T6ve53VQgDtuVNk5w9xTw=
+Received: by 10.213.27.68 with SMTP id h4mr423566ebc.98.1283578936309;
+        Fri, 03 Sep 2010 22:42:16 -0700 (PDT)
+Received: from [172.19.43.221] (ip-89-174-126-51.multimo.pl [89.174.126.51])
+        by mx.google.com with ESMTPS id a48sm4045816eei.7.2010.09.03.22.42.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 03 Sep 2010 22:42:15 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.9pre) Gecko/20100819 Lightning/1.0b2 Lanikai/3.1.3pre
+In-Reply-To: <alpine.LFD.2.00.1009032304560.19366@xanadu.home>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155306>
 
-On Fri, 3 Sep 2010, Theodore Tso wrote:
-
+>> 2) Git doesn't use chained deltas. IOW given commits "A --d1-> B --d2-> C",
+>>    "C" can be represented as a delta against "A" or "B", but _not_ against "d1". 
+>>    (Think of the case where "C" reverts /part of/ "B")
 > 
-> On Sep 3, 2010, at 3:41 PM, Nicolas Pitre wrote:
+> Git does use chained deltas indeed.  But deltas are used only at the 
+> object level within a pack file.  Any blob object can be represented as 
+> a delta against any other blob in the pack, regardless of the commit(s) 
+> those blob objects belong to.  Same thing for tree objects.  So you can 
+> have deltas going in total random directions if you look them from a 
+> commit perspective.  So "C" can have some of its objects being deltas 
+> against objects from "B", or "A", or any other commit for that matter, 
+> or even objects belonging to the same commit "C". And some other objects 
+> from "B" can delta against objects from "C" too. There is simply no 
+> restrictions at all on the actual delta direction.  The only rule is 
+> that an object may only delta against another object of the same type.
 > 
-> > 
-> > Let's see what such instructions for how to make the canonical pack 
-> > might look like:
+> Of course we don't try to delta each object against all the other 
+> available objects as that would be a O(n^2) operation (imagine with n = 
+> 1.7 million objects).  So we use many heuristics to make this delta 
+> packing efficient without taking an infinite amount of time.
 > 
-> But we don't need to replicate any particular pack.  We just need to 
-> provide instructions that can be replicated everywhere to provide *a* 
-> canonical pack.
+> For example, if we have objects X and Y that need to be packed together 
+> and sent to a client over the net, and we find that Y is already a delta 
+> against X in one pack that exists locally, then we simply and literally 
+> copy the delta representation of Y from that local pack file and send it 
+> out without recomputing that delta.
 
-But that canonical pack could be any particular pack.
+What i meant by 'chained deltas' is a representation that takes delta#1 and
+applies delta#2 to the first delta, and applies the result to the source of
+delta#1. Which could be a more compact representation of eg. a partial revert.
 
-> > First you need the full ordered list of objects.  That's a 20-byte SHA1
-> > per object.  The current Linux repo has 1704556 objects, therefore this
-> > list is 33MB already.
-> 
-> Assume the people creating this "gitdo" pack (i.e., much like jigdo) 
-> have a superset of Linus's objects.  So if we have all of the branches 
-> in Linus's repository, we can construct all of the necessary objects 
-> going back in time to constitute his repository.  If Linus has only 
-> one branch in his repo, we only need a single 20-byte SHA1 branch 
-> identifier.  For git, presumbly we would need three (one for next, 
-> maint, and master).
+IOW, if I have commits A..Y, ask (via git pull) for commits X and Z, then I'm
+guaranteed to receive them either raw, or as a delta vs commits A..X, right?
+What I'm really asking is, if a (modified) git-upload-pack skips transferring
+commit X, and just sends me commit Z (possibly as delta vs 'X'), _and_ I 
+obtain commit 'X" in some other way, I will be able to reconstruct 'Z', correct?
 
-Sure, but that's not sufficient.  All this 20-byte SHA1 gives you is a 
-set of objects.  That says nothing about their encoding.
+TIA, 
 
-> What about the order of the objects in the pack?  Well, ordering 
-> doesn't matter, right?  So let's assume the pack is sorted by hash id.  
-> Is there any downside to that?  I can't think of any, but you're the 
-> pack expert...
-
-Ordering does matter a big deal.  Since object IDs are the SHA1 of their 
-content, those IDs are totally random.  So if you store objects 
-according to their sorted IDs, then the placement of objects belonging 
-to, say, the top commit will be totally random.  And since you are the 
-filesystem expert, I don't have to tell you what performance impacts 
-this random access of small segments of data scattered throughout a 
-400MB file will have on a checkout operation.
-
-> If we do that, we would thus only need to send 20 bytes instead of 33MB.  
-> 
-> > Then you need to identify which of those objects are deltas, and against
-> > which object.  Assuming we can index in the list of objects, that means,
-> > say, one bit to identify a delta, and 31 bits for indexing the base. In
-> > my case this is currently 1393087 deltas, meaning 5.3 MB of additional
-> > information.
-> 
-> OK, this we'll need which means 5.3MB.
-> 
-> > 
-> > But then, the deltas themselves can have variations in their encoding.
-> > And we did change the heuristics for the actual delta encoding in the
-> > past too (while remaining backward compatible), but for a canonical pack
-> > creation we'd need to describe that in order to make things totally
-> > reproducible.
-> > 
-> > So there are 2 choices here: Either we specify the Git version to make 
-> > sure identical delta code is used, but that will put big pressure on 
-> > that code to remain stable and not improve anymore as any behavior 
-> > change will create a compatibility issue forcing people to upgrade their 
-> > Git version all at the same time.  That's not something I want to see 
-> > the world rely upon.
-> 
-> I don't think the choice is that stark.  It does mean that in addition 
-> to whatever pack encoding format is used by git natively, the code 
-> would also need to preserve one version of the delta hueristics for 
-> "Canonical pack version 1". After this version is declared, it's true 
-> that you might come up with a stunning new innovation that saves some 
-> disk space.  How much is that likely to be?  3%?  5%?  Worst case, it 
-> means that (1) the bittorent-distributed packs might not be as 
-> efficient, and (2) the code would be made more complex because we 
-> would either need to (a) keep multiple versions of the code, or (b) 
-> the code might need to have some conditionals:
-> 
-> 	if (canonical pack v1)
-> 		do_this_code;
-> 	else
-> 		do_this_more_clever_code;
-> 
-> Is that really that horrible?  And certainly we should be able to set things up so that it won't be a brake on innovation...
-
-Well, this would still be a non negligible maintenance cost.  And for 
-what purpose already? What is the real advantage?
-
-> The advantages of sending a canonical pack is that it's relatively 
-> less code to write, since we can reuse the standard BitTorrent clients 
-> and servers to transmit the git repository.  The downsides are that 
-> it's mainly useful for downloading the entire repository, but I think 
-> that's the most useful place for peer2peer anyway.
-
-Sure.  But I don't think it is worth making Git less flexible just for 
-the purpose of ensuring that people could independently create identical 
-packs.  I'd advocate for "no code to write at all" instead, and simply 
-have one person create and seed the reference pack.
-
-And if you are willing to participate in the seeding of such a torrent, 
-then you better not be bandwidth limited, meaning that you certainly can 
-afford to download that reference pack in the first place.
-
-And that reference pack doesn't have to change that often either.  If 
-you update it only on every major kernel releases, then you'll need to 
-fetch it about once every 3 months.  Incremental updates from those 
-points should be relatively small.
-
-Yet... it should be possible in practice to produce identical packs, 
-given that the Git version is specified, the zlib version is specified, 
-the number of threads for the repack is equal to 1, the -f flag is used 
-meaning a full repack is performed, the delta depth and window size is 
-specified, and the head branches are specified.  Given that torrents are 
-also identified by a hash of their content, it should be pretty easy to 
-see if the attempt to reproduce the reference pack worked, and start 
-seeding right away if it did.
-
-But again, I don't think it is worth freezing the pack format into a 
-canonical encoding for this purpose.
-
-
-Nicolas
+artur
