@@ -1,62 +1,83 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: Re: [bug-patch] Re: [BUG?] rename patch accepted with --dry-run, rejected without (Re: [PATCH V3] arm & sh: factorised duplicated clkdev.c)
-Date: Sun, 5 Sep 2010 00:26:08 +0200
-Organization: SUSE Labs
-Message-ID: <201009050026.08235.agruen@suse.de>
-References: <1283431716-21540-1-git-send-email-plagnioj@jcrosoft.com> <201009042346.11787.agruen@suse.de> <20100904220152.GB20444@n2100.arm.linux.org.uk>
+From: Ted Ts'o <tytso@mit.edu>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Sat, 4 Sep 2010 18:41:39 -0400
+Message-ID: <20100904224139.GD4887@thunk.org>
+References: <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+ <7voccezr7m.fsf@alter.siamese.dyndns.org>
+ <20100903183120.GA4887@thunk.org>
+ <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+ <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+ <alpine.LFD.2.00.1009040040030.19366@xanadu.home>
+ <5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
+ <AANLkTi==yv2CkgKEPJbTLf0P2XMtLmny1t6Zqhwh8wbV@mail.gmail.com>
+ <20100904181405.GB4887@thunk.org>
+ <AANLkTikAfSrfKRaK3ozXV_eT6Rd-VRbXQUQLk3SY8QnJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: bug-patch@gnu.org,
-	"Uwe =?iso-8859-1?q?Kleine-K=F6nig?=" 
-	<u.kleine-koenig@pengutronix.de>, linux-sh@vger.kernel.org,
-	Magnus Damm <magnus.damm@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Jean-Christophe PLAGNIOL-VILLARD" <plagnioj@jcrosoft.com>,
-	linux-arm-kernel@lists.infradead.org
-To: "Russell King - ARM Linux" <linux@arm.linux.org.uk>
-X-From: git-owner@vger.kernel.org Sun Sep 05 00:32:04 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 05 00:42:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Os1HF-000205-IR
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 00:32:01 +0200
+	id 1Os1Qy-0004ua-08
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 00:42:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170Ab0IDWcA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 18:32:00 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:59150 "EHLO mx2.suse.de"
+	id S1754181Ab0IDWlo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 4 Sep 2010 18:41:44 -0400
+Received: from THUNK.ORG ([69.25.196.29]:39710 "EHLO thunker.thunk.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754158Ab0IDWb7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 18:31:59 -0400
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id 931C679727;
-	Sun,  5 Sep 2010 00:31:58 +0200 (CEST)
-User-Agent: KMail/1.12.4 (Linux/2.6.31.12-0.2-desktop; KDE/4.3.5; i686; ; )
-In-Reply-To: <20100904220152.GB20444@n2100.arm.linux.org.uk>
+	id S1754096Ab0IDWlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 18:41:44 -0400
+Received: from root (helo=tytso-glaptop)
+	by thunker.thunk.org with local-esmtp   (Exim 4.50 #1 (Debian))
+	id 1Os1Qa-00033m-Eg; Sat, 04 Sep 2010 18:41:40 -0400
+Received: from tytso by tytso-glaptop with local (Exim 4.71)
+	(envelope-from <tytso@thunk.org>)
+	id 1Os1QZ-0006Ru-Mz; Sat, 04 Sep 2010 18:41:39 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTikAfSrfKRaK3ozXV_eT6Rd-VRbXQUQLk3SY8QnJ@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: tytso@thunk.org
+X-SA-Exim-Scanned: No (on thunker.thunk.org); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155381>
 
-On Sunday 05 September 2010 00:01:52 Russell King - ARM Linux wrote:
-> On Sat, Sep 04, 2010 at 11:46:11PM +0200, Andreas Gruenbacher wrote:
-> > On Saturday 04 September 2010 23:45:27 Russell King - ARM Linux wrote:
-> > > It also makes them incompatible with GNU patch, whether or not GNU patch
-> > > understands the GIT headers.
-> > 
-> > Aha?  Then why do you think GNU patch tries to understand the GIt patch 
-> > headers?  So that it can be incompatible with GIT?
-> 
-> Read what you said last time around.  "In this case, the patch itself is
-> broken."
+On Sat, Sep 04, 2010 at 09:00:56PM +0100, Luke Kenneth Casson Leighton =
+wrote:
+> > Which brings me back to my original question --- what problem exact=
+ly
+> > are you trying to solve? =A0What's the scenario?
+>=20
+> i described those in prior messages.  to summarise: they're basically
+> reduction of dependence on centralised infrastructure, and to allow
+> developers to carry on doing code-sprints using bugtrackers, wikis an=
+d
+> anything else that can be "git-able" as its back-end, _even_ in the
+> cases where there is little or absolutely no bandwidth... and _still_
+> sync up globally once any one of the developers gets back online.
 
-I was corrected on that by Jonathan Nieder's mail which describes a detail of 
-the GIT patch format that I didn't know about.  So it's a bug in the way GNU 
-patch handles the git patch format and not an error in the patch.  Not nice 
-and probably not easy to fix, but not fundamentally unfixable.
+So at all of the code sprints I've been at, the developers all have
+locally very good bandwidth between each other.  And if they don't
+have wifi, what *will* they have?  In the example you gave, you never
+were able to bring up a local area network, because you had one or two
+lamers who couldn't even do wifi in adhoc mode.  Hell, even if you had
+to hook up someone's laptop using an RS-232 line and PPP, that would
+be plenty of bandwidth for git.  So you weren't specific enough in
+your scenario.  How could it happen?  And is it really all that realist=
+ic?
 
-Andreas
+Even if it did, it wouldn't be hard to just set up a git server on one
+of the laptop.  What makes peer2peer so critically important in this
+use case?  (And no, carrier pigeons are not particularly realistic for
+a code sprint....)
+
+							- Ted
