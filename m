@@ -1,111 +1,93 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sat, 04 Sep 2010 02:13:23 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1009040153280.19366@xanadu.home>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
- <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
- <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
- <4C7FC3DC.3060907@gmail.com>
- <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
- <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
- <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
- <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
- <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
- <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org>
- <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
- <AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
- <AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com>
- <4C81A67B.2060400@gmail.com> <alpine.LFD.2.00.1009032304560.19366@xanadu.home>
- <4C81DC34.2090800@gmail.com>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: git-fast-import doc problem and git-fast-export does not quote filenames
+ correctly
+Date: Sat, 04 Sep 2010 08:17:05 +0200
+Message-ID: <4C81E461.7010704@alum.mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Artur Skawina <art.08.09@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 04 08:13:32 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 04 08:17:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Orm0I-0006nv-V2
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 08:13:31 +0200
+	id 1Orm3u-00088x-Kw
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Sep 2010 08:17:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752616Ab0IDGNZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 02:13:25 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:25492 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750940Ab0IDGNY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 02:13:24 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0L87002A4LABA740@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 04 Sep 2010 02:13:24 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4C81DC34.2090800@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752225Ab0IDGRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 02:17:09 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:44896 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751029Ab0IDGRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 02:17:08 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.69.133] (p54BEAB5B.dip.t-dialin.net [84.190.171.91])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o846H6XA009074
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sat, 4 Sep 2010 08:17:06 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.24) Gecko/20100317 Thunderbird/2.0.0.24 Mnenhy/0.7.6.666
+X-Enigmail-Version: 0.95.0
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155308>
 
-On Sat, 4 Sep 2010, Artur Skawina wrote:
+According to the git-fast-import manpage:
 
-> >> 2) Git doesn't use chained deltas. IOW given commits "A --d1-> B --d2-> C",
-> >>    "C" can be represented as a delta against "A" or "B", but _not_ against "d1". 
-> >>    (Think of the case where "C" reverts /part of/ "B")
-> > 
-> > Git does use chained deltas indeed.  But deltas are used only at the 
-> > object level within a pack file.  Any blob object can be represented as 
-> > a delta against any other blob in the pack, regardless of the commit(s) 
-> > those blob objects belong to.  Same thing for tree objects.  So you can 
-> > have deltas going in total random directions if you look them from a 
-> > commit perspective.  So "C" can have some of its objects being deltas 
-> > against objects from "B", or "A", or any other commit for that matter, 
-> > or even objects belonging to the same commit "C". And some other objects 
-> > from "B" can delta against objects from "C" too. There is simply no 
-> > restrictions at all on the actual delta direction.  The only rule is 
-> > that an object may only delta against another object of the same type.
-> > 
-> > Of course we don't try to delta each object against all the other 
-> > available objects as that would be a O(n^2) operation (imagine with n = 
-> > 1.7 million objects).  So we use many heuristics to make this delta 
-> > packing efficient without taking an infinite amount of time.
-> > 
-> > For example, if we have objects X and Y that need to be packed together 
-> > and sent to a client over the net, and we find that Y is already a delta 
-> > against X in one pack that exists locally, then we simply and literally 
-> > copy the delta representation of Y from that local pack file and send it 
-> > out without recomputing that delta.
+> A `<path>` string must use UNIX-style directory separators (forward
+> slash `/`), may contain any byte other than `LF`, and must not
+> start with double quote (`"`).
 > 
-> What i meant by 'chained deltas' is a representation that takes delta#1 and
-> applies delta#2 to the first delta, and applies the result to the source of
-> delta#1. Which could be a more compact representation of eg. a partial revert.
+> If an `LF` or double quote must be encoded into `<path>` shell-style
+> quoting should be used, e.g. `"path/with\n and \" in it"`.
+> 
+> The value of `<path>` must be in canonical form. That is it must not:
+> 
+> * contain an empty directory component (e.g. `foo//bar` is invalid),
+> * end with a directory separator (e.g. `foo/` is invalid),
+> * start with a directory separator (e.g. `/foo` is invalid),
+> * contain the special component `.` or `..` (e.g. `foo/./bar` and
+>   `foo/../bar` are invalid).
+> 
+> It is recommended that `<path>` always be encoded using UTF-8.
 
-You can have deltas on top of deltas.  And they can be in any direction 
-i.e. object #1 can be a delta that only takes half of a bigger object 
-#2, or object #2 can be a delta copying a smaller object #1 and adding 
-more data to it.  In the end both representation will take more or less 
-the same amount of space.
+The first problem is that the doc seems to allow NUL bytes (which I
+suspect are not really allowed) or the backslash '\' character (which,
+if allowed, would logically have to be escaped, too).
 
-> IOW, if I have commits A..Y, ask (via git pull) for commits X and Z, then I'm
-> guaranteed to receive them either raw, or as a delta vs commits A..X, right?
+The second problem is that "git fast-export" does not do even the
+specified quoting:
 
-In such case you will receive only those new objects that commits X and 
-Z introduced, and those new objects may indeed be encoded either as 
-whole objects, or as deltas against either objects that you already 
-have, or even as deltas against objects that are part of the transfer.
+$ git init
+Initialized empty Git repository in /home/mhagger/tmp/gitfoo/.git/
+$ touch '"path with
+ and " in it"'
+$ git add -u
+$ git commit -am 'Madness'
+[master (root-commit) 2472bdb] Madness
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 "\"path with\n and \" in it\""
+$ git fast-export --all
+blob
+mark :1
+data 0
 
-> What I'm really asking is, if a (modified) git-upload-pack skips transferring
-> commit X, and just sends me commit Z (possibly as delta vs 'X'), _and_ I 
-> obtain commit 'X" in some other way, I will be able to reconstruct 'Z', correct?
+reset refs/heads/master
+commit refs/heads/master
+mark :2
+author Michael Haggerty <mhagger@michael.localdomain> 1283580642 +0200
+committer Michael Haggerty <mhagger@michael.localdomain> 1283580642 +0200
+data 8
+Madness
+M 100644 :1 "path with
+ and " in it"
 
-Yes.  Although it is 'git pack-objects' that decides what objects to 
-send, not 'git-upload-pack'.
+reset refs/heads/master
+from :2
 
-
-Nicolas
+Michael
