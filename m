@@ -1,92 +1,106 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] Make commit help text more accurate for --verbose
-Date: Sun, 5 Sep 2010 16:30:25 +0000
-Message-ID: <AANLkTikLTykbgUjCK4H0cbF0QXZHOPYbLdptEKe4-rD5@mail.gmail.com>
-References: <1283680383-12495-1-git-send-email-ramana.kumar@gmail.com>
-	<AANLkTinEZ92S_XB4zrnb26eVR-MFsDQcSPAZ3RXj6ofH@mail.gmail.com>
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Sun, 5 Sep 2010 18:16:26 +0100
+Message-ID: <AANLkTimZA=VpGjcZEjoRVJUZcwnYoPQF5bNHyM2J8byE@mail.gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+	<4C7FC3DC.3060907@gmail.com>
+	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+	<AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+	<7voccezr7m.fsf@alter.siamese.dyndns.org>
+	<20100903183120.GA4887@thunk.org>
+	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+	<04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+	<AANLkTikVf=X8cLP9s6W9VGOt0EHE4J5MYsBpgKYhrAri@mail.gmail.com>
+	<AANLkTim1XMY6Qe+h9LpqfoBzFE+B5AobcOpHx1rDfXwZ@mail.gmail.com>
+	<alpine.LFD.2.00.1009042119570.19366@xanadu.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramana Kumar <ramana.kumar@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 05 18:30:38 2010
+Cc: Kyle Moffett <kyle@moffetthome.net>, Theodore Tso <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Sep 05 19:16:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsI71-0007ct-B5
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 18:30:35 +0200
+	id 1OsIph-0001Q2-QH
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 19:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753645Ab0IEQa0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 12:30:26 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:65389 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752993Ab0IEQaZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Sep 2010 12:30:25 -0400
-Received: by iwn5 with SMTP id 5so3390508iwn.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 09:30:25 -0700 (PDT)
+	id S1753959Ab0IERQ2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 13:16:28 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37010 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753589Ab0IERQ1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Sep 2010 13:16:27 -0400
+Received: by vws3 with SMTP id 3so2710765vws.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 10:16:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Zs2KVZddicNsMdoW9Exoq8jUCSkNUy76/vyHrC7g3zE=;
-        b=SI+VdwyOwqMmid1ik/oOygRDWL9F6Y5K4EGM1ebZp7ZS5vCLE1ovnFvwzar1vPAzKJ
-         6QBV83unU28QbScw1b5G7izkZkSUpsjTAQnRye93Mv/ZYk06OWW6H0j0NBcYvUQWQPyM
-         wzSiI2q/B0KjzEpeHxAf9cYYlhoaCX+09SNns=
+        bh=Xeoz3y0ViEpNHX7KUCepUsdWrUKkYVPVHAl4+5Tl1oQ=;
+        b=YeteMPV+b2bLMKEhejF101Uy67kwzmVUP5GdFOeYESKMm9j4oxWgKnMG9BkTYtgn/h
+         c4JavsATyiLpXsEmXbisMdL6B2Lqc/x7+w5oC+SuPLbRi/WcNG1IZUSo1dsHg6SDgfr5
+         ykuJjwxnFOG2uONPuIxOs0YPWD7qS9ySbudjw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=c1vAj5nIHzhtBLshA6+w19H8obxVFyIFjGqt4OBMRArIsTyElXUTyBEc3ritYNh23C
-         K3i4tDG5C6qnrwH0UekVM2YUv0DDAtxbAcPBguhCDu90/Ws8ScJ8wqiQXnafkQpEEBEG
-         ghltk3qTADEEVfQ1aZw1EliLj60xl2oEoR7OI=
-Received: by 10.231.37.10 with SMTP id v10mr4605346ibd.188.1283704225373; Sun,
- 05 Sep 2010 09:30:25 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sun, 5 Sep 2010 09:30:25 -0700 (PDT)
-In-Reply-To: <AANLkTinEZ92S_XB4zrnb26eVR-MFsDQcSPAZ3RXj6ofH@mail.gmail.com>
+        b=wltbgpBFgF5XMZXBf24U0k81djoKs8U+GxmPBuyA0H7GiJG6JyshyTk3FLjE2QfUie
+         gAU+Jk4Pw9MYJpx6rt8L2qRyq6oqhm4YdnaW77PALuKxEblQOaf0hwB7DiwyGU9dbkK7
+         KvNWoVkPA00AbIcEHfWX5HnUQNaIv7XxgPNqQ=
+Received: by 10.220.62.202 with SMTP id y10mr508794vch.58.1283706986814; Sun,
+ 05 Sep 2010 10:16:26 -0700 (PDT)
+Received: by 10.220.98.8 with HTTP; Sun, 5 Sep 2010 10:16:26 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1009042119570.19366@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155461>
 
-On Sun, Sep 5, 2010 at 15:06, Thiago Farina <tfransosi@gmail.com> wrote=
-:
-> Hi Ramana,
+On Sun, Sep 5, 2010 at 2:32 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Sat, 4 Sep 2010, Luke Kenneth Casson Leighton wrote:
 >
-> Some *style* comments below.
-> On Sun, Sep 5, 2010 at 6:53 AM, Ramana Kumar <ramana.kumar@gmail.com>=
- wrote:
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fprintf(fp,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0"\n"
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0"# Please enter the commit message for your changes.");
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cleanup_mode =
-=3D=3D CLEANUP_ALL)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cleanup_mode =
-=3D=3D CLEANUP_ALL && !verbose)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0fprintf(fp,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0" Lines starting\n"
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"# with '#' will be ignored, =
-and an empty"
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0" message aborts the commit.\=
-n");
-> The Documentation/CodingStyle says to avoid using braces unncessary.
-> But since this is not a single line statement, like:
-> if (foo)
-> =C2=A0foo =3D x;
+>> so, i believe that a much simpler algorithm is to follow nicolas' ad=
+vice, and:
+>>
+>> * split up a pack-index file by its fanout (1st byte of SHAs in the =
+idx)
+>> * create SHA1s of the list of object-refs within an individual fanou=
+t
+>> * compare the per-fanout SHA1s remote and local
+>> * if same, deduce "oh look, we have that per-fanout list already"
+>> * grab the per-fanout object-ref list using standard p2p filesharing
+>>
+>> in this way you'd end up breaking down e.g. 50mb of pack-index (for
+>> e.g. linux-2.6.git) into rouughly 200k chunks, and you'd exchange
+>> rouughly 50k of network traffic to find out that you'd got some of
+>> those fanout object-ref-lists already. =C2=A0which is nice.
 >
-> Could you wrapp this into { } ?
+> Scrap that idea -- this won't work. =C2=A0The problem is that, by nat=
+ure,
+> SHA1 is totally random. =C2=A0So if you have, say, 256 objects to tra=
+nsfer
+> (and 256 objects is not that much) then, statistically, the probabili=
+ty
+> that the SHA1s for those objects end up uniformly distributed across =
+all
+> the 256 fanouts is quite high. =C2=A0the algorithm I mentioned comple=
+tely
+> breaks down in that case.
 
-The braces are still unncessary if the function call is spread across
-a few lines. I haven't seen anything in the source that indicates that
-we prefer braces when a braceless if/else has an associated statement
-that exceeds 1 line.
+ mmm... that's no so baad.  requesting a table/pseudo-file with 1
+fanout or 256 fanouts is still only one extra round-trip.  if i split
+it into pseudo-subdirectories _then_ yes you have 256 requests.  that
+can be avoided with a bit of work.  so, no biggie :)
+
+l.
