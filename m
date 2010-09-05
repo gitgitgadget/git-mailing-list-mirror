@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 11/17] pathspec retrieval fix
-Date: Sun,  5 Sep 2010 16:47:38 +1000
-Message-ID: <1283669264-15759-12-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 12/17] clone: support --narrow option
+Date: Sun,  5 Sep 2010 16:47:39 +1000
+Message-ID: <1283669264-15759-13-git-send-email-pclouds@gmail.com>
 References: <1283669264-15759-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,177 +10,208 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 05 08:50:11 2010
+X-From: git-owner@vger.kernel.org Sun Sep 05 08:50:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Os93F-0008LL-EO
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 08:50:05 +0200
+	id 1Os93O-0008Px-UT
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 08:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752118Ab0IEGt5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 02:49:57 -0400
+	id S1752161Ab0IEGuG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 02:50:06 -0400
 Received: from mail-pv0-f174.google.com ([74.125.83.174]:53862 "EHLO
 	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751820Ab0IEGt4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 02:49:56 -0400
-Received: by pvg2 with SMTP id 2so1071800pvg.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 23:49:55 -0700 (PDT)
+	with ESMTP id S1751820Ab0IEGuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 02:50:05 -0400
+Received: by mail-pv0-f174.google.com with SMTP id 2so1071800pvg.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 23:50:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=uS1V/npSRwEFvx9i3zqZyicBQwsxJ42FJalHgkBWZeU=;
-        b=rLgPyRcZY/2Hx2g4HpiIOHNrul/t3qiVMXw+pZufHLurxYZf1V+DS1rnw0CQzbXfbh
-         Bsga7IMHy67iXpNu8Wzy3Z6/Jmpu/M7jCopQnSJA4y8Muyc97tAxJlmR64Jy4V5z4bRJ
-         zrcLHCX0qn4X2CAocTOz2GWZpMLvn4zNgwQDs=
+        bh=zFC0BSj4yvnV54hJJ8YTAViUsVmoDqwqcnqlFOW3uzY=;
+        b=r1q2T+YdbnnQOYNAX1vI4tvmYfd2A2ZihHAqSr+4kS2sGsiDFzfLcDgrXv2jBzMCtD
+         CYdDKEWLmhChMNLL2AenFCAtfw8JMq2fjYulMj8jL05KhgeAyprXVhNr5b1eOso/+rI+
+         Xst/a94LS0J9kwJ78CiQVcbmQzCMdM+X1h2qk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=fzROpqLMIy0kuFPK6zKWAsJCHm3ShaXQ8LuqigQCw60X8rlhwZLw+yKpvei9PbZlxG
-         dzY010INBbMOPHfkOllr37ZMPRmmKBZZoqQEsS48qDXjDjiJhus7DcnZ0oU9nmB0FlNa
-         /qY/3tMif7GdMiQ7nSbmx8VvG16LJ1ubPTFfE=
-Received: by 10.114.112.6 with SMTP id k6mr1828610wac.194.1283669395903;
-        Sat, 04 Sep 2010 23:49:55 -0700 (PDT)
+        b=DBK83Ur5KqnqEBW78nCOCUAWfNP2plF9z4wn7csNhSfackFUhBNjIxOttkJi7V/iaY
+         imDEsUiMx2fnJj74GKLUFZwjpvTS/A2BaDHcoXIR75evRt1+SkbrrtfNTbKXma3vT13+
+         lrCcStj2/h8mhUP92pAMCct1YV/xFEjGzY6B0=
+Received: by 10.114.131.2 with SMTP id e2mr480525wad.158.1283669404928;
+        Sat, 04 Sep 2010 23:50:04 -0700 (PDT)
 Received: from dektop ([119.12.225.18])
-        by mx.google.com with ESMTPS id d2sm8034138wam.14.2010.09.04.23.49.52
+        by mx.google.com with ESMTPS id q6sm8038979waj.10.2010.09.04.23.50.00
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Sep 2010 23:49:55 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Sun,  5 Sep 2010 16:49:47 +1000
+        Sat, 04 Sep 2010 23:50:03 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Sun,  5 Sep 2010 16:49:56 +1000
 X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 In-Reply-To: <1283669264-15759-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155438>
 
-In normal repos, when there is no command line argument, it's safe to
-say we don't have pathspec. In narrow repos, get_pathspec() in that
-case will still generate some pathspecs (the narrow prefix). Make sure
-get_pathspec() is always called.
-
-Some commands however, especially plumbings, won't want narrow prefix
-to get in the way. Use get_pathspec_narrow(...., 0); in those cases to
-disable narrow pathspec rewriting.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/commit.c   |    6 ++----
- builtin/grep.c     |    5 ++---
- builtin/ls-files.c |    2 +-
- builtin/ls-tree.c  |    2 +-
- builtin/reset.c    |    3 +--
- revision.c         |    5 +++++
- 6 files changed, 12 insertions(+), 11 deletions(-)
+ Documentation/git-clone.txt |   14 +++++++++++++-
+ builtin/clone.c             |   43 +++++++++++++++++++++++++++++++++++=
+++++++++
+ 2 files changed, 56 insertions(+), 1 deletions(-)
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 66fdd22..d8c5273 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -303,8 +303,7 @@ static char *prepare_index(int argc, const char **a=
-rgv, const char *prefix, int
- 		return get_index_file();
- 	}
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index dc7d3d1..d9a5729 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -12,7 +12,8 @@ SYNOPSIS
+ 'git clone' [--template=3D<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository=
+>]
+-	  [--depth <depth>] [--recursive] [--] <repository> [<directory>]
++	  [--depth <depth>] [--narrow <path>] [--recursive]
++	  [--] <repository> [<directory>]
 =20
--	if (*argv)
--		pathspec =3D get_pathspec(prefix, argv);
-+	pathspec =3D get_pathspec(prefix, argv);
+ DESCRIPTION
+ -----------
+@@ -161,6 +162,17 @@ objects from the source repository into a pack in =
+the cloned repository.
+ 	with a long history, and would want to send in fixes
+ 	as patches.
 =20
- 	if (read_cache_preload(pathspec) < 0)
- 		die("index file corrupt");
-@@ -1083,8 +1082,7 @@ int cmd_status(int argc, const char **argv, const=
- char *prefix)
- 	handle_untracked_files_arg(&s);
- 	if (show_ignored_in_status)
- 		s.show_ignored_files =3D 1;
--	if (*argv)
--		s.pathspec =3D get_pathspec(prefix, argv);
-+	s.pathspec =3D get_pathspec(prefix, argv);
++--narrow <path>::
++	Create a 'narrow' clone with all commit trees limited to
++	the given path. A narrow repository has a number of
++	limititations (you cannot clone or fech from it, nor push
++	into it), but is adequate if you are only interested in
++	certain paths of a large repository, and would want to
++	push some fixes.
+++
++Multiple --narrow can be given. This option can also be used together
++with --depth to truncate both history and path.
++
+ --recursive::
+ 	After the clone is created, initialize all submodules within,
+ 	using their default settings. This is equivalent to running
+diff --git a/builtin/clone.c b/builtin/clone.c
+index efb1e6f..439ce8a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -23,6 +23,7 @@
+ #include "branch.h"
+ #include "remote.h"
+ #include "run-command.h"
++#include "narrow-tree.h"
 =20
- 	read_cache_preload(s.pathspec);
- 	refresh_index(&the_index, REFRESH_QUIET|REFRESH_UNMERGED, s.pathspec,=
- NULL, NULL);
-diff --git a/builtin/grep.c b/builtin/grep.c
-index cf6c29f..b55a0a4 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -1058,9 +1058,8 @@ int cmd_grep(int argc, const char **argv, const c=
-har *prefix)
- 			verify_filename(prefix, argv[j]);
- 	}
-=20
--	if (i < argc)
--		paths =3D get_pathspec(prefix, argv + i);
--	else if (prefix) {
-+	paths =3D get_pathspec(prefix, argv + i);
-+	if (prefix && !paths) {
- 		paths =3D xcalloc(2, sizeof(const char *));
- 		paths[0] =3D prefix;
- 		paths[1] =3D NULL;
-diff --git a/builtin/ls-files.c b/builtin/ls-files.c
-index bb4f612..27610ab 100644
---- a/builtin/ls-files.c
-+++ b/builtin/ls-files.c
-@@ -565,7 +565,7 @@ int cmd_ls_files(int argc, const char **argv, const=
- char *cmd_prefix)
- 	if (require_work_tree && !is_inside_work_tree())
- 		setup_work_tree();
-=20
--	pathspec =3D get_pathspec(prefix, argv);
-+	pathspec =3D get_pathspec_narrow(prefix, argv, 0);
-=20
- 	/* be nice with submodule paths ending in a slash */
- 	if (pathspec)
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index dc86b0d..d37eaa5 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -164,7 +164,7 @@ int cmd_ls_tree(int argc, const char **argv, const =
-char *prefix)
- 	if (get_sha1(argv[0], sha1))
- 		die("Not a valid object name %s", argv[0]);
-=20
--	pathspec =3D get_pathspec(prefix, argv + 1);
-+	pathspec =3D get_pathspec_narrow(prefix, argv + 1, 0);
- 	tree =3D parse_tree_indirect(sha1);
- 	if (!tree)
- 		die("not a tree object");
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 1283068..ae96c8b 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -181,8 +181,7 @@ static int interactive_reset(const char *revision, =
-const char **argv,
+ /*
+  * Overall FIXMEs:
+@@ -40,11 +41,15 @@ static const char * const builtin_clone_usage[] =3D=
  {
- 	const char **pathspec =3D NULL;
+ static int option_no_checkout, option_bare, option_mirror;
+ static int option_local, option_no_hardlinks, option_shared, option_re=
+cursive;
+ static char *option_template, *option_reference, *option_depth;
++static const char **option_narrow;
+ static char *option_origin =3D NULL;
+ static char *option_branch =3D NULL;
+ static char *option_upload_pack =3D "git-upload-pack";
+ static int option_verbosity;
+ static int option_progress;
++static int narrow_nr;
++
++static int add_narrow_prefix(const struct option *opt, const char *arg=
+, int unset);
 =20
--	if (*argv)
--		pathspec =3D get_pathspec(prefix, argv);
-+	pathspec =3D get_pathspec(prefix, argv);
+ static struct option builtin_clone_options[] =3D {
+ 	OPT__VERBOSITY(&option_verbosity),
+@@ -78,6 +83,8 @@ static struct option builtin_clone_options[] =3D {
+ 		   "path to git-upload-pack on the remote"),
+ 	OPT_STRING(0, "depth", &option_depth, "depth",
+ 		    "create a shallow clone of that depth"),
++	OPT_CALLBACK(0, "narrow", NULL, "prefix", "narrow clone",
++		     add_narrow_prefix),
 =20
- 	return run_add_interactive(revision, "--patch=3Dreset", pathspec);
- }
-diff --git a/revision.c b/revision.c
-index ea64970..73fe894 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1625,6 +1625,11 @@ int setup_revisions(int argc, const char **argv,=
- struct rev_info *revs, struct s
+ 	OPT_END()
+ };
+@@ -86,6 +93,22 @@ static const char *argv_submodule[] =3D {
+ 	"submodule", "update", "--init", "--recursive", NULL
+ };
 =20
- 	if (prune_data)
- 		revs->prune_data =3D get_pathspec(revs->prefix, prune_data);
-+	else if (get_narrow_prefix()) {
-+		const char *nul =3D NULL;
-+		prune_data =3D &nul;
-+		revs->prune_data =3D get_pathspec(revs->prefix, prune_data);
++static int add_narrow_prefix(const struct option *opt, const char *arg=
+, int unset)
++{
++	if (unset)
++		die("--no-narrow is not supported");
++
++	narrow_nr++;
++	option_narrow =3D xrealloc(option_narrow, sizeof(*option_narrow)*narr=
+ow_nr);
++	option_narrow[narrow_nr-1] =3D arg;
++	return 0;
++}
++
++static int narrow_cmp(const void *a, const void *b)
++{
++	return strcmp(*(const char**)a, *(const char **)b);
++}
++
+ static char *get_repo_path(const char *repo, int *is_bundle)
+ {
+ 	static char *suffix[] =3D { "/.git", ".git", "" };
+@@ -443,6 +466,14 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 		git_dir =3D xstrdup(mkpath("%s/.git", dir));
+ 	}
+=20
++	if (option_narrow) {
++		int i;
++		qsort(option_narrow, narrow_nr, sizeof(*option_narrow), narrow_cmp);
++		for (i =3D 0; i < narrow_nr; i++)
++			if (!valid_narrow_prefix(option_narrow[i], i ? option_narrow[i-1] :=
+ NULL, 0))
++				die("Invalid narrow prefix");
 +	}
++
+ 	if (!option_bare) {
+ 		junk_work_tree =3D work_tree;
+ 		if (safe_create_leading_directories_const(work_tree) < 0)
+@@ -515,6 +546,8 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 	strbuf_reset(&value);
 =20
- 	if (revs->def =3D=3D NULL)
- 		revs->def =3D opt ? opt->def : NULL;
+ 	if (path && !is_bundle) {
++		if (option_narrow)
++			die("--narrow is not really for local clone. Please consider --shar=
+ed");
+ 		refs =3D clone_local(path, git_dir);
+ 		mapped_refs =3D wanted_peer_refs(refs, refspec);
+ 	} else {
+@@ -530,6 +563,16 @@ int cmd_clone(int argc, const char **argv, const c=
+har *prefix)
+ 			transport_set_option(transport, TRANS_OPT_DEPTH,
+ 					     option_depth);
+=20
++		/* Do this early in order to set get_narrow_prefix() !=3D NULL */
++		if (option_narrow) {
++			int i;
++			FILE *fp =3D fopen(git_path("narrow"), "w+");
++			for (i =3D 0; i < narrow_nr; i++)
++				fprintf(fp, "%s\n", option_narrow[i]);
++			fclose(fp);
++			check_narrow_prefix(); /* Install the prefix */
++		}
++
+ 		transport_set_verbosity(transport, option_verbosity, option_progress=
+);
+=20
+ 		if (option_upload_pack)
 --=20
 1.7.1.rc1.69.g24c2f7
