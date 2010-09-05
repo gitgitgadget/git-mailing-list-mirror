@@ -1,85 +1,92 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sun, 5 Sep 2010 18:25:42 +0100
-Message-ID: <AANLkTim8XLB5SjV3JtWT-ARN_XuofKDjYRSYT8kPxEvq@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
-	<AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
-	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
-	<AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
-	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
-	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
-	<7voccezr7m.fsf@alter.siamese.dyndns.org>
-	<20100903183120.GA4887@thunk.org>
-	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
-	<04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
-	<alpine.LFD.2.00.1009040040030.19366@xanadu.home>
-	<5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
-	<alpine.LFD.2.00.1009041107180.19366@xanadu.home>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sun Sep 05 19:25:49 2010
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: [PATCH] Add ERR support to smart HTTP
+Date: Sun,  5 Sep 2010 20:30:15 +0300
+Message-ID: <1283707815-32038-1-git-send-email-ilari.liusvaara@elisanet.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 05 19:28:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsIyS-0004uF-LW
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 19:25:49 +0200
+	id 1OsJ0o-0005pd-7v
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 19:28:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754025Ab0IERZo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 13:25:44 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:35503 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753589Ab0IERZn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Sep 2010 13:25:43 -0400
-Received: by vws3 with SMTP id 3so2714456vws.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 10:25:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=DmnKoh+zrwkR2FxR8Hqp96PTOODkLirUSKywF3z8w64=;
-        b=Lgj341GGqyWUXrb6h2AFIjl1Q+VM5ZffkPTD1AbU7XmSqhUg7rOlpCtDm6HBjq3sEE
-         sEltoIOh+W2SPpoyY8G2EGv7XjrSydeFYV2eVB5dXdsdxMHxsXLYc5AeQf5LaAa7tn+z
-         w+vB6zSLXjRSk9rvif6Ck2xpDCPbsfDbvLxRo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=j6Fci3y9X4Q6lakNeCZi9CRVnd3MU21rLAorKv+zMOhEi5ycGWmImDSDGqKhEDfr3P
-         cW1gkuU9TIsuRJqhFw0L2MPzG3dzi0MGSUwKccGMkvYMAB3Yuqz9sTxbDwQm03KcRHp2
-         fF1YCAXzZhdOBf6kmpZhkmNTVnsOo1Bwrh1ws=
-Received: by 10.220.62.5 with SMTP id v5mr1461435vch.242.1283707542683; Sun,
- 05 Sep 2010 10:25:42 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Sun, 5 Sep 2010 10:25:42 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1009041107180.19366@xanadu.home>
+	id S1753992Ab0IER2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 13:28:08 -0400
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:53101 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753589Ab0IER2H (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 13:28:07 -0400
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id CC4B918CEC6
+	for <git@vger.kernel.org>; Sun,  5 Sep 2010 20:28:05 +0300 (EEST)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A024C6A5CC3; Sun, 05 Sep 2010 20:28:05 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id B094A27D84
+	for <git@vger.kernel.org>; Sun,  5 Sep 2010 20:28:04 +0300 (EEST)
+X-Mailer: git-send-email 1.7.1.rc2.10.g714149
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155464>
 
-On Sun, Sep 5, 2010 at 2:18 AM, Nicolas Pitre <nico@fluxnic.net> wrote
-> I agree. =C2=A0So far it has been an interesting topic for discussion=
-, but in
-> practice I doubt the actual benefits will justify the required effort=
-s
-> and/or constraints on the protocol. Otherwise we would have a working
-> implementation in use already. =C2=A0People tried in the past, and so=
- far
-> none of those attempts passed the reality test nor kept people motiva=
-ted
-> enough to work on them further.
+All "true smart transports" support ERR packets, allowing server
+to send back error message explaining reasons for refusing the
+request instead of just rudely closing connection without any error.
 
- then i'm all the more grateful that you continue to drop technical
-hints in my direction.  thank you for not judging.
+However, since smart HTTP isn't "true smart transport", but instead
+dumb one from git main executable perspective, smart HTTP needs to
+implement its own version of this.
 
- l.
+Now that Gitolite supports HTTP too, it needs to be able to send
+error messages for authorization failures back to client so that's
+one probable user for this feature.
+
+The error is sent as '<packetlength># ERR <message>" and must be the
+first packet in response. The reason for putting the '#' there is that
+old git versions will interpret that as invalid server response and
+print (at least the first line of) the error together with complaint
+of invalid response (mangling it a bit but it will still be understandable,
+in manner similar to existing smart transport ERR messages).
+
+Thus for example server response:
+
+"0031# ERR W access for foo/alice/a1 DENIED to bob"
+
+Will cause the following to be printed:
+
+"fatal: remote error: W access for foo/alice/a1 DENIED to bob"
+
+If the git version is old and doesn't support this feature, then the
+message will be:
+
+"fatal: invalid server response; got '# ERR W access for foo/alice/a1
+DENIED to bob'"
+
+Which is at least undertandable.
+
+Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+---
+ remote-curl.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/remote-curl.c b/remote-curl.c
+index 24fbb9a..46fa971 100644
+--- a/remote-curl.c
++++ b/remote-curl.c
+@@ -153,6 +153,8 @@ static struct discovery* discover_refs(const char *service)
+ 
+ 		if (packet_get_line(&buffer, &last->buf, &last->len) <= 0)
+ 			die("%s has invalid packet header", refs_url);
++		if (buffer.len >= 6 && !strncmp(buffer.buf, "# ERR ", 6))
++			die("remote error: %s", buffer.buf + 6);
+ 		if (buffer.len && buffer.buf[buffer.len - 1] == '\n')
+ 			strbuf_setlen(&buffer, buffer.len - 1);
+ 
+-- 
+1.7.2.4.g27652
