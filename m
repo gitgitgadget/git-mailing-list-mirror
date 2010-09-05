@@ -1,110 +1,103 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] fast-import: give importers access to the
- object store
-Date: Sun, 5 Sep 2010 14:17:35 +0530
-Message-ID: <20100905084731.GB15511@kytes>
-References: <20100701031819.GA12524@burratino>
- <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes>
- <20100905031528.GA2344@burratino>
- <20100905060854.GA15511@kytes>
- <AANLkTimqMJ1vHaJL65RZ4PuxONtg1evn4vBdPks_odqq@mail.gmail.com>
+From: Ramana Kumar <ramana.kumar@gmail.com>
+Subject: [PATCH] Make commit help text more accurate for --verbose
+Date: Sun, 5 Sep 2010 19:53:03 +1000
+Message-ID: <1283680383-12495-1-git-send-email-ramana.kumar@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 05 10:49:54 2010
+Content-Type: text/plain
+Cc: Ramana Kumar <ramana.kumar@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Sun Sep 05 12:04:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsAvA-0002Jl-Km
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 10:49:52 +0200
+	id 1OsC54-0005t3-2i
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 12:04:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754369Ab0IEItn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 04:49:43 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:44461 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752693Ab0IEItm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 04:49:42 -0400
-Received: by pwi3 with SMTP id 3so738728pwi.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 01:49:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=CJIJvtAnN8b8SqiyXIPhHlK3+5dkb9uWcLmhmXcV4co=;
-        b=SkDs4Yw9ayGCuAFk65bxretZ5SWO+disPhpWGRe5s6Dy+qF1PNm/MYnWEdQ7IQIzir
-         os299ZJj+QbbGJUp+pU2Pz7xpFvUEwaIOaL3p2wHj4l/+3D98w4e/o8HMqTWGkuzpjYJ
-         Hoq9OxLvo8x7NUdxjXdMGshIzM6p17qJpZ1h4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=w8wojyRC9B/fNGaDdUZy0mBiUi8I0UqbqhnNOHVcofrBZjdq4j8fuVg6EPyK9/E5st
-         +TE8FEvQgjp8GuY4WQt8c0ceKVDe8/P8C4StTxm1M5TARjhckFvx2Ylfgasr4XHY0UPC
-         j+UVfe+SEheEVoXUVEC5eMdd7cNolR11oZbWE=
-Received: by 10.114.151.5 with SMTP id y5mr1168942wad.172.1283676581961;
-        Sun, 05 Sep 2010 01:49:41 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id d39sm8261860wam.16.2010.09.05.01.49.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Sep 2010 01:49:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimqMJ1vHaJL65RZ4PuxONtg1evn4vBdPks_odqq@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754676Ab0IEKDz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 06:03:55 -0400
+Received: from atp-es2.it.nicta.com.au ([203.143.174.70]:42896 "EHLO
+	atp-es2.it.nicta.com.au" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752231Ab0IEKDy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 06:03:54 -0400
+X-Greylist: delayed 426 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Sep 2010 06:03:54 EDT
+Received: from atp-mbx1.it.nicta.com.au ([221.199.216.123] helo=atp-mbx1.in.nicta.com.au)
+	by atp-es2.it.nicta.com.au with esmtp (Exim 4.69)
+	(envelope-from <ramana.kumar@gmail.com>)
+	id 1OsBvZ-00005Z-N9; Sun, 05 Sep 2010 19:54:39 +1000
+Received: from localhost (221.199.216.124) by atp-mbx1.in.nicta.com.au
+ (221.199.216.123) with Microsoft SMTP Server (TLS) id 8.2.176.0; Sun, 5 Sep
+ 2010 19:53:30 +1000
+X-Mailer: git-send-email 1.7.2.2
+X-TM-AS-Product-Ver: SMEX-8.0.0.4125-6.500.1024-17616.006
+X-TM-AS-Result: No--4.748000-8.000000-31
+X-TM-AS-User-Approved-Sender: No
+X-TM-AS-User-Blocked-Sender: No
+X-SA-Exim-Connect-IP: 221.199.216.123
+X-SA-Exim-Mail-From: ramana.kumar@gmail.com
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	atp-es2.it.nicta.com.au
+X-Spam-Level: 
+X-Spam-Status: No, score=-8.9 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+X-SA-Exim-Version: 4.2.1 (built Wed, 25 Jun 2008 17:20:07 +0000)
+X-SA-Exim-Scanned: Yes (on atp-es2.it.nicta.com.au)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155450>
 
-Hi Sverre,
+Commit message help text says lines starting with '#' will be ignored.
+The diff lines added by --verbose are also ignored, although they don't
+start with '#'s. Extend help text to describe behavior on diff lines
+when relevant.
 
-Sverre Rabbelier writes:
-> On Sun, Sep 5, 2010 at 01:08, Ramkumar Ramachandra <artagnon@gmail.co=
-m> wrote:
-> >> Another possible concern is that this is very much git specific.
-> >> Other fast-import backends are just not going to be able to do
-> >> it with the same format. =A0Is there a convention for naming
-> >> options like that?
-> >
-> > Why is this a concern? We aren't even breaking backward
-> > compatibility. This bidi interface should only be used by SVN-like
-> > frontends.
->=20
-> I don't agree, imagine implementing hg-remote-svn (or the conceptual
-> equivalent at least), it would require the same functionality, yes?
-> You need to retrieve something from fast-import that you previously
-> gave it.
+Signed-off-by: Ramana Kumar <ramana.kumar@gmail.com>
+---
+ builtin/commit.c |   25 ++++++++++++++++++-------
+ 1 files changed, 18 insertions(+), 7 deletions(-)
 
-Ah, yes. I didn't think of that. If fast-import is already mature,
-it's probably a good idea to design a new protocol altogether based on
-this and not call it fast-import?
-
-> > We'll get ideas to improve this as svn-fe gets built up. On a relat=
-ed
-> > note, we should probably extend the git-remote-testgit helper to us=
-e
-> > this feature in future to facilitate writing unittests.
->=20
-> Hmmm, that would be somewhat difficult I suspect, the reason
-> git-remote-testgit was so easy to write is because git-fast-export an=
-d
-> git-fast-import do exactly what I wanted to test. You'd have to teach
-> munge the fast-export stream even more to insert this feature somehow=
-,
-> I suspect that'll be a non-trivial feat. Of course, you will need to
-> test it somehow, I suspect that Jonathan's current approach (using
-> hardcoded streams) might be the easiest.
-
-Hm, ok. Whatever makes testing easier.
-
--- Ram
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 66fdd22..b49fd7a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -658,17 +658,28 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		fprintf(fp,
+ 			"\n"
+ 			"# Please enter the commit message for your changes.");
+-		if (cleanup_mode == CLEANUP_ALL)
++		if (cleanup_mode == CLEANUP_ALL && !verbose)
+ 			fprintf(fp,
+ 				" Lines starting\n"
+ 				"# with '#' will be ignored, and an empty"
+ 				" message aborts the commit.\n");
+-		else /* CLEANUP_SPACE, that is. */
+-			fprintf(fp,
+-				" Lines starting\n"
+-				"# with '#' will be kept; you may remove them"
+-				" yourself if you want to.\n"
+-				"# An empty message aborts the commit.\n");
++    else {
++      if (cleanup_mode == CLEANUP_ALL)
++        fprintf(fp,
++          " Lines starting\n"
++          "# with '#' will be ignored, as will"
++          " the diff and anything below it.\n");
++      else { /* CLEANUP_SPACE, that is. */
++        fprintf(fp,
++          " Lines starting\n"
++          "# with '#' will be kept; you may remove them"
++          " yourself if you want to.\n");
++        if (verbose)
++          fprintf(fp,
++            "# The diff and anything below it will be ignored.\n");
++      }
++      fprintf(fp, "# An empty message aborts the commit.\n");
++    }
+ 		if (only_include_assumed)
+ 			fprintf(fp, "# %s\n", only_include_assumed);
+ 
+-- 
+1.7.2.2
