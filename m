@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 04/17] index: make narrow index incompatible with older git
-Date: Sun,  5 Sep 2010 16:47:31 +1000
-Message-ID: <1283669264-15759-5-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 06/17] {fetch,upload}-pack: support narrow repository
+Date: Sun,  5 Sep 2010 16:47:33 +1000
+Message-ID: <1283669264-15759-7-git-send-email-pclouds@gmail.com>
 References: <1283669264-15759-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,204 +10,245 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 05 08:49:10 2010
+X-From: git-owner@vger.kernel.org Sun Sep 05 08:49:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Os92G-0007yI-Lk
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 08:49:05 +0200
+	id 1Os92U-00082P-Dt
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 08:49:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754Ab0IEGsv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 02:48:51 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:36326 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751040Ab0IEGsu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 02:48:50 -0400
-Received: by mail-px0-f174.google.com with SMTP id 10so649695pxi.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 23:48:50 -0700 (PDT)
+	id S1751835Ab0IEGtM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 02:49:12 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:37408 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751155Ab0IEGtK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 02:49:10 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 9so1040881pzk.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 23:49:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=ZAhvMXCHknXN2vaZb7tatD6syUImx/yL9oitWcPQStA=;
-        b=vhsRll5jWoQRvkcjSwg/K9kzQ+YTis6W7CSf/cZ4XIq7ZBDd7VkQv+wt8T+RX5ugj8
-         q44xj0Aqi+4uKdUEO4OIG9ibFma1z7g8dsmZ6C7JTKZ4k6xmsEqdLbo36zQ9tUMwXoE6
-         w50hFuBCkGQVr46x6/k5sZS3AYUqxHISYJLow=
+        bh=bW0ErX9E+UQGQiCqOKzxyHmJlbgAfGHgk6KqBFg1gm4=;
+        b=mh2U7YfPlv49iqjgpnQdc1S6vLRdSeUzhyLohHUPHDeD+ABtFrmuW4fG5lSukn6Y43
+         Kpsh4qiMdrS4YT1JMntnchmngtxxTfbjtqRlmwY+oq1587PEVrU7os+NevoeByZuw3Wz
+         Co21VD/6F4BfZHsYpCMcoQoZCegGiMpARAGA4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=OJeElatz5APIaFpOZUpp5Q+rx/FKxPNDdojZ9Ly/rufICtbbX/kTMocPXui4tAk8dF
-         eVytCld7tNrp9xkCEFe/kCyDiLWAGmpkVy9i2InKr59hmJ6FTrViOO9AGsBP6KYCetAw
-         w+py6l95uHbZSdBGI48CMWP8RfJAG5olQh2C8=
-Received: by 10.114.121.18 with SMTP id t18mr1558914wac.136.1283669329962;
-        Sat, 04 Sep 2010 23:48:49 -0700 (PDT)
+        b=VqTZtDhwrSpAdPVQAP7etaX8y2WC2gmDwVEnxSCW4uWI/WO3u53OXROcKjX3CepA0I
+         eBZNiPISxhlfNaTO13tdq7QU6VkLeOH+K31Rj5b+RBCXaiNnRsXW2SN4mRoRkAKvEsTT
+         OWMEC5VuQLateCVFUTJM/fmaVCkKyoC1UUZ44=
+Received: by 10.114.24.3 with SMTP id 3mr1173525wax.31.1283669350606;
+        Sat, 04 Sep 2010 23:49:10 -0700 (PDT)
 Received: from dektop ([119.12.225.18])
-        by mx.google.com with ESMTPS id r37sm8038506wak.23.2010.09.04.23.48.45
+        by mx.google.com with ESMTPS id q6sm8036344waj.22.2010.09.04.23.49.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 04 Sep 2010 23:48:48 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Sun,  5 Sep 2010 16:48:40 +1000
+        Sat, 04 Sep 2010 23:49:09 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Sun,  5 Sep 2010 16:48:59 +1000
 X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 In-Reply-To: <1283669264-15759-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155432>
 
-Index in narrow repos is also narrowed and should not be used to
-create commits straight away (to be explained later on). On the other
-hand, while normal index can still be used in narrow repos, it should
-be narrowed when the repo becomes narrow. Disallow that case too.
+If $GIT_DIR/narrow is set, fetch-pack will send "narrow-tree" lines to
+upload-pack, where the prefixes are passed to rev-list mechanism to
+produce a narrow pack.
 
-Add non-optional extension "narw" so that older git will refuse to
-read it. Also check narrow prefix in index against $GIT_DIR/narrow,
-just in case.
+"narrow-tree" capability is required for this to work.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- cache.h                |    1 +
- read-cache.c           |   32 ++++++++++++++++++++++++++++++--
- t/t0063-narrow-repo.sh |   28 ++++++++++++++++++++++++++++
- 3 files changed, 59 insertions(+), 2 deletions(-)
+ Documentation/git-fetch-pack.txt          |    3 ++
+ Documentation/technical/pack-protocol.txt |    3 ++
+ builtin/fetch-pack.c                      |    9 +++++++
+ upload-pack.c                             |   38 +++++++++++++++++++++=
+++++++-
+ 4 files changed, 51 insertions(+), 2 deletions(-)
 
-diff --git a/cache.h b/cache.h
-index d09c4fc..88a2ec6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -292,6 +292,7 @@ struct index_state {
- 	struct string_list *resolve_undo;
- 	struct cache_tree *cache_tree;
- 	struct cache_time timestamp;
-+	char *narrow_prefix;
- 	void *alloc;
- 	unsigned name_hash_initialized : 1,
- 		 initialized : 1;
-diff --git a/read-cache.c b/read-cache.c
-index 1f42473..250013c 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -12,6 +12,7 @@
- #include "commit.h"
- #include "blob.h"
- #include "resolve-undo.h"
-+#include "narrow-tree.h"
+diff --git a/Documentation/git-fetch-pack.txt b/Documentation/git-fetch=
+-pack.txt
+index 4a8487c..19b0d92 100644
+--- a/Documentation/git-fetch-pack.txt
++++ b/Documentation/git-fetch-pack.txt
+@@ -25,6 +25,9 @@ This command degenerates to download everything to co=
+mplete the
+ asked refs from the remote side when the local side does not
+ have a common ancestor commit.
 =20
- static struct cache_entry *refresh_cache_entry(struct cache_entry *ce,=
- int really);
-=20
-@@ -25,8 +26,9 @@ static struct cache_entry *refresh_cache_entry(struct=
- cache_entry *ce, int reall
-  */
-=20
- #define CACHE_EXT(s) ( (s[0]<<24)|(s[1]<<16)|(s[2]<<8)|(s[3]) )
--#define CACHE_EXT_TREE 0x54524545	/* "TREE" */
--#define CACHE_EXT_RESOLVE_UNDO 0x52455543 /* "REUC" */
-+#define CACHE_EXT_TREE		0x54524545	/* "TREE" */
-+#define CACHE_EXT_RESOLVE_UNDO	0x52455543	/* "REUC" */
-+#define CACHE_EXT_NARROW	0x6e617277	/* "narw" */
-=20
- struct index_state the_index;
-=20
-@@ -1188,6 +1190,9 @@ static int read_index_extension(struct index_stat=
-e *istate,
- 	case CACHE_EXT_RESOLVE_UNDO:
- 		istate->resolve_undo =3D resolve_undo_read(data, sz);
- 		break;
-+	case CACHE_EXT_NARROW:
-+		istate->narrow_prefix =3D xstrdup(data);
-+		break;
- 	default:
- 		if (*ext < 'A' || 'Z' < *ext)
- 			return error("index uses %.4s extension, which we do not understand=
-",
-@@ -1352,6 +1357,18 @@ int read_index_from(struct index_state *istate, =
-const char *path)
- 		src_offset +=3D extsize;
- 	}
- 	munmap(mmap, mmap_size);
++In narrow repositories, it asks 'git-upload-pack' to send only objects
++within narrow area defined in $GIT_DIR/narrow.
 +
-+	if ((!get_narrow_prefix() && !istate->narrow_prefix))
-+		;		/* good */
-+	else if (get_narrow_prefix() && istate->narrow_prefix) {
-+		char *buf =3D get_narrow_string();
-+		if (strcmp(buf, istate->narrow_prefix))
-+			die("Invalid index, narrow prefix does not match $GIT_DIR/narrow");
-+		free(buf);
+=20
+ OPTIONS
+ -------
+diff --git a/Documentation/technical/pack-protocol.txt b/Documentation/=
+technical/pack-protocol.txt
+index 369f91d..39474d2 100644
+--- a/Documentation/technical/pack-protocol.txt
++++ b/Documentation/technical/pack-protocol.txt
+@@ -215,6 +215,9 @@ discovery phase as 'want' lines. Clients MUST send =
+at least one
+ obj-id in a 'want' command which did not appear in the response
+ obtained through ref discovery.
+=20
++If client is requesting narrow clone, it must send 'narrow-tree'
++lines before 'want' lines.
++
+ If client is requesting a shallow clone, it will now send a 'deepen'
+ line with the depth it is requesting.
+=20
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index dbd8b7b..591e0e4 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -37,6 +37,7 @@ static int marked;
+=20
+ static struct commit_list *rev_list;
+ static int non_common_revs, multi_ack, use_sideband;
++const char **narrow_prefix;
+=20
+ static void rev_list_push(struct commit *commit, int mark)
+ {
+@@ -237,6 +238,12 @@ static int find_common(int fd[2], unsigned char *r=
+esult_sha1,
+ 	for_each_ref(rev_list_insert_ref, NULL);
+=20
+ 	fetching =3D 0;
++	narrow_prefix =3D get_narrow_prefix();
++	if (narrow_prefix) {
++		const char **p =3D narrow_prefix;
++		while (*p)
++			packet_buf_write(&req_buf, "narrow-tree %s\n", *p++);
 +	}
-+	else
-+		die("Invalid index, not suitable for narrow repository");
-+
- 	return istate->cache_nr;
+ 	for ( ; refs ; refs =3D refs->next) {
+ 		unsigned char *remote =3D refs->old_sha1;
+ 		const char *remote_hex;
+@@ -692,6 +699,8 @@ static struct ref *do_fetch_pack(int fd[2],
 =20
- unmap:
-@@ -1378,6 +1395,8 @@ int discard_index(struct index_state *istate)
- 	free(istate->alloc);
- 	istate->alloc =3D NULL;
- 	istate->initialized =3D 0;
-+	free(istate->narrow_prefix);
-+	istate->narrow_prefix =3D NULL;
+ 	if (is_repository_shallow() && !server_supports("shallow"))
+ 		die("Server does not support shallow clients");
++	if (narrow_prefix && !server_supports("narrow-tree"))
++		die("Server does not support narrow-tree");
+ 	if (server_supports("multi_ack_detailed")) {
+ 		if (args.verbose)
+ 			fprintf(stderr, "Server supports multi_ack_detailed\n");
+diff --git a/upload-pack.c b/upload-pack.c
+index cc1983f..f3747e5 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -41,6 +41,8 @@ static int use_sideband;
+ static int debug_fd;
+ static int advertise_refs;
+ static int stateless_rpc;
++const char **narrow_prefix;
++int narrow_prefix_nr;
 =20
- 	/* no need to throw away allocated active_cache */
- 	return 0;
-@@ -1607,6 +1626,15 @@ int write_index(struct index_state *istate, int =
-newfd)
- 		if (err)
- 			return -1;
- 	}
-+	if (get_narrow_prefix()) {
-+		char *buf =3D get_narrow_string();
-+		int len =3D strlen(buf)+1;
-+		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_NARROW, len) < 0=
- ||
-+			ce_write(&c, newfd, buf, len) < 0;
-+		free(buf);
-+		if (err)
-+			return -1;
+ static void reset_timeout(void)
+ {
+@@ -118,6 +120,10 @@ static int do_rev_list(int in, int out, void *user=
+_data)
+ 	revs.simplify_history =3D 0;
+ 	if (use_thin_pack)
+ 		revs.edge_hint =3D 1;
++	if (narrow_prefix) {
++		revs.prune_data =3D narrow_prefix;
++		narrow_prefix[narrow_prefix_nr] =3D NULL;
 +	}
 =20
- 	if (ce_flush(&c, newfd) || fstat(newfd, &st))
- 		return -1;
-diff --git a/t/t0063-narrow-repo.sh b/t/t0063-narrow-repo.sh
-index 51b753d..926802c 100755
---- a/t/t0063-narrow-repo.sh
-+++ b/t/t0063-narrow-repo.sh
-@@ -43,4 +43,32 @@ test_expect_success 'unsorted multiple prefix' '
- 	test_must_fail git rev-parse --narrow-prefix
- '
+ 	for (i =3D 0; i < want_obj.nr; i++) {
+ 		struct object *o =3D want_obj.objects[i].item;
+@@ -154,9 +160,10 @@ static void create_pack_file(void)
+ 		"corruption on the remote side.";
+ 	int buffered =3D -1;
+ 	ssize_t sz;
+-	const char *argv[10];
++	const char **argv;
+ 	int arg =3D 0;
 =20
-+test_expect_success 'create narrow index' '
-+	echo a >.git/narrow &&
-+	: >foo
-+	git add foo &&
-+	test -f .git/index
-+'
++	argv =3D xmalloc(sizeof(*argv)*(11+narrow_prefix_nr));
+ 	if (shallow_nr) {
+ 		memset(&rev_list, 0, sizeof(rev_list));
+ 		rev_list.proc =3D do_rev_list;
+@@ -180,6 +187,11 @@ static void create_pack_file(void)
+ 		argv[arg++] =3D "--delta-base-offset";
+ 	if (use_include_tag)
+ 		argv[arg++] =3D "--include-tag";
++	if (narrow_prefix) {
++		argv[arg++] =3D "--";
++		memcpy(argv+arg, narrow_prefix, narrow_prefix_nr*sizeof(*argv));
++		arg +=3D narrow_prefix_nr;
++	}
+ 	argv[arg++] =3D NULL;
+=20
+ 	memset(&pack_objects, 0, sizeof(pack_objects));
+@@ -307,6 +319,7 @@ static void create_pack_file(void)
+ 		error("git upload-pack: git-pack-objects died with error.");
+ 		goto fail;
+ 	}
++	free(argv);
+ 	if (shallow_nr && finish_async(&rev_list))
+ 		goto fail;	/* error was already reported */
+=20
+@@ -500,6 +513,22 @@ static void receive_needs(void)
+ 		if (debug_fd)
+ 			write_in_full(debug_fd, line, len);
+=20
++		if (!prefixcmp(line, "narrow-tree ")) {
++			char *s;
++			int len;
++			len =3D strlen(line+12);
++			s =3D malloc(len+1);
++			memcpy(s, line+12, len-1);
++			s[len-1] =3D '\0'; /* \n */
++			if (s[len-2] =3D=3D '/')
++				die("trailing slash in narrow prefix not allowed, %s", line);
 +
-+test_expect_success '$GIT_DIR/narrow and index do not match' '
-+	echo b >.git/narrow &&
-+	test_must_fail git add foo
-+'
++			narrow_prefix_nr++;
++			narrow_prefix =3D xrealloc(narrow_prefix,
++						 sizeof(*narrow_prefix)*(narrow_prefix_nr+1));
++			narrow_prefix[narrow_prefix_nr-1] =3D s;
++			continue;
++		}
+ 		if (!prefixcmp(line, "shallow ")) {
+ 			unsigned char sha1[20];
+ 			struct object *object;
+@@ -563,6 +592,9 @@ static void receive_needs(void)
+ 	if (!use_sideband && daemon_mode)
+ 		no_progress =3D 1;
+=20
++	if (narrow_prefix)
++		use_thin_pack =3D 0;
 +
-+test_expect_success 'narrow index and normal repo' '
-+	rm .git/narrow &&
-+	test_must_fail git add foo
-+'
-+
-+test_expect_success 'turn to normal index again' '
-+	rm .git/index &&
-+	git add foo &&
-+	test -f .git/index
-+'
-+
-+test_expect_success 'normal index and narrow repo' '
-+	echo a >.git/narrow &&
-+	test_must_fail git add foo
-+'
-+
- test_done
+ 	if (depth =3D=3D 0 && shallows.nr =3D=3D 0)
+ 		return;
+ 	if (depth > 0) {
+@@ -620,7 +652,7 @@ static int send_ref(const char *refname, const unsi=
+gned char *sha1, int flag, vo
+ {
+ 	static const char *capabilities =3D "multi_ack thin-pack side-band"
+ 		" side-band-64k ofs-delta shallow no-progress"
+-		" include-tag multi_ack_detailed";
++		" include-tag multi_ack_detailed narrow-tree";
+ 	struct object *o =3D parse_object(sha1);
+=20
+ 	if (!o)
+@@ -725,6 +757,8 @@ int main(int argc, char **argv)
+ 		die("'%s' does not appear to be a git repository", dir);
+ 	if (is_repository_shallow())
+ 		die("attempt to fetch/clone from a shallow repository");
++	if (get_narrow_prefix())
++		die("attempt to fetch/clone from a narrow repository");
+ 	if (getenv("GIT_DEBUG_SEND_PACK"))
+ 		debug_fd =3D atoi(getenv("GIT_DEBUG_SEND_PACK"));
+ 	upload_pack();
 --=20
 1.7.1.rc1.69.g24c2f7
