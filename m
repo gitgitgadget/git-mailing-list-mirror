@@ -1,92 +1,113 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: direct ref manipulation
-Date: Sun, 5 Sep 2010 18:36:39 -0500
-Message-ID: <20100905233639.GB18103@burratino>
-References: <20100905232525.GA494@nibiru.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: [PATCH v2] string-list: Document STRING_LIST_INIT_* macros.
+Date: Sun,  5 Sep 2010 20:40:55 -0300
+Message-ID: <1283730055-14477-1-git-send-email-tfransosi@gmail.com>
+Cc: jrnieder@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 06 01:38:42 2010
+X-From: git-owner@vger.kernel.org Mon Sep 06 01:41:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsOnH-0004Ur-LL
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 01:38:40 +0200
+	id 1OsOph-0005Fx-OZ
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 01:41:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754805Ab0IEXif (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Sep 2010 19:38:35 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36862 "EHLO
+	id S1754824Ab0IEXlE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 19:41:04 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:64688 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754270Ab0IEXie (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 19:38:34 -0400
-Received: by gyd8 with SMTP id 8so1442181gyd.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 16:38:34 -0700 (PDT)
+	with ESMTP id S1754270Ab0IEXlD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 19:41:03 -0400
+Received: by gyd8 with SMTP id 8so1442502gyd.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 16:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=o52WpRV93hCmrnV/6qBRqxaeSMIMGdIM5599/oaW2dM=;
-        b=TEDR1Wyo2yDoK5YUfbddJhqQDlqWNqhM6AvuDblXDxdgtaD388LQkWTiOZv0I6IfIt
-         FqjQ2ZG19N4RS/FWaDqeqCwPMTyFmbFQI3mkzkDWHVWmxYtH4/IotHtORFGuj2H2BX/R
-         XWhkbK31KjarL5G/K+TnkzfUsi8WOW99PJe6c=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=fkwMyU4ccpVREoFc0Mad4crVZZD024Hz4WotP98OzuA=;
+        b=DMRrnlMUqAD6RGSq6CiBVOoHQl17wzB8NCZT7LNtu5NCTtQvWcul57fXNA45h/Y6PZ
+         j8q9u/je08YXOLVvxFpGlHbn7RHZWF4YNiOxSa3qto32tHHHK99DMO4Dja+S9o0ns66Z
+         X8n92WlkUCR9AbIgzBWujuOmiPWLSY4G4LN4o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YDeUIGE5+v/anW/EDLzZrzH6xCNmkX0I5wNe1PxpaLdVADrC7EROHO+u56OSunFnBc
-         y9IpitlG3mmgF16LDqG0yC6ET3I3yQkN7v8z6HeP8ZqXlpcYR/41iusUThKwr2gL8Vzv
-         UNPINGnddWxpdzOhjjPqNRQspBD0pxY7sDXak=
-Received: by 10.151.62.21 with SMTP id p21mr822547ybk.170.1283729914209;
-        Sun, 05 Sep 2010 16:38:34 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id q31sm2818184yba.0.2010.09.05.16.38.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 05 Sep 2010 16:38:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100905232525.GA494@nibiru.local>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=qdl6/X95v6bZrsV+U9dGJZsSlVMA/jawTrWtnCrrq2ZSPvbzOop75DftBRPnPFsdgb
+         y4Swo8ehmqjsjHqC5uvJ1MVs6iQaOWTMevGSYSpmyTKCur3MV+dmYj4zcqIJda+r4UCN
+         j0aOR0YyW5aC/1pm1jb5kcMeazB6LrrDbfkJQ=
+Received: by 10.150.11.15 with SMTP id 15mr227991ybk.140.1283730062563;
+        Sun, 05 Sep 2010 16:41:02 -0700 (PDT)
+Received: from localhost ([186.205.0.204])
+        by mx.google.com with ESMTPS id t16sm5208185ybm.10.2010.09.05.16.41.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 05 Sep 2010 16:41:02 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3.313.gcd15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155498>
 
-Hi Enrico,
+Clarify the modern ways to initialize a string_list. Text roughly
+based on the analogous passage from api-strbuf.txt.
 
-Enrico Weigelt wrote:
+(Note: Based on the demo patch of Jonathan Nieder).
 
-> is there already an command for directly manipulating refs
-> (eg. set a specific to given object id) ?
+Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+---
+ Documentation/technical/api-string-list.txt |   24 +++++++++++++++++++++---
+ 1 files changed, 21 insertions(+), 3 deletions(-)
 
-$ man git |grep ref
-    Do not use replacement refs to replace git objects. See git-replace(1) for more information.
-See the references above to get started using git. The following is probably more detail than necessary
-    Move objects and refs by archive.
-    Download objects and refs from another repository.
-    Update remote refs along with associated objects.
-    (deprecated) Recover lost refs that luckily have not yet been pruned.
-git-pack-refs(1)
-git-reflog(1)
-    Manage reflog information.
-    Create, list, delete refs to replace objects.
-move objects and references between repositories.
-git-symbolic-ref(1)
-    Read and modify symbolic refs.
-git-update-ref(1)
-    Update the object name stored in a ref safely.
-git-for-each-ref(1)
-    Output information on each ref.
-    List references in a remote repository.
-git-show-ref(1)
-    List references in a local repository.
-git-check-ref-format(1)
-    Ensures that a reference name is well formed.
-...
-
-Perhaps you are looking for git-update-ref.
-
-Hope that helps,
-Jonathan
+diff --git a/Documentation/technical/api-string-list.txt b/Documentation/technical/api-string-list.txt
+index 3f575bd..1510ee2 100644
+--- a/Documentation/technical/api-string-list.txt
++++ b/Documentation/technical/api-string-list.txt
+@@ -11,7 +11,14 @@ The caller:
+ 
+ . Allocates and clears a `struct string_list` variable.
+ 
+-. Initializes the members. You might want to set the flag `strdup_strings`
++. Initializes the members. A string_list has to by `= STRING_LIST_INT_NODUP` or
++  `= STRING_LIST_INIT_DUP` before it can be used.
++  Strings in lists initialized with the _DUP variant will be
++  automatically strdup()ed on insertion and free()ed on removal.
++  For example, this is necessary when you add something like
++  git_path("..."), since that function returns a static buffer
++  that will change with the next call to git_path().
++
+   if the strings should be strdup()ed. For example, this is necessary
+   when you add something like git_path("..."), since that function returns
+   a static buffer that will change with the next call to git_path().
+@@ -34,10 +41,9 @@ member (you need this if you add things later) and you should set the
+ Example:
+ 
+ ----
+-struct string_list list;
++struct string_list list = STRING_LIST_DUP;
+ int i;
+ 
+-memset(&list, 0, sizeof(struct string_list));
+ string_list_append(&list, "foo");
+ string_list_append(&list, "bar");
+ for (i = 0; i < list.nr; i++)
+@@ -52,6 +58,18 @@ However, if you use the list to check if a certain string was added
+ already, you should not do that (using unsorted_string_list_has_string()),
+ because the complexity would be quadratic again (but with a worse factor).
+ 
++Macros
++------
++
++`STRING_LIST_INIT_NODUP`::
++
++	Initialize the members and set the `strdup_strings` member to 0.
++
++`STRING_LIST_INIT_DUP`::
++
++	Initialize the members and set the `strdup_strings` member to 1.
++
++
+ Functions
+ ---------
+ 
+-- 
+1.7.2.3.313.gcd15
