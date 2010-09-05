@@ -1,205 +1,191 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sun, 5 Sep 2010 19:05:57 +0100
-Message-ID: <AANLkTi=YLx6MqbWd_N0geXbuXLdqAUOneGoym75dfthL@mail.gmail.com>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
-	<4C7FC3DC.3060907@gmail.com>
-	<AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
-	<alpine.LFD.2.00.1009021249510.19366@xanadu.home>
-	<AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
-	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
-	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
-	<7voccezr7m.fsf@alter.siamese.dyndns.org>
-	<20100903183120.GA4887@thunk.org>
-	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
-	<AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
-	<AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com>
-	<4C81A67B.2060400@gmail.com>
-	<alpine.LFD.2.00.1009032304560.19366@xanadu.home>
-	<4C81DC34.2090800@gmail.com>
-	<alpine.LFD.2.00.1009040153280.19366@xanadu.home>
-	<AANLkTi=7jUSCNiPf+HfEQuxaf16Jt06--bFE7=Of9wp=@mail.gmail.com>
-	<AANLkTik9awEd40s3r-O8t9DwZBh34Z0ozsxMm1QNjNoT@mail.gmail.com>
-	<alpine.LFD.2.00.1009042132500.19366@xanadu.home>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=5D=20po/hi=2Epo=3A=20Add=20Hindi=20Translation?=
+Date: Sun,  5 Sep 2010 23:57:47 +0530
+Message-ID: <1283711267-27679-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Artur Skawina <art.08.09@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"Ted Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sun Sep 05 20:06:06 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Sep 05 20:30:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsJbQ-0003t1-Dk
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 20:06:04 +0200
+	id 1OsJz2-00052d-VN
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 20:30:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754112Ab0IESF7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 14:05:59 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:63154 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751627Ab0IESF6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Sep 2010 14:05:58 -0400
-Received: by vws3 with SMTP id 3so2729789vws.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 11:05:57 -0700 (PDT)
+	id S1754223Ab0IES37 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 14:29:59 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:38568 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753834Ab0IES36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 14:29:58 -0400
+Received: by pzk9 with SMTP id 9so1179377pzk.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 11:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=sZNwhnBgB0bvKS5WIcbwrMtcsnvfwUF1widAObhAf+Y=;
-        b=Iu6yUE27VlGIdl838rScSpT+IfqujFzcuWbqFgAfGXatLyzbEbytHObMZwkgPdhZvb
-         dLbUZXO2mMkgQxhI93mJbO6NHyPPtIFMik+uALVwbB8k0Tyd5VQGi2n4CnQfwUMX/ciT
-         9rPs1tJyUTwn/epEeW4JAeRZbAopWfNSqAQVI=
+        bh=UDrDsohokZL5YGcSYoL2cJYWVHGjLMn/7UU0z8hzAAk=;
+        b=jseokEncJL+3thGoOfme7wkP0RdwaMexojr6oGL/7ukF3CYnr4eo2/lODkQKDxP2x8
+         9Sq5Ni33KkEpyM7pQHHA6wHK+lu4yMbJoPHsmfk2duo3adgKNvaSmSmUGu1M+MVg0Fgu
+         EOgABIfDeZNlkQd5AQoQSPXyJKpgfM7wXlAdY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Zv3Mlcg2V3TG/leoGuVLYA/z9z2dYvudMHnhYt74stFQvBmRYEHhs3iYEVWZVWghXq
-         egzSfdQqUwnRl/EwACzf/22386eQEvVvNeBT3pVlxvxqD7UXBcB30yW4uS3OSmILixU1
-         Bfda6I0i4sQ1UhI5XOZOmV9gZx8xgqFvZukts=
-Received: by 10.220.62.197 with SMTP id y5mr1546547vch.3.1283709957605; Sun,
- 05 Sep 2010 11:05:57 -0700 (PDT)
-Received: by 10.220.98.8 with HTTP; Sun, 5 Sep 2010 11:05:57 -0700 (PDT)
-In-Reply-To: <alpine.LFD.2.00.1009042132500.19366@xanadu.home>
+        h=from:to:subject:date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        b=crEV/+GpA7KqWb1kni9A9/hVY9yWhAVK1Zaiz/+JGXe8BqgohChpzvmYoqyg9sxqBg
+         0ZM5xfNHsbn5+WUgNg8MJ9WzJzV1kzLzy5/yjPpK5lrdd0CB7HDY01s0dmmLKVu7gmpV
+         2PNi4JC05CYGn/mroIxmhItupVXsVTZGkzQpw=
+Received: by 10.142.112.19 with SMTP id k19mr289360wfc.266.1283711398229;
+        Sun, 05 Sep 2010 11:29:58 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id q23sm2924915wfc.6.2010.09.05.11.29.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 05 Sep 2010 11:29:57 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155473>
 
-On Sun, Sep 5, 2010 at 3:16 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> On Sat, 4 Sep 2010, Luke Kenneth Casson Leighton wrote:
->
->> * git-index-pack requires a pack file in order to re-create the inde=
-x:
->> i don't want that
->> * git-pack-objects appears to have no way of telling it "just gimme
->> index file please"
->> * fast-import.c appears not to be what's needed either.
->>
->> so - any other methods for just getting the index file (exclusively?=
-)
->> any other commands i've missed? =C2=A0if not, are there any other wa=
-ys of
->> getting a pack's index of objects without err... getting the index
->> file? =C2=A0(i believe the answer to be no, but i'm just making sure=
-) and
->> on that basis i believe it is safe to ask: any objections to a patch
->> which adds "--index-only" to builtin/pack-objects.c?
->
-> No patch is needed.
->
-> First, what you want is an index of objects you are willing to share,
-> and not the index of whatever pack file you might have on your disk,
-> especially if you have multiple packs which is typical.
+Translate a few Git messages to Standard Hindi. It uses a phonetic
+script called Devanagari. Focus especially on transforming grammar and
+tense in a sane manner to serve as a guideline for future translators.
 
- blast.  so *sigh* ignoring the benefits that can be obtained by the
-delta-compression thing, somewhat; ignoring the fact that perhaps less
-traffic miight be transferred by happening to borrow objects from
-another branch (which is the situation that, i believe, happens with
-"git pull" over http:// or git://); ignoring the fact that i actually
-implemented using the .idx file yesterday ... :)
+Note that Devanagari rendering is broken on many applications by
+default at this time- the latest Emacs, Vim and Chrome render it
+incorrectly.
 
- ... there is a bit of a disadvantage to using pack index files that
-it goes all the way down (if i am reading things correctly) and cannot
-be told "give me just the objects related to a particular commit"....
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Cc: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+---
+ Note that I don't know Hindi well myself- I read the grammar rules,
+ looked up some dictionaries, and used peer review to focus on few
+ high-quality translations. The grammar/ tense transformation from
+ English is especially non-trivial. I'd encourage an expert Hindi
+ speaker to contribute to this.
 
+ To fix rendering in Emacs, see
+ http://www.emacswiki.org/emacs/SupportHindi
 
-> Try this instead:
->
-> =C2=A0 =C2=A0git rev-list --objects HEAD | cut -c -40 | sort
->
-> That will give you a sorted list of all objects reachable from the
-> current branch. =C2=A0With the Linux repo, you may replace "HEAD" wit=
-h
-> "v2.6.34..v2.6.35" if you wish, and that would give you the list of t=
-he
-> new objects that were introduced between v2.6.34 and v2.6.35.
+ po/hi.po |   67 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 67 insertions(+), 0 deletions(-)
+ create mode 100644 po/hi.po
 
- ... unlike this, which is in fact much more along the lines of what i
-was looking for (minus the loveliness of the delta compression oh
-well)
-
->=C2=A0This will
-> provide you with 84642 objects instead of the 1.7 million objects tha=
-t
-> the Linux repo contains (easier when testing stuff).
-
- hurrah! :)  [but, then if you actually want to go back and get alll
-commits, that's ... well, we'll not worry about that too much, given
-the benefits of being able to get smaller chunks.]
-
-> That sorted list of objects is more or less what the pack index file
-> contains, plus an offset in the pack for each entry. =C2=A0It is used=
- to
-> quickly find the offset for a given object in the corresponding pack
-> file, and the fanout is only a way to cut 3 iterations in the binary
-> search.
->
-> But anyway, what you want is really to select the precise set of obje=
-cts
-> you wish to share, and not blindly using the pack index file. =C2=A0I=
-f you
-> have a public branch and a private branch in your repository, then
-> objects from both branches may end up in the same pack
-
- slightly confused: are you of the belief that i intend to ignore
-refs/branches/* starting points?
-
-> and you probably
-> don't want to publish those objects from the private branch.
-
- ahh, i wondered where i'd seen the bit about "confusing" two
-branches, i thought it was in another message.  so many flying back &
-forth :)  from what i can gather, this is exactly what happens with
-git fetch from http:// or git:// so what's the big deal about that?
-why stop gitp2p from benefitting from the extra compression that could
-result from "borrowing" bits of another branch's objects, neh?
-
- or .. have i misunderstood?
-
-> The only
-> reliable way to generate a list of object is to use the output from '=
-git
-> rev-list'. =C2=A0Those objects may come from one or multiple packs, o=
-r be
-> loose in the object subdirectories, or even borrowed from another
-> repository through the alternates mechanism. =C2=A0But rev-list will =
-dig
-> those object SHA1s for you and only those you asked for.
-
- excellent.  that's proobably what i need right now.
-
-> You should look at the Git documentation for plumbing commands. =C2=A0=
-The
-> plumbing is actually a toolset that allows you to manipulate and extr=
-act
-> information from a Git repository. =C2=A0This is really handy for pro=
-totyping
-> new functionalities. Initially, the Git user interface was all
-> implemented in shell scripts on top of that plumbing.
-
- i'm using gitdb (ok don't need that any more, if i don't walk the
-pack-index file *sigh*) and python-git - am quite happy with the speed
-at which i can knock stuff together, using it.  the only tricky wobbly
-moment i had was not being able to pass in a file-handle to stdin (git
-pack-objects) and i got round that with "input =3D os.tmpfile();
-input.write(objref+"\n"); input.seek(0)".
-
-> Back to that rev-list output... OK, you want the equivalent of a fano=
-ut
-> table. =C2=A0You may do something like this then:
->
-> =C2=A0 =C2=A0git rev-list --objects v2.6.34..v2.6.35 | cut -c -2 | so=
-rt | uniq -c
-
-  ack.  got it.
-
- thanks nicolas.
-
-l.
+diff --git a/po/hi.po b/po/hi.po
+new file mode 100644
+index 0000000..d31e60b
+--- /dev/null
++++ b/po/hi.po
+@@ -0,0 +1,67 @@
++msgid ""
++msgstr ""
++"Project-Id-Version: Git\n"
++"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
++"Language-Team: Git Mailing List <git@vger.kernel.org>\n"
++"Last-Translator: Ramkumar Ramachandra <artagnon@gmail.com>\n"
++"POT-Creation-Date: 2010-09-05 16:05+0530\n"
++"Language: hi\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=3DUTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++
++#, c-format
++msgid "Could not make %s writable by group"
++msgstr "%s =E0=A4=95=E0=A5=8B =E0=A4=B8=E0=A4=AE=E0=A5=82=E0=A4=B9 =E0=
+=A4=A6=E0=A5=8D=E0=A4=B5=E0=A4=BE=E0=A4=B0=E0=A4=BE =E0=A4=B2=E0=A4=BF=E0=
+=A4=96=E0=A4=A8=E0=A5=87 =E0=A4=AF=E0=A5=8B=E0=A4=97=E0=A5=8D=E0=A4=AF =
+=E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=AC=E0=A4=A8=E0=A4=BE =E0=A4=
+=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "insanely long template name %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F =E0=A4=95=E0=A4=BE =E0=A4=A8=E0=A4=BE=E0=A4=AE =E0=A4=AC=E0=A4=
+=B9=E0=A5=81=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=A4=BE =E0=A4=B9=E0=
+=A5=88: %s"
++
++#, c-format
++msgid "cannot stat '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=
+=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "cannot stat template '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "cannot opendir '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=
+=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87: '%s'"
++
++#, c-format
++msgid "cannot readlink '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 =E0=A4=A8=E0=A4=B9=E0=A5=80=
+=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87: '%s'=
+"
++
++#, c-format
++msgid "insanely long symlink %s"
++msgstr "=E0=A4=AA=E0=A5=8D=E0=A4=B0=E0=A4=A4=E0=A5=80=E0=A4=95=E0=A4=BE=
+=E0=A4=A4=E0=A5=8D=E0=A4=AE=E0=A4=95 =E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95=
+ =E0=A4=AC=E0=A4=B9=E0=A5=81=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=A4=
+=BE =E0=A4=B9=E0=A5=88: %s"
++
++#, c-format
++msgid "cannot symlink '%s' '%s'"
++msgstr "'%s' =E0=A4=B8=E0=A5=87 '%s' =E0=A4=AA=E0=A5=8D=E0=A4=B0=E0=A4=
+=A4=E0=A5=80=E0=A4=95=E0=A4=BE=E0=A4=A4=E0=A5=8D=E0=A4=AE=E0=A4=95 =E0=A4=
+=B2=E0=A4=BF=E0=A4=82=E0=A4=95 =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=AC=E0=A4=A8=E0=A4=BE =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "cannot copy '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A4=BE =E0=A4=A8=E0=A4=95=E0=A4=B2 '%s' =E0=A4=
+=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=AC=E0=A4=A8=E0=A4=BE =E0=A4=B8=E0=
+=A4=95=E0=A5=87"
++
++#, c-format
++msgid "ignoring template %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F =E0=A4=95=E0=A5=8B =E0=A4=89=E0=A4=AA=E0=A5=87=E0=A4=95=E0=A5=
+=8D=E0=A4=B7=E0=A4=BE =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87 =E0=
+=A4=B9=E0=A5=88: %s"
++
++#, c-format
++msgid "insanely long template path %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F =E0=A4=95=E0=A4=BE =E0=A4=86=E0=A4=95=E0=A4=BE=E0=A4=B0 =E0=A4=
+=AC=E0=A4=B9=E0=A5=81=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=A4=BE =E0=
+=A4=B9=E0=A5=88: %s"
++
++#, c-format
++msgid "templates not found %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=AE=E0=A4=BF=E0=A4=
+=B2=E0=A4=BE: %s"
++
++#, c-format
++msgid "not copying templates of a wrong format version %d from '%s'"
++msgstr "'%s' =E0=A4=B8=E0=A5=87 =E0=A4=97=E0=A4=B2=E0=A4=A4 =E0=A4=B8=E0=
+=A5=8D=E0=A4=B5=E0=A4=B0=E0=A5=82=E0=A4=AA =E0=A4=B8=E0=A4=82=E0=A4=B8=E0=
+=A5=8D=E0=A4=95=E0=A4=B0=E0=A4=A3 %d =E0=A4=95=E0=A4=BE =E0=A4=9F=E0=A5=
+=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=E0=A4=9F =E0=A4=A8=E0=A4=
+=95=E0=A4=B2 =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=
+=A4=B0=E0=A4=B9=E0=A5=87 =E0=A4=B9=E0=A5=88"
++
++#, c-format
++msgid "insane git directory %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
+--=20
+1.7.2.2.409.gdbb11.dirty
