@@ -1,206 +1,123 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: git pack/unpack over bittorrent - works!
-Date: Sun, 05 Sep 2010 19:52:23 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1009051820100.19366@xanadu.home>
-References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
- <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
- <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
- <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
- <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
- <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org>
- <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
- <AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
- <AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com>
- <4C81A67B.2060400@gmail.com> <alpine.LFD.2.00.1009032304560.19366@xanadu.home>
- <4C81DC34.2090800@gmail.com> <alpine.LFD.2.00.1009040153280.19366@xanadu.home>
- <AANLkTi=7jUSCNiPf+HfEQuxaf16Jt06--bFE7=Of9wp=@mail.gmail.com>
- <AANLkTik9awEd40s3r-O8t9DwZBh34Z0ozsxMm1QNjNoT@mail.gmail.com>
- <alpine.LFD.2.00.1009042132500.19366@xanadu.home>
- <AANLkTi=YLx6MqbWd_N0geXbuXLdqAUOneGoym75dfthL@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] string-list: Document STRING_LIST_INIT_* macros.
+Date: Sun, 5 Sep 2010 18:57:52 -0500
+Message-ID: <20100905235752.GA18060@burratino>
+References: <1283730055-14477-1-git-send-email-tfransosi@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_cSYg+o3GhxrZAzAxI8Iugw)"
-Cc: Artur Skawina <art.08.09@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Ted Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	git <git@vger.kernel.org>
-To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 01:52:35 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 06 02:00:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsP0h-0000Fg-3B
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 01:52:31 +0200
+	id 1OsP8J-0002J9-3F
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 02:00:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754698Ab0IEXw0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Sep 2010 19:52:26 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:22291 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754197Ab0IEXwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 19:52:25 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L8A00EDZSZBSI10@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Sun, 05 Sep 2010 19:52:24 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <AANLkTi=YLx6MqbWd_N0geXbuXLdqAUOneGoym75dfthL@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754849Ab0IEX75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 19:59:57 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:34553 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754828Ab0IEX74 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 19:59:56 -0400
+Received: by gxk23 with SMTP id 23so1440884gxk.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 16:59:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=6l2ZiTBd0lofajIYM30g6n2/KpImRHI7mgFx4fzjOMI=;
+        b=Fl/AGPRxWTNlOmgAxm+GsWgMX9lYV5fnLmndw3EUXFuuxx3aWZNf4IkphR2YTtUAuG
+         pfRq7hze3vJg4q4vOF2/4wn9+LvH4OZcv36lnSn9BQTeHgLqXn0Dw6+XE0c2jWcXgezv
+         xNAw66G3id4TvIYK6nRos8M5N3M5NGVnc+eaY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=c7GUf9R6cKktwydM+hqdyLdCByzMY47k3MMMcpi4c3rkSYmNL48TNrB7zeHPFDg1fq
+         9jpvueObk6BHQrfgsdgz9yeWCEqDDgz9PtMT1KotHq8p5FV5O/n/7Xg7nIzYZSXIzlA2
+         AktIvKgbY8KUP/Px6mTNspXpxt5niXJRInf6Y=
+Received: by 10.151.150.18 with SMTP id c18mr603056ybo.358.1283731195667;
+        Sun, 05 Sep 2010 16:59:55 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id q31sm5225791ybk.1.2010.09.05.16.59.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 05 Sep 2010 16:59:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1283730055-14477-1-git-send-email-tfransosi@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155501>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Thiago Farina wrote:
 
---Boundary_(ID_cSYg+o3GhxrZAzAxI8Iugw)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
+> +++ b/Documentation/technical/api-string-list.txt
+> @@ -11,7 +11,14 @@ The caller:
+>  
+>  . Allocates and clears a `struct string_list` variable.
+>  
+> -. Initializes the members. You might want to set the flag `strdup_strings`
+> +. Initializes the members. A string_list has to by `= STRING_LIST_INT_NODUP` or
+> +  `= STRING_LIST_INIT_DUP` before it can be used.
+> +  Strings in lists initialized with the _DUP variant will be
+> +  automatically strdup()ed on insertion and free()ed on removal.
+> +  For example, this is necessary when you add something like
+> +  git_path("..."), since that function returns a static buffer
+> +  that will change with the next call to git_path().
+> +
+>    if the strings should be strdup()ed. For example, this is necessary
+>    when you add something like git_path("...")
 
-On Sun, 5 Sep 2010, Luke Kenneth Casson Leighton wrote:
+Hmm, something seems to have go wrong here.  Did you intend to
+insert that line break and duplicate the text below it?
 
-> On Sun, Sep 5, 2010 at 3:16 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > On Sat, 4 Sep 2010, Luke Kenneth Casson Leighton wrote:
-> >
-> >> * git-index-pack requires a pack file in order to re-create the index:
-> >> i don't want that
-> >> * git-pack-objects appears to have no way of telling it "just gimme
-> >> index file please"
-> >> * fast-import.c appears not to be what's needed either.
-> >>
-> >> so - any other methods for just getting the index file (exclusively?)
-> >> any other commands i've missed?  if not, are there any other ways of
-> >> getting a pack's index of objects without err... getting the index
-> >> file?  (i believe the answer to be no, but i'm just making sure) and
-> >> on that basis i believe it is safe to ask: any objections to a patch
-> >> which adds "--index-only" to builtin/pack-objects.c?
-> >
-> > No patch is needed.
-> >
-> > First, what you want is an index of objects you are willing to share,
-> > and not the index of whatever pack file you might have on your disk,
-> > especially if you have multiple packs which is typical.
-> 
->  blast.  so *sigh* ignoring the benefits that can be obtained by the
-> delta-compression thing, somewhat; ignoring the fact that perhaps less
-> traffic miight be transferred by happening to borrow objects from
-> another branch (which is the situation that, i believe, happens with
-> "git pull" over http:// or git://); ignoring the fact that i actually
-> implemented using the .idx file yesterday ... :)
+We cannot really say "a string_list has to be initialized with
+STRING_LIST_INIT_NODUP or STRING_LIST_INIT_DUP before it is
+used" because not all string_lists are statically allocated.
+Some (many) are allocated on the heap, which is part of why I
+introduced a string_list_init() function in the rfc series.
 
-Please, let's get it slow.
+> @@ -52,6 +58,18 @@ However, if you use the list to check if a certain string was added
+>  already, you should not do that (using unsorted_string_list_has_string()),
+>  because the complexity would be quadratic again (but with a worse factor).
+>  
+> +Macros
+> +------
+> +
+> +`STRING_LIST_INIT_NODUP`::
+> +
+> +	Initialize the members and set the `strdup_strings` member to 0.
 
-There are 2 concepts you really need to master in order to come up with 
-a solution.  And those concepts are completely independent from 
-each other, but at the moment you are blending them up together and 
-that's not good.
+I think this section is not very useful.  I think what is intended is
+something like
 
-The first one is all about object enumeration.  And object enumeration 
-is all about 'git rev-list'.  This is important when offering objects to 
-the outside world that you actually do offer _all_ the needed objects, 
-but _only_ the needed objects.  If some objects are missing you get a 
-broken repository.  But more objects can also be a security problem as 
-those extra objects may contain confidential data that you never 
-intended to publish.
+`STRING_LIST_INIT_NODUP`::
 
-And object enumeration has absolutely nothing to do with packs, nor .idx 
-files for that matter.  As I said, the objects you want might be split 
-across multiple packs, and also in loose form, and also in some 
-alternate location that is shared amongst many repositories on the same 
-filesystem.  But a single pack may also contain more than what you want 
-to offer, and it is extremely important that you do _not_ offer those 
-objects that are not reachable from the branch you want to publish.
+	initializer for a string_list with 0 items and the `strdup_strings`
+	member equal to 0
 
-Following me so far?
+but string-list.h says that already:
 
-The second concept is all about object _representation_ or _encoding_.  
-That's where the deltas come into play.  So the idea is to grab the list 
-of objects you want to publish, and then look into existing packs to see 
-if you could find them in delta form.  So, for each object, if you do 
-find them in delta form, and the objec the delta is made against is 1) 
-also part of the list of objects you want to send, or 2) is already 
-available at the remote end, then you may simply reuse that delta data 
-as is from the pack.  Finding if a particular pack has the wanted object 
-is easy: you just need to look it up in the .idx file.  Then, in the 
-corresponding pack file you parse the object header to find out if it is 
-a delta, and what its base object is.
+ struct string_list
+ {
+	struct string_list_item *items;
+	unsigned int nr, alloc;
+	unsigned int strdup_strings:1;
+ };
 
->  ... there is a bit of a disadvantage to using pack index files that
-> it goes all the way down (if i am reading things correctly) and cannot
-> be told "give me just the objects related to a particular commit"....
+ #define STRING_LIST_INIT_NODUP	{ NULL, 0, 0, 0 }
 
-Exact.  The .idx file gives you a list of objects that exists in the 
-corresponding pack.  That list of object might belong to a totally 
-random number of random commits.  You may also have a random number of 
-packs across which some or all objects are distributed.  Because, of 
-course, not all the objects you need are always packed.
+In generally it is not always a good idea to immediately document
+every identifier in a project like this one: writing good
+documentation takes some time, and maintaining it takes even more, so
+when the code already explains something, it tends to be more useful
+to document from another angle.
 
-So... I hope you understand now that there is no relation between 
-commits and .idx files.  The only exception is when you do create a 
-custom pack with 'git pack-objects'.
-
-> > Try this instead:
-> >
-> >    git rev-list --objects HEAD | cut -c -40 | sort
-> >
-> > That will give you a sorted list of all objects reachable from the
-> > current branch.  With the Linux repo, you may replace "HEAD" with
-> > "v2.6.34..v2.6.35" if you wish, and that would give you the list of the
-> > new objects that were introduced between v2.6.34 and v2.6.35.
-> 
->  ... unlike this, which is in fact much more along the lines of what i
-> was looking for (minus the loveliness of the delta compression oh
-> well)
-
-Again, delta compression is a _separate_ issue.
-
-> > This will
-> > provide you with 84642 objects instead of the 1.7 million objects that
-> > the Linux repo contains (easier when testing stuff).
-> 
->  hurrah! :)  [but, then if you actually want to go back and get alll
-> commits, that's ... well, we'll not worry about that too much, given
-> the benefits of being able to get smaller chunks.]
-
-If you want all commits then you just need --all instead of HEAD.
-
-> > That sorted list of objects is more or less what the pack index file
-> > contains, plus an offset in the pack for each entry.  It is used to
-> > quickly find the offset for a given object in the corresponding pack
-> > file, and the fanout is only a way to cut 3 iterations in the binary
-> > search.
-> >
-> > But anyway, what you want is really to select the precise set of objects
-> > you wish to share, and not blindly using the pack index file.  If you
-> > have a public branch and a private branch in your repository, then
-> > objects from both branches may end up in the same pack
-> 
->  slightly confused: are you of the belief that i intend to ignore
-> refs/branches/* starting points?
-
-I don't know what your exact understanding of Git is, and although I 
-know one or two things about the Git storage model, I get confused 
-myself by some of your comments, such as this one above.
-
-> > and you probably
-> > don't want to publish those objects from the private branch.
-> 
->  ahh, i wondered where i'd seen the bit about "confusing" two
-> branches, i thought it was in another message.  so many flying back &
-> forth :)  from what i can gather, this is exactly what happens with
-> git fetch from http:// or git:// so what's the big deal about that?
-> why stop gitp2p from benefitting from the extra compression that could
-> result from "borrowing" bits of another branch's objects, neh?
-
-No.  git:// will _never_ ever transfer any object that is not part of 
-the published branch(es).  If an object that does get transmitted is 
-actually a delta against an object that is only part of a branch that is 
-not published, then the delta will be expanded and redone against 
-another suitable object before transmission.
-
-
-Nicolas
-
---Boundary_(ID_cSYg+o3GhxrZAzAxI8Iugw)--
+Hope that helps,
+Jonathan
