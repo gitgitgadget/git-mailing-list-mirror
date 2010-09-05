@@ -1,84 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Add ERR support to smart HTTP
-Date: Sun, 5 Sep 2010 12:41:06 -0500
-Message-ID: <20100905174105.GB14020@burratino>
-References: <1283707815-32038-1-git-send-email-ilari.liusvaara@elisanet.fi>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sun Sep 05 19:43:09 2010
+From: Pascal Obry <pascal@obry.net>
+Subject: [PATCH v3 0/3]  Add support for SMTP server options
+Date: Sun,  5 Sep 2010 19:48:57 +0200
+Message-ID: <1283708940-2172-1-git-send-email-pascal@obry.net>
+Cc: Pascal Obry <pascal@obry.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 05 19:48:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsJFD-0002xV-2e
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 19:43:07 +0200
+	id 1OsJKd-0005FF-Hr
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 19:48:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041Ab0IERnC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Sep 2010 13:43:02 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50486 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753836Ab0IERnA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 13:43:00 -0400
-Received: by ywh1 with SMTP id 1so1384094ywh.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 10:43:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=zDFSwbzUaBDV+Vkb88ALBTEado4pbQFXZ6gAjvlB1uU=;
-        b=Yhn5oyylvd4J+SedeQm992ahzKXZYnnHc0gJJMcMuU0JL8cWR1P0QWBChMFfRq/dBs
-         1byaEV3L0DthKSGdIoabIVE2ClJbhmjZ/88aNxNY6amPuVYT36bfCS+JUcDu68DSfCTx
-         jql95iR+aigxmy5oa4oSgpsdnjYWXVEHCWRoI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bZdLnCXj7JAFoQnj1DMeGhEBlQqAjPOMDnOwf/4kLZTahiGynlHyICh9YkE4pxKXHg
-         FtFaoF6SMNQNbD23RDDrPlUUEp304l96C0JaGpXMP6cNPklFgzsMTyBCmlAaIFekmp7o
-         t3ctWPB7xnbiJODSVnJQwhhxJiqaZErMSL+do=
-Received: by 10.100.46.17 with SMTP id t17mr422245ant.237.1283708580062;
-        Sun, 05 Sep 2010 10:43:00 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id i30sm7390902anh.29.2010.09.05.10.42.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 05 Sep 2010 10:42:59 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1283707815-32038-1-git-send-email-ilari.liusvaara@elisanet.fi>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754100Ab0IERsi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 13:48:38 -0400
+Received: from smtp19.orange.fr ([80.12.242.19]:28088 "EHLO smtp19.orange.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752211Ab0IERsh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 13:48:37 -0400
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1928.orange.fr (SMTP Server) with ESMTP id BB86F20001F7;
+	Sun,  5 Sep 2010 19:48:35 +0200 (CEST)
+Received: from me-wanadoo.net (localhost [127.0.0.1])
+	by mwinf1928.orange.fr (SMTP Server) with ESMTP id AE384200020F;
+	Sun,  5 Sep 2010 19:48:35 +0200 (CEST)
+Received: from localhost (AVelizy-154-1-100-4.w90-2.abo.wanadoo.fr [90.2.58.4])
+	by mwinf1928.orange.fr (SMTP Server) with ESMTP id 4107820001F7;
+	Sun,  5 Sep 2010 19:48:35 +0200 (CEST)
+X-ME-UUID: 20100905174835266.4107820001F7@mwinf1928.orange.fr
+X-Mailer: git-send-email 1.7.2.3.316.ga4c47
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155467>
 
-Ilari Liusvaara wrote:
+I'm not familiar at all with Perl so comments on style or usage most
+welcomed. This patch is to introduce a way to pass specific options to the
+SMTP server used by git-send-email.
 
-> Thus for example server response:
-> 
-> "0031# ERR W access for foo/alice/a1 DENIED to bob"
-> 
-> Will cause the following to be printed:
-> 
-> "fatal: remote error: W access for foo/alice/a1 DENIED to bob"
-> 
-> If the git version is old and doesn't support this feature, then the
-> message will be:
-> 
-> "fatal: invalid server response; got '# ERR W access for foo/alice/a1
-> DENIED to bob'"
+I need that to be able to use different SMTP account (wanadoo, gmail...) on
+some Git repositories to send over proper identity.
 
-Yippee!  Thanks, Ilari.
+This is v3 of the patch thanks to Junio and AEvar for the review and help.
 
-For this specific error, why can't gitolite use an HTTP response code?
-Should http-backend be using ERR is some places, too, a la [1]?
+The two first patches are really code clean-up found while working on this
+new feature. The last patch is the actual implementation of this new
+feature.
 
-Jonathan
-who would like to find time to write a test case for "git daemon" any
-day now
+Pascal Obry (3):
+  Minor indentation fix.
+  Remove @smtp_host_parts variable as not used.
+  New send-email option smtpserveroption.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/145456/focus=145573
+ Documentation/git-send-email.txt |    8 ++++++++
+ git-send-email.perl              |   12 +++++++++---
+ 2 files changed, 17 insertions(+), 3 deletions(-)
+
+-- 
+1.7.2.2.277.gb49c4
