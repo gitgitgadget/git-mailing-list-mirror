@@ -1,147 +1,243 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [RFC PATCH 15/15] clone: Ensure sparse limiting arguments are used in subsequent operations
-Date: Sat,  4 Sep 2010 18:14:07 -0600
-Message-ID: <1283645647-1891-16-git-send-email-newren@gmail.com>
+Subject: [RFC PATCH 02/15] Add tests for client handling in a sparse repository
+Date: Sat,  4 Sep 2010 18:13:54 -0600
+Message-ID: <1283645647-1891-3-git-send-email-newren@gmail.com>
 References: <1283645647-1891-1-git-send-email-newren@gmail.com>
 Cc: pclouds@gmail.com, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 05 02:13:52 2010
+X-From: git-owner@vger.kernel.org Sun Sep 05 02:13:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Os2rj-0008IQ-I6
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 02:13:47 +0200
+	id 1Os2rk-0008IQ-JK
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Sep 2010 02:13:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754622Ab0IEANi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Sep 2010 20:13:38 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:65512 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754613Ab0IEANc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Sep 2010 20:13:32 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 3so647396pwi.19
-        for <git@vger.kernel.org>; Sat, 04 Sep 2010 17:13:32 -0700 (PDT)
+	id S1754523Ab0IEANG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Sep 2010 20:13:06 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:52689 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754466Ab0IEAMz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Sep 2010 20:12:55 -0400
+Received: by mail-pv0-f174.google.com with SMTP id 2so1002177pvg.19
+        for <git@vger.kernel.org>; Sat, 04 Sep 2010 17:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=nvCW3XWjyZdQfHAaMixX+zEItO/7ePYiqfvpiP6YJDs=;
-        b=dHh2w+tkDnx8WRWPmCwZ79ahXHxINSsb9l9oIv0q7DDOrPNL8z2RBE0cKQtlH0//JF
-         k39dzMKK2SZ3O3a/yqy5l+AoKIh+SwqBaXwA97HK8a2axWBKtYjF/RjA04yruahn9Lr9
-         Vg67Bvfl6TkJWlyqLM53kreygZZEBryq11UN4=
+        bh=TVeGoofwERvD7eYvMTk0ic2i/Nqd18FjF60HHFpf6n8=;
+        b=Kk3aCpOEVsfYP8vKU7f0A6MBa5NLjSXwt7TCFshynojM6+cv4sWZChHVttczlS27ze
+         Bm+Q2cG+f5YhP+l71WlOF3/SWOnL73RojMdh4A2OJYRYVK6XGpKbt4an9XtcFnuIKbW2
+         s7IBALHC+iqmhBAxKxzuoq2vcdzaPNLu85aQo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=WwwXOOf4aN+YELmS2HwcizT4s7L5aY1JtBxSIYfQfAssY4sebEICC7WAx2hARHSP4C
-         rXsQJYKXi+j2XNhm5bia4dgu2VH9oGEqzKhTZ8FpvWk/2FKzN/VlI7Rc0I9xbffDJwu8
-         eB5TLdumI1EXTAZTr+YWW1u+C5HSfH07OdCts=
-Received: by 10.114.120.17 with SMTP id s17mr901836wac.87.1283645612542;
-        Sat, 04 Sep 2010 17:13:32 -0700 (PDT)
+        b=dM+Txs5xsvsRoTT94tJYfLRLj6qYIZ4YhFYtKKLNgNUBmI5X4yEB+ipo1Z0pzE/0MB
+         nuWZ3ybRSo8dRlIGaPwE57wzq262X2dXUIsCfH5VqZICMcXp/9Nkw2BpCxHYGZRHh//R
+         XddrknRItSSDUza7AHX/PtSeRxTGMpOPa9vNM=
+Received: by 10.114.52.1 with SMTP id z1mr1549673waz.64.1283645574830;
+        Sat, 04 Sep 2010 17:12:54 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id 33sm7341833wad.18.2010.09.04.17.13.30
+        by mx.google.com with ESMTPS id 33sm7341833wad.18.2010.09.04.17.12.52
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 04 Sep 2010 17:13:31 -0700 (PDT)
+        Sat, 04 Sep 2010 17:12:54 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.2.140.gd06af
 In-Reply-To: <1283645647-1891-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155402>
 
-After fetching, register sparse args for subsequent checkout portion of
-clone, and record sparse args for any later commands run in the clone.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- builtin/clone.c                            |   17 +++++++++++++----
- t/t5721-sparse-repository-communication.sh |    4 ++--
- 2 files changed, 15 insertions(+), 6 deletions(-)
+ t/sparse-lib.sh                     |   38 ++++++++++
+ t/t5720-sparse-repository-basics.sh |  130 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 168 insertions(+), 0 deletions(-)
+ create mode 100644 t/sparse-lib.sh
+ create mode 100755 t/t5720-sparse-repository-basics.sh
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 5c0f594..4f55ab0 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -24,6 +24,7 @@
- #include "remote.h"
- #include "run-command.h"
- #include "quote.h"
-+#include "sparse-repo.h"
- 
- /*
-  * Overall FIXMEs:
-@@ -370,7 +371,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	const struct ref *refs, *remote_head;
- 	const struct ref *remote_head_points_at;
- 	const struct ref *our_head_points_at;
--	struct ref *mapped_refs;
-+	struct ref *mapped_refs = NULL;
- 	struct strbuf key = STRBUF_INIT, value = STRBUF_INIT;
- 	struct strbuf branch_top = STRBUF_INIT, reflog_msg = STRBUF_INIT;
- 	struct transport *transport = NULL;
-@@ -519,9 +520,12 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	strbuf_reset(&value);
- 
- 	if (is_local) {
-+		if (argc > rest_argc)
-+			die("Sparse clones of local repositories must be done using the file:// protocol.");
- 		refs = clone_local(path, git_dir);
- 		mapped_refs = wanted_peer_refs(refs, refspec);
- 	} else {
-+		struct strbuf quoted_sparse_args = STRBUF_INIT;
- 		struct remote *remote = remote_get(option_origin);
- 		transport = transport_get(remote, remote->url[0]);
- 
-@@ -541,12 +545,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 					     option_upload_pack);
- 
- 		if (argc > rest_argc) {
--			struct strbuf buf = STRBUF_INIT;
- 			int ret;
- 
--			sq_quote_argv(&buf, &argv[rest_argc], 0);
-+			sq_quote_argv(&quoted_sparse_args, &argv[rest_argc], 0);
- 			ret = transport_set_option(transport, TRANS_OPT_REVLIST_ARGS,
--						   strbuf_detach(&buf, NULL));
-+						   quoted_sparse_args.buf);
- 			if (ret)
- 				warning ("Sparse clone not supported!\n");
- 		}
-@@ -556,6 +559,12 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 			mapped_refs = wanted_peer_refs(refs, refspec);
- 			transport_fetch_refs(transport, mapped_refs);
- 		}
+diff --git a/t/sparse-lib.sh b/t/sparse-lib.sh
+new file mode 100644
+index 0000000..0b779c6
+--- /dev/null
++++ b/t/sparse-lib.sh
+@@ -0,0 +1,38 @@
++#!/bin/sh
 +
-+		if (argc > rest_argc) {
-+			register_sparse_limits(&argv[rest_argc]);
-+			record_sparse_limits(quoted_sparse_args.buf);
-+		}
-+		strbuf_release(&quoted_sparse_args);
- 	}
- 
- 	if (refs) {
-diff --git a/t/t5721-sparse-repository-communication.sh b/t/t5721-sparse-repository-communication.sh
-index 35cb6a2..61ce8c6 100755
---- a/t/t5721-sparse-repository-communication.sh
-+++ b/t/t5721-sparse-repository-communication.sh
-@@ -52,7 +52,7 @@ test_expect_success 'make comparison sparse repository' '
- 	)
- '
- 
--test_expect_failure 'basic sparse clone succeeds' '
-+test_expect_success 'basic sparse clone succeeds' '
- 	rm -fr dst &&
- 	git clone "file://$(pwd)/src" dst -- sub/b/ &&
- 	(
-@@ -82,7 +82,7 @@ test_expect_failure 'basic sparse clone succeeds' '
- 	)
- '
- 
--test_expect_failure 'basic sparse clone guts match expectations' '
-+test_expect_success 'basic sparse clone guts match expectations' '
- 	(
- 		# Loose objects only, to facilitate comparison
- 		cd dst &&
++make_sparse() {
++	# We only want loose objects
++	mv .git/objects/pack/* . &&
++	for i in $(ls *.pack); do
++		git unpack-objects -q < $i
++	done &&
++	rm -f *.pack *.idx &&
++
++	cd .git/objects &&
++
++	# Find the objects need for the specified paths
++	for i in $(git rev-list master); do
++		echo $i;
++		git rev-parse $i^{tree};
++		git ls-tree -rt $i -- "$@" | awk '{print $3}';
++	done | sort | uniq > ../wanted &&
++
++	# Find all other objects and delete them
++	find . -type f | sed -e s#[\./]##g \
++		       | grep -v -F "$(cat ../wanted)" > ../bad &&
++	for i in $(cat ../bad); do
++		rm -f ./${i:0:2}/${i:2};
++	done &&
++
++	# Record the sparse limits
++	cd .. &&
++	echo -n "'--'" > sparse-limits &&
++	for i in "$@"; do
++		echo -n " '$i'" >> sparse-limits
++	done &&
++	echo >> sparse-limits &&
++
++	# Trim the index while we're at it
++	cd .. &&
++	git reset --hard HEAD
++}
+diff --git a/t/t5720-sparse-repository-basics.sh b/t/t5720-sparse-repository-basics.sh
+new file mode 100755
+index 0000000..b8e9a3a
+--- /dev/null
++++ b/t/t5720-sparse-repository-basics.sh
+@@ -0,0 +1,130 @@
++#!/bin/sh
++
++test_description='sparse repository basics'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/sparse-lib.sh
++
++test_expect_success 'setup' '
++	rm -fr .git &&
++	test_create_repo src &&
++	(
++		cd src &&
++
++		mkdir -p sub/{a,b} &&
++		> sub/a/file &&
++		git add sub/a/file &&
++		test_tick &&
++		git commit -q -m initial &&
++
++		> sub/b/file &&
++		git add sub/b/file &&
++		test_tick &&
++		git commit -q -m two &&
++
++		echo unique > sub/file &&
++		git add sub/file &&
++		test_tick &&
++		git commit -q -m three &&
++
++		echo content > sub/b/file &&
++		test_tick &&
++		git commit -q -m subbfile sub/b/file &&
++
++		cp -a sub/b sub/bcopy &&
++		git add sub/bcopy &&
++		test_tick &&
++		git commit -q -m subbcopy &&
++
++		echo stuff > sub/a/file &&
++		test_tick &&
++		git commit -q -m subafile sub/a/file
++	)
++'
++
++test_expect_failure 'make sparse repository' '
++	git clone -q "file://$(pwd)/src" dst &&
++	(
++		cd dst &&
++		test 25 = "$(git rev-list --objects master | wc -l)" &&
++		make_sparse sub/b/file &&
++		test 0 = $(find .git/objects/pack -type f | wc -l) &&
++		test 22 = $(find .git/objects -type f | wc -l)
++	)
++'
++
++cd dst 2>/dev/null || test_done
++srcgit="--git-dir=../src/.git"
++
++test_expect_failure 'plumbing: ls-files works' '
++	git ls-files > output &&
++	test "sub/b/file" = "$(cat output)"
++'
++
++test_expect_failure 'plumbing: rev-list works' '
++	test "$(git rev-list HEAD)" = \
++	     "$(git $srcgit rev-list HEAD -- sub/b/)" &&
++	test "$(git rev-list --objects HEAD)" = \
++	     "$(git $srcgit rev-list --objects HEAD -- sub/b/)"
++'
++
++for i in $(git $srcgit rev-list HEAD | xargs git name-rev | cut -b 42-); do
++	git $srcgit rev-parse $i:sub/b/file >/dev/null 2>&1 &&
++	test_expect_success "plumbing: We can access $i:sub/b/file" "
++		git cat-file -t $i:sub/b/file
++	"
++done
++
++final_afile_sha=$(git $srcgit rev-parse master:sub/a/file)
++known_objects=$(git $srcgit rev-list --objects master \
++		| grep sub                            \
++		| grep -v $final_afile_sha            \
++		| cut -b -40)
++for i in $(git $srcgit rev-list HEAD | xargs git name-rev | cut -b 42-); do
++	git $srcgit ls-tree -rt $i | grep -F "$known_objects" >expect &&
++	test_expect_failure "plumbing: ls-tree -rt $i works" "
++		git ls-tree -rt $i 2>error >output &&
++		test_cmp output expect
++	"
++done
++
++test_expect_failure 'basic: log works' '
++	git log > /dev/null &&
++	git log -p > /dev/null &&
++	git log -Scontent > /dev/null
++'
++
++test_expect_failure 'basic: diff works' '
++	git diff master~3 master &&
++	git diff master~3
++'
++
++test_expect_failure 'basic: checkout works' '
++	git checkout master~2 &&
++	git checkout master
++'
++
++test_expect_failure 'basic: status works with modified stuff' '
++	git status &&
++	echo more content >> sub/b/file &&
++	echo newfile content >> sub/b/whatever &&
++	git status
++'
++
++test_expect_failure 'basic: add works' '
++	git add sub/b/file &&
++	git add sub/b/whatever
++'
++
++test_expect_failure 'basic: commit works' '
++	git commit -m "Commit in a sparse clone" &&
++	git rev-parse master^{tree} &&
++	git rev-parse master:sub &&
++	git rev-parse master:sub/b &&
++	git rev-parse master:sub/b/file &&
++	git rev-parse master:sub/bcopy &&
++	git rev-parse master:sub/bcopy/file &&
++	git rev-parse master:sub/a &&
++	git rev-parse master:sub/file
++'
++
++test_done
 -- 
 1.7.2.2.140.gd06af
