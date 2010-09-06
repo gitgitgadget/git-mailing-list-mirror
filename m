@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 1/3] t3509: Add rename + D/F conflict testcases that recursive strategy fails
-Date: Mon,  6 Sep 2010 14:47:48 -0600
-Message-ID: <1283806070-22027-2-git-send-email-newren@gmail.com>
+Subject: [PATCH 2/3] merge-recursive: Small code cleanup
+Date: Mon,  6 Sep 2010 14:47:49 -0600
+Message-ID: <1283806070-22027-3-git-send-email-newren@gmail.com>
 References: <AANLkTimz8qSwefp137-D+vEbsf6soG51u0im9EC911_O@mail.gmail.com>
 Cc: gitster@pobox.com, oinksocket@letterboxes.org,
 	ken.schalk@intel.com, Elijah Newren <newren@gmail.com>
@@ -12,128 +12,116 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsiaM-00008F-AD
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 22:46:38 +0200
+	id 1OsiaM-00008F-Qx
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 22:46:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755348Ab0IFUqc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 16:46:32 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:44616 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755088Ab0IFUqa (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 16:46:30 -0400
-Received: by pvg2 with SMTP id 2so1524811pvg.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 13:46:30 -0700 (PDT)
+	id S1755354Ab0IFUqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 16:46:35 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:50283 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755353Ab0IFUqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 16:46:33 -0400
+Received: by pwi3 with SMTP id 3so1173033pwi.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 13:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=Dow5Pk3E+WtsRDcxl2vid8A94CTyNQ20W3i7JbGBDww=;
-        b=l3ZBCXTSHRpwLGJ6MZn+B84soqeQyAXMv9yTZHfrtF+JyQtghoYxN7fDfe08eyegW0
-         8nayoE9mUZzq2k9rSqjR+MoaS34+xzpFWVGuo/eJtYjs26IK3Gn7hcGEAPk1c9BEa0nE
-         GeL4qeE8Ih3yVIt5M7UrN244MlTOM8pNXAQcg=
+        bh=yhxAaXD7k2cXORgJGbxEnZ7aMo1zf2vUsb+d+cCW+U4=;
+        b=PskjP/qyNaWVz3bA2XwMPWU8wcpDz+NoaAWW+xoTEz6TI0SM/KO+/VTcVEHDBc3H4D
+         OXYmrI5ZDyOZ/vmAjs0AZIDRqeEztYsKfnKAOQvt+LrTapJ6hXrmDcRyF9oPTXLPi033
+         8UzIzmyC73v9Pz0rm7MZhjgT+nduL6sJO0SzY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=oUMnhVSK8QBs1uPIMwAC6nR2DRNrpUDtW/xJ63s1vohisUEqV8DOUbRiZ49s9IsT0S
-         vYwd495kvmeHN5kKCufFxRMulaDCMv+hHxWbzI4czIcgNQfEpmb5laJkrTZpJjx6ylN8
-         9UaNo+//D8yi8KkJZPhQLUxArpDwyNU7GuEUk=
-Received: by 10.114.76.3 with SMTP id y3mr4222664waa.11.1283805990548;
-        Mon, 06 Sep 2010 13:46:30 -0700 (PDT)
+        b=WjLd+f/EqHNGuooa4H6UNRxLoOx1obmHqTIis6GrHDGM379dspRtSqqlM6gIPZbjvX
+         CKY6jZ+4pCphzD2r82vJzo+vLP2y164QsmjfP8GviK2ER9W2PrrVhtNC3NQn/Wp3KtYf
+         DURB5yTV2KfSpx/FxHL3IXxafysdXj8uSF65Y=
+Received: by 10.114.24.15 with SMTP id 15mr4133560wax.122.1283805992831;
+        Mon, 06 Sep 2010 13:46:32 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id d39sm11973876wam.4.2010.09.06.13.46.28
+        by mx.google.com with ESMTPS id d39sm11973876wam.4.2010.09.06.13.46.30
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 13:46:29 -0700 (PDT)
+        Mon, 06 Sep 2010 13:46:32 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.rc0.170.g5cfb0.dirty
 In-Reply-To: <AANLkTimz8qSwefp137-D+vEbsf6soG51u0im9EC911_O@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155617>
 
-When one side of a file rename matches a directory name on the other side,
-the recursive merge strategy will fail.  This is true even if the merge is
-trivially resolvable.
+process_renames() had a variable named "stage" and derived variables
+src_other and dst_other whose purpose was not entirely clear to me.  Make
+the name of stage slightly more descriptive and add a brief comment
+explaining what is occurring.
+
+Also, in d5af510 (RE: [PATCH] Avoid rename/add conflict when contents are
+identical 2010-09-01), a separate if-block was added to provide a special
+case for the rename/add conflict case that can be resolved (namely when
+the contents on the destination side are identical).  However, as a
+separate if block, it's not immediately obvious that its code is related to
+the subsequent code checking for a rename/add conflict.  We can combine and
+simplify the check slightly.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t3509-cherry-pick-merge-df.sh |   66 +++++++++++++++++++++++++++++++++++++++
- 1 files changed, 66 insertions(+), 0 deletions(-)
+ merge-recursive.c |   34 ++++++++++++++++++++--------------
+ 1 files changed, 20 insertions(+), 14 deletions(-)
 
-diff --git a/t/t3509-cherry-pick-merge-df.sh b/t/t3509-cherry-pick-merge-df.sh
-index a5ccdbf..eb5826f 100755
---- a/t/t3509-cherry-pick-merge-df.sh
-+++ b/t/t3509-cherry-pick-merge-df.sh
-@@ -32,4 +32,70 @@ test_expect_success SYMLINKS 'Cherry-pick succeeds with rename across D/F confli
- 	git cherry-pick branch
- '
+diff --git a/merge-recursive.c b/merge-recursive.c
+index c574698..5e2886a 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -923,15 +923,26 @@ static int process_renames(struct merge_options *o,
+ 			/* Renamed in 1, maybe changed in 2 */
+ 			struct string_list_item *item;
+ 			/* we only use sha1 and mode of these */
+-			struct diff_filespec src_other, dst_other;
+-			int try_merge, stage = a_renames == renames1 ? 3: 2;
++			struct diff_filespec src_other, dst_other, dst_renamed;
++			int try_merge;
  
-+test_expect_success 'Setup rename with file on one side matching directory name on other' '
-+	git checkout --orphan nick-testcase &&
-+	git rm -rf . &&
+-			remove_file(o, 1, ren1_src, o->call_depth || stage == 3);
++			/*
++			 * unpack_trees loads entries from common-commit
++			 * into stage 1, from head-commit into stage 2, and
++			 * from merge-commit into stage 3.  We keep track
++			 * of which side corresponds to the rename.
++			 */
++			int renamed_stage = a_renames == renames1 ? 2 : 3;
++			int other_stage =   a_renames == renames1 ? 3 : 2;
 +
-+	>empty &&
-+	git add empty &&
-+	git commit -m "Empty file" &&
-+
-+	git checkout -b simple &&
-+	mv empty file &&
-+	mkdir empty &&
-+	mv file empty &&
-+	git add empty/file &&
-+	git commit -m "Empty file under empty dir" &&
-+
-+	echo content >newfile &&
-+	git add newfile &&
-+	git commit -m "New file"
-+'
-+
-+test_expect_success 'Cherry-pick succeeds with was_a_dir/file -> was_a_dir (resolve)' '
-+	git reset --hard &&
-+	git checkout -q nick-testcase^0 &&
-+	git cherry-pick --strategy=resolve simple
-+'
-+
-+test_expect_failure 'Cherry-pick succeeds with was_a_dir/file -> was_a_dir (recursive)' '
-+	git reset --hard &&
-+	git checkout -q nick-testcase^0 &&
-+	git cherry-pick --strategy=recursive simple
-+'
-+
-+test_expect_success 'Setup rename with file on one side matching different dirname on other' '
-+	git reset --hard &&
-+	git checkout --orphan mergeme &&
-+	git rm -rf . &&
-+
-+	mkdir sub &&
-+	mkdir othersub &&
-+	echo content > sub/file &&
-+	echo foo > othersub/whatever &&
-+	git add -A &&
-+	git commit -m "Common commmit" &&
-+
-+	git rm -rf othersub &&
-+	git mv sub/file othersub &&
-+	git commit -m "Commit to merge" &&
-+
-+	git checkout -b newhead mergeme~1 &&
-+	>independent-change &&
-+	git add independent-change &&
-+	git commit -m "Completely unrelated change"
-+'
-+
-+test_expect_success 'Cherry-pick with rename to different D/F conflict succeeds (resolve)' '
-+	git reset --hard &&
-+	git checkout -q newhead^0 &&
-+	git cherry-pick --strategy=resolve mergeme
-+'
-+
-+test_expect_failure 'Cherry-pick with rename to different D/F conflict succeeds (recursive)' '
-+	git reset --hard &&
-+	git checkout -q newhead^0 &&
-+	git cherry-pick --strategy=recursive mergeme
-+'
-+
- test_done
++			remove_file(o, 1, ren1_src, o->call_depth || renamed_stage == 2);
+ 
+-			hashcpy(src_other.sha1, ren1->src_entry->stages[stage].sha);
+-			src_other.mode = ren1->src_entry->stages[stage].mode;
+-			hashcpy(dst_other.sha1, ren1->dst_entry->stages[stage].sha);
+-			dst_other.mode = ren1->dst_entry->stages[stage].mode;
++			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
++			src_other.mode = ren1->src_entry->stages[other_stage].mode;
++			hashcpy(dst_other.sha1, ren1->dst_entry->stages[other_stage].sha);
++			dst_other.mode = ren1->dst_entry->stages[other_stage].mode;
++			hashcpy(dst_renamed.sha1, ren1->dst_entry->stages[renamed_stage].sha);
++			dst_renamed.mode = ren1->dst_entry->stages[renamed_stage].mode;
+ 
+ 			try_merge = 0;
+ 
+@@ -955,13 +966,8 @@ static int process_renames(struct merge_options *o,
+ 							ren1->pair->two : NULL,
+ 							branch1 == o->branch1 ?
+ 							NULL : ren1->pair->two, 1);
+-			} else if ((dst_other.mode == ren1->pair->two->mode) &&
+-				   sha_eq(dst_other.sha1, ren1->pair->two->sha1)) {
+-				/* Added file on the other side
+-				   identical to the file being
+-				   renamed: clean merge */
+-				update_file(o, 1, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
+-			} else if (!sha_eq(dst_other.sha1, null_sha1)) {
++			} else if (!sha_eq(dst_other.sha1, null_sha1) &&
++				   !sha_eq(dst_other.sha1, dst_renamed.sha1)) {
+ 				const char *new_path;
+ 				clean_merge = 0;
+ 				try_merge = 1;
 -- 
 1.7.3.rc0.170.g5cfb0.dirty
