@@ -1,74 +1,93 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [Patch v3] string-list: Document STRING_LIST_INIT_* macros.
-Date: Sun, 5 Sep 2010 21:38:01 -0300
-Message-ID: <AANLkTikivCxU8Si-p1u4H6GtQfrdQdrHcBpr0Smkf5Rq@mail.gmail.com>
-References: <1283731991-15080-1-git-send-email-tfransosi@gmail.com>
-	<20100906002249.GB18060@burratino>
+From: Olaf Dabrunz <odabrunz@gmx.net>
+Subject: [TopGit PATCH] add section POINTERS to README
+Date: Mon,  6 Sep 2010 02:02:54 +0200
+Message-ID: <1283731374-2809-1-git-send-email-odabrunz@gmx.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 02:38:10 2010
+Cc: Olaf Dabrunz <odabrunz@gmx.net>, Petr Baudis <pasky@suse.cz>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>,
+	martin f krafft <madduck@madduck.net>,
+	Per Cederqvist <ceder@lysator.liu.se>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 06 02:52:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsPir-00057A-MW
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 02:38:10 +0200
+	id 1OsPwo-0000ZJ-Oy
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 02:52:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754488Ab0IFAiE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Sep 2010 20:38:04 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:59054 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751182Ab0IFAiD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Sep 2010 20:38:03 -0400
-Received: by qwh6 with SMTP id 6so3424524qwh.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 17:38:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MC8IJ3miEvuP7JninOm33qVHXmM/MlxgkXdTREtEV7s=;
-        b=Nwrk2qYRBbfWaTXWraXoOgtJ6NoG0UBqiINDtYwEphPgDSXZRfkF6qMB6dXU+yZ/nd
-         6stYDztuc3hERQcvZDhdUiDZC/Okqx9Bg4nllvxw2bR8rs1zgNfYJAxHSGI//hauCLOE
-         Mp1d1TW8G+oTyI/pEzGBJzSLKOKl1jLIelV2E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=S9VzOuLQWW2RrG9+gXHLFUphQjFC6Wq/p2AR1+ljmy8ry6aNt+KmZEdPB1tjfdZtcU
-         P9DpSxnrFi/YTRpJtKIQksyoU3nPfyywTfNCqpLQ6AP2KRR26ZjEZSeIHBnkql8Ogolk
-         9bWfk3IeVJTKMQK/oTneccHkT7L4+zl4mfCSg=
-Received: by 10.224.80.133 with SMTP id t5mr1110177qak.341.1283733481830; Sun,
- 05 Sep 2010 17:38:01 -0700 (PDT)
-Received: by 10.229.245.202 with HTTP; Sun, 5 Sep 2010 17:38:01 -0700 (PDT)
-In-Reply-To: <20100906002249.GB18060@burratino>
+	id S1755149Ab0IFAwE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 20:52:04 -0400
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from mailout-de.gmx.net ([213.165.64.22]:56595 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755239Ab0IFAwD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 20:52:03 -0400
+Received: (qmail invoked by alias); 06 Sep 2010 00:52:01 -0000
+Received: from p579E9A99.dip.t-dialin.net (EHLO santana.dyndns.org) [87.158.154.153]
+  by mail.gmx.net (mp020) with SMTP; 06 Sep 2010 02:52:01 +0200
+X-Authenticated: #20497841
+X-Provags-ID: V01U2FsdGVkX1/m1sJzhP3mQuELFiCbweJu27H8NWjZ+mKYgXoIzD
+	cz6pr7vFY8t/O6
+Received: by santana.dyndns.org (Postfix, from userid 1000)
+	id 48AB8B881; Mon,  6 Sep 2010 02:51:59 +0200 (CEST)
+X-Mailer: git-send-email 1.7.1
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155510>
 
-On Sun, Sep 5, 2010 at 9:22 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
->> @@ -34,10 +39,9 @@ member (you need this if you add things later) an=
-d you should set the
->> =C2=A0Example:
->>
->> =C2=A0----
->> -struct string_list list;
->> +struct string_list list =3D STRING_LIST_DUP;
->> =C2=A0int i;
->>
->> -memset(&list, 0, sizeof(struct string_list));
->> =C2=A0string_list_append(&list, "foo");
->> =C2=A0string_list_append(&list, "bar");
->> =C2=A0for (i =3D 0; i < list.nr; i++)
->
-> Probably worth copying and pasting this code to another file and
-> trying it to make sure it works for the final draft.
+Added a pointer to a mail discussing the design for "tg depend rm".
 
-I already done in the test-string-list.c patch I sent. :-)
+Signed-off-by: Olaf Dabrunz <odabrunz@gmx.net>
+---
+
+Uwe Kleine-K=C3=B6nig mentioned that the URL could be included in the
+README.
+
+I did not cite the URL from the tg depend TODO item, as tg help
+depend would not show the reference.
+
+ README |   10 ++++++++++
+ 1 files changed, 10 insertions(+), 0 deletions(-)
+
+diff --git a/README b/README
+index f103d92..9bab4de 100644
+--- a/README
++++ b/README
+@@ -622,3 +622,13 @@ All commands by default refer to the remote that '=
+tg remote --populate'
+ was called on the last time ('topgit.remote' configuration variable). =
+You can
+ manually run any command with a different base remote by passing '-r R=
+EMOTE'
+ _before_ the subcommand name.
++
++
++POINTERS
++--------
++
++The following references are useful to understand the development of t=
+opgit and
++its subcommands.
++
++tg depend:
++  http://lists-archives.org/git/688698-add-list-and-rm-sub-commands-to=
+-tg-depend.html
+--=20
+1.7.1
