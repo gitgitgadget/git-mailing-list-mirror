@@ -1,85 +1,226 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 3/4] tree-walk: actually move tree_entry_interesting() to tree-walk.c
-Date: Mon, 6 Sep 2010 09:31:57 -0600
-Message-ID: <AANLkTinV+Bo_EijJU2q5GVG=jr9GFAuQGo5KQpvf0K-V@mail.gmail.com>
-References: <1283645647-1891-8-git-send-email-newren@gmail.com>
-	<1283748429-31076-4-git-send-email-pclouds@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/2] po/de.po: add German translation
+Date: Mon, 6 Sep 2010 17:41:27 +0200
+Message-ID: <201009061741.27840.trast@student.ethz.ch>
+References: <AANLkTi=6ctLp-8FeqOGMZuhwvM_7DbaEp7+LK4nXfCaE@mail.gmail.com> <4c8197ab.1707e30a.3f10.714a@mx.google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 17:32:06 2010
+Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jan =?iso-8859-1?q?Kr=FCger?= <jk@jk.gs>,
+	Sam Reed <sam@reedyboy.net>, Jeff King <peff@peff.net>
+To: <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 06 17:41:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Osdfw-0007Br-Ol
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 17:32:05 +0200
+	id 1OsdpD-0004hH-2p
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 17:41:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751321Ab0IFPb7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 11:31:59 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47926 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750775Ab0IFPb6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 11:31:58 -0400
-Received: by fxm13 with SMTP id 13so2509483fxm.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 08:31:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zxMDBYwARVseyveA41CxjIOpu9gvWmtaqsAVop0ORps=;
-        b=BMdK/2PhYC+MM16hOJ5UyGvVpGOp0WnYjsFk/DnMnNh2XlFUl5/WxGHqYAjKlOgBxm
-         BydM3txjmyxJ4CUy0vTnFOc6XePdi+R08HGcCg4l2YFSVJy0XryepNp08kpvwPbWRs9h
-         djJ5o8pMEHnRSTHy94LZIjAPjdcaoZhsd/cWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OmGwwNse9hSp3Hw1xB+qjWxhxUqVTdi9HJbjla4O6BWXvJXGq+0taGyhviyHXMjxyN
-         WitByUDAu5z5o94svr+9OCKpYHd2Mtdm+fuN6gkjeIXbKxy4sJOqQBsv/oT5isyCP41x
-         cYW+z8gyalp9XrtC0/jkXMDxlxZoESWHDB1E8=
-Received: by 10.223.108.71 with SMTP id e7mr209990fap.13.1283787117243; Mon,
- 06 Sep 2010 08:31:57 -0700 (PDT)
-Received: by 10.223.50.154 with HTTP; Mon, 6 Sep 2010 08:31:57 -0700 (PDT)
-In-Reply-To: <1283748429-31076-4-git-send-email-pclouds@gmail.com>
+	id S1753122Ab0IFPlb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 11:41:31 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:34257 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752822Ab0IFPla convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 11:41:30 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 6 Sep
+ 2010 17:41:28 +0200
+Received: from thomas.site (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.0.702.0; Mon, 6 Sep
+ 2010 17:41:28 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <4c8197ab.1707e30a.3f10.714a@mx.google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155578>
 
-2010/9/5 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>:
-> This function can be potentially used in more places than just
-> tree-diff.c. This patches removes struct diff_options dependency from
-> the function, and moves it to tree-walk.c.
->
-> No functionality change intended.
+Hi Jan
 
-Thanks for working on this.  I like having the declaration of
-tree_entry_interesting() moved to tree_walk.h, at the very least.  The
-change to make tree_entry_interesting() take an entry instead of a
-tree_desc makes sense too.
+=46irst off thanks for taking on the mammoth job of translating this.  =
+I
+skimmed the entire file, and apart from the comments below everything
+looks sane, though I may of course have missed something.
 
-I'm unsure about replacing the diff_options with paths + pathlens +
-nr_paths -- that might be exposing too much implementation detail in
-the API.  In particular, I'm worried that if we try to add support for
-negated pathspecs or globs or regexes to tree_entry_interesting(),
-then we'll need to pass different data to this function and update an
-awful lot of callers.
+I already like the translation way better than the one that
+gitk/git-gui have, because it doesn't try so hard to translate *every*
+term.  Maybe it would help to make a little translation glossary,
+here's a start:
 
-Perhaps we should make a new struct containing paths + pathlens +
-nr_paths, make tree_entry_interesting() take such a struct, modify
-diff_options have such a struct instead of the current three paths,
-pathlens, and nr_paths fields, and modify diff_tree_setup_path()s to
-take such a struct instead of a diff_options* (and perhaps move
-diff_tree_setup_paths() out of diff.h and tree-diff.c into some other
-file(s)?).
+  bare repository       Lager-Repository
+  blob object           Blob-Objekt
+  branch                Branch (m.)
+  checkout              auschecken
+  commit                Commit/committen
+  commit object         Commit-Objekt
+  dangling ...          ... zeigt ins Leere
+  detached HEAD         von HEAD abgetrennt  [but see below]
+  directory             Verzeichnis
+  fast-forward          Update ohne Merge
+  fetch                 holen
+  file system           Dateisystem
+  index                 Index
+  merge                 Merge
+  object                Objekt
+  origin                Ursprung
+  parent                [unused, but would be interesting]
+  pull                  [dito]
+  push                  push [though only used as the command name so f=
+ar]
+  reference             Referenz
+  reflog                Reflog
+  refspec               Refspec
+  repository            Repository
+  resolve               aufl=F6sen
+  revision              Revision
+  tag                   Tag
+  tracking branch       ... verfolgt ...
+  tree                  Tree
+  unmerged              verbleibende Konflikte
+  upstream branch       Ursprung [note collision with "origin"]
+  working tree          Arbeitsverzeichnis
 
-Thoughts?
+As I said, I agree with the general idea of leaving certain terms
+untranslated.  You said on IRC that you left all English terms that
+are also used on
 
-Elijah
+  http://de.wikipedia.org/wiki/Versionskontrolle
+
+which seems a sound rule.  In any case it roughly matches (or still
+stays slightly on the more-German side of) the colloquial usage in my
+group, if that is any indication.
+
+avarab@gmail.com wrote:
+> +#, c-format
+> +msgid "nothing added to commit but untracked files present%s\n"
+> +msgstr "keine =C4nderungen f=FCr den Commit vorgemerkt, aber unber=FC=
+cksichtigte Dateien vorhanden\n"
+
+Loses the %s (which is used for advice).
+
+> +#, c-format
+> +msgid "unexpected diff status %c"
+> +msgstr "unerwarteter Diff-Status %s"
+
+Changes the format type.
+
+[way earlier, and same goes for "by us" -> "hier" [lit. "here"]]
+> +msgid "deleted by them:"
+> +msgstr "dort gel=F6scht:"
+[lit. "deleted there"]
+> +
+[...]
+> +#, c-format
+> +msgid "behind %d] "
+> +msgstr "nur dort %d] "
+[lit. "only there"]
+
+This had me pause for a moment.  The concepts of "[merge side] theirs"
+and "behind" are quite different; is it a good idea to translate these
+to the same?
+
+Especially so since later on you translate
+
+> +#, c-format
+> +msgid "path '%s' does not have our version"
+> +msgstr "Pfad '%s' hat keine Version 'von uns' im Index"
+[lit. "... 'of us' ..."]
+
+I do agree that the best I can come up with, "von den anderen
+gel=F6scht", would be quite awkward.
+
+> +msgid "You are on a branch yet to be born"
+> +msgstr "Der aktive Branch ist noch nicht angelegt"
+
+ISTR you asked about this on IRC, very nice solution.
+
+> +msgid "--patch is incompatible with all other options"
+> +msgstr "--patch vertr=E4gt sich nicht mit allen anderen Optionen"
+
+Nit: "... den restlichen Optionen" would be less ambiguous as to how
+many of them you can give until it conflicts with --patch.
+
+> +#, c-format
+> +msgid "Remote branch %s not found in upstream %s, using HEAD instead=
+"
+> +msgstr ""
+> +"Remote-branch %s nicht in Ursprung %s gefunden, benutze stattdessen=
+ HEAD"
+["Ursprung" is literally "origin"]
+
+This also has a slight danger of confusion with the canonical upstream
+'origin'.
+
+> +#, c-format
+> +msgid ""
+> +" Lines starting\n"
+> +"# with '#' will be kept; you may remove them yourself if you want t=
+o.\n"
+> +"# An empty message aborts the commit.\n"
+> +msgstr ""
+> +" Zeilen, die mit '#'\n"
+> +"# anfangen, werden beibehalten; du kannst sie selbst entfernen, wen=
+n du\n"
+> +"willst. Ein leerer Kommentar bricht den Commit ab.\n"
+
+The last line lacks a #.
+
+> +msgid "Explicit paths specified without -i nor -o; assuming --only p=
+aths..."
+> +msgstr ""
+> +"Pfade angegeben ohne ausdr=FCckliches -i oder -o angegeben, ich neh=
+me -o an..."
+
+There's a stray "angegeben".
+
+> +# FIXME: ich hab keine Ahnung, worum es hier geht
+> +#, c-format
+> +msgid "'%s': short read %s"
+> +msgstr "'%s': short read %s"
+
+Judging from the code, the file size changed between lstat() and
+read_in_full(), and/or read() failed to read the end of the file.
+Maybe "unvollst=E4ndig gelesen".
+
+> +msgid "You cannot combine --no-ff with --ff-only."
+> +msgstr "Du kannst --no-ff nicht mit --ff-only kombinieren (wirklich =
+wahr)."
+
+:-)
+
+> +#, c-format
+> +msgid "%s - not something we can merge"
+> +msgstr "%s ist etwas, das wir nicht mergen k=F6nnen"
+
+That's the message you get if you say "git merge nonexistent" in an
+unborn branch, so the implication (in the German version) that %s
+exists is not accurate.  Maybe "Ich kann mit %s nichts anfangen" or
+"%s taugt nicht f=FCr einen Merge"?
+
+> +msgid "Fast-forward"
+> +msgstr "Update ohne Merge"
+
+Clever!
+
+> +#, c-format
+> +msgid "Pushing to %s\n"
+> +msgstr "=DCbertrag zu %s\n"
+
+"=DCbertrage"?
+
+[probably out of order, I found it while compiling the glossary]
+> +msgid "detached HEAD"
+> +msgstr "von HEAD abgetrennt"
+
+That's not strictly speaking true; HEAD always points to a commit
+except in an unborn branch, and in any case (this is from commit.c)
+points to a commit after this message is output.  You could try
+"abgetrennter HEAD", "entkoppelter HEAD" or so...
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
