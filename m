@@ -1,102 +1,281 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Add ERR support to smart HTTP
-Date: Mon, 6 Sep 2010 18:31:58 +0200
-Message-ID: <201009061832.00512.jnareb@gmail.com>
-References: <1283707815-32038-1-git-send-email-ilari.liusvaara@elisanet.fi> <201009061049.38546.jnareb@gmail.com> <AANLkTi=jqpspQvz6--CGfVEpP8raD7RpNGgMs6KabXfS@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Mon, 06 Sep 2010 12:51:47 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1009061025210.19366@xanadu.home>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+ <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+ <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+ <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org>
+ <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+ <AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
+ <AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com>
+ <4C81A67B.2060400@gmail.com> <alpine.LFD.2.00.1009032304560.19366@xanadu.home>
+ <4C81DC34.2090800@gmail.com> <alpine.LFD.2.00.1009040153280.19366@xanadu.home>
+ <AANLkTi=7jUSCNiPf+HfEQuxaf16Jt06--bFE7=Of9wp=@mail.gmail.com>
+ <AANLkTik9awEd40s3r-O8t9DwZBh34Z0ozsxMm1QNjNoT@mail.gmail.com>
+ <alpine.LFD.2.00.1009042132500.19366@xanadu.home>
+ <AANLkTi=YLx6MqbWd_N0geXbuXLdqAUOneGoym75dfthL@mail.gmail.com>
+ <alpine.LFD.2.00.1009051820100.19366@xanadu.home>
+ <AANLkTi=CEOj40Sj+zegvX+ry8-y6p7UwsyqdtoHB1d-T@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason" 
-	<avarab@gmail.com>, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Tarmigan Casebolt <tarmigan+git@gmail.com>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 18:31:38 2010
+Content-Type: multipart/mixed; boundary="Boundary_(ID_W5UunvyN625iD7Nw38Q2Cw)"
+Cc: Artur Skawina <art.08.09@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Ted Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 06 18:52:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsebZ-0000GS-Ug
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 18:31:38 +0200
+	id 1OsevP-0004Xq-9b
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 18:52:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752462Ab0IFQbc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 12:31:32 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35918 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751080Ab0IFQbb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 12:31:31 -0400
-Received: by bwz11 with SMTP id 11so3423899bwz.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 09:31:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=tpU03pp91V6ZTtp8Gz7v6ZBAEgt9YEIa+FaMcmzGzHI=;
-        b=EIG1uY9BNz68a2XFpzFECwtb2jouddp4iOpWXAWer2yaqH5KfXHgabiQQXJfHbddek
-         veEKQU3pGWzWDWM1lSnmOGEgnOkZKeQA+qwLPwWq9gaP8xgj0Xmt0FlnAThAgKSC6SF4
-         0LMLVjy4NjsRlrnP7DIPYQv1qMM4uhZH4igLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=sE7O5X1WzAzktZ3q8liie6f8FA/ZAfZf9AYdNjrwpNQ2EzSO9xwiYL4xoPxkBrWFoA
-         PxSwnWVVs9jc9lceXf70RxgR2b1soC0KS7REODIT972oHYSZfZIThHfjYOjF5MFX+svC
-         pNLGN7kVjGr74SmNlmQbkP/3zokaZi+Je1qiw=
-Received: by 10.204.112.7 with SMTP id u7mr3349207bkp.70.1283790689675;
-        Mon, 06 Sep 2010 09:31:29 -0700 (PDT)
-Received: from [192.168.1.13] (abwo37.neoplus.adsl.tpnet.pl [83.8.238.37])
-        by mx.google.com with ESMTPS id x19sm4462623bkv.21.2010.09.06.09.31.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 09:31:28 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTi=jqpspQvz6--CGfVEpP8raD7RpNGgMs6KabXfS@mail.gmail.com>
-Content-Disposition: inline
+	id S1754158Ab0IFQvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 12:51:50 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:31627 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753014Ab0IFQvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 12:51:48 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L8C00654467LET0@VL-MR-MRZ20.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 06 Sep 2010 12:51:44 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTi=CEOj40Sj+zegvX+ry8-y6p7UwsyqdtoHB1d-T@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+Content-id: <alpine.LFD.2.00.1009061151220.19366@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155583>
 
-Sitaram Chamarty wrote:
-> On Mon, Sep 6, 2010 at 2:19 PM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> > Nevertheless I think it would be a good idea to make *client* more
-> > accepting, which means:
-> > 1. Printing full HTTP status, and not only HTTP return / error code=
-;
-> > =C2=A0 perhaps only if it is non-standard, and perhaps only in --ve=
-rbose
-> > =C2=A0 mode.
-> > 2. If message body contains ERR line, print error message even if t=
-he
-> > =C2=A0 HTTP status was other than "200 OK". =C2=A0To be "generous i=
-n what you
-> > =C2=A0 receive" (well, kind of).
-> > 3. In verbose mode, if body of HTTP error message (not "HTTP OK")
-> > =C2=A0 exists and does not contain ERR line (e.g. an error from web=
- server),
-> > =C2=A0 print it in full (perhaps indented).
-> >
-> > I think that neither of the above would lead to leaking sensitive
-> > information.
->=20
-> I didn't understand this bit about leaking info.  If the bits are
-> coming into my machine I know what they are anyway (or am able to fin=
-d
-> out easily enough, even if git itself isn't showing them to me).
-> Where's the leak?
+--Boundary_(ID_W5UunvyN625iD7Nw38Q2Cw)
+Content-id: <alpine.LFD.2.00.1009061151221.19366@xanadu.home>
+Content-type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-transfer-encoding: 8BIT
 
-I meant here that programs (including git) do not provide full details
-about error condition, especially if it has to do womething with=20
-authentication, to avoid leaking sensitive information (like e.g.=20
-saying that username + password combination is invalid, instead of
-telling which one is wrong, to avoid disclosing usernames).
+On Mon, 6 Sep 2010, Luke Kenneth Casson Leighton wrote:
 
---=20
-Jakub Narebski
-Poland
+> On Mon, Sep 6, 2010 at 12:52 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> 
+> > And object enumeration has absolutely nothing to do with packs, nor .idx
+> > files for that matter.
+> 
+>  mmm packs not being to do with object enumeration i get.  i
+> understand that .idx files contain "lists of objects" which isn't the
+> same thing (and also happen to contain pointers/offsets to the objects
+> of its associated .pack)
+> 
+>  at some point i'd really like to know what the object list is (not
+> the objects themselves) that comes out of "git pack-objects --thin"
+
+You need to feed 'git pack-objects' a list of objects in the first 
+place for it to pack anything.  So you must have that list even before 
+pack-objects can produce any output.  And that list is usually generated 
+by 'git rev-list'.  So, typically, you'd do:
+
+	git rev-list --objects <commit_range> | git pack-objects foo
+
+But these days the ability to enumerate objects was integrated into 
+pack-objects directly, so you can do:
+
+	echo "<commit_range>" | git pack-objects --revs foo
+
+But you should get the idea.
+
+> > So... I hope you understand now that there is no relation between
+> > commits and .idx files.  The only exception is when you do create a
+> > custom pack with 'git pack-objects'.
+> 
+>  yes.  ahh... that's what i've been doing: using "git pack-objects
+> --thin".  and the reason for that is because i've seen it used in the
+> http implementation of "git fetch".
+
+Well, the HTTP implementation is a rather tricky example as there are 
+actually two implementations: one that is dumb and only slurps packs and 
+loose objects out of a remote .git/ directory, and another that is smart 
+enough to carry the smarter Git protocol across HTTP requests.  
+
+When using the "smart" Git protocol, the client tells the server what it 
+already has, and then the server uses pack-objects to produce a pack 
+with only those objects that the client doesn't have, and stream that 
+pack directly without even storing it on disk.  The server doesn't even 
+produce a .idx file in that case.  It is up to the client to store the 
+pack on disk, and feed it through 'git index-pack' to construct a .idx 
+file for it locally.
+
+>  so, my questions up until now regarding .pack and .idx have all been
+> targetted at that, and based on that context, _not_ the packs+idx
+> files that are in .git/
+
+Tell me if the above clears them up.
+
+> > If you want all commits then you just need --all instead of HEAD.
+> 
+>  no, i want commits separated and individual and "compoundable".  the plan is:
+> 
+> * to get the ref associated with refs/heads/master
+
+You can do:
+
+	git rev-parse refs/heads/master
+
+> * to get the list of all commits associated with that master ref
+
+Just use (without the --objects argument):
+
+	git rev-list refs/heads/master
+
+> * to work out how far local deviates from remote along that list of commits
+
+That's an operation that only the peer with the most recent commits can 
+do, unless you transfer that huge list of commits from above across the 
+network.  So, on a server (i.e. the peer sending objects) you'd do:
+
+	git rev-list <refs_that_I_publish> --not <refs_that_the_remote_has>
+
+> * to get the objects which will make up the missing commits (if they
+> aren't already in the local store)
+
+Again, that's a task for the peer with objects to offer.  It just has to 
+use the above rev-list invocation and add the --objects argument to it 
+(or feed the equivalent ref specifications to pack-objects directly as 
+shown previously).
+
+> * to apply those commits in the correct order
+
+Why would you care about this?  There is nothing to "apply" as all you 
+have to do is simply transfer objects.
+
+> in other words, the plan is to follow what git http fetch and/org git
+> git:// fetch does as much as possible (ok, perhaps not).
+
+Well... I don't think it would be easy to do the same in a P2P context.  
+Those fetch operations are totally stream oriented between 2 peers, and 
+not many to many.
+
+> the reason for getting the objects individually (blobs etc.) should be
+> clear: prior commits _could_ have resulted in that exact object having
+> been obtained already.
+
+Sure.  But objects known to exist on the remote side won't be listed by 
+rev-list.
+
+> so far i have implemented:
+> 
+> * get the master ref using git for-each-ref
+> * get the list of all commits using git rev-list
+
+So far so good.
+
+> * enumerate the list of objects associated with an individual commit by:
+>     i) creating a CUSTOM pack+idx using git pack-objects {ref}
+>     ii) *parsing* the idx file using gitdb's FileIndex to get the list
+> of objects
+
+That's where you're going so much out of your way to give you trouble.  
+A simple rev-list would give you that list:
+
+	git rev-list --objects <this_commit> --not <this_commit''s_parents>
+
+That's it.
+
+>     iii) transferring that list to the local machine
+> * requesting *individual* objects from the enumerated list out of the idx file
+>    by using a CUSTOM "git pack-objects --thin {ref} < {ref}" command
+
+That's where you'll have to get your hands real dirty and write actual 
+code to serve individual objects but not through cat-file.  In a P2P 
+setup you'd want to transfer as little amount of data as possible, 
+meaning that you'd want to serve deltas as much as possible.  It's then 
+a matter of finding if the requested object exists already in delta 
+form, if so then whether or not its base object is something that the 
+other end has in which case you send that as is, otherwise figuring out 
+if that would be worth creating a delta against another object known to 
+exist at the other end.
+
+On the receiving end, you'd simply have to store those objects in 
+the .git/objects/ directories as loose objects after expanding the 
+deltas, or even stuff everything 
+into a pack and run 'git index-pack' on it when the transfer is 
+complete (and run 'git repack' to optimize the pack eventually).
+
+Once the transfer is complete, you do a  reachability and validity check 
+on the refs you are supposed to have received the objects for, and if 
+everything is OK then you update the refs and you're done.
+
+> that's as far as i've got, before you mentioned that it would be
+> better to use "git rev-list --objects commit1..commit2" and to use
+> "git cat-file" to obtain the actual object [what's not clear in this
+> plan is how to store that cat'ed file at the local end, hence the
+> continued use of git pack-objects --thin {ref} < {ref}]
+> 
+> the prior implementation was to treat the custom pack-object as if it
+> was "the atomic leaf-node operation" instead of individual objects
+> (blobs, trees).
+
+Well, OK.  But suppose that you have only 2 new commits with a big 
+amount of objects for each.  Typically the very first commit of a 
+project corresponds to the import of that project into Git, and it is 
+equivalent to the whole work tree.  Don't you want to spread the request 
+for those objects across as many peers as possible?
+
+>  what i _have_ been doing however is custom-generating pack-objects
+> and associated pack-indexes (just like git http fetch) _including_
+> using the --thin option because that's what git http fetch does.
+
+Well, let's get back to that HTTP fetch which has a double personality.  
+The "smart" HTTP fetch doesn't involve any pack index at all.  It ends 
+up streaming pack-objects stdout's output over the net and the pack 
+index is recreated on the other end.
+
+However, what the _dumb_ HTTP fetch does (and that is the same idea for 
+the FTP fetch, or the rsync fetch) is to dig into the remote's .git 
+directory and grab those .idx files, look into them to see if the 
+corresponding .pack file actually contain the wanted objects, so to only 
+downloads the needed packs afterwards.  And those dumb protocols are 
+what they are: dumb.  They usually end up transferring way more data 
+than actually necessary.
+
+> > If an object that does get transmitted is
+> > actually a delta against an object that is only part of a branch that is
+> > not published, then the delta will be expanded and redone against
+> > another suitable object before transmission.
+> 
+>  and that's handled by git pack-objects --thin (am i right?)
+
+Right.  But the --thin flag here is unrelated to this.
+
+What --thin does is to tell pack-objects that it can produce deltas 
+against objects that will _not_ be included in the produced pack.  That 
+is OK only if the consumer of that pack is 1) aware of that fact and
+2) is going to "fix" the pack by appending those objects to the pack 
+from a local copy.  For a pack to be "valid" in your .git directory, it 
+has to be self contained with regards to deltas.  It is not allowed to 
+have deltas across different packs as this makes the issue of delta 
+loops extremely difficult to deal with in the context of incremental 
+repacks.
+
+>  so.  we have a hierarchical plan: get the commit list, get a
+> per-commit object-list, get the objects (if needed), store the
+> objects.
+> 
+>  problem: despite looking through virtually every single builtin/*.c
+> file which uses write_sha1_file (which i believe i have correctly
+> identified, from examining git unpack-objects, as being the function
+> which stores actual objects, including their type), i do not see a git
+> command (yet) which performs the reverse operation of "git cat-file".
+
+It is 'git hash-object'.
+
+
+Nicolas
+
+--Boundary_(ID_W5UunvyN625iD7Nw38Q2Cw)--
