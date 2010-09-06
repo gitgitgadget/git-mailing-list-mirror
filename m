@@ -1,59 +1,74 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Should git-citool be in mainporcelain in command-list?
-Date: Mon, 6 Sep 2010 21:27:13 +0000
-Message-ID: <AANLkTi=Hn_GG1y3gkVxgnsKyVD+VutG5SU5HhmhRfktH@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Sep 06 23:27:21 2010
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCH] cache_tree_free: Fix small memory leak
+Date: Mon,  6 Sep 2010 15:40:16 -0600
+Message-ID: <1283809216-26867-1-git-send-email-newren@gmail.com>
+Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 06 23:39:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsjDk-0002jQ-6B
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 23:27:20 +0200
+	id 1OsjPB-0006sl-BL
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 23:39:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755747Ab0IFV1P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 17:27:15 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62886 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755741Ab0IFV1O (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 17:27:14 -0400
-Received: by iwn5 with SMTP id 5so4609883iwn.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 14:27:13 -0700 (PDT)
+	id S1755783Ab0IFViv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 17:38:51 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:39691 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755622Ab0IFVit (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 17:38:49 -0400
+Received: by pxi10 with SMTP id 10so1112425pxi.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 14:38:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=ag8mngM8iF+/4AiNo9OZMicwGgenvGzA7WO2ADc5t+s=;
-        b=WY5I+hinIB7LmpSyShHyphPNYgwsamC17PhfEag/fM8qdf61fLgwAJBgEssoHEvK6J
-         K5f6JLlkB5OTpl6lSI/puA2uNR8zm4nqFhMr4l1z0Y6EnQbsV/Y5LtiwCHsv8uDVHDmX
-         +4cnISLJhRf/bXt0epFlEOcAa8GpBFYDYD91A=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=ryUl8LPc5S048r2JLu4ZwoU1ZmepXJVuXzytTAln8N8=;
+        b=Ya8H5HbhImJLyMbAsshnz212BHa6YCui8y9bXdLEgu8IxHG0ZwK+Aa19Pzyspxu8uj
+         JQs/QJBTL6LudqKYvvDXo1QGd+hq/Oeulmf1OMKbjnSN8j58Lk743rDie0/j5if7wmuy
+         iINIBWMdYMMOWQpsgqHyNbQ3/iRmihqR79XCM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=legpK8215PW4BXH6TfFnuUsuabNoPzm7BN3hIZIFvHKQTbM8IOyoOFjF6pXxL8mE5a
-         8rXa6zFr8NRzLNTm+R3NH4adGQmvsLcVFAY5yRIl3PIfdBtq3brQOsl09pnmeouqtbFt
-         PJum9GdiHhJNaslyqnuKRPYC5SW7IS+AJzlt4=
-Received: by 10.231.146.134 with SMTP id h6mr6809203ibv.170.1283808433498;
- Mon, 06 Sep 2010 14:27:13 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Mon, 6 Sep 2010 14:27:13 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=nye7usHk12bHKl7Mc15I/yYjbCivEv2bQqqierv7qZoaz3ydg1L+FvPIfLT21XDTM+
+         zOPFwQ8SlcKmxkRzZQNpl8XFjaAEq50azqa05oszNUhEPgdULva5mimRjenBagd+Jhk4
+         dYwjPD5Mr36fZ8CZe/zglwDDeBNyAV6o6S0bs=
+Received: by 10.114.148.15 with SMTP id v15mr381291wad.127.1283809128828;
+        Mon, 06 Sep 2010 14:38:48 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
+        by mx.google.com with ESMTPS id r37sm12058447wak.11.2010.09.06.14.38.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 06 Sep 2010 14:38:47 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3.5.g2c13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155627>
 
-Maybe there should be an aliases category:
 
-    $ grep -e git-gui -e citool command-list.txt
-    git-citool                              mainporcelain
-    git-gui                                 mainporcelain
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ cache-tree.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
-A very minor nit, just something I ran into while gettext-izing and
-wondered "what's that".
-
-But I'm probably the only one that's used command-list.txt for
-anything non-Make related in a while :)
+diff --git a/cache-tree.c b/cache-tree.c
+index c60cf91..f755590 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -22,8 +22,10 @@ void cache_tree_free(struct cache_tree **it_p)
+ 	if (!it)
+ 		return;
+ 	for (i = 0; i < it->subtree_nr; i++)
+-		if (it->down[i])
++		if (it->down[i]) {
+ 			cache_tree_free(&it->down[i]->cache_tree);
++			free(it->down[i]);
++		}
+ 	free(it->down);
+ 	free(it);
+ 	*it_p = NULL;
+-- 
+1.7.2.3.5.g2c13
