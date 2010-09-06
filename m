@@ -1,105 +1,97 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [RFC PATCH 07/15] cache_tree_update(): Capability to handle tree
- entries missing from index
-Date: Sun, 5 Sep 2010 22:42:53 -0600
-Message-ID: <AANLkTinufi3TwnPZ+smq5FE5S3zZdQSzKpqYv=hVfcLV@mail.gmail.com>
-References: <1283645647-1891-1-git-send-email-newren@gmail.com>
-	<1283645647-1891-8-git-send-email-newren@gmail.com>
-	<AANLkTi=ijbaATavcujUY-WnEfKFKrNue_kP6vSngKSvQ@mail.gmail.com>
-	<AANLkTikK9vGgtzrrAAyqptPVHM2wjOjK_cH6GB0rgewP@mail.gmail.com>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 0/4] en/object-list-with-pathspec update
+Date: Mon,  6 Sep 2010 14:47:05 +1000
+Message-ID: <1283748429-31076-1-git-send-email-pclouds@gmail.com>
+References: <1283645647-1891-8-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 06:43:01 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 06 06:47:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsTXo-0008Np-ST
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 06:43:01 +0200
+	id 1OsTc2-0001HM-NI
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 06:47:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992Ab0IFEmz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 00:42:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40994 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750768Ab0IFEmy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 00:42:54 -0400
-Received: by fxm13 with SMTP id 13so2295312fxm.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 21:42:53 -0700 (PDT)
+	id S1750943Ab0IFErS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 00:47:18 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:43384 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750768Ab0IFErR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 00:47:17 -0400
+Received: by pxi10 with SMTP id 10so914378pxi.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 21:47:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VpBtBzqFmXoet28elChlE2xJPtTrbX6ep69zVOxZcBI=;
-        b=n62Qxuzb1F6Yto4t3g+l6KJpg3eIyw7tlSiwM17ZluGJ9ikZSDp2+TiUxz8ebrdntr
-         xgQv1tCT8MKrLIN3S5rKGhnFCkGJDNweWFxmhYOTzSKUCmdpmtG0169wxvPsXecGCuYR
-         JtnS4+wgAXFjJZir5qiPxhBlNpK0pH9DkWxHE=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=2ve4liKlRvtbqfgMwquaPGPq9+DTezo5J6CGy4ypg+k=;
+        b=TYddO5JavjeJeiQ5q2EcqdvFO1qUa3xxrCh+B95ROUlrCGMCJT5Q/nBpTdwsQ/EK0g
+         WoBw07VKeEoHd8mS6J62HmxyW9N8sxXX85SBaeWmaSWzVvC08m982iAE8FXU3EYy80tK
+         aFWBi6YaMj1FWkAxYb5yLkctb/UtKo5xNfLg8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=J75y6Bsu4Ud4X4jBHF/WdLGntB2Mikbt8lbo/JP6ek0RsexMWlRxzGUDfZnlzwWMgQ
-         GRWBjqA4GAp9eAyYWNMmRPUgmrRrJBbCPiu2c2yRqfsX8BxsVM8g/c1qHk4xOMKwUlsV
-         fw6cynIKUcCn2Q6ZUJ7fJidTSdx5c+jYQIM8k=
-Received: by 10.223.117.14 with SMTP id o14mr2174892faq.5.1283748173464; Sun,
- 05 Sep 2010 21:42:53 -0700 (PDT)
-Received: by 10.223.50.154 with HTTP; Sun, 5 Sep 2010 21:42:53 -0700 (PDT)
-In-Reply-To: <AANLkTikK9vGgtzrrAAyqptPVHM2wjOjK_cH6GB0rgewP@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=NsXgq2txgMlNLzsjJiKXSG8Aacq9vNDxPBeI/M3W8t3BcQINn5zCkaSvKVK8nhKYng
+         ljz1jJCozmyED9kijpuWwdaFr1IVKPlo4JuaX1vO9Yp09YYFiBLs3kQnL+7aBWM6JAum
+         g5c4W5OMO43l2+NVC8t31ZuChphm6GEKlwIiI=
+Received: by 10.114.46.8 with SMTP id t8mr3249896wat.32.1283748436852;
+        Sun, 05 Sep 2010 21:47:16 -0700 (PDT)
+Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
+        by mx.google.com with ESMTPS id r37sm10437979wak.23.2010.09.05.21.47.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 05 Sep 2010 21:47:15 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Mon,  6 Sep 2010 14:47:10 +1000
+X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
+In-Reply-To: <1283645647-1891-8-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155521>
 
-On Sun, Sep 5, 2010 at 3:09 PM, Elijah Newren <newren@gmail.com> wrote:
-> n Sun, Sep 5, 2010 at 1:54 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
->> On Sun, Sep 5, 2010 at 10:13 AM, Elijah Newren <newren@gmail.com> wr=
-ote:
->>> cache_tree_update() will write trees using the index. =C2=A0With sp=
-arse clones,
->>> the index will only contain entries matching the sparse limits, mea=
-ning
->>> that the index does not provide enough information to write complet=
-e tree
->>> objects. =C2=A0Having cache_tree_update() take a tree (typically HE=
-AD), will
->>> allow new complete trees to be constructed by using entries from th=
-e
->>> specified tree outside the sparse limits together with the index.
->>
->> You are moving it closer to the index (from my view because I change=
-d
->> in commit_tree()). This makes me think, why don't you move the base
->> tree into the index itself?
->>
->> The index is supposed to save the image of full worktree. While you
->> don't have all path names, you have the clue to all of them, the bas=
-e
->> tree. To me, that means it belongs to the index. That would reduce
->> code change to
->> =C2=A0- cache-tree.c (generate new tree from the base tree and index=
-)
->> =C2=A0- read-cache.c (new sparse-clone index extension)
->> =C2=A0- index writing operations (save the base tree in index): read=
--tree and merge
->
-> That's a really good idea. =C2=A0I'll look into that.
+On Sun, Sep 5, 2010 at 10:13 AM, Elijah Newren <newren@gmail.com> wrote=
+:
+> diff --git a/cache-tree.c b/cache-tree.c
+> index c60cf91..2ba6a76 100644
+> --- a/cache-tree.c
+> +++ b/cache-tree.c
+> @@ -2,6 +2,7 @@
+>  #include "tree.h"
+>  #include "tree-walk.h"
+>  #include "cache-tree.h"
+> +#include "diff.h"  /* FIXME: for tree_entry_interesting; maybe it sh=
+ould be in tree-walk.h? */
 
-Hmm..maybe before I get ahead of myself, I should back up for a
-second.  Which way do we think is better -- handling this in
-cache_tree_update() or doing a fixup in commit_tree()?  If the latter,
-then I should just drop my 7/15 and 8/15 for your 13/17 and 14/17.  If
-the former, then it makes sense to look into this change you suggest.
-In that case, we'd probably keep my 7/15 but drop 8/15 for patch(es)
-that implement your idea above.  But you're more familiar with the
-index format than I am and it's your idea, so you'd probably be the
-better one to implement it.
+Yes, please. And I'd rather see it done sooner than later, before
+tree_entry_interesting() usage is spread over the place.
 
-Thoughts?
+Elijah Newren (2):
+  Add testcases showing how pathspecs are ignored with rev-list
+    --objects
+  Make rev-list --objects work together with pathspecs
 
-Elijah
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (2):
+  tree-walk: copy tree_entry_interesting() as-is from tree-diff.c
+  tree-walk: actually move tree_entry_interesting() to tree-walk.c
+
+ list-objects.c           |   25 ++++++++++
+ revision.c               |    8 ++-
+ revision.h               |    3 +-
+ t/t6000-rev-list-misc.sh |   51 +++++++++++++++++++
+ tree-diff.c              |  121 ++------------------------------------=
+--------
+ tree-walk.c              |  110 ++++++++++++++++++++++++++++++++++++++=
++++
+ tree-walk.h              |    3 +
+ 7 files changed, 201 insertions(+), 120 deletions(-)
+ create mode 100755 t/t6000-rev-list-misc.sh
