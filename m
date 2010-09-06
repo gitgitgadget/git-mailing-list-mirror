@@ -1,121 +1,73 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] Add test-string-list.c
-Date: Mon, 6 Sep 2010 20:48:29 -0300
-Message-ID: <AANLkTi=J_0XaVYUt8Umu3uW15W86wbWv-xCMuVGA7cUE@mail.gmail.com>
-References: <4f798daaf4631e00927b455b77919d5bb8fade03.1283653854.git.tfransosi@gmail.com>
-	<20100905050254.GA6134@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] merge-recursive: Small code cleanup
+Date: Mon, 06 Sep 2010 16:49:33 -0700
+Message-ID: <7vy6besa9e.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimz8qSwefp137-D+vEbsf6soG51u0im9EC911_O@mail.gmail.com>
+ <1283806070-22027-3-git-send-email-newren@gmail.com>
+ <AANLkTiky3JL6rpo2x79dqQKKndUMa58Se_4CLpSFdj4+@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 01:48:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, oinksocket@letterboxes.org,
+	ken.schalk@intel.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 07 01:49:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OslQU-0004D7-52
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 01:48:38 +0200
+	id 1OslRh-0004cI-Iw
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 01:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752929Ab0IFXsc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 19:48:32 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:46388 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752442Ab0IFXsa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 19:48:30 -0400
-Received: by qwh6 with SMTP id 6so4202159qwh.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 16:48:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5eyZn4sCnWoRp41OEK5MXdo6zlV+449WH+teVHIcGw8=;
-        b=xlva7kjiUzmUjhkQTexratOOdex0FH1LbXcaby56BoEZnDgr1z2bddM8w8hWX/XoPX
-         dQH/BQVslvDd9UvSdUKCmZhw7Rvo1nojvBb3qfz7Xx0Mvd5bqpaIT8cKkQYcpkBIYF7e
-         /frd47rWAKuWaQABZ4dwGUPtjBu0K4BF7kOWA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=N3K2smO9hl4stpMVoLgR90h69d/M8BnQOIPnE2my0k4S+qO5JtECqRt/w4cyBVBVcN
-         WAECeJeeIak/wEKaZJwuz9IjJNEeBULOPY1UIRCSEFHRalClE4W8lfnEeT13Iy3MVBnu
-         mIPLJw/OJVlDYUKjmhrsmrLBy6IdhnNo+ndSA=
-Received: by 10.229.52.32 with SMTP id f32mr3015900qcg.265.1283816909293; Mon,
- 06 Sep 2010 16:48:29 -0700 (PDT)
-Received: by 10.229.245.202 with HTTP; Mon, 6 Sep 2010 16:48:29 -0700 (PDT)
-In-Reply-To: <20100905050254.GA6134@burratino>
+	id S1753943Ab0IFXtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 19:49:49 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51645 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752442Ab0IFXts (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 19:49:48 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 96785D3572;
+	Mon,  6 Sep 2010 19:49:45 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0utZmZDdx4fw7MycrTOelQ+3ah0=; b=RKQwtU
+	4psI5MWYEaz/hqkiOM+a8eToKEhhutTMkaaOTzQy9ODiJUZYwvfxoHEhSxYM+n6Q
+	EWpGQ3wlXlcQ/UyaUi0SjwWQ8yAUSRSn3Q3U7z9gztt54ErJ0SLpkH6nQ1JkICjn
+	GOXf+sF8HxxmOVfQrzV1Yb6wHivm3bPng9Qus=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=p5oeiCNchlstUbPtAtq0pVAN3o1GVrtl
+	rhrLwf31V0X4APswQDY+1jXITJ21UVpbY9vLQ0U2nTJpZgGamRSfS4paPxayBmbT
+	+5PhIzKckSPtcgMFj4PygaSM01YxJi/rLz69A+3IZWwyd0Ia3d2vQoHnnXxh4UsK
+	MYlzm3OpkEU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 55415D356C;
+	Mon,  6 Sep 2010 19:49:41 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5F47ED356B; Mon,  6 Sep
+ 2010 19:49:35 -0400 (EDT)
+In-Reply-To: <AANLkTiky3JL6rpo2x79dqQKKndUMa58Se_4CLpSFdj4+@mail.gmail.com>
+ (Elijah Newren's message of "Mon\, 6 Sep 2010 15\:25\:17 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6AC9934A-BA11-11DF-998A-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155644>
 
-On Sun, Sep 5, 2010 at 2:02 AM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:>
->
-> Git programs tend to start with
->
-> =C2=A0#include "cache.h"
->
-> or
->
-> =C2=A0#include "git-compat-util.h"
->
-> to get all the portability niceties.
->
-Including it now.
+Elijah Newren <newren@gmail.com> writes:
 
->> + =C2=A0 =C2=A0 print_string_list(&list, "");
->> +
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0int has_foo =3D string_list_has_string(=
-&list, "foo");
->
-> Whitespace, declaration after statement... (see
-> Documentation/CodingGuidelines).
->
-=46ixed.
+> Hmmm...should I have split this off from the rest of the series (its
+> only relation is that it cleans up code that made it harder for me to
+> find the real fix)?  If I did that, I could rebase the rest of the
+> series on maint...
 
->> + =C2=A0 =C2=A0 if (has_foo !=3D 1)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("List doesn't have=
- foo.");
->
-> This does not exit with nonzero status when it fails. =C2=A0You proba=
-bly
-> wanted
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (bad things)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return error("=
-problems!");
->
-=46ixed.
+Good thinking.
 
->> + =C2=A0 =C2=A0 string_list_clear(&list, 0);
->> + =C2=A0 =C2=A0 if (list.nr > 0)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 error("List is not clear=
-=2E");
->
-> To make sure this example remains valid, wouldn't you want to include
-> a caller in the t/ directory so it can be automatically run? =C2=A0(S=
-ee
-> t/README.)
->
-I read it, but I'm not sure how to do this. Maybe you could point me
-to an example?
+The real polishing of this series will happen after 1.7.3 anyway, so for
+now a series forking from ks/recursive-rename-add-identical (which I
+expect to be in 1.7.3) is fine.
 
-> Thoughts separate from the code:
->
-> =C2=A0* for this to be useful as a test I think one has to sort of be=
-lieve
-> =C2=A0 that it can break. =C2=A0That is, a test of something this bas=
-ic (which
-> =C2=A0 is already demonstrated and exercised by code throughout git, =
-after
-> =C2=A0 all) would tend to be especially devious.
->
-It is basic, so anyone can read it, and say "Oh, I can do this.".
-Looking through the code maybe not so easy.
-
-It can be expanded later by anyone to test many other things though.
-So, why not? (Is it so bad to not have it at all?).
+Thanks.
