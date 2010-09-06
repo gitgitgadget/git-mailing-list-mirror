@@ -1,321 +1,237 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 3/4] tree-walk: actually move tree_entry_interesting() to tree-walk.c
-Date: Mon,  6 Sep 2010 14:47:08 +1000
-Message-ID: <1283748429-31076-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/4] Make rev-list --objects work together with pathspecs
+Date: Mon,  6 Sep 2010 14:47:09 +1000
+Message-ID: <1283748429-31076-5-git-send-email-pclouds@gmail.com>
 References: <1283645647-1891-8-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc: Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 06:47:51 2010
+X-From: git-owner@vger.kernel.org Mon Sep 06 06:47:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsTcU-0001Yl-9d
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 06:47:50 +0200
+	id 1OsTcV-0001Yl-OV
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 06:47:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751105Ab0IFEri convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 00:47:38 -0400
+	id S1751112Ab0IFErp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 00:47:45 -0400
 Received: from mail-pz0-f46.google.com ([209.85.210.46]:58873 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751066Ab0IFEri (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 00:47:38 -0400
-Received: by pzk9 with SMTP id 9so1304132pzk.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 21:47:37 -0700 (PDT)
+	with ESMTP id S1751110Ab0IFEro (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 00:47:44 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 9so1304132pzk.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 21:47:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=xH2XnVh6jLu4LZI5HNprWKVovCFFPX8meNJiSJPi5Ug=;
-        b=hN5J91yMcUi7u5UHQ1nQFqRKpqu4FCJQZMWKAGW0rgoOTVKAI72aACEOGLnb/8DGqu
-         NmYVAV7OWAjrjao8/iL1FqHGeZPQAznxaA0q+/Fhi/OswrWYAg0n8TJ7CTftrE08vHu8
-         2iJYjlpx0tl05As3IyqvBHSZynbjf5wQxI5N4=
+        bh=5oze2Tz+LDnGuDi0EV34zzWY45caDOry+k5l+xhcsFE=;
+        b=qJ9fILQYfGVNNp9u+cPLq1HdlK8qoXotlhJ7nowYFhfPGqemXukfFO5yJBtN5Yv/r/
+         kOa0PeDXAvIhTn1cHkoi6FLXoTkkliZrmHVp3SipPYDgWXUEjaWGkA5sDj1g1m7bUOSJ
+         uwuZt/PeBe2v6/3qOy2+nSl1HxOEKcw1JJp98=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=dWIFPm8vczDvT3tTDTZa24WaTrWZmbVytWNB+Ikjw4dr9tNU420GxhknWS9zprP7v0
-         N4Ww00kyzQlEjz/20S4JCo5MjrfwWgDIoangJJ79BwRKfl0bR3gvu6NcB9/jxJID+rGx
-         gqe0TgwDfhJm3bh0sHiKapI+kPGjUtTinH+eU=
-Received: by 10.114.13.2 with SMTP id 2mr3147382wam.155.1283748457421;
-        Sun, 05 Sep 2010 21:47:37 -0700 (PDT)
+        b=KR83AJPKz+iulOXMpek8y+RpC0pFNuo6i+VP7oEzZq0vxD7ciXiDHwLkjryLt7/cOZ
+         lD9WYWlW2OCxu7TOxeXN9SdXcWDjePovSHpAI2td9bF8q3lVEPSY/hKMxgMzF4HKR52U
+         EoN1sCgldWurfuUkojq/7pxl/sWVFqbmbCSeo=
+Received: by 10.114.15.18 with SMTP id 18mr2818226wao.182.1283748464197;
+        Sun, 05 Sep 2010 21:47:44 -0700 (PDT)
 Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id d39sm10435525wam.4.2010.09.05.21.47.34
+        by mx.google.com with ESMTPS id q6sm10435003waj.10.2010.09.05.21.47.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Sep 2010 21:47:36 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Mon,  6 Sep 2010 14:47:30 +1000
+        Sun, 05 Sep 2010 21:47:43 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Mon,  6 Sep 2010 14:47:37 +1000
 X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
 In-Reply-To: <1283645647-1891-8-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155524>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155525>
 
-This function can be potentially used in more places than just
-tree-diff.c. This patches removes struct diff_options dependency from
-the function, and moves it to tree-walk.c.
+=46rom: Elijah Newren <newren@gmail.com>
 
-No functionality change intended.
+When traversing commits, the selection of commits would heed the list o=
+f
+pathspecs passed, but subsequent walking of the trees of those commits
+would not.  This resulted in 'rev-list --objects HEAD -- <paths>'
+displaying objects at unwanted paths.
 
+Have process_tree() call tree_entry_interesting() to determine which pa=
+ths
+are interesting and should be walked.
+
+Naturally, this change can provide a large speedup when paths are speci=
+fied
+together with --objects, since many tree entries are now correctly igno=
+red.
+Interestingly, though, this change also gives me a small (~1%) but
+repeatable speedup even when no paths are specified with --objects.
+
+Signed-off-by: Elijah Newren <newren@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- tree-diff.c |  121 ++-------------------------------------------------=
---------
- tree-walk.c |   25 +++++-------
- tree-walk.h |    3 +
- 3 files changed, 17 insertions(+), 132 deletions(-)
+ The "while (tree_entry(..))" loop makes a come back.
+ tree_entry_interesting() call is updated.
+ Nothing else is changed
 
-diff --git a/tree-diff.c b/tree-diff.c
-index cd659c6..332f0c8 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -82,120 +82,6 @@ static int compare_tree_entry(struct tree_desc *t1,=
- struct tree_desc *t2, const
- 	return 0;
- }
+ list-objects.c           |   25 +++++++++++++++++++++++++
+ revision.c               |    8 ++++++--
+ revision.h               |    3 ++-
+ t/t6000-rev-list-misc.sh |    6 +++---
+ 4 files changed, 36 insertions(+), 6 deletions(-)
+
+diff --git a/list-objects.c b/list-objects.c
+index 8953548..8ea1822 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -67,6 +67,9 @@ static void process_tree(struct rev_info *revs,
+ 	struct tree_desc desc;
+ 	struct name_entry entry;
+ 	struct name_path me;
++	int all_interesting =3D (revs->diffopt.nr_paths =3D=3D 0);
++	char *full_prefix =3D NULL;
++	int full_prefix_len =3D 0;
 =20
--/*
-- * Is a tree entry interesting given the pathspec we have?
-- *
-- * Return:
-- *  - 2 for "yes, and all subsequent entries will be"
-- *  - 1 for yes
-- *  - zero for no
-- *  - negative for "no, and no subsequent entries will be either"
-- */
--static int tree_entry_interesting(struct tree_desc *desc, const char *=
-base, int baselen, struct diff_options *opt)
--{
--	const char *path;
--	const unsigned char *sha1;
--	unsigned mode;
--	int i;
--	int pathlen;
--	int never_interesting =3D -1;
--
--	if (!opt->nr_paths)
--		return 1;
--
--	sha1 =3D tree_entry_extract(desc, &path, &mode);
--
--	pathlen =3D tree_entry_len(path, sha1);
--
--	for (i =3D 0; i < opt->nr_paths; i++) {
--		const char *match =3D opt->paths[i];
--		int matchlen =3D opt->pathlens[i];
--		int m =3D -1; /* signals that we haven't called strncmp() */
--
--		if (baselen >=3D matchlen) {
--			/* If it doesn't match, move along... */
--			if (strncmp(base, match, matchlen))
--				continue;
--
--			/*
--			 * If the base is a subdirectory of a path which
--			 * was specified, all of them are interesting.
--			 */
--			if (!matchlen ||
--			    base[matchlen] =3D=3D '/' ||
--			    match[matchlen - 1] =3D=3D '/')
--				return 2;
--
--			/* Just a random prefix match */
--			continue;
--		}
--
--		/* Does the base match? */
--		if (strncmp(base, match, baselen))
--			continue;
--
--		match +=3D baselen;
--		matchlen -=3D baselen;
--
--		if (never_interesting) {
--			/*
--			 * We have not seen any match that sorts later
--			 * than the current path.
--			 */
--
--			/*
--			 * Does match sort strictly earlier than path
--			 * with their common parts?
--			 */
--			m =3D strncmp(match, path,
--				    (matchlen < pathlen) ? matchlen : pathlen);
--			if (m < 0)
--				continue;
--
--			/*
--			 * If we come here even once, that means there is at
--			 * least one pathspec that would sort equal to or
--			 * later than the path we are currently looking at.
--			 * In other words, if we have never reached this point
--			 * after iterating all pathspecs, it means all
--			 * pathspecs are either outside of base, or inside the
--			 * base but sorts strictly earlier than the current
--			 * one.  In either case, they will never match the
--			 * subsequent entries.  In such a case, we initialized
--			 * the variable to -1 and that is what will be
--			 * returned, allowing the caller to terminate early.
--			 */
--			never_interesting =3D 0;
--		}
--
--		if (pathlen > matchlen)
--			continue;
--
--		if (matchlen > pathlen) {
--			if (match[pathlen] !=3D '/')
--				continue;
--			if (!S_ISDIR(mode))
--				continue;
--		}
--
--		if (m =3D=3D -1)
--			/*
--			 * we cheated and did not do strncmp(), so we do
--			 * that here.
--			 */
--			m =3D strncmp(match, path, pathlen);
--
--		/*
--		 * If common part matched earlier then it is a hit,
--		 * because we rejected the case where path is not a
--		 * leading directory and is shorter than match.
--		 */
--		if (!m)
--			return 1;
--	}
--	return never_interesting; /* No matches */
--}
--
- /* A whole sub-tree went away or appeared */
- static void show_tree(struct diff_options *opt, const char *prefix, st=
-ruct tree_desc *desc, const char *base, int baselen)
- {
-@@ -206,8 +92,8 @@ static void show_tree(struct diff_options *opt, cons=
-t char *prefix, struct tree_
- 		if (all_interesting)
- 			show =3D 1;
- 		else {
--			show =3D tree_entry_interesting(desc, base, baselen,
--						      opt);
-+			show =3D tree_entry_interesting(&desc->entry, base, baselen,
-+						      opt->paths, opt->pathlens, opt->nr_paths);
- 			if (show =3D=3D 2)
- 				all_interesting =3D 1;
- 		}
-@@ -266,7 +152,8 @@ static void skip_uninteresting(struct tree_desc *t,=
- const char *base, int basele
- 		if (all_interesting)
- 			show =3D 1;
- 		else {
--			show =3D tree_entry_interesting(t, base, baselen, opt);
-+			show =3D tree_entry_interesting(&t->entry, base, baselen,
-+						      opt->paths, opt->pathlens, opt->nr_paths);
- 			if (show =3D=3D 2)
- 				all_interesting =3D 1;
- 		}
-diff --git a/tree-walk.c b/tree-walk.c
-index bc83fa3..c665e35 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -2,7 +2,6 @@
- #include "tree-walk.h"
- #include "unpack-trees.h"
- #include "tree.h"
--#include "diff.h"
+ 	if (!revs->tree_objects)
+ 		return;
+@@ -82,9 +85,30 @@ static void process_tree(struct rev_info *revs,
+ 	me.elem =3D name;
+ 	me.elem_len =3D strlen(name);
 =20
- static const char *get_mode(const char *str, unsigned int *modep)
- {
-@@ -466,25 +465,21 @@ int get_tree_entry(const unsigned char *tree_sha1=
-, const char *name, unsigned ch
-  *  - zero for no
-  *  - negative for "no, and no subsequent entries will be either"
-  */
--static int tree_entry_interesting(struct tree_desc *desc, const char *=
-base, int baselen, struct diff_options *opt)
-+int tree_entry_interesting(const struct name_entry *entry, const char =
-*base, int baselen,
-+			   const char **paths, int *pathlens, int nr_paths)
- {
--	const char *path;
--	const unsigned char *sha1;
--	unsigned mode;
- 	int i;
- 	int pathlen;
- 	int never_interesting =3D -1;
-=20
--	if (!opt->nr_paths)
-+	if (!nr_paths)
- 		return 1;
-=20
--	sha1 =3D tree_entry_extract(desc, &path, &mode);
--
--	pathlen =3D tree_entry_len(path, sha1);
-+	pathlen =3D tree_entry_len(entry->path, entry->sha1);
-=20
--	for (i =3D 0; i < opt->nr_paths; i++) {
--		const char *match =3D opt->paths[i];
--		int matchlen =3D opt->pathlens[i];
-+	for (i =3D 0; i < nr_paths; i++) {
-+		const char *match =3D paths[i];
-+		int matchlen =3D pathlens[i];
- 		int m =3D -1; /* signals that we haven't called strncmp() */
-=20
- 		if (baselen >=3D matchlen) {
-@@ -522,7 +517,7 @@ static int tree_entry_interesting(struct tree_desc =
-*desc, const char *base, int
- 			 * Does match sort strictly earlier than path
- 			 * with their common parts?
- 			 */
--			m =3D strncmp(match, path,
-+			m =3D strncmp(match, entry->path,
- 				    (matchlen < pathlen) ? matchlen : pathlen);
- 			if (m < 0)
- 				continue;
-@@ -549,7 +544,7 @@ static int tree_entry_interesting(struct tree_desc =
-*desc, const char *base, int
- 		if (matchlen > pathlen) {
- 			if (match[pathlen] !=3D '/')
- 				continue;
--			if (!S_ISDIR(mode))
-+			if (!S_ISDIR(entry->mode))
- 				continue;
- 		}
-=20
-@@ -558,7 +553,7 @@ static int tree_entry_interesting(struct tree_desc =
-*desc, const char *base, int
- 			 * we cheated and did not do strncmp(), so we do
- 			 * that here.
- 			 */
--			m =3D strncmp(match, path, pathlen);
-+			m =3D strncmp(match, entry->path, pathlen);
-=20
- 		/*
- 		 * If common part matched earlier then it is a hit,
-diff --git a/tree-walk.h b/tree-walk.h
-index 88ea7e9..b20f3c4 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -57,4 +57,7 @@ static inline int traverse_path_len(const struct trav=
-erse_info *info, const stru
- 	return info->pathlen + tree_entry_len(n->path, n->sha1);
- }
-=20
-+extern int tree_entry_interesting(const struct name_entry *entry, cons=
-t char *base, int baselen,
-+				  const char **paths, int *pathlens, int nr_paths);
++	if (!all_interesting) {
++		full_prefix =3D path_name_impl(path, name, 1);
++		full_prefix_len =3D strlen(full_prefix);
++	}
 +
- #endif
+ 	init_tree_desc(&desc, tree->buffer, tree->size);
+=20
+ 	while (tree_entry(&desc, &entry)) {
++		if (!all_interesting) {
++			int showit =3D tree_entry_interesting(&entry,
++							    full_prefix,
++							    full_prefix_len,
++							    revs->diffopt.paths,
++							    revs->diffopt.pathlens,
++							    revs->diffopt.nr_paths);
++
++			if (showit < 0)
++				break;
++			else if (!showit)
++				continue;
++			else if (showit =3D=3D 2)
++				all_interesting =3D 1;
++		}
++
+ 		if (S_ISDIR(entry.mode))
+ 			process_tree(revs,
+ 				     lookup_tree(entry.sha1),
+@@ -97,6 +121,7 @@ static void process_tree(struct rev_info *revs,
+ 				     lookup_blob(entry.sha1),
+ 				     show, &me, entry.path);
+ 	}
++	free(full_prefix);
+ 	free(tree->buffer);
+ 	tree->buffer =3D NULL;
+ }
+diff --git a/revision.c b/revision.c
+index b1c1890..55c4586 100644
+--- a/revision.c
++++ b/revision.c
+@@ -16,7 +16,7 @@
+=20
+ volatile show_early_output_fn_t show_early_output;
+=20
+-char *path_name(const struct name_path *path, const char *name)
++char *path_name_impl(const struct name_path *path, const char *name, i=
+nt isdir)
+ {
+ 	const struct name_path *p;
+ 	char *n, *m;
+@@ -27,7 +27,7 @@ char *path_name(const struct name_path *path, const c=
+har *name)
+ 		if (p->elem_len)
+ 			len +=3D p->elem_len + 1;
+ 	}
+-	n =3D xmalloc(len);
++	n =3D xmalloc(len + !!isdir);
+ 	m =3D n + len - (nlen + 1);
+ 	strcpy(m, name);
+ 	for (p =3D path; p; p =3D p->up) {
+@@ -37,6 +37,10 @@ char *path_name(const struct name_path *path, const =
+char *name)
+ 			m[p->elem_len] =3D '/';
+ 		}
+ 	}
++	if (isdir && len > 1) {
++		n[len-1] =3D '/';
++		n[len] =3D '\0';
++	}
+ 	return n;
+ }
+=20
+diff --git a/revision.h b/revision.h
+index 05659c6..92f4feb 100644
+--- a/revision.h
++++ b/revision.h
+@@ -173,7 +173,8 @@ struct name_path {
+ 	const char *elem;
+ };
+=20
+-char *path_name(const struct name_path *path, const char *name);
++char *path_name_impl(const struct name_path *path, const char *name, i=
+nt isdir);
++#define path_name(path, name) path_name_impl(path, name, 0)
+=20
+ extern void add_object(struct object *obj,
+ 		       struct object_array *p,
+diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
+index b3c1dd8..b10685a 100755
+--- a/t/t6000-rev-list-misc.sh
++++ b/t/t6000-rev-list-misc.sh
+@@ -11,13 +11,13 @@ test_expect_success setup '
+ 	git commit -m one
+ '
+=20
+-test_expect_failure 'rev-list --objects heeds pathspecs' '
++test_expect_success 'rev-list --objects heeds pathspecs' '
+ 	git rev-list --objects HEAD -- wanted_file >output &&
+ 	grep wanted_file output &&
+ 	! grep unwanted_file output
+ '
+=20
+-test_expect_failure 'rev-list --objects with pathspecs and deeper path=
+s' '
++test_expect_success 'rev-list --objects with pathspecs and deeper path=
+s' '
+ 	mkdir foo &&
+ 	>foo/file &&
+ 	git add foo/file &&
+@@ -31,7 +31,7 @@ test_expect_failure 'rev-list --objects with pathspec=
+s and deeper paths' '
+ 	! grep unwanted_file output
+ '
+=20
+-test_expect_failure 'rev-list --objects with pathspecs and copied file=
+s' '
++test_expect_success 'rev-list --objects with pathspecs and copied file=
+s' '
+ 	git checkout --orphan junio-testcase &&
+ 	git rm -rf . &&
+=20
 --=20
 1.7.1.rc1.69.g24c2f7
