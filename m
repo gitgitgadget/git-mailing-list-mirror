@@ -1,123 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] string-list: Document STRING_LIST_INIT_* macros.
-Date: Sun, 5 Sep 2010 18:57:52 -0500
-Message-ID: <20100905235752.GA18060@burratino>
-References: <1283730055-14477-1-git-send-email-tfransosi@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Sun, 05 Sep 2010 20:05:26 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1009051952390.19366@xanadu.home>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+ <AANLkTinu=RoGfq93d+yjHiQwCt0HXx4YtqfvhXyZdO=F@mail.gmail.com>
+ <AANLkTimpE6rf0azHtrz6BFK5d7YojF+G1YuSA1gusSC=@mail.gmail.com>
+ <4C7FC3DC.3060907@gmail.com>
+ <AANLkTikBnKQJmgOms2wK1+6fCLtHWiWkhuCVMN7kKLXP@mail.gmail.com>
+ <alpine.LFD.2.00.1009021249510.19366@xanadu.home>
+ <AANLkTinFPxsY6frVnga8u15aovQarfWreBYJfri6ywoK@mail.gmail.com>
+ <alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+ <B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+ <7voccezr7m.fsf@alter.siamese.dyndns.org> <20100903183120.GA4887@thunk.org>
+ <alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+ <04755B03-EE1D-48FA-8894-33AA8E2661C0@mit.edu>
+ <alpine.LFD.2.00.1009040040030.19366@xanadu.home>
+ <5B5470E5-57E6-48D2-981B-CE77FA43546F@mit.edu>
+ <alpine.LFD.2.00.1009041107180.19366@xanadu.home>
+ <AANLkTim8XLB5SjV3JtWT-ARN_XuofKDjYRSYT8kPxEvq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 02:00:23 2010
+Content-Type: multipart/mixed; boundary="Boundary_(ID_jbR45RFhUqbaykOFv1d2sw)"
+Cc: Theodore Tso <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 06 02:05:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsP8J-0002J9-3F
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 02:00:23 +0200
+	id 1OsPDI-0003v1-Qw
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 02:05:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754849Ab0IEX75 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Sep 2010 19:59:57 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:34553 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754828Ab0IEX74 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Sep 2010 19:59:56 -0400
-Received: by gxk23 with SMTP id 23so1440884gxk.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 16:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6l2ZiTBd0lofajIYM30g6n2/KpImRHI7mgFx4fzjOMI=;
-        b=Fl/AGPRxWTNlOmgAxm+GsWgMX9lYV5fnLmndw3EUXFuuxx3aWZNf4IkphR2YTtUAuG
-         pfRq7hze3vJg4q4vOF2/4wn9+LvH4OZcv36lnSn9BQTeHgLqXn0Dw6+XE0c2jWcXgezv
-         xNAw66G3id4TvIYK6nRos8M5N3M5NGVnc+eaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=c7GUf9R6cKktwydM+hqdyLdCByzMY47k3MMMcpi4c3rkSYmNL48TNrB7zeHPFDg1fq
-         9jpvueObk6BHQrfgsdgz9yeWCEqDDgz9PtMT1KotHq8p5FV5O/n/7Xg7nIzYZSXIzlA2
-         AktIvKgbY8KUP/Px6mTNspXpxt5niXJRInf6Y=
-Received: by 10.151.150.18 with SMTP id c18mr603056ybo.358.1283731195667;
-        Sun, 05 Sep 2010 16:59:55 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id q31sm5225791ybk.1.2010.09.05.16.59.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 05 Sep 2010 16:59:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1283730055-14477-1-git-send-email-tfransosi@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754876Ab0IFAF2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Sep 2010 20:05:28 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:53103 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754270Ab0IFAF1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Sep 2010 20:05:27 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L8A00FS3TL0A740@VL-MR-MRZ20.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 05 Sep 2010 20:05:24 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTim8XLB5SjV3JtWT-ARN_XuofKDjYRSYT8kPxEvq@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155502>
 
-Thiago Farina wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> +++ b/Documentation/technical/api-string-list.txt
-> @@ -11,7 +11,14 @@ The caller:
->  
->  . Allocates and clears a `struct string_list` variable.
->  
-> -. Initializes the members. You might want to set the flag `strdup_strings`
-> +. Initializes the members. A string_list has to by `= STRING_LIST_INT_NODUP` or
-> +  `= STRING_LIST_INIT_DUP` before it can be used.
-> +  Strings in lists initialized with the _DUP variant will be
-> +  automatically strdup()ed on insertion and free()ed on removal.
-> +  For example, this is necessary when you add something like
-> +  git_path("..."), since that function returns a static buffer
-> +  that will change with the next call to git_path().
-> +
->    if the strings should be strdup()ed. For example, this is necessary
->    when you add something like git_path("...")
+--Boundary_(ID_jbR45RFhUqbaykOFv1d2sw)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-Hmm, something seems to have go wrong here.  Did you intend to
-insert that line break and duplicate the text below it?
+On Sun, 5 Sep 2010, Luke Kenneth Casson Leighton wrote:
 
-We cannot really say "a string_list has to be initialized with
-STRING_LIST_INIT_NODUP or STRING_LIST_INIT_DUP before it is
-used" because not all string_lists are statically allocated.
-Some (many) are allocated on the heap, which is part of why I
-introduced a string_list_init() function in the rfc series.
+> On Sun, Sep 5, 2010 at 2:18 AM, Nicolas Pitre <nico@fluxnic.net> wrote
+> > I agree.  So far it has been an interesting topic for discussion, but in
+> > practice I doubt the actual benefits will justify the required efforts
+> > and/or constraints on the protocol. Otherwise we would have a working
+> > implementation in use already.  People tried in the past, and so far
+> > none of those attempts passed the reality test nor kept people motivated
+> > enough to work on them further.
+> 
+>  then i'm all the more grateful that you continue to drop technical
+> hints in my direction.  thank you for not judging.
 
-> @@ -52,6 +58,18 @@ However, if you use the list to check if a certain string was added
->  already, you should not do that (using unsorted_string_list_has_string()),
->  because the complexity would be quadratic again (but with a worse factor).
->  
-> +Macros
-> +------
-> +
-> +`STRING_LIST_INIT_NODUP`::
-> +
-> +	Initialize the members and set the `strdup_strings` member to 0.
+Well, either you'll come to the same conclusion as the other people 
+before you (myself included), or you'll surprise us all with some clever 
+solution.  But that part is up to you.  In either cases, I think it is a 
+good thing if I can help you grasp the technical limitations and issues 
+faster so you don't waste your time on false assumptions.
 
-I think this section is not very useful.  I think what is intended is
-something like
 
-`STRING_LIST_INIT_NODUP`::
+Nicolas
 
-	initializer for a string_list with 0 items and the `strdup_strings`
-	member equal to 0
-
-but string-list.h says that already:
-
- struct string_list
- {
-	struct string_list_item *items;
-	unsigned int nr, alloc;
-	unsigned int strdup_strings:1;
- };
-
- #define STRING_LIST_INIT_NODUP	{ NULL, 0, 0, 0 }
-
-In generally it is not always a good idea to immediately document
-every identifier in a project like this one: writing good
-documentation takes some time, and maintaining it takes even more, so
-when the code already explains something, it tends to be more useful
-to document from another angle.
-
-Hope that helps,
-Jonathan
+--Boundary_(ID_jbR45RFhUqbaykOFv1d2sw)--
