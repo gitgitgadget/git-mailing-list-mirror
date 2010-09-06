@@ -1,93 +1,115 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Should git-citool be in mainporcelain in command-list?
-Date: Mon, 6 Sep 2010 17:31:20 -0500
-Message-ID: <20100906223120.GI26371@burratino>
-References: <AANLkTi=Hn_GG1y3gkVxgnsKyVD+VutG5SU5HhmhRfktH@mail.gmail.com>
- <20100906213937.GF26371@burratino>
- <AANLkTimRoAgAtrkpyd08mVG93prQ40B1y=ReLRdNfbWt@mail.gmail.com>
- <20100906220757.GH26371@burratino>
- <AANLkTiknz1vmXj+jOHudyW1QQkZhy+EgMG7_56_50GT6@mail.gmail.com>
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: git pack/unpack over bittorrent - works!
+Date: Mon, 6 Sep 2010 23:33:57 +0100
+Message-ID: <AANLkTimxyWOd3MUnbXZS0ZdqEXb8oRCUwHDNtavbCpgJ@mail.gmail.com>
+References: <AANLkTik-w6jWgrt_kwAk2uNGhF_=3tMEpTZs3nyF_zGA@mail.gmail.com>
+	<alpine.LFD.2.00.1009021624170.19366@xanadu.home>
+	<B757A854-C7BF-4CBF-9132-91D205344606@mit.edu>
+	<7voccezr7m.fsf@alter.siamese.dyndns.org>
+	<20100903183120.GA4887@thunk.org>
+	<alpine.LFD.2.00.1009031522590.19366@xanadu.home>
+	<AANLkTi=sC3NMNzPRQM5RKwnZQyRq-gq6+7wdiT5LGDrc@mail.gmail.com>
+	<AANLkTinoyehduhdHSEm5yGTLvU6C-ViE885yLd63iQU0@mail.gmail.com>
+	<4C81A67B.2060400@gmail.com>
+	<alpine.LFD.2.00.1009032304560.19366@xanadu.home>
+	<4C81DC34.2090800@gmail.com>
+	<alpine.LFD.2.00.1009040153280.19366@xanadu.home>
+	<AANLkTi=7jUSCNiPf+HfEQuxaf16Jt06--bFE7=Of9wp=@mail.gmail.com>
+	<AANLkTik9awEd40s3r-O8t9DwZBh34Z0ozsxMm1QNjNoT@mail.gmail.com>
+	<alpine.LFD.2.00.1009042132500.19366@xanadu.home>
+	<AANLkTi=YLx6MqbWd_N0geXbuXLdqAUOneGoym75dfthL@mail.gmail.com>
+	<alpine.LFD.2.00.1009051820100.19366@xanadu.home>
+	<AANLkTi=CEOj40Sj+zegvX+ry8-y6p7UwsyqdtoHB1d-T@mail.gmail.com>
+	<alpine.LFD.2.00.1009061025210.19366@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 00:33:33 2010
+Cc: Artur Skawina <art.08.09@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	"Ted Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
+	git <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Sep 07 00:34:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OskFl-0004Gn-Ns
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 00:33:30 +0200
+	id 1OskGL-0004MY-HX
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 00:34:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754717Ab0IFWdZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 18:33:25 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:44841 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753542Ab0IFWdY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 18:33:24 -0400
-Received: by qwh6 with SMTP id 6so4169005qwh.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 15:33:23 -0700 (PDT)
+	id S1755000Ab0IFWeA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 18:34:00 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40551 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753542Ab0IFWd7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 18:33:59 -0400
+Received: by vws3 with SMTP id 3so3678976vws.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 15:33:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=DmJc8NoTGKz4T4GYyUUtRkbZsi5Zqu87mStd0RzIpyo=;
-        b=jtf5VON8CfeS3qxcisJ6NyqBfijB3KjqrCsKH9Zpn5TK466Q9ZJogngVSM8VfPhqjh
-         ZDQpTu12LO6oo1jyTwalqBt55lK0S/E6rmVSn4V7G+VjxAVvFxrjdk04//MMBHkNqOv4
-         D9X1lGjkMV0RTO9K7+W8a7JlpkGFYDN+GTJoY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ZUy9zIyoUD2gyswqn+dhOL3ORaMAa97oUsxgFEFdVIE=;
+        b=M5yLuDjrnhbtmh8sNvlAsysFhgcJslXN5lPiwUsFwPc0E9Q3S4kmiUon4pa/Yaxyuv
+         WqAyOy4IkmGhpQ7w4wZC5LxLkvo6egsAFVszr4c09+z88RUc9ZANfIhvpD0T1iIr1dS0
+         rFa5K1jAg97TLzp5Xxa0XUQ79ojtnZ9IbYMek=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=pnoDS7ewCBTZkWbxuyWi9ad4x54/OnHGv03w4J0TG9/rJbnx39mynEpQlsY48eP2vy
-         Jha4E3xSEK0HCdLMrsMurPHF6OFkN2qMMLEg5xeLrq3IwBdMk2vVrBuQXi0GyOEpX/Rw
-         tK/jwqHYUTnWj9YV560DEaMqvsr0M1lfg7xn0=
-Received: by 10.224.3.21 with SMTP id 21mr311280qal.337.1283812403145;
-        Mon, 06 Sep 2010 15:33:23 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t24sm6177556qcs.35.2010.09.06.15.33.21
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 15:33:22 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTiknz1vmXj+jOHudyW1QQkZhy+EgMG7_56_50GT6@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Mn1yI3W330vdj+BCpLdp8mFPsuBeDZA+hHLWbwjbf4EBA4GRKYsgh6oFUGqnhGwuyX
+         slZHHbnhHwQuDm/dhBVaxNpafhDCCMutDMXdajE8mMLd4ayG59QWBpjwnPgzOC/OrV/k
+         lF6l/Sn1xKQcBsY5R3igZn7J+LEdPfDQOtW3Y=
+Received: by 10.220.126.130 with SMTP id c2mr293313vcs.224.1283812437843; Mon,
+ 06 Sep 2010 15:33:57 -0700 (PDT)
+Received: by 10.220.75.196 with HTTP; Mon, 6 Sep 2010 15:33:57 -0700 (PDT)
+In-Reply-To: <alpine.LFD.2.00.1009061025210.19366@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155637>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Mon, Sep 6, 2010 at 22:07, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
+nicolas, thank you very brief reply (busy for 2 days)
 
->> =C2=A0 =C2=A0 =C2=A0 git citool is actually a standard alias for git=
- gui
->> =C2=A0 =C2=A0 =C2=A0 citool. See git-gui(1) for more details.
+On Mon, Sep 6, 2010 at 5:51 PM, Nicolas Pitre <nico@fluxnic.net> wrote:
+
+>> * to work out how far local deviates from remote along that list of =
+commits
 >
-> I.e. `git gui citool` and `git citool` launch the same thing, the
-> latter is just a shorter way to do it.
+> That's an operation that only the peer with the most recent commits c=
+an
+> do, unless you transfer that huge list of commits from above across t=
+he
+> network.
 
-All I meant is that it is not an alias for "git gui" but for
-"git gui citool".  I can imagine a person reading git(1) and
-learning about the ability to say
+ i Have A Plan for dealing with that.
 
-	git citool
+> So, on a server (i.e. the peer sending objects) you'd do:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git rev-list <refs_that_I_publish> --not <=
+refs_that_the_remote_has>
 
-though I guess by the same token a person might wonder why
-the list does not include similar
+ sadly that involves telling the sender what the recipient has.
 
-	git blametool
-
-and
-
-	git browsertool
-
-commands.  Anyway, I have nothing against a separate "aliases" category=
+>> =C2=A0problem: despite looking through virtually every single builti=
+n/*.c
+>> file which uses write_sha1_file (which i believe i have correctly
+>> identified, from examining git unpack-objects, as being the function
+>> which stores actual objects, including their type), i do not see a g=
+it
+>> command (yet) which performs the reverse operation of "git cat-file"=
 =2E
-Sorry for the noise.
+>
+> It is 'git hash-object'.
+
+ ah _haa_ - thank you!  ok, so i have to create a pack-object-like
+format, putting the object type at the beginning of the format, then
+put the contents of "git cat-file" after it.
+
+ so - apologies, will be dealing with some work-related stuff for a
+day or so.  thank you for everything so far nicolas.
+
+l.
