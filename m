@@ -1,65 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [ANNOUNCE] gitolite now supports smart http
-Date: Sun, 05 Sep 2010 23:28:01 -0700
-Message-ID: <7vy6bfv11q.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikKt5srTvn3zh7ZQ54ii=3eDnxAxxy8njtSaz4y@mail.gmail.com>
+From: "J. Bakshi" <joydeep@infoservices.in>
+Subject: git over http configuration problem
+Date: Mon, 6 Sep 2010 12:01:44 +0530
+Message-ID: <20100906120144.19b2923c@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	gitolite <gitolite@googlegroups.com>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 08:28:18 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 06 08:31:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsVBg-0001Va-Hs
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 08:28:16 +0200
+	id 1OsVFE-0002l1-JT
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 08:31:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751754Ab0IFG2L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 02:28:11 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60191 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751436Ab0IFG2K (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 02:28:10 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A25DAD3AD8;
-	Mon,  6 Sep 2010 02:28:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nqaTTkip0sIx2Y46hNeC4Ub/JiI=; b=P0qbXH
-	W67weO41k2D/Tz2h++wJA/jUQDik+0MFduiEm778ZeAuc8Dwv6taQa4VkuoAQtC4
-	pJXr77QrHlqHwuWNcb+a+i5fmmn+Nbm3oxEABB+MxBD4d9D2oCl3vkbDi5UKSI9p
-	OkAcTFthUKMbIXYTNYVWDupycjWsW5lX9/mGo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e2ge5HhK2nv2YeVdJPj4Hr7J9heaOUqz
-	94twBBMZU07Fhgfdjg/LT48DmhZOhmsRL01scTWHCxmH0TpotjaVod2jasssr9Lx
-	HV2hhB2b72HJ7HshuT1H/5VrJUT4AysrmR++5+Nsnz+8gLVA0pNv9LO1gxendbIY
-	B9qVo55whkY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 61EA2D3AD6;
-	Mon,  6 Sep 2010 02:28:06 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id ABC01D3AD5; Mon,  6 Sep
- 2010 02:28:02 -0400 (EDT)
-In-Reply-To: <AANLkTikKt5srTvn3zh7ZQ54ii=3eDnxAxxy8njtSaz4y@mail.gmail.com>
- (Sitaram Chamarty's message of "Sun\, 5 Sep 2010 21\:07\:34 +0530")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E8E5416C-B97F-11DF-AFF5-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752564Ab0IFGbv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 02:31:51 -0400
+Received: from static.206.87.46.78.clients.your-server.de ([78.46.87.206]:44175
+	"EHLO Kolkata.infoservices.in" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752471Ab0IFGbv (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 02:31:51 -0400
+Received: from debian (unknown [122.176.30.116])
+	by Kolkata.infoservices.in (Postfix) with ESMTPSA id 40C0966A974
+	for <git@vger.kernel.org>; Mon,  6 Sep 2010 08:31:47 +0200 (CEST)
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155536>
 
-Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> With some caveats and limitations, we now have smart http support in gitolite.
->
-> See http://github.com/sitaramc/gitolite/blob/pu/doc/http-backend.mkd
-> for all the details.
+Hello,
 
-Nice ;-)
+I am a newbie in git technology, please bear with me. I am interested to implement git over http along with gitweb.
+
+At first I have already created a demo git repository in the server , After restating apache I can see gitweb at http://192.168.1.1/gitweb 
+Here is the apache related configuration
+
+```````````````
+Alias /gitweb /var/gitdir/
+RewriteEngine On
+RewriteRule ^gitweb$ gitweb/ [R]
+SetEnv GITWEB_CONFIG /etc/gitweb.conf
+
+<Directory "/var/gitdir/">
+AllowOverride AuthConfig
+Options +ExecCGI +Indexes
+Order allow,deny
+Allow from all
+DirectoryIndex gitweb.cgi
+SetEnv GITWEB_CONFIG "/etc/gitweb.conf"
+AddHandler cgi-script .cgi
+</Directory>
+``````````````````````````
+
+webdav is successfully running in this server for some other project. I have setup webdav for git like
+
+`````````
+<IfModule mod_dav_svn.c>
+<Location /myproject.git>
+Dav on
+AuthType Basic
+AuthName "My repo with git"
+AuthUserFile /home/svn/PASSWORD
+<Limitexcept GET HEAD PROPFIND OPTIONS REPORT>
+Require valid-user
+</Limitexcept>
+</Location>
+</IfModule>
+```````````````
+
+Now testing with cadaver
+
+`````````````````
+cadaver https://192.168.1.1/gitweb/test.git
+
+Authentication required for Write access requires a password on server `192.168.1.1':
+Username: svnadmin
+Password:
+Could not open collection:
+404 Not Found
+
+``````````````````````
+
+I think there are some configuration problem which can't find the correct location/path. Could anyone kindly enlighten me, actually where the problem is ? Here is /etc/gitweb.conf
+
+````````````````````````
+$feature{'blame'}{'default'} = [undef];
+$feature{'pickaxe'}{'default'} = [undef];
+$feature{'search'}{'default'} = [undef];
+$feature{'grep'}{'default'} = 1;
+$feature{'snapshot'}{'default'} = ['tgz', 'gzip', 'zip'];
+$feature{'snapshot'}{'override'} = 1;
+
+# path to git projects (<project>.git)
+$projectroot = "/home/git";
+
+# directory to use for temp files
+$git_temp = "/tmp";
+
+$projects_list = $projectroot;
+$export_ok = "";
+$strict_export = "true";
+
+$site_name = "The Average Geek's Git Repo";
+$fallback_encoding = 'utf-8';
+@stylesheets = ("gitweb.css");
+$projects_list_description_width = 50;
+``````````````````````````````````
+
+Thanks for your time
