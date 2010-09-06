@@ -1,76 +1,57 @@
 From: Pascal Obry <pascal@obry.net>
-Subject: [PATCH v4 0/3]  Add support for SMTP server options
-Date: Mon,  6 Sep 2010 19:38:00 +0200
-Message-ID: <1283794683-2796-1-git-send-email-pascal@obry.net>
+Subject: [PATCH v4 2/3] Remove @smtp_host_parts variable as not used.
+Date: Mon,  6 Sep 2010 19:38:02 +0200
+Message-ID: <1283794683-2796-3-git-send-email-pascal@obry.net>
+References: <1283794683-2796-1-git-send-email-pascal@obry.net>
 Cc: Pascal Obry <pascal@obry.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 06 19:37:51 2010
+X-From: git-owner@vger.kernel.org Mon Sep 06 19:38:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Osfdb-0003aE-E8
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 19:37:47 +0200
+	id 1Osfdu-0003lx-OO
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 19:38:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752225Ab0IFRhm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 13:37:42 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:41796 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804Ab0IFRhl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 13:37:41 -0400
-Received: by wwj40 with SMTP id 40so6854761wwj.1
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 10:37:40 -0700 (PDT)
-Received: by 10.227.134.144 with SMTP id j16mr103604wbt.50.1283794660058;
-        Mon, 06 Sep 2010 10:37:40 -0700 (PDT)
+	id S1753336Ab0IFRhs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 13:37:48 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36298 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752703Ab0IFRhq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 13:37:46 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 22so3214915wyf.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 10:37:45 -0700 (PDT)
+Received: by 10.227.154.9 with SMTP id m9mr1742994wbw.219.1283794665479;
+        Mon, 06 Sep 2010 10:37:45 -0700 (PDT)
 Received: from localhost (AVelizy-154-1-100-4.w90-2.abo.wanadoo.fr [90.2.58.4])
-        by mx.google.com with ESMTPS id b23sm4835871wbb.10.2010.09.06.10.37.37
+        by mx.google.com with ESMTPS id e31sm4838901wbe.23.2010.09.06.10.37.44
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 10:37:38 -0700 (PDT)
+        Mon, 06 Sep 2010 10:37:44 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.rc0
+In-Reply-To: <1283794683-2796-1-git-send-email-pascal@obry.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155587>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155588>
 
-This is v4 of the patch thanks to Junio and AEvar for the review and help.
+---
+ git-send-email.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-context:
---------
-
-I'm not familiar at all with Perl so comments on style or usage most
-welcomed. This patch is to introduce a way to pass specific options to the
-SMTP server used by git-send-email.
-
-I need that to be able to use different SMTP account (wanadoo, gmail...) on
-some Git repositories to send over proper identity.
-
-change since v3:
-----------------
-
-I have moved smtp server option description after smtp server port. Seems
-more natural to me.
-
-I have added note about the fact that multiple lines are needed for each
-option in configuration files.
-
-patches:
---------
-
-The two first patches are really code clean-up found while working on this
-new feature. The last patch is the actual implementation of this new
-feature.
-
-Pascal Obry (3):
-  Minor indentation fix.
-  Remove @smtp_host_parts variable as not used.
-  New send-email option smtpserveroption.
-
- Documentation/config.txt         |    1 +
- Documentation/git-send-email.txt |    9 +++++++++
- git-send-email.perl              |   12 +++++++++---
- 3 files changed, 19 insertions(+), 3 deletions(-)
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 0063606..39cb5af 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -189,7 +189,7 @@ sub do_edit {
+ # Variables with corresponding config settings
+ my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
+-my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts, $smtp_domain);
++my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
+ my ($validate, $confirm);
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
 -- 
-1.7.2.2.277.gb49c4
+1.7.3.rc0
