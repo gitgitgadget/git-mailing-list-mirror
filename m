@@ -1,129 +1,101 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: [PATCH v4 3/3] New send-email option smtpserveroption.
-Date: Mon,  6 Sep 2010 19:38:03 +0200
-Message-ID: <1283794683-2796-4-git-send-email-pascal@obry.net>
-References: <1283794683-2796-1-git-send-email-pascal@obry.net>
-Cc: Pascal Obry <pascal@obry.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 06 19:38:13 2010
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] Add ERR support to smart HTTP
+Date: Mon, 6 Sep 2010 23:29:02 +0530
+Message-ID: <AANLkTikmU9_Vg2+=73yjPyaaDSqk73Bvs1HyNjFDWqNY@mail.gmail.com>
+References: <1283707815-32038-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	<AANLkTikGiekZGNffaraHK-waBt7wH84jujM_uh3cw46y@mail.gmail.com>
+	<AANLkTinTFWHWU1vCnDa-c3p5g+y7wnH9A8fieowQHU5z@mail.gmail.com>
+	<201009061049.38546.jnareb@gmail.com>
+	<EC704F6E-3075-459C-9210-10C234523D80@gmail.com>
+	<20100906145606.GM32601@spearce.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Joshua Juran <jjuran@gmail.com>, Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Tarmigan Casebolt <tarmigan+git@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Mon Sep 06 19:59:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Osfdv-0003lx-92
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 19:38:07 +0200
+	id 1OsfyK-0006nv-Hy
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 19:59:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750758Ab0IFRhv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 13:37:51 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:41796 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753215Ab0IFRht (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 13:37:49 -0400
-Received: by mail-ww0-f44.google.com with SMTP id 40so6854761wwj.1
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 10:37:48 -0700 (PDT)
-Received: by 10.216.187.143 with SMTP id y15mr4038395wem.74.1283794668371;
-        Mon, 06 Sep 2010 10:37:48 -0700 (PDT)
-Received: from localhost (AVelizy-154-1-100-4.w90-2.abo.wanadoo.fr [90.2.58.4])
-        by mx.google.com with ESMTPS id v44sm3514989weq.28.2010.09.06.10.37.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 10:37:47 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.rc0
-In-Reply-To: <1283794683-2796-1-git-send-email-pascal@obry.net>
+	id S1754178Ab0IFR7H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 13:59:07 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:44008 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753217Ab0IFR7E convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 13:59:04 -0400
+Received: by gyd8 with SMTP id 8so1698268gyd.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 10:59:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=oagKsbglwoTC7mnuI8gMY1seCaoWn9O84PYUk/66Rto=;
+        b=adgnnPDn80sZGHgu5K4A7YH1RUSu0WehirdQVpuvVDedTfg1VGzA0onpuvu/d8+Ld/
+         Q05Hu9TJUeq5PCc3iBNhJmiCtK3FbHLvoGieocglLZ8a9px8iYko9KmBwBl8RKdvXMeb
+         pu9dn7/emGKACN3Ps3tM89IRkqd2VzTdcJuoA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=J5YcqO0F99hm5JSWqOLFI+AIH7ZKvipUxYxizBUvtjgwZUa/9IWMqjgAkbzH7MJuyV
+         B+eqXvYnkUBVl0tn0K0redOtMWrEfGF57pe9Wg0QTlZ69s2UyYLWjNoavixCYjrBBii0
+         A80v2yN0vH4P68gLbitXPr12J8MG7f1KDX7JU=
+Received: by 10.90.63.7 with SMTP id l7mr777112aga.52.1283795942949; Mon, 06
+ Sep 2010 10:59:02 -0700 (PDT)
+Received: by 10.90.209.12 with HTTP; Mon, 6 Sep 2010 10:59:02 -0700 (PDT)
+In-Reply-To: <20100906145606.GM32601@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155590>
 
-The new command line parameter --smtp-server-option or default
-configuration sendemail.smtpserveroption can be used to pass
-specific options to the SMTP server. Update the documentation
-accordingly.
----
- Documentation/config.txt         |    1 +
- Documentation/git-send-email.txt |    9 +++++++++
- git-send-email.perl              |    8 +++++++-
- 3 files changed, 17 insertions(+), 1 deletions(-)
+On Mon, Sep 6, 2010 at 8:26 PM, Shawn O. Pearce <spearce@spearce.org> w=
+rote:
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 0510ac7..d318c31 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1716,6 +1716,7 @@ sendemail.to::
- sendemail.smtpdomain::
- sendemail.smtpserver::
- sendemail.smtpserverport::
-+sendemail.smtpserveroption::
- sendemail.smtpuser::
- sendemail.thread::
- sendemail.validate::
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index c283084..cde404a 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -165,6 +165,15 @@ user is prompted for a password while the input is masked for privacy.
- 	are also accepted. The port can also be set with the
- 	'sendemail.smtpserverport' configuration variable.
- 
-+--smtp-server-option=<option>::
-+	If set, specifies the outgoing SMTP server option to use.
-+	Default value can be specified by the 'sendemail.smtpserveroption'
-+	configuration option.
-++
-+The --smtp-server-option option must be repeated for each option you want
-+to pass to the server. Likewise, different lines in the configuration files
-+must be used for each option.
-+
- --smtp-ssl::
- 	Legacy alias for '--smtp-encryption ssl'.
- 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 39cb5af..47989fe 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -60,6 +60,7 @@ git send-email [options] <file | directory | rev-list options >
-     --envelope-sender       <str>  * Email envelope sender.
-     --smtp-server       <str:int>  * Outgoing SMTP server to use. The port
-                                      is optional. Default 'localhost'.
-+    --smtp-server-option    <str>  * Outgoing SMTP server option to use.
-     --smtp-server-port      <int>  * Outgoing SMTP server port.
-     --smtp-user             <str>  * Username for SMTP-AUTH.
-     --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
-@@ -188,7 +189,8 @@ sub do_edit {
- 
- # Variables with corresponding config settings
- my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_cmd);
--my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption);
-+my ($smtp_server, $smtp_server_port, @smtp_server_options);
-+my ($smtp_authuser, $smtp_encryption);
- my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
- my ($validate, $confirm);
- my (@suppress_cc);
-@@ -210,6 +212,7 @@ my %config_bool_settings = (
- my %config_settings = (
-     "smtpserver" => \$smtp_server,
-     "smtpserverport" => \$smtp_server_port,
-+    "smtpserveroption" => \@smtp_server_options,
-     "smtpuser" => \$smtp_authuser,
-     "smtppass" => \$smtp_authpass,
-     "smtpdomain" => \$smtp_domain,
-@@ -279,6 +282,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "no-bcc" => \$no_bcc,
- 		    "chain-reply-to!" => \$chain_reply_to,
- 		    "smtp-server=s" => \$smtp_server,
-+		    "smtp-server-option=s" => \@smtp_server_options,
- 		    "smtp-server-port=s" => \$smtp_server_port,
- 		    "smtp-user=s" => \$smtp_authuser,
- 		    "smtp-pass:s" => \$smtp_authpass,
-@@ -1015,6 +1019,8 @@ X-Mailer: git-send-email $gitversion
- 		}
- 	}
- 
-+	unshift (@sendmail_parameters, @smtp_server_options);
-+
- 	if ($dry_run) {
- 		# We don't want to send the email.
- 	} elsif ($smtp_server =~ m#^/#) {
--- 
-1.7.3.rc0
+> That is, the following will trigger a correct error on the client:
+>
+> =C2=A0200 OK
+> =C2=A0Content-Type: application/x-git-upload-pack-advertisement
+>
+> =C2=A0001e# service=3Dgit-upload-pack
+> =C2=A00022ERR You shall not do this
+
+are those counts accurate for the specific example you show or just mad=
+e up?
+
+It seems the first line has a count in hex that includes the newline
+at the end, and the second one has a count in decimal that does not
+include the newline nor even the 4-digits plus "ERR"
+
+> Likewise if you wanted to do this with receive-pack, replace upload
+> with receive above and adjust the pkt-line lengths.
+
+ok... what about all the other service commands?  like /info/refs?
+What should I put there?
+
+Sorry if I'm being stupid but I couldn't find this info anywhere (my C
+grokking isn't as good as it used to be anyway).  I've tried all sorts
+of combinations of sending out two such lines -- variations on length,
+\r, \n, \r\n, neither, etc etc but I can't get the correct output.
+
+Also, experimenting with making the update hook die similarly and
+wireshark-ing the responde does not show similar pattern coming
+through.
+
+If you could point me to some place that says the precise format,
+including \r\n, I'd greatly appreciate it.
+
+Thanks,
+
+Sitaram
