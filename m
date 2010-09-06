@@ -1,237 +1,189 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 4/4] Make rev-list --objects work together with pathspecs
-Date: Mon,  6 Sep 2010 14:47:09 +1000
-Message-ID: <1283748429-31076-5-git-send-email-pclouds@gmail.com>
-References: <1283645647-1891-8-git-send-email-newren@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC PATCH 07/15] cache_tree_update(): Capability to handle tree
+ entries missing from index
+Date: Mon, 6 Sep 2010 15:02:50 +1000
+Message-ID: <AANLkTikvJoVdUWAbQw0xT=JOiry4FaA0jsOMTNf=iZqH@mail.gmail.com>
+References: <1283645647-1891-1-git-send-email-newren@gmail.com>
+	<1283645647-1891-8-git-send-email-newren@gmail.com>
+	<AANLkTi=ijbaATavcujUY-WnEfKFKrNue_kP6vSngKSvQ@mail.gmail.com>
+	<AANLkTikK9vGgtzrrAAyqptPVHM2wjOjK_cH6GB0rgewP@mail.gmail.com>
+	<AANLkTinufi3TwnPZ+smq5FE5S3zZdQSzKpqYv=hVfcLV@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 06 06:47:54 2010
+Cc: git <git@vger.kernel.org>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 06 07:02:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsTcV-0001Yl-OV
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 06:47:52 +0200
+	id 1OsTr7-000761-UH
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 07:02:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751112Ab0IFErp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 00:47:45 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:58873 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110Ab0IFEro (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 00:47:44 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 9so1304132pzk.19
-        for <git@vger.kernel.org>; Sun, 05 Sep 2010 21:47:44 -0700 (PDT)
+	id S1751265Ab0IFFCw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 01:02:52 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46067 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751243Ab0IFFCw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 01:02:52 -0400
+Received: by wyf22 with SMTP id 22so2509870wyf.19
+        for <git@vger.kernel.org>; Sun, 05 Sep 2010 22:02:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=5oze2Tz+LDnGuDi0EV34zzWY45caDOry+k5l+xhcsFE=;
-        b=qJ9fILQYfGVNNp9u+cPLq1HdlK8qoXotlhJ7nowYFhfPGqemXukfFO5yJBtN5Yv/r/
-         kOa0PeDXAvIhTn1cHkoi6FLXoTkkliZrmHVp3SipPYDgWXUEjaWGkA5sDj1g1m7bUOSJ
-         uwuZt/PeBe2v6/3qOy2+nSl1HxOEKcw1JJp98=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1NMQddKTifQJhMSp7u5urF6n5OJvBBLVpq8kcVltzlk=;
+        b=DtFWmd+xLJzUtq5RmppSsO3p+42E9aLn4DBC9+fGTFzckwp9YUB4kCoTr9P/Py9Fwr
+         2+LgBKPJTScRLILrSZGkxVlufYynoVqeicGB+MlPx/WyIC9PI6GYsjLAomV70RRhXN2D
+         OaccaDcuzx8xo9vgvAlE0pbdixVY4Tw2iVDUY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=KR83AJPKz+iulOXMpek8y+RpC0pFNuo6i+VP7oEzZq0vxD7ciXiDHwLkjryLt7/cOZ
-         lD9WYWlW2OCxu7TOxeXN9SdXcWDjePovSHpAI2td9bF8q3lVEPSY/hKMxgMzF4HKR52U
-         EoN1sCgldWurfuUkojq/7pxl/sWVFqbmbCSeo=
-Received: by 10.114.15.18 with SMTP id 18mr2818226wao.182.1283748464197;
-        Sun, 05 Sep 2010 21:47:44 -0700 (PDT)
-Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id q6sm10435003waj.10.2010.09.05.21.47.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Sep 2010 21:47:43 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Mon,  6 Sep 2010 14:47:37 +1000
-X-Mailer: git-send-email 1.7.1.rc1.69.g24c2f7
-In-Reply-To: <1283645647-1891-8-git-send-email-newren@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sUjCzjcjZL+5z175jX4SpNOxoVzsc+lX5eNkHhnBx3CFG2sEa7A62Xs3db0TcY0Yzy
+         5umM6zN9Fd8gmAduF6rWPzNUH9cdT6RTQDrDLhHq5zAYWgT/4f/xw/GNZTj7MT4rEAWb
+         LFR/KY1rJjQdkkjO64myYSpARW9mvxvZsw+9c=
+Received: by 10.216.186.70 with SMTP id v48mr693455wem.64.1283749370420; Sun,
+ 05 Sep 2010 22:02:50 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Sun, 5 Sep 2010 22:02:50 -0700 (PDT)
+In-Reply-To: <AANLkTinufi3TwnPZ+smq5FE5S3zZdQSzKpqYv=hVfcLV@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155526>
 
-=46rom: Elijah Newren <newren@gmail.com>
+On Mon, Sep 6, 2010 at 2:42 PM, Elijah Newren <newren@gmail.com> wrote:
+> On Sun, Sep 5, 2010 at 3:09 PM, Elijah Newren <newren@gmail.com> wrot=
+e:
+>> n Sun, Sep 5, 2010 at 1:54 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.c=
+om> wrote:
+>>> On Sun, Sep 5, 2010 at 10:13 AM, Elijah Newren <newren@gmail.com> w=
+rote:
+>>>> cache_tree_update() will write trees using the index. =C2=A0With s=
+parse clones,
+>>>> the index will only contain entries matching the sparse limits, me=
+aning
+>>>> that the index does not provide enough information to write comple=
+te tree
+>>>> objects. =C2=A0Having cache_tree_update() take a tree (typically H=
+EAD), will
+>>>> allow new complete trees to be constructed by using entries from t=
+he
+>>>> specified tree outside the sparse limits together with the index.
+>>>
+>>> You are moving it closer to the index (from my view because I chang=
+ed
+>>> in commit_tree()). This makes me think, why don't you move the base
+>>> tree into the index itself?
+>>>
+>>> The index is supposed to save the image of full worktree. While you
+>>> don't have all path names, you have the clue to all of them, the ba=
+se
+>>> tree. To me, that means it belongs to the index. That would reduce
+>>> code change to
+>>> =C2=A0- cache-tree.c (generate new tree from the base tree and inde=
+x)
+>>> =C2=A0- read-cache.c (new sparse-clone index extension)
+>>> =C2=A0- index writing operations (save the base tree in index): rea=
+d-tree and merge
+>>
+>> That's a really good idea. =C2=A0I'll look into that.
+>
+> Hmm..maybe before I get ahead of myself, I should back up for a
+> second. =C2=A0Which way do we think is better -- handling this in
+> cache_tree_update() or doing a fixup in commit_tree()? =C2=A0If the l=
+atter,
+> then I should just drop my 7/15 and 8/15 for your 13/17 and 14/17. =C2=
+=A0If
+> the former, then it makes sense to look into this change you suggest.
+> In that case, we'd probably keep my 7/15 but drop 8/15 for patch(es)
+> that implement your idea above. =C2=A0But you're more familiar with t=
+he
+> index format than I am and it's your idea, so you'd probably be the
+> better one to implement it.
+>
+> Thoughts?
 
-When traversing commits, the selection of commits would heed the list o=
-f
-pathspecs passed, but subsequent walking of the trees of those commits
-would not.  This resulted in 'rev-list --objects HEAD -- <paths>'
-displaying objects at unwanted paths.
+The former makes more sense. I still keep an eye on remote merge
+support. Think of this case: you request a remote merge and have a
+completely new base tree, different from HEAD. Then you get some
+conflicts inside narrow/sparse area. By the time you resolve all
+conflicts and are about to commit, where do you get the base tree?
 
-Have process_tree() call tree_entry_interesting() to determine which pa=
-ths
-are interesting and should be walked.
+It could follow the same way merge does, store it in a file in
+$GIT_DIR, similar to $GIT_DIR/MERGE_HEAD, and make "git commit" pick
+it up. Or just store it in index. You would need to (or should) change
+the index anyway, to prevent naive git implementation from using it.
+It makes more sense to put some more in index rather than a separate
+file. Some commands (especially "git commit") make use of temporary
+index. I think putting the base tree in index is a good point here,
+but I'm not quite sure.
 
-Naturally, this change can provide a large speedup when paths are speci=
-fied
-together with --objects, since many tree entries are now correctly igno=
-red.
-Interestingly, though, this change also gives me a small (~1%) but
-repeatable speedup even when no paths are specified with --objects.
+Anyway if you want to play with it, apply this on top of my 04/17
+(then change index_state.narrow_base to something suitable for sparse
+clone)
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- The "while (tree_entry(..))" loop makes a come back.
- tree_entry_interesting() call is updated.
- Nothing else is changed
+diff --git a/cache.h b/cache.h
+index 9c014ef..c7d626d 100644
+--- a/cache.h
++++ b/cache.h
+@@ -293,6 +293,7 @@ struct index_state {
+ 	struct cache_tree *cache_tree;
+ 	struct cache_time timestamp;
+ 	char *narrow_prefix;
++	unsigned char narrow_base[20];
+ 	void *alloc;
+ 	unsigned name_hash_initialized : 1,
+ 		 initialized : 1;
+diff --git a/read-cache.c b/read-cache.c
+index 250013c..15c1c9e 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -1191,7 +1191,8 @@ static int read_index_extension(struct
+index_state *istate,
+ 		istate->resolve_undo =3D resolve_undo_read(data, sz);
+ 		break;
+ 	case CACHE_EXT_NARROW:
+-		istate->narrow_prefix =3D xstrdup(data);
++		hashcpy(istate->narrow_base, data);
++		istate->narrow_prefix =3D xstrdup(data+sizeof(istate->narrow_base));
+ 		break;
+ 	default:
+ 		if (*ext < 'A' || 'Z' < *ext)
+@@ -1396,6 +1397,7 @@ int discard_index(struct index_state *istate)
+ 	istate->alloc =3D NULL;
+ 	istate->initialized =3D 0;
+ 	free(istate->narrow_prefix);
++	hashcpy(istate->narrow_base, (const unsigned char *)EMPTY_TREE_SHA1_B=
+IN);
+ 	istate->narrow_prefix =3D NULL;
 
- list-objects.c           |   25 +++++++++++++++++++++++++
- revision.c               |    8 ++++++--
- revision.h               |    3 ++-
- t/t6000-rev-list-misc.sh |    6 +++---
- 4 files changed, 36 insertions(+), 6 deletions(-)
-
-diff --git a/list-objects.c b/list-objects.c
-index 8953548..8ea1822 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -67,6 +67,9 @@ static void process_tree(struct rev_info *revs,
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	struct name_path me;
-+	int all_interesting =3D (revs->diffopt.nr_paths =3D=3D 0);
-+	char *full_prefix =3D NULL;
-+	int full_prefix_len =3D 0;
-=20
- 	if (!revs->tree_objects)
- 		return;
-@@ -82,9 +85,30 @@ static void process_tree(struct rev_info *revs,
- 	me.elem =3D name;
- 	me.elem_len =3D strlen(name);
-=20
-+	if (!all_interesting) {
-+		full_prefix =3D path_name_impl(path, name, 1);
-+		full_prefix_len =3D strlen(full_prefix);
-+	}
-+
- 	init_tree_desc(&desc, tree->buffer, tree->size);
-=20
- 	while (tree_entry(&desc, &entry)) {
-+		if (!all_interesting) {
-+			int showit =3D tree_entry_interesting(&entry,
-+							    full_prefix,
-+							    full_prefix_len,
-+							    revs->diffopt.paths,
-+							    revs->diffopt.pathlens,
-+							    revs->diffopt.nr_paths);
-+
-+			if (showit < 0)
-+				break;
-+			else if (!showit)
-+				continue;
-+			else if (showit =3D=3D 2)
-+				all_interesting =3D 1;
-+		}
-+
- 		if (S_ISDIR(entry.mode))
- 			process_tree(revs,
- 				     lookup_tree(entry.sha1),
-@@ -97,6 +121,7 @@ static void process_tree(struct rev_info *revs,
- 				     lookup_blob(entry.sha1),
- 				     show, &me, entry.path);
+ 	/* no need to throw away allocated active_cache */
+@@ -1627,11 +1629,15 @@ int write_index(struct index_state *istate, int=
+ newfd)
+ 			return -1;
  	}
-+	free(full_prefix);
- 	free(tree->buffer);
- 	tree->buffer =3D NULL;
- }
-diff --git a/revision.c b/revision.c
-index b1c1890..55c4586 100644
---- a/revision.c
-+++ b/revision.c
-@@ -16,7 +16,7 @@
-=20
- volatile show_early_output_fn_t show_early_output;
-=20
--char *path_name(const struct name_path *path, const char *name)
-+char *path_name_impl(const struct name_path *path, const char *name, i=
-nt isdir)
- {
- 	const struct name_path *p;
- 	char *n, *m;
-@@ -27,7 +27,7 @@ char *path_name(const struct name_path *path, const c=
-har *name)
- 		if (p->elem_len)
- 			len +=3D p->elem_len + 1;
+ 	if (get_narrow_prefix()) {
++		struct strbuf sb =3D STRBUF_INIT;
+ 		char *buf =3D get_narrow_string();
+-		int len =3D strlen(buf)+1;
+-		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_NARROW, len) < 0=
+ ||
+-			ce_write(&c, newfd, buf, len) < 0;
++		int len =3D 20+strlen(buf)+1;
++		strbuf_add(&sb, istate->narrow_base, 20);
++		strbuf_addstr(&sb, buf);
+ 		free(buf);
++		err =3D write_index_ext_header(&c, newfd, CACHE_EXT_NARROW, len) < 0=
+ ||
++			ce_write(&c, newfd, sb.buf, len) < 0;
++		strbuf_release(&sb);
+ 		if (err)
+ 			return -1;
  	}
--	n =3D xmalloc(len);
-+	n =3D xmalloc(len + !!isdir);
- 	m =3D n + len - (nlen + 1);
- 	strcpy(m, name);
- 	for (p =3D path; p; p =3D p->up) {
-@@ -37,6 +37,10 @@ char *path_name(const struct name_path *path, const =
-char *name)
- 			m[p->elem_len] =3D '/';
- 		}
- 	}
-+	if (isdir && len > 1) {
-+		n[len-1] =3D '/';
-+		n[len] =3D '\0';
-+	}
- 	return n;
- }
-=20
-diff --git a/revision.h b/revision.h
-index 05659c6..92f4feb 100644
---- a/revision.h
-+++ b/revision.h
-@@ -173,7 +173,8 @@ struct name_path {
- 	const char *elem;
- };
-=20
--char *path_name(const struct name_path *path, const char *name);
-+char *path_name_impl(const struct name_path *path, const char *name, i=
-nt isdir);
-+#define path_name(path, name) path_name_impl(path, name, 0)
-=20
- extern void add_object(struct object *obj,
- 		       struct object_array *p,
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-index b3c1dd8..b10685a 100755
---- a/t/t6000-rev-list-misc.sh
-+++ b/t/t6000-rev-list-misc.sh
-@@ -11,13 +11,13 @@ test_expect_success setup '
- 	git commit -m one
- '
-=20
--test_expect_failure 'rev-list --objects heeds pathspecs' '
-+test_expect_success 'rev-list --objects heeds pathspecs' '
- 	git rev-list --objects HEAD -- wanted_file >output &&
- 	grep wanted_file output &&
- 	! grep unwanted_file output
- '
-=20
--test_expect_failure 'rev-list --objects with pathspecs and deeper path=
-s' '
-+test_expect_success 'rev-list --objects with pathspecs and deeper path=
-s' '
- 	mkdir foo &&
- 	>foo/file &&
- 	git add foo/file &&
-@@ -31,7 +31,7 @@ test_expect_failure 'rev-list --objects with pathspec=
-s and deeper paths' '
- 	! grep unwanted_file output
- '
-=20
--test_expect_failure 'rev-list --objects with pathspecs and copied file=
-s' '
-+test_expect_success 'rev-list --objects with pathspecs and copied file=
-s' '
- 	git checkout --orphan junio-testcase &&
- 	git rm -rf . &&
-=20
 --=20
-1.7.1.rc1.69.g24c2f7
+Duy
