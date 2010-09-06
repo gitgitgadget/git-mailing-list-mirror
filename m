@@ -1,89 +1,525 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH] help.autocorrect prompt
-Date: Mon,  6 Sep 2010 17:27:10 +1000
-Message-ID: <1283758030-13345-1-git-send-email-david.barr@cordelta.com>
-References: <20100906025949.GA23594@burratino>
-Cc: David Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 06 09:26:22 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: What's cooking in git.git (Sep 2010, #02; Mon, 6)
+Date: Mon, 06 Sep 2010 00:41:11 -0700
+Message-ID: <7v1v97uxns.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 06 09:41:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsW5q-0007LW-Co
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 09:26:18 +0200
+	id 1OsWKV-0004gD-6c
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Sep 2010 09:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751299Ab0IFH0N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 03:26:13 -0400
-Received: from static-198-196.grapevine.transact.net.au ([121.127.198.196]:56505
-	"EHLO mailhost.cordelta" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751052Ab0IFH0M (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 03:26:12 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id 6CEF2C051;
-	Mon,  6 Sep 2010 17:26:07 +1000 (EST)
-X-Virus-Scanned: amavisd-new at mailhost.cordelta
-Received: from mailhost.cordelta ([127.0.0.1])
-	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vc5HY6T0PaVe; Mon,  6 Sep 2010 17:26:05 +1000 (EST)
-Received: from dba.cordelta (unknown [192.168.123.57])
-	by mailhost.cordelta (Postfix) with ESMTP id 3B738C04F;
-	Mon,  6 Sep 2010 17:26:05 +1000 (EST)
-X-Mailer: git-send-email 1.7.2.3.392.g02377.dirty
-In-Reply-To: <20100906025949.GA23594@burratino>
+	id S1752228Ab0IFHlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 03:41:21 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62606 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752197Ab0IFHlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 03:41:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BDE77D31C6;
+	Mon,  6 Sep 2010 03:41:16 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=assh
+	k0NIR/JUEpD7Z6GxdPLAhfA=; b=n6iuBgpZuIMcxj0bW2a2MqWPWSoVx0MgHwZo
+	ITx8U9f7e15Ica50EuEVuLA5RamdKLCd/nj9eTRnZbsdj8ntGlFSsXmi3scu4pBN
+	39jLyyoKO8A7pna24YQkB8EHDsQwBNmvjbW/LC1GllnL+8peaXXeqdmy9gTRcRGj
+	HjW//mc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=scN
+	iT6twbDQfA47a5myiXW3GkcbakjEhTcsuBEAN2XBvpORCg9a0+lmLqEj6TDPIwnZ
+	S2Ht2yKvKPAfNntMJcq61BtKPJSpgFjJDN4sS5PeqZQqwpeG59nh43AnrBsbsIM4
+	/Od6mnLLqdr2kQjyN7ZbaX0YZtIJbY7N6u3UXWbo=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AAC9ED31C5;
+	Mon,  6 Sep 2010 03:41:15 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4AA48D31C4; Mon,  6 Sep
+ 2010 03:41:13 -0400 (EDT)
+X-master-at: 4682693e9ccc04252d0fad6f5627fc056abcdbba
+X-next-at: dbf0d4b6cc543fc5bf9b1b20149324fff6736c38
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 211F2818-B98A-11DF-95FC-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155542>
 
-Added a new configuration value for help.autocorrect.
-A value of 'prompt' causes git to wait for confirmation
-before executing the assumed command.
+Here are the topics that have been cooking.  Commits prefixed with '-' are
+only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+marked with '.' do not appear in any of the integration branches, but I am
+still holding onto them.
 
-Signed-off-by: David Barr <david.barr@cordelta.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
----
- help.c |   19 ++++++++++++++++---
- 1 files changed, 16 insertions(+), 3 deletions(-)
+There are a few leftover bits in 'next' that need to be merged to 'master'
+before we declare a real -rc cycle, so tonight's pushout is -rc0.
 
-diff --git a/help.c b/help.c
-index 7f4928e..2282885 100644
---- a/help.c
-+++ b/help.c
-@@ -267,8 +267,12 @@ static struct cmdnames aliases;
- 
- static int git_unknown_cmd_config(const char *var, const char *value, void *cb)
- {
--	if (!strcmp(var, "help.autocorrect"))
--		autocorrect = git_config_int(var,value);
-+	if (!strcmp(var, "help.autocorrect")) {
-+		if (!strcmp(value, "prompt"))
-+			autocorrect = INT_MAX;
-+		else
-+			autocorrect = git_config_int(var,value);
-+	}
- 	/* Also use aliases for command lookup */
- 	if (!prefixcmp(var, "alias."))
- 		add_cmdname(&aliases, var + 6, strlen(var + 6));
-@@ -342,7 +346,16 @@ const char *help_unknown_cmd(const char *cmd)
- 			"which does not exist.\n"
- 			"Continuing under the assumption that you meant '%s'\n",
- 			cmd, assumed);
--		if (autocorrect > 0) {
-+		if (autocorrect == INT_MAX) {
-+			char answer[3];
-+			if (!isatty(STDIN_FILENO) || !isatty(STDERR_FILENO))
-+				exit(1);
-+			fprintf(stderr, "Continue? (y/n) ");
-+			if (!fgets(answer, sizeof(answer), stdin))
-+				exit(1);
-+			if (*answer != 'y' && *answer != 'Y')
-+				exit(1);
-+		} else if (autocorrect > 0) {
- 			fprintf(stderr, "in %0.1f seconds automatically...\n",
- 				(float)autocorrect/10.0);
- 			poll(NULL, 0, autocorrect * 100);
--- 
-1.7.2.3.392.g02377.dirty
+--------------------------------------------------
+[Graduated to "master"]
+
+* ab/compat-regex (2010-08-26) 9 commits
+  (merged to 'next' on 2010-08-26 at c5cc9d2)
+ + Fix compat/regex ANSIfication on MinGW
+  (merged to 'next' on 2010-08-22 at 40bce7c)
+ + autoconf: regex library detection typofix
+  (merged to 'next' on 2010-08-21 at 632d60f)
+ + autoconf: don't use platform regex if it lacks REG_STARTEND
+ + t/t7008-grep-binary.sh: un-TODO a test that needs REG_STARTEND
+ + compat/regex: get rid of old-style definition
+ + compat/regex: define out variables only used under RE_ENABLE_I18N
+ + Change regerror() declaration from K&R style to ANSI C (C89)
+ + compat/regex: get the gawk regex engine to compile within git
+ + compat/regex: use the regex engine from gawk for compat
+
+This may need a yet another fix-up for MinGW.
+
+* ab/test-2 (2010-08-30) 51 commits
+  (merged to 'next' on 2010-08-31 at 9d56f47)
+ + tests: factor HOME=$(pwd) in test-lib.sh
+ + test-lib: use subshell instead of cd $new && .. && cd $old
+ + tests: simplify "missing PREREQ" message
+ + t/t0000-basic.sh: Run the passing TODO test inside its own test-lib
+ + test-lib: Allow overriding of TEST_DIRECTORY
+ + test-lib: Use "$GIT_BUILD_DIR" instead of "$TEST_DIRECTORY"/../
+ + test-lib: Use $TEST_DIRECTORY or $GIT_BUILD_DIR instead of $(pwd) and ../
+ + test: Introduce $GIT_BUILD_DIR
+  (merged to 'next' on 2010-08-18 at f88bdb1)
+ + cvs tests: do not touch test CVS repositories shipped with source
+ + t/t9602-cvsimport-branches-tags.sh: Add a PERL prerequisite
+ + t/t9601-cvsimport-vendor-branch.sh: Add a PERL prerequisite
+ + t/t7105-reset-patch.sh: Add a PERL prerequisite
+ + t/t9001-send-email.sh: convert setup code to tests
+ + t/t9001-send-email.sh: change from skip_all=* to prereq skip
+ + t/t9001-send-email.sh: Remove needless PROG=* assignment
+ + t/t9600-cvsimport.sh: change from skip_all=* to prereq skip
+ + lib-patch-mode tests: change from skip_all=* to prereq skip
+ + t/t3701-add-interactive.sh: change from skip_all=* to prereq skip
+ + tests: Move FILEMODE prerequisite to lib-prereq-FILEMODE.sh
+ + t/Makefile: Create test-results dir for smoke target
+ + git-notes: Run partial expensive test everywhere
+ + t/t3300-funny-names: change from skip_all=* to prereq skip
+ + t/t3902-quoted: change from skip_all=* to prereq skip
+ + t/t4016-diff-quote: change from skip_all=* to prereq skip
+ + t/t5503-tagfollow: change from skip_all=* to prereq skip
+ + t/t7005-editor: change from skip_all=* to prereq skip
+ + t/t5705-clone-2gb: change from skip_all=* to prereq skip
+ + t/t1304-default-acl: change from skip_all=* to prereq skip
+ + t/README: Update "Skipping tests" to align with best practices
+ + t/t7800-difftool.sh: Skip with prereq on no PERL
+ + t/t5800-remote-helpers.sh: Skip with prereq on python <2.4
+ + t/t4004-diff-rename-symlink.sh: use three-arg <prereq>
+ + tests: implicitly skip SYMLINKS tests using <prereq>
+ + Makefile: make gcov invocation configurable
+ + t/README: Add a note about the dangers of coverage chasing
+ + t/README: A new section about test coverage
+ + Makefile: Add cover_db_html target
+ + Makefile: Add cover_db target
+ + Makefile: Split out the untested functions target
+ + Makefile: Include subdirectories in "make cover" reports
+ + gitignore: Ignore files generated by "make coverage"
+ + t/README: Add SMOKE_{COMMENT,TAGS}= to smoke_report target
+ + t/Makefile: Can't include GIT-BUILD-OPTIONS, it's a .sh
+ + t/README: Document the Smoke testing
+ + tests: Infrastructure for Git smoke testing
+ + test-lib: Multi-prereq support only checked the last prereq
+ + tests: A SANITY test prereq for testing if we're root
+ + t/README: Document the predefined test prerequisites
+ + test-lib: Print missing prerequisites in test output
+ + test-lib: Add support for multiple test prerequisites
+ + test-lib: Don't write test-results when HARNESS_ACTIVE
+
+* cb/maint-mergetool-no-tty (2010-08-20) 1 commit
+  (merged to 'next' on 2010-08-26 at b14989a)
+ + mergetool: Remove explicit references to /dev/tty
+
+* eb/double-convert-before-merge (2010-07-02) 3 commits
+ + Don't expand CRLFs when normalizing text during merge
+ + Try normalizing files to avoid delete/modify conflicts when merging
+ + Avoid conflicts when merging branches with mixed normalization
+ (this branch is used by jf/merge-ignore-ws and jn/merge-renormalize.)
+
+* jc/maint-doc-em-dash (2010-08-23) 1 commit
+  (merged to 'next' on 2010-08-24 at 2e4d30b)
+ + Work around em-dash handling in newer AsciiDoc
+
+* jl/submodule-ignore-diff (2010-08-28) 3 commits
+  (merged to 'next' on 2010-08-31 at 4f21f92)
+ + checkout: Use submodule.*.ignore settings from .git/config and .gitmodules
+ + checkout: Add test for diff.ignoreSubmodules
+  (merged to 'next' on 2010-08-26 at af1c819)
+ + checkout: respect diff.ignoreSubmodules setting
+
+* jn/apply-filename-with-sp (2010-08-18) 3 commits
+  (merged to 'next' on 2010-08-26 at 4f60840)
+ + apply: handle traditional patches with space in filename
+ + tests: exercise "git apply" with weird filenames
+ + apply: split quoted filename handling into new function
+
+* jn/doc-backslash (2010-08-20) 17 commits
+  (merged to 'next' on 2010-08-23 at 8c364b2)
+ + Documentation: remove stray backslash in show-branch discussion
+ + Documentation: remove stray backslashes from "Fighting regressions" article
+ + Documentation: do not convert ... operator to ellipses
+ + Documentation: avoid stray backslash in user manual
+ + Documentation: avoid stray backslashes in core tutorial
+ + Documentation: remove stray backslashes in rev-parse manual
+ + Documentation: remove backslash before ~ in fast-import manual
+ + Documentation: remove stray backslash from "git bundle" manual
+ + Documentation/technical: avoid stray backslash in parse-options API docs
+ + Documentation: remove backslashes in manpage synopses
+ + Documentation: clarify quoting in gitignore docs
+ + Documentation: clarify quoting in "git rm" example
+ + Documentation: add missing quotes to "git grep" examples
+ + Documentation: clarify quoting in "git add" example
+ + Documentation: unbreak regex in show-ref manual
+ + Documentation: quoting trouble in "git rm" discussion
+ + Documentation: tweak description of log.date
+
+* jn/maint-doc-user-manual-html-doctype (2010-08-21) 2 commits
+  (merged to 'next' on 2010-08-26 at e9084af)
+ + docs: fix Makefile dependency for user manual
+ + Documentation: set a !DOCTYPE for user manual
+
+* jn/merge-custom-no-trivial (2010-08-23) 3 commits
+  (merged to 'next' on 2010-08-24 at d9e5b2d)
+ + t7606: Avoid using head as a file name
+  (merged to 'next' on 2010-08-21 at 674498b)
+ + merge: let custom strategies intervene in trivial merges
+ + t7606 (merge-theirs): modernize style
+
+* jn/merge-renormalize (2010-08-05) 12 commits
+  (merged to 'next' on 2010-08-18 at d9aa77b)
+ + merge-recursive --renormalize
+ + rerere: never renormalize
+ + rerere: migrate to parse-options API
+ + t4200 (rerere): modernize style
+ + ll-merge: let caller decide whether to renormalize
+ + ll-merge: make flag easier to populate
+ + Documentation/technical: document ll_merge
+ + merge-trees: let caller decide whether to renormalize
+ + merge-trees: push choice to renormalize away from low level
+ + t6038 (merge.renormalize): check that it can be turned off
+ + t6038 (merge.renormalize): try checkout -m and cherry-pick
+ + t6038 (merge.renormalize): style nitpicks
+ (this branch is used by jf/merge-ignore-ws and jf/merge-ignore-ws; uses eb/double-convert-before-merge.)
+
+* jn/update-contrib-example-merge (2010-08-17) 24 commits
+  (merged to 'next' on 2010-08-21 at 41b5c4d)
+ + merge script: learn --[no-]rerere-autoupdate
+ + merge script: notice @{-1} shorthand
+ + merge script: handle --no-ff --no-commit correctly
+ + merge script: --ff-only to disallow true merge
+ + merge script: handle many-way octopus
+ + merge script: handle -m --log correctly
+ + merge script: forbid merge -s index
+ + merge script: allow custom strategies
+ + merge script: merge -X<option>
+ + merge script: improve log message subject
+ + merge script: refuse to merge during merge
+ + merge script: tweak unmerged files message to match builtin
+ + merge script: --squash, --ff from unborn branch are errors
+ + fmt-merge-msg -m to override merge title
+ + merge-base --independent to print reduced parent list in a merge
+ + merge-base --octopus to mimic show-branch --merge-base
+ + Documentation: add a SEE ALSO section for merge-base
+ + t6200 (fmt-merge-msg): style nitpicks
+ + t6010 (merge-base): modernize style
+ + t7600 (merge): test merge from branch yet to be born
+ + t7600 (merge): check reflog entry
+ + t7600 (merge): do not launch gitk for --debug
+ + t7600 (merge): modernize style
+ + merge: do not mistake (ancestor of) tag for branch
+ (this branch is used by rr/fmt-merge-msg.)
+
+* js/detached-stash (2010-09-01) 10 commits
+  (merged to 'next' on 2010-08-31 at 7d20c13)
+ + t3903: fix broken test_must_fail calls
+  (merged to 'next' on 2010-08-26 at 7180a87)
+ + detached-stash: update Documentation
+ + detached-stash: tests of git stash with stash-like arguments
+ + detached-stash: simplify git stash show
+ + detached-stash: simplify git stash branch
+ + detached-stash: refactor git stash pop implementation
+ + detached-stash: simplify stash_drop
+ + detached-stash: simplify stash_apply
+ + detached-stash: work around git rev-parse failure to detect bad log refs
+ + detached-stash: introduce parse_flags_and_revs function
+
+* js/maint-reflog-beyond-horizon (2010-09-01) 4 commits
+  (merged to 'next' on 2010-08-31 at d700755)
+ + t1503: fix broken test_must_fail calls
+  (merged to 'next' on 2010-08-26 at 4281562)
+ + rev-parse: tests git rev-parse --verify master@{n}, for various n
+ + sha1_name.c: use warning in preference to fprintf(stderr
+ + rev-parse: exit with non-zero status if ref@{n} is not valid.
+
+* mg/doc-bundle (2010-08-23) 3 commits
+  (merged to 'next' on 2010-08-23 at 2251a51)
+ + git-bundle.txt: Clarify rev-list-args restrictions
+ + git-bundle.txt: whitespace cleanup
+ + git-bundle.txt: Cleanup
+
+* nd/clone-depth-zero (2010-08-23) 1 commit
+  (merged to 'next' on 2010-08-26 at b4491c3)
+ + clone: warn users --depth is ignored in local clones
+
+--------------------------------------------------
+[New Topics]
+
+* ks/recursive-rename-add-identical (2010-09-01) 1 commit
+  (merged to 'next' on 2010-09-03 at 1a5082f)
+ + RE: [PATCH] Avoid rename/add conflict when contents are identical
+
+* po/sendemail (2010-09-05) 3 commits
+ - send-email: add --smtpserveroption
+ - send-email: remove unused @smtp_host_parts variable
+ - send-email: Minor indentation fix
+
+--------------------------------------------------
+[Stalled]
+
+* jj/icase-directory (2010-08-16) 6 commits
+  (merged to 'next' on 2010-08-26 at 9d8e1bc)
+ + Support case folding in git fast-import when core.ignorecase=true
+ + Support case folding for git add when core.ignorecase=true
+ + Add case insensitivity support when using git ls-files
+ + Add case insensitivity support for directories when using git status
+ + Case insensitivity support for .gitignore via core.ignorecase
+ + Add string comparison functions that respect the ignore_case variable.
+
+Depends on GNU FNM_CASEFOLD.  Presumably a bit of tweak in Makefile for
+non-windows but non-GNU platforms is all it takes?
+
+* by/line-log (2010-08-11) 17 commits
+  (merged to 'next' on 2010-08-26 at a160ff1)
+ + Document line history browser
+ + Add tests for line history browser
+ + Add --full-line-diff option
+ + Add --graph prefix before line history output
+ + Add parent rewriting to line history browser
+ + Make graph_next_line external to other part of git
+ + Make rewrite_parents public to other part of git
+ + Hook line history into cmd_log, ensuring a topo-ordered walk
+ + Print the line log
+ + map/take range to the parent of commits
+ + Add range clone functions
+ + Export three functions from diff.c
+ + Parse the -L options
+ + Refactor parse_loc
+ + Add the basic data structure for line level history
+ + parse-options: add two helper functions
+ + parse-options: enhance STOP_AT_NON_OPTION
+
+There is a reported crash with valgrind trace.  Bo seems to be looking
+into it.
+
+* il/rfc-remote-fd-ext (2010-08-26) 7 commits
+ - remote-ext/fd style fixup
+ - Fix build on Windows
+ - Simplify send_git_request()
+ - Rewrite bidirectional traffic loop
+ - gitignore: Ignore the new /git-remote-{ext,fd} helpers
+ - New remote helper: git-remote-ext
+ - New remote helper git-remote-fd
+
+Needs a bit of usage illustration (this does not seem to come with any
+documentation nor tests).
+
+* zl/mailinfo-recode-patch (2010-06-14) 2 commits
+ - add --recode-patch option to git-am
+ - add --recode-patch option to git-mailinfo
+
+I recall there was another round of re-roll planned for this one.
+
+* jk/tag-contains (2010-07-05) 4 commits
+ - Why is "git tag --contains" so slow?
+ - default core.clockskew variable to one day
+ - limit "contains" traversals based on commit timestamp
+ - tag: speed up --contains calculation
+
+The idea of the bottom one is probably Ok, except that the use of object
+flags needs to be rethought, or at least the helper needs to be moved to
+builtin/tag.c to make it clear that it should not be used outside the
+current usage context.
+
+--------------------------------------------------
+[Cooking]
+
+* ch/filter-branch-deprecate-remap-to-ancestor (2010-08-27) 1 commit
+ - filter-branch: retire --remap-to-ancestor
+
+* ch/maint-cannot-create-bundle-error (2010-08-27) 1 commit
+ - bundle: detect if bundle file cannot be created
+
+* rr/format-patch-count-without-merges (2010-08-28) 2 commits
+ - format-patch: Don't go over merge commits
+ - t4014-format-patch: Call test_tick before committing
+
+* as/daemon-multi-listen (2010-08-29) 2 commits
+ - daemon: allow more than one host address given via --listen
+ - daemon: add helper function setup_named_sock()
+
+I think the idea is sound.  It came a bit late in the cycle for the next
+release and probably needs a bit more polish.
+
+* jc/pickaxe-grep (2010-08-31) 4 commits
+ - diff/log -G<pattern>: tests
+ - git log/diff: add -G<regexp> that greps in the patch text
+ - diff: pass the entire diff-options to diffcore_pickaxe()
+ - gitdiffcore doc: update pickaxe description
+
+This is a re-roll of "grepping inside the log -p output" which is a
+feature that is often asked for when people hear about -S option.
+
+* jh/error-removing-missing-note (2010-08-31) 1 commit
+  (merged to 'next' on 2010-09-04 at 428b078)
+ + notes: Don't create (empty) commit when removing non-existing notes
+
+Will merge to 'master' shortly.
+
+* jk/test-must-fail-missing (2010-08-31) 4 commits
+  (merged to 'next' on 2010-09-04 at cc5c1c4)
+ + tests: make test_might_fail fail on missing commands
+ + tests: make test_might_fail more verbose
+ + tests: make test_must_fail fail on missing commands
+ + tests: make test_must_fail more verbose
+
+Will merge to 'master' shortly.
+
+* jl/fetch-submodule-recursive (2010-08-30) 2 commits
+ - Submodules: Add the new "fetch" config option for fetch and pull
+ - fetch/pull: Recursively fetch populated submodules
+
+I think the idea is sound and hopefully the end result will help the heavy
+users of subprojects.  It came a bit late in the cycle for the next
+release, though.
+
+* kf/askpass-config (2010-08-30) 3 commits
+  (merged to 'next' on 2010-09-04 at c49783f)
+ + Extend documentation of core.askpass and GIT_ASKPASS.
+ + Allow core.askpass to override SSH_ASKPASS.
+ + Add a new option 'core.askpass'.
+
+Will merge to 'master' shortly.
+
+* tf/cleanup-builtin-help-headers (2010-08-31) 1 commit
+  (merged to 'next' on 2010-09-06 at dbf0d4b)
+ + builtin.h: Move two functions definitions to help.h.
+
+* en/object-list-with-pathspec (2010-08-26) 2 commits
+ - Make rev-list --objects work together with pathspecs
+ - Add testcases showing how pathspecs are ignored with rev-list --objects
+
+* bc/maint-fetch-url-only (2010-08-25) 2 commits
+  (merged to 'next' on 2010-09-04 at 710af12)
+ + builtin/fetch.c: ignore merge config when not fetching from branch's remote
+ + t/t5510: demonstrate failure to fetch when current branch has merge ref
+
+Will merge to 'master' shortly.
+
+* jf/merge-ignore-ws (2010-08-26) 4 commits
+ - merge-recursive: options to ignore whitespace changes
+ - merge-recursive --patience
+ - ll-merge: replace flag argument with options struct
+ - merge-recursive: expose merge options for builtin merge
+
+I think the idea is sound.  It came a bit late in the cycle for the next
+release, though.
+
+* jk/maint-pass-c-config-in-env (2010-08-24) 2 commits
+  (merged to 'next' on 2010-09-04 at f4ed3ac)
+ + do not pass "git -c foo=bar" params to transport helpers
+ + pass "git -c foo=bar" params through environment
+
+Will merge to 'master' shortly.
+
+* rr/fmt-merge-msg (2010-08-27) 5 commits
+ - t6200-fmt-merge-msg: Exercise '--log' to configure shortlog length
+ - t6200-fmt-merge-msg: Exercise 'merge.log' to configure shortlog length
+ - merge: Make 'merge.log' an integer or boolean option
+ - merge: Make '--log' an integer option for number of shortlog entries
+ - fmt_merge_msg: Change fmt_merge_msg API to accept shortlog_len
+
+I think the idea is sound.  It came a bit late in the cycle for the next
+release, though.
+
+* tr/merge-unborn-clobber (2010-08-22) 1 commit
+ - Exhibit merge bug that clobbers index&WT
+
+* en/tree-walk-optim (2010-08-26) 4 commits
+ - diff_tree(): Skip skip_uninteresting() when all remaining paths interesting
+ - tree_entry_interesting(): Make return value more specific
+ - tree-walk: Correct bitrotted comment about tree_entry()
+ - Document pre-condition for tree_entry_interesting
+
+I think the idea is sound.  For a patch that touches fairly core part of
+the system, it came a bit late in the cycle, though.
+
+* cb/ignored-paths-are-precious (2010-08-21) 1 commit
+ - checkout/merge: optionally fail operation when ignored files need to be overwritten
+
+I fixed up a trivial error in the configuration parser (which didn't
+return immediately after parsing), and while at it flipped the default 
+value of the configuration and the command line option to false.
+
+This probably needs tests; also we know of longstanding bugs in related
+area that needs to be addressed---they do not have to be part of this
+series but their reproduction recipe would belong to the test script for
+this topic.
+
+It may hurt users to make the new feature on by default, especially the
+ones with subdirectories that come and go.  For a patch that changes a
+long established semantics, it came a bit late in the cycle, so it will
+have to wait until the next release.
+
+* po/etc-gitattributes (2010-09-01) 1 commit
+ - Add global and system-wide gitattributes
+
+I think the idea is sound.  For a patch that touches fairly core part of
+the system, it came a bit late in the cycle, though.
+
+* gb/shell-ext (2010-08-27) 6 commits
+  (merged to 'next' on 2010-08-27 at e1ef3c1)
+ + shell: Display errors from improperly-formatted command lines
+ + Merge branch 'gb/split-cmdline-errmsg' into gb/shell-ext
+  (merged to 'next' on 2010-08-24 at 49ea7b8)
+ + shell: Rewrite documentation and improve error message
+ + Add sample commands for git-shell
+ + Add interactive mode to git-shell for user-friendliness
+ + Allow creation of arbitrary git-shell commands
+
+I am not very happy about adding these backdoors to git-shell, which is
+primarily a security mechanism, and obviously security and backdoor do not
+mix well.
+
+* ab/i18n (2010-08-30) 21 commits
+ - gettext tests: test message re-encoding under C
+ - po/pl.po: add Polish translation
+ - po/is.po: add Icelandic translation
+ - po/is.po: msgmerge and add Language: header
+ - gettext tests: mark a test message as not needing translation
+ - gettext tests: test re-encoding with a UTF-8 msgid under Shell
+ - gettext tests: test message re-encoding under Shell
+ - gettext tests: add detection for is_IS.ISO-8859-1 locale
+ - gettext tests: update test/is.po to match t/t0200/test.c
+ - gettext tests: test if $VERSION exists before using it
+ - gettext.c: work around us not using setlocale(LC_CTYPE, "")
+ - gettext: localize the main git-init message
+ - gettext: make the simple parts of git-init localizable
+ - builtin.h: Include gettext.h
+ - Makefile: use variables and shorter lines for xgettext
+ - Makefile: tell xgettext(1) that our source is in UTF-8
+ - Makefile: provide a --msgid-bugs-address to xgettext(1)
+ - Makefile: A variable for options used by xgettext(1) calls
+ - tests: locate i18n lib&data correctly under --valgrind
+ - gettext: setlocale(LC_CTYPE, "") breaks Git's C function assumptions
+ - Add infrastructure for translating Git with gettext
+
+Kicked back to 'pu' to give it a bit more time to experiment with a
+Porcelain command or a two, and an opportunity for a fresh restart if
+necessary in the next cycle.
