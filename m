@@ -1,8 +1,8 @@
-From: Jeff King <peff@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: guarding everything with test_expect_success (Re: [PATCH 6/7]
  t1303 (config): style tweaks)
-Date: Tue, 7 Sep 2010 01:56:37 -0400
-Message-ID: <20100907055636.GA30357@sigill.intra.peff.net>
+Date: Tue, 7 Sep 2010 01:12:13 -0500
+Message-ID: <20100907061213.GU1182@burratino>
 References: <4C85357A.8090000@web.de>
  <20100906190655.GG25426@burratino>
  <4C854B36.6010606@web.de>
@@ -10,170 +10,118 @@ References: <4C85357A.8090000@web.de>
  <20100907015317.GG1182@burratino>
  <20100907043050.GA13291@sigill.intra.peff.net>
  <20100907051218.GO1182@burratino>
+ <20100907055636.GA30357@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: Jens Lehmann <Jens.Lehmann@web.de>,
 	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 07:56:27 2010
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 07 08:14:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsrAQ-00084z-Mc
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 07:56:27 +0200
+	id 1OsrRh-0006yB-EF
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 08:14:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756099Ab0IGF4W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 01:56:22 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:39803 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752844Ab0IGF4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 01:56:20 -0400
-Received: (qmail 3628 invoked by uid 111); 7 Sep 2010 05:56:19 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Sep 2010 05:56:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Sep 2010 01:56:37 -0400
+	id S1752446Ab0IGGON (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Sep 2010 02:14:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34998 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751494Ab0IGGOL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Sep 2010 02:14:11 -0400
+Received: by iwn5 with SMTP id 5so5011994iwn.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 23:14:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=t1iXU7W+WF9i2jcZYScuB08x9grn4fO8Eeq7oql9a8g=;
+        b=RLNEQIxPa+CKVjT6l7GUoNf+1fGt0dXMpdQ9oPouCrK5+I1bo8a08cLBKmk0HhS163
+         hhcidcZADKi8/QipdgLao8MMmV54biuvODHHGSNGQF1e4r8BQZm7eI9Ugg0bSgdpwCMQ
+         rDJrk19XCPWqwt6zP8lEW4s1U0UznCRfyZcUw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ldx5OsUGOj5dF0xeD71M0tpS2j4/JbeP+Xy8JgPoe00FxVLzP2/iHPahnn/CDVnrA7
+         Dhn+qjGUbtBT7gm1tQdZHNc07xMWW3XrDHDm4lSRwgfyQYTWxigzKadp2Xj9ll1m3lQp
+         38KboSp8JKkyhyseuv9/QGE17yaAmycZx/srg=
+Received: by 10.231.190.203 with SMTP id dj11mr7471508ibb.93.1283840051392;
+        Mon, 06 Sep 2010 23:14:11 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm6789514ibk.21.2010.09.06.23.14.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 06 Sep 2010 23:14:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20100907051218.GO1182@burratino>
+In-Reply-To: <20100907055636.GA30357@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155682>
 
-On Tue, Sep 07, 2010 at 12:12:18AM -0500, Jonathan Nieder wrote:
+Jeff King wrote:
 
-> As you mentioned, it is a big departure from the style of the existing
-> tests.  So why push it?  A quick story:
+> Perhaps we could refactor it into a
+> set of two functions that keep state? E.g., something like:
 > 
-> 1. Long ago, when I first debugged a test script with -v, I was a bit
->    confused because the transcript did not tell the whole story
->    (because some commands are run outside test assertions).  No big
->    deal, but I remembered it.
+> test_start 'setup'
+> cat >expect <<EOF
+> ... whatever ...
+> EOF
+> test_end success
+> 
+> test_start 'description'
+> git frob >actual &&
+> test_cmp expect actual
+> test_end success
+> 
+> where test_start would set up >&3 and >&4 as usual, and test_end would
+> check $? and report the status. The biggest problem I see is that we
+> never have the actual shell script snippet as a string, so we don't have
+> a way of printing it for "-v" (or on failure). Hmm.
 
-Yeah, that can be frustrating. However, I have found (as I think you
-have, from your point 4 below) that it is not just about seeing the
-whole story with "-v", but rather about reaching some state in the test
-script which may depend on prior tests. So yes, if everything were in
-"-v", you could in theory cut and paste it all into a terminal. But
-would you necessarily _want_ to, if it is test 25 in the script?
+FWIW I don't mind this idea (to be used as an alternative to
+test_expect_success when quoting issues get ugly).  Maybe the harness
+could fetch the snippet by parsing $0?  (Sorry, couldn't resist.
+Something simpler might be possible: e.g., a special
 
-What I often end up doing is sticking "&& bash" into the test, running
-the script, and exploring from that state. Perhaps we could have more
-support for that. E.g., something like:
-
-  $ ./t1303-wacky-config.sh --debug=2
-  expecting success:
-          setup &&
-          git config section.key bar &&
-          check section.key bar
-  ok 1 - modify same key
-
-  entering debug session for test 2; test text is:
-        setup &&
-        git config section2.key bar &&
-        check section.key foo &&
-        check section2.key bar
-
-  $ [now try running commands]
-
-The obvious problem is that you're actually in a subshell, not the same
-shell. We would probably want to do some behind-the-scenes magic to
-import variables and functions from the parent shell (unless you can
-think of a clever way to suddenly turn the existing shell interactive).
-
-> 2. Sometimes the setup commands outside of test scripts produce
->    output.  This is annoying, so people silence it.
-
-Yeah, it is annoying. And I am totally in favor of things that might
-produce output going into test_expect_success blocks. And...
-
-> 3. Sometimes the setup commands outside of test scripts are broken.
->    Tests do not use "set -e" or check for errors outside of test
->    assertions, so simple typos can go undetected for a long time.
-
-I agree here. And I'm totally in favor of things that might fail going
-into test_expect_success blocks. I don't consider running "printf", or
-dumping a here-document into a file via cat to be likely to fail.
-
-> 4. What actually provoked me to care about it: when trying to add a
->    test to t9301-fast-import.sh, say, I found myself completely lost.
->    It is really hard to figure out what the state is supposed to be
->    at a particular point in the test script.  Sometimes I am tempted
->    to write a new test script when adding a new behavior, only
->    because I do not understand the existing one on a topic.  All the
->    tests can be well-behaved and follow sane invariants, but that
->    does not matter, because the invariants are not documented anywhere.
-
-To some degree, I addressed this above. But yeah, even with a nice
-drop-to-shell debug support, undocumented invariants are going to be a
-pain when debugging a test. But I don't think moving them into a
-test_expect_success block is going to help that. The problem is subtle
-state changes of the test directory.
-
-Things like test_when_finished help with that, and I hope people will
-use them. But I fear that tests will always suffer from being somewhat
-messier than actual code, and will always be written in a bit of a
-procedural fashion. That is, I don't think we will ever achieve a level
-of modularity and orthogonality in writing tests that would mean you
-could just run some tests in isolation. It's just not worth the effort
-most of the time.
-
-Still, I encourage you to try to push in that direction by leading by
-example. You obviously have some ideas. My only real complaint about
-your patch was that I find the syntax uglier. And your suggestions are
-not alone in that. We have tons of ugly quoting because of the need to
-double-quote in test_expect_success. Perhaps we could refactor it into a
-set of two functions that keep state? E.g., something like:
-
-test_start 'setup'
+test_expect_success 'description' - <<\test_end
 cat >expect <<EOF
 ... whatever ...
 EOF
-test_end success
+test_end
 
-test_start 'description'
-git frob >actual &&
-test_cmp expect actual
-test_end success
+syntax.)
 
-where test_start would set up >&3 and >&4 as usual, and test_end would
-check $? and report the status. The biggest problem I see is that we
-never have the actual shell script snippet as a string, so we don't have
-a way of printing it for "-v" (or on failure). Hmm.
+>> I don't know: I think
+>> 
+>> 	cat >expect <<-\EOF &&
+>> 	...
+>> 	EOF
+>> 
+>> is pretty readable.  The problem with sticking to
+>
+> Yeah, I almost mentioned that, but for some reason in the back of my
+> mind <<- is not actually portable. Perhaps I am just thinking of the
+> fact that perl does not support it.
 
-> The result would be:
-> 
->  - test commands all shown with "-v", output all suppressed without;
->  - all commands pass at least the sanity check of exiting with 0
->    status;
->  - easy to write a GIT_SKIP_TESTS specification.  Would be possible
->    to add the ability to try a single test (plus all setup tests in
->    that script that precede it);
->  - as long as all the setup tests pass, the list of failed tests
->    from a test failure can be more informative;
->  - state can be tracked by just reading the setup tests.
+I seem to remember some language where the here documents would snip
+some well determined constant amount of whitespace from the enclosed
+lines.  Unfortunately in the shell, that is not the rule: <<- just
+trims out all the leading tabs.
 
-Again, I think these are great goals. I'm not sure we will ever reach
-them, or whether we will find the work that goes into them to be worth
-the effort (especially because it is so easy to break these properties
-with new tests, and there is not a good test harness for testing how
-well you have written your tests).
+So when expected output includes leading tabs, it is ugly again.
 
-> I don't know: I think
-> 
-> 	cat >expect <<-\EOF &&
-> 	...
-> 	EOF
-> 
-> is pretty readable.  The problem with sticking to
+	q_to_tab <<-\EOF
+	Like this:
 
-Yeah, I almost mentioned that, but for some reason in the back of my
-mind <<- is not actually portable. Perhaps I am just thinking of the
-fact that perl does not support it.
-
--Peff
+	Q1. indented line
+	Q2. second indented line
+	EOF
