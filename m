@@ -1,162 +1,203 @@
-From: Antriksh Pany <antriksh.pany@gmail.com>
-Subject: Re: [PATCH] po/hi.po: Add Hindi Translation
-Date: Tue, 7 Sep 2010 09:14:50 +0530
-Message-ID: <AANLkTimprZ39ggcfgh_6b9yGDnfM8vFSfs+rH82ZWfkD@mail.gmail.com>
-References: <1283711267-27679-1-git-send-email-artagnon@gmail.com>
-	<AANLkTinGvySGu=rQxccCJ6v3ct6s6kf3butEcZvSMPpB@mail.gmail.com>
-	<20100906042942.GA32387@kytes>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/7] tests: subshell indentation stylefix
+Date: Mon, 6 Sep 2010 22:44:17 -0500
+Message-ID: <20100907034417.GL1182@burratino>
+References: <4C85357A.8090000@web.de>
+ <20100906190655.GG25426@burratino>
+ <4C854B36.6010606@web.de>
+ <20100907014135.GA1182@burratino>
+ <20100907014254.GB1182@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: Sitaram Chamarty <sitaramc@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 05:45:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Tue Sep 07 05:46:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Osp7I-0008Dg-Rl
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 05:45:05 +0200
+	id 1Osp8X-0000Kl-WD
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 05:46:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755989Ab0IGDoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 23:44:55 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:53125 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755675Ab0IGDow (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 23:44:52 -0400
-Received: by yxp4 with SMTP id 4so1716865yxp.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 20:44:51 -0700 (PDT)
+	id S1754031Ab0IGDqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 23:46:17 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:65501 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751959Ab0IGDqQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 23:46:16 -0400
+Received: by gxk23 with SMTP id 23so1807367gxk.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 20:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QySeC2sz0CDPLWsqo6uRAOKMnAKHES1b6BfNycTKF6Y=;
-        b=pxD3BW6Y7pWfeLCor/wVyv7GwrcFGWP0Li5pvP1EQwyvINXCg7j9yO/9J8o/PeCCUI
-         3BdMK9J84v+02pnHUh0nfPGVw+UuTbo8xMnxv3JVMFA2yq9MPdA5YTTRY+bW2uM+LXV3
-         XuM/LJv8CQdYXAgR1V9PeojFTJdOcd+O7/rOA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=gJvAOdROlRPKH0E9wujIqxe17gHYYC1i9AWfAfPnLFA=;
+        b=mQ0M3QYqENIpz98d+TxSY1HZbw7UYzjnVfzSccgcGnMPU7cWgwjZrC3VMRuKEFBQZg
+         EPeBqswuYmV6ZwLK+fwMhhrlf0JtAdpZEKNgxPvxM+rVLt8iaUa3aavrjStd8m0k76bQ
+         9H8TA/+Br2A/Kcr41njcfRZpcWKr4Wajjc0Qk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=u5y4ZQogLG5BfwywrO41XwypnDwPMOnZJUxshx9Age2RZMm45Geq6JAbXnmYKmGHB3
-         lZOANmwfOk4kw/AS/8L7VEJFTXfKJQPi49wx7y+77dafAE+zTSEYemivANAK90pHoYWY
-         GUZWoJUTqohmJf5mSRgYFYdAI55h2Q6lwI48c=
-Received: by 10.150.49.16 with SMTP id w16mr57201ybw.119.1283831090913; Mon,
- 06 Sep 2010 20:44:50 -0700 (PDT)
-Received: by 10.42.3.212 with HTTP; Mon, 6 Sep 2010 20:44:50 -0700 (PDT)
-In-Reply-To: <20100906042942.GA32387@kytes>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hwF4kxN4IrMLbtPAiFUAxRGvEfPojcxscnPL7BZJQm1MxPASZ8Fh/2ibF6wkMcNG/a
+         eej5LY5+M4alcqAu8aXgCfabnW/yoxRrcwoZm0sbykmqJDQ0TexUtA9U11rzokfRRFJZ
+         52KzTs8TZrq94Fw278jqpUAR5zzw5yknktsOI=
+Received: by 10.150.98.10 with SMTP id v10mr16734ybb.387.1283831175711;
+        Mon, 06 Sep 2010 20:46:15 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id q38sm4469585yba.6.2010.09.06.20.46.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 06 Sep 2010 20:46:14 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100907014254.GB1182@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155670>
 
-SGkgUmFtCgpOaWNlIHRvIHNlZSBzb21lIEhpbmRpIGFyb3VuZCBoZXJlIDtQCgpBIGZldyBjb21t
-ZW50cyBpbmxpbmUuCgpPbiBNb24sIFNlcCA2LCAyMDEwIGF0IDk6NTkgQU0sIFJhbWt1bWFyIFJh
-bWFjaGFuZHJhIDxhcnRhZ25vbkBnbWFpbC5jb20+IHdyb3RlOgo+IEhpIFNpdGFyYW0sCj4KPiBT
-aXRhcmFtIENoYW1hcnR5IHdyaXRlczoKPj4gbG9va3MgT0sgdG8gbWUuIMKgU29tZSBvZiB0aG9z
-ZSB3b3JkcyB3aWxsIG5ldmVyIGJlIGVuY291bnRlcmVkIGluCj4+IGNvbGxvcXVpYWwgSGluZGkg
-KEkgaGFkIHRvIHRoaW5rIGZvciBhIGJpdCBvbiDgpKjgpL/gpLDgpY3gpKbgpYfgpLbgpL/gpJXg
-pL4gYW5kCj4+IOCkquCljeCksOCkpOClgOCkleCkvuCkpOCljeCkruCklSDgpLLgpL/gpILgpJUh
-KSAsIGJ1dCB0aGF0J3MgdGhlIHdheSBpdCBhbHdheXMgaXMuIMKgV2UgZW5kIHVwIGp1c3QKPj4g
-dXNpbmcgdGhlIEVuZ2xpc2ggd29yZCB3aXRoaW4gSGluZGkvVGVsdWd1L3doYXRldmVyIDotKQo+
-Cj4gVGhhbmtzIGZvciB0aGUgZmVlZGJhY2suIFllcywgdGhhdCdzIHRydWUtIGV2ZW4gYW1vbmcg
-bXkgZnJpZW5kcywgb25seQo+IGEgZmV3IGV4cGVydCBIaW5kaSBzcGVha2VycyB3ZXJlIGFibGUg
-dG8gZm9sbG93IGhpbmRpLnBvCj4gY29tcGxldGVseS4gSG93ZXZlciwgSSBmaWd1cmVkIHRoYXQg
-b25seSB0aG9zZSBwZW9wbGUgd2hvIGFyZSBtb3JlCj4gY29tZm9ydGFibGUgaW4gSGluZGkgdGhh
-biBFbmdsaXNoIHdpbGwgYWN0dWFsbHkgdXNlIGhpbmRpLnBvLCBzbyB3ZQo+IG1pZ2h0IGFzIHdl
-bGwgZG8gaXQgcmlnaHQgOikKPgo+IEkgYWxzbyBkaXNjb3ZlcmVkIGFub3RoZXIgdGhpbmctIGV2
-ZW4gZXhwZXJ0IEhpbmRpIHNwZWFrZXJzIGRvbid0IHNlZW0KPiB0byB1bmRlcnN0YW5kIEhpbmRp
-IGdyYW1tYXIgdmVyeSB3ZWxsIDpwIEFmdGVyIGEgZmV3IGhvdXJzIG9mCj4gc3R1ZHlpbmcsIEkg
-d2FzIGFibGUgdG8gY29ycmVjdCBhIGZldyBtb3JlIG1pc3Rha2VzIHRoYXQgb3RoZXJzCj4gd2Vy
-ZW4ndCBhYmxlIHRvIHNwb3QuIEhlcmUncyB0aGUgZGlmZi4KPgo+IEp1bmlvOiBQbGVhc2Ugc3F1
-YXNoIHRoaXMgaW50byB0aGUgZmlyc3QgcmV2aXNpb24gb2YgdGhlIHBhdGNoLgo+Cj4gZGlmZiAt
-LWdpdCBhL3BvL2hpLnBvIGIvcG8vaGkucG8KPiBpbmRleCBkMzFlNjBiLi5hNTQ2NGIzIDEwMDY0
-NAo+IC0tLSBhL3BvL2hpLnBvCj4gKysrIGIvcG8vaGkucG8KPiBAQCAtMTIsMTEgKzEyLDExIEBA
-IG1zZ3N0ciAiIgo+Cj4gwqAjLCBjLWZvcm1hdAo+IMKgbXNnaWQgIkNvdWxkIG5vdCBtYWtlICVz
-IHdyaXRhYmxlIGJ5IGdyb3VwIgo+IC1tc2dzdHIgIiVzIOCkleCliyDgpLjgpK7gpYLgpLkg4KSm
-4KWN4KS14KS+4KSw4KS+IOCksuCkv+CkluCkqOClhyDgpK/gpYvgpJfgpY3gpK8g4KSo4KS54KWA
-4KSCIOCkrOCkqOCkviDgpLjgpJXgpYciCj4gK21zZ3N0ciAiJXMg4KSV4KWLIOCkuOCkruClguCk
-uSDgpKbgpY3gpLXgpL7gpLDgpL4g4KSy4KS/4KSW4KSo4KWHIOCkleClgCDgpIfgpJzgpL7gpJzg
-pLzgpKQg4KSo4KS54KWAIOCkpuClhyDgpLjgpJXgpYciCj4KPiDCoCMsIGMtZm9ybWF0Cj4gwqBt
-c2dpZCAiaW5zYW5lbHkgbG9uZyB0ZW1wbGF0ZSBuYW1lICVzIgo+IC1tc2dzdHIgIuCkn+Clh+Ck
-ruCljeCkquCksuClh+CknyDgpJXgpL4g4KSo4KS+4KSuIOCkrOCkueClgeCkpCDgpLLgpILgpKzg
-pL4g4KS54KWIOiAlcyIKPiArbXNnc3RyICLgpJ/gpYfgpK7gpY3gpKrgpLLgpYfgpJ8gJXMg4KSV
-4KS+IOCkqOCkvuCkriDgpKzgpLngpYHgpKQg4KSy4KSC4KSs4KS+IOCkueCliCIKYmFodXQgLT4g
-YXR5YW50PwoKPgo+IMKgIywgYy1mb3JtYXQKPiDCoG1zZ2lkICJjYW5ub3Qgc3RhdCAnJXMnIgo+
-IEBAIC0yOCw0MCArMjgsNDAgQEAgbXNnc3RyICLgpJ/gpYfgpK7gpY3gpKrgpLLgpYfgpJ8gJyVz
-JyDgpJXgpYsgW3N0YXRdIOCkqOCkueClgOCkgiDgpJXgpLAg4KS44KSVCj4KPiDCoCMsIGMtZm9y
-bWF0Cj4gwqBtc2dpZCAiY2Fubm90IG9wZW5kaXIgJyVzJyIKPiAtbXNnc3RyICLgpKjgpL/gpLDg
-pY3gpKbgpYfgpLbgpL/gpJXgpL4g4KSo4KS54KWA4KSCIOCkluCli+CksiDgpLjgpJXgpYc6ICcl
-cyciCj4gK21zZ3N0ciAi4KSo4KS/4KSw4KWN4KSm4KWH4KS24KS/4KSV4KS+ICclcycg4KSo4KS5
-4KWA4KSCIOCkluCli+CksiDgpLjgpJXgpYciCj4KPiDCoCMsIGMtZm9ybWF0Cj4gwqBtc2dpZCAi
-Y2Fubm90IHJlYWRsaW5rICclcyciCj4gLW1zZ3N0ciAi4KSy4KS/4KSC4KSVIOCkqOCkueClgOCk
-giDgpKrgpKLgpLwg4KS44KSV4KWHOiAnJXMnIgo+ICttc2dzdHIgIuCksuCkv+CkguCklSAnJXMn
-IOCkqOCkueClgOCkgiDgpKrgpKLgpLwg4KS44KSV4KWHIgo+Cj4gwqAjLCBjLWZvcm1hdAo+IMKg
-bXNnaWQgImluc2FuZWx5IGxvbmcgc3ltbGluayAlcyIKPiAtbXNnc3RyICLgpKrgpY3gpLDgpKTg
-pYDgpJXgpL7gpKTgpY3gpK7gpJUg4KSy4KS/4KSC4KSVIOCkrOCkueClgeCkpCDgpLLgpILgpKzg
-pL4g4KS54KWIOiAlcyIKPiArbXNnc3RyICLgpKrgpY3gpLDgpKTgpYDgpJXgpL7gpKTgpY3gpK7g
-pJUg4KSy4KS/4KSC4KSVICVzIOCkrOCkueClgeCkpCDgpLLgpILgpKzgpL4g4KS54KWIIgpTYW1l
-IHN1Z2dlc3Rpb246IGJhaHV0IC0+IGF0eWFudD8KQWxzbywgZHJvcHBpbmcgdGhlICfgpLngpYgn
-IG1pZ2h0IGJlIGNyaXNwZXIgYW5kIGNsb3NlciB0byB0aGUgRW5nbGlzaCB2ZXJzaW9uLgoKPgo+
-IMKgIywgYy1mb3JtYXQKPiDCoG1zZ2lkICJjYW5ub3Qgc3ltbGluayAnJXMnICclcyciCj4gLW1z
-Z3N0ciAiJyVzJyDgpLjgpYcgJyVzJyDgpKrgpY3gpLDgpKTgpYDgpJXgpL7gpKTgpY3gpK7gpJUg
-4KSy4KS/4KSC4KSVIOCkqOCkueClgOCkgiDgpKzgpKjgpL4g4KS44KSV4KWHIgo+ICttc2dzdHIg
-Iiclcycg4KSV4KS+IOCkquCljeCksOCkpOClgOCkleCkvuCkpOCljeCkruCklSDgpLLgpL/gpILg
-pJUgJyVzJyDgpK7gpYfgpIIg4KSo4KS54KWA4KSCIOCkrOCkqOCkviDgpLjgpJXgpYciCj4KPiDC
-oCMsIGMtZm9ybWF0Cj4gwqBtc2dpZCAiY2Fubm90IGNvcHkgJyVzJyB0byAnJXMnIgo+IC1tc2dz
-dHIgIiclcycg4KSV4KS+IOCkqOCkleCksiAnJXMnIOCkqOCkueClgOCkgiDgpKzgpKjgpL4g4KS4
-4KSV4KWHIgo+ICttc2dzdHIgIiclcycg4KSV4KS+IOCkheCkqOClgeCkleClg+CkpOCkvyAnJXMn
-IOCkruClh+CkgiDgpKjgpLngpYDgpIIg4KSV4KSwIOCkuOCkleClhyIKa2EgLT4ga2kKCj4KPiDC
-oCMsIGMtZm9ybWF0Cj4gwqBtc2dpZCAiaWdub3JpbmcgdGVtcGxhdGUgJXMiCj4gLW1zZ3N0ciAi
-4KSf4KWH4KSu4KWN4KSq4KSy4KWH4KSfIOCkleCliyDgpIngpKrgpYfgpJXgpY3gpLfgpL4g4KSV
-4KSwIOCksOCkueClhyDgpLngpYg6ICVzIgo+ICttc2dzdHIgIuCkn+Clh+CkruCljeCkquCksuCl
-h+CknyAlcyDgpJXgpL4g4KSJ4KSq4KWH4KSV4KWN4KS34KS+IOCkleCksCDgpLDgpLngpYcg4KS5
-4KWIIgprYSAtPiBraQoKPgo+IMKgIywgYy1mb3JtYXQKPiDCoG1zZ2lkICJpbnNhbmVseSBsb25n
-IHRlbXBsYXRlIHBhdGggJXMiCj4gLW1zZ3N0ciAi4KSf4KWH4KSu4KWN4KSq4KSy4KWH4KSfIOCk
-leCkviDgpIbgpJXgpL7gpLAg4KSs4KS54KWB4KSkIOCksuCkguCkrOCkviDgpLngpYg6ICVzIgo+
-ICttc2dzdHIgIuCkn+Clh+CkruCljeCkquCksuClh+CknyAlcyDgpJXgpL4g4KSG4KSV4KS+4KSw
-IOCkrOCkueClgeCkpCDgpLLgpILgpKzgpL4g4KS54KWIIgpBZ2FpbjogYmFodXQgLT4gYXR5YW50
-LiBBbmQgYWdhaW4sICfgpLngpYgnIGNvdWxkIGJlIGRyb3BwZWQgcGVyaGFwcy4KCj4KPiDCoCMs
-IGMtZm9ybWF0Cj4gwqBtc2dpZCAidGVtcGxhdGVzIG5vdCBmb3VuZCAlcyIKPiAtbXNnc3RyICLg
-pJ/gpYfgpK7gpY3gpKrgpLLgpYfgpJ8g4KSo4KS54KWA4KSCIOCkruCkv+CksuCkvjogJXMiCj4g
-K21zZ3N0ciAi4KSf4KWH4KSu4KWN4KSq4KSy4KWH4KSfICVzIOCkqOCkueClgOCkgiDgpK7gpL/g
-pLLgpL4iCj4KPiDCoCMsIGMtZm9ybWF0Cj4gwqBtc2dpZCAibm90IGNvcHlpbmcgdGVtcGxhdGVz
-IG9mIGEgd3JvbmcgZm9ybWF0IHZlcnNpb24gJWQgZnJvbSAnJXMnIgo+IC1tc2dzdHIgIiclcycg
-4KS44KWHIOCkl+CksuCkpCDgpLjgpY3gpLXgpLDgpYLgpKog4KS44KSC4KS44KWN4KSV4KSw4KSj
-ICVkIOCkleCkviDgpJ/gpYfgpK7gpY3gpKrgpLLgpYfgpJ8g4KSo4KSV4KSyIOCkqOCkueClgOCk
-giDgpJXgpLAg4KSw4KS54KWHIOCkueCliCIKPiArbXNnc3RyICInJXMnIOCkuOClhyDgpJfgpLLg
-pKQg4KS44KWN4KS14KSw4KWC4KSqIOCkuOCkguCkuOCljeCkleCksOCkoyAlZCDgpJXgpYcg4KSf
-4KWH4KSu4KWN4KSq4KSy4KWH4KSf4KWN4KS4IOCkleClhyDgpKjgpJXgpLIg4KSo4KS54KWA4KSC
-IOCkleCksCDgpLDgpLngpYcg4KS54KWIIgpIYWQgY2hhbmdlZCDgpKjgpJXgpLIgdG8g4KSF4KSo
-4KWB4KSV4KWD4KSk4KS/IGVhcmxpZXIuIE5vdCBkb2luZyB0aGF0IGhlcmU/Cgo+Cj4gwqAjLCBj
-LWZvcm1hdAo+IMKgbXNnaWQgImluc2FuZSBnaXQgZGlyZWN0b3J5ICVzIgo+IC1tc2dzdHIgIuCk
-luCksOCkvuCkrCDgpJfgpL/gpJ8g4KSo4KS/4KSw4KWN4KSm4KWH4KS24KS/4KSV4KS+ICVzIgo+
-ICttc2dzdHIgIiVzIOCkluCksOCkvuCkrCDgpJfgpL/gpJ8g4KSo4KS/4KSw4KWN4KSm4KWH4KS2
-4KS/4KSV4KS+IOCkueCliCIKSSB0aGluayB0aGUgZmlyc3Qgb25lIHdhcyBiZXR0ZXIuCgoKSGF2
-aW5nIGdvbmUgdGhyb3VnaCB0aGlzLCBJIGZpbmQgaXQgaGFyZCB0byB0aGluayB0aGF0IGFueW9u
-ZSBpcwpyZWFsbHkgZ29pbmcgdG8gdXNlIHRoZSBIaW5kaSB0cmFuc2xhdGlvbi4gQW55IEluZGlh
-biB3aG8gd291bGQgYmUKaW52b2x2ZWQgd2l0aCBnaXQgd291bGQgYWxtb3N0IGNlcnRhaW5seSBi
-ZSBpbnZvbHZlZCB3aXRoIGl0IGluIHRoZQpFbmdsaXNoIGxhbmd1YWdlLCBwYXJ0aWN1bGFybHkg
-Z2l2ZW4gdGhhdCBzb21lIG9mIHRoZSBIaW5kaSB3b3JkcyBhcmUKZmFpcmx5IGhhcmQgdG8gZm9s
-bG93LiBBbHNvLCB3aGVuIGl0IGNvbWVzIHRvIHRoZSBTY2llbmNlcyAoYW5kIGluCnBhcnRpY3Vs
-YXIsIENvbXB1dGVycykgSW5kaWFucyAoYXQgbGVhc3QgdGhlIEhpbmRpIHNwZWFraW5nCnBvcHVs
-YXRpb24pIGhhdmUgZGlyZWN0bHkgYWRvcHRlZCB0aGUgRW5nbGlzaCB2ZXJzaW9ucyBpbnN0ZWFk
-IG9mCnNlZWtpbmcgYXBwcm9wcmlhdGUgSGluZGkgb25lcy4KCklmIHdlIGFyZSBnb2luZyB0byBo
-YXZlIGEgaGluZGkucG8sIEkgdGhpbmsgaXQgbWF5IGJlIGFsdG9nZXRoZXIKYmV0dGVyIHRvIGRy
-b3AgdGhlIHVudXN1YWwgSGluZGkgd29yZHMsIGFuZCBsaXRlcmFsbHkgdXNlIHRoZSBFbmdsaXNo
-CndvcmQgd3JpdHRlbiBpbiBIaW5kaS4uIHRoZSB3YXkgeW91IGRpZCBmb3Igd29yZHMgbGlrZSAn
-dGVtcGxhdGVzJywKJ2xpbmsnIGV0Yy4gT3RoZXIgY2FuZGlkYXRlcyBjb3VsZCBiZSAnZGlyZWN0
-b3J5JywgJ2Zvcm1hdCcsCid2ZXJzaW9uJywgJ2NvcHknLCAnc3ltYm9saWMgKGxpbmspJywgJ2dy
-b3VwJywgJ3JlYWQnLCAnd3JpdGUnLiBJIGtub3cKdGhhdCB0cmFuc2xhdGlvbiBmb3IgdGhlIGxh
-c3QgZmV3IHdvcmRzIGFyZSBub3QgY29tcGxpY2F0ZWQuIEhvd2V2ZXIsCnRoZSBzdWJ0bGUgbWVh
-bmluZ3Mgb2YgdGhlc2Ugd29yZHMgaW4gdGhlIGNvbnRleHQgb2YgY29tcHV0ZXJzIGdldHMKbG9z
-dCB3aGVuIHRyYW5zbGF0ZWQgaW4gSGluZGkuIChGb3IgZXhhbXBsZSwgJ3JlYWQnIGFuZCAnd3Jp
-dGUnLCB3aGlsZQpiZWluZyBzaW1pbGFyIHRvIHJlYWwtbGlmZSB1c2FnZSwgaGF2ZSBpbiBmYWN0
-IHRha2VuIHZlcnkgc3BlY2lmaWMKbWVhbmluZ3MgaW4gdGhlIGNvbnRleHQgb2YgY29tcHV0ZXIg
-c2NpZW5jZS4pCgpDaGVlcnMKQW50cmlrc2gK
+Jonathan Nieder wrote:
+
+> Format the subshells introduced by the previous patch (Several tests:
+> cd inside subshell instead of around, 2010-09-06)
+
+Review of said previous patch follows.  Sorry for the confusing diffs.
+
+> --- a/t/t1020-subdirectory.sh
+> +++ b/t/t1020-subdirectory.sh
+> @@ -27,12 +27,13 @@ test_expect_success 'update-index and ls-files' '
+>  	one) echo pass one ;;
+>  	*) echo bad one; exit 1 ;;
+>  	esac &&
+> -	(cd dir &&
+> -	git update-index --add two &&
+> -	case "`git ls-files`" in
+> -	two) echo pass two ;;
+> -	*) echo bad two; exit 1 ;;
+> -	esac
+> +	(
+> +		cd dir &&
+> +		git update-index --add two &&
+> +		case "`git ls-files`" in
+> +		two) echo pass two ;;
+> +		*) echo bad two; exit 1 ;;
+> +		esac
+>  	) &&
+
+Trapping the "exit" in a subshell improves behavior.  I wonder why the
+script does not use "false" or "(exit 1)"; the tests outside the
+subshell have the same problem...
+
+> --- a/t/t4041-diff-submodule-option.sh
+> +++ b/t/t4041-diff-submodule-option.sh
+> @@ -85,9 +85,10 @@ EOF
+>  "
+>  
+>  commit_file sm1 &&
+> -head3=$(cd sm1 &&
+> -git reset --hard HEAD~2 >/dev/null &&
+> -git rev-parse --verify HEAD | cut -c1-7
+> +head3=$(
+> +	cd sm1 &&
+> +	git reset --hard HEAD~2 >/dev/null &&
+> +	git rev-parse --verify HEAD | cut -c1-7
+
+Unrelated: the --verify here does not have much effect on the upstream
+of a pipeline.  Maybe "git log -1 --abbrev=7 --format=%h", or even
+better, "git log -1 --format=%h" (for DEFAULT_ABBREV) would do the
+trick.
+
+> --- a/t/t9100-git-svn-basic.sh
+> +++ b/t/t9100-git-svn-basic.sh
+> @@ -22,16 +22,17 @@ esac
+>  test_expect_success \
+>      'initialize git svn' '
+>  	mkdir import &&
+> -	(cd import &&
+> -	echo foo > foo &&
+> -	ln -s foo foo.link
+> -	mkdir -p dir/a/b/c/d/e &&
+> -	echo "deep dir" > dir/a/b/c/d/e/file &&
+> -	mkdir bar &&
+> -	echo "zzz" > bar/zzz &&
+> -	echo "#!/bin/sh" > exec.sh &&
+> -	chmod +x exec.sh &&
+> -	svn_cmd import -m "import for git svn" . "$svnrepo" >/dev/null
+> +	(
+> +		cd import &&
+> +		echo foo >foo &&
+> +		ln -s foo foo.link
+
+Missing SYMLINKS prerequisite?
+
+> --- a/t/t9107-git-svn-migrate.sh
+> +++ b/t/t9107-git-svn-migrate.sh
+> @@ -6,14 +6,16 @@ test_description='git svn metadata migrations from previous versions'
+>  test_expect_success 'setup old-looking metadata' '
+>  	cp "$GIT_DIR"/config "$GIT_DIR"/config-old-git-svn &&
+>  	mkdir import &&
+> -	(cd import &&
+> -		for i in trunk branches/a branches/b \
+> -		         tags/0.1 tags/0.2 tags/0.3; do
+> -			mkdir -p $i && \
+> -			echo hello >> $i/README || exit 1
+> -		done && \
+> +	(
+> +		cd import &&
+> +		for i in trunk branches/a branches/b tags/0.1 tags/0.2 tags/0.3
+> +		do
+> +			mkdir -p $i &&
+> +			echo hello >>$i/README ||
+> +			exit 1
+
+An "exit" to avoid wasting time after a failing setup test might seem
+appropriate, but I am happier to see it trapped by the subshell.
+
+> --- a/t/t9116-git-svn-log.sh
+> +++ b/t/t9116-git-svn-log.sh
+> @@ -8,14 +8,16 @@ test_description='git svn log tests'
+>  
+>  test_expect_success 'setup repository and import' '
+>  	mkdir import &&
+> -	(cd import &&
+> -		for i in trunk branches/a branches/b \
+> -		         tags/0.1 tags/0.2 tags/0.3; do
+> -			mkdir -p $i && \
+> -			echo hello >> $i/README || exit 1
+> -		done && \
+> +	(
+> +		cd import &&
+> +		for i in trunk branches/a branches/b tags/0.1 tags/0.2 tags/0.3
+> +		do
+> +			mkdir -p $i &&
+> +			echo hello >>$i/README ||
+> +			exit 1
+
+Likewise.
+
+> --- a/t/t9119-git-svn-info.sh
+> +++ b/t/t9119-git-svn-info.sh
+> @@ -179,11 +186,13 @@ test_expect_success 'info --url added-directory' '
+>  	'
+>  
+>  test_expect_success 'info added-symlink-file' "
+> -	(cd gitwc &&
+> +	(
+> +		cd gitwc &&
+>  		ln -s added-file added-symlink-file &&
+>  		git add added-symlink-file
+>  	) &&
+> -	(cd svnwc &&
+> +	(
+> +		cd svnwc &&
+>  		ln -s added-file added-symlink-file &&
+
+More missing SYMLINKS prerequisites.
+
+To summarize, wherever you change behavior, it is improved.  Thanks.
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
