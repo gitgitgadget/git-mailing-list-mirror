@@ -1,93 +1,122 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Documentation: move RelNotes into a directory of their
- own
-Date: Mon, 6 Sep 2010 21:01:09 -0500
-Message-ID: <20100907020109.GI1182@burratino>
-References: <alpine.LFD.2.00.1009062026330.19366@xanadu.home>
+Subject: Re: [PATCH] Several tests: cd inside subshell instead of around
+Date: Mon, 6 Sep 2010 21:37:13 -0500
+Message-ID: <20100907023713.GJ1182@burratino>
+References: <4C85357A.8090000@web.de>
+ <7vhbi2tqd0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Sep 07 04:03:17 2010
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 07 04:39:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OsnWn-0003Du-73
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 04:03:17 +0200
+	id 1Oso5h-0005hx-UF
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 04:39:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933Ab0IGCDL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Sep 2010 22:03:11 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:40013 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755855Ab0IGCDJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Sep 2010 22:03:09 -0400
-Received: by qyk33 with SMTP id 33so4847320qyk.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 19:03:08 -0700 (PDT)
+	id S1755744Ab0IGCjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 22:39:17 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:59957 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755513Ab0IGCjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 22:39:16 -0400
+Received: by gwj17 with SMTP id 17so1736161gwj.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 19:39:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=j5OYH8zx7pj45AKLuZ87Es8BZ776hrHl54zJMj+XCPM=;
-        b=odAcCyAqH88Bd6+WQDTZzwOJZxsAi/30bEfjeSUAufTPXo4jUxzdkgRt0kuQBRUswJ
-         8g0wgXWuVBMkVm1qaYq1FmyBYDhbtOateOrYxzmIstULwswLvp1m7fkFl0teIiMax6EH
-         H9M1mbG1oyNifLR/f3AX+8KChIOOu+gVQxR+k=
+        bh=qL1lxo/LMnKvkpQSpmLjcp8DWhfqyeDA1HUOPYneq7s=;
+        b=D7DKY/ssCmyz6r941UhTcuRwhfCNopOQk9iWwfKcq+g4utfSrId1Ztw+fZXb6klere
+         NjnWpZA51NYJsscvQL8J9vym3zEmfo/dvd18nmGWR81wu9bxK+79z/YSTz61ReisW7ZR
+         MXyzJvrnQBQsEmN/Mx9l8FuFhDJG34I7xJJ1k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=XX5GQtDBK/OmIqMggyO7Mwbu3erRwn7c4DH6xx8YTKeRaeJJ3JY8xJzAXlUrHvl8rk
-         l+jMfvi3nXQte46TN9HmeEFDM6APXuxatc4ACORv4waFj5OW5kAq7Y8jJtvaYTkbISTt
-         cgyyYBJbIMkgLnUKwXldmnalGjeKSsOQSBVbE=
-Received: by 10.229.189.83 with SMTP id dd19mr4139996qcb.92.1283824987511;
-        Mon, 06 Sep 2010 19:03:07 -0700 (PDT)
+        b=jsQ6be81SwEDjCfCJYuj5g51R9sM2hcftKeHXKiiono6e9dyZ1+ID037UgvH0FdsbG
+         OEHV4duhtZxLCMNZEerFlHol0KWCfeCgElzICrYmP9wnrgOsR3S5p/Bp6IKFFN7A+jKd
+         HEgcDxXCL7V480f40TbGW+QVM0UIHZohxK/QI=
+Received: by 10.100.33.18 with SMTP id g18mr1779596ang.68.1283827151565;
+        Mon, 06 Sep 2010 19:39:11 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id r1sm6432544qcq.46.2010.09.06.19.03.06
+        by mx.google.com with ESMTPS id w10sm10396861ank.34.2010.09.06.19.39.10
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 19:03:07 -0700 (PDT)
+        Mon, 06 Sep 2010 19:39:10 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1009062026330.19366@xanadu.home>
+In-Reply-To: <7vhbi2tqd0.fsf@alter.siamese.dyndns.org>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155667>
 
-Nicolas Pitre wrote:
+Junio C Hamano wrote:
 
-> There are 108 of them already.  That's a bit more than one third of
-> all the files in the Documentation directory already, and still growing.
-> 
-> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-> ---
->  .../{RelNotes-1.5.0.1.txt => RelNotes/1.5.0.1.txt} |    0
->  .../{RelNotes-1.5.0.2.txt => RelNotes/1.5.0.2.txt} |    0
-[...]
+> If we were to insist that no matter how an individual test fail, the test
+> that follows it must start in a known location (namely, $TRASH), then we
+> might want to use something like the attached patch.
 
-Junio: Because of
+I like it.  Affected test scripts:
 
-	for th in \
-		"$T"/*.html "$T"/*.txt \
-		"$T"/howto/*.txt "$T"/howto/*.html \
-		"$T"/technical/*.txt "$T"/technical/*.html
-	do
-		h=`expr "$th" : "$strip_leading"'\(.*\)'`
-		case "$h" in
-		index.html) continue ;;
-		esac
-		test -f "$h" && continue
-		echo >&2 "# rm -f $th"
-		rm -f "$th"
-	done
+  t0003-attributes.sh		t0050-filesystem.sh
+  t1007-hash-object.sh		t1020-subdirectory.sh
+  t1301-shared-repo.sh		t1500-rev-parse.sh
+  t1501-worktree.sh		t1504-ceiling-dirs.sh
+  t2050-git-dir-relative.sh	t2300-cd-to-toplevel.sh
+  t3407-rebase-abort.sh		t4119-apply-config.sh
+  t5300-pack-object.sh		t5404-tracking-branches.sh
+  t5406-remote-rejects.sh	t5510-fetch.sh
+  t5515-fetch-merge-logic.sh	t5520-pull.sh
+  t5530-upload-pack-error.sh	t5600-clone-fail-cleanup.sh
+  t5700-clone-reference.sh	t5701-clone-local.sh
+  t5710-info-alternate.sh	t6029-merge-subtree.sh
+  t7001-mv.sh			t7103-reset-bare.sh
+  t7400-submodule-basic.sh	t7401-submodule-summary.sh
+  t7408-submodule-reference.sh	t7610-mergetool.sh
+  t9101-git-svn-props.sh	t9103-git-svn-tracked-directory-removed.sh
+  t9113-git-svn-dcommit-new-file.sh
+  t9115-git-svn-dcommit-funky-renames.sh
+  t9117-git-svn-init-clone.sh
+  t9137-git-svn-dcommit-clobber-series.sh
+  t9400-git-cvsserver-server.sh
 
-this would invalidate old URLs like
+and probably some others.
 
-	http://www.kernel.org/pub/software/scm/git/docs/RelNotes-1.7.2.3.txt
+What is the ",$(pwd)" for?
 
-, no?  Is there some easy way to set up the appropriate HTTP 301
-responses?
-
-Aside from that, this looks like a very good idea.
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 29fd720..90ed4d9 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -370,6 +370,11 @@ test_debug () {
+ }
+ 
+ test_run_ () {
++	if test ",$(pwd)" != ",$TRASH_DIRECTORY"
++	then
++		error "bug in test script: starting from a different directory"
++	fi
++
+ 	test_cleanup=:
+ 	eval >&3 2>&4 "$1"
+ 	eval_ret=$?
+@@ -377,6 +382,11 @@ test_run_ () {
+ 	if test "$verbose" = "t" && test -n "$HARNESS_ACTIVE"; then
+ 		echo ""
+ 	fi
++
++	if test ",$(pwd)" != ",$TRASH_DIRECTORY"
++	then
++		error "bug in test script: moved to a different directory"
++	fi
+ 	return 0
+ }
+ 
+-- 
