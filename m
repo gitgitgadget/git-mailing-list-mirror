@@ -1,130 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: refs/original breaks git-clone for tags
-Date: Tue, 7 Sep 2010 18:14:00 -0500
-Message-ID: <20100907231400.GA2024@capella.cs.uchicago.edu>
-References: <5054888.117464.1282315250235.JavaMail.root@mail.hq.genarts.com> <32751199.117741.1282331329553.JavaMail.root@mail.hq.genarts.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 5/7] t1302 (core.repositoryversion): style tweaks
+Date: Wed, 8 Sep 2010 09:45:16 +1000
+Message-ID: <AANLkTinSAqEYnrU=S9mEOztK+hVGvNNh7OQ-hHgyUwKJ@mail.gmail.com>
+References: <4C85357A.8090000@web.de>
+	<20100906190655.GG25426@burratino>
+	<4C854B36.6010606@web.de>
+	<20100907014135.GA1182@burratino>
+	<20100907015227.GF1182@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Wed Sep 08 01:14:13 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 01:45:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ot7Mi-0004At-2Q
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 01:14:12 +0200
+	id 1Ot7r0-00079c-18
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 01:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751175Ab0IGXOE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 19:14:04 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.164.153]:51628 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751006Ab0IGXOD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 19:14:03 -0400
-Received: from capella.cs.uchicago.edu (capella.cs.uchicago.edu [128.135.24.228])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id C7A41B8F4;
-	Tue,  7 Sep 2010 18:14:01 -0500 (CDT)
-Received: by capella.cs.uchicago.edu (Postfix, from userid 10442)
-	id 85100B3F2; Tue,  7 Sep 2010 18:14:01 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <32751199.117741.1282331329553.JavaMail.root@mail.hq.genarts.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1758294Ab0IGXpU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Sep 2010 19:45:20 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62366 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756573Ab0IGXpS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Sep 2010 19:45:18 -0400
+Received: by wwj40 with SMTP id 40so8891351wwj.1
+        for <git@vger.kernel.org>; Tue, 07 Sep 2010 16:45:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=plBGQK8qoX5EoF1g1SIhm9Ph5L3Ben2Q0i5vcDXbMSo=;
+        b=Zk2OfVnyyNs584TcvuuMb+uMqtCPMA2qEwHfJFvEFxM/gn/bXuZGOUiPmMDsVNkyUR
+         txU0BO5rfH9sUw7GN5OA+PdoMJtQjaWXdnZKJKbhuZaejwEfhU8Mbw0p60apqQwPFVc9
+         pcPnsJBlMfl5c7mgOAYCJsbMAEMPtjdGOwZhc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=HBWQJajfjO9Coe2zgw9RSiQCxroT4TTSt4o8XeRzYENyueLXJkiEkKE2v8aYOPt1T4
+         yK0OGcG9VhcTmJHClBoZi4j00RK+UNheYigKx2PM8zlZJqPfF5B81toOt6Sl/ltwqgW8
+         YOt1y321M5w6apxvz1Qw/htNQtsBs+WGkWXF4=
+Received: by 10.216.1.12 with SMTP id 12mr1423854wec.1.1283903117135; Tue, 07
+ Sep 2010 16:45:17 -0700 (PDT)
+Received: by 10.216.184.17 with HTTP; Tue, 7 Sep 2010 16:45:16 -0700 (PDT)
+In-Reply-To: <20100907015227.GF1182@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155749>
 
-Hi Stephen,
+2010/9/7 Jonathan Nieder <jrnieder@gmail.com>:
+> This test is from 2007, which is late enough for the style to be
+> recognizably modern but still a while ago. =C2=A0Freshen it up to
+> follow new best practices:
+>
+> =C2=A0- guard setup commands with test_expect_setup, so errors at
+> =C2=A0 that stage can be caught;
+> =C2=A0- use <<\EOF in preference to <<EOF, to save reviewers the
+> =C2=A0 trouble of looking for variable interpolations;
+> =C2=A0- use test_cmp instead of test "$foo" =3D "$bar", for better
+> =C2=A0 output with -v on failure;
+> =C2=A0- indent commands in subshells and let them span multiple lines=
+;
+> =C2=A0- combine the two "gitdir required mode" tests that do not make
+> =C2=A0 as much sense alone.
+>
+> Cc: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-Stephen Bash wrote:
-
-> After a lot of guess and check, it appears the issue is somehow
-> related to the refs/original directory created by filter-branch.  If
-> that directory is moved out of refs/ or deleted the clone succeeds.
-> Digging further, a simple rename of refs/original/refs/tags/tagFoo
-> to anything else also fixes the problem.
-
-Thanks for a clear report.  I backported your test case:
-
--- 8< --
-#!/bin/sh
-mkdir foo &&
-(
-	cd foo &&
-	git init &&
-	echo A >foo.txt &&
-	git add foo.txt &&
-	git commit -m "Created foo" &&
-	git tag -am "Tagging foo" tagFoo &&
-	git filter-branch --env-filter 'export GIT_AUTHOR_NAME=xyz123' \
-				--tag-name-filter cat -- --all &&
-	git show-ref
-) &&
-git clone file:///`pwd`/foo newFoo &&
-(
-	cd newFoo &&
-	git show-ref
-)
--- >8 --
-
-which produces the result:
-
- ...
- 07fa3d4c3aba83b293e24a12a87faca363ad34e6 refs/heads/master
- 90a32c29df06b4f6e4218c1b82b35a3e49aed9f2 refs/original/refs/heads/master
- 90a32c29df06b4f6e4218c1b82b35a3e49aed9f2 refs/original/refs/tags/tagfoo
- ef92777a31663135426a9648d0abb0c06b448fbe refs/tags/tagfoo
- ...
- Resolving deltas: 100% (1/1), done.
- error: refs/tags/tagfoo does not point to a valid object!
- 07fa3d4c3aba83b293e24a12a87faca363ad34e6 refs/heads/master
- 07fa3d4c3aba83b293e24a12a87faca363ad34e6 refs/remotes/origin/HEAD
- 07fa3d4c3aba83b293e24a12a87faca363ad34e6 refs/remotes/origin/master
- $
-
-The error message bisects to:
-
-commit 5bdc32d3e50d8335c65e136e6b5234c5dd92a7a9 (tags/v1.6.5-rc3~20)
-Author: Nicolas Pitre <nico@fluxnic.net>
-Date:   Fri Sep 25 23:54:42 2009 -0400
-
-    make 'git clone' ask the remote only for objects it cares about
-    
-    Current behavior of 'git clone' when not using --mirror is to fetch
-    everything from the peer, and then filter out unwanted refs just before
-    writing them out to the cloned repository.  This may become highly
-    inefficient if the peer has an unusual ref namespace, or if it simply
-    has "remotes" refs of its own, and those locally unwanted refs are
-    connecting to a large set of objects which becomes unreferenced as soon
-    as they are fetched.
-    
-    Let's filter out those unwanted refs from the peer _before_ asking it
-    what refs we want to fetch instead, which is the most logical thing to
-    do anyway.
-    
-    Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-
-That is not too surprising.  Before then, "git clone" fetched
-all objects.
-
-The error message is from refs.c::do_one_ref(), which notices the
-missing object ef92777a31663135426a9648d0abb0c06b448fbe (i.e., ye
-old tag object).
-
-Call chain:
-
- cmd_clone() ->
-  write_remote_refs() ->
-   pack_refs() ->
-    do_for_each_ref() ->
-     do_one_ref()
-
-The transport is done afaict by then.
-
-Nico, Shawn: ideas?
+Looks good to me.
+--=20
+Duy
