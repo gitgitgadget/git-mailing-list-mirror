@@ -1,43 +1,64 @@
-From: Douglas Tan <douglas@getgosu.com>
-Subject: Propagating config to clones/pulls
-Date: Tue, 7 Sep 2010 16:56:57 +0800
-Message-ID: <A8F08AD5-6DB5-4A4D-9A8F-79DDBD93E666@getgosu.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 07 11:03:13 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Propagating config to clones/pulls
+Date: Tue, 7 Sep 2010 11:23:20 +0200
+Message-ID: <201009071123.21011.trast@student.ethz.ch>
+References: <A8F08AD5-6DB5-4A4D-9A8F-79DDBD93E666@getgosu.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Douglas Tan <douglas@getgosu.com>
+X-From: git-owner@vger.kernel.org Tue Sep 07 11:23:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Osu5B-00044E-4J
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 11:03:13 +0200
+	id 1OsuOo-0007yh-G1
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 11:23:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755714Ab0IGJDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 05:03:04 -0400
-Received: from mail.getgosu.com ([67.110.176.227]:57343 "EHLO mail.getgosu.com"
+	id S1756126Ab0IGJXZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Sep 2010 05:23:25 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:52308 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755416Ab0IGJDB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Sep 2010 05:03:01 -0400
-X-Greylist: delayed 353 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Sep 2010 05:03:01 EDT
-Received: from [10.10.13.18] (unknown [10.10.13.18])
-	by mail.getgosu.com (Postfix) with ESMTPSA id A148B22C18
-	for <git@vger.kernel.org>; Tue,  7 Sep 2010 04:26:01 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=getgosu.com;
-	s=default; t=1283847962;
-	bh=45NEywuKwb1wtZzV1yhXNWy5kph6n8ATtV2XhWIibOY=;
-	h=From:Content-Type:Content-Transfer-Encoding:Subject:Date:
-	 Message-Id:To:Mime-Version;
-	b=UihrDyTEQHE3zJQFaAtenqG6pKU82YZa35eXaxKnI/++OUbzgzA8GfxmuPsEQek9Y
-	 zfGZe56ce2TxD5cLuLee7quHIKHDCSJRt7Ll4vYHUlE8q+y93ppMtOwgL8UJamDtuo
-	 bl5+pkOwSlnigQIyKZ/8S6PrNZ3RvOj+zi7KRoC4=
-X-Mailer: Apple Mail (2.1081)
+	id S1755997Ab0IGJXX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Sep 2010 05:23:23 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 7 Sep
+ 2010 11:23:22 +0200
+Received: from thomas.site (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.0.702.0; Tue, 7 Sep
+ 2010 11:23:21 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <A8F08AD5-6DB5-4A4D-9A8F-79DDBD93E666@getgosu.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155691>
 
-I have some config settings that I'll like to make default for anyone cloning/pulling from the central remote bare repository. I've tried to do this by editing the config file in the bare repository on the server but the change doesn't appear when cloning. How can I go about pushing default config settings to anyone cloing or pulling from the repository?
+Douglas Tan wrote:
+> 
+> I have some config settings that I'll like to make default for
+> anyone cloning/pulling from the central remote bare repository. I've
+> tried to do this by editing the config file in the bare repository
+> on the server but the change doesn't appear when cloning. How can I
+> go about pushing default config settings to anyone cloing or pulling
+> from the repository?
+
+You can't, since that would open a whole range of security issues.
+
+You can put some config defaults inside the repository itself, but it
+is up to your users whether they apply them.  Perhaps it's best to
+write them as a shellscript that adds to the configuration file(s) so
+that it is easy to apply it later, e.g.,
+
+  #!/bin/sh
+  git config diff.jpg.textconv exiftool
+  cat >> .gitattributes <<EOF
+  *.jpg diff=jpg
+  EOF
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
