@@ -1,67 +1,86 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] builtin/clean.c: Use STRING_LIST_INIT_NODUP.
-Date: Mon, 6 Sep 2010 21:03:19 -0300
-Message-ID: <AANLkTinGdaAgnYBGB2Y9O6=JrnjqAqRkcNewoT1=jwXL@mail.gmail.com>
-References: <1283815975-11107-1-git-send-email-tfransosi@gmail.com>
-	<7vpqwqs9xu.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Add test-string-list.c
+Date: Mon, 6 Sep 2010 19:07:03 -0500
+Message-ID: <20100907000703.GB32717@burratino>
+References: <4f798daaf4631e00927b455b77919d5bb8fade03.1283653854.git.tfransosi@gmail.com>
+ <20100905050254.GA6134@burratino>
+ <AANLkTi=J_0XaVYUt8Umu3uW15W86wbWv-xCMuVGA7cUE@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 02:03:34 2010
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 07 02:09:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oslew-0000Lc-9W
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 02:03:34 +0200
+	id 1OslkP-00020c-MO
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 02:09:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755411Ab0IGADW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 20:03:22 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:59142 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755180Ab0IGADU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 20:03:20 -0400
-Received: by qwh6 with SMTP id 6so4208419qwh.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 17:03:19 -0700 (PDT)
+	id S1751927Ab0IGAJJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 20:09:09 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:61606 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751219Ab0IGAJH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 20:09:07 -0400
+Received: by gyd8 with SMTP id 8so1777025gyd.19
+        for <git@vger.kernel.org>; Mon, 06 Sep 2010 17:09:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=W3Rs8NAUdvhVy3KvdvdkI3pCQMDa7kgpQOv+riuXjb0=;
-        b=EqpA0dkp9a8r6ykC9npivUsZtxROtLa5THdCjSFdwxlVkvle592yHIhcqXt+V0eaB4
-         VjMuY/1NDn7uRoNNd47ZnphhckIwaFWApd7N1uHV4m3bKA+VwHJFED9tKxso76+XTdY5
-         uh+iD0L+XUWbUt4jmH4m97ANirZuXXqy71hdc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=yDlmcOWbUu4Kyjp6iSTrwHVHVLSsQG4Uzzr/1+NOGEI=;
+        b=jM4gNtPwh1cVEJJBLJPyTXNldtOJoodp/KeIhskXbGdyMi3A0RuCIV5J6hIEuKnxxt
+         v4G7uFY4JAFIySfCBX/nvxh4RPvxUldKlmzojgxAfQXQ96Rr1BQTRKE7SoDOBaWmYNyH
+         7KzKY4+yR/vW7+FC6sSc9S/3JvNoqsySj1TPw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vu+AIxoP21EAjE/Eb4YuR1IqaFvNzkJtLYcNdX1FGalB7HJe1ABEbXjUT4YUcmzClx
-         YnuscKA1INXGx5PxMRY+u5kmm/7wi8IgKw7PlyfM2whthz/dsxAxVs1uSqqt7XBV0gbo
-         7mqCbmu8rVWE3OpojzeFwVQEQmje+D7TDqWiQ=
-Received: by 10.229.52.32 with SMTP id f32mr3023696qcg.265.1283817799322; Mon,
- 06 Sep 2010 17:03:19 -0700 (PDT)
-Received: by 10.229.245.202 with HTTP; Mon, 6 Sep 2010 17:03:19 -0700 (PDT)
-In-Reply-To: <7vpqwqs9xu.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=FQS3Kss3fCbB1bkam8avVdyMtGWQBaaHGBtZhK4rr/ElGZRHQP4+abNP0mbsWZIZzW
+         I98gXvbcqhAO702mgAx1pB7gfxBCD4Si5JV+7I4PTefuu6jSdnwNhx97eoV8mw+sxzUp
+         6aAgTFQ92X/IO0RwXsK9uKcFSwPiiEPjZeAqY=
+Received: by 10.151.63.28 with SMTP id q28mr412182ybk.183.1283818146616;
+        Mon, 06 Sep 2010 17:09:06 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id q25sm6637846ybk.18.2010.09.06.17.09.05
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 06 Sep 2010 17:09:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=J_0XaVYUt8Umu3uW15W86wbWv-xCMuVGA7cUE@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155649>
 
-On Mon, Sep 6, 2010 at 8:56 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Good eyes. =C2=A0Is this the last spelled-out initialization (I didn'=
-t check
-> deeper than running a quick grep for "struct string_list .*=3D *{")?
+Hi Thiago,
+
+Thiago Farina wrote:
+> On Sun, Sep 5, 2010 at 2:02 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:>
+
+>> To make sure this example remains valid, wouldn't you want to includ=
+e
+>> a caller in the t/ directory so it can be automatically run? =C2=A0(=
+See
+>> t/README.)
 >
-Yup! This is the last. :)
+> I read it, but I'm not sure how to do this. Maybe you could point me
+> to an example?
 
-I checked firstly with:
-$ git grep -e 'struct string_list [^ ]* =3D {.*'
+t0070-fundamental.sh might be a good place to add it.
 
-And then with yours:
-$ git grep -e "struct string_list .*=3D *{"
+> It can be expanded later by anyone to test many other things though.
+
+I suppose.  Edge cases for arguments, sorting, and _DUP versus _NODUP
+semantics would be the main thing I would be interested in testing.
+Maybe another day.
+
+Thanks,
+Jonathan
