@@ -1,105 +1,105 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: gitweb not friendly to firefox revived
-Date: Tue, 7 Sep 2010 10:22:53 +0200
-Message-ID: <20100907082253.GA16198@pengutronix.de>
-References: <20100801195138.GA1980@pengutronix.de> <4C6670EE.3060806@gmail.com> <AANLkTimR9Wkz+YOchyjvO8fgAwk5YsGtcpMOpyZY4Fjv@mail.gmail.com> <201008141433.35451.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC 7/7] t2016 (checkout -p): use printf for multiline
+ y/n input
+Date: Tue, 7 Sep 2010 03:22:53 -0500
+Message-ID: <20100907082253.GY1182@burratino>
+References: <4C85357A.8090000@web.de>
+ <20100907014135.GA1182@burratino>
+ <20100907015509.GH1182@burratino>
+ <201009071006.27607.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org,
-	kernel@pengutronix.de
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 10:23:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Sep 07 10:25:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OstSQ-0007Y9-Mq
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 10:23:11 +0200
+	id 1OstUA-0008Ms-KS
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 10:24:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755556Ab0IGIXF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Sep 2010 04:23:05 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:46538 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755502Ab0IGIXB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 04:23:01 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1OstS9-0004KH-Gp; Tue, 07 Sep 2010 10:22:53 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1OstS9-0004Ig-5B; Tue, 07 Sep 2010 10:22:53 +0200
+	id S1755505Ab0IGIYy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Sep 2010 04:24:54 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:33953 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753534Ab0IGIYw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Sep 2010 04:24:52 -0400
+Received: by ywh1 with SMTP id 1so1851189ywh.19
+        for <git@vger.kernel.org>; Tue, 07 Sep 2010 01:24:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ZF3IboQiJlqaNONKnCI/rdHEP5tRM7LqKe951wHEpRg=;
+        b=vQ5eeX0s4p4yiDS6aIrBN0gqNhhR1SeDwGTqNZpWTynfCfFOrYzrUl4OWI472INla/
+         emMvSjK7H3vuhZaabyM1pRt0oRBs0XGB6o8p0Lza3y5XtJjDsOR+DMLGVF7lIJeDBYil
+         IytsVeVGargthnPw21LrPYqBNP2vn+qGJYpAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=f0vCM7fAZU2JJFyFRpmf1XzdOqupN9WZxFvV7m15TQFQlr+lf4/m3/5r8YdMDIOmRW
+         vmEJs2MnphF21nWukZrn4/1JJdHGhXkR07+YjNvdj17ChjHAX5dd1B/IDtcI7e7Bb0n3
+         wBWbJmDIt1nHmHD/HusiL1vw6p1lm/5IkcNQg=
+Received: by 10.151.49.9 with SMTP id b9mr702618ybk.177.1283847892083;
+        Tue, 07 Sep 2010 01:24:52 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id h8sm6922268ibk.21.2010.09.07.01.24.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 07 Sep 2010 01:24:51 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <201008141433.35451.jnareb@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <201009071006.27607.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155687>
 
-Hello,
+Thomas Rast wrote:
 
-just to stop this topic dying ...
+> I'm indifferent about this.  It does save a process, but (maybe that's
+> just me though) I had to look up a POSIX manpage to verify that the
+> repeating behaviour is guaranteed.
 
-On Sat, Aug 14, 2010 at 02:33:33PM +0200, Jakub Narebski wrote:
-> On Sat, 14 Aug 2010, =C6var Arnfj=F6r=F0 Bjarmason wrote:
-> > 2010/8/14 Stephen Boyd <bebarino@gmail.com>:
-> >> =A0On 08/03/2010 02:50 PM, Jakub Narebski wrote:
-> >>>
-> >>> +
-> >>> + =A0 =A0 =A0 my $title =3D to_utf8("Search for commits $performe=
-d by $author");
-> >>> + =A0 =A0 =A0 $title =3D~ s/[[:cntrl:]]/?/g;
-> >>> +
-> >>>
-> >>
-> >> Isn't it possible that other data coming from git could have escap=
-e
-> >> characters in them such as the commit subject line? In which case =
-this same
-> >> bug would occur?
-> >>
-> >> Therefore isn't it better to strip out control characters (that's =
-what this
-> >> patch is doing right?) in esc_html?
-> >=20
-> > I don't think stripping them out is the right thing either, hiding
-> > from you that something is Really Wrong (binary garbage in patches)
-> > isn't good.
-> >=20
-> > Something like this would be better:
-> >=20
-> >     s/([[:cntrl:]])/sprintf("\\%03x", ord $1)/ge
->=20
-> Or=20
->       s|([[:cntrl:]])|quot_cec($1)|eg;
->=20
-> But is it worth it?  This is about _title_ attribute, shown only on=20
-> mouseover (mouse hover).
->=20
->=20
-> But perhaps it would be worth it to add 'prep_attr' and 'esc_attr'
-> functions, though esc_html can be used in those places where esc_attr
-> would be needed...
-Is there something I can do to bring this forward?  (I assume this isn'=
-t
-fixed yet, at least it isn't in Debian's 1.7.2.3 package.)
+If saving a process is the only benefit, let's forget it.
 
-Best regards
-Uwe
+>> While at it, add a missing && to the "git checkout -p HEAD with change
+>> already staged" test.
+>
+> Good catch.
 
+Here's a patch with just that.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+-- 8< --
+Subject: t2016 (checkout -p): add missing &&
+
+Although the set_state command is not likely to fail, it is best to
+stay in the habit of checking for failures.
+
+Cc: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/t2016-checkout-patch.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t2016-checkout-patch.sh b/t/t2016-checkout-patch.sh
+index 7657ec1..a463b13 100755
+--- a/t/t2016-checkout-patch.sh
++++ b/t/t2016-checkout-patch.sh
+@@ -52,7 +52,7 @@ test_expect_success PERL 'git checkout -p HEAD with NO staged changes: apply' '
+ '
+ 
+ test_expect_success PERL 'git checkout -p HEAD with change already staged' '
+-	set_state dir/foo index index
++	set_state dir/foo index index &&
+ 	# the third n is to get out in case it mistakenly does not apply
+ 	(echo n; echo y; echo n) | git checkout -p HEAD &&
+ 	verify_saved_state bar &&
+-- 
+1.7.2.3
