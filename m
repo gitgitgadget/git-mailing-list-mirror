@@ -1,61 +1,57 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: Propagating config to clones/pulls
-Date: Tue, 7 Sep 2010 16:36:23 -0500
-Message-ID: <i66bas$q4t$1@dough.gmane.org>
-References: <A8F08AD5-6DB5-4A4D-9A8F-79DDBD93E666@getgosu.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 07 23:37:48 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: building git on Solaris
+Date: Tue, 7 Sep 2010 21:42:20 +0000
+Message-ID: <AANLkTikvy-wUB-RFLegp7KJa_srqh97nLC03bdZDmru=@mail.gmail.com>
+References: <4C86A86B.1030107@bio.umass.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git mailing list <git@vger.kernel.org>
+To: Chris Hoogendyk <hoogendyk@bio.umass.edu>
+X-From: git-owner@vger.kernel.org Tue Sep 07 23:42:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ot5rP-0000oN-OE
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 23:37:48 +0200
+	id 1Ot5vu-0002xL-Ta
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 23:42:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753840Ab0IGVhn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 17:37:43 -0400
-Received: from lo.gmane.org ([80.91.229.12]:38358 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754564Ab0IGVhm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 17:37:42 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ot5rJ-0000jv-Bh
-	for git@vger.kernel.org; Tue, 07 Sep 2010 23:37:41 +0200
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Sep 2010 23:37:41 +0200
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Sep 2010 23:37:41 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1750930Ab0IGVmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Sep 2010 17:42:22 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:40773 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750828Ab0IGVmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Sep 2010 17:42:21 -0400
+Received: by yxp4 with SMTP id 4so2040684yxp.19
+        for <git@vger.kernel.org>; Tue, 07 Sep 2010 14:42:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=/zkEa+eLYWNRHTQP+RSjLjuVJfmNUJn4urqxfUfr1IU=;
+        b=w84apO4x/l1UW2UQEBAsqYtisRuMHBmd/i5u6vMHb5PNlqX2CTVWpBiirTRchcBCjN
+         Xz27SJ5rfR07yhOKeqysVEm46EQoxZeTofaVkE4Yn/1mRLjNq4Uw3cHRW0tleQpXY/2V
+         7Mx9oIRfGV1OqaROFz8J5SPM1KumNwYnZ9vHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=w4unLGZkkoW3yMKQGhv2Hzbs0RGzr5zEq2de9MlxmSL3dkH4bOwlHqAdvqPrKPXsHR
+         dy+IaDBVWOpPnFdVJxkSIDtTXcn5wgFoBdrEZW62HnoJPMojvyHpSnO6IKXGYNHgKNB1
+         TqqVfqi//TXoNRYl5CuKQ+4PSgiqHbQK2A5Ok=
+Received: by 10.150.204.4 with SMTP id b4mr717169ybg.132.1283895740907; Tue,
+ 07 Sep 2010 14:42:20 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Tue, 7 Sep 2010 14:42:20 -0700 (PDT)
+In-Reply-To: <4C86A86B.1030107@bio.umass.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155746>
 
-"Douglas Tan" <douglas@getgosu.com> wrote in message 
-news:A8F08AD5-6DB5-4A4D-9A8F-79DDBD93E666@getgosu.com...
->I have some config settings that I'll like to make default for anyone 
->cloning/pulling from the central remote bare repository. I've tried to do 
->this by editing the config file in the bare repository on the server but 
->the change doesn't appear when cloning. How can I go about pushing default 
->config settings to anyone cloing or pulling from the repository?--
+On Tue, Sep 7, 2010 at 21:02, Chris Hoogendyk <hoogendyk@bio.umass.edu> wrote:
 
-Based on the assumption that your "child" repos are supposed to have the 
-same .git/config files, I tried using git-init --template=x with a config 
-file in template directory "x", but git-init only picks up the config file 
-on an initialization of a new repo, not on a reinitialization of an existing 
-repo.
+> Does anyone have any guidance or clues as to where I should look from here?
+> Or how to fix this?
 
-v/r,
-Neal 
+Call make as gmake?
