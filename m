@@ -1,132 +1,77 @@
-From: Marcus Comstedt <marcus@mc.pp.se>
-Subject: [PATCH v2 2/2] t0021: test checkout and commit of foreign idents
-Date: Tue, 7 Sep 2010 21:16:03 +0200
-Message-ID: <E1Ot4NU-0002xs-OO@chiyo.mc.pp.se>
-References: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 07 22:09:41 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 20/20] gettextize: git-am printf(1) message to eval_gettext
+Date: Tue, 7 Sep 2010 14:10:50 -0600
+Message-ID: <AANLkTim_ovWkPPepB7xRez5DTmJRTrFoZWG+Nx0_O=oL@mail.gmail.com>
+References: <1283877955-19105-1-git-send-email-avarab@gmail.com>
+	<1283878224-20202-1-git-send-email-avarab@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 07 22:11:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ot4U8-0003iV-MS
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 22:09:41 +0200
+	id 1Ot4VO-0004eO-4h
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 22:10:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758213Ab0IGUJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 16:09:34 -0400
-Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:49954 "EHLO
-	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758181Ab0IGUJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 16:09:32 -0400
-X-Greylist: delayed 409 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Sep 2010 16:09:32 EDT
-Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bahamut.mc.pp.se (Postfix) with ESMTPS id 12F6FFB18;
-	Tue,  7 Sep 2010 22:02:50 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
-	t=1283889770; bh=LEw+XPlp7cbcuUyiBOqDSdx4K1ClqZye9vsdBzHlbC4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:To:Cc; b=fw3E
-	/oq2PYdrdfWHUrehnoQFTQTRjKiyTL7RYYXPWmZvpnM15p2KW/wNgICZ0zAA5OQWzhw
-	s67d4FFVAnEiQrhu/vpz9Y1osmIFQWp8yFcY1XxwwIVpextDB/wiPBEwgdP/w6F7EFY
-	i7Q537sOTypwpVIwXNVc1LPZN1gbPA4mI=
-Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
-	(envelope-from <f1c36c4f8a6a2d45ee4283ae3bef93abb00bc8a8@chiyo>)
-	id 1Ot4NU-0002xs-OO; Tue, 07 Sep 2010 22:02:48 +0200
-In-Reply-To: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
+	id S1758214Ab0IGUKw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Sep 2010 16:10:52 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51805 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758114Ab0IGUKv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Sep 2010 16:10:51 -0400
+Received: by iwn5 with SMTP id 5so5569554iwn.19
+        for <git@vger.kernel.org>; Tue, 07 Sep 2010 13:10:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BrYQL5UXfu/7MuyqzfMZPm27gj+28UPyYoPUWX0lEmU=;
+        b=VLsjITSErhQ/YqDDrnahRHwVUosonZQ0OIRnOAtPzYqRp1z+E3zNWjxN35Ly2ZciyE
+         cHnEqEjIzW0pjChSu097N4RGTHZkhQY2UE4RcOtU2gQgp0kbdCg5/G+fIzY0ww/gWN3B
+         eV5PlrQ3OBxPjuK173hnFYpxQ8LfUjyoNPars=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EG3yWyKfPeWiJeiG8r/uhwsLjYcT8kE1HFLQ8GPsUyhIccaLrNrRIbSHZUolhwVEYi
+         d1ccxDKtmBagTOacpselW1yDuBSOMIDnRCqUYzfXbFZD4S4Cz7ttUgZXTgH9ePTyv5lO
+         x4GBFH+coWVegxngy+/aQx80a7izxYzQqxHok=
+Received: by 10.231.159.204 with SMTP id k12mr8519261ibx.42.1283890250365;
+ Tue, 07 Sep 2010 13:10:50 -0700 (PDT)
+Received: by 10.231.14.76 with HTTP; Tue, 7 Sep 2010 13:10:50 -0700 (PDT)
+In-Reply-To: <1283878224-20202-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155738>
 
-Add test cases for the following behaviors:
+Hi,
 
-  * Checking out a file with a foreign ident should not flag
-    the file as modified.  This is to prevent a mess when checking
-    out old versions, and to allow a migration model where files
-    are allowed to keep their foreign ident as long as their
-    content is also "foreign", i.e. not modified since the migration
-    to git.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-  * Committing to a file with a foreign ident should replace the
-    foreign ident with a native ident.  This is simply to get
-    the normal behavior of ident:  When the contents of the file is
-    updated, so is the ident.
+> +++ b/git-am.sh
+> @@ -778,7 +778,7 @@ did you forget to use 'git add'?"; echo
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fi
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if test $apply_status !=3D 0
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0then
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 printf 'Patch fail=
+ed at %s %s\n' "$msgnum" "$FIRSTLINE"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 echo "$(eval_gette=
+xt "Patch failed at \$msgnum \$FIRSTLINE")"
 
-Signed-off-by: Marcus Comstedt <marcus@mc.pp.se>
----
- t/t0021-conversion.sh |   58 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 58 insertions(+), 0 deletions(-)
+Probably I am missing something silly, but why not just:
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 828e35b..c0ad9e8 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -93,4 +93,62 @@ test_expect_success expanded_in_repo '
- 	cmp expanded-keywords expected-output
- '
- 
-+# Check that a file containing idents (native or foreign) is not
-+# spuriously flagged as modified on checkout
-+test_expect_success 'ident pristine after checkout' '
-+	{
-+		echo "File with expanded keywords"
-+		echo "\$Id\$"
-+		echo "\$Id: Foreign Commit With Spaces \$"
-+	} > native-and-foreign-idents &&
-+
-+	{
-+		echo "File with expanded keywords"
-+		echo "\$Id: 9bdc217750894eed31bb870e9ffa00599f0573a2 \$"
-+		echo "\$Id: Foreign Commit With Spaces \$"
-+	} > expected-output &&
-+
-+	git add native-and-foreign-idents &&
-+	git commit -m "File with native and foreign idents" &&
-+
-+	echo "native-and-foreign-idents ident" >> .gitattributes &&
-+
-+	rm -f native-and-foreign-idents &&
-+	git checkout -- native-and-foreign-idents &&
-+	cat native-and-foreign-idents &&
-+	cmp native-and-foreign-idents expected-output &&
-+	touch native-and-foreign-idents &&
-+	git status --porcelain native-and-foreign-idents > output &&
-+	test ! -s output &&
-+	git diff -- native-and-foreign-idents > output &&
-+	test ! -s output
-+'
-+
-+# Check that actually modifying the file and committing it produces a
-+# new ident on checkout
-+test_expect_success 'foreign ident replaced on commit' '
-+	{
-+		echo "File with expanded keywords"
-+		echo "\$Id: 2499e26293e36cc92399835e497ef6396d710055 \$"
-+		echo "\$Id: 2499e26293e36cc92399835e497ef6396d710055 \$"
-+		echo "Some new content"
-+	} > expected-output &&
-+
-+	echo "1	0	native-and-foreign-idents" > expected-stat1 &&
-+	echo "2	1	native-and-foreign-idents" > expected-stat2 &&
-+
-+	echo "Some new content" >> native-and-foreign-idents &&
-+	git diff --numstat -- native-and-foreign-idents > output &&
-+	cmp output expected-stat1 &&
-+	git add native-and-foreign-idents &&
-+	git commit -m "Modified file" &&
-+	git diff --numstat HEAD^ HEAD -- native-and-foreign-idents > output &&
-+	cmp output expected-stat2 &&
-+	rm -f native-and-foreign-idents &&
-+	git checkout -- native-and-foreign-idents &&
-+	cat native-and-foreign-idents &&
-+	cmp native-and-foreign-idents expected-output
-+'
-+
-+
- test_done
--- 
-1.7.2
+        eval_gettext 'Patch failed at $msgnum $FIRSTLINE\n'
+
+? I ask because it is nice to be able to avoid "echo" with arbitrary
+data: special characters (e.g. \) can make for portability hassles.
+
+Jonathan
