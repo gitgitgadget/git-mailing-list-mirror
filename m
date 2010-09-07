@@ -1,57 +1,138 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: building git on Solaris
-Date: Tue, 7 Sep 2010 21:42:20 +0000
-Message-ID: <AANLkTikvy-wUB-RFLegp7KJa_srqh97nLC03bdZDmru=@mail.gmail.com>
-References: <4C86A86B.1030107@bio.umass.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: remote-helpers: http-push protocol
+Date: Tue, 7 Sep 2010 17:14:01 -0500
+Message-ID: <20100907221401.GA29102@capella.cs.uchicago.edu>
+References: <AANLkTim=HKiQ-25QEAPPRcH6wwLLAsDdoRqTsanM67SK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git mailing list <git@vger.kernel.org>
-To: Chris Hoogendyk <hoogendyk@bio.umass.edu>
-X-From: git-owner@vger.kernel.org Tue Sep 07 23:42:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Git List <git@vger.kernel.org>,
+	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 00:14:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ot5vu-0002xL-Ta
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 23:42:27 +0200
+	id 1Ot6Qc-00040V-FM
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 00:14:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750930Ab0IGVmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 17:42:22 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40773 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750828Ab0IGVmV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 17:42:21 -0400
-Received: by yxp4 with SMTP id 4so2040684yxp.19
-        for <git@vger.kernel.org>; Tue, 07 Sep 2010 14:42:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=/zkEa+eLYWNRHTQP+RSjLjuVJfmNUJn4urqxfUfr1IU=;
-        b=w84apO4x/l1UW2UQEBAsqYtisRuMHBmd/i5u6vMHb5PNlqX2CTVWpBiirTRchcBCjN
-         Xz27SJ5rfR07yhOKeqysVEm46EQoxZeTofaVkE4Yn/1mRLjNq4Uw3cHRW0tleQpXY/2V
-         7Mx9oIRfGV1OqaROFz8J5SPM1KumNwYnZ9vHk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=w4unLGZkkoW3yMKQGhv2Hzbs0RGzr5zEq2de9MlxmSL3dkH4bOwlHqAdvqPrKPXsHR
-         dy+IaDBVWOpPnFdVJxkSIDtTXcn5wgFoBdrEZW62HnoJPMojvyHpSnO6IKXGYNHgKNB1
-         TqqVfqi//TXoNRYl5CuKQ+4PSgiqHbQK2A5Ok=
-Received: by 10.150.204.4 with SMTP id b4mr717169ybg.132.1283895740907; Tue,
- 07 Sep 2010 14:42:20 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Tue, 7 Sep 2010 14:42:20 -0700 (PDT)
-In-Reply-To: <4C86A86B.1030107@bio.umass.edu>
+	id S1756026Ab0IGWOF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Sep 2010 18:14:05 -0400
+Received: from camembert.cs.uchicago.edu ([128.135.164.153]:55735 "EHLO
+	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753578Ab0IGWOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Sep 2010 18:14:04 -0400
+Received: from capella.cs.uchicago.edu (capella.cs.uchicago.edu [128.135.24.228])
+	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 2D6D7B927;
+	Tue,  7 Sep 2010 17:14:01 -0500 (CDT)
+Received: by capella.cs.uchicago.edu (Postfix, from userid 10442)
+	id 6AA9BDF9FB; Tue,  7 Sep 2010 17:14:01 -0500 (CDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTim=HKiQ-25QEAPPRcH6wwLLAsDdoRqTsanM67SK@mail.gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155747>
 
-On Tue, Sep 7, 2010 at 21:02, Chris Hoogendyk <hoogendyk@bio.umass.edu> wrote:
+Hi,
 
-> Does anyone have any guidance or clues as to where I should look from here?
-> Or how to fix this?
+Here's a know-nothing view (and I assume you have already done this
+legwork; just summarizing for myself).  Following along in do_push().
 
-Call make as gmake?
+Sverre Rabbelier wrote:
+
+> When fetching from the remote, the helper is called with 'list',
+
+get_ref_map() -> transport_get_remote_refs() ->
+transport::get_refs_list()
+
+[...]
+> What happens next is the part that confuses me, a certain set of refs
+> is pushed, by calling the helper with 'push <refspec>'.
+
+The transport_push() codepath in transport.c.  For remote helpers, it
+relies on the push_refs() method, calling:
+
+ - transport::get_refs_list() to get the list of remote refs
+ - get_local_heads() for the local refs
+ - match_refs() to list remote refs matching the refspec/--all/
+   --mirror
+ - transport::push_refs() to push the list of refs chosen
+ - transport_print_push_status() for a nice message
+ - set_upstreams() to handle --set-upstream requests
+ - transport_update_tracking_ref() to update the local remote-tracking
+   refs.
+
+> I am unclear
+> how this set of refs is chosen
+
+remote.c's match_refs() calls:
+
+ - parse_push_refspec() to convert the refspec strings to
+   structs refspec, separating src, dest, and +/*/no-dest-specified
+   flags
+ - match_explicit_refs() to build a linked list of struct ref
+   explicitly requested with non-wildcard refspecs (the easy ones)
+ - check_pattern_match() for each remote ref, to figure out which
+   refspec, if any, it corresponds to.  If any:
+    - Refs outside the refs/heads/ hierarchy are excluded (unless
+      --mirror as used) when not named by a refspec, as you mentioned.
+    - Where actual refspecs are concerned, though, they can match.
+    - A local peer is determined with find_ref_by_name().
+    - Enforces the "push matching" rule: do not push a new branch
+      unless it was explicitly requested by naming it, --all, or
+      --mirror.
+ 
+> I see that only refs that have a
+> peer_ref are sent, unless mirror is also set (I don't think I
+> understand the significance)?
+
+$ git log -S'"matching refs"; traditionally we pushed everything' remote.c
+commit 098e711e6c0d123dff2f38d6b804ec632ad7dd78
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Sun Jul 1 19:00:08 2007 -0700
+
+    "git-push $URL" without refspecs pushes only matching branches
+
+    When "git push" is run without any refspec (neither on the
+    command line nor in the config), we used to push "matching refs"
+    in the sense that anything under refs/ hierarchy that exist on
+    both ends were updated.  This used to be a sane default for
+    publishing your repository to another back when we did not have
+    refs/remotes/ hierarchy, but it does not make much sense these
+    days.
+
+    This changes the semantics to push only "matching branches".
+
+So I suspect this is to ensure that with "[push] default = matching",
+
+ $ git push
+
+pushes branches and not remote-tracking refs, but
+
+ $ git push --mirror
+
+pushes everything.
+
+> After the push, the helper write a set
+> of 'ok/error' messages sometimes for refs that were not asked to be
+> pushed in the first place
+
+Part of transport::push_refs().  I think it only allows status
+messages for refs that were actually pushed; otherwise it will print
+
+	warning: helper reported unexpected status of <ref>
+
+> Can you clarify the behavior I described? How can I best hook into the
+> 'refs that need to be pushed selection' in the 'export' command [0]?
+
+Hmm --- do you want some other hierarchy than refs/heads/* for the
+"push matching" rule?
+
+Thanks for the nice introduction.
