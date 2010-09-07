@@ -1,86 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Add test-string-list.c
-Date: Mon, 6 Sep 2010 19:07:03 -0500
-Message-ID: <20100907000703.GB32717@burratino>
-References: <4f798daaf4631e00927b455b77919d5bb8fade03.1283653854.git.tfransosi@gmail.com>
- <20100905050254.GA6134@burratino>
- <AANLkTi=J_0XaVYUt8Umu3uW15W86wbWv-xCMuVGA7cUE@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Patch v2] Add test-string-list.c
+Date: Mon, 06 Sep 2010 17:15:06 -0700
+Message-ID: <7viq2is92t.fsf@alter.siamese.dyndns.org>
+References: <1283816603-12156-1-git-send-email-tfransosi@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jrnieder@gmail.com
 To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 07 02:09:18 2010
+X-From: git-owner@vger.kernel.org Tue Sep 07 02:15:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OslkP-00020c-MO
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 02:09:14 +0200
+	id 1OslqM-0003ia-PD
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Sep 2010 02:15:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751927Ab0IGAJJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Sep 2010 20:09:09 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61606 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751219Ab0IGAJH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Sep 2010 20:09:07 -0400
-Received: by gyd8 with SMTP id 8so1777025gyd.19
-        for <git@vger.kernel.org>; Mon, 06 Sep 2010 17:09:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=yDlmcOWbUu4Kyjp6iSTrwHVHVLSsQG4Uzzr/1+NOGEI=;
-        b=jM4gNtPwh1cVEJJBLJPyTXNldtOJoodp/KeIhskXbGdyMi3A0RuCIV5J6hIEuKnxxt
-         v4G7uFY4JAFIySfCBX/nvxh4RPvxUldKlmzojgxAfQXQ96Rr1BQTRKE7SoDOBaWmYNyH
-         7KzKY4+yR/vW7+FC6sSc9S/3JvNoqsySj1TPw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=FQS3Kss3fCbB1bkam8avVdyMtGWQBaaHGBtZhK4rr/ElGZRHQP4+abNP0mbsWZIZzW
-         I98gXvbcqhAO702mgAx1pB7gfxBCD4Si5JV+7I4PTefuu6jSdnwNhx97eoV8mw+sxzUp
-         6aAgTFQ92X/IO0RwXsK9uKcFSwPiiEPjZeAqY=
-Received: by 10.151.63.28 with SMTP id q28mr412182ybk.183.1283818146616;
-        Mon, 06 Sep 2010 17:09:06 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id q25sm6637846ybk.18.2010.09.06.17.09.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Sep 2010 17:09:05 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=J_0XaVYUt8Umu3uW15W86wbWv-xCMuVGA7cUE@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752940Ab0IGAPS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Sep 2010 20:15:18 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33439 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752229Ab0IGAPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Sep 2010 20:15:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 60927D3899;
+	Mon,  6 Sep 2010 20:15:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pKspzKNyLXkLr987XMvz5Hxkhpg=; b=fsRT36
+	KiIYItIRmNB0SF3RN3yduEGL+v+Pp+ehOA1HpfZiur5HGub6jXIIZq7qAv/16plv
+	gOSbQdOO6GNsvGotXwhMNXOKFFHZns3NLWtOCZRJZ9dLxHxMEBmHaopZETsupq1z
+	eeSCcR5j4FxXO9wLyn3J3MZwk4jfqMM7QgIrk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cwxV2EkFV2KDz9tFcnlBVClHuW/0Ynw2
+	YCTqSPacJ1SGZ+DJvDnLbqULTKWE2WlQD6paLkeEi0O3TGAORfI9mq+GDxZi1r5i
+	onzoxq7MBS1THiVJH6sicrgj/XC6WlUoiNI/0BCcdHHOyk4x3ZFoVsDjqmuZkDzN
+	iloC+lJqNZA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2D70BD3895;
+	Mon,  6 Sep 2010 20:15:12 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 54AC2D3893; Mon,  6 Sep
+ 2010 20:15:08 -0400 (EDT)
+In-Reply-To: <1283816603-12156-1-git-send-email-tfransosi@gmail.com> (Thiago
+ Farina's message of "Mon\,  6 Sep 2010 20\:43\:23 -0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FB3CF69E-BA14-11DF-8079-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155650>
 
-Hi Thiago,
+We have many invocations of string_list_* functions in the code that are
+already run with our test suite, and breakage to string_list functions
+would very likely break them.  This patch adds yet another and a lot
+simpler caller that is not used from anywhere.
 
-Thiago Farina wrote:
-> On Sun, Sep 5, 2010 at 2:02 AM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:>
+Sorry, but I simply do not see the point.
 
->> To make sure this example remains valid, wouldn't you want to includ=
-e
->> a caller in the t/ directory so it can be automatically run? =C2=A0(=
-See
->> t/README.)
->
-> I read it, but I'm not sure how to do this. Maybe you could point me
-> to an example?
+As I already said in a previous message, your program, because it is so
+short and simple, may be a lot easier example for people who are learning
+git API than any of the real existing programs.  It might be a good public
+service to give it a wider exposure by having it somewhere in my tree than
+burying it in your blog ;-), but then I think a better place to do so
+would be in Documentation/technical/api-*.txt and not in "test program"
+that is not used by anything.
 
-t0070-fundamental.sh might be a good place to add it.
+Or are you planning to change the implementation of string_list so
+drastically real soon now that you need a specific test that only checks
+the API?  If that is the case, I am Ok with treating it just like test-date
+which tries to test the approxidate API in isolation, but then you would
+need to connect test-string-list to a t/tNNNN-XXXX.sh script in the test
+suite.
 
-> It can be expanded later by anyone to test many other things though.
+But for that purpose, you are not exercising the API to any meaningful
+depth yet.  It uses the unordered append interface to add only two
+elements, does a single look up, and clear.  It may be a good start, but
+it isn't yet something I would want to be CC'ed for application.
 
-I suppose.  Edge cases for arguments, sorting, and _DUP versus _NODUP
-semantics would be the main thing I would be interested in testing.
-Maybe another day.
-
-Thanks,
-Jonathan
+Thanks.
