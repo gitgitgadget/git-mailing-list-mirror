@@ -1,75 +1,79 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [BUG] git-send-email format-patch awareness & retry
-Date: Wed, 8 Sep 2010 11:14:18 +0200
-Message-ID: <201009081114.18263.trast@student.ethz.ch>
-References: <AANLkTimtOguHdcs+QYj7ePNeyMNsWYLDu+yfyOPrDWUG@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCH] sha1_name: allow to add @{...} alias via config
+Date: Wed, 8 Sep 2010 11:45:29 +0200
+Message-ID: <AANLkTimK6MwJHYafAAYNn+h3HD1f0H-BHsQYph4qbCrJ@mail.gmail.com>
+References: <1283918641-3662-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Ryan Anderson <ryan@michonline.com>, Greg KH <greg@kroah.com>
-To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 08 11:14:52 2010
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 11:45:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtGjz-0004Zp-GT
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 11:14:51 +0200
+	id 1OtHE3-0003zj-B5
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 11:45:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758574Ab0IHJOn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 05:14:43 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:39611 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752714Ab0IHJOl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 05:14:41 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 8 Sep
- 2010 11:14:41 +0200
-Received: from thomas.site (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.0.702.0; Wed, 8 Sep
- 2010 11:14:18 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <AANLkTimtOguHdcs+QYj7ePNeyMNsWYLDu+yfyOPrDWUG@mail.gmail.com>
+	id S1758583Ab0IHJpv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 05:45:51 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39839 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756004Ab0IHJpt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 05:45:49 -0400
+Received: by iwn5 with SMTP id 5so6218452iwn.19
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 02:45:49 -0700 (PDT)
+Received: by 10.231.169.10 with SMTP id w10mr9617391iby.106.1283939149123;
+ Wed, 08 Sep 2010 02:45:49 -0700 (PDT)
+Received: by 10.231.30.193 with HTTP; Wed, 8 Sep 2010 02:45:29 -0700 (PDT)
+In-Reply-To: <1283918641-3662-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155776>
 
-=C6var Arnfj=F6r=F0 Bjarmason wrote:
-> (cc primary authors & Junio)
->=20
-> This is more of a TODO note to myself than a bug, but if someone else
-> gets around to fixing these that'd be great too.
->=20
-> git-send-email should:
->=20
->  * Complain loudly on "*** SUBJECT HERE ***" and "*** BLURB HERE ***"
->=20
->    This should have an additional "are you sure" dialog:
->=20
->     Subject: [PATCH 00/20] *** SUBJECT HERE ***
->     Date: Tue,  7 Sep 2010 16:43:03 +0000
->     Message-Id: <1283877803-17757-1-git-send-email-avarab@gmail.com>
->     X-Mailer: git-send-email 1.7.2.3.313.gcd15
->     MIME-Version: 1.0
->     Content-Type: text/plain; charset=3DUTF-8
->     Content-Transfer-Encoding: 8bit
->=20
->     Send this email? ([y]es|[n]o|[q]uit|[a]ll): y
->     Password:
+2010/9/8 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>:
+> This allows users to add new @{..} alias via ref-at.* config
+> variables. The rewrite rule is printf-alike.
+>
+> My itch is I usually work on a topic and only want to see commits in
+> that topic. So I make a tag to the topic's base, then do
+>
+> git log base/my-topic..
+>
+> That is a lot of keystrokes, and my mind is small enough sometimes I
+> don't even remember the topic name, stucking at "base/ =C2=A0what?"
+>
+> Now I have "ref-at.base =3D base/%(tip)" in my gitconfig and I only n=
+eed
+> to do "git log @{base}..".
 
-You could resurrect
+I like the idea, but I would like something more generic, a ref
+transformation or expression (ref-exp?). Currently you can't say
+%(tip)@{1}, neither %(tip)^, nor origin/master..origin/%(tip).
 
-  http://mid.gmane.org/7fedc4b76fed03e4db6a2bb7453609c9cd02928a.1244496=
-564.git.trast@student.ethz.ch
+Another issue is that it can shadow builtin @{}s, like @{upstream}.
 
-though on re-reading I'm not so sure anymore that *any* complaints
-remained.
+Why %(tip) and not %(branchname), in line with other %() modifiers.
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+In particular I have a use case for this @{name}. I would like somethin=
+g like:
+
+ref-exp.last =3D %(tip)@{1}..%(tip)@{0}
+
+so I could do:
+
+git log @{last}
+git log origin/master@{last}
+
+Although another way to get it could be:
+
+git log @{1..0}
+git log origin/master@{1..0}
+
+Thanks,
+Santi
