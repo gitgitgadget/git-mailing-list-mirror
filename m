@@ -1,181 +1,134 @@
-From: Daniel Trebbien <dtrebbien@gmail.com>
-Subject: Why does git-svn redownload revisions?
-Date: Wed, 8 Sep 2010 16:13:33 +0000 (UTC)
-Message-ID: <loom.20100908T181056-819@post.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 00/20] [CONTINUE] Add gettext support to Git
+Date: Wed, 08 Sep 2010 09:43:44 -0700
+Message-ID: <7vd3sonq2n.fsf@alter.siamese.dyndns.org>
+References: <1283877955-19105-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 08 18:15:16 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 18:44:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtNIo-0004Il-BX
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 18:15:14 +0200
+	id 1OtNki-0003WL-7y
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 18:44:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756094Ab0IHQPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 12:15:11 -0400
-Received: from lo.gmane.org ([80.91.229.12]:42985 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755973Ab0IHQPI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 12:15:08 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OtNIc-0004Cb-V3
-	for git@vger.kernel.org; Wed, 08 Sep 2010 18:15:03 +0200
-Received: from cpe-76-88-109-104.san.res.rr.com ([76.88.109.104])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Sep 2010 18:15:02 +0200
-Received: from dtrebbien by cpe-76-88-109-104.san.res.rr.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Sep 2010 18:15:02 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 76.88.109.104 (Mozilla/5.0 (X11; U; Linux i686; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Safari/531.2+ Debian/squeeze (2.30.5-1) Epiphany/2.30.5)
+	id S1756413Ab0IHQny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 12:43:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46521 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496Ab0IHQnw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 12:43:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EE279D40BC;
+	Wed,  8 Sep 2010 12:43:50 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=tuIvnYL3G6Wp4Gr7BiMIa3h3JjM=; b=xjqJdW
+	QyaWlGxIzvbZ3Qp8Ad2ktDMTVs6h/9yioJOEGt3/PFIluD19s21nFuq1mNyY9IDB
+	Y5okY6eKXgLaZlFT7dThvF2eOwOutrPV7z0dt1Zm66kygArLtugEKkIV0froaXnw
+	J9xgw72MWglcr7thlQG5eqWlnJZ6rFBr+I2DA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V3ev2hDuvmjB2GaztgJ3DSzTOOVAPrke
+	MtvTA8cSkv+h5yssj67rnZM/kZODJZExHKGUGTKvr4Sr1s8Lx90oAfT1Rnb4HvPx
+	HD0Y4OZ8vSTP+/3x97l6lZLL3hOvEhR2jF2T4nGaRsS5B8DEObdbtGI5ssq/DjPj
+	FII7ClHNakg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CAE0ED40BB;
+	Wed,  8 Sep 2010 12:43:48 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EFA1ED40B1; Wed,  8 Sep
+ 2010 12:43:45 -0400 (EDT)
+Importance: high
+In-Reply-To: <1283877955-19105-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue\,  7 Sep
+ 2010 16\:45\:35 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 412066EC-BB68-11DF-BD73-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155799>
 
-For my first time using git-svn, I decided that I wanted to convert the GNU Nano
-Subversion repository to a git repo. I finally settled on the following series
-of commands after some initial trial-and-error (e.g. having the wrong
-`i18n.commitencoding` and not specifying a Subversion authors file):
-git svn init -s svn://svn.sv.gnu.org/nano
-git config svn.authorsfile ~/projects/nano/svn.authorsfile
-git config i18n.commitencoding 'ISO-8859-1'
-git svn fetch
+I've done
 
-The issue is that the fetch runs up to revision 4250, but then mysteriously
-begins redownloading revisions 1 up to four thousand something in importing
-the `nano_2_1_1` tag:
-...
-r4248 = 7c444dd667b9629ce92a53e8d35ad2d178e5735f (refs/remotes/trunk)
-	M	nano/ChangeLog
-	M	nano/configure.ac
-	M	nano/po/cs.po
-	M	nano/po/pt_BR.po
-	M	nano/po/es.po
-	M	nano/po/eu.po
-	M	nano/po/hu.po
-	M	nano/po/vi.po
-	M	nano/po/nano.pot
-	M	nano/po/ms.po
-	M	nano/po/uk.po
-	M	nano/po/ro.po
-	M	nano/po/ru.po
-	M	nano/po/rw.po
-	M	nano/po/id.po
-	M	nano/po/nb.po
-	M	nano/po/gl.po
-	M	nano/po/fr.po
-	M	nano/po/nl.po
-	M	nano/po/nn.po
-	M	nano/po/pl.po
-	M	nano/po/it.po
-	M	nano/po/ca.po
-	M	nano/po/da.po
-	M	nano/po/sr.po
-	M	nano/po/tr.po
-	M	nano/po/ga.po
-	M	nano/po/bg.po
-	M	nano/po/sv.po
-	M	nano/po/de.po
-	M	nano/po/zh_TW.po
-	M	nano/po/fi.po
-	M	nano/po/zh_CN.po
-r4249 = 6fbad8a00fa067d1e3de913f77db08c6117843c7 (refs/remotes/trunk)
-	M	nano/NEWS
-r4250 = 704700855e5112d75654e3e7461e896f49e10fd8 (refs/remotes/trunk)
-Found possible branch point: svn://svn.sv.gnu.org/nano/trunk/nano =>
-svn://svn.sv.gnu.org/nano/tags/nano_2_1_1, 4248
-Initializing parent: refs/remotes/tags/nano_2_1_1@4248
-	A	mkinstalldirs
-	A	utils.c
-	A	nano.h
-	A	global.c
-	A	configure
-	A	Makefile.in
-	A	AUTHORS
-	A	configure.in
-	A	ChangeLog
-	A	proto.h
-	A	nano.1
-	A	nano.1.html
-	A	README
-	A	acconfig.h
-	A	BUGS
-	A	config.h.in
-	A	ABOUT-NLS
-	A	TODO
-	A	INSTALL
-	A	intl/po2tbl.sed.in
-	A	intl/loadinfo.h
-	A	intl/Makefile.in
-	A	intl/explodename.c
-	A	intl/VERSION
-	A	intl/xopen-msg.sed
-	A	intl/ChangeLog
-	A	intl/finddomain.c
-	A	intl/localealias.c
-	A	intl/gettextP.h
-	A	intl/textdomain.c
-	A	intl/linux-msg.sed
-	A	intl/l10nflist.c
-	A	intl/loadmsgcat.c
-	A	intl/libgettext.h
-	A	intl/bindtextdom.c
-	A	intl/gettext.c
-	A	intl/intl-compat.c
-	A	intl/dgettext.c
-	A	intl/cat-compat.c
-	A	intl/gettext.h
-	A	intl/dcgettext.c
-	A	intl/hash-string.h
-	A	winio.c
-	A	COPYING
-	A	Makefile.am
-	A	missing
-	A	NEWS
-	A	cut.c
-	A	nano.c
-	A	aclocal.m4
-	A	install-sh
-	A	po/cat-id-tbl.c
-	A	po/stamp-cat-id
-	A	po/es.po
-	A	po/fr.po
-	A	po/de.po
-	A	po/ChangeLog
-	A	po/Makefile.in.in
-	A	po/es.gmo
-	A	po/fr.gmo
-	A	po/de.gmo
-	A	po/it.po
-	A	po/POTFILES.in
-	A	po/nano.pot
-	A	po/it.gmo
-	A	stamp-h.in
-r2 = 842a208235bd2a1181250766996f7797e74a8608
-(refs/remotes/tags/nano_2_1_1@4248)
-	M	winio.c
-r6 = 280cfdcb8533ffcb424b3a86b7392ccfbc054e60
-(refs/remotes/tags/nano_2_1_1@4248)
-	M	ChangeLog
-r7 = 6951e65102dd1e005761dec6eb082f0a2d9327a2
-(refs/remotes/tags/nano_2_1_1@4248)
-	M	AUTHORS
-...
+    git fetch git://github.com/avar/git +ab/i18n-all-continue:ab/i18n
 
+and rebuilt 'pu' with it (I am not quite ready to push the results out,
+though).
 
-Why is git-svn redownloading revision history? Also, why hasn't git-svn
-redownloaded revisions to import other tags such as `nano_1_3_9`, `nano_2_0_0`,
-and `nano_0_9_14`? I have yet to complete the fetch, but git-svn finished
-redownloading revisions for `nano_2_1_1`, seemed to skip redownloading for
-`nano_2_1_2`, and is now redownloading for `nano_2_1_3`.
+Please squash in the following to appropriate patches in the series.
+Thanks.
+
+-- >8 --
+From: Junio C Hamano <gitster@pobox.com>
+Date: Wed, 8 Sep 2010 09:33:18 -0700
+Subject: [PATCH] Style fixups: explicitly disambiguate nested if/if/else correspondence
+
+Write {} to let the compiler know that we know what we are doing, like
+this, when writing a nested if/if/else:
+
+    if (...) {
+        if (...)
+	    ...
+	else
+	    ...
+    }
+
+The programmer who writes the code like the above without the outermost {}
+may know that "else" corresponds to the innermost "if", but it will keep
+things easier and safer while reviewing patches that build on top of code
+like this.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/clean.c |    3 ++-
+ builtin/clone.c |    3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index 642d767..e1694c0 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -77,13 +77,14 @@ int cmd_clean(int argc, const char **argv, const char *prefix)
+ 	if (ignored && ignored_only)
+ 		die(_("-x and -X cannot be used together"));
+ 
+-	if (!show_only && !force)
++	if (!show_only && !force) {
+ 		if (config_set)
+ 			die(_("clean.requireForce set to true and neither -n nor -f given; "
+ 				  "refusing to clean"));
+ 		else
+ 			die(_("clean.requireForce defaults to true and neither -n nor -f given; "
+ 				  "refusing to clean"));
++	}
+ 
+ 	if (force > 1)
+ 		rm_flags = 0;
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 7b0d104..1f10f3f 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -465,11 +465,12 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 		die(_("could not create leading directories of '%s'"), git_dir);
+ 	set_git_dir(make_absolute_path(git_dir));
+ 
+-	if (0 <= option_verbosity)
++	if (0 <= option_verbosity) {
+ 		if (option_bare)
+ 			printf(_("Cloning into bare repository %s"), dir);
+ 		else
+ 			printf(_("Cloning into %s"), dir);
++	}
+ 	init_db(option_template, INIT_DB_QUIET);
+ 
+ 	/*
+-- 
+1.7.3.rc0.183.gb0497
