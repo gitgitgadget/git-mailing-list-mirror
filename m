@@ -1,112 +1,188 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: NO_REGEX defaults on obscure platforms
-Date: Wed, 08 Sep 2010 10:20:08 -0700 (PDT)
-Message-ID: <m3hbi0m9uw.fsf@localhost.localdomain>
-References: <AANLkTimYY_KHwqWWXTxFqW67FHYtJJkLuA-6WVc6wzO5@mail.gmail.com>
-	<HYj6Cf-QUJiUlQ7fPRq5qJw3IurvsqhLa1qIg9c6ajPY6g_B2-OehA@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	"Gary V. Vaughan" <gary@thewrittenword.com>,
-	Boyd Lynn Gerber <gerberb@zenez.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Jason Riedy <ejr@EECS.Berkeley.EDU>,
-	Robert Schiele <rschiele@gmail.com>
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Sep 08 19:20:19 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH 1/5] fmt_merge_msg: Change fmt_merge_msg API to accept shortlog_len
+Date: Wed,  8 Sep 2010 23:29:53 +0530
+Message-ID: <1283968797-31793-2-git-send-email-artagnon@gmail.com>
+References: <1283968797-31793-1-git-send-email-artagnon@gmail.com>
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 20:02:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtOJm-00081K-Vq
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 19:20:19 +0200
+	id 1OtOyM-0000U4-Nv
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 20:02:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751880Ab0IHRUO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 13:20:14 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51868 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751716Ab0IHRUM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 13:20:12 -0400
-Received: by wwj40 with SMTP id 40so309155wwj.1
-        for <git@vger.kernel.org>; Wed, 08 Sep 2010 10:20:11 -0700 (PDT)
+	id S1752061Ab0IHSCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 14:02:12 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:35423 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751287Ab0IHSCK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 14:02:10 -0400
+Received: by pvg2 with SMTP id 2so150627pvg.19
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 11:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=fXvhUAwRWiET8q61xgFrXnriATzWmL817ZAw0DukC/o=;
-        b=PsC6Q1Jg2488P7QSQakwI+GqN+REZG6DXdAGIvIUHGov0gGky+Hp+rT0riR4IcOxul
-         SrlXgnNcLyWV+fr+hpiTw4b76hdlJXkcXEesMYybjRgyKce7RG3dFwicPcGdGUKpQsAh
-         +oBYQgQZDGy6THVWSZ9fo7hsBarmQXFOhGE24=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=r+urYYfZvEP7AnVpu6ggJkREboPLFjq3/cuPq4N/SZs=;
+        b=RBuq/zd4BbqAydPqvB7xnT3Zw+dRl9lil1Bo9KUEWI+9miGZviL0wbu0miyMpmhwTn
+         oeJJFScU4AKRiOk/B+F/7+ugVKDninmDSprJ/5OeEKW9vS0It/2kKexhMuUnZx+2jkCe
+         3aeOSGO7SsGL4GiVbNbWmJOTiAFswEjhAt41c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=jhOLcslio6fWHZ1Ofm6GsDWgYGhaWjTIVYKFy+QzJkh0qpFP1IPorGaVNId8FDAbQz
-         ejuo6rxH5oe0Tenq3GA4bCXIujv1mpUsVmrC4k/EYwXtgBLF1fEGBvEFC37RL3B5SHOG
-         hGLqzz+P5qsYJlve4LePxvCR74rZoGQg2tgNo=
-Received: by 10.227.157.147 with SMTP id b19mr2460wbx.49.1283966411005;
-        Wed, 08 Sep 2010 10:20:11 -0700 (PDT)
-Received: from localhost.localdomain (abwu94.neoplus.adsl.tpnet.pl [83.8.244.94])
-        by mx.google.com with ESMTPS id p52sm188237weq.20.2010.09.08.10.20.06
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=ZEGRUk+fPu1R0vJPeSCRe67ssIcRri7iCHEHnZXy/AaAwHzCFJ52xFz9YiSu3lJzz7
+         Ednj5E4HbpvUuoFJKzAINojooweGsy02W1Zezb8y2jG+zlBNBOttIDXyH+EysUfry6Ej
+         2xJAbE57TsroImybBwmCX+URhNlDixqpQYt5o=
+Received: by 10.142.121.40 with SMTP id t40mr107749wfc.258.1283968928500;
+        Wed, 08 Sep 2010 11:02:08 -0700 (PDT)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id z6sm199616ibc.12.2010.09.08.11.02.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Sep 2010 10:20:08 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o88HJum0016845;
-	Wed, 8 Sep 2010 19:20:02 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o88HJK9l016833;
-	Wed, 8 Sep 2010 19:19:20 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <HYj6Cf-QUJiUlQ7fPRq5qJw3IurvsqhLa1qIg9c6ajPY6g_B2-OehA@cipher.nrlssc.navy.mil>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Wed, 08 Sep 2010 11:02:07 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
+In-Reply-To: <1283968797-31793-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155802>
 
-Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
-> On 09/08/2010 10:12 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
->> On Mon, Sep 6, 2010 at 07:41, Junio C Hamano <gitster@pobox.com> wro=
-te:
->>=20
->>> There are a few leftover bits in 'next' that need to be merged to '=
-master'
->>> before we declare a real -rc cycle, so tonight's pushout is -rc0.
->>=20
->> One thing that's almost certainly wrong in v1.7.3-rc0 is the NO_REGE=
-X
->> defaults. It's a non-issue for people who run the configure script,
->> but the Makefile probably has the wrong defaults on some obscure
->> platforms.
-[...]
+Give "shortlog_len" parameter to the fmt_merge_msg(), remove its
+"merge_summary" parameter, and remove fmt_merge_msg_shortlog() function.
+In the updated API, shortlog_len == 0 means no shortlog is given.
 
->> Alternatively, just check for REG_STARTEND in regex.h (or the includ=
-es
->> it pulls in):
->>=20
->>     $ grep REG_STARTEND /usr/include/regex.h
->>     #define REG_STARTEND (1 << 2)
->=20
-> Unfortunately, IRIX actually defines REG_STARTEND in its regex.h, but
-> the feature does not seem to work.  This also means the configure scr=
-ipt
-> will give a false negative and indicate that NO_REGEX should _not_ be
-> set, when it actually should be.
+The parameter "merge_title" controls if the title of the merge commit is
+autogenerated (it reads something like "Merge branch ..."), and typically
+it is set to true when the caller does not give its own message.
 
-Well, that just means that the test for NO_REGEX in configure.ac
-should be more involved than just checking if REG_STARTEND is defined:
-it should test if regex can truly handle null bytes.  There are some
-examples of such test programs: see e.g. check for NO_C99_FORMAT
-above.
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Mentored-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ builtin.h               |    7 ++++---
+ builtin/fmt-merge-msg.c |   30 ++++++++++++++----------------
+ builtin/merge.c         |   14 ++++++--------
+ 3 files changed, 24 insertions(+), 27 deletions(-)
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+diff --git a/builtin.h b/builtin.h
+index ed6ee26..09b94ea 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -7,6 +7,8 @@
+ #include "commit.h"
+ #include "notes.h"
+ 
++#define DEFAULT_MERGE_LOG_LEN 20
++
+ extern const char git_version_string[];
+ extern const char git_usage_string[];
+ extern const char git_more_info_string[];
+@@ -14,9 +16,8 @@ extern const char git_more_info_string[];
+ extern void list_common_cmds_help(void);
+ extern const char *help_unknown_cmd(const char *cmd);
+ extern void prune_packed_objects(int);
+-extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
+-	struct strbuf *out);
+-extern int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out);
++extern int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
++			 int merge_title, int shortlog_len);
+ extern int commit_notes(struct notes_tree *t, const char *msg);
+ 
+ struct notes_rewrite_cfg {
+diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
+index 937d5a7..42021d3 100644
+--- a/builtin/fmt-merge-msg.c
++++ b/builtin/fmt-merge-msg.c
+@@ -255,9 +255,9 @@ static void do_fmt_merge_msg_title(struct strbuf *out,
+ 		strbuf_addf(out, " into %s\n", current_branch);
+ }
+ 
+-static int do_fmt_merge_msg(int merge_title, int merge_summary,
+-	struct strbuf *in, struct strbuf *out) {
+-	int limit = 20, i = 0, pos = 0;
++static int do_fmt_merge_msg(int merge_title, struct strbuf *in,
++	struct strbuf *out, int shortlog_len) {
++	int i = 0, pos = 0;
+ 	unsigned char head_sha1[20];
+ 	const char *current_branch;
+ 
+@@ -288,7 +288,7 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
+ 	if (merge_title)
+ 		do_fmt_merge_msg_title(out, current_branch);
+ 
+-	if (merge_summary) {
++	if (shortlog_len) {
+ 		struct commit *head;
+ 		struct rev_info rev;
+ 
+@@ -303,17 +303,14 @@ static int do_fmt_merge_msg(int merge_title, int merge_summary,
+ 
+ 		for (i = 0; i < origins.nr; i++)
+ 			shortlog(origins.items[i].string, origins.items[i].util,
+-					head, &rev, limit, out);
++					head, &rev, shortlog_len, out);
+ 	}
+ 	return 0;
+ }
+ 
+-int fmt_merge_msg(int merge_summary, struct strbuf *in, struct strbuf *out) {
+-	return do_fmt_merge_msg(1, merge_summary, in, out);
+-}
+-
+-int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out) {
+-	return do_fmt_merge_msg(0, 1, in, out);
++int fmt_merge_msg(struct strbuf *in, struct strbuf *out,
++		  int merge_title, int shortlog_len) {
++	return do_fmt_merge_msg(merge_title, in, out, shortlog_len);
+ }
+ 
+ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+@@ -355,12 +352,13 @@ int cmd_fmt_merge_msg(int argc, const char **argv, const char *prefix)
+ 
+ 	if (strbuf_read(&input, fileno(in), 0) < 0)
+ 		die_errno("could not read input file");
+-	if (message) {
++
++	if (message)
+ 		strbuf_addstr(&output, message);
+-		ret = fmt_merge_msg_shortlog(&input, &output);
+-	} else {
+-		ret = fmt_merge_msg(merge_summary, &input, &output);
+-	}
++	ret = fmt_merge_msg(&input, &output,
++			    message ? 0 : 1,
++			    merge_summary ? DEFAULT_MERGE_LOG_LEN : 0);
++
+ 	if (ret)
+ 		return ret;
+ 	write_in_full(STDOUT_FILENO, output.buf, output.len);
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 2207f79..b2c0984 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -998,14 +998,12 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		for (i = 0; i < argc; i++)
+ 			merge_name(argv[i], &merge_names);
+ 
+-		if (have_message && option_log)
+-			fmt_merge_msg_shortlog(&merge_names, &merge_msg);
+-		else if (!have_message)
+-			fmt_merge_msg(option_log, &merge_names, &merge_msg);
+-
+-
+-		if (!(have_message && !option_log) && merge_msg.len)
+-			strbuf_setlen(&merge_msg, merge_msg.len-1);
++		if (!have_message || option_log) {
++			fmt_merge_msg(&merge_names, &merge_msg, !have_message,
++				      option_log ? DEFAULT_MERGE_LOG_LEN : 0);
++			if (merge_msg.len)
++				strbuf_setlen(&merge_msg, merge_msg.len - 1);
++		}
+ 	}
+ 
+ 	if (head_invalid || !argc)
+-- 
+1.7.2.2.409.gdbb11.dirty
