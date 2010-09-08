@@ -1,152 +1,69 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv2 2/2] merge-recursive: D/F conflicts where was_a_dir/file -> was_a_dir
-Date: Wed,  8 Sep 2010 00:40:41 -0600
-Message-ID: <1283928041-9882-3-git-send-email-newren@gmail.com>
+Subject: Re: [PATCHv2 0/2] Fix resolvable rename + D/F conflict testcases
+Date: Wed, 8 Sep 2010 00:41:26 -0600
+Message-ID: <AANLkTin0KidU3og7SVEVUAaRfMzafEvvme_vP-0V773E@mail.gmail.com>
 References: <1283928041-9882-1-git-send-email-newren@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: gitster@pobox.com, oinksocket@letterboxes.org,
 	Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 08 08:39:34 2010
+X-From: git-owner@vger.kernel.org Wed Sep 08 08:41:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtEJi-00060v-Dr
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 08:39:34 +0200
+	id 1OtELg-0007DJ-Uq
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 08:41:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752947Ab0IHGjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 02:39:31 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:48651 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751796Ab0IHGjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 02:39:21 -0400
-Received: by mail-qy0-f181.google.com with SMTP id 33so6160227qyk.19
-        for <git@vger.kernel.org>; Tue, 07 Sep 2010 23:39:20 -0700 (PDT)
+	id S1754170Ab0IHGl3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 02:41:29 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52177 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750893Ab0IHGl1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 02:41:27 -0400
+Received: by fxm16 with SMTP id 16so529506fxm.19
+        for <git@vger.kernel.org>; Tue, 07 Sep 2010 23:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=t3/HFMZhpWm4dvxedc4DsFjAgryJlqVQ6pJohxt3zGk=;
-        b=lXQSpuQ5bWhhr6UnOXUJLVGL+h+E1RDnOhBaoT/zYvXfKlJxi4XSOL41rGvciqe0oX
-         UbUdkqO7sb12ratKBk3RRaCw2GMaFm+aOeiUyCc5PZL319qm9N0tsluRWZ2p0V/YHF6I
-         yffs76Dp8J0vHR6osb+1H8bj5Yd+uGVMez1EE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uc1m7Okd87lrZ0WnDWusPG1pTT3dF/q9+S0T/YrsqI8=;
+        b=t8TQYpdwXkVUHvQkfFBfcqM6etVenY4a+bs6hOwQ5uE5TQonvaM3rKn0HinOwA6Vm4
+         jpPe/UjyQPt7IUJQSAAHQLEptwz1dCGdCxgCkIWZBfTVFbRaWfYABqb/DlUHm1yH3p1c
+         gKMmNmawqUsSxyORKZtoTVQudeSiIUFrgwYBI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=v5ioDie8d8bzFVB0bFxwiV9b96ujJhYELknWA0spDT6AyLSHlOI9RGQ8WNHtNN/4E/
-         BlDT8qB091Z81s5vhMH22KbvBt4FIwSYcRtzzQgRvhQY6sov2+4BhJyg1RnDcXN3Pxx6
-         9T7sFrcO6DMW8bvWTZPOspgQSLlVGwVSS6mCo=
-Received: by 10.224.36.207 with SMTP id u15mr1594213qad.332.1283927960649;
-        Tue, 07 Sep 2010 23:39:20 -0700 (PDT)
-Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id t4sm8076432qcs.40.2010.09.07.23.39.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 07 Sep 2010 23:39:20 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.rc0.8.g2ec3f
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=JjcL4EadtYSvyGp0Zrzf3UWgneiEN7NztZ/extx/MyAubn3gZ4WXvQoenKfmLhdc2f
+         5A5I44kZLBEmvxnzDKn/2zv8NTQXN5OJlpx3KVWkrmlf3j4nLkTKf6SIybDQ8jG5jQ0V
+         Gpi+D3eXCX5+xicuLj5zlJOS8hGeN9cSsbE7I=
+Received: by 10.223.118.15 with SMTP id t15mr118786faq.96.1283928086673; Tue,
+ 07 Sep 2010 23:41:26 -0700 (PDT)
+Received: by 10.223.50.154 with HTTP; Tue, 7 Sep 2010 23:41:26 -0700 (PDT)
 In-Reply-To: <1283928041-9882-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155772>
 
-In merge-recursive.c, whenever there was a rename where a file name on one
-side of the rename matches a directory name on the other side of the merge,
-then the very first check that
-  string_list_has_string(&o->current_directory_set, ren1_dst)
-would trigger forcing it into marking it as a rename/directory conflict.
+On Wed, Sep 8, 2010 at 12:40 AM, Elijah Newren <newren@gmail.com> wrote=
+:
+> This fixes an issue reported by Nick (no lastname given) on the
+> mailing list, as well as a closely related issue in the handling of
+> rename + directory/file conflicts, namely where a filename on one sid=
+e
+> of the rename is a directory name on the other side of the merge.
+>
+> Change since v1:
+> =C2=A0* Split unrelated 2/3 patch out into a separate submission
 
-However, if the path is only renamed on one side and a simple three-way
-merge between the separate files resolves cleanly, then we don't need to
-mark it as a rename/directory conflict.  So, we can simply move the check
-for rename/directory conflicts after we've verified that there isn't a
-rename/rename conflict and that a threeway content merge doesn't work.
-
-This changes the particular error message one gets in the case where the
-directory name that a file on one side of the rename matches is not also
-part of the rename pair.  For example, with commits containing the files:
-  COMMON    -> (HEAD,           MERGE )
-  ---------    ---------------  -------
-  sub/file1 -> (sub/file1,      newsub)
-  <NULL>    -> (newsub/newfile, <NULL>)
-then previously when one tried to merge MERGE into HEAD, one would get
-  CONFLICT (rename/directory): Rename sub/file1->newsub in HEAD  directory newsub added in merge
-  Renaming sub/file1 to newsub~HEAD instead
-  Adding newsub/newfile
-  Automatic merge failed; fix conflicts and then commit the result.
-After this patch, the error message will instead become:
-  Removing newsub
-  Adding newsub/newfile
-  CONFLICT (file/directory): There is a directory with name newsub in merge. Adding newsub as newsub~HEAD
-  Automatic merge failed; fix conflicts and then commit the result.
-That makes more sense to me, because git can't know that there's a conflict
-until after it's tried resolving paths involving newsub/newfile to see if
-they are still in the way at the end (and if newsub/newfile is not in the
-way at the end, there should be no conflict at all, which did not hold with
-git previously).
-
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- merge-recursive.c               |   16 ++++++++--------
- t/t3509-cherry-pick-merge-df.sh |    4 ++--
- 2 files changed, 10 insertions(+), 10 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 20e1779..5ea6d11 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -935,14 +935,7 @@ static int process_renames(struct merge_options *o,
- 
- 			try_merge = 0;
- 
--			if (string_list_has_string(&o->current_directory_set, ren1_dst)) {
--				clean_merge = 0;
--				output(o, 1, "CONFLICT (rename/directory): Rename %s->%s in %s "
--				       " directory %s added in %s",
--				       ren1_src, ren1_dst, branch1,
--				       ren1_dst, branch2);
--				conflict_rename_dir(o, ren1, branch1);
--			} else if (sha_eq(src_other.sha1, null_sha1)) {
-+			if (sha_eq(src_other.sha1, null_sha1)) {
- 				clean_merge = 0;
- 				output(o, 1, "CONFLICT (rename/delete): Rename %s->%s in %s "
- 				       "and deleted in %s",
-@@ -1034,6 +1027,13 @@ static int process_renames(struct merge_options *o,
- 					if (!ren1->dst_entry->stages[2].mode !=
- 					    !ren1->dst_entry->stages[3].mode)
- 						ren1->dst_entry->processed = 0;
-+				} else if (string_list_has_string(&o->current_directory_set, ren1_dst)) {
-+					clean_merge = 0;
-+					output(o, 1, "CONFLICT (rename/directory): Rename %s->%s in %s "
-+					       " directory %s added in %s",
-+					       ren1_src, ren1_dst, branch1,
-+					       ren1_dst, branch2);
-+					conflict_rename_dir(o, ren1, branch1);
- 				} else {
- 					if (mfi.merge || !mfi.clean)
- 						output(o, 1, "Renaming %s => %s", ren1_src, ren1_dst);
-diff --git a/t/t3509-cherry-pick-merge-df.sh b/t/t3509-cherry-pick-merge-df.sh
-index eb5826f..948ca1b 100755
---- a/t/t3509-cherry-pick-merge-df.sh
-+++ b/t/t3509-cherry-pick-merge-df.sh
-@@ -58,7 +58,7 @@ test_expect_success 'Cherry-pick succeeds with was_a_dir/file -> was_a_dir (reso
- 	git cherry-pick --strategy=resolve simple
- '
- 
--test_expect_failure 'Cherry-pick succeeds with was_a_dir/file -> was_a_dir (recursive)' '
-+test_expect_success 'Cherry-pick succeeds with was_a_dir/file -> was_a_dir (recursive)' '
- 	git reset --hard &&
- 	git checkout -q nick-testcase^0 &&
- 	git cherry-pick --strategy=recursive simple
-@@ -92,7 +92,7 @@ test_expect_success 'Cherry-pick with rename to different D/F conflict succeeds
- 	git cherry-pick --strategy=resolve mergeme
- '
- 
--test_expect_failure 'Cherry-pick with rename to different D/F conflict succeeds (recursive)' '
-+test_expect_success 'Cherry-pick with rename to different D/F conflict succeeds (recursive)' '
- 	git reset --hard &&
- 	git checkout -q newhead^0 &&
- 	git cherry-pick --strategy=recursive mergeme
--- 
-1.7.3.rc0.8.g2ec3f
+=2E..oh, and now the series is based on master instead of next.  (I
+would base it on maint, but since I was adding another testcase to
+t3509 and t3509 does not yet exist in maint, I couldn't as easily put
+it there.)
