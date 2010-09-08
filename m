@@ -1,68 +1,86 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: git log for a merged branch
-Date: Wed, 8 Sep 2010 11:22:22 -0400 (EDT)
-Message-ID: <7551190.230240.1283959342943.JavaMail.root@mail.hq.genarts.com>
-References: <AANLkTimSHrmQgcrx-CqMgvkcBdgBG9icqw934+7qP7kg@mail.gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: NO_REGEX defaults on obscure platforms
+Date: Wed, 08 Sep 2010 10:31:44 -0500
+Message-ID: <HYj6Cf-QUJiUlQ7fPRq5qJw3IurvsqhLa1qIg9c6ajPY6g_B2-OehA@cipher.nrlssc.navy.mil>
+References: <AANLkTimYY_KHwqWWXTxFqW67FHYtJJkLuA-6WVc6wzO5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Wed Sep 08 17:22:38 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	"Gary V. Vaughan" <gary@thewrittenword.com>,
+	Boyd Lynn Gerber <gerberb@zenez.com>,
+	Brandon Casey <drafnel@gmail.com>,
+	Jason Riedy <ejr@EECS.Berkeley.EDU>,
+	Robert Schiele <rschiele@gmail.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 17:43:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtMTt-0000hC-Fm
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 17:22:37 +0200
+	id 1OtMnz-0008CV-Qf
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 17:43:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755010Ab0IHPWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 11:22:33 -0400
-Received: from hq.genarts.com ([173.9.65.1]:46359 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751716Ab0IHPWb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 11:22:31 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id C4F9C1E26254;
-	Wed,  8 Sep 2010 11:22:30 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RMMKcR+M+OdT; Wed,  8 Sep 2010 11:22:23 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 06F331E261EA;
-	Wed,  8 Sep 2010 11:22:23 -0400 (EDT)
-In-Reply-To: <AANLkTimSHrmQgcrx-CqMgvkcBdgBG9icqw934+7qP7kg@mail.gmail.com>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1755478Ab0IHPnS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 11:43:18 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37157 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751038Ab0IHPnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 11:43:17 -0400
+Received: by mail.nrlssc.navy.mil id o88FVi0K009987; Wed, 8 Sep 2010 10:31:44 -0500
+In-Reply-To: <AANLkTimYY_KHwqWWXTxFqW67FHYtJJkLuA-6WVc6wzO5@mail.gmail.com>
+X-OriginalArrivalTime: 08 Sep 2010 15:31:44.0792 (UTC) FILETIME=[F18DC980:01CB4F6A]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155794>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155795>
 
------ Original Message -----
-> From: "Tor Arntsen" <tor@spacetec.no>
-> To: "Stephen Bash" <bash@genarts.com>
-> Cc: "Git Mailing List" <git@vger.kernel.org>
-> Sent: Wednesday, September 8, 2010 10:23:47 AM
-> Subject: Re: git log for a merged branch
-> On Wed, Sep 8, 2010 at 16:04, Stephen Bash <bash@genarts.com> wrote:
->
-> > If I want to
-> > see the commits (bug fixes) performed on the release branch, how do
-> > I do it?
-> [..]
-> 
-> Maybe not exactly what you ask for, but the way I do it is simply to
-> use a non-ff merge with additional logging, i.e. git merge --no-ff
-> --log <branchname-with-fixes>
-> which will give me a merge commit which includes one-liners for each
-> of those commits merged into mainline.
+On 09/08/2010 10:12 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Mon, Sep 6, 2010 at 07:41, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>=20
+>> There are a few leftover bits in 'next' that need to be merged to 'm=
+aster'
+>> before we declare a real -rc cycle, so tonight's pushout is -rc0.
+>=20
+> One thing that's almost certainly wrong in v1.7.3-rc0 is the NO_REGEX
+> defaults. It's a non-issue for people who run the configure script,
+> but the Makefile probably has the wrong defaults on some obscure
+> platforms.
+>=20
+> I've CC'd people involved in Tru64, UnixWare, SCO, HP/UX, IRIX etc. I=
+t
+> would be really useful if you could:
+>=20
+>   1. Get v1.7.3-rc0
+>   2. Compile with the defaults, and NO_REGEX=3DYesPlease
+>   3. Run `cd t && ./t7008-grep-binary.sh` and report the results.
+>=20
+> That test is probably failing on some of these platforms.
 
-That's actually a pretty cool trick.  I will file that one for adoption as we move to a git-centric workflow.
+Yes, I've already tested and IRIX does indeed need to use the compat
+regex, i.e. IRIX needs NO_REGEX=3DYesPlease.
 
-I'm still curious if there's an "easy" way to extract the segment of history that was the release branch because I feel like there may be other uses than just git log... (not that I've nailed them down yet)
+> Alternatively, just check for REG_STARTEND in regex.h (or the include=
+s
+> it pulls in):
+>=20
+>     $ grep REG_STARTEND /usr/include/regex.h
+>     #define REG_STARTEND (1 << 2)
 
-Thanks!
-Stephen
+Unfortunately, IRIX actually defines REG_STARTEND in its regex.h, but
+the feature does not seem to work.  This also means the configure scrip=
+t
+will give a false negative and indicate that NO_REGEX should _not_ be
+set, when it actually should be.
+
+I have a few other patches, in addition to this NO_REGEX setting, that
+I haven't found time to submit, but my feelings won't be hurt if someon=
+e
+else beats me to it. (hint, hint :)
+
+-Brandon
