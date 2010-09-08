@@ -1,131 +1,61 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: [PATCH] git-svn: Use platform-specific svn authentication
-	providers (e.g., gnome-keyring)
-Date: Wed, 8 Sep 2010 20:55:46 +0200
-Message-ID: <20100908185546.GC22067@login.drsnuggles.stderr.nl>
+From: der Mouse <mouse@Rodents-Montreal.ORG>
+Subject: git's use of mkdir(2)
+Date: Wed, 8 Sep 2010 15:36:43 -0400 (EDT)
+Message-ID: <201009081936.PAA07078@Sparkle.Rodents-Montreal.ORG>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="KPt3K2mvTQbi32Jy"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 08 21:39:08 2010
+X-From: git-owner@vger.kernel.org Wed Sep 08 21:54:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtQU4-0006oJ-EJ
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 21:39:04 +0200
+	id 1OtQip-0007FJ-9X
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 21:54:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753556Ab0IHTi7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 15:38:59 -0400
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:41850 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753160Ab0IHTi6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 15:38:58 -0400
-X-Greylist: delayed 2590 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Sep 2010 15:38:58 EDT
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1OtPoA-0001gY-PY
-	for git@vger.kernel.org; Wed, 08 Sep 2010 20:55:48 +0200
-Received: (nullmailer pid 6479 invoked by uid 1000);
-	Wed, 08 Sep 2010 18:55:46 -0000
-Mail-Followup-To: Matthijs Kooijman <matthijs@stdin.nl>,
-	git@vger.kernel.org
-Content-Disposition: inline
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://katherina.student.utwente.nl/~matthijs/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.2 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
-	0.4 AWL                    AWL: From: address is in the auto white-list
+	id S1754084Ab0IHTxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 15:53:55 -0400
+Received: from Sparkle.Rodents-Montreal.ORG ([216.46.5.7]:57127 "EHLO
+	Sparkle.Rodents-Montreal.ORG" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753917Ab0IHTxz (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 15:53:55 -0400
+X-Greylist: delayed 1030 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Sep 2010 15:53:54 EDT
+Received: (from mouse@localhost)
+	by Sparkle.Rodents-Montreal.ORG (8.8.8/8.8.8) id PAA07078;
+	Wed, 8 Sep 2010 15:36:43 -0400 (EDT)
+X-Erik-Conspiracy: There is no Conspiracy - and if there were I wouldn't be part of it anyway.
+X-Message-Flag: Microsoft: the company who gave us the botnet zombies.
+X-Composition-Start-Date: Wed, 8 Sep 2010 15:16:20 -0400 (EDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155812>
 
+I've been trying to convince git to run on some of the systems I use.
+Of particular relevance at the moment are two BSD systems which have an
+important behavioural difference.
 
---KPt3K2mvTQbi32Jy
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Specifically, if /foo/bar does not exist but /foo does,
+mkdir("/foo/bar/",...) works on one and fails showing ENOENT on the
+other.  (Without the trailing slash, it works on both.)
 
-Hi folks,
+git (at least in the version I've got here, which appears to be
+1.6.4.1) depends on this working, and breaks as a result on the second
+of the above two systems.
 
-I've create below patch to make git work with platform-specific
-authentication providers (in particular, I needed this to get my svn
-passwords out of gnome-keyring, which isn't working currently).
+I've been doing a little digging and I think I might be able to fix
+this - but, before I charged ahead with it, I thought I'd float a query
+here to ask (a) if this is a known issue and fixed in something more
+recent (I had a look at 1.7.2 and a quick read of the code makes me
+think it still does this, but I could have missed something) and (b) if
+there would be any interest in such fixes if I do come up with them.
 
-Index: git-core/git-svn
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
-=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
---- git-core.orig/git-svn       2010-09-08 20:11:16.000000000 +0200
-+++ git-core/git-svn    2010-09-08 20:26:38.000000000 +0200
-@@ -4830,6 +4830,7 @@
-=20
- sub _auth_providers () {
-        [
-+         @{SVN::Core::auth_get_platform_specific_client_providers(undef, u=
-ndef)},
-          SVN::Client::get_simple_provider(),
-          SVN::Client::get_ssl_server_trust_file_provider(),
-          SVN::Client::get_simple_prompt_provider(
+Thoughts?
 
-Note that the auth_get_platform_specific_client_provides function used is n=
-ot
-working correctly in current versions of SVN, I've posted a separate patch =
-to
-fix the perl bindings there [1].
-
-[1]: http://svn.haxx.se/dev/archive-2010-09/0171.shtml
-
-Furthermore, the function accepts two parameters: $config and $pool. I've l=
-eft
-both undef here, which works. For $config, this means the default set of
-providers is used. I'm not sure what the implications are of not passing a
-$pool, any comments?
-
-The _auth_providers function is called from:
- - Git::SVN::Ra::new, where a $config and $pool would be available.
- - Git::SVN::Ra::trees_match, where neither is readily available (though
-   looking more closely, it seems that both values are in fact stored in $s=
-elf in
-   the new method, so they would be available.
- - cmd_branch, where neither seems to be available.
-
-So it does not seem trivial to pass in useful values for these two argument=
-s in
-all places. Any ideas on what would be a good way to handle this?
-
-What's the idea behind custom SVN configuration anyway?  From the sources, =
-it
-seems that only a few commands allow specifying the SVN configuration, thro=
-ugh
-the --config-dir option (namely init, migrate, fetch, clone, dcommit, set-t=
-ree,
-multi-fetch, rebase, but notably not dcommit).
-
-Gr.
-
-Matthijs
-
---KPt3K2mvTQbi32Jy
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkyH3DIACgkQz0nQ5oovr7zdAgCgqCHdSWBPFqjnTeEP3/R/R0Ee
-qzEAoIfljDdoD9rs9Fzph4EgWdqBiGot
-=tF4T
------END PGP SIGNATURE-----
-
---KPt3K2mvTQbi32Jy--
+/~\ The ASCII				  Mouse
+\ / Ribbon Campaign
+ X  Against HTML		mouse@rodents-montreal.org
+/ \ Email!	     7D C8 61 52 5D E7 2D 39  4E F1 31 3E E8 B3 27 4B
