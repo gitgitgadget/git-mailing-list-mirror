@@ -1,102 +1,76 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH] merge-recursive: Small code cleanup
-Date: Wed,  8 Sep 2010 01:21:22 -0600
-Message-ID: <1283930482-10228-1-git-send-email-newren@gmail.com>
-Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 08 09:20:09 2010
+Subject: Re: [PATCH 0/5] en/object-list-with-pathspec (v3?)
+Date: Wed, 8 Sep 2010 01:47:21 -0600
+Message-ID: <AANLkTimFRUfK2+yNGkgJX8K-0N5QYOp4ud2O7afH_iNz@mail.gmail.com>
+References: <1283874483-32017-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 08 09:47:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtEwt-0000Cl-4b
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 09:20:03 +0200
+	id 1OtFNP-0006WL-Sa
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 09:47:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757999Ab0IHHT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 03:19:58 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:63861 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757513Ab0IHHT5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 03:19:57 -0400
-Received: by gxk23 with SMTP id 23so2273536gxk.19
-        for <git@vger.kernel.org>; Wed, 08 Sep 2010 00:19:56 -0700 (PDT)
+	id S1758169Ab0IHHrX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 03:47:23 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43177 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756349Ab0IHHrW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 03:47:22 -0400
+Received: by fxm16 with SMTP id 16so546789fxm.19
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 00:47:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=pqCVmkTXaIjwSmDEbx4fwzXzc7ZjdO2xr8KMYeBW5Cs=;
-        b=TJjvBxjWpKhjgFlWhWAbLpiBzt6VqrZG7Rf5pTgu9v7MKG/KZuBOv2bhV9YnqsuCEa
-         0NdYRmHxi3i9o9D716/LhA8z4+DXbhbOoTfTSu6Ore8HRorXejhOFVG/V6SdYSyUM7qN
-         BSVnArzP3xkU92cmUvtACzoHZ5mWd99QBFy+U=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4YyA9Bh0LtE+kKqhIMI/reR5rqjwc9VAnuINsEVHHzo=;
+        b=sF8tKh82A/04/ArKvBL/cT//e/ye1/m1o6rN2slJdeIbncHqjGi/1qEY0dY0rvZtrN
+         ltkAaEkA38MDBEIECy5TNDqmxYBjVPCc+PDdJklvVSZZtcvesJ/kBF/PMS4OYLB/o35l
+         jSMZ29lhxGyW69B868cc0hEmXHHmPLmxsyxI8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=aMQu4JdSHGAruESX/7MDXrUtn9PJR1XJztNlo/w+8qV+R4dkOd1ZU8JXq1OgKmMt3M
-         dzcVde+livKVr/+gEoILoLXWm7l+mDJyA0idK+AM7tvs92zBDjQTvwJSeXDsm3lsvjK1
-         FcY8v+7dgpyteEL4gtIXWRxbdZO9iF81anZJU=
-Received: by 10.100.231.16 with SMTP id d16mr741777anh.94.1283930396233;
-        Wed, 08 Sep 2010 00:19:56 -0700 (PDT)
-Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id x19sm12956963anc.5.2010.09.08.00.19.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 08 Sep 2010 00:19:55 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.3.7.gf6a98
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=DPNCt+wkBbU2Sgy8QUx0U4G8Xca/5m2S9MpLc8/6IrPAHsFp8JXK4xfzlPOFlrmZ7f
+         HaGjrdYeqA+YKCSXFLxzrb+QT9AP/zmtOH7WI+RFVGogmChYuoWTV6UywT8gBiJpa1On
+         ty4AsXiLEq+wqCMTXFGXl6FyeP2h102iA8sX8=
+Received: by 10.223.114.74 with SMTP id d10mr395911faq.1.1283932041182; Wed,
+ 08 Sep 2010 00:47:21 -0700 (PDT)
+Received: by 10.223.50.154 with HTTP; Wed, 8 Sep 2010 00:47:21 -0700 (PDT)
+In-Reply-To: <1283874483-32017-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155774>
 
-process_renames() had a variable named "stage" and derived variables
-src_other and dst_other whose purpose was not entirely clear to me.  Make
-the name of stage slightly more descriptive and add a brief comment
-explaining what is occurring.
+2010/9/7 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>:
+> Changes from last time is tree_entry_interesting() now takes
+> struct exclude * as the pathspecs.
+>
+> I think there'll be a bit of performance loss because diff_options.el
+> is not initialized from the beginning. But that requires more changes
+> outside tree-diff.c (makes sure that diff_options.el is copied proper=
+ly,
+> makes sure that diff_tree_setup_* is called ...) So one step at a tim=
+e.
+> I'm working on it.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-Was previously PATCH 2/3 from my "fix resolvable rename + D/F conflict
-testcases" series, but I've pulled this patch out since it's not
-strictly related.  Also, due to Ken Schalk's response, I've dropped
-the piece of the patch he pointed out an issue in.  So now it's just a
-smaller cleanup, that is now based on maint.
+Looks reasonable to me so far.  I believe your series already makes
+nr_paths, paths, and pathlens fields from diff_options unused (other
+than via exclude_list) -- yes?  If so, that suggests that we could
+just modify diff_tree_setup_paths() to do the work that your new
+diff_tree_setup_exclude_lists() is doing (and to take an exclude_list*
+instead of a diff_options*).  Then you wouldn't need to worry about
+doing the setup "on-the-fly" and the performance differences should go
+away.
 
- merge-recursive.c |   20 ++++++++++++++------
- 1 files changed, 14 insertions(+), 6 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index fb6aa4a..ba9cbab 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -924,15 +924,23 @@ static int process_renames(struct merge_options *o,
- 			struct string_list_item *item;
- 			/* we only use sha1 and mode of these */
- 			struct diff_filespec src_other, dst_other;
--			int try_merge, stage = a_renames == renames1 ? 3: 2;
-+			int try_merge;
- 
--			remove_file(o, 1, ren1_src, o->call_depth || stage == 3);
-+			/*
-+			 * unpack_trees loads entries from common-commit
-+			 * into stage 1, from head-commit into stage 2, and
-+			 * from merge-commit into stage 3.  We keep track
-+			 * of which side corresponds to the rename.
-+			 */
-+			int renamed_stage = a_renames == renames1 ? 2 : 3;
-+			int other_stage =   a_renames == renames1 ? 3 : 2;
- 
--			hashcpy(src_other.sha1, ren1->src_entry->stages[stage].sha);
--			src_other.mode = ren1->src_entry->stages[stage].mode;
--			hashcpy(dst_other.sha1, ren1->dst_entry->stages[stage].sha);
--			dst_other.mode = ren1->dst_entry->stages[stage].mode;
-+			remove_file(o, 1, ren1_src, o->call_depth || renamed_stage == 2);
- 
-+			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
-+			src_other.mode = ren1->src_entry->stages[other_stage].mode;
-+			hashcpy(dst_other.sha1, ren1->dst_entry->stages[other_stage].sha);
-+			dst_other.mode = ren1->dst_entry->stages[other_stage].mode;
- 			try_merge = 0;
- 
- 			if (string_list_has_string(&o->current_directory_set, ren1_dst)) {
--- 
-1.7.2.3.7.gf6a98
+Am I understanding correctly, and is that the route you're going?
