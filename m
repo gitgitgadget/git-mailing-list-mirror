@@ -1,50 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Fix for normalization of foreign idents
-Date: Tue, 7 Sep 2010 23:32:28 -0500
-Message-ID: <20100908043227.GD24444@capella.cs.uchicago.edu>
-References: <1282599032-11369-1-git-send-email-marcus@mc.pp.se> <20100823213531.GD2120@burratino> <yf97hjhrol5.fsf@chiyo.mc.pp.se> <yf9vd6j5hti.fsf@mc.pp.se> <20100906210719.GD26371@burratino> <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: combined diff seems to ignore diff attribute
+Date: Tue, 07 Sep 2010 21:32:28 -0700
+Message-ID: <7vvd6gonxf.fsf@alter.siamese.dyndns.org>
+References: <AANLkTinbaQbS=pU44sSCf7+_3bLrREpehYQCiV5CFuVB@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Marcus Comstedt <marcus@mc.pp.se>
+Cc: git <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
 X-From: git-owner@vger.kernel.org Wed Sep 08 06:33:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtCLC-0004Is-BE
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 06:32:58 +0200
+	id 1OtCLC-0004Is-Rm
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 06:32:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410Ab0IHEcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 00:32:43 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.164.153]:39587 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750946Ab0IHEc3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 00:32:29 -0400
-Received: from capella.cs.uchicago.edu (capella.cs.uchicago.edu [128.135.24.228])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 9F40CB92C;
-	Tue,  7 Sep 2010 23:32:28 -0500 (CDT)
-Received: by capella.cs.uchicago.edu (Postfix, from userid 10442)
-	id 2C2E8A7CA; Tue,  7 Sep 2010 23:32:28 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1750946Ab0IHEcr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 00:32:47 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53469 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751381Ab0IHEci (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 00:32:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3763AD48F1;
+	Wed,  8 Sep 2010 00:32:35 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8t0R0fHMHHUYXfZMYGf5iJ9eyDc=; b=DTitlN
+	yEZ/U07E1cjAEcysV3cOofgGZYCWaIwBSNTl1AHlz2e4NjBXdgv0HMXTf5+pI3Xw
+	/WVSzNT7Ag3fkyGVyAGSX7bsqcQQTHWKao61QSXcPEmY5nuLweAZnc0yRZyXyQ5J
+	6BOwhIbA12mjsHJ7on8W/W2uKBHwSZVpSbFb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pn5cVzUZyBb9EtIXvP7mYSAFkTbVH/xh
+	MHElnyMGv3v/gf8MOGG96R0P/8km9yyX4GA4yecgXgPEyuGfmXTRmAzkgt3EEUXR
+	ASAbZt7wJpm4RBcR3Grihs5g+Ss+sQoJz6wJdTHn+dQQPd3XX32bK1ubkRYxEoaX
+	VG35sS58CaA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BABADD48F0;
+	Wed,  8 Sep 2010 00:32:32 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DF0F2D48EF; Wed,  8 Sep
+ 2010 00:32:29 -0400 (EDT)
+In-Reply-To: <AANLkTinbaQbS=pU44sSCf7+_3bLrREpehYQCiV5CFuVB@mail.gmail.com>
+ (Jay Soffian's message of "Tue\, 7 Sep 2010 20\:33\:02 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 18F3D73C-BB02-11DF-93B1-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155766>
 
-Marcus Comstedt wrote:
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-> Ok.  I'll shortly post an updated patch with some test cases.
+> which works fine except for --cc output. Is this a bug, oversight, or
+> my stupidity?
 
-Thanks.
+It is "meh"; when we wrote -c/--cc we weren't interested in "-diff"
+attribute at all.
 
-> As for documentation, I suppose that would mean documenting the
-> "foreign ident" concept as a whole, as I don't think there's currently
-> anything about that in the documentation?  Would the `ident` section
-> of gitattributes.txt be a suitable place for this?
-
-Yep, that sounds good (though by no means necessary either).
+It shouldn't be a rocket science to come up with a patch that skips such a
+path before running --cc, I would think.
