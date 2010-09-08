@@ -1,149 +1,198 @@
 From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 3/5] merge: Make 'merge.log' an integer or boolean option
-Date: Wed,  8 Sep 2010 23:29:55 +0530
-Message-ID: <1283968797-31793-4-git-send-email-artagnon@gmail.com>
-References: <1283968797-31793-1-git-send-email-artagnon@gmail.com>
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 08 20:03:04 2010
+Subject: =?UTF-8?q?=5BPATCH=20v2=5D=20po/hi=2Epo=3A=20Add=20Hindi=20Translation?=
+Date: Thu,  9 Sep 2010 00:08:51 +0530
+Message-ID: <1283971131-25106-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Antriksh Pany <antriksh.pany@gmail.com>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 08 20:41:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtOz4-0001BB-6h
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 20:02:58 +0200
+	id 1OtPZt-0001zP-NP
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 20:41:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752388Ab0IHSCT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 14:02:19 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:44818 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752242Ab0IHSCR (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 14:02:17 -0400
-Received: by yxp4 with SMTP id 4so177905yxp.19
-        for <git@vger.kernel.org>; Wed, 08 Sep 2010 11:02:16 -0700 (PDT)
+	id S1752587Ab0IHSkx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 14:40:53 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:43508 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752536Ab0IHSkv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 14:40:51 -0400
+Received: by pwi3 with SMTP id 3so188261pwi.19
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 11:40:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=F8StHfrZqO4wEErZIyU/8phhYCazMUOo1gKVsm+cJsk=;
-        b=G34/OXlAbONNRqqzclkKt8pkVk1AZ9ZvpJPyOQgAjMwvM+ku4dSXyKRahe5o9aACy5
-         0bRER8Lxi/hxO80g44cqRorKXWBHJgLBqEC2wNcXt6y2QC8DW4swUdykEq6scmZBdKpk
-         XzXhIdagqbhvLNYVVbSJP5bnZYs8XPU7evHMM=
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=eqrh3z+XUkeHUynxIhMpQ3KIYPHEnI+wV3PZD1Qzcw0=;
+        b=LghAswPTBlbV5M7+zDT3tHCCAsjvRvBItkuRrysNayXoLuZIqhTkDEzR7pM5DXdNX6
+         EQWNRA9RMBIZSiLo5G2dNiUl/8ZYUWE2CM34EvPMPBlXabxRbvaRQNPGGSoPG3YuPwXh
+         01sMoqndC3HwDlc7kjthiLY1srjsqDFsz1stI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=PGFkoBKJVzLHZ6Chzft13GF5ZpiK1byQpYO69rz/mszVIVmzm8JxrxK5rG53J+SHVl
-         F6PFwX9wIelpt4T6rXqOcy7jE78h2Nb5uzizto4JQbBGpwSX4mnSzm5xGhXYYG4V1r17
-         PHeSNJwi7hgeOB3tBxgDJT8ZvI4mbfvuHTjq4=
-Received: by 10.151.122.8 with SMTP id z8mr247606ybm.376.1283968936492;
-        Wed, 08 Sep 2010 11:02:16 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=Qh/VO+lIBrhjA7uFCm4PM2sHXlJas/xf/rz9e9WdANf/NzewX+gMe1O8rX1y3t4XGV
+         qtR1ZHgx1FQv0q5AP70BN/4Navj/riBqCsf3psfGI1/97VkCy2uYMWiyX5Igzlwuswt+
+         CVV3Qx2iMUXZiz1+ytvAOCCm0uKSyks9Y/tUQ=
+Received: by 10.142.47.5 with SMTP id u5mr111537wfu.28.1283971251049;
+        Wed, 08 Sep 2010 11:40:51 -0700 (PDT)
 Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id z6sm199616ibc.12.2010.09.08.11.02.13
+        by mx.google.com with ESMTPS id t18sm321257wfc.23.2010.09.08.11.40.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Sep 2010 11:02:15 -0700 (PDT)
+        Wed, 08 Sep 2010 11:40:49 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.2.409.gdbb11.dirty
-In-Reply-To: <1283968797-31793-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155808>
 
-Make 'merge.log' an integer or boolean option to set the number of
-shortlog entries to display in the merge commit. Note that it defaults
-to false, and that true means a default value of 20. Also update
-corresponding documentation.
+Translate a few Git messages to Standard Hindi. It uses a phonetic
+script called Devanagari. Focus especially on transforming grammar and
+tense in a sane manner to serve as a guideline for future translators.
+
+Note that Devanagari rendering is broken on many applications by
+default at this time- the latest Emacs, Vim and Chrome render it
+incorrectly.
 
 Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
-Thanks-to: Johannes Sixt <j.sixt@viscovery.net>
+Helped-by: Antriksh Pany <antriksh.pany@gmail.com>
+Cc: Sitaram Chamarty <sitaramc@gmail.com>
 ---
- Documentation/git-fmt-merge-msg.txt |    6 ++++--
- Documentation/merge-config.txt      |    6 ++++--
- builtin/fmt-merge-msg.c             |   16 +++++++---------
- builtin/merge.c                     |    7 ++++++-
- 4 files changed, 21 insertions(+), 14 deletions(-)
+ Thanks to Antriksh's reviews, we have some more improvements/
+ corrections. I've also squashed in a few more of my own. I haven't
+ addressed the issue of using "complex or imprecise Hindi words"
+ versus "transliteration" fully because I've received several
+ conflicting opinions from existing Indian translators on this
+ issue. The central issue is that Hindi is seldom used in the field of
+ science. I think the best solution is to commit this revision and let
+ hi.po evolve naturally as future translators contribute more
+ translations.
 
-diff --git a/Documentation/git-fmt-merge-msg.txt b/Documentation/git-fmt-merge-msg.txt
-index f04a9ff..40dba8c 100644
---- a/Documentation/git-fmt-merge-msg.txt
-+++ b/Documentation/git-fmt-merge-msg.txt
-@@ -54,8 +54,10 @@ CONFIGURATION
- -------------
- 
- merge.log::
--	Whether to include summaries of merged commits in newly
--	merge commit messages. False by default.
-+	In addition to branch names, populate the log message with at
-+	most the specified number of one-line descriptions from the
-+	actual commits that are being merged.  Defaults to false, and
-+	true is a synoym for 20.
- 
- merge.summary::
- 	Synonym to `merge.log`; this is deprecated and will be removed in
-diff --git a/Documentation/merge-config.txt b/Documentation/merge-config.txt
-index a403155..acbe1e1 100644
---- a/Documentation/merge-config.txt
-+++ b/Documentation/merge-config.txt
-@@ -7,8 +7,10 @@ merge.conflictstyle::
- 	marker and the original text before the `=======` marker.
- 
- merge.log::
--	Whether to include summaries of merged commits in newly created
--	merge commit messages. False by default.
-+	In addition to branch names, populate the log message with at
-+	most the specified number of one-line descriptions from the
-+	actual commits that are being merged.  Defaults to false, and
-+	true is a synoym for 20.
- 
- merge.renameLimit::
- 	The number of files to consider when performing rename detection
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 455e7c6..5deba65 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -15,15 +15,13 @@ static int shortlog_len;
- 
- static int fmt_merge_msg_config(const char *key, const char *value, void *cb)
- {
--	static int found_merge_log = 0;
--	if (!strcmp("merge.log", key)) {
--		found_merge_log = 1;
--		shortlog_len = git_config_bool(key, value) ? DEFAULT_MERGE_LOG_LEN : 0;
--		return 0;
--	}
--	if (!found_merge_log && !strcmp("merge.summary", key)) {
--		shortlog_len = git_config_bool(key, value) ? DEFAULT_MERGE_LOG_LEN : 0;
--		return 0;
-+	if (!strcmp(key, "merge.log") || !strcmp(key, "merge.summary")) {
-+		int is_bool;
-+		shortlog_len = git_config_bool_or_int(key, value, &is_bool);
-+		if (!is_bool && shortlog_len < 0)
-+			return error("%s: negative length %s", key, value);
-+		if (is_bool && shortlog_len)
-+			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 	}
- 	return 0;
- }
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 9e4733d..1e9c898 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -503,7 +503,12 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 	else if (!strcmp(k, "pull.octopus"))
- 		return git_config_string(&pull_octopus, k, v);
- 	else if (!strcmp(k, "merge.log") || !strcmp(k, "merge.summary")) {
--		shortlog_len = git_config_bool(k, v) ? DEFAULT_MERGE_LOG_LEN : 0;
-+		int is_bool;
-+		shortlog_len = git_config_bool_or_int(k, v, &is_bool);
-+		if (!is_bool && shortlog_len < 0)
-+			return error("%s: negative length %s", k, v);
-+		if (is_bool && shortlog_len)
-+			shortlog_len = DEFAULT_MERGE_LOG_LEN;
- 		return 0;
- 	}
- 	return git_diff_ui_config(k, v, cb);
--- 
+ po/hi.po |   67 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 67 insertions(+), 0 deletions(-)
+ create mode 100644 po/hi.po
+
+diff --git a/po/hi.po b/po/hi.po
+new file mode 100644
+index 0000000..46fd544
+--- /dev/null
++++ b/po/hi.po
+@@ -0,0 +1,67 @@
++msgid ""
++msgstr ""
++"Project-Id-Version: Git\n"
++"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
++"Language-Team: Git Mailing List <git@vger.kernel.org>\n"
++"Last-Translator: Ramkumar Ramachandra <artagnon@gmail.com>\n"
++"POT-Creation-Date: 2010-09-05 16:05+0530\n"
++"Language: hi\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=3DUTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++
++#, c-format
++msgid "Could not make %s writable by group"
++msgstr "%s =E0=A4=95=E0=A5=8B =E0=A4=B8=E0=A4=AE=E0=A5=82=E0=A4=B9 =E0=
+=A4=A6=E0=A5=8D=E0=A4=B5=E0=A4=BE=E0=A4=B0=E0=A4=BE =E0=A4=B2=E0=A4=BF=E0=
+=A4=96=E0=A4=A8=E0=A5=87 =E0=A4=95=E0=A5=80 =E0=A4=87=E0=A4=9C=E0=A4=BE=
+=E0=A4=9C=E0=A4=BC=E0=A4=A4 =E0=A4=A8=E0=A4=B9=E0=A5=80 =E0=A4=A6=E0=A5=
+=87 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "insanely long template name %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=95=E0=A4=BE =E0=A4=A8=E0=A4=BE=E0=A4=AE =E0=A4=85=E0=
+=A4=A4=E0=A5=8D=E0=A4=AF=E0=A4=82=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=
+=A4=BE"
++
++#, c-format
++msgid "cannot stat '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=
+=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "cannot stat template '%s'"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F '%s' =E0=A4=95=E0=A5=8B [stat] =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=
+=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "cannot opendir '%s'"
++msgstr "=E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=
+=E0=A4=BF=E0=A4=95=E0=A4=BE '%s' =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=
+=A4=96=E0=A5=8B=E0=A4=B2 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "cannot readlink '%s'"
++msgstr "=E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=AA=E0=A4=A2=E0=A4=BC =E0=A4=B8=E0=A4=95=E0=A5=87=
+"
++
++#, c-format
++msgid "insanely long symlink %s"
++msgstr "=E0=A4=AA=E0=A5=8D=E0=A4=B0=E0=A4=A4=E0=A5=80=E0=A4=95=E0=A4=BE=
+=E0=A4=A4=E0=A5=8D=E0=A4=AE=E0=A4=95 =E0=A4=B2=E0=A4=BF=E0=A4=82=E0=A4=95=
+ %s =E0=A4=85=E0=A4=A4=E0=A5=8D=E0=A4=AF=E0=A4=82=E0=A4=A4 =E0=A4=B2=E0=
+=A4=82=E0=A4=AC=E0=A4=BE"
++
++#, c-format
++msgid "cannot symlink '%s' '%s'"
++msgstr "'%s' =E0=A4=95=E0=A4=BE =E0=A4=AA=E0=A5=8D=E0=A4=B0=E0=A4=A4=E0=
+=A5=80=E0=A4=95=E0=A4=BE=E0=A4=A4=E0=A5=8D=E0=A4=AE=E0=A4=95 =E0=A4=B2=E0=
+=A4=BF=E0=A4=82=E0=A4=95 '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=AC=E0=A4=A8=E0=A4=BE =E0=A4=B8=E0=A4=95=E0=
+=A5=87"
++
++#, c-format
++msgid "cannot copy '%s' to '%s'"
++msgstr "'%s' =E0=A4=95=E0=A5=80 =E0=A4=85=E0=A4=A8=E0=A5=81=E0=A4=95=E0=
+=A5=83=E0=A4=A4=E0=A4=BF '%s' =E0=A4=AE=E0=A5=87=E0=A4=82 =E0=A4=A8=E0=A4=
+=B9=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B8=E0=A4=95=E0=A5=87"
++
++#, c-format
++msgid "ignoring template %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=95=E0=A5=80 =E0=A4=89=E0=A4=AA=E0=A5=87=E0=A4=95=E0=
+=A5=8D=E0=A4=B7=E0=A4=BE =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87=
+ =E0=A4=B9=E0=A5=88=E0=A4=82"
++
++#, c-format
++msgid "insanely long template path %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=95=E0=A5=80 [path] =E0=A4=85=E0=A4=A4=E0=A5=8D=E0=A4=
+=AF=E0=A4=82=E0=A4=A4 =E0=A4=B2=E0=A4=82=E0=A4=AC=E0=A4=BE"
++
++#, c-format
++msgid "templates not found %s"
++msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=
+=E0=A4=9F %s =E0=A4=A8=E0=A4=B9=E0=A5=80=E0=A4=82 =E0=A4=AE=E0=A4=BF=E0=
+=A4=B2=E0=A4=BE"
++
++#, c-format
++msgid "not copying templates of a wrong format version %d from '%s'"
++msgstr "'%s' =E0=A4=B8=E0=A5=87 =E0=A4=97=E0=A4=B2=E0=A4=A4 =E0=A4=B8=E0=
+=A5=8D=E0=A4=B5=E0=A4=B0=E0=A5=82=E0=A4=AA =E0=A4=B8=E0=A4=82=E0=A4=B8=E0=
+=A5=8D=E0=A4=95=E0=A4=B0=E0=A4=A3 %d =E0=A4=95=E0=A5=87 =E0=A4=9F=E0=A5=
+=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=E0=A4=9F=E0=A5=8D=E0=A4=
+=B8 =E0=A4=95=E0=A5=80 =E0=A4=A8=E0=A4=95=E0=A4=B2 =E0=A4=A8=E0=A4=B9=E0=
+=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87 =E0=A4=B9=
+=E0=A5=88=E0=A4=82"
++
++#, c-format
++msgid "insane git directory %s"
++msgstr "=E0=A4=96=E0=A4=B0=E0=A4=BE=E0=A4=AC =E0=A4=97=E0=A4=BF=E0=A4=9F=
+ =E0=A4=A8=E0=A4=BF=E0=A4=B0=E0=A5=8D=E0=A4=A6=E0=A5=87=E0=A4=B6=E0=A4=BF=
+=E0=A4=95=E0=A4=BE %s"
+--=20
 1.7.2.2.409.gdbb11.dirty
