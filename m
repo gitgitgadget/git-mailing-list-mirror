@@ -1,69 +1,102 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCHv2 0/2] Fix resolvable rename + D/F conflict testcases
-Date: Wed, 8 Sep 2010 00:41:26 -0600
-Message-ID: <AANLkTin0KidU3og7SVEVUAaRfMzafEvvme_vP-0V773E@mail.gmail.com>
-References: <1283928041-9882-1-git-send-email-newren@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, oinksocket@letterboxes.org,
-	Elijah Newren <newren@gmail.com>
+Subject: [PATCH] merge-recursive: Small code cleanup
+Date: Wed,  8 Sep 2010 01:21:22 -0600
+Message-ID: <1283930482-10228-1-git-send-email-newren@gmail.com>
+Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 08 08:41:37 2010
+X-From: git-owner@vger.kernel.org Wed Sep 08 09:20:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtELg-0007DJ-Uq
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 08:41:37 +0200
+	id 1OtEwt-0000Cl-4b
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 09:20:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170Ab0IHGl3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 02:41:29 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52177 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750893Ab0IHGl1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 02:41:27 -0400
-Received: by fxm16 with SMTP id 16so529506fxm.19
-        for <git@vger.kernel.org>; Tue, 07 Sep 2010 23:41:26 -0700 (PDT)
+	id S1757999Ab0IHHT6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 03:19:58 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:63861 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757513Ab0IHHT5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 03:19:57 -0400
+Received: by gxk23 with SMTP id 23so2273536gxk.19
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 00:19:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uc1m7Okd87lrZ0WnDWusPG1pTT3dF/q9+S0T/YrsqI8=;
-        b=t8TQYpdwXkVUHvQkfFBfcqM6etVenY4a+bs6hOwQ5uE5TQonvaM3rKn0HinOwA6Vm4
-         jpPe/UjyQPt7IUJQSAAHQLEptwz1dCGdCxgCkIWZBfTVFbRaWfYABqb/DlUHm1yH3p1c
-         gKMmNmawqUsSxyORKZtoTVQudeSiIUFrgwYBI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=pqCVmkTXaIjwSmDEbx4fwzXzc7ZjdO2xr8KMYeBW5Cs=;
+        b=TJjvBxjWpKhjgFlWhWAbLpiBzt6VqrZG7Rf5pTgu9v7MKG/KZuBOv2bhV9YnqsuCEa
+         0NdYRmHxi3i9o9D716/LhA8z4+DXbhbOoTfTSu6Ore8HRorXejhOFVG/V6SdYSyUM7qN
+         BSVnArzP3xkU92cmUvtACzoHZ5mWd99QBFy+U=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=JjcL4EadtYSvyGp0Zrzf3UWgneiEN7NztZ/extx/MyAubn3gZ4WXvQoenKfmLhdc2f
-         5A5I44kZLBEmvxnzDKn/2zv8NTQXN5OJlpx3KVWkrmlf3j4nLkTKf6SIybDQ8jG5jQ0V
-         Gpi+D3eXCX5+xicuLj5zlJOS8hGeN9cSsbE7I=
-Received: by 10.223.118.15 with SMTP id t15mr118786faq.96.1283928086673; Tue,
- 07 Sep 2010 23:41:26 -0700 (PDT)
-Received: by 10.223.50.154 with HTTP; Tue, 7 Sep 2010 23:41:26 -0700 (PDT)
-In-Reply-To: <1283928041-9882-1-git-send-email-newren@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=aMQu4JdSHGAruESX/7MDXrUtn9PJR1XJztNlo/w+8qV+R4dkOd1ZU8JXq1OgKmMt3M
+         dzcVde+livKVr/+gEoILoLXWm7l+mDJyA0idK+AM7tvs92zBDjQTvwJSeXDsm3lsvjK1
+         FcY8v+7dgpyteEL4gtIXWRxbdZO9iF81anZJU=
+Received: by 10.100.231.16 with SMTP id d16mr741777anh.94.1283930396233;
+        Wed, 08 Sep 2010 00:19:56 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
+        by mx.google.com with ESMTPS id x19sm12956963anc.5.2010.09.08.00.19.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 08 Sep 2010 00:19:55 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3.7.gf6a98
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155773>
 
-On Wed, Sep 8, 2010 at 12:40 AM, Elijah Newren <newren@gmail.com> wrote=
-:
-> This fixes an issue reported by Nick (no lastname given) on the
-> mailing list, as well as a closely related issue in the handling of
-> rename + directory/file conflicts, namely where a filename on one sid=
-e
-> of the rename is a directory name on the other side of the merge.
->
-> Change since v1:
-> =C2=A0* Split unrelated 2/3 patch out into a separate submission
+process_renames() had a variable named "stage" and derived variables
+src_other and dst_other whose purpose was not entirely clear to me.  Make
+the name of stage slightly more descriptive and add a brief comment
+explaining what is occurring.
 
-=2E..oh, and now the series is based on master instead of next.  (I
-would base it on maint, but since I was adding another testcase to
-t3509 and t3509 does not yet exist in maint, I couldn't as easily put
-it there.)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+Was previously PATCH 2/3 from my "fix resolvable rename + D/F conflict
+testcases" series, but I've pulled this patch out since it's not
+strictly related.  Also, due to Ken Schalk's response, I've dropped
+the piece of the patch he pointed out an issue in.  So now it's just a
+smaller cleanup, that is now based on maint.
+
+ merge-recursive.c |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
+
+diff --git a/merge-recursive.c b/merge-recursive.c
+index fb6aa4a..ba9cbab 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -924,15 +924,23 @@ static int process_renames(struct merge_options *o,
+ 			struct string_list_item *item;
+ 			/* we only use sha1 and mode of these */
+ 			struct diff_filespec src_other, dst_other;
+-			int try_merge, stage = a_renames == renames1 ? 3: 2;
++			int try_merge;
+ 
+-			remove_file(o, 1, ren1_src, o->call_depth || stage == 3);
++			/*
++			 * unpack_trees loads entries from common-commit
++			 * into stage 1, from head-commit into stage 2, and
++			 * from merge-commit into stage 3.  We keep track
++			 * of which side corresponds to the rename.
++			 */
++			int renamed_stage = a_renames == renames1 ? 2 : 3;
++			int other_stage =   a_renames == renames1 ? 3 : 2;
+ 
+-			hashcpy(src_other.sha1, ren1->src_entry->stages[stage].sha);
+-			src_other.mode = ren1->src_entry->stages[stage].mode;
+-			hashcpy(dst_other.sha1, ren1->dst_entry->stages[stage].sha);
+-			dst_other.mode = ren1->dst_entry->stages[stage].mode;
++			remove_file(o, 1, ren1_src, o->call_depth || renamed_stage == 2);
+ 
++			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
++			src_other.mode = ren1->src_entry->stages[other_stage].mode;
++			hashcpy(dst_other.sha1, ren1->dst_entry->stages[other_stage].sha);
++			dst_other.mode = ren1->dst_entry->stages[other_stage].mode;
+ 			try_merge = 0;
+ 
+ 			if (string_list_has_string(&o->current_directory_set, ren1_dst)) {
+-- 
+1.7.2.3.7.gf6a98
