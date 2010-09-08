@@ -1,73 +1,68 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: building git on Solaris
-Date: Wed, 08 Sep 2010 10:16:54 -0500
-Message-ID: <nMrBbfBjISeakrCCpr3u3goqKMFMLUPCXiAa8ohZrHAmY1k660aYdA@cipher.nrlssc.navy.mil>
-References: <4C86A86B.1030107@bio.umass.edu> <AANLkTikvy-wUB-RFLegp7KJa_srqh97nLC03bdZDmru=@mail.gmail.com> <4C87A1DF.1020706@bio.umass.edu>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: git log for a merged branch
+Date: Wed, 8 Sep 2010 11:22:22 -0400 (EDT)
+Message-ID: <7551190.230240.1283959342943.JavaMail.root@mail.hq.genarts.com>
+References: <AANLkTimSHrmQgcrx-CqMgvkcBdgBG9icqw934+7qP7kg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git mailing list <git@vger.kernel.org>
-To: Chris Hoogendyk <hoogendyk@bio.umass.edu>
-X-From: git-owner@vger.kernel.org Wed Sep 08 17:17:08 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Tor Arntsen <tor@spacetec.no>
+X-From: git-owner@vger.kernel.org Wed Sep 08 17:22:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtMOZ-0004nF-U8
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 17:17:08 +0200
+	id 1OtMTt-0000hC-Fm
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 17:22:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751839Ab0IHPRB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 11:17:01 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:37265 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751228Ab0IHPRA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 11:17:00 -0400
-Received: by mail.nrlssc.navy.mil id o88FGtFM008168; Wed, 8 Sep 2010 10:16:55 -0500
-In-Reply-To: <4C87A1DF.1020706@bio.umass.edu>
-X-OriginalArrivalTime: 08 Sep 2010 15:16:55.0085 (UTC) FILETIME=[DF3F45D0:01CB4F68]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1755010Ab0IHPWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 11:22:33 -0400
+Received: from hq.genarts.com ([173.9.65.1]:46359 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751716Ab0IHPWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 11:22:31 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C4F9C1E26254;
+	Wed,  8 Sep 2010 11:22:30 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id RMMKcR+M+OdT; Wed,  8 Sep 2010 11:22:23 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 06F331E261EA;
+	Wed,  8 Sep 2010 11:22:23 -0400 (EDT)
+In-Reply-To: <AANLkTimSHrmQgcrx-CqMgvkcBdgBG9icqw934+7qP7kg@mail.gmail.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155794>
 
-On 09/08/2010 09:46 AM, Chris Hoogendyk wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Tue, Sep 7, 2010 at 21:02, Chris Hoogendyk <hoogendyk@bio.umass.e=
-du> wrote:
->> =20
->>> Does anyone have any guidance or clues as to where I should look fr=
-om here?
->>> Or how to fix this?
->>>    =20
->>
->> Call make as gmake?
->=20
-> magical.
->=20
-> I did an `ln -s /usr/local/bin/make /usr/local/bin/gmake` and then re=
-ferenced gmake rather than make. For some reason, that got over the hum=
-p. I have no clue why calling make would initially work and later in th=
-e process revert to /usr/ccs/bin/make, but calling the same code via th=
-e symlink name gmake works.
->=20
-> Anyway, now I'm in the normal build debugging mode. Got all the way t=
-hrough to building the Documentation, at which stage I now need to get =
-asciidoc and python. I don't really like bloating my minimal server sys=
-tems with python, but it seems I'm finally stuck, since I have faculty =
-who really want to use git.
->=20
-> Thanks for the clue.
+----- Original Message -----
+> From: "Tor Arntsen" <tor@spacetec.no>
+> To: "Stephen Bash" <bash@genarts.com>
+> Cc: "Git Mailing List" <git@vger.kernel.org>
+> Sent: Wednesday, September 8, 2010 10:23:47 AM
+> Subject: Re: git log for a merged branch
+> On Wed, Sep 8, 2010 at 16:04, Stephen Bash <bash@genarts.com> wrote:
+>
+> > If I want to
+> > see the commits (bug fixes) performed on the release branch, how do
+> > I do it?
+> [..]
+> 
+> Maybe not exactly what you ask for, but the way I do it is simply to
+> use a non-ff merge with additional logging, i.e. git merge --no-ff
+> --log <branchname-with-fixes>
+> which will give me a merge commit which includes one-liners for each
+> of those commits merged into mainline.
 
-There is a quick-install-doc make target.
+That's actually a pretty cool trick.  I will file that one for adoption as we move to a git-centric workflow.
 
-It extracts prebuilt documentation from a branch named origin/man
-in your repository.  Junio keeps this up-to-date with the
-Documentation on master.  You can use it instead of trying to build
-the documentation from scratch.
+I'm still curious if there's an "easy" way to extract the segment of history that was the release branch because I feel like there may be other uses than just git log... (not that I've nailed them down yet)
 
--Brandon
+Thanks!
+Stephen
