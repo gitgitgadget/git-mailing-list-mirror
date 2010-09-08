@@ -1,75 +1,181 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git-send-email format-patch awareness & retry
-Date: Wed, 08 Sep 2010 09:04:02 -0700
-Message-ID: <7vk4mwnrwt.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimtOguHdcs+QYj7ePNeyMNsWYLDu+yfyOPrDWUG@mail.gmail.com>
- <201009081114.18263.trast@student.ethz.ch>
+From: Daniel Trebbien <dtrebbien@gmail.com>
+Subject: Why does git-svn redownload revisions?
+Date: Wed, 8 Sep 2010 16:13:33 +0000 (UTC)
+Message-ID: <loom.20100908T181056-819@post.gmane.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ryan Anderson <ryan@michonline.com>, Greg KH <greg@kroah.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Sep 08 18:04:31 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 08 18:15:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtN8P-0005av-07
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 18:04:29 +0200
+	id 1OtNIo-0004Il-BX
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 18:15:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756155Ab0IHQEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 12:04:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47369 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754892Ab0IHQET (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 12:04:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DE086D49B1;
-	Wed,  8 Sep 2010 12:04:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=2aG00sBrvyisQ6roNXp3pSQeu5I=; b=UY6YdV
-	JhSAzvJXqZJmK0b95mIVGgHSaJ4c2s+qV8gqMeheV5WTX2KngA1vHaPz7tEUfdr9
-	m2dkWBYxpnwBld5hk5/DU5L5pdyOc6ldVJqV4Oo9vuvdHo5POVkYOr0IBDLrCzJJ
-	WxyV02TvVbj1T61nXEGMqDzY0Jqjb7aAif9G0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KgZnTt+dXOD7ALxnF4SU7ELBLD8hIGBj
-	eEjsWRv4p8pIQzGCC8IE75MLZzi6CGNBNKCyvESDXDazOx+UUj9qchbkL2r49/IK
-	vsKmUPGhi3KciyYLeK40ivZ0R60Y0Ccq8JnxlWgsimoh5rVYvQ+QDclUzo5WwrHW
-	v61Kyi+u5+4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7CC6CD49AF;
-	Wed,  8 Sep 2010 12:04:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 92B4DD49AD; Wed,  8 Sep
- 2010 12:04:04 -0400 (EDT)
-In-Reply-To: <201009081114.18263.trast@student.ethz.ch> (Thomas Rast's
- message of "Wed\, 8 Sep 2010 11\:14\:18 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B8BA83C8-BB62-11DF-A487-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756094Ab0IHQPL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 12:15:11 -0400
+Received: from lo.gmane.org ([80.91.229.12]:42985 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755973Ab0IHQPI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 12:15:08 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OtNIc-0004Cb-V3
+	for git@vger.kernel.org; Wed, 08 Sep 2010 18:15:03 +0200
+Received: from cpe-76-88-109-104.san.res.rr.com ([76.88.109.104])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 18:15:02 +0200
+Received: from dtrebbien by cpe-76-88-109-104.san.res.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 18:15:02 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 76.88.109.104 (Mozilla/5.0 (X11; U; Linux i686; en-us) AppleWebKit/531.2+ (KHTML, like Gecko) Safari/531.2+ Debian/squeeze (2.30.5-1) Epiphany/2.30.5)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155797>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155798>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+For my first time using git-svn, I decided that I wanted to convert the GNU Nano
+Subversion repository to a git repo. I finally settled on the following series
+of commands after some initial trial-and-error (e.g. having the wrong
+`i18n.commitencoding` and not specifying a Subversion authors file):
+git svn init -s svn://svn.sv.gnu.org/nano
+git config svn.authorsfile ~/projects/nano/svn.authorsfile
+git config i18n.commitencoding 'ISO-8859-1'
+git svn fetch
 
-> You could resurrect
->
->   http://mid.gmane.org/7fedc4b76fed03e4db6a2bb7453609c9cd02928a.1244496564.git.trast@student.ethz.ch
->
-> though on re-reading I'm not so sure anymore that *any* complaints
-> remained.
+The issue is that the fetch runs up to revision 4250, but then mysteriously
+begins redownloading revisions 1 up to four thousand something in importing
+the `nano_2_1_1` tag:
+...
+r4248 = 7c444dd667b9629ce92a53e8d35ad2d178e5735f (refs/remotes/trunk)
+	M	nano/ChangeLog
+	M	nano/configure.ac
+	M	nano/po/cs.po
+	M	nano/po/pt_BR.po
+	M	nano/po/es.po
+	M	nano/po/eu.po
+	M	nano/po/hu.po
+	M	nano/po/vi.po
+	M	nano/po/nano.pot
+	M	nano/po/ms.po
+	M	nano/po/uk.po
+	M	nano/po/ro.po
+	M	nano/po/ru.po
+	M	nano/po/rw.po
+	M	nano/po/id.po
+	M	nano/po/nb.po
+	M	nano/po/gl.po
+	M	nano/po/fr.po
+	M	nano/po/nl.po
+	M	nano/po/nn.po
+	M	nano/po/pl.po
+	M	nano/po/it.po
+	M	nano/po/ca.po
+	M	nano/po/da.po
+	M	nano/po/sr.po
+	M	nano/po/tr.po
+	M	nano/po/ga.po
+	M	nano/po/bg.po
+	M	nano/po/sv.po
+	M	nano/po/de.po
+	M	nano/po/zh_TW.po
+	M	nano/po/fi.po
+	M	nano/po/zh_CN.po
+r4249 = 6fbad8a00fa067d1e3de913f77db08c6117843c7 (refs/remotes/trunk)
+	M	nano/NEWS
+r4250 = 704700855e5112d75654e3e7461e896f49e10fd8 (refs/remotes/trunk)
+Found possible branch point: svn://svn.sv.gnu.org/nano/trunk/nano =>
+svn://svn.sv.gnu.org/nano/tags/nano_2_1_1, 4248
+Initializing parent: refs/remotes/tags/nano_2_1_1@4248
+	A	mkinstalldirs
+	A	utils.c
+	A	nano.h
+	A	global.c
+	A	configure
+	A	Makefile.in
+	A	AUTHORS
+	A	configure.in
+	A	ChangeLog
+	A	proto.h
+	A	nano.1
+	A	nano.1.html
+	A	README
+	A	acconfig.h
+	A	BUGS
+	A	config.h.in
+	A	ABOUT-NLS
+	A	TODO
+	A	INSTALL
+	A	intl/po2tbl.sed.in
+	A	intl/loadinfo.h
+	A	intl/Makefile.in
+	A	intl/explodename.c
+	A	intl/VERSION
+	A	intl/xopen-msg.sed
+	A	intl/ChangeLog
+	A	intl/finddomain.c
+	A	intl/localealias.c
+	A	intl/gettextP.h
+	A	intl/textdomain.c
+	A	intl/linux-msg.sed
+	A	intl/l10nflist.c
+	A	intl/loadmsgcat.c
+	A	intl/libgettext.h
+	A	intl/bindtextdom.c
+	A	intl/gettext.c
+	A	intl/intl-compat.c
+	A	intl/dgettext.c
+	A	intl/cat-compat.c
+	A	intl/gettext.h
+	A	intl/dcgettext.c
+	A	intl/hash-string.h
+	A	winio.c
+	A	COPYING
+	A	Makefile.am
+	A	missing
+	A	NEWS
+	A	cut.c
+	A	nano.c
+	A	aclocal.m4
+	A	install-sh
+	A	po/cat-id-tbl.c
+	A	po/stamp-cat-id
+	A	po/es.po
+	A	po/fr.po
+	A	po/de.po
+	A	po/ChangeLog
+	A	po/Makefile.in.in
+	A	po/es.gmo
+	A	po/fr.gmo
+	A	po/de.gmo
+	A	po/it.po
+	A	po/POTFILES.in
+	A	po/nano.pot
+	A	po/it.gmo
+	A	stamp-h.in
+r2 = 842a208235bd2a1181250766996f7797e74a8608
+(refs/remotes/tags/nano_2_1_1@4248)
+	M	winio.c
+r6 = 280cfdcb8533ffcb424b3a86b7392ccfbc054e60
+(refs/remotes/tags/nano_2_1_1@4248)
+	M	ChangeLog
+r7 = 6951e65102dd1e005761dec6eb082f0a2d9327a2
+(refs/remotes/tags/nano_2_1_1@4248)
+	M	AUTHORS
+...
 
-I think I got distracted in the follow-up discussion and forgot about that
-patch.
 
-And the patch looks sane; let's queue it, so that I won't forget about it
-again.
-
-Thanks.
+Why is git-svn redownloading revision history? Also, why hasn't git-svn
+redownloaded revisions to import other tags such as `nano_1_3_9`, `nano_2_0_0`,
+and `nano_0_9_14`? I have yet to complete the fetch, but git-svn finished
+redownloading revisions for `nano_2_1_1`, seemed to skip redownloading for
+`nano_2_1_2`, and is now redownloading for `nano_2_1_3`.
