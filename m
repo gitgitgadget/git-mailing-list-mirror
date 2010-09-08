@@ -1,92 +1,109 @@
-From: Gregg Leichtman <gslaccts@verizon.net>
-Subject: git log over restricts output when using --follow?
-Date: Tue, 07 Sep 2010 20:15:42 -0400
-Message-ID: <4C86D5AE.6030302@verizon.net>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: combined diff seems to ignore diff attribute
+Date: Tue, 7 Sep 2010 20:33:02 -0400
+Message-ID: <AANLkTinbaQbS=pU44sSCf7+_3bLrREpehYQCiV5CFuVB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 08 02:16:17 2010
+Content-Type: text/plain; charset=UTF-8
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 08 02:33:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ot8Kh-0002gF-Lg
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 02:16:12 +0200
+	id 1Ot8bc-0000AA-EP
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Sep 2010 02:33:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754541Ab0IHAQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Sep 2010 20:16:05 -0400
-Received: from vms173003pub.verizon.net ([206.46.173.3]:51648 "EHLO
-	vms173003pub.verizon.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910Ab0IHAQE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Sep 2010 20:16:04 -0400
-Received: from [192.168.1.2] ([unknown] [108.16.32.164])
- by vms173003.mailsrvcs.net
- (Sun Java(tm) System Messaging Server 7u2-7.02 32bit (built Apr 16 2009))
- with ESMTPA id <0L8E00N3JJE74T4P@vms173003.mailsrvcs.net> for
- git@vger.kernel.org; Tue, 07 Sep 2010 19:15:44 -0500 (CDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.8) Gecko/20100802
- SUSE/3.1.2 Lightning/1.0b2 Thunderbird/3.1.2 ThunderBrowse/3.3.2
+	id S1756860Ab0IHAdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Sep 2010 20:33:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38687 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753690Ab0IHAde (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Sep 2010 20:33:34 -0400
+Received: by iwn5 with SMTP id 5so5784231iwn.19
+        for <git@vger.kernel.org>; Tue, 07 Sep 2010 17:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=dwkDVm8oOetZYQEPPgEiqJUdypPZIQANYPwa/GO1qCg=;
+        b=CdfD6CORbYoe0eFP6iE/zfO1G/soJ+jrEyc6mi2V9NRCCrYhx2zJPjs9/j7zVP8MaM
+         ccg6JQDew7C7H/i9BaKMe30E+Cnr823ed8McXDKTnRWJ7QvGhzlFJuOY0dmmcgaxzGh+
+         WeON7EpETYbKjkXYOfhBTQGTBvt0gFDb6N5G8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=SKa3sPGmwDlXGHxBRkruJVbS7VrfhwF+vofOtjEFoePjkKQ9WDfwDn/IlGqIRkye4L
+         oTHOi7CusYPMID0ojhJBzSJIfZCzbBMZvzlfPJWifPbxMbbq7iKt/JLGTmOCxJmrQEqf
+         IVo9Q28i96cq3prS3vQtO+0VfXLQPViy0H38c=
+Received: by 10.231.157.195 with SMTP id c3mr1278800ibx.155.1283906014135;
+ Tue, 07 Sep 2010 17:33:34 -0700 (PDT)
+Received: by 10.231.44.208 with HTTP; Tue, 7 Sep 2010 17:33:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155751>
 
+I want to squelch the output of a particular file type because it's
+too noisy (Mac OS X xib files). So I added:
 
+*.xib -diff
 
-Before I post this as a possible defect, I wanted to check here.
+to .git/info/attributes
 
-On the following server:
+which works fine except for --cc output. Is this a bug, oversight, or
+my stupidity?
 
-|gsl@aragorn:~/gitTest> uname -a
-Linux aragorn 2.6.31.12-0.2-default #1 SMP 2010-03-16 21:25:39 +0100 i686 i686 i386 GNU/Linux
+$ git log -p --cc
+commit fdffb6081c2c09f55e2fdb6a02905054484965ed
+Merge: 947da38 dcce084
+Author: Jay Soffian <jaysoffian@gmail.com>
+Date:   Tue Sep 7 20:28:44 2010 -0400
 
-gsl@aragorn:~/gitTest> cat /etc/SuSE-release
+    Merge branch 'side'
 
-openSUSE 11.2 (i586)
-VERSION = 11.2
-|
+    * side:
+      side
 
-I use the following git:
+    Conflicts:
+        file.xib
 
-|gsl@aragorn:~/gitTest> git --version
-git version 1.7.2.3
+diff --cc file.xib
+index 1f7391f,2299c37..0f8f0c9
+--- a/file.xib
++++ b/file.xib
+@@@ -1,1 -1,1 +1,1 @@@
+- master
+ -side
+++master side
 
-|
+commit dcce0846b493edc0ab4301fae6c3910a6dd31ed8
+Author: Jay Soffian <jaysoffian@gmail.com>
+Date:   Tue Sep 7 20:28:17 2010 -0400
 
-I get (with a bash alias of |gitnp='git --no-pager'|):
+    side
 
-(1)
+diff --git a/file.xib b/file.xib
+index e69de29..2299c37 100644
+Binary files a/file.xib and b/file.xib differ
 
-|gsl@aragorn:~/gitTest> gitnp log --pretty=oneline junk.txt
-500e8791578c5baf7a139d4997841769a995ac6b mod of junk and junk3
-594ceed7a0fb35a860a6e2cb913d5398f09a861f 1st mod junk.txt
-df271b2ebd5801bd8d827b0630577cad51c40896 initial junk.txt
-|
+commit 947da38b8ec84527aa60c0e8bca7279e6b2bb0af
+Author: Jay Soffian <jaysoffian@gmail.com>
+Date:   Tue Sep 7 20:28:09 2010 -0400
 
-(2)
+    master
 
-|gsl@aragorn:~/gitTest> gitnp log --follow --pretty=oneline junk.txt
-500e8791578c5baf7a139d4997841769a995ac6b mod of junk and junk3
-594ceed7a0fb35a860a6e2cb913d5398f09a861f 1st mod junk.txt
-df271b2ebd5801bd8d827b0630577cad51c40896 initial junk.txt
-|
+diff --git a/file.xib b/file.xib
+index e69de29..1f7391f 100644
+Binary files a/file.xib and b/file.xib differ
 
-(3)
+commit 419c5c0dc0ae4d548227d85ded2d8abc42001720
+Author: Jay Soffian <jaysoffian@gmail.com>
+Date:   Tue Sep 7 20:27:49 2010 -0400
 
-|gsl@aragorn:~/gitTest> gitnp log -2 --follow --pretty=oneline junk.txt
-500e8791578c5baf7a139d4997841769a995ac6b mod of junk and junk3
-|
+    initial
 
-(4)
-
-|gsl@aragorn:~/gitTest> gitnp log -2 --pretty=oneline junk.txt
-500e8791578c5baf7a139d4997841769a995ac6b mod of junk and junk3
-594ceed7a0fb35a860a6e2cb913d5398f09a861f 1st mod junk.txt
-|
-
-Why don't I see 2 output lines for item (3) above?
-
--=> Gregg <=-
+diff --git a/file.xib b/file.xib
+new file mode 100644
+index 0000000..e69de29
