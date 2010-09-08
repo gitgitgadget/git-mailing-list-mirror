@@ -1,97 +1,83 @@
-From: Michele Ballabio <barra_cuda@katamail.com>
-Subject: Re: git log for a merged branch
-Date: Thu, 9 Sep 2010 01:17:05 +0200
-Message-ID: <201009090117.06555.barra_cuda@katamail.com>
-References: <14267801.230161.1283954674012.JavaMail.root@mail.hq.genarts.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 00/20] [CONTINUE] Add gettext support to Git
+Date: Wed, 8 Sep 2010 23:32:45 +0000
+Message-ID: <AANLkTinC59XFt8pPyUF3ifMTeVMSC1e44MDPto5Fy1+n@mail.gmail.com>
+References: <1283877955-19105-1-git-send-email-avarab@gmail.com>
+	<7vd3sonq2n.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Thu Sep 09 01:27:06 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Sep 09 01:32:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtU2j-0006uk-HY
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 01:27:05 +0200
+	id 1OtU8L-0000aS-DG
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 01:32:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756677Ab0IHX07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 19:26:59 -0400
-Received: from smtp225-pc.aruba.it ([62.149.157.225]:39917 "HELO
-	smtp2-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with SMTP id S1756679Ab0IHX06 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Sep 2010 19:26:58 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Sep 2010 19:26:57 EDT
-Received: (qmail 30652 invoked by uid 89); 8 Sep 2010 23:20:08 -0000
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp2-pc.ad.aruba.it
-X-Spam-Level: *
-X-Spam-Status: No, score=1.5 required=6.0 tests=BAYES_50,RDNS_NONE
-	autolearn=no version=3.2.5
-Received: from unknown (HELO darkstar.localnet) (barra?cuda@katamail.com@78.134.95.128)
-  by smtp2-pc.ad.aruba.it with SMTP; 8 Sep 2010 23:20:06 -0000
-User-Agent: KMail/1.13.5 (Linux/2.6.35.4-mike-1mike; KDE/4.4.5; i686; ; )
-In-Reply-To: <14267801.230161.1283954674012.JavaMail.root@mail.hq.genarts.com>
+	id S1756750Ab0IHXcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Sep 2010 19:32:50 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58134 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756699Ab0IHXct convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 19:32:49 -0400
+Received: by iwn5 with SMTP id 5so448532iwn.19
+        for <git@vger.kernel.org>; Wed, 08 Sep 2010 16:32:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/i3jxLvfoApgtLKLOVeFP9Qrnr6abCdF+iVlsjNuGS4=;
+        b=dagr6SsxsnuM2ZrrkXH+ISwOXyHhTIDDRshkC6Det5zLV3j3tdr3u+iBbQYI6ldMtl
+         AEWzEGe9WYndkH51S7BRi2CMQX+wMIq6PKNurMU9yOlVmYUaTbJanX7xnh1bhMXOulKZ
+         bX2LFntSzOE+AMCf2hhDsruzF5Y9WRBRdy8as=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=v2GvojmWhUVKDDCZ1nzVMxfhuxxn+4igcO7X6Um97HaDo2VWXDTyy/bOA7VUA95NhR
+         CKdCKb72TmQ4z5U2dXfSjnagvQlgdRgGnu9YErbbN0KF4rpf00GybUIEsKV4J3SWShrE
+         zWRftZvHloHMRXUs35HY+KQW2H+5oTd7n3SnM=
+Received: by 10.231.11.72 with SMTP id s8mr10340885ibs.110.1283988766021; Wed,
+ 08 Sep 2010 16:32:46 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 8 Sep 2010 16:32:45 -0700 (PDT)
+In-Reply-To: <7vd3sonq2n.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155824>
 
-On Wednesday 08 September 2010, Stephen Bash wrote:
-> Assume I have a release branch with bug fixes that is tagged at the end of
-> the release cycle (let's call the tag tagFoo).  The release branch then
-> gets merged back into mainline development (call the branch mainline), and
-> the release branch is deleted.  If I want to see the commits (bug fixes)
-> performed on the release branch, how do I do it?
-> 
-> I don't think
->    git log mainline..tagFoo
-> works because all the commits of tagFoo are now reachable by mainline
-> thanks to the merge.  Is there a simple way to express this concept?
-> 
-> Obviously in a pinch a simple
->    git log tagFoo
-> will give you everything back to the beginning of time, but I think that's
-> suboptimal...
+On Wed, Sep 8, 2010 at 16:43, Junio C Hamano <gitster@pobox.com> wrote:
+> I've done
+>
+> =C2=A0 =C2=A0git fetch git://github.com/avar/git +ab/i18n-all-continu=
+e:ab/i18n
+>
+> and rebuilt 'pu' with it (I am not quite ready to push the results ou=
+t,
+> though).
+>
+> Please squash in the following to appropriate patches in the series.
+> Thanks.
 
-Let's call the merge commit "mergecmt". The commit where the "release" branch
-branched off is
+Thanks, those fixes were actually already part of the series, but I
+hadn't squashed those yet.
 
-	git merge-base mergecmt^1 mergecmt^2
+I've gone ahead and done so:
 
-... where mergecmt^1 is the first parent of the merge (usually on the
-"mainline" branch) and mergecmt^2 is the second parent, which usually(*)
-refers to the "release" branch (in this case, tagFoo).
+    pick 8e9b49d gettextize: git-clone "Cloning into" message
+    fixup 73f08a1 gettextize: git-clone "Cloning into" message braces
 
-So
+and:
 
-	git log $(git merge-base mergecmt^1 mergecmt^2)..mergecmt^2
+    pick 8e9b49d gettextize: git-clone "Cloning into" message
+    fixup 73f08a1 gettextize: git-clone "Cloning into" message braces
 
-is what you want.
-
-> To complicate things a bit more, in the real world there may be multiple
-> merges from the release branch to mainline during the life of the release
-> branch, so any solution that also deals with that would be outstanding
-> (probably at the cost of additional complexity?)
-
-Maybe something like:
-
-	for i in $(git rev-list --merges last_interesting_tag..mainline)
-	do
-		git log $(git merge-base $i^1 $i^2)..$i^2
-	done
-
-... or maybe using GIT_PAGER='':
-
-	for i in $(git rev-list --merges last_interesting_tag..mainline)
-	do
-		GIT_PAGER='' git log $(git merge-base $i^1 $i^2)..$i^2
-	done
-
-(*) I don't remember the details, but if you do the standard "git pull"
-or "git merge" and don't use the plumbing commands in a weird way to badly
-reimplement "merge" or "pull", you should be safe. Others may want to
-comment on this, though.
+I've also fixed up the whole mess with the "me" messages. I.e. dropped
+the revert commits and just fixed the originals so they make sense in
+the first place.
