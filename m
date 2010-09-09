@@ -1,122 +1,136 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Coping with the pull-before-you-push model
-Date: Thu, 9 Sep 2010 13:06:38 +0000
-Message-ID: <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com>
-References: <4C8866F9.1040705@workspacewhiz.com>
+From: Antriksh Pany <antriksh.pany@gmail.com>
+Subject: Re: [PATCH v2] po/hi.po: Add Hindi Translation
+Date: Thu, 9 Sep 2010 19:09:41 +0530
+Message-ID: <AANLkTi=geJoBzDw4z-pWytCi9XmzwXvzyzFHUpVYnmMJ@mail.gmail.com>
+References: <1283971131-25106-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Thu Sep 09 15:06:49 2010
+Content-Transfer-Encoding: base64
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sitaram Chamarty <sitaramc@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 09 15:40:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otgq1-00017x-As
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 15:06:49 +0200
+	id 1OthMB-0005bI-IB
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 15:40:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742Ab0IINGl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 09:06:41 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:54024 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751259Ab0IINGj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 09:06:39 -0400
-Received: by gxk23 with SMTP id 23so582844gxk.19
-        for <git@vger.kernel.org>; Thu, 09 Sep 2010 06:06:39 -0700 (PDT)
+	id S1752395Ab0IINjo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 09:39:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:40348 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751446Ab0IINjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 09:39:42 -0400
+Received: by gyd8 with SMTP id 8so620952gyd.19
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 06:39:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=8X1csClZWQQdROy0c7UkPB2qo+OxEdvgiyTLM2uwI/I=;
-        b=aChxh7yRy/wqY8b0OI1u1sy3g+68vx6HPu6zQO+2Ic4udG7EGvLlkyu55e9MQ7EbEn
-         Lya4MEnNwHFWrBO9uUH1RGT3KT/Dj3iUD3AEXMhp/BAEovv9nBZIDV6aC7Om90hxNrY/
-         EQaD2zGiBbZMfYz+WqTZYUq18QWZaDLhVoCkY=
+        bh=vKgVqV+rdTJi8mMEvcb/KI6nP2c1MWooAskKZAcDpdo=;
+        b=NL+qpiMM5u243BFe0ZzG4k5RoW2L+DtIc2jEtpOn6KD6zBgkcN/uWKWN2+TOrqjBYY
+         wDb4qEMcfKxYCT4dt10szFg+9sSuVcXkakyqMSJSgPZWsr1oU4qSyTSZtTqsK1ODZyg+
+         GxoqYXaSNF3iKU0WvG2GBe5s6WicCNltVV7LI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=VstAFIIT5Zhu5mp/aFh4n745piu6UMKJDVYep8EAyklF8qUo1exBjAR7r2iyv8lvHO
-         vkiSmiAkxytZZZsCz367VMDWgb9RrmUwJDFqscu6EPigtNazEZ6D1zAfVz4Z1L6vDREI
-         Dy833Y6XdGqcCw8G9VLME/u4JgOuUEgBkqCZM=
-Received: by 10.100.127.5 with SMTP id z5mr254750anc.47.1284037598961; Thu, 09
- Sep 2010 06:06:38 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Thu, 9 Sep 2010 06:06:38 -0700 (PDT)
-In-Reply-To: <4C8866F9.1040705@workspacewhiz.com>
+        b=Y2nyM5tKlFIShFfpm8gisbdqpTRAcRAZb9RwEZN4y9tsa46Ctn7uTP6LB5PejnDw8B
+         ibDaAgRePlT5YdjBnxyET4V/VPd6rAB4kC6JSIxZp2jEJJGCSo6tWDK+L3d1FUbLXJxR
+         DJHFl/sGiex7N5bh2pxkyjJ3I0qrRaeLEwaMA=
+Received: by 10.151.62.9 with SMTP id p9mr278961ybk.122.1284039581884; Thu, 09
+ Sep 2010 06:39:41 -0700 (PDT)
+Received: by 10.42.3.212 with HTTP; Thu, 9 Sep 2010 06:39:41 -0700 (PDT)
+In-Reply-To: <1283971131-25106-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155857>
 
-On Thu, Sep 9, 2010 at 04:47, Joshua Jensen <jjensen@workspacewhiz.com>=
- wrote:
-> =C2=A0After a deployment of Git on a centralized server at my place o=
-f business,
-> the largest amount of grumbling has been with the pull-before-you-pus=
-h
-> model. =C2=A0Coming from the file-centric Perforce where you need onl=
-y have
-> latest of just the files you are submitting, the pull-before-you-push=
- model
-> has really been a pain in the neck for a large team.
->
-> Even with topic branches being used, merges to master occur frequentl=
-y. =C2=A0It
-> can really be a frustrating battle to get your merged branch pushed t=
-o the
-> central master branch. =C2=A0In the time it took you to pull, test, a=
-nd push,
-> someone has probably already pushed before you. =C2=A0To cope with th=
-is, people
-> will pull, not bother testing, and immediately push their changes. =C2=
-=A0Yes,
-> this could result in build instability, but it is considered better t=
-han
-> never being able to make your change live.
->
-> (Let's ignore what we should or shouldn't be doing as far as 'develop=
-ment
-> practices'. =C2=A0:) =C2=A0We're solving the problems one step at a t=
-ime...)
-
-Let's not ignore that.
-
-Presumably you had exactly the same problem in perforce, i.e. because
-you only had have the files you were changing checked out in Perforce
-in the time between `hack && pull && test && push` someone else might
-have already pushed. Thus what you just submitted wasn't guaranteed to
-pass tests.
-
-So is the flow in Git where you don't run the tests again, rebase and
-push and hope for the best any different?
-
-> Gerrit provides a compelling model where branches are pushed to the c=
-ode
-> review server in the form refs/for/master, and the given push will al=
-ways
-> succeed. =C2=A0Code reviews are performed, someone sets the verified =
-bit, and the
-> change is submitted and merged to master by Gerrit itself in a queued
-> fashion. =C2=A0Unfortunately, its general "requirement" to squash you=
-r branch
-> down to a single commit is, possibly, a showstopper. =C2=A0If it trea=
-ted a branch
-> merge as a group of commits that MUST stay together, that would be pe=
-rfect.
-
-This sounds like something that's configurable in Gerrit, or should
-be.
-
-> [..]
->
-> Is there another workflow that is successful for your large(-ish) ent=
-erprise
-> team?
-
-Linux manages to deal with a huge number of commits, but does so by
-having subsystems.
-
-Maybe that's something you can use in your codebase?
+RHVkZQoKU29ycnkgYWJvdXQgYSBjb3VwbGUgb2YgcGlja3MgYWdhaW4uIEhpbmRpJ3MgaW5zYW5l
+IGdlbmRlciB1c2FnZSBmb3IKb2JqZWN0cyBjYW4gYmUKZGF1bnRpbmchCgpPbiBUaHUsIFNlcCA5
+LCAyMDEwIGF0IDEyOjA4IEFNLCBSYW1rdW1hciBSYW1hY2hhbmRyYQo8YXJ0YWdub25AZ21haWwu
+Y29tPiB3cm90ZToKPiBUcmFuc2xhdGUgYSBmZXcgR2l0IG1lc3NhZ2VzIHRvIFN0YW5kYXJkIEhp
+bmRpLiBJdCB1c2VzIGEgcGhvbmV0aWMKPiBzY3JpcHQgY2FsbGVkIERldmFuYWdhcmkuIEZvY3Vz
+IGVzcGVjaWFsbHkgb24gdHJhbnNmb3JtaW5nIGdyYW1tYXIgYW5kCj4gdGVuc2UgaW4gYSBzYW5l
+IG1hbm5lciB0byBzZXJ2ZSBhcyBhIGd1aWRlbGluZSBmb3IgZnV0dXJlIHRyYW5zbGF0b3JzLgo+
+Cj4gTm90ZSB0aGF0IERldmFuYWdhcmkgcmVuZGVyaW5nIGlzIGJyb2tlbiBvbiBtYW55IGFwcGxp
+Y2F0aW9ucyBieQo+IGRlZmF1bHQgYXQgdGhpcyB0aW1lLSB0aGUgbGF0ZXN0IEVtYWNzLCBWaW0g
+YW5kIENocm9tZSByZW5kZXIgaXQKPiBpbmNvcnJlY3RseS4KPgo+IFNpZ25lZC1vZmYtYnk6IFJh
+bWt1bWFyIFJhbWFjaGFuZHJhIDxhcnRhZ25vbkBnbWFpbC5jb20+Cj4gSGVscGVkLWJ5OiBBbnRy
+aWtzaCBQYW55IDxhbnRyaWtzaC5wYW55QGdtYWlsLmNvbT4KPiBDYzogU2l0YXJhbSBDaGFtYXJ0
+eSA8c2l0YXJhbWNAZ21haWwuY29tPgo+IC0tLQo+IMKgVGhhbmtzIHRvIEFudHJpa3NoJ3MgcmV2
+aWV3cywgd2UgaGF2ZSBzb21lIG1vcmUgaW1wcm92ZW1lbnRzLwo+IMKgY29ycmVjdGlvbnMuIEkn
+dmUgYWxzbyBzcXVhc2hlZCBpbiBhIGZldyBtb3JlIG9mIG15IG93bi4gSSBoYXZlbid0Cj4gwqBh
+ZGRyZXNzZWQgdGhlIGlzc3VlIG9mIHVzaW5nICJjb21wbGV4IG9yIGltcHJlY2lzZSBIaW5kaSB3
+b3JkcyIKPiDCoHZlcnN1cyAidHJhbnNsaXRlcmF0aW9uIiBmdWxseSBiZWNhdXNlIEkndmUgcmVj
+ZWl2ZWQgc2V2ZXJhbAo+IMKgY29uZmxpY3Rpbmcgb3BpbmlvbnMgZnJvbSBleGlzdGluZyBJbmRp
+YW4gdHJhbnNsYXRvcnMgb24gdGhpcwo+IMKgaXNzdWUuIFRoZSBjZW50cmFsIGlzc3VlIGlzIHRo
+YXQgSGluZGkgaXMgc2VsZG9tIHVzZWQgaW4gdGhlIGZpZWxkIG9mCj4gwqBzY2llbmNlLiBJIHRo
+aW5rIHRoZSBiZXN0IHNvbHV0aW9uIGlzIHRvIGNvbW1pdCB0aGlzIHJldmlzaW9uIGFuZCBsZXQK
+PiDCoGhpLnBvIGV2b2x2ZSBuYXR1cmFsbHkgYXMgZnV0dXJlIHRyYW5zbGF0b3JzIGNvbnRyaWJ1
+dGUgbW9yZQo+IMKgdHJhbnNsYXRpb25zLgo+Cj4gwqBwby9oaS5wbyB8IMKgIDY3Cj4gKysrKysr
+KysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysK
+PiDCoDEgZmlsZXMgY2hhbmdlZCwgNjcgaW5zZXJ0aW9ucygrKSwgMCBkZWxldGlvbnMoLSkKPiDC
+oGNyZWF0ZSBtb2RlIDEwMDY0NCBwby9oaS5wbwo+Cj4gZGlmZiAtLWdpdCBhL3BvL2hpLnBvIGIv
+cG8vaGkucG8KPiBuZXcgZmlsZSBtb2RlIDEwMDY0NAo+IGluZGV4IDAwMDAwMDAuLjQ2ZmQ1NDQK
+PiAtLS0gL2Rldi9udWxsCj4gKysrIGIvcG8vaGkucG8KPiBAQCAtMCwwICsxLDY3IEBACj4gK21z
+Z2lkICIiCj4gK21zZ3N0ciAiIgo+ICsiUHJvamVjdC1JZC1WZXJzaW9uOiBHaXRcbiIKPiArIlJl
+cG9ydC1Nc2dpZC1CdWdzLVRvOiBHaXQgTWFpbGluZyBMaXN0IDxnaXRAdmdlci5rZXJuZWwub3Jn
+PlxuIgo+ICsiTGFuZ3VhZ2UtVGVhbTogR2l0IE1haWxpbmcgTGlzdCA8Z2l0QHZnZXIua2VybmVs
+Lm9yZz5cbiIKPiArIkxhc3QtVHJhbnNsYXRvcjogUmFta3VtYXIgUmFtYWNoYW5kcmEgPGFydGFn
+bm9uQGdtYWlsLmNvbT5cbiIKPiArIlBPVC1DcmVhdGlvbi1EYXRlOiAyMDEwLTA5LTA1IDE2OjA1
+KzA1MzBcbiIKPiArIkxhbmd1YWdlOiBoaVxuIgo+ICsiTUlNRS1WZXJzaW9uOiAxLjBcbiIKPiAr
+IkNvbnRlbnQtVHlwZTogdGV4dC9wbGFpbjsgY2hhcnNldD1VVEYtOFxuIgo+ICsiQ29udGVudC1U
+cmFuc2Zlci1FbmNvZGluZzogOGJpdFxuIgo+ICsKPiArIywgYy1mb3JtYXQKPiArbXNnaWQgIkNv
+dWxkIG5vdCBtYWtlICVzIHdyaXRhYmxlIGJ5IGdyb3VwIgo+ICttc2dzdHIgIiVzIOCkleCliyDg
+pLjgpK7gpYLgpLkg4KSm4KWN4KS14KS+4KSw4KS+IOCksuCkv+CkluCkqOClhyDgpJXgpYAg4KSH
+4KSc4KS+4KSc4KS84KSkIOCkqOCkueClgCDgpKbgpYcg4KS44KSV4KWHIgo+ICsKPiArIywgYy1m
+b3JtYXQKPiArbXNnaWQgImluc2FuZWx5IGxvbmcgdGVtcGxhdGUgbmFtZSAlcyIKPiArbXNnc3Ry
+ICLgpJ/gpYfgpK7gpY3gpKrgpLLgpYfgpJ8gJXMg4KSV4KS+IOCkqOCkvuCkriDgpIXgpKTgpY3g
+pK/gpILgpKQg4KSy4KSC4KSs4KS+Igo+ICsKPiArIywgYy1mb3JtYXQKPiArbXNnaWQgImNhbm5v
+dCBzdGF0ICclcyciCj4gK21zZ3N0ciAiJyVzJyDgpJXgpYsgW3N0YXRdIOCkqOCkueClgOCkgiDg
+pJXgpLAg4KS44KSV4KWHIgo+ICsKPiArIywgYy1mb3JtYXQKPiArbXNnaWQgImNhbm5vdCBzdGF0
+IHRlbXBsYXRlICclcyciCj4gK21zZ3N0ciAi4KSf4KWH4KSu4KWN4KSq4KSy4KWH4KSfICclcycg
+4KSV4KWLIFtzdGF0XSDgpKjgpLngpYDgpIIg4KSV4KSwIOCkuOCkleClhyIKPiArCj4gKyMsIGMt
+Zm9ybWF0Cj4gK21zZ2lkICJjYW5ub3Qgb3BlbmRpciAnJXMnIgo+ICttc2dzdHIgIuCkqOCkv+Ck
+sOCljeCkpuClh+CktuCkv+CkleCkviAnJXMnIOCkqOCkueClgOCkgiDgpJbgpYvgpLIg4KS44KSV
+4KWHIgo+ICsKPiArIywgYy1mb3JtYXQKPiArbXNnaWQgImNhbm5vdCByZWFkbGluayAnJXMnIgo+
+ICttc2dzdHIgIuCksuCkv+CkguCklSAnJXMnIOCkqOCkueClgOCkgiDgpKrgpKLgpLwg4KS44KSV
+4KWHIgo+ICsKPiArIywgYy1mb3JtYXQKPiArbXNnaWQgImluc2FuZWx5IGxvbmcgc3ltbGluayAl
+cyIKPiArbXNnc3RyICLgpKrgpY3gpLDgpKTgpYDgpJXgpL7gpKTgpY3gpK7gpJUg4KSy4KS/4KSC
+4KSVICVzIOCkheCkpOCljeCkr+CkguCkpCDgpLLgpILgpKzgpL4iCj4gKwo+ICsjLCBjLWZvcm1h
+dAo+ICttc2dpZCAiY2Fubm90IHN5bWxpbmsgJyVzJyAnJXMnIgo+ICttc2dzdHIgIiclcycg4KSV
+4KS+IOCkquCljeCksOCkpOClgOCkleCkvuCkpOCljeCkruCklSDgpLLgpL/gpILgpJUgJyVzJyDg
+pK7gpYfgpIIg4KSo4KS54KWA4KSCIOCkrOCkqOCkviDgpLjgpJXgpYciCj4gKwo+ICsjLCBjLWZv
+cm1hdAo+ICttc2dpZCAiY2Fubm90IGNvcHkgJyVzJyB0byAnJXMnIgo+ICttc2dzdHIgIiclcycg
+4KSV4KWAIOCkheCkqOClgeCkleClg+CkpOCkvyAnJXMnIOCkruClh+CkgiDgpKjgpLngpYDgpIIg
+4KSV4KSwIOCkuOCkleClhyIKPiArCj4gKyMsIGMtZm9ybWF0Cj4gK21zZ2lkICJpZ25vcmluZyB0
+ZW1wbGF0ZSAlcyIKPiArbXNnc3RyICLgpJ/gpYfgpK7gpY3gpKrgpLLgpYfgpJ8gJXMg4KSV4KWA
+IOCkieCkquClh+CkleCljeCkt+CkviDgpJXgpLAg4KSw4KS54KWHIOCkueCliOCkgiIKPiArCj4g
+KyMsIGMtZm9ybWF0Cj4gK21zZ2lkICJpbnNhbmVseSBsb25nIHRlbXBsYXRlIHBhdGggJXMiCj4g
+K21zZ3N0ciAi4KSf4KWH4KSu4KWN4KSq4KSy4KWH4KSfICVzIOCkleClgCBbcGF0aF0g4KSF4KSk
+4KWN4KSv4KSC4KSkIOCksuCkguCkrOCkviIKCk5vdyB0aGlzIHdvdWxkIGJlY29tZSAna2EnLCAn
+cGF0aCcgYmVpbmcgbWFzY3VsaW5lIDopCgo+ICsKPiArIywgYy1mb3JtYXQKPiArbXNnaWQgInRl
+bXBsYXRlcyBub3QgZm91bmQgJXMiCj4gK21zZ3N0ciAi4KSf4KWH4KSu4KWN4KSq4KSy4KWH4KSf
+ICVzIOCkqOCkueClgOCkgiDgpK7gpL/gpLLgpL4iCgpUaGlzIGNhbiBpbnN0ZWFkIGJlICLgpJ/g
+pYfgpK7gpY3gpKrgpLLgpYfgpJ/gpY3gpLggJXMg4KSo4KS54KWA4KSCIOCkruCkv+CksuClhyIg
+dG8ga2VlcCB0aGUgcGx1cmFsIGZvcm0uCkFsc28sIHRoZSAnJXMnIGhlcmUgaW5kaWNhdGVzIGEg
+dGVtcGxhdGUgZGlyZWN0b3J5LCBzbyBpbiB0aGUgSGluZGkgdmVyc2lvbgphbHNvIHlvdSBtYXkg
+d2FudCB0byBzdGljayBpdCBhdCB0aGUgZW5kLgoKPiArCj4gKyMsIGMtZm9ybWF0Cj4gK21zZ2lk
+ICJub3QgY29weWluZyB0ZW1wbGF0ZXMgb2YgYSB3cm9uZyBmb3JtYXQgdmVyc2lvbiAlZCBmcm9t
+ICclcyciCj4gK21zZ3N0ciAiJyVzJyDgpLjgpYcg4KSX4KSy4KSkIOCkuOCljeCkteCksOClguCk
+qiDgpLjgpILgpLjgpY3gpJXgpLDgpKMgJWQg4KSV4KWHIOCkn+Clh+CkruCljeCkquCksuClh+Ck
+n+CljeCkuCDgpJXgpYAg4KSo4KSV4KSyIOCkqOCkueClgOCkgiDgpJXgpLAg4KSw4KS54KWHIOCk
+ueCliOCkgiIKPiArCj4gKyMsIGMtZm9ybWF0Cj4gK21zZ2lkICJpbnNhbmUgZ2l0IGRpcmVjdG9y
+eSAlcyIKPiArbXNnc3RyICLgpJbgpLDgpL7gpKwg4KSX4KS/4KSfIOCkqOCkv+CksOCljeCkpuCl
+h+CktuCkv+CkleCkviAlcyIKPiAtLQo+IDEuNy4yLjIuNDA5LmdkYmIxMS5kaXJ0eQo+Cj4KCklm
+IHRoaXMgcGF0Y2ggaXMgYmVpbmcgdGFrZW4gaW4sIGxvb2tzIGdvb2QgZm9yIGEgZmlyc3QgZHJh
+ZnQuIEFuZCBpZiBJIG1heSwKQWNrZWQtYnk6IEFudHJpa3NoIFBhbnkgPGFudHJpa3NoLnBhbnlA
+Z21haWwuY29tPgo=
