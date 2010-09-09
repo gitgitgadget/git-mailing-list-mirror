@@ -1,95 +1,117 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+From: Davi Reis <davi.reis@gmail.com>
 Subject: Re: [PATCH 2/2] Added test from David Glasser.
-Date: Thu, 09 Sep 2010 23:33:30 +0200
-Message-ID: <vpqk4muvbyt.fsf@bauges.imag.fr>
+Date: Thu, 9 Sep 2010 14:44:21 -0700
+Message-ID: <AANLkTikrvX-BZFTDA3OyrNP7BZN99=Nb4i6=LMaBGX+-@mail.gmail.com>
 References: <1284056514-4935-1-git-send-email-davi.reis@gmail.com>
 	<1284056514-4935-2-git-send-email-davi.reis@gmail.com>
+	<vpqk4muvbyt.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: davi.reis@gmail.com
-X-From: git-owner@vger.kernel.org Thu Sep 09 23:33:55 2010
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Sep 09 23:44:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otokk-0001At-6d
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 23:33:54 +0200
+	id 1Otouy-0006Cl-TR
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 23:44:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119Ab0IIVdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 17:33:36 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:33049 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756066Ab0IIVdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 17:33:35 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o89LLBH3031614
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 9 Sep 2010 23:21:11 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OtokN-0000RF-0y; Thu, 09 Sep 2010 23:33:31 +0200
-In-Reply-To: <1284056514-4935-2-git-send-email-davi.reis@gmail.com> (davi reis's message of "Thu\,  9 Sep 2010 11\:21\:54 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 09 Sep 2010 23:21:12 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o89LLBH3031614
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1284672073.6869@3oNC7zwpXnD8HwAl/pLHWg
+	id S1754728Ab0IIVoX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 17:44:23 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:59768 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753792Ab0IIVoX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 17:44:23 -0400
+Received: by bwz11 with SMTP id 11so1566896bwz.19
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 14:44:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zgRkoTSraJNMlvtYt1JiszUbG9SzIq6iPa2O93Bnn2Q=;
+        b=KNVwQlACJRqu4ZXdzTbtlNtq0/B9DSsaeDDmIn+50ZTAeGaamn93IdT+OyYY/xFcAc
+         R3baWeu3pYDVrq0Z9gTEUVAkGFRl2QDsQeybU8xB1L6GhO3ljTtE0lGmLwX+6MEQkj8I
+         W5RDShngKqN7I6z1Q+N60FHJF0Bv+T9JPkNCc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=XmbNZC5s213KtcHQGmKkHt4XMnhbAeQpbmOumfSurWtpDdUjAKJE4eprc2b3Ss4CcO
+         xWYQPlUj+O3HE8Dd7hLRJ9I9h+wITinZXLXjToBbZimrZizX0MbdmgbS8dNugW4MakNB
+         rTB3ymBMSaJcUIWpf1BtCflQ4TXCZCqBoKOso=
+Received: by 10.204.117.13 with SMTP id o13mr1489387bkq.48.1284068661374; Thu,
+ 09 Sep 2010 14:44:21 -0700 (PDT)
+Received: by 10.204.76.20 with HTTP; Thu, 9 Sep 2010 14:44:21 -0700 (PDT)
+In-Reply-To: <vpqk4muvbyt.fsf@bauges.imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155905>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155906>
 
-davi.reis@gmail.com writes:
+I will squash the patches and try again from scratch. Thanks Matthieu.
 
-> --- a/builtin/ls-tree.c
-> +++ b/builtin/ls-tree.c
-> @@ -52,7 +52,7 @@ static int show_recursive(const char *base, int baselen, const char *pathname)
->  		speclen = strlen(spec);
->  		if (speclen <= len)
->  			continue;
-> -		if (spec[len] != 0 && spec[len] != '/')
-> +		if (spec[len] != '/')
+On Thu, Sep 9, 2010 at 2:33 PM, Matthieu Moy
+<Matthieu.Moy@grenoble-inp.fr> wrote:
+> davi.reis@gmail.com writes:
+>
+>> --- a/builtin/ls-tree.c
+>> +++ b/builtin/ls-tree.c
+>> @@ -52,7 +52,7 @@ static int show_recursive(const char *base, int ba=
+selen, const char *pathname)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 speclen =3D strlen(spec);
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (speclen <=3D len)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continue;
+>> - =A0 =A0 =A0 =A0 =A0 =A0 if (spec[len] !=3D 0 && spec[len] !=3D '/'=
+)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 if (spec[len] !=3D '/')
+>
+> This change is not the one advertized for in the title. If you didn't
+> mean it, then
+>
+> =A0git send-email --annotate
+>
+> can be your friend, it gives you a last opportunity to check your
+> patch before it is sent.
+>
+> If you did mean it, then it should be justified in the commit message=
+=2E
+>
+>> --- a/t/t3100-ls-tree-restrict.sh
+>> +++ b/t/t3100-ls-tree-restrict.sh
+>> @@ -165,4 +165,13 @@ test_expect_success \
+>> =A0EOF
+>> =A0 =A0 =A0 test_output'
+>>
+>> +test_expect_success \
+>> + =A0 =A0'ls-tree with one path a prefix of the other' \
+>> + =A0 =A0'git ls-tree $tree path2/baz path2/bazbo >current &&
+>> + =A0 =A0 make_expected <<\EOF &&
+>> +040000 tree X =A0path2/baz
+>> +120000 blob X =A0path2/bazbo
+>> +EOF
+>> + =A0 =A0 test_output'
+>> +
+>> =A0test_done
+>
+> Adding the test can help people to understand what the first patch is
+> fixing, hence, I'd suggest either squashing both patches, or putting
+> the test patch first (with a test_expect_failure), and having the
+> second turn the test_expect_failure into a test_expect_success (hence=
+,
+> it's obvious reading the patch that it fixes the test).
+>
+> --
+> Matthieu Moy
+> http://www-verimag.imag.fr/~moy/
+>
 
-This change is not the one advertized for in the title. If you didn't
-mean it, then
 
-  git send-email --annotate
 
-can be your friend, it gives you a last opportunity to check your
-patch before it is sent.
-
-If you did mean it, then it should be justified in the commit message.
-
-> --- a/t/t3100-ls-tree-restrict.sh
-> +++ b/t/t3100-ls-tree-restrict.sh
-> @@ -165,4 +165,13 @@ test_expect_success \
->  EOF
->       test_output'
->  
-> +test_expect_success \
-> +    'ls-tree with one path a prefix of the other' \
-> +    'git ls-tree $tree path2/baz path2/bazbo >current &&
-> +     make_expected <<\EOF &&
-> +040000 tree X  path2/baz
-> +120000 blob X  path2/bazbo
-> +EOF
-> +     test_output'
-> +
->  test_done
-
-Adding the test can help people to understand what the first patch is
-fixing, hence, I'd suggest either squashing both patches, or putting
-the test patch first (with a test_expect_failure), and having the
-second turn the test_expect_failure into a test_expect_success (hence,
-it's obvious reading the patch that it fixes the test).
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+[]s
+Davi de Castro Reis
