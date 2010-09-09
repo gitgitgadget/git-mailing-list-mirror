@@ -1,117 +1,61 @@
-From: Davi Reis <davi.reis@gmail.com>
-Subject: Re: [PATCH 2/2] Added test from David Glasser.
-Date: Thu, 9 Sep 2010 14:44:21 -0700
-Message-ID: <AANLkTikrvX-BZFTDA3OyrNP7BZN99=Nb4i6=LMaBGX+-@mail.gmail.com>
-References: <1284056514-4935-1-git-send-email-davi.reis@gmail.com>
-	<1284056514-4935-2-git-send-email-davi.reis@gmail.com>
-	<vpqk4muvbyt.fsf@bauges.imag.fr>
+From: Anthony <anthony@bnovc.com>
+Subject: No argument is allowed
+Date: Thu, 9 Sep 2010 21:43:39 +0000 (UTC)
+Message-ID: <loom.20100909T233911-69@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Thu Sep 09 23:44:29 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 09 23:45:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otouy-0006Cl-TR
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 23:44:29 +0200
+	id 1Otovi-0006Sn-E2
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 23:45:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754728Ab0IIVoX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 17:44:23 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:59768 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753792Ab0IIVoX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 17:44:23 -0400
-Received: by bwz11 with SMTP id 11so1566896bwz.19
-        for <git@vger.kernel.org>; Thu, 09 Sep 2010 14:44:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zgRkoTSraJNMlvtYt1JiszUbG9SzIq6iPa2O93Bnn2Q=;
-        b=KNVwQlACJRqu4ZXdzTbtlNtq0/B9DSsaeDDmIn+50ZTAeGaamn93IdT+OyYY/xFcAc
-         R3baWeu3pYDVrq0Z9gTEUVAkGFRl2QDsQeybU8xB1L6GhO3ljTtE0lGmLwX+6MEQkj8I
-         W5RDShngKqN7I6z1Q+N60FHJF0Bv+T9JPkNCc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XmbNZC5s213KtcHQGmKkHt4XMnhbAeQpbmOumfSurWtpDdUjAKJE4eprc2b3Ss4CcO
-         xWYQPlUj+O3HE8Dd7hLRJ9I9h+wITinZXLXjToBbZimrZizX0MbdmgbS8dNugW4MakNB
-         rTB3ymBMSaJcUIWpf1BtCflQ4TXCZCqBoKOso=
-Received: by 10.204.117.13 with SMTP id o13mr1489387bkq.48.1284068661374; Thu,
- 09 Sep 2010 14:44:21 -0700 (PDT)
-Received: by 10.204.76.20 with HTTP; Thu, 9 Sep 2010 14:44:21 -0700 (PDT)
-In-Reply-To: <vpqk4muvbyt.fsf@bauges.imag.fr>
+	id S1755746Ab0IIVpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 17:45:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:33120 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753208Ab0IIVpH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 17:45:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OtovY-0006OM-5F
+	for git@vger.kernel.org; Thu, 09 Sep 2010 23:45:06 +0200
+Received: from mail.garmin.com ([63.76.48.90])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 23:45:04 +0200
+Received: from anthony by mail.garmin.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 23:45:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 63.77.95.90 (Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.53 Safari/534.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155907>
 
-I will squash the patches and try again from scratch. Thanks Matthieu.
+When doing a "git clone 
+ssh://platforms.companyname.com:40511/Support/Support/foobar.git", I get "fatal: 
+No argument is allowed: /Support/Support/foobar.git".
 
-On Thu, Sep 9, 2010 at 2:33 PM, Matthieu Moy
-<Matthieu.Moy@grenoble-inp.fr> wrote:
-> davi.reis@gmail.com writes:
->
->> --- a/builtin/ls-tree.c
->> +++ b/builtin/ls-tree.c
->> @@ -52,7 +52,7 @@ static int show_recursive(const char *base, int ba=
-selen, const char *pathname)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 speclen =3D strlen(spec);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (speclen <=3D len)
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continue;
->> - =A0 =A0 =A0 =A0 =A0 =A0 if (spec[len] !=3D 0 && spec[len] !=3D '/'=
-)
->> + =A0 =A0 =A0 =A0 =A0 =A0 if (spec[len] !=3D '/')
->
-> This change is not the one advertized for in the title. If you didn't
-> mean it, then
->
-> =A0git send-email --annotate
->
-> can be your friend, it gives you a last opportunity to check your
-> patch before it is sent.
->
-> If you did mean it, then it should be justified in the commit message=
-=2E
->
->> --- a/t/t3100-ls-tree-restrict.sh
->> +++ b/t/t3100-ls-tree-restrict.sh
->> @@ -165,4 +165,13 @@ test_expect_success \
->> =A0EOF
->> =A0 =A0 =A0 test_output'
->>
->> +test_expect_success \
->> + =A0 =A0'ls-tree with one path a prefix of the other' \
->> + =A0 =A0'git ls-tree $tree path2/baz path2/bazbo >current &&
->> + =A0 =A0 make_expected <<\EOF &&
->> +040000 tree X =A0path2/baz
->> +120000 blob X =A0path2/bazbo
->> +EOF
->> + =A0 =A0 test_output'
->> +
->> =A0test_done
->
-> Adding the test can help people to understand what the first patch is
-> fixing, hence, I'd suggest either squashing both patches, or putting
-> the test patch first (with a test_expect_failure), and having the
-> second turn the test_expect_failure into a test_expect_success (hence=
-,
-> it's obvious reading the patch that it fixes the test).
->
-> --
-> Matthieu Moy
-> http://www-verimag.imag.fr/~moy/
->
+The server is using JGit (0.8.4, with apache-sshd 0.3.0), but that error message 
+isn't in the jgit source. I don't know where it originates from.
 
+SSHing to that server gives "shell request failed on channel 0"
 
+Someone in freenode/#git recommended I post here, although it may turn out the 
+JGit mailing list is more appropriate.
 
---=20
-[]s
-Davi de Castro Reis
+Does anyone have any suggestions on how to resolve this or additional 
+information?
+
+Thanks
