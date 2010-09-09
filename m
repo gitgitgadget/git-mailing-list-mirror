@@ -1,83 +1,122 @@
-From: martin f krafft <madduck@madduck.net>
-Subject: Re: Find the next tag on a given branch
-Date: Thu, 9 Sep 2010 11:34:38 +0200
-Message-ID: <20100909093438.GE8776@fishbowl.rw.madduck.net>
-References: <20100909052841.GA16722@fishbowl.rw.madduck.net>
- <201009091007.35275.trast@student.ethz.ch>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Coping with the pull-before-you-push model
+Date: Thu, 9 Sep 2010 13:06:38 +0000
+Message-ID: <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com>
+References: <4C8866F9.1040705@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-ripemd160;
-	protocol="application/pgp-signature"; boundary="X3gaHHMYHkYqP6yf"
-To: Thomas Rast <trast@student.ethz.ch>,
-	git discussion list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 09 11:59:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Thu Sep 09 15:06:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtduM-0008W9-MA
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 11:59:07 +0200
+	id 1Otgq1-00017x-As
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 15:06:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754300Ab0IIJ67 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 05:58:59 -0400
-Received: from seamus.madduck.net ([213.203.238.82]:37522 "EHLO
-	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754248Ab0IIJ65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 05:58:57 -0400
-X-Greylist: delayed 439 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Sep 2010 05:58:57 EDT
-Received: from fishbowl.rw.madduck.net (vera.madduck.net [77.109.139.84])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
-	by seamus.madduck.net (postfix) with ESMTPS id C9D21411664;
-	Thu,  9 Sep 2010 11:51:30 +0200 (CEST)
-Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
-	id 591971FE5B; Thu,  9 Sep 2010 11:34:38 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <201009091007.35275.trast@student.ethz.ch>
-X-Motto: Keep the good times rollin'
-X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.35-trunk-amd64 x86_64
-X-Spamtrap: madduck.bogus@madduck.net
-X-Subliminal-Message: debian/rules!
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Virus-Scanned: clamav-milter 0.96.1 at seamus
-X-Virus-Status: Clean
+	id S1751742Ab0IINGl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 09:06:41 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:54024 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751259Ab0IINGj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 09:06:39 -0400
+Received: by gxk23 with SMTP id 23so582844gxk.19
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 06:06:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8X1csClZWQQdROy0c7UkPB2qo+OxEdvgiyTLM2uwI/I=;
+        b=aChxh7yRy/wqY8b0OI1u1sy3g+68vx6HPu6zQO+2Ic4udG7EGvLlkyu55e9MQ7EbEn
+         Lya4MEnNwHFWrBO9uUH1RGT3KT/Dj3iUD3AEXMhp/BAEovv9nBZIDV6aC7Om90hxNrY/
+         EQaD2zGiBbZMfYz+WqTZYUq18QWZaDLhVoCkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VstAFIIT5Zhu5mp/aFh4n745piu6UMKJDVYep8EAyklF8qUo1exBjAR7r2iyv8lvHO
+         vkiSmiAkxytZZZsCz367VMDWgb9RrmUwJDFqscu6EPigtNazEZ6D1zAfVz4Z1L6vDREI
+         Dy833Y6XdGqcCw8G9VLME/u4JgOuUEgBkqCZM=
+Received: by 10.100.127.5 with SMTP id z5mr254750anc.47.1284037598961; Thu, 09
+ Sep 2010 06:06:38 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 9 Sep 2010 06:06:38 -0700 (PDT)
+In-Reply-To: <4C8866F9.1040705@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155855>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155856>
 
+On Thu, Sep 9, 2010 at 04:47, Joshua Jensen <jjensen@workspacewhiz.com>=
+ wrote:
+> =C2=A0After a deployment of Git on a centralized server at my place o=
+f business,
+> the largest amount of grumbling has been with the pull-before-you-pus=
+h
+> model. =C2=A0Coming from the file-centric Perforce where you need onl=
+y have
+> latest of just the files you are submitting, the pull-before-you-push=
+ model
+> has really been a pain in the neck for a large team.
+>
+> Even with topic branches being used, merges to master occur frequentl=
+y. =C2=A0It
+> can really be a frustrating battle to get your merged branch pushed t=
+o the
+> central master branch. =C2=A0In the time it took you to pull, test, a=
+nd push,
+> someone has probably already pushed before you. =C2=A0To cope with th=
+is, people
+> will pull, not bother testing, and immediately push their changes. =C2=
+=A0Yes,
+> this could result in build instability, but it is considered better t=
+han
+> never being able to make your change live.
+>
+> (Let's ignore what we should or shouldn't be doing as far as 'develop=
+ment
+> practices'. =C2=A0:) =C2=A0We're solving the problems one step at a t=
+ime...)
 
---X3gaHHMYHkYqP6yf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Let's not ignore that.
 
-also sprach Thomas Rast <trast@student.ethz.ch> [2010.09.09.1007 +0200]:
->   git tag --contains mycommit | grep ^debian/
+Presumably you had exactly the same problem in perforce, i.e. because
+you only had have the files you were changing checked out in Perforce
+in the time between `hack && pull && test && push` someone else might
+have already pushed. Thus what you just submitted wasn't guaranteed to
+pass tests.
 
-Awesome. Thank you so much!
+So is the flow in Git where you don't run the tests again, rebase and
+push and hope for the best any different?
 
---=20
-martin | http://madduck.net/ | http://two.sentenc.es/
-=20
-wind catches lily,
-scattering petals to the ground.
-segmentation fault.
-=20
-spamtraps: madduck.bogus@madduck.net
+> Gerrit provides a compelling model where branches are pushed to the c=
+ode
+> review server in the form refs/for/master, and the given push will al=
+ways
+> succeed. =C2=A0Code reviews are performed, someone sets the verified =
+bit, and the
+> change is submitted and merged to master by Gerrit itself in a queued
+> fashion. =C2=A0Unfortunately, its general "requirement" to squash you=
+r branch
+> down to a single commit is, possibly, a showstopper. =C2=A0If it trea=
+ted a branch
+> merge as a group of commits that MUST stay together, that would be pe=
+rfect.
 
---X3gaHHMYHkYqP6yf
-Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
-Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
-Content-Disposition: inline
+This sounds like something that's configurable in Gerrit, or should
+be.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+> [..]
+>
+> Is there another workflow that is successful for your large(-ish) ent=
+erprise
+> team?
 
-iEYEAREDAAYFAkyIqi4ACgkQIgvIgzMMSnVoKQCcCTjF0QK2cM5/eQcb7NaQNpWU
-wQ8AoNYxiTWlJ0eCDHSM12BnODwFn0Vn
-=Phlt
------END PGP SIGNATURE-----
+Linux manages to deal with a huge number of commits, but does so by
+having subsystems.
 
---X3gaHHMYHkYqP6yf--
+Maybe that's something you can use in your codebase?
