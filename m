@@ -1,67 +1,68 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] git-help: find library man pages again
-Date: Thu, 9 Sep 2010 15:58:08 -0400
-Message-ID: <20100909195808.GD1146@sigill.intra.peff.net>
-References: <0b8d803551f495e2494b43c6d95163daca82f62b.1283356852.git.git@drmicha.warpmail.net>
- <20100902081646.GK29713@burratino>
- <4C7F6354.70108@drmicha.warpmail.net>
+Subject: Re: [PATCH 3/4] t/t4018: test whether the word_regex patterns
+ compile
+Date: Thu, 9 Sep 2010 15:59:04 -0400
+Message-ID: <20100909195904.GE1146@sigill.intra.peff.net>
+References: <rRj7JpFIk_D_n7-wGkkucFJE0330IabsqMoSzalswHpjT-Z1HCuOFaIgMsaPgIuQSp0KUMW97Wo@cipher.nrlssc.navy.mil>
+ <rRj7JpFIk_D_n7-wGkkucC32o5VKAledjObzc1bFHX8SBUchsp6UDflVKjnjY9xKm9Q48ir5iu8@cipher.nrlssc.navy.mil>
+ <20100909192331.GD32508@sigill.intra.peff.net>
+ <j45XQiddacaKt4L280HjYoaYzAnnDCuR2Yspxw_iRDyU3Y9YkKMxAQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 09 21:58:05 2010
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Thu Sep 09 21:59:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtnG0-0003K3-J4
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 21:58:04 +0200
+	id 1OtnGw-0003vN-2h
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 21:59:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755958Ab0IIT55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 15:57:57 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40288 "EHLO peff.net"
+	id S1756168Ab0IIT6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 15:58:53 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40294 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752854Ab0IIT54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 15:57:56 -0400
-Received: (qmail 21356 invoked by uid 111); 9 Sep 2010 19:57:55 -0000
+	id S1755552Ab0IIT6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 15:58:52 -0400
+Received: (qmail 21380 invoked by uid 111); 9 Sep 2010 19:58:51 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 09 Sep 2010 19:57:55 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Sep 2010 15:58:08 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 09 Sep 2010 19:58:51 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Sep 2010 15:59:04 -0400
 Content-Disposition: inline
-In-Reply-To: <4C7F6354.70108@drmicha.warpmail.net>
+In-Reply-To: <j45XQiddacaKt4L280HjYoaYzAnnDCuR2Yspxw_iRDyU3Y9YkKMxAQ@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155900>
 
-On Thu, Sep 02, 2010 at 10:41:56AM +0200, Michael J Gruber wrote:
+On Thu, Sep 09, 2010 at 02:39:32PM -0500, Brandon Casey wrote:
 
-> >  i.e. I think that is the same issue after all and that
-> > builtin/help.c ought to learn another heuristic than is_git_command().
+> > Definitely something we should be doing, but one nit:
+> > 
+> >> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> >> index 61de8a2..620cd02 100755
+> >> --- a/t/t4018-diff-funcname.sh
+> >> +++ b/t/t4018-diff-funcname.sh
+> >> @@ -40,6 +40,11 @@ do
+> >>  		! ( git diff --no-index Beer.java Beer-correct.java 2>&1 |
+> >>  			grep "fatal" > /dev/null )
+> >>  	'
+> >> +	test_expect_success "builtin $p wordRegex pattern compiles" '
+> >> +		! ( git diff --no-index --word-diff \
+> >> +			Beer.java Beer-correct.java 2>&1 |
+> >> +			grep "fatal" > /dev/null )
+> >> +	'
+> > 
+> > Why the subshell? Shouldn't just testing the pipeline outcome work?
 > 
-> One heuristic, which I would have left for a later patch because of its
-> radicality (and I think we're in some phase of some rc something), is to
-> simply not do any checks when calling the viewers. This requires that
-> everything is prepended with "git-", which I see you have done in
-> builtin/help.c. Still, none-command help pages will not show up with
-> "git help -a". So it's not a complete solution.
+> Notice the similarity between the added lines and the lines just
+> above them?  Where were you when I submitted those? :)
 
-That was my first thought upon reading your patch, too. And something
-like "s/gitworkflows/git-workflows/" is reasonable. But you can do "git
-help attributes" and "git help ignore" now, and those should almost
-certainly remain "gitattributes" and "gitignore" (at the very least, we
-should still allow "git help gitattributes", which works now, but which
-your proposal would break).
-
-So maybe we could get by with "prepend git- unless it starts with git".
-
-I dunno. The current behavior seems hack-ish, but I am loathe to change
-names if people really prefer the existing ones. FWIW, I would actually
-say "git help git-sh-setup", which in fact works (leading me to get
-puzzled by your patch at first). So who knows what people are typing in
-practice.
+I did. I almost said "obviously you copied from above, but that is no
+excuse". So let me say it now. :)
 
 -Peff
