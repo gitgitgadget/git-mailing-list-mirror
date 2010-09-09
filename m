@@ -1,142 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: explain "git branch --with"
-Date: Thu, 09 Sep 2010 15:45:13 -0700
-Message-ID: <7vhbhyleo6.fsf@alter.siamese.dyndns.org>
-References: <4C83FEC3.3040101@gmail.com>
- <7viq2jv05c.fsf@alter.siamese.dyndns.org>
- <AANLkTinDfCkkY_D6F7VepvuNAN1g1hC9UgnqRUjZn88y@mail.gmail.com>
- <AANLkTim4kxpQj_UFOBcwCaVmBFCHun4T9t3O9Zvq3w49@mail.gmail.com>
- <AANLkTinPDUeL2jaY3P17TiA959WH8eOQZ4=CeaHOYuq2@mail.gmail.com>
- <7v39tmtpci.fsf@alter.siamese.dyndns.org> <20100907055209.GT1182@burratino>
+From: "Schalk, Ken" <ken.schalk@intel.com>
+Subject: RE: [PATCH 2/3] merge-recursive: Small code cleanup
+Date: Thu, 9 Sep 2010 13:23:26 -0700
+Message-ID: <EF9FEAB3A4B7D245B0801936B6EF4A25593A57@azsmsx503.amr.corp.intel.com>
+References: <AANLkTimz8qSwefp137-D+vEbsf6soG51u0im9EC911_O@mail.gmail.com>
+	<1283806070-22027-3-git-send-email-newren@gmail.com>
+	<EF9FEAB3A4B7D245B0801936B6EF4A254B6BBD@azsmsx503.amr.corp.intel.com>
+ <AANLkTim5AA7mnAhkbqJaFcUv9vniTVG7siOMxE+y=ehf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Artur Skawina <art.08.09@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 10 00:50:17 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
+	"gitster@pobox.com" <gitster@pobox.com>,
+	"oinksocket@letterboxes.org" <oinksocket@letterboxes.org>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 10 01:58:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otpwf-0003G7-8A
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 00:50:17 +0200
+	id 1Otr0i-0005ci-SU
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 01:58:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757257Ab0IIWsk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 18:48:40 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41352 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933259Ab0IIWp3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 18:45:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E054D4985;
-	Thu,  9 Sep 2010 18:45:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=t08DHSYgkwgWqMDDn5qsGjPq1WA=; b=EQhuoB
-	pXMtRSD2QsO7dBIsygaKED5a+BOdUuYWLtuurkCFZDd8rSZhGItFXmUAvjgrqMa1
-	0VDq/CbIGscTdGdCaoB3DQW153tNZoVQA7YDVkmGXf0WqakdtEN0MLhtoSlqs04o
-	SGgR/GbLdC3Ownk8O0H8UnnJcq0JIc9PuQfOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=qC20iPOS0zXkVA+dciQgtJppfNFb8ff9
-	C1zU1rZ+IvVNEkvLxp28KvDhFa3iG2/GU86qdzpG3/T9w1Z6mqjlOBu2K8yubGYM
-	XvQO9qIWmdJF4XoQ7/SiNCcWZXLcp18+OcxZgiYTOWv1xYSUorxFA5PRkQmvGlVz
-	hLtlGHu4dUc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C0173D4984;
-	Thu,  9 Sep 2010 18:45:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A1404D497B; Thu,  9 Sep
- 2010 18:45:15 -0400 (EDT)
-In-Reply-To: <20100907055209.GT1182@burratino> (Jonathan Nieder's message of
- "Tue\, 7 Sep 2010 00\:52\:09 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ED8C89F0-BC63-11DF-9E61-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757077Ab0IIX61 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 19:58:27 -0400
+Received: from mga02.intel.com ([134.134.136.20]:24073 "EHLO mga02.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754085Ab0IIX60 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 19:58:26 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga101.jf.intel.com with ESMTP; 09 Sep 2010 16:58:25 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.56,343,1280732400"; 
+   d="scan'208";a="553145217"
+Received: from azsmsx601.amr.corp.intel.com ([10.2.121.193])
+  by orsmga002.jf.intel.com with ESMTP; 09 Sep 2010 16:58:24 -0700
+Received: from azsmsx604.amr.corp.intel.com (10.2.161.34) by
+ azsmsx601.amr.corp.intel.com (10.2.121.193) with Microsoft SMTP Server (TLS)
+ id 8.2.254.0; Thu, 9 Sep 2010 13:23:28 -0700
+Received: from azsmsx503.amr.corp.intel.com ([10.2.121.76]) by
+ azsmsx604.amr.corp.intel.com ([10.2.161.34]) with mapi; Thu, 9 Sep 2010
+ 13:23:28 -0700
+Thread-Topic: [PATCH 2/3] merge-recursive: Small code cleanup
+Thread-Index: ActPHnOQooFlMxj2QdqzrqmNi+E0EwBPbsBg
+In-Reply-To: <AANLkTim5AA7mnAhkbqJaFcUv9vniTVG7siOMxE+y=ehf@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155911>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+>Perhaps you could submit another patch changing your testcase back to
+>using a symlink to make sure someone like me doesn't break your
+>original testcase in the future?
 
-> More precisely, it is advertised by "git branch --help-all" but not
-> the manual or "git branch -h".
+Here's a patch relative to my last one.  Rather than restoring the previous test, I added it so that platforms with no symlink support can still test copy vs. rename and platforms with symlink support can also test rename vs. rename/symlink.
 
-Sorry, but I don't understand what you are trying to say here.  Isn't it
-the whole point of distinction between --help-all vs -h (aka
-PARSE_OPT_HIDDEN)?
+Signed-off-by: Ken Schalk <ken.schalk@intel.com>
+---
+ t/t3030-merge-recursive.sh |   36 +++++++++++++++++++++++++++++++++++-
+ 1 files changed, 35 insertions(+), 1 deletions(-)
 
-Some interesting findings after a quick "grep" to see which ones are
-hidden (potential bugs below might be good for janitors).
+diff --git a/t/t3030-merge-recursive.sh b/t/t3030-merge-recursive.sh
+index b23bd9f..9514ae2 100755
+--- a/t/t3030-merge-recursive.sh
++++ b/t/t3030-merge-recursive.sh
+@@ -25,6 +25,10 @@ test_expect_success 'setup 1' '
+        git branch submod &&
+        git branch copy &&
+        git branch rename &&
++       if test_have_prereq SYMLINKS
++       then
++               git branch rename-ln
++       fi &&
 
-* apply --allow-binary-replacement, --binary
+        echo hello >>a &&
+        cp a d/e &&
+@@ -256,7 +260,17 @@ test_expect_success 'setup 8' '
+        git mv a e &&
+        git add e &&
+        test_tick &&
+-       git commit -m "rename a->e"
++       git commit -m "rename a->e" &&
++       if test_have_prereq SYMLINKS
++       then
++               git checkout rename-ln &&
++               git mv a e &&
++               ln -s e a &&
++               git add a e &&
++               test_tick &&
++               git commit -m "rename a->e, symlink a->e"
++       fi
++
+ '
 
-  These are always on, and are no-op (even --no-binary is a no-op);
-  documented.
+ test_expect_success 'setup 9' '
+@@ -618,5 +632,25 @@ test_expect_success 'merge-recursive copy vs. rename' '
+        test_cmp expected actual
+ '
 
-* archive -[2-8]
++if test_have_prereq SYMLINKS
++then
++       test_expect_success 'merge-recursive rename vs. rename/symlink' '
++
++               git checkout -f rename &&
++               git merge rename-ln &&
++               ( git ls-tree -r HEAD ; git ls-files -s ) >actual &&
++               (
++                       echo "100644 blob $o0   b"
++                       echo "100644 blob $o0   c"
++                       echo "100644 blob $o0   d/e"
++                       echo "100644 blob $o0   e"
++                       echo "100644 $o0 0      b"
++                       echo "100644 $o0 0      c"
++                       echo "100644 $o0 0      d/e"
++                       echo "100644 $o0 0      e"
++               ) >expected &&
++               test_cmp expected actual
++       '
++fi
 
-  git-archive manual page mentions -0 thru -9 can be used as "zip backend
-  option", while explicitly describing -0 and -9.  "git archive -h" gives
-  special description for -1 as well.  Perhaps we should be consistent and
-  document -1 in the manual page.
-  
-* checkout --[no-]guess
-
-  Controls the "dwim 'git checkout x' to 'git checkout -b x remote/x' when
-  'x' cannot possibly name anything other than a branch that we copied
-  from a remote repository uniquely"; since the dwimming is on by default,
-  the only use case is to say --no-guess; not documented.
-
-* clone --naked
-
-  An old name used during the development for the current --bare option;
-  not documented.
-
-* commit --allow-empty --allow-empty-message
-
-  Documented; hidden primarily to discourage their uses and also to keep
-  output from 'commit -h' short.
-
-* fmt-merge-msg --summary
-
-  An old name used during the development for the current --log option;
-  documented.
-
-* grep --help-all, show-ref --help-all
-
-  I do not know why an entry for this needs to be in the struct option []
-  for the command.  It is not (and should not be) documented in the manual
-  page of the individual commands.
-
-* show-ref -h
-
-  "-h" was meant to be a historical synonym for "--head" (i.e. tells the
-  command include HEAD in the output not just under refs/ hierarchy), but
-  it seems that we broke it somewhere between v1.6.5 and v1.7.0; it now
-  shows the help text.
-
-* write-tree --ignore-cache-tree
-
-  A debugging aid; not documented.
-
-
-It seems that our use of OPT_HIDDEN or if a hidden option is documented
-are not entirely consistent. The "--with" under discussion is similar to
-"clone --naked" and "fmt-merge-msg --summary".
-
-I am Ok with a policy to document historical synonyms that are hidden, but
-if we were to document them, I suspect that we would need to explicitly
-state they are synonyms.  Otherwise, somebody who saw this...
-
->  --contains <commit>::
-> +--with <commit>::
->  	Only list branches which contain the specified commit.
-
-... for the first time is bound to ask what the differences are between
-the two.
+ test_done
+--
+1.7.0
