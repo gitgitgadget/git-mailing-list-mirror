@@ -1,85 +1,56 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: git rebase --preserve-merges seems to not work
-Date: Thu, 09 Sep 2010 00:26:42 -0600
-Message-ID: <4C887E22.5050303@workspacewhiz.com>
-References: <4C886DF3.8050903@workspacewhiz.com> <20100909055104.GA21004@atjola.homenet>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonathan Steinert <hachi@kuiki.net>
-To: =?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Thu Sep 09 08:26:50 2010
+From: Oded Shimon <ods15@ods15.dyndns.org>
+Subject: [PATCH] Add --src/dst-prefix to git-formt-patch in git-rebase.sh
+Date: Thu,  9 Sep 2010 11:07:05 +0300
+Message-ID: <1284019625-14096-1-git-send-email-ods15@ods15.dyndns.org>
+References: <1283954045-8326-1-git-send-email-ods15@ods15.dyndns.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 09 10:07:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otaaw-0001QA-IQ
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 08:26:50 +0200
+	id 1OtcA7-00065a-Oa
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 10:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753311Ab0IIG0o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 02:26:44 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:47031 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751058Ab0IIG0n (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 02:26:43 -0400
-Received: (qmail 25881 invoked by uid 399); 9 Sep 2010 00:26:43 -0600
-Received: from unknown (HELO ?192.168.1.100?) (jjensen@workspacewhiz.com@76.27.116.215)
-  by hsmail.qwknetllc.com with ESMTPAM; 9 Sep 2010 00:26:43 -0600
-X-Originating-IP: 76.27.116.215
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.8) Gecko/20100802 Lightning/1.0b2 Thunderbird/3.1.2
-In-Reply-To: <20100909055104.GA21004@atjola.homenet>
+	id S1752743Ab0IIIHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 04:07:10 -0400
+Received: from bzq-79-177-53-38.red.bezeqint.net ([79.177.53.38]:44528 "EHLO
+	ods15.dyndns.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751311Ab0IIIHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 04:07:07 -0400
+Received: from ods15 by ods15.dyndns.org with local (Exim 4.71)
+	(envelope-from <ods15@ods15.dyndns.org>)
+	id 1Otc9x-0003fu-4F
+	for git@vger.kernel.org; Thu, 09 Sep 2010 11:07:05 +0300
+X-Mailer: git-send-email 1.6.4.4
+In-Reply-To: <1283954045-8326-1-git-send-email-ods15@ods15.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155848>
 
-  ----- Original Message -----
-=46rom: Bj=F6rn Steinbrink
-Date: 9/8/2010 11:51 PM
->> $ git lg --all
->> * 2c93a8a - (HEAD) c (11 seconds ago)
->> * 2b98bc6 - b (11 seconds ago)
->> * 6abf527 - (d) d (3 minutes ago)
->> | *   472fd93 - (bc-merge) Merge commit 'c' into HEAD (74 seconds ag=
-o)
->> | |\
->> |/ /
->> | * d132c87 - (c) c (3 minutes ago)
->> | * 4a88fd1 - b (3 minutes ago)
->> |/
->> * b576660 - (a, master) a (4 minutes ago)
-> What you actually wanted to replay is just the first-parent history,
-> redoing the merges with their respective original second parent.
-> Jonathan (Cc'ed) had the same problem about a month ago.
->
-> The "first parent" thing isn't that well defined, criss-cross merges
-> combined with some unfortunate fast-forwards will easily make the
-> first-parent history become the one that you didn't mean (ask any
-> git-svn users that dared to use "git merge" without fully understandi=
-ng
-> how git-svn uses the history ;-)), but it works in this special case.
-> And with that special case in mind (and admittedly probably not think=
-ing
-> much further) I came up with this patch a few years ago:
->
-> http://marc.info/?l=3Dgit&m=3D119379735525213&w=3D2
-I hand merged your change in to my Git installation.  There is one part=
-=20
-of git-rebase--interactive that looks entirely different, so I would=20
-need to look back through the history to determine how to properly appl=
-y it.
+For the case of "diff.noprefix" in git-config, git-format-patch should
+still output diff with standard prefixes for git-am
 
-The good news is the patch does exactly what I want in this simple=20
-case.  I will have to try it on some more complicated hierarchies to se=
-e=20
-what the end result is.
+Signed-off-by: Oded Shimon <ods15@ods15.dyndns.org>
+---
+ git-rebase.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-It's curious... whenever I ask around about issue X or feature Y, a=20
-previously submitted patch can generally be found in the list archives.=
-  :)
-
-Josh
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 7508463..e83a0cf 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -565,7 +565,7 @@ fi
+ 
+ if test -z "$do_merge"
+ then
+-	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
++	git format-patch -k --stdout --full-index --ignore-if-in-upstream --src-prefix=a/ --dst-prefix=b/ \
+ 		--no-renames $root_flag "$revisions" |
+ 	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
+ 	move_to_original_branch
+-- 
+1.6.4.4
