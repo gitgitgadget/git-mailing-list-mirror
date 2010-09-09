@@ -1,127 +1,126 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2] po/hi.po: Add Hindi Translation
-Date: Thu, 9 Sep 2010 21:03:52 +0530
-Message-ID: <20100909153350.GB27725@kytes>
-References: <1283971131-25106-1-git-send-email-artagnon@gmail.com>
- <AANLkTi=geJoBzDw4z-pWytCi9XmzwXvzyzFHUpVYnmMJ@mail.gmail.com>
- <20100909140205.GA13472@kytes>
+From: Artur Skawina <art.08.09@gmail.com>
+Subject: Re: Find the next tag on a given branch
+Date: Thu, 09 Sep 2010 18:12:28 +0200
+Message-ID: <4C89076C.2040308@gmail.com>
+References: <20100909052841.GA16722@fishbowl.rw.madduck.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sitaram Chamarty <sitaramc@gmail.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-To: Antriksh Pany <antriksh.pany@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 09 17:35:53 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git discussion list <git@vger.kernel.org>
+To: martin f krafft <madduck@madduck.net>
+X-From: git-owner@vger.kernel.org Thu Sep 09 18:12:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtjAH-0000uJ-Cw
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 17:35:53 +0200
+	id 1Otjjv-0006EW-Bq
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 18:12:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755095Ab0IIPfs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 11:35:48 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:39985 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab0IIPfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 11:35:46 -0400
-Received: by gxk23 with SMTP id 23so661307gxk.19
-        for <git@vger.kernel.org>; Thu, 09 Sep 2010 08:35:46 -0700 (PDT)
+	id S1752718Ab0IIQMf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 12:12:35 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:38777 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751089Ab0IIQMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 12:12:34 -0400
+Received: by ewy23 with SMTP id 23so989016ewy.19
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 09:12:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=fz6g+3dHwUTXaH4GvlCKcAOcFReZG+iavXXrw+EdrA8=;
-        b=SqqXG3qrjQDAUfnc8y9aVtbLgbCR4MrCvgBEQC1TdV+ZIHHdlw3344p5z/3fdJudVD
-         VGoUZljeWx1CW2UcoDsgdfI2gjcLHSWbp9frC2bjl4bRVWXCrA/rVgUeIi0HABlYtdaL
-         g1PQLfrf5XDb602PPbWwVvIGNgWFOWoy4EBss=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :x-enigmail-version:openpgp:content-type:content-transfer-encoding;
+        bh=1aTdPcEOIGh+cnVqIcDIHwlgFDjJ36BqlmcIgnpQ6Kc=;
+        b=dw3cj6sISM4GYzQzQBONrzjk6hOKEyH744tWfUvn5/rAWiQbOCnG7uJDOF+ucP+LA7
+         yK79ReSF5pq/4e992Zsqz7GutEs94mUw4Bkoblnng5Kbuhnip82RUTDD8V5nUXYjz7Hz
+         /MlNn+A4sgARHN93Lk7OC/Zfn52m7A9O6Z+Uw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QJC61T4B0Dj2mPRK3C9ymlSq/XKnMhbWgh2vXJSAAkCO+DHZS0wRd4sxmx4O4ioPha
-         cJLgWVhsXDo/vHk3Qi9sx8aCHz11K27lSvQehvMlnPHFxZ+G4RoMKQ9pcCSk9X9pkkPs
-         EwYROsgR9qXS3SNxI4Z0/EUaQ2Xz39jmobLgY=
-Received: by 10.100.250.11 with SMTP id x11mr233359anh.95.1284046546132;
-        Thu, 09 Sep 2010 08:35:46 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id f29sm2113772anh.31.2010.09.09.08.35.42
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:x-enigmail-version:openpgp:content-type
+         :content-transfer-encoding;
+        b=ix+Bv9fGnAuuQVLtWVumBjQX6P5U+KZVfbz6frld2UocW0AybVDsHlARpv/IPqzC1t
+         YAgdRczdEeKjyH45L+2/VpnqaBXIqs6i3uC1SMIo2xpumKbQwia+gzoMH3EoXnEr5w5b
+         8ACfT9IhplDCsti/7kwEfC5+6HMg2DsvKcfeU=
+Received: by 10.213.101.13 with SMTP id a13mr99575ebo.44.1284048752873;
+        Thu, 09 Sep 2010 09:12:32 -0700 (PDT)
+Received: from [172.19.43.221] (ip-94-42-26-180.multimo.pl [94.42.26.180])
+        by mx.google.com with ESMTPS id z55sm2236566eeh.9.2010.09.09.09.12.29
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Sep 2010 08:35:45 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100909140205.GA13472@kytes>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Thu, 09 Sep 2010 09:12:31 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.9pre) Gecko/20100819 Lightning/1.0b2 Lanikai/3.1.3pre
+In-Reply-To: <20100909052841.GA16722@fishbowl.rw.madduck.net>
+X-Enigmail-Version: 1.1.1
+OpenPGP: id=DDEB1C43
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155864>
 
-Hi,
+On 09/09/10 07:28, martin f krafft wrote:
+> I want to find the next tag (the tag following a commit), but
+> require that it lie on a given branch. Alternatively, a filter
 
-Ramkumar Ramachandra writes:
-> From: Ramkumar Ramachandra <artagnon@gmail.com>
-> Date: Sun, 5 Sep 2010 23:49:38 +0530
-> Subject: [PATCH] po/hi.po: Add Hindi Translation
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=3DUTF-8
-> Content-Transfer-Encoding: 8bit
->=20
-> Translate a few Git messages to Standard Hindi. It uses a phonetic
-> script called Devanagari. Focus especially on transforming grammar an=
-d
-> tense in a sane manner to serve as a guideline for future translators=
-=2E
->=20
-> Note that Devanagari rendering is broken on many applications by
-> default at this time- the latest Emacs, Vim and Chrome render it
-> incorrectly.
->=20
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> Acked-by: Antriksh Pany <antriksh.pany@gmail.com>
-> Cc: Sitaram Chamarty <sitaramc@gmail.com>
-> Cc: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+> The way Debian packages are (mostly) maintained in Git is that
+> there are at least an upstream and a Debian branch (usually
+> "master"). master branched off upstream, and upstream is merged into
+> master at regular intervals. Whenever a Debian release is made, the
+> corresponding branch is tagged.
+> 
+> If I run
+> 
+>   git describe --contains mycommitish
+> 
+> it prints the next tag, which is usually upstream's tag, which is
+> not quite what I want (it's usually enough for me to figure it out,
+> but this is Git and so I should be able to do even better! ;\) )
+> 
+> I would like to have it continue the search until it reaches the
+> master branch. For instance, a command like
+> 
+>   git describe --contains mycommit --on-branch master
 
-Couple of silly mistakes that were breaking the build spotted by
-=C3=86var. Here's the diff.
+It's not that simple, as 'mycommit', once merged, /is/ technically part
+of master.
 
--- 8< --
-diff --git a/po/hi.po b/po/hi.po
-index 85890fa..8f25f02 100644
---- a/po/hi.po
-+++ b/po/hi.po
-@@ -2,6 +2,7 @@ msgid ""
- msgstr ""
- "Project-Id-Version: Git\n"
- "Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
-+"PO-Revision-Date: 2010-09-09 20:55+0530\n"
- "Language-Team: Git Mailing List <git@vger.kernel.org>\n"
- "Last-Translator: Ramkumar Ramachandra <artagnon@gmail.com>\n"
- "POT-Creation-Date: 2010-09-05 16:05+0530\n"
-@@ -60,7 +61,7 @@ msgstr "=E0=A4=9F=E0=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=
-=E0=A4=B2=E0=A5=87=E0=A4=9F=E0=A5=8D=E0=A4=B8 =E0=A4=A8=E0=A4=B9=E0=A5=80=
-=E0=A4=82 =E0=A4=AE=E0=A4=BF=E0=A4=B2=E0=A5=87: %s"
-=20
- #, c-format
- msgid "not copying templates of a wrong format version %d from '%s'"
--msgstr "'%s' =E0=A4=B8=E0=A5=87 =E0=A4=97=E0=A4=B2=E0=A4=A4 =E0=A4=B8=E0=
-=A5=8D=E0=A4=B5=E0=A4=B0=E0=A5=82=E0=A4=AA =E0=A4=B8=E0=A4=82=E0=A4=B8=E0=
-=A5=8D=E0=A4=95=E0=A4=B0=E0=A4=A3 %d =E0=A4=95=E0=A5=87 =E0=A4=9F=E0=A5=
-=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=E0=A4=9F=E0=A5=8D=E0=A4=
-=B8 =E0=A4=95=E0=A5=80 =E0=A4=A8=E0=A4=95=E0=A4=B2 =E0=A4=A8=E0=A4=B9=E0=
-=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87 =E0=A4=B9=
-=E0=A5=88=E0=A4=82"
-+msgstr "'%2$s' =E0=A4=B8=E0=A5=87 =E0=A4=97=E0=A4=B2=E0=A4=A4 =E0=A4=B8=
-=E0=A5=8D=E0=A4=B5=E0=A4=B0=E0=A5=82=E0=A4=AA =E0=A4=B8=E0=A4=82=E0=A4=B8=
-=E0=A5=8D=E0=A4=95=E0=A4=B0=E0=A4=A3 %1$d =E0=A4=95=E0=A5=87 =E0=A4=9F=E0=
-=A5=87=E0=A4=AE=E0=A5=8D=E0=A4=AA=E0=A4=B2=E0=A5=87=E0=A4=9F=E0=A5=8D=E0=
-=A4=B8 =E0=A4=95=E0=A5=80 =E0=A4=A8=E0=A4=95=E0=A4=B2 =E0=A4=A8=E0=A4=B9=
-=E0=A5=80=E0=A4=82 =E0=A4=95=E0=A4=B0 =E0=A4=B0=E0=A4=B9=E0=A5=87 =E0=A4=
-=B9=E0=A5=88=E0=A4=82"
-=20
- #, c-format
- msgid "insane git directory %s"
+If 'upstream' contains just imports, ie has no merges whatsoever, like
+eg git://git.debian.org/collab-maint/batmand.git, you could use something
+like this: 
+
+$ git rev-list --ancestry-path --merges mycommit..master | xargs -n1 git describe --contains
+
+(this doesn't catch the very first initial import (and release tag),
+ but that case isn't very interesting anyway)
+
+
+With a more complicated history, with many merges, you'd have to
+do something more like
+
+1) git rev-list --ancestry-path --merges mycommit..master
+2) filter out all the merge ids from this list that are reachable from
+   'upstream'
+3) git describe --contains 
+
+Easily scriptable, but i don't see a way to express the 2nd step
+in pure git-speak right now. [1] Is there a way?
+
+Or you could just extend 'git describe --contains' to take another
+optional ref, check if the object pointed to by the tag that it finds
+is reachable from that ref, and skip this tag if yes.
+Then you could do `git describe --contains mycommit --skip upstream`. ;)
+
+artur
+
+[1] iff i got it right. Consider history such as:
+               
+         ...-> c
+                \    
+upstream -> C -> m -> c ----> ... ---> c ---> upstream
+                       \                \
+master   -------------> M -> m -> ... -> m -> master
+                            /
+         ... ------------> c
+
+Asking for a released 'C' must result in 'M'. 
+(Merging 'master' into 'upstream' must not happen, obviously)
