@@ -1,64 +1,89 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: Why does git-svn redownload revisions?
-Date: Wed, 8 Sep 2010 19:50:44 -0400
-Message-ID: <1C149599-1AC6-464F-9FE0-298D224E9B49@silverinsanity.com>
-References: <loom.20100908T181056-819@post.gmane.org> <B1E94440-DDCA-4C10-A0EE-E08A66DF3D7E@silverinsanity.com> <AANLkTinOTgB7HkeVdB-+ttvVMT1HFg91nt6pdD6Y_uML@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Daniel Trebbien <dtrebbien@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 09 01:50:55 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: interactive rebase "reword" runs pre-commit hook but ignores non-zero exit status
+Date: Wed, 8 Sep 2010 19:26:58 -0500
+Message-ID: <i699mo$8jd$1@dough.gmane.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 09 02:28:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtUPl-0007FH-VO
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 01:50:54 +0200
+	id 1OtV08-0002qn-IA
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 02:28:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756715Ab0IHXut (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Sep 2010 19:50:49 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:38799 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756634Ab0IHXus convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Sep 2010 19:50:48 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id D27B21FFC32E; Wed,  8 Sep 2010 23:50:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.6 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 81DF31FFC32C;
-	Wed,  8 Sep 2010 23:50:37 +0000 (UTC)
-In-Reply-To: <AANLkTinOTgB7HkeVdB-+ttvVMT1HFg91nt6pdD6Y_uML@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1755653Ab0IIA2X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Sep 2010 20:28:23 -0400
+Received: from lo.gmane.org ([80.91.229.12]:54171 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753194Ab0IIA2V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Sep 2010 20:28:21 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OtUzx-0002o0-DB
+	for git@vger.kernel.org; Thu, 09 Sep 2010 02:28:17 +0200
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 02:28:17 +0200
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 02:28:17 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155826>
 
+I've isolated what seems to be a loophole in interactive rebase by rebasing 
+a branch for the sole purpose of rewording some commits:
 
-On Sep 8, 2010, at 6:36 PM, Daniel Trebbien wrote:
+(I just finished performing a rebase for the sole purpose of squashing 
+several commits into 2 commits)
+(Now I want to reword those 2 commits)
 
->> Or you can downloading both trunk and nano as separate branches.  I think it fetches each revision twice, but it will prevent it from downloading the entire history for each subdirectory branch.
->> 
->>        fetch = trunk:refs/remotes/trunk
->> +       fetch = trunk/nano:refs/remotes/nano
->> 
->> This will make your history look a little odd since trunk will have every commit that nano does but be a completely separate branch.  (It also seems to confuse `git-svn find-rev`.)
+$ git --version = 1.7.1
+$ git rebase -i --onto BranchA~2 BranchA~2 BranchA
+(change "pick" to "reword" in rebase-stack editor)
+reword Abbrsha1 some-commit-message
+reword Bbbrsha1 some-other-commit-message
+# Rebase Cbbrsha1..Dbbrsha1 onto Cbbrsha1
+(save changes in editor)
+".git/rebase-merge/git-rebase-todo" 15L, 580C written
+(shows output from pre-commit hook and the corresponding non-zero exit)
+Start of pre-commit hook...
+checking for something I don't like...
+ERROR: I found something I don't like!
+Commit Aborted!
+Start of pre-commit hook...
+checking for something I don't like...
+ERROR: I found something I don't like!
+Commit Aborted!
+Successfully rebased and updated refs/heads/BranchA.
+$ _
 
-> Looking through the Nano repository, it appears that early tags were
-> copies of the entire trunk, but later tags (`nano_2_0_8` and onward)
-> were copies of just `trunk/nano`.
-> 
-> Is there a way that I can inform git-svn that tags `nano_2_0_8`,
-> `nano_2_0_9`, ... should all be based off of `remotes/trunk/nano`?
+In this case, the thing that caused the pre-commit to error-out was that the 
+format of a report that it runs was changed.  So in this case, I will 
+rebase -i and "edit" the commits and git-add the new report format so the 
+pre-commit doesn't complain.  However, I originally tried to do the reword 
+and squash in a single rebase and it gave the same errors, but performed the 
+squashes.  Is this the intended behavior?  On the one hand, you shouldn't be 
+changing content in a "reword", but on the other hand if you're going to run 
+the pre-commit hook then shouldn't you abort the rebase if the pre-commit 
+hook exits with non-zero status?
 
-git-svn will automatically determine that it's branched off of trunk/nano, but will only save the commits for trunk/nano if you create a branch for it.  That's I think adding a fetch line for trunk/nano as the lesser of two evils.
+I admit that a workflow in which content changes on a reword may not be a 
+valid scenario that you should care about in your rebase exception handling, 
+but shouldn't you care that the pre-commit hook exited with non-zero status 
+regardless of the reason why it exited with non-zero status?  Just a 
+question.
 
-~~ Brian
+v/r,
+Neal
