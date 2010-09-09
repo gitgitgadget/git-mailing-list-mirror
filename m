@@ -1,59 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 1/4] diff.c: call regfree to free memory allocated by
- regcomp when necessary
-Date: Thu, 9 Sep 2010 15:15:57 -0400
-Message-ID: <20100909191557.GB32508@sigill.intra.peff.net>
-References: <rRj7JpFIk_D_n7-wGkkucFJE0330IabsqMoSzalswHpjT-Z1HCuOFaIgMsaPgIuQSp0KUMW97Wo@cipher.nrlssc.navy.mil>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Thu Sep 09 21:15:52 2010
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: [PATCH 2/2] Makefile: use compat regex on IRIX 6.5
+Date: Thu,  9 Sep 2010 14:15:58 -0500
+Message-ID: <aIkKF4vjSeghwDQ63eyGAvzoq81HvE3fJPXM0HchsiJm2ahDUH-dO4jBA6nOEoyKGFpRKLAY7_A@cipher.nrlssc.navy.mil>
+References: <HYj6Cf-QUJiUlQ7fPRq5qJw3IurvsqhLa1qIg9c6ajPY6g_B2-OehA@cipher.nrlssc.navy.mil>
+Cc: git@vger.kernel.org, avarab@gmail.com,
+	Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Sep 09 21:17:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otmb8-0000WW-Jo
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 21:15:50 +0200
+	id 1OtmcR-0001jv-0Q
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 21:17:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754020Ab0IITPq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 15:15:46 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52495 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752537Ab0IITPp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 15:15:45 -0400
-Received: (qmail 20955 invoked by uid 111); 9 Sep 2010 19:15:44 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 09 Sep 2010 19:15:44 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Sep 2010 15:15:57 -0400
-Content-Disposition: inline
-In-Reply-To: <rRj7JpFIk_D_n7-wGkkucFJE0330IabsqMoSzalswHpjT-Z1HCuOFaIgMsaPgIuQSp0KUMW97Wo@cipher.nrlssc.navy.mil>
+	id S1755440Ab0IITRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 15:17:04 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:34835 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755418Ab0IITRD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 15:17:03 -0400
+Received: by mail.nrlssc.navy.mil id o89JG7PW003168; Thu, 9 Sep 2010 14:16:08 -0500
+In-Reply-To: <HYj6Cf-QUJiUlQ7fPRq5qJw3IurvsqhLa1qIg9c6ajPY6g_B2-OehA@cipher.nrlssc.navy.mil>
+X-OriginalArrivalTime: 09 Sep 2010 19:16:07.0839 (UTC) FILETIME=[74917AF0:01CB5053]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155886>
 
-On Thu, Sep 09, 2010 at 02:02:45PM -0500, Brandon Casey wrote:
+From: Brandon Casey <drafnel@gmail.com>
 
-> @@ -919,7 +919,10 @@ static void free_diff_words_data(struct emit_callback *ecbdata)
->  		free (ecbdata->diff_words->minus.orig);
->  		free (ecbdata->diff_words->plus.text.ptr);
->  		free (ecbdata->diff_words->plus.orig);
-> -		free(ecbdata->diff_words->word_regex);
-> +		if (ecbdata->diff_words->word_regex) {
-> +			regfree(ecbdata->diff_words->word_regex);
-> +			free(ecbdata->diff_words->word_regex);
-> +		}
+The IRIX 6.5 regex.h header file defines REG_STARTEND, but the feature does
+not appear to work.  Since REG_STARTEND is required for proper functioning
+of git-grep, set NO_REGEX and use the alternative regex libraries in compat/
 
-Makes sense, and closes a leak. But I wonder why word_regex is a pointer
-to malloc'd memory at all? Couldn't it just be an actual regex_t inside
-the diff_words struct, and we regcomp and regfree it?
+Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+---
+ Makefile |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I guess maybe having it be NULL is useful. You could check
-diff_words->o->word_regex, but I suppose that would mean carrying an
-extra variable around through the callchain.
-
--Peff
+diff --git a/Makefile b/Makefile
+index 8b7c243..c27e8bc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -982,6 +982,7 @@ ifeq ($(uname_S),IRIX)
+ 	# NO_MMAP.  If you suspect that your compiler is not affected by this
+ 	# issue, comment out the NO_MMAP statement.
+ 	NO_MMAP = YesPlease
++	NO_REGEX = YesPlease
+ 	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	SHELL_PATH = /usr/gnu/bin/bash
+ 	NEEDS_LIBGEN = YesPlease
+@@ -1000,6 +1001,7 @@ ifeq ($(uname_S),IRIX64)
+ 	# NO_MMAP.  If you suspect that your compiler is not affected by this
+ 	# issue, comment out the NO_MMAP statement.
+ 	NO_MMAP = YesPlease
++	NO_REGEX = YesPlease
+ 	SNPRINTF_RETURNS_BOGUS = YesPlease
+ 	SHELL_PATH=/usr/gnu/bin/bash
+ 	NEEDS_LIBGEN = YesPlease
+-- 
+1.7.2.1
