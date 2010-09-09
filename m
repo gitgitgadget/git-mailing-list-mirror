@@ -1,162 +1,103 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [Alt. PATCH] format-patch: do not use diff UI config
-Date: Thu, 9 Sep 2010 10:36:54 +0200
-Message-ID: <2a6b8c51903fd6a22606b8f592b1a2e11ea68741.1284020917.git.trast@student.ethz.ch>
-References: <1284019625-14096-1-git-send-email-ods15@ods15.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>, <git@vger.kernel.org>
-To: Oded Shimon <ods15@ods15.dyndns.org>
-X-From: git-owner@vger.kernel.org Thu Sep 09 10:37:05 2010
+From: Sensei <senseiwa@gmail.com>
+Subject: Git with http and no Dav?
+Date: Thu, 9 Sep 2010 10:59:51 +0200
+Message-ID: <4F28769D-A026-4DA0-9BD4-094EA61EAF92@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 09 11:00:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Otccx-0007T7-7Y
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 10:37:03 +0200
+	id 1OtczE-0002xc-EK
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 11:00:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753917Ab0IIIg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 04:36:58 -0400
-Received: from gwse.ethz.ch ([129.132.178.238]:5045 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752394Ab0IIIg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 04:36:56 -0400
-Received: from CAS22.d.ethz.ch (172.31.51.112) by gws01.d.ethz.ch
- (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 9 Sep
- 2010 10:36:54 +0200
-Received: from localhost.localdomain (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Thu, 9 Sep
- 2010 10:36:54 +0200
-X-Mailer: git-send-email 1.7.3.rc0.289.gcd076
-In-Reply-To: <1284019625-14096-1-git-send-email-ods15@ods15.dyndns.org>
-X-Originating-IP: [129.132.153.233]
+	id S1751311Ab0III77 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 04:59:59 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52290 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751009Ab0III75 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 04:59:57 -0400
+Received: by wwb34 with SMTP id 34so157320wwb.1
+        for <git@vger.kernel.org>; Thu, 09 Sep 2010 01:59:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:to:mime-version
+         :x-mailer;
+        bh=U4OL/zhF6MgcchRHYyARRXwIxb9A3YqaZF2wUXqR5kI=;
+        b=CK87kikjX1Pomn8y2vlLtlMo8zIk3ExmHuA1OAv3ll0y10/OKjyQ9rRpQ/q/P/uAYP
+         adg+QCsDIhkz0qLHoi4J2tGPYGuGA1gk7Gs57OpziUFugAJUy7MwBG6HWjnCoXgdP/fl
+         VoNEQoNSp96+hr3oyEjcTpsFueMRupTYpkcPI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :to:mime-version:x-mailer;
+        b=CVCFwQzIrbst8Nyk5XrR1t1R4dtPPhA1YnR0pZgDRL6IJPQH4PSV8veUqXxTvzSYTl
+         9Vge3TkoDrOqsB3E61JtE5F6rgGjJetaZDvQzrKhrjUHcAHqJ+Km5K0L2bfqg5cbb5Ms
+         xnXTtIbrRtBl7c8aghR8AoqAmu1Q3J0T6/nbs=
+Received: by 10.216.23.78 with SMTP id u56mr14568weu.56.1284022796440;
+        Thu, 09 Sep 2010 01:59:56 -0700 (PDT)
+Received: from quantum-imac.dia.uniroma3.it ([193.205.142.127])
+        by mx.google.com with ESMTPS id o49sm679731wej.19.2010.09.09.01.59.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 09 Sep 2010 01:59:54 -0700 (PDT)
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155852>
 
-format-patch read and used the diff UI config, such as diff.renames,
-diff.noprefix and diff.mnemnoicprefix.  These have a history of
-breaking rebase and patch application in general; cf. 840b3ca (rebase:
-protect against diff.renames configuration, 2008-11-10).
+Hi all!
 
-Instead of continually putting more options inside git-rebase to avoid
-these issues, this patch takes the stance that output from
-format-patch is intended primarily for git-am and only as a side
-effect also for human consumption.  Hence, ignore the diff UI config
-entirely when coming from format-patch.
+I am starting to make some public repositories available, although I am struggling with the HTTP backend! 
 
-Note that all existing calls to git_log_config except for the one in
-git_format_config use a NULL callback.
+My setup is currently this: authorized users make use of ssh in order to clone/push, and this works like a charm. A public view (only view!) of repositories can be obtained by gitweb, and this also works flawlessly. 
 
-Reported-by: Oded Shimon <ods15@ods15.dyndns.org>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
+On my debian server though, I don't know how to enable public cloning via http, since I don't really want to use WebDAV, as explained on the "setup-git-server-over-http.txt" howto. 
 
-This is a bolder approach that just outright ignores the backwards
-compatibility complaints Junio had in 840b3ca.  Among the variables
-parsed in git_diff_ui_config, namely
+As suggested, I issued the "git update-server-info" command in the repository location, however, this has no effect on the repository:
 
-  color.diff (and its legacy alias diff.color)
-  diff.renames
-  diff.autorefreshindex
-  diff.mnemonicprefix
-  diff.noprefix
-  diff.external
-  diff.wordregex
-  diff.ignoresubmodules
+# git update-server-info
 
-arguably only diff.renames (and perhaps diff.ignoresubmodules, I don't
-use them) should affect format-patch.  Everything else undermines the
-guarantee (by having a consistent format) that format-patch|am works.
+# ls refs/
+heads  tags
 
-So now I'm not so sure about diff.renames.  Perhaps it needs to be
-retained, but that requires a special case since we cannot move it to
-git_diff_basic_config() (which affects diff-* plumbing too).
+My apache configuration regarding git is this:
 
-In any case I also made a test.  If you decide to go for the original
-patch, please feel free to "steal" it.
+(...)
+	<Directory /var/www/site/git>
+		Allow from all
+		AllowOverride all
+		Order allow,deny
+		Options ExecCGI
+		<Files gitweb.cgi>
+			SetHandler cgi-script
+		</Files>
+		DirectoryIndex gitweb.cgi
+	</Directory>
+	SetEnv  GITWEB_CONFIG  /etc/gitweb.conf
+
+	<Directory /home/git>
+		Order allow,deny
+		Allow from all
+	</Directory>
+(...)
 
 
+Anyway, I keep having the very same error (I tried also with different paths with no luck and the same error):
 
- builtin/log.c     |   20 ++++++++++++++++++--
- t/t3400-rebase.sh |    7 +++++++
- 2 files changed, 25 insertions(+), 2 deletions(-)
+$ git clone http://my.site/home/git/repo
+Cloning into repo...
+fatal: http://my.site/home/git/repo/info/refs not found: did you run git update-server-info on the server?
 
-diff --git a/builtin/log.c b/builtin/log.c
-index f2d9d61..a1079fe 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -385,8 +385,19 @@ static int cmd_log_walk(struct rev_info *rev)
- 	return diff_result_code(&rev->diffopt, 0);
- }
- 
-+struct log_config_cb_data
-+{
-+	/*
-+	 * If no_diff_ui_config is set, we use diff_basic_config
-+	 * instead, ignoring the plumbing-specific UI settings.
-+	 */
-+	int no_diff_ui_config;
-+};
-+
- static int git_log_config(const char *var, const char *value, void *cb)
- {
-+	struct log_config_cb_data *cb_data = cb;
-+
- 	if (!strcmp(var, "format.pretty"))
- 		return git_config_string(&fmt_pretty, var, value);
- 	if (!strcmp(var, "format.subjectprefix"))
-@@ -406,7 +417,10 @@ static int git_log_config(const char *var, const char *value, void *cb)
- 	if (!prefixcmp(var, "color.decorate."))
- 		return parse_decorate_color_config(var, 15, value);
- 
--	return git_diff_ui_config(var, value, cb);
-+	if (!cb_data || !cb_data->no_diff_ui_config)
-+		return git_diff_ui_config(var, value, cb);
-+	else
-+		return git_diff_basic_config(var, value, cb);
- }
- 
- int cmd_whatchanged(int argc, const char **argv, const char *prefix)
-@@ -1099,6 +1113,7 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	char *add_signoff = NULL;
- 	struct strbuf buf = STRBUF_INIT;
- 	int use_patch_format = 0;
-+	struct log_config_cb_data config_cb_data;
- 	const struct option builtin_format_patch_options[] = {
- 		{ OPTION_CALLBACK, 'n', "numbered", &numbered, NULL,
- 			    "use [PATCH n/m] even with a single patch",
-@@ -1160,7 +1175,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
- 	extra_hdr.strdup_strings = 1;
- 	extra_to.strdup_strings = 1;
- 	extra_cc.strdup_strings = 1;
--	git_config(git_format_config, NULL);
-+	config_cb_data.no_diff_ui_config = 1;
-+	git_config(git_format_config, &config_cb_data);
- 	init_revisions(&rev, prefix);
- 	rev.commit_format = CMIT_FMT_EMAIL;
- 	rev.verbose_header = 1;
-diff --git a/t/t3400-rebase.sh b/t/t3400-rebase.sh
-index 349eebd..0e2fe71 100755
---- a/t/t3400-rebase.sh
-+++ b/t/t3400-rebase.sh
-@@ -144,6 +144,13 @@ test_expect_success 'rebase is not broken by diff.renames' '
- 	GIT_TRACE=1 git rebase force-3way
- '
- 
-+test_expect_success 'rebase is not broken by diff.noprefix' '
-+	git config diff.noprefix true &&
-+	test_when_finished "git config --unset diff.noprefix" &&
-+	git checkout -b noprefix side &&
-+	GIT_TRACE=1 git rebase master
-+'
-+
- test_expect_success 'setup: recover' '
- 	test_might_fail git rebase --abort &&
- 	git reset --hard &&
--- 
-1.7.3.rc0.289.gcd076
+
+There's something terribly naive that I'm missing here, I know!
+
+Can you give me a hint?
+
+Thanks & Cheers!
