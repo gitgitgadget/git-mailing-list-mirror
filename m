@@ -1,64 +1,57 @@
 From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 3/4] t/t4018: test whether the word_regex patterns compile
-Date: Thu,  9 Sep 2010 14:02:47 -0500
-Message-ID: <rRj7JpFIk_D_n7-wGkkucC32o5VKAledjObzc1bFHX8SBUchsp6UDflVKjnjY9xKm9Q48ir5iu8@cipher.nrlssc.navy.mil>
-References: <rRj7JpFIk_D_n7-wGkkucFJE0330IabsqMoSzalswHpjT-Z1HCuOFaIgMsaPgIuQSp0KUMW97Wo@cipher.nrlssc.navy.mil>
+Subject: [PATCH 1/4] diff.c: call regfree to free memory allocated by regcomp when necessary
+Date: Thu,  9 Sep 2010 14:02:45 -0500
+Message-ID: <rRj7JpFIk_D_n7-wGkkucFJE0330IabsqMoSzalswHpjT-Z1HCuOFaIgMsaPgIuQSp0KUMW97Wo@cipher.nrlssc.navy.mil>
 Cc: peff@peff.net, Brandon Casey <drafnel@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 09 21:03:18 2010
+X-From: git-owner@vger.kernel.org Thu Sep 09 21:03:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtmOw-0008CF-02
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 21:03:14 +0200
+	id 1OtmPG-0008OX-Bv
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 21:03:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755119Ab0IITDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 15:03:08 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54206 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754421Ab0IITDG (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754553Ab0IITDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 9 Sep 2010 15:03:06 -0400
-Received: by mail.nrlssc.navy.mil id o89J33eI001978; Thu, 9 Sep 2010 14:03:03 -0500
-In-Reply-To: <rRj7JpFIk_D_n7-wGkkucFJE0330IabsqMoSzalswHpjT-Z1HCuOFaIgMsaPgIuQSp0KUMW97Wo@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 09 Sep 2010 19:03:03.0059 (UTC) FILETIME=[A0CD8E30:01CB5051]
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:54201 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753471Ab0IITDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 15:03:05 -0400
+Received: by mail.nrlssc.navy.mil id o89J30ZG001964; Thu, 9 Sep 2010 14:03:00 -0500
+X-OriginalArrivalTime: 09 Sep 2010 19:02:59.0856 (UTC) FILETIME=[9EE4D100:01CB5051]
 X-Virus-Scanned: clamav-milter 0.95.3 at mail1
 X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155882>
 
 From: Brandon Casey <drafnel@gmail.com>
 
-Previously (e3bf5e43), a test was added to test whether the builtin
-xfuncname regular expressions could be compiled without error by regcomp.
-Let's do the same for the word_regex patterns.  This should help catch any
-cross-platform incompatibilities that exist between the pattern creator's
-system and the various platforms that the test suite is commonly run on.
 
 Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
 ---
- t/t4018-diff-funcname.sh |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ diff.c |    5 ++++-
+ 1 files changed, 4 insertions(+), 1 deletions(-)
 
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 61de8a2..620cd02 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -40,6 +40,11 @@ do
- 		! ( git diff --no-index Beer.java Beer-correct.java 2>&1 |
- 			grep "fatal" > /dev/null )
- 	'
-+	test_expect_success "builtin $p wordRegex pattern compiles" '
-+		! ( git diff --no-index --word-diff \
-+			Beer.java Beer-correct.java 2>&1 |
-+			grep "fatal" > /dev/null )
-+	'
- done
- 
- test_expect_success 'default behaviour' '
+diff --git a/diff.c b/diff.c
+index 144f2aa..9a5c77c 100644
+--- a/diff.c
++++ b/diff.c
+@@ -919,7 +919,10 @@ static void free_diff_words_data(struct emit_callback *ecbdata)
+ 		free (ecbdata->diff_words->minus.orig);
+ 		free (ecbdata->diff_words->plus.text.ptr);
+ 		free (ecbdata->diff_words->plus.orig);
+-		free(ecbdata->diff_words->word_regex);
++		if (ecbdata->diff_words->word_regex) {
++			regfree(ecbdata->diff_words->word_regex);
++			free(ecbdata->diff_words->word_regex);
++		}
+ 		free(ecbdata->diff_words);
+ 		ecbdata->diff_words = NULL;
+ 	}
 -- 
 1.7.2.1
