@@ -1,56 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Tags only shown on log with --decorate?
-Date: Thu, 9 Sep 2010 17:14:43 -0400
-Message-ID: <20100909211443.GA3096@sigill.intra.peff.net>
-References: <AANLkTikgxMFoiQm31FXgqBth=enVxxgxDJv8_97C30HF@mail.gmail.com>
- <AANLkTimOEQY9xJvindxuVPZotmWXZ=Ya9088ghL--Xuf@mail.gmail.com>
- <20100909194823.GB1146@sigill.intra.peff.net>
- <AANLkTi=htz2+tPSNrt+niQPczAoTGeu2g0iWgjZoFxBb@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Do not let lstree output recursively when a directory whose name is a prefix of the others is given in the path list.
+Date: Thu, 09 Sep 2010 23:22:52 +0200
+Message-ID: <vpqtylyvcgj.fsf@bauges.imag.fr>
+References: <1284010826-81989-1-git-send-email-davi.reis@gmail.com>
+	<vpqzkvr5u73.fsf@bauges.imag.fr>
+	<AANLkTikZ11-3QhOxoW096cdA4LryuZQiegg=GLMO0BJB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Carlos Eduardo da Fonseca <eduardongu@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 09 23:14:40 2010
+To: Davi Reis <davi.reis@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 09 23:23:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtoS5-0007ek-NX
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 23:14:38 +0200
+	id 1OtoaI-0003tZ-Fw
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Sep 2010 23:23:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755086Ab0IIVOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 17:14:32 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59609 "EHLO peff.net"
+	id S1755945Ab0IIVW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 17:22:59 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60723 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753727Ab0IIVOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 17:14:32 -0400
-Received: (qmail 21696 invoked by uid 111); 9 Sep 2010 21:14:30 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 09 Sep 2010 21:14:30 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 09 Sep 2010 17:14:43 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=htz2+tPSNrt+niQPczAoTGeu2g0iWgjZoFxBb@mail.gmail.com>
+	id S1755886Ab0IIVW7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 17:22:59 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o89LIrsX027216
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 9 Sep 2010 23:18:53 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Otoa5-0000L6-4S; Thu, 09 Sep 2010 23:22:53 +0200
+In-Reply-To: <AANLkTikZ11-3QhOxoW096cdA4LryuZQiegg=GLMO0BJB@mail.gmail.com> (Davi Reis's message of "Thu\, 9 Sep 2010 11\:26\:09 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 09 Sep 2010 23:18:54 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o89LIrsX027216
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1284671937.54451@2xvQcKa9miyZhmK6NfNSLQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155902>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155903>
 
-On Thu, Sep 09, 2010 at 05:36:09PM -0300, Carlos Eduardo da Fonseca wrote:
+Davi Reis <davi.reis@gmail.com> writes:
 
-> Well, I don't see how can it distract people, but I find important to
-> developers who clone/pull a repository to immediatly see what were the
-> tags added and what are they relation with commits when they "git
-> log".
-> I wouldn't (and I think most developers also wouldn't) remember to
-> execute "git tag" or use the "--decorate" parameter every time they
-> clone/pull something.
+> I added the test and used git-sendemail again, but I guess it ended up
+> in a different thread.
 
-Right. That's why we have a config option, as I explained in my other
-mail. If you want to argue that the config option should default to on,
-submit a patch.  Either it will get accepted, or it will generate lots
-of responses from people who disagree with you.
+--in-reply-to is your friend ;-).
 
--Peff
+> Is this good enough or is there some formal path that I should take?
+
+I'll comment in the other thread.
+
+Thanks,
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
