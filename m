@@ -1,124 +1,91 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH 4/4 v2] userdiff.c: add builtin fortran regex patterns
-Date: Fri, 10 Sep 2010 11:18:14 -0500
-Message-ID: <KtBylmXQLVPyA9SToc1FN6znL4kFcYiYuvLgq017oHm66wTCLQA6Tsi_ja4x5cfwDmaQJs2cGi4@cipher.nrlssc.navy.mil>
-References: <6F7MXe3ksgGGsKBKvAOQG_pNROYqzpzjQTM_YARyO5d1RK6OVY8oLg@cipher.nrlssc.navy.mil>
-Cc: gitster@pobox.com, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: peff@peff.net
-X-From: git-owner@vger.kernel.org Fri Sep 10 18:18:51 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [Alt. PATCH] format-patch: do not use diff UI config
+Date: Fri, 10 Sep 2010 09:21:19 -0700
+Message-ID: <7vzkvph8n4.fsf@alter.siamese.dyndns.org>
+References: <1284019625-14096-1-git-send-email-ods15@ods15.dyndns.org>
+ <2a6b8c51903fd6a22606b8f592b1a2e11ea68741.1284020917.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Oded Shimon <ods15@ods15.dyndns.org>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Sep 10 18:21:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou6JL-0004fM-OA
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 18:18:48 +0200
+	id 1Ou6M6-0006DY-O5
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 18:21:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755508Ab0IJQSj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Sep 2010 12:18:39 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:36545 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755422Ab0IJQSi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Sep 2010 12:18:38 -0400
-Received: by mail.nrlssc.navy.mil id o8AGIOAm016752; Fri, 10 Sep 2010 11:18:24 -0500
-In-Reply-To: <6F7MXe3ksgGGsKBKvAOQG_pNROYqzpzjQTM_YARyO5d1RK6OVY8oLg@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 10 Sep 2010 16:18:24.0190 (UTC) FILETIME=[CAF385E0:01CB5103]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1755489Ab0IJQVc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 12:21:32 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37102 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755409Ab0IJQVb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Sep 2010 12:21:31 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A1F59D5DB0;
+	Fri, 10 Sep 2010 12:21:30 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=ZxfNKbflnruV5LmB4POvnRNvlQw=; b=cC3djSiYeYjaeS2bWHJHYFu
+	QwcEGh9tDlYohxbNtEzpyIJCndSLL3zrQ+fXGZL9N5C4voXNaxzMmPutG6sXSQu9
+	XsYR2sp+YB0WsWSDZS1wzpG+2B2a8WE0q65/ulhpCbwTB4fMDyD5SIG4YyeYQDjG
+	deQjcj8sD8WQdrzD6TWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=qNm+L6rUrqY7d/LC/2y27v5cu605SgXSM7l5d5jEzRyvJzFnT
+	AqwawVDZWoEg/aq/IrAyi4fwASoMtbVNPkGrhoz85QZ3HZzgrnTTgZXica8wOQzo
+	rg3rUX6mRTvaZyJCJuSakxMisogrjy9LGb1lbBKnc3ui035CS4WALSFdDs=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 58BB0D5DAA;
+	Fri, 10 Sep 2010 12:21:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 59A36D5D9C; Fri, 10 Sep
+ 2010 12:21:21 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 75C76D9C-BCF7-11DF-B653-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155943>
 
-From: Brandon Casey <drafnel@gmail.com>
+Thomas Rast <trast@student.ethz.ch> writes:
 
-This adds fortran xfuncname and wordRegex patterns to the list of builtin
-patterns.  The intention is for the patterns to be appropriate for all
-versions of fortran including 77, 90, 95.  The patterns can be enabled by
-adding the diff=fortran attribute to the .gitattributes file for the
-desired file glob.
+> ...
+> arguably only diff.renames (and perhaps diff.ignoresubmodules, I don't
+> use them) should affect format-patch.  Everything else undermines the
+> guarantee (by having a consistent format) that format-patch|am works.
 
-This also adds a new macro named IPATTERN which is just like the PATTERNS
-macro except it sets the REG_ICASE flag so that case will be ignored.
+We need to be a bit careful here.
 
-The test code in t4018 and the docs were updated as appropriate.
+Each user must be able to find a combination of ($opts1, $opts2) to make
+"format-patch $opts1 | am $opts2" run correctly with his funny settings
+(e.g. diff.noprefix).  We must guarantee that [*1*].
 
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
+I however don't think we need to guarantee that the pipeline always works
+for empty opts1/2, and certainly we shouldn't insist what flows in that
+pipe must be the bog-standard -p1 with a/ b/ prefix patch.  For example,
+in circles under svn influence, people may prefer opts1=--no-prefix, and
+as long as the recipient understands that is the community norm around
+there, he can run his "am" with -p0 and everything should work.  It is not
+unreasonable for the sender to have diff.noprefix in the repository config
+in such a setup, don't you think?
+
+There is no way to easily affect what options the "format-patch | am"
+pipeline uses inside rebase.  It may make sense to introduce --rebasing
+option to format-patch to cause it to ignore any funny setting the user
+might have, so that we don't have to keep adding options to the command
+invocation.  "am" has --rebasing already, and it may be beneficial to
+teach the codepath to defeat some configuration variables in a similar
+way.
 
 
-This version renames the iPATTERN macro to the all uppercase IPATTERN, and
-is a replacement for the version in pu.
+[Footnote]
 
-
- Documentation/gitattributes.txt |    2 ++
- t/t4018-diff-funcname.sh        |    2 +-
- userdiff.c                      |   17 +++++++++++++++++
- 3 files changed, 20 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index e5a27d8..fbf507a 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -477,6 +477,8 @@ patterns are available:
- 
- - `csharp` suitable for source code in the C# language.
- 
-+- `fortran` suitable for source code in the Fortran language.
-+
- - `html` suitable for HTML/XHTML documents.
- 
- - `java` suitable for source code in the Java language.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index c8e1937..0a61b57 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -32,7 +32,7 @@ EOF
- 
- sed 's/beer\\/beer,\\/' < Beer.java > Beer-correct.java
- 
--builtin_patterns="bibtex cpp csharp html java objc pascal php python ruby tex"
-+builtin_patterns="bibtex cpp csharp fortran html java objc pascal php python ruby tex"
- for p in $builtin_patterns
- do
- 	test_expect_success "builtin $p pattern compiles" '
-diff --git a/userdiff.c b/userdiff.c
-index e552215..f9e05b5 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -9,7 +9,23 @@ static int drivers_alloc;
- 
- #define PATTERNS(name, pattern, word_regex)			\
- 	{ name, NULL, -1, { pattern, REG_EXTENDED }, word_regex }
-+#define IPATTERN(name, pattern, word_regex)			\
-+	{ name, NULL, -1, { pattern, REG_EXTENDED | REG_ICASE }, word_regex }
- static struct userdiff_driver builtin_drivers[] = {
-+IPATTERN("fortran",
-+	 "!^([C*]|[ \t]*!)\n"
-+	 "!^[ \t]*MODULE[ \t]+PROCEDURE[ \t]\n"
-+	 "^[ \t]*((END[ \t]+)?(PROGRAM|MODULE|BLOCK[ \t]+DATA"
-+		"|([^'\" \t]+[ \t]+)*(SUBROUTINE|FUNCTION))[ \t]+[A-Z].*)$",
-+	 /* -- */
-+	 "[a-zA-Z][a-zA-Z0-9_]*"
-+	 "|\\.([Ee][Qq]|[Nn][Ee]|[Gg][TtEe]|[Ll][TtEe]|[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]|[Aa][Nn][Dd]|[Oo][Rr]|[Nn]?[Ee][Qq][Vv]|[Nn][Oo][Tt])\\."
-+	 /* numbers and format statements like 2E14.4, or ES12.6, 9X.
-+	  * Don't worry about format statements without leading digits since
-+	  * they would have been matched above as a variable anyway. */
-+	 "|[-+]?[0-9.]+([AaIiDdEeFfLlTtXx][Ss]?[-+]?[0-9.]*)?(_[a-zA-Z0-9][a-zA-Z0-9_]*)?"
-+	 "|//|\\*\\*|::|[/<>=]="
-+	 "|[^[:space:]]|[\x80-\xff]+"),
- PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
- 	 "[^<>= \t]+|[^[:space:]]|[\x80-\xff]+"),
- PATTERNS("java",
-@@ -101,6 +117,7 @@ PATTERNS("csharp",
- { "default", NULL, -1, { NULL, 0 } },
- };
- #undef PATTERNS
-+#undef IPATTERN
- 
- static struct userdiff_driver driver_true = {
- 	"diff=true",
--- 
-1.7.2.1
+*1* ... within reason.  For example, I don't think there is no opts2 if
+you had opts1="--src-prefix=a/ --dst-prefix=b/c/" that makes the pipeline
+work reasonably.
