@@ -1,79 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/5] gettext docs: add "Marking strings for translation"
- section in po/README
-Date: Fri, 10 Sep 2010 22:31:10 +0000
-Message-ID: <AANLkTi=Ahh1vvwwYoAKNSVQE5dxV7RLdvjSefHOx+JK=@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/5] gettext docs: the gettext.h C interface
+Date: Fri, 10 Sep 2010 15:52:22 -0700
+Message-ID: <7veid1gqjd.fsf@alter.siamese.dyndns.org>
 References: <AANLkTikdHZFmXAdABvS9hPXtbXNJU5NdCOrw5_KP73bX@mail.gmail.com>
-	<1284147353-18000-3-git-send-email-avarab@gmail.com>
-	<7vmxrpgrqe.fsf@alter.siamese.dyndns.org>
+ <1284147353-18000-4-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 11 00:31:36 2010
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 11 00:52:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuC87-0005bR-1V
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 00:31:35 +0200
+	id 1OuCST-0004mo-6F
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 00:52:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754595Ab0IJWbN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 18:31:13 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53388 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753340Ab0IJWbM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 18:31:12 -0400
-Received: by fxm16 with SMTP id 16so2111621fxm.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 15:31:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KTdZtVOZFGg1nzWLvLRXoFZi4KPeATVaJPrYDYXIOk4=;
-        b=AxppG/SYxLwl0vj1mSsLKoIT0H/ZxL/VWeCmfR7M3Z+WYRo/BYn1fiHyZUlTxhTuUu
-         4jRoq0G2SH+r8Q6aaxC4cjdX4BqR901zijw+cLAaVq2H3tXBz8/WhYHpWsaXE75R0Pi5
-         EyFsNsMgttMx1faxZtHfAXUI2R28kQdVeKSSw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=QV+ELZQlyhwU4PN6ZyC1dv45Vkui6zsb5JBjYEWSZauVsXMwIWzur5fg/Jju9pdupU
-         qhJWb7H5mt8G16x1DAn4VhhRSffA+HSGeu3Xa4MR80Qe3CnChbUxQZUHoGRrLmrlQ+ic
-         VJ/kXjkgAY0wTMEo7z5ky7eNMW3PL5iTrjEoQ=
-Received: by 10.223.107.65 with SMTP id a1mr986294fap.2.1284157870635; Fri, 10
- Sep 2010 15:31:10 -0700 (PDT)
-Received: by 10.223.120.14 with HTTP; Fri, 10 Sep 2010 15:31:10 -0700 (PDT)
-In-Reply-To: <7vmxrpgrqe.fsf@alter.siamese.dyndns.org>
+	id S1753363Ab0IJWwb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 18:52:31 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64670 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753160Ab0IJWwa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 18:52:30 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D1761D5054;
+	Fri, 10 Sep 2010 18:52:28 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=KyP41Wh6w+jN
+	slR6FE03qsDwtuM=; b=UuCRoMgbhlJNVq0NaOOopduZH1h1AC7S0c+XQUvDLJRx
+	lZ7tnGSS/qwSmp9XE0g9l7FXr/qqSEEiyUZXxKn0gTOVohndm/TU48CfW+w6LkuV
+	UocA31jUqCIrYeCNGyOGKfjZvYbiFHZsrszxCu5kFhmehgekZC9O8VNm4AZG0Vo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=SZbU/9
+	o1rC3Lyrj0NrXOxWAcdwhUt8gwOau8ThTFowfCvixacyfMWZrQueL5StIo3Ala3y
+	FvnYdTTMsobJ2UENVFDnvwfvVVGNOqFJerUSJ1lkMVcRRSQpFNGIeKe+mqoNlDkD
+	s1goD3GEpDYAj3Lil4+ce22iTpWjGlwviVr8Y=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AEDE2D5051;
+	Fri, 10 Sep 2010 18:52:26 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F1F8ED504C; Fri, 10 Sep
+ 2010 18:52:23 -0400 (EDT)
+In-Reply-To: <1284147353-18000-4-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri\, 10 Sep
+ 2010 19\:35\:51 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 153D2F8E-BD2E-11DF-AE52-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155977>
 
-On Fri, Sep 10, 2010 at 22:26, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
->> + - Don't mark everything for translation, only strings which will b=
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason  <avarab@gmail.com> writes:
+
+> +   - _()
+> +
+> +    Mark and translate a string. E.g.:
+> +
+> +        printf(_("HEAD is now at %s"), hex);
+> +
+> +   - N_()
+> +
+> +    A no-op pass-through macro for marking strings inside static
+> +    initializations, e.g.:
+> +       =20
+> +        static const char *reset_type_names[] =3D {
+> +            N_("mixed"), N_("soft"), N_("hard"), N_("merge"), N_("ke=
+ep"), NULL
+> +        };
+> +       =20
+> +    And then, later:
+> +
+> +        die(_("%s reset is not allowed in a bare repository"),
+> +               _(reset_type_names[reset_type]));
+
+I do not think this is a very good example.  Unless we are doing l10n o=
+f
+option names, a Portuguese won't be typing "git reset --misto", so ther=
 e
->> + =C2=A0 read by humans (the porcelain interface) should be translat=
-ed.
->> +
->> + =C2=A0 The output from Git's plumbing utilities will primarily be =
-read by
->> + =C2=A0 programs and would break scripts under non-C locales. These=
- strings
->> + =C2=A0 should not be translated.
->
-> Hmm, I had to re-read the above twice and then mentally annotate "wou=
-ld
-> break ... _if translated_" to make sense of the advice. =C2=A0Perhaps=
- other
-> people are much less dense than me?
+is no point in invoking _(reset_type_names[]) to begin with, and there =
+is
+no need to mark mixed/soft/hard/... for translation.
 
-No, that "... if translated" wording is better.
+And we won't be doing l10n of option names or subcommand names, I hope =
+;-).
