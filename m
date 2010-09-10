@@ -1,114 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Questions concerning SCM Life Cycle Management and GIT.
-Date: Fri, 10 Sep 2010 07:47:51 -0700 (PDT)
-Message-ID: <m3d3slmza0.fsf@localhost.localdomain>
-References: <9F0BA72CD5252845A09DBB8FEC3A1633756133@naeanrfkez06v.nadsusea.nads.navy.mil>
+From: "Steven" <redalert.commander@gmail.com>
+Subject: Re: git revert ignore whitespace
+Date: Fri, 10 Sep 2010 16:54:11 +0200 (CEST)
+Message-ID: <15732.91.183.48.98.1284130451.squirrel@stevenleeuw.kwik.to>
+References: <14756.91.183.48.98.1284105472.squirrel@stevenleeuw.kwik.to>
+    <20100910142114.GB6936@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: "Butler, Anna R CIV NSWCDD, W34" <anna.butler@navy.mil>
-X-From: git-owner@vger.kernel.org Fri Sep 10 16:52:10 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: "Jeff King" <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 10 17:05:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou4xV-0006gD-DH
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 16:52:09 +0200
+	id 1Ou5A8-0005En-TT
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 17:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753327Ab0IJOwD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Sep 2010 10:52:03 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62059 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752908Ab0IJOwA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Sep 2010 10:52:00 -0400
-Received: by bwz11 with SMTP id 11so2271741bwz.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 07:51:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=d0Z/TofXyNYNsGHT3sq+BO1HHGhyS+Ub/+Ff7Y0tlpM=;
-        b=IZtkIL4K6lzYwZBcwXL5JT1LOkdoLIAVH3Rx5DufhhOcJvn2lkJGyJasVIj7sg9aW1
-         dqb5dBq6FLv8cl8vUbUerjblqFcNNx2ZX5s29BaxSkKeDnZo0Ttt9kV+J98uu5yYciY/
-         6aruPAnXRngBhK++J8HmdqVUpyTSJ/6SaYpJk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=SsrH3DKxRNpFSfs8jWhOQgZbNQ0EQ8MFHj+9Af+16r2joGjewS98pFHDe3yFvAP9Kd
-         S+vwzpcV56dxPRZATU6ScCowfRE/kyALWl7o31+dxOFMoVpnWE/HXPXYeiYQzEshDqHr
-         IvaE1Aw/YBd41u5xF6AJ8tXdi8wkmntI2VzOs=
-Received: by 10.204.81.130 with SMTP id x2mr470717bkk.210.1284130072715;
-        Fri, 10 Sep 2010 07:47:52 -0700 (PDT)
-Received: from localhost.localdomain (abuz124.neoplus.adsl.tpnet.pl [83.8.197.124])
-        by mx.google.com with ESMTPS id g12sm2055044bkb.2.2010.09.10.07.47.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Sep 2010 07:47:51 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8AElJCv017116;
-	Fri, 10 Sep 2010 16:47:30 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8AEl48Z017112;
-	Fri, 10 Sep 2010 16:47:04 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <9F0BA72CD5252845A09DBB8FEC3A1633756133@naeanrfkez06v.nadsusea.nads.navy.mil>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754219Ab0IJPFG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 11:05:06 -0400
+Received: from mailrelay003.isp.belgacom.be ([195.238.6.53]:1860 "EHLO
+	mailrelay003.isp.belgacom.be" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753670Ab0IJPFE (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 11:05:04 -0400
+X-Belgacom-Dynamic: yes
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvIaAEbliUxbsdtz/2dsb2JhbACELZ0Tcq5KiE8uiB+DAQiCNAQ
+Received: from 115.219-177-91.adsl-dyn.isp.belgacom.be (HELO debian.LAN) ([91.177.219.115])
+  by relay.skynet.be with ESMTP; 10 Sep 2010 17:04:58 +0200
+Received: from localhost ([127.0.0.1] helo=stevenleeuw.kwik.to)
+	by debian.LAN with esmtp (Exim 4.63)
+	(envelope-from <redalert.commander@gmail.com>)
+	id 1Ou4zT-0001aV-Po; Fri, 10 Sep 2010 16:54:11 +0200
+Received: from 91.183.48.98
+        (SquirrelMail authenticated user steven)
+        by stevenleeuw.kwik.to with HTTP;
+        Fri, 10 Sep 2010 16:54:11 +0200 (CEST)
+In-Reply-To: <20100910142114.GB6936@sigill.intra.peff.net>
+User-Agent: SquirrelMail/1.4.9a
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155932>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155933>
 
-"Butler, Anna R CIV NSWCDD, W34" <anna.butler@navy.mil> writes:
-
-> Hello,
-> 
-> We are looking for Software Configuration Life Cycle Management
-> Tools.  It looks to me that GIT supports Version Control only.  Is
-> this true or did I miss something?
-
-Git is distributed version control system only (following UNIX
-philosophy "Write programs that *do one thing* and *do it well*").
-
-> Does GIT track software defects? If so can you link elements in the
-> software version repository to a defect?
+On Fri, September 10, 2010 16:21, Jeff King wrote:
 >
-> Does GIT track Requirements?  If so can you link elements in the
-> software version repository to a requirement?  Can GIT link test
-> cases to both a defect and elements in the software version
-> repository?
-> 
-> I appreciate you attention to these questions.  Looking forward to
-> hearing form you.
+> In theory there is no reason we couldn't support "-w", but I don't think
+> there is a way to do it currently.
+>
+> You could just manually do the revert. Something like:
+>
+>   git diff-tree -p $commit | git apply --ignore-whitespace
+>   git commit -m "revert '`git log -1 --format=%s $commit`'"
+>
 
-If you want/need *integrated solution* covering whole Software
-Configuration Life Cycle Management, there are tools that come
-to my mind:
+Thanks for the tip Jeff.
 
-1. Gerrit[1], a web-based collaborative code review tool for Git,
-   which uses Git for version control.  It is used by Google for
-   development of Android platform.  Open source (Apache license).
+I had to modify the commands a bit to get it to work.
+Here they are:
+git diff-tree -p <commithash> | git apply --reverse --ignore-whitespace -C0
+git add <file(s)>
+git commit -m "revert '`git log -1 --format=%s $commit`'"
 
-2. Kiln[2], from Fog Creek, with integrated code review and FogBugz 
-   integration (a web-based project management tool), which uses
-   Mercurial (other DVCS) for version control.  IIRC proprietary.
+The --reverse is necessary to revert a patch, I needed the -C0 parameter
+as well because the line above changed as well.
+This was a fairly simple example, but I imagine it won't work at all with
+a larger history, especially with more changes in the relevant sections
+and additions/deletions. I believe git revert does take these into
+account?
 
-3. There is Launchpad[3], which uses Bazaar for version control.
-   Used by Ubuntu.  Open source (AGPLv3).
-
-
-GitHub offers paid plans, and also hosted GitHub:FI; it includes
-issue tracker and a kind of code review.  Similar opensource solution
-include Gitorious and InDefero.
-
-HTH
-
-[1] http://code.google.com/p/gerrit/
-[2] http://www.fogcreek.com/kiln/
-[3] https://launchpad.net/
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Kind regards,
+Steven
