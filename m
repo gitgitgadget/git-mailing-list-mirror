@@ -1,62 +1,128 @@
-From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
-Subject: [PATCH] read-tree: abort if no trees are given
-Date: Fri, 10 Sep 2010 12:06:04 +0200
-Message-ID: <20100910120604.50aa1e94@jk.gs>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: [PATCH] git-svn: Use platform-specific svn authentication
+	providers (e.g., gnome-keyring)
+Date: Fri, 10 Sep 2010 12:07:05 +0200
+Message-ID: <20100910100705.GJ22067@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 10 12:06:17 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="YqRP4mvCGTXkUB2y"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 10 12:07:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou0Uq-0006Lz-IT
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 12:06:16 +0200
+	id 1Ou0Vo-0006oz-HX
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 12:07:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751941Ab0IJKGL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 06:06:11 -0400
-Received: from zoidberg.org ([88.198.6.61]:43886 "EHLO cthulhu.zoidberg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751542Ab0IJKGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Sep 2010 06:06:09 -0400
-Received: from jk.gs (p508A2DEF.dip.t-dialin.net [::ffff:80.138.45.239])
-  (AUTH: LOGIN jast, TLS: TLSv1/SSLv3,128bits,AES128-SHA)
-  by cthulhu.zoidberg.org with esmtp; Fri, 10 Sep 2010 12:06:07 +0200
-  id 00400158.4C8A030F.00000C2A
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
+	id S1752376Ab0IJKHK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 06:07:10 -0400
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:35378 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752256Ab0IJKHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Sep 2010 06:07:07 -0400
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1Ou0Vd-0002ua-D7
+	for git@vger.kernel.org; Fri, 10 Sep 2010 12:07:06 +0200
+Received: (nullmailer pid 11192 invoked by uid 1000);
+	Fri, 10 Sep 2010 10:07:05 -0000
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://katherina.student.utwente.nl/~matthijs/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155924>
 
-Currently, read-tree silently accepts an invocation without any
-tree-ishs given and simply clobbers the index in that case. This
-contradicts the usage synopsis and it's also probably not what anyone
-would want to happen. So, instead, abort with a fatal error.
 
-Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
----
-Someone in #git got confused by this.
+--YqRP4mvCGTXkUB2y
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
- builtin/read-tree.c |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Hi folks,
 
-diff --git a/builtin/read-tree.c b/builtin/read-tree.c
-index 9ad1e66..67eb08e 100644
---- a/builtin/read-tree.c
-+++ b/builtin/read-tree.c
-@@ -166,6 +166,8 @@ int cmd_read_tree(int argc, const char **argv, cons=
-t char *unused_prefix)
- 			die("failed to unpack tree object %s", arg);
- 		stage++;
- 	}
-+	if (nr_trees =3D=3D 0)
-+		die("no trees specified to read");
- 	if (1 < opts.index_only + opts.update)
- 		die("-u and -i at the same time makes no sense");
- 	if ((opts.update||opts.index_only) && !opts.merge)
---=20
-1.7.2.3.392.g02377.dirty
+I've create below patch to make git work with platform-specific
+authentication providers (in particular, I needed this to get my svn
+passwords out of gnome-keyring, which isn't working currently).
+
+Index: git-core/git-svn
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+--- git-core.orig/git-svn       2010-09-08 20:11:16.000000000 +0200
++++ git-core/git-svn    2010-09-08 20:26:38.000000000 +0200
+@@ -4830,6 +4830,7 @@
+=20
+ sub _auth_providers () {
+        [
++         @{SVN::Core::auth_get_platform_specific_client_providers(undef, u=
+ndef)},
+          SVN::Client::get_simple_provider(),
+          SVN::Client::get_ssl_server_trust_file_provider(),
+          SVN::Client::get_simple_prompt_provider(
+
+Note that the auth_get_platform_specific_client_provides function used is n=
+ot
+working correctly in current versions of SVN, I've posted a separate patch =
+to
+fix the perl bindings there [1].
+
+[1]: http://svn.haxx.se/dev/archive-2010-09/0171.shtml
+
+Furthermore, the function accepts two parameters: $config and $pool. I've l=
+eft
+both undef here, which works. For $config, this means the default set of
+providers is used. I'm not sure what the implications are of not passing a
+$pool, any comments?
+
+The _auth_providers function is called from:
+ - Git::SVN::Ra::new, where a $config and $pool would be available.
+ - Git::SVN::Ra::trees_match, where neither is readily available (though
+   looking more closely, it seems that both values are in fact stored in $s=
+elf in
+   the new method, so they would be available.
+ - cmd_branch, where neither seems to be available.
+
+So it does not seem trivial to pass in useful values for these two argument=
+s in
+all places. Any ideas on what would be a good way to handle this?
+
+What's the idea behind custom SVN configuration anyway?  From the sources, =
+it
+seems that only a few commands allow specifying the SVN configuration, thro=
+ugh
+the --config-dir option (namely init, migrate, fetch, clone, dcommit, set-t=
+ree,
+multi-fetch, rebase, but notably not dcommit).
+
+Gr.
+
+Matthijs
+
+--YqRP4mvCGTXkUB2y
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkyKA0kACgkQz0nQ5oovr7zuUwCg4XQOzinLu2qy0ifAPp0dgWBb
+HuoAoMPlr5HV1l/NgjW5aqxkJgu74IeI
+=5rG9
+-----END PGP SIGNATURE-----
+
+--YqRP4mvCGTXkUB2y--
