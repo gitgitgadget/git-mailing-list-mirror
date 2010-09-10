@@ -1,112 +1,55 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How do I .gitignore files starting with "#"?
-Date: Fri, 10 Sep 2010 21:56:29 +0200
-Message-ID: <201009102156.31439.jnareb@gmail.com>
-References: <AANLkTimaPrDX4rn2xRYyLn-bh2rB-TgKaEtGSQ+JxSnM@mail.gmail.com> <AANLkTimw5pzdGjiPps-CE1PJS1sBXYw3dE4vhdwm1CYP@mail.gmail.com> <201009102133.19427.jnareb@gmail.com>
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: Re: building git on Solaris
+Date: Fri, 10 Sep 2010 22:00:03 +0200
+Message-ID: <4C8A8E43.1030708@dbservice.com>
+References: <4C86A86B.1030107@bio.umass.edu> <AANLkTikvy-wUB-RFLegp7KJa_srqh97nLC03bdZDmru=@mail.gmail.com> <4C87A1DF.1020706@bio.umass.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Bruce Korb <bruce.korb@gmail.com>, git@vger.kernel.org
-To: "=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason" 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 10 21:57:01 2010
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	git mailing list <git@vger.kernel.org>
+To: Chris Hoogendyk <hoogendyk@bio.umass.edu>
+X-From: git-owner@vger.kernel.org Fri Sep 10 22:16:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou9iX-0000dS-4w
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 21:57:01 +0200
+	id 1OuA1e-0003yT-Jl
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 22:16:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754756Ab0IJT4p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Sep 2010 15:56:45 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63679 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751453Ab0IJT4o (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Sep 2010 15:56:44 -0400
-Received: by bwz11 with SMTP id 11so2555307bwz.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 12:56:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=zqSziibeJSwbKiWkSGxX1pUVmIikCkT1Q0xWY5Wt9Rw=;
-        b=OSSOFA1fHh+CSMs0tEFrJLBHWHkslyv0eyUYC/6Ocek/t8rG9t9y78Tpc23zc6kRBe
-         VR1jjkW99a42gZyFu78Hh+HhmtWUaKjnAUyBkqP2COinIZJXyJ1XJvSnTVSNeaIw9vtQ
-         uMiDSPE3VS9kYKTwrmTrbCmJ7klg/4JYmbtYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=AvpKbM4yHMcoibgifojgVS6w8iJils/ALotkKecfCzZrdT2BeQHLMeE+CizH0GyOqr
-         YTNJTE3gldhe6ZnLo8lTYee6qcjpQcnjyXy4RDtqRe+A7+556vBodliJtt+z0pDnCCh4
-         KiC1A/MCgvdGVsxVVov0XhPNls2+9j6T8tBXM=
-Received: by 10.204.113.20 with SMTP id y20mr838897bkp.170.1284148602922;
-        Fri, 10 Sep 2010 12:56:42 -0700 (PDT)
-Received: from [192.168.1.13] (abuz124.neoplus.adsl.tpnet.pl [83.8.197.124])
-        by mx.google.com with ESMTPS id x19sm2265951bkv.21.2010.09.10.12.56.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Sep 2010 12:56:42 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201009102133.19427.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1755198Ab0IJUQj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 16:16:39 -0400
+Received: from office.neopsis.com ([78.46.209.98]:40532 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752938Ab0IJUQj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Sep 2010 16:16:39 -0400
+X-Spam-Status: No, hits=0.0 required=5.0
+	tests=BAYES_00: -1.665,TOTAL_SCORE: -1.665,autolearn=ham
+X-Spam-Level: 
+Received: from calvin.caurea.org ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
+	Fri, 10 Sep 2010 22:16:34 +0200
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <4C87A1DF.1020706@bio.umass.edu>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155968>
 
-Jakub Narebski wrote:
+On 9/8/10 4:46 PM, Chris Hoogendyk wrote:
+> Anyway, now I'm in the normal build debugging mode. Got all the way
+> through to building the Documentation, at which stage I now need to get
+> asciidoc and python. I don't really like bloating my minimal server
+> systems with python, but it seems I'm finally stuck, since I have
+> faculty who really want to use git.
 
-> Something like this?
+Git doesn't *need* python nor asciidoc, it works just fine without.
+Except, of course, that tools which require python don't work (but there
+aren't many of those, most is C, shell and perl).
 
-Err, rather like this.
--- >8 --
-Subject: [PATCH] Document escaping of special characters in gitignore files
-
-Requested-by: Bruce Korb <bruce.korb@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- Documentation/gitignore.txt |    7 +++++++
- templates/info--exclude     |    1 +
- 2 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 7dc2e8b..20abc20 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -68,6 +68,7 @@ Patterns have the following format:
-    for readability.
- 
-  - A line starting with # serves as a comment.
-+   Use `\#` for a literal # character starting filename.
- 
-  - An optional prefix '!' which negates the pattern; any
-    matching file excluded by a previous pattern will become
-@@ -98,6 +99,12 @@ Patterns have the following format:
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
-    "mozilla-sha1/sha1.c".
- 
-+ - You can escape special characters using backslash.
-+   For example, "{backslash}#*" matches files beginning in `#`
-+   (otherwise it would be considered comment),
-+   and "{backslash}!*{backslash}?" matches files starting with `!`
-+   (negate pattern prefix) and ending with `?` (glob wildcard).
-+
- An example:
- 
- --------------------------------------------------------------
-diff --git a/templates/info--exclude b/templates/info--exclude
-index a5196d1..2ebaf0d 100644
---- a/templates/info--exclude
-+++ b/templates/info--exclude
-@@ -4,3 +4,4 @@
- # exclude patterns (uncomment them if you want to use them):
- # *.[oa]
- # *~
-+# \#*#
--- 
-1.7.2.1
+tom
