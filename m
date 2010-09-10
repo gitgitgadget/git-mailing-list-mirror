@@ -1,76 +1,111 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 1/2] convert: fix normalization of foreign idents
-Date: Thu, 09 Sep 2010 17:26:21 -0700
-Message-ID: <7vmxrqjvf6.fsf@alter.siamese.dyndns.org>
-References: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
- <E1Ot4NP-0002xn-Nc@chiyo.mc.pp.se>
+Subject: Re: [PATCH 13/15] gettextize: git-revert messages using the "me"
+ variable
+Date: Thu, 09 Sep 2010 17:26:12 -0700
+Message-ID: <7vsk1ijvff.fsf@alter.siamese.dyndns.org>
+References: <1283638229-14199-1-git-send-email-avarab@gmail.com>
+ <1283775704-29440-14-git-send-email-avarab@gmail.com>
+ <20100906185023.GE25426@burratino>
+ <AANLkTi=8VXBFW7jzUe4EuCd+i221zRUt6LHGBYG8FQya@mail.gmail.com>
+ <20100907053936.GS1182@burratino>
+ <AANLkTimTG1FbR988c6cQHQsQ4k6__HVVByt5O0g-pe67@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Marcus Comstedt <marcus@mc.pp.se>
-X-From: git-owner@vger.kernel.org Fri Sep 10 02:26:35 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 10 02:26:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtrRr-0006Ua-1R
+	id 1OtrRr-0006Ua-JR
 	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 02:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756031Ab0IJA03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 20:26:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34101 "EHLO
+	id S1754791Ab0IJA03 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Sep 2010 20:26:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34096 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754331Ab0IJA02 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 20:26:28 -0400
+	with ESMTP id S1753215Ab0IJA02 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Sep 2010 20:26:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2F14D4792;
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B46CBD4791;
 	Thu,  9 Sep 2010 20:26:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=DinHHK2KOFffaFaRHwmaX4rFZQU=; b=TO9a5b9gsGmtl5Ah+t4NJ8+
-	BNPKmFH6bpilS715EyKJiGXqTWwAsOvKQuCT7EfScN7vECf3wP+fG4M4TGZ51Gr5
-	zWWFhWk9doRXTGG9OEVk/sQW0eWhFUTJHzlIuvoWCVWDqxKebaeDElrKdvnodRIC
-	4fOuyfb1CNKjlGwB+i+o=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=AB4OxSptK75uu36ChnYz0pIwu
+	qU=; b=itCzHJ/WKkEhAZO1LFDHcdSA4rbzIREZn4bN5TrkIyoqDCyFwrvpqwy69
+	REye1Sr7glTlUlaCTaIlhL/PFDqQPTeD9CB28WuvNda05ASpboSbL8P/Jg7fWgdQ
+	ue/igzSuswsWwUh2RAkGKKcZDgRvSbM8d61ZRT1Dq8fy+69Qpo=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=GVWc7oYnol6Zarz6FP4xDvb91pzyMOLBkrGxXpaJ2DY7/TOh+
-	01KxUVsgG5Fbd2kHy3KRghoekFKHN5AovrI+oEG8J1i0gXz2xjDyVV1MGxL2ExcX
-	bmnyRWxPZT3r44LaCh+625gDDVVhp5X/SKsbxK79yeONFi7TPqVLIT0NeM=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=DHElITa2i9yKfofy2Gi
+	f5uX/WWatYrKeINiOBDUaa45dg12ZmzD1hfGbzjBVa3FcrXn0WdMrSzSltEhc1di
+	NtfzRcGfCz6Iiw1ADjI7IQmrErOURwQJmfmSKa+CPevGZ9KcnyR6jn36PU3OAdxr
+	uzYQ2d+QlCO4/Jpo2fkemihc=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0E75D478F;
-	Thu,  9 Sep 2010 20:26:25 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 54DEBD477A;
+	Thu,  9 Sep 2010 20:26:21 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3117D477D; Thu,  9 Sep
- 2010 20:26:22 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3EC11D4778; Thu,  9 Sep
+ 2010 20:26:14 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0BE5D31C-BC72-11DF-B4C1-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 09541A64-BC72-11DF-A67C-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155916>
 
-Marcus Comstedt <marcus@mc.pp.se> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> Since ident_to_worktree() does not touch $Id$ tags which contain
-> foreign expansions in the repository, make sure that ident_to_git()
-> does not either.  This fixes the problem that such files show
-> spurious modification upon checkout.
+> On Tue, Sep 7, 2010 at 05:39, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>>> On Mon, Sep 6, 2010 at 18:50, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+>>
+>>>> Not good, in my opinion.  The dialogue ought to look like this, I =
+think:
+>>>>
+>>>>  $ git cherry-pick astermay
+>>>>  ...
+>>>>  fatal: cherry-pick: Unableway otay itewray ewnay indexway ilefay
+>> [...]
+>>> I don't know if all of the above hold true, e.g. because some
+>>> languages will always transliterate things, even proper nouns.
+>>>
+>>> But as mentioned before the string is probably being used in too ma=
+ny
+>>> different contexts for it to be useful to them.
+>>
+>> Hmm, okay.  Do you mean languages like Japanese or something else?  =
+At
+>> any rate, I guess you are right that this is too complicated for the
+>> moment.
 >
-> There is however one case where we want ident_to_git() to normalize
-> the tag to $Id$ despite the asymmetry:  When committing a modification
-> to a file which has a foreign ident, the foreign ident should be
-> replaced with a regular git ident.  Thus, add a new parameter to
-> convert_to_git() that indicates if we want the foreign idents
-> normalized after all.
+> The languages here that translate "Wikipedia" differently than
+> "Wikipedia" are a pretty good indicator:
+>
+>     http://meta.wikimedia.org/wiki/User:Waldir/Logos_and_slogans
 
-Would it be possible that the real culprit is that ident_to_worktree()
-does not always touch $Id$ in the first place?  Why isn't "$Id: garbage$"
-first cleaned and then smudged upon checkout?
+I don't think so, unless you are translating the git subcommand names.
 
-It also smells wrong that this "sometimes we convert, sometimes we don't"
-is a special case for "$Id$" and for no other conversion.  Why don't
-smudge/clean filter or CRLF conversion have the same issue that can be
-solved with the same approach as this patch takes?
+If your translated git lets/forces you to say
+
+  $  git ckcherry-piay astermay
+
+then that is a different story.  It might be very reasonable to transla=
+te
+the "fatal:" message to
+
+    alfatay: ckcherry-piay: Unableway otay itewray ewnay indexway ilefa=
+y
+
+and it probably becomes a fair comparison with the wikipedia situation,
+but otherwise no.
