@@ -1,162 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: How do I .gitignore files starting with "#"?
-Date: Fri, 10 Sep 2010 21:33:17 +0200
-Message-ID: <201009102133.19427.jnareb@gmail.com>
-References: <AANLkTimaPrDX4rn2xRYyLn-bh2rB-TgKaEtGSQ+JxSnM@mail.gmail.com> <m38w39mnyd.fsf@localhost.localdomain> <AANLkTimw5pzdGjiPps-CE1PJS1sBXYw3dE4vhdwm1CYP@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Bruce Korb <bruce.korb@gmail.com>, git@vger.kernel.org
-To: "=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason" 
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 10 21:33:40 2010
+Subject: [PATCH 0/5] gettext docs: programmer docs in po/README
+Date: Fri, 10 Sep 2010 19:35:48 +0000
+Message-ID: <1284147353-18000-1-git-send-email-avarab@gmail.com>
+References: <AANLkTikdHZFmXAdABvS9hPXtbXNJU5NdCOrw5_KP73bX@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 10 21:36:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou9Lq-0004x5-88
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 21:33:34 +0200
+	id 1Ou9OK-0006JH-Hp
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 21:36:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754534Ab0IJTd3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 15:33:29 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:32941 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754178Ab0IJTd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Sep 2010 15:33:28 -0400
-Received: by eyb6 with SMTP id 6so1993514eyb.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 12:33:27 -0700 (PDT)
+	id S1754575Ab0IJTgB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 15:36:01 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:58786 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753049Ab0IJTgA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Sep 2010 15:36:00 -0400
+Received: by mail-wy0-f174.google.com with SMTP id 22so3171634wyf.19
+        for <git@vger.kernel.org>; Fri, 10 Sep 2010 12:36:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=AaRYN/nuB1uE4BfC4kdsLiTVszDjKRpoXEfH7Xnz00s=;
-        b=MZgL25A1IbSwJBgcxWvaBduNNdDln7+Jc9WREzucskwQP9mPohfroG0mmXKYBmYtZu
-         tnaXU8AAnUhUVy/zlVStbrK7PMpA5TxzdvxkaOlXeo5A1ouwRCdcQnB0aA0mxVuRExGO
-         5s46YYkgV68zOFz0MDBPVRg98imXrS4e2+o+U=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=6PQwYfk30QUZkwXOSjORJf7LCZ3KebmeLmFH1SvfF9Y=;
+        b=NKbuOKLI5GXqPo72Ds/QbgW8Jq0GMzY5bjrRljCQT2nVc6q6udyaqGAy3aNBN02yJ4
+         CUoYn/cjeMdiLj3rsov9LE8h70OsAqoZJIeL+xAorPgXzrc4yytNCkuAM6fOjpK1sH/w
+         5UFvjPWEzYovEO5SuvgJpIzzpH2RqxXUiKcgE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=W9lBE5p1rgVOrm79YfDjJsrQfNtFOszee6uL5m2R+wG4dFhC0RZeVrbnGU8HNBtV94
-         5X05CynYELEKfyjiAU2EyF1ZK/EKW8GA0uMQgAgxFuwcMr1pnn+ryBkk6kUy/6MXf62x
-         X0OEYB40CyuKr5K8tOaSaYMjQFfTdxC8GUpBs=
-Received: by 10.14.127.74 with SMTP id c50mr679744eei.14.1284147206868;
-        Fri, 10 Sep 2010 12:33:26 -0700 (PDT)
-Received: from [192.168.1.13] (abuz124.neoplus.adsl.tpnet.pl [83.8.197.124])
-        by mx.google.com with ESMTPS id u9sm4402064eeh.17.2010.09.10.12.33.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Sep 2010 12:33:25 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTimw5pzdGjiPps-CE1PJS1sBXYw3dE4vhdwm1CYP@mail.gmail.com>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=SuI/8hDlQQG2qJ+CY4tH06MoVp1XAKrqj9IkJfUc9IaphI+Lg29mLd6Z2Cs3aSiDyj
+         0+oiQa7Wp7IoGDPmdXa81hPdoBNEfB6h7B/Z+jBM2pjHbO4ru3a2ALYnnbORXHqd0gMR
+         is73AxloZ/1hbdjAvAB0YrMtt3jaM5XuwCNdY=
+Received: by 10.227.37.95 with SMTP id w31mr378405wbd.0.1284147360019;
+        Fri, 10 Sep 2010 12:36:00 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id a1sm2534921wbb.8.2010.09.10.12.35.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 10 Sep 2010 12:35:59 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3.313.gcd15
+In-Reply-To: <AANLkTikdHZFmXAdABvS9hPXtbXNJU5NdCOrw5_KP73bX@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155960>
 
-On Fri, 10 Sep 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Fri, Sep 10, 2010 at 18:52, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> > Bruce Korb <bruce.korb@gmail.com> writes:
-> >
-> > > After trying lots of variations, I found it to be:
-> > >
-> > > \#*
-> > >
-> > > Not obvious and not easy to look up. =C2=A0Please add it to your
-> > > .git/info/exclude sample text. =C2=A0Thanks!
-> >
-> > Well, it is quite obvious to me, as escaping special characters usi=
-ng
-> > backslash is typical in Unix tools. =C2=A0But you are right that th=
-is needs
-> > to be documented.
-> >
-> > Perhaps something like this? =C2=A0I am not sure about example in
-> > .git/info/exclude skeleton
-> >
-> > -- >8 --
-> > Subject: [PATCH] Document escaping of special characters in gitigno=
-re files
-> >
-> > Requested-by: Bruce Korb <bruce.korb@gmail.com>
-> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> > ---
-> > =C2=A0Documentation/gitignore.txt | =C2=A0 =C2=A06 ++++++
-> > =C2=A0templates/info--exclude =C2=A0 =C2=A0 | =C2=A0 =C2=A01 +
-> > =C2=A02 files changed, 7 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.=
-txt
-> > index 7dc2e8b..67ae4d0 100644
-> > --- a/Documentation/gitignore.txt
-> > +++ b/Documentation/gitignore.txt
-> > @@ -98,6 +98,12 @@ Patterns have the following format:
-> > =C2=A0 =C2=A0For example, "/{asterisk}.c" matches "cat-file.c" but =
-not
-> > =C2=A0 =C2=A0"mozilla-sha1/sha1.c".
-> >
-> > + - You can escape special characters using backslash.
-> > + =C2=A0 For example, "{backslash}#*" matches files beginning in `#=
-`
-> > + =C2=A0 (otherwise it would be considered comment),
-> > + =C2=A0 and "{backslash}!*{backslash}?" matches files starting wit=
-h `!`
-> > + =C2=A0 (negate pattern prefix) and ending with `?` (glob wildcard=
-).
-> > +
->=20
-> Maybe fix this too in the same manpage:
->=20
->     A line starting with # serves as a comment.
->=20
-> To:
->=20
->     A line starting with # serves as a comment. Use \# for a literal =
-#
-> character. See ...
+On Fri, Sep 10, 2010 at 17:17, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> On Fri, Sep 10, 2010 at 16:01, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> As a companion update to 6495411 (gettext docs: add po/README file
+>> documenting Git's gettext, 2010-09-03), we would need a file in
+>> Documentation/ directory to describe the use of _() and N_() for
+>> programmers and point it from CodingGuidelines.
+>
+> I can add that to ab/i18n-for-junio, but haven't already. Isn't it
+> better if I send that to the list for review instead of just tucking
+> something at the end of the series. I can do either.
 
-Something like this?
--- >8 --
-Subject: [PATCH] Document escaping of special characters in gitignore f=
-iles
+Here it is on top of ab/i18n-for-junio. These can also be fetched
+from:
 
-Requested-by: Bruce Korb <bruce.korb@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
- Documentation/gitignore.txt |    6 ++++++
- templates/info--exclude     |    1 +
- 2 files changed, 7 insertions(+), 0 deletions(-)
+    git://github.com/avar/git.git ab/i18n-for-junio-with-docs
 
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 7dc2e8b..67ae4d0 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -98,6 +98,12 @@ Patterns have the following format:
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
-    "mozilla-sha1/sha1.c".
-=20
-+ - You can escape special characters using backslash.
-+   For example, "{backslash}#*" matches files beginning in `#`
-+   (otherwise it would be considered comment),
-+   and "{backslash}!*{backslash}?" matches files starting with `!`
-+   (negate pattern prefix) and ending with `?` (glob wildcard).
-+
- An example:
-=20
- --------------------------------------------------------------
-diff --git a/templates/info--exclude b/templates/info--exclude
-index a5196d1..2ebaf0d 100644
---- a/templates/info--exclude
-+++ b/templates/info--exclude
-@@ -4,3 +4,4 @@
- # exclude patterns (uncomment them if you want to use them):
- # *.[oa]
- # *~
-+# \#*#
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (5):
+  gettext docs: add a "Testing your changes" section to po/README
+  gettext docs: add "Marking strings for translation" section in
+    po/README
+  gettext docs: the gettext.h C interface
+  gettext docs: the git-sh-i18n.sh Shell interface
+  gettext docs: the Git::I18N Perl interface
+
+ Documentation/CodingGuidelines |    7 ++
+ git-sh-i18n.sh                 |   16 +-----
+ po/README                      |  125 ++++++++++++++++++++++++++++++++=
++++++++-
+ 3 files changed, 133 insertions(+), 15 deletions(-)
+
 --=20
-1.7.2.1
+1.7.2.3.313.gcd15
