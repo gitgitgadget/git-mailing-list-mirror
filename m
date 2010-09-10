@@ -1,87 +1,88 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: Re: possible gitattributes eol bug with new eol=crlf | lf support?
-Date: Fri, 10 Sep 2010 17:27:13 -0400
-Message-ID: <AANLkTi=xPpPZzUqVEHEkH2sKvSVZH+MzunET6vEA_tw5@mail.gmail.com>
-References: <AANLkTinC8g9m=2ka=7LiHH4MtfxC-NbxbsYQEbmMyXmN@mail.gmail.com>
-	<1F2D74A7-1C9C-47D9-9C3D-E430E446CB94@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RESEND] Pagination for gitweb
+Date: Fri, 10 Sep 2010 23:53:14 +0200
+Message-ID: <201009102353.17279.jnareb@gmail.com>
+References: <1284135442-10971-1-git-send-email-lkundrak@v3.sk> <m34odxmnpj.fsf@localhost.localdomain> <4C8A816E.4090305@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 10 23:27:22 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Lubomir Rintel <lkundrak@v3.sk>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Fri Sep 10 23:53:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuB7x-00058k-Nu
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 23:27:22 +0200
+	id 1OuBXO-0007Lc-Pl
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 23:53:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753978Ab0IJV1P convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 17:27:15 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:47305 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752840Ab0IJV1O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 17:27:14 -0400
-Received: by eyb6 with SMTP id 6so2081078eyb.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 14:27:13 -0700 (PDT)
+	id S1751945Ab0IJVxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 17:53:33 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36447 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750936Ab0IJVxc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Sep 2010 17:53:32 -0400
+Received: by fxm16 with SMTP id 16so2094571fxm.19
+        for <git@vger.kernel.org>; Fri, 10 Sep 2010 14:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=C1CTxdUzgkJYYE7MsyfDdrJxG2kaEzfSSxGVVJSt9Lk=;
-        b=nOdt3l8n4zHpAjO2FaLuUW/S4J28G7VhSVV5U4r+rPI32uv5tKl4NAZ0mPN+yoX+Me
-         4CmGf6ZslYcRHvadaJ24HvF4KU0ykXmTI4EwF17SuBtN6AmCQKsG90qXye3T3kFCVe4c
-         FTgXnwXl3QpkM8AF9ZaGJvovZtg8MRN6rpEVw=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=VJpCSHYMSxBB7teobmSH7tF7ZLQdtHwiM864a8Cgiio=;
+        b=f7jNAtwzWrmC+LkJaK3IjgZxxn3CDqdpRbuHtdWfRweWnfMnEsUTb2U4IBjOcCmFMY
+         PuAb+saVlGla0nAT0vxu6a54Yz0IdbpwOAW8HAhveSJ1fci/hrGIFK1Az6NSbPQCc6aI
+         o1imtmgWBfZE/nJ43Pe3Jtr12NJZRbNTUMm8M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dkw6yJX4IRVpS7RzXZh0utICIDAW+kPrf/OdfyKUxlsgtJMorCcpDv1c/Srgvp36nW
-         O+10VK9r3d/BvlTq/Buxg4+6AvgKeWPMTojh9HfmKFvG/4iJAeISCPaBoNhBzGlOHfBz
-         qfDmCa9bd6gn8xf1UsfJ43vhAS5o0IF9htY24=
-Received: by 10.213.59.76 with SMTP id k12mr135167ebh.13.1284154033199; Fri,
- 10 Sep 2010 14:27:13 -0700 (PDT)
-Received: by 10.14.4.11 with HTTP; Fri, 10 Sep 2010 14:27:13 -0700 (PDT)
-In-Reply-To: <1F2D74A7-1C9C-47D9-9C3D-E430E446CB94@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ojuJJozae6sDYDgV9rxHOEjEB/9BsYYSHpVak7cFUD5xJ+g+v46nPm7dIThBErQYGx
+         TlU1W7XDNGdW+kwfHKbzH5Janf+vwppUoFevJMMys2T5L+2dR+Ev74enaOcuQHh3GZRn
+         x0EMAgZyhfCgSqvtXyEWRUni9Mxs/YnS99U4c=
+Received: by 10.223.122.196 with SMTP id m4mr950343far.20.1284155610754;
+        Fri, 10 Sep 2010 14:53:30 -0700 (PDT)
+Received: from [192.168.1.13] (abuz124.neoplus.adsl.tpnet.pl [83.8.197.124])
+        by mx.google.com with ESMTPS id 19sm1592377fas.1.2010.09.10.14.53.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 10 Sep 2010 14:53:29 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4C8A816E.4090305@eaglescrag.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155971>
 
-I don't understand the inner workings of .git/index, but is removing
-that file destructive to history or anything? What are the
-implications of that delete-command?
+On Fri, 10 Sep 2010, J.H. wrote:
+> On 09/10/2010 11:57 AM, Jakub Narebski wrote:
+> > Lubomir Rintel <lkundrak@v3.sk> writes:
+> > 
+> > > I thought something like this could be a starter for better handling long
+> > > gitweb project lists (such as http://pkgs.fedoraproject.org/gitweb/).
+> > >
+> > > Could anyone please take a look?
+> > 
+> > What do you mean here by "better handling"?  
+> > 
+> > Is the problem server performance for large number of projects?  If
+> > this is the problem, perhaps better solution would be to use caching
+> > (work in progress).
+> 
+> They already moved to using my caching layer, mainly because I could
+> create an RPM for them and the fact that my caching code is slightly
+> more battle tested.
 
-Bob
+Note that with project list pagination, and especially with project
+search  feature, a better solution might be to cache *data* rather
+than HTML output, like in fork used (or used to be used) by
+http://repo.or.cz, or in Lea Wiemann's GSoC 2008 project [1]
 
-On Fri, Sep 10, 2010 at 2:25 PM, Eyvind Bernhardsen
-<eyvind.bernhardsen@gmail.com> wrote:
-> On 10. sep. 2010, at 00.31, Robert Buck wrote:
->
-> [...]
->
->> Conversion of LF-EOL files to CRLF works fine, but conversion of CRL=
-=46
->> to LF fails to occur.
->>
->> The doc is a little unclear if this is expected behavior, which if I
->> recall correctly from the email threads related to the new eol
->> support, this should not have occurred.
->
-> Unfortunately, this is expected behaviour: you need to "manually" rem=
-ove CRLFs when you turn on eol conversion. =C2=A0The simplest way to do=
- this is "rm .git/index && git reset", then commit the modified files (=
-ideally in the same commit that modifies .gitattributes--this is mentio=
-ned in gitattributes(5)).
->
-> To make this work as it should, git would have to notice changes to .=
-gitattributes and check files which have had their attributes changed. =
-=C2=A0It's on my "I wish I had time to do this" list.
->
-> - Eyvind
->
->
+[1] http://repo.or.cz/w/git/gitweb-caching.git
+-- 
+Jakub Narebski
+Poland
