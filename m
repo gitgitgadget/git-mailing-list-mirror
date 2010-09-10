@@ -1,69 +1,182 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] read-tree: deprecate syntax without tree-ish args
-Date: Fri, 10 Sep 2010 08:53:28 -0500
-Message-ID: <AANLkTimiT7eV2XHMEjbp6cOqTTQ6OH8vrbMoDCLxneJC@mail.gmail.com>
-References: <20100910120604.50aa1e94@jk.gs> <4C8A168F.1030502@viscovery.net> <20100910152859.778636d4@jk.gs>
+From: "Butler, Anna R CIV NSWCDD, W34" <anna.butler@navy.mil>
+Subject: Questions concerning SCM Life Cycle Management and GIT.
+Date: Fri, 10 Sep 2010 09:44:12 -0400
+Message-ID: <9F0BA72CD5252845A09DBB8FEC3A1633756133@naeanrfkez06v.nadsusea.nads.navy.mil>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, Git ML <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Fri Sep 10 15:54:01 2010
+Content-Type: multipart/signed;
+	boundary="----=_NextPart_000_0023_01CB50CC.B6C056C0";
+	protocol="application/x-pkcs7-signature";
+	micalg=SHA1
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 10 15:54:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou43E-0000vN-8J
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 15:54:00 +0200
+	id 1Ou43W-00014l-Bg
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 15:54:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754125Ab0IJNxy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 09:53:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:57960 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358Ab0IJNxy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 09:53:54 -0400
-Received: by ywh1 with SMTP id 1so1119646ywh.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 06:53:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=tJK5X+GSpz4qRGww9vm0qtyMlyHrlqU1QjsuWtk0cuk=;
-        b=vhyH6yT0dInz6Vhq7GoAcZbjMhUPvNkL7xSI5QzpiGtHd+Ic1qGr7DiVlAbZD+UToF
-         2MPHuYqG/+BuTC50gSrc1vzK//wLoQCaWpYDsJHiQM/o7a//eln0YXyC4CMc4T2GxWTC
-         hYlW341Wop8nJMbBUS+ZJKGylT6L91GiBunN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DiCAu9xUZAS70T41ZEyzu2MlIaOS5SSbSPPrqYbfdVmRjIy+tn+mCHGt1CkSpa5WEQ
-         zsVynMzZFjmpxlH1pAwfOw4ZIvPnPri62hlbFzz6qEBjiN4YlSw7G+/EuixpQCxX5uJ7
-         8YQMTz2tMYWlhRxJekMP1xddGdKRRuTuyx9fY=
-Received: by 10.151.45.8 with SMTP id x8mr187131ybj.11.1284126828333; Fri, 10
- Sep 2010 06:53:48 -0700 (PDT)
-Received: by 10.150.204.21 with HTTP; Fri, 10 Sep 2010 06:53:28 -0700 (PDT)
-In-Reply-To: <20100910152859.778636d4@jk.gs>
+	id S1754174Ab0IJNyA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 09:54:00 -0400
+Received: from gate1-norfolk.nmci.navy.mil ([138.162.0.41]:17413 "EHLO
+	gate1-norfolk.nmci.navy.mil" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754107Ab0IJNx7 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 09:53:59 -0400
+X-Greylist: delayed 584 seconds by postgrey-1.27 at vger.kernel.org; Fri, 10 Sep 2010 09:53:59 EDT
+Received: from naeanrfkeg01v.nadsusea.nads.navy.mil ([10.16.0.165]) by gate1-norfolk.nmci.navy.mil with Microsoft SMTPSVC(5.0.2195.6872);
+	 Fri, 10 Sep 2010 10:11:38 -0400
+Received: from naeanrfkeb14v.nadsusea.nads.navy.mil ([10.16.20.117]) by naeanrfkeg01v.nadsusea.nads.navy.mil with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 10 Sep 2010 09:44:13 -0400
+Received: from naeanrfkeb03v.nadsusea.nads.navy.mil ([10.16.20.106]) by naeanrfkeb14v.nadsusea.nads.navy.mil with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 10 Sep 2010 09:44:13 -0400
+Received: from naeanrfkez06v.nadsusea.nads.navy.mil ([10.16.20.145]) by naeanrfkeb03v.nadsusea.nads.navy.mil with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 10 Sep 2010 09:44:12 -0400
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+Content-class: urn:content-classes:message
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+Thread-Topic: Questions concerning SCM Life Cycle Management and GIT.
+Thread-Index: ActQ7j26dRh/FviJT3SrjZtF+rULSQ==
+X-OriginalArrivalTime: 10 Sep 2010 13:44:12.0562 (UTC) FILETIME=[408D1F20:01CB50EE]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155929>
 
-Heya,
+This is a multi-part message in MIME format.
 
-On Fri, Sep 10, 2010 at 08:28, Jan Kr=C3=BCger <jk@jk.gs> wrote:
-> Currently, read-tree can be run without tree-ish arguments, in which
-> case it will empty the index. Since this behavior is undocumented and
-> perhaps a bit too invasive to be the "default" action for read-tree,
-> deprecate it in favor of a new --empty option that does the same thin=
-g.
+------=_NextPart_000_0023_01CB50CC.B6C056C0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-=46WIW, I still like it.
+Hello,
 
---=20
-Cheers,
+We are looking for Software Configuration Life Cycle Management Tools.  It looks to me that GIT supports Version Control only.  Is this true or did I miss something?
 
-Sverre Rabbelier
+Does GIT track software Defects? If so can you link elements in the software version repository to a defect?
+Does GIT track Requirements?  If so can you link elements in the software version repository to a requirement?
+Can GIT link test cases to both a defect and elements in the software version repository?
+
+I appreciate you attention to these questions.  Looking forward to hearing form you.
+
+
+V/R,
+
+Anna Butler
+Software Configuration Manager 
+Gun Fire Control Systems Development Branch (W34)
+Naval Surface Warfare Center Dahlgren Division
+540.653.9817
+
+------=_NextPart_000_0023_01CB50CC.B6C056C0
+Content-Type: application/x-pkcs7-signature;
+	name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="smime.p7s"
+
+MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIISyDCCA3Aw
+ggJYoAMCAQICAQUwDQYJKoZIhvcNAQEFBQAwWzELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1UuUy4g
+R292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQS0kxFjAUBgNVBAMTDURvRCBSb290
+IENBIDIwHhcNMDQxMjEzMTUwMDEwWhcNMjkxMjA1MTUwMDEwWjBbMQswCQYDVQQGEwJVUzEYMBYG
+A1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEWMBQGA1UE
+AxMNRG9EIFJvb3QgQ0EgMjCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAMAswfaNO6z/
+PzzWcb64dCIH7HBBFfyrQOMHqsHD2J/+2kw6vz/I2Ch7SzYBwKxFJcPSDgqPhRhkED0aE3Aqb47X
+3I2Ts0EPOCHNravCPSoF01cRNw3NjFH5k+PMRkkhjhS0zcsUPjjNcjHuqxLyZeo0LlZd/+5jdctt
+upE0/J7z9C0cvlDEQt9ZiP9qs/qobD3LVnFxBZa7n4DlgEVZZ0Gw68OtYKSAdQYXnA70Q+CZDhv7
+f/WzzLKBgrH9MsG4vkGkZLVgOlpRMIzO3kEsGUdcSRBkuXSph0GvfW66wbihv2UxOgRn+bW7jpKK
+AGO4seaMOF+D/1DVO6Jda7IQzGMCAwEAAaM/MD0wHQYDVR0OBBYEFEl0uwxeunr+AlTve6DGlcYJ
+gHCWMAsGA1UdDwQEAwIBhjAPBgNVHRMBAf8EBTADAQH/MA0GCSqGSIb3DQEBBQUAA4IBAQCYkY0/
+ici79cBpcyk7Nay6swh2PXAJkumERCEBfRR2G+5RbB2NFTctezFp9JpEuK9GzDT6I8sDJxnSgyF1
+K+fgG5km3IRAleio0sz2WFxm7z9KlxCCHboKot1bBiudp2RO6y4BNaS0PxOtVeTVc6hpmxHxmPIx
+Hm9A1Ph4n46RoG9wBJBmqgYrzuF6krV94eDRluehOi3MsZ0fBUTth5nTTRpwOcEEDOV+2fGv1yAO
+8SJ6JaRzmcw/pAcnlqiile2CuRbTnguHwsHyiPVi32jfx7xpUe2xXNxUVCkPCTmarAPB2wxNrm8K
+ehZJ8b+R0jiU0/aVLLdsyUK2jcqQjYXZMIIEtzCCA5+gAwIBAgIDE9yZMA0GCSqGSIb3DQEBBQUA
+MF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEM
+MAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMjMwHhcNMTAwNDIzMDAwMDAwWhcN
+MTMwNDIyMjM1OTU5WjB0MQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQww
+CgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEMMAoGA1UECxMDVVNOMSEwHwYDVQQDExhCVVRMRVIu
+QU5OQS5SLjEyODMyOTIxNTcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCaOHZOURjl
+MDD8x6Ns5D+TMk7EpvlqwcizYrrN80v5jXAfaw8wnktaBTt1OEgnn9VH3rlEkvvQwZ4cEBMqjEVn
+TFtnOEVJd12YDA188rjqpKZsQTcwCSz/lQuSfybXDrp8Z1W1O6HnlSlMhh49asI+1PBnBUVdQvPj
+Y+CbuyByeKWvVS89+vDivvsd9adpjXlWBm2vbRHjsgBu5tpYb2mGlWkQk5DEKpealb2JsaOnkpFJ
+PIzcuhFYdgzxGfz7aDyX8rrhN6SbCjwE4Img0zPwBRm5VESUVvX2WKHMWIZdaXoyWJFCaf4sxG2h
+0rrBtBgA2nRgVFL5ni1UBuadku5BAgMBAAGjggFnMIIBYzAfBgNVHSMEGDAWgBRbli0xpeH2mmpc
+XoFRNmEeliQZ0TA/BgNVHR8EODA2MDSgMqAwhi5odHRwOi8vY3JsLmRpc2EubWlsL2dldGNybD9E
+T0QlMjBFTUFJTCUyMENBLTIzMA4GA1UdDwEB/wQEAwIFIDAjBgNVHSAEHDAaMAsGCWCGSAFlAgEL
+CTALBglghkgBZQIBCxMwHQYDVR0OBBYEFHUXnyQ29Yb0LXmGxgklRrXIlJypMG0GCCsGAQUFBwEB
+BGEwXzA7BggrBgEFBQcwAoYvaHR0cDovL2NybC5kaXNhLm1pbC9nZXRzaWduP0RPRCUyMEVNQUlM
+JTIwQ0EtMjMwIAYIKwYBBQUHMAGGFGh0dHA6Ly9vY3NwLmRpc2EubWlsMB8GA1UdEQQYMBaBFGFu
+bmEuYnV0bGVyQG5hdnkubWlsMBsGA1UdCQQUMBIwEAYIKwYBBQUHCQQxBBMCVVMwDQYJKoZIhvcN
+AQEFBQADggEBAJjzIOTha+yEo0b7nPo4QfroGkt5kfgrZ91XYPOWISZK3UD7x6vmsezNiQMCj1MF
+MLpDBB1rXB0XJw/O0XFHyjROK+MSSLLbRbpap41fKFdTbrrihdH2oKIjxnx7pWnEe3C+5tkOqZnr
+cFEmvZR+w+mDt9uyS2J3bf7P9B87RKf9HpFVq7tcPaPB9RZwVqdibG/oblAfEgryYITqZ2wNa7Be
+mTt+E/7FlEzu3qsFIz1nyYXnSr8FY0xwcogZ+eXYMD0kdmYG7Cm7j7IuB4lA/JBQrqO5iV0Pclby
+bDMFKq27MdpCmKeAYiaSfZV7FrySln2lzr0Rl2AdMBJt+hLlFjgwggUCMIID6qADAgECAgMT3JQw
+DQYJKoZIhvcNAQEFBQAwXTELMAkGA1UEBhMCVVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEM
+MAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQS0kxGDAWBgNVBAMTD0RPRCBFTUFJTCBDQS0yMzAeFw0x
+MDA0MjMwMDAwMDBaFw0xMzA0MjIyMzU5NTlaMHQxCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMu
+IEdvdmVybm1lbnQxDDAKBgNVBAsTA0RvRDEMMAoGA1UECxMDUEtJMQwwCgYDVQQLEwNVU04xITAf
+BgNVBAMTGEJVVExFUi5BTk5BLlIuMTI4MzI5MjE1NzCCASIwDQYJKoZIhvcNAQEBBQADggEPADCC
+AQoCggEBANbUzNCAUMwPfcLV99TLOA9PzSLQ0eSiA8UFa0iKDJ+ucalXr8WmZf7M7ef/5ln17GAB
+bHlZXmPYpTJ0SxIUi07AOJuQIIWa60LTqBB0E9VldbZKAutq5YqdVH4igsmy/4bqQninpjwCMvTh
+iFjiqyOTXDjdPswP6F+kc1BxupncEJf0HsZSLqJx8C9C7c4HU5n2GWPX+AZTJsSivstuzpzmOEXU
+2hIO81y1tboGDM4QisPF8AxhPiiNVN94ZOMFzJEWJwW0KmmT9Ww0L5QeKUgdeTz2Ugo/ayfOEWGA
+OZfXr+X5CY5J9Ew/kI9YtG84WZ6fJSsw2uznVTSZZCPgmSkCAwEAAaOCAbIwggGuMB8GA1UdIwQY
+MBaAFFuWLTGl4faaalxegVE2YR6WJBnRMD8GA1UdHwQ4MDYwNKAyoDCGLmh0dHA6Ly9jcmwuZGlz
+YS5taWwvZ2V0Y3JsP0RPRCUyMEVNQUlMJTIwQ0EtMjMwDgYDVR0PAQH/BAQDAgbAMCMGA1UdIAQc
+MBowCwYJYIZIAWUCAQsJMAsGCWCGSAFlAgELEzAdBgNVHQ4EFgQUBSxHH8ndFpfwk7AhjJyDABvJ
+6cIwbQYIKwYBBQUHAQEEYTBfMDsGCCsGAQUFBzAChi9odHRwOi8vY3JsLmRpc2EubWlsL2dldHNp
+Z24/RE9EJTIwRU1BSUwlMjBDQS0yMzAgBggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWww
+PwYDVR0RBDgwNoEUYW5uYS5idXRsZXJAbmF2eS5taWygHgYKKwYBBAGCNxQCA6AQDA4xMjgzMjky
+MTU3QG1pbDAbBgNVHQkEFDASMBAGCCsGAQUFBwkEMQQTAlVTMCkGA1UdJQQiMCAGCisGAQQBgjcU
+AgIGCCsGAQUFBwMCBggrBgEFBQcDBDANBgkqhkiG9w0BAQUFAAOCAQEAIpMfvOaj9rTa/Kiubjmi
+m1Lw8lPAShwqr8EDAdKa6dLsiEIwZf/7SfZ78OQs2fa6IrI7V08qIGM7dvmeqsHY/x0IVKL96FIH
+EkDpMC/yh6MvtdMrxTByXF4DQozXTZcBgHYoI7xsSOQQdn4UXg8FYxyj0QOnLeBuhcU1GIYalS14
+y18YHSLS99kPKaop1VpJagDbXTpFe8WIGRQ4VZ27q++V7mHLbtMX145vjfwjA0ATfdGSTOHSRVcH
+gsecLKxKbwBXu61iBeFyiSdeDEtcM8Qtk1qppd7BA/9rrroN587ZGD96GG4Yz34ebALmpA87ERmC
+wHxzjyj1dSkzcJusoDCCBY8wggR3oAMCAQICAUkwDQYJKoZIhvcNAQEFBQAwWzELMAkGA1UEBhMC
+VVMxGDAWBgNVBAoTD1UuUy4gR292ZXJubWVudDEMMAoGA1UECxMDRG9EMQwwCgYDVQQLEwNQS0kx
+FjAUBgNVBAMTDURvRCBSb290IENBIDIwHhcNMDkwMTI2MTY0MzI1WhcNMTUwMTI1MTY0MzI1WjBd
+MQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAK
+BgNVBAsTA1BLSTEYMBYGA1UEAxMPRE9EIEVNQUlMIENBLTIzMIIBIjANBgkqhkiG9w0BAQEFAAOC
+AQ8AMIIBCgKCAQEAvfQpTVeTRAMHjQYfrvo8NFY0QOexGH9sJW4XhQUFI+n2xVAlT4HkIzBCcWnq
+97ie92+s3l2q/Nbgjbxr7n2ZlSI7s1jGsVIcsqi/MUAiBv6NKNKpUFVqHgdw+KZIyW39ruy+gGw9
+z5DUB6JOkRQDv1dZEvV03kOWWlq5z7lH6H/QjrD42OlLNF7MSxeOAvASv/IEbB0Tv6sc3g0J7Mub
+Vu3ZkOeWpX8mZWHBxJtoJKXN0nkjb8M8wYUeSPk+UHFioEG6ckSlQ+Olcm7Nzqvay4TSGr8fbnIR
+Py2ZH22w+wUwzubsIyplRx94nA2fTCR1bHbS1TsXRBayiihI17kNrwIDAQABo4ICWjCCAlYwDgYD
+VR0PAQH/BAQDAgGGMB8GA1UdIwQYMBaAFEl0uwxeunr+AlTve6DGlcYJgHCWMB0GA1UdDgQWBBRb
+li0xpeH2mmpcXoFRNmEeliQZ0TAMBgNVHSQEBTADgAEAMBIGA1UdEwEB/wQIMAYBAf8CAQAwgZ8G
+A1UdIASBlzCBlDALBglghkgBZQIBCwUwCwYJYIZIAWUCAQsJMAsGCWCGSAFlAgELCjALBglghkgB
+ZQIBCxIwCwYJYIZIAWUCAQsTMAsGCWCGSAFlAgELFDAMBgpghkgBZQMCAQMGMAwGCmCGSAFlAwIB
+AwcwDAYKYIZIAWUDAgEDCDAMBgpghkgBZQMCAQMNMAwGCmCGSAFlAwIBAxEwPwYDVR0fBDgwNjA0
+oDKgMIYuaHR0cDovL2NybC5kaXNhLm1pbC9nZXRjcmw/RG9EJTIwUm9vdCUyMENBJTIwMjCB/gYI
+KwYBBQUHAQEEgfEwge4wPwYIKwYBBQUHMAKGM2h0dHA6Ly9jcmwuZGlzYS5taWwvZ2V0SXNzdWVk
+VG8/RG9EJTIwUm9vdCUyMENBJTIwMjAgBggrBgEFBQcwAYYUaHR0cDovL29jc3AuZGlzYS5taWww
+gYgGCCsGAQUFBzAChnxsZGFwOi8vY3JsLmdkcy5kaXNhLm1pbC9jbiUzZERvRCUyMFJvb3QlMjBD
+QSUyMDIlMmNvdSUzZFBLSSUyY291JTNkRG9EJTJjbyUzZFUuUy4lMjBHb3Zlcm5tZW50JTJjYyUz
+ZFVTP2NBQ2VydGlmaWNhdGU7YmluYXJ5MA0GCSqGSIb3DQEBBQUAA4IBAQA+9vbkD9RXzb7t6cRF
+UtpFWximNjkwCrZ+6/aJ/KdiLrM/g33hEhqG02OU9HT0znGX6vvEajpd4pmnrMPiNvjoePTYxFDu
+ioFV+oqDZQzF8k3M6R+Pe0bdAwqc6uKsY3cHyzJU2whVslgAfVymuRY8X2VtLwXOWj+a20nLkqOh
+2W9R1PXACMGjOVvQQWOBxJRlZGMpTF3wX3GHap2WkuXHgv0tdNcCbMri26Cz23HVDoY+PheJvW5C
+Fxu09jn5Gr3mLiybDjc7EF9E/nu1lFjWcSXlOdEjujQAwUNtuPQOl6uyMPaIp46OihADhHTcrk35
+5Zl0GqmiCm0LBxWUxT9jMYIDMjCCAy4CAQEwZDBdMQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5T
+LiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0QxDDAKBgNVBAsTA1BLSTEYMBYGA1UEAxMPRE9EIEVN
+QUlMIENBLTIzAgMT3JQwCQYFKw4DAhoFAKCCAaMwGAYJKoZIhvcNAQkDMQsGCSqGSIb3DQEHATAc
+BgkqhkiG9w0BCQUxDxcNMTAwOTEwMTM0NDA3WjAjBgkqhkiG9w0BCQQxFgQULO9aNTDwXgatKLx2
+6AZ5UN0J3i4wWAYJKoZIhvcNAQkPMUswSTAKBggqhkiG9w0DBzAOBggqhkiG9w0DAgICAIAwBwYF
+Kw4DAgcwDQYIKoZIhvcNAwICASgwBwYFKw4DAhowCgYIKoZIhvcNAgUwcwYJKwYBBAGCNxAEMWYw
+ZDBdMQswCQYDVQQGEwJVUzEYMBYGA1UEChMPVS5TLiBHb3Zlcm5tZW50MQwwCgYDVQQLEwNEb0Qx
+DDAKBgNVBAsTA1BLSTEYMBYGA1UEAxMPRE9EIEVNQUlMIENBLTIzAgMT3JkwdQYLKoZIhvcNAQkQ
+AgsxZqBkMF0xCzAJBgNVBAYTAlVTMRgwFgYDVQQKEw9VLlMuIEdvdmVybm1lbnQxDDAKBgNVBAsT
+A0RvRDEMMAoGA1UECxMDUEtJMRgwFgYDVQQDEw9ET0QgRU1BSUwgQ0EtMjMCAxPcmTANBgkqhkiG
+9w0BAQEFAASCAQBXFIMVG7hjk5OjICIlGZ/FYBGt0T5S48Dd97lQun+2Jo+wvtaANSUPud2LVJeH
+d3UEzSRgp/q8U/RabCCIi3Tl/+U2NJjYFtPrjMElMyTJEgiIJrE4R3TcZvAFKjBetO/2javFuKya
+bIR1CgxIKT+JHX+Z6NQwnPZPgKgdz6ayPQFa3TOluqzwN5sT46PYalEr6aL4E85EbZo2XaXEIjkE
+e+TGYd1bbYTUIESJ5zwt4TFVVvA5Cn2EeBORMy0Os4MrFAC8dg1dtJ+GCLxDa9UQ73pyVpoQXq07
+22R5eNgOiZV7OY0zAZeSfTL4LXNsg0PO/bq5Sh7+vDcs2B4FZdSZAAAAAAAA
+
+------=_NextPart_000_0023_01CB50CC.B6C056C0--
