@@ -1,158 +1,118 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 00/20] [CONTINUE] Add gettext support to Git
-Date: Fri, 10 Sep 2010 17:17:02 +0000
-Message-ID: <AANLkTikdHZFmXAdABvS9hPXtbXNJU5NdCOrw5_KP73bX@mail.gmail.com>
-References: <1283877955-19105-1-git-send-email-avarab@gmail.com>
-	<7vd3sonq2n.fsf@alter.siamese.dyndns.org>
-	<AANLkTinC59XFt8pPyUF3ifMTeVMSC1e44MDPto5Fy1+n@mail.gmail.com>
-	<AANLkTimU6Cznnqp+SokZDK7fnhV712a9QcAAd5peo93m@mail.gmail.com>
-	<7vaanpio4n.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] t/t4018: avoid two unnecessary sub-shell invocations
+Date: Fri, 10 Sep 2010 17:25:56 +0000
+Message-ID: <AANLkTindP1KiyFjF+7EVhKDciBr-g_cg3jfHCRB0Qfxo@mail.gmail.com>
+References: <20100909195904.GE1146@sigill.intra.peff.net>
+	<rl_Fe3GvwRHMfzdMCqwnBhdCJhaaE21fdWY64ux0ATvXGt5hFA80h-4iMktgWtjAQ_54uD09KJc@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Antriksh Pany <antriksh.pany@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 10 19:17:12 2010
+Cc: peff@peff.net, gitster@pobox.com, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Fri Sep 10 19:26:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou7Dr-0001Ba-Oe
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 19:17:12 +0200
+	id 1Ou7Mc-0005e0-Sg
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 19:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755573Ab0IJRRF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 13:17:05 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54446 "EHLO
+	id S1756049Ab0IJRZ6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Sep 2010 13:25:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:60908 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751425Ab0IJRRD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 13:17:03 -0400
-Received: by iwn5 with SMTP id 5so2378712iwn.19
-        for <git@vger.kernel.org>; Fri, 10 Sep 2010 10:17:03 -0700 (PDT)
+	with ESMTP id S1755368Ab0IJRZ5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Sep 2010 13:25:57 -0400
+Received: by iwn5 with SMTP id 5so2384546iwn.19
+        for <git@vger.kernel.org>; Fri, 10 Sep 2010 10:25:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=Ekbn4ou0gAUbt9UHIdSYaw9XWKQ6eC/3uk3xOLHDjnw=;
-        b=hFxtH7PhUyyNiWEVvs2Xex9T6l4ag3+7suD+SNJJotUL8uCHZ723gIZ1o7FYuMfOps
-         UFyws0mRX3hEJ560gCaNGdO1QFIkMvqtkGCz+oN309KUcETYbOc+qRvG/KwTqbo4rAmD
-         dAehFaEHFNp/+GmyRGzqecFdeGLmFhb/OWtzQ=
+        bh=pVlh49Q80x/kUz3xQ13nEIhSrknC5cy3QCzPF9yQvMY=;
+        b=ov4D84jH6Oe2PYeL8UlcSzTot2r7fkANX3Qo8c9V769I3pElJIXaWM5eEmdwjNVvdO
+         x/10kvl8pcnx4mROjuSxSPg0V+Q39Cmx/B+PXgny+ha3drcCfFwXuSbwdjPjl/XnySpd
+         6t/OE7peJzzxsxsoNFvbAYC9bIVw9fR8TFXgc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=cLv7txsk3JCSVcjb9RwPRDbKWkZu1/T6w/Nk1Ytg1EstG6YCZaBgtEwxJi2NVU1j14
-         2FHYiKjScP/b13wuIjxNVzJOiljcUnj7rLgkFCfcFurPEf1Td0r5NcSo9at4f26xz/AP
-         LlIdkW2+07bhSksjEOEwfTmzO05vrSb0ynnmg=
-Received: by 10.231.149.207 with SMTP id u15mr1332798ibv.13.1284139023103;
- Fri, 10 Sep 2010 10:17:03 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Fri, 10 Sep 2010 10:17:02 -0700 (PDT)
-In-Reply-To: <7vaanpio4n.fsf@alter.siamese.dyndns.org>
+        b=rYOVmzIG4dEpuaTP4ogVZE7l47t3nlQ7+XoFwfFGE5AD/qSGr7oHoBM1hte6eejxDJ
+         KZmqNTFNmF5+IasfSqLCYcPXEgciyr2HgLmM+6Co8mLD//QmD7Nb6EWUdjdKRVyaapQ1
+         NzwIjoMrPux+UcYVHFefC80a/57LRF/tFQx9U=
+Received: by 10.231.146.141 with SMTP id h13mr1354230ibv.1.1284139556197; Fri,
+ 10 Sep 2010 10:25:56 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Fri, 10 Sep 2010 10:25:56 -0700 (PDT)
+In-Reply-To: <rl_Fe3GvwRHMfzdMCqwnBhdCJhaaE21fdWY64ux0ATvXGt5hFA80h-4iMktgWtjAQ_54uD09KJc@cipher.nrlssc.navy.mil>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155949>
 
-On Fri, Sep 10, 2010 at 16:01, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On Fri, Sep 10, 2010 at 16:13, Brandon Casey <casey@nrlssc.navy.mil> wr=
+ote:
+> From: Brandon Casey <drafnel@gmail.com>
 >
->> Hi, since you didn't pick this up in the last push I fixed it up a b=
-it
->> more.
->>
->> I rebased ab/i18n-all-continue on the new master:
->>
->> =C2=A0 =C2=A0 git fetch git://github.com/avar/git +ab/i18n-all-conti=
-nue:ab/i18n
->>
->> But you probably want this instead:
->>
->> =C2=A0 =C2=A0 git fetch git://github.com/avar/git +ab/i18n-all-conti=
-nue-with-hindi:ab/i18n
->>
->> I took the liberty of adding Ramkumar Ramachandra's hi.po patch to t=
-he
->> series.
 >
-> I think that the latter is "i18n-continue-with-hindi" (no "all")
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+> Thanks again Jeff for your, as always, very valuable review.
+>
+>
+> =C2=A0t/t4018-diff-funcname.sh | =C2=A0 =C2=A08 ++++----
+> =C2=A01 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+> index 620cd02..c8e1937 100755
+> --- a/t/t4018-diff-funcname.sh
+> +++ b/t/t4018-diff-funcname.sh
+> @@ -37,13 +37,13 @@ for p in $builtin_patterns
+> =C2=A0do
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_expect_success "builtin $p pattern co=
+mpiles" '
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "*.java d=
+iff=3D$p" > .gitattributes &&
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ! ( git diff --no-=
+index Beer.java Beer-correct.java 2>&1 |
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 grep "fatal" > /dev/null )
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ! { git diff --no-=
+index Beer.java Beer-correct.java 2>&1 |
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 grep "fatal" > /dev/null; }
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0'
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_expect_success "builtin $p wordRegex =
+pattern compiles" '
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ! ( git diff --no-=
+index --word-diff \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ! { git diff --no-=
+index --word-diff \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0Beer.java Beer-correct.java 2>&1 |
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 grep "fatal" > /dev/null )
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 grep "fatal" > /dev/null; }
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0'
+> =C2=A0done
 
-Yes, sorry. It's just "ab/i18n-continue-with-hindi".
+=46WIW (but don't think you need to change 'em) I'd do these as
+(untested):
 
-> and also suspect that ab/i18n-all-continue either hasn't be pushed
-> out or is stale?
+test_expect_success "builtin $p wordRegex pattern compiles" '
+    git diff --no-index --word-diff >out 2>err &&
+    # Or whatever out should be..
+    ! test -s out &&
+    grep fatal err
+'
 
-Yes sorry, I pushed to "ab/i18n-continue"
-instead. "ab/i18n-all-continue" is now up-to-date (equivalent to
-"ab/i18n-continue"). Sorry abuot the mixup.
+It's much easier to debug tests that use intermediate files with
+--immediate --debug when they break, because you can just check out
+what out and err contain. You can't do that if the output was
+forgotten in some pipe.
 
-> The copy of "all-continue" I just fetched ends with 2b5170f (gettexti=
-ze:
-> git-shortlog basic messages, 2010-09-05) while hindi^ is at c4adf2e
-> (gettextize: git-am printf(1) message to eval_gettext, 2010-09-07).
-
-The hindi^ one was the right tip.
-
-> I haven't formed an opinion as to what to do with the *.po files afte=
-r the
-> series hits 'next' (or anything more stable than 'pu'); my preference=
- is
-> to delegate that part of the system to somebody who volunteers as an =
-i18n
-> coordinator, and pull from him/her from time to time, just like the w=
-ay
-> gitk and git-gui are managed.
-
-We could certainly set up something like that. I going to wait and see
-if we needed it before proposing such a thing.
-
-After an initial spur of translation submissions po/ will probably
-quiet down quickly. We aren't adding new strings that often, so
-updating translations shouldn't represent much PATCH traffic on-list.
-
-But it could be split up if that's preferred too.
-
-> For now, I'll queue the whole thing and merge that to 'pu', but we wo=
-uld
-> want to squash l10n commits after (but not including) 8d65a35 (gettex=
-t
-> tests: test re-encoding with a UTF-8 msgid under Shell, 2010-08-30) t=
-hat
-> touch only one file in po/*.po into one commit per language, move the=
-m
-> near the tip after all the infrastructure enhancements (and fix-ups t=
-o the
-> infrastructure, if necessary) and individual command i18ns, to make t=
-he
-> end result a reasonably complete and clean "first cut for public test=
-ing"
-> of the series before it hits 'next'.
-
-I can move those around, I didn't do so already because their position
-in the series is semantically meaningful. I.e. at the time is.po is
-added it's pretty much a 100% translation, but more strings are added
-after that.
-
-That's a trivial minor issue with msgmerge and msgfmt --statistics to
-find out how much is translated though. So I've re-arranged them and
-squashed 'em for you here:
-
-    git://github.com/avar/git.git ab/i18n-for-junio
-
-> As a companion update to 6495411 (gettext docs: add po/README file
-> documenting Git's gettext, 2010-09-03), we would need a file in
-> Documentation/ directory to describe the use of _() and N_() for
-> programmers and point it from CodingGuidelines.
-
-I can add that to ab/i18n-for-junio, but haven't already. Isn't it
-better if I send that to the list for review instead of just tucking
-something at the end of the series. I can do either.
-
-> We might also want to move po/README to Documentation/ but I don't
-> have strong preference either way.
-
-I'd like to make it a manpage (as mentioned before), but i can't
-figure out a good git-*.txt name for it.
+Maybe I should add a bit into t/README about this ...
