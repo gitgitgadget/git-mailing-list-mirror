@@ -1,67 +1,59 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Coping with the pull-before-you-push model
-Date: Fri, 10 Sep 2010 10:15:27 -0400
-Message-ID: <20100910141527.GA6936@sigill.intra.peff.net>
-References: <4C8866F9.1040705@workspacewhiz.com>
- <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com>
- <4C88F2A9.2080306@workspacewhiz.com>
- <AANLkTikdV3W1d7uNokKRRiT4FeznL1uM=Y9SQLDqgAic@mail.gmail.com>
+Subject: Re: git revert ignore whitespace
+Date: Fri, 10 Sep 2010 10:21:14 -0400
+Message-ID: <20100910142114.GB6936@sigill.intra.peff.net>
+References: <14756.91.183.48.98.1284105472.squirrel@stevenleeuw.kwik.to>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 10 16:15:29 2010
+Cc: git@vger.kernel.org
+To: Steven <redalert.commander@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 10 16:21:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ou4O0-0003iw-HO
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 16:15:28 +0200
+	id 1Ou4Te-0006t5-VA
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 16:21:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750992Ab0IJOPP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Sep 2010 10:15:15 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58877 "EHLO peff.net"
+	id S1751020Ab0IJOVA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Sep 2010 10:21:00 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59281 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750946Ab0IJOPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Sep 2010 10:15:14 -0400
-Received: (qmail 24679 invoked by uid 111); 10 Sep 2010 14:15:12 -0000
+	id S1750891Ab0IJOVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Sep 2010 10:21:00 -0400
+Received: (qmail 24706 invoked by uid 111); 10 Sep 2010 14:20:59 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 10 Sep 2010 14:15:12 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Sep 2010 10:15:27 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 10 Sep 2010 14:20:59 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Sep 2010 10:21:14 -0400
 Content-Disposition: inline
-In-Reply-To: <AANLkTikdV3W1d7uNokKRRiT4FeznL1uM=Y9SQLDqgAic@mail.gmail.com>
+In-Reply-To: <14756.91.183.48.98.1284105472.squirrel@stevenleeuw.kwik.to>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155931>
 
-On Fri, Sep 10, 2010 at 03:35:21PM +1000, Jon Seymour wrote:
+On Fri, Sep 10, 2010 at 09:57:52AM +0200, Steven wrote:
 
-> This is probably the cultural shift that is hardest for enterprises to
-> accept - why do I need a _person_ to do this _manual_ work when tools
-> like {insert favourite non-DVCS here} can do this for me? To
-> management, this looks like a step-backwards.
+> I want to revert a specific commit using 'git revert',
+> however in the meantime there were some whitespace changes.
+> Is it still possible to do this? The manual doesn't mention a -w or
+> --ignore-whitespace option for git revert.
 
-Bear in mind that you can still shift to a maintainer model, but keep
-the maintainer automated. That is, you can queue up "to-pull" heads, and
-then have an automated process pull them one by one and do some basic QA
-(does it merge, does it build, does it pass automated tests, etc). Which
-is not that different from what many shops do in the non-maintainer
-model, except that when you break the build, the maintainer process
-notices _before_ publishing the merged tip, so everybody won't try to
-build on your broken crap.
+In theory there is no reason we couldn't support "-w", but I don't think
+there is a way to do it currently.
 
-I seem to recall that Gerrit does something like this, but I may be
-mis-remembering. I haven't actually used it for real work.
+You could just manually do the revert. Something like:
 
-I still prefer a human maintainer, because they can do things like
-reorder the queue manually (or outright reject flaky topics) to get more
-sensible merges, or do easy but non-trivial merges themselves to avoid
-kicking code back to the developer.
+  git diff-tree -p $commit | git apply --ignore-whitespace
+  git commit -m "revert '`git log -1 --format=%s $commit`'"
+
+which is more or less what revert will do (actually, I think it will do
+more with 3-way merges during the application, but the point is that a
+revert in git is nothing more than achieving a tree state that pulls out
+the reverted content, and then making a commit. It has no special status
+in the history graph).
 
 -Peff
