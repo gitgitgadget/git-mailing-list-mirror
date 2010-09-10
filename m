@@ -1,96 +1,76 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
- submodules
-Date: Thu, 09 Sep 2010 17:21:26 -0700
-Message-ID: <7vy6bajvnd.fsf@alter.siamese.dyndns.org>
-References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil>
+Subject: Re: [PATCH v2 1/2] convert: fix normalization of foreign idents
+Date: Thu, 09 Sep 2010 17:26:21 -0700
+Message-ID: <7vmxrqjvf6.fsf@alter.siamese.dyndns.org>
+References: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
+ <E1Ot4NP-0002xn-Nc@chiyo.mc.pp.se>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
-	Jens.Lehmann@web.de, Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Fri Sep 10 02:21:58 2010
+Cc: git@vger.kernel.org
+To: Marcus Comstedt <marcus@mc.pp.se>
+X-From: git-owner@vger.kernel.org Fri Sep 10 02:26:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OtrNO-00059w-9l
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 02:21:58 +0200
+	id 1OtrRr-0006Ua-1R
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Sep 2010 02:26:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754319Ab0IJAVl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Sep 2010 20:21:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63905 "EHLO
+	id S1756031Ab0IJA03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Sep 2010 20:26:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34101 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752285Ab0IJAVk (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Sep 2010 20:21:40 -0400
+	with ESMTP id S1754331Ab0IJA02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Sep 2010 20:26:28 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B47FED46DB;
-	Thu,  9 Sep 2010 20:21:39 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C2F14D4792;
+	Thu,  9 Sep 2010 20:26:27 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YTjtGfZPlNaTbcgV3il7YqoqC3g=; b=dhiFZm
-	Y3+SV8b8CFqHkfnGP1QJgJWwicvNscujPqefN32ZKffvhQZGY0tnEhUisMw5/nuI
-	d+3w9gWQB3XtPLES5eg9OG7P3lTSmq9uq7HqQJBDLMicSlz/0HHqRJS0sWlR2CYJ
-	wxC+u+yhg3JfKSy/beyf2rYo/nUgETjMePgRM=
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=DinHHK2KOFffaFaRHwmaX4rFZQU=; b=TO9a5b9gsGmtl5Ah+t4NJ8+
+	BNPKmFH6bpilS715EyKJiGXqTWwAsOvKQuCT7EfScN7vECf3wP+fG4M4TGZ51Gr5
+	zWWFhWk9doRXTGG9OEVk/sQW0eWhFUTJHzlIuvoWCVWDqxKebaeDElrKdvnodRIC
+	4fOuyfb1CNKjlGwB+i+o=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=djWNa4Vd16miB6H7eVLJGGMV5oi7bIpa
-	Uv0nH3QuMPHbqx3U+9Id29FFmcF/ybTxlsqFiXuc+5FWuP/MZMQUnSRRw4qlazQT
-	gtYRe2U/haqt8shY5nCd1joVhCGplDUtlMFI/pVwJNSmtT5EZo+1davkEsmabShu
-	7Md23peCslo=
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=GVWc7oYnol6Zarz6FP4xDvb91pzyMOLBkrGxXpaJ2DY7/TOh+
+	01KxUVsgG5Fbd2kHy3KRghoekFKHN5AovrI+oEG8J1i0gXz2xjDyVV1MGxL2ExcX
+	bmnyRWxPZT3r44LaCh+625gDDVVhp5X/SKsbxK79yeONFi7TPqVLIT0NeM=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5C9E1D46DA;
-	Thu,  9 Sep 2010 20:21:34 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0E75D478F;
+	Thu,  9 Sep 2010 20:26:25 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4B904D46D7; Thu,  9 Sep
- 2010 20:21:28 -0400 (EDT)
-In-Reply-To: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil> (Brandon Casey's message of "Thu\,  9 Sep 2010 14\:12\:19 -0500")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3117D477D; Thu,  9 Sep
+ 2010 20:26:22 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5E485202-BC71-11DF-A67C-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 0BE5D31C-BC72-11DF-B4C1-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155915>
 
-Brandon Casey <casey@nrlssc.navy.mil> writes:
+Marcus Comstedt <marcus@mc.pp.se> writes:
 
-> From: Brandon Casey <drafnel@gmail.com>
+> Since ident_to_worktree() does not touch $Id$ tags which contain
+> foreign expansions in the repository, make sure that ident_to_git()
+> does not either.  This fixes the problem that such files show
+> spurious modification upon checkout.
 >
-> Since 'git describe' does not append -dirty to the version string it
-> produces when untracked files exist in the working directory of the main
-> repository, it should not do so for submodules either.
->
-> Add --ignore-submodules=untracked to the call to diff-index which is used
-> to decide whether or not the '-dirty' string is necessary.
->
-> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
-> ---
+> There is however one case where we want ident_to_git() to normalize
+> the tag to $Id$ despite the asymmetry:  When committing a modification
+> to a file which has a foreign ident, the foreign ident should be
+> replaced with a regular git ident.  Thus, add a new parameter to
+> convert_to_git() that indicates if we want the foreign idents
+> normalized after all.
 
-Hmm, this changes the behaviour in a big way but it probably is for the
-better.  At least it is consistent with the recent fixes to the
-interaction between diff and submodules.
+Would it be possible that the real culprit is that ident_to_worktree()
+does not always touch $Id$ in the first place?  Why isn't "$Id: garbage$"
+first cleaned and then smudged upon checkout?
 
-Objections from submodule users?
-
->  builtin/describe.c |    3 ++-
->  1 files changed, 2 insertions(+), 1 deletions(-)
->
-> diff --git a/builtin/describe.c b/builtin/describe.c
-> index 43caff2..6c4f15b 100644
-> --- a/builtin/describe.c
-> +++ b/builtin/describe.c
-> @@ -29,7 +29,8 @@ static const char *dirty;
->  
->  /* diff-index command arguments to check if working tree is dirty. */
->  static const char *diff_index_args[] = {
-> -	"diff-index", "--quiet", "HEAD", "--", NULL
-> +	"diff-index", "--quiet", "--ignore-submodules=untracked", "HEAD",
-> +	"--", NULL
->  };
->  
->  
-> -- 
-> 1.7.2.1
+It also smells wrong that this "sometimes we convert, sometimes we don't"
+is a special case for "$Id$" and for no other conversion.  Why don't
+smudge/clean filter or CRLF conversion have the same issue that can be
+solved with the same approach as this patch takes?
