@@ -1,58 +1,63 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
- submodules
-Date: Sat, 11 Sep 2010 22:23:11 +0200 (CEST)
-Message-ID: <1982035721.2791029.1284236591083.JavaMail.fmail@mwmweb045>
-References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil>
- <7vy6bajvnd.fsf@alter.siamese.dyndns.org>
- <1464835923.7527323.1284144028047.JavaMail.fmail@mwmweb047>
- <1529126586.2758911.1284228699341.JavaMail.fmail@mwmweb045>,
- <7v39tgf5zw.fsf@alter.siamese.dyndns.org>
+From: Marc Bejarano <beej@beej.org>
+Subject: git diffstat feature suggestion
+Date: Sat, 11 Sep 2010 13:35:01 -0700
+Message-ID: <AANLkTimr6MByE=jnKAjku1Hbcm66giHMLNz6TVxxkYkq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de, Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 11 22:23:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 11 22:35:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuWba-0004MN-1W
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 22:23:22 +0200
+	id 1OuWnO-00006k-Av
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 22:35:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752060Ab0IKUXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Sep 2010 16:23:13 -0400
-Received: from fmmailgate07.web.de ([217.72.192.248]:59295 "EHLO
-	fmmailgate07.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751785Ab0IKUXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Sep 2010 16:23:12 -0400
-Received: from mwmweb045  ( [172.20.18.54])
-	by fmmailgate07.web.de (Postfix) with ESMTP id 172974C91BF;
-	Sat, 11 Sep 2010 22:23:11 +0200 (CEST)
-Received: from [92.104.70.131]  by  mwmweb045  with HTTP; Sat
- Sep 11 22:23:11 CEST 2010
-In-Reply-To: <7v39tgf5zw.fsf@alter.siamese.dyndns.org>
-X-UI-Message-Type: mail
-X-UI-ATTACHMENT-ID-POSTFIX: 14b070c3-6009-43f7-8e2b-fc1303fd40e8
-X-Priority: 3
-Importance: normal
-Sensitivity: Normal
-X-Provags-ID: V01U2FsdGVkX19Zn4r9yztDmaQt7KJmPN2mN45aqK8duxOBX1q++l6hCwRo9OR+Ui0d
- l7ILAKoP4oWNM5IUrUUpoxU6AmpWlhuEErI0QyIwtko=
+	id S1751928Ab0IKUfD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Sep 2010 16:35:03 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58660 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751841Ab0IKUfC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Sep 2010 16:35:02 -0400
+Received: by iwn5 with SMTP id 5so3540100iwn.19
+        for <git@vger.kernel.org>; Sat, 11 Sep 2010 13:35:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=qP5bSXGbsobMlCWxgoDZXdU9DGyQcStc04DY+LqaVZY=;
+        b=sf9kbiBxhpBrgWqv0tpVX3olqUgi0aVgAcRvl9EqH6CeLQZTtCemLboB6gYuXUzhZm
+         VJHr5JcDntpDuL7Uv7I7weYzQ7fBPPibUzuqKomXxsR8rVeFGUX4ybj8AlKX1ipuvpko
+         lv28QqKtenf5GYD0iXkD4O8eJSKnnyuZ+29jM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=IZNfRzP6h/N660IIr3vyXTq5Oe9YNo5NOK+qQsyuxoL2qlq7Bl3MzMkX32DRJaDtkd
+         7hd1G4n00Oaf05QqkIN7Tpcd3aDG5AUOeEszqbO2dAhuGBXx3IuNvIuCSTF0aPeEBUvF
+         CV1hnuIoc8w2QeZjWaMpAYsJAteKyTpKjIrsw=
+Received: by 10.231.169.210 with SMTP id a18mr3465323ibz.5.1284237301470; Sat,
+ 11 Sep 2010 13:35:01 -0700 (PDT)
+Received: by 10.231.144.3 with HTTP; Sat, 11 Sep 2010 13:35:01 -0700 (PDT)
+X-Google-Sender-Auth: zTj6phAKqiZPsLxJD8DG8Qca2AI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156011>
 
->Jens Lehmann <Jens.Lehmann@web.de> writes:
->> And maybe we should teach "git describe" the "--ignore-submodules" option, then
->> you could tell describe what to pass to the diff-index command. Thoughts?
->
->It is sensible to add the option, and handle_ignore_submodules_arg() call
->to grab "diff.ignoresubmodules" configuration) to the command, perhaps.
+hi.
 
-Ok, I'll look into that and prepare a patch.
+i find the diffstats that get posted to development mailing lists from
+people using (i'm guessing) quilt to be great.=A0 one improvement that
+comes to mind would be some sort of option that just tallies changes
+in actual lines of code, ignoring whitespace and comments.
+
+i couldn't find an issue tracker for git so that this could be tracked
+properly.=A0 is there one?
+
+cheers,
+marc
