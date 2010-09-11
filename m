@@ -1,197 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/2] ls-tree $di $dir: do not mistakenly recurse into
- directories
-Date: Sat, 11 Sep 2010 12:00:19 -0700
-Message-ID: <7vd3skf6m4.fsf_-_@alter.siamese.dyndns.org>
-References: <1284010826-81989-1-git-send-email-davi.reis@gmail.com>
- <vpqzkvr5u73.fsf@bauges.imag.fr> <7vhbhwf6q5.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: RFC: Adding an option to log-like commands to call an external
+ command for each revision
+Date: Sat, 11 Sep 2010 19:07:49 +0000
+Message-ID: <AANLkTi=p1ScGXAWprSYC6=K_FyNS3m2En-NZLtNU_ES_@mail.gmail.com>
+References: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
+	<20100830030819.GA25415@sigill.intra.peff.net>
+	<AANLkTi=WokEQMDc92SoWXPJW67dy0q79WW9RajrBHRx3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: davi.reis@gmail.com, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Sep 11 21:00:40 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Sep 11 21:08:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuVJU-0008P1-VF
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 21:00:37 +0200
+	id 1OuVQZ-0002aF-RM
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 21:07:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751899Ab0IKTAc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Sep 2010 15:00:32 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62351 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750972Ab0IKTAb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Sep 2010 15:00:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C43D8D5856;
-	Sat, 11 Sep 2010 15:00:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JAiKItqxqYPNJzfN1hhJLJ4BMj8=; b=sh6IYW
-	55NgHmXoS6W5BcZCjplYJTHi1tJD346Ex0y4HPZrvg/Qd0EqGVRNCEDozVyxez1E
-	SSGoBTelh1nxe6CqEeGHdmgjIw3bsgHwD+ETweh70CO0pBh7bBWBSvu4J3EAdcap
-	eMphj+iaoiDNvZlxLOIC7CBpVvOqg4SdK8oO4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=v/Pw/2HdM/9fpXI9g4BXqNzKkCiWXArt
-	WIByaqYBEKUPfHVor2lfeFT8uhRvhBoxDsk2fqifhbAwSU+ZPCLfOuPNfw/IeOGC
-	OfjS+dV983CeP+pLfvhC8+tiihBd/q+XkATCMFxyDGQzwAu0IpHHDmrSZZNisswB
-	JUWKmThS44I=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8DF94D5855;
-	Sat, 11 Sep 2010 15:00:27 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 46ED9D5853; Sat, 11 Sep
- 2010 15:00:21 -0400 (EDT)
-In-Reply-To: <7vhbhwf6q5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 11 Sep 2010 11\:57\:54 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D73271B4-BDD6-11DF-A981-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751665Ab0IKTHu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Sep 2010 15:07:50 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47915 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751427Ab0IKTHu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Sep 2010 15:07:50 -0400
+Received: by iwn5 with SMTP id 5so3482881iwn.19
+        for <git@vger.kernel.org>; Sat, 11 Sep 2010 12:07:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HJuxH/9SFf04bPRti3KASAeFGfNRdg8+sQk3dCsxEEk=;
+        b=pVDR4lH24+n5mAAJB75z+6RPfJvZTI+boCIjrXCUka55Nxtt7Z3zo9OCoNGPAzbfHT
+         0qAZpbIYKS2iG6JAkEHQJZptvT/OYqrG5P3dPjn7ZwYyBKMVhV6vbnIrCNy9Df44RPrM
+         hxBifTUZO+wSh+E03htmvCrROMT6PdgbpjiQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=u8W/aAkZBWNQ2bZ7EkPoGWaigPEKCBBFbvo63j5UAcQhECk7+Pwho2rxDEvXCI0xp1
+         20iZnB+Y4zXXchRlOpYUsUjDZRXnsXeiCrwxfX9/P0m8Uh0eVQY++6WAKsVptH54B+ap
+         1jx0hKzjgCW4gBRQunNYZwCYkgK1jcxXs7wvw=
+Received: by 10.231.157.143 with SMTP id b15mr3273615ibx.113.1284232069393;
+ Sat, 11 Sep 2010 12:07:49 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Sat, 11 Sep 2010 12:07:49 -0700 (PDT)
+In-Reply-To: <AANLkTi=WokEQMDc92SoWXPJW67dy0q79WW9RajrBHRx3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156006>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156007>
 
-When applying two pathspecs, one of which is named as a prefix to the
-other, we mistakenly recursed into the shorter one.
+On Sat, Sep 11, 2010 at 15:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> `On Mon, Aug 30, 2010 at 03:08, Jeff King <peff@peff.net> wrote:
 
-Noticed and fixed by David Reis.
+>> I don't understand why you have these at all. Just use "git log
+>> --format=3D%H" in your git review above (instead of rev-list), and t=
+hen
+>> you can just do:
+>>
+>> =C2=A0git review --grep=3Dwhatever
+>> =C2=A0git review -Sfoo
+>> =C2=A0git review file
+>>
+>> Or am I missing something subtle?
+>
+> You're not missing something, my alias was silly because I brainfarte=
+d
+> and didn't realize I could do $@, not "$@", so now it's:
+>
+> =C2=A0 =C2=A0review =3D "!f() { for rev in $(git log --reverse --form=
+at=3D%H $@);
+> do git show $rev; done; }; f"
+>
+> Which means I can do all of the commands you suggested above, thanks!
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
+Hrm, actually in the case of that alias doing:
 
-  Junio C Hamano <gitster@pobox.com> writes:
+    git review -M ...
 
-  > Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-  >
-  >> That's so close to a real test-case...
-  >
-  > Let's do this.
-  >
-  >  * t3101 seems somewhat stale; fix the style and add a few missing " &&"
-  >    cascades as a preparatory patch.
-  >
-  >  * Add the "mistaken prefix computation causes unwarranted recursion" fix
-  >    with a test.
-  >
-  > Here is the first one in such a series.
-
-  and here is the second one.
-
- builtin/ls-tree.c          |    2 ++
- t/t3101-ls-tree-dirname.sh |   20 +++++++++++++++++++-
- 2 files changed, 21 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/ls-tree.c b/builtin/ls-tree.c
-index dc86b0d..a818756 100644
---- a/builtin/ls-tree.c
-+++ b/builtin/ls-tree.c
-@@ -52,6 +52,8 @@ static int show_recursive(const char *base, int baselen, const char *pathname)
- 		speclen = strlen(spec);
- 		if (speclen <= len)
- 			continue;
-+		if (spec[len] && spec[len] != '/')
-+			continue;
- 		if (memcmp(pathname, spec, len))
- 			continue;
- 		return 1;
-diff --git a/t/t3101-ls-tree-dirname.sh b/t/t3101-ls-tree-dirname.sh
-index 026f9f8..ed8160c 100755
---- a/t/t3101-ls-tree-dirname.sh
-+++ b/t/t3101-ls-tree-dirname.sh
-@@ -15,6 +15,7 @@ This test runs git ls-tree with the following in a tree.
-     path2/1.txt        - a file in a directory
-     path3/1.txt        - a file in a directory
-     path3/2.txt        - a file in a directory
-+    path30/3.txt       - a file in a directory
- 
- Test the handling of mulitple directories which have matching file
- entries.  Also test odd filename and missing entries handling.
-@@ -24,7 +25,7 @@ entries.  Also test odd filename and missing entries handling.
- test_expect_success 'setup' '
- 	echo 111 >1.txt &&
- 	echo 222 >2.txt &&
--	mkdir path0 path0/a path0/a/b path0/a/b/c &&
-+	mkdir path0 path0/a path0/a/b path0/a/b/c path30 &&
- 	echo 111 >path0/a/b/c/1.txt &&
- 	mkdir path1 path1/b path1/b/c &&
- 	echo 111 >path1/b/c/1.txt &&
-@@ -33,6 +34,7 @@ test_expect_success 'setup' '
- 	mkdir path3 &&
- 	echo 111 >path3/1.txt &&
- 	echo 222 >path3/2.txt &&
-+	echo 333 >path30/3.txt &&
- 	find *.txt path* \( -type f -o -type l \) -print |
- 	xargs git update-index --add &&
- 	tree=`git write-tree` &&
-@@ -53,6 +55,7 @@ test_expect_success 'ls-tree plain' '
- 040000 tree X	path1
- 040000 tree X	path2
- 040000 tree X	path3
-+040000 tree X	path30
- EOF
- 	test_output
- '
-@@ -68,6 +71,7 @@ test_expect_success 'ls-tree recursive' '
- 100644 blob X	path2/1.txt
- 100644 blob X	path3/1.txt
- 100644 blob X	path3/2.txt
-+100644 blob X	path30/3.txt
- EOF
- 	test_output
- '
-@@ -164,6 +168,7 @@ test_expect_success 'ls-tree --full-tree' '
- 040000 tree X	path1
- 040000 tree X	path2
- 040000 tree X	path3
-+040000 tree X	path30
- EOF
- 	test_output
- '
-@@ -181,6 +186,7 @@ test_expect_success 'ls-tree --full-tree -r' '
- 100644 blob X	path2/1.txt
- 100644 blob X	path3/1.txt
- 100644 blob X	path3/2.txt
-+100644 blob X	path30/3.txt
- EOF
- 	test_output
- '
-@@ -195,6 +201,7 @@ test_expect_success 'ls-tree --abbrev=5' '
- 040000 tree X	path1
- 040000 tree X	path2
- 040000 tree X	path3
-+040000 tree X	path30
- EOF
- 	test_cmp expected check
- '
-@@ -208,6 +215,7 @@ path0
- path1
- path2
- path3
-+path30
- EOF
- 	test_output
- '
-@@ -222,6 +230,16 @@ path1/b/c/1.txt
- path2/1.txt
- path3/1.txt
- path3/2.txt
-+path30/3.txt
-+EOF
-+	test_output
-+'
-+
-+test_expect_success 'ls-tree with two dirnames' '
-+	git ls-tree --name-only $tree path3 path30 >current &&
-+	cat >expected <<\EOF &&
-+path3
-+path30
- EOF
- 	test_output
- '
--- 
-1.7.3.rc1.215.g6997c
+Won't do what I want, because it's `git show` that has to be invoked
+by -M. An option like --for-each-invoke-pager (or something) could do
+the right thing there.
