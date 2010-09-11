@@ -1,82 +1,121 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
- submodules
-Date: Sat, 11 Sep 2010 20:11:39 +0200 (CEST)
-Message-ID: <1529126586.2758911.1284228699341.JavaMail.fmail@mwmweb045>
-References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil>,
- <7vy6bajvnd.fsf@alter.siamese.dyndns.org>,
- <1464835923.7527323.1284144028047.JavaMail.fmail@mwmweb047>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: git-p4
+Date: Sat, 11 Sep 2010 20:42:41 +0200
+Message-ID: <AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>
+References: <4C8A8CE8.90600@borg.org>
+	<20100910235323.773d2c5b@varda>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
-	Brandon Casey <drafnel@gmail.com>
-To: Brandon Casey <casey@nrlssc.navy.mil>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 11 20:12:08 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: linux-kernel@vger.kernel.org, git@vger.kernel.org,
+	=?UTF-8?Q?Alejandro_Riveira_Fern=C3=A1ndez?= <ariveira@gmail.com>
+To: Kent Borg <kentborg@borg.org>
+X-From: git-owner@vger.kernel.org Sat Sep 11 20:42:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuUYZ-0005ky-7w
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 20:12:07 +0200
+	id 1OuV2O-0000m4-OT
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 20:42:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751547Ab0IKSL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Sep 2010 14:11:57 -0400
-Received: from fmmailgate06.web.de ([217.72.192.247]:58017 "EHLO
-	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750930Ab0IKSLl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Sep 2010 14:11:41 -0400
-Received: from mwmweb045  ( [172.20.18.54])
-	by fmmailgate06.web.de (Postfix) with ESMTP id 58B0A561A5A;
-	Sat, 11 Sep 2010 20:11:39 +0200 (CEST)
-Received: from [92.104.70.131]  by  mwmweb045  with HTTP; Sat
- Sep 11 20:11:39 CEST 2010
-In-Reply-To: <1464835923.7527323.1284144028047.JavaMail.fmail@mwmweb047>
-X-UI-Message-Type: mail
-X-UI-ATTACHMENT-ID-POSTFIX: 79d561ea-46c1-4c67-94f9-22b25429cd5f
-X-Priority: 3
-Importance: normal
-Sensitivity: Normal
-X-Provags-ID: V01U2FsdGVkX1/bMUQn0G3mA285pMH+5qmIo5ETHQI1sM3P/a9TBZCk5uyL4bZffOGT
- YiJaGQPy60/iKJhrgWY364Ny1oEEIA+pXaBK7fbhcUw=
+	id S1751827Ab0IKSmn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Sep 2010 14:42:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61509 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750903Ab0IKSmm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 11 Sep 2010 14:42:42 -0400
+Received: by iwn5 with SMTP id 5so3466696iwn.19
+        for <multiple recipients>; Sat, 11 Sep 2010 11:42:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=I+e+bWZSrC2KxhIL3Laxng6aSnd44BQDVyTJdOI1lrI=;
+        b=rmEom8E3dsx+kNxLnJA1SXlTvv7avNXrE2xzu5uBJYbXzS2ZZEglxWpD1KCtaqBih0
+         rb5vKf90DwkUzXDVz60MejHyvtNEuGapdZV2CJ7BYbbyM3tfe7WDdyPpMW92eAhltaeM
+         GX0FWYbVmAHJrfqsyM1iS8ok7H/AKL6gdwQVI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=tAVlqivB91sUA2oU16SFF6QSmrnYRgaqWyKwaBLoZcespQpj0bCex9ixcBZeXCHBYW
+         A73JHaJzJuOkYDGW1INQxExh2I1SovJBDLQAKRrgRb5RPqhigg/gSpHZYGZqpC3vePpu
+         ELt6PJnHMXzdMG+i+/vD+ze7PPdfZc3UywvNk=
+Received: by 10.231.146.212 with SMTP id i20mr3260188ibv.52.1284230561452;
+ Sat, 11 Sep 2010 11:42:41 -0700 (PDT)
+Received: by 10.231.112.20 with HTTP; Sat, 11 Sep 2010 11:42:41 -0700 (PDT)
+In-Reply-To: <20100910235323.773d2c5b@varda>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156004>
 
->>Brandon Casey <casey@nrlssc.navy.mil> writes:
->>
->>> From: Brandon Casey <drafnel@gmail.com>
->>>
->>> Since 'git describe' does not append -dirty to the version string it
->>> produces when untracked files exist in the working directory of the main
->>> repository, it should not do so for submodules either.
->>>
->>> Add --ignore-submodules=untracked to the call to diff-index which is used
->>> to decide whether or not the '-dirty' string is necessary.
->>>
->>> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
->>> ---
->>
->>Hmm, this changes the behaviour in a big way but it probably is for the
->>better.  At least it is consistent with the recent fixes to the
->>interaction between diff and submodules.
+2010/9/10 Alejandro Riveira Fern=C3=A1ndez <ariveira@gmail.com>:
+> El Fri, 10 Sep 2010 15:54:16 -0400
+> Kent Borg <kentborg@borg.org> escribi=C3=B3:
 >
->Hmm, by default the diff family considers submodules with untracked files as
->dirty unless configured otherwise (and AFAICS the recent fixes to the interaction
->between diff and submodule were options to configure your own default).
+> =C2=A0[ CCing git mailing list. Looks like a better place to ask this=
+ question]
 >
->So when git status tells you the subodule is modified, e.g. because of an untracked
->file, I would expect git describe to add '-dirty' to its output when requested. To get rid
->of that I would expect you either fix the .gitignore of the submodule or configure that
->you don't care about untracked files in submodules at all (either only for this
->submodule or in the config).
->
->So if I didn't misunderstand something here I would rather vote against this change,
->git describe should append a '-dirty' when git status would show modifications, no?
+>> I have a git-p4 question: I work in a Perforce shop and am doing Lin=
+ux
+>> kernel work, I need to share that work with colleagues who see the w=
+orld
+>> as a Perforce place. =C2=A0The kernel I have came from Linus' tree a=
+nd has a
+>> lot of history. =C2=A0When I try to do my first a "git p4 submit" it=
+ chokes
+>> as it looks back in the entire git history until it fails looking fo=
+r
+>> the ancestor of the first commit (linux-2.6.12-rc2!), I think it is
+>> looking for the last time it did a git-p4 submit so it knows how far
+>> back to go--but it has never done a submit in this new relationship
+>> between p4 and git. =C2=A0There is plenty of git history that is not
+>> reflected in p4, and I don't want it in p4, I just want new work in =
+p4.
 
-And maybe we should teach "git describe" the "--ignore-submodules" option, then
-you could tell describe what to pass to the diff-index command. Thoughts?
+Yes, you are right in that git-p4 looks for the last point in history
+where p4 and git were "in sync".
+
+>> I fear that git-p4 is for git people to contribute to bits natively
+>> p4-homed code, not this case where the code is natively git-homed co=
+de
+>> and it is the p4 people who will be contributing bits.
+
+This is also correct, I'd say.
+
+>> My attempt at a work around was this:
+>>
+>> =C2=A0- create a director on the p4 side, and from the p4 side submi=
+t the
+>> files that match my latest git submit.
+>>
+>> =C2=A0- sync with git-p4
+
+This is how I would do it too...
+
+>> =C2=A0- try to submit a file with git-p4...and that fails as it runs=
+ all the
+>> way back through the history. =C2=A0(Thank goodness it didn't succee=
+d in
+>> submitting kernel activity since 2005!)
+
+Well, when you did the "sync with git-p4", did it create a branch in
+refs/remotes/p4/master or something like that? I think that's
+generally how it solves the issue of knowing what to submit to p4; On
+the git side you have a number of commits that you _don't_ want to
+submit, and the most recent of these commits should have a log message
+that ends with:
+
+[git-p4: depot-paths =3D "//Path/To/Your/Project/": change =3D 30049]
+
+=2E. where the 'change' number is the number of the perforce changelist
+you synced using git-p4.
+
+So - work that you want to submit to p4 should be rebased on top of
+such a commit. Then it should work to do git-p4 submit.
+
+-Tor Arvid-
