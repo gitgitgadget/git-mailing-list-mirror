@@ -1,88 +1,73 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: RFC: Adding an option to log-like commands to call an external
- command for each revision
-Date: Sat, 11 Sep 2010 19:07:49 +0000
-Message-ID: <AANLkTi=p1ScGXAWprSYC6=K_FyNS3m2En-NZLtNU_ES_@mail.gmail.com>
-References: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
-	<20100830030819.GA25415@sigill.intra.peff.net>
-	<AANLkTi=WokEQMDc92SoWXPJW67dy0q79WW9RajrBHRx3@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
+ submodules
+Date: Sat, 11 Sep 2010 12:13:39 -0700
+Message-ID: <7v39tgf5zw.fsf@alter.siamese.dyndns.org>
+References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil> <7vy6bajvnd.fsf@alter.siamese.dyndns.org> <1464835923.7527323.1284144028047.JavaMail.fmail@mwmweb047> <1529126586.2758911.1284228699341.JavaMail.fmail@mwmweb045>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Sep 11 21:08:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, Brandon Casey <drafnel@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sat Sep 11 21:14:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuVQZ-0002aF-RM
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 21:07:56 +0200
+	id 1OuVWS-0004wz-8D
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 21:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751665Ab0IKTHu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 11 Sep 2010 15:07:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47915 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751427Ab0IKTHu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 11 Sep 2010 15:07:50 -0400
-Received: by iwn5 with SMTP id 5so3482881iwn.19
-        for <git@vger.kernel.org>; Sat, 11 Sep 2010 12:07:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HJuxH/9SFf04bPRti3KASAeFGfNRdg8+sQk3dCsxEEk=;
-        b=pVDR4lH24+n5mAAJB75z+6RPfJvZTI+boCIjrXCUka55Nxtt7Z3zo9OCoNGPAzbfHT
-         0qAZpbIYKS2iG6JAkEHQJZptvT/OYqrG5P3dPjn7ZwYyBKMVhV6vbnIrCNy9Df44RPrM
-         hxBifTUZO+wSh+E03htmvCrROMT6PdgbpjiQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=u8W/aAkZBWNQ2bZ7EkPoGWaigPEKCBBFbvo63j5UAcQhECk7+Pwho2rxDEvXCI0xp1
-         20iZnB+Y4zXXchRlOpYUsUjDZRXnsXeiCrwxfX9/P0m8Uh0eVQY++6WAKsVptH54B+ap
-         1jx0hKzjgCW4gBRQunNYZwCYkgK1jcxXs7wvw=
-Received: by 10.231.157.143 with SMTP id b15mr3273615ibx.113.1284232069393;
- Sat, 11 Sep 2010 12:07:49 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Sat, 11 Sep 2010 12:07:49 -0700 (PDT)
-In-Reply-To: <AANLkTi=WokEQMDc92SoWXPJW67dy0q79WW9RajrBHRx3@mail.gmail.com>
+	id S1751476Ab0IKTNy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Sep 2010 15:13:54 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37244 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750929Ab0IKTNx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Sep 2010 15:13:53 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 63C4DD595A;
+	Sat, 11 Sep 2010 15:13:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=cGWHgmQxvgeysF2HFti7hTwswrE=; b=pkWu2b
+	Jbnd5igSpFLysxANTLUIj7FPrJlechSsIbeXD9kmRGvj+nmNN9UxPvwCwPYNqBtr
+	BrloR56sOpd5AF6oZTwLz0Yjri35xrfVDl+NZ0XuTcMia3ku27EbB95966fpTGXW
+	eneeWoLz56DNYpyPrK67vcajlivN70ohGazdM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Kt8WFOUQB+DXLNfPvbqPb0zK0w1GKKG5
+	yklvgrvA34eB3pAFpRZRATZl0pgFEBwOPEK2KPIVNEVdrW/q4OeTS+DGcR9UUPPG
+	RtrdiK1oBMnbzxBSud91s8dcGbZGndDDEXgSPMbrn1m+cvAAH3IcB8dT7jlpw0fQ
+	cFqaelgPA84=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D3A4D5951;
+	Sat, 11 Sep 2010 15:13:47 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D48BD5950; Sat, 11 Sep
+ 2010 15:13:40 -0400 (EDT)
+In-Reply-To: <1529126586.2758911.1284228699341.JavaMail.fmail@mwmweb045>
+ (Jens Lehmann's message of "Sat\, 11 Sep 2010 20\:11\:39 +0200 \(CEST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B3B98158-BDD8-11DF-A43E-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156008>
 
-On Sat, Sep 11, 2010 at 15:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> `On Mon, Aug 30, 2010 at 03:08, Jeff King <peff@peff.net> wrote:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
->> I don't understand why you have these at all. Just use "git log
->> --format=3D%H" in your git review above (instead of rev-list), and t=
-hen
->> you can just do:
->>
->> =C2=A0git review --grep=3Dwhatever
->> =C2=A0git review -Sfoo
->> =C2=A0git review file
->>
->> Or am I missing something subtle?
+>>So if I didn't misunderstand something here I would rather vote against this change,
+>>git describe should append a '-dirty' when git status would show modifications, no?
 >
-> You're not missing something, my alias was silly because I brainfarte=
-d
-> and didn't realize I could do $@, not "$@", so now it's:
->
-> =C2=A0 =C2=A0review =3D "!f() { for rev in $(git log --reverse --form=
-at=3D%H $@);
-> do git show $rev; done; }; f"
->
-> Which means I can do all of the commands you suggested above, thanks!
+> And maybe we should teach "git describe" the "--ignore-submodules" option, then
+> you could tell describe what to pass to the diff-index command. Thoughts?
 
-Hrm, actually in the case of that alias doing:
+It is sensible to add the option, and handle_ignore_submodules_arg() call
+to grab "diff.ignoresubmodules" configuration) to the command, perhaps.
 
-    git review -M ...
-
-Won't do what I want, because it's `git show` that has to be invoked
-by -M. An option like --for-each-invoke-pager (or something) could do
-the right thing there.
+Both "status" and "diff" are described in the documentation as having
+"all" as the default value for --ignore-submodules option, but by default
+neither ignores changes in the submodules.  So it seems consistent for the
+command to take submodule changes into account by default.
