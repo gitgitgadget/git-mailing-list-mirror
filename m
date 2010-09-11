@@ -1,72 +1,42 @@
-From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: [PATCH] compat/nedmalloc: don't  force NDEBUG on the rest of git
-Date: Sat, 11 Sep 2010 11:59:18 +0200
-Message-ID: <4C8B52F6.5040609@lsrfire.ath.cx>
+From: "Tjernlund" <tjernlund@tjernlund.se>
+Subject: gitweb: please show tags file history browsing
+Date: Sat, 11 Sep 2010 16:37:56 +0200
+Message-ID: <000001cb51be$ed214dd0$c763e970$@se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: Steffen Prohaska <prohaska@zib.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Marius Storm-Olsen <marius@trolltech.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 11 12:00:19 2010
+To: "'git'" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 11 16:38:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuMsd-000104-BU
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 12:00:19 +0200
+	id 1OuRDb-0000Bp-C6
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Sep 2010 16:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751366Ab0IKJ7y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Sep 2010 05:59:54 -0400
-Received: from india601.server4you.de ([85.25.151.105]:54691 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751171Ab0IKJ7y (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Sep 2010 05:59:54 -0400
-Received: from [10.0.1.100] (p57B7A75A.dip.t-dialin.net [87.183.167.90])
-	by india601.server4you.de (Postfix) with ESMTPSA id CB5062F8090;
-	Sat, 11 Sep 2010 11:59:49 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.9) Gecko/20100825 Thunderbird/3.1.3
+	id S1752970Ab0IKOiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Sep 2010 10:38:07 -0400
+Received: from csmtp2.one.com ([91.198.169.22]:33103 "EHLO csmtp2.one.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752194Ab0IKOiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Sep 2010 10:38:06 -0400
+Received: from jockexp (84-217-8-85.tn.glocalnet.net [84.217.8.85])
+	by csmtp2.one.com (Postfix) with ESMTPA id 645F38463932C
+	for <git@vger.kernel.org>; Sat, 11 Sep 2010 14:38:04 +0000 (UTC)
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: ActRvutJYVrF1BqVQn2qr21ulU9T6A==
+Content-Language: sv
+x-cr-hashedpuzzle: BG4i Bnwd BvAa CeAz DP84 D0Z2 FMBm Fzb8 GKeP G6Dg G/Pc HNpm H32q IYRC JGeg JNJw;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{FC362EB4-9F66-4920-89B1-A76C0F85FDC3};dABqAGUAcgBuAGwAdQBuAGQAQAB0AGoAZQByAG4AbAB1AG4AZAAuAHMAZQA=;Sat, 11 Sep 2010 14:37:54 GMT;ZwBpAHQAdwBlAGIAOgAgAHAAbABlAGEAcwBlACAAcwBoAG8AdwAgAHQAYQBnAHMAIABmAGkAbABlACAAaABpAHMAdABvAHIAeQAgAGIAcgBvAHcAcwBpAG4AZwA=
+x-cr-puzzleid: {FC362EB4-9F66-4920-89B1-A76C0F85FDC3}
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/155990>
 
-Define the nedmalloc feature configuration macros for nedmalloc.o, only.
-This keeps assert(3) working for the rest of the git source; it was
-turned off for nedmalloc users before by defining NDEBUG globally.
+I would really like to see where the tags are when browsing
+file or directory history in gitweb. Would that be possible?
 
-Also remove -DUSE_NED_ALLOCATOR as this macro isn't used anywhere.
-
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- Makefile |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index c27e8bc..4d45e04 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1465,7 +1465,7 @@ ifdef NO_REGEX
- endif
- 
- ifdef USE_NED_ALLOCATOR
--       COMPAT_CFLAGS += -DUSE_NED_ALLOCATOR -DOVERRIDE_STRDUP -DNDEBUG -DREPLACE_SYSTEM_ALLOCATOR -Icompat/nedmalloc
-+       COMPAT_CFLAGS += -Icompat/nedmalloc
-        COMPAT_OBJS += compat/nedmalloc/nedmalloc.o
- endif
- 
-@@ -1908,6 +1908,11 @@ ifdef NO_REGEX
- compat/regex/regex.o: EXTRA_CPPFLAGS = -DGAWK -DNO_MBSUPPORT
- endif
- 
-+ifdef USE_NED_ALLOCATOR
-+compat/nedmalloc/nedmalloc.o: EXTRA_CPPFLAGS = \
-+	-DNDEBUG -DOVERRIDE_STRDUP -DREPLACE_SYSTEM_ALLOCATOR
-+endif
-+
- git-%$X: %.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) $(LIBS)
- 
+ Jocke
