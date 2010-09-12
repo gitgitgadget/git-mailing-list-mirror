@@ -1,93 +1,130 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: git-p4
-Date: Sun, 12 Sep 2010 22:12:23 +0200
-Message-ID: <AANLkTikrSt4djXep-o4Hr8EZAsiNXnqCHa2fLrys8T==@mail.gmail.com>
-References: <4C8A8CE8.90600@borg.org>
-	<20100910235323.773d2c5b@varda>
-	<AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>
-	<4C8CF231.6090403@borg.org>
-	<AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>
-	<4C8D14F9.90705@borg.org>
-	<AANLkTi=NGsY3wDiTLwNLpw4TJMpiSY8A=az_=v2fYDLj@mail.gmail.com>
-	<4C8D3303.1030302@borg.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [PATCH 1/2] Command names should not be translated.
+Date: Sun, 12 Sep 2010 21:09:55 +0100
+Message-ID: <20100912202105.DA51D2FC00@perkele>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Alejandro_Riveira_Fern=C3=A1ndez?= <ariveira@gmail.com>
-To: Kent Borg <kentborg@borg.org>
-X-From: git-owner@vger.kernel.org Sun Sep 12 22:12:31 2010
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org, avarab@gmail.com
+X-From: git-owner@vger.kernel.org Sun Sep 12 22:21:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ousub-0006MF-Bp
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 22:12:29 +0200
+	id 1Out3J-0000tk-Vr
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 22:21:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753548Ab0ILUMY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 16:12:24 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36472 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753281Ab0ILUMX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 16:12:23 -0400
-Received: by iwn5 with SMTP id 5so4388692iwn.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 13:12:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8FfD8fzh4+Mg0EEkbm/9KQgPHuG9un+ZvzQypC3jWn8=;
-        b=p+uQyCQ0vd4eGeRUrF0H5qLGoc7R3bEDjsfpG8jwUXwiUqmUtWHhvyQfXc4N5Sej2u
-         KzGSI7RcHoFl8MNGldhNhlFXtk7YfmuxQV3mcK2ggRW0CI+Upv5iA35NGcxzJSogZvNg
-         RoqFKFTOaMnlezpEANJKocP4ScPqaby5yB54M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=tlTGYEasSHQD/okg1nrR+6HI5mAA90bgPJAx9ou3WbLYH5elj5jiN50Djj55XgeXmg
-         dNkkmPwkTSiS+VIJEbjaQ9HJ/7NEgHMp9BwzouXRAR0qtHKQeD3Qtq1GfS7at03pTJ0T
-         EbxHbmOq1mvfL4Zy+CcBp0bbfQy404iM9U61c=
-Received: by 10.231.190.75 with SMTP id dh11mr4848236ibb.189.1284322343263;
- Sun, 12 Sep 2010 13:12:23 -0700 (PDT)
-Received: by 10.231.178.139 with HTTP; Sun, 12 Sep 2010 13:12:23 -0700 (PDT)
-In-Reply-To: <4C8D3303.1030302@borg.org>
+	id S1753551Ab0ILUVP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 16:21:15 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:43681 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753184Ab0ILUVI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 16:21:08 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L8N005RDHV6Q740@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 12 Sep 2010 22:21:06 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 3EADA179910D_C8D3632B	for <git@vger.kernel.org>; Sun,
+ 12 Sep 2010 20:21:06 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 1E49317968D8_C8D3632F	for <git@vger.kernel.org>; Sun,
+ 12 Sep 2010 20:21:06 +0000 (GMT)
+Received: from perkele ([84.215.142.63]) by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L8N00JFWHV68U30@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 12 Sep 2010 22:21:06 +0200 (MEST)
+Received: by perkele (Postfix, from userid 501)	id DA51D2FC00; Sun,
+ 12 Sep 2010 22:21:05 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156052>
 
-2010/9/12 Kent Borg <kentborg@borg.org>:
-> Tor Arvid Lund wrote:
->> When messing about with git-p4 I have sometimes messed up that
->> p4/master ref myself. I can normally fix it by setting it manually
->
-> Um, I maybe just did that before I saw your e-mail.
->
-> I edited:
->
-> =C2=A0.git/info/refs
-> =C2=A0.git/ORIG_HEAD
-> =C2=A0.git/packed/refs
->
-> ...and put in the sha1 of the "[git-p4:"-commit.
->
-> When I now do:
->
-> =C2=A0$ git rev-list --no-merges remotes/p4/master..master
->
-> I get just the one commit that I hoped to get!
->
-> ...did I just fix it?
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+---
+ builtin/notes.c |   12 ++++++------
+ wt-status.c     |    4 ++--
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-My guess: Yes! :)
-
-> I don't have time to try the "git p4 submit" now, I am going to be la=
-te
-> in meeting my wife. =C2=A0Tomorrow morning...will it work?
-
-I'm optimistic :)
-
--TA-
+diff --git a/builtin/notes.c b/builtin/notes.c
+index e33e39a..6679322 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -502,7 +502,7 @@ static int list(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_list_usage, options);
+ 	}
+ 
+-	t = init_notes_check(N_("list"));
++	t = init_notes_check("list");
+ 	if (argc) {
+ 		if (get_sha1(argv[0], object))
+ 			die(_("Failed to resolve '%s' as a valid ref."), argv[0]);
+@@ -559,7 +559,7 @@ static int add(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1(object_ref, object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+ 
+-	t = init_notes_check(N_("add"));
++	t = init_notes_check("add");
+ 	note = get_note(t, object);
+ 
+ 	if (note) {
+@@ -635,7 +635,7 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1(object_ref, object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+ 
+-	t = init_notes_check(N_("copy"));
++	t = init_notes_check("copy");
+ 	note = get_note(t, object);
+ 
+ 	if (note) {
+@@ -751,7 +751,7 @@ static int show(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1(object_ref, object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+ 
+-	t = init_notes_check(N_("show"));
++	t = init_notes_check("show");
+ 	note = get_note(t, object);
+ 
+ 	if (!note)
+@@ -788,7 +788,7 @@ static int remove_cmd(int argc, const char **argv, const char *prefix)
+ 	if (get_sha1(object_ref, object))
+ 		die(_("Failed to resolve '%s' as a valid ref."), object_ref);
+ 
+-	t = init_notes_check(N_("remove"));
++	t = init_notes_check("remove");
+ 
+ 	retval = remove_note(t, object);
+ 	if (retval)
+@@ -822,7 +822,7 @@ static int prune(int argc, const char **argv, const char *prefix)
+ 		usage_with_options(git_notes_prune_usage, options);
+ 	}
+ 
+-	t = init_notes_check(N_("prune"));
++	t = init_notes_check("prune");
+ 
+ 	prune_notes(t, (verbose ? NOTES_PRUNE_VERBOSE : 0) |
+ 		(show_only ? NOTES_PRUNE_VERBOSE|NOTES_PRUNE_DRYRUN : 0) );
+diff --git a/wt-status.c b/wt-status.c
+index f6946e1..7d4719f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -663,9 +663,9 @@ void wt_status_print(struct wt_status *s)
+ 		wt_status_print_submodule_summary(s, 1);  /* unstaged */
+ 	}
+ 	if (s->show_untracked_files) {
+-		wt_status_print_other(s, &s->untracked, _("Untracked"), _("add"));
++		wt_status_print_other(s, &s->untracked, _("Untracked"), "add");
+ 		if (s->show_ignored_files)
+-			wt_status_print_other(s, &s->ignored, _("Ignored"), _("add -f"));
++			wt_status_print_other(s, &s->ignored, _("Ignored"), "add -f");
+ 	} else if (s->commitable)
+ 		fprintf(s->fp, _("# Untracked files not listed%s\n"),
+ 			advice_status_hints
+-- 
+1.7.1
