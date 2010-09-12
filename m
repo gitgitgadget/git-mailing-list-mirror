@@ -1,71 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
- submodules
-Date: Sun, 12 Sep 2010 10:44:18 -0700
-Message-ID: <7vfwxeeu19.fsf@alter.siamese.dyndns.org>
-References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil> <7vy6bajvnd.fsf@alter.siamese.dyndns.org> <1464835923.7527323.1284144028047.JavaMail.fmail@mwmweb047> <1529126586.2758911.1284228699341.JavaMail.fmail@mwmweb045> <7v39tgf5zw.fsf@alter.siamese.dyndns.org> <1982035721.2791029.1284236591083.JavaMail.fmail@mwmweb045>
+From: Kent Borg <kentborg@borg.org>
+Subject: Re: git-p4
+Date: Sun, 12 Sep 2010 13:59:21 -0400
+Message-ID: <4C8D14F9.90705@borg.org>
+References: <4C8A8CE8.90600@borg.org>	<20100910235323.773d2c5b@varda>	<AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>	<4C8CF231.6090403@borg.org> <AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de, Brandon Casey <drafnel@gmail.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Sep 12 19:44:54 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?QWxlamFuZHJvIFJpdmVpcmEgRmVybsOhbmRleg==?= 
+	<ariveira@gmail.com>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 19:59:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ouqbl-0001X0-FZ
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 19:44:53 +0200
+	id 1Ouqpv-0007pU-2V
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 19:59:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753545Ab0ILRod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 13:44:33 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49153 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751607Ab0ILRoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 13:44:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DED77D5FFD;
-	Sun, 12 Sep 2010 13:44:31 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=D8ZTZKbpDKegzaxC6lCqzJE60Qo=; b=JSu2Gs
-	ylTsuEsa3NqGbTrkli00fJWqDB90f10uGPqFRdMWL7kg/eTmGp+DxRhKoumcSgiG
-	7+EjPFoznq5LFGDfn89rEFmCi1299FLlmFLxOux18J+8lah74fMkWNUdxkODZqzM
-	Yza3ND58zi4lM7AI/86rGB1f+PbJf1Cxpk7Nk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=k1U8p3oCmMbgGA3d/9YnMxS15aW/5EmC
-	gPhWUKqDCvnF0S2Z+YkCOrXcoY9X4OcaTui30Jmb0BQ/xoWWlFl3hw4Roe5WQmrn
-	cHD82TdCJLChaOyuPF5fdWJ6C7i7y8TY4WO/71xJhBKiSpIl6fA9KhzMeVM1I9kk
-	nPXwVwTIKYM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 87FA6D5FF8;
-	Sun, 12 Sep 2010 13:44:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CC21D5FF7; Sun, 12 Sep
- 2010 13:44:19 -0400 (EDT)
-In-Reply-To: <1982035721.2791029.1284236591083.JavaMail.fmail@mwmweb045>
- (Jens Lehmann's message of "Sat\, 11 Sep 2010 22\:23\:11 +0200 \(CEST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 63084B5A-BE95-11DF-999A-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752818Ab0ILR7Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 13:59:24 -0400
+Received: from borg.org ([64.105.205.123]:43759 "EHLO borg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751817Ab0ILR7Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 13:59:24 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: kentborg)
+	by borg.org (Postfix) with ESMTP id E6FDD87805;
+	Sun, 12 Sep 2010 13:59:22 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156040>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156041>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Tor Arvid Lund wrote:
+> Ok, so if you call this on the cmd line, it should output sha1's on
+> all commits that will be submitted (in reverse order) to p4. If it
+> doesn't, this may well be a good place to dig for a solution.
 
->>Jens Lehmann <Jens.Lehmann@web.de> writes:
->>> And maybe we should teach "git describe" the "--ignore-submodules" option, then
->>> you could tell describe what to pass to the diff-index command. Thoughts?
->>
->>It is sensible to add the option, and handle_ignore_submodules_arg() call
->>to grab "diff.ignoresubmodules" configuration) to the command, perhaps.
->
-> Ok, I'll look into that and prepare a patch.
+It does output the commits it wants to submit.  In my broken case far
+too many.
 
-Thanks; and thanks for biting my sanity check weatherbaloon ;-)
+I created a simple working case to see what working looks like, and the
+exact same command outputs just the one commit.  Looking more carefully
+at my gitg pictures in the good and bad cases, I realize that I in the
+broken case I probably don't have the graph I need.
+
+
+Good case:
+
+  (master)
+   |
+  (p4/HEAD)  (p4/master)
+   |
+  initial test import from existing depot
+
+
+Bad case:
+
+  (master)   trivial change I am trying to submit
+   |
+  (tmp)  commit with the "[git-p4: depot-paths = "//depot/[...blah
+blah...]": change  = 160991]" string at the end of the description
+   |
+  Merge remote branch 'p4/master'
+   | \
+   |  (p4/HEAD)  (p4/master)  a commit that is real work
+   |   |
+   |   more real work
+   |   |
+   |   more real work
+   |   |
+   Merge remote branch 'p4/master'
+   |  \|
+   some commit in my thrashing about
+   |   |
+   |   more real work
+   |   |
+   .   .
+   .   .
+   .   .
+   |   |
+   |   initial import of no-history linux sources that I put in manually
+via Perforce
+   |
+   .
+   .
+   .
+   |
+   Linux-2.6.12-rc2
+ 
+
+I think my understanding of merges and rebases needs more depth...and I
+think I have mangled branches.
+
+
+I tried a checkout of master and a "git rebase remotes/p4/master" and
+that produced thousands of conflicts.  Was that due to my initial Linux
+sources put in on the Perforce side?
+
+
+How do I untangle myself here?
+
+
+I think I am about to be saved, thanks so much in advance for that!
+
+
+-kb
