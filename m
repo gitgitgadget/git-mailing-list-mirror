@@ -1,111 +1,96 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: Re: possible gitattributes eol bug with new eol=crlf | lf support?
-Date: Sun, 12 Sep 2010 15:58:43 -0400
-Message-ID: <AANLkTi=9Wv9_s2zDEdpc8Dn7qXSRepZSToKkOrAoTQnR@mail.gmail.com>
-References: <AANLkTinC8g9m=2ka=7LiHH4MtfxC-NbxbsYQEbmMyXmN@mail.gmail.com>
-	<1F2D74A7-1C9C-47D9-9C3D-E430E446CB94@gmail.com>
-	<AANLkTi=xPpPZzUqVEHEkH2sKvSVZH+MzunET6vEA_tw5@mail.gmail.com>
-	<4F27AD7B-2B2D-4378-B1D5-6F380396E0FF@gmail.com>
+From: Parag Kalra <paragkalra@gmail.com>
+Subject: Re: Making Git untrack few folders
+Date: Sun, 12 Sep 2010 13:00:17 -0700
+Message-ID: <AANLkTi=5_u+Ei-3+9uUYcv5bkrpGCuibMiOW-_N6H8tb@mail.gmail.com>
+References: <AANLkTi=vjueuP66BAMsRDww=J3Nq3Q4BooKF+85khcBn@mail.gmail.com>
+ <AANLkTiktMe190OVPrTXMtmfaLRLXeJBZ4vSZewJecQWe@mail.gmail.com> <20100912103717.GA24576@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 21:58:56 2010
+Cc: git@vger.kernel.org
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 22:00:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OushS-0000GS-Uj
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 21:58:55 +0200
+	id 1OusjD-00014q-Er
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 22:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753544Ab0ILT6s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 15:58:48 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:61028 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753003Ab0ILT6p convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 15:58:45 -0400
-Received: by ewy23 with SMTP id 23so2452381ewy.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 12:58:44 -0700 (PDT)
+	id S1753439Ab0ILUAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 16:00:38 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:49682 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752972Ab0ILUAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 16:00:38 -0400
+Received: by qyk36 with SMTP id 36so1175209qyk.19
+        for <git@vger.kernel.org>; Sun, 12 Sep 2010 13:00:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QKEv4mpShl1L4LPLFgBTmz07ZymJO6Aya28yxlgMEnw=;
-        b=W0dJ7FVe9R5LkDR8YS4qT6U4LVN9x25e1Ev6Oxom+LuavylMGy7JlLc4LGDr4fw2u0
-         TxAUJTAHjbGgmChy2zV2Wv5tNq1rtG+NHoUqPzJgA9LfeSyZ0KYJA6+oMBJpFDcDJxjC
-         ocsndl0KLlNiWOJHKayqBvMJOnue9IvhdPT0g=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=+UOsLROgNTVDEZSEayexQYUGhL5u29SsuxFGBQdXHGE=;
+        b=NwdAbfkhjCLCHJSBJ0bNo0GUMVxhRuHCFqD+fOJ+bp++h794yWwmkc6VlAzeGhgrdy
+         hC5clPkzVYS8lqGIGw2IWmKNqdoe0+FD4/k1NqBpohp5dkAcSRLOPO4kkvwJa9+Vos+r
+         Z+pCbvWxfuHatK17mF2fZWomaBCGZqNrwJ47Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=htkDqLX79OPLM3fb/av2l/c21v4mUN96IAD3QlnRwarE7rt7S2d3nwJloM05tO6RGN
-         PFTC0+LsE3WqoCr/AcuDsYscUjpcNeIX0QQEWhS7BAplezcv2g+msn/TIzzAuMyRgdze
-         R5Rbq77pxMeCnjMduME+GMnpnsBOHfM4pYLJc=
-Received: by 10.14.53.1 with SMTP id f1mr2104935eec.36.1284321524041; Sun, 12
- Sep 2010 12:58:44 -0700 (PDT)
-Received: by 10.14.4.11 with HTTP; Sun, 12 Sep 2010 12:58:43 -0700 (PDT)
-In-Reply-To: <4F27AD7B-2B2D-4378-B1D5-6F380396E0FF@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=kywzizPVzrnuyd3co8LdjW2FHfahM13nV3pJlg/Esrags0BB3BttlY9tOOU/7SSBRv
+         J7cMBoyL4osKEzELjrNVecJuKXdR70Vj1Y7QxYndpSAKcNrOk4o0sjnxMiXTzqqmWRLk
+         C6KgSd/in1BHWgneCwkv4GCOYce3nUpgVJ0A4=
+Received: by 10.229.233.80 with SMTP id jx16mr2605164qcb.62.1284321637155;
+ Sun, 12 Sep 2010 13:00:37 -0700 (PDT)
+Received: by 10.229.248.149 with HTTP; Sun, 12 Sep 2010 13:00:17 -0700 (PDT)
+In-Reply-To: <20100912103717.GA24576@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156048>
 
-Thanks Eyvind,
+Thanks Ram.
 
-I tried it on an experimental repository and it worked. Thank you for
-your recommendation.
+git rm --cached was precisely what I was looking for.
 
-I also found the following link at github which achieves a similar
-effect. Adding this for the record in case someone else searching for
-a solution in the future wanted more detail.
+Also .gitignore file worked without any issues.
 
-    http://help.github.com/dealing-with-lineendings/
+Cheers,
+Parag
 
-The one thing I find curious about the github article is that it seems
-to recommend using autocrlf=3Dtrue for ALL platforms once the linefeeds
-have been normalized.
 
-Let me ask for an opinion about this... Given we have an environment
-of mixed Windows, Mac, and Linux developers, that we have just
-migrated from svn and over 2000 files in the repository have messed up
-line-endings, what would be your recommendation for autocrlf settings?
-Oh, important note, because neither cygwin nor msysgit support newer
-versions of git, we do not have the flexibility of running your new
-"eol" support on Windows, while Linux developers do.
 
-So if we did this one-time normalization on all repositories, all
-branches, what holistic approach (eol, autocrlf) would keep our files
-sane for a mix of 1.7.2 and later, and 1.7.0.1 and earlier, Windows,
-Mac, and Linux?
 
-Thanks Eyvind.
-
--Bob
-
-On Sun, Sep 12, 2010 at 7:46 AM, Eyvind Bernhardsen
-<eyvind.bernhardsen@gmail.com> wrote:
-> On 10. sep. 2010, at 23.27, Robert Buck wrote:
+On Sun, Sep 12, 2010 at 3:37 AM, Ramkumar Ramachandra
+<artagnon@gmail.com> wrote:
+> Hi Parag,
 >
->> I don't understand the inner workings of .git/index, but is removing
->> that file destructive to history or anything? What are the
->> implications of that delete-command?
+> Parag Kalra writes:
+>> 1. Is there a way I can make Git not track a particular folder in my
+>> working code base directory. For example, I have a tmp folder in my
+>> local code base and I don't want Git to track whats going on inside
+>> that directory.
 >
-> Removing the index will lose the changes you've staged ("git add"ed) =
-for the next commit, but your working directory won't be touched. =C2=A0=
-If you've added a file and then modified or deleted it, you would lose =
-the version of that file that was in the index.
+> Yes. See gitignore (5).
 >
-> "git reset" then rebuilds the index identically to the HEAD commit, b=
-ut without the staged changes and (importantly) the stat cache. =C2=A0T=
-he point is to make git re-check every file to see if it has been modif=
-ied.
+>> 2. Accidently I have added this folder, committed and pushed it to
+>> origin master. Is there a way I can remove this tmp folder from git
+>> revision history and at the same time keeping it intact in my local
+>> code base directory.
 >
-> Sorry, I should have mentioned the downsides.
+> Yes. Simply `rm --cached` the folder, and amemd your previous commit
+> using `commit --amend`, and perform a non-ff push using the `+`
+> syntax. For example, to perform a non-ff push to remote branch `foo`
+> whose local name is `foo`, invoke `push +foo:foo`. Note that other
+> users who have already pulled the bad commit will have to forget about
+> it explicitly too.
 >
-> - Eyvind
+> If the folder tracking information is a few revision deep, consider
+> using `rebase -i` to manually overwrite those commits to exclude that
+> folder. If the folder was too many revisions earlier, use a
+> `filter-branch` index filter to make Git completely forget that
+> folder.
 >
+> -- Ram
 >
