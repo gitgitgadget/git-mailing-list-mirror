@@ -1,65 +1,71 @@
-From: Peter Baumann <waste.manager@gmx.de>
-Subject: Re: git-svn: How dependent is the git-svn repository on the
- Subversion repository URL?
-Date: Sun, 12 Sep 2010 08:57:12 +0200
-Message-ID: <20100912065712.GA11407@m62s10.vlinux.de>
-References: <loom.20100912T032208-79@post.gmane.org>
+From: "Tjernlund" <tjernlund@tjernlund.se>
+Subject: RE: gitweb: please show tags file history browsing
+Date: Sun, 12 Sep 2010 11:27:52 +0200
+Message-ID: <000d01cb525c$c6c2b8b0$54482a10$@se>
+References: <000001cb51be$ed214dd0$c763e970$@se> <m3r5h0kwn5.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Daniel Trebbien <dtrebbien@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 08:57:27 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "'git'" <git@vger.kernel.org>
+To: "'Jakub Narebski'" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 11:38:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OugVA-0004ti-PZ
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 08:57:25 +0200
+	id 1Ouj1B-0006K4-OW
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 11:38:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751614Ab0ILG5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 02:57:19 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:33535 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751518Ab0ILG5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 02:57:18 -0400
-Received: (qmail invoked by alias); 12 Sep 2010 06:57:16 -0000
-Received: from m62s10.vlinux.de (EHLO m62s10.vlinux.de) [83.151.21.204]
-  by mail.gmx.net (mp043) with SMTP; 12 Sep 2010 08:57:16 +0200
-X-Authenticated: #1252284
-X-Provags-ID: V01U2FsdGVkX19kWEdLGxVkaJSZUqXUL1myAzrrhCWWvx1C50tghQ
-	Ipd4lTM2zEtmee
-Received: by m62s10.vlinux.de (Postfix, from userid 1000)
-	id 7A612D400E; Sun, 12 Sep 2010 08:57:12 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <loom.20100912T032208-79@post.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Y-GMX-Trusted: 0
+	id S1752457Ab0ILJib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 05:38:31 -0400
+Received: from csmtp1.one.com ([195.47.247.21]:33260 "EHLO csmtp1.one.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752417Ab0ILJia (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 05:38:30 -0400
+X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Sep 2010 05:38:30 EDT
+Received: from jockexp (84-217-13-162.tn.glocalnet.net [84.217.13.162])
+	by csmtp1.one.com (Postfix) with ESMTP id 0D9611BC3CCA8;
+	Sun, 12 Sep 2010 09:28:02 +0000 (UTC)
+In-Reply-To: <m3r5h0kwn5.fsf@localhost.localdomain>
+X-Mailer: Microsoft Office Outlook 12.0
+thread-index: ActR2Fyvm2Wwg40oTT6aHvbuEguGIAAg35qQ
+Content-Language: sv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156022>
 
-On Sun, Sep 12, 2010 at 01:29:52AM +0000, Daniel Trebbien wrote:
-> If I initialize the git-svn repository by passing in the location of a local
-> mirror, as in:
-> git svn init -s file:///path/to/mirror
-> and proceed to fetch all revisions from the mirror, may I simply change the
-> `url = ` line of `.git/config` to make it point to the real repository, or is
-> the git repository that is created by git-svn dependent on the original URL that
-> was specified in the initialization?
+> -----Original Message-----
+> From: Jakub Narebski [mailto:jnareb@gmail.com]
 > 
+> "Tjernlund" <tjernlund@tjernlund.se> writes:
+> 
+> > I would really like to see where the tags are when browsing
+> > file or directory history in gitweb. Would that be possible?
+> 
+> Hmmm... that is second such request...
 
-Changing only the url in the config does won't work, because git-svn appends a line
-to every commit message which includes the SVN URL. But If I remember correctly,
-putting something like this into the config file *will* work
+:)
 
-[svn-remote "svn"]
-        rewriteRoot = svn://url/to/pubic/svn/server
-        url = file:///path/to/mirror
+> 
+> While it probably be possible to show tags in 'history' view, it would
+> be not easy.  The problem is that 'history' view shows only commits
+> that touch specified file or directory, and tagged commits usually do
+> not touch those files (at least if one is using "bump version number"
+> commits to tag them).
+> 
+> So you would have:
+> 1. Design where to show those tags - they would be between shown
+>    commits.
+> 2. Create code which shows some/all tags that are between commits in
+>    the presence of nonlinear history, without affecting performance
+>    too badly.
 
-After the initial import you could exchange the url with the rewriteRoot url
-and remove the later entry completly.
+Ah, that is too bad because I think it would really useful.
+Image browsing a drivers history in the linux kernel. Then it would be
+really nice to see what changes/bug fixes went into what release.
 
-So have a look at --rewrite-root in the git svn manpage.
+ Jocke
