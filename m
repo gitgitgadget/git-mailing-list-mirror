@@ -1,2106 +1,3169 @@
 From: Peter Krefting <peter@softwolves.pp.se>
-Subject: [PATCH] git-gui: Update Swedish translation (521t).
-Date: Sun, 12 Sep 2010 21:13:29 +0100
-Message-ID: <20100912202124.833B32FC00@perkele>
+Subject: [PATCH 2/2] Add Swedish translation.
+Date: Sun, 12 Sep 2010 21:10:21 +0100
+Message-ID: <20100912202111.B11522FC00@perkele>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, spearce@spearce.org
-X-From: git-owner@vger.kernel.org Sun Sep 12 22:21:33 2010
+To: git@vger.kernel.org, avarab@gmail.com
+X-From: git-owner@vger.kernel.org Sun Sep 12 22:21:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Out3M-0000tk-85
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 22:21:32 +0200
+	id 1Out3K-0000tk-Gk
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 22:21:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753639Ab0ILUV3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 16:21:29 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:43720 "EHLO smtp.getmail.no"
+	id S1753184Ab0ILUVS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 16:21:18 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:43687 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753579Ab0ILUV1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 16:21:27 -0400
+	id S1753356Ab0ILUVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 16:21:14 -0400
 Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
  by get-mta-out03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L8N005SDHVPQ740@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 12 Sep 2010 22:21:25 +0200 (MEST)
+ with ESMTP id <0L8N005RPHVDQ740@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 12 Sep 2010 22:21:13 +0200 (MEST)
 Received: from get-mta-scan01.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 7B8361799109_C8D3645B	for <git@vger.kernel.org>; Sun,
- 12 Sep 2010 20:21:25 +0000 (GMT)
+ with SMTP id 0E96017992E8_C8D3639B	for <git@vger.kernel.org>; Sun,
+ 12 Sep 2010 20:21:13 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 2E3AB17968A6_C8D3645F	for <git@vger.kernel.org>; Sun,
- 12 Sep 2010 20:21:25 +0000 (GMT)
+ with ESMTP id B99C717968CD_C8D3638F	for <git@vger.kernel.org>; Sun,
+ 12 Sep 2010 20:21:12 +0000 (GMT)
 Received: from perkele ([84.215.142.63]) by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L8N00JGUHVO8U30@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Sun, 12 Sep 2010 22:21:25 +0200 (MEST)
-Received: by perkele (Postfix, from userid 501)	id 833B32FC00; Sun,
- 12 Sep 2010 22:21:24 +0200 (CEST)
+ with ESMTP id <0L8N00JG7HVB8U30@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 12 Sep 2010 22:21:12 +0200 (MEST)
+Received: by perkele (Postfix, from userid 501)	id B11522FC00; Sun,
+ 12 Sep 2010 22:21:11 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156055>
 
 Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
 ---
- po/sv.po |  802 +++++++++++++++++++++++++++++++-----------------------=
---------
- 1 files changed, 403 insertions(+), 399 deletions(-)
+ po/sv.po | 2947 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ 1 files changed, 2947 insertions(+), 0 deletions(-)
+ create mode 100644 po/sv.po
 
 diff --git a/po/sv.po b/po/sv.po
-index d8d73ac..8bd3c5d 100644
---- a/po/sv.po
+new file mode 100644
+index 0000000..26fa0a6
+--- /dev/null
 +++ b/po/sv.po
-@@ -8,41 +8,41 @@ msgid ""
- msgstr ""
- "Project-Id-Version: sv\n"
- "Report-Msgid-Bugs-To: \n"
--"POT-Creation-Date: 2010-01-26 15:47-0800\n"
--"PO-Revision-Date: 2010-01-28 13:57+0100\n"
-+"POT-Creation-Date: 2010-09-12 21:11+0100\n"
-+"PO-Revision-Date: 2010-09-12 21:12+0100\n"
- "Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
- "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
- "MIME-Version: 1.0\n"
- "Content-Type: text/plain; charset=3DUTF-8\n"
- "Content-Transfer-Encoding: 8bit"
-=20
--#: git-gui.sh:41 git-gui.sh:793 git-gui.sh:807 git-gui.sh:820 git-gui.=
-sh:903
--#: git-gui.sh:922
--msgid "git-gui: fatal error"
--msgstr "git-gui: =C3=B6desdigert fel"
--
--#: git-gui.sh:743
-+#: git-gui.sh:781
- #, tcl-format
- msgid "Invalid font specified in %s:"
- msgstr "Ogiltigt teckensnitt angivet i %s:"
-=20
--#: git-gui.sh:779
-+#: git-gui.sh:831
- msgid "Main Font"
- msgstr "Huvudteckensnitt"
-=20
--#: git-gui.sh:780
-+#: git-gui.sh:832
- msgid "Diff/Console Font"
- msgstr "Diff/konsolteckensnitt"
-=20
--#: git-gui.sh:794
-+#: git-gui.sh:845 git-gui.sh:859 git-gui.sh:872 git-gui.sh:955 git-gui=
-=2Esh:974
-+#: git-gui.sh:2964
-+msgid "git-gui: fatal error"
-+msgstr "git-gui: =C3=B6desdigert fel"
+@@ -0,0 +1,2947 @@
++# Swedish translation of git
++# Copyright =C2=A9 2010 Peter krefting <peter@softwolves.pp.se>
++# Peter Krefting <peter@softwolves.pp.se>, 2010.
++#
++msgid ""
++msgstr ""
++"Project-Id-Version: git 1.7.3\n"
++"Report-Msgid-Bugs-To: Git Mailing List <git@vger.kernel.org>\n"
++"POT-Creation-Date: 2010-09-10 20:09+0100\n"
++"PO-Revision-Date: 2010-09-12 21:07+0100\n"
++"Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
++"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
++"MIME-Version: 1.0\n"
++"Content-Type: text/plain; charset=3DUTF-8\n"
++"Content-Transfer-Encoding: 8bit\n"
++"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);"
 +
-+#: git-gui.sh:846
- msgid "Cannot find git in PATH."
- msgstr "Hittar inte git i PATH."
-=20
--#: git-gui.sh:821
-+#: git-gui.sh:873
- msgid "Cannot parse Git version string:"
- msgstr "Kan inte tolka versionsstr=C3=A4ng fr=C3=A5n Git:"
-=20
--#: git-gui.sh:839
-+#: git-gui.sh:891
- #, tcl-format
- msgid ""
- "Git version cannot be determined.\n"
-@@ -61,478 +61,478 @@ msgstr ""
- "\n"
- "Anta att \"%s\" =C3=A4r version 1.5.0?\n"
-=20
--#: git-gui.sh:1128
-+#: git-gui.sh:1180
- msgid "Git directory not found:"
- msgstr "Git-katalogen hittades inte:"
-=20
--#: git-gui.sh:1146
-+#: git-gui.sh:1201
- msgid "Cannot move to top of working directory:"
- msgstr "Kan inte g=C3=A5 till b=C3=B6rjan p=C3=A5 arbetskatalogen:"
-=20
--#: git-gui.sh:1154
-+#: git-gui.sh:1209
- msgid "Cannot use bare repository:"
- msgstr "Kan inte anv=C3=A4nda naket arkiv:"
-=20
--#: git-gui.sh:1162
-+#: git-gui.sh:1217
- msgid "No working directory"
- msgstr "Ingen arbetskatalog"
-=20
--#: git-gui.sh:1334 lib/checkout_op.tcl:306
-+#: git-gui.sh:1389 lib/checkout_op.tcl:306
- msgid "Refreshing file status..."
- msgstr "Uppdaterar filstatus..."
-=20
--#: git-gui.sh:1390
-+#: git-gui.sh:1445
- msgid "Scanning for modified files ..."
- msgstr "S=C3=B6ker efter =C3=A4ndrade filer..."
-=20
--#: git-gui.sh:1454
-+#: git-gui.sh:1509
- msgid "Calling prepare-commit-msg hook..."
- msgstr ""
- "Anropar kroken f=C3=B6r f=C3=B6rberedelse av incheckningsmeddelande (=
-prepare-commit-"
- "msg)..."
-=20
--#: git-gui.sh:1471
-+#: git-gui.sh:1526
- msgid "Commit declined by prepare-commit-msg hook."
- msgstr ""
- "Incheckningen avvisades av kroken f=C3=B6r f=C3=B6rberedelse av inche=
-ckningsmeddelande "
- "(prepare-commit-msg)."
-=20
--#: git-gui.sh:1629 lib/browser.tcl:246
-+#: git-gui.sh:1684 lib/browser.tcl:246
- msgid "Ready."
- msgstr "Klar."
-=20
--#: git-gui.sh:1787
-+#: git-gui.sh:1842
- #, tcl-format
- msgid "Displaying only %s of %s files."
- msgstr "Visar endast %s av %s filer."
-=20
--#: git-gui.sh:1913
-+#: git-gui.sh:1968
- msgid "Unmodified"
- msgstr "Of=C3=B6r=C3=A4ndrade"
-=20
--#: git-gui.sh:1915
-+#: git-gui.sh:1970
- msgid "Modified, not staged"
- msgstr "F=C3=B6r=C3=A4ndrade, ej k=C3=B6ade"
-=20
--#: git-gui.sh:1916 git-gui.sh:1924
-+#: git-gui.sh:1971 git-gui.sh:1979
- msgid "Staged for commit"
- msgstr "K=C3=B6ade f=C3=B6r incheckning"
-=20
--#: git-gui.sh:1917 git-gui.sh:1925
-+#: git-gui.sh:1972 git-gui.sh:1980
- msgid "Portions staged for commit"
- msgstr "Delar k=C3=B6ade f=C3=B6r incheckning"
-=20
--#: git-gui.sh:1918 git-gui.sh:1926
-+#: git-gui.sh:1973 git-gui.sh:1981
- msgid "Staged for commit, missing"
- msgstr "K=C3=B6ade f=C3=B6r incheckning, saknade"
-=20
--#: git-gui.sh:1920
-+#: git-gui.sh:1975
- msgid "File type changed, not staged"
- msgstr "Filtyp =C3=A4ndrad, ej k=C3=B6ade"
-=20
--#: git-gui.sh:1921
-+#: git-gui.sh:1976
- msgid "File type changed, staged"
- msgstr "Filtyp =C3=A4ndrad, k=C3=B6ade"
-=20
--#: git-gui.sh:1923
-+#: git-gui.sh:1978
- msgid "Untracked, not staged"
- msgstr "Ej sp=C3=A5rade, ej k=C3=B6ade"
-=20
--#: git-gui.sh:1928
-+#: git-gui.sh:1983
- msgid "Missing"
- msgstr "Saknade"
-=20
--#: git-gui.sh:1929
-+#: git-gui.sh:1984
- msgid "Staged for removal"
- msgstr "K=C3=B6ade f=C3=B6r borttagning"
-=20
--#: git-gui.sh:1930
-+#: git-gui.sh:1985
- msgid "Staged for removal, still present"
- msgstr "K=C3=B6ade f=C3=B6r borttagning, fortfarande n=C3=A4rvarande"
-=20
--#: git-gui.sh:1932 git-gui.sh:1933 git-gui.sh:1934 git-gui.sh:1935
--#: git-gui.sh:1936 git-gui.sh:1937
-+#: git-gui.sh:1987 git-gui.sh:1988 git-gui.sh:1989 git-gui.sh:1990
-+#: git-gui.sh:1991 git-gui.sh:1992
- msgid "Requires merge resolution"
- msgstr "Kr=C3=A4ver konflikthantering efter sammanslagning"
-=20
--#: git-gui.sh:1972
-+#: git-gui.sh:2027
- msgid "Starting gitk... please wait..."
- msgstr "Startar gitk... v=C3=A4nta..."
-=20
--#: git-gui.sh:1984
-+#: git-gui.sh:2039
- msgid "Couldn't find gitk in PATH"
- msgstr "Hittade inte gitk i PATH."
-=20
--#: git-gui.sh:2043
-+#: git-gui.sh:2098
- msgid "Couldn't find git gui in PATH"
- msgstr "Hittade inte git gui i PATH."
-=20
--#: git-gui.sh:2455 lib/choose_repository.tcl:36
-+#: git-gui.sh:2515 lib/choose_repository.tcl:36
- msgid "Repository"
- msgstr "Arkiv"
-=20
--#: git-gui.sh:2456
-+#: git-gui.sh:2516
- msgid "Edit"
- msgstr "Redigera"
-=20
--#: git-gui.sh:2458 lib/choose_rev.tcl:561
-+#: git-gui.sh:2518 lib/choose_rev.tcl:566
- msgid "Branch"
- msgstr "Gren"
-=20
--#: git-gui.sh:2461 lib/choose_rev.tcl:548
-+#: git-gui.sh:2521 lib/choose_rev.tcl:553
- msgid "Commit@@noun"
- msgstr "Incheckning"
-=20
--#: git-gui.sh:2464 lib/merge.tcl:121 lib/merge.tcl:150 lib/merge.tcl:1=
-68
-+#: git-gui.sh:2524 lib/merge.tcl:121 lib/merge.tcl:150 lib/merge.tcl:1=
-68
- msgid "Merge"
- msgstr "Sl=C3=A5 ihop"
-=20
--#: git-gui.sh:2465 lib/choose_rev.tcl:557
-+#: git-gui.sh:2525 lib/choose_rev.tcl:562
- msgid "Remote"
- msgstr "Fj=C3=A4rrarkiv"
-=20
--#: git-gui.sh:2468
-+#: git-gui.sh:2528
- msgid "Tools"
- msgstr "Verktyg"
-=20
--#: git-gui.sh:2477
-+#: git-gui.sh:2537
- msgid "Explore Working Copy"
- msgstr "Utforska arbetskopia"
-=20
--#: git-gui.sh:2483
-+#: git-gui.sh:2543
- msgid "Browse Current Branch's Files"
- msgstr "Bl=C3=A4ddra i grenens filer"
-=20
--#: git-gui.sh:2487
-+#: git-gui.sh:2547
- msgid "Browse Branch Files..."
- msgstr "Bl=C3=A4ddra filer p=C3=A5 gren..."
-=20
--#: git-gui.sh:2492
-+#: git-gui.sh:2552
- msgid "Visualize Current Branch's History"
- msgstr "Visualisera grenens historik"
-=20
--#: git-gui.sh:2496
-+#: git-gui.sh:2556
- msgid "Visualize All Branch History"
- msgstr "Visualisera alla grenars historik"
-=20
--#: git-gui.sh:2503
-+#: git-gui.sh:2563
- #, tcl-format
- msgid "Browse %s's Files"
- msgstr "Bl=C3=A4ddra i filer f=C3=B6r %s"
-=20
--#: git-gui.sh:2505
-+#: git-gui.sh:2565
- #, tcl-format
- msgid "Visualize %s's History"
- msgstr "Visualisera historik f=C3=B6r %s"
-=20
--#: git-gui.sh:2510 lib/database.tcl:27 lib/database.tcl:67
-+#: git-gui.sh:2570 lib/database.tcl:40 lib/database.tcl:66
- msgid "Database Statistics"
- msgstr "Databasstatistik"
-=20
--#: git-gui.sh:2513 lib/database.tcl:34
-+#: git-gui.sh:2573 lib/database.tcl:33
- msgid "Compress Database"
- msgstr "Komprimera databas"
-=20
--#: git-gui.sh:2516
-+#: git-gui.sh:2576
- msgid "Verify Database"
- msgstr "Verifiera databas"
-=20
--#: git-gui.sh:2523 git-gui.sh:2527 git-gui.sh:2531 lib/shortcut.tcl:8
-+#: git-gui.sh:2583 git-gui.sh:2587 git-gui.sh:2591 lib/shortcut.tcl:8
- #: lib/shortcut.tcl:40 lib/shortcut.tcl:72
- msgid "Create Desktop Icon"
- msgstr "Skapa skrivbordsikon"
-=20
--#: git-gui.sh:2539 lib/choose_repository.tcl:183 lib/choose_repository=
-=2Etcl:191
-+#: git-gui.sh:2599 lib/choose_repository.tcl:188 lib/choose_repository=
-=2Etcl:196
- msgid "Quit"
- msgstr "Avsluta"
-=20
--#: git-gui.sh:2547
-+#: git-gui.sh:2607
- msgid "Undo"
- msgstr "=C3=85ngra"
-=20
--#: git-gui.sh:2550
-+#: git-gui.sh:2610
- msgid "Redo"
- msgstr "G=C3=B6r om"
-=20
--#: git-gui.sh:2554 git-gui.sh:3109
-+#: git-gui.sh:2614 git-gui.sh:3190
- msgid "Cut"
- msgstr "Klipp ut"
-=20
--#: git-gui.sh:2557 git-gui.sh:3112 git-gui.sh:3186 git-gui.sh:3259
-+#: git-gui.sh:2617 git-gui.sh:3193 git-gui.sh:3267 git-gui.sh:3340
- #: lib/console.tcl:69
- msgid "Copy"
- msgstr "Kopiera"
-=20
--#: git-gui.sh:2560 git-gui.sh:3115
-+#: git-gui.sh:2620 git-gui.sh:3196
- msgid "Paste"
- msgstr "Klistra in"
-=20
--#: git-gui.sh:2563 git-gui.sh:3118 lib/branch_delete.tcl:26
--#: lib/remote_branch_delete.tcl:38
-+#: git-gui.sh:2623 git-gui.sh:3199 lib/branch_delete.tcl:28
-+#: lib/remote_branch_delete.tcl:39
- msgid "Delete"
- msgstr "Ta bort"
-=20
--#: git-gui.sh:2567 git-gui.sh:3122 git-gui.sh:3263 lib/console.tcl:71
-+#: git-gui.sh:2627 git-gui.sh:3203 git-gui.sh:3344 lib/console.tcl:71
- msgid "Select All"
- msgstr "Markera alla"
-=20
--#: git-gui.sh:2576
-+#: git-gui.sh:2636
- msgid "Create..."
- msgstr "Skapa..."
-=20
--#: git-gui.sh:2582
-+#: git-gui.sh:2642
- msgid "Checkout..."
- msgstr "Checka ut..."
-=20
--#: git-gui.sh:2588
-+#: git-gui.sh:2648
- msgid "Rename..."
- msgstr "Byt namn..."
-=20
--#: git-gui.sh:2593
-+#: git-gui.sh:2653
- msgid "Delete..."
- msgstr "Ta bort..."
-=20
--#: git-gui.sh:2598
-+#: git-gui.sh:2658
- msgid "Reset..."
- msgstr "=C3=85terst=C3=A4ll..."
-=20
--#: git-gui.sh:2608
-+#: git-gui.sh:2668
- msgid "Done"
- msgstr "F=C3=A4rdig"
-=20
--#: git-gui.sh:2610
-+#: git-gui.sh:2670
- msgid "Commit@@verb"
- msgstr "Checka in"
-=20
--#: git-gui.sh:2619 git-gui.sh:3050
-+#: git-gui.sh:2679 git-gui.sh:3131
- msgid "New Commit"
- msgstr "Ny incheckning"
-=20
--#: git-gui.sh:2627 git-gui.sh:3057
-+#: git-gui.sh:2687 git-gui.sh:3138
- msgid "Amend Last Commit"
- msgstr "L=C3=A4gg till f=C3=B6reg=C3=A5ende incheckning"
-=20
--#: git-gui.sh:2637 git-gui.sh:3011 lib/remote_branch_delete.tcl:99
-+#: git-gui.sh:2697 git-gui.sh:3092 lib/remote_branch_delete.tcl:101
- msgid "Rescan"
- msgstr "S=C3=B6k p=C3=A5 nytt"
-=20
--#: git-gui.sh:2643
-+#: git-gui.sh:2703
- msgid "Stage To Commit"
- msgstr "K=C3=B6a f=C3=B6r incheckning"
-=20
--#: git-gui.sh:2649
-+#: git-gui.sh:2709
- msgid "Stage Changed Files To Commit"
- msgstr "K=C3=B6a =C3=A4ndrade filer f=C3=B6r incheckning"
-=20
--#: git-gui.sh:2655
-+#: git-gui.sh:2715
- msgid "Unstage From Commit"
- msgstr "Ta bort fr=C3=A5n incheckningsk=C3=B6"
-=20
--#: git-gui.sh:2661 lib/index.tcl:412
-+#: git-gui.sh:2721 lib/index.tcl:415
- msgid "Revert Changes"
- msgstr "=C3=85terst=C3=A4ll =C3=A4ndringar"
-=20
--#: git-gui.sh:2669 git-gui.sh:3310 git-gui.sh:3341
-+#: git-gui.sh:2729 git-gui.sh:3391 git-gui.sh:3422
- msgid "Show Less Context"
- msgstr "Visa mindre sammanhang"
-=20
--#: git-gui.sh:2673 git-gui.sh:3314 git-gui.sh:3345
-+#: git-gui.sh:2733 git-gui.sh:3395 git-gui.sh:3426
- msgid "Show More Context"
- msgstr "Visa mer sammanhang"
-=20
--#: git-gui.sh:2680 git-gui.sh:3024 git-gui.sh:3133
-+#: git-gui.sh:2740 git-gui.sh:3105 git-gui.sh:3214
- msgid "Sign Off"
- msgstr "Skriv under"
-=20
--#: git-gui.sh:2696
-+#: git-gui.sh:2756
- msgid "Local Merge..."
- msgstr "Lokal sammanslagning..."
-=20
--#: git-gui.sh:2701
-+#: git-gui.sh:2761
- msgid "Abort Merge..."
- msgstr "Avbryt sammanslagning..."
-=20
--#: git-gui.sh:2713 git-gui.sh:2741
-+#: git-gui.sh:2773 git-gui.sh:2801
- msgid "Add..."
- msgstr "L=C3=A4gg till..."
-=20
--#: git-gui.sh:2717
-+#: git-gui.sh:2777
- msgid "Push..."
- msgstr "S=C3=A4nd..."
-=20
--#: git-gui.sh:2721
-+#: git-gui.sh:2781
- msgid "Delete Branch..."
- msgstr "Ta bort gren..."
-=20
--#: git-gui.sh:2731 git-gui.sh:3292
-+#: git-gui.sh:2791 git-gui.sh:3373
- msgid "Options..."
- msgstr "Alternativ..."
-=20
--#: git-gui.sh:2742
-+#: git-gui.sh:2802
- msgid "Remove..."
- msgstr "Ta bort..."
-=20
--#: git-gui.sh:2751 lib/choose_repository.tcl:50
-+#: git-gui.sh:2811 lib/choose_repository.tcl:50
- msgid "Help"
- msgstr "Hj=C3=A4lp"
-=20
--#: git-gui.sh:2755 git-gui.sh:2759 lib/about.tcl:14
-+#: git-gui.sh:2815 git-gui.sh:2819 lib/about.tcl:14
- #: lib/choose_repository.tcl:44 lib/choose_repository.tcl:53
- #, tcl-format
- msgid "About %s"
- msgstr "Om %s"
-=20
--#: git-gui.sh:2783
-+#: git-gui.sh:2843
- msgid "Online Documentation"
- msgstr "Webbdokumentation"
-=20
--#: git-gui.sh:2786 lib/choose_repository.tcl:47 lib/choose_repository.=
-tcl:56
-+#: git-gui.sh:2846 lib/choose_repository.tcl:47 lib/choose_repository.=
-tcl:56
- msgid "Show SSH Key"
- msgstr "Visa SSH-nyckel"
-=20
--#: git-gui.sh:2893
-+#: git-gui.sh:2965
- #, tcl-format
- msgid "fatal: cannot stat path %s: No such file or directory"
- msgstr ""
- "=C3=B6desdigert: kunde inte ta status p=C3=A5 s=C3=B6kv=C3=A4gen %s: =
-=46il eller katalog saknas"
-=20
--#: git-gui.sh:2926
-+#: git-gui.sh:2997
- msgid "Current Branch:"
- msgstr "Aktuell gren:"
-=20
--#: git-gui.sh:2947
-+#: git-gui.sh:3023
- msgid "Staged Changes (Will Commit)"
- msgstr "K=C3=B6ade =C3=A4ndringar (kommer att checkas in)"
-=20
--#: git-gui.sh:2967
-+#: git-gui.sh:3043
- msgid "Unstaged Changes"
- msgstr "Ok=C3=B6ade =C3=A4ndringar"
-=20
--#: git-gui.sh:3017
-+#: git-gui.sh:3098
- msgid "Stage Changed"
- msgstr "K=C3=B6a =C3=A4ndrade"
-=20
--#: git-gui.sh:3036 lib/transport.tcl:104 lib/transport.tcl:193
-+#: git-gui.sh:3117 lib/transport.tcl:107 lib/transport.tcl:196
- msgid "Push"
- msgstr "S=C3=A4nd"
-=20
--#: git-gui.sh:3071
-+#: git-gui.sh:3152
- msgid "Initial Commit Message:"
- msgstr "Inledande incheckningsmeddelande:"
-=20
--#: git-gui.sh:3072
-+#: git-gui.sh:3153
- msgid "Amended Commit Message:"
- msgstr "Ut=C3=B6kat incheckningsmeddelande:"
-=20
--#: git-gui.sh:3073
-+#: git-gui.sh:3154
- msgid "Amended Initial Commit Message:"
- msgstr "Ut=C3=B6kat inledande incheckningsmeddelande:"
-=20
--#: git-gui.sh:3074
-+#: git-gui.sh:3155
- msgid "Amended Merge Commit Message:"
- msgstr "Ut=C3=B6kat incheckningsmeddelande f=C3=B6r sammanslagning:"
-=20
--#: git-gui.sh:3075
-+#: git-gui.sh:3156
- msgid "Merge Commit Message:"
- msgstr "Incheckningsmeddelande f=C3=B6r sammanslagning:"
-=20
--#: git-gui.sh:3076
-+#: git-gui.sh:3157
- msgid "Commit Message:"
- msgstr "Incheckningsmeddelande:"
-=20
--#: git-gui.sh:3125 git-gui.sh:3267 lib/console.tcl:73
-+#: git-gui.sh:3206 git-gui.sh:3348 lib/console.tcl:73
- msgid "Copy All"
- msgstr "Kopiera alla"
-=20
--#: git-gui.sh:3149 lib/blame.tcl:104
-+#: git-gui.sh:3230 lib/blame.tcl:104
- msgid "File:"
- msgstr "Fil:"
-=20
--#: git-gui.sh:3255
-+#: git-gui.sh:3336
- msgid "Refresh"
- msgstr "Uppdatera"
-=20
--#: git-gui.sh:3276
-+#: git-gui.sh:3357
- msgid "Decrease Font Size"
- msgstr "Minska teckensnittsstorlek"
-=20
--#: git-gui.sh:3280
-+#: git-gui.sh:3361
- msgid "Increase Font Size"
- msgstr "=C3=96ka teckensnittsstorlek"
-=20
--#: git-gui.sh:3288 lib/blame.tcl:281
-+#: git-gui.sh:3369 lib/blame.tcl:281
- msgid "Encoding"
- msgstr "Teckenkodning"
-=20
--#: git-gui.sh:3299
-+#: git-gui.sh:3380
- msgid "Apply/Reverse Hunk"
- msgstr "Anv=C3=A4nd/=C3=A5terst=C3=A4ll del"
-=20
--#: git-gui.sh:3304
-+#: git-gui.sh:3385
- msgid "Apply/Reverse Line"
- msgstr "Anv=C3=A4nd/=C3=A5terst=C3=A4ll rad"
-=20
--#: git-gui.sh:3323
-+#: git-gui.sh:3404
- msgid "Run Merge Tool"
- msgstr "Starta verktyg f=C3=B6r sammanslagning"
-=20
--#: git-gui.sh:3328
-+#: git-gui.sh:3409
- msgid "Use Remote Version"
- msgstr "Anv=C3=A4nd versionen fr=C3=A5n fj=C3=A4rrarkivet"
-=20
--#: git-gui.sh:3332
-+#: git-gui.sh:3413
- msgid "Use Local Version"
- msgstr "Anv=C3=A4nd lokala versionen"
-=20
--#: git-gui.sh:3336
-+#: git-gui.sh:3417
- msgid "Revert To Base"
- msgstr "=C3=85terst=C3=A4ll till basversionen"
-=20
--#: git-gui.sh:3354
-+#: git-gui.sh:3435
- msgid "Visualize These Changes In The Submodule"
- msgstr "Visualisera =C3=A4ndringarna i undermodulen"
-=20
--#: git-gui.sh:3358
-+#: git-gui.sh:3439
- msgid "Visualize Current Branch History In The Submodule"
- msgstr "Visualisera grenens historik i undermodulen"
-=20
--#: git-gui.sh:3362
-+#: git-gui.sh:3443
- msgid "Visualize All Branch History In The Submodule"
- msgstr "Visualisera alla grenars historik i undermodulen"
-=20
--#: git-gui.sh:3367
-+#: git-gui.sh:3448
- msgid "Start git gui In The Submodule"
- msgstr "Starta git gui i undermodulen"
-=20
--#: git-gui.sh:3389
-+#: git-gui.sh:3483
- msgid "Unstage Hunk From Commit"
- msgstr "Ta bort del ur incheckningsk=C3=B6"
-=20
--#: git-gui.sh:3391
-+#: git-gui.sh:3485
- msgid "Unstage Lines From Commit"
- msgstr "Ta bort rader ur incheckningsk=C3=B6"
-=20
--#: git-gui.sh:3393
-+#: git-gui.sh:3487
- msgid "Unstage Line From Commit"
- msgstr "Ta bort rad ur incheckningsk=C3=B6"
-=20
--#: git-gui.sh:3396
-+#: git-gui.sh:3490
- msgid "Stage Hunk For Commit"
- msgstr "St=C3=A4ll del i incheckningsk=C3=B6"
-=20
--#: git-gui.sh:3398
-+#: git-gui.sh:3492
- msgid "Stage Lines For Commit"
- msgstr "St=C3=A4ll rader i incheckningsk=C3=B6"
-=20
--#: git-gui.sh:3400
-+#: git-gui.sh:3494
- msgid "Stage Line For Commit"
- msgstr "St=C3=A4ll rad i incheckningsk=C3=B6"
-=20
--#: git-gui.sh:3424
-+#: git-gui.sh:3519
- msgid "Initializing..."
- msgstr "Initierar..."
-=20
--#: git-gui.sh:3541
-+#: git-gui.sh:3658
- #, tcl-format
- msgid ""
- "Possible environment issues exist.\n"
-@@ -549,7 +549,7 @@ msgstr ""
- "av %s:\n"
- "\n"
-=20
--#: git-gui.sh:3570
-+#: git-gui.sh:3687
- msgid ""
- "\n"
- "This is due to a known issue with the\n"
-@@ -559,7 +559,7 @@ msgstr ""
- "Detta beror p=C3=A5 ett k=C3=A4nt problem med\n"
- "Tcl-bin=C3=A4ren som f=C3=B6ljer med Cygwin."
-=20
--#: git-gui.sh:3575
-+#: git-gui.sh:3692
- #, tcl-format
- msgid ""
- "\n"
-@@ -613,132 +613,132 @@ msgstr "Klandra f=C3=B6r=C3=A4ldraincheckning"
- msgid "Reading %s..."
- msgstr "L=C3=A4ser %s..."
-=20
--#: lib/blame.tcl:557
-+#: lib/blame.tcl:581
- msgid "Loading copy/move tracking annotations..."
- msgstr "L=C3=A4ser annoteringar f=C3=B6r kopiering/flyttning..."
-=20
--#: lib/blame.tcl:577
-+#: lib/blame.tcl:601
- msgid "lines annotated"
- msgstr "rader annoterade"
-=20
--#: lib/blame.tcl:769
-+#: lib/blame.tcl:793
- msgid "Loading original location annotations..."
- msgstr "L=C3=A4ser in annotering av originalplacering..."
-=20
--#: lib/blame.tcl:772
-+#: lib/blame.tcl:796
- msgid "Annotation complete."
- msgstr "Annotering fullbordad."
-=20
--#: lib/blame.tcl:802
-+#: lib/blame.tcl:826
- msgid "Busy"
- msgstr "Upptagen"
-=20
--#: lib/blame.tcl:803
-+#: lib/blame.tcl:827
- msgid "Annotation process is already running."
- msgstr "Annoteringsprocess k=C3=B6rs redan."
-=20
--#: lib/blame.tcl:842
-+#: lib/blame.tcl:866
- msgid "Running thorough copy detection..."
- msgstr "K=C3=B6r grundlig kopieringsigenk=C3=A4nning..."
-=20
--#: lib/blame.tcl:910
-+#: lib/blame.tcl:934
- msgid "Loading annotation..."
- msgstr "L=C3=A4ser in annotering..."
-=20
--#: lib/blame.tcl:963
-+#: lib/blame.tcl:987
- msgid "Author:"
- msgstr "F=C3=B6rfattare:"
-=20
--#: lib/blame.tcl:967
-+#: lib/blame.tcl:991
- msgid "Committer:"
- msgstr "Incheckare:"
-=20
--#: lib/blame.tcl:972
-+#: lib/blame.tcl:996
- msgid "Original File:"
- msgstr "Ursprunglig fil:"
-=20
--#: lib/blame.tcl:1020
-+#: lib/blame.tcl:1044
- msgid "Cannot find HEAD commit:"
- msgstr "Hittar inte incheckning f=C3=B6r HEAD:"
-=20
--#: lib/blame.tcl:1075
-+#: lib/blame.tcl:1099
- msgid "Cannot find parent commit:"
- msgstr "Hittar inte f=C3=B6r=C3=A4ldraincheckning:"
-=20
--#: lib/blame.tcl:1090
-+#: lib/blame.tcl:1114
- msgid "Unable to display parent"
- msgstr "Kan inte visa f=C3=B6r=C3=A4lder"
-=20
--#: lib/blame.tcl:1091 lib/diff.tcl:320
-+#: lib/blame.tcl:1115 lib/diff.tcl:323
- msgid "Error loading diff:"
- msgstr "Fel vid inl=C3=A4sning av differens:"
-=20
--#: lib/blame.tcl:1231
-+#: lib/blame.tcl:1255
- msgid "Originally By:"
- msgstr "Ursprungligen av:"
-=20
--#: lib/blame.tcl:1237
-+#: lib/blame.tcl:1261
- msgid "In File:"
- msgstr "I filen:"
-=20
--#: lib/blame.tcl:1242
-+#: lib/blame.tcl:1266
- msgid "Copied Or Moved Here By:"
- msgstr "Kopierad eller flyttad hit av:"
-=20
--#: lib/branch_checkout.tcl:14 lib/branch_checkout.tcl:19
-+#: lib/branch_checkout.tcl:16 lib/branch_checkout.tcl:21
- msgid "Checkout Branch"
- msgstr "Checka ut gren"
-=20
--#: lib/branch_checkout.tcl:23
-+#: lib/branch_checkout.tcl:26
- msgid "Checkout"
- msgstr "Checka ut"
-=20
--#: lib/branch_checkout.tcl:27 lib/branch_create.tcl:35
--#: lib/branch_delete.tcl:32 lib/branch_rename.tcl:30 lib/browser.tcl:2=
-82
--#: lib/checkout_op.tcl:579 lib/choose_font.tcl:43 lib/merge.tcl:172
--#: lib/option.tcl:125 lib/remote_add.tcl:32 lib/remote_branch_delete.t=
-cl:42
--#: lib/tools_dlg.tcl:40 lib/tools_dlg.tcl:204 lib/tools_dlg.tcl:352
--#: lib/transport.tcl:108
-+#: lib/branch_checkout.tcl:30 lib/branch_create.tcl:37
-+#: lib/branch_delete.tcl:34 lib/branch_rename.tcl:32 lib/browser.tcl:2=
-86
-+#: lib/checkout_op.tcl:579 lib/choose_font.tcl:45 lib/merge.tcl:172
-+#: lib/option.tcl:127 lib/remote_add.tcl:34 lib/remote_branch_delete.t=
-cl:43
-+#: lib/tools_dlg.tcl:41 lib/tools_dlg.tcl:202 lib/tools_dlg.tcl:345
-+#: lib/transport.tcl:111
- msgid "Cancel"
- msgstr "Avbryt"
-=20
--#: lib/branch_checkout.tcl:32 lib/browser.tcl:287 lib/tools_dlg.tcl:32=
-8
-+#: lib/branch_checkout.tcl:35 lib/browser.tcl:291 lib/tools_dlg.tcl:32=
-1
- msgid "Revision"
- msgstr "Revision"
-=20
--#: lib/branch_checkout.tcl:36 lib/branch_create.tcl:69 lib/option.tcl:=
-280
-+#: lib/branch_checkout.tcl:39 lib/branch_create.tcl:69 lib/option.tcl:=
-287
- msgid "Options"
- msgstr "Alternativ"
-=20
--#: lib/branch_checkout.tcl:39 lib/branch_create.tcl:92
-+#: lib/branch_checkout.tcl:42 lib/branch_create.tcl:92
- msgid "Fetch Tracking Branch"
- msgstr "H=C3=A4mta sp=C3=A5rande gren"
-=20
--#: lib/branch_checkout.tcl:44
-+#: lib/branch_checkout.tcl:47
- msgid "Detach From Local Branch"
- msgstr "Koppla bort fr=C3=A5n lokal gren"
-=20
--#: lib/branch_create.tcl:22
-+#: lib/branch_create.tcl:23
- msgid "Create Branch"
- msgstr "Skapa gren"
-=20
--#: lib/branch_create.tcl:27
-+#: lib/branch_create.tcl:28
- msgid "Create New Branch"
- msgstr "Skapa ny gren"
-=20
--#: lib/branch_create.tcl:31 lib/choose_repository.tcl:381
-+#: lib/branch_create.tcl:33 lib/choose_repository.tcl:389
- msgid "Create"
- msgstr "Skapa"
-=20
--#: lib/branch_create.tcl:40
-+#: lib/branch_create.tcl:42
- msgid "Branch Name"
- msgstr "Namn p=C3=A5 gren"
-=20
--#: lib/branch_create.tcl:43 lib/remote_add.tcl:39 lib/tools_dlg.tcl:50
-+#: lib/branch_create.tcl:44 lib/remote_add.tcl:41 lib/tools_dlg.tcl:51
- msgid "Name:"
- msgstr "Namn:"
-=20
--#: lib/branch_create.tcl:58
-+#: lib/branch_create.tcl:57
- msgid "Match Tracking Branch Name"
- msgstr "Anv=C3=A4nd namn p=C3=A5 sp=C3=A5rad gren"
-=20
-@@ -766,41 +766,41 @@ msgstr "=C3=85terst=C3=A4ll"
- msgid "Checkout After Creation"
- msgstr "Checka ut n=C3=A4r skapad"
-=20
--#: lib/branch_create.tcl:131
-+#: lib/branch_create.tcl:132
- msgid "Please select a tracking branch."
- msgstr "V=C3=A4lj en gren att sp=C3=A5ra."
-=20
--#: lib/branch_create.tcl:140
-+#: lib/branch_create.tcl:141
- #, tcl-format
- msgid "Tracking branch %s is not a branch in the remote repository."
- msgstr "Den sp=C3=A5rade grenen %s =C3=A4r inte en gren i fj=C3=A4rrar=
-kivet."
-=20
--#: lib/branch_create.tcl:153 lib/branch_rename.tcl:86
-+#: lib/branch_create.tcl:154 lib/branch_rename.tcl:92
- msgid "Please supply a branch name."
- msgstr "Ange ett namn f=C3=B6r grenen."
-=20
--#: lib/branch_create.tcl:164 lib/branch_rename.tcl:106
-+#: lib/branch_create.tcl:165 lib/branch_rename.tcl:112
- #, tcl-format
- msgid "'%s' is not an acceptable branch name."
- msgstr "\"%s\" kan inte anv=C3=A4ndas som namn p=C3=A5 grenen."
-=20
--#: lib/branch_delete.tcl:15
-+#: lib/branch_delete.tcl:16
- msgid "Delete Branch"
- msgstr "Ta bort gren"
-=20
--#: lib/branch_delete.tcl:20
-+#: lib/branch_delete.tcl:21
- msgid "Delete Local Branch"
- msgstr "Ta bort lokal gren"
-=20
--#: lib/branch_delete.tcl:37
-+#: lib/branch_delete.tcl:39
- msgid "Local Branches"
- msgstr "Lokala grenar"
-=20
--#: lib/branch_delete.tcl:52
-+#: lib/branch_delete.tcl:51
- msgid "Delete Only If Merged Into"
- msgstr "Ta bara bort om sammanslagen med"
-=20
--#: lib/branch_delete.tcl:54 lib/remote_branch_delete.tcl:119
-+#: lib/branch_delete.tcl:53 lib/remote_branch_delete.tcl:120
- msgid "Always (Do not perform merge checks)"
- msgstr "Alltid (utf=C3=B6r inte sammanslagningstest)"
-=20
-@@ -809,7 +809,7 @@ msgstr "Alltid (utf=C3=B6r inte sammanslagningstest=
++#: wt-status.c:56
++msgid "# Unmerged paths:"
++msgstr "# Ej sammanslagna s=C3=B6kv=C3=A4gar:"
++
++#: wt-status.c:62 wt-status.c:79
++#, c-format
++msgid "#   (use \"git reset %s <file>...\" to unstage)"
++msgstr "#   (anv=C3=A4nd \"git reset %s <fil>...\" f=C3=B6r att ta bor=
+t fr=C3=A5n k=C3=B6)"
++
++#: wt-status.c:64 wt-status.c:81
++msgid "#   (use \"git rm --cached <file>...\" to unstage)"
++msgstr "#   (anv=C3=A4nd \"git rm --cached <fil>...\" f=C3=B6r att ta =
+bort fr=C3=A5n k=C3=B6)"
++
++#: wt-status.c:65
++msgid "#   (use \"git add/rm <file>...\" as appropriate to mark resolu=
+tion)"
++msgstr "#   (anv=C3=A4nd \"git add/rm <fil>...\" som l=C3=A4mpligt f=C3=
+=B6r att ange l=C3=B6sning)"
++
++#: wt-status.c:73
++msgid "# Changes to be committed:"
++msgstr "# =C3=84ndringar att checka in:"
++
++#: wt-status.c:91
++msgid "# Changed but not updated:"
++msgstr "# =C3=84ndrade men inte uppdaterade:"
++
++#: wt-status.c:95
++msgid "#   (use \"git add <file>...\" to update what will be committed=
 )"
- msgid "The following branches are not completely merged into %s:"
- msgstr "F=C3=B6ljande grenar =C3=A4r inte till fullo sammanslagna med =
-%s:"
-=20
--#: lib/branch_delete.tcl:115 lib/remote_branch_delete.tcl:217
-+#: lib/branch_delete.tcl:115 lib/remote_branch_delete.tcl:218
- msgid ""
- "Recovering deleted branches is difficult.\n"
- "\n"
-@@ -828,32 +828,32 @@ msgstr ""
- "Kunde inte ta bort grenar:\n"
- "%s"
-=20
--#: lib/branch_rename.tcl:14 lib/branch_rename.tcl:22
-+#: lib/branch_rename.tcl:15 lib/branch_rename.tcl:23
- msgid "Rename Branch"
- msgstr "Byt namn p=C3=A5 gren"
-=20
--#: lib/branch_rename.tcl:26
-+#: lib/branch_rename.tcl:28
- msgid "Rename"
- msgstr "Byt namn"
-=20
--#: lib/branch_rename.tcl:36
-+#: lib/branch_rename.tcl:38
- msgid "Branch:"
- msgstr "Gren:"
-=20
--#: lib/branch_rename.tcl:39
-+#: lib/branch_rename.tcl:46
- msgid "New Name:"
- msgstr "Nytt namn:"
-=20
--#: lib/branch_rename.tcl:75
-+#: lib/branch_rename.tcl:81
- msgid "Please select a branch to rename."
- msgstr "V=C3=A4lj en gren att byta namn p=C3=A5."
-=20
--#: lib/branch_rename.tcl:96 lib/checkout_op.tcl:202
-+#: lib/branch_rename.tcl:102 lib/checkout_op.tcl:202
- #, tcl-format
- msgid "Branch '%s' already exists."
- msgstr "Grenen \"%s\" finns redan."
-=20
--#: lib/branch_rename.tcl:117
-+#: lib/branch_rename.tcl:123
- #, tcl-format
- msgid "Failed to rename '%s'."
- msgstr "Kunde inte byta namn p=C3=A5 \"%s\"."
-@@ -862,7 +862,7 @@ msgstr "Kunde inte byta namn p=C3=A5 \"%s\"."
- msgid "Starting..."
- msgstr "Startar..."
-=20
--#: lib/browser.tcl:26
-+#: lib/browser.tcl:27
- msgid "File Browser"
- msgstr "Filbl=C3=A4ddrare"
-=20
-@@ -875,13 +875,13 @@ msgstr "L=C3=A4ser %s..."
- msgid "[Up To Parent]"
- msgstr "[Upp till f=C3=B6r=C3=A4lder]"
-=20
--#: lib/browser.tcl:267 lib/browser.tcl:273
-+#: lib/browser.tcl:269 lib/browser.tcl:276
- msgid "Browse Branch Files"
- msgstr "Bl=C3=A4ddra filer p=C3=A5 grenen"
-=20
--#: lib/browser.tcl:278 lib/choose_repository.tcl:398
--#: lib/choose_repository.tcl:486 lib/choose_repository.tcl:497
--#: lib/choose_repository.tcl:1028
-+#: lib/browser.tcl:282 lib/choose_repository.tcl:404
-+#: lib/choose_repository.tcl:491 lib/choose_repository.tcl:500
-+#: lib/choose_repository.tcl:1027
- msgid "Browse"
- msgstr "Bl=C3=A4ddra"
-=20
-@@ -895,8 +895,8 @@ msgstr "H=C3=A4mtar %s fr=C3=A5n %s"
- msgid "fatal: Cannot resolve %s"
- msgstr "=C3=B6desdigert: Kunde inte sl=C3=A5 upp %s"
-=20
--#: lib/checkout_op.tcl:146 lib/console.tcl:81 lib/database.tcl:31
--#: lib/sshkey.tcl:53
-+#: lib/checkout_op.tcl:146 lib/console.tcl:81 lib/database.tcl:30
-+#: lib/sshkey.tcl:55
- msgid "Close"
- msgstr "St=C3=A4ng"
-=20
-@@ -1008,7 +1008,7 @@ msgstr "Det kanske inte =C3=A4r s=C3=A5 enkelt at=
-t =C3=A5terskapa f=C3=B6rlorade incheckningar."
- msgid "Reset '%s'?"
- msgstr "=C3=85terst=C3=A4lla \"%s\"?"
-=20
--#: lib/checkout_op.tcl:567 lib/merge.tcl:164 lib/tools_dlg.tcl:343
-+#: lib/checkout_op.tcl:567 lib/merge.tcl:164 lib/tools_dlg.tcl:336
- msgid "Visualize"
- msgstr "Visualisera"
-=20
-@@ -1029,23 +1029,23 @@ msgstr ""
- "\n"
- "Detta skulle inte ha h=C3=A4nt. %s kommer nu st=C3=A4ngas och ge upp.=
++msgstr "#   (anv=C3=A4nd \"git add <fil>...\" f=C3=B6r att uppdatera v=
+ad som skall checkas in)"
++
++#: wt-status.c:97
++msgid "#   (use \"git add/rm <file>...\" to update what will be commit=
+ted)"
++msgstr "#   (anv=C3=A4nd \"git add/rm <fil>...\" f=C3=B6r att uppdater=
+a vad som skall checkas in)"
++
++#: wt-status.c:98
++msgid ""
++"#   (use \"git checkout -- <file>...\" to discard changes in working =
 "
-=20
--#: lib/choose_font.tcl:39
-+#: lib/choose_font.tcl:41
- msgid "Select"
- msgstr "V=C3=A4lj"
-=20
--#: lib/choose_font.tcl:53
-+#: lib/choose_font.tcl:55
- msgid "Font Family"
- msgstr "Teckensnittsfamilj"
-=20
--#: lib/choose_font.tcl:74
-+#: lib/choose_font.tcl:76
- msgid "Font Size"
- msgstr "Storlek"
-=20
--#: lib/choose_font.tcl:91
-+#: lib/choose_font.tcl:93
- msgid "Font Example"
- msgstr "Exempel"
-=20
--#: lib/choose_font.tcl:103
-+#: lib/choose_font.tcl:105
- msgid ""
- "This is example text.\n"
- "If you like this text, it can be your font."
-@@ -1057,7 +1057,7 @@ msgstr ""
- msgid "Git Gui"
- msgstr "Git Gui"
-=20
--#: lib/choose_repository.tcl:87 lib/choose_repository.tcl:386
-+#: lib/choose_repository.tcl:87 lib/choose_repository.tcl:394
- msgid "Create New Repository"
- msgstr "Skapa nytt arkiv"
-=20
-@@ -1065,76 +1065,76 @@ msgstr "Skapa nytt arkiv"
- msgid "New..."
- msgstr "Nytt..."
-=20
--#: lib/choose_repository.tcl:100 lib/choose_repository.tcl:471
-+#: lib/choose_repository.tcl:100 lib/choose_repository.tcl:478
- msgid "Clone Existing Repository"
- msgstr "Klona befintligt arkiv"
-=20
--#: lib/choose_repository.tcl:106
-+#: lib/choose_repository.tcl:111
- msgid "Clone..."
- msgstr "Klona..."
-=20
--#: lib/choose_repository.tcl:113 lib/choose_repository.tcl:1016
-+#: lib/choose_repository.tcl:118 lib/choose_repository.tcl:1017
- msgid "Open Existing Repository"
- msgstr "=C3=96ppna befintligt arkiv"
-=20
--#: lib/choose_repository.tcl:119
-+#: lib/choose_repository.tcl:124
- msgid "Open..."
- msgstr "=C3=96ppna..."
-=20
--#: lib/choose_repository.tcl:132
-+#: lib/choose_repository.tcl:137
- msgid "Recent Repositories"
- msgstr "Senaste arkiven"
-=20
--#: lib/choose_repository.tcl:138
-+#: lib/choose_repository.tcl:143
- msgid "Open Recent Repository:"
- msgstr "=C3=96ppna tidigare arkiv:"
-=20
--#: lib/choose_repository.tcl:306 lib/choose_repository.tcl:313
--#: lib/choose_repository.tcl:320
-+#: lib/choose_repository.tcl:313 lib/choose_repository.tcl:320
-+#: lib/choose_repository.tcl:327
- #, tcl-format
- msgid "Failed to create repository %s:"
- msgstr "Kunde inte skapa arkivet %s:"
-=20
--#: lib/choose_repository.tcl:391
-+#: lib/choose_repository.tcl:399
- msgid "Directory:"
- msgstr "Katalog:"
-=20
--#: lib/choose_repository.tcl:423 lib/choose_repository.tcl:550
--#: lib/choose_repository.tcl:1052
-+#: lib/choose_repository.tcl:429 lib/choose_repository.tcl:550
-+#: lib/choose_repository.tcl:1051
- msgid "Git Repository"
- msgstr "Gitarkiv"
-=20
--#: lib/choose_repository.tcl:448
-+#: lib/choose_repository.tcl:454
- #, tcl-format
- msgid "Directory %s already exists."
- msgstr "Katalogen %s finns redan."
-=20
--#: lib/choose_repository.tcl:452
-+#: lib/choose_repository.tcl:458
- #, tcl-format
- msgid "File %s already exists."
- msgstr "Filen %s finns redan."
-=20
--#: lib/choose_repository.tcl:466
-+#: lib/choose_repository.tcl:473
- msgid "Clone"
- msgstr "Klona"
-=20
--#: lib/choose_repository.tcl:479
-+#: lib/choose_repository.tcl:486
- msgid "Source Location:"
- msgstr "Plats f=C3=B6r k=C3=A4llkod:"
-=20
--#: lib/choose_repository.tcl:490
-+#: lib/choose_repository.tcl:495
- msgid "Target Directory:"
- msgstr "M=C3=A5lkatalog:"
-=20
--#: lib/choose_repository.tcl:502
-+#: lib/choose_repository.tcl:505
- msgid "Clone Type:"
- msgstr "Typ av klon:"
-=20
--#: lib/choose_repository.tcl:508
-+#: lib/choose_repository.tcl:510
- msgid "Standard (Fast, Semi-Redundant, Hardlinks)"
- msgstr "Standard (snabb, semiredundant, h=C3=A5rda l=C3=A4nkar)"
-=20
--#: lib/choose_repository.tcl:514
-+#: lib/choose_repository.tcl:515
- msgid "Full Copy (Slower, Redundant Backup)"
- msgstr "Full kopia (l=C3=A5ngsammare, redundant s=C3=A4kerhetskopia)"
-=20
-@@ -1144,7 +1144,7 @@ msgstr "Delad (snabbast, rekommenderas ej, ingen =
-s=C3=A4kerhetskopia)"
-=20
- #: lib/choose_repository.tcl:556 lib/choose_repository.tcl:603
- #: lib/choose_repository.tcl:749 lib/choose_repository.tcl:819
--#: lib/choose_repository.tcl:1058 lib/choose_repository.tcl:1066
-+#: lib/choose_repository.tcl:1057 lib/choose_repository.tcl:1065
- #, tcl-format
- msgid "Not a Git repository: %s"
- msgstr "Inte ett Gitarkiv: %s"
-@@ -1258,8 +1258,8 @@ msgstr "Kunde inte sl=C3=A5 upp %s till n=C3=A5go=
-n incheckning."
- msgid "Creating working directory"
- msgstr "Skapar arbetskatalog"
-=20
--#: lib/choose_repository.tcl:939 lib/index.tcl:67 lib/index.tcl:130
--#: lib/index.tcl:198
-+#: lib/choose_repository.tcl:939 lib/index.tcl:70 lib/index.tcl:133
-+#: lib/index.tcl:201
- msgid "files"
- msgstr "filer"
-=20
-@@ -1267,20 +1267,20 @@ msgstr "filer"
- msgid "Initial file checkout failed."
- msgstr "Inledande filutcheckning misslyckades."
-=20
--#: lib/choose_repository.tcl:1011
-+#: lib/choose_repository.tcl:1012
- msgid "Open"
- msgstr "=C3=96ppna"
-=20
--#: lib/choose_repository.tcl:1021
-+#: lib/choose_repository.tcl:1022
- msgid "Repository:"
- msgstr "Arkiv:"
-=20
--#: lib/choose_repository.tcl:1072
-+#: lib/choose_repository.tcl:1071
- #, tcl-format
- msgid "Failed to open repository %s:"
- msgstr "Kunde inte =C3=B6ppna arkivet %s:"
-=20
--#: lib/choose_rev.tcl:53
-+#: lib/choose_rev.tcl:52
- msgid "This Detached Checkout"
- msgstr "Denna fr=C3=A5nkopplade utcheckning"
-=20
-@@ -1288,36 +1288,36 @@ msgstr "Denna fr=C3=A5nkopplade utcheckning"
- msgid "Revision Expression:"
- msgstr "Revisionsuttryck:"
-=20
--#: lib/choose_rev.tcl:74
-+#: lib/choose_rev.tcl:72
- msgid "Local Branch"
- msgstr "Lokal gren"
-=20
--#: lib/choose_rev.tcl:79
-+#: lib/choose_rev.tcl:77
- msgid "Tracking Branch"
- msgstr "Sp=C3=A5rande gren"
-=20
--#: lib/choose_rev.tcl:84 lib/choose_rev.tcl:538
-+#: lib/choose_rev.tcl:82 lib/choose_rev.tcl:543
- msgid "Tag"
- msgstr "Tagg"
-=20
--#: lib/choose_rev.tcl:317
-+#: lib/choose_rev.tcl:321
- #, tcl-format
- msgid "Invalid revision: %s"
- msgstr "Ogiltig revision: %s"
-=20
--#: lib/choose_rev.tcl:338
-+#: lib/choose_rev.tcl:342
- msgid "No revision selected."
- msgstr "Ingen revision vald."
-=20
--#: lib/choose_rev.tcl:346
-+#: lib/choose_rev.tcl:350
- msgid "Revision expression is empty."
- msgstr "Revisionsuttrycket =C3=A4r tomt."
-=20
--#: lib/choose_rev.tcl:531
-+#: lib/choose_rev.tcl:536
- msgid "Updated"
- msgstr "Uppdaterad"
-=20
--#: lib/choose_rev.tcl:559
-+#: lib/choose_rev.tcl:564
- msgid "URL"
- msgstr "Webbadress"
-=20
-@@ -1508,31 +1508,31 @@ msgstr "Lyckades"
- msgid "Error: Command Failed"
- msgstr "Fel: Kommando misslyckades"
-=20
--#: lib/database.tcl:43
-+#: lib/database.tcl:42
- msgid "Number of loose objects"
- msgstr "Antal l=C3=B6sa objekt"
-=20
--#: lib/database.tcl:44
-+#: lib/database.tcl:43
- msgid "Disk space used by loose objects"
- msgstr "Diskutrymme anv=C3=A4nt av l=C3=B6sa objekt"
-=20
--#: lib/database.tcl:45
-+#: lib/database.tcl:44
- msgid "Number of packed objects"
- msgstr "Antal packade objekt"
-=20
--#: lib/database.tcl:46
-+#: lib/database.tcl:45
- msgid "Number of packs"
- msgstr "Antal paket"
-=20
--#: lib/database.tcl:47
-+#: lib/database.tcl:46
- msgid "Disk space used by packed objects"
- msgstr "Diskutrymme anv=C3=A4nt av packade objekt"
-=20
--#: lib/database.tcl:48
-+#: lib/database.tcl:47
- msgid "Packed objects waiting for pruning"
- msgstr "Packade objekt som v=C3=A4ntar p=C3=A5 st=C3=A4dning"
-=20
--#: lib/database.tcl:49
-+#: lib/database.tcl:48
- msgid "Garbage files"
- msgstr "Skr=C3=A4pfiler"
-=20
-@@ -1618,7 +1618,7 @@ msgstr "LOKAL:\n"
- msgid "REMOTE:\n"
- msgstr "FJ=C3=84RR:\n"
-=20
--#: lib/diff.tcl:202 lib/diff.tcl:319
-+#: lib/diff.tcl:202 lib/diff.tcl:322
- #, tcl-format
- msgid "Unable to display %s"
- msgstr "Kan inte visa %s"
-@@ -1655,19 +1655,19 @@ msgstr ""
- "* Den osp=C3=A5rade filen klipptes h=C3=A4r av %s.\n"
- "* F=C3=B6r att se hela filen, anv=C3=A4nd ett externt redigeringsprog=
-ram.\n"
-=20
--#: lib/diff.tcl:482
-+#: lib/diff.tcl:485
- msgid "Failed to unstage selected hunk."
- msgstr "Kunde inte ta bort den valda delen fr=C3=A5n k=C3=B6n."
-=20
--#: lib/diff.tcl:489
-+#: lib/diff.tcl:492
- msgid "Failed to stage selected hunk."
- msgstr "Kunde inte l=C3=A4gga till den valda delen till k=C3=B6n."
-=20
--#: lib/diff.tcl:568
-+#: lib/diff.tcl:571
- msgid "Failed to unstage selected line."
- msgstr "Kunde inte ta bort den valda raden fr=C3=A5n k=C3=B6n."
-=20
--#: lib/diff.tcl:576
-+#: lib/diff.tcl:579
- msgid "Failed to stage selected line."
- msgstr "Kunde inte l=C3=A4gga till den valda raden till k=C3=B6n."
-=20
-@@ -1684,7 +1684,7 @@ msgstr "Systemets (%s)"
- msgid "Other"
- msgstr "Annan"
-=20
--#: lib/error.tcl:20 lib/error.tcl:114
-+#: lib/error.tcl:20 lib/error.tcl:116
- msgid "error"
- msgstr "fel"
-=20
-@@ -1692,7 +1692,7 @@ msgstr "fel"
- msgid "warning"
- msgstr "varning"
-=20
--#: lib/error.tcl:94
-+#: lib/error.tcl:96
- msgid "You must correct the above errors before committing."
- msgstr "Du m=C3=A5ste r=C3=A4tta till felen ovan innan du checkar in."
-=20
-@@ -1700,11 +1700,11 @@ msgstr "Du m=C3=A5ste r=C3=A4tta till felen ova=
-n innan du checkar in."
- msgid "Unable to unlock the index."
- msgstr "Kunde inte l=C3=A5sa upp indexet."
-=20
--#: lib/index.tcl:15
-+#: lib/index.tcl:17
- msgid "Index Error"
- msgstr "Indexfel"
-=20
--#: lib/index.tcl:17
-+#: lib/index.tcl:19
- msgid ""
- "Updating the Git index failed.  A rescan will be automatically starte=
-d to "
- "resynchronize git-gui."
-@@ -1712,52 +1712,52 @@ msgstr ""
- "Misslyckades med att uppdatera Gitindexet. En oms=C3=B6kning kommer a=
-tt startas "
- "automatiskt f=C3=B6r att synkronisera om git-gui."
-=20
--#: lib/index.tcl:28
-+#: lib/index.tcl:30
- msgid "Continue"
- msgstr "Forst=C3=A4tt"
-=20
--#: lib/index.tcl:31
-+#: lib/index.tcl:33
- msgid "Unlock Index"
- msgstr "L=C3=A5s upp index"
-=20
--#: lib/index.tcl:289
-+#: lib/index.tcl:292
- #, tcl-format
- msgid "Unstaging %s from commit"
- msgstr "Tar bort %s f=C3=B6r incheckningsk=C3=B6n"
-=20
--#: lib/index.tcl:328
-+#: lib/index.tcl:331
- msgid "Ready to commit."
- msgstr "Redo att checka in."
-=20
--#: lib/index.tcl:341
-+#: lib/index.tcl:344
- #, tcl-format
- msgid "Adding %s"
- msgstr "L=C3=A4gger till %s"
-=20
--#: lib/index.tcl:398
-+#: lib/index.tcl:401
- #, tcl-format
- msgid "Revert changes in file %s?"
- msgstr "=C3=85terst=C3=A4ll =C3=A4ndringarna i filen %s?"
-=20
--#: lib/index.tcl:400
-+#: lib/index.tcl:403
- #, tcl-format
- msgid "Revert changes in these %i files?"
- msgstr "=C3=85terst=C3=A4ll =C3=A4ndringarna i dessa %i filer?"
-=20
--#: lib/index.tcl:408
-+#: lib/index.tcl:411
- msgid "Any unstaged changes will be permanently lost by the revert."
- msgstr ""
- "Alla ok=C3=B6ade =C3=A4ndringar kommer permanent g=C3=A5 f=C3=B6rlora=
-de vid =C3=A5terst=C3=A4llningen."
-=20
--#: lib/index.tcl:411
-+#: lib/index.tcl:414
- msgid "Do Nothing"
- msgstr "G=C3=B6r ingenting"
-=20
--#: lib/index.tcl:429
-+#: lib/index.tcl:432
- msgid "Reverting selected files"
- msgstr "=C3=85terst=C3=A4ller valda filer"
-=20
--#: lib/index.tcl:433
-+#: lib/index.tcl:436
- #, tcl-format
- msgid "Reverting %s"
- msgstr "=C3=85terst=C3=A4ller %s"
-@@ -2004,145 +2004,133 @@ msgstr "Den globala teckenkodningen \"%s\" =C3=
-=A4r ogiltig"
- msgid "Invalid repo encoding '%s'"
- msgstr "Arkivets teckenkodning \"%s\" =C3=A4r ogiltig"
-=20
--#: lib/option.tcl:117
-+#: lib/option.tcl:119
- msgid "Restore Defaults"
- msgstr "=C3=85terst=C3=A4ll standardv=C3=A4rden"
-=20
--#: lib/option.tcl:121
-+#: lib/option.tcl:123
- msgid "Save"
- msgstr "Spara"
-=20
--#: lib/option.tcl:131
-+#: lib/option.tcl:133
- #, tcl-format
- msgid "%s Repository"
- msgstr "Arkivet %s"
-=20
--#: lib/option.tcl:132
-+#: lib/option.tcl:134
- msgid "Global (All Repositories)"
- msgstr "Globalt (alla arkiv)"
-=20
--#: lib/option.tcl:138
-+#: lib/option.tcl:140
- msgid "User Name"
- msgstr "Anv=C3=A4ndarnamn"
-=20
--#: lib/option.tcl:139
-+#: lib/option.tcl:141
- msgid "Email Address"
- msgstr "E-postadress"
-=20
--#: lib/option.tcl:141
-+#: lib/option.tcl:143
- msgid "Summarize Merge Commits"
- msgstr "Summera sammanslagningsincheckningar"
-=20
--#: lib/option.tcl:142
-+#: lib/option.tcl:144
- msgid "Merge Verbosity"
- msgstr "Pratsamhet f=C3=B6r sammanslagningar"
-=20
--#: lib/option.tcl:143
-+#: lib/option.tcl:145
- msgid "Show Diffstat After Merge"
- msgstr "Visa diffstatistik efter sammanslagning"
-=20
--#: lib/option.tcl:144
-+#: lib/option.tcl:146
- msgid "Use Merge Tool"
- msgstr "Anv=C3=A4nd verktyg f=C3=B6r sammanslagning"
-=20
--#: lib/option.tcl:146
-+#: lib/option.tcl:148
- msgid "Trust File Modification Timestamps"
- msgstr "Lita p=C3=A5 fil=C3=A4ndringstidsst=C3=A4mplar"
-=20
--#: lib/option.tcl:147
-+#: lib/option.tcl:149
- msgid "Prune Tracking Branches During Fetch"
- msgstr "St=C3=A4da sp=C3=A5rade grenar vid h=C3=A4mtning"
-=20
--#: lib/option.tcl:148
-+#: lib/option.tcl:150
- msgid "Match Tracking Branches"
- msgstr "Matcha sp=C3=A5rade grenar"
-=20
--#: lib/option.tcl:149
-+#: lib/option.tcl:151
-+msgid "Use Textconv For Diffs and Blames"
-+msgstr "Anv=C3=A4nd Textconv f=C3=B6r diff och klandring"
++"directory)"
++msgstr ""
++"#   (anv=C3=A4nd \"git checkout -- <fil>...\" f=C3=B6r att f=C3=B6rka=
+sta =C3=A4ndringar i "
++"arbetskatalogen)"
 +
-+#: lib/option.tcl:152
- msgid "Blame Copy Only On Changed Files"
- msgstr "Klandra kopiering bara i =C3=A4ndrade filer"
-=20
--#: lib/option.tcl:150
-+#: lib/option.tcl:153
- msgid "Minimum Letters To Blame Copy On"
- msgstr "Minsta antal tecken att klandra kopiering f=C3=B6r"
-=20
--#: lib/option.tcl:151
-+#: lib/option.tcl:154
- msgid "Blame History Context Radius (days)"
- msgstr "Historikradie f=C3=B6r klandring (dagar)"
-=20
--#: lib/option.tcl:152
-+#: lib/option.tcl:155
- msgid "Number of Diff Context Lines"
- msgstr "Antal rader sammanhang i differenser"
-=20
--#: lib/option.tcl:153
-+#: lib/option.tcl:156
- msgid "Commit Message Text Width"
- msgstr "Textbredd f=C3=B6r incheckningsmeddelande"
-=20
--#: lib/option.tcl:154
-+#: lib/option.tcl:157
- msgid "New Branch Name Template"
- msgstr "Mall f=C3=B6r namn p=C3=A5 nya grenar"
-=20
--#: lib/option.tcl:155
-+#: lib/option.tcl:158
- msgid "Default File Contents Encoding"
- msgstr "Standardteckenkodning f=C3=B6r filinneh=C3=A5ll"
-=20
--#: lib/option.tcl:203
-+#: lib/option.tcl:204
- msgid "Change"
- msgstr "=C3=84ndra"
-=20
--#: lib/option.tcl:230
-+#: lib/option.tcl:231
- msgid "Spelling Dictionary:"
- msgstr "Stavningsordlista:"
-=20
--#: lib/option.tcl:254
-+#: lib/option.tcl:261
- msgid "Change Font"
- msgstr "Byt teckensnitt"
-=20
--#: lib/option.tcl:258
-+#: lib/option.tcl:265
- #, tcl-format
- msgid "Choose %s"
- msgstr "V=C3=A4lj %s"
-=20
--#: lib/option.tcl:264
-+#: lib/option.tcl:271
- msgid "pt."
- msgstr "p."
-=20
--#: lib/option.tcl:278
-+#: lib/option.tcl:285
- msgid "Preferences"
- msgstr "Inst=C3=A4llningar"
-=20
--#: lib/option.tcl:314
-+#: lib/option.tcl:322
- msgid "Failed to completely save options:"
- msgstr "Misslyckades med att helt spara alternativ:"
-=20
--#: lib/remote.tcl:163
--msgid "Remove Remote"
--msgstr "Ta bort fj=C3=A4rrarkiv"
--
--#: lib/remote.tcl:168
--msgid "Prune from"
--msgstr "Ta bort fr=C3=A5n"
--
--#: lib/remote.tcl:173
--msgid "Fetch from"
--msgstr "H=C3=A4mta fr=C3=A5n"
--
--#: lib/remote.tcl:215
--msgid "Push to"
--msgstr "S=C3=A4nd till"
--
--#: lib/remote_add.tcl:19
-+#: lib/remote_add.tcl:20
- msgid "Add Remote"
- msgstr "L=C3=A4gg till fj=C3=A4rrarkiv"
-=20
--#: lib/remote_add.tcl:24
-+#: lib/remote_add.tcl:25
- msgid "Add New Remote"
- msgstr "L=C3=A4gg till nytt fj=C3=A4rrarkiv"
-=20
--#: lib/remote_add.tcl:28 lib/tools_dlg.tcl:36
-+#: lib/remote_add.tcl:30 lib/tools_dlg.tcl:37
- msgid "Add"
- msgstr "L=C3=A4gg till"
-=20
--#: lib/remote_add.tcl:37
-+#: lib/remote_add.tcl:39
- msgid "Remote Details"
- msgstr "Detaljer f=C3=B6r fj=C3=A4rrarkiv"
-=20
-@@ -2150,58 +2138,58 @@ msgstr "Detaljer f=C3=B6r fj=C3=A4rrarkiv"
- msgid "Location:"
- msgstr "Plats:"
-=20
--#: lib/remote_add.tcl:62
-+#: lib/remote_add.tcl:60
- msgid "Further Action"
- msgstr "Ytterligare =C3=A5tg=C3=A4rd"
-=20
--#: lib/remote_add.tcl:65
-+#: lib/remote_add.tcl:63
- msgid "Fetch Immediately"
- msgstr "H=C3=A4mta omedelbart"
-=20
--#: lib/remote_add.tcl:71
-+#: lib/remote_add.tcl:69
- msgid "Initialize Remote Repository and Push"
- msgstr "Initiera fj=C3=A4rrarkiv och s=C3=A4nd till"
-=20
--#: lib/remote_add.tcl:77
-+#: lib/remote_add.tcl:75
- msgid "Do Nothing Else Now"
- msgstr "G=C3=B6r ingent mer nu"
-=20
--#: lib/remote_add.tcl:101
-+#: lib/remote_add.tcl:100
- msgid "Please supply a remote name."
- msgstr "Ange ett namn f=C3=B6r fj=C3=A4rrarkivet."
-=20
--#: lib/remote_add.tcl:114
-+#: lib/remote_add.tcl:113
- #, tcl-format
- msgid "'%s' is not an acceptable remote name."
- msgstr "\"%s\" kan inte anv=C3=A4ndas som namn p=C3=A5 fj=C3=A4rrarkiv=
-et."
-=20
--#: lib/remote_add.tcl:125
-+#: lib/remote_add.tcl:124
- #, tcl-format
- msgid "Failed to add remote '%s' of location '%s'."
- msgstr "Kunde inte l=C3=A4gga till fj=C3=A4rrarkivet \"%s\" p=C3=A5 pl=
-atsen \"%s\"."
-=20
--#: lib/remote_add.tcl:133 lib/transport.tcl:6
-+#: lib/remote_add.tcl:132 lib/transport.tcl:6
- #, tcl-format
- msgid "fetch %s"
- msgstr "h=C3=A4mta %s"
-=20
--#: lib/remote_add.tcl:134
-+#: lib/remote_add.tcl:133
- #, tcl-format
- msgid "Fetching the %s"
- msgstr "H=C3=A4mtar %s"
-=20
--#: lib/remote_add.tcl:157
-+#: lib/remote_add.tcl:156
- #, tcl-format
- msgid "Do not know how to initialize repository at location '%s'."
- msgstr "Vet inte hur arkivet p=C3=A5 platsen \"%s\" skall initieras."
-=20
--#: lib/remote_add.tcl:163 lib/transport.tcl:25 lib/transport.tcl:63
-+#: lib/remote_add.tcl:162 lib/transport.tcl:25 lib/transport.tcl:63
- #: lib/transport.tcl:81
- #, tcl-format
- msgid "push %s"
- msgstr "s=C3=A4nd %s"
-=20
--#: lib/remote_add.tcl:164
-+#: lib/remote_add.tcl:163
- #, tcl-format
- msgid "Setting up the %s (at %s)"
- msgstr "Konfigurerar %s (p=C3=A5 %s)"
-@@ -2210,35 +2198,35 @@ msgstr "Konfigurerar %s (p=C3=A5 %s)"
- msgid "Delete Branch Remotely"
- msgstr "Ta bort gren fr=C3=A5n fj=C3=A4rrarkiv"
-=20
--#: lib/remote_branch_delete.tcl:47
-+#: lib/remote_branch_delete.tcl:48
- msgid "From Repository"
- msgstr "Fr=C3=A5n arkiv"
-=20
--#: lib/remote_branch_delete.tcl:50 lib/transport.tcl:134
-+#: lib/remote_branch_delete.tcl:51 lib/transport.tcl:134
- msgid "Remote:"
- msgstr "Fj=C3=A4rrarkiv:"
-=20
--#: lib/remote_branch_delete.tcl:66 lib/transport.tcl:149
-+#: lib/remote_branch_delete.tcl:72 lib/transport.tcl:154
- msgid "Arbitrary Location:"
- msgstr "Godtycklig plats:"
-=20
--#: lib/remote_branch_delete.tcl:84
-+#: lib/remote_branch_delete.tcl:88
- msgid "Branches"
- msgstr "Grenar"
-=20
--#: lib/remote_branch_delete.tcl:109
-+#: lib/remote_branch_delete.tcl:110
- msgid "Delete Only If"
- msgstr "Ta endast bort om"
-=20
--#: lib/remote_branch_delete.tcl:111
-+#: lib/remote_branch_delete.tcl:112
- msgid "Merged Into:"
- msgstr "Sammanslagen i:"
-=20
--#: lib/remote_branch_delete.tcl:152
-+#: lib/remote_branch_delete.tcl:153
- msgid "A branch is required for 'Merged Into'."
- msgstr "En gren kr=C3=A4vs f=C3=B6r \"Sammanslagen i\"."
-=20
--#: lib/remote_branch_delete.tcl:184
-+#: lib/remote_branch_delete.tcl:185
- #, tcl-format
- msgid ""
- "The following branches are not completely merged into %s:\n"
-@@ -2249,7 +2237,7 @@ msgstr ""
- "\n"
- " - %s"
-=20
--#: lib/remote_branch_delete.tcl:189
-+#: lib/remote_branch_delete.tcl:190
- #, tcl-format
- msgid ""
- "One or more of the merge tests failed because you have not fetched th=
-e "
-@@ -2258,37 +2246,53 @@ msgstr ""
- "En eller flera av sammanslagningstesterna misslyckades eftersom du in=
-te har "
- "h=C3=A4mtat de n=C3=B6dv=C3=A4ndiga incheckningarna. F=C3=B6rs=C3=B6k=
- h=C3=A4mta fr=C3=A5n %s f=C3=B6rst."
-=20
--#: lib/remote_branch_delete.tcl:207
-+#: lib/remote_branch_delete.tcl:208
- msgid "Please select one or more branches to delete."
- msgstr "V=C3=A4lj en eller flera grenar att ta bort."
-=20
--#: lib/remote_branch_delete.tcl:226
-+#: lib/remote_branch_delete.tcl:227
- #, tcl-format
- msgid "Deleting branches from %s"
- msgstr "Tar bort grenar fr=C3=A5n %s"
-=20
--#: lib/remote_branch_delete.tcl:292
-+#: lib/remote_branch_delete.tcl:293
- msgid "No repository selected."
- msgstr "Inget arkiv markerat."
-=20
--#: lib/remote_branch_delete.tcl:297
-+#: lib/remote_branch_delete.tcl:298
- #, tcl-format
- msgid "Scanning %s..."
- msgstr "S=C3=B6ker %s..."
-=20
--#: lib/search.tcl:21
-+#: lib/remote.tcl:163
-+msgid "Remove Remote"
-+msgstr "Ta bort fj=C3=A4rrarkiv"
++#: wt-status.c:100
++msgid "#   (commit or discard the untracked or modified content in sub=
+modules)"
++msgstr "#   (checka in eller f=C3=B6rkasta osp=C3=A5rat eller =C3=A4nd=
+rat inneh=C3=A5ll i undermoduler)"
 +
-+#: lib/remote.tcl:168
-+msgid "Prune from"
-+msgstr "Ta bort fr=C3=A5n"
++#: wt-status.c:109
++#, c-format
++msgid "# %s files:"
++msgstr "# %s filer:"
 +
-+#: lib/remote.tcl:173
-+msgid "Fetch from"
-+msgstr "H=C3=A4mta fr=C3=A5n"
++#: wt-status.c:112
++#, c-format
++msgid "#   (use \"git %s <file>...\" to include in what will be commit=
+ted)"
++msgstr "#   (anv=C3=A4nd \"git %s <fil>...\" f=C3=B6r att ta med i vad=
+ som skall checkas in)"
 +
-+#: lib/remote.tcl:215
-+msgid "Push to"
-+msgstr "S=C3=A4nd till"
++#: wt-status.c:129
++msgid "bug"
++msgstr "programfel"
 +
-+#: lib/search.tcl:22
- msgid "Find:"
- msgstr "S=C3=B6k:"
-=20
--#: lib/search.tcl:23
-+#: lib/search.tcl:24
- msgid "Next"
- msgstr "N=C3=A4sta"
-=20
--#: lib/search.tcl:24
-+#: lib/search.tcl:25
- msgid "Prev"
- msgstr "F=C3=B6reg"
-=20
--#: lib/search.tcl:25
-+#: lib/search.tcl:26
- msgid "Case-Sensitive"
- msgstr "Skilj p=C3=A5 VERSALER/gemener"
-=20
-@@ -2350,19 +2354,19 @@ msgstr "Hittade =C3=B6ppen nyckel i: %s"
- msgid "Generate Key"
- msgstr "Skapa nyckel"
-=20
--#: lib/sshkey.tcl:56
-+#: lib/sshkey.tcl:58
- msgid "Copy To Clipboard"
- msgstr "Kopiera till Urklipp"
-=20
--#: lib/sshkey.tcl:70
-+#: lib/sshkey.tcl:72
- msgid "Your OpenSSH Public Key"
- msgstr "Din =C3=B6ppna OpenSSH-nyckel"
-=20
--#: lib/sshkey.tcl:78
-+#: lib/sshkey.tcl:80
- msgid "Generating..."
- msgstr "Skapar..."
-=20
--#: lib/sshkey.tcl:84
-+#: lib/sshkey.tcl:86
- #, tcl-format
- msgid ""
- "Could not start ssh-keygen:\n"
-@@ -2373,54 +2377,24 @@ msgstr ""
- "\n"
- "%s"
-=20
--#: lib/sshkey.tcl:111
-+#: lib/sshkey.tcl:113
- msgid "Generation failed."
- msgstr "Misslyckades med att skapa."
-=20
--#: lib/sshkey.tcl:118
-+#: lib/sshkey.tcl:120
- msgid "Generation succeded, but no keys found."
- msgstr "Lyckades skapa nyckeln, men hittar inte n=C3=A5gon nyckel."
-=20
--#: lib/sshkey.tcl:121
-+#: lib/sshkey.tcl:123
- #, tcl-format
- msgid "Your key is in: %s"
- msgstr "Din nyckel finns i: %s"
-=20
--#: lib/status_bar.tcl:83
-+#: lib/status_bar.tcl:86
- #, tcl-format
- msgid "%s ... %*i of %*i %s (%3i%%)"
- msgstr "%s... %*i av %*i %s (%3i%%)"
-=20
--#: lib/tools.tcl:75
--#, tcl-format
--msgid "Running %s requires a selected file."
--msgstr "F=C3=B6r att starta %s m=C3=A5ste du v=C3=A4lja en fil."
--
--#: lib/tools.tcl:90
--#, tcl-format
--msgid "Are you sure you want to run %s?"
--msgstr "=C3=84r du s=C3=A4ker p=C3=A5 att du vill starta %s?"
--
--#: lib/tools.tcl:110
--#, tcl-format
--msgid "Tool: %s"
--msgstr "Verktyg: %s"
--
--#: lib/tools.tcl:111
--#, tcl-format
--msgid "Running: %s"
--msgstr "Exekverar: %s"
--
--#: lib/tools.tcl:149
--#, tcl-format
--msgid "Tool completed successfully: %s"
--msgstr "Verktyget avslutades framg=C3=A5ngsrikt: %s"
--
--#: lib/tools.tcl:151
--#, tcl-format
--msgid "Tool failed: %s"
--msgstr "Verktyget misslyckades: %s"
--
- #: lib/tools_dlg.tcl:22
- msgid "Add Tool"
- msgstr "L=C3=A4gg till verktyg"
-@@ -2429,52 +2403,52 @@ msgstr "L=C3=A4gg till verktyg"
- msgid "Add New Tool Command"
- msgstr "L=C3=A4gg till nytt verktygskommando"
-=20
--#: lib/tools_dlg.tcl:33
-+#: lib/tools_dlg.tcl:34
- msgid "Add globally"
- msgstr "L=C3=A4gg till globalt"
-=20
--#: lib/tools_dlg.tcl:45
-+#: lib/tools_dlg.tcl:46
- msgid "Tool Details"
- msgstr "Detaljer f=C3=B6r verktyg"
-=20
--#: lib/tools_dlg.tcl:48
-+#: lib/tools_dlg.tcl:49
- msgid "Use '/' separators to create a submenu tree:"
- msgstr "Anv=C3=A4nd \"/\"-avdelare f=C3=B6r att skapa ett undermenytr=C3=
-=A4d:"
-=20
--#: lib/tools_dlg.tcl:61
-+#: lib/tools_dlg.tcl:60
- msgid "Command:"
- msgstr "Kommando:"
-=20
--#: lib/tools_dlg.tcl:74
-+#: lib/tools_dlg.tcl:71
- msgid "Show a dialog before running"
- msgstr "Visa dialog innan programmet startas"
-=20
--#: lib/tools_dlg.tcl:80
-+#: lib/tools_dlg.tcl:77
- msgid "Ask the user to select a revision (sets $REVISION)"
- msgstr "Be anv=C3=A4ndaren v=C3=A4lja en version (s=C3=A4tter $REVISIO=
-N)"
-=20
--#: lib/tools_dlg.tcl:85
-+#: lib/tools_dlg.tcl:82
- msgid "Ask the user for additional arguments (sets $ARGS)"
- msgstr "Be anv=C3=A4ndaren om ytterligare parametrar (s=C3=A4tter $ARG=
-S)"
-=20
--#: lib/tools_dlg.tcl:92
-+#: lib/tools_dlg.tcl:89
- msgid "Don't show the command output window"
- msgstr "Visa inte kommandots utdataf=C3=B6nster"
-=20
--#: lib/tools_dlg.tcl:97
-+#: lib/tools_dlg.tcl:94
- msgid "Run only if a diff is selected ($FILENAME not empty)"
- msgstr "K=C3=B6r endast om en diff har markerats ($FILENAME =C3=A4r in=
-te tomt)"
-=20
--#: lib/tools_dlg.tcl:121
-+#: lib/tools_dlg.tcl:118
- msgid "Please supply a name for the tool."
- msgstr "Ange ett namn f=C3=B6r verktyget."
-=20
--#: lib/tools_dlg.tcl:129
-+#: lib/tools_dlg.tcl:126
- #, tcl-format
- msgid "Tool '%s' already exists."
- msgstr "Verktyget \"%s\" finns redan."
-=20
--#: lib/tools_dlg.tcl:151
-+#: lib/tools_dlg.tcl:148
- #, tcl-format
- msgid ""
- "Could not add tool:\n"
-@@ -2483,35 +2457,65 @@ msgstr ""
- "Kunde inte l=C3=A4gga till verktyget:\n"
- "%s"
-=20
--#: lib/tools_dlg.tcl:190
-+#: lib/tools_dlg.tcl:187
- msgid "Remove Tool"
- msgstr "Ta bort verktyg"
-=20
--#: lib/tools_dlg.tcl:196
-+#: lib/tools_dlg.tcl:193
- msgid "Remove Tool Commands"
- msgstr "Ta bort verktygskommandon"
-=20
--#: lib/tools_dlg.tcl:200
-+#: lib/tools_dlg.tcl:198
- msgid "Remove"
- msgstr "Ta bort"
-=20
--#: lib/tools_dlg.tcl:236
-+#: lib/tools_dlg.tcl:231
- msgid "(Blue denotes repository-local tools)"
- msgstr "(Bl=C3=A5tt anger verktyg lokala f=C3=B6r arkivet)"
-=20
--#: lib/tools_dlg.tcl:297
-+#: lib/tools_dlg.tcl:292
- #, tcl-format
- msgid "Run Command: %s"
- msgstr "K=C3=B6r kommandot: %s"
-=20
--#: lib/tools_dlg.tcl:311
-+#: lib/tools_dlg.tcl:306
- msgid "Arguments"
- msgstr "Argument"
-=20
--#: lib/tools_dlg.tcl:348
-+#: lib/tools_dlg.tcl:341
- msgid "OK"
- msgstr "OK"
-=20
-+#: lib/tools.tcl:75
-+#, tcl-format
-+msgid "Running %s requires a selected file."
-+msgstr "F=C3=B6r att starta %s m=C3=A5ste du v=C3=A4lja en fil."
++#: wt-status.c:134
++msgid "both deleted:"
++msgstr "borttaget av b=C3=A4gge:"
 +
-+#: lib/tools.tcl:90
-+#, tcl-format
-+msgid "Are you sure you want to run %s?"
-+msgstr "=C3=84r du s=C3=A4ker p=C3=A5 att du vill starta %s?"
++#: wt-status.c:135
++msgid "added by us:"
++msgstr "tillagt av oss:"
 +
-+#: lib/tools.tcl:110
-+#, tcl-format
-+msgid "Tool: %s"
-+msgstr "Verktyg: %s"
++#: wt-status.c:136
++msgid "deleted by them:"
++msgstr "borttaget av dem:"
 +
-+#: lib/tools.tcl:111
-+#, tcl-format
-+msgid "Running: %s"
-+msgstr "Exekverar: %s"
++#: wt-status.c:137
++msgid "added by them:"
++msgstr "tillagt av dem:"
 +
-+#: lib/tools.tcl:149
-+#, tcl-format
-+msgid "Tool completed successfully: %s"
-+msgstr "Verktyget avslutades framg=C3=A5ngsrikt: %s"
++#: wt-status.c:138
++msgid "deleted by us:"
++msgstr "borttaget av oss:"
 +
-+#: lib/tools.tcl:151
-+#, tcl-format
-+msgid "Tool failed: %s"
-+msgstr "Verktyget misslyckades: %s"
++#: wt-status.c:139
++msgid "both added:"
++msgstr "tillagt av b=C3=A4gge:"
 +
- #: lib/transport.tcl:7
- #, tcl-format
- msgid "Fetching new changes from %s"
-@@ -2542,11 +2546,11 @@ msgstr "Speglar till %s"
- msgid "Pushing %s %s to %s"
- msgstr "S=C3=A4nder %s %s till %s"
-=20
--#: lib/transport.tcl:100
-+#: lib/transport.tcl:102
- msgid "Push Branches"
- msgstr "S=C3=A4nd grenar"
-=20
--#: lib/transport.tcl:114
-+#: lib/transport.tcl:117
- msgid "Source Branches"
- msgstr "K=C3=A4llgrenar"
-=20
-@@ -2554,19 +2558,19 @@ msgstr "K=C3=A4llgrenar"
- msgid "Destination Repository"
- msgstr "Destinationsarkiv"
-=20
--#: lib/transport.tcl:169
-+#: lib/transport.tcl:172
- msgid "Transfer Options"
- msgstr "=C3=96verf=C3=B6ringsalternativ"
-=20
--#: lib/transport.tcl:171
-+#: lib/transport.tcl:174
- msgid "Force overwrite existing branch (may discard changes)"
- msgstr "Tvinga =C3=B6verskrivning av befintlig gren (kan kasta bort =C3=
-=A4ndringar)"
-=20
--#: lib/transport.tcl:175
-+#: lib/transport.tcl:178
- msgid "Use thin pack (for slow network connections)"
- msgstr "Anv=C3=A4nd tunt paket (f=C3=B6r l=C3=A5ngsamma n=C3=A4tverksa=
-nslutningar)"
-=20
--#: lib/transport.tcl:179
-+#: lib/transport.tcl:182
- msgid "Include tags"
- msgstr "Ta med taggar"
-=20
++#: wt-status.c:140
++msgid "both modified:"
++msgstr "=C3=A4ndrat av b=C3=A4gge:"
++
++#: wt-status.c:170
++msgid "new commits, "
++msgstr "nya incheckningar, "
++
++#: wt-status.c:172
++msgid "modified content, "
++msgstr "=C3=A4ndrat inneh=C3=A5ll, "
++
++#: wt-status.c:174
++msgid "untracked content, "
++msgstr "osp=C3=A5rat inneh=C3=A5ll, "
++
++#: wt-status.c:188
++#, c-format
++msgid "new file:   %s"
++msgstr "ny fil:     %s"
++
++#: wt-status.c:191
++#, c-format
++msgid "copied:     %s -> %s"
++msgstr "kopierad:   %s -> %s"
++
++#: wt-status.c:194
++#, c-format
++msgid "deleted:    %s"
++msgstr "borttagen:  %s"
++
++#: wt-status.c:197
++#, c-format
++msgid "modified:   %s"
++msgstr "=C3=A4ndrad:     %s"
++
++#: wt-status.c:200
++#, c-format
++msgid "renamed:    %s -> %s"
++msgstr "namnbyte:   %s -> %s"
++
++#: wt-status.c:203
++#, c-format
++msgid "typechange: %s"
++msgstr "typbyte:    %s"
++
++#: wt-status.c:206
++#, c-format
++msgid "unknown:    %s"
++msgstr "ok=C3=A4nd:      %s"
++
++#: wt-status.c:209
++#, c-format
++msgid "unmerged:   %s"
++msgstr "osammansl.: %s"
++
++#: wt-status.c:212
++#, c-format
++msgid "bug: unhandled diff status %c"
++msgstr "programfel: diff-status %c ej hanterad"
++
++#: wt-status.c:635
++msgid "On branch "
++msgstr "P=C3=A5 grenen "
++
++#: wt-status.c:642
++msgid "Not currently on any branch."
++msgstr "Inte p=C3=A5 n=C3=A5gon gren f=C3=B6r n=C3=A4rvarande."
++
++#: wt-status.c:652
++msgid "# Initial commit"
++msgstr "# Grundincheckning"
++
++#: wt-status.c:666
++msgid "Untracked"
++msgstr "Osp=C3=A5rad"
++
++#: wt-status.c:666 builtin/notes.c:562
++msgid "add"
++msgstr "add"
++
++#: wt-status.c:668
++msgid "Ignored"
++msgstr "Ignorerad"
++
++#: wt-status.c:668
++msgid "add -f"
++msgstr "add -f"
++
++#: wt-status.c:670
++#, c-format
++msgid "# Untracked files not listed%s\n"
++msgstr "# Osp=C3=A5rade filer visas ej%s\n"
++
++#: wt-status.c:672
++msgid " (use -u option to show untracked files)"
++msgstr " (anv=C3=A4nd flaggan -u f=C3=B6r att visa osp=C3=A5rade filer=
+)"
++
++#: wt-status.c:678
++#, c-format
++msgid "# No changes\n"
++msgstr "# Inga =C3=A4ndringar\n"
++
++#: wt-status.c:682
++#, c-format
++msgid "no changes added to commit%s\n"
++msgstr "inga =C3=A4ndringar att checka in%s\n"
++
++#: wt-status.c:684
++msgid " (use \"git add\" and/or \"git commit -a\")"
++msgstr " (anv=C3=A4nd \"git add\" och/eller \"git commit -a\")"
++
++#: wt-status.c:686
++#, c-format
++msgid "nothing added to commit but untracked files present%s\n"
++msgstr "inget k=C3=B6at f=C3=B6r incheckning, men osp=C3=A5rade filer =
+finns%s\n"
++
++#: wt-status.c:688
++msgid " (use \"git add\" to track)"
++msgstr " (anv=C3=A4nd \"git add\" f=C3=B6r att sp=C3=A5ra)"
++
++#: wt-status.c:691
++msgid " (create/copy files and use \"git add\" to track)"
++msgstr " (skapa/kopiera filer och anv=C3=A4nd \"git add\" f=C3=B6r att=
+ sp=C3=A5ra)"
++
++#: wt-status.c:693 wt-status.c:696
++#, c-format
++msgid "nothing to commit%s\n"
++msgstr "inget att checka in%s\n"
++
++#: wt-status.c:694
++msgid " (use -u to show untracked files)"
++msgstr " (anv=C3=A4nd -u f=C3=B6r att visa osp=C3=A5rade filer)"
++
++#: wt-status.c:697
++msgid " (working directory clean)"
++msgstr " (arbetskatalogen ren)"
++
++#: wt-status.c:795
++msgid "HEAD (no branch)"
++msgstr "HEAD (ingen gren)"
++
++#: wt-status.c:801
++msgid "Initial commit on "
++msgstr "Grundincheckning p=C3=A5 "
++
++#: wt-status.c:816
++msgid "behind "
++msgstr "efter "
++
++#: wt-status.c:819 wt-status.c:822
++msgid "ahead "
++msgstr "f=C3=B6re "
++
++#: wt-status.c:824
++msgid ", behind "
++msgstr ", efter "
++
++#: builtin/add.c:41
++#, c-format
++msgid "unexpected diff status %c"
++msgstr "diff-status %c f=C3=B6rv=C3=A4ntades inte"
++
++#: builtin/add.c:67 builtin/commit.c:244
++msgid "updating files failed"
++msgstr "misslyckades uppdatera filer"
++
++#: builtin/add.c:77
++#, c-format
++msgid "remove '%s'\n"
++msgstr "ta bort \"%s\"\n"
++
++#: builtin/add.c:175
++#, c-format
++msgid "Path '%s' is in submodule '%.*s'"
++msgstr "S=C3=B6kv=C3=A4gen \"%s\" =C3=A4r i undermodulen \"%.*s\""
++
++#: builtin/add.c:191
++msgid "Unstaged changes after refreshing the index:"
++msgstr "Osp=C3=A5rade =C3=A4ndringar efter att ha uppdaterat indexet:"
++
++#: builtin/add.c:194 builtin/add.c:452 builtin/rm.c:194
++#, c-format
++msgid "pathspec '%s' did not match any files"
++msgstr "s=C3=B6kv=C3=A4gsangivelsen \"%s\" motsvarade inte n=C3=A5gra =
+filer"
++
++#: builtin/add.c:208
++#, c-format
++msgid "'%s' is beyond a symbolic link"
++msgstr "\"%s\" =C3=A4r p=C3=A5 andra sidan av en symbolisk l=C3=A4nk"
++
++#: builtin/add.c:275
++msgid "Could not read the index"
++msgstr "Kunde inte l=C3=A4sa indexet"
++
++#: builtin/add.c:284
++#, c-format
++msgid "Could not open '%s' for writing."
++msgstr "Kunde inte =C3=B6ppna \"%s\" f=C3=B6r skrivning"
++
++#: builtin/add.c:288
++msgid "Could not write patch"
++msgstr "Kunde inte skriva patch"
++
++#: builtin/add.c:293
++#, c-format
++msgid "Could not stat '%s'"
++msgstr "Kunde inte ta status p=C3=A5 \"%s\""
++
++#: builtin/add.c:295
++msgid "Empty patch. Aborted."
++msgstr "Tom patch. Avbryter."
++
++#: builtin/add.c:301
++#, c-format
++msgid "Could not apply '%s'"
++msgstr "Kunde inte applicera \"%s\""
++
++#: builtin/add.c:349
++#, c-format
++msgid "Use -f if you really want to add them.\n"
++msgstr "Anv=C3=A4nd -f om du verkligen vill l=C3=A4gga till dem.\n"
++
++#: builtin/add.c:350
++msgid "no files added"
++msgstr "inga filer har lagts till"
++
++#: builtin/add.c:356
++msgid "adding files failed"
++msgstr "misslyckades l=C3=A4gga till filer"
++
++#: builtin/add.c:388
++msgid "-A and -u are mutually incompatible"
++msgstr "-A och -u =C3=A4r =C3=B6msesidigt inkompatibla"
++
++#: builtin/add.c:390
++msgid "Option --ignore-missing can only be used together with --dry-ru=
+n"
++msgstr "Flaggan --ignore-missing kan endast anv=C3=A4ndas tillsammans =
+med --dry-run"
++
++#: builtin/add.c:410
++#, c-format
++msgid "Nothing specified, nothing added.\n"
++msgstr "Inget angivet, inget tillagt.\n"
++
++#: builtin/add.c:411
++#, c-format
++msgid "Maybe you wanted to say 'git add .'?\n"
++msgstr "Kanske menade du att skriva \"git add .\"?\n"
++
++#: builtin/add.c:417 builtin/clean.c:95 builtin/commit.c:301
++#: builtin/commit.c:310 builtin/mv.c:77 builtin/rm.c:171
++msgid "index file corrupt"
++msgstr "indexfilen trasig"
++
++#: builtin/add.c:468 builtin/mv.c:223 builtin/rm.c:268
++msgid "Unable to write new index file"
++msgstr "Kunde inte skriva ny indexfil"
++
++#: builtin/archive.c:17
++#, c-format
++msgid "could not create archive file '%s'"
++msgstr "Kunde inte skapa arkivfilen \"%s\""
++
++#: builtin/archive.c:20
++msgid "could not redirect output"
++msgstr "kunde inte omdirigera utdata"
++
++#: builtin/archive.c:36
++msgid "git archive: Remote with no URL"
++msgstr "git archive: Fj=C3=A4rr utan URL"
++
++#: builtin/archive.c:46
++msgid "git archive: expected ACK/NAK, got EOF"
++msgstr "git archive: f=C3=B6rv=C3=A4ntade ACK/NAK, fick EOF"
++
++#: builtin/archive.c:51
++#, c-format
++msgid "git archive: NACK %s"
++msgstr "git archive: NACK %s"
++
++#: builtin/archive.c:52
++msgid "git archive: protocol error"
++msgstr "git archive: protokollfel"
++
++#: builtin/archive.c:57
++msgid "git archive: expected a flush"
++msgstr "git archive: f=C3=B6rv=C3=A4ntade en t=C3=B6mning (flush)"
++
++#: builtin/branch.c:136
++#, c-format
++msgid ""
++"deleting branch '%s' that has been merged to\n"
++"         '%s', but it is not yet merged to HEAD."
++msgstr ""
++"tar bort grenen \"%s\" som inte har slagits ihop med\n"
++"         \"%s\", men som =C3=A4nnu inte slagits ihop med HEAD."
++
++#: builtin/branch.c:140
++#, c-format
++msgid ""
++"not deleting branch '%s' that is not yet merged to\n"
++"         '%s', even though it is merged to HEAD."
++msgstr ""
++"tar inte bort grenen \"%s\" som inte har slagits ihop med\n"
++"         \"%s\", trots att den har slagits ihop med HEAD."
++
++#. TRANSLATORS: This is "remote " in "remote branch '%s' not found"
++#: builtin/branch.c:161
++msgid "remote "
++msgstr "fj=C3=A4rr"
++
++#: builtin/branch.c:169
++msgid "cannot use -a with -d"
++msgstr "kan inte ange -a med -d"
++
++#: builtin/branch.c:175
++msgid "Couldn't look up commit object for HEAD"
++msgstr "Kunde inte sl=C3=A5 upp incheckningsobjekt f=C3=B6r HEAD"
++
++#: builtin/branch.c:180
++#, c-format
++msgid "Cannot delete the branch '%s' which you are currently on."
++msgstr "Kan inte ta bort grenen \"%s\" som du befinner dig p=C3=A5 f=C3=
+=B6r n=C3=A4rvarande."
++
++#: builtin/branch.c:190
++#, c-format
++msgid "%sbranch '%s' not found."
++msgstr "%sgrenen \"%s\" hittades inte."
++
++#: builtin/branch.c:198
++#, c-format
++msgid "Couldn't look up commit object for '%s'"
++msgstr "Kunde inte sl=C3=A5 upp incheckningsobjekt f=C3=B6r \"%s\""
++
++#: builtin/branch.c:204
++#, c-format
++msgid ""
++"The branch '%s' is not fully merged.\n"
++"If you are sure you want to delete it, run 'git branch -D %s'."
++msgstr ""
++"Grenen \"%s\" har inte slagits samman i sin helhet.\n"
++"Om du =C3=A4r s=C3=A4ker p=C3=A5 att du vill ta bort den, k=C3=B6r \"=
+git branch -D %s\"."
++
++#: builtin/branch.c:212
++#, c-format
++msgid "Error deleting %sbranch '%s'"
++msgstr "Fel vid borttagning av %sgrenen \"%s\""
++
++#: builtin/branch.c:217
++#, c-format
++msgid "Deleted %sbranch %s (was %s).\n"
++msgstr "Tog bort %sgrenen %s (var %s).\n"
++
++#: builtin/branch.c:222
++msgid "Update of config-file failed"
++msgstr "Misslyckades uppdatera konfigurationsfil"
++
++#: builtin/branch.c:304
++#, c-format
++msgid "branch '%s' does not point at a commit"
++msgstr "grenen \"%s\" pekar inte p=C3=A5 en incheckning"
++
++#: builtin/branch.c:381
++#, c-format
++msgid "behind %d] "
++msgstr "bakom %d] "
++
++#: builtin/branch.c:383
++#, c-format
++msgid "ahead %d] "
++msgstr "f=C3=B6re %d] "
++
++#: builtin/branch.c:385
++#, c-format
++msgid "ahead %d, behind %d] "
++msgstr "f=C3=B6re %d, bakom %d] "
++
++#: builtin/branch.c:484
++msgid "(no branch)"
++msgstr "(ingen gren)"
++
++#: builtin/branch.c:544
++msgid "some refs could not be read"
++msgstr "vissa referenser kunde inte l=C3=A4sas"
++
++#: builtin/branch.c:557
++msgid "cannot rename the current branch while not on any."
++msgstr "kunde inte byta namn p=C3=A5 aktuell gren n=C3=A4r du inte bef=
+inner dig p=C3=A5 n=C3=A5gon."
++
++#: builtin/branch.c:567 builtin/branch.c:571
++#, c-format
++msgid "Invalid branch name: '%s'"
++msgstr "Felaktigt namn p=C3=A5 gren: \"%s\""
++
++#: builtin/branch.c:574
++#, c-format
++msgid "A branch named '%s' already exists."
++msgstr "Det finns redan en gren som heter \"%s\""
++
++#: builtin/branch.c:580
++msgid "Branch rename failed"
++msgstr "Misslyckades byta namn p=C3=A5 gren"
++
++#: builtin/branch.c:584
++#, c-format
++msgid "Renamed a misnamed branch '%s' away"
++msgstr "Bytte bort namn p=C3=A5 en felaktigt namngiven gren \"%s\""
++
++#: builtin/branch.c:588
++#, c-format
++msgid "Branch renamed to %s, but HEAD is not updated!"
++msgstr "Grenen namnbytt till %s, men HEAD har inte uppdaterats!"
++
++#: builtin/branch.c:595
++msgid "Branch is renamed, but update of config-file failed"
++msgstr "Grenen namnbytt, men misslyckades uppdatera konfigurationsfile=
+n"
++
++#: builtin/branch.c:610
++#, c-format
++msgid "malformed object name %s"
++msgstr "felformat objektnamn %s"
++
++#: builtin/branch.c:680
++msgid "Failed to resolve HEAD as a valid ref."
++msgstr "Misslyckades sl=C3=A5 upp HEAD som giltig referens"
++
++#: builtin/branch.c:686
++msgid "HEAD not found below refs/heads!"
++msgstr "HEAD hittades inte under refs/heads!"
++
++#: builtin/branch.c:706
++msgid "-a and -r options to 'git branch' do not make sense with a bran=
+ch name"
++msgstr "flaggorna -a och -r p=C3=A5 \"git branch\" kan inte anges till=
+sammans med ett grennamn"
++
++#: builtin/bundle.c:47
++#, c-format
++msgid "%s is okay\n"
++msgstr "%s =C3=A4r okej\n"
++
++#: builtin/bundle.c:56
++msgid "Need a repository to create a bundle."
++msgstr "Beh=C3=B6ver ett arkiv f=C3=B6r att skapa ett paket (bundle)."
++
++#: builtin/bundle.c:60
++msgid "Need a repository to unbundle."
++msgstr "Beh=C3=B6ver ett arkiv f=C3=B6r att packa upp ett paket (bundl=
+e)."
++
++#: builtin/checkout.c:107 builtin/checkout.c:135
++#, c-format
++msgid "path '%s' does not have our version"
++msgstr "s=C3=B6kv=C3=A4gen \"%s\" har inte v=C3=A5r version"
++
++#: builtin/checkout.c:109 builtin/checkout.c:137
++#, c-format
++msgid "path '%s' does not have their version"
++msgstr "s=C3=B6kv=C3=A4gen \"%s\" har inte deras version"
++
++#: builtin/checkout.c:120
++#, c-format
++msgid "path '%s' does not have all three versions"
++msgstr "s=C3=B6kv=C3=A4gen \"%s\" har inte alla tre versionerna"
++
++#: builtin/checkout.c:155
++#, c-format
++msgid "path '%s' does not have all 3 versions"
++msgstr "s=C3=B6kv=C3=A4gen \"%s\" har inte alla 3 versionerna"
++
++#: builtin/checkout.c:172
++#, c-format
++msgid "path '%s': cannot merge"
++msgstr "s=C3=B6kv=C3=A4g \"%s\": kan inte sl=C3=A5 ihop"
++
++#: builtin/checkout.c:189
++#, c-format
++msgid "Unable to add merge result for '%s'"
++msgstr "Kunde inte l=C3=A4gga till sammanslagningsresultat f=C3=B6r \"=
+%s\""
++
++#: builtin/checkout.c:194 builtin/reset.c:170
++#, c-format
++msgid "make_cache_entry failed for path '%s'"
++msgstr "make_cache_entry misslyckades f=C3=B6r s=C3=B6kv=C3=A4gen \"%s=
+\""
++
++#: builtin/checkout.c:216 builtin/checkout.c:371
++msgid "corrupt index file"
++msgstr "indexfilen =C3=A4r trasig"
++
++#: builtin/checkout.c:244 builtin/checkout.c:251
++#, c-format
++msgid "path '%s' is unmerged"
++msgstr "s=C3=B6kv=C3=A4gen \"%s\" har inte slagits ihop"
++
++#: builtin/checkout.c:280 builtin/checkout.c:475 builtin/clone.c:658
++#: builtin/merge.c:737
++msgid "unable to write new index file"
++msgstr "kunde inte skriva ny indexfil"
++
++#: builtin/checkout.c:297 builtin/diff.c:307 builtin/merge.c:367
++msgid "diff_setup_done failed"
++msgstr "diff_setup_done misslyckades"
++
++#: builtin/checkout.c:393
++msgid "you need to resolve your current index first"
++msgstr "du m=C3=A5ste l=C3=B6sa ditt befintliga index f=C3=B6rst"
++
++#: builtin/checkout.c:524
++#, c-format
++msgid "Can not do reflog for '%s'\n"
++msgstr "Kan inte skapa referenslog f=C3=B6r \"%s\"\n"
++
++#: builtin/checkout.c:550
++#, c-format
++msgid "Already on '%s'\n"
++msgstr "Redan p=C3=A5 \"%s\"\n"
++
++#: builtin/checkout.c:554
++#, c-format
++msgid "Switched to and reset branch '%s'\n"
++msgstr "V=C3=A4xlade till och nollst=C3=A4llde grenen \"%s\"\n"
++
++#: builtin/checkout.c:556
++#, c-format
++msgid "Switched to a new branch '%s'\n"
++msgstr "V=C3=A4xlade till en ny gren \"%s\"\n"
++
++#: builtin/checkout.c:558
++#, c-format
++msgid "Switched to branch '%s'\n"
++msgstr "V=C3=A4xlade till grenen \"%s\"\n"
++
++#: builtin/checkout.c:575
++msgid "HEAD is now at"
++msgstr "HEAD =C3=A4r nu p=C3=A5"
++
++#: builtin/checkout.c:603
++msgid "You are on a branch yet to be born"
++msgstr "Du =C3=A4r p=C3=A5 en gren som =C3=A4nnu inte =C3=A4r f=C3=B6d=
+d"
++
++#: builtin/checkout.c:617
++msgid "Previous HEAD position was"
++msgstr "Tidigare position f=C3=B6r HEAD var"
++
++#: builtin/checkout.c:730
++msgid "-B cannot be used with -b"
++msgstr "-B kan inte anv=C3=A4ndas med -b"
++
++#: builtin/checkout.c:738
++msgid "--patch is incompatible with all other options"
++msgstr "--patch =C3=A4r inkompatibel med alla andra flaggor"
++
++#: builtin/checkout.c:744
++msgid "--track needs a branch name"
++msgstr "--track beh=C3=B6ver ett namn p=C3=A5 en gren"
++
++#: builtin/checkout.c:751
++msgid "Missing branch name; try -b"
++msgstr "Grennamn saknas; f=C3=B6rs=C3=B6k med -b"
++
++#: builtin/checkout.c:757
++msgid "--orphan and -b|-B are mutually exclusive"
++msgstr "--orphan och --b|-B kan inte anv=C3=A4ndas samtidigt"
++
++#: builtin/checkout.c:759
++msgid "--orphan cannot be used with -t"
++msgstr "--orphan kan inte anv=C3=A4ndas med -t"
++
++#: builtin/checkout.c:769
++msgid "git checkout: -f and -m are incompatible"
++msgstr "git checkout: -f och -m =C3=A4r inkompatibla"
++
++#. case (1)
++#: builtin/checkout.c:815
++#, c-format
++msgid "invalid reference: %s"
++msgstr "felaktig referens: %s"
++
++#. case (1): want a tree
++#: builtin/checkout.c:852
++#, c-format
++msgid "reference is not a tree: %s"
++msgstr "referensen =C3=A4r inte ett tr=C3=A4d: %s"
++
++#: builtin/checkout.c:878
++msgid "invalid path specification"
++msgstr "felaktig s=C3=B6kv=C3=A4gsangivelse"
++
++#: builtin/checkout.c:886
++#, c-format
++msgid ""
++"git checkout: updating paths is incompatible with switching branches.=
+\n"
++"Did you intend to checkout '%s' which can not be resolved as commit?"
++msgstr ""
++"git checkout: uppdatera s=C3=B6kv=C3=A4gar =C3=A4r inkompatibelt med =
+att v=C3=A4xla gren.\n"
++"Ville du checka ut \"%s\" som inte kan l=C3=B6sas som en sammanslanin=
+g?"
++
++#: builtin/checkout.c:888
++msgid "git checkout: updating paths is incompatible with switching bra=
+nches."
++msgstr "git checkout: uppdatera s=C3=B6kv=C3=A4gar =C3=A4r inkompatibe=
+lt med att v=C3=A4xla gren."
++
++#: builtin/checkout.c:893
++msgid ""
++"git checkout: --ours/--theirs, --force and --merge are incompatible w=
+hen\n"
++"checking out of the index."
++msgstr ""
++"git checkout: --ours/--theirs, --force och --merge =C3=A4r inkompatib=
+la n=C3=A4r\n"
++"du checkar ut fr=C3=A5n indexet."
++
++#: builtin/checkout.c:904
++#, c-format
++msgid "git checkout: we do not like '%s' as a branch name."
++msgstr "git checkout: vi tycker inte om \"%s\" som namn p=C3=A5 en gre=
+n."
++
++#: builtin/checkout.c:909
++#, c-format
++msgid "git checkout: branch %s already exists"
++msgstr "git checkout: grenen %s finns redan"
++
++#: builtin/checkout.c:916
++msgid "Cannot switch branch to a non-commit."
++msgstr "Kan inte v=C3=A4xla gren p=C3=A5 en icke-incheckning."
++
++#: builtin/checkout.c:919
++msgid "--ours/--theirs is incompatible with switching branches."
++msgstr "--ours/--theirs =C3=A4r inkompatibla n=C3=A4r du v=C3=A4xlar g=
+ren."
++
++#: builtin/clean.c:78
++msgid "-x and -X cannot be used together"
++msgstr "-x och -X kan inte anv=C3=A4ndas samtidigt"
++
++#: builtin/clean.c:82
++msgid ""
++"clean.requireForce set to true and neither -n nor -f given; refusing =
+to clean"
++msgstr ""
++"clean.requireForce satt till true, men varken -n eller -f angavs; v=C3=
+=A4grar st=C3=A4da"
++
++#: builtin/clean.c:85
++msgid ""
++"clean.requireForce defaults to true and neither -n nor -f given; refu=
+sing to "
++"clean"
++msgstr ""
++"clean.requireForce har standardv=C3=A4rdet true, men varken -n eller =
+-f angavs; v=C3=A4grar st=C3=A4da"
++
++#: builtin/clean.c:154 builtin/clean.c:175
++#, c-format
++msgid "Would remove %s\n"
++msgstr "Skulle ta bort %s\n"
++
++#: builtin/clean.c:158 builtin/clean.c:178
++#, c-format
++msgid "Removing %s\n"
++msgstr "Tar bort %s\n"
++
++#: builtin/clean.c:161 builtin/clean.c:181
++#, c-format
++msgid "failed to remove '%s'"
++msgstr "kunde inte ta bort \"%s\""
++
++#: builtin/clean.c:165
++#, c-format
++msgid "Would not remove %s\n"
++msgstr "Skulle inte ta bort %s\n"
++
++#: builtin/clean.c:167
++#, c-format
++msgid "Not removing %s\n"
++msgstr "Tar inte bort %s\n"
++
++#: builtin/clone.c:208
++#, c-format
++msgid "reference repository '%s' is not a local directory."
++msgstr "referensarkivet \"%s\" =C3=A4r inte en lokal katalog."
++
++#: builtin/clone.c:235
++#, c-format
++msgid "failed to open '%s'"
++msgstr "misslyckades =C3=B6ppna \"%s\""
++
++#: builtin/clone.c:239
++#, c-format
++msgid "failed to create directory '%s'"
++msgstr "misslyckades skapa katalogen \"%s\""
++
++#: builtin/clone.c:241 builtin/diff.c:74
++#, c-format
++msgid "failed to stat '%s'"
++msgstr "misslyckades ta status p=C3=A5 \"%s\""
++
++#: builtin/clone.c:243
++#, c-format
++msgid "%s exists and is not a directory"
++msgstr "%s finns och =C3=A4r ingen katalog"
++
++#: builtin/clone.c:257
++#, c-format
++msgid "failed to stat %s\n"
++msgstr "misslyckades ta status p=C3=A5 %s\n"
++
++#: builtin/clone.c:267
++#, c-format
++msgid "failed to unlink '%s'"
++msgstr "misslyckades ta bort l=C3=A4nken \"%s\""
++
++#: builtin/clone.c:272
++#, c-format
++msgid "failed to create link '%s'"
++msgstr "misslyckades skapa l=C3=A4nken \"%s\""
++
++#: builtin/clone.c:276
++#, c-format
++msgid "failed to copy file to '%s'"
++msgstr "misslyckades kopiera filen till \"%s\""
++
++#: builtin/clone.c:305
++#, c-format
++msgid "done.\n"
++msgstr "klart.\n"
++
++#: builtin/clone.c:387
++msgid "Too many arguments."
++msgstr "F=C3=B6r m=C3=A5nga argument."
++
++#: builtin/clone.c:391
++msgid "You must specify a repository to clone."
++msgstr "Du m=C3=A5ste ange ett arkiv att klona."
++
++#: builtin/clone.c:399
++#, c-format
++msgid "--bare and --origin %s options are incompatible."
++msgstr "flaggorna --bare och --origin %s =C3=A4r inkompatibla."
++
++#: builtin/clone.c:428
++#, c-format
++msgid "destination path '%s' already exists and is not an empty direct=
+ory."
++msgstr "destinationss=C3=B6kv=C3=A4gen \"%s\" finns redan och =C3=A4r =
+inte en tom katalog."
++
++#: builtin/clone.c:438
++#, c-format
++msgid "working tree '%s' already exists."
++msgstr "arbetstr=C3=A4det \"%s\" finns redan."
++
++#: builtin/clone.c:451 builtin/clone.c:465
++#, c-format
++msgid "could not create leading directories of '%s'"
++msgstr "kunde inte skapa inledande kataloger f=C3=B6r \"%s\""
++
++#: builtin/clone.c:454
++#, c-format
++msgid "could not create work tree dir '%s'."
++msgstr "kunde inte skapa arbetskatalogen \"%s\""
++
++#: builtin/clone.c:470
++#, c-format
++msgid "Cloning into bare repository %s"
++msgstr "Klonar till ett naket arkiv %s"
++
++#: builtin/clone.c:472
++#, c-format
++msgid "Cloning into %s"
++msgstr "Klonar till %s"
++
++#: builtin/clone.c:530
++#, c-format
++msgid "Don't know how to clone %s"
++msgstr "Vet inte hur man klonar %s"
++
++#: builtin/clone.c:569
++#, c-format
++msgid "Remote branch %s not found in upstream %s, using HEAD instead"
++msgstr "Fj=C3=A4rrgrenen %s hittades inte i uppstr=C3=B6msarkivet %s, =
+anv=C3=A4nder HEAD ist=C3=A4llet"
++
++#: builtin/clone.c:579
++msgid "You appear to have cloned an empty repository."
++msgstr "Du verkar ha klonat ett tomt arkiv."
++
++#: builtin/clone.c:621
++msgid "remote HEAD refers to nonexistent ref, unable to checkout.\n"
++msgstr "HEAD hos fj=C3=A4rren pekar p=C3=A5 en obefintlig referens, ka=
+n inte checka ut.\n"
++
++#: builtin/commit.c:41
++msgid ""
++"Your name and email address were configured automatically based\n"
++"on your username and hostname. Please check that they are accurate.\n=
+"
++"You can suppress this message by setting them explicitly:\n"
++"\n"
++"    git config --global user.name \"Your Name\"\n"
++"    git config --global user.email you@example.com\n"
++"\n"
++"If the identity used for this commit is wrong, you can fix it with:\n=
+"
++"\n"
++"    git commit --amend --author=3D'Your Name <you@example.com>'\n"
++msgstr ""
++"Ditt namn och e-postadress konfigurerades automatiskt baserat p=C3=A5=
+\n"
++"ditt anv=C3=A4ndar-id och v=C3=A4rdnamn. Kontrollera att de =C3=A4r r=
+iktiga. Du\n"
++"kan f=C3=B6rhindra det h=C3=A4r meddelandet genom att st=C3=A4lla dem=
+ explicit:\n"
++"\n"
++"    git config --global user.name \"Ditt namn\"\n"
++"    git config --global user.email du@example.com\n"
++"\n"
++"Om identiteten som anv=C3=A4ndes f=C3=B6r incheckningen =C3=A4r felak=
+tig kan du\n"
++"r=C3=A4tta den med:\n"
++"\n"
++"    git commit --amend --author=3D'Ditt namn <du@example.com>'\n"
++
++#: builtin/commit.c:53
++msgid ""
++"You asked to amend the most recent commit, but doing so would make\n"
++"it empty. You can repeat your command with --allow-empty, or you can\=
+n"
++"remove the commit entirely with \"git reset HEAD^\".\n"
++msgstr ""
++"Du bad om att ut=C3=B6ka den senaste incheckningen, men om du g=C3=B6=
+r det\n"
++"blir den tom. Du kan k=C3=B6ra kommandot p=C3=A5 nytt med --allow-emp=
+ty, eller\n"
++"s=C3=A5 kan du ta bort incheckningen helt med \"git reset HEAD^\".\n"
++
++#: builtin/commit.c:271
++msgid "failed to unpack HEAD tree object"
++msgstr "misslyckades packa upp HEAD:s tr=C3=A4dobjekt"
++
++#: builtin/commit.c:299
++msgid "interactive add failed"
++msgstr "interaktiv till=C3=A4ggning misslyckades"
++
++#: builtin/commit.c:330 builtin/commit.c:350 builtin/commit.c:396
++msgid "unable to write new_index file"
++msgstr "kunde inte skriva filen new_index"
++
++#: builtin/commit.c:380
++msgid "cannot do a partial commit during a merge."
++msgstr "kan inte utf=C3=B6ra en delvis incheckning under en sammanslag=
+ning."
++
++#: builtin/commit.c:389
++msgid "cannot read the index"
++msgstr "kan inte l=C3=A4sa indexet"
++
++#: builtin/commit.c:409
++msgid "unable to write temporary index file"
++msgstr "kunde inte skriva tempor=C3=A4r indexfil"
++
++#: builtin/commit.c:456 builtin/commit.c:1294
++msgid "could not parse HEAD commit"
++msgstr "kunde inte tolka HEAD:s incheckning"
++
++#: builtin/commit.c:475 builtin/commit.c:481
++#, c-format
++msgid "invalid commit: %s"
++msgstr "felaktig incheckning: %s"
++
++#: builtin/commit.c:499
++msgid "malformed --author parameter"
++msgstr "felformad \"--author\"-flagga"
++
++#: builtin/commit.c:573 builtin/shortlog.c:299
++#, c-format
++msgid "(reading log message from standard input)\n"
++msgstr "(l=C3=A4ser loggmeddelande fr=C3=A5n standard in)\n"
++
++#: builtin/commit.c:575
++msgid "could not read log from standard input"
++msgstr "kunde inte l=C3=A4sa logg fr=C3=A5n standard in"
++
++#: builtin/commit.c:579
++#, c-format
++msgid "could not read log file '%s'"
++msgstr "kunde inte l=C3=A4sa loggfilen \"%s\""
++
++#: builtin/commit.c:585
++msgid "commit has empty message"
++msgstr "incheckningen har ett tomt meddelande"
++
++#: builtin/commit.c:591
++msgid "could not read MERGE_MSG"
++msgstr "kunde inte l=C3=A4sa MERGE_MSG"
++
++#: builtin/commit.c:595
++msgid "could not read SQUASH_MSG"
++msgstr "kunde inte l=C3=A4sa SQUASH_MSG"
++
++#: builtin/commit.c:599
++#, c-format
++msgid "could not read '%s'"
++msgstr "kunde inte l=C3=A4sa \"%s\""
++
++#: builtin/commit.c:612
++#, c-format
++msgid "could not open '%s'"
++msgstr "kunde inte =C3=B6ppna \"%s\""
++
++#: builtin/commit.c:636
++msgid "could not write commit template"
++msgstr "kunde inte skriva incheckningsmall"
++
++#: builtin/commit.c:650
++#, c-format
++msgid ""
++"#\n"
++"# It looks like you may be committing a MERGE.\n"
++"# If this is not correct, please remove the file\n"
++"#\t%s\n"
++"# and try again.\n"
++"#\n"
++msgstr ""
++"#\n"
++"# Det verkar som du checkar in en SAMMANSLAGNING.\n"
++"# Om det inte st=C3=A4mmer tar du bort filen\n"
++"#\t%s\n"
++"# och f=C3=B6rs=C3=B6ker igen.\n"
++"#\n"
++
++#: builtin/commit.c:659
++#, c-format
++msgid ""
++"\n"
++"# Please enter the commit message for your changes."
++msgstr ""
++"\n"
++"# Ange ett incheckningsmeddelande f=C3=B6r dina =C3=A4ndringar."
++
++#: builtin/commit.c:663
++#, c-format
++msgid ""
++" Lines starting\n"
++"# with '#' will be ignored, and an empty message aborts the commit.\n=
+"
++msgstr ""
++" Rader som inleds\n"
++"# med \"#\" kommer ignoreras, och ett tomt meddelande avbryter inchec=
+kningen.\n"
++""
++
++#: builtin/commit.c:668
++#, c-format
++msgid ""
++" Lines starting\n"
++"# with '#' will be kept; you may remove them yourself if you want to.=
+\n"
++"# An empty message aborts the commit.\n"
++msgstr ""
++" Rader som inleds\n"
++"# med \"#\" kommer beh=C3=A5llas; du kan sj=C3=A4lv ta bort dem om du=
+ vill.\n"
++"# Ett tomt meddelande avbryter incheckningen.\n"
++
++#: builtin/commit.c:680
++#, c-format
++msgid "%s# Author:    %s\n"
++msgstr "%s# F=C3=B6rfattare: %s\n"
++
++#: builtin/commit.c:688
++#, c-format
++msgid "%s# Committer: %s\n"
++msgstr "%s# Incheckare: %s\n"
++
++#: builtin/commit.c:705
++msgid "Cannot read index"
++msgstr "Kan inte l=C3=A4sa indexet"
++
++#: builtin/commit.c:737
++msgid "Error building trees"
++msgstr "Fel vid byggande av tr=C3=A4d"
++
++#: builtin/commit.c:752 builtin/tag.c:321
++#, c-format
++msgid "Please supply the message using either -m or -F option.\n"
++msgstr "Ange meddelandet en av flaggorna -m eller -F.\n"
++
++#: builtin/commit.c:832
++#, c-format
++msgid "No existing author found with '%s'"
++msgstr "Hittade ingen befintlig f=C3=B6rfattare med \"%s\""
++
++#: builtin/commit.c:847 builtin/commit.c:1039
++#, c-format
++msgid "Invalid untracked files mode '%s'"
++msgstr "Ogiltigt l=C3=A4ge f=C3=B6r osp=C3=A5rade filer: \"%s\""
++
++#: builtin/commit.c:864
++msgid "Using both --reset-author and --author does not make sense"
++msgstr "Kan inte anv=C3=A4nda b=C3=A5de --reset-author och --author"
++
++#: builtin/commit.c:878
++msgid "You have nothing to amend."
++msgstr "Du har inget att ut=C3=B6ka."
++
++#: builtin/commit.c:880
++msgid "You are in the middle of a merge -- cannot amend."
++msgstr "Du =C3=A4r i mitten av en incheckning -- kan inte ut=C3=B6ka."
++
++#: builtin/commit.c:889
++msgid "Only one of -c/-C/-F can be used."
++msgstr "Kan endast anv=C3=A4nda en av -c/-C/-F."
++
++#: builtin/commit.c:891
++msgid "Option -m cannot be combined with -c/-C/-F."
++msgstr "Flaggan -m kan inte kombineras med -c/-C/-F."
++
++#: builtin/commit.c:897
++msgid "--reset-author can be used only with -C, -c or --amend."
++msgstr "--reset-author kan endast anv=C3=A4ndas med -C, -c eller --ame=
+nd."
++
++#: builtin/commit.c:906
++#, c-format
++msgid "could not lookup commit %s"
++msgstr "kunde inte sl=C3=A5 upp incheckningen %s"
++
++#: builtin/commit.c:909
++#, c-format
++msgid "could not parse commit %s"
++msgstr "kunde inte tolka incheckningen %s"
++
++#: builtin/commit.c:937
++msgid "Only one of --include/--only/--all/--interactive can be used."
++msgstr "Endast en av --include/--only/--all/--interactive kan anv=C3=A4=
+ndas."
++
++#: builtin/commit.c:939
++msgid "No paths with --include/--only does not make sense."
++msgstr "Du m=C3=A5ste ange s=C3=B6kv=C3=A4gar tillsammans med --includ=
+e/--only."
++
++#: builtin/commit.c:941
++msgid "Clever... amending the last one with dirty index."
++msgstr "Smart... ut=C3=B6ka den senaste med smutsigt index."
++
++#: builtin/commit.c:943
++msgid "Explicit paths specified without -i nor -o; assuming --only pat=
+hs..."
++msgstr "Explicita s=C3=B6kv=C3=A4gar angavs utan -i eller -o; antar --=
+only-paths..."
++
++#: builtin/commit.c:953
++#, c-format
++msgid "Invalid cleanup mode %s"
++msgstr "Felaktigt st=C3=A4dningsl=C3=A4ge %s"
++
++#: builtin/commit.c:958
++msgid "Paths with -a does not make sense."
++msgstr "Kan inte ange s=C3=B6kv=C3=A4gar med -a."
++
++#: builtin/commit.c:960
++msgid "Paths with --interactive does not make sense."
++msgstr "Kan inte ange s=C3=B6kv=C3=A4gar med --interactive."
++
++#: builtin/commit.c:1142
++msgid "couldn't look up newly created commit"
++msgstr "kunde inte sl=C3=A5 upp en precis skapad incheckning"
++
++#: builtin/commit.c:1144
++msgid "could not parse newly created commit"
++msgstr "kunde inte tolka en precis skapad incheckning"
++
++#: builtin/commit.c:1185
++msgid "detached HEAD"
++msgstr "fr=C3=A5nkopplad HEAD"
++
++#: builtin/commit.c:1187
++msgid " (root-commit)"
++msgstr " (rotincheckning)"
++
++#: builtin/commit.c:1307 builtin/merge.c:461
++#, c-format
++msgid "could not open '%s' for reading"
++msgstr "kunde inte =C3=B6ppna \"%s\" f=C3=B6r l=C3=A4sning"
++
++#: builtin/commit.c:1312
++#, c-format
++msgid "Corrupt MERGE_HEAD file (%s)"
++msgstr "Trasig MERGE_HEAD-fil (%s)"
++
++#: builtin/commit.c:1319
++msgid "could not read MERGE_MODE"
++msgstr "kunde inte l=C3=A4sa MERGE_MODE"
++
++#: builtin/commit.c:1336
++#, c-format
++msgid "could not read commit message: %s"
++msgstr "kunde inte l=C3=A4sa incheckningsmeddelande: %s"
++
++#: builtin/commit.c:1350
++#, c-format
++msgid "Aborting commit due to empty commit message.\n"
++msgstr "Avbryter p=C3=A5 grund av tomt incheckningsmeddelande.\n"
++
++#: builtin/commit.c:1358
++msgid "failed to write commit object"
++msgstr "kunde inte skriva incheckningsobjekt"
++
++#: builtin/commit.c:1375
++msgid "cannot lock HEAD ref"
++msgstr "kunde inte l=C3=A5sa HEAD-referens"
++
++#: builtin/commit.c:1379
++msgid "cannot update HEAD ref"
++msgstr "kunde inte uppdatera HEAD-referens"
++
++#: builtin/commit.c:1388
++msgid ""
++"Repository has been updated, but unable to write\n"
++"new_index file. Check that disk is not full or quota is\n"
++"not exceeded, and then \"git reset HEAD\" to recover."
++msgstr ""
++"Arkivet har uppdaterats, men kunde inte skriva filen\n"
++"new_index. Kontrollera att disken inte =C3=A4r full och\n"
++"att kvoten inte har =C3=B6verskridits, och k=C3=B6r sedan\n"
++"\"git reset HEAD\" f=C3=B6r att =C3=A5terst=C3=A4lla."
++
++#: builtin/describe.c:205
++#, c-format
++msgid "annotated tag %s not available"
++msgstr "den dekorerade taggen %s inte tillg=C3=A4nglig"
++
++#: builtin/describe.c:209
++#, c-format
++msgid "annotated tag %s has no embedded name"
++msgstr "den dekorerade taggen %s har inget inb=C3=A4ddat namn"
++
++#: builtin/describe.c:211
++#, c-format
++msgid "tag '%s' is really '%s' here"
++msgstr "taggen \"%s\" =C3=A4r i verkligheten \"%s\" h=C3=A4r"
++
++#: builtin/describe.c:238
++#, c-format
++msgid "Not a valid object name %s"
++msgstr "Objektnamnet =C3=A4r inte giltigt: %s"
++
++#: builtin/describe.c:241
++#, c-format
++msgid "%s is not a valid '%s' object"
++msgstr "%s =C3=A4r inte ett giltigt \"%s\"-objekt"
++
++#: builtin/describe.c:258
++#, c-format
++msgid "no tag exactly matches '%s'"
++msgstr "ingen tagg motsvarar \"%s\" exakt"
++
++#: builtin/describe.c:260
++#, c-format
++msgid "searching to describe %s\n"
++msgstr "s=C3=B6ker f=C3=B6r att beskriva %s\n"
++
++#: builtin/describe.c:295
++#, c-format
++msgid "finished search at %s\n"
++msgstr "avslutade s=C3=B6kning p=C3=A5 %s\n"
++
++#: builtin/describe.c:319
++#, c-format
++msgid ""
++"No annotated tags can describe '%s'.\n"
++"However, there were unannotated tags: try --tags."
++msgstr ""
++"Inga dekorerade taggar kan beskriva \"%s\".\n"
++"Det finns dock odekorerade taggar: testa --tags."
++
++#: builtin/describe.c:323
++#, c-format
++msgid ""
++"No tags can describe '%s'.\n"
++"Try --always, or create some tags."
++msgstr ""
++"Inga taggar kan beskriva \"%s\".\n"
++"Testa --always, eller skapa n=C3=A5gra taggar."
++
++#: builtin/describe.c:344
++#, c-format
++msgid "traversed %lu commits\n"
++msgstr "traverserade %lu incheckningar\n"
++
++#: builtin/describe.c:347
++#, c-format
++msgid ""
++"more than %i tags found; listed %i most recent\n"
++"gave up search at %s\n"
++msgstr ""
++"mer =C3=A4n %i taggar hittades; listar de %i senaste\n"
++"gav upp s=C3=B6kningen vid %s\n"
++
++#: builtin/describe.c:398
++msgid "--long is incompatible with --abbrev=3D0"
++msgstr "--long =C3=A4r inkompatibel med --abbrev=3D0"
++
++#: builtin/describe.c:423
++msgid "No names found, cannot describe anything."
++msgstr "Inga namn hittades, kan inte beskriva n=C3=A5got."
++
++#: builtin/describe.c:430
++msgid "--dirty is incompatible with committishes"
++msgstr "--dirty =C3=A4r inkompatibelt med \"committish\"-v=C3=A4rden"
++
++#: builtin/diff.c:76
++#, c-format
++msgid "'%s': not a regular file or symlink"
++msgstr "\"%s\": inte en normal fil eller symbolisk l=C3=A4nk"
++
++#: builtin/diff.c:225
++#, c-format
++msgid "invalid option: %s"
++msgstr "ogiltig flagga: %s"
++
++#: builtin/diff.c:302
++msgid "Not a git repository"
++msgstr "Inte ett git-arkiv"
++
++#: builtin/diff.c:334
++msgid "No HEAD commit to compare with (yet)"
++msgstr "Ingen HEAD-incheckning att j=C3=A4mf=C3=B6ra med (=C3=A4nnu)"
++
++#: builtin/diff.c:349
++#, c-format
++msgid "invalid object '%s' given."
++msgstr "objektet \"%s\" som angavs =C3=A4r felaktigt."
++
++#: builtin/diff.c:354
++#, c-format
++msgid "more than %d trees given: '%s'"
++msgstr "mer =C3=A4n %d tr=C3=A4d angavs: \"%s\""
++
++#: builtin/diff.c:364
++#, c-format
++msgid "more than two blobs given: '%s'"
++msgstr "mer =C3=A4n tv=C3=A5 blobbar angavs: \"%s\""
++
++#: builtin/diff.c:372
++#, c-format
++msgid "unhandled object '%s' given."
++msgstr "ej hanterat objekt \"%s\" angavs."
++
++#: builtin/fetch.c:172
++msgid "Couldn't find remote ref HEAD"
++msgstr "Kunde inte hitta fj=C3=A4rr-referensen HEAD"
++
++#: builtin/fetch.c:225
++#, c-format
++msgid "object %s not found"
++msgstr "objektet %s hittades inte"
++
++#: builtin/fetch.c:230
++msgid "[up to date]"
++msgstr "[=C3=A0jour]"
++
++#.
++#. * If this is the head, and it's not okay to update
++#. * the head, and the old value of the head isn't empty...
++#.
++#: builtin/fetch.c:243
++#, c-format
++msgid "! %-*s %-*s -> %s  (can't fetch in current branch)"
++msgstr "! %-*s %-*s -> %s  (kan inte h=C3=A4mta i aktuell gren)"
++
++#: builtin/fetch.c:244 builtin/fetch.c:306
++msgid "[rejected]"
++msgstr "[refuserad]"
++
++#: builtin/fetch.c:254
++msgid "[tag update]"
++msgstr "[uppdaterad tagg]"
++
++#: builtin/fetch.c:255 builtin/fetch.c:277 builtin/fetch.c:290
++msgid "  (unable to update local ref)"
++msgstr "  (kunde inte uppdatera lokal ref)"
++
++#: builtin/fetch.c:267
++msgid "[new tag]"
++msgstr "[ny tagg]"
++
++#: builtin/fetch.c:271
++msgid "[new branch]"
++msgstr "[ny gren]"
++
++#: builtin/fetch.c:302
++msgid "unable to update local ref"
++msgstr "kunde inte uppdatera lokal ref"
++
++#: builtin/fetch.c:302
++msgid "forced update"
++msgstr "tvingad uppdatering"
++
++#: builtin/fetch.c:307
++msgid "(non-fast-forward)"
++msgstr "(ej snabbspolad)"
++
++#: builtin/fetch.c:325 builtin/fetch.c:648
++#, c-format
++msgid "cannot open %s: %s\n"
++msgstr "kan inte =C3=B6ppna %s. %s\n"
++
++#: builtin/fetch.c:403
++#, c-format
++msgid "From %.*s\n"
++msgstr "Fr=C3=A5n %.*s\n"
++
++#: builtin/fetch.c:414
++#, c-format
++msgid ""
++"some local refs could not be updated; try running\n"
++" 'git remote prune %s' to remove any old, conflicting branches"
++msgstr ""
++"n=C3=A5gra lokala referenser kunde inte uppdateras; testa att k=C3=B6=
+ra\n"
++" \"git remote prune %s\" f=C3=B6r att ta bort gamla grenar som st=C3=A5=
+r i konflikt"
++
++#: builtin/fetch.c:464
++msgid "could not run rev-list"
++msgstr "kunde inte k=C3=B6ra rev-list"
++
++#: builtin/fetch.c:478
++#, c-format
++msgid "failed write to rev-list: %s"
++msgstr "kunde inte skriva till rev-list: %s"
++
++#: builtin/fetch.c:485
++#, c-format
++msgid "failed to close rev-list's stdin: %s"
++msgstr "kunde inte st=C3=A4nga rev-list:s standard in: %s"
++
++#: builtin/fetch.c:512
++#, c-format
++msgid "   (%s will become dangling)\n"
++msgstr "   (%s kommer bli dinglande)\n"
++
++#: builtin/fetch.c:513
++#, c-format
++msgid "   (%s has become dangling)\n"
++msgstr "   (%s har blivit dinglande)\n"
++
++#: builtin/fetch.c:520
++msgid "[deleted]"
++msgstr "[borttagen]"
++
++#: builtin/fetch.c:521
++msgid "(none)"
++msgstr "(ingen)"
++
++#: builtin/fetch.c:638
++#, c-format
++msgid "Refusing to fetch into current branch %s of non-bare repository=
+"
++msgstr "V=C3=A4grar h=C3=A4mta till aktuell gren %s i ett icke-naket a=
+rkiv"
++
++#: builtin/fetch.c:672
++#, c-format
++msgid "Don't know how to fetch from %s"
++msgstr "Vet inte hur man h=C3=A4mtar fr=C3=A5n %s"
++
++#: builtin/fetch.c:726
++#, c-format
++msgid "Option \"%s\" value \"%s\" is not valid for %s"
++msgstr "Flaggan \"%s\" och v=C3=A4rdet \"%s\" =C3=A4r inte giltigt f=C3=
+=B6r %s"
++
++#: builtin/fetch.c:729
++#, c-format
++msgid "Option \"%s\" is ignored for %s\n"
++msgstr "Flaggan \"%s\" ignoreras f=C3=B6r %s\n"
++
++#: builtin/fetch.c:818
++#, c-format
++msgid "Fetching %s\n"
++msgstr "H=C3=A4mtar %s\n"
++
++#: builtin/fetch.c:820
++#, c-format
++msgid "Could not fetch %s"
++msgstr "Kunde inte h=C3=A4mta %s"
++
++#: builtin/fetch.c:836
++msgid ""
++"No remote repository specified.  Please, specify either a URL or a\n"
++"remote name from which new revisions should be fetched."
++msgstr ""
++"Inget fj=C3=A4rrarkiv angavs. Ange antingen en URL eller namnet p=C3=A5=
+ ett\n"
++"fj=C3=A4rrarkiv som nya incheckningar skall h=C3=A4mtas fr=C3=A5n."
++
++#: builtin/fetch.c:856
++msgid "You need to specify a tag name."
++msgstr "Du m=C3=A5ste ange namnet p=C3=A5 en tagg."
++
++#: builtin/fetch.c:896
++msgid "fetch --all does not take a repository argument"
++msgstr "fetch --all tar inte namnet p=C3=A5 ett arkiv som argument"
++
++#: builtin/fetch.c:898
++msgid "fetch --all does not make sense with refspecs"
++msgstr "fetch --all kan inte anges med referensspecifikationer"
++
++#: builtin/fetch.c:909
++#, c-format
++msgid "No such remote or remote group: %s"
++msgstr "Fj=C3=A4rren eller fj=C3=A4rrgruppen finns inte: %s"
++
++#: builtin/fetch.c:917
++msgid "Fetching a group and specifying refspecs does not make sense"
++msgstr "Kan inte h=C3=A4mta fr=C3=A5n grupp och ange referensspecifika=
+tioner"
++
++#: builtin/gc.c:63
++#, c-format
++msgid "Invalid %s: '%s'"
++msgstr "Felaktigt %s: \"%s\""
++
++#: builtin/gc.c:78
++msgid "Too many options specified"
++msgstr "F=C3=B6r m=C3=A5nga flaggor angavs"
++
++#: builtin/gc.c:103
++#, c-format
++msgid "insanely long object directory %.*s"
++msgstr "tokigt l=C3=A5ng objektkatalog %.*s"
++
++#: builtin/gc.c:220
++#, c-format
++msgid "Auto packing the repository for optimum performance.\n"
++msgstr "Packar arkivet automatiskt f=C3=B6r optimal prestanda.\n"
++
++#: builtin/gc.c:223
++#, c-format
++msgid ""
++"Auto packing the repository for optimum performance. You may also\n"
++"run \"git gc\" manually. See \"git help gc\" for more information."
++msgstr ""
++"Packar arkivet automatiskt f=C3=B6r optimal prestanda. Du kan =C3=A4v=
+en\n"
++"k=C3=B6ra \"git gc\" manuellt. Se \"git help gc\" f=C3=B6r mer inform=
+ation."
++
++#: builtin/gc.c:251
++msgid ""
++"There are too many unreachable loose objects; run 'git prune' to remo=
+ve them."
++msgstr ""
++"Det finns f=C3=B6r m=C3=A5nga on=C3=A5bara l=C3=B6sa objekt; k=C3=B6r=
+ \"git prune\" f=C3=B6r att ta bort dem."
++
++#: builtin/grep.c:252
++#, c-format
++msgid "grep: failed to create thread: %s"
++msgstr "grep: misslyckades skapa tr=C3=A5d. %s"
++
++#: builtin/grep.c:457
++#, c-format
++msgid "'%s': unable to read %s"
++msgstr "\"%s\" kunde inte l=C3=A4sa %s"
++
++#: builtin/grep.c:508
++#, c-format
++msgid "'%s': %s"
++msgstr "\"%s\": %s"
++
++#: builtin/grep.c:519
++#, c-format
++msgid "'%s': short read %s"
++msgstr "\"%s\": kort l=C3=A4sning %s"
++
++#: builtin/grep.c:581
++#, c-format
++msgid "Failed to chdir: %s"
++msgstr "Kunde inte byta katalog (chdir): %s"
++
++#: builtin/grep.c:671 builtin/grep.c:697
++#, c-format
++msgid "unable to read tree (%s)"
++msgstr "kunde inte l=C3=A4sa tr=C3=A4d (%s)"
++
++#: builtin/grep.c:703
++#, c-format
++msgid "unable to grep from object of type %s"
++msgstr "Kunde inte \"grep\" fr=C3=A5n objekt av typen %s"
++
++#: builtin/grep.c:755
++#, c-format
++msgid "switch `%c' expects a numerical value"
++msgstr "flaggan \"%c\" antar ett numeriskt v=C3=A4rde"
++
++#: builtin/grep.c:771
++#, c-format
++msgid "cannot open '%s'"
++msgstr "kan inte =C3=B6ppna \"%s\""
++
++#: builtin/grep.c:1012
++msgid "no pattern given."
++msgstr "inget m=C3=B6nster angavs."
++
++#: builtin/grep.c:1016
++msgid "cannot mix --fixed-strings and regexp"
++msgstr "kan inte blanda --fixed-strings och regulj=C3=A4ra uttryck"
++
++#: builtin/grep.c:1041
++#, c-format
++msgid "bad object %s"
++msgstr "felaktigt objekt %s"
++
++#: builtin/grep.c:1068
++msgid "--open-files-in-pager only works on the worktree"
++msgstr "--open-files-in-pager fungerar endast i arbetskatalogen"
++
++#: builtin/grep.c:1093
++msgid "--cached cannot be used with --no-index."
++msgstr "--cached kan inte anv=C3=A4ndas med --no-index."
++
++#: builtin/grep.c:1095
++msgid "--no-index cannot be used with revs."
++msgstr "--no-index kan inte anv=C3=A4ndas med revisioner."
++
++#: builtin/grep.c:1104
++msgid "both --cached and trees are given."
++msgstr "b=C3=A5de --cached och tr=C3=A4d angavs."
++
++#: builtin/init-db.c:34
++#, c-format
++msgid "Could not make %s writable by group"
++msgstr "Kunde inte g=C3=B6ra %s skrivbar f=C3=B6r grubben"
++
++#: builtin/init-db.c:61
++#, c-format
++msgid "insanely long template name %s"
++msgstr "tokigt l=C3=A5ngt namn p=C3=A5 mallen %s"
++
++#: builtin/init-db.c:66
++#, c-format
++msgid "cannot stat '%s'"
++msgstr "kan inte ta status p=C3=A5 \"%s\""
++
++#: builtin/init-db.c:72
++#, c-format
++msgid "cannot stat template '%s'"
++msgstr "kan inte ta status p=C3=A5 mallen \"%s\""
++
++#: builtin/init-db.c:79
++#, c-format
++msgid "cannot opendir '%s'"
++msgstr "kan inte =C3=B6ppna katalogen (opendir) \"%s\""
++
++#: builtin/init-db.c:96
++#, c-format
++msgid "cannot readlink '%s'"
++msgstr "kan inte l=C3=A4sa l=C3=A4nk (readlink) \"%s\""
++
++#: builtin/init-db.c:98
++#, c-format
++msgid "insanely long symlink %s"
++msgstr "tokigt l=C3=A5ng symbolisk l=C3=A4nk %s"
++
++#: builtin/init-db.c:101
++#, c-format
++msgid "cannot symlink '%s' '%s'"
++msgstr "kan inte skapa symbolisk l=C3=A4nk \"%s\" \"%s\""
++
++#: builtin/init-db.c:105
++#, c-format
++msgid "cannot copy '%s' to '%s'"
++msgstr "kan inte kopiera \"%s\" till \"%s\""
++
++#: builtin/init-db.c:109
++#, c-format
++msgid "ignoring template %s"
++msgstr "ignorerar mallen %s"
++
++#: builtin/init-db.c:132
++#, c-format
++msgid "insanely long template path %s"
++msgstr "tokigt l=C3=A5ng malls=C3=B6kv=C3=A4g %s"
++
++#: builtin/init-db.c:140
++#, c-format
++msgid "templates not found %s"
++msgstr "mallarna hittades inte %s"
++
++#: builtin/init-db.c:153
++#, c-format
++msgid "not copying templates of a wrong format version %d from '%s'"
++msgstr "kopierade inte mallar fr=C3=A5n felaktig formatversion %d fr=C3=
+=A5n \"%s\""
++
++#: builtin/init-db.c:191
++#, c-format
++msgid "insane git directory %s"
++msgstr "tokig git-katalog %s"
++
++#. TRANSLATORS: The first '%s' is either "Reinitialized
++#. existing" or "Initialized empty", the second " shared" or
++#. "", and the last '%s%s' is the verbatim directory name.
++#: builtin/init-db.c:355
++#, c-format
++msgid "%s%s Git repository in %s%s\n"
++msgstr "%s%s Git-arkiv i %s%s\n"
++
++#: builtin/init-db.c:356
++msgid "Reinitialized existing"
++msgstr "Ominitierade befintligt"
++
++#: builtin/init-db.c:356
++msgid "Initialized empty"
++msgstr "Initierade tomt"
++
++#: builtin/init-db.c:357
++msgid " shared"
++msgstr " delat"
++
++#: builtin/init-db.c:376
++msgid "cannot tell cwd"
++msgstr "kan inte l=C3=A4sa aktuell katalog (cwd)"
++
++#: builtin/init-db.c:450 builtin/init-db.c:457
++#, c-format
++msgid "cannot mkdir %s"
++msgstr "kan inte skapa katalogen (mkdir) %s"
++
++#: builtin/init-db.c:461
++#, c-format
++msgid "cannot chdir to %s"
++msgstr "kan inte byta katalog (chdir) till %s"
++
++#: builtin/init-db.c:483
++#, c-format
++msgid ""
++"%s (or --work-tree=3D<directory>) not allowed without specifying %s (=
+or --git-"
++"dir=3D<directory>)"
++msgstr ""
++"%s (eller --work-tree=3D<katalog>) inte till=C3=A5tet utan att ange %=
+s (eller "
++"--git-dir=3D<katalog>)"
++
++#: builtin/init-db.c:509
++msgid "Cannot access current working directory"
++msgstr "Kan inte komma =C3=A5t aktuell arbetskatalog"
++
++#: builtin/init-db.c:512
++#, c-format
++msgid "Cannot access work tree '%s'"
++msgstr "Kan inte komma =C3=A5t arbetskatalogen \"%s\""
++
++#: builtin/log.c:104
++#, c-format
++msgid "invalid --decorate option: %s"
++msgstr "felaktigt v=C3=A4rde till --decorate: %s"
++
++#: builtin/log.c:113 builtin/log.c:1138 builtin/shortlog.c:287
++#, c-format
++msgid "unrecognized argument: %s"
++msgstr "ok=C3=A4nt argument: %s"
++
++#: builtin/log.c:156
++#, c-format
++msgid "Final output: %d %s\n"
++msgstr "Slututdata: %d %s\n"
++
++#: builtin/log.c:255 builtin/log.c:674 builtin/log.c:1222 builtin/log.=
+c:1428
++#: builtin/merge.c:310 builtin/revert.c:556 builtin/shortlog.c:184
++msgid "revision walk setup failed"
++msgstr "misslyckades skapa revisionstraversering"
++
++#: builtin/log.c:347 builtin/log.c:434
++#, c-format
++msgid "Could not read object %s"
++msgstr "Kunde inte l=C3=A4sa objektet %s"
++
++#: builtin/log.c:458
++#, c-format
++msgid "Unknown type: %d"
++msgstr "Ok=C3=A4nd typ: %d"
++
++#: builtin/log.c:558
++msgid "format.headers without value"
++msgstr "format.headers utan v=C3=A4rde"
++
++#: builtin/log.c:630
++msgid "name of output directory is too long"
++msgstr "namn p=C3=A5 utdatakatalogen =C3=A4r f=C3=B6r l=C3=A5ng"
++
++#: builtin/log.c:641
++#, c-format
++msgid "Cannot open patch file %s"
++msgstr "Kan inte =C3=B6ppna patchfilen %s"
++
++#: builtin/log.c:655
++msgid "Need exactly one range."
++msgstr "Beh=C3=B6ver precis ett intervall."
++
++#: builtin/log.c:663
++msgid "Not a range."
++msgstr "Inte ett intervall."
++
++#: builtin/log.c:700
++msgid "Could not extract email from committer identity."
++msgstr "Kunde inte extrahera e-postadress fr=C3=A5n incheckarens ident=
+itet."
++
++#: builtin/log.c:732
++msgid "Cover letter needs email format"
++msgstr "Omslagsbrevet beh=C3=B6ver e-postformat"
++
++#: builtin/log.c:825
++#, c-format
++msgid "insane in-reply-to: %s"
++msgstr "tokigt in-reply-to: %s"
++
++#: builtin/log.c:898
++msgid "Two output directories?"
++msgstr "Tv=C3=A5 utdatakataloger?"
++
++#: builtin/log.c:1087
++#, c-format
++msgid "bogus committer info %s"
++msgstr "felaktig incheckarinformation %s"
++
++#: builtin/log.c:1132
++msgid "-n and -k are mutually exclusive."
++msgstr "-n och -k kan inte anv=C3=A4ndas samtidigt."
++
++#: builtin/log.c:1134
++msgid "--subject-prefix and -k are mutually exclusive."
++msgstr "--subject-prefix och -k kan inte anv=C3=A4ndas samtidigt."
++
++#: builtin/log.c:1141
++msgid "--name-only does not make sense"
++msgstr "kan inte anv=C3=A4nda --name-only"
++
++#: builtin/log.c:1143
++msgid "--name-status does not make sense"
++msgstr "kan inte anv=C3=A4nda --name-status"
++
++#: builtin/log.c:1145
++msgid "--check does not make sense"
++msgstr "kan inte anv=C3=A4nda --check"
++
++#: builtin/log.c:1166
++msgid "standard output, or directory, which one?"
++msgstr "standard ut, eller katalog, vilken skall det vara?"
++
++#: builtin/log.c:1168
++#, c-format
++msgid "Could not create directory '%s'"
++msgstr "Kunde inte skapa katalogen \"%s\""
++
++#: builtin/log.c:1307
++msgid "Failed to create output files"
++msgstr "Misslyckades skapa utdatafiler"
++
++#: builtin/log.c:1394
++#, c-format
++msgid ""
++"Could not find a tracked remote branch, please specify <upstream> man=
+ually.\n"
++msgstr ""
++"Kunde inte hitta en sp=C3=A5rad fj=C3=A4rrgren, ange <uppstr=C3=B6m> =
+manuellt.\n"
++
++#: builtin/log.c:1410 builtin/log.c:1412 builtin/log.c:1424
++#, c-format
++msgid "Unknown commit %s"
++msgstr "Ok=C3=A4nd incheckning %s"
++
++#: builtin/merge.c:82
++msgid "switch `m' requires a value"
++msgstr "flaggan \"m\" beh=C3=B6ver ett v=C3=A4rde"
++
++#: builtin/merge.c:119
++#, c-format
++msgid "Could not find merge strategy '%s'.\n"
++msgstr "Kunde inte hitta sammanslagningsstrategin \"%s\".\n"
++
++#: builtin/merge.c:120
++#, c-format
++msgid "Available strategies are:"
++msgstr "Tillg=C3=A4ngliga strategier =C3=A4r:"
++
++#: builtin/merge.c:125
++#, c-format
++msgid "Available custom strategies are:"
++msgstr "Tillg=C3=A4ngliga skr=C3=A4ddarsydda strategier =C3=A4r:"
++
++#: builtin/merge.c:223
++msgid "could not run stash."
++msgstr "kunde k=C3=B6ra stash."
++
++#: builtin/merge.c:228
++msgid "stash failed"
++msgstr "stash misslyckades"
++
++#: builtin/merge.c:233
++#, c-format
++msgid "not a valid object: %s"
++msgstr "inte ett giltigt objekt: %s"
++
++#: builtin/merge.c:250
++msgid "read-tree failed"
++msgstr "read-tree misslyckades"
++
++#: builtin/merge.c:279
++msgid " (nothing to squash)"
++msgstr " (inget att platta till)"
++
++#: builtin/merge.c:292
++#, c-format
++msgid "Squash commit -- not updating HEAD\n"
++msgstr "Tillplattningsincheckning -- uppdaterar inte HEAD\n"
++
++#: builtin/merge.c:295 builtin/merge.c:1290 builtin/merge.c:1299
++#: builtin/merge.c:1309
++#, c-format
++msgid "Could not write to '%s'"
++msgstr "Kunde inte skriva till \"%s\""
++
++#: builtin/merge.c:323
++msgid "Writing SQUASH_MSG"
++msgstr "Skriver SQUASH_MSG"
++
++#: builtin/merge.c:325
++msgid "Finishing SQUASH_MSG"
++msgstr "Avslutar SQUASH_MSG"
++
++#: builtin/merge.c:345
++#, c-format
++msgid "No merge message -- not updating HEAD\n"
++msgstr "Inget sammanslagningsmeddelande -- uppdaterar inte HEAD\n"
++
++#: builtin/merge.c:396
++#, c-format
++msgid "'%s' does not point to a commit"
++msgstr "\"%s\" verkar inte peka p=C3=A5 en incheckning"
++
++#: builtin/merge.c:491
++#, c-format
++msgid "Bad branch.%s.mergeoptions string: %s"
++msgstr "Felaktig branch.%s.mergeoptions-str=C3=A4ng: %s"
++
++#: builtin/merge.c:553
++msgid "git write-tree failed to write a tree"
++msgstr "git write--tree misslyckades skriva ett tr=C3=A4d"
++
++#: builtin/merge.c:594
++msgid "failed to read the cache"
++msgstr "misslyckads l=C3=A4sa cachen"
++
++#: builtin/merge.c:611
++msgid "Unable to write index."
++msgstr "Kunde inte skriva indexet."
++
++#: builtin/merge.c:624
++msgid "Not handling anything other than two heads merge."
++msgstr "Hanterar inte n=C3=A5got annat =C3=A4n en sammanslagning av tv=
+=C3=A5 huvuden."
++
++#: builtin/merge.c:651
++#, c-format
++msgid "Unknown option for merge-recursive: -X%s"
++msgstr "Felaktig flagga f=C3=B6r merge-recursive: -X%s"
++
++#: builtin/merge.c:666
++#, c-format
++msgid "unable to write %s"
++msgstr "kunde inte skriva %s"
++
++#: builtin/merge.c:791
++#, c-format
++msgid "Wonderful.\n"
++msgstr "Underbart.\n"
++
++#: builtin/merge.c:840 builtin/merge.c:1287 builtin/merge.c:1295
++#: builtin/merge.c:1303
++#, c-format
++msgid "Could not open '%s' for writing"
++msgstr "Kunde inte =C3=B6ppna \"%s\" f=C3=B6r skrivning"
++
++#: builtin/merge.c:856
++#, c-format
++msgid "Automatic merge failed; fix conflicts and then commit the resul=
+t.\n"
++msgstr "Kunde inte sl=C3=A5 ihop automatiskt; fixa konflikter och chec=
+ka in resultatet.\n"
++
++#: builtin/merge.c:871
++#, c-format
++msgid "'%s' is not a commit"
++msgstr "\"%s\" =C3=A4r inte en incheckning"
++
++#: builtin/merge.c:921
++msgid ""
++"You have not concluded your merge (MERGE_HEAD exists).\n"
++"Please, commit your changes before you can merge."
++msgstr ""
++"Du har inte avslutat sammanslagningen (MERGE_HEAD finns).\n"
++"Checka in dina =C3=A4ndringar innan du kan sl=C3=A5 ihop."
++
++#: builtin/merge.c:924
++msgid "You have not concluded your merge (MERGE_HEAD exists)."
++msgstr "Du har inte avslutat sammanslagningen (MERGE_HEAD finns)."
++
++#: builtin/merge.c:951
++msgid "You cannot combine --squash with --no-ff."
++msgstr "Du kan inte kombinera --squash med --no-ff."
++
++#: builtin/merge.c:956
++msgid "You cannot combine --no-ff with --ff-only."
++msgstr "Du kan inte kombinera --no-ff med --ff-only."
++
++#: builtin/merge.c:984
++msgid "Can merge only exactly one commit into empty head"
++msgstr "Kan endast sl=C3=A5 ihop en enda incheckning i ett tomt huvud.=
+"
++
++#: builtin/merge.c:987
++msgid "Squash commit into empty head not supported yet"
++msgstr "St=C3=B6der inte en tillplattningsincheckning p=C3=A5 ett tomt=
+ huvud =C3=A4nnu"
++
++#: builtin/merge.c:989
++msgid "Non-fast-forward commit does not make sense into an empty head"
++msgstr "Icke-snabbspolad incheckning kan inte anv=C3=A4ndas med ett to=
+mt huvud"
++
++#: builtin/merge.c:993 builtin/merge.c:1041
++#, c-format
++msgid "%s - not something we can merge"
++msgstr "%s - inte n=C3=A5got vi kan sl=C3=A5 ihop"
++
++#: builtin/merge.c:1099
++#, c-format
++msgid "Updating %s..%s\n"
++msgstr "Uppdaterar %s..%s\n"
++
++#: builtin/merge.c:1133
++#, c-format
++msgid "Trying really trivial in-index merge...\n"
++msgstr "F=C3=B6rs=C3=B6ker riktigt enkel sammanslagning i indexet...\n=
+"
++
++#: builtin/merge.c:1137
++#, c-format
++msgid "Nope.\n"
++msgstr "Nej.\n"
++
++#: builtin/merge.c:1170
++msgid "Not possible to fast-forward, aborting."
++msgstr "Kan inte snabbspola, avbryter."
++
++#: builtin/merge.c:1196 builtin/merge.c:1269
++#, c-format
++msgid "Rewinding the tree to pristine...\n"
++msgstr "=C3=85terspolar tr=C3=A4det till of=C3=B6rd=C3=A4rvat...\n"
++
++#: builtin/merge.c:1200
++#, c-format
++msgid "Trying merge strategy %s...\n"
++msgstr "F=C3=B6rs=C3=B6ker sammanslagninsstrategin %s...\n"
++
++#: builtin/merge.c:1261
++#, c-format
++msgid "No merge strategy handled the merge.\n"
++msgstr "Ingen sammanslagningsstrategi hanterade sammanslagningen.\n"
++
++#: builtin/merge.c:1263
++#, c-format
++msgid "Merge with strategy %s failed.\n"
++msgstr "Sammanslaning med strategin %s misslyckades.\n"
++
++#: builtin/merge.c:1271
++#, c-format
++msgid "Using the %s to prepare resolving by hand.\n"
++msgstr "Anv=C3=A4nder %s f=C3=B6r att f=C3=B6rbereda l=C3=B6sning f=C3=
+=B6r hand.\n"
++
++#: builtin/merge.c:1314
++#, c-format
++msgid "Automatic merge went well; stopped before committing as request=
+ed\n"
++msgstr "Automatisk sammanslagning lyckades; stoppar f=C3=B6re incheckn=
+ing som =C3=B6nskat\n"
++
++#: builtin/mv.c:103
++#, c-format
++msgid "Checking rename of '%s' to '%s'\n"
++msgstr "Kontrollerar namnbyte av \"%s\" till \"%s\"\n"
++
++#: builtin/mv.c:107
++msgid "bad source"
++msgstr "felaktig k=C3=A4lla"
++
++#: builtin/mv.c:110
++msgid "can not move directory into itself"
++msgstr "kan inte flytta katalog till sig sj=C3=A4lv"
++
++#: builtin/mv.c:113
++msgid "cannot move directory over file"
++msgstr "kan inte flytta katalog =C3=B6ver fil"
++
++#: builtin/mv.c:123
++#, c-format
++msgid "Huh? %.*s is in index?"
++msgstr "Vad? %.*s =C3=A4r i indexet?"
++
++#: builtin/mv.c:135
++msgid "source directory is empty"
++msgstr "k=C3=A4llkatalogen =C3=A4r tom"
++
++#: builtin/mv.c:166
++msgid "not under version control"
++msgstr "inte versionshanterad"
++
++#: builtin/mv.c:168
++msgid "destination exists"
++msgstr "destinationen finns"
++
++#: builtin/mv.c:175
++#, c-format
++msgid "%s; will overwrite!"
++msgstr "%s; kommer skriva =C3=B6ver!"
++
++#: builtin/mv.c:178
++msgid "Cannot overwrite"
++msgstr "Kan inte skriva =C3=B6ver"
++
++#: builtin/mv.c:181
++msgid "multiple sources for the same target"
++msgstr "flera k=C3=A4llor f=C3=B6r samma m=C3=A5l"
++
++#: builtin/mv.c:196
++#, c-format
++msgid "%s, source=3D%s, destination=3D%s"
++msgstr "%s, k=C3=A4lla=3D%s, m=C3=A5l=3D%s"
++
++#: builtin/mv.c:206
++#, c-format
++msgid "Renaming %s to %s\n"
++msgstr "Byter namn p=C3=A5 %s till %s\n"
++
++#: builtin/mv.c:209
++#, c-format
++msgid "renaming '%s' failed"
++msgstr "misslyckades byta namn p=C3=A5 \"%s\""
++
++#: builtin/notes.c:122
++#, c-format
++msgid "unable to start 'show' for object '%s'"
++msgstr "kunde int estarta \"show\" f=C3=B6r objektet \"%s\""
++
++#: builtin/notes.c:128
++msgid "can't fdopen 'show' output fd"
++msgstr "kunde inte =C3=B6ppna (fdopen) \"show\"-utdata-filhandtag"
++
++#: builtin/notes.c:138
++#, c-format
++msgid "failed to close pipe to 'show' for object '%s'"
++msgstr "kunde inte st=C3=A4nga r=C3=B6ret till \"show\" f=C3=B6r objek=
+tet \"%s\""
++
++#: builtin/notes.c:141
++#, c-format
++msgid "failed to finish 'show' for object '%s'"
++msgstr "kunde inte avsluta \"show\" f=C3=B6r objektet \"%s\""
++
++#: builtin/notes.c:158 builtin/tag.c:311
++#, c-format
++msgid "could not create file '%s'"
++msgstr "kunde inte skapa filen \"%s\""
++
++#: builtin/notes.c:172
++msgid "Please supply the note contents using either -m or -F option"
++msgstr "Ange inneh=C3=A5ll f=C3=B6r anteckningen med antingen -m eller=
+ -F"
++
++#: builtin/notes.c:193 builtin/notes.c:797
++#, c-format
++msgid "Removing note for object %s\n"
++msgstr "Tar bort anteckning f=C3=B6r objektet %s\n"
++
++#: builtin/notes.c:198
++msgid "unable to write note object"
++msgstr "kunde inte skriva anteckningsobjekt"
++
++#: builtin/notes.c:200
++#, c-format
++msgid "The note contents has been left in %s"
++msgstr "Anteckningens inneh=C3=A5ll har l=C3=A4mnats kvar i %s"
++
++#: builtin/notes.c:234 builtin/tag.c:445
++#, c-format
++msgid "cannot read '%s'"
++msgstr "kunde inte l=C3=A4sa \"%s\""
++
++#: builtin/notes.c:236 builtin/tag.c:448
++#, c-format
++msgid "could not open or read '%s'"
++msgstr "kunde inte =C3=B6ppna eller l=C3=A4sa \"%s\""
++
++#: builtin/notes.c:255 builtin/notes.c:444 builtin/notes.c:446
++#: builtin/notes.c:508 builtin/notes.c:560 builtin/notes.c:631
++#: builtin/notes.c:636 builtin/notes.c:710 builtin/notes.c:752
++#: builtin/notes.c:789 builtin/reset.c:303 builtin/tag.c:461
++#, c-format
++msgid "Failed to resolve '%s' as a valid ref."
++msgstr "Kunde inte sl=C3=A5 upp \"%s\" som en giltig referens."
++
++#: builtin/notes.c:258
++#, c-format
++msgid "Failed to read object '%s'."
++msgstr "Kunde inte l=C3=A4sa objektet \"%s\"."
++
++#: builtin/notes.c:283
++msgid "Cannot commit uninitialized/unreferenced notes tree"
++msgstr "Kan inte checka in oinitierat/orefererat anteckningstr=C3=A4d"
++
++#: builtin/notes.c:295
++msgid "Failed to write current notes tree to database"
++msgstr "Kunde inte skriva aktuellt anteckningstr=C3=A4d till databasen=
+"
++
++#: builtin/notes.c:307
++msgid "Failed to commit notes tree to database"
++msgstr "Kunde inte checka in anteckningstr=C3=A4d i databasen"
++
++#: builtin/notes.c:339
++#, c-format
++msgid "Bad notes.rewriteMode value: '%s'"
++msgstr "Felaktigt v=C3=A4rde f=C3=B6r notes.rewriteMode: '%s'"
++
++#: builtin/notes.c:349
++#, c-format
++msgid "Refusing to rewrite notes in %s (outside of refs/notes/)"
++msgstr "V=C3=A4grar skriva =C3=B6ver anteckningar i %s (utanf=C3=B6r r=
+efs/notes/)"
++
++#. TRANSLATORS: The first %s is the name of the
++#. environment variable, the second %s is its value
++#: builtin/notes.c:376
++#, c-format
++msgid "Bad %s value: '%s'"
++msgstr "Felaktigt v=C3=A4rde p=C3=A5 %s: \"%s\""
++
++#: builtin/notes.c:440
++#, c-format
++msgid "Malformed input line: '%s'."
++msgstr "Felaktig indatarad: \"%s\"."
++
++#: builtin/notes.c:455
++#, c-format
++msgid "Failed to copy notes from '%s' to '%s'"
++msgstr "Misslyckades kopiera anteckningar fr=C3=A5n \"%s\" till \"%s\"=
+"
++
++# FIXME: Untranslatable!
++#. TRANSLATORS: The first %s is one of "git notes ACTION",
++#. e.g. "add", "copy", "append" etc.
++#: builtin/notes.c:481
++#, c-format
++#=20
++msgid "Refusing to %s notes in %s (outside of refs/notes/)"
++msgstr "V=C3=A4grar %s anteckningar i %s (utanf=C3=B6r refs/notes/)"
++
++#: builtin/notes.c:501 builtin/notes.c:553 builtin/notes.c:614
++#: builtin/notes.c:626 builtin/notes.c:698 builtin/notes.c:745
++#: builtin/notes.c:782 builtin/notes.c:821
++msgid "too many parameters"
++msgstr "f=C3=B6r m=C3=A5nga parametrar"
++
++#: builtin/notes.c:505
++msgid "list"
++msgstr "list"
++
++#: builtin/notes.c:514 builtin/notes.c:758
++#, c-format
++msgid "No note found for object %s."
++msgstr "Inga anteckningar hittades f=C3=B6r objektet %s."
++
++#: builtin/notes.c:567
++#, c-format
++msgid ""
++"Cannot add notes. Found existing notes for object %s. Use '-f' to ove=
+rwrite "
++"existing notes"
++msgstr ""
++"Kan inte l=C3=A4gga till anteckningar. Hittade befintliga anteckninga=
+r f=C3=B6r "
++"objektet %s. Anv=C3=A4nd \"-f\" f=C3=B6r att skriva =C3=B6ver befintl=
+iga anteckningar"
++
++#: builtin/notes.c:572 builtin/notes.c:649
++#, c-format
++msgid "Overwriting existing notes for object %s\n"
++msgstr "Skriver =C3=B6ver befintliga anteckningar f=C3=B6r objektet %s=
+\n"
++
++#: builtin/notes.c:622
++msgid "too few parameters"
++msgstr "f=C3=B6r f=C3=A5 parametrar"
++
++#: builtin/notes.c:638
++msgid "copy"
++msgstr "copy"
++
++#: builtin/notes.c:643
++#, c-format
++msgid ""
++"Cannot copy notes. Found existing notes for object %s. Use '-f' to ov=
+erwrite "
++"existing notes"
++msgstr ""
++"Kan inte kopiera anteckningar. Hittade befintliga anteckningar f=C3=B6=
+r objektet "
++"%s. Anv=C3=A4nd \"-f\" f=C3=B6r att skriva =C3=B6ver befintliga antec=
+kningar"
++
++#: builtin/notes.c:655
++#, c-format
++msgid "Missing notes on source object %s. Cannot copy."
++msgstr "Anteckningar p=C3=A5 k=C3=A4llobjektet %s saknas. Kan inte kop=
+iera."
++
++#: builtin/notes.c:703
++#, c-format
++msgid ""
++"The -m/-F/-c/-C options have been deprecated for the 'edit' subcomman=
+d.\n"
++"Please use 'git notes add -f -m/-F/-c/-C' instead.\n"
++msgstr ""
++"Flaggorna -m/-F/-c/-C rekommenderas inte f=C3=B6r underkommandot \"ed=
+it\".\n"
++"Anv=C3=A4nd \"git notes add -f -m/-F/-c/-C\" ist=C3=A4llet.\n"
++
++#: builtin/notes.c:754
++msgid "show"
++msgstr "show"
++
++#: builtin/notes.c:791
++msgid "remove"
++msgstr "remove"
++
++#: builtin/notes.c:795
++#, c-format
++msgid "Object %s has no note\n"
++msgstr "Objektet %s har ingen anteckning\n"
++
++#: builtin/notes.c:825
++msgid "prune"
++msgstr "prune"
++
++#: builtin/notes.c:877
++#, c-format
++msgid "Unknown subcommand: %s"
++msgstr "Ok=C3=A4nt underkommando: %s"
++
++#: builtin/push.c:43
++msgid "tag shorthand without <tag>"
++msgstr "taggf=C3=B6rkortning utan <tagg>"
++
++#: builtin/push.c:62
++msgid "--delete only accepts plain target ref names"
++msgstr "--delete godtar endast enkla m=C3=A5lreferensnamn"
++
++#: builtin/push.c:72
++msgid "You are not currently on a branch."
++msgstr "Du =C3=A4r inte p=C3=A5 n=C3=A5gon gren f=C3=B6r n=C3=A4rvaran=
+de."
++
++#: builtin/push.c:74
++#, c-format
++msgid "The current branch %s is not tracking anything."
++msgstr "Den aktuella grenen %s sp=C3=A5rar ingenting."
++
++#: builtin/push.c:77
++#, c-format
++msgid "The current branch %s is tracking multiple branches, refusing t=
+o push."
++msgstr "Den aktuella grenen %s sp=C3=A5rar flera grenar, v=C3=A4grar s=
+=C3=A4nda."
++
++#: builtin/push.c:100
++msgid ""
++"You didn't specify any refspecs to push, and push.default is \"nothin=
+g\"."
++msgstr ""
++"Du angav inga referensspecifikationer att s=C3=A4nda, och push.defaul=
+t =C3=A4r \"nothing\"."
++
++#: builtin/push.c:120
++#, c-format
++msgid "Pushing to %s\n"
++msgstr "S=C3=A4nder till %s\n"
++
++#: builtin/push.c:124
++#, c-format
++msgid "failed to push some refs to '%s'"
++msgstr "misslyckades s=C3=A4nda n=C3=A5gra referenser till \"%s\""
++
++#: builtin/push.c:132
++#, c-format
++msgid ""
++"To prevent you from losing history, non-fast-forward updates were rej=
+ected\n"
++"Merge the remote changes (e.g. 'git pull') before pushing again.  See=
+ the\n"
++"'Note about fast-forwards' section of 'git push --help' for details.\=
+n"
++msgstr ""
++"F=C3=B6r att f=C3=B6rhindra att du tappar historik har icke snabbspol=
+ande uppdateringar\n"
++"avvisats. Sl=C3=A5 ihop fj=C3=A4rr=C3=A4ndringarna (t.ex \"git pull\"=
+) innan du s=C3=A4nder igen.\n"
++"Se avsnittet \"Note about fast-forward\" i \"git push --help\" f=C3=B6=
+r detaljer.\n"
++
++#: builtin/push.c:149
++#, c-format
++msgid "bad repository '%s'"
++msgstr "felaktigt arkiv \"%s\""
++
++#: builtin/push.c:150
++msgid "No destination configured to push to."
++msgstr "Har inte st=C3=A4llt in n=C3=A5gon destination att s=C3=A4nda =
+till."
++
++#: builtin/push.c:158
++msgid "--all and --tags are incompatible"
++msgstr "--all och --tags =C3=A4r inkompatibla"
++
++#: builtin/push.c:159
++msgid "--all can't be combined with refspecs"
++msgstr "--all kan inte kombineras med referensspecifikationer"
++
++#: builtin/push.c:164
++msgid "--mirror and --tags are incompatible"
++msgstr "--mirror och --tags =C3=A4r inkompatibla"
++
++#: builtin/push.c:165
++msgid "--mirror can't be combined with refspecs"
++msgstr "--mirror kan inte kombineras med referensspecifikationer"
++
++#: builtin/push.c:170
++msgid "--all and --mirror are incompatible"
++msgstr "--all och --mirror =C3=A4r inkompatibla"
++
++#: builtin/push.c:235
++msgid "--delete is incompatible with --all, --mirror and --tags"
++msgstr "--delete =C3=A4r imkompatibel med --all, --mirror och --tags"
++
++#: builtin/push.c:237
++msgid "--delete doesn't make sense without any refs"
++msgstr "--delete kan inte anv=C3=A4ndas utan referenser"
++
++#: builtin/reset.c:33
++msgid "mixed"
++msgstr "blandad"
++
++#: builtin/reset.c:33
++msgid "soft"
++msgstr "mjuk"
++
++#: builtin/reset.c:33
++msgid "hard"
++msgstr "h=C3=A5rd"
++
++#: builtin/reset.c:33
++msgid "merge"
++msgstr "sammanslagning"
++
++#: builtin/reset.c:33
++msgid "keep"
++msgstr "beh=C3=A5ll"
++
++#: builtin/reset.c:95
++msgid "You do not have a valid HEAD."
++msgstr "Du har inte en giltig HEAD."
++
++#: builtin/reset.c:97
++msgid "Failed to find tree of HEAD."
++msgstr "Kunde inte hitta tr=C3=A4der f=C3=B6r HEAD."
++
++#: builtin/reset.c:103
++#, c-format
++msgid "Failed to find tree of %s."
++msgstr "Kunde inte hitta tr=C3=A4der f=C3=B6r %s."
++
++#: builtin/reset.c:108
++msgid "Could not write new index file."
++msgstr "Kunde inte skriva ny indexfil."
++
++#: builtin/reset.c:118
++#, c-format
++msgid "HEAD is now at %s"
++msgstr "HEAD =C3=A4r nu p=C3=A5 %s"
++
++#: builtin/reset.c:142
++msgid "Could not read index"
++msgstr "Kunde inte l=C3=A4sa indexet"
++
++#: builtin/reset.c:145
++msgid "Unstaged changes after reset:"
++msgstr "Ok=C3=B6ade =C3=A4ndringar efter =C3=A5terst=C3=A4llning:"
++
++#: builtin/reset.c:225
++#, c-format
++msgid "Reflog action message too long: %.*s..."
++msgstr "Reflog-h=C3=A4ndelsemeddelande f=C3=B6r l=C3=A5ngt: %.*s..."
++
++#: builtin/reset.c:231
++#, c-format
++msgid "Cannot do a %s reset in the middle of a merge."
++msgstr "Kan inte utf=C3=B6ra en %s =C3=A5terst=C3=A4llning mitt i en s=
+ammanslagning."
++
++#: builtin/reset.c:307
++#, c-format
++msgid "Could not parse object '%s'."
++msgstr "Kan inte tolka objektet \"%s\""
++
++#: builtin/reset.c:312
++msgid "--patch is incompatible with --{hard,mixed,soft}"
++msgstr "--patch =C3=A4r inkompatibel med --{hard,mixed,soft}"
++
++#: builtin/reset.c:321
++msgid "--mixed with paths is deprecated; use 'git reset -- <paths>' in=
+stead."
++msgstr "--mixed rekommenderas inte med s=C3=B6kv=C3=A4gar; anv=C3=A4nd=
+ \"git reset -- <s=C3=B6kv=C3=A4gar>\"."
++
++#: builtin/reset.c:323
++#, c-format
++msgid "Cannot do %s reset with paths."
++msgstr "Kan inte g=C3=B6ra %s =C3=A5terst=C3=A4llning med s=C3=B6kv=C3=
+=A4gar."
++
++#: builtin/reset.c:335
++#, c-format
++msgid "%s reset is not allowed in a bare repository"
++msgstr "%s =C3=A5terst=C3=A4llning till=C3=A5ts inte i ett naket arkiv=
+"
++
++#: builtin/reset.c:351
++#, c-format
++msgid "Could not reset index file to revision '%s'."
++msgstr "Kunde inte =C3=A5terst=C3=A4lla indexfilen till versionen \"%s=
+\"."
++
++#: builtin/revert.c:82
++msgid "program error"
++msgstr "programfel"
++
++#: builtin/revert.c:154 builtin/revert.c:188
++#, c-format
++msgid "Could not read commit message of %s"
++msgstr "Kunde inte l=C3=A4sa incheckningsmeddelandet f=C3=B6r %s"
++
++#: builtin/revert.c:202
++#, c-format
++msgid "Could not extract author email from %s"
++msgstr "Kunde inte h=C3=A4mta f=C3=B6rfattarens e-postadress fr=C3=A5n=
+ %s"
++
++#: builtin/revert.c:214
++#, c-format
++msgid "Could not extract author time from %s"
++msgstr "Kunde inte h=C3=A4mta f=C3=B6rfattartid fr=C3=A5n %s"
++
++#: builtin/revert.c:230
++#, c-format
++msgid "No author information found in %s"
++msgstr "Hittade ingen f=C3=B6rfattarinformation i %s"
++
++#: builtin/revert.c:267
++#, c-format
++msgid "Could not write to %s."
++msgstr "Kunde inte skriva till %s."
++
++#: builtin/revert.c:270
++#, c-format
++msgid "Error wrapping up %s"
++msgstr "Fel vid ombrytning av %s"
++
++#: builtin/revert.c:290
++msgid ""
++"Your local changes would be overwritten by revert.\n"
++"Please, commit your changes or stash them to proceed."
++msgstr ""
++"Dina lokala =C3=A4ndringar skulle skrivas =C3=B6ver av \"revert\".\n"
++"Checka in dina =C3=A4ndringar eller anv=C3=A4nd \"stash\" f=C3=B6r at=
+t forts=C3=A4tta."
++
++#: builtin/revert.c:293
++msgid ""
++"Your local changes would be overwritten by cherry-pick.\n"
++"Please, commit your changes or stash them to proceed."
++msgstr ""
++"Dina lokala =C3=A4ndringar skulle skrivas =C3=B6ver av \"cherry-pick\=
+".\n"
++"Checka in dina =C3=A4ndringar eller anv=C3=A4nd \"stash\" f=C3=B6r at=
+t forts=C3=A4tta."
++
++#. TRANSLATORS: %s will be "revert" or "cherry-pick"
++#: builtin/revert.c:351
++#, c-format
++msgid "%s: Unable to write new index file"
++msgstr "%s: Kunde inte skriva ny indexfil"
++
++#: builtin/revert.c:417
++msgid "Your index file is unmerged."
++msgstr "Din indexfil har inte slagits ihop."
++
++#: builtin/revert.c:420
++msgid "You do not have a valid HEAD"
++msgstr "Du har ingen giltig HEAD"
++
++#: builtin/revert.c:428
++msgid "Cannot revert a root commit"
++msgstr "Kan inte =C3=A5ngra en rotincheckning"
++
++#: builtin/revert.c:437
++#, c-format
++msgid "Commit %s is a merge but no -m option was given."
++msgstr "Incheckning %s =C3=A4r en sammanslagning, men flaggan -m angav=
+s inte."
++
++#: builtin/revert.c:445
++#, c-format
++msgid "Commit %s does not have parent %d"
++msgstr "Incheckning %s har inte f=C3=B6r=C3=A4lder %d"
++
++#: builtin/revert.c:449
++#, c-format
++msgid "Mainline was specified but commit %s is not a merge."
++msgstr "Huvudlinje angavs, men incheckningen %s =C3=A4r inte en samman=
+slagning"
++
++#. TRANSLATORS: The first %s will be "revert" or
++#. "cherry-pick", the second %s a SHA1
++#: builtin/revert.c:460
++#, c-format
++msgid "%s: cannot parse parent commit %s"
++msgstr "%s: kan inte tolka f=C3=B6r=C3=A4ldraincheckningen %s"
++
++#: builtin/revert.c:464
++#, c-format
++msgid "Cannot get commit message for %s"
++msgstr "Kan inte h=C3=A4mta incheckningsmeddelande f=C3=B6r %s"
++
++#: builtin/revert.c:525
++#, c-format
++msgid "could not revert %s... %s"
++msgstr "kunde inte =C3=A5ngra %s... %s"
++
++#: builtin/revert.c:526
++#, c-format
++msgid "could not apply %s... %s"
++msgstr "kunde inte applicera %s... %s"
++
++#: builtin/revert.c:559
++msgid "empty commit set passed"
++msgstr "den angivna upps=C3=A4ttningen incheckningar =C3=A4r tom"
++
++#: builtin/revert.c:573
++msgid "cherry-pick --ff cannot be used with --signoff"
++msgstr "cherry-pick --ff kan inte anv=C3=A4ndas med --signoff"
++
++#: builtin/revert.c:575
++msgid "cherry-pick --ff cannot be used with --no-commit"
++msgstr "cherry-pick --ff kan inte anv=C3=A4ndas med --no-commit"
++
++#: builtin/revert.c:577
++msgid "cherry-pick --ff cannot be used with -x"
++msgstr "cherry-pick --ff kan inte anv=C3=A4ndas med -x"
++
++#: builtin/revert.c:579
++msgid "cherry-pick --ff cannot be used with --edit"
++msgstr "cherry-pick --ff kan inte anv=C3=A4ndas med --edit"
++
++#. TRANSLATORS: %s will be "revert" or "cherry-pick"
++#: builtin/revert.c:584
++#, c-format
++msgid "git %s: failed to read the index"
++msgstr "git %s: misslyckades l=C3=A4sa indexet"
++
++#: builtin/rm.c:118
++#, c-format
++msgid ""
++"'%s' has staged content different from both the file and the HEAD\n"
++"(use -f to force removal)"
++msgstr ""
++"\"%s\" har k=C3=B6at =C3=A4ndringar som skiljer sig b=C3=A5de fr=C3=A5=
+n filen och HEAD\n"
++"(anv=C3=A4nd -f f=C3=B6r att tvinga borttagning)"
++
++#: builtin/rm.c:124
++#, c-format
++msgid ""
++"'%s' has changes staged in the index\n"
++"(use --cached to keep the file, or -f to force removal)"
++msgstr ""
++"\"%s\" har k=C3=B6ade =C3=A4ndringar i indexet\n"
++"(anv=C3=A4nd --cached f=C3=B6r att beh=C3=A5lla filen eller -f f=C3=B6=
+r att tvinga borttagning)"
++
++#: builtin/rm.c:128
++#, c-format
++msgid ""
++"'%s' has local modifications\n"
++"(use --cached to keep the file, or -f to force removal)"
++msgstr ""
++"\"%s\" har lokala =C3=A4ndringar\n"
++"(anv=C3=A4nd --cached f=C3=B6r att beh=C3=A5lla filen eller -f f=C3=B6=
+r att tvinga borttagning)"
++
++#: builtin/rm.c:202
++#, c-format
++msgid "not removing '%s' recursively without -r"
++msgstr "tar inte bort \"%s\" rekursivt utan -r"
++
++#: builtin/rm.c:238
++#, c-format
++msgid "git rm: unable to remove %s"
++msgstr "git rm: kan inte ta bort %s"
++
++#: builtin/shortlog.c:161
++#, c-format
++msgid "Missing author: %s"
++msgstr "Saknad f=C3=B6rfattare: %s"
++
++#: builtin/tag.c:123 builtin/tag.c:464
++#, c-format
++msgid "tag name too long: %.*s..."
++msgstr "taggnamnet f=C3=B6r l=C3=A5ngt: %.*s..."
++
++#: builtin/tag.c:128
++#, c-format
++msgid "tag '%s' not found."
++msgstr "taggen \"%s\" hittades inte."
++
++#: builtin/tag.c:143
++#, c-format
++msgid "Deleted tag '%s' (was %s)\n"
++msgstr "Tog bort tagg \"%s\" (var %s)\n"
++
++#: builtin/tag.c:155
++#, c-format
++msgid "could not verify the tag '%s'"
++msgstr "kunde inte bekr=C3=A4fta taggen \"%s\""
++
++#: builtin/tag.c:170
++msgid "committer info too long."
++msgstr "incheckarinformation f=C3=B6r l=C3=A5ng."
++
++#: builtin/tag.c:190
++msgid "could not run gpg."
++msgstr "kunde inte k=C3=B6ra gpg."
++
++#: builtin/tag.c:196
++msgid "gpg did not accept the tag data"
++msgstr "gpg godtog inte taggdata"
++
++#: builtin/tag.c:203
++msgid "gpg failed to sign the tag"
++msgstr "gpg misslyckades signera taggen"
++
++#: builtin/tag.c:218
++msgid ""
++"\n"
++"#\n"
++"# Write a tag message\n"
++"#\n"
++msgstr ""
++"\n"
++"#\n"
++"# Skriv ett taggmeddelande\n"
++"#\n"
++
++#: builtin/tag.c:226
++#, c-format
++msgid "signing key value too long (%.10s...)"
++msgstr "signeringsnyckelv=C3=A4rdet f=C3=B6r l=C3=A5ngt (%.10s...)"
++
++#: builtin/tag.c:272
++msgid "unable to sign the tag"
++msgstr "kunde inte signera taggen"
++
++#: builtin/tag.c:274
++msgid "unable to write tag file"
++msgstr "kunde inte skriva tagg-filen"
++
++#: builtin/tag.c:289
++msgid "bad object type."
++msgstr "felaktig objekttyp"
++
++#: builtin/tag.c:302
++msgid "tag header too big."
++msgstr "tagghuvud f=C3=B6r stort."
++
++#: builtin/tag.c:329
++msgid "no tag message?"
++msgstr "inget taggmeddelande?"
++
++#: builtin/tag.c:335
++#, c-format
++msgid "The tag message has been left in %s\n"
++msgstr "Taggmeddelandet har l=C3=A4mnats i %s\n"
++
++#: builtin/tag.c:428
++msgid "-n option is only allowed with -l."
++msgstr "Flaggan -n =C3=A4r endast till=C3=A5ten tillsammans med -l."
++
++#: builtin/tag.c:430
++msgid "--contains option is only allowed with -l."
++msgstr "Flaggan --contains =C3=A4r endast till=C3=A5ten tillsammans me=
+d -l"
++
++#: builtin/tag.c:438
++msgid "only one -F or -m option is allowed."
++msgstr "endast en av flaggorna -F eller -m till=C3=A5ts."
++
++#: builtin/tag.c:458
++msgid "too many params"
++msgstr "f=C3=B6r m=C3=A5nga parametrar"
++
++#: builtin/tag.c:466
++#, c-format
++msgid "'%s' is not a valid tag name."
++msgstr "\"%s\" =C3=A4r inte ett giltigt taggnamn."
++
++#: builtin/tag.c:471
++#, c-format
++msgid "tag '%s' already exists"
++msgstr "taggen \"%s\" finns redan"
++
++#: builtin/tag.c:479
++#, c-format
++msgid "%s: cannot lock the ref"
++msgstr "%s: kan inte l=C3=A5sa referensen"
++
++#: builtin/tag.c:481
++#, c-format
++msgid "%s: cannot update the ref"
++msgstr "%s: kan inte uppdatera referensen"
++
++#: builtin/tag.c:483
++#, c-format
++msgid "Updated tag '%s' (was %s)\n"
++msgstr "Uppdaterad tagg \"%s\" (var %s)\n"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.c:5
++msgid "See 'git help COMMAND' for more information on a specific comma=
+nd."
++msgstr "Se \"git help KOMMANDO\" f=C3=B6r mer information om ett speci=
+fikt kommando."
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.c:10
++msgid "TEST: A C test string"
++msgstr "TEST: A C test string"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.c:13
++#, c-format
++msgid "TEST: A C test string %s"
++msgstr "TEST: A C test string %s"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.c:16
++#, c-format
++msgid "TEST: Hello World!"
++msgstr "TEST: Hello World!"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.c:19
++#, c-format
++msgid "TEST: Old English Runes"
++msgstr "TEST: Old English Runes"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.c:22
++#, c-format
++msgid "TEST: =E2=80=98single=E2=80=99 and =E2=80=9Cdouble=E2=80=9D quo=
+tes"
++msgstr "TEST: =E2=80=98single=E2=80=99 and =E2=80=9Cdouble=E2=80=9D qu=
+otes"
++
++#: git-am.sh:47
++msgid "You need to set your committer info first"
++msgstr "Du m=C3=A5ste st=C3=A4lla in din incheckarinformation f=C3=B6r=
+st"
++
++#: git-am.sh:80
++#, sh-format
++msgid ""
++"When you have resolved this problem run \"$cmdline --resolved\".\n"
++"If you would prefer to skip this patch, instead run \"$cmdline --skip=
+\".\n"
++"To restore the original branch and stop patching run \"$cmdline --abo=
+rt\"."
++msgstr ""
++"N=C3=A4r du har l=C3=B6st problemet k=C3=B6r du \"$cmdline --resolved=
+\".\n"
++"Om du vill hoppa =C3=B6ver patchen k=C3=B6r du ist=C3=A4llet \"$cmdli=
+ne --skip\".\n"
++"F=C3=B6r att =C3=A5terst=C3=A4lla originalgrenen och avbryta k=C3=B6r=
+ du \"$cmdline --abort\"."
++
++#: git-am.sh:96
++msgid "Cannot fall back to three-way merge."
++msgstr "Kan inte falla tillbaka p=C3=A5 trev=C3=A4gssammanslagning."
++
++#: git-am.sh:111
++msgid "Repository lacks necessary blobs to fall back on 3-way merge."
++msgstr "Arkivet saknar objekt som beh=C3=B6vs f=C3=B6r att falla tillb=
+aka p=C3=A5 3-v=C3=A4gssammanslagning."
++
++#: git-am.sh:120
++msgid ""
++"Did you hand edit your patch?\n"
++"It does not apply to blobs recorded in its index."
++msgstr ""
++"Vill du handredigera din patch?\n"
++"Den kan inte appliceras p=C3=A5 blobbar som antecknats i dess index."
++
++#: git-am.sh:236
++msgid "Only one StGIT patch series can be applied at once"
++msgstr "Endast en StGIT-patchserie kan appliceras =C3=A5t g=C3=A5ngen"
++
++#: git-am.sh:288
++#, sh-format
++msgid "Patch format $patch_format is not supported."
++msgstr "Patchformatet $patch_format st=C3=B6ds inte."
++
++#: git-am.sh:290
++msgid "Patch format detection failed."
++msgstr "Misslyckades detektera patchformat."
++
++#: git-am.sh:340
++msgid "-d option is no longer supported.  Do not use."
++msgstr "Flaggan -d st=C3=B6ds inte l=C3=A4gre. Anv=C3=A4nd inte."
++
++#: git-am.sh:403
++#, sh-format
++msgid "previous rebase directory $dotest still exists but mbox given."
++msgstr "tidigare rebase-katalog $dotest finns redan, men mbox angavs."
++
++#: git-am.sh:408
++msgid "Please make up your mind. --skip or --abort?"
++msgstr "Best=C3=A4m dig. --skip eller --abort?"
++
++#: git-am.sh:434
++msgid "Resolve operation not in progress, we are not resuming."
++msgstr "L=C3=B6sningsoperation p=C3=A5g=C3=A5r inte, vi =C3=A5teruppta=
+r inte."
++
++#: git-am.sh:499
++#, sh-format
++msgid "Dirty index: cannot apply patches (dirty: $files)"
++msgstr "Smutsigt index: kan inte applicera patchar (smutsiga: $files)"
++
++#: git-am.sh:595
++#, sh-format
++msgid ""
++"Patch is empty.  Was it split wrong?\n"
++"If you would prefer to skip this patch, instead run \"$cmdline --skip=
+\".\n"
++"To restore the original branch and stop patching run \"$cmdline --abo=
+rt\"."
++msgstr ""
++"Patchen =C3=A4r tom. Delades den upp felaktigt?\n"
++"Om du vill hoppa =C3=B6ver patchen k=C3=B6r du ist=C3=A4llet \"$cmdli=
+ne --skip\".\n"
++"F=C3=B6r att =C3=A5terst=C3=A4lla originalgrenen och avbryta k=C3=B6r=
+ du \"$cmdline --abort\"."
++
++#: git-am.sh:632
++msgid "Patch does not have a valid e-mail address."
++msgstr "Patchen har inte n=C3=A5gon giltig e-postadress."
++
++#: git-am.sh:679
++msgid "cannot be interactive without stdin connected to a terminal."
++msgstr "kan inte vara interaktiv om standard in inte =C3=A4r ansluten =
+till en terminal."
++
++#: git-am.sh:683
++msgid "Commit Body is:"
++msgstr "Incheckningskroppen =C3=A4r:"
++
++#. TRANSLATORS: Make sure to include [y], [n], [e], [v] and [a]
++#. in your translation. The program will only accept English
++#. input at this point.
++#: git-am.sh:690
++msgid "Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all "
++msgstr "Applicera? Y=3Dja/N=3Dnej/E=3Dredigera/V=3Dvisa patch/A=3Dgodt=
+a alla "
++
++#: git-am.sh:726
++#, sh-format
++msgid "Applying: $FIRSTLINE"
++msgstr "Applicerar: $FIRSTLINE"
++
++#: git-am.sh:747
++msgid ""
++"No changes - did you forget to use 'git add'?\n"
++"If there is nothing left to stage, chances are that something else\n"
++"already introduced the same changes; you might want to skip this patc=
+h."
++msgstr ""
++"Inga =C3=A4ndrinar - gl=C3=B6mde du anv=C3=A4nda \"git add\"?\n"
++"Om det inte =C3=A4r n=C3=A5got kvar att k=C3=B6a kan det h=C3=A4nda a=
+tt n=C3=A5gon annan redan\n"
++"introducerat samma =C3=A4ndringar; kanske du b=C3=B6r hoppa =C3=B6ver=
+ patchen."
++
++#: git-am.sh:755
++msgid ""
++"You still have unmerged paths in your index\n"
++"did you forget to use 'git add'?"
++msgstr ""
++"Du har fortfarande s=C3=B6kv=C3=A4gar som inte slagits samman i ditt =
+index\n"
++"gl=C3=B6mde du anv=C3=A4nda \"git add\"?"
++
++#: git-am.sh:771
++msgid "No changes -- Patch already applied."
++msgstr "Inga =C3=A4ndringar -- Patchen har redan applicerats."
++
++#: git-am.sh:781
++#, sh-format
++msgid "Patch failed at $msgnum $FIRSTLINE"
++msgstr "Patchen misslyckades vid $msgnum $FIRSTLINE"
++
++#: git-am.sh:797
++msgid "applying to an empty history"
++msgstr "applicerar p=C3=A5 en tom historik"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.sh:8
++msgid "TEST: A Shell test string"
++msgstr "TEST: A Shell test string"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.sh:11
++#, sh-format
++msgid "TEST: A Shell test $variable"
++msgstr "TEST: A Shell test $variable"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.perl:8
++msgid "TEST: A Perl test string"
++msgstr "TEST: A Perl test string"
++
++#. TRANSLATORS: This is a test. You don't need to translate it.
++#: t/t0200/test.perl:11
++#, perl-format
++msgid "TEST: A Perl test variable %s"
++msgstr "TEST: A Perl test variable %s"
++
 --=20
 1.7.1
