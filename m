@@ -1,107 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: please show tags file history browsing
-Date: Sun, 12 Sep 2010 12:19:57 +0200
-Message-ID: <201009121219.58191.jnareb@gmail.com>
-References: <000001cb51be$ed214dd0$c763e970$@se> <m3r5h0kwn5.fsf@localhost.localdomain> <000d01cb525c$c6c2b8b0$54482a10$@se>
+From: Parag Kalra <paragkalra@gmail.com>
+Subject: Making Git untrack few folders
+Date: Sun, 12 Sep 2010 03:22:40 -0700
+Message-ID: <AANLkTiktMe190OVPrTXMtmfaLRLXeJBZ4vSZewJecQWe@mail.gmail.com>
+References: <AANLkTi=vjueuP66BAMsRDww=J3Nq3Q4BooKF+85khcBn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: "Tjernlund" <tjernlund@tjernlund.se>
-X-From: git-owner@vger.kernel.org Sun Sep 12 12:21:56 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 12 12:23:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oujh5-0000A6-Lp
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 12:21:56 +0200
+	id 1OujiF-0000Rw-QM
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 12:23:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751836Ab0ILKVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 06:21:38 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:42496 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045Ab0ILKVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 06:21:37 -0400
-Received: by fxm16 with SMTP id 16so2627694fxm.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 03:21:36 -0700 (PDT)
+	id S1752417Ab0ILKXD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 06:23:03 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:54628 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751902Ab0ILKXB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 06:23:01 -0400
+Received: by qyk33 with SMTP id 33so4296217qyk.19
+        for <git@vger.kernel.org>; Sun, 12 Sep 2010 03:23:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=3DkDWtefz8TX0u2VmHkGNA4B9EwWoixwrG1EKRPYwZE=;
-        b=grlMLdDCtBMQviz1sEPIorNJ4BxN5efzXZeqfODDFA3oxuXqBLJobmxyQhfvykxICK
-         +Z+Ygq9hsDZmze/inqQwMD+wF39oWM7hMeigaIydc6Cxw1nKSE0B1ToIzY6Wy78a4iz1
-         ZUBV5iZyzjCCO6p+wId+s53tVWNPp4yK6Te3I=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=Hg4G1PxUQ5wMa9MB/2PWeS4Orv5snIhyi39rjkykEuM=;
+        b=wNJ19jZh/s2Ef0ryVgY+PaZ5dEDc2QJM2Bfawa6Q1l08W45geitMDDoMiRAkU9iE8t
+         k98TteI03PtrokhldIMQLiLyi34nLGPvpRxf4xM6PnszYqzYj0I6ZLPE0n/ObV7yopFR
+         jV7No9+IEaSkbtcPi3dbUu9GgjD1WpqI16WVE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=SMi+nElYnA/6+iR6G4pcmHxdR9cCiVKEv5SEZpLYN4lzrvQPKZXebtxC+S/8b+2VkK
-         dhJHFk/osO7iGeoqSAZjldK8qW68d8wQ4uBveQaSpJC4+V6AdOK6Boynsw8FgNa9z43B
-         80yn2o0RmLIoRtWHDzyTGLw6lJRIGBBaTVRKE=
-Received: by 10.223.103.148 with SMTP id k20mr2193227fao.37.1284286808673;
-        Sun, 12 Sep 2010 03:20:08 -0700 (PDT)
-Received: from [192.168.1.13] (abwi198.neoplus.adsl.tpnet.pl [83.8.232.198])
-        by mx.google.com with ESMTPS id b9sm2263962faq.7.2010.09.12.03.20.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 12 Sep 2010 03:20:07 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <000d01cb525c$c6c2b8b0$54482a10$@se>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=kTJMa1FK/QLsfT+msU23MxvCCLFE/GLbswXFO62hYIvNltLiNVqQ+BIToWqctP7jmE
+         oYV1yPXtgILxaujdF8MfHXwiZp4JkzSkNmyjruAp7F9Io0Z0xM9HoEMq86YGG82BrwCz
+         CCU1bBDqZ1kML6/zQvszw+Fbo6hK+GE6pJJAQ=
+Received: by 10.229.224.67 with SMTP id in3mr2189711qcb.91.1284286980285; Sun,
+ 12 Sep 2010 03:23:00 -0700 (PDT)
+Received: by 10.229.248.149 with HTTP; Sun, 12 Sep 2010 03:22:40 -0700 (PDT)
+In-Reply-To: <AANLkTi=vjueuP66BAMsRDww=J3Nq3Q4BooKF+85khcBn@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156029>
 
-On Sun, 12 Sep 2010, Tjernlund wrote:
-> > -----Original Message-----
-> > From: Jakub Narebski [mailto:jnareb@gmail.com]
-> > 
-> > "Tjernlund" <tjernlund@tjernlund.se> writes:
-> > 
-> > > I would really like to see where the tags are when browsing
-> > > file or directory history in gitweb. Would that be possible?
+Hi All,
 
-> > While it probably be possible to show tags in 'history' view, it would
-> > be not easy.  The problem is that 'history' view shows only commits
-> > that touch specified file or directory, and tagged commits usually do
-> > not touch those files (at least if one is using "bump version number"
-> > commits to tag them).
-> > 
-> > So you would have:
-> > 1. Design where to show those tags - they would be between shown
-> >    commits.
-> > 2. Create code which shows some/all tags that are between commits in
-> >    the presence of nonlinear history, without affecting performance
-> >    too badly.
-> 
-> Ah, that is too bad because I think it would really useful.
-> Image browsing a drivers history in the linux kernel. Then it would be
-> really nice to see what changes/bug fixes went into what release.
+I have couple of interconnected questions:
 
-First, you can help with the first issue even if you can't help with
-the coding itself.
+1. Is there a way I can make Git not track a particular folder in my
+working code base directory. For example, I have a tmp folder in my
+local code base and I don't want Git to track whats going on inside
+that directory.
 
-Second, with single 'git name-rev --tags --stdin' or with '--decorate'
-or '%d' in format we could (I think) either display at least some tags,
-or name-rev decorations, i.e. something like:
+2. Accidently I have added this folder, committed and pushed it to
+origin master. Is there a way I can remove this tmp folder from git
+revision history and at the same time keeping it intact in my local
+code base directory.
 
-  (v1.7.3-rc0~38) gitweb: Don't die_error in git_tag after already printing headers
-  (v1.7.3-rc0~44) Merge branch 'maint'
-  (v1.7.2.3~15) Typos in code comments, an error message, documentation
-  (v1.7.3-rc0~85) Merge branch 'jn/maint-gitweb-dynconf'
-  (v1.7.3-rc0~92) Merge branch 'maint'
-  (v1.7.2.2~12) gitweb: clarify search results page when no matching commit found
-  [...]
-
-If we want to display all tags we would have IIUC extend git-log to
-generate such information.
-
--- 
-Jakub Narebski
-Poland
+Cheers,
+Parag
