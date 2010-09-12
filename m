@@ -1,61 +1,110 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Input welcome for "Git Bisect and Testing" presentation at GTAC 2010
-Date: Sun, 12 Sep 2010 22:25:52 +0200
-Message-ID: <201009122225.52520.chriscool@tuxfamily.org>
+From: Marcus Comstedt <marcus@mc.pp.se>
+Subject: Re: [PATCH v2 1/2] convert: fix normalization of foreign idents
+Date: Sun, 12 Sep 2010 23:01:53 +0200
+Message-ID: <yf9hbhuisla.fsf@chiyo.mc.pp.se>
+References: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
+	<E1Ot4NP-0002xn-Nc@chiyo.mc.pp.se>
+	<7vmxrqjvf6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Ingo Molnar <mingo@elte.hu>, Andreas Ericsson <ae@op5.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 12 22:26:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 23:02:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Out7p-0002sn-5t
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 22:26:09 +0200
+	id 1Outgj-0005JD-Do
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 23:02:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676Ab0ILU0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 16:26:03 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:41834 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752802Ab0ILU0B (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 16:26:01 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 240688180BA;
-	Sun, 12 Sep 2010 22:25:53 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; x86_64; ; )
+	id S1753946Ab0ILVCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 17:02:00 -0400
+Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:51253 "EHLO
+	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753725Ab0ILVB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 17:01:59 -0400
+Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by bahamut.mc.pp.se (Postfix) with ESMTPS id 205D8D254;
+	Sun, 12 Sep 2010 23:01:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
+	t=1284325316; bh=8hg2LMRtB7H0K+maofSkEvXASEMITfFTOpDkY7+t61U=;
+	h=To:Cc:Subject:References:From:Date:In-Reply-To:Message-ID:
+	 MIME-Version:Content-Type; b=jKCqDzi1GnB6cpQs+x+kQo0iCd0Hc0M33HIH/
+	kdbGv2pBCObxqC47R2pXdFizCHcacdrlpzck6YyfmYmVZVhFPnyxCojIC3iIQNcP/wz
+	iruHAu9lZrkMjhPPnBs/muQZUb4b78IYXwt2Xv3OaQDWGk6ORn6Y4NJrjZHQyk/kEAs
+	=
+Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
+	(envelope-from <marcus@mc.pp.se>)
+	id 1OutgQ-0004S4-Al; Sun, 12 Sep 2010 23:01:54 +0200
+In-Reply-To: <7vmxrqjvf6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu, 09 Sep 2010 17:26:21 -0700")
+User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.4.22 (linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156056>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156057>
 
-Hi,
 
-The Google Test Automation Conference (http://www.gtac.biz) committee accepted 
-my proposal for a "Git Bisect and Testing" presentation at the GTAC 2010 in 
-India on October 28 and 29. So I am working on it.
+Hi Junio.
 
-It will be roughly based on my previous "Fighting regressions with git bisect" 
-article (http://www.kernel.org/pub/software/scm/git/docs/git-bisect-lk2009.html)
-and presentation (http://www.linux-kongress.org/2009/slides/fighting_regressions_with_git_bisect_christian_couder.pdf). 
-But I would be happy to add more concrete examples of how "git bisect" is used 
-in the real world. And more generally I am very open to any kind of feedback 
-about "git bisect".
 
-For example it can be how "git bisect run" is used automatically in build 
-systems, or how "git bisect" is used manually on GUI applications in your 
-company, or how you use Avery Pennarun's "git-builder" (http://github.com/apenwarr/gitbuilder, it uses "git bisect" 
-underneath), or what features you would want to see added, or what have been 
-your experience with it, and so on.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks in advance,
-Christian.
+> Would it be possible that the real culprit is that ident_to_worktree()
+> does not always touch $Id$ in the first place?  Why isn't "$Id: garbage$"
+> first cleaned and then smudged upon checkout?
 
-PS: Because of this presentation I won't come to the GitTogether this year.
-Anyway I wish people going there an happy GitTogether'10!   
+Please see commit 07814d90095b65b4594efd47c69f9f171ef162d4, and
+the discussion preceeding it.
+
+
+> It also smells wrong that this "sometimes we convert, sometimes we don't"
+> is a special case for "$Id$" and for no other conversion.  Why don't
+> smudge/clean filter or CRLF conversion have the same issue that can be
+> solved with the same approach as this patch takes?
+
+I gather that this is because nobody has come up with a use case
+for smudge/clean or CRLF where a (pervasive) non-normalized
+representation in the repository makes sense.
+
+Specifically, a foreign ident in the repo is not "garbage", but
+something useful when you migrate a repo from a different VCS for (at
+least) the following reasons:
+
+* It allows you to check out a historical tree from the git repo which
+  looks exactly like what it would look like if you checked it out
+  from the previous system
+
+* It provides an indication that a version of a file comes directly
+  from the previous VCS, without any modification since the migration
+  to git, and exactly where in the history of the previous VCS it has
+  originated
+
+* Quite frankly, idents generated by other VCSs contain more useful
+  information than those generated by git, so it's a waste to discard
+  them prematurely
+
+The same effect can be achieved without direct support for foreign
+idents by instead using fine-grained control in .gitattributes to
+force -ident on any file which still has foreign idents, but there are
+two downsides to this approach:
+
+* A commit hook (and probably a pre-receive hook at the "blessed"
+  repository) is needed to make sure that no commits are allowed to a
+  file with foreign idents without also flipping the attribute from
+  -ident to +ident
+
+* Either a full enumeration of all files with foreign idents, or
+  of all files with native idents, is needed in .gitattributes, so
+  that a file can be either added to or removed from this list when
+  making the first "native" commit to it
+
+So it's possible, albeit slightly less practical, to do without this
+feature.  If the decision to include it is reversed, 07814d90095b65
+should probably be reverted.
+
+
+  // Marcus
