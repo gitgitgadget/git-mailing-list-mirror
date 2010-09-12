@@ -1,70 +1,92 @@
-From: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
-Subject: Re: possible gitattributes eol bug with new eol=crlf | lf support?
-Date: Sun, 12 Sep 2010 13:46:32 +0200
-Message-ID: <4F27AD7B-2B2D-4378-B1D5-6F380396E0FF@gmail.com>
-References: <AANLkTinC8g9m=2ka=7LiHH4MtfxC-NbxbsYQEbmMyXmN@mail.gmail.com> <1F2D74A7-1C9C-47D9-9C3D-E430E446CB94@gmail.com> <AANLkTi=xPpPZzUqVEHEkH2sKvSVZH+MzunET6vEA_tw5@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
-To: Robert Buck <buck.robert.j@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 13:47:07 2010
+From: "Tjernlund" <tjernlund@tjernlund.se>
+Subject: RE: gitweb: please show tags file history browsing
+Date: Sun, 12 Sep 2010 15:11:30 +0200
+Message-ID: <001101cb527c$041a0eb0$0c4e2c10$@se>
+References: <000001cb51be$ed214dd0$c763e970$@se> <m3r5h0kwn5.fsf@localhost.localdomain> <000d01cb525c$c6c2b8b0$54482a10$@se> <201009121219.58191.jnareb@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Jakub Narebski'" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 15:12:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oul1V-0004dy-JK
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 13:47:05 +0200
+	id 1OumMJ-0006dF-Kv
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 15:12:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752771Ab0ILLqo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 07:46:44 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:34285 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752667Ab0ILLqi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 07:46:38 -0400
-Received: by ewy23 with SMTP id 23so2383748ewy.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 04:46:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=86JvFI3UOcDf9oIYm29DE8t2cqx+x65AELzRUknuBbc=;
-        b=XGvXfQDGNNvXfOEYtsBkcLMww2bNBHsrHnkmMWRS7CRAB2wusMgEYjj3XZIMwnVape
-         RNe8g6jxmn69vXkCyj9DfbDjtGz+oNk5IvZxFTbU7JuBOeLbx1SHqfNIQCC3AyzPaoiv
-         cdj/dkR1Pqe3vfB1HE22OVcGpg9rxj017q42g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=wbrWzz9yhlbnEddSoDkjZij8zk8e4H5VO9xanWzP7d5ffvqL6afd5h2qDq//4Wcohq
-         3AArm6WbHsV7FJmvIml+HWvXW6k1Zj9jF6kf6eOeNzKkpGwg24gR2X7cytRaZuzuUULJ
-         NjgewjWh1rei6vCFMgq75o8SIqFBCaVCywkMk=
-Received: by 10.213.22.201 with SMTP id o9mr1942280ebb.71.1284291997267;
-        Sun, 12 Sep 2010 04:46:37 -0700 (PDT)
-Received: from [192.168.0.3] ([178.72.23.126])
-        by mx.google.com with ESMTPS id v59sm7319122eeh.4.2010.09.12.04.46.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 12 Sep 2010 04:46:36 -0700 (PDT)
-In-Reply-To: <AANLkTi=xPpPZzUqVEHEkH2sKvSVZH+MzunET6vEA_tw5@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1752691Ab0ILNM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 09:12:26 -0400
+Received: from csmtp2.one.com ([91.198.169.22]:56822 "EHLO csmtp2.one.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751827Ab0ILNMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 09:12:25 -0400
+Received: from jockexp (84-217-13-162.tn.glocalnet.net [84.217.13.162])
+	by csmtp2.one.com (Postfix) with ESMTPA id 9B584C00A3B3;
+	Sun, 12 Sep 2010 13:11:39 +0000 (UTC)
+In-Reply-To: <201009121219.58191.jnareb@gmail.com>
+X-Mailer: Microsoft Office Outlook 12.0
+thread-index: ActSZEgZ3avo3ApeSc+IEYTBhOAunQAFmvxw
+Content-Language: sv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156033>
 
-On 10. sep. 2010, at 23.27, Robert Buck wrote:
+Jocke
 
-> I don't understand the inner workings of .git/index, but is removing
-> that file destructive to history or anything? What are the
-> implications of that delete-command?
+> -----Original Message-----
+> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> On Sun, 12 Sep 2010, Tjernlund wrote:
+> > > -----Original Message-----
+> > > From: Jakub Narebski [mailto:jnareb@gmail.com]
+> > >
+> > > "Tjernlund" <tjernlund@tjernlund.se> writes:
+> > >
+> > > > I would really like to see where the tags are when browsing
+> > > > file or directory history in gitweb. Would that be possible?
+> 
+> > > While it probably be possible to show tags in 'history' view, it would
+> > > be not easy.  The problem is that 'history' view shows only commits
+> > > that touch specified file or directory, and tagged commits usually do
+> > > not touch those files (at least if one is using "bump version number"
+> > > commits to tag them).
+> > >
+> > > So you would have:
+> > > 1. Design where to show those tags - they would be between shown
+> > >    commits.
+> > > 2. Create code which shows some/all tags that are between commits in
+> > >    the presence of nonlinear history, without affecting performance
+> > >    too badly.
+> >
+> > Ah, that is too bad because I think it would really useful.
+> > Image browsing a drivers history in the linux kernel. Then it would be
+> > really nice to see what changes/bug fixes went into what release.
+> 
+> First, you can help with the first issue even if you can't help with
+> the coding itself.
 
-Removing the index will lose the changes you've staged ("git add"ed) for the next commit, but your working directory won't be touched.  If you've added a file and then modified or deleted it, you would lose the version of that file that was in the index.
+I like the gitk way of showing tags, won't that work in gitweb too?
 
-"git reset" then rebuilds the index identically to the HEAD commit, but without the staged changes and (importantly) the stat cache.  The point is to make git re-check every file to see if it has been modified.
+> 
+> Second, with single 'git name-rev --tags --stdin' or with '--decorate'
+> or '%d' in format we could (I think) either display at least some tags,
+> or name-rev decorations, i.e. something like:
+> 
+>   (v1.7.3-rc0~38) gitweb: Don't die_error in git_tag after already printing headers
+>   (v1.7.3-rc0~44) Merge branch 'maint'
+>   (v1.7.2.3~15) Typos in code comments, an error message, documentation
+>   (v1.7.3-rc0~85) Merge branch 'jn/maint-gitweb-dynconf'
+>   (v1.7.3-rc0~92) Merge branch 'maint'
+>   (v1.7.2.2~12) gitweb: clarify search results page when no matching commit found
+>   [...]
+> 
+> If we want to display all tags we would have IIUC extend git-log to
+> generate such information.
 
-Sorry, I should have mentioned the downsides.
-
-- Eyvind
+if displaying tags is a too expensive operation one could have a knob
+in gitweb to get at the tags.
