@@ -1,110 +1,93 @@
-From: Marcus Comstedt <marcus@mc.pp.se>
-Subject: Re: [PATCH v2 1/2] convert: fix normalization of foreign idents
-Date: Sun, 12 Sep 2010 23:01:53 +0200
-Message-ID: <yf9hbhuisla.fsf@chiyo.mc.pp.se>
-References: <yf9sk1l73bt.fsf@chiyo.mc.pp.se>
-	<E1Ot4NP-0002xn-Nc@chiyo.mc.pp.se>
-	<7vmxrqjvf6.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: RFC: Adding an option to log-like commands to call an external
+ command for each revision
+Date: Sun, 12 Sep 2010 14:25:44 -0700
+Message-ID: <7vmxrmd57r.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikh-KoWuPYE12pVszwduGTBOssKDxqk=4iF6QZT@mail.gmail.com>
+ <20100830030819.GA25415@sigill.intra.peff.net>
+ <AANLkTi=WokEQMDc92SoWXPJW67dy0q79WW9RajrBHRx3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 23:02:15 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 23:26:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Outgj-0005JD-Do
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 23:02:13 +0200
+	id 1Ouu3z-00053b-Cd
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 23:26:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab0ILVCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 17:02:00 -0400
-Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:51253 "EHLO
-	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753725Ab0ILVB7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 17:01:59 -0400
-Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by bahamut.mc.pp.se (Postfix) with ESMTPS id 205D8D254;
-	Sun, 12 Sep 2010 23:01:56 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
-	t=1284325316; bh=8hg2LMRtB7H0K+maofSkEvXASEMITfFTOpDkY7+t61U=;
-	h=To:Cc:Subject:References:From:Date:In-Reply-To:Message-ID:
-	 MIME-Version:Content-Type; b=jKCqDzi1GnB6cpQs+x+kQo0iCd0Hc0M33HIH/
-	kdbGv2pBCObxqC47R2pXdFizCHcacdrlpzck6YyfmYmVZVhFPnyxCojIC3iIQNcP/wz
-	iruHAu9lZrkMjhPPnBs/muQZUb4b78IYXwt2Xv3OaQDWGk6ORn6Y4NJrjZHQyk/kEAs
-	=
-Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
-	(envelope-from <marcus@mc.pp.se>)
-	id 1OutgQ-0004S4-Al; Sun, 12 Sep 2010 23:01:54 +0200
-In-Reply-To: <7vmxrqjvf6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu, 09 Sep 2010 17:26:21 -0700")
-User-Agent: Gnus/5.1008 (Gnus v5.10.8) XEmacs/21.4.22 (linux)
+	id S1753672Ab0ILVZz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 17:25:55 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47624 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753588Ab0ILVZy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 17:25:54 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4E893D55BB;
+	Sun, 12 Sep 2010 17:25:53 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=XGngUw25AlnH
+	hY6NwzumIId7r+s=; b=ClZkM8oPqgePAN4mzlIvURTcrHgrWR6uF3ZdEG498Zkp
+	tur6Xp1T99/ja/WHuH8SZIlLhlHbctl/UaZieI/QvCu3iRruafAr+4xznyc+3qwU
+	plxYHSJna2mR70oQ8fefrzK4+d4IqD8He5UMnX/M+ih7L1G5QZW3fiPDkhNQZBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZZ+q0S
+	X5oHN/YuhKi+ZlDf86y/D8x5PU2dxSKRZRRdCMXwrqvy1kL0DgwQMiJHeou9BONg
+	UXmLEDRxGAAveAqiSAgUnMyCgB47kjCk6fUIwdeJslFKY6NnUhyKsSa233cQFqcL
+	XJIs4+QplWKkqGXWFmdMl/D2C3c7++6MRKMn4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1B1D9D55BA;
+	Sun, 12 Sep 2010 17:25:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48936D55B9; Sun, 12 Sep
+ 2010 17:25:46 -0400 (EDT)
+In-Reply-To: <AANLkTi=WokEQMDc92SoWXPJW67dy0q79WW9RajrBHRx3@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sat\, 11 Sep
+ 2010 15\:56\:13 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 50A5B4E2-BEB4-11DF-8B4D-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156058>
 
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Hi Junio.
+> I just like the UI of having each commit "pop up" where I can either
+> page up/down within the commit, or dismiss it with "q" and go to the
+> next one.
+>
+> You can't do both of those in a pager, up/down goes across commits,
+> and "q" quits the whole pager.
 
+I would throw this not into the incomplete scriptability category but i=
+nto
+the "user does not know how to use his pager" category.  With "/^commit=
+ .*"
+you can not only advance to the next commit with "/<RET>", you can go b=
+ack
+to the previous one with "?<RET>", and keep going in the same direction
+with "n".
 
-Junio C Hamano <gitster@pobox.com> writes:
+>>> Maybe we should have something like:
+>>>
+>>> =C2=A0 =C2=A0 git log --for-each=3Dless a..b
 
-> Would it be possible that the real culprit is that ident_to_worktree()
-> does not always touch $Id$ in the first place?  Why isn't "$Id: garbage$"
-> first cleaned and then smudged upon checkout?
+If anything that shouldn't be an option to "log", but to "rev-list", as
+you are aiming for scriptability.  But
 
-Please see commit 07814d90095b65b4594efd47c69f9f171ef162d4, and
-the discussion preceeding it.
+    git rev-list --for-each=3D'cmd that takes commit as its argument'
 
+wouldn't be much of an improvement over "git rev-list | xargs -n1 'cmd'=
+"
+pipeline from the _scriptability_ point of view.
 
-> It also smells wrong that this "sometimes we convert, sometimes we don't"
-> is a special case for "$Id$" and for no other conversion.  Why don't
-> smudge/clean filter or CRLF conversion have the same issue that can be
-> solved with the same approach as this patch takes?
-
-I gather that this is because nobody has come up with a use case
-for smudge/clean or CRLF where a (pervasive) non-normalized
-representation in the repository makes sense.
-
-Specifically, a foreign ident in the repo is not "garbage", but
-something useful when you migrate a repo from a different VCS for (at
-least) the following reasons:
-
-* It allows you to check out a historical tree from the git repo which
-  looks exactly like what it would look like if you checked it out
-  from the previous system
-
-* It provides an indication that a version of a file comes directly
-  from the previous VCS, without any modification since the migration
-  to git, and exactly where in the history of the previous VCS it has
-  originated
-
-* Quite frankly, idents generated by other VCSs contain more useful
-  information than those generated by git, so it's a waste to discard
-  them prematurely
-
-The same effect can be achieved without direct support for foreign
-idents by instead using fine-grained control in .gitattributes to
-force -ident on any file which still has foreign idents, but there are
-two downsides to this approach:
-
-* A commit hook (and probably a pre-receive hook at the "blessed"
-  repository) is needed to make sure that no commits are allowed to a
-  file with foreign idents without also flipping the attribute from
-  -ident to +ident
-
-* Either a full enumeration of all files with foreign idents, or
-  of all files with native idents, is needed in .gitattributes, so
-  that a file can be either added to or removed from this list when
-  making the first "native" commit to it
-
-So it's possible, albeit slightly less practical, to do without this
-feature.  If the decision to include it is reversed, 07814d90095b65
-should probably be reverted.
-
-
-  // Marcus
+So no.
