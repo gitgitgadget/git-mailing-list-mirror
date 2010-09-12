@@ -1,135 +1,111 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: git-p4
-Date: Sun, 12 Sep 2010 21:54:07 +0200
-Message-ID: <AANLkTi=NGsY3wDiTLwNLpw4TJMpiSY8A=az_=v2fYDLj@mail.gmail.com>
-References: <4C8A8CE8.90600@borg.org>
-	<20100910235323.773d2c5b@varda>
-	<AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>
-	<4C8CF231.6090403@borg.org>
-	<AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>
-	<4C8D14F9.90705@borg.org>
+From: Robert Buck <buck.robert.j@gmail.com>
+Subject: Re: possible gitattributes eol bug with new eol=crlf | lf support?
+Date: Sun, 12 Sep 2010 15:58:43 -0400
+Message-ID: <AANLkTi=9Wv9_s2zDEdpc8Dn7qXSRepZSToKkOrAoTQnR@mail.gmail.com>
+References: <AANLkTinC8g9m=2ka=7LiHH4MtfxC-NbxbsYQEbmMyXmN@mail.gmail.com>
+	<1F2D74A7-1C9C-47D9-9C3D-E430E446CB94@gmail.com>
+	<AANLkTi=xPpPZzUqVEHEkH2sKvSVZH+MzunET6vEA_tw5@mail.gmail.com>
+	<4F27AD7B-2B2D-4378-B1D5-6F380396E0FF@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?Alejandro_Riveira_Fern=C3=A1ndez?= <ariveira@gmail.com>
-To: Kent Borg <kentborg@borg.org>
-X-From: git-owner@vger.kernel.org Sun Sep 12 21:54:20 2010
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>
+To: Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 21:58:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ousd1-0007Lk-G2
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 21:54:19 +0200
+	id 1OushS-0000GS-Uj
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 21:58:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753140Ab0ILTyN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 15:54:13 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:37095 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752874Ab0ILTyM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 15:54:12 -0400
-Received: by iwn5 with SMTP id 5so4376082iwn.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 12:54:12 -0700 (PDT)
+	id S1753544Ab0ILT6s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 15:58:48 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:61028 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753003Ab0ILT6p convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 15:58:45 -0400
+Received: by ewy23 with SMTP id 23so2452381ewy.19
+        for <git@vger.kernel.org>; Sun, 12 Sep 2010 12:58:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=aa25AjqUiRQJhP1Siv6GknicLWywYT/mmrBIW70p0d8=;
-        b=pctPM32ruoHUammu/XLdYVlWOinynWNHV3Sur17v+Plywv76TBXL0EJ2Zf/4ZBUCS5
-         GeBYkNCazkzaddP8h5rmWhvXmx8V8uDakdS10Zu3bAqe/ZXLU5Jh9TZfywAteGFxCBhl
-         9po8pDSP7+Jjle+lkZeYNCJMfhPxnCuG0eM1c=
+        bh=QKEv4mpShl1L4LPLFgBTmz07ZymJO6Aya28yxlgMEnw=;
+        b=W0dJ7FVe9R5LkDR8YS4qT6U4LVN9x25e1Ev6Oxom+LuavylMGy7JlLc4LGDr4fw2u0
+         TxAUJTAHjbGgmChy2zV2Wv5tNq1rtG+NHoUqPzJgA9LfeSyZ0KYJA6+oMBJpFDcDJxjC
+         ocsndl0KLlNiWOJHKayqBvMJOnue9IvhdPT0g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=wdwRLsTeSTz8v++f1U1R7HyHhrg140dybqt2LR8O2OhslisE4Q5ibEHhkUioeTApMx
-         +JvmKJ4oRQe013YLRptiWSqZOUyqSowQJIAST6x2Sh3L0aNAFQLf8SmLr1QS7HS0Gp0i
-         nwl/3Xjpa2FsLIL7mzotnaQWt1vVDc+sF56ok=
-Received: by 10.231.148.85 with SMTP id o21mr4918270ibv.26.1284321247221; Sun,
- 12 Sep 2010 12:54:07 -0700 (PDT)
-Received: by 10.231.178.139 with HTTP; Sun, 12 Sep 2010 12:54:07 -0700 (PDT)
-In-Reply-To: <4C8D14F9.90705@borg.org>
+        b=htkDqLX79OPLM3fb/av2l/c21v4mUN96IAD3QlnRwarE7rt7S2d3nwJloM05tO6RGN
+         PFTC0+LsE3WqoCr/AcuDsYscUjpcNeIX0QQEWhS7BAplezcv2g+msn/TIzzAuMyRgdze
+         R5Rbq77pxMeCnjMduME+GMnpnsBOHfM4pYLJc=
+Received: by 10.14.53.1 with SMTP id f1mr2104935eec.36.1284321524041; Sun, 12
+ Sep 2010 12:58:44 -0700 (PDT)
+Received: by 10.14.4.11 with HTTP; Sun, 12 Sep 2010 12:58:43 -0700 (PDT)
+In-Reply-To: <4F27AD7B-2B2D-4378-B1D5-6F380396E0FF@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156047>
 
-2010/9/12 Kent Borg <kentborg@borg.org>:
-> Tor Arvid Lund wrote:
->> Ok, so if you call this on the cmd line, it should output sha1's on
->> all commits that will be submitted (in reverse order) to p4. If it
->> doesn't, this may well be a good place to dig for a solution.
->
-> It does output the commits it wants to submit. =C2=A0In my broken cas=
-e far
-> too many.
->
-> I created a simple working case to see what working looks like, and t=
-he
-> exact same command outputs just the one commit. =C2=A0Looking more ca=
-refully
-> at my gitg pictures in the good and bad cases, I realize that I in th=
-e
-> broken case I probably don't have the graph I need.
->
->
-> Good case:
->
-> =C2=A0(master)
-> =C2=A0 |
-> =C2=A0(p4/HEAD) =C2=A0(p4/master)
-> =C2=A0 |
-> =C2=A0initial test import from existing depot
->
->
-> Bad case:
->
-> =C2=A0(master) =C2=A0 trivial change I am trying to submit
-> =C2=A0 |
-> =C2=A0(tmp) =C2=A0commit with the "[git-p4: depot-paths =3D "//depot/=
-[...blah
-> blah...]": change =C2=A0=3D 160991]" string at the end of the descrip=
-tion
-> =C2=A0 |
-> =C2=A0Merge remote branch 'p4/master'
-> =C2=A0 | \
-> =C2=A0 | =C2=A0(p4/HEAD) =C2=A0(p4/master) =C2=A0a commit that is rea=
-l work
-<snip>
+Thanks Eyvind,
 
-Hmm.. Let's define a "commit that contains that [git-p4:
-depot-paths=3D...] stuff" as a git/perforce commit. Then I would say
-that p4/master should always point to the most recent git/perforce
-commit. In your "Bad case", it seems that it doesn't do that, because
-the most recent git/perforce commit is (tmp).
+I tried it on an experimental repository and it worked. Thank you for
+your recommendation.
 
-When messing about with git-p4 I have sometimes messed up that
-p4/master ref myself. I can normally fix it by setting it manually: In
-git, all existing branches are simply files with a sha1 in them (or
-symbolic refs that point to other refs, like "ref:
-refs/heads/master"). You should thus be able to put the sha1 of your
-(tmp) commit into refs/remotes/p4/master.
+I also found the following link at github which achieves a similar
+effect. Adding this for the record in case someone else searching for
+a solution in the future wanted more detail.
 
-You could try that and see if git rev-list gives the expected result.
+    http://help.github.com/dealing-with-lineendings/
 
-> I think my understanding of merges and rebases needs more depth...and=
- I
-> think I have mangled branches.
+The one thing I find curious about the github article is that it seems
+to recommend using autocrlf=3Dtrue for ALL platforms once the linefeeds
+have been normalized.
+
+Let me ask for an opinion about this... Given we have an environment
+of mixed Windows, Mac, and Linux developers, that we have just
+migrated from svn and over 2000 files in the repository have messed up
+line-endings, what would be your recommendation for autocrlf settings?
+Oh, important note, because neither cygwin nor msysgit support newer
+versions of git, we do not have the flexibility of running your new
+"eol" support on Windows, while Linux developers do.
+
+So if we did this one-time normalization on all repositories, all
+branches, what holistic approach (eol, autocrlf) would keep our files
+sane for a mix of 1.7.2 and later, and 1.7.0.1 and earlier, Windows,
+Mac, and Linux?
+
+Thanks Eyvind.
+
+-Bob
+
+On Sun, Sep 12, 2010 at 7:46 AM, Eyvind Bernhardsen
+<eyvind.bernhardsen@gmail.com> wrote:
+> On 10. sep. 2010, at 23.27, Robert Buck wrote:
+>
+>> I don't understand the inner workings of .git/index, but is removing
+>> that file destructive to history or anything? What are the
+>> implications of that delete-command?
+>
+> Removing the index will lose the changes you've staged ("git add"ed) =
+for the next commit, but your working directory won't be touched. =C2=A0=
+If you've added a file and then modified or deleted it, you would lose =
+the version of that file that was in the index.
+>
+> "git reset" then rebuilds the index identically to the HEAD commit, b=
+ut without the staged changes and (importantly) the stat cache. =C2=A0T=
+he point is to make git re-check every file to see if it has been modif=
+ied.
+>
+> Sorry, I should have mentioned the downsides.
+>
+> - Eyvind
 >
 >
-> I tried a checkout of master and a "git rebase remotes/p4/master" and
-> that produced thousands of conflicts. =C2=A0Was that due to my initia=
-l Linux
-> sources put in on the Perforce side?
-
-Well, when you do that, git will look back until it finds a common
-ancestor commit of master and p4/master. I am guessing, that a common
-ancestor for those branches does not exist in your case... If my guess
-is correct, git will go back to the beginning of master (to linux
-2.6.12-rc2) and try to apply each of those commits on top of
-p4/master. Naturally, that will cause a world of pain and conflicts ;)
-
--Tor Arvid-
