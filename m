@@ -1,81 +1,80 @@
-From: Kent Borg <kentborg@borg.org>
-Subject: Re: git-p4
-Date: Sun, 12 Sep 2010 11:30:57 -0400
-Message-ID: <4C8CF231.6090403@borg.org>
-References: <4C8A8CE8.90600@borg.org>	<20100910235323.773d2c5b@varda> <AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>
+From: "Tjernlund" <tjernlund@tjernlund.se>
+Subject: RE: gitweb: please show tags file history browsing
+Date: Sun, 12 Sep 2010 18:12:55 +0200
+Message-ID: <001201cb5295$5c055850$141008f0$@se>
+References: <000001cb51be$ed214dd0$c763e970$@se> <201009121219.58191.jnareb@gmail.com> <001101cb527c$041a0eb0$0c4e2c10$@se> <201009121719.32390.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+	charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?UTF-8?B?QWxlamFuZHJvIFJpdmVpcmEgRmVybsOhbmRleg==?= 
-	<ariveira@gmail.com>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 18:01:18 2010
+Cc: <git@vger.kernel.org>
+To: "'Jakub Narebski'" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 12 18:13:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuozV-00038F-KU
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 18:01:18 +0200
+	id 1OupB6-0007Yw-Gs
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 18:13:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753251Ab0ILQBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 12:01:08 -0400
-Received: from borg.org ([64.105.205.123]:34654 "EHLO borg.org"
+	id S1752738Ab0ILQNH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 12:13:07 -0400
+Received: from csmtp2.one.com ([91.198.169.22]:59000 "EHLO csmtp2.one.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753012Ab0ILQBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 12:01:07 -0400
-X-Greylist: delayed 1799 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Sep 2010 12:01:07 EDT
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: kentborg)
-	by borg.org (Postfix) with ESMTP id 43449877FD;
-	Sun, 12 Sep 2010 11:31:03 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S1752271Ab0ILQNH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 12:13:07 -0400
+Received: from jockexp (84-217-13-162.tn.glocalnet.net [84.217.13.162])
+	by csmtp2.one.com (Postfix) with ESMTPA id C8B91D614E19E;
+	Sun, 12 Sep 2010 16:13:04 +0000 (UTC)
+In-Reply-To: <201009121719.32390.jnareb@gmail.com>
+X-Mailer: Microsoft Office Outlook 12.0
+thread-index: ActSjelocQUWgIZSS4ijh4XLzRZx+AABxWqg
+Content-Language: sv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156037>
 
-Tor Arvid Lund wrote:
-> [git-p4: depot-paths = "//Path/To/Your/Project/": change = 30049]
-> .. where the 'change' number is the number of the perforce changelist
-> you synced using git-p4.
->
-> So - work that you want to submit to p4 should be rebased on top of
-> such a commit. Then it should work to do git-p4 submit.
->   
+> -----Original Message-----
+> On Sun, 12 Sep 2010, Tjernlund wrote:
+> >> -----Original Message-----
+> >> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> >> On Sun, 12 Sep 2010, Tjernlund wrote:
+> >>>> -----Original Message-----
+> >>>> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> >>>>
+> >>>> "Tjernlund" <tjernlund@tjernlund.se> writes:
+> >>>>
+> >>>>> I would really like to see where the tags are when browsing
+> >>>>> file or directory history in gitweb. Would that be possible?
+> >>
+> >>>> While it probably be possible to show tags in 'history' view, it would
+> >>>> be not easy.  The problem is that 'history' view shows only commits
+> >>>> that touch specified file or directory, and tagged commits usually do
+> >>>> not touch those files (at least if one is using "bump version number"
+> >>>> commits to tag them).
+> >>>>
+> >>>> So you would have:
+> >>>> 1. Design where to show those tags - they would be between shown
+> >>>>    commits.
+> >>>> 2. Create code which shows some/all tags that are between commits in
+> >>>>    the presence of nonlinear history, without affecting performance
+> >>>>    too badly.
+> >>>
+> >>> Ah, that is too bad because I think it would really useful.
+> >>> Image browsing a drivers history in the linux kernel. Then it would be
+> >>> really nice to see what changes/bug fixes went into what release.
+> >>
+> >> First, you can help with the first issue even if you can't help with
+> >> the coding itself.
+> >
+> > I like the gitk way of showing tags, won't that work in gitweb too?
+> 
+> Err... "gitk" shows tags, but so does 'shortlog' and 'log' view in
+> gitweb.  The 'history' view in gitweb doesn't show intermediate tags,
+> but neither does "gitk -- <path>".
 
-That doesn't work.  I am suspecting there is a tangle in my branches.
-
-Firing up a Python session and manually running the git-p4
-findUpstreamBranchPoint() I get back something reminiscent of the commit
-I made at your suggestion:
-
-  ['remotes/p4/master', {'change': '160991', 'depot-paths':
-['//depot/imgeng/sw/inferno/kernel/linux-2.6.33-quatro']}]
-
-I thought it looked reasonable, but when I try to run the git p4 summit,
-at line 811 in git-p4 it is doing:
-
-  git rev-list --no-merges remotes/p4/master..master
-
-And then reversing the results and trying to apply them all, starting
-with 1da177e (which is Linux-2.16.12-rc), and again it fails.  (Again,
-thank goodness it failed at that.)  How is git rev-list supposed to get
-a limited list back?
-
-Anyone spot my silliness?  Next I'm going to see if I can create a
-normal (and working) case for comparison.  (As a newbie git is one
-thing, trying to understand git-p4 at the same time makes it that much
-harder.)
-
-
-Thanks a bunch,
-
--kb, the Kent who Monday morning (UTC-0400) would love to casually say
-"Oh, yes, git-p4 is working great, both directions, no problem.".
+I know, I just meant the yellow note with tag name in it, how tags
+are displayed. When they are display is another matter :)
