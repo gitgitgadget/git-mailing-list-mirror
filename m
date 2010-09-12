@@ -1,79 +1,71 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC 3/3] t/gitweb-lib.sh: Add support for
- GITWEB_TEST_INSTALLED
-Date: Sun, 12 Sep 2010 10:37:47 -0700
-Message-ID: <7vtylueuc4.fsf@alter.siamese.dyndns.org>
-References: <1284284466-14506-1-git-send-email-jnareb@gmail.com>
- <1284284466-14506-4-git-send-email-jnareb@gmail.com>
+Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
+ submodules
+Date: Sun, 12 Sep 2010 10:44:18 -0700
+Message-ID: <7vfwxeeu19.fsf@alter.siamese.dyndns.org>
+References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil> <7vy6bajvnd.fsf@alter.siamese.dyndns.org> <1464835923.7527323.1284144028047.JavaMail.fmail@mwmweb047> <1529126586.2758911.1284228699341.JavaMail.fmail@mwmweb045> <7v39tgf5zw.fsf@alter.siamese.dyndns.org> <1982035721.2791029.1284236591083.JavaMail.fmail@mwmweb045>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 19:38:07 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de, Brandon Casey <drafnel@gmail.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Sep 12 19:44:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OuqVA-000710-QK
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 19:38:05 +0200
+	id 1Ouqbl-0001X0-FZ
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 19:44:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753523Ab0ILRh7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 13:37:59 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45526 "EHLO
+	id S1753545Ab0ILRod (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 13:44:33 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49153 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753306Ab0ILRh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 13:37:57 -0400
+	with ESMTP id S1751607Ab0ILRoc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 13:44:32 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 640D2D5F6E;
-	Sun, 12 Sep 2010 13:37:54 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DED77D5FFD;
+	Sun, 12 Sep 2010 13:44:31 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UcBWTZ0FHNNdl8CIv+dJ3mNidPI=; b=BhtIbc
-	5YVJ7nfiMO0z4LD3CVC1a362HgHuaR4RUS48zZemrMsY9pQovsltPcA+Xii+CL88
-	67qp+DPMWNlZBzvBfMh3tmITzn7+nqVtx18rjI2Cd29rwp54Z9aEfM2edV1AQKRC
-	OJoPFaDKOiaOjmqyqCnoWcwStnklTb3oHsDxs=
+	:content-type; s=sasl; bh=D8ZTZKbpDKegzaxC6lCqzJE60Qo=; b=JSu2Gs
+	ylTsuEsa3NqGbTrkli00fJWqDB90f10uGPqFRdMWL7kg/eTmGp+DxRhKoumcSgiG
+	7+EjPFoznq5LFGDfn89rEFmCi1299FLlmFLxOux18J+8lah74fMkWNUdxkODZqzM
+	Yza3ND58zi4lM7AI/86rGB1f+PbJf1Cxpk7Nk=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Im+Sb8No2aL5pH2N2cVkpkuVp4HUzSUq
-	ab8IVrp2fG+iCQilRzJiBrO1CcvHg+jkyWK7+PCSfQkPkr3F5qyvihYbXdAjBeyQ
-	7gJUpH6E+ddjokkqhVj6u5Hce+MFjOjmudTpSlgwZY2F14TxK3zP8ECbVjlOU6sa
-	7R/lYL77ibU=
+	:content-type; q=dns; s=sasl; b=k1U8p3oCmMbgGA3d/9YnMxS15aW/5EmC
+	gPhWUKqDCvnF0S2Z+YkCOrXcoY9X4OcaTui30Jmb0BQ/xoWWlFl3hw4Roe5WQmrn
+	cHD82TdCJLChaOyuPF5fdWJ6C7i7y8TY4WO/71xJhBKiSpIl6fA9KhzMeVM1I9kk
+	nPXwVwTIKYM=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 411FBD5F6D;
-	Sun, 12 Sep 2010 13:37:52 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 87FA6D5FF8;
+	Sun, 12 Sep 2010 13:44:26 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9EDFDD5F6C; Sun, 12 Sep
- 2010 13:37:49 -0400 (EDT)
-In-Reply-To: <1284284466-14506-4-git-send-email-jnareb@gmail.com> (Jakub
- Narebski's message of "Sun\, 12 Sep 2010 11\:41\:06 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6CC21D5FF7; Sun, 12 Sep
+ 2010 13:44:19 -0400 (EDT)
+In-Reply-To: <1982035721.2791029.1284236591083.JavaMail.fmail@mwmweb045>
+ (Jens Lehmann's message of "Sat\, 11 Sep 2010 22\:23\:11 +0200 \(CEST\)")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7804764C-BE94-11DF-9405-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 63084B5A-BE95-11DF-999A-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156040>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-> It is an RFC because I am not sure where to put documentation,
-> i.e. description of GITWEB_TEST_INSTALLED.  Should it be put in
-> t/README, in gitweb/README, or in gitweb/INSTALL, or in
-> t/gitweb-lib.sh header?
+>>Jens Lehmann <Jens.Lehmann@web.de> writes:
+>>> And maybe we should teach "git describe" the "--ignore-submodules" option, then
+>>> you could tell describe what to pass to the diff-index command. Thoughts?
+>>
+>>It is sensible to add the option, and handle_ignore_submodules_arg() call
+>>to grab "diff.ignoresubmodules" configuration) to the command, perhaps.
+>
+> Ok, I'll look into that and prepare a patch.
 
-I think the comment in this file is fine.
-
-> +	# You can set the GITWEB_TEST_INSTALLED environment variable to
-> +	# the gitwebdir (the directory where gitweb is installed / deployed to)
-> +	# of an existing gitweb instalation to test that installation.
-> +	if test -n "$GITWEB_TEST_INSTALLED" ; then
-> +		SCRIPT_NAME="$GITWEB_TEST_INSTALLED/gitweb.cgi"
-> +		test -f "$SCRIPT_NAME" ||
-> +		error "Cannot find gitweb.cgi at $GITWEB_TEST_INSTALLED."
-
-I don't know if GIT_WEB_TEST_INSTALLED=/path/to/some/directory (naming the
-directory that houses the script which must be named gitweb.cgi) is easier
-to use than GIT_WEB_TEST_INSTALLED=/path/to/some/gitweb.perl (naming the
-script that is allowed to be renamed).
+Thanks; and thanks for biting my sanity check weatherbaloon ;-)
