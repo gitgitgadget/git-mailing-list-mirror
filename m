@@ -1,71 +1,68 @@
-From: "Tjernlund" <tjernlund@tjernlund.se>
-Subject: RE: gitweb: please show tags file history browsing
-Date: Sun, 12 Sep 2010 11:27:52 +0200
-Message-ID: <000d01cb525c$c6c2b8b0$54482a10$@se>
-References: <000001cb51be$ed214dd0$c763e970$@se> <m3r5h0kwn5.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: "'git'" <git@vger.kernel.org>
-To: "'Jakub Narebski'" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 12 11:38:38 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/3] t/gitweb-lib.sh improvements
+Date: Sun, 12 Sep 2010 11:41:03 +0200
+Message-ID: <1284284466-14506-1-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 12 11:41:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ouj1B-0006K4-OW
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 11:38:38 +0200
+	id 1Ouj41-00073O-Ms
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Sep 2010 11:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752457Ab0ILJib (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 05:38:31 -0400
-Received: from csmtp1.one.com ([195.47.247.21]:33260 "EHLO csmtp1.one.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752417Ab0ILJia (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 05:38:30 -0400
-X-Greylist: delayed 481 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Sep 2010 05:38:30 EDT
-Received: from jockexp (84-217-13-162.tn.glocalnet.net [84.217.13.162])
-	by csmtp1.one.com (Postfix) with ESMTP id 0D9611BC3CCA8;
-	Sun, 12 Sep 2010 09:28:02 +0000 (UTC)
-In-Reply-To: <m3r5h0kwn5.fsf@localhost.localdomain>
-X-Mailer: Microsoft Office Outlook 12.0
-thread-index: ActR2Fyvm2Wwg40oTT6aHvbuEguGIAAg35qQ
-Content-Language: sv
+	id S1752324Ab0ILJl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Sep 2010 05:41:28 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62592 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141Ab0ILJl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Sep 2010 05:41:27 -0400
+Received: by bwz11 with SMTP id 11so3684689bwz.19
+        for <git@vger.kernel.org>; Sun, 12 Sep 2010 02:41:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=HxiYaDRJXZ+T1FKrHPl+78Hc1SHxiINa0NACKcrFtDA=;
+        b=LNFo4spmCZ2Q0Ur/DPJEoy+3HIuvxWMf7O8SFKDbZP4uwIMcb0UVfODAb7J4i8PEyr
+         +hmgItO68KP3fzbCRFfqZOORYEs23cEYJk7MnvmFWcb9ZeC8HSvZ08fmAIkcXgFJXJPI
+         65nZ8UvTtQroLp76Zz7hRtoXh8bykcUeUDCik=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=gcA9ZAkYZMcKCKATKC07o6WM1DJbsaAyGeQb/d802NPlOTighK2SDGd3ETmlpyp9II
+         hOOVRQNkArT2FRQJjFCsHSb6Da3Cw1p4HU2QLJmqWwgvyde8b2k2+OQZ6yjsdKfISLrY
+         nwk4aOMCyqWsHRJ9nendVnR6f29moBU3R0QHI=
+Received: by 10.204.126.29 with SMTP id a29mr2161364bks.59.1284284485939;
+        Sun, 12 Sep 2010 02:41:25 -0700 (PDT)
+Received: from localhost.localdomain (abvl188.neoplus.adsl.tpnet.pl [83.8.209.188])
+        by mx.google.com with ESMTPS id 24sm3570708bkr.19.2010.09.12.02.41.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 12 Sep 2010 02:41:24 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156023>
 
-> -----Original Message-----
-> From: Jakub Narebski [mailto:jnareb@gmail.com]
-> 
-> "Tjernlund" <tjernlund@tjernlund.se> writes:
-> 
-> > I would really like to see where the tags are when browsing
-> > file or directory history in gitweb. Would that be possible?
-> 
-> Hmmm... that is second such request...
+This series of patches is meant as preparation for splitting gitweb;
+the most important (but only RFC) is the last patch adding support for
+GITWEB_TEST_INSTALLED, similar to GIT_TEST_INSTALLED from
+t/test-lib.sh
 
-:)
+Comments appreciated.
 
-> 
-> While it probably be possible to show tags in 'history' view, it would
-> be not easy.  The problem is that 'history' view shows only commits
-> that touch specified file or directory, and tagged commits usually do
-> not touch those files (at least if one is using "bump version number"
-> commits to tag them).
-> 
-> So you would have:
-> 1. Design where to show those tags - they would be between shown
->    commits.
-> 2. Create code which shows some/all tags that are between commits in
->    the presence of nonlinear history, without affecting performance
->    too badly.
+Jakub Narebski (3):
+  t/gitweb-lib.sh: Use GIT_BUILD_DIR
+  t/gitweb-lib.sh: Use tabs for indent consistently
+  t/gitweb-lib.sh: Add support for GITWEB_TEST_INSTALLED
 
-Ah, that is too bad because I think it would really useful.
-Image browsing a drivers history in the linux kernel. Then it would be
-really nice to see what changes/bug fixes went into what release.
+ t/gitweb-lib.sh |   25 ++++++++++++++++++-------
+ 1 files changed, 18 insertions(+), 7 deletions(-)
+ mode change 100644 => 100755 t/gitweb-lib.sh
 
- Jocke
+-- 
+1.7.2.1
