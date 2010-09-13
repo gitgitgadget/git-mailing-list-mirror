@@ -1,59 +1,81 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Mailing list headers: Date:<TAB> instead of Date:<SPACE>
-Date: Mon, 13 Sep 2010 18:08:56 -0400
-Message-ID: <AANLkTinTs+ym5pTBaPCVsFLyp-KKTQW7FknCgcTFRUYW@mail.gmail.com>
-References: <20100913150245.GT22527@danbala.tuwien.ac.at> <AANLkTinEb9geKox+a+HosQn-g4eKd-DW4agRCf8yqv=k@mail.gmail.com>
- <sfid-H20100913-202503-+038.68-1@spamfilter.osbf.lua> <4C8E6C7B.2090904@gmail.com>
- <20100913183054.GE7006@danbala.tuwien.ac.at> <4C8E7445.6070604@gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC 01/12] gettextize: git-submodule add git-sh-i18n
+Date: Mon, 13 Sep 2010 22:09:07 +0000
+Message-ID: <1284415758-20931-2-git-send-email-avarab@gmail.com>
+References: <1284415758-20931-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Klausner <tk@giga.or.at>, git@vger.kernel.org
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 00:09:39 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Lars Hjemli <hjemli@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 14 00:10:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvHDQ-0006gx-IU
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 00:09:32 +0200
+	id 1OvHDl-0006mj-La
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 00:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752874Ab0IMWJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 18:09:27 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:47024 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751805Ab0IMWJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 18:09:27 -0400
-Received: by gwj17 with SMTP id 17so2192410gwj.19
-        for <git@vger.kernel.org>; Mon, 13 Sep 2010 15:09:26 -0700 (PDT)
+	id S1753511Ab0IMWJq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 18:09:46 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:64182 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752950Ab0IMWJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 18:09:44 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 20so393266wwd.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 15:09:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=LUSVvkDUdULvszcO4KWCNQjS2Z+WhE2CqqWWtUhSgZc=;
-        b=Q2XBkJS05qvSs5W5s4kJcRSOqxkD0lxn/2AYN47HscmylnSel6TLIzzks6lAzNcYBl
-         EUzYsebY1UIoFPDd/Ovwpw4Y0U2h8o60NrUkD+yDRkE9slBRCjVjJwkHVkPD2rLxarI5
-         UBCtmIagM1/J3iTvJ3zH0T8k4fklOtDBQjGmI=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=YFY6YopsWjtw2gc41tadno4aEaApL+i/TGe9S3flfu8=;
+        b=pb/NkT17wM9+34ip+sZ4pZok2RZPvhx0urLeaSm41zTiuFDPENoz+rx/wXCY+kP7yt
+         pOcQYfOmRr8NLEgk//RRHFeGFYUlzaGuuIvS4Po+dB/tL9esAm6s6qM2ac8C+etybwKS
+         n+VuGftzctkk+SmRIWEn4JL6Sn5LOOzZu+66o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=AaWW4PP9c35fZfdXz9/AJI187Wm6dhhYRjU8kxdAzD/BhjSu/L1vvrSif5OQ5oL2qu
-         ul/xBp20ipoo7CZGNGH4FA1d59RABIZkp31PcdAl5Faerl4ZMvSIQFaQk9/nQzsBxhpZ
-         YqNHD/KlTNUmzFMrpLF7nazuvpCx6kgRsE5eo=
-Received: by 10.151.6.5 with SMTP id j5mr841850ybi.29.1284415766163; Mon, 13
- Sep 2010 15:09:26 -0700 (PDT)
-Received: by 10.231.11.11 with HTTP; Mon, 13 Sep 2010 15:08:56 -0700 (PDT)
-In-Reply-To: <4C8E7445.6070604@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=mGy72IJ7Q6lpLhBYb8bqV1Cr9R1jzJpGv3GZMlmXVciZ2nd5AugiHyKcK/vwgBggvF
+         XlLtPYyumAArsHIROj6stAdAighN2e0cwaYVxnxje6D0aeKZZHYXvmSgvwBIKUoDcLIw
+         hNx/dxoCw1VlMYiFWjLJt1foNdZmQKz4iHjzw=
+Received: by 10.216.154.131 with SMTP id h3mr3156716wek.74.1284415783945;
+        Mon, 13 Sep 2010 15:09:43 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id w14sm4296416weq.9.2010.09.13.15.09.42
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 13 Sep 2010 15:09:42 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.rc1.220.gb4d42
+In-Reply-To: <1284415758-20931-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156133>
 
-On Mon, Sep 13, 2010 at 2:58 PM, Chris Packham <judge.packham@gmail.com> wrote:
-> You may get more mileage out of asking the developers of the majordomo
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ git-submodule.sh |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-AFAIK, majordomo hasn't been touched in almost a decade, so I doubt it.
-
-j.
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9ebbab7..5ef3d0d 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -14,6 +14,7 @@ USAGE=3D"[--quiet] add [-b branch] [-f|--force] [--re=
+ference <repository>] [--] <r
+    or: $dashless [--quiet] sync [--] [<path>...]"
+ OPTIONS_SPEC=3D
+ . git-sh-setup
++. git-sh-i18n
+ . git-parse-remote
+ require_work_tree
+=20
+--=20
+1.7.3.rc1.220.gb4d42
