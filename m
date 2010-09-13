@@ -1,132 +1,137 @@
-From: Avery Pennarun <apenwarr@gmail.com>
-Subject: Re: Input welcome for "Git Bisect and Testing" presentation at GTAC 2010
-Date: Mon, 13 Sep 2010 01:04:50 -0700
-Message-ID: <AANLkTi=k-oUi0uT=ho9TdCyhKwV=wiW8nj6AWZA_9F7-@mail.gmail.com>
-References: <201009122225.52520.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH 1/2] grep: move logic to compile header pattern into a
+ separate helper
+Date: Mon, 13 Sep 2010 01:13:58 -0700
+Message-ID: <7vsk1eawmx.fsf_-_@alter.siamese.dyndns.org>
+References: <AANLkTikONxneEgF5m+m6100pwzThTnaiAB+OFzYufcC2@mail.gmail.com>
+ <7veidlkxdb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Ingo Molnar <mingo@elte.hu>, Andreas Ericsson <ae@op5.se>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Mon Sep 13 10:05:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Emil Sit <sit@emilsit.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 13 10:14:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov42V-0000en-8o
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 10:05:23 +0200
+	id 1Ov4BG-0003pi-9H
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 10:14:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754542Ab0IMIFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 04:05:13 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:41026 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754231Ab0IMIFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 04:05:12 -0400
-Received: by wwb13 with SMTP id 13so3576903wwb.1
-        for <git@vger.kernel.org>; Mon, 13 Sep 2010 01:05:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=LdKSAf7vf1J4VqsgD4+T4q0MTzP3xZQuohjlTKiwc84=;
-        b=P9+XSQ7FQJOFfhpFWVfYnLiffncJtTll9UoLs6TNNIEKZVqvx54R5GMLqHcHUOQypK
-         ATc0nWltpw9Qe/v5o0zKWsd+Bw0YkF/fBQ7jRbmvvuxsvC09hkJbuPnN86pzc0Nijq6n
-         NK1M8+PQJ3DzBcat3u/ZSgDh5UBvS6mV8ckpU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ePewj2k6BCP7vUzOchRFPT8+vI5W8M7U2SJTAybZD+zc4zpJkKJj8iiOKNKUC4ejTj
-         YKYM9Cu6oMac2uQDIk40TJibEnBAXAd96/0zo1/nn/lWvBP06ig+dtPpHKp199mz7Tv1
-         ntFj5Mp2/kkjHeDMjU3vhKfpiF7sQCrLJrTiQ=
-Received: by 10.216.67.66 with SMTP id i44mr2276934wed.53.1284365110421; Mon,
- 13 Sep 2010 01:05:10 -0700 (PDT)
-Received: by 10.216.49.72 with HTTP; Mon, 13 Sep 2010 01:04:50 -0700 (PDT)
-In-Reply-To: <201009122225.52520.chriscool@tuxfamily.org>
+	id S1754412Ab0IMIOI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 04:14:08 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54420 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752557Ab0IMIOH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 04:14:07 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EEFB2D549A;
+	Mon, 13 Sep 2010 04:14:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M4zXKumVXGe4NbTtlJO0HYazBFo=; b=fFL5eR
+	iI6AlzO4WZjkmwa1i0cTm47Wltma6TpEU8Tl0xl+bC3MoP+bJrAAn4sXwx/H6xh2
+	VO0ELTHYchtTNOe03PVP7ebRoVlYFoihCq0D5M7ErDpKzfqzTOYOhf4REogKFWNh
+	mw0X4kyVbu4nq43Ppqty+x9fFrw0O57eBBv5Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=HepU8qbeQecdiJPRgGw8nBCLRhSX9nb5
+	qtpkgEOHrWiQKeyHl+iJ9BUWjxhDYMm81wamMnaLQZNsBaONINMsNrQyYC39VLyL
+	CiuZRmmX7m6u8mfS+SgglVux6Nm70Zgf6yLgMhkf75Rm6euzRHNX5XTq+RpRlX1I
+	5gA067hNauw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9C7DD5498;
+	Mon, 13 Sep 2010 04:14:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F20E7D5497; Mon, 13 Sep
+ 2010 04:13:59 -0400 (EDT)
+In-Reply-To: <7veidlkxdb.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Thu\, 26 Aug 2010 12\:05\:52 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DE831C14-BF0E-11DF-A651-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156073>
 
-On Sun, Sep 12, 2010 at 1:25 PM, Christian Couder
-<chriscool@tuxfamily.org> wrote:
-> For example it can be how "git bisect run" is used automatically in build
-> systems, or how "git bisect" is used manually on GUI applications in your
-> company, or how you use Avery Pennarun's "git-builder" (http://github.com/apenwarr/gitbuilder, it uses "git bisect"
-> underneath), or what features you would want to see added, or what have been
-> your experience with it, and so on.
+The callers should be queuing only GREP_PATTERN_HEAD elements to the
+header_list queue; simplify the switch and guard it with an assert.
 
-Ha, when I saw my name in the (very short) cc: list, I was wondering
-why I was being included explicitly here.  Thanks for reminding me
-that I wrote gitbuilder and it uses git-bisect :)  It's interesting in
-that it has quite a few followers on github, but I don't get any
-feedback about it.  (I assume either it Just Works or it Just Doesn't
-Work :))
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
 
-Since you asked, here are some passing comments about git-bisect
-and/or gitbuilder:
+ * This is just a clean-up before the real fun.
 
-- for most smallish projects, doing 'git bisect' by hand (especially
-'git bisect run') gives you the most instant gratification and is the
-easiest way to find where you introduced an error.  gitbuilder takes
-longer and is thus less interesting.
+ grep.c |   43 +++++++++++++++++++++----------------------
+ 1 files changed, 21 insertions(+), 22 deletions(-)
 
-- for bisect to be useful, you really need to be careful to commit
-things in logical chunks and to make sure each commit *works*.  I've
-noticed that people do their commits totally differently when they
-are/aren't thinking about future bisections.  That means bisect is a
-bit of an "artificial" construct: you can't just bisect your way
-through just *any* source tree and get useful results, because in many
-commercial projects (at least), most commits don't even run.  Sad, but
-true.  So you really need to train developers to think seriously about
-making their commits small, atomic, and non-broken before pushing.
-
-- gitbuilder, conversely, is more useful for very large projects with
-extensive test suites.  For example, at work we have a project that
-takes about an hour to build from scratch and run through all the
-tests. Bisecting this sort of project by hand is a huge pain.  In
-fact, even running the automated tests before committing is a lot to
-ask - and people often don't do it.  Thus, having a system that
-*automatically* grinds away at releases and pinpoints the sources of
-error can be very valuable.
-
-- Because gitbuilder builds all your branches from multiple
-repositories automatically, failing the gitbuilder test doesn't have
-to be an embarrassment because it doesn't have to hurt anybody but
-yourself; if it catches a failure, just rebase your branch and get it
-turning green before committing to mainline.  gitbuilder has been
-instrumental in a) helping get our internal development projects to
-zero unit test failures in the mainline at all times, and b) making it
-easy to decide which branches are ready to merge and which aren't, and
-c) knowing who to complain to when a problem is introduced even so.
-
-- gitbuilder uses git-bisect (actually git rev-list --bisect) in a
-peculiar way: with --first-parent.  This is on purpose, although you
-have to think carefully about your workflow in order to benefit from
-it.  There are two advantages to doing it this way: 1) the gitbuilder
-status display makes way more sense to normal people because it can
-just show a linear sequence of commits; 2) to a maintainer, merges
-into the mainline are an all-or-nothing sort of thing.  If I merged in
-a branch and it started failing, then I don't want to bisect it, I
-want to complain to the person whose branch I merged in.  And that
-person's branch should *already* be built by gitbuilder and bisected
-away, so he should have no trouble tracing it by looking at the
-gitbuilder stats for his own branch.  So far, users here have found
-this way of thinking about the bisection to be pretty easy to
-understand, much more so than git's rather mind-melting DAG graphs
-that you might get from things like 'git bisect visualize'.  It's also
-pretty resilient against people who make frequent non-working commits
-in their side branches; the mainline maintainer never has to worry
-about "accidentally" bisecting into them, which removes the need for
-things like 'git bisect skip'.  I've never much trusted 'git bisect
-skip', though now that it's pseudorandom it supposedly works better
-than it once did, so maybe I should adjust my opinion.
-
-I'm sorry I'll miss meeting you and/or seeing your presentation at
-GitTogether.  Have fun in India!
-
-Have fun,
-
-Avery
+diff --git a/grep.c b/grep.c
+index 82fb349..718a3c2 100644
+--- a/grep.c
++++ b/grep.c
+@@ -189,29 +189,31 @@ static struct grep_expr *compile_pattern_expr(struct grep_pat **list)
+ 	return compile_pattern_or(list);
+ }
+ 
+-void compile_grep_patterns(struct grep_opt *opt)
++static struct grep_expr *prep_header_patterns(struct grep_opt *opt)
+ {
+ 	struct grep_pat *p;
+-	struct grep_expr *header_expr = NULL;
+-
+-	if (opt->header_list) {
+-		p = opt->header_list;
+-		header_expr = compile_pattern_expr(&p);
+-		if (p)
+-			die("incomplete pattern expression: %s", p->pattern);
+-		for (p = opt->header_list; p; p = p->next) {
+-			switch (p->token) {
+-			case GREP_PATTERN: /* atom */
+-			case GREP_PATTERN_HEAD:
+-			case GREP_PATTERN_BODY:
+-				compile_regexp(p, opt);
+-				break;
+-			default:
+-				opt->extended = 1;
+-				break;
+-			}
+-		}
++	struct grep_expr *header_expr;
++
++	if (!opt->header_list)
++		return NULL;
++	p = opt->header_list;
++	header_expr = compile_pattern_expr(&p);
++	if (p)
++		die("incomplete pattern expression: %s", p->pattern);
++	for (p = opt->header_list; p; p = p->next) {
++		if (p->token != GREP_PATTERN_HEAD)
++			die("bug: a non-header pattern in grep header list.");
++		if (p->field < 0 || GREP_HEADER_FIELD_MAX <= p->field)
++			die("bug: unknown header field %d", p->field);
++		compile_regexp(p, opt);
+ 	}
++	return header_expr;
++}
++
++void compile_grep_patterns(struct grep_opt *opt)
++{
++	struct grep_pat *p;
++	struct grep_expr *header_expr = prep_header_patterns(opt);
+ 
+ 	for (p = opt->pattern_list; p; p = p->next) {
+ 		switch (p->token) {
+@@ -231,9 +233,6 @@ void compile_grep_patterns(struct grep_opt *opt)
+ 	else if (!opt->extended)
+ 		return;
+ 
+-	/* Then bundle them up in an expression.
+-	 * A classic recursive descent parser would do.
+-	 */
+ 	p = opt->pattern_list;
+ 	if (p)
+ 		opt->pattern_expression = compile_pattern_expr(&p);
+-- 
+1.7.3.rc1.227.gee5c7b
