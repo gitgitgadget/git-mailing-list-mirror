@@ -1,93 +1,55 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 7/8] setup_tree_pathspec(): interpret '^' as negative pathspec
-Date: Mon, 13 Sep 2010 11:39:10 +1000
-Message-ID: <AANLkTikKtu9Xp1kvHwCzMoPRubLb0VFKTzbgCvF6Sfxf@mail.gmail.com>
-References: <1283961023-4491-1-git-send-email-pclouds@gmail.com>
-	<1283961023-4491-8-git-send-email-pclouds@gmail.com>
-	<AANLkTin_m+zjHND5AwFhkrZM-VEkn70qgCTwpB2B+RA+@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 03:39:19 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: [PATCH] t7003: Use test_commit instead of custom function
+Date: Mon, 13 Sep 2010 00:14:25 -0400
+Message-ID: <214E9A5B-E9CE-4B98-88EC-744DBE1F3C32@gernhardtsoftware.com>
+References: <1284156396-81023-1-git-send-email-brian@gernhardtsoftware.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 06:14:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ouy0s-0006ud-Ko
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 03:39:18 +0200
+	id 1Ov0RD-0005wn-7R
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 06:14:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754155Ab0IMBjM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 21:39:12 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:60790 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754104Ab0IMBjM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 21:39:12 -0400
-Received: by wyf22 with SMTP id 22so5587246wyf.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 18:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vIgN8S+gz+V4nKwqSMFzvMjKmPe7gBm9TJIxpO2SASc=;
-        b=t/LnO1DY1Y5vNSuVUBUE/d3mz/mOp8TXl5n8W8P2BBqg6lNkwAYt7Rf5upxNFAlHGU
-         Rpv3kTxax26M8QfzI+ZVFNIVlEC/IDwClnz0TPfyQ3vbfB1UJRWt2ehwE5xMS4CKqxrQ
-         RDQ5erXd/4IF4WLWdduPRj/AHOtVKNRjS2ndw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Sy0IVznxLliz9bmy8sX9HDfE7r1PUBV+UO3lCtcx7WJipL76ICrps/AaI7Z9mzN5Fm
-         oHcJcbvvSJFsU/2ZqkYP6QJCTQWHt/G3GMy98KcYxaOy8MRR7IubHakg/lWB3OryqW3x
-         nqZMD4AzvMPGymCwXO1ZQV03WQhLIhnENL774=
-Received: by 10.216.22.70 with SMTP id s48mr2002028wes.27.1284341950680; Sun,
- 12 Sep 2010 18:39:10 -0700 (PDT)
-Received: by 10.216.171.134 with HTTP; Sun, 12 Sep 2010 18:39:10 -0700 (PDT)
-In-Reply-To: <AANLkTin_m+zjHND5AwFhkrZM-VEkn70qgCTwpB2B+RA+@mail.gmail.com>
+	id S1751208Ab0IMEOd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 00:14:33 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:48526 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750744Ab0IMEOd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 00:14:33 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id BC31C1FFC54B; Mon, 13 Sep 2010 04:14:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id EF3F01FFC545;
+	Mon, 13 Sep 2010 04:14:17 +0000 (UTC)
+In-Reply-To: <1284156396-81023-1-git-send-email-brian@gernhardtsoftware.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156068>
 
-2010/9/12 Elijah Newren <newren@gmail.com>:
-> 2010/9/8 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->:
->> This patch does preparation work for tree exclusion in
->> tree_entry_interesting(). '^' has similar meaning to '!' in
->> gitexcludes. '!' is not used because bash does not like arguments wi=
-th
->> a leading '!'.
->>
->> Eventually, "git diff -- foo ^foo/bar" should show differences in fo=
-o,
->> except foo/bar. If "git diff -- ^foo" is given, then it implies
->> everything except foo, which could surprise users that
->> "bar" in "git diff -- bar ^foo" has no effect at all.
->
-> I really like the work here. =C2=A0There are just two things that I t=
-hink
-> are missing:
-> =C2=A0* It doesn't handle files with leading carats in their name
-> =C2=A0* It handles some nested include/exclude cases (e.g. dir
-> ^dir/subdir) but not more complicated ones.
 
-Yeah. I originally needed it to compare trees outside narrow area
-(i.e. negating all pathspecs). But I would need a more robust
-implementation soon when I implement tree widening.
+On Sep 10, 2010, at 6:06 PM, Brian Gernhardt wrote:
 
-> Note: In the second test, I used:
-> =C2=A0* "^funny" to search for all files EXCEPT "funny"
-> =C2=A0* "^^funny" to search for a file named "^funny"
-> =C2=A0* "^^^funny" to search for all files EXCEPT "^funny"
-> I'm not sure if that's really the syntax we want to adopt, but it
-> should be easy to change if we decide on some other syntax.
+> Not only is this unneeded code duplication, it also was something
+> simply waiting to fail on case-insensitive file systems.  So replace
+> all uses of make_commit with test_commit.
 
-Another way is always treat the leading ^ as negative pathspec. If you
-have file "^foo", specify it with ./^foo. There's still problem with
-top level entries this way.
---=20
-Duy
+To be more specific: this causes a failure in next on case-insensitive HFS+.  The commit that finally triggered the problem is 7ec344d: "filter-branch: retire --remap-to-ancestor", by using `git reset --hard A` which got confused on if 'A' was 'refs/branches/A' or './a'
+
+However, the patch applies to master or maint.
+
+~~ Brian
