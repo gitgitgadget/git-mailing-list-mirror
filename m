@@ -1,164 +1,90 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] Add Swedish translation.
-Date: Mon, 13 Sep 2010 13:35:59 +0000
-Message-ID: <AANLkTinhmBHQzkdEY88Oa-XsZQ4VAUz0Tci+gOt=fXmE@mail.gmail.com>
-References: <20100912202111.B11522FC00@perkele>
-	<AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
-	<alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: git log for a merged branch
+Date: Mon, 13 Sep 2010 09:37:58 -0400 (EDT)
+Message-ID: <30770696.248360.1284385078695.JavaMail.root@mail.hq.genarts.com>
+References: <201009090117.06555.barra_cuda@katamail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Peter Krefting <peter@softwolves.pp.se>
-X-From: git-owner@vger.kernel.org Mon Sep 13 15:36:10 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Michele Ballabio <barra_cuda@katamail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 15:38:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov9Ca-0004oG-MY
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 15:36:09 +0200
+	id 1Ov9Ed-0005dm-4O
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 15:38:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754456Ab0IMNgC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 09:36:02 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:55905 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753062Ab0IMNgA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 09:36:00 -0400
-Received: by gwj17 with SMTP id 17so2027142gwj.19
-        for <git@vger.kernel.org>; Mon, 13 Sep 2010 06:35:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1bZLIMykTX7weKCYjJZKEb1Ir9MUmcQ1SMO6qQGegnM=;
-        b=fvY22c0/a2FoXIzJTGJ1vg3Eb9ccdUGl3ZRAUL0fOHwJmcOtWk7vlpTexaT+kxAZXW
-         npf+/v9401rhYYXHY8toWgIYQ3LqkfLGonK5yp0dlDhCRHdq2a8cGAE0uQbVW97AFERX
-         ks4+RH1CY8FOsriADLWrQELqbYpcvk7XrIEUY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fx9yyjENbliJAgKBIyAJlYgIu7iXo14tbiXAEnRVHoBUALDcke93HlPH3Jxw4HIrFT
-         EBSvq12HwkGlCyCed3ZHeHyH0uzPnKf1NcQcf7rt+SMO/XvgxE8Yhuth7B96yj/y3bug
-         QVF4l3Z4wp5JmJ/ULZoUYFZSoI75w6I+EEyNo=
-Received: by 10.101.176.29 with SMTP id d29mr236673anp.163.1284384959277; Mon,
- 13 Sep 2010 06:35:59 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Mon, 13 Sep 2010 06:35:59 -0700 (PDT)
-In-Reply-To: <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
+	id S1752049Ab0IMNiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 09:38:07 -0400
+Received: from hq.genarts.com ([173.9.65.1]:51027 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751792Ab0IMNiG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 09:38:06 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 875AF1E2636A;
+	Mon, 13 Sep 2010 09:38:05 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TGAazEOyD2t4; Mon, 13 Sep 2010 09:37:58 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C05421E26354;
+	Mon, 13 Sep 2010 09:37:58 -0400 (EDT)
+In-Reply-To: <201009090117.06555.barra_cuda@katamail.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156089>
 
-On Mon, Sep 13, 2010 at 07:15, Peter Krefting <peter@softwolves.pp.se> =
-wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+
+
+----- Original Message -----
+> From: "Michele Ballabio" <barra_cuda@katamail.com>
+> To: "Stephen Bash" <bash@genarts.com>
+> Cc: "Git Mailing List" <git@vger.kernel.org>
+> Sent: Wednesday, September 8, 2010 7:17:05 PM
+> Subject: Re: git log for a merged branch
+> On Wednesday 08 September 2010, Stephen Bash wrote:
 >
->> * Doesn't follow the "Initializing a .po file" docs in
->> =C2=A0t/README. Here's what you get after applying the little Perl
->> =C2=A0cleanup program there to it:
->
-> Well, I just used the standard commands for creating it.
+> Let's call the merge commit "mergecmt". The commit where the "release"
+> branch
+> branched off is
+> 
+> git merge-base mergecmt^1 mergecmt^2
+> 
+> ... where mergecmt^1 is the first parent of the merge (usually on the
+> "mainline" branch) and mergecmt^2 is the second parent, which
+> usually(*)
+> refers to the "release" branch (in this case, tagFoo).
+> 
+> So
+> 
+> git log $(git merge-base mergecmt^1 mergecmt^2)..mergecmt^2
+> 
+> is what you want.
+> 
+> > To complicate things a bit more, in the real world there may be
+> > multiple
+> > merges from the release branch to mainline during the life of the
+> > release
+> > branch, so any solution that also deals with that would be
+> > outstanding
+> > (probably at the cost of additional complexity?)
+> 
+> Maybe something like:
+> 
+> for i in $(git rev-list --merges last_interesting_tag..mainline)
+> do
+> git log $(git merge-base $i^1 $i^2)..$i^2
+> done
 
-What commands did you use? I different things on GNU gettext 0.18.1
-using the commands documented in po/README, e.g.:
+Hm...  Makes sense...  I'll have to play with it a little bit to get a good feel for how it fits our workflow, but it seems like a really good option.
 
-    @@ -12,0 +13 @@ msgstr ""
-    +"Language: sv\n"
+Thanks!
 
-    @@ -16 +17 @@ msgstr ""
-    -"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);"
-    +"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);\n"
-
-And the line wrapping is different after a msgmerge:
-
-    @@ -533 +532,3 @@ msgid "-a and -r options to 'git branch' do not
-make sense with a branch name"
-    -msgstr "flaggorna -a och -r p=C3=A5 \"git branch\" kan inte anges
-tillsammans med ett grennamn"
-    +msgstr ""
-    +"flaggorna -a och -r p=C3=A5 \"git branch\" kan inte anges tillsam=
-mans med ett "
-    +"grennamn"
-
-Which is probably because you edited it with an unofficial PO editor
-(i.e. not Emacs's po-mode.el) and didn't do msgmerge afterwards.
-
->> =C2=A0 =C2=A0 =C2=A0 @@ -1,54 +1,38 @@
->> =C2=A0 =C2=A0 =C2=A0 -# Swedish translation of git
->> =C2=A0 =C2=A0 =C2=A0 -# Copyright =C2=A9 2010 Peter krefting <peter@=
-softwolves.pp.se>
->> =C2=A0 =C2=A0 =C2=A0 -# Peter Krefting <peter@softwolves.pp.se>, 201=
-0.
->> =C2=A0 =C2=A0 =C2=A0 -#
->
-> That's a standard header, which is good to keep for clarity. If we wa=
-nt to
-> go through Translation Project (which I still do recommend), it is re=
-quired.
-
-We could just autogenerate it from the git.git logs before uploading
-to the Translation Project if it comes to that. Having comments before
-the <msgstr ""> also means it can't be updated with the example
-snippet in po/README.
-
->> =C2=A0 =C2=A0 =C2=A0 -"PO-Revision-Date: 2010-09-12 21:07+0100\n"
->
-> That's a good reference header to see how out-of-date the translation=
- is.
-
-But redundant to `git log sv.po | grep ^Date | head -n1`. And since
-it's autogenerated it'll cause merge conflicts across different git
-branches eventually.
-
->> =C2=A0 =C2=A0 =C2=A0 -"Last-Translator: Peter Krefting <peter@softwo=
-lves.pp.se>\n"
->> =C2=A0 =C2=A0 =C2=A0 -"Language-Team: Swedish <tp-sv@listor.tp-sv.se=
->\n"
->
-> These are standard headers to make it easier to find out who to blame=
- the
-> translation on. I haven't actually submitted my translation for revie=
-w on
-> the Swedish list yet, but will do so soon enough.
-
-Ditto redundant to `git log sv.po | grep ^Author`.  .
-
->> =C2=A0 =C2=A0 =C2=A0 -#: wt-status.c:56
->
-> These context lines are invaluable when figuring out how to translate=
- stuff,
-> and to track back strings after the fact. I do not like the idea of r=
-emoving
-> them.
-
-Yes they're useful while translating. But as documented in po/README's
-"Updating a .po file" you can use them while doing that without
-submitting them to git.git.
-
-If they're included the majority of any po/*.po update will be updates
-to auto-generated line number comments.
-
-Anyway, I don't feel strongly about any of the above. Maybe we're
-omitting some some PO header entries that we should use, and maybe we
-should include PO commits (although that'd need a custom merge
-driver).
-
-But we should do that with a patch to po/README and implement it
-consistently across all the po/*.po files, having something that
-deviates from the norm is a pain to maintain.
-
->> * Commit message should be "po/sv.po: add Swedish translation". It
->> =C2=A0makes it much easier to `git log --grep=3Dpo/` or `git log
->> =C2=A0--grep=3Dpo/sv.po` in the future.
->
-> Git has that information already, no need to put it in the commit mes=
-sage
-> :-)
-
-It's not using the "<subsystem>: <message> <no-full-stop>"
-convention. All the existing commits in ab/i18n use that convention,
-and I'd prefer to keep it that way.
+Stephen
