@@ -1,78 +1,68 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+From: Stephen Bash <bash@genarts.com>
 Subject: Re: git log for a merged branch
-Date: Mon, 13 Sep 2010 16:00:18 +0200
-Message-ID: <AANLkTikbnoR_=x1_Aq4jh1BuMarEMxXkY=iX0iOjdgyt@mail.gmail.com>
-References: <201009090117.06555.barra_cuda@katamail.com> <30770696.248360.1284385078695.JavaMail.root@mail.hq.genarts.com>
+Date: Mon, 13 Sep 2010 10:13:38 -0400 (EDT)
+Message-ID: <15224422.248536.1284387218322.JavaMail.root@mail.hq.genarts.com>
+References: <AANLkTikbnoR_=x1_Aq4jh1BuMarEMxXkY=iX0iOjdgyt@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Michele Ballabio <barra_cuda@katamail.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 16:00:49 2010
+To: =?utf-8?Q?Santi_B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Sep 13 16:13:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov9aQ-0006IU-81
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 16:00:46 +0200
+	id 1Ov9n5-0003HU-Nm
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 16:13:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316Ab0IMOAj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 10:00:39 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:55736 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751815Ab0IMOAj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 10:00:39 -0400
-Received: by pvg2 with SMTP id 2so2131676pvg.19
-        for <git@vger.kernel.org>; Mon, 13 Sep 2010 07:00:38 -0700 (PDT)
-Received: by 10.114.136.19 with SMTP id j19mr4199483wad.170.1284386438608;
- Mon, 13 Sep 2010 07:00:38 -0700 (PDT)
-Received: by 10.231.30.193 with HTTP; Mon, 13 Sep 2010 07:00:18 -0700 (PDT)
-In-Reply-To: <30770696.248360.1284385078695.JavaMail.root@mail.hq.genarts.com>
+	id S1751836Ab0IMONq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 10:13:46 -0400
+Received: from hq.genarts.com ([173.9.65.1]:27134 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750997Ab0IMONp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 10:13:45 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 930591E2636D;
+	Mon, 13 Sep 2010 10:13:44 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id fBvzz6wkqRwS; Mon, 13 Sep 2010 10:13:38 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 6F8061E26371;
+	Mon, 13 Sep 2010 10:13:38 -0400 (EDT)
+In-Reply-To: <AANLkTikbnoR_=x1_Aq4jh1BuMarEMxXkY=iX0iOjdgyt@mail.gmail.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156092>
 
-On Mon, Sep 13, 2010 at 3:37 PM, Stephen Bash <bash@genarts.com> wrote:
->
->
-> ----- Original Message -----
->> From: "Michele Ballabio" <barra_cuda@katamail.com>
->> To: "Stephen Bash" <bash@genarts.com>
->> Cc: "Git Mailing List" <git@vger.kernel.org>
->> Sent: Wednesday, September 8, 2010 7:17:05 PM
->> Subject: Re: git log for a merged branch
->> On Wednesday 08 September 2010, Stephen Bash wrote:
->>
->> Let's call the merge commit "mergecmt". The commit where the "releas=
-e"
->> branch
->> branched off is
->>
->> git merge-base mergecmt^1 mergecmt^2
->>
->> ... where mergecmt^1 is the first parent of the merge (usually on th=
-e
->> "mainline" branch) and mergecmt^2 is the second parent, which
->> usually(*)
->> refers to the "release" branch (in this case, tagFoo).
->>
->> So
->>
->> git log $(git merge-base mergecmt^1 mergecmt^2)..mergecmt^2
->>
->> is what you want.
+----- Original Message -----
+> From: "Santi B=C3=A9jar" <santi@agolina.net>
+> To: "Stephen Bash" <bash@genarts.com>
+> Cc: "Michele Ballabio" <barra_cuda@katamail.com>, "Git Mailing List" =
+<git@vger.kernel.org>
+> Sent: Monday, September 13, 2010 10:00:18 AM
+> Subject: Re: git log for a merged branch
+>=20
+> If there is more than one merge-base you=C2=B4ll have to use:
+>=20
+> git log mergecmt^2 --not $(git merge-base mergecmt^1 mergecmt^2)
+>=20
+> and you may use this shorter form:
+>=20
+> git log mergecmt^2 --not $(git merge-base mergecmt^@)
 
-If there is more than one merge-base you=B4ll have to use:
+That's surprisingly compact...  Impressive.
 
-git log mergecmt^2 --not $(git merge-base mergecmt^1 mergecmt^2)
+Slightly changing the topic, we normally tag the release branch, then m=
+erge, then delete the branch.  Is there a simple way to determine merge=
+mt from the release tag?
 
-and you may use this shorter form:
-
-git log mergecmt^2 --not $(git merge-base mergecmt^@)
-
-HTH,
-Santi
+Thanks,
+Stephen
