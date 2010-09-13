@@ -1,88 +1,107 @@
-From: "Tjernlund" <tjernlund@tjernlund.se>
-Subject: RE: gitweb: please show tags file history browsing
-Date: Mon, 13 Sep 2010 07:42:12 +0200
-Message-ID: <001601cb5306$6a7d8030$3f788090$@se>
-References: <000001cb51be$ed214dd0$c763e970$@se> <201009121719.32390.jnareb@gmail.com> <001201cb5295$5c055850$141008f0$@se> <201009122020.11556.jnareb@gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Mon, 13 Sep 2010 08:15:48 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
+References: <20100912202111.B11522FC00@perkele> <AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: "'Jakub Narebski'" <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 07:42:46 2010
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 09:16:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov1oR-0000sT-H0
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 07:42:43 +0200
+	id 1Ov3Gg-0005qm-VB
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 09:15:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495Ab0IMFm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 01:42:26 -0400
-Received: from csmtp2.one.com ([91.198.169.22]:60619 "EHLO csmtp2.one.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751253Ab0IMFmZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 01:42:25 -0400
-Received: from jockexp (84-217-13-162.tn.glocalnet.net [84.217.13.162])
-	by csmtp2.one.com (Postfix) with ESMTPA id 51E2B3CA47D87;
-	Mon, 13 Sep 2010 05:42:23 +0000 (UTC)
-In-Reply-To: <201009122020.11556.jnareb@gmail.com>
-X-Mailer: Microsoft Office Outlook 12.0
-thread-index: ActSpymIiZ8u+cUEQ6uCyCS01XVJZwAXourg
-Content-Language: sv
+	id S1752791Ab0IMHPx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 03:15:53 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:50432 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752377Ab0IMHPx (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 03:15:53 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8D7Fmor000328
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 13 Sep 2010 09:15:48 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8D7FmgA000322;
+	Mon, 13 Sep 2010 09:15:48 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Mon, 13 Sep 2010 09:15:48 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156071>
 
-> -----Original Message-----
-> From: Jakub Narebski [mailto:jnareb@gmail.com]
-> Tjernlund wrote:
-> >> On Sun, 12 Sep 2010, Tjernlund wrote:
-> >>>> From: Jakub Narebski [mailto:jnareb@gmail.com]
-> >>>> On Sun, 12 Sep 2010, Tjernlund wrote:
-> >>>>>> From: Jakub Narebski [mailto:jnareb@gmail.com]
-> 
-> >>>>>> While it probably be possible to show tags in 'history' view, it would
-> >>>>>> be not easy.  The problem is that 'history' view shows only commits
-> >>>>>> that touch specified file or directory, and tagged commits usually do
-> >>>>>> not touch those files (at least if one is using "bump version number"
-> >>>>>> commits to tag them).
-> >>>>>>
-> >>>>>> So you would have:
-> >>>>>> 1. Design where to show those tags - they would be between shown
-> >>>>>>    commits.
-> >>>>>> 2. Create code which shows some/all tags that are between commits in
-> >>>>>>    the presence of nonlinear history, without affecting performance
-> >>>>>>    too badly.
-> >>>>>
-> >>>>> Ah, that is too bad because I think it would really useful.
-> >>>>> Image browsing a drivers history in the linux kernel. Then it would be
-> >>>>> really nice to see what changes/bug fixes went into what release.
-> >>>>
-> >>>> First, you can help with the first issue even if you can't help with
-> >>>> the coding itself.
-> >>>
-> >>> I like the gitk way of showing tags, won't that work in gitweb too?
-> >>
-> >> Err... "gitk" shows tags, but so does 'shortlog' and 'log' view in
-> >> gitweb.  The 'history' view in gitweb doesn't show intermediate tags,
-> >> but neither does "gitk -- <path>".
-> >
-> > I know, I just meant the yellow note with tag name in it, how tags
-> > are displayed. When they are display is another matter :)
-> 
-> When those yellow notes with tag name are displayed beside commit
-> subject it means that this commit is referenced by given tag (i.e.
-> <this tag>^{commit} = <this commit>).
-> 
-> We have to distinguish situation where tag is between commits, and
-> tag points to commit.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
 
-Why? I just want to know if a commit is included or not in the tag.
-When a tag is formally between commits, just display the
-tag with the commit line below.
+> * Doesn't follow the "Initializing a .po file" docs in
+>   t/README. Here's what you get after applying the little Perl
+>   cleanup program there to it:
 
- Jocke 
+Well, I just used the standard commands for creating it.
+
+>        @@ -1,54 +1,38 @@
+>        -# Swedish translation of git
+>        -# Copyright =C2=A9 2010 Peter krefting <peter@softwolves.pp.s=
+e>
+>        -# Peter Krefting <peter@softwolves.pp.se>, 2010.
+>        -#
+
+That's a standard header, which is good to keep for clarity. If we want=
+ to=20
+go through Translation Project (which I still do recommend), it is requ=
+ired.
+
+>        -"PO-Revision-Date: 2010-09-12 21:07+0100\n"
+
+That's a good reference header to see how out-of-date the translation i=
+s.
+
+>        -"Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
+>        -"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+
+These are standard headers to make it easier to find out who to blame t=
+he=20
+translation on. I haven't actually submitted my translation for review =
+on=20
+the Swedish list yet, but will do so soon enough.
+
+>        -#: wt-status.c:56
+
+These context lines are invaluable when figuring out how to translate s=
+tuff,=20
+and to track back strings after the fact. I do not like the idea of rem=
+oving=20
+them.
+
+> * Commit message should be "po/sv.po: add Swedish translation". It
+>   makes it much easier to `git log --grep=3Dpo/` or `git log
+>   --grep=3Dpo/sv.po` in the future.
+
+Git has that information already, no need to put it in the commit messa=
+ge :-)
+
+> * You're translating the TEST: messages, it's redundant except for
+>   Icelandic (which uses it for git.git tests), but I can see how it
+>   can be painful to have non-100% translation coverage.
+
+I just copied them verbatim, I didn't actually translate them. Without=20
+translating them I can't tell if I've translated everything when doing =
+a=20
+"msgfmt -vvv --check sv.po".
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
