@@ -1,90 +1,88 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 1/2] Command names should not be translated.
-Date: Mon, 13 Sep 2010 07:07:58 +0200 (CEST)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1009130706450.29710@perkele.intern.softwolves.pp.se>
-References: <20100912202105.DA51D2FC00@perkele>
- <AANLkTinN_fDAVVuT1ygCe7gMpHqAhL4GGjrZ98igbbP3@mail.gmail.com>
+From: "Tjernlund" <tjernlund@tjernlund.se>
+Subject: RE: gitweb: please show tags file history browsing
+Date: Mon, 13 Sep 2010 07:42:12 +0200
+Message-ID: <001601cb5306$6a7d8030$3f788090$@se>
+References: <000001cb51be$ed214dd0$c763e970$@se> <201009121719.32390.jnareb@gmail.com> <001201cb5295$5c055850$141008f0$@se> <201009122020.11556.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 07:08:14 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Jakub Narebski'" <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 07:42:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov1H0-0000y5-Th
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 07:08:11 +0200
+	id 1Ov1oR-0000sT-H0
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 07:42:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751240Ab0IMFID convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 01:08:03 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:64009 "EHLO smtp.getmail.no"
+	id S1751495Ab0IMFm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 01:42:26 -0400
+Received: from csmtp2.one.com ([91.198.169.22]:60619 "EHLO csmtp2.one.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750874Ab0IMFIC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 01:08:02 -0400
-Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L8O007DB69BVY40@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 13 Sep 2010 07:07:59 +0200 (MEST)
-Received: from get-mta-scan01.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 462C5179926B_C8DB1AFB	for <git@vger.kernel.org>; Mon,
- 13 Sep 2010 05:07:59 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 2AED717968A3_C8DB1AFF	for <git@vger.kernel.org>; Mon,
- 13 Sep 2010 05:07:59 +0000 (GMT)
-Received: from perkele ([84.215.142.63]) by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L8O00EEC69BY600@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 13 Sep 2010 07:07:59 +0200 (MEST)
-Received: by perkele (Postfix, from userid 501)	id EBB372FC00; Mon,
- 13 Sep 2010 07:07:58 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id E85812FBEE; Mon, 13 Sep 2010 07:07:58 +0200 (CEST)
-In-reply-to: <AANLkTinN_fDAVVuT1ygCe7gMpHqAhL4GGjrZ98igbbP3@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
+	id S1751253Ab0IMFmZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 01:42:25 -0400
+Received: from jockexp (84-217-13-162.tn.glocalnet.net [84.217.13.162])
+	by csmtp2.one.com (Postfix) with ESMTPA id 51E2B3CA47D87;
+	Mon, 13 Sep 2010 05:42:23 +0000 (UTC)
+In-Reply-To: <201009122020.11556.jnareb@gmail.com>
+X-Mailer: Microsoft Office Outlook 12.0
+thread-index: ActSpymIiZ8u+cUEQ6uCyCS01XVJZwAXourg
+Content-Language: sv
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156070>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> -----Original Message-----
+> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> Tjernlund wrote:
+> >> On Sun, 12 Sep 2010, Tjernlund wrote:
+> >>>> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> >>>> On Sun, 12 Sep 2010, Tjernlund wrote:
+> >>>>>> From: Jakub Narebski [mailto:jnareb@gmail.com]
+> 
+> >>>>>> While it probably be possible to show tags in 'history' view, it would
+> >>>>>> be not easy.  The problem is that 'history' view shows only commits
+> >>>>>> that touch specified file or directory, and tagged commits usually do
+> >>>>>> not touch those files (at least if one is using "bump version number"
+> >>>>>> commits to tag them).
+> >>>>>>
+> >>>>>> So you would have:
+> >>>>>> 1. Design where to show those tags - they would be between shown
+> >>>>>>    commits.
+> >>>>>> 2. Create code which shows some/all tags that are between commits in
+> >>>>>>    the presence of nonlinear history, without affecting performance
+> >>>>>>    too badly.
+> >>>>>
+> >>>>> Ah, that is too bad because I think it would really useful.
+> >>>>> Image browsing a drivers history in the linux kernel. Then it would be
+> >>>>> really nice to see what changes/bug fixes went into what release.
+> >>>>
+> >>>> First, you can help with the first issue even if you can't help with
+> >>>> the coding itself.
+> >>>
+> >>> I like the gitk way of showing tags, won't that work in gitweb too?
+> >>
+> >> Err... "gitk" shows tags, but so does 'shortlog' and 'log' view in
+> >> gitweb.  The 'history' view in gitweb doesn't show intermediate tags,
+> >> but neither does "gitk -- <path>".
+> >
+> > I know, I just meant the yellow note with tag name in it, how tags
+> > are displayed. When they are display is another matter :)
+> 
+> When those yellow notes with tag name are displayed beside commit
+> subject it means that this commit is referenced by given tag (i.e.
+> <this tag>^{commit} = <this commit>).
+> 
+> We have to distinguish situation where tag is between commits, and
+> tag points to commit.
 
-> I disagree with all those. These don't end up being used in a context=
- like:
->
->    die("git-%s: error ...", command);
->
-> But:
->
->    die(_("Refusing to %s notes in %s (outside of refs/notes/)"),
->        _(subcommand), t->ref);
+Why? I just want to know if a commit is included or not in the tag.
+When a tag is formally between commits, just display the
+tag with the commit line below.
 
-You are right. I saw the first as a duplicate source of the wt-status.c=
-=20
-command name that I got for translation. Drop these, then.
-
-Still the construct is a bit awkward, but possibly doable, at least for=
- my=20
-language.
-
-> These however are good, because here it gets used as:
->
->    color_fprintf_ln(s->fp, c, _("#   (use \"git %s <file>...\" to
-> include in what will be committed)"), how);
->
-> I.e. this is purely a hardcoded command name.
-
-Indeed.
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+ Jocke 
