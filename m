@@ -1,119 +1,93 @@
-From: Greg Ward <greg@gerg.ca>
-Subject: Inconsistent result from git diff --quiet after untar'ing
- repo+working dir
-Date: Sun, 12 Sep 2010 21:24:22 -0400
-Message-ID: <AANLkTikqrn0MKLFAt2D71fNyFkG1T3ncrrHx-LoSZLAH@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 7/8] setup_tree_pathspec(): interpret '^' as negative pathspec
+Date: Mon, 13 Sep 2010 11:39:10 +1000
+Message-ID: <AANLkTikKtu9Xp1kvHwCzMoPRubLb0VFKTzbgCvF6Sfxf@mail.gmail.com>
+References: <1283961023-4491-1-git-send-email-pclouds@gmail.com>
+	<1283961023-4491-8-git-send-email-pclouds@gmail.com>
+	<AANLkTin_m+zjHND5AwFhkrZM-VEkn70qgCTwpB2B+RA+@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 13 03:24:32 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 03:39:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ouxma-00045a-06
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 03:24:32 +0200
+	id 1Ouy0s-0006ud-Ko
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 03:39:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754116Ab0IMBYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Sep 2010 21:24:25 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51879 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753832Ab0IMBYY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Sep 2010 21:24:24 -0400
-Received: by iwn5 with SMTP id 5so4608943iwn.19
-        for <git@vger.kernel.org>; Sun, 12 Sep 2010 18:24:24 -0700 (PDT)
+	id S1754155Ab0IMBjM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Sep 2010 21:39:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:60790 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754104Ab0IMBjM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Sep 2010 21:39:12 -0400
+Received: by wyf22 with SMTP id 22so5587246wyf.19
+        for <git@vger.kernel.org>; Sun, 12 Sep 2010 18:39:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type;
-        bh=JIGQ47xJF3p2PYH96pzP/pPtwGwRpGyLDbAt1RrmCr0=;
-        b=t/M3bXgIvAfQAX2geXCyfsK3/Fi9HbYZ1yehRXz6dHfeLawvpoTIQN8/DYhxch1Arw
-         PAquTCG1Qy9bmklmajzfEdRHMgwx+pL3bgJWzOQMLEMpv6wdv6QgMCOwjk7NvNcSZAX7
-         qrSAuo9bSPALBC/iLuP91h4XnEiJMDOofnGBg=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vIgN8S+gz+V4nKwqSMFzvMjKmPe7gBm9TJIxpO2SASc=;
+        b=t/LnO1DY1Y5vNSuVUBUE/d3mz/mOp8TXl5n8W8P2BBqg6lNkwAYt7Rf5upxNFAlHGU
+         Rpv3kTxax26M8QfzI+ZVFNIVlEC/IDwClnz0TPfyQ3vbfB1UJRWt2ehwE5xMS4CKqxrQ
+         RDQ5erXd/4IF4WLWdduPRj/AHOtVKNRjS2ndw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=ZUz0bAvl3LjRplO2EuHqgbB252NR+O+CdN5Yua53B2ENg+MKh3RgGstylcwte785o6
-         lgEIpcB+lbSVcnihVrEil8W0phSPsPVvi1JWg8YdeEZXaAUjV+x+PNxVHnWZWp6nkxEc
-         59WEYMVR/wKgAESNtKNVSMt+3Uq4LNwLqdIgM=
-Received: by 10.231.170.21 with SMTP id b21mr5244445ibz.122.1284341062885;
- Sun, 12 Sep 2010 18:24:22 -0700 (PDT)
-Received: by 10.231.121.82 with HTTP; Sun, 12 Sep 2010 18:24:22 -0700 (PDT)
-X-Google-Sender-Auth: Vvkjun-evXEMxYZx3qGrEIdXFVc
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Sy0IVznxLliz9bmy8sX9HDfE7r1PUBV+UO3lCtcx7WJipL76ICrps/AaI7Z9mzN5Fm
+         oHcJcbvvSJFsU/2ZqkYP6QJCTQWHt/G3GMy98KcYxaOy8MRR7IubHakg/lWB3OryqW3x
+         nqZMD4AzvMPGymCwXO1ZQV03WQhLIhnENL774=
+Received: by 10.216.22.70 with SMTP id s48mr2002028wes.27.1284341950680; Sun,
+ 12 Sep 2010 18:39:10 -0700 (PDT)
+Received: by 10.216.171.134 with HTTP; Sun, 12 Sep 2010 18:39:10 -0700 (PDT)
+In-Reply-To: <AANLkTin_m+zjHND5AwFhkrZM-VEkn70qgCTwpB2B+RA+@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156067>
 
-Hi all --
+2010/9/12 Elijah Newren <newren@gmail.com>:
+> 2010/9/8 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>:
+>> This patch does preparation work for tree exclusion in
+>> tree_entry_interesting(). '^' has similar meaning to '!' in
+>> gitexcludes. '!' is not used because bash does not like arguments wi=
+th
+>> a leading '!'.
+>>
+>> Eventually, "git diff -- foo ^foo/bar" should show differences in fo=
+o,
+>> except foo/bar. If "git diff -- ^foo" is given, then it implies
+>> everything except foo, which could surprise users that
+>> "bar" in "git diff -- bar ^foo" has no effect at all.
+>
+> I really like the work here. =C2=A0There are just two things that I t=
+hink
+> are missing:
+> =C2=A0* It doesn't handle files with leading carats in their name
+> =C2=A0* It handles some nested include/exclude cases (e.g. dir
+> ^dir/subdir) but not more complicated ones.
 
-I'm writing some automated tests that need a tiny git repo [1].  So I
-have a shell script create the repo + working dir and tar it up, then
-each test case untars the repo and does stuff inside it.  The working
-dir deliberately has uncommitted changes and an untracked file.
+Yeah. I originally needed it to compare trees outside narrow area
+(i.e. negating all pathspecs). But I would need a more robust
+implementation soon when I implement tree widening.
 
-Some of the test cases involve running "git diff --quiet", and I'm
-getting inconsistent results.  Specifically, the first run after
-untar'ing the repo+working dir incorrectly reports no changes (exit
-status 0).  Subsequent runs correctly report changes (exit status 1).
-Morever, if I run "git status" or regular non-quiet "git diff" first,
-then "git diff --quiet" correctly reports changes.
+> Note: In the second test, I used:
+> =C2=A0* "^funny" to search for all files EXCEPT "funny"
+> =C2=A0* "^^funny" to search for a file named "^funny"
+> =C2=A0* "^^^funny" to search for all files EXCEPT "^funny"
+> I'm not sure if that's really the syntax we want to adopt, but it
+> should be easy to change if we decide on some other syntax.
 
-Here's my shell script to create the tiny test repo:
-
-"""
-#!/bin/sh
-
-# Output is git-repo.tar, which can be unpacked for each test -- that
-# way tests can modify the repo and/or working dir without harming
-# other tests.
-
-set -ex
-rm -rf git-repo
-git init git-repo
-cd git-repo
-
-# two files tracked by git
-echo a > a
-echo b > b
-git add -A
-git commit -m"add a, b"
-
-# uncommitted change to b
-echo foo >> b
-
-# some ignored files
-echo "*.o" > .git/info/exclude
-touch a.o
-
-# an unknown file ("other" in git-speak)
-touch junk
-
-cd ..
-tar -cf git-repo.tar git-repo
-rm -rf git-repo
-"""
-
-If you run that in a temp dir, you'll get git-repo.tar.  To reproduce the bug:
-
-  $  tar -xf git-repo.tar
-  $ cd git-repo
-  $ git diff --quiet && echo "no changes" || echo "changes"
-  no changes                    # WRONG
-  $ git diff --quiet && echo "no changes" || echo "changes"
-  changes                         # CORRECT
-
-Or at least, that's what I'm getting running git 1.7.2.3 on Arch Linux x86_64.
-
-Do I totally misunderstand things, or is there a bug here?
-
-Thanks --
-
-Greg
-
-[1] this is for my vcprompt project, which prints info about the
-working dir for hg, git, svn, cvs, and bzr working dirs for use in
-your shell prompt: see http://hg.gerg.ca/vcprompt/ .
+Another way is always treat the leading ^ as negative pathspec. If you
+have file "^foo", specify it with ./^foo. There's still problem with
+top level entries this way.
+--=20
+Duy
