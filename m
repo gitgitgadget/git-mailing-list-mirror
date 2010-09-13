@@ -1,82 +1,58 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
- submodules
-Date: Mon, 13 Sep 2010 19:59:27 +0200 (CEST)
-Message-ID: <503065167.8606900.1284400767803.JavaMail.fmail@mwmweb047>
-References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil>
- <7vy6bajvnd.fsf@alter.siamese.dyndns.org>
- <1094265482.7527324.1284144028114.JavaMail.fmail@mwmweb047>,
- <AANLkTinMf-_vk2-gRazf-8FNykZoNbVwmu_+c+5ht8rY@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Mailing list headers: Date:<TAB> instead of Date:<SPACE>
+Date: Mon, 13 Sep 2010 18:03:03 +0000
+Message-ID: <AANLkTinEb9geKox+a+HosQn-g4eKd-DW4agRCf8yqv=k@mail.gmail.com>
+References: <20100913150245.GT22527@danbala.tuwien.ac.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <casey@nrlssc.navy.mil>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de
-To: Brandon Casey <drafnel@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 19:59:48 2010
+Cc: git@vger.kernel.org
+To: Thomas Klausner <tk@giga.or.at>
+X-From: git-owner@vger.kernel.org Mon Sep 13 20:03:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvDJe-0002ix-0i
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 19:59:42 +0200
+	id 1OvDN6-0004Ca-2e
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 20:03:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020Ab0IMR7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 13:59:35 -0400
-Received: from fmmailgate06.web.de ([217.72.192.247]:51597 "EHLO
-	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751273Ab0IMR7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 13:59:34 -0400
-Received: from mwmweb047  ( [172.20.18.56])
-	by fmmailgate06.web.de (Postfix) with ESMTP id C6832574DA8;
-	Mon, 13 Sep 2010 19:59:27 +0200 (CEST)
-Received: from [92.104.70.131]  by  mwmweb047  with HTTP; Mon
- Sep 13 19:59:27 CEST 2010
-In-Reply-To: <AANLkTinMf-_vk2-gRazf-8FNykZoNbVwmu_+c+5ht8rY@mail.gmail.com>
-X-UI-Message-Type: mail
-X-UI-ATTACHMENT-ID-POSTFIX: 2dce3080-c55b-49a4-949e-53613a85bad0
-X-Priority: 3
-Importance: normal
-Sensitivity: Normal
-X-Provags-ID: V01U2FsdGVkX1862d+MADKdrajwsW6uI9exszC61PvaOAFi8Djl7Rs+uTOgIjKRzNiy
- b0SXikXSOZpcjKaQZdEUfg2/cqxcx6Rxva8AN629CVE=
+	id S1754551Ab0IMSDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 14:03:06 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57558 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751413Ab0IMSDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 14:03:05 -0400
+Received: by fxm16 with SMTP id 16so3312051fxm.19
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 11:03:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Gb5/m+u4vKvQa9DI27DzaEqxmzAcZf82YsU3G9lqe0E=;
+        b=d9ysdQAZp+JIat/SxQ5gzDJGB4QPvEGq0lO7oMRELIa2ayqZJtmiY5Z/S2Cw+8qDdM
+         MgNdIuelXkCIvBzdl67gwWK6lKOIwMqniew99VXJu5L8S7smsrvosnq7HJIOGAPFY+ZO
+         k2EC5hQdQqm2O8ggwLQA9VqyxanEptYEjeE1w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hw24N4begPe8Kj8DTLgAweCKeOFFFez08fHlJTbj3RWruzxxN0Rj2/DY0Jp12FkyUU
+         V0At3QzFnzY+bqhUwkT/mR1lyosVTJB31m66cKzKJdiOZTt7s5wg0Qd6e+aZFw5dUkX+
+         OUeLi8gZtGwagxSPOB/05Hprd/AS0/aUytJ5E=
+Received: by 10.223.114.72 with SMTP id d8mr3665237faq.83.1284400983470; Mon,
+ 13 Sep 2010 11:03:03 -0700 (PDT)
+Received: by 10.223.120.14 with HTTP; Mon, 13 Sep 2010 11:03:03 -0700 (PDT)
+In-Reply-To: <20100913150245.GT22527@danbala.tuwien.ac.at>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156103>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156104>
 
->Do you agree that there is an inconsistency between how untracked content is
->treated at the super-project level and at the submodule level? 
+On Mon, Sep 13, 2010 at 15:02, Thomas Klausner <tk@giga.or.at> wrote:
 
-Yes, but I - and others included in that discussion some time ago - could not
-come up with a sane and simple solution to that problem.
+> While this doesn't seem to be forbidden by the RFC, I think it is
+> at least uncommon, and here it causes trouble. Could you please change
+> this?
 
-
-> Any thoughts
->about how the behavior should be made to be consistent?
-
-The core of this issue is that for git a file is either untracked, modified or clean.
-But submodules can have every combination of all these states - as they consist
-of multiple files - and additionally their HEAD can differ from the commit recorded
-in the superproject. So basically I see two ways to handle that:
-a) add new states for an entry to represent all missing combinations of possible
-   states for submodules and tell all porcelain to handle these.
-b) simplify this problem by having a submodule show up as modified when
-   either of these three conditions are met (and enable the user to choose what
-   conditions she wants to see and what not).
-
-Obviously a) will complicate all git by a large degree just for the sake of submodules.
-I am arguing for b), because submodules itself can be seen as a bunch of files which
-don't interest me as single entities until I want to take a closer look. I think the issue
-we are discussing here is the price we have to pay for this abstraction. I am very
-open to proposals how to better handle that but so far I haven't seen any.
-
-
->Perhaps the default setting of submodule.<name>.ignore should be 'untracked'?
-
-I still vote for none. I think the default should be to not have untracked files in
-your projects (like you should not have warnings when compiling your project).
-If that is not wanted, just use the configuration options git provides to change it.
+Wouldn't it be better to just change tin to be RFC compliant?
