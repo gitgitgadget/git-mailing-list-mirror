@@ -1,107 +1,132 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 2/2] Add Swedish translation.
-Date: Mon, 13 Sep 2010 08:15:48 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
-References: <20100912202111.B11522FC00@perkele> <AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
+From: Avery Pennarun <apenwarr@gmail.com>
+Subject: Re: Input welcome for "Git Bisect and Testing" presentation at GTAC 2010
+Date: Mon, 13 Sep 2010 01:04:50 -0700
+Message-ID: <AANLkTi=k-oUi0uT=ho9TdCyhKwV=wiW8nj6AWZA_9F7-@mail.gmail.com>
+References: <201009122225.52520.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 09:16:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Ingo Molnar <mingo@elte.hu>, Andreas Ericsson <ae@op5.se>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Mon Sep 13 10:05:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov3Gg-0005qm-VB
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 09:15:59 +0200
+	id 1Ov42V-0000en-8o
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 10:05:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752791Ab0IMHPx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 03:15:53 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:50432 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752377Ab0IMHPx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 03:15:53 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8D7Fmor000328
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 13 Sep 2010 09:15:48 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8D7FmgA000322;
-	Mon, 13 Sep 2010 09:15:48 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Mon, 13 Sep 2010 09:15:48 +0200 (CEST)
+	id S1754542Ab0IMIFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 04:05:13 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:41026 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754231Ab0IMIFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 04:05:12 -0400
+Received: by wwb13 with SMTP id 13so3576903wwb.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 01:05:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=LdKSAf7vf1J4VqsgD4+T4q0MTzP3xZQuohjlTKiwc84=;
+        b=P9+XSQ7FQJOFfhpFWVfYnLiffncJtTll9UoLs6TNNIEKZVqvx54R5GMLqHcHUOQypK
+         ATc0nWltpw9Qe/v5o0zKWsd+Bw0YkF/fBQ7jRbmvvuxsvC09hkJbuPnN86pzc0Nijq6n
+         NK1M8+PQJ3DzBcat3u/ZSgDh5UBvS6mV8ckpU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ePewj2k6BCP7vUzOchRFPT8+vI5W8M7U2SJTAybZD+zc4zpJkKJj8iiOKNKUC4ejTj
+         YKYM9Cu6oMac2uQDIk40TJibEnBAXAd96/0zo1/nn/lWvBP06ig+dtPpHKp199mz7Tv1
+         ntFj5Mp2/kkjHeDMjU3vhKfpiF7sQCrLJrTiQ=
+Received: by 10.216.67.66 with SMTP id i44mr2276934wed.53.1284365110421; Mon,
+ 13 Sep 2010 01:05:10 -0700 (PDT)
+Received: by 10.216.49.72 with HTTP; Mon, 13 Sep 2010 01:04:50 -0700 (PDT)
+In-Reply-To: <201009122225.52520.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156072>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+On Sun, Sep 12, 2010 at 1:25 PM, Christian Couder
+<chriscool@tuxfamily.org> wrote:
+> For example it can be how "git bisect run" is used automatically in build
+> systems, or how "git bisect" is used manually on GUI applications in your
+> company, or how you use Avery Pennarun's "git-builder" (http://github.com/apenwarr/gitbuilder, it uses "git bisect"
+> underneath), or what features you would want to see added, or what have been
+> your experience with it, and so on.
 
-> * Doesn't follow the "Initializing a .po file" docs in
->   t/README. Here's what you get after applying the little Perl
->   cleanup program there to it:
+Ha, when I saw my name in the (very short) cc: list, I was wondering
+why I was being included explicitly here.  Thanks for reminding me
+that I wrote gitbuilder and it uses git-bisect :)  It's interesting in
+that it has quite a few followers on github, but I don't get any
+feedback about it.  (I assume either it Just Works or it Just Doesn't
+Work :))
 
-Well, I just used the standard commands for creating it.
+Since you asked, here are some passing comments about git-bisect
+and/or gitbuilder:
 
->        @@ -1,54 +1,38 @@
->        -# Swedish translation of git
->        -# Copyright =C2=A9 2010 Peter krefting <peter@softwolves.pp.s=
-e>
->        -# Peter Krefting <peter@softwolves.pp.se>, 2010.
->        -#
+- for most smallish projects, doing 'git bisect' by hand (especially
+'git bisect run') gives you the most instant gratification and is the
+easiest way to find where you introduced an error.  gitbuilder takes
+longer and is thus less interesting.
 
-That's a standard header, which is good to keep for clarity. If we want=
- to=20
-go through Translation Project (which I still do recommend), it is requ=
-ired.
+- for bisect to be useful, you really need to be careful to commit
+things in logical chunks and to make sure each commit *works*.  I've
+noticed that people do their commits totally differently when they
+are/aren't thinking about future bisections.  That means bisect is a
+bit of an "artificial" construct: you can't just bisect your way
+through just *any* source tree and get useful results, because in many
+commercial projects (at least), most commits don't even run.  Sad, but
+true.  So you really need to train developers to think seriously about
+making their commits small, atomic, and non-broken before pushing.
 
->        -"PO-Revision-Date: 2010-09-12 21:07+0100\n"
+- gitbuilder, conversely, is more useful for very large projects with
+extensive test suites.  For example, at work we have a project that
+takes about an hour to build from scratch and run through all the
+tests. Bisecting this sort of project by hand is a huge pain.  In
+fact, even running the automated tests before committing is a lot to
+ask - and people often don't do it.  Thus, having a system that
+*automatically* grinds away at releases and pinpoints the sources of
+error can be very valuable.
 
-That's a good reference header to see how out-of-date the translation i=
-s.
+- Because gitbuilder builds all your branches from multiple
+repositories automatically, failing the gitbuilder test doesn't have
+to be an embarrassment because it doesn't have to hurt anybody but
+yourself; if it catches a failure, just rebase your branch and get it
+turning green before committing to mainline.  gitbuilder has been
+instrumental in a) helping get our internal development projects to
+zero unit test failures in the mainline at all times, and b) making it
+easy to decide which branches are ready to merge and which aren't, and
+c) knowing who to complain to when a problem is introduced even so.
 
->        -"Last-Translator: Peter Krefting <peter@softwolves.pp.se>\n"
->        -"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+- gitbuilder uses git-bisect (actually git rev-list --bisect) in a
+peculiar way: with --first-parent.  This is on purpose, although you
+have to think carefully about your workflow in order to benefit from
+it.  There are two advantages to doing it this way: 1) the gitbuilder
+status display makes way more sense to normal people because it can
+just show a linear sequence of commits; 2) to a maintainer, merges
+into the mainline are an all-or-nothing sort of thing.  If I merged in
+a branch and it started failing, then I don't want to bisect it, I
+want to complain to the person whose branch I merged in.  And that
+person's branch should *already* be built by gitbuilder and bisected
+away, so he should have no trouble tracing it by looking at the
+gitbuilder stats for his own branch.  So far, users here have found
+this way of thinking about the bisection to be pretty easy to
+understand, much more so than git's rather mind-melting DAG graphs
+that you might get from things like 'git bisect visualize'.  It's also
+pretty resilient against people who make frequent non-working commits
+in their side branches; the mainline maintainer never has to worry
+about "accidentally" bisecting into them, which removes the need for
+things like 'git bisect skip'.  I've never much trusted 'git bisect
+skip', though now that it's pseudorandom it supposedly works better
+than it once did, so maybe I should adjust my opinion.
 
-These are standard headers to make it easier to find out who to blame t=
-he=20
-translation on. I haven't actually submitted my translation for review =
-on=20
-the Swedish list yet, but will do so soon enough.
+I'm sorry I'll miss meeting you and/or seeing your presentation at
+GitTogether.  Have fun in India!
 
->        -#: wt-status.c:56
+Have fun,
 
-These context lines are invaluable when figuring out how to translate s=
-tuff,=20
-and to track back strings after the fact. I do not like the idea of rem=
-oving=20
-them.
-
-> * Commit message should be "po/sv.po: add Swedish translation". It
->   makes it much easier to `git log --grep=3Dpo/` or `git log
->   --grep=3Dpo/sv.po` in the future.
-
-Git has that information already, no need to put it in the commit messa=
-ge :-)
-
-> * You're translating the TEST: messages, it's redundant except for
->   Icelandic (which uses it for git.git tests), but I can see how it
->   can be painful to have non-100% translation coverage.
-
-I just copied them verbatim, I didn't actually translate them. Without=20
-translating them I can't tell if I've translated everything when doing =
-a=20
-"msgfmt -vvv --check sv.po".
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+Avery
