@@ -1,81 +1,133 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: git-subtree:  bug, and ideas for doc improvements
-Date: Mon, 13 Sep 2010 13:57:05 +0200
-Organization: Bertin Technologies
-Message-ID: <20100913135705.36f8217b@chalon.bertin.fr>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] Makefile: only add gettext tests on XGETTEXT_INCLUDE_TESTS=YesPlease
+Date: Mon, 13 Sep 2010 12:47:56 +0000
+Message-ID: <1284382076-1907-1-git-send-email-avarab@gmail.com>
+References: <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 13 14:12:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 13 14:48:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov7tM-0003YL-Hm
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 14:12:12 +0200
+	id 1Ov8SH-0002GK-Gh
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 14:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754965Ab0IMMME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 08:12:04 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:39953 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755089Ab0IMMMD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 08:12:03 -0400
-X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Sep 2010 08:12:03 EDT
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 0185354358
-	for <git@vger.kernel.org>; Mon, 13 Sep 2010 14:04:34 +0200 (CEST)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id D3B5B5434D
-	for <git@vger.kernel.org>; Mon, 13 Sep 2010 14:04:33 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0L8O003K8PJLD150@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Mon, 13 Sep 2010 14:04:33 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17634.007
+	id S1755130Ab0IMMsL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 08:48:11 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33425 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754714Ab0IMMsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 08:48:10 -0400
+Received: by wwb13 with SMTP id 13so57976wwb.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 05:48:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Wm7zTOv08givkr+AgAHZfG6VcHY6Xpddm6KLhWcBKYY=;
+        b=p3z0QJ4+ogFUEHuZt3Il+Bep/7vE+kQ6OfAf9u3f4S57Ny3Kt8VhByqKUHSibD9Nyd
+         28nN2Lbwv24V+hHp2KzljmWuKwvI+QVArg18jPLQ+KHlq8pPWE1ZzvM8i4k1vYBjIl1w
+         9MP4rz3OXygkZpvRUdwG7qNfatQngyGDwSK8g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=cvLZnjrnDua0zuiguSBTax4EKWF4LvByyC893SQ/5b+zX4kLyKfDSSLeBKdWIdTFWB
+         x1rRs/KDAmoD2l2GlcYZLMscH/lnC5MTRNT9w1cEYbl43CUSe2zXcHse/3d2JBmQ7N+0
+         27xsUlhPRfcfiQrsVq9m618K30zLcoXTUHs+M=
+Received: by 10.227.135.18 with SMTP id l18mr51039wbt.120.1284382089249;
+        Mon, 13 Sep 2010 05:48:09 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id e31sm5211340wbe.23.2010.09.13.05.48.07
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 13 Sep 2010 05:48:08 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.3.313.gcd15
+In-Reply-To: <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156086>
 
-Hi Avery,
+Change the "pot" target so that the xgettext(1) invocation no longer
+include test files from t/t0200.
 
-Here are a couple of remarks from trying to work out how to convert
-an imported-with-local-changes kernel to git-subtree.
+These should only be included in the Icelandic is.po file since Git's
+own test suite uses them for regression tests, but nobody else should
+translate them. Previously I indicated this with a TRANSLATORS comment
+for all the strings:
 
-* When reading the doc, it looks like my use case would require --onto,
-  but although it is documented *when* to we are expected to use that
-  flag, it is not explained *what* it does (which tends to make be both
-  curious and nervous about it ;)
+    #. TRANSLATORS: This is a test. You don't need to translate it.
+    #, c-format
+    msgid "TEST: A C test string %s"
+    msgstr ""
 
-* In addition, describing "what git subtree is expecting" without
-  --onto would probably be useful
+But if translators follow those instructions they'll never have 100%
+translation coverage. It's much better to add a hidden option so that
+is.po now has to use a special git.pot file for msgmerge(1):
 
-* If I first run "split" without --onto, then "reset --hard HEAD^" and
-  rerun the same split with an additional --onto, then:
-  - although a new set of split commits is created, the new branch
-    ref is set to the old one
-  - the split then aborts saying that the new branch ref is not an
-    ancestor
- => this does not happen if I remove the old branch ref first, so it
- does not look tied to the subtree-cache, only to the reachability of
- the old split branch ?  FWIW, old branch (without --onto) is named
- "linux-2.6" and new one (with --onto) is "linux-2.6b".
+    make pot XGETTEXT_INCLUDE_TESTS=3DYesPlease
 
-* If I run "split --onto=XXX" where XXX is as specified in the manpage
-  "the first revision of the subproject's history that was imported
-  into your project", then the split history looks exactly the same,
-  appart from:
-  - without --onto, the root of the split branch has no parent
-  - with --onto, the split branch is forked off the specified commit,
-    which is itself not split.  The "--onto" name makes that result
-    understandable, but shouldn't the doc tell to use "the last commit
-    before the subproject's history was imported into your project"
-    instead ?
+But everything else can continue to use the documented:
 
-Best regards,
--- 
-Yann Dirson - Bertin Technologies
+    make pot
+
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+
+On Mon, Sep 13, 2010 at 07:15, Peter Krefting <peter@softwolves.pp.se> =
+wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> * You're translating the TEST: messages, it's redundant except for
+>>  Icelandic (which uses it for git.git tests), but I can see how it
+>>  can be painful to have non-100% translation coverage.
+>
+> I just copied them verbatim, I didn't actually translate them. Withou=
+t
+> translating them I can't tell if I've translated everything when doin=
+g a
+> "msgfmt -vvv --check sv.po".
+
+This is a much better solution then. I'll submit this as part of an
+updated ab/i18n series.
+
+ Makefile |   12 +++++++++---
+ 1 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 8cec626..680e578 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2047,9 +2047,15 @@ XGETTEXT_OPTIONS_C =3D $(XGETTEXT_OPTIONS) --key=
+word=3D_ --keyword=3DN_ --language=3DC
+ XGETTEXT_OPTIONS_SH =3D $(XGETTEXT_OPTIONS) --language=3DShell
+ XGETTEXT_OPTIONS_PERL =3D $(XGETTEXT_OPTIONS) --keyword=3D__ --languag=
+e=3DPerl
+=20
+-LOCALIZED_C =3D $(C_OBJ:o=3Dc) t/t0200/test.c
+-LOCALIZED_SH =3D $(SCRIPT_SH) t/t0200/test.sh
+-LOCALIZED_PERL =3D $(SCRIPT_PERL) t/t0200/test.perl
++LOCALIZED_C =3D $(C_OBJ:o=3Dc)
++LOCALIZED_SH =3D $(SCRIPT_SH)
++LOCALIZED_PERL =3D $(SCRIPT_PERL)
++
++ifdef XGETTEXT_INCLUDE_TESTS
++LOCALIZED_C +=3D t/t0200/test.c
++LOCALIZED_SH +=3D t/t0200/test.sh
++LOCALIZED_PERL +=3D t/t0200/test.perl
++endif
+=20
+ pot:
+ 	$(XGETTEXT) $(XGETTEXT_OPTIONS_C) $(LOCALIZED_C)
+--=20
+1.7.2.3.313.gcd15
