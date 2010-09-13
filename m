@@ -1,107 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/6] git-reset.txt: reset --soft is not a no-op
-Date: Mon, 13 Sep 2010 16:19:57 -0700
-Message-ID: <7v39tdb59e.fsf@alter.siamese.dyndns.org>
-References: <cover.1284365021.git.git@drmicha.warpmail.net>
- <f30121dda2c44d2a87f2d2bf651d6a0adfa8c955.1284365021.git.git@drmicha.warpmail.net> <AANLkTin1Ht+2Q4v5pyt8p11VmQ275C41rJLMLLuLkEfA@mail.gmail.com>
+Subject: Re: [PATCH] tests: use test_cmp instead of piping to diff(1)
+Date: Mon, 13 Sep 2010 16:31:45 -0700
+Message-ID: <7vy6b59q5a.fsf@alter.siamese.dyndns.org>
+References: <1284411582-1088-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	A Large Angry SCM <gitzilla@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 01:20:19 2010
+Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 14 01:32:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvIJu-00029G-FI
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 01:20:18 +0200
+	id 1OvIVR-0004t7-0z
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 01:32:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805Ab0IMXUL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 19:20:11 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42629 "EHLO
+	id S1751906Ab0IMXb4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 19:31:56 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57520 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750920Ab0IMXUK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 19:20:10 -0400
+	with ESMTP id S1751585Ab0IMXbz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 19:31:55 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 461FFD6432;
-	Mon, 13 Sep 2010 19:20:10 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BE295D658E;
+	Mon, 13 Sep 2010 19:31:53 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=DH4utp40pImM
-	Gxt+6HOysGgN77I=; b=ddLbfZ7xWQ74jgshwbGbgFBhyq0jhq7W8UM2nLG5uUfV
-	8vF5U4pvrBgBAveRJRIUQPQqrdkLUoDo9eGXQkUT9Q1fIXnypKcMI1pT3rqkaUIg
-	DK3rusKxjVnOqkxiGv91lr5oEpWziIE2QH0aRcngXdjokvC1NXA1+UFf+j1cSZw=
+	:content-type:content-transfer-encoding; s=sasl; bh=wW6kx1oXYTsv
+	D7vyafB0ZJOzSM0=; b=KLjo84Jd3drfFto6bIh+buLKSS6E60wW9JvPJZBE16Xp
+	Ct5ehkr3voRQxyUkhhLvo523tnnS7mwOvhlF4BToWbvJ3WnqLq5WkryNBBOyals4
+	4tsu1qQPP3H5zNZv65QlGSFtLcGt9MfMfzjkftGbu7rNXqRa/am4sEvgSyoLpgw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=jwat3q
-	81G3L8iGQaAxyO3Ry+FccQJBZ3BBcxdAFFS2IWvQnQNRK/GkDDc375jHzr05n8Dp
-	kENVyg8qxbXsCaa2X2bVrTT984e3gL4pILSl8vQe+6+dZvbg/ZW4SOMLx4OuWuLp
-	tHtibZxnKWNbepuq5Kd4MyNeQ2xoLwNzqJ9pQ=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=XI4EC9
+	fC52otMR4fiHJ3Vm1G9TC4KnGZOij4hfXwrZUQL9cfwg1/WRsU/+B9eAxgdY9Xk5
+	CIFgCCb6M5GaOfx+fN1Ziwc4EKgQPqHv9+/l05YUuiRHM3XBko8QNIlCzES7QI00
+	Nh0HtSpFmgIMOsXLArJ9rwEBRAeryuZ1BixGQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D3663D6430;
-	Mon, 13 Sep 2010 19:20:04 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89816D6589;
+	Mon, 13 Sep 2010 19:31:50 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AA1C7D642C; Mon, 13 Sep
- 2010 19:19:58 -0400 (EDT)
-In-Reply-To: <AANLkTin1Ht+2Q4v5pyt8p11VmQ275C41rJLMLLuLkEfA@mail.gmail.com>
- (Jay Soffian's message of "Mon\, 13 Sep 2010 18\:13\:55 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CD7A6D6588; Mon, 13 Sep
+ 2010 19:31:46 -0400 (EDT)
+In-Reply-To: <1284411582-1088-1-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon\, 13 Sep
+ 2010 20\:59\:42 +0000")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 70CF044C-BF8D-11DF-BB0A-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 1570F84C-BF8F-11DF-B60B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156152>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Mon, Sep 13, 2010 at 4:06 AM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Make it clearer that git reset --soft actually does something (chang=
-ing
->> HEAD). While it is meantioned in the previous paragraph already it c=
-an
->> be easily overlooked otherwise.
->>
->> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->> ---
->> =C2=A0Documentation/git-reset.txt | =C2=A0 =C2=A03 ++-
->> =C2=A01 files changed, 2 insertions(+), 1 deletions(-)
->>
->> diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.t=
-xt
->> index 8fb871c..65f5d07 100644
->> --- a/Documentation/git-reset.txt
->> +++ b/Documentation/git-reset.txt
->> @@ -43,7 +43,8 @@ linkgit:git-add[1]).
->> =C2=A0--
->> =C2=A0--soft::
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0Does not touch the index file nor the wor=
-king tree at all, but
->> - =C2=A0 =C2=A0 =C2=A0 requires them to be in a good order. This lea=
-ves all your changed
->> + =C2=A0 =C2=A0 =C2=A0 requires them to be in good order (and sets t=
-he head to <commit>,
->> + =C2=A0 =C2=A0 =C2=A0 just like all modes do). This leaves all your=
- changed
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0files "Changes to be committed", as 'git =
-status' would
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0put it.
->
-> What does "requires them to be in good order" mean anyway?
+> @@ -37,9 +37,10 @@ head1=3D$(add_file sm1 foo1 foo2)
+>  test_expect_success 'added submodule' "
+>  	git add sm1 &&
+>  	git diff-index -p --submodule=3Dlog HEAD >actual &&
+> -	diff actual - <<-EOF
+> +	cat >expected <<-EOF &&
+>  Submodule sm1 0000000...$head1 (new submodule)
+>  EOF
+> +    test_cmp expected actual
+>  "
 
-Good point.  I don't think it means anything now; for that matter I do =
-not
-think it meant anything even back when that sentence was added in f6754=
-5e
-(Docs for git-reset-script., 2005-09-07).  A soft reset doesn't even lo=
-ok
-at the index nor the working tree, so there is no good nor bad order
-there.
-
-Just remove it.
+Nit.  Did you really mean <<-EOF, not <<EOF, here, especially you are
+writing the here document without indentation with any TAB?
