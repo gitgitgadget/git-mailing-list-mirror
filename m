@@ -1,74 +1,82 @@
-From: Kent Borg <kentborg@borg.org>
-Subject: Re: git-p4
-Date: Mon, 13 Sep 2010 12:28:15 -0400
-Message-ID: <4C8E511F.8000400@borg.org>
-References: <4C8A8CE8.90600@borg.org>	<20100910235323.773d2c5b@varda>	<AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>	<4C8CF231.6090403@borg.org>	<AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>	<4C8D14F9.90705@borg.org>	<AANLkTi=NGsY3wDiTLwNLpw4TJMpiSY8A=az_=v2fYDLj@mail.gmail.com>	<4C8D3303.1030302@borg.org>	<AANLkTikrSt4djXep-o4Hr8EZAsiNXnqCHa2fLrys8T==@mail.gmail.com>	<4C8E33DF.7010904@borg.org> <AANLkTimL3mB8LeUOANsJO7p9uwqDCN9wKnLVMTq_-=3H@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in
+ submodules
+Date: Mon, 13 Sep 2010 19:59:27 +0200 (CEST)
+Message-ID: <503065167.8606900.1284400767803.JavaMail.fmail@mwmweb047>
+References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil>
+ <7vy6bajvnd.fsf@alter.siamese.dyndns.org>
+ <1094265482.7527324.1284144028114.JavaMail.fmail@mwmweb047>,
+ <AANLkTinMf-_vk2-gRazf-8FNykZoNbVwmu_+c+5ht8rY@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 18:28:29 2010
+Cc: Brandon Casey <casey@nrlssc.navy.mil>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de
+To: Brandon Casey <drafnel@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 19:59:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvBtK-0006UZ-5v
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 18:28:26 +0200
+	id 1OvDJe-0002ix-0i
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 19:59:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903Ab0IMQ2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 12:28:17 -0400
-Received: from borg.org ([64.105.205.123]:38334 "EHLO borg.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753204Ab0IMQ2Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 12:28:16 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: kentborg)
-	by borg.org (Postfix) with ESMTP id AA9D087822;
-	Mon, 13 Sep 2010 12:28:15 -0400 (EDT)
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <AANLkTimL3mB8LeUOANsJO7p9uwqDCN9wKnLVMTq_-=3H@mail.gmail.com>
-X-Enigmail-Version: 0.95.7
+	id S1753020Ab0IMR7f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 13:59:35 -0400
+Received: from fmmailgate06.web.de ([217.72.192.247]:51597 "EHLO
+	fmmailgate06.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751273Ab0IMR7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 13:59:34 -0400
+Received: from mwmweb047  ( [172.20.18.56])
+	by fmmailgate06.web.de (Postfix) with ESMTP id C6832574DA8;
+	Mon, 13 Sep 2010 19:59:27 +0200 (CEST)
+Received: from [92.104.70.131]  by  mwmweb047  with HTTP; Mon
+ Sep 13 19:59:27 CEST 2010
+In-Reply-To: <AANLkTinMf-_vk2-gRazf-8FNykZoNbVwmu_+c+5ht8rY@mail.gmail.com>
+X-UI-Message-Type: mail
+X-UI-ATTACHMENT-ID-POSTFIX: 2dce3080-c55b-49a4-949e-53613a85bad0
+X-Priority: 3
+Importance: normal
+Sensitivity: Normal
+X-Provags-ID: V01U2FsdGVkX1862d+MADKdrajwsW6uI9exszC61PvaOAFi8Djl7Rs+uTOgIjKRzNiy
+ b0SXikXSOZpcjKaQZdEUfg2/cqxcx6Rxva8AN629CVE=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156103>
 
-Tor Arvid Lund wrote:
-> git remote, shows remotes as defined in your .git/config file (the
-> [remote "someremotename"] sections). git-p4 does not need nor create
-> such entries.
+>Do you agree that there is an inconsistency between how untracked content is
+>treated at the super-project level and at the submodule level? 
 
-I am confused trying to understand what kind of beast the p4/master is.
-
-I think my fundamental problem is that I need p4/master to point at a
-branch with a real git history, not a sync from Perforce (which has no
-git history).
-
-I tried pointing p4/master at a clean branch in my repository with "git
-update-ref refs/remotes/p4/master ...", but every time I tried a "git p4
-sync --verbose" it sprang back to pointing at the old commit (the one
-without a full git history). 
-
-So I figured I have brokenness I might be able to leave behind if I
-tried making a new "git p4 clone", doing a "git remote add ..." to the
-branch I like in my old git repository, and trying it again...but I get
-the same result. 
-
-After my update-ref I grep in .git for the commit hash that keeps
-grabbing my p4/master...and that hash is only in
-logs/refs/remotes/p4/master.    I do a "git p4 sync" and the hash
-reappears in refs/remotes/p4/master.  Where is it coming from?
-
-How do I change where p4/master points?  (Put another way, how can I
-have a complete Linux history in git but only new work in Perforce?)
+Yes, but I - and others included in that discussion some time ago - could not
+come up with a sane and simple solution to that problem.
 
 
-Thanks,
+> Any thoughts
+>about how the behavior should be made to be consistent?
 
--kb, the Kent who is getting a lot smarter about git in the last few
-days, but for whom git-p4 is not yet in control.
+The core of this issue is that for git a file is either untracked, modified or clean.
+But submodules can have every combination of all these states - as they consist
+of multiple files - and additionally their HEAD can differ from the commit recorded
+in the superproject. So basically I see two ways to handle that:
+a) add new states for an entry to represent all missing combinations of possible
+   states for submodules and tell all porcelain to handle these.
+b) simplify this problem by having a submodule show up as modified when
+   either of these three conditions are met (and enable the user to choose what
+   conditions she wants to see and what not).
+
+Obviously a) will complicate all git by a large degree just for the sake of submodules.
+I am arguing for b), because submodules itself can be seen as a bunch of files which
+don't interest me as single entities until I want to take a closer look. I think the issue
+we are discussing here is the price we have to pay for this abstraction. I am very
+open to proposals how to better handle that but so far I haven't seen any.
+
+
+>Perhaps the default setting of submodule.<name>.ignore should be 'untracked'?
+
+I still vote for none. I think the default should be to not have untracked files in
+your projects (like you should not have warnings when compiling your project).
+If that is not wanted, just use the configuration options git provides to change it.
