@@ -1,87 +1,99 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Mailing list headers: Date:<TAB> instead of Date:<SPACE>
-Date: Mon, 13 Sep 2010 11:58:13 -0700
-Message-ID: <4C8E7445.6070604@gmail.com>
-References: <20100913150245.GT22527@danbala.tuwien.ac.at> <AANLkTinEb9geKox+a+HosQn-g4eKd-DW4agRCf8yqv=k@mail.gmail.com> <sfid-H20100913-202503-+038.68-1@spamfilter.osbf.lua> <4C8E6C7B.2090904@gmail.com> <20100913183054.GE7006@danbala.tuwien.ac.at>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC 6/8] gettextize: git-pull "You asked to pull" message
+Date: Mon, 13 Sep 2010 19:35:56 +0000
+Message-ID: <1284406558-23684-7-git-send-email-avarab@gmail.com>
+References: <1284406558-23684-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Thomas Klausner <tk@giga.or.at>
-X-From: git-owner@vger.kernel.org Mon Sep 13 20:58:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Jan=20Kr=C3=BCger?= <jk@jk.gs>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 13 21:36:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvEEG-0004Bj-FZ
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 20:58:12 +0200
+	id 1OvEpQ-0005HT-5L
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 21:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754950Ab0IMS6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 14:58:05 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:45810 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754489Ab0IMS6D (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 14:58:03 -0400
-Received: by pvg2 with SMTP id 2so2253781pvg.19
-        for <git@vger.kernel.org>; Mon, 13 Sep 2010 11:58:02 -0700 (PDT)
+	id S1755215Ab0IMTgX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 15:36:23 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52169 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755211Ab0IMTgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 15:36:21 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 20so201266wwd.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 12:36:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=okK/IHW7jeQ3WNoN/ylwWOBmxr/nDXmJXf5Xm+OUiBM=;
-        b=Zedgk1nLEEguI+/yXiNjtxyYX8EqtF6Zh+d0gC1HRwA5YaHY06+/n+TV2rSQBHkgB9
-         eNdVRC9gG1ch2HfobdR+uOrIlVrmzcRicPpM3oY9Md7B7Vzc+huvmHiGWWpcOJHtp2sM
-         Q69MN8AHxYJJuo63RSyNJxDEpxHiumUmNTdCU=
+        bh=td0eQ2lw+c1RxHNnsXsiBXI946cZXtdjv/HY+ymwvHM=;
+        b=u0cJIF/brmFkn7i6zJv6dQ6YqTPaeBvERkqDebNs7kcSFrCrnQhC56ed8xUqGLvRr6
+         rOVeQdDHWvTCTwcaQwo6du7q1+JnSnSZOLmJhJZwgIAmxfXXcZkFjJZ8lWuaxiRlPYhy
+         2bzdgk/taUqZBP6prF1kId/CT7yBoACeAIa54=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=rLUrLulF8iBcNLTpssHkTwfhGzWYW7M6rrntJ/AkK9V0FESJTf6HLIEm7Wfz23XSfW
-         EpugcB7WcLmWdgflvC/JVUrpFs13Xun9gVJUskI8SZYXXC4vn/myjUcZWQVotbVZWasl
-         YgYMDAvM2ayT0cLpFPi1Yl8/UGXOWfALtPHlg=
-Received: by 10.114.127.3 with SMTP id z3mr164694wac.83.1284404282464;
-        Mon, 13 Sep 2010 11:58:02 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id d39sm12559456wam.4.2010.09.13.11.58.00
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=jazB7pMG8vfq9j0X6oGgD0ra4gxvoZ9gIArrmnq+efhv+BH40UCFalth9h49AgLE7E
+         1WlegxEFRg91n/K5MER0KAeYmKknF8W8/qmpY2VDO78cFcfYYzj4cuT+upRwwojUMxzO
+         /NVuI49DIa40ygvYYv4Es+3TjBZZoC8a64YnI=
+Received: by 10.216.161.71 with SMTP id v49mr4638269wek.94.1284406580356;
+        Mon, 13 Sep 2010 12:36:20 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id k7sm4178195wej.2.2010.09.13.12.36.19
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 13 Sep 2010 11:58:01 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <20100913183054.GE7006@danbala.tuwien.ac.at>
+        Mon, 13 Sep 2010 12:36:19 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.rc1.110.g6776a.dirty
+In-Reply-To: <1284406558-23684-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156115>
 
-On 13/09/10 11:30, Thomas Klausner wrote:
-> On Mon, Sep 13, 2010 at 11:24:59AM -0700, Chris Packham wrote:
->> There is also a problem with your definition of "uncommon". I haven't
->> checked but I'm guessing the tabs are there for every mailing list run
->> by vger.kernel.org. Those are some of the highest volume mailing lists
->> that I know of. It can't be to hard to change tin to parse a tab or
->> space character.
-> 
-> I'm sorry if you don't like my choice of words. I have subscribed to a
-> number of mailing lists and read them in tin without stumbling over
-> this problem.
+Gettextize the "You asked to pull" error message. This message
+interpolated $1 which won't work with eval_gettext for obvious
+reasons, so I needed to provide an alias for it.
 
-And I'm sorry if that came of a little terse. Honestly since the advent
-of web based mail/news viewers I've never really bothered with using one
-so I'm fairly ignorant.
+This also made the message easier to translate, and I added a
+TRANSLATORS comment to make it even easier.
 
-> Is my request so much to ask?
->  Thomas
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ git-pull.sh |    9 ++++++---
+ 1 files changed, 6 insertions(+), 3 deletions(-)
 
-My point was you're not asking the maintainer of the git mailing list to
-change something. You're asking the maintainers of all mailing lists run
-from vger.kernel.org to change something (i.e. a much greater scale).
-Again my ignorance as to how things are run at kernel.org may be
-distorting reality.
-
-You may get more mileage out of asking the developers of the majordomo
-software [1]. But even if they do make a change it may take a while to
-be deployed on kernel.org
-
-[1] http://www.greatcircle.com/majordomo/
+diff --git a/git-pull.sh b/git-pull.sh
+index bbb2a0a..6ab09b6 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -156,9 +156,12 @@ Generally this means that you provided a wildcard =
+refspec which had no
+ matches on the remote end."; echo
+ 		fi
+ 	elif [ $# -gt 0 ] && [ "$1" !=3D "$remote" ]; then
+-		echo "You asked to pull from the remote '$1', but did not specify"
+-		echo "a branch. Because this is not the default configured remote"
+-		echo "for your current branch, you must specify a branch on the comm=
+and line."
++		requested_remote=3D$1
++		# TRANSLATORS: $requested_remote will be a remote name, like
++		# "origin" or "avar"
++		eval_gettext "You asked to pull from the remote '\$requested_remote'=
+, but did not specify
++a branch. Because this is not the default configured remote
++for your current branch, you must specify a branch on the command line=
+=2E"; echo
+ 	elif [ -z "$curr_branch" ]; then
+ 		echo "You are not currently on a branch, so I cannot use any"
+ 		echo "'branch.<branchname>.merge' in your configuration file."
+--=20
+1.7.3.rc1.110.g6776a.dirty
