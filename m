@@ -1,74 +1,164 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: git-subtree:  bug, and ideas for doc improvements
-Date: Mon, 13 Sep 2010 14:51:18 +0200
-Organization: Bertin Technologies
-Message-ID: <20100913145118.20469cda@chalon.bertin.fr>
-References: <20100913135705.36f8217b@chalon.bertin.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Mon, 13 Sep 2010 13:35:59 +0000
+Message-ID: <AANLkTinhmBHQzkdEY88Oa-XsZQ4VAUz0Tci+gOt=fXmE@mail.gmail.com>
+References: <20100912202111.B11522FC00@perkele>
+	<AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
+	<alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Yann Dirson <dirson@bertin.fr>, git@vger.kernel.org
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 14:58:57 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Sep 13 15:36:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov8cb-0006dV-Bm
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 14:58:57 +0200
+	id 1Ov9Ca-0004oG-MY
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 15:36:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755215Ab0IMM6w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 08:58:52 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:44006 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754801Ab0IMM6w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 08:58:52 -0400
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 7AC7F54358
-	for <git@vger.kernel.org>; Mon, 13 Sep 2010 14:58:47 +0200 (CEST)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 58A175434D
-	for <git@vger.kernel.org>; Mon, 13 Sep 2010 14:58:47 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0L8O003K1S1YD160@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Mon, 13 Sep 2010 14:58:47 +0200 (CEST)
-In-reply-to: <20100913135705.36f8217b@chalon.bertin.fr>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17634.007
+	id S1754456Ab0IMNgC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 09:36:02 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:55905 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753062Ab0IMNgA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 09:36:00 -0400
+Received: by gwj17 with SMTP id 17so2027142gwj.19
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 06:35:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1bZLIMykTX7weKCYjJZKEb1Ir9MUmcQ1SMO6qQGegnM=;
+        b=fvY22c0/a2FoXIzJTGJ1vg3Eb9ccdUGl3ZRAUL0fOHwJmcOtWk7vlpTexaT+kxAZXW
+         npf+/v9401rhYYXHY8toWgIYQ3LqkfLGonK5yp0dlDhCRHdq2a8cGAE0uQbVW97AFERX
+         ks4+RH1CY8FOsriADLWrQELqbYpcvk7XrIEUY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fx9yyjENbliJAgKBIyAJlYgIu7iXo14tbiXAEnRVHoBUALDcke93HlPH3Jxw4HIrFT
+         EBSvq12HwkGlCyCed3ZHeHyH0uzPnKf1NcQcf7rt+SMO/XvgxE8Yhuth7B96yj/y3bug
+         QVF4l3Z4wp5JmJ/ULZoUYFZSoI75w6I+EEyNo=
+Received: by 10.101.176.29 with SMTP id d29mr236673anp.163.1284384959277; Mon,
+ 13 Sep 2010 06:35:59 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Mon, 13 Sep 2010 06:35:59 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156087>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156088>
 
-Well, things finally seem even more complicated: in my case, the tree
-is a bit more particular than what I originally thought:
+On Mon, Sep 13, 2010 at 07:15, Peter Krefting <peter@softwolves.pp.se> =
+wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+>> * Doesn't follow the "Initializing a .po file" docs in
+>> =C2=A0t/README. Here's what you get after applying the little Perl
+>> =C2=A0cleanup program there to it:
+>
+> Well, I just used the standard commands for creating it.
 
-* I finally understand I read the --onto description wrong.  It could
-  surely be made easier to understand, by telling the user he first
-  has to import the subproject history into the superproject repo
-  first.  Adding an example of this would be of great use too.
+What commands did you use? I different things on GNU gettext 0.18.1
+using the commands documented in po/README, e.g.:
 
-* In my case the directory in which the kernel was originally located
-  has since then been renamed, and git-subtree stops exploring the
-  history at the rename commit, assuming the full import occured there.
+    @@ -12,0 +13 @@ msgstr ""
+    +"Language: sv\n"
 
-  Maybe git-subtree can be taught to follow renames, but currently the
-  way to handle that would seem to split in 2 steps:
-  - checkout the revision before the move
-  - split that part of history using the old name (without
-    --rejoin, and with a different --branch name than intended in
-    the end)
-  - checkout the head to be split
-  - split the remaining part, passing --onto the branch name that was
-    passed to --branch in the first run
+    @@ -16 +17 @@ msgstr ""
+    -"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);"
+    +"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);\n"
 
-  However, if I try that, the root of the second split has no parent.
-  I can use a graft and filter-branch - but there is either something
-  else I did not understood incorrectly, or maybe a bug somewhere ?
+And the line wrapping is different after a msgmerge:
 
-Best regards,
--- 
-Yann Dirson - Bertin Technologies
+    @@ -533 +532,3 @@ msgid "-a and -r options to 'git branch' do not
+make sense with a branch name"
+    -msgstr "flaggorna -a och -r p=C3=A5 \"git branch\" kan inte anges
+tillsammans med ett grennamn"
+    +msgstr ""
+    +"flaggorna -a och -r p=C3=A5 \"git branch\" kan inte anges tillsam=
+mans med ett "
+    +"grennamn"
+
+Which is probably because you edited it with an unofficial PO editor
+(i.e. not Emacs's po-mode.el) and didn't do msgmerge afterwards.
+
+>> =C2=A0 =C2=A0 =C2=A0 @@ -1,54 +1,38 @@
+>> =C2=A0 =C2=A0 =C2=A0 -# Swedish translation of git
+>> =C2=A0 =C2=A0 =C2=A0 -# Copyright =C2=A9 2010 Peter krefting <peter@=
+softwolves.pp.se>
+>> =C2=A0 =C2=A0 =C2=A0 -# Peter Krefting <peter@softwolves.pp.se>, 201=
+0.
+>> =C2=A0 =C2=A0 =C2=A0 -#
+>
+> That's a standard header, which is good to keep for clarity. If we wa=
+nt to
+> go through Translation Project (which I still do recommend), it is re=
+quired.
+
+We could just autogenerate it from the git.git logs before uploading
+to the Translation Project if it comes to that. Having comments before
+the <msgstr ""> also means it can't be updated with the example
+snippet in po/README.
+
+>> =C2=A0 =C2=A0 =C2=A0 -"PO-Revision-Date: 2010-09-12 21:07+0100\n"
+>
+> That's a good reference header to see how out-of-date the translation=
+ is.
+
+But redundant to `git log sv.po | grep ^Date | head -n1`. And since
+it's autogenerated it'll cause merge conflicts across different git
+branches eventually.
+
+>> =C2=A0 =C2=A0 =C2=A0 -"Last-Translator: Peter Krefting <peter@softwo=
+lves.pp.se>\n"
+>> =C2=A0 =C2=A0 =C2=A0 -"Language-Team: Swedish <tp-sv@listor.tp-sv.se=
+>\n"
+>
+> These are standard headers to make it easier to find out who to blame=
+ the
+> translation on. I haven't actually submitted my translation for revie=
+w on
+> the Swedish list yet, but will do so soon enough.
+
+Ditto redundant to `git log sv.po | grep ^Author`.  .
+
+>> =C2=A0 =C2=A0 =C2=A0 -#: wt-status.c:56
+>
+> These context lines are invaluable when figuring out how to translate=
+ stuff,
+> and to track back strings after the fact. I do not like the idea of r=
+emoving
+> them.
+
+Yes they're useful while translating. But as documented in po/README's
+"Updating a .po file" you can use them while doing that without
+submitting them to git.git.
+
+If they're included the majority of any po/*.po update will be updates
+to auto-generated line number comments.
+
+Anyway, I don't feel strongly about any of the above. Maybe we're
+omitting some some PO header entries that we should use, and maybe we
+should include PO commits (although that'd need a custom merge
+driver).
+
+But we should do that with a patch to po/README and implement it
+consistently across all the po/*.po files, having something that
+deviates from the norm is a pain to maintain.
+
+>> * Commit message should be "po/sv.po: add Swedish translation". It
+>> =C2=A0makes it much easier to `git log --grep=3Dpo/` or `git log
+>> =C2=A0--grep=3Dpo/sv.po` in the future.
+>
+> Git has that information already, no need to put it in the commit mes=
+sage
+> :-)
+
+It's not using the "<subsystem>: <message> <no-full-stop>"
+convention. All the existing commits in ab/i18n use that convention,
+and I'd prefer to keep it that way.
