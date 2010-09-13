@@ -1,74 +1,81 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] t7003: Use test_commit instead of custom function
-Date: Mon, 13 Sep 2010 12:11:32 +0000
-Message-ID: <AANLkTi=1p7tTNfhX7_4vMPFGtRC=F14im3qo009RPJV9@mail.gmail.com>
-References: <1284156396-81023-1-git-send-email-brian@gernhardtsoftware.com>
-	<214E9A5B-E9CE-4B98-88EC-744DBE1F3C32@gernhardtsoftware.com>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: git-subtree:  bug, and ideas for doc improvements
+Date: Mon, 13 Sep 2010 13:57:05 +0200
+Organization: Bertin Technologies
+Message-ID: <20100913135705.36f8217b@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 14:11:40 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 13 14:12:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov7sq-0003NE-GY
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 14:11:40 +0200
+	id 1Ov7tM-0003YL-Hm
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 14:12:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952Ab0IMMLe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 08:11:34 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40766 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754879Ab0IMMLd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 08:11:33 -0400
-Received: by iwn5 with SMTP id 5so5131488iwn.19
-        for <git@vger.kernel.org>; Mon, 13 Sep 2010 05:11:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=js1FmJ7IwWu3j0u1qk5UQAwFmFA3HjVNFl7eYKcy6R8=;
-        b=B1r6uUD3pEUzrmcii6wcqayHO0yonAdJSGC3EbyQdetErMUUiLRM5RC+6BG+whsg1B
-         lMLYxC7ARhKW3hK1LrlhCHmWNuUSxNqLmaioYdFimfwsZYtWOHy4HUN0JV4gUUd0a+yC
-         K8FacVZ9fSo8CBuYYh0hjdKgM1/gsbaXtvSqg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=SIDwCIhtQUuGDkHOG4i+n6Bog2HMQGavnhB8X9lbD29HekxanGCvi9ZZqpgEGlWPz0
-         sd3TQA21LAQPelGFMP3CB3Z6UCIlGGtKtQZeE7jM1/y3fxMtoMlZ9/ZahJy/NiGRw3YF
-         GyT6Rx32/teVjo9c9mdAnntyyDoDNZfh/4YVs=
-Received: by 10.231.155.206 with SMTP id t14mr6166295ibw.34.1284379892758;
- Mon, 13 Sep 2010 05:11:32 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Mon, 13 Sep 2010 05:11:32 -0700 (PDT)
-In-Reply-To: <214E9A5B-E9CE-4B98-88EC-744DBE1F3C32@gernhardtsoftware.com>
+	id S1754965Ab0IMMME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Sep 2010 08:12:04 -0400
+Received: from blois.bertin.fr ([195.68.26.9]:39953 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755089Ab0IMMMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 08:12:03 -0400
+X-Greylist: delayed 443 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Sep 2010 08:12:03 EDT
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 0185354358
+	for <git@vger.kernel.org>; Mon, 13 Sep 2010 14:04:34 +0200 (CEST)
+Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id D3B5B5434D
+	for <git@vger.kernel.org>; Mon, 13 Sep 2010 14:04:33 +0200 (CEST)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0L8O003K8PJLD150@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Mon, 13 Sep 2010 14:04:33 +0200 (CEST)
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17634.007
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156085>
 
-On Mon, Sep 13, 2010 at 04:14, Brian Gernhardt
-<brian@gernhardtsoftware.com> wrote:
->
-> On Sep 10, 2010, at 6:06 PM, Brian Gernhardt wrote:
->
->> Not only is this unneeded code duplication, it also was something
->> simply waiting to fail on case-insensitive file systems. =C2=A0So re=
-place
->> all uses of make_commit with test_commit.
->
-> To be more specific: this causes a failure in next on case-insensitiv=
-e HFS+. =C2=A0The commit that finally triggered the problem is 7ec344d:=
- "filter-branch: retire --remap-to-ancestor", by using `git reset --har=
-d A` which got confused on if 'A' was 'refs/branches/A' or './a'
->
-> However, the patch applies to master or maint.
+Hi Avery,
 
-And you've modified the casing so it passes? Maybe it should skip on
-case-insensitive systems instead, or perhaps we should modify it and
-test for that elsewhere.
+Here are a couple of remarks from trying to work out how to convert
+an imported-with-local-changes kernel to git-subtree.
+
+* When reading the doc, it looks like my use case would require --onto,
+  but although it is documented *when* to we are expected to use that
+  flag, it is not explained *what* it does (which tends to make be both
+  curious and nervous about it ;)
+
+* In addition, describing "what git subtree is expecting" without
+  --onto would probably be useful
+
+* If I first run "split" without --onto, then "reset --hard HEAD^" and
+  rerun the same split with an additional --onto, then:
+  - although a new set of split commits is created, the new branch
+    ref is set to the old one
+  - the split then aborts saying that the new branch ref is not an
+    ancestor
+ => this does not happen if I remove the old branch ref first, so it
+ does not look tied to the subtree-cache, only to the reachability of
+ the old split branch ?  FWIW, old branch (without --onto) is named
+ "linux-2.6" and new one (with --onto) is "linux-2.6b".
+
+* If I run "split --onto=XXX" where XXX is as specified in the manpage
+  "the first revision of the subproject's history that was imported
+  into your project", then the split history looks exactly the same,
+  appart from:
+  - without --onto, the root of the split branch has no parent
+  - with --onto, the split branch is forked off the specified commit,
+    which is itself not split.  The "--onto" name makes that result
+    understandable, but shouldn't the doc tell to use "the last commit
+    before the subproject's history was imported into your project"
+    instead ?
+
+Best regards,
+-- 
+Yann Dirson - Bertin Technologies
