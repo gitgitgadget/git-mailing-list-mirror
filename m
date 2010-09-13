@@ -1,131 +1,184 @@
 From: Marcus Comstedt <marcus@mc.pp.se>
-Subject: [PATCH v3 3/4] t0021: test checkout and commit of foreign idents
-Date: Tue, 7 Sep 2010 21:16:03 +0200
-Message-ID: <8221caee454ac58983c657e306341059061218aa.1284820251.git.marcus@mc.pp.se>
+Subject: [PATCH v3 1/4] convert: generalize checksafe parameter
+Date: Tue, 14 Sep 2010 00:00:49 +0200
+Message-ID: <dc98d53e2cc922c4ba7f21043969f77463e72c58.1284820251.git.marcus@mc.pp.se>
 References: <cover.1284820251.git.marcus@mc.pp.se>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 18 16:47:51 2010
+X-From: git-owner@vger.kernel.org Sat Sep 18 16:48:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owyhj-0008C7-3u
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 16:47:51 +0200
+	id 1Owyi8-00005X-FW
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 16:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755559Ab0IROrr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Sep 2010 10:47:47 -0400
-Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:46089 "EHLO
+	id S1755489Ab0IROrp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 10:47:45 -0400
+Received: from ua-85-227-1-6.cust.bredbandsbolaget.se ([85.227.1.6]:46504 "EHLO
 	bahamut.mc.pp.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755404Ab0IROr2 (ORCPT <rfc822;git@vger.kernel.org>);
+	with ESMTP id S1755405Ab0IROr2 (ORCPT <rfc822;git@vger.kernel.org>);
 	Sat, 18 Sep 2010 10:47:28 -0400
 Received: from chiyo.mc.pp.se (chiyo [192.168.42.32])
 	(using TLSv1 with cipher AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by bahamut.mc.pp.se (Postfix) with ESMTPS id 3D160F8C5;
-	Sat, 18 Sep 2010 16:37:48 +0200 (CEST)
+	by bahamut.mc.pp.se (Postfix) with ESMTPS id 13CF1F8C2;
+	Sat, 18 Sep 2010 16:37:47 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=mc.pp.se; s=hedgehog;
-	t=1284820668; bh=MEz6LdjKk/L6lzdvABKj21Rs8k62C946+EXIKV+TEnU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:To:Cc; b=rVt5
-	5uDeSVfRwgXoU21A4RWqyYBXSM6EiriNgqa+dJX7stzNsWN2wZgUcBdUEGXH6FtOUdp
-	q63hFkc+ZYDx2qjUovkBVrVrW3nwBwqF6VE3V2gxPuqJItGFYYC9G/GJUT8UCFkVmkI
-	YOuZ0VoZ2h4axA/vLTYY+kXyECm05t9hk=
+	t=1284820668; bh=Z9RsyosLEDY0jwQyIvpSrk98zPqly2/61Gu/My+sNgA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:To:Cc; b=hqxu
+	fWJZP6GvVFW7r1UgTlEK+XwC8kR31bMgt+NIKnaMAQ2caCWmfynCFP1++s7+iFs0UnJ
+	afRQAtCiDXHOkKyWgy7KL+qsL5CzY00vtF7983UI1PLi2dP7IeBDxdM3C2C11gerLSs
+	H1OHIdznEgyd7FyhIerLfLbKlKsW+Y9bs=
 Received: from marcus by chiyo.mc.pp.se with local (Exim 4.71)
-	(envelope-from <8221caee454ac58983c657e306341059061218aa@chiyo>)
-	id 1OwyXz-0002NH-Ma; Sat, 18 Sep 2010 16:37:47 +0200
+	(envelope-from <dc98d53e2cc922c4ba7f21043969f77463e72c58@chiyo>)
+	id 1OwyXy-0002NB-W3; Sat, 18 Sep 2010 16:37:47 +0200
 In-Reply-To: <cover.1284820251.git.marcus@mc.pp.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156458>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156459>
 
-Add test cases for the following behaviors:
+The convert_to_git() function used to have a checksafe parameter,
+which could be used to prevent safe_crlf checks by passing 0
+instead of the value of the global variable safe_crlf.
 
-  * Checking out a file with a foreign ident should not flag
-    the file as modified.  This is to prevent a mess when checking
-    out old versions, and to allow a migration model where files
-    are allowed to keep their foreign ident as long as their
-    content is also "foreign", i.e. not modified since the migration
-    to git.
-
-  * Committing to a file with a foreign ident should replace the
-    foreign ident with a native ident.  This is simply to get
-    the normal behavior of ident:  When the contents of the file is
-    updated, so is the ident.
+Since preventing checks is a wider concept than just disabling
+safe_crlf, generalize the parameter so that it can be used for other
+types of checks as well.
 
 Signed-off-by: Marcus Comstedt <marcus@mc.pp.se>
 ---
- t/t0021-conversion.sh |   58 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 58 insertions(+), 0 deletions(-)
+ builtin/apply.c |    2 +-
+ builtin/blame.c |    2 +-
+ cache.h         |    7 ++++++-
+ combine-diff.c  |    2 +-
+ convert.c       |    7 ++++---
+ diff.c          |    2 +-
+ sha1_file.c     |    2 +-
+ 7 files changed, 15 insertions(+), 9 deletions(-)
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 828e35b..cf83c02 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -93,4 +93,62 @@ test_expect_success expanded_in_repo '
- 	cmp expanded-keywords expected-output
- '
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 23c18c5..638e7be 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -1932,7 +1932,7 @@ static int read_old_data(struct stat *st, const char *path, struct strbuf *buf)
+ 	case S_IFREG:
+ 		if (strbuf_read_file(buf, path, st->st_size) != st->st_size)
+ 			return error("unable to open or read %s", path);
+-		convert_to_git(path, buf->buf, buf->len, buf, 0);
++		convert_to_git(path, buf->buf, buf->len, buf, CHECKS_DISALLOWED);
+ 		return 0;
+ 	default:
+ 		return -1;
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 1015354..850e165 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -2095,7 +2095,7 @@ static struct commit *fake_working_tree_commit(struct diff_options *opt,
+ 		if (strbuf_read(&buf, 0, 0) < 0)
+ 			die_errno("failed to read from stdin");
+ 	}
+-	convert_to_git(path, buf.buf, buf.len, &buf, 0);
++	convert_to_git(path, buf.buf, buf.len, &buf, CHECKS_DISALLOWED);
+ 	origin->file.ptr = buf.buf;
+ 	origin->file.size = buf.len;
+ 	pretend_sha1_file(buf.buf, buf.len, OBJ_BLOB, origin->blob_sha1);
+diff --git a/cache.h b/cache.h
+index 2ef2fa3..250abc1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -581,6 +581,11 @@ enum eol {
  
-+# Check that a file containing idents (native or foreign) is not
-+# spuriously flagged as modified on checkout
-+test_expect_success 'ident pristine after checkout' '
-+	{
-+		echo "File with foreign ident"
-+		echo "\$Id\$"
-+		echo "\$Id: Foreign Commit With Spaces \$"
-+	} > native-and-foreign-idents &&
+ extern enum eol eol;
+ 
++enum allow_checks {
++	CHECKS_DISALLOWED = 0,
++	CHECKS_ALLOWED = 1,
++};
 +
-+	{
-+		echo "File with foreign ident"
-+		echo "\$Id: c389f8936d7baa13f463254d55b72e00e5496e3f \$"
-+		echo "\$Id: Foreign Commit With Spaces \$"
-+	} > expected-output &&
-+
-+	git add native-and-foreign-idents &&
-+	git commit -m "File with native and foreign idents" &&
-+
-+	echo "native-and-foreign-idents ident" >> .gitattributes &&
-+
-+	rm -f native-and-foreign-idents &&
-+	git checkout -- native-and-foreign-idents &&
-+	cat native-and-foreign-idents &&
-+	cmp native-and-foreign-idents expected-output &&
-+	touch native-and-foreign-idents &&
-+	git status --porcelain native-and-foreign-idents > output &&
-+	test ! -s output &&
-+	git diff -- native-and-foreign-idents > output &&
-+	test ! -s output
-+'
-+
-+# Check that actually modifying the file and committing it produces a
-+# new ident on checkout
-+test_expect_success 'foreign ident replaced on commit' '
-+	{
-+		echo "File with foreign ident"
-+		echo "\$Id: cc874844b7868ce341059e6a87c50b6f37b75807 \$"
-+		echo "\$Id: cc874844b7868ce341059e6a87c50b6f37b75807 \$"
-+		echo "Some new content"
-+	} > expected-output &&
-+
-+	echo "1	0	native-and-foreign-idents" > expected-stat1 &&
-+	echo "2	1	native-and-foreign-idents" > expected-stat2 &&
-+
-+	echo "Some new content" >> native-and-foreign-idents &&
-+	git diff --numstat -- native-and-foreign-idents > output &&
-+	cmp output expected-stat1 &&
-+	git add native-and-foreign-idents &&
-+	git commit -m "Modified file" &&
-+	git diff --numstat HEAD^ HEAD -- native-and-foreign-idents > output &&
-+	cmp output expected-stat2 &&
-+	rm -f native-and-foreign-idents &&
-+	git checkout -- native-and-foreign-idents &&
-+	cat native-and-foreign-idents &&
-+	cmp native-and-foreign-idents expected-output
-+'
-+
-+
- test_done
+ enum branch_track {
+ 	BRANCH_TRACK_UNSPECIFIED = -1,
+ 	BRANCH_TRACK_NEVER = 0,
+@@ -1059,7 +1064,7 @@ extern void trace_argv_printf(const char **argv, const char *format, ...);
+ /* convert.c */
+ /* returns 1 if *dst was used */
+ extern int convert_to_git(const char *path, const char *src, size_t len,
+-                          struct strbuf *dst, enum safe_crlf checksafe);
++                          struct strbuf *dst, enum allow_checks checksallowed);
+ extern int convert_to_working_tree(const char *path, const char *src, size_t len, struct strbuf *dst);
+ extern int renormalize_buffer(const char *path, const char *src, size_t len, struct strbuf *dst);
+ 
+diff --git a/combine-diff.c b/combine-diff.c
+index 655fa89..c7f132d 100644
+--- a/combine-diff.c
++++ b/combine-diff.c
+@@ -758,7 +758,7 @@ static void show_patch_diff(struct combine_diff_path *elem, int num_parent,
+ 			if (is_file) {
+ 				struct strbuf buf = STRBUF_INIT;
+ 
+-				if (convert_to_git(elem->path, result, len, &buf, safe_crlf)) {
++				if (convert_to_git(elem->path, result, len, &buf, CHECKS_ALLOWED)) {
+ 					free(result);
+ 					result = strbuf_detach(&buf, &len);
+ 					result_size = len;
+diff --git a/convert.c b/convert.c
+index 01de9a8..8050c24 100644
+--- a/convert.c
++++ b/convert.c
+@@ -706,7 +706,7 @@ static enum action determine_action(enum action text_attr, enum eol eol_attr)
+ }
+ 
+ int convert_to_git(const char *path, const char *src, size_t len,
+-                   struct strbuf *dst, enum safe_crlf checksafe)
++                   struct strbuf *dst, enum allow_checks checksallowed)
+ {
+ 	struct git_attr_check check[5];
+ 	enum action action = CRLF_GUESS;
+@@ -733,7 +733,8 @@ int convert_to_git(const char *path, const char *src, size_t len,
+ 		len = dst->len;
+ 	}
+ 	action = determine_action(action, eol_attr);
+-	ret |= crlf_to_git(path, src, len, dst, action, checksafe);
++	ret |= crlf_to_git(path, src, len, dst, action,
++			   (checksallowed? safe_crlf : 0));
+ 	if (ret) {
+ 		src = dst->buf;
+ 		len = dst->len;
+@@ -796,5 +797,5 @@ int renormalize_buffer(const char *path, const char *src, size_t len, struct str
+ 		src = dst->buf;
+ 		len = dst->len;
+ 	}
+-	return ret | convert_to_git(path, src, len, dst, 0);
++	return ret | convert_to_git(path, src, len, dst, CHECKS_DISALLOWED);
+ }
+diff --git a/diff.c b/diff.c
+index 9a5c77c..ed74f6b 100644
+--- a/diff.c
++++ b/diff.c
+@@ -2375,7 +2375,7 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
+ 		/*
+ 		 * Convert from working tree format to canonical git format
+ 		 */
+-		if (convert_to_git(s->path, s->data, s->size, &buf, safe_crlf)) {
++		if (convert_to_git(s->path, s->data, s->size, &buf, CHECKS_ALLOWED)) {
+ 			size_t size = 0;
+ 			munmap(s->data, s->size);
+ 			s->should_munmap = 0;
+diff --git a/sha1_file.c b/sha1_file.c
+index 0cd9435..13624a6 100644
+--- a/sha1_file.c
++++ b/sha1_file.c
+@@ -2434,7 +2434,7 @@ static int index_mem(unsigned char *sha1, void *buf, size_t size,
+ 	if ((type == OBJ_BLOB) && path) {
+ 		struct strbuf nbuf = STRBUF_INIT;
+ 		if (convert_to_git(path, buf, size, &nbuf,
+-		                   write_object ? safe_crlf : 0)) {
++		                   write_object ? CHECKS_ALLOWED : CHECKS_DISALLOWED)) {
+ 			buf = strbuf_detach(&nbuf, &size);
+ 			re_allocated = 1;
+ 		}
 -- 
 1.7.2
