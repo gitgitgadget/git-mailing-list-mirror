@@ -1,90 +1,131 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: git log for a merged branch
-Date: Mon, 13 Sep 2010 09:37:58 -0400 (EDT)
-Message-ID: <30770696.248360.1284385078695.JavaMail.root@mail.hq.genarts.com>
-References: <201009090117.06555.barra_cuda@katamail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Mon, 13 Sep 2010 14:45:09 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1009131437310.16248@ds9.cixit.se>
+References: <20100912202111.B11522FC00@perkele> <AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com> <alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se> <AANLkTinhmBHQzkdEY88Oa-XsZQ4VAUz0Tci+gOt=fXmE@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Michele Ballabio <barra_cuda@katamail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 13 15:38:15 2010
+Content-Type: TEXT/PLAIN; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 13 15:45:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ov9Ed-0005dm-4O
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 15:38:15 +0200
+	id 1Ov9Le-00005c-9T
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Sep 2010 15:45:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752049Ab0IMNiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 09:38:07 -0400
-Received: from hq.genarts.com ([173.9.65.1]:51027 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751792Ab0IMNiG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 09:38:06 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 875AF1E2636A;
-	Mon, 13 Sep 2010 09:38:05 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id TGAazEOyD2t4; Mon, 13 Sep 2010 09:37:58 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id C05421E26354;
-	Mon, 13 Sep 2010 09:37:58 -0400 (EDT)
-In-Reply-To: <201009090117.06555.barra_cuda@katamail.com>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1754677Ab0IMNpP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 09:45:15 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:37553 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752516Ab0IMNpN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Sep 2010 09:45:13 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8DDj9vV022966
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 13 Sep 2010 15:45:10 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8DDj91D022962;
+	Mon, 13 Sep 2010 15:45:09 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTinhmBHQzkdEY88Oa-XsZQ4VAUz0Tci+gOt=fXmE@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Mon, 13 Sep 2010 15:45:10 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156089>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156090>
+
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+
+> What commands did you use? I different things on GNU gettext 0.18.1
+> using the commands documented in po/README, e.g.:
+
+I have 0.17, so there may be changes since then.
+
+>    @@ -12,0 +13 @@ msgstr ""
+>    +"Language: sv\n"
+
+gtranslator (at least in the version I'm using) kills that line for me.
+
+>    @@ -16 +17 @@ msgstr ""
+>    -"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);"
+>    +"Plural-Forms: nplurals=3D2; plural=3D(n !=3D 1);\n"
+
+another gtranslator oddity (it removes the trailing \n). That one doesn=
+'t=20
+matter, though.
+
+> And the line wrapping is different after a msgmerge:
+
+I didn't run msgmerge on the output from gtranslator. If I do that, I g=
+et=20
+your wrapped version.
+
+> Having comments before the <msgstr ""> also means it can't be updated=
+ with=20
+> the example snippet in po/README.
+
+Huh? I've never had problems with that in any project I work on. And so=
+me of=20
+the editors (notably KBabel) even inserts these comments by itself.
+
+> But redundant to `git log sv.po | grep ^Date | head -n1`.
+
+No. That gives you when the translation was *committed*, not when the=20
+string set it used as a base for translation was created.
+
+> And since it's autogenerated it'll cause merge conflicts across diffe=
+rent=20
+> git branches eventually.
+
+PO files don't merge properly between branches anyway (one might be abl=
+e to=20
+set up a custom merge driver that runs msgmerge between the files, but =
+I've=20
+never been able to get that to work), so they are best avoided. General=
+ly,=20
+you only want to update PO files on the mainline version(s), and ignore=
+ them=20
+on merge.
+
+> Ditto redundant to `git log sv.po | grep ^Author`.  .
+
+No Language-Team. But, sure. You would have to delete them every time s=
+ince=20
+any sane PO file editor will add them back automatically on each edit.
+
+> Yes they're useful while translating. But as documented in po/README'=
+s=20
+> "Updating a .po file" you can use them while doing that without submi=
+tting=20
+> them to git.git.
+
+Sure. But then again you would have to remember to delete them manually=
+=2E=20
+Everything that requires an extra step of manual commands will make the=
+=20
+hurdle to create translations higher.
+
+> It's not using the "<subsystem>: <message> <no-full-stop>"
+> convention. All the existing commits in ab/i18n use that convention,
+> and I'd prefer to keep it that way.
+
+Well, I don't really care either way.
 
 
+Expect an updated version after I go through the review comments I got =
+(I've=20
+also posted the translation to the TP-SV list for review there).
 
------ Original Message -----
-> From: "Michele Ballabio" <barra_cuda@katamail.com>
-> To: "Stephen Bash" <bash@genarts.com>
-> Cc: "Git Mailing List" <git@vger.kernel.org>
-> Sent: Wednesday, September 8, 2010 7:17:05 PM
-> Subject: Re: git log for a merged branch
-> On Wednesday 08 September 2010, Stephen Bash wrote:
->
-> Let's call the merge commit "mergecmt". The commit where the "release"
-> branch
-> branched off is
-> 
-> git merge-base mergecmt^1 mergecmt^2
-> 
-> ... where mergecmt^1 is the first parent of the merge (usually on the
-> "mainline" branch) and mergecmt^2 is the second parent, which
-> usually(*)
-> refers to the "release" branch (in this case, tagFoo).
-> 
-> So
-> 
-> git log $(git merge-base mergecmt^1 mergecmt^2)..mergecmt^2
-> 
-> is what you want.
-> 
-> > To complicate things a bit more, in the real world there may be
-> > multiple
-> > merges from the release branch to mainline during the life of the
-> > release
-> > branch, so any solution that also deals with that would be
-> > outstanding
-> > (probably at the cost of additional complexity?)
-> 
-> Maybe something like:
-> 
-> for i in $(git rev-list --merges last_interesting_tag..mainline)
-> do
-> git log $(git merge-base $i^1 $i^2)..$i^2
-> done
-
-Hm...  Makes sense...  I'll have to play with it a little bit to get a good feel for how it fits our workflow, but it seems like a really good option.
-
-Thanks!
-
-Stephen
+--=20
+\\// Peter - http://www.softwolves.pp.se/
