@@ -1,96 +1,72 @@
-From: Ramana Kumar <ramana.kumar@gmail.com>
-Subject: Re: [PATCH] Make commit help text more accurate for --verbose
-Date: Tue, 14 Sep 2010 19:08:39 +1000
-Message-ID: <AANLkTin0W3HOwSQVFR_cm9oJzYib2yULkUc19Pg4yJD6@mail.gmail.com>
-References: <1283680383-12495-1-git-send-email-ramana.kumar@gmail.com>
- <AANLkTinEZ92S_XB4zrnb26eVR-MFsDQcSPAZ3RXj6ofH@mail.gmail.com> <AANLkTikLTykbgUjCK4H0cbF0QXZHOPYbLdptEKe4-rD5@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 11:09:14 2010
+From: Theodore Tso <tytso@MIT.EDU>
+Subject: Re: Coping with the pull-before-you-push model
+Date: Tue, 14 Sep 2010 08:12:13 -0400
+Message-ID: <D4360EBB-7891-457E-A6AC-7159CADCAC6C@mit.edu>
+References: <4C8866F9.1040705@workspacewhiz.com> <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com> <4C88F2A9.2080306@workspacewhiz.com> <AANLkTikdV3W1d7uNokKRRiT4FeznL1uM=Y9SQLDqgAic@mail.gmail.com> <20100910141527.GA6936@sigill.intra.peff.net> <4C8EFE62.7080908@workspacewhiz.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>, Jon Seymour <jon.seymour@gmail.com>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Tue Sep 14 14:17:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvRVn-0004ny-82
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 11:09:11 +0200
+	id 1OvURv-00006T-Tt
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 14:17:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113Ab0INJJE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 05:09:04 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:59785 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751664Ab0INJJA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 05:09:00 -0400
-Received: by wyf22 with SMTP id 22so7185655wyf.19
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 02:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IE2MtfoqZubbheifBpuXo3WJ8Lco9Ly2NvqpWupQaow=;
-        b=jVQJbzWpTPeOQEJ/sQhuMlfACrFyQegQ6AqHdAs/q5Le/zDCpRDF0mYAdtNzgUEbsZ
-         YauNGJHqt1SdMmx4OKFPQ79yP8yzFDn7jbS3XWQgscL7FEJFdU9kjfYgQvkwbo6ljwfV
-         kiSOFfcwlQsUjJpUApRleUqH3ehLqZayHmA2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=W11VbK3hP53IQZXUkT9qIRqMQ8yDo2VUKzmCih1OGPF2Kti5UoHEH5JViwwB6vsPIi
-         lX9g2lQHnKewQdwjoOTGDIH1gCb4NJHnCDtO2YVI020BUYB467+CFtpWOJDvkNcABq9Y
-         m9v1daN89LIibn2pebML+1A9Zqk5fe8KeOlK8=
-Received: by 10.216.158.140 with SMTP id q12mr3669000wek.14.1284455339269;
- Tue, 14 Sep 2010 02:08:59 -0700 (PDT)
-Received: by 10.216.25.9 with HTTP; Tue, 14 Sep 2010 02:08:39 -0700 (PDT)
-In-Reply-To: <AANLkTikLTykbgUjCK4H0cbF0QXZHOPYbLdptEKe4-rD5@mail.gmail.com>
+	id S1753601Ab0INMRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 08:17:17 -0400
+Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:42447 "EHLO
+	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752060Ab0INMRQ convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 08:17:16 -0400
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Sep 2010 08:17:16 EDT
+X-AuditID: 12074424-b7b2bae000005b3f-e4-4c8f66857ff8
+Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
+	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id E3.A2.23359.5866F8C4; Tue, 14 Sep 2010 08:11:49 -0400 (EDT)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o8ECCDK4002414;
+	Tue, 14 Sep 2010 08:12:13 -0400
+Received: from [10.0.42.108] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
+	(authenticated bits=0)
+        (User authenticated as tytso@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o8ECCBYI016999
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
+	Tue, 14 Sep 2010 08:12:12 -0400 (EDT)
+In-Reply-To: <4C8EFE62.7080908@workspacewhiz.com>
+X-Mailer: Apple Mail (2.1081)
+X-Brightmail-Tracker: AAAAARX2XKo=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156167>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156168>
 
-On Mon, Sep 6, 2010 at 2:30 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Sun, Sep 5, 2010 at 15:06, Thiago Farina <tfransosi@gmail.com> wro=
-te:
->> Hi Ramana,
->>
->> Some *style* comments below.
->> On Sun, Sep 5, 2010 at 6:53 AM, Ramana Kumar <ramana.kumar@gmail.com=
-> wrote:
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0fprintf(fp,
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0"\n"
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0"# Please enter the commit message for your changes.");
->>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cleanup_mode=
- =3D=3D CLEANUP_ALL)
->>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (cleanup_mode=
- =3D=3D CLEANUP_ALL && !verbose)
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0fprintf(fp,
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0" Lines starting\n"
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0"# with '#' will be ignored, =
-and an empty"
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0" message aborts the commit.\=
-n");
->> The Documentation/CodingStyle says to avoid using braces unncessary.
->> But since this is not a single line statement, like:
->> if (foo)
->> =C2=A0foo =3D x;
->>
->> Could you wrapp this into { } ?
->
-> The braces are still unncessary if the function call is spread across
-> a few lines. I haven't seen anything in the source that indicates tha=
-t
-> we prefer braces when a braceless if/else has an associated statement
-> that exceeds 1 line.
 
-Any other suggestions to improve this patch?
+On Sep 14, 2010, at 12:47 AM, Joshua Jensen wrote:
+
+>>> management, this looks like a step-backwards.
+>> Bear in mind that you can still shift to a maintainer model, but keep
+>> the maintainer automated. That is, you can queue up "to-pull" heads, and
+>> then have an automated process pull them one by one and do some basic QA
+>> (does it merge, does it build, does it pass automated tests, etc). Which
+>> is not that different from what many shops do in the non-maintainer
+>> model, except that when you break the build, the maintainer process
+>> notices _before_ publishing the merged tip, so everybody won't try to
+>> build on your broken crap.
+>> 
+> Do you know of any existing software that does this?  This may be ideal in the short term.
+
+Our workflow at $WORK involves pushing changes to gerrit to various "effort branches", and then once they are approved, we have a "Mergitator" script that will attempt to merge the effort branch with the merged master branch, and then attempt to do a build.  If the build succeeds, then the changes will get pushed back to the publically visible merged master branch, and then the Mergitator will move on to the next effort branch that requires merging.   If there is a merge conflict, the Mergitator will refuse the merge, and then give instructions on how to fix up the tree to avoid merge conflicts.
+
+The Mergitator code hasn't been released, and I suspect the main reason is that there's relatively little code that could be used outside of our environment, and a large amount of code which contains lots of details about our internal build system that would have to be stripped out and generalized before it could be released --- and no one has time to do it.
+
+So this probably doesn't help you since I suspect you meant to ask the question, "do you know of any existing publically available software", but I can tell you that it certainly can be done, and that software exists.  Making it be software which is useful and usable to you would definitely take more work...
+
+-- Ted
