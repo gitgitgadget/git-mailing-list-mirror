@@ -1,68 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] git-reset.txt: clarify branch vs. branch head
-Date: Mon, 13 Sep 2010 17:35:29 -0700
-Message-ID: <7v62y99n72.fsf@alter.siamese.dyndns.org>
-References: <cover.1284365021.git.git@drmicha.warpmail.net>
- <4cb6432e6fc534231841ca8301b9022fa038946c.1284365021.git.git@drmicha.warpmail.net>
+From: Thomas Dickey <dickey@his.com>
+Subject: Re: git diffstat feature suggestion
+Date: Mon, 13 Sep 2010 17:33:41 -0700 (PDT)
+Message-ID: <d8b9a7c5-ee78-4b75-a820-8eb8943c9f13@g18g2000vbn.googlegroups.com>
+References: <AANLkTimr6MByE=jnKAjku1Hbcm66giHMLNz6TVxxkYkq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 14 02:35:53 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 14 03:21:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvJV1-0006bL-EM
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 02:35:51 +0200
+	id 1OvKDH-0000Jf-MA
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 03:21:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073Ab0INAfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Sep 2010 20:35:39 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37239 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751908Ab0INAfi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Sep 2010 20:35:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F2387D6C85;
-	Mon, 13 Sep 2010 20:35:37 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=04cLtCUMqLX8L7fNleRCJrrqErQ=; b=tUk/zaJmDoUKU+rTTE5FQRL
-	vbJm6GXf2JVmXQQiXl05Z5DrRLwECvSvpF8wT5orRQuwgJ+mOQyA14EikMic3J3Q
-	scaEIZXAl/4snxnm2MCF7LWk8+OXIscP9f2sDZI7nOdKXgO6ewHZDQKaP+xj/p9p
-	91gEIvTQvm9ZhZsRKoSE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=a9/x8AWtJMeeQGebe0gpDlEeBxMOv+OrblUg3XlAUSqz/kV4W
-	fWrQO2esQqk6soFby5mL2t0YULG+5ne9HNvYWVK7zMEfA0A3YCJPvL5NabNtd5+8
-	P3+zBPLiIH06ZiKQCnp8qx/J16Ba1mMF7eZ1N0+08mBuAudFatpnOasvRc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B44F6D6C84;
-	Mon, 13 Sep 2010 20:35:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F11F8D6C83; Mon, 13 Sep
- 2010 20:35:30 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FCD3D300-BF97-11DF-BC99-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751859Ab0INBVR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Sep 2010 21:21:17 -0400
+Received: from mail-gy0-f184.google.com ([209.85.160.184]:43299 "EHLO
+	mail-gy0-f184.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751650Ab0INBVR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 13 Sep 2010 21:21:17 -0400
+X-Greylist: delayed 2854 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Sep 2010 21:21:17 EDT
+Received: by gyg8 with SMTP id 8so4149371gyg.1
+        for <git@vger.kernel.org>; Mon, 13 Sep 2010 18:21:16 -0700 (PDT)
+Received: by 10.101.52.7 with SMTP id e7mr147015ank.49.1284424421848; Mon, 13
+ Sep 2010 17:33:41 -0700 (PDT)
+Received: by g18g2000vbn.googlegroups.com with HTTP; Mon, 13 Sep 2010 17:33:41
+ -0700 (PDT)
+In-Reply-To: <AANLkTimr6MByE=jnKAjku1Hbcm66giHMLNz6TVxxkYkq@mail.gmail.com>
+X-IP: 96.255.37.241
+User-Agent: G2/1.0
+X-HTTP-UserAgent: Opera/9.80 (X11; Linux i686; U; en) Presto/2.2.15 Version/10.10,gzip(gfe)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156157>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On Sep 11, 4:35=A0pm, Marc Bejarano <b...@beej.org> wrote:
+> hi.
+>
+> i find the diffstats that get posted to development mailing lists fro=
+m
+> people using (i'm guessing) quilt to be great. one improvement that
+> comes to mind would be some sort of option that just tallies changes
+> in actual lines of code, ignoring whitespace and comments.
 
-> @@ -36,7 +36,7 @@ This means that `git reset -p` is the opposite of `git add -p` (see
->  linkgit:git-add[1]).
->  
->  'git reset' [--<mode>] [<commit>]::
-> -	This form points the current branch to <commit> and then
-> +	This form sets the current branch head to <commit> and then
->  	updates index and working tree according to <mode>, which must
->  	be one of the following:
+fwiw, I don't recall seeing any patches from quilt (I don't use it).
 
-Perhaps "resets" or "moves" is even clearer?
-
-In any case I think this is an improvement.
+To track whitespace and comments, it would of course be necessary to
+make the diff program know about various program's syntaxes.
