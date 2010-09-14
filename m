@@ -1,99 +1,71 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] send-email: use catfile() to concatenate files
-Date: Tue, 14 Sep 2010 20:42:52 +0000
-Message-ID: <AANLkTikEe_KNmXUmTtVSRjKy4QbhAmSJ9jXz2y0dO9Em@mail.gmail.com>
-References: <1284490944-16964-1-git-send-email-avarab@gmail.com>
-	<7v7hio86tz.fsf@alter.siamese.dyndns.org>
-	<AANLkTim7y3qUqQ4TN4w9+5qwR-uLmCP=dTKnMUSnqUrP@mail.gmail.com>
-	<m3iq28kqs4.fsf@localhost.localdomain>
+From: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
+Subject: Import existing (old) topic branches in topgit
+Date: Tue, 14 Sep 2010 22:44:22 +0200
+Message-ID: <AANLkTima2NsEWuT85oFZGpfCQrsrqy5KsQSOez3B9i-7@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 22:43:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 14 22:44:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvcLD-0000Is-4q
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:42:59 +0200
+	id 1OvcMg-0000uH-0K
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:44:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752113Ab0INUmy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 16:42:54 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52097 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646Ab0INUmx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 16:42:53 -0400
-Received: by iwn5 with SMTP id 5so6347415iwn.19
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 13:42:53 -0700 (PDT)
+	id S1753204Ab0INUoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 16:44:25 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:51922 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751646Ab0INUoZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 16:44:25 -0400
+Received: by wwd20 with SMTP id 20so209098wwd.1
+        for <git@vger.kernel.org>; Tue, 14 Sep 2010 13:44:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+85WPHtXxc++dWMG2sltGNdoP+6xTqLPXaKmDZj3C64=;
-        b=Pe3+6nTK2gY3tB2zzl8AJN15rueqITSHAlKt9HzvZcPGxffZeE+Lk4gz/XHkr06ZfZ
-         Mqgodg52VgC0kswnTO0v8WmMQx4MknRhoOWbw+EsuuLw/6R/wKj1LcEansIz8324RyVk
-         8j1eJhlHyMyz0YVEOKbk/eMQ+A69yo2Y6J7Jk=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=a9pjocyUgKd/G1DMeBVoIx5L/mdQOya3ZrVUb1uyrcg=;
+        b=drB1d0m731PH7CCb8VovVe2mw6KtGAUScGknpFqglSFze2xn1TZj3nqWcMAdr3Sabq
+         jkIGU3Li+WRqtdusFDRYlaP/6cBuIzYgJZokbFJkcYqmkU0y/loWO4rVlUu3A3M/i6gz
+         KXnaQ9hWhWnnjtA7AiUjcdYh0d9Yaxqn99kM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=PfCETGuU2O0L+Qa5SiWgWOV9NRLKpdzcnQs7QwZsZ6z3J+YKX2shi4tpjnJMIYG56h
-         gGol9bAE5dHQzZBA6RXSpp2UYLnTZyWy754gqAmq4sB7IpJSHN8F4rbS3spjQQxosR/Z
-         LEBxk2YB4Y2JzXR2A7xyb7zkjK1xXiFdcYWFQ=
-Received: by 10.231.85.206 with SMTP id p14mr436104ibl.89.1284496972936; Tue,
- 14 Sep 2010 13:42:52 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Tue, 14 Sep 2010 13:42:52 -0700 (PDT)
-In-Reply-To: <m3iq28kqs4.fsf@localhost.localdomain>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=pIS77YahQLrg9ny5TFexYmOeabh4f+OpouXFuppqfQLVdOJBWK4Ev30bsGFDTbpXFR
+         cpG/RuuXY0hJqXQ+RtgFseuo+y8lVXtKm3IJtA/Cdsn7dEWDZ2yoqrgNqfL/gW8wduYS
+         pg8FipIsHSzz6e2EvucCVonRUl7XhQky6kIqU=
+Received: by 10.216.38.20 with SMTP id z20mr346173wea.108.1284497063020; Tue,
+ 14 Sep 2010 13:44:23 -0700 (PDT)
+Received: by 10.216.153.193 with HTTP; Tue, 14 Sep 2010 13:44:22 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156212>
 
-On Tue, Sep 14, 2010 at 20:35, Jakub Narebski <jnareb@gmail.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->> On Tue, Sep 14, 2010 at 19:26, Junio C Hamano <gitster@pobox.com> wr=
-ote:
->>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->>>
->>>> Change send-email to use Perl's catfile() function instead of
->>>> "$dir/$file". If send-email is given a $dir that ends with a / we'=
-ll
->>>> end up printing a double slashed path like "dir//mtfnpy.patch".
->>>>
->>>> This doesn't cause any problems since Perl's IO layer will handle =
-it,
->>>> but it looks ugly.
->>>>
->>>> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmai=
-l.com>
->>>
->>> If you mentioned in the proposed log message that File::Spec::Funct=
-ions
->>> have been with us since Perl 5.6.1, it would have saved me (and oth=
-ers)
->>> some time worrying about the portability issues.
->>
->> I thought you might trust me to write portable code by default :)
->>
->> Anyway, I forgot to mention it. But one can use the corelist(1)
->> program to see when what modules appeared in perl core:
->>
->> =C2=A0 =C2=A0 $ corelist File::Spec::Functions
->> =C2=A0 =C2=A0 File::Spec::Functions was first released with perl 5.0=
-0504
->
-> Also using File::Spec / File::Spec::Functions makes code more portabl=
-e
-> (with respect to things such as different directory separators, and
-> volume portion of pathname) than using "$dir/$file".
+Hi all,
 
-Right, but perl mitigates that to some extent by converting Unix paths
-on-the-fly
-to whatever the native platform uses. But of course that falls down in
-cases like Win32
-volume labels.
+After trying to manually maintain many topic branches before sending
+them upstream, I recently discovered that topgit seems to become my
+best friend.
+
+But as I'm new to this tool, I don't know what's the best way to
+import existing branches in topgit.
+
+What I mean is:
+* I already have topic branches, with long history and regular merges
+with upstream.
+* I want to manage the related topic via topgit
+* I whish to keep my own history (if possible)
+
+
+Can experimented users give me some tips on how to do this?
+
+Thanks in advance.
+-- 
+Guilhem BONNEFILLE
+-=- JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
+-=- mailto:guilhem.bonnefille@gmail.com
+-=- http://nathguil.free.fr/
