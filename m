@@ -1,98 +1,106 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in submodules
-Date: Tue, 14 Sep 2010 22:30:09 +0200
-Message-ID: <4C8FDB51.6010009@web.de>
-References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil> <7vy6bajvnd.fsf@alter.siamese.dyndns.org> <1094265482.7527324.1284144028114.JavaMail.fmail@mwmweb047> <AANLkTinMf-_vk2-gRazf-8FNykZoNbVwmu_+c+5ht8rY@mail.gmail.com> <1258122337.8606899.1284400767503.JavaMail.fmail@mwmweb047> <150763691.8130046.1284401891268.JavaMail.fmail@mwmweb048> <7v7hipb5ht.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] send-email: use catfile() to concatenate files
+Date: Tue, 14 Sep 2010 13:35:40 -0700 (PDT)
+Message-ID: <m3iq28kqs4.fsf@localhost.localdomain>
+References: <1284490944-16964-1-git-send-email-avarab@gmail.com>
+	<7v7hio86tz.fsf@alter.siamese.dyndns.org>
+	<AANLkTim7y3qUqQ4TN4w9+5qwR-uLmCP=dTKnMUSnqUrP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Brandon Casey <drafnel@gmail.com>,
-	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
-	johannes.schindelin@gmx.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 22:30:30 2010
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 14 22:36:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovc96-0002fi-Ap
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:30:28 +0200
+	id 1OvcEV-0005X1-RH
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:36:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755617Ab0INUaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 16:30:16 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:46654 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755607Ab0INUaM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Sep 2010 16:30:12 -0400
-Received: from smtp07.web.de  ( [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 9D8F31685AD55;
-	Tue, 14 Sep 2010 22:30:10 +0200 (CEST)
-Received: from [93.246.48.208] (helo=[192.168.178.29])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1Ovc8o-0008Ax-00; Tue, 14 Sep 2010 22:30:10 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-In-Reply-To: <7v7hipb5ht.fsf@alter.siamese.dyndns.org>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+XZBLLiwtugWdvXGNS8Sewb4SHBBK19qNZqjVX
-	9kt0K4NvP9GZiqJqCMR1iT14N4uOUVdbmPM20fM2QldweBswN2
-	YZRhhXonRVOEsETTPjuw==
+	id S1755309Ab0INUf5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 16:35:57 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51605 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751819Ab0INUf4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 16:35:56 -0400
+Received: by bwz11 with SMTP id 11so5915978bwz.19
+        for <git@vger.kernel.org>; Tue, 14 Sep 2010 13:35:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=g6VhsxfeVrNVyDBtGQU+Upz0A4FdTa2u+FQv8W6X6pI=;
+        b=hz2Yg7+T/1zUSWyWQJ0vEdLgsNEdW/8PqnGU8jDa4NSwxfOWAtpPpXgRRvYaQlOLio
+         3A8fZ3akfRxzx1YP3thc8bUBN8zOr3t4k4wpWGxIAex9kObTBVB6P/kTb3LIk/uJzqBM
+         pu2euuau5JXTco2IJbiZYGM/Md4JLi6scG3Yo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=i/ETJJzQ75Asy1c7cyCs/lRwwYuQBUiJIrdmy2BeSyLM5aU1S6GPa+U7IIK1xH7Yhu
+         X96iE1d7FPeaQYi4RgtCKfjYc+TESISL6I2a/GIv5kq42X6KRqj49Ru6V+HjPLcQslGX
+         Zqowx924XIhRWKW+UI7vmp+sTWF2965ac0loo=
+Received: by 10.204.48.75 with SMTP id q11mr480494bkf.0.1284496542298;
+        Tue, 14 Sep 2010 13:35:42 -0700 (PDT)
+Received: from localhost.localdomain (abwn161.neoplus.adsl.tpnet.pl [83.8.237.161])
+        by mx.google.com with ESMTPS id 11sm580724bkj.23.2010.09.14.13.35.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 14 Sep 2010 13:35:40 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8EKZ81i024767;
+	Tue, 14 Sep 2010 22:35:19 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8EKYqQQ024763;
+	Tue, 14 Sep 2010 22:34:52 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTim7y3qUqQ4TN4w9+5qwR-uLmCP=dTKnMUSnqUrP@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156209>
 
-Am 14.09.2010 01:14, schrieb Junio C Hamano:
-> What makes untracked paths in the superproject different from the ones in
-> a submodule?
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+> On Tue, Sep 14, 2010 at 19:26, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+>>
+>>> Change send-email to use Perl's catfile() function instead of
+>>> "$dir/$file". If send-email is given a $dir that ends with a / we'l=
+l
+>>> end up printing a double slashed path like "dir//mtfnpy.patch".
+>>>
+>>> This doesn't cause any problems since Perl's IO layer will handle i=
+t,
+>>> but it looks ugly.
+>>>
+>>> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+>>
+>> If you mentioned in the proposed log message that File::Spec::Functi=
+ons
+>> have been with us since Perl 5.6.1, it would have saved me (and othe=
+rs)
+>> some time worrying about the portability issues.
+>=20
+> I thought you might trust me to write portable code by default :)
+>=20
+> Anyway, I forgot to mention it. But one can use the corelist(1)
+> program to see when what modules appeared in perl core:
+>=20
+>     $ corelist File::Spec::Functions
+>     File::Spec::Functions was first released with perl 5.00504
 
-That you can have a different state for each path inside the superproject
-(modified, untracked etc.) while you can't have that for the paths in the
-submodule (when looked at from the superproject): There is only a single
-state available for the whole submodule, it's either modified or it isn't.
-So IMO a modified submodule should tell the user: "There is a change in
-this submodule so that when you commit/push your superproject now, others
-might run into problems when fetching it; you want to be sure this is not
-the case before doing that". And this is just the same thing you could
-say about a file in the superproject when it shows up as modified, no?
-And for submodules this definition must also include new yet untracked
-files, as they are very likely to be missing in every but your work tree.
+Also using File::Spec / File::Spec::Functions makes code more portable
+(with respect to things such as different directory separators, and
+volume portion of pathname) than using "$dir/$file".
 
-
-> "git diff" cannot be it as it does not show untracked paths
-> in the superproject, so you are talking about "the user cannot tell from
-> the 'git status' output", right?
-
-Nope, it's "git diff" too. The thing that got me started working on this
-topic was that "git gui" and "gitk" were quiet about submodules which
-had modified tracked files and/or new untracked files, which lead to
-real world problems where I work. And both use diff-index and diff-files
-to get the paths they should display *and* to display the actual changes.
-(And as "git diff" uses the same machinery under the hood as "git status"
-does, everything fell into place pretty easily)
-
-And I argue that this is sane behavior, as I'm sure other tools rely on
-"git diff" or "git status" too to check if there are modifications to the
-work tree (or they call run_diff_files() or run_diff_index() directly to
-do that). So all of these should agree on what they are saying about the
-state of a submodule, or things will get interesting. (Same goes for
-describe, it should append the "-dirty" when "git status" or "git diff"
-say a submodule is modified)
-
-And this approach works really well at my dayjob. Since we are using it,
-me and my colleagues are really happy with it, because we can't forget to
-commit changes inside a submodule anymore. So judging from this real life
-experience "ignore=none" is a very sane default.
-
-But I admit that this change in behavior can be strange for long time
-submodule users when they first encounter it. And if they still don't
-like the new behavior after some consideration, they can disable it
-easily using the new configuration options. But one of the advantages I
-really liked when I started using git was that is was not able to forget
-to commit new files anymore. So I suspect ignore=none is especially
-useful for new users of submodules, because it is on the safe side, and
-therefore should be the default setting. You can later turn the 'noise'
-down if you want (just like some users do when using the "-uno" option
-to "git status" if they don't want to be told about untracked files in
-the superproject or its submodules).
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
