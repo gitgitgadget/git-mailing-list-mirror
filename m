@@ -1,91 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Coping with the pull-before-you-push model
-Date: Tue, 14 Sep 2010 01:24:51 -0400
-Message-ID: <20100914052451.GA15839@sigill.intra.peff.net>
-References: <4C8866F9.1040705@workspacewhiz.com>
- <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com>
- <4C88F2A9.2080306@workspacewhiz.com>
- <AANLkTikdV3W1d7uNokKRRiT4FeznL1uM=Y9SQLDqgAic@mail.gmail.com>
- <20100910141527.GA6936@sigill.intra.peff.net>
- <4C8EFE62.7080908@workspacewhiz.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Avery Pennarun <apenwarr@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 07:24:57 2010
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [RFC/PATCH] Force using Tcl/Tk 8.4 on Mac OS X
+Date: Tue, 14 Sep 2010 07:42:34 +0200
+Message-ID: <1jossvu.zf5a2u1xnuow0M%lists@haller-berlin.de>
+References: <CB6C69E6-7943-49B7-96E7-4C00831C3C9D@users.sourceforge.net>
+Cc: git@vger.kernel.org, dsteffen@apple.com (Daniel A Steffen)
+To: das@users.sourceforge.net (Daniel A. Steffen)
+X-From: git-owner@vger.kernel.org Tue Sep 14 07:42:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvO0j-000669-P2
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 07:24:54 +0200
+	id 1OvOIB-0002RW-9I
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 07:42:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094Ab0INFYs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 01:24:48 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44410 "EHLO peff.net"
+	id S1751499Ab0INFmj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 01:42:39 -0400
+Received: from mail.ableton.net ([62.96.12.115]:53785 "EHLO mail.ableton.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751286Ab0INFYr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Sep 2010 01:24:47 -0400
-Received: (qmail 12307 invoked by uid 111); 14 Sep 2010 05:24:45 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 14 Sep 2010 05:24:45 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 14 Sep 2010 01:24:51 -0400
-Content-Disposition: inline
-In-Reply-To: <4C8EFE62.7080908@workspacewhiz.com>
+	id S1751135Ab0INFmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 01:42:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=dCmG6i6Kzda7RVjqw7m/L4QhTEWrDRCa53DLZIaUD+o=;
+	b=fiACTr3Z4Upq0/frrTRlhdLwtpa8WHF1t9EAVoDte28Pci1qej2ZbOyQIhGNiHlUSBrHl1ADS1s6k74LoXBqz7KH0hK2N4ba7+Z9LR5YYmljokUn5UqGn/+ltvcXPXB+g+3us490UG6sl/gheMe9Lb3u1lPLmsvLxzHXNG71KdU=;
+Received: from dslb-088-073-104-214.pools.arcor-ip.net ([88.73.104.214] helo=[192.168.42.92])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1OvODe-0004ST-KZ; Tue, 14 Sep 2010 07:38:14 +0200
+In-Reply-To: <CB6C69E6-7943-49B7-96E7-4C00831C3C9D@users.sourceforge.net>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156162>
 
-On Mon, Sep 13, 2010 at 10:47:30PM -0600, Joshua Jensen wrote:
+Daniel A. Steffen <das@users.sourceforge.net> wrote:
 
-> >Bear in mind that you can still shift to a maintainer model, but keep
-> >the maintainer automated. That is, you can queue up "to-pull" heads, and
-> >then have an automated process pull them one by one and do some basic QA
-> >(does it merge, does it build, does it pass automated tests, etc). Which
-> >is not that different from what many shops do in the non-maintainer
-> >model, except that when you break the build, the maintainer process
-> >notices _before_ publishing the merged tip, so everybody won't try to
-> >build on your broken crap.
-> >
-> Do you know of any existing software that does this?  This may be
-> ideal in the short term.
+> Ultimately the right way to address this issue is to fix it in Tk, please
+> report this in the Tk bug tracker if you haven't already, a quick glance
+> in the debugger shows a hang in recursive event loop invocation such as
+> used by tk_dialog when called from a menu accelerator callback.
 
-I think that Avery Pennarun's gitbuilder may do what you want:
+I finally got around to this now.  It was already reported as issue
+3044863; I added a comment to the existing ticket.
 
-  http://github.com/apenwarr/gitbuilder/
+<http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
 
-but I've never used it.
+I still think we need a work-around in git gui (and maybe gitk) until a
+fixed Tk version is widely available. Yesterday I showed git to a
+co-worker, and after 20 minutes of randomly playing around with it he
+ran into the problem (without me pointing him to it).
 
-I seem to recall from one of Shawn's presentations on Gerrit Code Review
-that it does something like this, too, but I can't seem to find any docs
-about it in my brief search:
+-Stefan
 
-  http://code.google.com/p/gerrit/
 
-It may be that Gerrit doesn't handle building itself, but that the
-Android project is running something alongside it. Shawn may be able to
-say more.
-
-Basically, what we are talking about is continuous integration, with the
-slight twist that instead of developers pushing commits to a mainline
-branch which is built and tested, we would build and test their commits
-and then merge them to the mainline branch.
-
-Systems like Hudson that do continuous integration and support git may
-handle a workflow like this, but I don't know (I've only ever used
-Hudson in the everything-goes-to-svn-trunk model).
-
-There is also a small continuous integration system that lives in the
-contrib/continuous directory of git.git itself. It's quite old at this
-point, but I wouldn't be surprised if its descendant is what Gerrit
-uses.
-
--Peff
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
