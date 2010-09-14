@@ -1,71 +1,68 @@
-From: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>
-Subject: Import existing (old) topic branches in topgit
-Date: Tue, 14 Sep 2010 22:44:22 +0200
-Message-ID: <AANLkTima2NsEWuT85oFZGpfCQrsrqy5KsQSOez3B9i-7@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Do not let lstree output recursively when a directory whose name is a prefix of the others is given in the path list.
+Date: Tue, 14 Sep 2010 23:22:44 +0200
+Message-ID: <vpqmxrk10m3.fsf@bauges.imag.fr>
+References: <1284010826-81989-1-git-send-email-davi.reis@gmail.com>
+	<vpqzkvr5u73.fsf@bauges.imag.fr>
+	<7vhbhwf6q5.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 14 22:44:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: davi.reis@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 14 23:24:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvcMg-0000uH-0K
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:44:30 +0200
+	id 1OvczJ-0003cg-BM
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 23:24:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753204Ab0INUoZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 16:44:25 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51922 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646Ab0INUoZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Sep 2010 16:44:25 -0400
-Received: by wwd20 with SMTP id 20so209098wwd.1
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 13:44:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=a9pjocyUgKd/G1DMeBVoIx5L/mdQOya3ZrVUb1uyrcg=;
-        b=drB1d0m731PH7CCb8VovVe2mw6KtGAUScGknpFqglSFze2xn1TZj3nqWcMAdr3Sabq
-         jkIGU3Li+WRqtdusFDRYlaP/6cBuIzYgJZokbFJkcYqmkU0y/loWO4rVlUu3A3M/i6gz
-         KXnaQ9hWhWnnjtA7AiUjcdYh0d9Yaxqn99kM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=pIS77YahQLrg9ny5TFexYmOeabh4f+OpouXFuppqfQLVdOJBWK4Ev30bsGFDTbpXFR
-         cpG/RuuXY0hJqXQ+RtgFseuo+y8lVXtKm3IJtA/Cdsn7dEWDZ2yoqrgNqfL/gW8wduYS
-         pg8FipIsHSzz6e2EvucCVonRUl7XhQky6kIqU=
-Received: by 10.216.38.20 with SMTP id z20mr346173wea.108.1284497063020; Tue,
- 14 Sep 2010 13:44:23 -0700 (PDT)
-Received: by 10.216.153.193 with HTTP; Tue, 14 Sep 2010 13:44:22 -0700 (PDT)
+	id S1755606Ab0INVYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 17:24:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35729 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754141Ab0INVYP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 17:24:15 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o8ELITGm029049
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 14 Sep 2010 23:18:29 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Ovcxg-00046x-G4; Tue, 14 Sep 2010 23:22:44 +0200
+In-Reply-To: <7vhbhwf6q5.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 11 Sep 2010 11\:57\:54 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 14 Sep 2010 23:18:30 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o8ELITGm029049
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1285103914.16504@fBFdvSUHtw2CjU8g4cBGuw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156213>
 
-Hi all,
+Junio C Hamano <gitster@pobox.com> writes:
 
-After trying to manually maintain many topic branches before sending
-them upstream, I recently discovered that topgit seems to become my
-best friend.
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>
+>> That's so close to a real test-case...
+>
+> Let's do this.
+>
+>  * t3101 seems somewhat stale; fix the style and add a few missing " &&"
+>    cascades as a preparatory patch.
+>
+>  * Add the "mistaken prefix computation causes unwarranted recursion" fix
+>    with a test.
 
-But as I'm new to this tool, I don't know what's the best way to
-import existing branches in topgit.
+Sounds good, yes.
 
-What I mean is:
-* I already have topic branches, with long history and regular merges
-with upstream.
-* I want to manage the related topic via topgit
-* I whish to keep my own history (if possible)
-
-
-Can experimented users give me some tips on how to do this?
-
-Thanks in advance.
 -- 
-Guilhem BONNEFILLE
--=- JID: guyou@im.apinc.org MSN: guilhem_bonnefille@hotmail.com
--=- mailto:guilhem.bonnefille@gmail.com
--=- http://nathguil.free.fr/
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
