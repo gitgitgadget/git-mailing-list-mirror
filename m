@@ -1,81 +1,108 @@
-From: Rob Aldred <raldred@gmail.com>
-Subject: Re: Issue with git rebase
-Date: Tue, 14 Sep 2010 14:10:06 +0100
-Message-ID: <AANLkTikVNUOC+ZfzsAJeSnxeXK_KzAnOuRPhVbmtZq2V@mail.gmail.com>
-References: <AANLkTikWPkJ+8DJn5KZXfVw460HRY3Ui-xDZ_TR1X_Xg@mail.gmail.com>
- <AANLkTikUE1q-MrOsc3QOc1x0UHdLJn6nf7yGJZ=q_qqP@mail.gmail.com> <AANLkTikA7WpyiZCq43+vdUBri5X9pi3odkfRYd4jMXwR@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC 00/20] gettextize: git-stash & git-bisect
+Date: Tue, 14 Sep 2010 13:52:00 +0000
+Message-ID: <1284472340-7049-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 15:10:38 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 14 15:52:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvVHR-0000Ka-2a
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 15:10:37 +0200
+	id 1OvVw3-0003vr-Ms
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 15:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139Ab0INNK1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 09:10:27 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:51378 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752417Ab0INNK0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 09:10:26 -0400
-Received: by qwh6 with SMTP id 6so4321022qwh.19
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 06:10:26 -0700 (PDT)
+	id S1752587Ab0INNwa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 09:52:30 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:47340 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751774Ab0INNw3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 09:52:29 -0400
+Received: by wyf22 with SMTP id 22so7426257wyf.19
+        for <git@vger.kernel.org>; Tue, 14 Sep 2010 06:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=3oL05cMIey88Z3tS28xYTpnGJER6l2wRrbkMyoLAYKU=;
-        b=G4Aq0sr5JuT5EkavS4UCQIwmqBT2mO+H/N6dFwsWfW8YPicJ8UMVdoMBbHRbVK0Gdw
-         In/3l25IKm5tyYBOH6fJXTzSYztMyfRGflOcAeGsPIocV2DalCPkXt/cqLv4arnchg9d
-         vgzBvkxZt7q+yYwBootLbQeOcDjm+Lw/I/AyQ=
+        bh=Upjl9eOsJB7cT5v2Y2bCT/2uYOfSxSIGdVx83fO9l3s=;
+        b=nnFG+h7a2vCKsqvE7UBqSqCdyjunwLcdPibATjqB99RQ8ywIBL4zGCSwSR90H+KdZv
+         xSHMcCdGl5aDtrcFWG+1SwQQvtUl2peh9OPGipUVM7GMUDJ9yAMa4GAj5jA283YtrBbD
+         fCyKXr/dGHtLZkbkLCRn2m/D3/dR5njPxH7S4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=MpYF2lfXJVTzapswTBJhGUEWhwTDwMZWChj1YbZCV8l5vbCXLiQDx3gK1GekExH6JU
-         fx/tAwfmosccgXY4TTCIMs1o3Su8+J5E3y4ozbwOZO80ti4RnnlkGIPN65Mw83GeD6iJ
-         i1gfwQw2Jm6uNWujFZ5nk4k9fm1cb2RomerdY=
-Received: by 10.229.229.83 with SMTP id jh19mr4420124qcb.76.1284469826121;
- Tue, 14 Sep 2010 06:10:26 -0700 (PDT)
-Received: by 10.229.72.135 with HTTP; Tue, 14 Sep 2010 06:10:06 -0700 (PDT)
-In-Reply-To: <AANLkTikA7WpyiZCq43+vdUBri5X9pi3odkfRYd4jMXwR@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=cGh+qn95ZKEGIKnpVIPkhcxcVrQn7sT/LhQSRxUF0XDP/akgzW+xVQ2tLfDXpcmuOW
+         e1amzDVI85WJzLlc5dX6JHXV2P29nSWTvhz5uBgy++Glxq8i9Dq70gHD70zq/tA3w3WQ
+         0YrDMQfTsXzs6BxPRWdQxyo1bIK3MNQNPubrM=
+Received: by 10.216.169.136 with SMTP id n8mr3936458wel.65.1284472347697;
+        Tue, 14 Sep 2010 06:52:27 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id v11sm158854weq.16.2010.09.14.06.52.26
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 14 Sep 2010 06:52:26 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.rc1.234.g8dc15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156172>
 
-On 14 September 2010 13:43, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail=
-=2Ecom> wrote:
->
-> What version of Git is this, and what does it have on git-am line 765=
-?
->
-> How does it look under GIT_TRACE=3D1 ?
->
-> In cases like these you can extend the maximum argument list that the
-> OS can take as a workaround.
->
+This is an RFC on a series that makes git-stash.sh and git-bisect.sh
+translatable. With this git-rebase is the only mainporcelain command
+that isn't translatable (soon to be fixed).
 
-hey, rapid reply thanks.
-git version 1.7.0.3 (Mac Snow Leopard) compiled by macports
-line 765 that errors is:
-git update-ref -m "$GIT_REFLOG_ACTION: $FIRSTLINE" HEAD $commit $parent=
- ||
+I'll be folding this into the next version of the ab/i18n series I'll
+be sending to Junio. No need to apply it to the current one.
 
-hmm it seems to have worked when running it with GIT_TRACE
-im sure thats didnt really fix it, very weird. it seems to have
-completed successfully
+Note that this isn't diff --check clean, because the code I'm altering
+wasn't:
 
-Thanks for your time.
+    git-bisect.sh:117: indent with spaces.
+    +                       die "$(eval_gettext "'\$arg' does not appea=
+r to be a valid revision")"
+    git-bisect.sh:190: indent with spaces.
+    +                revs=3D$(git rev-list "$arg") || die "$(eval_gette=
+xt "Bad rev input: \$arg")" ;;
 
+Patches to fix these whitespace issues can come later after the i18n
+series is applied.
 
---
-Rob
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (20):
+  gettextize: git-stash add git-sh-i18n
+  gettextize: git-stash echo + gettext message
+  gettextize: git-stash say + gettext messages
+  gettextize: git-stash die + gettext messages
+  gettextize: git-stash die + eval_gettext messages
+  gettextize: git-stash die + eval_gettext $* messages
+  gettextize: git-stash die + eval_gettext $1 messages
+  gettextize: git-stash "unknown option" message
+  gettextize: git-stash drop_stash say/die messages
+  gettextize: git-bisect add git-sh-i18n
+  gettextize: git-bisect gettext + echo message
+  gettextize: git-bisect echo + gettext messages
+  gettextize: git-bisect echo + eval_gettext message
+  gettextize: git-bisect die + gettext messages
+  gettextize: git-bisect die + eval_gettext messages
+  gettextize: git-bisect bisect_run + $@ messages
+  gettextize: git-bisect bisect_reset + $1 messages
+  gettextize: git-bisect bisect_replay + $1 messages
+  gettextize: git-bisect [Y/n] messages
+  gettextize: git-bisect bisect_next_check "You need to" message
+
+ git-bisect.sh |   84 ++++++++++++++++++++++++++++++++-----------------=
+-------
+ git-stash.sh  |   75 +++++++++++++++++++++++++++++++------------------=
+-
+ 2 files changed, 94 insertions(+), 65 deletions(-)
+
+--=20
+1.7.3.rc1.234.g8dc15
