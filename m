@@ -1,109 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] disallow branch names that start with a hyphen
-Date: Tue, 14 Sep 2010 13:09:20 -0700
-Message-ID: <7vtyls6qa7.fsf@alter.siamese.dyndns.org>
-References: <20100822140801.GA6574@localhost>
- <7vsk262vla.fsf@alter.siamese.dyndns.org> <20100823043701.GA11822@localhost>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] builtin/describe.c: ignore untracked changes in submodules
+Date: Tue, 14 Sep 2010 22:30:09 +0200
+Message-ID: <4C8FDB51.6010009@web.de>
+References: <CC-1wlyJRzGfkPwn1Ra8d4Ot7mMnUGxYChGZHdqp-lQ5URlUFhNp4Ilyrh4bGk1dWF6drZXvim0@cipher.nrlssc.navy.mil> <7vy6bajvnd.fsf@alter.siamese.dyndns.org> <1094265482.7527324.1284144028114.JavaMail.fmail@mwmweb047> <AANLkTinMf-_vk2-gRazf-8FNykZoNbVwmu_+c+5ht8rY@mail.gmail.com> <1258122337.8606899.1284400767503.JavaMail.fmail@mwmweb047> <150763691.8130046.1284401891268.JavaMail.fmail@mwmweb048> <7v7hipb5ht.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Sep 14 22:09:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Brandon Casey <drafnel@gmail.com>,
+	Brandon Casey <casey@nrlssc.navy.mil>, git@vger.kernel.org,
+	johannes.schindelin@gmx.de
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 14 22:30:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovbow-0000qS-Ai
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:09:38 +0200
+	id 1Ovc96-0002fi-Ap
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 22:30:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754419Ab0INUJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 16:09:32 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46004 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751305Ab0INUJc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Sep 2010 16:09:32 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D13FFD62D1;
-	Tue, 14 Sep 2010 16:09:29 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y9WdxdXppF4L16l0SKfXmlluSDU=; b=NCK1Pf
-	yiVeIIS4cqy11E4IFeYNdr+8+MIWhSigUJwd1Q4MqvKtYk3TBks5Iq6/cOltQQMg
-	e9ewKMQXpFIp8+FLk/vr7pFgBjhA4EeqCnX2zYX5BQ/2BHWj+rRGFEMleWhLKEp5
-	rVT1zYIn9WPbvoJJqnv1KsgQSE3J3AOjToMuQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=luFbgBlYM4xPUi+oRexSvDMQmbAHUzrJ
-	CjNOkdxlPnVosZKAKBnqmWiYo37KSVBx0HNJcYVBiSnjf6ivi2R1tgXYOurcxC2y
-	nWk/XwWACHJFMVmoDxeBsO9J/w2Po5ucqPAS9qPTKVzyhQYC4Zn7BIQY9sJHbD5F
-	gJi7zUcRKrQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 97F90D62CE;
-	Tue, 14 Sep 2010 16:09:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B239FD62C9; Tue, 14 Sep
- 2010 16:09:22 -0400 (EDT)
-In-Reply-To: <20100823043701.GA11822@localhost> (Clemens Buchacher's message
- of "Mon\, 23 Aug 2010 06\:37\:01 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F97FDF42-C03B-11DF-9AB0-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755617Ab0INUaQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 16:30:16 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:46654 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755607Ab0INUaM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 16:30:12 -0400
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 9D8F31685AD55;
+	Tue, 14 Sep 2010 22:30:10 +0200 (CEST)
+Received: from [93.246.48.208] (helo=[192.168.178.29])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1Ovc8o-0008Ax-00; Tue, 14 Sep 2010 22:30:10 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <7v7hipb5ht.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+XZBLLiwtugWdvXGNS8Sewb4SHBBK19qNZqjVX
+	9kt0K4NvP9GZiqJqCMR1iT14N4uOUVdbmPM20fM2QldweBswN2
+	YZRhhXonRVOEsETTPjuw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156208>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Am 14.09.2010 01:14, schrieb Junio C Hamano:
+> What makes untracked paths in the superproject different from the ones in
+> a submodule?
 
-> On Sun, Aug 22, 2010 at 02:20:17PM -0700, Junio C Hamano wrote:
->> 
->> forbid "checkout -b" and "branch" from creating such a branch.
->
-> Sounds good to me. I will have limited access to email this week.
-> I'll revisit this when I am back.
+That you can have a different state for each path inside the superproject
+(modified, untracked etc.) while you can't have that for the paths in the
+submodule (when looked at from the superproject): There is only a single
+state available for the whole submodule, it's either modified or it isn't.
+So IMO a modified submodule should tell the user: "There is a change in
+this submodule so that when you commit/push your superproject now, others
+might run into problems when fetching it; you want to be sure this is not
+the case before doing that". And this is just the same thing you could
+say about a file in the superproject when it shows up as modified, no?
+And for submodules this definition must also include new yet untracked
+files, as they are very likely to be missing in every but your work tree.
 
-Heh, it turns out that we have a perfect place to hook this into.
 
--- >8 --
-Subject: disallow branch names that start with a hyphen
+> "git diff" cannot be it as it does not show untracked paths
+> in the superproject, so you are talking about "the user cannot tell from
+> the 'git status' output", right?
 
-The current command line parser overly lax in places and allows a branch
-whose name begins with a hyphen e.g. "-foo" to be created, but the
-parseopt infrastructure in general do not like to parse anything that
-begin with a dash as a short-hand refname.  "git checkout -foo" won't
-work, nor "git branch -d -foo" (even though "git branch -d -- -foo" works,
-it does so by mistake; we should not be taking anything but pathspecs
-after double-dash).
+Nope, it's "git diff" too. The thing that got me started working on this
+topic was that "git gui" and "gitk" were quiet about submodules which
+had modified tracked files and/or new untracked files, which lead to
+real world problems where I work. And both use diff-index and diff-files
+to get the paths they should display *and* to display the actual changes.
+(And as "git diff" uses the same machinery under the hood as "git status"
+does, everything fell into place pretty easily)
 
-All the codepath that creates a new branch ref, including the destination
-of "branch -m src dst", use strbuf_check_branch_ref() to validate if the
-given name is suitable as a branch name.  Tighten it to disallow such a
-name.
+And I argue that this is sane behavior, as I'm sure other tools rely on
+"git diff" or "git status" too to check if there are modifications to the
+work tree (or they call run_diff_files() or run_diff_index() directly to
+do that). So all of these should agree on what they are saying about the
+state of a submodule, or things will get interesting. (Same goes for
+describe, it should append the "-dirty" when "git status" or "git diff"
+say a submodule is modified)
 
-You can still get rid of historical mistake with
+And this approach works really well at my dayjob. Since we are using it,
+me and my colleagues are really happy with it, because we can't forget to
+commit changes inside a submodule anymore. So judging from this real life
+experience "ignore=none" is a very sane default.
 
-  $ git update-ref -d refs/heads/-foo
-
-and third-party Porcelains are free to keep using update-ref to create
-refs with path component that begins with "-".
-
-Issue originally raised by Clemens Buchacher.
-
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
-
-diff --git a/strbuf.c b/strbuf.c
-index bc3a080..65b4cf4 100644
---- a/strbuf.c
-+++ b/strbuf.c
-@@ -399,6 +399,8 @@ int strbuf_branchname(struct strbuf *sb, const char *name)
- int strbuf_check_branch_ref(struct strbuf *sb, const char *name)
- {
- 	strbuf_branchname(sb, name);
-+	if (name[0] == '-')
-+		return CHECK_REF_FORMAT_ERROR;
- 	strbuf_splice(sb, 0, 0, "refs/heads/", 11);
- 	return check_ref_format(sb->buf);
- }
+But I admit that this change in behavior can be strange for long time
+submodule users when they first encounter it. And if they still don't
+like the new behavior after some consideration, they can disable it
+easily using the new configuration options. But one of the advantages I
+really liked when I started using git was that is was not able to forget
+to commit new files anymore. So I suspect ignore=none is especially
+useful for new users of submodules, because it is on the safe side, and
+therefore should be the default setting. You can later turn the 'noise'
+down if you want (just like some users do when using the "-uno" option
+to "git status" if they don't want to be told about untracked files in
+the superproject or its submodules).
