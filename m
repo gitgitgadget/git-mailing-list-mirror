@@ -1,72 +1,140 @@
-From: Theodore Tso <tytso@MIT.EDU>
-Subject: Re: Coping with the pull-before-you-push model
-Date: Tue, 14 Sep 2010 08:12:13 -0400
-Message-ID: <D4360EBB-7891-457E-A6AC-7159CADCAC6C@mit.edu>
-References: <4C8866F9.1040705@workspacewhiz.com> <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com> <4C88F2A9.2080306@workspacewhiz.com> <AANLkTikdV3W1d7uNokKRRiT4FeznL1uM=Y9SQLDqgAic@mail.gmail.com> <20100910141527.GA6936@sigill.intra.peff.net> <4C8EFE62.7080908@workspacewhiz.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Jeff King <peff@peff.net>, Jon Seymour <jon.seymour@gmail.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Tue Sep 14 14:17:25 2010
+From: Rob Aldred <raldred@gmail.com>
+Subject: Issue with git rebase
+Date: Tue, 14 Sep 2010 13:39:39 +0100
+Message-ID: <AANLkTikUE1q-MrOsc3QOc1x0UHdLJn6nf7yGJZ=q_qqP@mail.gmail.com>
+References: <AANLkTikWPkJ+8DJn5KZXfVw460HRY3Ui-xDZ_TR1X_Xg@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 14 14:40:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvURv-00006T-Tt
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 14:17:24 +0200
+	id 1OvUo4-00016B-T2
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 14:40:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753601Ab0INMRR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 08:17:17 -0400
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:42447 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752060Ab0INMRQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Sep 2010 08:17:16 -0400
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Tue, 14 Sep 2010 08:17:16 EDT
-X-AuditID: 12074424-b7b2bae000005b3f-e4-4c8f66857ff8
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id E3.A2.23359.5866F8C4; Tue, 14 Sep 2010 08:11:49 -0400 (EDT)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id o8ECCDK4002414;
-	Tue, 14 Sep 2010 08:12:13 -0400
-Received: from [10.0.42.108] (c-98-216-98-217.hsd1.ma.comcast.net [98.216.98.217])
-	(authenticated bits=0)
-        (User authenticated as tytso@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id o8ECCBYI016999
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NOT);
-	Tue, 14 Sep 2010 08:12:12 -0400 (EDT)
-In-Reply-To: <4C8EFE62.7080908@workspacewhiz.com>
-X-Mailer: Apple Mail (2.1081)
-X-Brightmail-Tracker: AAAAARX2XKo=
+	id S1753922Ab0INMkA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 08:40:00 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:63631 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753301Ab0INMkA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 08:40:00 -0400
+Received: by qwh6 with SMTP id 6so4299427qwh.19
+        for <git@vger.kernel.org>; Tue, 14 Sep 2010 05:39:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=K+nyv/W09uJBhDrdClN26ovn37Ce35HCZVY6ZzeYqh8=;
+        b=YyHj7Y+/i+9HeN1PniPkI6E+H0LIlZliftPdNORfsix2qtTac+9ONr2rIktNn/v1V0
+         HHiQrP9srDj28NgZ7gnG6NLmgeCQbXdbIugFjI3TuO0ogRwl+0U3hdhx6BoFmpiSb36D
+         /xEyxoQMT0CPtNIv5yRhnNsGmsAW7z9EW79VM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        b=bfj6HAg8/+Gvy2VNzGdC37sQA2eATWTlYWB/omLQdq1tk8WsL202+byMwdWJS/IvjH
+         emXBwX65dPL4MzItKSVjdiQMnjbHmx3xpAGnggUeWmO5FNhr2Fphfx9MM/HHRRcomRcq
+         OF3UkrMcWCnMZ/gn+SCdz2D7vrPThIoL3Kkqk=
+Received: by 10.224.112.215 with SMTP id x23mr911808qap.37.1284467999113; Tue,
+ 14 Sep 2010 05:39:59 -0700 (PDT)
+Received: by 10.229.72.135 with HTTP; Tue, 14 Sep 2010 05:39:39 -0700 (PDT)
+In-Reply-To: <AANLkTikWPkJ+8DJn5KZXfVw460HRY3Ui-xDZ_TR1X_Xg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156168>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156169>
 
+Hey, I have a problem with rebase which i suspect is not very common
+I'm trying to repair a commit where over 100,000 lines including a
+diff were commited to the commit message.
+I have followed the manual here:=A0http://bit.ly/9uVReJ
+That produces an error when it reaches the bad commit, heres the output=
+:
 
-On Sep 14, 2010, at 12:47 AM, Joshua Jensen wrote:
+    First, rewinding head to replay your work on top of it...
+    Applying: fixes #2791 - added page count back in
+    Applying: fixes #2399 - commenting out code for starting and
+restarting solr/sunspot on production sites
+    Applying: fixes #2361 - all selenium features now pass
+    Applying: fixes #2797 - fixed checkout footer
+    Applying: Implementing cartridge chooser wizard, Showing featured
+products on the homepage and improving the printer inks page
+    =A0.......the rest of the massive 100000+ line commit message......
+    /usr/local/git/libexec/git-core/git-am: line 765:
+/usr/local/git/libexec/git-core/git: Argument list too long
 
->>> management, this looks like a step-backwards.
->> Bear in mind that you can still shift to a maintainer model, but keep
->> the maintainer automated. That is, you can queue up "to-pull" heads, and
->> then have an automated process pull them one by one and do some basic QA
->> (does it merge, does it build, does it pass automated tests, etc). Which
->> is not that different from what many shops do in the non-maintainer
->> model, except that when you break the build, the maintainer process
->> notices _before_ publishing the merged tip, so everybody won't try to
->> build on your broken crap.
->> 
-> Do you know of any existing software that does this?  This may be ideal in the short term.
+The other way I have tried is suggested on stack overflow and other pla=
+ces,
+`git rebase -i bad_commits_parent`
+So i get the editor popup with the list of pick lines and commit
+messages, it also includes the huge 100000 line message of the bad
+commit
+so I remove the rubbish from the editor leaving the following:
 
-Our workflow at $WORK involves pushing changes to gerrit to various "effort branches", and then once they are approved, we have a "Mergitator" script that will attempt to merge the effort branch with the merged master branch, and then attempt to do a build.  If the build succeeds, then the changes will get pushed back to the publically visible merged master branch, and then the Mergitator will move on to the next effort branch that requires merging.   If there is a merge conflict, the Mergitator will refuse the merge, and then give instructions on how to fix up the tree to avoid merge conflicts.
+    pick 9ca499d fixes #2791 - added page count back in
+    pick 6554bab fixes #2399 - commenting out code for starting and
+restarting solr/sunspot on production sites
+    pick fcd461a fixes #2361 - all selenium features now pass
+    pick abedb79 fixes #2797 - fixed checkout footer
+    pick 2860581 fixes #2757 Tidying up search results partial added
+in filtering feature for search added filter search controller
+refactored filter helpers to help with testing added string method for
+filter values
+    pick 010b596 Improving printer type and printer type category pages
+    reword e00b910 remove the full printer file we dont need it
+    pick 46d0831 Show the show the printer picker on printer type categ=
+ory pages
+    pick 7c0a850 - printer email now works like all other jobs - price
+band class should be called access via root from
+CartridgeSave::PriceBand
+    pick 96423bb - link to background jobs - add indexes to
+background_job_errors
+    pick aa5fba2 - tables are missing loads of indexes, so added a shed=
+ load
+    pick ee8d5e2 - index on status for orders, could get messy without
+    pick 2de051a remove js logging
+    pick 625243c fixes to specs for import mailer after rejig of jobs
+    pick cbaafa1 * Use 'homepage' tag instead of 'featured' for
+featured products on homepage. =A0* Show border around printer makes on
+printer type pages =A0* Resized konica minolta image so it isn't so
+large
+    pick 2b1ea09 customer id index already exists on cards
+    pick d4d4d7a Fixing a couple of failing features
+    pick 6856c1e emails seem to be missing :format :html form urls, wei=
+rd.
+    pick fbfb16b renaming TallyGenicom printer brand image
+    pick f02966a fixes #2757 - fixes problems with using pagination on
+the filtering
+    # Rebase 6fe8075..f02966a onto 6fe8075
+    #
+    # Commands:
+    # =A0p, pick =3D use commit
+    # =A0r, reword =3D use commit, but edit the commit message
+    # =A0e, edit =3D use commit, but stop for amending
+    # =A0s, squash =3D use commit, but meld into previous commit
+    # =A0f, fixup =3D like "squash", but discard this commit's log mess=
+age
+    #
+    # If you remove a line here THAT COMMIT WILL BE LOST.
+    # However, if you remove everything, the rebase will be aborted.
 
-The Mergitator code hasn't been released, and I suspect the main reason is that there's relatively little code that could be used outside of our environment, and a large amount of code which contains lots of details about our internal build system that would have to be stripped out and generalized before it could be released --- and no one has time to do it.
+i get the following out put:
+Successfully rebased and updated refs/heads/master.
 
-So this probably doesn't help you since I suspect you meant to ask the question, "do you know of any existing publically available software", but I can tell you that it certainly can be done, and that software exists.  Making it be software which is useful and usable to you would definitely take more work...
+I'm left at the the parent of the bad commit anything newer including
+the bad commit is gone.
+I can only assume something happened internally of git and it stopped
+at the bad commit.
+I'm about to resort to manually cherry picking all the recent commits
+and reapply everything manually.
 
--- Ted
+Hope you can help.
+
+Many thanks
+Rob
