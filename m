@@ -1,94 +1,72 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH/RFC 16/20] gettextize: git-bisect bisect_run + $@ messages
-Date: Tue, 14 Sep 2010 13:52:16 +0000
-Message-ID: <1284472340-7049-17-git-send-email-avarab@gmail.com>
-References: <1284472340-7049-1-git-send-email-avarab@gmail.com>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Coping with the pull-before-you-push model
+Date: Tue, 14 Sep 2010 09:51:22 -0600
+Message-ID: <4C8F99FA.3040003@workspacewhiz.com>
+References: <4C8866F9.1040705@workspacewhiz.com> <AANLkTikY55ZJvSTqyFKLqwABqnJZuODz3yrc7CFvQf0K@mail.gmail.com> <4C88F2A9.2080306@workspacewhiz.com> <AANLkTikdV3W1d7uNokKRRiT4FeznL1uM=Y9SQLDqgAic@mail.gmail.com> <20100910141527.GA6936@sigill.intra.peff.net> <4C8EFE62.7080908@workspacewhiz.com> <D4360EBB-7891-457E-A6AC-7159CADCAC6C@mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 14 16:02:16 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Jon Seymour <jon.seymour@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Theodore Tso <tytso@MIT.EDU>
+X-From: git-owner@vger.kernel.org Tue Sep 14 17:51:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvW5N-0002SH-PJ
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 16:02:14 +0200
+	id 1OvXn9-0004Q9-91
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Sep 2010 17:51:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752800Ab0INOCE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Sep 2010 10:02:04 -0400
-Received: from mail-wy0-f180.google.com ([74.125.82.180]:48304 "EHLO
-	mail-wy0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751356Ab0INOCD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Sep 2010 10:02:03 -0400
-Received: by wyb40 with SMTP id 40so9228774wyb.11
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 07:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=zK97+411YC8VUAEc9xZazlp++6pALrBcfUsyKvJ8cFA=;
-        b=KAJ5EoMK//YJvLafAMF//+B274apY1X8Fqsq4mJA8eFA3uNE4ApM7ZD0Omrb/9PGlp
-         06I2pOJgWVz0S4AIxPZYZhnPJod8FdbuGHycY0Svc3ocMYqkO6s0G8K0SRf0oaGYgAs5
-         lXsSjV6q0E/dZFyJoH8018he/5buapjkQim4U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=GhjUTFQy/tEQzGFfdKLp568SDNxNdSIbfv/KjTa8cSYSCcqqJJ/fq3nWFJj3mWSRKL
-         gh8q6K9iMjbbh2p8BmOpuObqJjn8r4Ma9cRmBQkA1TOIgs3TuOaErLM0uLdARIZnh2Ef
-         VQ7T6w2A6wqmxbDbKodbQo+TGCHyg26zH/LqI=
-Received: by 10.216.5.21 with SMTP id 21mr3994570wek.20.1284472425723;
-        Tue, 14 Sep 2010 06:53:45 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id v11sm158854weq.16.2010.09.14.06.53.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 14 Sep 2010 06:53:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.rc1.234.g8dc15
-In-Reply-To: <1284472340-7049-1-git-send-email-avarab@gmail.com>
+	id S1752988Ab0INPvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 11:51:24 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:60120 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752770Ab0INPvY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 11:51:24 -0400
+Received: (qmail 2569 invoked by uid 399); 14 Sep 2010 09:51:23 -0600
+Received: from unknown (HELO ?192.168.1.3?) (jjensen@workspacewhiz.com@75.196.173.255)
+  by hsmail.qwknetllc.com with ESMTPAM; 14 Sep 2010 09:51:23 -0600
+X-Originating-IP: 75.196.173.255
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100825 Lightning/1.0b3pre Thunderbird/3.1.3
+In-Reply-To: <D4360EBB-7891-457E-A6AC-7159CADCAC6C@mit.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156193>
 
-Gettextize bisect_run messages that use the $@ variable. Since it's
-subroutine local we have to provide an alias for it for eval_gettext.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+  ----- Original Message -----
+From: Theodore Tso
+Date: 9/14/2010 6:12 AM
+> On Sep 14, 2010, at 12:47 AM, Joshua Jensen wrote:
+>>> Bear in mind that you can still shift to a maintainer model, but keep
+>>> the maintainer automated. That is, you can queue up "to-pull" heads, and
+>>> then have an automated process pull them one by one and do some basic QA
+>>> (does it merge, does it build, does it pass automated tests, etc). Which
+>> Do you know of any existing software that does this?  This may be ideal in the short ter
+> Our workflow at $WORK involves pushing changes to gerrit to various "effort branches", and then once they are approved, we have a "Mergitator" script that will attempt to merge the effort branch with the merged master branch, and then attempt to do a build.  If the build succeeds, then the changes will get pushed back to the publically visible merged master branch, and then the Mergitator will move on to the next effort branch that requires merging.   If there is a merge conflict, the Mergitator will refuse the merge, and then give instructions on how to fix up the tree to avoid merge conflicts.
 >
----
- git-bisect.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+How does the integration with Gerrit work here?  The only thing that 
+comes to mind is that you do something like:
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index f715e84..3b10ce6 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -366,14 +366,15 @@ bisect_run () {
-=20
-     while true
-     do
--      echo "running $@"
-+      command=3D"$@"
-+      eval_gettext "running \$command"; echo
-       "$@"
-       res=3D$?
-=20
-       # Check for really bad run error.
-       if [ $res -lt 0 -o $res -ge 128 ]; then
--	  echo >&2 "bisect run failed:"
--	  echo >&2 "exit code $res from '$@' is < 0 or >=3D 128"
-+	  echo >&2 "$(eval_gettext "bisect run failed:
-+exit code \$res from '\$command' is < 0 or >=3D 128")"
- 	  exit $res
-       fi
-=20
---=20
-1.7.3.rc1.234.g8dc15
+git push gerrit HEAD:refs/for/merged-master
+
+Then the approvals are done.  Afterward, Gerrit merges to the 
+merged-master branch.
+
+I would suppose an external script is performing regular fetches.  When 
+it sees new code, it builds.
+
+No, this can't be right, but I'll leave my incorrect workflow here.
+> So this probably doesn't help you since I suspect you meant to ask the question, "do you know of any existing publically available software", but I can tell you that it certainly can be done, and that software exists.  Making it be software which is useful and usable to you would definitely take more work...
+It's the branch queueing issue that is my current hang up.  Gerrit's 
+method is slick, but that won't work outside of JGit.  I'm not opposed 
+to JGit; I just haven't touched Java in years.
+
+So, perhaps, a web interface where the branch owner selects the (pushed 
+to central server) branch name that is ready to go.  A merge is 
+attempted.  If it succeeds, great.  If it fails, then the merge is reset?
+
+Josh
