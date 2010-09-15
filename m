@@ -1,68 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 19/25] gettextize: git-reset reset_type_names messages
-Date: Wed, 15 Sep 2010 17:50:00 +0200
-Message-ID: <201009151750.00882.trast@student.ethz.ch>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com> <1283456446-22577-20-git-send-email-avarab@gmail.com> <alpine.DEB.2.00.1009151216000.11791@ds9.cixit.se>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH 1/2] po/de.po: add German translation
+Date: Wed, 15 Sep 2010 18:54:52 +0200
+Message-ID: <m2fwxb6j6r.fsf@igel.home>
+References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
+	<4C90A9A2.5050705@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 15 17:50:13 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
+	jk@jk.gs, avarab@gmail.com, git <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Sep 15 18:55:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvuFQ-000867-Uk
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 17:50:13 +0200
+	id 1OvvG9-00068I-4V
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 18:55:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754229Ab0IOPuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 11:50:04 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:28077 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753557Ab0IOPuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 11:50:04 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 15 Sep
- 2010 17:50:01 +0200
-Received: from thomas.site (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 15 Sep
- 2010 17:50:01 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.34.4-0.1-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <alpine.DEB.2.00.1009151216000.11791@ds9.cixit.se>
-X-Originating-IP: [129.132.153.233]
+	id S1753894Ab0IOQy4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 12:54:56 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:51748 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753747Ab0IOQyz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 12:54:55 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id B2D7A1C001A4;
+	Wed, 15 Sep 2010 18:54:53 +0200 (CEST)
+Received: from igel.home (ppp-88-217-113-189.dynamic.mnet-online.de [88.217.113.189])
+	by mail.mnet-online.de (Postfix) with ESMTP id 712921C001D6;
+	Wed, 15 Sep 2010 18:54:53 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id 4A4D4CA299; Wed, 15 Sep 2010 18:54:53 +0200 (CEST)
+X-Yow: Hey, waiter!  I want a NEW SHIRT and a PONY TAIL with lemon sauce!
+In-Reply-To: <4C90A9A2.5050705@drmicha.warpmail.net> (Michael J. Gruber's
+	message of "Wed, 15 Sep 2010 13:10:26 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156240>
 
-Peter Krefting wrote:
-> This is untranslatable for several languages. For Swedish it would suffice 
-> to move the " reset" part into the array:
-> 
-> > -	"mixed", "soft", "hard", "merge", "keep", NULL
-> > +	N_("mixed"), N_("soft"), N_("hard"), N_("merge"), N_("keep"), NULL
-> > };
-> 
-> changing it to
-> 
-> N_("mixed reset"), N_("soft reset"), ...
-> 
-> and changing this
-> 
-> > -		die("Cannot do a %s reset in the middle of a merge.",
-> > -		    reset_type_names[reset_type]);
-> > +		die(_("Cannot do a %s reset in the middle of a merge."),
-> > +		    _(reset_type_names[reset_type]));
-> 
-> into "... do a %s in ..", with similar changes for the others.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-This would still break even in English(!) if we ever introduced an
-arduous or extreme reset...
+> Christian Stimming venit, vidit, dixit 15.09.2010 09:33:
+>>=20
+>>>  revision              Revision
+>>=20
+>> Die "Revision" kommt ins Haus, um die B=C3=BCcher zu pr=C3=BCfen. Ho=
+nestly, =20
+>> please don't use that word in German. Why not "Version"?
+>
+> +1
+> Again, that reflects a limited view of the use of "Revision", but I h=
+ave
+> no objection against "Version". Even our existing glossary says that =
+a
+> "revision" is what other scms call a "version".
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+A more literal translation would be "=C3=84nderung", which I think isn'=
+t all
+that bad.
+
+Andreas.
+
+--=20
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
+ED5
+"And now for something completely different."
