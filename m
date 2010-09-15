@@ -1,73 +1,63 @@
-From: Thomas Hochstein <thh@inter.net>
-Subject: Re: [PATCH 1/2] po/de.po: add German translation
-Date: Wed, 15 Sep 2010 13:44:48 +0200
-Message-ID: <gcvg.1009151344.2868@thorondor.akallabeth.de>
-References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
-Mime-Version: 1.0
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: git log --pretty=format joins lines in the subject of commit message
+Date: Wed, 15 Sep 2010 16:55:20 +0400
+Message-ID: <DDB24DEE-934B-4C8D-8DAA-595905035AC4@jetbrains.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 15 14:25:31 2010
+X-From: git-owner@vger.kernel.org Wed Sep 15 14:55:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovr3J-0001KW-US
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 14:25:30 +0200
+	id 1OvrWZ-0003Ec-7M
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 14:55:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752085Ab0IOMZG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 08:25:06 -0400
-Received: from lo.gmane.org ([80.91.229.12]:33807 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751720Ab0IOMZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 08:25:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Ovr2t-00017m-8A
-	for git@vger.kernel.org; Wed, 15 Sep 2010 14:25:03 +0200
-Received: from p548b6688.dip.t-dialin.net ([84.139.102.136])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 14:25:03 +0200
-Received: from thh by p548b6688.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 14:25:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: p548b6688.dip.t-dialin.net
-User-Agent: ForteAgent/2.0-32.652  Hamster/2.1.0.11
-X-Uptime: 7 day(s), 3 hour(s), 41 minute(s), 45 second(s) [thorondor | 61332]
+	id S1753225Ab0IOMzi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 08:55:38 -0400
+Received: from mail.intellij.net ([213.182.181.98]:52907 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752983Ab0IOMzh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 08:55:37 -0400
+Received: (qmail 12037 invoked by uid 89); 15 Sep 2010 12:55:33 -0000
+Received: by simscan 1.1.0 ppid: 11921, pid: 11967, t: 8.1454s
+         scanners: regex: 1.1.0 clamav: 0.96
+/m: 52
+Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
+  by mail.intellij.net with ESMTPA; 15 Sep 2010 12:55:24 -0000
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156235>
 
-Christian Stimming schrieb:
+Commit something to a git repository with a commit message with several newlines like this:
 
->  I do not agree about the importance  
-> of statements on this mailing list like "This translation translates  
-> too much terms - I cannot find the commands I'm used to". The point of  
-> a translation is to enable the usage of a program to people who do  
-> *not* know the original language. This is the target audience. 
+==== commit message starts below ===
+first line
+second line
+third line
 
-I don't agree. I prefer to use localized/translated software [1], even
-though I'm able to speak English, because it's just easier to use, but
-I strongly consider translated technical terms nearly unusable - you
-lose a common base for communication with other people and you can't
-use most documentation any longer as it'll be in English or at least
-use the original, non-translated technical terms. So I think the
-target audience for a German translation is neither only nor primarily
-people not understanding English [2] but all those who do speak
-English but prefer a localized environment.
+fifth line
+=== commit message ends above ===
 
-Don't let us get back to the times where a "computer" was a
-"Rechenmaschine", the CPU a "Zentralrecheneinheit" or email
-"elektronische Post" ...
+Git treats the first 3 lines as commit message subject and the last line as its body.
 
--thh
+'git log' shows the commit message correctly - exactly like I've entered. So does 'git log --pretty=raw'
 
-[1] And German translations of books, movies etc. - mostly, that is.
-[2] You won't get far in IT if you're not able to understand at least
-some English, I think.
+But 'git log --pretty=format:%s#%b' joins the first three lines:
+first line second line third line#fifth line
+
+Is it a bug or a feature?
+If it is a feature how can I acquire the original subject of the commit message by using custom format?
+
+Thanks a lot.
+
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
