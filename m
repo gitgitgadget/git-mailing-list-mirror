@@ -1,120 +1,75 @@
-From: Jay Soffian <jaysoffian@gmail.com>
+From: Kevin Ballard <kevin@sb.org>
 Subject: Re: ls-files --exclude broken?
-Date: Wed, 15 Sep 2010 19:19:28 -0400
-Message-ID: <AANLkTimYNtU7sHn4_Vx50evTWDpMK_=XgshU3ZzT+eVw@mail.gmail.com>
+Date: Wed, 15 Sep 2010 16:21:20 -0700
+Message-ID: <02BCF40A-6E66-4E19-9235-5EB271F3D685@sb.org>
 References: <AANLkTimuTHvA+qjqpmz=VkCpTTiRA7imb5+ZyTVmPwYy@mail.gmail.com> <7v62y661pl.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jay Soffian <jaysoffian@gmail.com>, git <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 16 01:20:07 2010
+X-From: git-owner@vger.kernel.org Thu Sep 16 01:21:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ow1Go-0001Dw-0O
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:20:06 +0200
+	id 1Ow1IC-0001lb-5n
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:21:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566Ab0IOXT7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 19:19:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38501 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753402Ab0IOXT6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 19:19:58 -0400
-Received: by iwn5 with SMTP id 5so490352iwn.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:19:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1yvFWBfx22EOKGHZi68f5IEiyFVrF3/KWEzcdC6BOmQ=;
-        b=gPX99P4CGCF2jW+N+rYJcgtdRPGHAq1W+UmJJ2PPSL+h1QeK7iLM//l9PL6iRe0Lo0
-         gQVBNhSeGZdgQA8c8L8Dm10Y9q2+TCmFMl4bF8pgMD4P15UCjmgzgA7Xz9M6OBSiLbaM
-         z2UINIDklu8NaZTn9dgjbuRZal6aR5ME5g4iI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xidzgmE1hqSmYEejlk6yp5AmYTGnTOSX4SGTGld8zQpudeXpPf04ykL2t0OB5yQ3hq
-         usIzObbb+2QIrz7A0ST+f9uMWXLQxd4lT3qoM51XPNBgsYqiKMwORQWm4y7+m4nD7rPk
-         ajqMWjxtgTnCv24P2o+3q7q1Dr3OAt1WVaRDw=
-Received: by 10.231.60.4 with SMTP id n4mr2523419ibh.18.1284592798114; Wed, 15
- Sep 2010 16:19:58 -0700 (PDT)
-Received: by 10.231.11.11 with HTTP; Wed, 15 Sep 2010 16:19:28 -0700 (PDT)
+	id S1753715Ab0IOXV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 19:21:28 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:57005 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600Ab0IOXV1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 19:21:27 -0400
+Received: by pvg2 with SMTP id 2so207070pvg.19
+        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:21:27 -0700 (PDT)
+Received: by 10.142.152.12 with SMTP id z12mr2080947wfd.94.1284592886989;
+        Wed, 15 Sep 2010 16:21:26 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id t11sm2248662wfc.22.2010.09.15.16.21.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Sep 2010 16:21:26 -0700 (PDT)
 In-Reply-To: <7v62y661pl.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156273>
 
-On Wed, Sep 15, 2010 at 7:12 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
+On Sep 15, 2010, at 4:12 PM, Junio C Hamano wrote:
+
+> Jay Soffian <jaysoffian@gmail.com> writes:
+> 
 >> Am I missing something really obvious here?
->>
+>> 
 >> kore:~/Repos/git (master)$ git ls-files | wc -l
->> =C2=A0 =C2=A0 2009
->
-> You asked it to show the cached paths (default). =C2=A0Your project c=
-urrently
+>>    2009
+> 
+> You asked it to show the cached paths (default).  Your project currently
 > tracks 2009 paths in the index.
-
-Correct.
-
+> 
 >> kore:~/Repos/git (master)$ git ls-files -x \* | wc -l
->> =C2=A0 =C2=A0 2009
->
-> You told that '*' is the exclude pattern for carrying out some operat=
-ion,
-> but you didn't tell what operation you want. =C2=A0You are shown the =
-cached
+>>    2009
+> 
+> You told that '*' is the exclude pattern for carrying out some operation,
+> but you didn't tell what operation you want.  You are shown the cached
 > paths (default).
-
-I want cached paths, minus the exclude pattern. Using -c -x \* gives
-the same result.
-
-There is no indication in the man page that -x doesn't apply to -c.
-
+> 
 >> kore:~/Repos/git (master)$ git ls-files -i -x \* | wc -l
->> =C2=A0 =C2=A0 2009
->
-> You told that '*' is the exclude pattern, you want only paths that ma=
-tch
-> the exclude pattern, and chose to show files in the index (which agai=
-n is
+>>    2009
+> 
+> You told that '*' is the exclude pattern, you want only paths that match
+> the exclude pattern, and chose to show files in the index (which again is
 > the default) by not saying -o.
->
-> I've never found -i useful myself (actually I don't find many options=
- the
-> command has very useful anymore), but the above is how I read the ls-=
-files
+> 
+> I've never found -i useful myself (actually I don't find many options the
+> command has very useful anymore), but the above is how I read the ls-files
 > manual page.
 
-I don't care about -i myself, and maybe I should have been clearer.
-AFAICT, [-c] -x is broken:
+My impression is that -x is pretty much only useful when you're using the -o flag, as anything that's already tracked isn't supposed to be affected by exclude patterns. The argument can be made that ls-files should indeed apply the exclude pattern to other requested display modes, and in fact a reading of the -i switch seems to imply that it should. Running `git ls-files -x '*.m' -c -i` displays all files ending in .m in the index. It would seem logical that the similar `git ls-files -x '*.m' -c` should display all files that don't end in .m in the index, but it doesn't appear to apply the exclude pattern in this case. As for -i being useful, I've never actually used it myself (though obviously it can be used as a way to grep through the index via the exclude pattern), but I can imagine a 
+ scenario where I want to clean up all untracked files and end up running something like `git ls-files -z -o -i --exclude-standard | xargs -0 rm`.
 
-$ git ls-files -c -x \* |wc -l
-    2009
-
-       -c, --cached
-           Show cached files in the output (default)
-
-       -x <pattern>, --exclude=3D<pattern>
-           Skips files matching pattern. Note that pattern is a shell
-wildcard pattern.
-
-Oh, geez, here it is lower down in the man page:
-
-  git ls-files can use a list of "exclude patterns" when traversing
-the directory tree and finding files to show when the flags --others
-or --ignored are specified. gitignore(5) specifies the format of
-exclude patterns.
-
-Bah, what use is that? Minimally ls-files shouldn't accept -x unless
-given either --ignored or --others if that's all it applies to. I
-guess this is my itch to scratch.
-
-j.
+-Kevin Ballard
