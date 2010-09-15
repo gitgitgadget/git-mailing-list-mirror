@@ -1,112 +1,243 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: How we should translate Git
-Date: Wed, 15 Sep 2010 20:09:38 +0000
-Message-ID: <AANLkTinJSzP+3xNLHJisqKzg2LHFaSuaRWxgdFrFp17R@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH (bugfix)] gitweb: Add and use prep_attr helper
+Date: Wed, 15 Sep 2010 22:34:12 +0200
+Message-ID: <201009152234.14253.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Stimming <stimming@tuhh.de>, jk@jk.gs,
-	git <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Sep 15 22:09:48 2010
+Cc: "=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason" 
+	<avarab@gmail.com>,
+	"Uwe =?utf-8?q?Kleine-K=C3=B6nig?=" <u.kleine-koenig@pengutronix.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 15 22:37:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvyId-0000dv-JC
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 22:09:47 +0200
+	id 1Ovyj1-0006sO-BN
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 22:37:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754164Ab0IOUJk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 16:09:40 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:59858 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754119Ab0IOUJj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 16:09:39 -0400
-Received: by iwn5 with SMTP id 5so365657iwn.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 13:09:39 -0700 (PDT)
+	id S1754231Ab0IOUde convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 16:33:34 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:40777 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754168Ab0IOUdc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 16:33:32 -0400
+Received: by bwz11 with SMTP id 11so912557bwz.19
+        for <git@vger.kernel.org>; Wed, 15 Sep 2010 13:33:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=lDH3k/IcPERF7XqiaYmA/aFAAjmaDbjlimsh4yUnbOo=;
-        b=ksufzYXrHcmGo/QRgZzNwlR0B0BNX4wIBcQ2n4Pmc+KvrJTIos2ACzNGDMYzI+TtdZ
-         WKlpdmU5znZ4vsOv8hkmguxzaUd9S3BjHRpe2YG/YZDK3sbINlADoe2hrhBWMfwbylTP
-         9ov8UFTeZ5KFwQHFFwAnyEYPU2dTAiAYKc37U=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=BMzv4cWJ4AbVAadZRV84wbbf8UN3bNnmHlum1ff7ofk=;
+        b=EPFsdvdhTGj9QOlO/JXhpsjqvqCf6yQzivJcMsbx+Bg1VtptQsZQyYt/McUpshiffd
+         AoSTtuzsKBVTf8dm1XLyteDqfY5YCWQeyRo5jPsF5uVrZi+tcX6UP+hmz6nMbBmg6rQL
+         qi145vr968HfgufHpyJixRo73/WdkXK0HaN4Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=I2TgcDt/53NAgg1tirByY0PN1atPbFr+5wQzjA3y6FjWGnnCx77gMLiow1hdmMkg0E
-         /cWOyXwN/hXDPnbU8yWlo7Nzdv9A/TDU7GB3DzIgNHKMbccarmKB0WtoiQMbth7VV0l1
-         u0nXt3toHVFqeBSMYR+ZqF89ZZK0ljHvCLnWs=
-Received: by 10.231.183.67 with SMTP id cf3mr2018563ibb.187.1284581379272;
- Wed, 15 Sep 2010 13:09:39 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Wed, 15 Sep 2010 13:09:38 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        b=eW8sIkjDS8amFjRaRFfH6p2lCOVydFPMHHnFeev91duNxulgvtfFyfyHdqP9jhbOTH
+         L0vSrkk5xVdxp4oKHCzbS5aKjlwHt9D/UcblG216w8Iz2chBCQgtiTQ+xkPCh811TefO
+         O+SQw0FKs78SNgnsrc9I+bzMDvXY7f3kcGexg=
+Received: by 10.204.19.83 with SMTP id z19mr1770044bka.43.1284582808719;
+        Wed, 15 Sep 2010 13:33:28 -0700 (PDT)
+Received: from [192.168.1.13] (abve52.neoplus.adsl.tpnet.pl [83.8.202.52])
+        by mx.google.com with ESMTPS id f10sm1722636bkl.5.2010.09.15.13.33.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Sep 2010 13:33:27 -0700 (PDT)
+User-Agent: KMail/1.9.3
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156245>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156246>
 
-On Wed, Sep 15, 2010 at 09:47, Thomas Rast <trast@student.ethz.ch> wrot=
-e:
-> There are German terms for all the untranslated ones, but I rarely
-> hear them in practical usage. =C2=A0Books probably go for a full
-> translation since they want to be normative (how should I know, it's
-> been a while since I used a German book), but lectures stick to the
-> half-translated version.
->
-> And much like the average computer scientist around here uses a numbe=
-r
-> of English terms even in German informal speech, I suspect the averag=
-e
-> German user of git would not translate *every* term. =C2=A0Unless you=
- are
-> aiming for a normative usage, in which case we would also have to
-> translate the theory (manpages, books) using the same terms...
->
-> I'll leave it at that for my $0.02, since as you note, I'm not
-> actually the intended audience.
+One of features of CGI.pm module is HTML generation.  The HTML
+generation subroutines / methods automatically escape values of
+attributes of HTML elements... but in older versions didn't do it
+fully, not removing / replacing control characters.  Control
+characters are forbidden in XML / XHTML, and some browsers
+(e.g. Firefox) do not skip over them but display error instead of page
+in strict XHTML mode (XHTML DTD + application/xml+html mimetype).
 
-I'm forking this off from the German thread since I wanted to make a
-more general point about how we translate Git in general.
+This issue was noticed by Uwe Kleine-K=C3=B6nig and resolved to be a
+problem with control characters in XHTML output by =C3=86var Arnfj=C3=B6=
+r=C3=B0
+Bjarmason in format_search_author() subroutine.
 
-=46irstly, not to step on anyone's toes. I think that final say on how
-to translate Git has to be left to each language community, some
-languages (like German) simply use more loan words. While others (like
-Icelandic) prefer to translate pretty much anything as a matter of
-course.
 
-But here's something to keep in mind:
+Introduce prep_attr subroutine to deal with this problem, and use it
+in all places where we use data from outside gitweb in attributes of
+HTML elements, where those HTML elements are generated by CGI.pm
+subroutines / methods (this usually means 'title' attribute).
 
-Unlike the German article on version control we're going to be the
-primary and definite source for Git translations, and given Git's
-popularity probably the definite source for all DVCS translations for
-a given language.
+While at it simplify format_search_author() a bit, and use spaces
+for align.
 
-While translating some things might look awkward now words are usually
-awkward because you aren't familiar with them.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is a more generic replacement for
+  [PATCH] gitweb: Harden format_search_author()
+  http://thread.gmane.org/gmane.comp.version-control.git/152379/focus=3D=
+152543
+from 2010-08-03
 
-The translations we come up with are going to be used for a long time,
-DVCS is a relatively new field, and if we do a good job people using
-Git (or other derived systems) in the year 2050 might be using some of
-the terms we come up with, and they'll sound natural to them because
-they're used to them.
+ gitweb/gitweb.perl |   62 +++++++++++++++++++++++++++++++-------------=
+--------
+ 1 files changed, 37 insertions(+), 25 deletions(-)
 
-More and more people from all walks of life are using computers, word
-processing used to be a relatively advanced thing 20 years ago, now
-everyone does it.
-
-Similarly, everyone might be using a DVCS 30 years from now. Small
-children might be "forking" and "branching" on their tablet computers
-as they collaborate on some school project.
-
-People like that will benefit from a more exhaustive translation into
-their native language, and even people that are bilingual will benefit
-from a good translation.
-
-I find it very easy to think in either English or Icelandic, but I
-struggle when I have to do both at the same time. I'd guess that
-people who explicitly turn on translations on their computer usually
-want a more complete one than not.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a85e2f6..da20209 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1346,6 +1346,22 @@ sub esc_param {
+ 	return $str;
+ }
+=20
++# prepare 'attribute =3D> value' pair for CGI.pm HTML generation,
++# by escaping/quoting/replacing/removing values which are invalid in (=
+X)HTML,
++# and which older versions of CGI.pm do not quote correctly
++#
++# USAGE:
++#   $cgi->a({-href =3D> ..., prep_attr(-title =3D> $title)}, esc_html(=
+$contents));
++#   $cgi->a({-href =3D> ..., -title =3D> prep_attr($title)}, esc_html(=
+$contents));
++sub prep_attr {
++	my ($attr_name, $value) =3D @_ > 1 ? @_ : (undef, @_);
++
++	$value =3D to_utf8($value);
++	$value =3D~ s/[[:cntrl:]]/?/g;
++
++	return defined $attr_name ? ($attr_name =3D> $value) : $value;
++}
++
+ # quote unsafe chars in whole URL, so some characters cannot be quoted
+ sub esc_url {
+ 	my $str =3D shift;
+@@ -1555,8 +1571,7 @@ sub chop_and_escape_str {
+ 	if ($chopped eq $str) {
+ 		return esc_html($chopped);
+ 	} else {
+-		$str =3D~ s/[[:cntrl:]]/?/g;
+-		return $cgi->span({-title=3D>$str}, esc_html($chopped));
++		return $cgi->span({prep_attr(-title=3D>$str)}, esc_html($chopped));
+ 	}
+ }
+=20
+@@ -1778,9 +1793,8 @@ sub format_subject_html {
+ 	$extra =3D '' unless defined($extra);
+=20
+ 	if (length($short) < length($long)) {
+-		$long =3D~ s/[[:cntrl:]]/?/g;
+ 		return $cgi->a({-href =3D> $href, -class =3D> "list subject",
+-		                -title =3D> to_utf8($long)},
++		                prep_attr(-title =3D> $long)},
+ 		       esc_html($short)) . $extra;
+ 	} else {
+ 		return $cgi->a({-href =3D> $href, -class =3D> "list subject"},
+@@ -1856,23 +1870,20 @@ sub format_search_author {
+ 	my ($author, $searchtype, $displaytext) =3D @_;
+ 	my $have_search =3D gitweb_check_feature('search');
+=20
+-	if ($have_search) {
+-		my $performed =3D "";
+-		if ($searchtype eq 'author') {
+-			$performed =3D "authored";
+-		} elsif ($searchtype eq 'committer') {
+-			$performed =3D "committed";
+-		}
+-
+-		return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash,
+-				searchtext=3D>$author,
+-				searchtype=3D>$searchtype), class=3D>"list",
+-				title=3D>"Search for commits $performed by $author"},
+-				$displaytext);
++	return $displaytext unless ($have_search);
+=20
+-	} else {
+-		return $displaytext;
++	my $performed =3D "";
++	if ($searchtype eq 'author') {
++		$performed =3D "authored";
++	} elsif ($searchtype eq 'committer') {
++		$performed =3D "committed";
+ 	}
++
++	my $title =3D "Search for commits $performed by $author";
++	return $cgi->a({-href =3D> href(action=3D>"search", hash=3D>$hash,
++	                              searchtext=3D>$author, searchtype=3D>$s=
+earchtype),
++	                -class=3D>"list", prep_attr(-title=3D>$title)},
++	               $displaytext);
+ }
+=20
+ # format the author name of the given commit with the given tag
+@@ -3559,7 +3570,7 @@ sub git_footer_html {
+ 		foreach my $format qw(RSS Atom) {
+ 			$href_params{'action'} =3D lc($format);
+ 			print $cgi->a({-href =3D> href(%href_params),
+-			              -title =3D> "$href_params{'-title'} $format feed",
++			              prep_attr(-title =3D> "$href_params{'-title'} $format=
+ feed"),
+ 			              -class =3D> $feed_class}, $format)."\n";
+ 		}
+=20
+@@ -3827,17 +3838,17 @@ sub git_print_page_path {
+ 			$fullname .=3D ($fullname ? '/' : '') . $dir;
+ 			print $cgi->a({-href =3D> href(action=3D>"tree", file_name=3D>$full=
+name,
+ 			                             hash_base=3D>$hb),
+-			              -title =3D> $fullname}, esc_path($dir));
++			              prep_attr(-title =3D> $fullname)}, esc_path($dir));
+ 			print " / ";
+ 		}
+ 		if (defined $type && $type eq 'blob') {
+ 			print $cgi->a({-href =3D> href(action=3D>"blob_plain", file_name=3D=
+>$file_name,
+ 			                             hash_base=3D>$hb),
+-			              -title =3D> $name}, esc_path($basename));
++			              prep_attr(-title =3D> $name)}, esc_path($basename));
+ 		} elsif (defined $type && $type eq 'tree') {
+ 			print $cgi->a({-href =3D> href(action=3D>"tree", file_name=3D>$file=
+_name,
+ 			                             hash_base=3D>$hb),
+-			              -title =3D> $name}, esc_path($basename));
++			              prep_attr(-title =3D> $name)}, esc_path($basename));
+ 			print " / ";
+ 		} else {
+ 			print esc_path($basename);
+@@ -3981,7 +3992,8 @@ sub git_print_tree_entry {
+ 					print " -> " .
+ 					      $cgi->a({-href =3D> href(action=3D>"object", hash_base=3D>$=
+hash_base,
+ 					                             file_name=3D>$norm_target),
+-					               -title =3D> $norm_target}, esc_path($link_target))=
+;
++					               prep_attr(-title =3D> $norm_target)},
++					              esc_path($link_target));
+ 				} else {
+ 					print " -> " . esc_path($link_target);
+ 				}
+@@ -4687,7 +4699,7 @@ sub git_project_list_body {
+ 		print "<td>" . $cgi->a({-href =3D> href(project=3D>$pr->{'path'}, ac=
+tion=3D>"summary"),
+ 		                        -class =3D> "list"}, esc_html($pr->{'path'})=
+) . "</td>\n" .
+ 		      "<td>" . $cgi->a({-href =3D> href(project=3D>$pr->{'path'}, ac=
+tion=3D>"summary"),
+-		                        -class =3D> "list", -title =3D> $pr->{'descr=
+_long'}},
++		                        -class =3D> "list", prep_attr(-title =3D> $p=
+r->{'descr_long'})},
+ 		                        esc_html($pr->{'descr'})) . "</td>\n" .
+ 		      "<td><i>" . chop_and_escape_str($pr->{'owner'}, 15) . "</i></t=
+d>\n";
+ 		print "<td class=3D\"". age_class($pr->{'age'}) . "\">" .
+--=20
+1.7.2.1
