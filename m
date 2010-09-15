@@ -1,131 +1,100 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [RFC PATCH 0/2] Teach fetch and pull to recursively fetch submodules too
-Date: Wed, 15 Sep 2010 16:12:44 -0700
-Message-ID: <810A496E-68B0-4478-A698-2CFEE6CE354C@sb.org>
-References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <4C90AEDE.4070300@web.de>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jens Lehmann <jens.lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Sep 16 01:12:57 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] tests: use test_cmp instead of piping to diff(1)
+Date: Wed, 15 Sep 2010 23:15:36 +0000
+Message-ID: <AANLkTimpV20yGKw57raxho-8zSymLEvXgXSAayEmb7M9@mail.gmail.com>
+References: <1284411582-1088-1-git-send-email-avarab@gmail.com>
+	<7vy6b59q5a.fsf@alter.siamese.dyndns.org>
+	<AANLkTinGt6d8tKh8yOT0SJpcgsv+KgrE4jPT2_RgGzeG@mail.gmail.com>
+	<4C90029F.6020909@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 16 01:15:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ow19q-0006a9-41
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:12:54 +0200
+	id 1Ow1CZ-0007mb-LX
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753262Ab0IOXMr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 19:12:47 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:56298 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752448Ab0IOXMq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 19:12:46 -0400
-Received: by pwi3 with SMTP id 3so279218pwi.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:12:46 -0700 (PDT)
-Received: by 10.114.124.17 with SMTP id w17mr2622408wac.204.1284592366470;
-        Wed, 15 Sep 2010 16:12:46 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id d38sm3199454wam.8.2010.09.15.16.12.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Sep 2010 16:12:45 -0700 (PDT)
-In-Reply-To: <4C90AEDE.4070300@web.de>
-X-Mailer: Apple Mail (2.1081)
+	id S1753391Ab0IOXPi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 19:15:38 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37698 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751666Ab0IOXPh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 19:15:37 -0400
+Received: by iwn5 with SMTP id 5so487628iwn.19
+        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:15:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MDPaytulk5pG1RHL2BOe11lTkUDQ4GnaUrOdUNom35c=;
+        b=ppCACxdKMK5NoagEJTp30w6kCO/7EYR6oUWpOlGPQNDKD2FquqvOvHEw/TXunIPSQb
+         bVMXq2CGqYu/q1PJpWOhifVCHHHbL2Szz2E1cjkCKvcGVwwn6lXCY/mKsVK3UxJUt1WG
+         vU7zgwCz7V/xdes6scvcqP3wSTdw/wZpNJFDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=V9/BsHI1e6Q+AQG5hPe05d3AkN72E+xOw/6nIOiiHXuumy1Za2VdVLhnEwMlrpAkdo
+         bJl0Goz9xgJxz9+kmrCB7WczRKeFKGHyLZpdB4IJ3P6BklUmSHw/rBLfi45/Yf5V/zXV
+         wjg4KdvbwHGF+yivd8toXiFfqZtlkt39J1Gs8=
+Received: by 10.231.157.195 with SMTP id c3mr2349029ibx.155.1284592536590;
+ Wed, 15 Sep 2010 16:15:36 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 15 Sep 2010 16:15:36 -0700 (PDT)
+In-Reply-To: <4C90029F.6020909@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156271>
 
-On Sep 15, 2010, at 4:32 AM, Jens Lehmann wrote:
+On Tue, Sep 14, 2010 at 23:17, Jens Lehmann <Jens.Lehmann@web.de> wrote=
+:
+> Am 14.09.2010 03:45, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> On Mon, Sep 13, 2010 at 23:31, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>>> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>>>
+>>>> @@ -37,9 +37,10 @@ head1=3D$(add_file sm1 foo1 foo2)
+>>>> =C2=A0test_expect_success 'added submodule' "
+>>>> =C2=A0 =C2=A0 =C2=A0 git add sm1 &&
+>>>> =C2=A0 =C2=A0 =C2=A0 git diff-index -p --submodule=3Dlog HEAD >act=
+ual &&
+>>>> - =C2=A0 =C2=A0 diff actual - <<-EOF
+>>>> + =C2=A0 =C2=A0 cat >expected <<-EOF &&
+>>>> =C2=A0Submodule sm1 0000000...$head1 (new submodule)
+>>>> =C2=A0EOF
+>>>> + =C2=A0 =C2=A0test_cmp expected actual
+>>>> =C2=A0"
+>>>
+>>> Nit. =C2=A0Did you really mean <<-EOF, not <<EOF, here, especially =
+you are
+>>> writing the here document without indentation with any TAB?
+>>
+>> I just meant to replace the diff invocations with test_cmp. Changing
+>> the surrounding here-docs was outside the scope of the patch.
+>
+> I plead guilty for introducing the "<<-EOF"s in the first place by
+> simply copying the frame for this test from t7401. But me too thinks
+> the "test_cmp" should have TABs in front of them instead of spaces.
+>
+> With the "TAB in front of test_cmp" issue fixed you may add:
+> Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
 
-> Am 15.09.2010 02:18, schrieb Kevin Ballard:
->> The first is `git remote update`, which I am fond of using, causes buggy behavior where it fetches all submodules twice.
-> 
-> I'll look into that, fetching the same submodule twice should not
-> happen. (But I'm not sure what you mean by "buggy behavior where it
-> fetches all submodules twice" though, is there something else going
-> wrong?)
+Junio, since you picked this up as part of the ab/i18n branch I fixed
+this issue up there. You can pull it from the usual place
+(git://github.com/avar/git.git ab/i18n).
 
-Nothing else wrong, the bug was simply that it fetches all submodules twice. And if it helps, I only have one remote.
+I didn't switch to TAB in all cases, but only the ones where the
+surrounding test code already used TAB. t4041-diff-submodule-option.sh
+uses TAB for indent, but t7401-submodule-summary.sh does not, this way
+my patch retains the indentation of the surrounding code.
 
->> The second is this submodule fetch doesn't appear to be recursive.
-> 
-> That is strange as fetch now executes a 'git fetch' inside each
-> populated submodule, which should automagically recurse. So I assume
-> that you don't have a .gitmodules file inside your first level of
-> submodules which describes the deeper nested ones?
-
-I do indeed have a .gitmodules file. My normal approach of `git submodule update --init --recursive` works perfectly fine to update the entire tree of submodules, even on a brand new clone.
-
-Upon further investigation, judging from the time spent on each submodule, it may indeed be recursing. The odd part then, is that a `git fetch` at the top level reports that it's fetching one of the nested submodules, even though a `git fetch` inside that submodule doesn't report any of its nested submodules being fetched.
-
-Here's an equivalent tree for the submodules I have:
-
-  .--Root-.
- / / /|\ \ \  
-A B C D E F G
-      |
-      H
-     /|\
-    I J K
-     /|\--.
-    L M N J'
-     /|\
-    O P Q
-
-J' is listed in .gitmodules but doesn't actually exist in the tree anymore. I'm not sure if this makes a difference.
-
-When I run `git fetch` at the root level, I see the following:
-
-Fetching submodule A
-Fetching submodule B
-Fetching submodule C
-Fetching submodule H
-Fetching submodule D
-Fetching submodule E
-Fetching submodule F
-Fetching submodule G
-
-This exactly matches the ordering of the submodules in .gitmodules, except for the stray fetch of H listed after C. If I cd into C and run `git fetch`, I only see
-
-Fetching submodule H
-
-Similarly if I cd into H and fetch, I only see I, J, and K.
-
-I cannot figure out why it is displaying "Fetching submodule H" at this root level. As I said above, going by how long it spends fetching the submodule, I assume it is actually recursing appropriately.
-
->> The third issue is `git fetch` doesn't have any business fetching submodules when the submodule reference was never changed as part of the fetch, especially if the main fetch itself didn't even find any changes. It seems to me that the correct behavior would be to look at all the fetched commits to see if any of them change the submodule reference, and only in that case should it automatically fetch any submodules whose references were modified. The stated desire of avoiding "(commits not present)" when doing a diff will still be met, but it will avoid slowing down the normal case of a `git fetch`.
-> 
-> I was thinking about implementing that optimization too but came to
-> the conclusion that you always have to fetch submodules too no matter
-> if the superproject has any new commits fetched for them. Because
-> when you don't do that you wouldn't get a chance to test and commit
-> e.g. a new feature added by a colleague in a submodule and pushed by
-> him, as that would not be fetched into your repo before it was
-> committed inside the superproject. That leads to a 'chicken or the
-> egg' problem.
-
-In my scenario, running `git fetch` will fetch a grand total of 17 submodules. This makes fetching extremely slow. And the normal workflow here is if one of my coworkers commits a change to submodule D, and the submodule is in an appropriate state to be updated in the root project, he will go ahead and update it in that root project. Alternatively, if he's making the change to satisfy a request made by me, he will let me know when it's done and I will update it. Otherwise, I don't want to know when he pushes changes. So the ideal behavior for me is only fetch a submodule if the superproject's fetch actually fetched new trees, and one of those trees references a new commit in this submodule that doesn't already exist. If I want to know about changes that aren't referenced by the superprojec
- t, I would simply run `git submodule update --recursive`.
-
-I'm not sure I understand why you think there's a 'chicken or the egg' problem. If a colleague adds a new feature to a submodule, if he updates the superproject for this and commits, then the behavior of `git fetch` won't make any difference. If he just pushes the submodule and leaves it up to you to update the superproject, then there's still no problem, as it cannot be committed into the superproject without you fetching the submodule. It seems the only reason to proactively fetch commits in a submodule that hasn't been updated in the superproject is so you can be aware that there were new commits pushed in the submodule, if you care to go look at them and potentially update the superproject to include the new commits. I am not convinced that this needs to be done on every `git fetch`. I
- t seems likely that most people running `git fetch` aren't responsible for updating the submodule, and often may explicitly not want to update the submodule. And whatever developer is responsible for updating the submodule when necessary should just be in the habit of running something like `git submodule foreach --recursive 'git fetch'`. Alternately, we could turn the submodule.<name>.fetch property into an enum rather than a boolean, and have one value of the enum be the current behavior (where it always fetches), another value be the new default behavior where it only fetches when necessary to resolve commit references in the superproject, and a third value be to never fetch. This mechanism would also benefit from having a config value that sets the default to use when submodule.<name
- >.fetch doesn't exist.
-
->> It also seems like there ought to be a config variable one can set for the default behavior if submodule.<name>.fetch is not present in .gitmodules or in .git/config.
-> 
-> I'll take this as a 'yes' to my question if such an option is wanted.
-> 
-> 
-> In your other mail you wrote that the output of the recursive fetch
-> does not prepend the names of the higher level submodules. I did not
-> think about that and will post a fix for that problem soon.
-
-As illustrated above, the recursive fetch actually isn't printing out any of the nested submodules, except for my outlier submodule H. If it's supposed to be printing them, it should prepend the submodule name with the parent. If it's not supposed to be printing them, then this isn't an issue. That said, I do think it should be printing them, because otherwise you get the weird behavior where you can see several fetches in a row, but without any "Fetching submodule <blah>" header between them. It makes it look like the same repo needed to be fetched several times and is quite confusing.
-
--Kevin Ballard
+(I didn't add Jens's Acked-by to the patch since I didn't strictly do
+what he was suggesting).
