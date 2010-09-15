@@ -1,76 +1,101 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [RFC PATCH 0/2] Teach fetch and pull to recursively fetch submodules too
-Date: Tue, 14 Sep 2010 19:40:50 -0700
-Message-ID: <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org>
-References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Sep 15 04:41:00 2010
+From: martin f krafft <madduck@madduck.net>
+Subject: Re: Import existing (old) topic branches in topgit
+Date: Wed, 15 Sep 2010 06:55:09 +0200
+Message-ID: <20100915045509.GA16770@fishbowl.rw.madduck.net>
+References: <AANLkTima2NsEWuT85oFZGpfCQrsrqy5KsQSOez3B9i-7@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-ripemd160;
+	protocol="application/pgp-signature"; boundary="Qxx1br4bt0+wmkIi"
+To: Guilhem Bonnefille <guilhem.bonnefille@gmail.com>,
+	Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 15 07:35:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovhvf-00077U-M6
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 04:41:00 +0200
+	id 1Ovkee-0007L8-Lm
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 07:35:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752222Ab0IOCky (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 22:40:54 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:50513 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752066Ab0IOCkx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 22:40:53 -0400
-Received: by pwi3 with SMTP id 3so22126pwi.19
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 19:40:53 -0700 (PDT)
-Received: by 10.114.88.15 with SMTP id l15mr968170wab.191.1284518452767;
-        Tue, 14 Sep 2010 19:40:52 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id d2sm1438570wam.2.2010.09.14.19.40.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Sep 2010 19:40:51 -0700 (PDT)
-In-Reply-To: <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org>
-X-Mailer: Apple Mail (2.1081)
+	id S1753341Ab0IOFfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 01:35:22 -0400
+Received: from seamus.madduck.net ([213.203.238.82]:54658 "EHLO
+	seamus.madduck.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753328Ab0IOFfV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 01:35:21 -0400
+Received: from fishbowl.rw.madduck.net (tmo-101-187.customers.d1-online.com [80.187.101.187])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "fishbowl.rw.madduck.net", Issuer "CAcert Class 3 Root" (verified OK))
+	by seamus.madduck.net (postfix) with ESMTPS id B30E7411658;
+	Wed, 15 Sep 2010 07:35:08 +0200 (CEST)
+Received: by fishbowl.rw.madduck.net (Postfix, from userid 1000)
+	id 58F99217D5; Wed, 15 Sep 2010 06:55:09 +0200 (CEST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTima2NsEWuT85oFZGpfCQrsrqy5KsQSOez3B9i-7@mail.gmail.com>
+X-Motto: Keep the good times rollin'
+X-OS: Debian GNU/Linux squeeze/sid kernel 2.6.35-trunk-amd64 x86_64
+X-Spamtrap: madduck.bogus@madduck.net
+X-Subliminal-Message: debian/rules!
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Virus-Scanned: clamav-milter 0.96.1 at seamus
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156224>
 
-To those CC'd on the original message, sorry for the repeat send to the list but the original was rejected due to not being text/plain.
 
-On Sep 14, 2010, at 5:18 PM, Kevin Ballard wrote:
+--Qxx1br4bt0+wmkIi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Aug 29, 2010, at 10:58 PM, Junio C Hamano wrote:
-> 
->> Jens Lehmann <Jens.Lehmann@web.de> writes:
->> 
->>> So I extended the fetch command to fetch populated submodules too. I
->>> also added a command line option to fetch and pull and the second patch
->>> introduces a per submodule config option to give users the chance to
->>> control that behavior.
->>> 
->>> And maybe we need a config option to customize that behavior
->>> for all submodules or all repos too?
->>> 
->>> Opinions?
->> 
->> I think your "if a particular submodule is already initialized, recursing
->> into it is more likely than not what the user wants" is a sound heuristic.
-> 
-> This was just merged onto the next branch a few days ago, so I finally got a chance to test it out, and it's not pretty. The project I'm working in has a bunch of submodules, and this makes a simple `git fetch` take about 20 seconds. Even worse, it makes `git remote update` take significantly longer, as it apparently fetches all submodules twice. As a comparison, with all the submodule fetching turned off, a normal `git fetch` takes about 1.5 seconds. Oddly enough, it doesn't seem to be fetching submodules recursively - one of my submodules has a whole tree of about 6 different submodules, but those embedded submodules aren't being fetched.
-> 
-> There seems to be 3 issues here. The first is `git remote update`, which I am fond of using, causes buggy behavior where it fetches all submodules twice. The second is this submodule fetch doesn't appear to be recursive. The third issue is `git fetch` doesn't have any business fetching submodules when the submodule reference was never changed as part of the fetch, especially if the main fetch itself didn't even find any changes. It seems to me that the correct behavior would be to look at all the fetched commits to see if any of them change the submodule reference, and only in that case should it automatically fetch any submodules whose references were modified. The stated desire of avoiding "(commits not present)" when doing a diff will still be met, but it will avoid slowing down the n
- ormal case of a `git fetch`.
-> 
-> It also seems like there ought to be a config variable one can set for the default behavior if submodule.<name>.fetch is not present in .gitmodules or in .git/config.
+also sprach Guilhem Bonnefille <guilhem.bonnefille@gmail.com> [2010.09.14.2=
+244 +0200]:
+> But as I'm new to this tool, I don't know what's the best way to
+> import existing branches in topgit.
 
-Turns out the recursive fetch behavior is a bit more subtle than I thought. It actually recurses one level deep into submodules, but no further. I have a submodule foo, which has a submodule bar, which has a submodule baz, and when I run `git fetch` I get
+There is tg-import, but it looks like it rewrites the history, which
+you might not want.
 
-Fetching submodule foo
-Fetching submodule bar
+This should be trivially possible, and it would be nice if TopGit
+could help you, but for now you will have to do this manually. The
+following is an example for the simple case when branch foo depends
+on master, and you want to convert foo:
 
-There's two problems here. The first is it doesn't tell me that bar is actually foo/bar, and the second is it never fetches baz.
+1. git checkout foo    # the topic branch
+2. git update-ref refs/top-bases/foo $(git merge-base master HEAD)
+3. echo master > .topdeps
+4. git format-patch --stdout -s HEAD^ | sed -e 1d -e '/---/,$d' -e '/^Date:=
+/d' > .topmsg
+5. git add .top(deps|msg)
+6. git commit -sm'convrting branch to topgit format'
+7. tg summary
 
--Kevin Ballard
+Now: will you write a new tg-import or tg-convert? ;)
+
+Cheers,
+
+--=20
+martin | http://madduck.net/ | http://two.sentenc.es/
+=20
+a: no.
+q: should i include quotations after my reply?
+=20
+spamtraps: madduck.bogus@madduck.net
+
+--Qxx1br4bt0+wmkIi
+Content-Type: application/pgp-signature; name="digital_signature_gpg.asc"
+Content-Description: Digital signature (see http://martin-krafft.net/gpg/)
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEAREDAAYFAkyQUa0ACgkQIgvIgzMMSnVBBwCcDoAUXvSR4duV9aPR2IvRbNyy
+u3MAoKdlOZkmMdc9UHr8oJqe4QPEJsTe
+=9bDQ
+-----END PGP SIGNATURE-----
+
+--Qxx1br4bt0+wmkIi--
