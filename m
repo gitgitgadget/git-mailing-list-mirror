@@ -1,80 +1,75 @@
-From: Elijah Newren <newren@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
 Subject: Re: ls-files --exclude broken?
-Date: Wed, 15 Sep 2010 17:34:43 -0600
-Message-ID: <AANLkTi=FePrE6gpwiaxqDfw0f7Jk=mb-sTe-XR6-sKXM@mail.gmail.com>
+Date: Wed, 15 Sep 2010 19:41:50 -0400
+Message-ID: <AANLkTi=L0PA-p5HkWnurfurfyYAQhCBt+Q7SzzCczFLH@mail.gmail.com>
 References: <AANLkTimuTHvA+qjqpmz=VkCpTTiRA7imb5+ZyTVmPwYy@mail.gmail.com>
-	<7v62y661pl.fsf@alter.siamese.dyndns.org>
-	<AANLkTimYNtU7sHn4_Vx50evTWDpMK_=XgshU3ZzT+eVw@mail.gmail.com>
+ <7v62y661pl.fsf@alter.siamese.dyndns.org> <AANLkTimYNtU7sHn4_Vx50evTWDpMK_=XgshU3ZzT+eVw@mail.gmail.com>
+ <AANLkTik7ORPUsABJv-bFraFNt2TvP0Xx=-013P2=A6Nr@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 16 01:34:51 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Jeff King <peff@peff.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 16 01:42:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ow1V4-0006lo-7W
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:34:50 +0200
+	id 1Ow1cd-0001eW-OD
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754794Ab0IOXep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 19:34:45 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60490 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754316Ab0IOXep (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 19:34:45 -0400
-Received: by bwz11 with SMTP id 11so1067937bwz.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:34:43 -0700 (PDT)
+	id S1753262Ab0IOXmW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 19:42:22 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57979 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752557Ab0IOXmV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 19:42:21 -0400
+Received: by iwn5 with SMTP id 5so506831iwn.19
+        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:42:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=aBaFJhf+mTLQ2RKLt6SacxGq/gXlcMkZTLYdTDaSTkc=;
-        b=gDZSeDvyg1X1a+yXeEYjgPhSquzw8/8ADQUN2qLEpxU3JFqfK+2yngRC+26I4C85cY
-         AOvefZmXEzMeIYoTJogEfRQKgQrIG4tSzXlkMKGsh2H20ISXdMwVF6uB48+FqyJp+9UR
-         pj4TODOSYlq/ct8Pn4H3NsVQWGGK4h4tkmbQI=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=U9C/PBof2OxaoXZCIZmJ5EF11c/LVJuLOrduLFJOZ6E=;
+        b=BsnjTxyJVInw1USvj27LxvZaG0rNs7ljaN2QYIu/fby9hXJih/RFzHcZygXo1gEeKj
+         zxTNUqbsvchVZREe0b6demCABa+OXte0Aq+tftuBL0CLujwT03vOqr8+wLS9kbONwCY6
+         QDTfQXgkE6849yV89uJLhL8tJ8TIWFpIgEqn0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        b=lqpSdMhfsyvM7t2xraOko3YGGoxkRxMDekwLmh305kncwOr7xHAuKqoCEQbcS4j2lK
-         56EIo4HVpP0z7+ngSqNnCo8y6CKwzcGvzesE1sALKCiX4WCT+le819Q9Bjzr0LX8Avv9
-         OOvJ6wnanWa/wdojXsI9CQaAkTs8ton3nAaOo=
-Received: by 10.223.122.143 with SMTP id l15mr1040044far.44.1284593683722;
- Wed, 15 Sep 2010 16:34:43 -0700 (PDT)
-Received: by 10.223.120.131 with HTTP; Wed, 15 Sep 2010 16:34:43 -0700 (PDT)
-In-Reply-To: <AANLkTimYNtU7sHn4_Vx50evTWDpMK_=XgshU3ZzT+eVw@mail.gmail.com>
+        b=d+lUMs3sFfr7u/R11LqXr8AcQFJZhAIUOjj4IJxxvtI4Z3uDyTTwONC88aIwAMfO8B
+         PBd3bmPaPdteDskY7mWydjfMytZca/6eAm6PAewCCe1ARLlDl2OSNYxaTUOHVHQdOqr7
+         MmrBo2r4nTT3Pu8cC2/kPhO8bOdzSvEC9fGTE=
+Received: by 10.231.10.135 with SMTP id p7mr2315625ibp.88.1284594140445; Wed,
+ 15 Sep 2010 16:42:20 -0700 (PDT)
+Received: by 10.231.11.11 with HTTP; Wed, 15 Sep 2010 16:41:50 -0700 (PDT)
+In-Reply-To: <AANLkTik7ORPUsABJv-bFraFNt2TvP0Xx=-013P2=A6Nr@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156277>
 
-On Wed, Sep 15, 2010 at 5:19 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
-> I want cached paths, minus the exclude pattern. Using -c -x \* gives
-> the same result.
->
-> There is no indication in the man page that -x doesn't apply to -c.
+On Wed, Sep 15, 2010 at 7:29 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> I sense another use of negative pathspecs here..
 
-That caught me too.
+Yeah, I'm really not sure I agree with the reasoning of b5227d8
+(ls-files: excludes should not impact tracked files, 2009-10-12).
 
-<snip>
-> Bah, what use is that? Minimally ls-files shouldn't accept -x unless
-> given either --ignored or --others if that's all it applies to. I
-> guess this is my itch to scratch.
+I thought about submitting a patch to revert b5227d8, but with an
+additional option to guard the behavior
+(--exclude-cached-files-too-pretty-please).
 
-I ran into the same thing earlier this week and came up with a patch
-similar to Nguyen's (though I just restored it closer to what Johannes
-originally had there), before I discovered that this was an
-intentional change by Jeff.  (And then I tabled it to get back to work
-on fixing up merge-recursive some more)
+But I guess I don't see the harm in allowing excludes to apply to
+cached files when it is explicitly requested on the command-line. Here
+I think ls-files is slightly different than the other areas of git
+that don't apply excludes to cached files as it's about, well, listing
+files, and it's clear (I think) what the user wants.
 
-I can't say I really understand the changes from b5227d8 and 500348,
-though; I found (and find) it confusing as well.  I did notice that
-restoring the old behavior didn't work very well with items below the
-current directory, so it'd take a bit more work than just restoring
-the original behavior.
+But I'll go dig in the mailing list archives now to see if I can find
+what motivated Jeff's change beyond what he gave in the commit
+message.
 
-
-Elijah
+j.
