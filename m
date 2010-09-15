@@ -1,68 +1,61 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [RFC PATCH 0/2] Teach fetch and pull to recursively fetch submodules too
-Date: Tue, 14 Sep 2010 17:18:08 -0700
-Message-ID: <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org>
-References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 15 02:18:22 2010
+From: Ramana Kumar <ramana.kumar@gmail.com>
+Subject: svn propset
+Date: Wed, 15 Sep 2010 11:00:21 +1000
+Message-ID: <AANLkTikm8Cgo7uYWey18yWsbHB4xDaJod99itv1oXn3f@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 15 03:00:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovfhc-0007NQ-Be
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 02:18:20 +0200
+	id 1OvgMk-0003gn-CY
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 03:00:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752094Ab0IOASP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Sep 2010 20:18:15 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:32872 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646Ab0IOASO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Sep 2010 20:18:14 -0400
-Received: by pwi3 with SMTP id 3so3256pwi.19
-        for <git@vger.kernel.org>; Tue, 14 Sep 2010 17:18:13 -0700 (PDT)
-Received: by 10.142.153.7 with SMTP id a7mr647699wfe.341.1284509893154;
-        Tue, 14 Sep 2010 17:18:13 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id t11sm877570wfc.10.2010.09.14.17.18.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Sep 2010 17:18:11 -0700 (PDT)
-In-Reply-To: <7vocckhcb6.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1081)
+	id S1753562Ab0IOBAn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Sep 2010 21:00:43 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:35395 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752421Ab0IOBAm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Sep 2010 21:00:42 -0400
+Received: by wyf22 with SMTP id 22so8056404wyf.19
+        for <git@vger.kernel.org>; Tue, 14 Sep 2010 18:00:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=Xsep2iqVCgKOKoSaCoGe9VkbfFPcL01nwxgpTyIJVeg=;
+        b=oMLekc8ryijSO50SIDQlINVYu5RhxECojUkS5ErTe1hJdb1WChJw8xThF5JxPQrwzG
+         ZieOFx18zzWALyObsXsOmhSlAxv+1bHwHeLgyfC6s/b4arOOayvDfOxi7UiPuy79z8rg
+         yPnkBUGVFok50lS0iRYmjEyxtBWqDt8aqxfbY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=G6Lm4tMtWG9rsE/m3P0SERcDaWNa12m+8gEO2ddE3TnJ5L474i0t/rFcHM8uKcmPXW
+         K2miBL40rQFQ7zbJ5GefAwBT0CXgxr3aITrdHr7J1M7Kg4HuWZ5yBNvo6S/bo3x34cqC
+         2lPp+MrXLaIHWpei1OBilXFCqEBvUzpf/h8yU=
+Received: by 10.216.203.71 with SMTP id e49mr605710weo.60.1284512441248; Tue,
+ 14 Sep 2010 18:00:41 -0700 (PDT)
+Received: by 10.216.25.9 with HTTP; Tue, 14 Sep 2010 18:00:21 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156220>
 
-On Aug 29, 2010, at 10:58 PM, Junio C Hamano wrote:
+Whatever happened to manually setting properties with git svn?
+I couldn't find any replies to David Fraser's patch
+(http://marc.info/?l=git&m=125259772625008)
 
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> So I extended the fetch command to fetch populated submodules too. I
->> also added a command line option to fetch and pull and the second patch
->> introduces a per submodule config option to give users the chance to
->> control that behavior.
->> 
->> And maybe we need a config option to customize that behavior
->> for all submodules or all repos too?
->> 
->> Opinions?
-> 
-> I think your "if a particular submodule is already initialized, recursing
-> into it is more likely than not what the user wants" is a sound heuristic.
+In line with the current special treatment of certain properties
+(ignore, externals, and executable), perhaps we could have a command
+just for setting svn:ignore appropriately. Automatically keeping the
+svn:ignores in sync with .git/info/exclude would be _very_ helpful for
+me, but I imagine that would be a lot of work to code up (and I
+wouldn't want to do that, not knowing perl very well). Simply
+extending the svn:ignore property manually on some paths would also be
+quite helpful, and may be doable working from the patch above.
 
-This was just merged onto the next branch a few days ago, so I finally got a chance to test it out, and it's not pretty. The project I'm working in has a bunch of submodules, and this makes a simple `git fetch` take about 20 seconds. Even worse, it makes `git remote update` take significantly longer, as it apparently fetches all submodules twice. As a comparison, with all the submodule fetching turned off, a normal `git fetch` takes about 1.5 seconds. Oddly enough, it doesn't seem to be fetching submodules recursively - one of my submodules has a whole tree of about 6 different submodules, but those embedded submodules aren't being fetched.
-
-There seems to be 3 issues here. The first is `git remote update`, which I am fond of using, causes buggy behavior where it fetches all submodules twice. The second is this submodule fetch doesn't appear to be recursive. The third issue is `git fetch` doesn't have any business fetching submodules when the submodule reference was never changed as part of the fetch, especially if the main fetch itself didn't even find any changes. It seems to me that the correct behavior would be to look at all the fetched commits to see if any of them change the submodule reference, and only in that case should it automatically fetch any submodules whose references were modified. The stated desire of avoiding "(commits not present)" when doing a diff will still be met, but it will avoid slowing down the nor
- mal case of a `git fetch`.
-
-It also seems like there ought to be a config variable one can set for the default behavior if submodule.<name>.fetch is not present in .gitmodules or in .git/config.
-
--Kevin Ballard
+Is there any interest or further information from the list readers on this?
