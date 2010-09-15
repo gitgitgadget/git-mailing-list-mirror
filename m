@@ -1,76 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 3/6] git-reset.txt: reset --soft is not a no-op
-Date: Wed, 15 Sep 2010 22:47:41 +0200
-Message-ID: <f78f891e34a6509e937e1235dffcdfb789ef9cc9.1284582409.git.git@drmicha.warpmail.net>
-References: <cover.1284365021.git.git@drmicha.warpmail.net>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 15 22:49:19 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH (bugfix)] gitweb: Add and use prep_attr helper
+Date: Wed, 15 Sep 2010 13:53:36 -0700
+Message-ID: <7vsk1a684v.fsf@alter.siamese.dyndns.org>
+References: <201009152234.14253.jnareb@gmail.com>
+ <AANLkTi=o2PFB=JkO5wYHCLAHCO=Ebe63mAc6WB8GfktH@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 15 22:54:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovyuo-0005JE-MA
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 22:49:15 +0200
+	id 1OvyzS-0007kh-S2
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 22:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755142Ab0IOUrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 16:47:48 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:57865 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755123Ab0IOUrs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 16:47:48 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A48E75FB;
-	Wed, 15 Sep 2010 16:47:47 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 15 Sep 2010 16:47:47 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=R9kCnL+bZ0v1ITVWI3+C1u61Ksg=; b=P226wvkgWsOEe8n0yfVha8Da5bMLogueLfpLDF/5WvlXBcyVXywobXccvoeIo1rIabcOJpk0M6lpdvUBwTrH55Tut4LYj/jOC7/Ss5iLlViBU8smMJ7VwoKZIbTKqm+NQ7vc86bsLI/DlBNmAHAwQhxzH8L5lguLzaPpzeUup8E=
-X-Sasl-enc: RhpGltFXDIGH03R35zC1gNZeHbu7TA1waAInp0PFH5px 1284583666
-Received: from localhost (p548580A7.dip0.t-ipconnect.de [84.133.128.167])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F0383400500;
-	Wed, 15 Sep 2010 16:47:46 -0400 (EDT)
-X-Mailer: git-send-email 1.7.3.rc1.215.g6997c
-In-Reply-To: <cover.1284365021.git.git@drmicha.warpmail.net>
-In-Reply-To: <cover.1284582409.git.git@drmicha.warpmail.net>
-References: <cover.1284582409.git.git@drmicha.warpmail.net>
+	id S1754295Ab0IOUxu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 16:53:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62341 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754231Ab0IOUxu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 16:53:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6DA32D66DF;
+	Wed, 15 Sep 2010 16:53:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=lLGKDsS85Eo7
+	czzC6vCLqxfRaT0=; b=l5jwSeunR6oFlV/R3TILaRsQ96mqRuuPqqbnAfHTbp0n
+	3GXeySVd8OYb9W0DtH9iCIRkFcElumOgNEVn6RLvSStbe8qCp2tnG5r1a8pmSySl
+	8uTSMlGcbsLJO090L6ZLYUDyecfrCAs6NmqhPy83Bnu+jqruegYL9PQzTHTC9PE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rXwwrG
+	zSpCabnU3LVH9Je16NSYsZJPCyYKNe6LAB6gExAweqDIgy+6pNeBbwpeqa5UpcGx
+	7Fy8zA+A1Kp9nepk5S/8VuolVxS2TEliBls3fiCCjFaMEN2eEvyXJkGoDOnStS0K
+	pkpacH3GG33UpWRCgTolbRtO3xgO9ZsDfh6+w=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 153B4D66DD;
+	Wed, 15 Sep 2010 16:53:44 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 715D4D66DC; Wed, 15 Sep
+ 2010 16:53:38 -0400 (EDT)
+In-Reply-To: <AANLkTi=o2PFB=JkO5wYHCLAHCO=Ebe63mAc6WB8GfktH@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed\, 15 Sep
+ 2010 20\:40\:41 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 53E307D2-C10B-11DF-9067-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156256>
 
-Make it clearer that git reset --soft actually does something (changing
-HEAD). While it is mentioned in the previous paragraph already it can
-be easily overlooked otherwise.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Also, git reset --soft does not look at the index nor the worktree, so
-there is no "good order" requirement.
+> FWIW this looks good to me, but perhaps instead of using "?" for
+> everything in ASCII from \0 to " " it would be better to display the
+> human-readable escape sequence, like "\r" or "\b".
+>
+> Gitweb already does this...
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-reset.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-reset.txt b/Documentation/git-reset.txt
-index e443740..8762a0c 100644
---- a/Documentation/git-reset.txt
-+++ b/Documentation/git-reset.txt
-@@ -42,10 +42,10 @@ linkgit:git-add[1]).
- +
- --
- --soft::
--	Does not touch the index file nor the working tree at all, but
--	requires them to be in a good order. This leaves all your changed
--	files "Changes to be committed", as 'git status' would
--	put it.
-+	Does not touch the index file nor the working tree at all (but
-+	resets the head to <commit>, just like all modes do). This leaves
-+	all your changed files "Changes to be committed", as 'git status'
-+	would put it.
- 
- --mixed::
- 	Resets the index but not the working tree (i.e., the changed files
--- 
-1.7.3.rc1.215.g6997c
+Good point ;-).
