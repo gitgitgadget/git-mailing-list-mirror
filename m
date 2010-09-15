@@ -1,116 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.3.rc2
-Date: Wed, 15 Sep 2010 15:20:21 -0700
-Message-ID: <7vd3se644a.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Wed, 15 Sep 2010 22:38:49 +0000
+Message-ID: <AANLkTi=PcKXNN-3LzbkJa5qDgjfnA=Jhd4ECXL0hYvCX@mail.gmail.com>
+References: <20100912202111.B11522FC00@perkele>
+	<AANLkTikg1vD33f6Rj4UEzsbrUemta6NbRWWH22h2Y0-B@mail.gmail.com>
+	<alpine.DEB.2.00.1009130810580.31516@ds9.cixit.se>
+	<AANLkTinhmBHQzkdEY88Oa-XsZQ4VAUz0Tci+gOt=fXmE@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 16 00:20:59 2010
+Cc: git@vger.kernel.org, Bruno Haible <bruno@clisp.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Sep 16 00:38:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ow0La-0006IH-HG
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 00:20:58 +0200
+	id 1Ow0cx-0006jt-Lf
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 00:38:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158Ab0IOWUb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 18:20:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54708 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752062Ab0IOWUa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 18:20:30 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 12270D644E;
-	Wed, 15 Sep 2010 18:20:30 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=eCax7CPHVwXOcasClUuoWpL38
-	fo=; b=ljYvRQ/qM5Gjh//R3IO6f8WwUscauTfKJhFkZYxVbkb4ENbBo8VLNbAIX
-	/JtOFjrtRDvnsgLmtAbaWCsoyd9sVYdAAZbKeQaUEKWc+DcMHyofSvDkjUPmeF2o
-	U6kHD26gZROXhok5877Cl8exwIVvdmrIETrMGslwoer1Ui4Ov8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=JowqcuBuAnYd+l9oaUW
-	OSpCAP4cmq5FcdoRydr1ZPI+3R8iJ5HTG1dDSw3pndrgMWMqJkeMXmZCXRQ5iGS0
-	eZcZPLYUR/tmrsErNBJ878n8i4AbUhM92NREtddgeKblEY0re1FvR5+DDFRpM9hP
-	1696LZdDnvC8VV6wy76u4Ixc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CCD69D6448;
-	Wed, 15 Sep 2010 18:20:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5DA9D643E; Wed, 15 Sep
- 2010 18:20:22 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 70F4868C-C117-11DF-B94D-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754445Ab0IOWiu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 18:38:50 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46937 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753940Ab0IOWit convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 18:38:49 -0400
+Received: by iwn5 with SMTP id 5so462856iwn.19
+        for <git@vger.kernel.org>; Wed, 15 Sep 2010 15:38:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=qWXY7uZ1CiLfOpd8myq2nN2PNVEZh/LZjsTAw4GH7is=;
+        b=dr2bNpTHmZ+g2+Di1j7uKD/zwzJ73McpxfCNVWpZCC5d3vU7mVhejibdBDBF39h2Q3
+         xXWfn6iSS6EuQxGWGq48QmMhg0Xa2zuZbt22qJ6MMNjFWJf0V5RDwEPJeWj3wBgKq9CA
+         8C5hV6gir4/0UQagAiUzeXyYGpOOuVxWy6Ohw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=I/SKBXQuKO57w9UvwrJFQls18fAY76yO4sVy0gEj11XOS8F3/FKGTjhl9IOn7acje0
+         Wkhrs/yKgoSCVJvZWeS3rCDaEW3LJLARL2KWSgA7FKAiPZz0amolStAObVfzHx6zQoiO
+         wMIlQnELaXVDMf8qnfw8OkQQFGJwr7MzJEvZQ=
+Received: by 10.231.174.144 with SMTP id t16mr2401579ibz.118.1284590329455;
+ Wed, 15 Sep 2010 15:38:49 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Wed, 15 Sep 2010 15:38:49 -0700 (PDT)
+In-Reply-To: <AANLkTinhmBHQzkdEY88Oa-XsZQ4VAUz0Tci+gOt=fXmE@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156264>
 
-A release candidate Git 1.7.3.rc2 is available at the usual places
-for testing:
+On Mon, Sep 13, 2010 at 13:35, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+>>> =C2=A0 =C2=A0 =C2=A0 -#: wt-status.c:56
+>>
+>> These context lines are invaluable when figuring out how to translat=
+e stuff,
+>> and to track back strings after the fact. I do not like the idea of =
+removing
+>> them.
+>
+> Yes they're useful while translating. But as documented in po/README'=
+s
+> "Updating a .po file" you can use them while doing that without
+> submitting them to git.git.
+>
+> If they're included the majority of any po/*.po update will be update=
+s
+> to auto-generated line number comments.
 
-  http://www.kernel.org/pub/software/scm/git/
+After doing some msgmerge on is.po I think omitting these line numbers
+might be the wrong move.
 
-  git-1.7.3.rc2.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.3.rc2.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.3.rc2.tar.{gz,bz2}		(preformatted docs)
+msgmerge can get very confused, and mark translations fuzzy across
+unrelated files, presumably that wouldn't happen if they were there. I
+haven't tested it though.
 
-The RPM binary packages for a few architectures are found in:
-
-  testing/git-*-1.7.3.rc2-1.fc11.$arch.rpm	(RPM)
-
-
-
-Changes since v1.7.3-rc1 are as follows:
-
-Csaba Henk (2):
-      bundle: detect if bundle file cannot be created
-      filter-branch: retire --remap-to-ancestor
-
-Jens Lehmann (2):
-      Several tests: cd inside subshell instead of around
-      t1020: Get rid of 'cd "$HERE"' at the start of each test
-
-Jonathan Nieder (5):
-      tests: subshell indentation stylefix
-      t1450 (fsck): remove dangling objects
-      t2105 (gitfile): add missing &&
-      t1302 (core.repositoryversion): style tweaks
-      t2016 (checkout -p): add missing &&
-
-Junio C Hamano (3):
-      t3101: modernise style
-      ls-tree $di $dir: do not mistakenly recurse into directories
-      Git 1.7.3 rc2
-
-Matthieu Moy (1):
-      git-gui: use shell to launch textconv filter in "blame"
-
-Oded Shimon (1):
-      Add --src/dst-prefix to git-formt-patch in git-rebase.sh
-
-Pat Thoyts (6):
-      git-gui: Make usage statement visible on Windows.
-      git-gui: display error launching blame as a message box.
-      git-gui: handle textconv filter on Windows and in development
-      git-gui: ensure correct application termination in git-gui--askpa=
-ss
-      git-gui: avoid mis-encoding the copyright message on Windows.
-      git-gui 0.13
-
-Peter Krefting (1):
-      git-gui: Update Swedish translation (521t).
-
-Ramsay Allan Jones (1):
-      vcs-svn: Fix some printf format compiler warnings
-
-Ren=C3=A9 Scharfe (1):
-      compat/nedmalloc: don't force NDEBUG on the rest of git
-
-Schalk, Ken (1):
-      Avoid rename/add conflict when contents are identical
+CC-ing the gettext maintainer, maybe he has some insights. The gettext
+manual doesn't discuss this as far as I can see.
