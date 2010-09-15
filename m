@@ -1,102 +1,158 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH] disallow branch names that start with a hyphen
-Date: Wed, 15 Sep 2010 09:34:14 +0200
-Message-ID: <20100915073414.GA28927@localhost>
-References: <20100822140801.GA6574@localhost>
- <7vsk262vla.fsf@alter.siamese.dyndns.org>
- <20100823043701.GA11822@localhost>
- <7vtyls6qa7.fsf@alter.siamese.dyndns.org>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
+From: Christian Stimming <stimming@tuhh.de>
+Subject: Re: [PATCH 1/2] po/de.po: add German translation
+Date: Wed, 15 Sep 2010 09:33:13 +0200
+Message-ID: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="jRHKVT23PllUwdXP"
-Cc: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 15 09:34:00 2010
+Content-Type: text/plain; charset=ISO-8859-1;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: trast@student.ethz.ch, jk@jk.gs, avarab@gmail.com
+X-From: git-owner@vger.kernel.org Wed Sep 15 09:46:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvmVD-0004pC-Vh
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 09:34:00 +0200
+	id 1OvmhP-00025Z-V4
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 09:46:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751647Ab0IOHdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 03:33:54 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:49762 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240Ab0IOHdx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 03:33:53 -0400
-Received: by bwz11 with SMTP id 11so250252bwz.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 00:33:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=O4WHCH/c1jZRwZ0CIQOSh4vnFAl4Lo2a9jdHqpkSJ8g=;
-        b=eWM2D4p5TDgFhNRCqPckJ1Dj+oSJPtnh29ZLM1gxfqsPcImKmCaZLW5SciJbtlLCMl
-         Kz9dhEmexHveoOKZrbuD4oaTiGDCbePCkSfPQXCjLaTiYTbgPY4G8iWmbagTM9dmJp6r
-         7kuw2tviggmpFGoom0efjUQg+Au/rqYp5ltYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=MufwZKrmxsTFGxn/Xg08LSyiUeSxFxJQgxylNsQQF/lscWPdiVTeHhRY3zoi78B5A6
-         KvyB2rAX0DcuUvl9KTnwzkS/iTe2PfRGm7pOtGR3f3+YBoxELXgfsjxynZs+frF/G9kV
-         zD+Fic028ACwIb5IVG5083NsmaN3OOng0Y4ms=
-Received: by 10.204.126.223 with SMTP id d31mr851228bks.146.1284536031818;
-        Wed, 15 Sep 2010 00:33:51 -0700 (PDT)
-Received: from darc.lan (p549A56EF.dip.t-dialin.net [84.154.86.239])
-        by mx.google.com with ESMTPS id 11sm1050944bkj.23.2010.09.15.00.33.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Sep 2010 00:33:50 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OvmVS-0007XI-Lx; Wed, 15 Sep 2010 09:34:14 +0200
+	id S1752062Ab0IOHnf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 03:43:35 -0400
+Received: from smtp3.rz.tu-harburg.de ([134.28.202.138]:58545 "EHLO
+	smtp3.rz.tu-harburg.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751813Ab0IOHne (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 03:43:34 -0400
+X-Greylist: delayed 616 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Sep 2010 03:43:34 EDT
+Received: from mail.tu-harburg.de (mail.tu-harburg.de [134.28.202.179])
+	by smtp3.rz.tu-harburg.de (8.13.8/8.13.8) with ESMTP id o8F7XDBi022365
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 15 Sep 2010 09:33:13 +0200
+Received: from webmail.tu-harburg.de (webmail.rz.tu-harburg.de [134.28.202.69])
+	(user=alucst mech=PLAIN bits=0)
+	by mail.tu-harburg.de (8.13.8/8.13.8) with ESMTP id o8F7XDvt002382
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Wed, 15 Sep 2010 09:33:13 +0200
+Received: from hansjoerg.sick.de (hansjoerg.sick.de [91.207.92.112]) by
+ webmail.tu-harburg.de (Horde Framework) with HTTP; Wed, 15 Sep 2010
+ 09:33:13 +0200
 Content-Disposition: inline
-In-Reply-To: <7vtyls6qa7.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+User-Agent: Internet Messaging Program (IMP) H3 (4.3.7)
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.138
+X-Scanned-By: TUHH Rechenzentrum content checker on 134.28.202.179
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156226>
+
+Dear Thomas, Jan, et al.,
+
+thanks for the discussion of an initial git translation to German. I =20
+appreciate the efforts to translate not only the gui tools of git, but =
+=20
+also the command line commands as well. I completely agree with =20
+Thomas' proposal to discuss and agree on a glossary of terms *first*, =20
+and *secondly* preparing the actual translation - otherwise it will be =
+=20
+impossible to create a consistent translation.
+
+As you might guess, as the (initial) translator of git-gui I've been =20
+through this discussion before [1] and as you have noticed, I have =20
+decided to take a translation approach different from what you have =20
+recently discussed here. I deliberately tried to translate as much of =20
+the terms into German as possible. I do not agree about the importance =
+=20
+of statements on this mailing list like "This translation translates =20
+too much terms - I cannot find the commands I'm used to". The point of =
+=20
+a translation is to enable the usage of a program to people who do =20
+*not* know the original language. This is the target audience. By =20
+definition, this excludes anyone who participates on *this* mailing =20
+list from the target audience: Obviously you not only speak English =20
+very well, but you are daily familiar with the English git wording for =
+=20
+the concepts inside this VCS. Then let me repeat: A translation is not =
+=20
+for you. You know, the bait and the fisherman and the fish and such. =20
+Instead, a translation is for people who do neither know nor =20
+understand the English wording for the git concepts. For this target =20
+audience, the goal is to find a set of terms for the different git =20
+concepts which makes the concepts most easily accessible for their =20
+language. This may or may not include terms which are left at English =20
+words.
+
+Having said that, I would also take the following inspiration with a =20
+grain of salt:
+
+> You said on IRC that you left all English terms that
+> are also used on
+> http://de.wikipedia.org/wiki/Versionskontrolle
+
+Wikipedia is a bad reference for measuring the importance of certain =20
+things. I (or you) could have easily adapted that article to my point =20
+of view before continuing the discussion. However, in this particular =20
+case that article doesn't even mention many of the terms which need to =
+=20
+be discussed in a git glossary.
+
+Having said that as well, I admit the translation of the command line =20
+tools is somewhat more difficult than a GUI tool, because many of the =20
+git concepts appear as English words in the command itself. Hence, I =20
+admit it is much more difficult to decide on a non-English =20
+translation, but having to mention the English term all the time =20
+because that's the command which needs to be used. And for sure we =20
+won't want to translate the (main porcelain) command names. Hence, the =
+=20
+decision on terms which are left in English can surely be decided =20
+differently here than in the GUI tools.
+
+After this introduction, I would like to comment on a few of the =20
+proposed German glossary translations; the IMHO easier ones first:
+
+>  branch                Branch (m.)
+
+I'd go for "Zweig". It's even on the wikipedia page and it perfectly =20
+represents the concept.
+
+>  index                 Index
+
+I'd strongly vote for not using "Index". The "Index" is where the =20
+"Bundespr=FCfstelle f=FCr jugendgef=E4hrdende Schriften" puts the =20
+Ballerspiele on. Don't let the identical word fool you into thinking =20
+this is a worthwhile translation. Also, the English term is a bad =20
+naming anyway IMHO. I'd use git-gui's replacement (staging area) and =20
+use "Bereitstellung" here as well. Feel free to propose something =20
+different, but please not "Index". Git isn't FSK18.
+
+>  commit (noun, verb)                Commit/committen
+
+That's a hard one. It sounds terrible to use "committen" in German. I =20
+would strongly vote for not using this word directly, but I admit I =20
+also don't have a completely convincing alternative.
+
+>  revision              Revision
+
+Die "Revision" kommt ins Haus, um die B=FCcher zu pr=FCfen. Honestly, =20
+please don't use that word in German. Why not "Version"?
+
+>  tag                   Tag
+
+Der heutige Tag oder der morgige Tag? What's the problem with =20
+"Markierung"? This is exactky the git concept which is meant.
+
+>  tree                  Tree
+
+I would not understand what the "Tree" in German should be. Any German =
+=20
+word instead?
+
+Many other of the proposals are just fine and very good. Keep up the =20
+good work!
+
+Regards,
+
+Christian Stimming
 
 
---jRHKVT23PllUwdXP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Sep 14, 2010 at 01:09:20PM -0700, Junio C Hamano wrote:
-> >
-> > Sounds good to me. I will have limited access to email this week.
-> > I'll revisit this when I am back.
->=20
-> Heh, it turns out that we have a perfect place to hook this into.
-
-Thank you for taking care of this! Unfortunately, I haven't had the
-time to do any work at all.
-
-Clemens
-
---jRHKVT23PllUwdXP
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJMkHb2AAoJELKdZexG8uqMWEUIAJqx+BwZomDE+UPRe38dSGjO
-Tt9uKwpfQKfaD6rJybVGCCSVykEJWLhVTlRlnDJPLbxIzTGKywDNdE7l393KTYJ3
-nBh2vWORYRGYkNBTXpF6c1PyzNAxxnBV8C1m9DuXWspaeWEXNevpCCeVpqIfKXVB
-wkJ1py71qFu1L4ZpPsXsGtm0wo193VF/ThdDGsiDloJKagK+kVJhOTuPw5PMR+jQ
-VzGPpuBBbrzbactqDzjJDU5hk7Av1ffwenuWPqP7MlbAFXS5O9GF2oGJczy+3xn8
-wQn51Qr6iW9MoHr87eZmCsqJ1L5ld8Sy1yluymgp5Yb0ElVOtui9cqzt0Ghl6FM=
-=rELm
------END PGP SIGNATURE-----
-
---jRHKVT23PllUwdXP--
+[1] http://article.gmane.org/gmane.comp.version-control.git/58315
