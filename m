@@ -1,76 +1,86 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 19/25] gettextize: git-reset reset_type_names messages
-Date: Wed, 15 Sep 2010 12:17:56 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1009151216000.11791@ds9.cixit.se>
-References: <1283373845-2022-1-git-send-email-avarab@gmail.com> <1283456446-22577-20-git-send-email-avarab@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC PATCH 0/2] Teach fetch and pull to recursively fetch submodules
+ too
+Date: Wed, 15 Sep 2010 13:32:46 +0200
+Message-ID: <4C90AEDE.4070300@web.de>
+References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 15 13:18:09 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Wed Sep 15 13:33:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ovq08-00073f-9J
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 13:18:08 +0200
+	id 1OvqEU-00058U-4R
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 13:32:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752417Ab0IOLSC convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Sep 2010 07:18:02 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:54359 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751660Ab0IOLSA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 07:18:00 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8FBHvFh028787
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 15 Sep 2010 13:17:57 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8FBHuGs028779;
-	Wed, 15 Sep 2010 13:17:57 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <1283456446-22577-20-git-send-email-avarab@gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 15 Sep 2010 13:17:57 +0200 (CEST)
+	id S1752598Ab0IOLcv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 07:32:51 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:44557 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752085Ab0IOLcu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 07:32:50 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 16C1017099CF3;
+	Wed, 15 Sep 2010 13:32:49 +0200 (CEST)
+Received: from [93.240.123.162] (helo=[192.168.178.29])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1OvqEK-0002PO-00; Wed, 15 Sep 2010 13:32:49 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100825 Thunderbird/3.1.3
+In-Reply-To: <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18qgg7pM+8GvytnvlLiudR31xWOnm9fykHQOaY/
+	w5/9e9cDFc8nSiuVsZxoe7ePfqyBH8EbsqGYONoHSvI3NX73KM
+	4JgP1ispDXqFLpxbZn6A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156231>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156232>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+Am 15.09.2010 02:18, schrieb Kevin Ballard:
+> The first is `git remote update`, which I am fond of using, causes buggy behavior where it fetches all submodules twice.
 
-> Make the messages in git-reset that use the reset_type_names static
-> array to be translatable by marking the array items with N_() and
-> using _() later.
+I'll look into that, fetching the same submodule twice should not
+happen. (But I'm not sure what you mean by "buggy behavior where it
+fetches all submodules twice" though, is there something else going
+wrong?)
 
-This is untranslatable for several languages. For Swedish it would suff=
-ice=20
-to move the " reset" part into the array:
 
-> -	"mixed", "soft", "hard", "merge", "keep", NULL
-> +	N_("mixed"), N_("soft"), N_("hard"), N_("merge"), N_("keep"), NULL
-> };
+> The second is this submodule fetch doesn't appear to be recursive.
 
-changing it to
+That is strange as fetch now executes a 'git fetch' inside each
+populated submodule, which should automagically recurse. So I assume
+that you don't have a .gitmodules file inside your first level of
+submodules which describes the deeper nested ones?
 
-N_("mixed reset"), N_("soft reset"), ...
 
-and changing this
+> The third issue is `git fetch` doesn't have any business fetching submodules when the submodule reference was never changed as part of the fetch, especially if the main fetch itself didn't even find any changes. It seems to me that the correct behavior would be to look at all the fetched commits to see if any of them change the submodule reference, and only in that case should it automatically fetch any submodules whose references were modified. The stated desire of avoiding "(commits not present)" when doing a diff will still be met, but it will avoid slowing down the normal case of a `git fetch`.
 
-> -		die("Cannot do a %s reset in the middle of a merge.",
-> -		    reset_type_names[reset_type]);
-> +		die(_("Cannot do a %s reset in the middle of a merge."),
-> +		    _(reset_type_names[reset_type]));
+I was thinking about implementing that optimization too but came to
+the conclusion that you always have to fetch submodules too no matter
+if the superproject has any new commits fetched for them. Because
+when you don't do that you wouldn't get a chance to test and commit
+e.g. a new feature added by a colleague in a submodule and pushed by
+him, as that would not be fetched into your repo before it was
+committed inside the superproject. That leads to a 'chicken or the
+egg' problem.
 
-into "... do a %s in ..", with similar changes for the others.
 
---=20
-\\// Peter - http://www.softwolves.pp.se/
+> It also seems like there ought to be a config variable one can set for the default behavior if submodule.<name>.fetch is not present in .gitmodules or in .git/config.
+
+I'll take this as a 'yes' to my question if such an option is wanted.
+
+
+In your other mail you wrote that the output of the recursive fetch
+does not prepend the names of the higher level submodules. I did not
+think about that and will post a fix for that problem soon.
+
+
+Thanks for your feedback!
