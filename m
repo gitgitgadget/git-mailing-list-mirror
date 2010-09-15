@@ -1,79 +1,87 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: git log --pretty=format joins lines in the subject of commit message
-Date: Wed, 15 Sep 2010 13:01:28 +0000
-Message-ID: <AANLkTikXwKBUKvrNs3ezKWjBh35Y87q6gZKSyZ=1cZyG@mail.gmail.com>
+From: <nolan.ring@emc.com>
+Subject: svn2git question:  Build directory inserted at top level?
+Date: Wed, 15 Sep 2010 09:47:42 -0400
+Message-ID: <4E10ACF241081344B9702AA8C6440440C5B13F2162@MX01A.corp.emc.com>
 References: <DDB24DEE-934B-4C8D-8DAA-595905035AC4@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-X-From: git-owner@vger.kernel.org Wed Sep 15 15:01:40 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 15 15:48:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OvrcG-0006sV-KZ
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 15:01:37 +0200
+	id 1OvsLP-0000bV-PK
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Sep 2010 15:48:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752821Ab0IONBa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 09:01:30 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:36911 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752475Ab0IONBa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 09:01:30 -0400
-Received: by bwz11 with SMTP id 11so470031bwz.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 06:01:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=QJqqFmUkSkPh/a85jppoEz/ksqsWSc6/MPqb1uyS69c=;
-        b=GOghd8PoT+q+KJT1hZaq3WEK9E/s6TCQH9GIiX+ozJFG8qcFxYHjPz2XVLi0csEUzo
-         2ghz9qDQwfQIgobaznUOvscB0sixqLxSoTbIO3LgzdcbqmwgHQ6Up4/nd01fcEpIJRPj
-         kjC2NywMnFGD+g5Ca2hxiTXPnVcI+YRcFgDMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=VK5hSoZ8sLeXB5/NWzI5KuPnDWoYCZj8Y9D/0eKMwjXRwVrCEuOpYeHgesHzLJ4Ra9
-         ZuRcEdoot3ku9IdK6QLhyYmp8439PtX61cgOHuYtOI6yLNZoNvdoECGT13hFNREkzy8P
-         7N/Z2oHLiH2B8FuWb8F0ozAi08NoTafva4EJc=
-Received: by 10.223.110.73 with SMTP id m9mr503324fap.60.1284555688836; Wed,
- 15 Sep 2010 06:01:28 -0700 (PDT)
-Received: by 10.223.117.14 with HTTP; Wed, 15 Sep 2010 06:01:28 -0700 (PDT)
+	id S1752344Ab0IONsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 09:48:03 -0400
+Received: from mexforward.lss.emc.com ([128.222.32.20]:59312 "EHLO
+	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789Ab0IONsB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Sep 2010 09:48:01 -0400
+Received: from hop04-l1d11-si01.isus.emc.com (HOP04-L1D11-SI01.isus.emc.com [10.254.111.54])
+	by mexforward.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8FDlxjh032736
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Wed, 15 Sep 2010 09:47:59 -0400
+Received: from mailhub.lss.emc.com (mailhub.lss.emc.com [10.254.221.251]) by hop04-l1d11-si01.isus.emc.com (RSA Interceptor) for <git@vger.kernel.org>; Wed, 15 Sep 2010 09:47:55 -0400
+Received: from corpussmtp3.corp.emc.com (corpussmtp3.corp.emc.com [10.254.169.196])
+	by mailhub.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8FDlnm6022630
+	for <git@vger.kernel.org>; Wed, 15 Sep 2010 09:47:55 -0400
+Received: from mxhub02.corp.emc.com ([10.254.141.104]) by corpussmtp3.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Wed, 15 Sep 2010 09:47:47 -0400
+Received: from MX01A.corp.emc.com ([169.254.1.232]) by mxhub02.corp.emc.com
+ ([10.254.141.104]) with mapi; Wed, 15 Sep 2010 09:47:47 -0400
+Thread-Topic: svn2git question:  Build directory inserted at top level?
+Thread-Index: ActU1VMpeXCyNvqdQCKR4S7dkabhLgABX0MA
 In-Reply-To: <DDB24DEE-934B-4C8D-8DAA-595905035AC4@jetbrains.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-OriginalArrivalTime: 15 Sep 2010 13:47:47.0963 (UTC) FILETIME=[950174B0:01CB54DC]
+X-EMM-MHVC: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156237>
 
-On Wed, Sep 15, 2010 at 12:55, Kirill Likhodedov
-<Kirill.Likhodedov@jetbrains.com> wrote:
-> Commit something to a git repository with a commit message with several newlines like this:
->
-> ==== commit message starts below ===
-> first line
-> second line
-> third line
->
-> fifth line
-> === commit message ends above ===
->
-> Git treats the first 3 lines as commit message subject and the last line as its body.
->
-> 'git log' shows the commit message correctly - exactly like I've entered. So does 'git log --pretty=raw'
->
-> But 'git log --pretty=format:%s#%b' joins the first three lines:
-> first line second line third line#fifth line
->
-> Is it a bug or a feature?
+All,
 
-It's probably a feature. We delimit the subject by "\n\n", not
-"\n". And IIRC subjects in E-Mail can contain \n.
+I'm converting repositories from svn to git using svn2git.  I have a repo with the following hierarchy:
 
-> If it is a feature how can I acquire the original subject of the commit message by using custom format?
+trunk/
+dist/
+tags/
+branches/
+REbranches/
 
-Use a log format that gives you the complete message, then pipe it
-through perl or something to parse it?
+Ultimately I want to convert everything except the dist directory but am trying to understand what svn2git is doing and why.
+
+I ran the command to see what I would get just importing trunk:
+
+svn2git -v --nobranches --notags  http://poc.emc.com/repos/POCcs
+
+After the conversion completed I had the following:
+
+buildadm@suse-s11:/work/POCcs> ls 
+Automation  build_cs_rpm.pl  ControlStation  depends.properties
+
+Then I ran the following command because I wanted to include the branches as well as the trunk in the conversion:
+
+svn2git -v --notags  http://poc.emc.com/repos/POCcs
+
+When I include the branches in the conversion I get a Build directory at the top level and then the usual directory structure of the repo.  Where is the Build dir coming from?  Is svn2git doing that?  Or is it finding that somewhere somehow in the repo?
+
+buildadm@suse-s11:/work/POCcs> ls
+Build
+buildadm@suse-s11:/work/POCcs/Build> ls
+Automation  build_cs_rpm.pl  ControlStation  depends.properties
+
+Thanks for any help.
+
+Nolan
