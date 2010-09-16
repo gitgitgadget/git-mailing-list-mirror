@@ -1,97 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] Add Swedish translation.
-Date: Thu, 16 Sep 2010 14:02:12 +0000
-Message-ID: <AANLkTim4M_KfuZoe5z_upPug5AT=P-_EfvPcxDe8-uPn@mail.gmail.com>
-References: <20100912202111.B11522FC00@perkele>
-	<alpine.DEB.2.00.1009151124100.11791@ds9.cixit.se>
-	<A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
-	<201009160046.47367.robin.rosenberg@dewire.com>
-	<alpine.DEB.2.00.1009161209500.18826@ds9.cixit.se>
-	<AANLkTin_5drpRva6jiwwC-OpMSxnYwJu5fJD4aU7P5jq@mail.gmail.com>
-	<4C92227B.70800@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] po/de.po: add German translation
+Date: Thu, 16 Sep 2010 07:52:24 -0700
+Message-ID: <7vsk194u6v.fsf@alter.siamese.dyndns.org>
+References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
+ <20100916125751.163d8691@jk.gs>
+ <AANLkTikvW=YY2X9VR8oS2pk3fs9KFkQ_O7m=zOEN4nEk@mail.gmail.com>
+ <4C91FF90.6050902@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Krefting <peter@softwolves.pp.se>,
-	Robin Rosenberg <robin.rosenberg@dewire.com>,
-	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
-	Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 16 16:02:26 2010
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>,
+	Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
+	git <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Thu Sep 16 16:52:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwF2e-0001Fe-Vx
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 16:02:25 +0200
+	id 1OwFpR-00032w-Cp
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 16:52:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755172Ab0IPOCO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 10:02:14 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:38083 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754987Ab0IPOCN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 10:02:13 -0400
-Received: by gxk23 with SMTP id 23so407294gxk.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 07:02:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fFiJ7cQkERt19MbCdsZFkXDk5uBmgpJp8LbjvcMmd4c=;
-        b=rVgG3Mge+35RnH5/g+qERknGvjkohXDPva4yutdJxuA+7knrNYOKBfWKuBrbfBNqiN
-         laUS7YxitKx5Sv/Gz5O33bU8YdDizkt5aLK8eQMzxQRUKAKMKzQNE1TOyw+5uITdhZCE
-         loVm9XPHO1DkGx8IjIdY1MOdK4hVPwusNDP2Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UETPL/yIugrI1t93irH4xzkeJWjgS/mT/Xz+WIGBq1mUcKXX97WU6Xj+TdMmwbZZ3u
-         7C170IqWqtNMZA25eqCveUJ5P08/2g37E2dEWG1+y5fqwU41xUkAlilYvDMhreraE+Li
-         X3NLitAjf37T94YFjfvYl666Ggn/F0/pSHpnQ=
-Received: by 10.150.140.1 with SMTP id n1mr3818937ybd.4.1284645732972; Thu, 16
- Sep 2010 07:02:12 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Thu, 16 Sep 2010 07:02:12 -0700 (PDT)
-In-Reply-To: <4C92227B.70800@drmicha.warpmail.net>
+	id S1755396Ab0IPOwn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 10:52:43 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:40332 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754637Ab0IPOwm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 10:52:42 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C9035D6DC5;
+	Thu, 16 Sep 2010 10:52:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=OjGfWLXmqI2v
+	/0mcvI3hpu3Op9k=; b=NSYnvUn+jQP6joP0xyBCXJUhOeQVD3owH7/kC1m78MNi
+	3E5paBzOWVb4ZnhK20Yzqlpw8z2IH6h/maMS4IUAhSsXCLcr0hkORuOoDjWnbOjA
+	e9fY9Oc3O7KEJynk7Trmvc7u0YJQYWECMGnL5gdRXlKzVG5IguivFOtbpJ5p+FA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=KeyJ50
+	WsYMkZshI8OKY9l2G5x5fv1joFbjHOj0422deDwIeLn8WqC6wd0CdPblBDh6ygia
+	NhuYMupQI58eY3IbNMnRzNn+htEn6MnVuaG7RhbOudR6mGCQboqlzofdLDEkc/Dv
+	1cbjGQc3AtLGECoNcQoLOhlsCC4025ns0NwEE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6541AD6DC4;
+	Thu, 16 Sep 2010 10:52:33 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4429CD6DBE; Thu, 16 Sep
+ 2010 10:52:26 -0400 (EDT)
+In-Reply-To: <4C91FF90.6050902@web.de> (Jens Lehmann's message of "Thu\, 16
+ Sep 2010 13\:29\:20 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0992A18C-C1A2-11DF-9153-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156335>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156336>
 
-On Thu, Sep 16, 2010 at 13:58, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 16.09.2010=
- 13:41:
->> On Thu, Sep 16, 2010 at 11:23, Peter Krefting <peter@softwolves.pp.s=
-e> wrote:
->>> Robin Rosenberg:
->>>> (My comments are in swedish as it feels more natural in this conte=
-xt).
->>>
->>> While I do agree, I'm trying to reply in English since the Git list=
- is in
->>> English.
->>
->> Usually yeah, but when a PO file is under discussion only people tha=
-t
->> speak the language can contribute usefully anyway, so I think it's O=
-K
->> if that discussion is not in English.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
+
+> Am 16.09.2010 13:09, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>> On Thu, Sep 16, 2010 at 10:57, Jan Kr=C3=BCger <jk@jk.gs> wrote:
+>>=20
+>>> My main reason for not translating this one is that we have a comma=
+nd
+>>> called "branch" and since people need to learn what it means anyway=
+,
+>>> and we're certainly not going to change the command names in differ=
+ent
+>>> languages [...] "Markierung" doesn't come close at all to describin=
+g the same
+>>> concept. Conflicts markers are "Markierungen"; tags are not.
+>>> The command name reasoning applies here, too.
+>>=20
+>> FWIW we could translate the command names if we wanted to, but wheth=
+er
+>> to do that or not is something we'll have to look at in due time.
 >
-> How about "[L10N SE] etc." subject lines etc.? That way people can
-> easily filter out all L10N posts but keep those relevant to them
-> (including their language).
+> Are you seriously thinking about translating the "git branch" command
+> into "git zweig"??? Locale-specific batch files should be real fun ..=
+=2E
 
-Sounds good, but convincing people to submit posts with those subjects
-consistently is the hard part :)
+Perhaps "dumme zweig"?  IOW, shouldn't "git" itself be translated in su=
+ch
+a case?
 
-> I'm trying to advocate "Marke" for DE ;)
-> In fact, subversion seems to be a good source for inspiration - at le=
-ast
-> for the terms...
-
-Yeah, languages that benefit from existing SCM translations should
-definitely be looking at those, even if those SCM's aren't distributed
-there's a lot of common vocabulary.
+People, please stop being ridiculous.
