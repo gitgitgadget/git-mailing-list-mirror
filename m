@@ -1,69 +1,176 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/2] po/de.po: add German translation
-Date: Thu, 16 Sep 2010 11:09:52 +0000
-Message-ID: <AANLkTikvW=YY2X9VR8oS2pk3fs9KFkQ_O7m=zOEN4nEk@mail.gmail.com>
-References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
-	<20100916125751.163d8691@jk.gs>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Thu, 16 Sep 2010 12:23:54 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1009161209500.18826@ds9.cixit.se>
+References: <20100912202111.B11522FC00@perkele> <alpine.DEB.2.00.1009151124100.11791@ds9.cixit.se> <A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com> <201009160046.47367.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: TEXT/PLAIN; charset=iso-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
-	git <git@vger.kernel.org>
-To: =?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Thu Sep 16 13:10:00 2010
+Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Thu Sep 16 13:24:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwCLn-0006Vi-J0
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 13:09:59 +0200
+	id 1OwCZk-000694-CQ
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 13:24:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752531Ab0IPLJy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 07:09:54 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:57071 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752360Ab0IPLJx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 07:09:53 -0400
-Received: by iwn5 with SMTP id 5so982298iwn.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 04:09:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MISxmR2yFJcmhIDFNeKpm9urB6RUAB5uv9cdjni5ij8=;
-        b=j2VtMm6KGZOp6q/8gGmzUp9oS/vy16tcAOObkvRtItX5emNgY0gr36wqati0nlX6Y6
-         APK9yzjWGk0/hlUMhIRs5Lo8QcROKcgwKcn0TbHBnZkT5ezguUtAv7uJ0530BIF8zIJn
-         7fNG+1VSyjffaClXbRuQeJUCjE+E7YGJ0Ijfw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=XQugEQ22SNroQ5HrQqm945L8QTlQLbCX0oR9xJTKdh6eFrYh5vZ4aJHHwKXXG12NBT
-         y16Oz7Ezn8ufAhOe8ZIi+664lgGfR9UYY+JvvLO+9RwSXtJlabVvc4xXbPSiDngio1PD
-         FFRWpX269jpNFosUZA+znIGJtYqW4sYsGFfRc=
-Received: by 10.231.148.83 with SMTP id o19mr3353851ibv.112.1284635392894;
- Thu, 16 Sep 2010 04:09:52 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Thu, 16 Sep 2010 04:09:52 -0700 (PDT)
-In-Reply-To: <20100916125751.163d8691@jk.gs>
+	id S1752266Ab0IPLYJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 07:24:09 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:58706 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751818Ab0IPLYI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 07:24:08 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8GBNsnJ029992
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 16 Sep 2010 13:23:54 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8GBNsKP029988;
+	Thu, 16 Sep 2010 13:23:54 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <201009160046.47367.robin.rosenberg@dewire.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 16 Sep 2010 13:23:54 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156319>
 
-On Thu, Sep 16, 2010 at 10:57, Jan Kr=C3=BCger <jk@jk.gs> wrote:
+Robin Rosenberg:
 
-> My main reason for not translating this one is that we have a command
-> called "branch" and since people need to learn what it means anyway,
-> and we're certainly not going to change the command names in differen=
-t
-> languages [...] "Markierung" doesn't come close at all to describing =
-the same
-> concept. Conflicts markers are "Markierungen"; tags are not.
-> The command name reasoning applies here, too.
+>> Well, "en delvis incheckning" doesn't sound like correct Swedish...
+> H=E5ller med. "delvis incheckning" =E4r inte svenska.
 
-=46WIW we could translate the command names if we wanted to, but whethe=
-r
-to do that or not is something we'll have to look at in due time.
+OK. Reluctantly changing to "partiell".
+
+> (My comments are in swedish as it feels more natural in this context)=
+=2E
+
+While I do agree, I'm trying to reply in English since the Git list is =
+in=20
+English.
+
+> Skriv om hel.
+> 	Kunde inte bygga tr=E4det.
+
+That does change the meaning. The original just reported that there was=
+ an=20
+error while building it, the rewritten says building it failed. I'm not=
+ sure=20
+there is actually any distinction here, but I'm trying to stick close t=
+o the=20
+original meaning of the message (even if it might be wrong).
+
+> Dekorerade l=E5ter konstigt. "annoterade" eller "kommenterade" funkar=
+=2E
+
+Changed.
+
+>>>>> +#: builtin/fetch.c:917
+>>>>> +msgid "Fetching a group and specifying refspecs does not make se=
+nse"
+>>>>> +msgstr "Kan inte h=E4mta fr=E5n grupp och ange referensspecifika=
+tioner"
+> Ni byter mening. Den engelska texten antyder att det man f=F6rs=F6ker=
+ inte kan=20
+> fungera, medan =F6vers=E4ttningen betyder att operationen inte lyckad=
+es den=20
+> h=E4r g=E5ngen.
+>
+> "Det =E4r inte m=F6jligt att h=E4mta en grupp och samtidigt ange=20
+> referensspecifikationer"
+
+You are right, the translation can be misunderstood.
+
+Shortening to "Det =E4r inte m=F6jligt att h=E4mta fr=E5n grupp och sam=
+tidigt ange=20
+ref.specifikationer" to fit in under 80 characters (now 79...).
+
+> Jag lyfte medvetet bort idiotf=F6rklaringen av anv=E4ndaren.
+
+Of course the user is an idiot, I mean, the program itself is a git, so=
+ why=20
+shouldn't the user be one too? :-)
+
+>>>>> +#: builtin/grep.c:703
+>>>>> +#, c-format
+>>>>> +msgid "unable to grep from object of type %s"
+>>>>> +msgstr "Kunde inte \"grep\" fr=E5n objekt av typen %s"
+>>>> "\"grep\"" -> "greppa" ?
+>>> That's a word that means something else... I don't really have any =
+good
+>>> idea on how to translate "grep" when used as a verb...
+>> Yeah, I know... I've no better suggestion I'm afraid.
+> Varf=F6r =E4ndra tempus?  s/Kunde/Kan/.
+
+I read this as an understood "[The program was] unable to ...", and use=
+ this=20
+form for all translation of incomplete sentences starting with "unable"=
+=2E
+
+> "Kan inte utf=F6ra texts=F6kning i \"%s\"-objekt"
+
+Changing to "Kunde inte utf=F6ra texts=F6kning (grep) fr=E5n objekt av =
+typen %s"
+
+> "tokigt v=E4rde f=F6r \"in-reply-to\""
+
+Trying to keep it short, as I don't know how long the value is.
+
+>>> "Trycka iv=E4g" sounds horrible, IMHO. I used "S=E4nd" in the git-g=
+ui
+>>> translation of "Push". As long as git doesn't grow a "git send"
+>>> command, I think that should be OK.
+
+> =D6vers=E4ttningarna i Git-gui =E4r prejudicerande f=F6r denna =F6ver=
+s=E4ttning. Sen=20
+> kanske de inte =E4r 100%-aga heller, men i s=E5 fall b=F6r b=E5de C G=
+it och Git=20
+> Gui =E4ndras.  Sen finns kanske ytterligare =F6vers=E4ttningar av and=
+ra=20
+> Git-verktyg. Personligen f=F6redrar jag nog Skicka.  Absolut inte try=
+cka.
+
+Since I have done all the three translations (git-gui, gitk, git) I can=
+=20
+easily fix it in all once everyone agrees. Until then I stick with what=
+ I=20
+have. :-)
+
+> Myndigheternas Skrivregler. Svenska Akademien anv=E4nder "t.ex." p=E5=
+ webben i
+> alla fall (utan blank).
+
+Adding the extra "."; found out I do have space for it after all.
+
+>>>>> +#, c-format
+>>>>> +msgid "Missing author: %s"
+>>>>> +msgstr "Saknad f=F6rfattare: %s"
+
+> Usch.
+> "F=F6rfattare saknas i: %s"
+
+=46ixed.
+
+> Tag =3D etikett
+
+While I do agree, I have never heard anyone use "etikett" for a tag in =
+the=20
+computer science sense (neither a HTML tag nor a VCS tag). While "tagg"=
+ is=20
+obviously horrible, I do use it in the translations simply because that=
+ is=20
+what everyone else is using.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
