@@ -1,61 +1,47 @@
-From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
-Subject: Using fromcvs/togit
-Date: Thu, 16 Sep 2010 11:03:56 +0200
-Message-ID: <AANLkTi=3u8JMe354J1yW0XTvg0GyTWWDOkAn4d-0cHS=@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: v1.7.3-rc2 has t7003 breakage on Mac OS X 10.6.4
+Date: Thu, 16 Sep 2010 11:04:54 +0200
+Message-ID: <4C91DDB6.5000406@viscovery.net>
+References: <664FE520-CDB1-4595-867A-9AEB4790C092@wincent.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 16 11:04:23 2010
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Thu Sep 16 11:05:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwAOF-0000lX-Fm
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 11:04:23 +0200
+	id 1OwAOt-0001Hv-KR
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 11:05:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752138Ab0IPJER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 05:04:17 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:39546 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751980Ab0IPJEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 05:04:16 -0400
-Received: by ywh1 with SMTP id 1so326981ywh.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 02:04:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=cVo/4R9Og2CYaaP6JShCVx5ZZrd707FF6fORHfxGWBY=;
-        b=URX5PkbVM3RuoKgojWBTDKuHPuuyR0m1jey4bW4Iw15yJWwE4hyGMTGpWjuvj9Onrt
-         iV2h+4f/TEcGkik7Bm4Zu3+akPsh3kJbzcvSEvME2Oyuz8WTxdpQvlZGFVp8gYb0PtBB
-         DvgxGMeetqBIixqKOnmXzmDAh7NLiV4tJVjn4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=Sd7gxzbNdWwul+7v7pvSfIE3TlWVtV2s903UxijSlu3+CTP9iW8LZOnin9pbo3x0Ck
-         VyZ4uq3+KTEUSTokFmEQIEIZD6rBbVinm3CGICD4G2w6icAphxQcBecCnYlcPNJtuHeD
-         KWrdSSnI56bhsoPDdXqjHiPUVdwhzNHYniKnI=
-Received: by 10.90.79.14 with SMTP id c14mr2266113agb.209.1284627856200; Thu,
- 16 Sep 2010 02:04:16 -0700 (PDT)
-Received: by 10.231.177.152 with HTTP; Thu, 16 Sep 2010 02:03:56 -0700 (PDT)
+	id S1752171Ab0IPJE6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Sep 2010 05:04:58 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38706 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750813Ab0IPJE5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 05:04:57 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OwAOk-0003qL-I4; Thu, 16 Sep 2010 11:04:54 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 47B9C1660F;
+	Thu, 16 Sep 2010 11:04:54 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100824 Thunderbird/3.0.7
+In-Reply-To: <664FE520-CDB1-4595-867A-9AEB4790C092@wincent.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156300>
 
-Hi,
+Am 9/16/2010 9:18, schrieb Wincent Colaiuta:
+> Just noticed a new test failure in t7003 on Mac OS X 10.6.4. Wasn't present in rc1, but is in rc2.
 
-  I am trying to use fromcvs/togit, however it keeps reporting message such as:
+git pull git://github.com/gitster/git.git bg/fix-t7003
 
-fatal: Not a valid object name
-...
-fatal: Not a valid object name refs/heads/mathieu
-fatal: Not a valid object name refs/heads/master
-
-  What does those errors refer to ?
-
-Thanks,
--- 
-Mathieu
+-- Hannes
