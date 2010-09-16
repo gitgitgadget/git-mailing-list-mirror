@@ -1,77 +1,118 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 7/7] gitweb: group remote heads
-Date: Thu, 16 Sep 2010 13:36:14 +0200
-Message-ID: <AANLkTimKV6iT-inphJbCiRa2Pb3OeP-usPpCHoaRuL8O@mail.gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1284629465-14798-8-git-send-email-giuseppe.bilotta@gmail.com> <AANLkTimFjofJo4ByFwr2Cz6-YqkHcZsHGk6r4siEFmDa@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Thu, 16 Sep 2010 11:41:23 +0000
+Message-ID: <AANLkTin_5drpRva6jiwwC-OpMSxnYwJu5fJD4aU7P5jq@mail.gmail.com>
+References: <20100912202111.B11522FC00@perkele>
+	<alpine.DEB.2.00.1009151124100.11791@ds9.cixit.se>
+	<A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
+	<201009160046.47367.robin.rosenberg@dewire.com>
+	<alpine.DEB.2.00.1009161209500.18826@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 16 13:36:48 2010
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Sep 16 13:41:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwClf-0005mK-3K
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 13:36:43 +0200
+	id 1OwCqI-0001AS-Bf
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 13:41:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754128Ab0IPLgf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 07:36:35 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:41773 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab0IPLgf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 07:36:35 -0400
-Received: by gxk23 with SMTP id 23so358989gxk.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 04:36:34 -0700 (PDT)
+	id S1754028Ab0IPLlZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 07:41:25 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52423 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751818Ab0IPLlY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 07:41:24 -0400
+Received: by iwn5 with SMTP id 5so1005770iwn.19
+        for <git@vger.kernel.org>; Thu, 16 Sep 2010 04:41:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=1PDJ5GNufp9ltwzbgSONybngjLKhmjo0HC2d19as5X4=;
-        b=x1NtV4RGlx9wBv+Imt9A0AUph9D6VinGkEDE5huYYD3JxutKarF3Wl7J3DfWnegXaK
-         f7ybLou9HEnKxslbCkIy9XFntG6jGMvYKcbG8LUQAXoLVzTpuScaFAtBESRhitWhsvMI
-         XrCSeNgUfcc9hEQLlJyfKQn6UqYmmE7AiaoCg=
+        bh=GXRoDT0qudQrfnz9lskWvYRu04DKEuDP7CnmOV3xf1k=;
+        b=jqGtjPzzj+atYsRhcmFIM/v7hv047oQ4upbOpK7yYXzkP99zUMD2K6jWu8+sXF6Fe6
+         vuRyRl+p7Ci3TT/bZrkB6v50gxHjgOshvD93Ufa4vcPl9TaIdDs84exAlk7Z9vdDyFU9
+         6UysVAgm8dvAQm3qL7ZBYaKy0szbd/BN4OUFU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=czaddmdgm/5CDNNiXPF9xyMslBYORhxRTgCRXymFhezMVg6DDn5iqAx29t9PK71CmF
-         cmPRI8+JxMsJejBtzq21TIp03n5euzS60gure9v05Z5MWNoeZcV16ZgndhPYGZL/5uNB
-         YQF+0yCPKAMTG1Qtrb1q+HJPGxPolcZN9fNqk=
-Received: by 10.101.69.3 with SMTP id w3mr3487694ank.178.1284636994137; Thu,
- 16 Sep 2010 04:36:34 -0700 (PDT)
-Received: by 10.231.150.202 with HTTP; Thu, 16 Sep 2010 04:36:14 -0700 (PDT)
-In-Reply-To: <AANLkTimFjofJo4ByFwr2Cz6-YqkHcZsHGk6r4siEFmDa@mail.gmail.com>
+        b=E2R8KyoaIBKU6sMFTpf8VDrxvi7JD+7lVFbR0Xc6BGAgmqP57LgHvm6wujao8mzDvI
+         5ZcC5+j+O5yISWq6DaO7yDWln3khWKfpmv12H5RbvIHnow6NRumar/cctRBBo9tEIW+E
+         rXx687ZjCUXRhM7pAsV4hcN693QxaHk0XJSxk=
+Received: by 10.231.168.21 with SMTP id s21mr3270726iby.123.1284637283996;
+ Thu, 16 Sep 2010 04:41:23 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 16 Sep 2010 04:41:23 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1009161209500.18826@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156323>
 
-On Thu, Sep 16, 2010 at 12:29 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Sep 16, 2010 at 09:31, Giuseppe Bilotta
-> <giuseppe.bilotta@gmail.com> wrote:
+On Thu, Sep 16, 2010 at 11:23, Peter Krefting <peter@softwolves.pp.se> =
+wrote:
+> Robin Rosenberg:
+>> (My comments are in swedish as it feels more natural in this context=
+).
 >
->> +sub git_get_remotes {
->> + =A0 =A0 =A0 my ($limit) =3D @_;
->> + =A0 =A0 =A0 open my $fd, '-|' , git_cmd(), 'remote';
->> + =A0 =A0 =A0 return () unless $fd;
->> + =A0 =A0 =A0 my @remotes =3D map { chomp ; $_ } <$fd>;
->> + =A0 =A0 =A0 close $fd or return ();
+> While I do agree, I'm trying to reply in English since the Git list i=
+s in
+> English.
+
+Usually yeah, but when a PO file is under discussion only people that
+speak the language can contribute usefully anyway, so I think it's OK
+if that discussion is not in English.
+
+> Fixed.
 >
-> =A0 =A0return unless $fd;
-> =A0 =A0chomp(my @remotes =3D <$fd>);
-> =A0 =A0close $fd or return;
+>> Tag =3D etikett
+>
+> While I do agree, I have never heard anyone use "etikett" for a tag i=
+n the
+> computer science sense (neither a HTML tag nor a VCS tag). While "tag=
+g" is
+> obviously horrible, I do use it in the translations simply because th=
+at is
+> what everyone else is using.
 
-Thanks a lot. I guess this shows pretty much how Perl is not exactly
-my primary language 8-)
+=46WIW mercurial uses m=C3=A4rke, e.g.:
 
+    msgid ""
+    "The reserved name \"tip\" is a special tag that always identifies =
+the\n"
+    "most recent revision."
+    msgstr ""
+    "Det reserverade namnet \"tip\" =C3=A4r ett speciellt m=C3=A4rke so=
+m alltid\n"
+    "identifierar den senaste revisionen."
 
---=20
-Giuseppe "Oblomov" Bilotta
+and:
+
+    "denotes the tipmost revision of that branch. Tag and branch names =
+must\n"
+    "not contain the \":\" character."
+
+    "anger den h=C3=B6gsta revisionen p=C3=A5 den grenen. M=C3=A4rkes- =
+och grennamn kan inte\n"
+    "inneh=C3=A5lla tecknet \":\"."
+
+and:
+
+    msgid "replace existing tag"
+    msgstr "ers=C3=A4tt existerande m=C3=A4rke"
+
+    msgid "make the tag local"
+    msgstr "g=C3=B6r m=C3=A4rket lokalt"
+
+    msgid "remove a tag"
+    msgstr "ta bort ett m=C3=A4rke"
+
+etc.
