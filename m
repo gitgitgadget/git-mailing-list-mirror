@@ -1,98 +1,143 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCH 0/7] gitweb: allheads feature
-Date: Thu, 16 Sep 2010 11:30:58 +0200
-Message-ID: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCH 3/7] gitweb: separate heads and remotes lists
+Date: Thu, 16 Sep 2010 11:31:01 +0200
+Message-ID: <1284629465-14798-4-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 16 11:31:33 2010
+X-From: git-owner@vger.kernel.org Thu Sep 16 11:31:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwAoV-0007Cg-Cx
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 11:31:31 +0200
+	id 1OwAop-0007PY-RR
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 11:31:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752522Ab0IPJb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 05:31:26 -0400
+	id S1753234Ab0IPJbl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Sep 2010 05:31:41 -0400
 Received: from mail-ww0-f44.google.com ([74.125.82.44]:34856 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab0IPJbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 05:31:25 -0400
-Received: by wwe15 with SMTP id 15so130944wwe.1
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 02:31:24 -0700 (PDT)
+	with ESMTP id S1751694Ab0IPJbk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 05:31:40 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 15so130944wwe.1
+        for <git@vger.kernel.org>; Thu, 16 Sep 2010 02:31:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=7P0UMC1FxCv3Ut5hIM2zgjOCf0lT0j+r+udAbl4cAYU=;
-        b=fCjJt9DFhGYJP9F3dtwOzCkXDFnM/GPPk4NYn3Z0rPa+kMMuS33LbkWdjMnMRRtJYd
-         umdPSBGMOVWrF5uZog3pXalKrNLA/qh9svKkUilA4pi1nxyh3ohJB+3M2b3qipJs5nvt
-         5RKC7t0M5OjBAPNFcFWrS90DWeEH7fXepyYtk=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=6c25zi/P1KhByL6qknQ5xMTBbXxwhuh8q4ielSMWuDg=;
+        b=Swv3e1RaAzhIt55qNjDgipU4LyvCQ7akj07iRhLE0Ao9nxTOLoRymUJvJOiFd7Tqyv
+         SIpLpZy70T8LcNAz4SR55ADChTdFzLLiVTyAgiMa1C8rui7FuSdPTQ/lj8O7DYwyaHQ7
+         GIPORJPlueOaLFLPybJQUEUO2KvK/Csxn3LHU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=jmyqbHbWB1rFbIBlGdlcsv8IONu7aczqSRDyRoCmNCo457QQ7t6ciTDvUUc9GTcdqB
-         bQfjbSBGHzbbkI6XwJQfBOyvQ8R20Ivklc34kAI6qWvqJsU77twQsv77VHTsFnc3P56w
-         weTwpkufV6yV2mUb+OhGGBi2/DRDw4+22mUVk=
-Received: by 10.227.196.1 with SMTP id ee1mr2418654wbb.98.1284629482877;
-        Thu, 16 Sep 2010 02:31:22 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=YCaw9UFUvjPEa9tm3OI2O+8le3FQACIKGrIW1R/t3WzEaCFa6sEet3D49VpYQ1dRQh
+         ZRq7Bof842KGX37quRjCkdHykB5h4guNiRyFgdFdV5JMNS+019RQyznwELrtZXCsFmKE
+         4oneNc1wI1ltXziWiqFWeWwciq2IbO/Ik1K4c=
+Received: by 10.216.155.206 with SMTP id j56mr2440406wek.67.1284629500033;
+        Thu, 16 Sep 2010 02:31:40 -0700 (PDT)
 Received: from localhost ([151.60.177.109])
-        by mx.google.com with ESMTPS id b23sm2126726wbb.16.2010.09.16.02.31.19
+        by mx.google.com with ESMTPS id u11sm1668833weq.7.2010.09.16.02.31.37
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Sep 2010 02:31:21 -0700 (PDT)
+        Thu, 16 Sep 2010 02:31:38 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.rc1.230.g8b572
+In-Reply-To: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156304>
 
-This is a rehash of an old patchset of mine that got stalled waiting for
-other independent patches to go in first, and then for me to get the
-time to work on it again.
+We specialize the 'heads' action to only display local branches, and
+introduce a 'remotes' action to display the remote branches (only
+available when the remotes_head feature is enabled).
 
-The first 4 patches are IMO ready for inclusing in gitweb, and their
-purpose is to introduce a new view (and a new summary block) that
-display all the remote heads (assuming the feature is enabled).
-Somebody suggested via email that this could even the basis for some
-kind of 'social graph' for gitweb repositories, in a way similar to what
-is found on sites like github or gitorious, but for me the feature in
-itself can already be useful.
+Mirroring this, we also split the heads list in summary view into
+local and remote lists, each linking to the appropriate action.
 
-The last three patches are more of the RFC side, in particular the last
-one. The idea is to group remote heads 'by remote' instead of just
-listing them serially. So I first introduce code and styling to have
-'blocks of stuff' in gitweb, and then use this concept to group together
-remote heads belonging to the same remote.
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |   30 ++++++++++++++++++++++++++++--
+ 1 files changed, 28 insertions(+), 2 deletions(-)
 
-The final result is rather curious and you can see it in action at
-<http://git.oblomov.eu/rbot/remotes>, although it would be nice to find
-a way to layout the blocks in a smarter way. What I really don't like
-(at the moment) is the way things come out in summary view instead.
-
-The issue there is that we only gather 16 remote heads, so some remotes
-might have no branches displayed, but it becomes difficult to detect and
-indicate when remotes have incomplete information being displayed. A
-possible solution would be to call show-ref N times (N being the number
-of remotes) with a limit of 16/N heads, but that can be a lot of calls.
-So I'm open to suggestions on how to improve this part (maybe just show
-a flat view in the remotes section of summary view?)
-
-Giuseppe Bilotta (7):
-  gitweb: introduce remote_heads feature
-  gitweb: git_get_heads_list accepts an optional list of refs.
-  gitweb: separate heads and remotes lists
-  gitweb: link heads and remotes view
-  gitweb: auxiliary functions to group data
-  gitweb: group styling
-  gitweb: group remote heads
-
- gitweb/gitweb.perl       |  100 ++++++++++++++++++++++++++++++++++++++++++---
- gitweb/static/gitweb.css |    6 +++
- 2 files changed, 99 insertions(+), 7 deletions(-)
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 21e83bb..0118739 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -712,6 +712,7 @@ our %actions = (
+ 	"log" => \&git_log,
+ 	"patch" => \&git_patch,
+ 	"patches" => \&git_patches,
++	"remotes" => \&git_remotes,
+ 	"rss" => \&git_rss,
+ 	"atom" => \&git_atom,
+ 	"search" => \&git_search,
+@@ -5112,6 +5113,7 @@ sub git_summary {
+ 	my %co = parse_commit("HEAD");
+ 	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
+ 	my $head = $co{'id'};
++	my $remote_heads = gitweb_check_feature('remote_heads');
+ 
+ 	my $owner = git_get_project_owner($project);
+ 
+@@ -5119,7 +5121,8 @@ sub git_summary {
+ 	# These get_*_list functions return one more to allow us to see if
+ 	# there are more ...
+ 	my @taglist  = git_get_tags_list(16);
+-	my @headlist = git_get_heads_list(16);
++	my @headlist = git_get_heads_list(16, 'heads');
++	my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
+ 	my @forklist;
+ 	my $check_forks = gitweb_check_feature('forks');
+ 
+@@ -5197,6 +5200,13 @@ sub git_summary {
+ 		               $cgi->a({-href => href(action=>"heads")}, "..."));
+ 	}
+ 
++	if (@remotelist) {
++		git_print_header_div('remotes');
++		git_heads_body(\@remotelist, $head, 0, 15,
++		               $#remotelist <= 15 ? undef :
++		               $cgi->a({-href => href(action=>"remotes")}, "..."));
++	}
++
+ 	if (@forklist) {
+ 		git_print_header_div('forks');
+ 		git_project_list_body(\@forklist, 'age', 0, 15,
+@@ -5504,13 +5514,29 @@ sub git_heads {
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('summary', $project);
+ 
+-	my @headslist = git_get_heads_list();
++	my @headslist = git_get_heads_list(undef, 'heads');
+ 	if (@headslist) {
+ 		git_heads_body(\@headslist, $head);
+ 	}
+ 	git_footer_html();
+ }
+ 
++sub git_remotes {
++	gitweb_check_feature('remote_heads')
++		or die_error(403, "Remote heads view is disabled");
++
++	my $head = git_get_head_hash($project);
++	git_header_html();
++	git_print_page_nav('','', $head,undef,$head);
++	git_print_header_div('summary', $project);
++
++	my @remotelist = git_get_heads_list(undef, 'remotes');
++	if (@remotelist) {
++		git_heads_body(\@remotelist, $head);
++	}
++	git_footer_html();
++}
++
+ sub git_blob_plain {
+ 	my $type = shift;
+ 	my $expires;
 -- 
 1.7.3.rc1.230.g8b572
