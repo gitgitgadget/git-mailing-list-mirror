@@ -1,84 +1,70 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: [PATCH] git-ls-files.txt: clarify -x/--exclude option
-Date: Wed, 15 Sep 2010 19:56:48 -0400
-Message-ID: <1284595008-36464-1-git-send-email-jaysoffian@gmail.com>
-References: <AANLkTimuTHvA+qjqpmz=VkCpTTiRA7imb5+ZyTVmPwYy@mail.gmail.com>
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	Junio C Hamano <junio@kernel.org>, Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 16 01:57:02 2010
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [RFC/PATCH 0/3] fast-import: give importers access to the
+ object store
+Date: Thu, 16 Sep 2010 12:14:08 +1200
+Message-ID: <1284596048.3298.3.camel@wilber>
+References: <20100701031819.GA12524@burratino>
+	 <20100701054849.GA14972@burratino> <20100817170216.GA14491@kytes>
+	 <20100905031528.GA2344@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 16 02:09:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ow1qX-00078v-Sf
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 01:57:02 +0200
+	id 1Ow22z-0003gT-RI
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 02:09:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755034Ab0IOX45 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Sep 2010 19:56:57 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58029 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752123Ab0IOX44 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Sep 2010 19:56:56 -0400
-Received: by ywh1 with SMTP id 1so237963ywh.19
-        for <git@vger.kernel.org>; Wed, 15 Sep 2010 16:56:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=tVXqzvuzilJDB+jbO0OvHI7oUyDu05cZL/sMcYkACTs=;
-        b=N+zkTYX6eggaE2R+X+oTRMSQPJbVI0s5tG0UdkyCo8VmUGjxfY6Gj/6emZjiaa+hs/
-         FTTiej0ABuRNCtxwyggz8oZPgKM/LD2oRCadQWMUxW0bdJKBWMbF+FKhSIHM3m35eG0V
-         jxzlHcgqGApL+X2Jhb6gZzNaSALpTpDP4kvXI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=LSUftEkf/6hi18pho3OvR2TBVTGbTY/QPlNHkRZ0FirCHj02jL48HsPoYdqYs5fucX
-         j08RZHWgwA73YJMitpvwadlxi9nJInXnEmDBgrpLm0sv38nyhb/HM9gH1sQ5H47Ts4+C
-         0YSgqivWCJbZ3vsE7/DryTMWSogbYePXkmlS4=
-Received: by 10.151.112.18 with SMTP id p18mr2663864ybm.339.1284595015525;
-        Wed, 15 Sep 2010 16:56:55 -0700 (PDT)
-Received: from localhost (cpe-065-190-041-119.nc.res.rr.com [65.190.41.119])
-        by mx.google.com with ESMTPS id c2sm6729723ybi.21.2010.09.15.16.56.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Sep 2010 16:56:54 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.rc1.5.g95127
-In-Reply-To: <AANLkTimuTHvA+qjqpmz=VkCpTTiRA7imb5+ZyTVmPwYy@mail.gmail.com>
+	id S1752448Ab0IPAJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Sep 2010 20:09:36 -0400
+Received: from watts.utsl.gen.nz ([202.78.240.73]:55515 "EHLO mail.utsl.gen.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751294Ab0IPAJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Sep 2010 20:09:36 -0400
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id AA30E21C3AF; Thu, 16 Sep 2010 12:09:34 +1200 (NZST)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
+	mail.musashi.utsl.gen.nz
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [192.168.2.22] (leibniz.catalyst.net.nz [202.78.240.7])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 5442621C322;
+	Thu, 16 Sep 2010 12:09:30 +1200 (NZST)
+In-Reply-To: <20100905031528.GA2344@burratino>
+X-Mailer: Evolution 2.28.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156280>
 
-Since b5227d8, -x/--exclude does not apply to cached files.
-This is easy to miss unless you read the discussion in the
-EXCLUDE PATTERNS section. Clarify that the option applies
-to untracked files and direct the reader to EXCLUDE PATTERNS.
+On Sat, 2010-09-04 at 22:15 -0500, Jonathan Nieder wrote:
+> It works like this:
+> 
+> frontend:
+> 	feature report-fd=3
+> 	commit refs/heads/master
+> 	... revision 1 ...
+> 
+> importer:
+> 	abc7856cba76bca87a65bca76bca8bca98bca78bca76
 
-Signed-off-by: Jay Soffian <jaysoffian@gmail.com>
----
- Documentation/git-ls-files.txt |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+This is probably quite a late comment, but I don't think that
+'report-fd=3' is a good idea in a protocol like this.  It should not
+take an argument and just respond down the appropriate selected file
+descriptor.  ie, default to standard output.  If standard input is a
+socket, then use that bidirectionally.  If --report-fd is used on the
+command line, use that.
 
-Well, at least we can clarify the man page to reduce likelihood
-of future confusion.
-
-diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.txt
-index 15aee2f..f52b06a 100644
---- a/Documentation/git-ls-files.txt
-+++ b/Documentation/git-ls-files.txt
-@@ -79,8 +79,9 @@ OPTIONS
- 
- -x <pattern>::
- --exclude=<pattern>::
--	Skips files matching pattern.
--	Note that pattern is a shell wildcard pattern.
-+	Skips untracked files matching pattern.
-+	Note that pattern is a shell wildcard pattern. See EXCLUDE PATTERNS
-+	below for more information.
- 
- -X <file>::
- --exclude-from=<file>::
--- 
-1.7.3.rc1.5.g95127
+Sam
