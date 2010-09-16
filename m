@@ -1,64 +1,67 @@
-From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
-Subject: Re: tig show <commit> not working anymore?
-Date: Thu, 16 Sep 2010 14:03:23 -0500
-Message-ID: <20100916190323.GL5785@bowser.ece.utexas.edu>
-References: <20100916125337.GG5785@bowser.ece.utexas.edu>
- <4C922112.404@drmicha.warpmail.net>
- <4C9222A9.4070801@atlas-elektronik.com>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: [PATCH 2/2] Add Swedish translation. [in swedish]
+Date: Thu, 16 Sep 2010 21:18:27 +0200
+Message-ID: <201009162118.28041.robin.rosenberg@dewire.com>
+References: <20100912202111.B11522FC00@perkele> <AANLkTin_5drpRva6jiwwC-OpMSxnYwJu5fJD4aU7P5jq@mail.gmail.com> <alpine.DEB.2.00.1009161908270.20149@perkele.intern.softwolves.pp.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonas Fonseca <fonseca@diku.dk>
-To: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-X-From: git-owner@vger.kernel.org Thu Sep 16 21:03:32 2010
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>,
+	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Thu Sep 16 21:18:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwJk2-000178-QD
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 21:03:31 +0200
+	id 1OwJyf-0003FO-Bf
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 21:18:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933Ab0IPTDZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 15:03:25 -0400
-Received: from irongate.mail.utexas.edu ([146.6.25.6]:51734 "EHLO
-	irongate.mail.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754390Ab0IPTDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 15:03:24 -0400
-X-IronPort-MID: 55232640
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAEoGkkyAU36M/2dsb2JhbACiDHHFYYVBBIRLhWQ
-Received: from wb4-a.mail.utexas.edu ([128.83.126.140])
-  by irongate.mail.utexas.edu with ESMTP; 16 Sep 2010 14:03:24 -0500
-Received: (qmail 67865 invoked from network); 16 Sep 2010 19:03:24 -0000
-Received: from bowser.ece.utexas.edu (a.kumar@146.6.33.245)
-  by wb4.mail.utexas.edu with (RC4-SHA encrypted) ESMTPSSA; 16 Sep 2010 19:03:24 -0000
-Content-Disposition: inline
-In-Reply-To: <4C9222A9.4070801@atlas-elektronik.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754765Ab0IPTSc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 15:18:32 -0400
+Received: from mail.dewire.com ([83.140.172.130]:11810 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754037Ab0IPTSb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 15:18:31 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 7649E1396D89;
+	Thu, 16 Sep 2010 21:18:29 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 9UNyVMos3LjA; Thu, 16 Sep 2010 21:18:28 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id D2BBB1396D87;
+	Thu, 16 Sep 2010 21:18:28 +0200 (CEST)
+User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; i686; ; )
+In-Reply-To: <alpine.DEB.2.00.1009161908270.20149@perkele.intern.softwolves.pp.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156347>
 
-On Thu, Sep 16, 2010 at 03:59:05PM +0200, Stefan Naewe wrote:
-> On 9/16/2010 3:52 PM, Michael J Gruber wrote:
-> > It seems that since that tig commit, "tig show <commit>" shows HEAD
-> > rather than <commit>. OTOH, "tig <commit>" does navigate to <commit>.
-> 
-> Oops...how true.
-> 
-> I tested 'tig show <commit>' and noticed it showed something but
-> didn't look close enough 8-|
+torsdagen den 16 september 2010 19.09.04 skrev  Peter Krefting:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> > FWIW mercurial uses m=C3=A4rke, e.g.:
+> I tried using that in a translation once, and no-one understood what =
+I was
+> talking about. :-/
 
-Ah, maybe I should have been more explicit and specified that it shows
-me the wrong commit. :-)
+Label, [lejbl],  tag (tagg), =C3=A4r de ord jag h=C3=B6rt och anv=C3=A4=
+nt s=C3=A5 l=C3=A4nge jag kan=20
+minnas. M=C3=A4rken g=C3=B6r man genom att rispa, kladda med tusch. ell=
+er tappa saker. =20
+En etikett =C3=A4r en prydlig m=C3=A4rkning.
 
-I did attempt to fix the code myself, but I require a more thorough
-understanding of the code to be able to fix it myself.
+Termen etikett har jag aldrig beh=C3=B6vt f=C3=B6rklara f=C3=B6r n=C3=A5=
+gon och ordet g=C3=A5r att b=C3=B6ja=20
+utan att det l=C3=A5ter konstigt, =C3=85 andra sidan kan "m=C3=A4rka" a=
+nv=C3=A4ndas eftersom man=20
+m=C3=A4rker upp saker med etiketter, snarare =C3=A4n att man "etiketter=
+ar" dem.
 
-Thanks.
-
-Kumar
+-- robin
