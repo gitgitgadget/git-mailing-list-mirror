@@ -1,114 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 4/7] gitweb: link heads and remotes view
-Date: Fri, 17 Sep 2010 01:02:22 +0200
-Message-ID: <201009170102.23053.jnareb@gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <1284629465-14798-5-git-send-email-giuseppe.bilotta@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 1/2] dir.c: fix uninitialized memory warning
+Date: Thu, 16 Sep 2010 23:13:11 +0000
+Message-ID: <AANLkTim4SiuX=aWLeYXKpgvD+Nh1trH8qgf3V36iVa9w@mail.gmail.com>
+References: <1284670403-90716-1-git-send-email-patnotz@gmail.com>
+	<1284670403-90716-2-git-send-email-patnotz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 01:02:45 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+To: Pat Notz <patnotz@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 01:13:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwNTQ-00033F-C4
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 01:02:36 +0200
+	id 1OwNdx-0008KQ-S0
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 01:13:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753774Ab0IPXCa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 19:02:30 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38424 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752497Ab0IPXCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 19:02:30 -0400
-Received: by bwz11 with SMTP id 11so2098400bwz.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 16:02:28 -0700 (PDT)
+	id S1753111Ab0IPXNN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 19:13:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56754 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425Ab0IPXNM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 19:13:12 -0400
+Received: by iwn5 with SMTP id 5so1408489iwn.19
+        for <git@vger.kernel.org>; Thu, 16 Sep 2010 16:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=hTqRGAPziFSfnmIbnOy7CIlLdO37QO8f3TdzR9xzqtQ=;
-        b=sRDSGX5VMI9fXPvEG+43LGPcWInVNL8kTZOF2T7GKuiqFGhRmk5Y2JD8MIXPLX65a3
-         HB05px2Nw78TRvxmsVe35xfnoRx7O/QTzNLKIVdeH3WSbCaqkfFFbueB8F6pyKWEMsw3
-         yvnffplkHBwR2VIwRMaNfYWXoUHf3Ojrm6J4Q=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5Fir5lY4UNOFXMwcOB6TYX8oVz5yYGZMVRN5NhpsU5E=;
+        b=o7rKUqY3xvXVV0ES3NbSsEVbKltIQbqQET1igNZY4asAfo9STGqi208oVMTkCy/Hd8
+         MkJhOKhlB2S5GflSVLAymptLN6GizDR1gnoDst9zg+YMCD+EZyoXce8C4r8umuSFBZgU
+         xoMYhQdqKlljYNQgypProNeFplFa+hWZ1dUnI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=vvEpaPbvY2Z/+crEd9Yx5IRpgWlrHK/QnEVonDiI/m+wMN4R9klmYvQVbgHXjYiQe8
-         QkVBfPgaQ+7dTISvuK4b0Cr8tjfmQ6Ag51e3Rjfs3Okj8JWD9zFrciCIOlIafw4wLoEV
-         iqADd84+S2Scmn3DErOZfzLRZChVHkwQH6CE4=
-Received: by 10.204.163.69 with SMTP id z5mr3042499bkx.167.1284678148782;
-        Thu, 16 Sep 2010 16:02:28 -0700 (PDT)
-Received: from [192.168.1.13] (abvm37.neoplus.adsl.tpnet.pl [83.8.210.37])
-        by mx.google.com with ESMTPS id f10sm2971223bkl.5.2010.09.16.16.02.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Sep 2010 16:02:27 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1284629465-14798-5-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=giBfPSsVsAHNezANWHMycOpmk/FcL46Aef6qZnbNn3scq+dSQMSoBpkF5k/urgvN3c
+         TTCePrKlg8ABWjZqN5Tass+KEmQebrPZi2T7ZyctPxmjD9mICnw9y+cfn1KVkqaGO3ae
+         dioiCCVLVirRjkWhacK/0Y0rWgl/EdvNFUhZw=
+Received: by 10.231.182.196 with SMTP id cd4mr4035535ibb.191.1284678791526;
+ Thu, 16 Sep 2010 16:13:11 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 16 Sep 2010 16:13:11 -0700 (PDT)
+In-Reply-To: <1284670403-90716-2-git-send-email-patnotz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156362>
 
-On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
-
-> Add a link in heads view to remotes view (if the feature is
-> enabled), and conversely from remotes to heads.
-
-Good idea... but this commit message doesn't tell us *where* this link
-do appear.  It is in lower part (the action specific part) of page
-navigation menu.
-
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+On Thu, Sep 16, 2010 at 20:53, Pat Notz <patnotz@gmail.com> wrote:
+> GCC 4.4.4 on MacOS warns about potential use of uninitialized memory.
+>
+> Signed-off-by: Pat Notz <patnotz@gmail.com>
 > ---
->  gitweb/gitweb.perl |   10 ++++++++--
->  1 files changed, 8 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 0118739..6138c6e 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5511,7 +5511,10 @@ sub git_tags {
->  sub git_heads {
->  	my $head = git_get_head_hash($project);
->  	git_header_html();
-> -	git_print_page_nav('','', $head,undef,$head);
-> +	my $heads_nav = gitweb_check_feature('remote_heads') ?
-> +		$cgi->a({-href => href(action=>"remotes", -replay=>1)},
-> +		        "remotes") : undef;
+> =C2=A0dir.c | =C2=A0 =C2=A02 +-
+> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/dir.c b/dir.c
+> index 133f472..d1e5e5e 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -232,7 +232,7 @@ int add_excludes_from_file_to_list(const char *fn=
+ame,
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct stat st;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int fd, i;
+> - =C2=A0 =C2=A0 =C2=A0 size_t size;
+> + =C2=A0 =C2=A0 =C2=A0 size_t size =3D 0;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0char *buf, *entry;
 
-I think it would be more readable here to use 'if' statement instead
-of conditional operator.
+What does the GCC warning say exactl? I.e. what line does it complain
+about?
 
-> +	git_print_page_nav('','', $head,undef,$head, $heads_nav);
->  	git_print_header_div('summary', $project);
->  
->  	my @headslist = git_get_heads_list(undef, 'heads');
-> @@ -5527,7 +5530,10 @@ sub git_remotes {
->  
->  	my $head = git_get_head_hash($project);
->  	git_header_html();
-> -	git_print_page_nav('','', $head,undef,$head);
-> +	my $heads_nav =
-> +		$cgi->a({-href => href(action=>"heads", -replay=>1)},
-> +		        "heads");
-> +	git_print_page_nav('','', $head,undef,$head, $heads_nav);
->  	git_print_header_div('summary', $project);
->  
->  	my @remotelist = git_get_heads_list(undef, 'remotes');
-> -- 
-> 1.7.3.rc1.230.g8b572
-> 
-> 
-
--- 
-Jakub Narebski
-Poland
+Maybe this is a logic error introduced in v1.7.0-rc0~25^2? I haven't
+checked.
