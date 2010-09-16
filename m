@@ -1,81 +1,61 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: empty directories and git Question
-Date: Thu, 16 Sep 2010 10:32:49 +0200
-Message-ID: <4C91D631.9010108@op5.se>
-References: <loom.20100916T095344-932@post.gmane.org>
+From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+Subject: Using fromcvs/togit
+Date: Thu, 16 Sep 2010 11:03:56 +0200
+Message-ID: <AANLkTi=3u8JMe354J1yW0XTvg0GyTWWDOkAn4d-0cHS=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Anton <tmp009@allproducts.info>
-X-From: git-owner@vger.kernel.org Thu Sep 16 10:39:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 16 11:04:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ow9zr-0003Om-5T
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 10:39:11 +0200
+	id 1OwAOF-0000lX-Fm
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 11:04:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751694Ab0IPIjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 04:39:05 -0400
-Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:50414 "HELO
-	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1750813Ab0IPIjE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 04:39:04 -0400
-X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Sep 2010 04:39:03 EDT
-Received: from source ([209.85.215.46]) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTJHXpsMn7cfSfo+zEOS5BzLHuk1PuS59@postini.com; Thu, 16 Sep 2010 01:39:04 PDT
-Received: by ewy23 with SMTP id 23so471815ewy.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 01:38:59 -0700 (PDT)
-Received: by 10.213.26.14 with SMTP id b14mr2582467ebc.15.1284625972420;
-        Thu, 16 Sep 2010 01:32:52 -0700 (PDT)
-Received: from clix.int.op5.se (fw1-sth-pio.op5.com [109.228.142.130])
-        by mx.google.com with ESMTPS id a48sm3520654eei.18.2010.09.16.01.32.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Sep 2010 01:32:51 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Thunderbird/3.0.6 ThunderGit/0.1a
-In-Reply-To: <loom.20100916T095344-932@post.gmane.org>
+	id S1752138Ab0IPJER (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Sep 2010 05:04:17 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:39546 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751980Ab0IPJEQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 05:04:16 -0400
+Received: by ywh1 with SMTP id 1so326981ywh.19
+        for <git@vger.kernel.org>; Thu, 16 Sep 2010 02:04:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=cVo/4R9Og2CYaaP6JShCVx5ZZrd707FF6fORHfxGWBY=;
+        b=URX5PkbVM3RuoKgojWBTDKuHPuuyR0m1jey4bW4Iw15yJWwE4hyGMTGpWjuvj9Onrt
+         iV2h+4f/TEcGkik7Bm4Zu3+akPsh3kJbzcvSEvME2Oyuz8WTxdpQvlZGFVp8gYb0PtBB
+         DvgxGMeetqBIixqKOnmXzmDAh7NLiV4tJVjn4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=Sd7gxzbNdWwul+7v7pvSfIE3TlWVtV2s903UxijSlu3+CTP9iW8LZOnin9pbo3x0Ck
+         VyZ4uq3+KTEUSTokFmEQIEIZD6rBbVinm3CGICD4G2w6icAphxQcBecCnYlcPNJtuHeD
+         KWrdSSnI56bhsoPDdXqjHiPUVdwhzNHYniKnI=
+Received: by 10.90.79.14 with SMTP id c14mr2266113agb.209.1284627856200; Thu,
+ 16 Sep 2010 02:04:16 -0700 (PDT)
+Received: by 10.231.177.152 with HTTP; Thu, 16 Sep 2010 02:03:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156299>
 
-On 09/16/2010 09:59 AM, Anton wrote:
-> Hi!
-> 
-> I am using git for a very long time with TextMate and Ruby on Rails,
-> now I am working with Eclipse and Android and I have a stupid problem
-> (or I am stupid...). Can anybody help me?
-> 
-> I have directories which I do not want to track in git (like gen/* an bin/*).
-> They can be ignored by adding them to the .gitignore - works well.
-> 
-> But when I clone the project Eclipse shouts about the missing directories.
-> So I tried the following:
-> 
-> added a .ignoreme file to "bin" and "gen", ignored everything else.
-> Works fine, now the directory and the two .ignoreme files are added,
-> but Eclipse does not like to have any file in the bin directory
-> (can't build until I remove it).
-> 
-> So it there no way to manage bin folders of any kind
-> in git when working with IDEs?
-> 
+Hi,
 
-You can't have empty directories in git. Eclipse forcing you to have a
-pre-created empty directory that it doesn't create itself if it doesn't
-exist sounds mightily weird though. I'd guess there's some setting in
-eclipse that tells it to automagically create or wipe the directory if
-it needs to. It's not like it's a small project, so I can't imagine a
-simple thing like that not being handled.
+  I am trying to use fromcvs/togit, however it keeps reporting message such as:
 
+fatal: Not a valid object name
+...
+fatal: Not a valid object name refs/heads/mathieu
+fatal: Not a valid object name refs/heads/master
+
+  What does those errors refer to ?
+
+Thanks,
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Mathieu
