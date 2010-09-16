@@ -1,109 +1,128 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: git-p4
-Date: Thu, 16 Sep 2010 15:54:03 +0200
-Message-ID: <AANLkTik-jATT0vJagsXWfexPyKHFZ0oo7Qp95vpiqmCd@mail.gmail.com>
-References: <4C8A8CE8.90600@borg.org>
-	<20100910235323.773d2c5b@varda>
-	<AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>
-	<4C8CF231.6090403@borg.org>
-	<AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>
-	<4C8D14F9.90705@borg.org>
-	<AANLkTi=NGsY3wDiTLwNLpw4TJMpiSY8A=az_=v2fYDLj@mail.gmail.com>
-	<4C8D3303.1030302@borg.org>
-	<AANLkTikrSt4djXep-o4Hr8EZAsiNXnqCHa2fLrys8T==@mail.gmail.com>
-	<4C8E33DF.7010904@borg.org>
-	<AANLkTimL3mB8LeUOANsJO7p9uwqDCN9wKnLVMTq_-=3H@mail.gmail.com>
-	<4C8E511F.8000400@borg.org>
-	<AANLkTingvEFDygkKipBXfCHJr2=oMQrYv3FKpxpo+TkW@mail.gmail.com>
-	<4C920A1B.1030707@borg.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] fetch: Get submodule paths from index and not from .gitmodules
+Date: Thu, 16 Sep 2010 15:55:02 +0200
+Message-ID: <4C9221B6.7070807@web.de>
+References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Kent Borg <kentborg@borg.org>
-X-From: git-owner@vger.kernel.org Thu Sep 16 15:54:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Thu Sep 16 15:55:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwEuh-0004Kn-Vt
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 15:54:12 +0200
+	id 1OwEw2-0005HK-GJ
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 15:55:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754811Ab0IPNyG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 09:54:06 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54125 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754360Ab0IPNyF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 09:54:05 -0400
-Received: by ywh1 with SMTP id 1so403410ywh.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 06:54:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=M7v63Qw7fDdIKDDb8I8qyfDiMRKBrabgRZ6vJPk0sk8=;
-        b=Iv3hsTfAlp4ceEotEN+9iHDZLNvyYhRUrP/MrY8JEYGLXJZCSmXWhgE7CXdVNTaqrt
-         ZJOf/g1VEvzYCMr+bodgXzQ4wsFC6aCUc/1TJefhqwsoxmViyM2z/7DAtWgW+bPm86Cl
-         sno/suG0KuyI0nSxDJOJhB9o9jvHaH8BfSmwA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YlbEih7UEoBrLV7obUUqfzrgOjc+XNRzjzIaVTJx/D2uLyjUMA7Lx8Lj0tymIEaBr4
-         idMClAzLo4Zp5jF5JcXnk07xpAbC+gzyocQA3kL8lNIFzRctQ57iPa2DTvI2PlfD4FPZ
-         5V5t1T1pPq/htf6VppkyWJ5G4CZBc94oFf6mM=
-Received: by 10.150.157.7 with SMTP id f7mr3611334ybe.153.1284645243482; Thu,
- 16 Sep 2010 06:54:03 -0700 (PDT)
-Received: by 10.231.178.139 with HTTP; Thu, 16 Sep 2010 06:54:03 -0700 (PDT)
-In-Reply-To: <4C920A1B.1030707@borg.org>
+	id S1755019Ab0IPNzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Sep 2010 09:55:10 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:55300 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755016Ab0IPNzI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 09:55:08 -0400
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate02.web.de (Postfix) with ESMTP id DD82C170DF8B9;
+	Thu, 16 Sep 2010 15:55:06 +0200 (CEST)
+Received: from [93.246.43.244] (helo=[192.168.178.29])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1OwEva-0001sC-00; Thu, 16 Sep 2010 15:55:06 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100825 Thunderbird/3.1.3
+In-Reply-To: <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/ArHe3hEejXoBjvqBnqAz7yry3X8OuJljZKvKp
+	+Pb+jU4sw4P5pANojaLTY2T9gMQ1AvJuKv/CXmFB8ZfAZrFe1z
+	g60la8k5FXuLReA89GsA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156332>
 
-On Thu, Sep 16, 2010 at 2:14 PM, Kent Borg <kentborg@borg.org> wrote:
-> One odd thing that had me worried was seeing the git side of the gate=
-way
-> repository show a single history back and then show a short split
-> history and then a single history, flopping as I ran transactions
-> through it. =C2=A0I am not sure what was going on, but I think git-p4=
- is
-> doing an amend of the last commit to put its notes in the message, an=
-d
-> if I have anything newer hanging from that commit this is a very bad
-> thing. =C2=A0I am still worried but less so as long as I behave mysel=
-f about
-> not expecting it to make amendments to anything but the newest commit=
-s.
+In the first version the .gitmodules file was parsed and all submodules
+found there were recursively fetched. This lead to problems when the
+.gitmodules file was not properly set up. "git submodule update" gets
+this information from the index via "git ls-files", lets do the same here.
 
-This is true. git-p4 does rebase (which usually rewrites history) the
-active branch as the last step when you do git-p4 submit. So, as you
-say, it is important to be aware of this.
+Reported-by: Kevin Ballard <kevin@sb.org>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-If HEAD points to X, and you do git-p4 submit, then if you have
-another branch YY on top of X, you may want to checkout YY and do git
-rebase X' (where X' is what git-p4 produces after it amends its
-[git-p4: ...] stuff).
+Could it be that the information in your .gitmodules files is not
+quite right? Then this patch should fix your problems with the
+recursion. Please test it and let me know if the submodules are
+now recursively fetched as they should.
 
-> Part of the consideration is to simply be very aware of those "[git-p=
-4:
-> ..." notes and decide where this should propagate to and design the
-> workflow accordingly. =C2=A0(lkml probably won't want to see p4 notat=
-ions...)
->
-> But anyway, I seem to have git-p4 working in both directions, with a
-> complete beginning-of-time history on the git side.
 
-Good stuff! Congrats :)
+ submodule.c |   25 +++++++++++++++++++------
+ 1 files changed, 19 insertions(+), 6 deletions(-)
 
-> Tor Arvid: I owe you a beer (or whatever you drink when someone offer=
-s
-> you a beer), how often do you visit Boston?
+diff --git a/submodule.c b/submodule.c
+index 05661e2..13a694b 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -240,7 +240,7 @@ void show_submodule_summary(FILE *f, const char *path,
 
-Appreciated :) Well, its been ~9 years, so maybe I should go again
-soon :) Otherwise, say hello whenever you're in Oslo ;)
+ int fetch_populated_submodules(int forced)
+ {
+-	int result = 0;
++	int i, result = 0;
+ 	struct child_process cp;
+ 	const char *argv[] = {
+ 		"fetch",
+@@ -251,6 +251,10 @@ int fetch_populated_submodules(int forced)
+ 	if (!work_tree)
+ 		return 0;
 
--TA-
++	if (!the_index.initialized)
++		if (read_cache() < 0)
++			die("index file corrupt");
++
+ 	memset(&cp, 0, sizeof(cp));
+ 	cp.argv = argv;
+ 	cp.env = local_repo_env;
+@@ -258,25 +262,34 @@ int fetch_populated_submodules(int forced)
+ 	cp.no_stdin = 1;
+ 	cp.out = -1;
+
+-	for_each_string_list_item(name_for_path, &config_name_for_path) {
++	for (i = 0; i < active_nr; i++) {
+ 		struct strbuf submodule_path = STRBUF_INIT;
+ 		struct strbuf submodule_git_dir = STRBUF_INIT;
+-		const char *git_dir;
++		struct cache_entry *ce = active_cache[i];
++		const char *git_dir, *name;
++
++		if (!S_ISGITLINK(ce->ce_mode))
++			continue;
++
++		name = ce->name;
++		name_for_path = unsorted_string_list_lookup(&config_name_for_path, ce->name);
++		if (name_for_path)
++			name = name_for_path->util;
+
+ 		if (!forced) {
+ 			struct string_list_item *fetch_option;
+-			fetch_option = unsorted_string_list_lookup(&config_fetch_for_name, name_for_path->util);
++			fetch_option = unsorted_string_list_lookup(&config_fetch_for_name, name);
+ 			if (fetch_option && !fetch_option->util)
+ 				continue;
+ 		}
+
+-		strbuf_addf(&submodule_path, "%s/%s", work_tree, name_for_path->string);
++		strbuf_addf(&submodule_path, "%s/%s", work_tree, ce->name);
+ 		strbuf_addf(&submodule_git_dir, "%s/.git", submodule_path.buf);
+ 		git_dir = read_gitfile_gently(submodule_git_dir.buf);
+ 		if (!git_dir)
+ 			git_dir = submodule_git_dir.buf;
+ 		if (is_directory(git_dir)) {
+-			printf("Fetching submodule %s\n", name_for_path->string);
++			printf("Fetching submodule %s\n", ce->name);
+ 			cp.dir = submodule_path.buf;
+ 			if (run_command(&cp))
+ 				result = 1;
+-- 
+1.7.3.rc2.232.g3328
