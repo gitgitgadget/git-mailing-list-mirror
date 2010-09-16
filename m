@@ -1,140 +1,187 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: RE: [PATCH 2/2] Add Swedish translation.
-Date: Thu, 16 Sep 2010 11:41:41 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1009161134390.18826@ds9.cixit.se>
-References: <20100912202111.B11522FC00@perkele> <A612847CFE53224C91B23E3A5B48BAC749BF60444B@xmail3.se.axis.com> <alpine.DEB.2.00.1009151124100.11791@ds9.cixit.se> <A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: [PATCH 1/2] po/de.po: add German translation
+Date: Thu, 16 Sep 2010 12:57:51 +0200
+Message-ID: <20100916125751.163d8691@jk.gs>
+References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=iso-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
-To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
-X-From: git-owner@vger.kernel.org Thu Sep 16 12:42:03 2010
+Cc: trast@student.ethz.ch, avarab@gmail.com, git <git@vger.kernel.org>
+To: Christian Stimming <stimming@tuhh.de>
+X-From: git-owner@vger.kernel.org Thu Sep 16 12:58:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwBuk-0005WW-Ta
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 12:42:03 +0200
+	id 1OwCAE-00071a-9F
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 12:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753844Ab0IPKl5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 06:41:57 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:41472 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752832Ab0IPKl4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 06:41:56 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8GAfgeu027660
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 16 Sep 2010 12:41:42 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8GAffO6027656;
-	Thu, 16 Sep 2010 12:41:41 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 16 Sep 2010 12:41:42 +0200 (CEST)
+	id S1752289Ab0IPK55 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 06:57:57 -0400
+Received: from zoidberg.org ([88.198.6.61]:41522 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752422Ab0IPK54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 06:57:56 -0400
+Received: from jk.gs (p4FDBFDAA.dip.t-dialin.net [::ffff:79.219.253.170])
+  (AUTH: LOGIN jast, SSL: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Thu, 16 Sep 2010 12:57:54 +0200
+  id 0040017D.4C91F832.00001C5B
+In-Reply-To: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156316>
 
-Peter Kjellerstedt:
+Christian Stimming <stimming@tuhh.de> wrote:
 
->>>> +#: builtin/commit.c:380
->>>> +msgid "cannot do a partial commit during a merge."
->>>> +msgstr "kan inte utf=F6ra en delvis incheckning under en sammansl=
-agning."
->>> "delvis" -> "partiell"
->> Is that better? Sounds a bit to technical to me.
-> Well, "en delvis incheckning" doesn't sound like correct Swedish...
-
-"Partiell" is something I connect with solar eclipses, can't say I can=20
-remember hearing it much elsewhere. But any ideas for better wording ar=
-e of=20
-course appreciated.
-
->>>> +#: builtin/commit.c:737
->>>> +msgid "Error building trees"
->>>> +msgstr "Fel vid byggande av tr=E4d"
->>> "byggande av tr=E4d" -> "tr=E4dbygge" ?
->> That sounds even weirder to me.
-> Hmm, you may be right. Alternatives for "byggande" is
-> "konstruktion" and "skapande", don't know if either of those
-> make it sound better.
-
-Changing to "skapande", that sounds better IMHO.
-
->>> "dekorerade" -> "annoterade"
->> Is that a word?
-> Yes. At least it is in SAOL which I think should be indicative of its=
+> As you might guess, as the (initial) translator of git-gui I've been =
 =20
-> existence ;)
+> through this discussion before [1] and as you have noticed, I have =20
+> decided to take a translation approach different from what you have =20
+> recently discussed here. I deliberately tried to translate as much
+> of the terms into German as possible. I do not agree about the
+> importance of statements on this mailing list like "This translation
+> translates too much terms - I cannot find the commands I'm used to".
+> The point of a translation is to enable the usage of a program to
+> people who do *not* know the original language.
 
-I take your word (no pun intended) for it. Changing everywhere.
+Please explain how translating all terms makes it easier for Germans to
+work with git. As far as I am concerned, all the terms you tried so
+hard to translate are technical terms, i.e. their full meaning cannot b=
+e
+readily understood without an explanation. That is the reason why we
+have a glossary for those terms even in the English original.
 
->>>> +#: builtin/log.c:825
->>>> +#, c-format
->>>> +msgid "insane in-reply-to: %s"
->>>> +msgstr "tokigt in-reply-to: %s"
->>> "tokigt" -> "tokig"
->> My sense of language says that it should be "neutrum", so "tokigt".
-> Well, I read it with an implicit "header" (i.e., as "insane in-reply-=
-to=20
-> header: %s")...
+Translating these terms into German does not change anything about
+that. All terms still need to be explained.
 
-Exactly. And "header" is "huvud", which is neuter.
+There is some slight potential gain in that perhaps *some* translated
+words will be more easily associated with their corresponding
+explanations due to the imagery they use, but at the same time there is
+a cost. I have never met anyone with experience with revision control
+who used Germanized technical terms. If you never introduce new folks
+to the terms that are actually used, they are in for a whole world of
+communication problems.
 
->>>> +#: builtin/merge.c:651
->>>> +#, c-format
->>>> +msgid "Unknown option for merge-recursive: -X%s"
->>>> +msgstr "Felaktig flagga f=F6r merge-recursive: -X%s"
->>> "merge-recursive" -> "rekursiv ihopslagning" ?
->> No, merge-recursive is a name of a merge strategy.
-> Maybe add quotes around it then do indicate that?
+There has always been opposition to borrowing words from other
+languages, but it's the way language develops. Nobody says
+"Haareschneider" or "Senf-Eier-Paste" or "d=C3=BCnne Nudelteigf=C3=A4de=
+n". Nobody
+says "Kompaktscheibe" or "Systemstartverwalter" or
+"grafisches Dokumentabtastger=C3=A4t". If I used those words out of the
+conviction that rigorously translating everything is a good thing,
+people who have difficulty understanding me if I casually used some of
+those (and I can think of lots more).
 
-Added.
+I don't actually think that translating words is bad, but I'd rather
+keep the original word than translate it to something that either
+doesn't map to the concept half as well or something that is simply
+extremely unwieldy.
 
->>> "t.ex" -> "t ex"
->> I think it looks clearer with the full stop.
-> Then it should be "t. ex." according to SAOL.
+There are quite a few examples in the git-gui translation that I
+consider extremely unwieldy, and in my initial translation of git
+itself I tried very hard to avoid translations like "Bereitstellung
+(zum Eintragen)", where I have absolutely no idea what that is supposed
+to mean. I don't want to turn this into a critique of git-gui's
+translation, though.=20
 
-Yes, but then I overflow an 80 character line... :-/
+> [...] a translation is for people who do neither know nor understand
+> the English wording for the git concepts.
 
->>>> +#: builtin/revert.c:270
->>>> +#, c-format
->>>> +msgid "Error wrapping up %s"
->>>> +msgstr "Fel vid ombrytning av %s"
->>> I do not think this "wrapping up" refers to reformatting of the com=
-mit=20
->>> message. I think it refers to finishing writing the message (a=20
->>> rephrasing of the English message is advisable). Thus the Swedish=20
->>> translation should probably be:
->>>
->>> "Fel vid avslutandet av %s"
->> Are you sure about that? I was unable to figure it out when I looked=
- at
->> it.
-> I am pretty sure. That error message is output in case a file called=20
-> "somefile.lock" cannot be closed and renamed to "somefile" (see=20
-> lockfile.c:commit_lock_file().)
+Yes, but when you are first introduced to the words as an English
+speaker, you don't=C2=A0understand the concepts either. This part of th=
+e
+learning curve cannot be eliminated.
 
-Indeed. Fixed. Thanks for clarifying it.
+> Wikipedia is a bad reference for measuring the importance of certain =
+=20
+> things. I (or you) could have easily adapted that article to my
+> point of view before continuing the discussion.
 
->>>> +#: builtin/tag.c:196
->>>> +msgid "gpg did not accept the tag data"
->>>> +msgstr "gpg godtog inte taggdata"
->>> "taggdata" -> "taggdatan"
->> "taggdatana" in that case. "data" is always plural.
-> Maybe better to use "tagginformationen"?
+But neither of us have, right? We're adults, after all. You're free to
+assume that Wikipedia doesn't reflect some kind of social consensus. I
+do assume that, moreso than I assume that Wikipedia is accurate.
 
-Yes. Much better! Thanks.
+> However, in this particular case that article doesn't even mention
+> many of the terms which need to be discussed in a git glossary.
 
---=20
-\\// Peter - http://www.softwolves.pp.se/
+Of course not... but it reflects a tendency for terms to not be
+translated.
+
+> >  branch                Branch (m.) =20
+>
+> I'd go for "Zweig". It's even on the wikipedia page and it perfectly =
+=20
+> represents the concept.
+
+My main reason for not translating this one is that we have a command
+called "branch" and since people need to learn what it means anyway,
+and we're certainly not going to change the command names in different
+languages, translating the term in other uses just means that German
+users have to remember two different words for the same thing. Similar
+reasoning applies to some other terms.
+
+> >  index                 Index
+>=20
+> I'd strongly vote for not using "Index". The "Index" is where the =20
+> "Bundespr=C3=BCfstelle f=C3=BCr jugendgef=C3=A4hrdende Schriften" put=
+s the =20
+> Ballerspiele on. Don't let the identical word fool you into thinking =
+=20
+> this is a worthwhile translation. Also, the English term is a bad =20
+> naming anyway IMHO. I'd use git-gui's replacement (staging area) and =
+=20
+> use "Bereitstellung" here as well. Feel free to propose something =20
+> different, but please not "Index". Git isn't FSK18.
+
+So we should strike the word "Index" from casual and professional usage
+when referring to the reference section of a book?
+
+>=20
+> >  commit (noun, verb)                Commit/committen
+>=20
+> That's a hard one. It sounds terrible to use "committen" in German.
+
+True, but it beats the alternatives. I seriously can't think of any
+German word that is equivalent to "commit" in the sense that we use it;
+neither verb nor noun form. The command name reasoning applies here,
+too.
+
+> >  revision              Revision
+>=20
+> Die "Revision" kommt ins Haus, um die B=C3=BCcher zu pr=C3=BCfen. Hon=
+estly, =20
+> please don't use that word in German. Why not "Version"?
+
+Sure, why not... though there are a *lot* of other meanings for the wor=
+d
+in German.
+
+> >  tag                   Tag
+>=20
+> Der heutige Tag oder der morgige Tag? What's the problem with =20
+> "Markierung"? This is exactky the git concept which is meant.
+
+I believe that the English "tag" is a much better metaphor than the
+German "Markierung". One use of "tag" refers to a small label that is
+attached to, for example, baggage. This is exactly the concept we have
+in git. "Markierung" doesn't come close at all to describing the same
+concept. Conflicts markers are "Markierungen"; tags are not.
+The command name reasoning applies here, too.
+
+> >  tree                  Tree
+>=20
+> I would not understand what the "Tree" in German should be. Any
+> German word instead?
+
+Okay, fair enough.
+
+Anyway, to conclude: I appreciate the feedback, but I think translating
+all words is not as conducive to making git accessible to Germans as yo=
+u
+think.
+
+-Jan
