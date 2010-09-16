@@ -1,230 +1,99 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/2] po/de.po: add German translation
-Date: Thu, 16 Sep 2010 13:51:26 +0200
-Message-ID: <4C9204BE.800@drmicha.warpmail.net>
-References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de> <20100916125751.163d8691@jk.gs>
+From: Kent Borg <kentborg@borg.org>
+Subject: Re: git-p4
+Date: Thu, 16 Sep 2010 08:14:19 -0400
+Message-ID: <4C920A1B.1030707@borg.org>
+References: <4C8A8CE8.90600@borg.org>	<20100910235323.773d2c5b@varda>	<AANLkTinmG5BU+yswWQ8=cRKT5WL_h8vWuUCu2PjZYb87@mail.gmail.com>	<4C8CF231.6090403@borg.org>	<AANLkTi=yJ5kVA17+40xc6NpEczFjgmYh7=w5k=GL_U9w@mail.gmail.com>	<4C8D14F9.90705@borg.org>	<AANLkTi=NGsY3wDiTLwNLpw4TJMpiSY8A=az_=v2fYDLj@mail.gmail.com>	<4C8D3303.1030302@borg.org>	<AANLkTikrSt4djXep-o4Hr8EZAsiNXnqCHa2fLrys8T==@mail.gmail.com>	<4C8E33DF.7010904@borg.org>	<AANLkTimL3mB8LeUOANsJO7p9uwqDCN9wKnLVMTq_-=3H@mail.gmail.com>	<4C8E511F.8000400@borg.org> <AANLkTingvEFDygkKipBXfCHJr2=oMQrYv3FKpxpo+TkW@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
-	avarab@gmail.com, git <git@vger.kernel.org>
-To: =?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Thu Sep 16 13:51:39 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 16 14:14:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwD05-0007eM-Kq
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 13:51:38 +0200
+	id 1OwDMF-0004c4-BL
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 14:14:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754461Ab0IPLvX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 07:51:23 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59348 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754454Ab0IPLvW (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 07:51:22 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 006C1574;
-	Thu, 16 Sep 2010 07:51:21 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Thu, 16 Sep 2010 07:51:22 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=d4W9DiozlC+gWn/meRNkbrPl40E=; b=sRUX4Ft0bD3umh6tyf7j2b888B/Qae6AKoUXVWQjRpYJ3j99PgIp4iEa0vNR/U6MMB55xL21G+ZZKbbS4x5Xs0+moa/ux7MU3NhJvSZBwEkd28vlCY/JWogvETvrOuPoghqZ4tBC1sOMG33lsEcErHrUVXtVbOlTo7scisJcZGw=
-X-Sasl-enc: PCxugpHhwhICYcq7eeV6FkhLu9BUiwsMrn1ZcW/4a2MW 1284637881
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 069975E6175;
-	Thu, 16 Sep 2010 07:51:20 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.3
-In-Reply-To: <20100916125751.163d8691@jk.gs>
+	id S1754462Ab0IPMO0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Sep 2010 08:14:26 -0400
+Received: from borg.org ([64.105.205.123]:52377 "EHLO borg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753581Ab0IPMOZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 08:14:25 -0400
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: kentborg)
+	by borg.org (Postfix) with ESMTP id 86FCD878D6;
+	Thu, 16 Sep 2010 08:14:21 -0400 (EDT)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <AANLkTingvEFDygkKipBXfCHJr2=oMQrYv3FKpxpo+TkW@mail.gmail.com>
+X-Enigmail-Version: 0.95.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156326>
 
-Jan Kr=C3=BCger venit, vidit, dixit 16.09.2010 12:57:
-> Christian Stimming <stimming@tuhh.de> wrote:
->=20
->> As you might guess, as the (initial) translator of git-gui I've been=
- =20
->> through this discussion before [1] and as you have noticed, I have =20
->> decided to take a translation approach different from what you have =
-=20
->> recently discussed here. I deliberately tried to translate as much
->> of the terms into German as possible. I do not agree about the
->> importance of statements on this mailing list like "This translation
->> translates too much terms - I cannot find the commands I'm used to".
->> The point of a translation is to enable the usage of a program to
->> people who do *not* know the original language.
->=20
-> Please explain how translating all terms makes it easier for Germans =
-to
-> work with git. As far as I am concerned, all the terms you tried so
-> hard to translate are technical terms, i.e. their full meaning cannot=
- be
-> readily understood without an explanation. That is the reason why we
-> have a glossary for those terms even in the English original.
->=20
-> Translating these terms into German does not change anything about
-> that. All terms still need to be explained.
+Tor Arvid Lund wrote:
+> Well, then I think you are a bit confused ;)
+>   
 
-Absolutely true, and absolutely irrelevant for the decision whether to
-translate these, since they need to be explained in any case.
+That I know is true, but I am making progress.
 
->=20
-> There is some slight potential gain in that perhaps *some* translated
-> words will be more easily associated with their corresponding
-> explanations due to the imagery they use,
+ - I have "git p4 rebase"-d changes from p4 world out to
+   git.  More than once even.
 
-The aim of a good translation is to reproduce the concept, not the word=
-=2E
-I assume we're talking about a (mostly) non-English speaking target
-audience here, and for them associating meaning with terms in their
-native language is certainly easier.
+ - I have "git p4 submit"-ted changes from git back into
+   p4 world.  Again, more than once.
 
-=2E..
-> There are quite a few examples in the git-gui translation that I
-> consider extremely unwieldy, and in my initial translation of git
-> itself I tried very hard to avoid translations like "Bereitstellung
-> (zum Eintragen)", where I have absolutely no idea what that is suppos=
-ed
-> to mean. I don't want to turn this into a critique of git-gui's
-> translation, though.=20
-[For the record, I don't like that translation either.]
+ - I can pull and push from/to this git repository to my primary git
+repository.
 
->> I'd go for "Zweig". It's even on the wikipedia page and it perfectly=
- =20
->> represents the concept.
->=20
-> My main reason for not translating this one is that we have a command
-> called "branch" and since people need to learn what it means anyway,
-> and we're certainly not going to change the command names in differen=
-t
-> languages, translating the term in other uses just means that German
-> users have to remember two different words for the same thing. Simila=
-r
-> reasoning applies to some other terms.
+> The p4/master branch is git's view of your p4 history. So p4/master
+> points to the most recent git/perforce commit. 
 
-I really have to oppose this reasoning. Are you seriously suggesting we
-should not translate the following words as a matter of principle?
+Yes.
 
-add
-am (OK, I'm kidding here)
-annotate
-apply
-archive
-bisect
-blame
-branch
-bundle
-cat (...)
-check
-checkout
-cherry(-pick)
-clean
-clone
-commit
-config
-count
-daemon
-describe
-diff
-fast
-fetch
-filter
-for
-format
-get
-grep
-gui
-hash
-help
-index
-init
-log
-lost
-mailinfo
-mailsplit
-merge
-mergetool
-name
-notes
-pack
-parse
-patch
-peek
-prune
-pull
-push
-read
-rebase
-receive
-reflog
-relink
-remote
-repack
-replace
-repo
-request
-reset
-revert
-rev
-send
-shell
-shortlog
-show
-stage
-stash
-status
-submodule
-symbolic
-tag
-tar
-unpack
-update
-upload
-var
-verify
-web
-write
+> An important side point
+> here, is that if you have another remote (which you do in your case)
+> that is a pure git remote that knows nothing about p4, then the
+> p4/master branch and the origin/master branch will be disjoint.
+>   
 
-We simply need a principle we can follow, which produces readable text,
-and which helps those in need of a translation. Those with a reasonable
-passive understanding of English don't need a translation at all. Some
-suggestions to follow:
+That, I think I fixed!  The first commit on the p4/master branch used to
+be a sync from p4, but after surgery on branch references (correct
+term?) my gateway git-p4 repository's p4/master branch now has history
+all the way back to the beginning of time in the git universe (back to
+good ol' Linux 2.6.12-rc2).  The recent commits have git-p4 comments
+that mark the matching p4 changesets.  I am not sure exactly how I did
+it, but it seems that doing a "git-p4 rebase" instead of "git-p4 sync"
+made my surgery work.
 
-- Identify term categories which are already in use in the English
-version, such as "combinatorial graphs".
+One odd thing that had me worried was seeing the git side of the gateway
+repository show a single history back and then show a short split
+history and then a single history, flopping as I ran transactions
+through it.  I am not sure what was going on, but I think git-p4 is
+doing an amend of the last commit to put its notes in the message, and
+if I have anything newer hanging from that commit this is a very bad
+thing.  I am still worried but less so as long as I behave myself about
+not expecting it to make amendments to anything but the newest commits.
 
-- Within each category, look for established translations in that field=
-;
-in any case, keep the categorical associations for the translation.
+Part of the consideration is to simply be very aware of those "[git-p4:
+..." notes and decide where this should propagate to and design the
+workflow accordingly.  (lkml probably won't want to see p4 notations...)
 
-- Translate concepts, not words. If there are several choices, favour
-the one which is linguistically close to the English Git glossary.
-There's a good chance this will happen quite often with German.
+But anyway, I seem to have git-p4 working in both directions, with a
+complete beginning-of-time history on the git side.
 
->>>  tag                   Tag
->>
->> Der heutige Tag oder der morgige Tag? What's the problem with =20
->> "Markierung"? This is exactky the git concept which is meant.
->=20
-> I believe that the English "tag" is a much better metaphor than the
-> German "Markierung". One use of "tag" refers to a small label that is
-> attached to, for example, baggage. This is exactly the concept we hav=
-e
-> in git. "Markierung" doesn't come close at all to describing the same
-> concept. Conflicts markers are "Markierungen"; tags are not.
 
-That's exactly why I suggested "Marke", see my earlier reply also for
-the other terms. It conveys the same multiple metaphorical associations=
-=2E
+Tor Arvid: I owe you a beer (or whatever you drink when someone offers
+you a beer), how often do you visit Boston?
 
-You know, there's a reason why translating is a profession. You need to
-be proficient in both languages, as well as creative. In fact, I don't
-think the majority of people are proficient enough for that even in
-their native language (as a translation target), but every native
-speaker thinks he or she is, of course. (This is a general remark not
-aimed at anyone specifically.)
 
-Michael
+Thanks for everyone's patience with a newbie,
+
+-kb
