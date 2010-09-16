@@ -1,81 +1,140 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2010, #05; Wed, 15)
-Date: Thu, 16 Sep 2010 10:33:17 +0000
-Message-ID: <AANLkTinZK2tV81RaF3__LKNbSrY4zuGnB1pinhLHkfUi@mail.gmail.com>
-References: <7viq266461.fsf@alter.siamese.dyndns.org>
-	<4C91B38D.8010106@viscovery.net>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: RE: [PATCH 2/2] Add Swedish translation.
+Date: Thu, 16 Sep 2010 11:41:41 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1009161134390.18826@ds9.cixit.se>
+References: <20100912202111.B11522FC00@perkele> <A612847CFE53224C91B23E3A5B48BAC749BF60444B@xmail3.se.axis.com> <alpine.DEB.2.00.1009151124100.11791@ds9.cixit.se> <A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Sep 16 12:33:32 2010
+Content-Type: TEXT/PLAIN; charset=iso-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
+To: Peter Kjellerstedt <peter.kjellerstedt@axis.com>
+X-From: git-owner@vger.kernel.org Thu Sep 16 12:42:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwBmP-0000TE-4d
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 12:33:25 +0200
+	id 1OwBuk-0005WW-Ta
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 12:42:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753852Ab0IPKdT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 06:33:19 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:50469 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245Ab0IPKdS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 06:33:18 -0400
-Received: by iwn5 with SMTP id 5so955177iwn.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 03:33:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Gjkhly3M2yCehC8Xk/GJplfHS61ecxdTUXUZVkuZVsI=;
-        b=h0/S+/T7/EdLSBZ2WHH8/XMiNjS5JuPizpVwV6G8mskROKx5ZGiqiuiL/WhEBxfKap
-         vKrryMeXKG2FTKKKNKppKIvzHn7KsKMTVGooNkisVKCyndWk2QqYoMmX6b1QE0OYa8dE
-         io7HelTWlWq8wJ5Mc7D/uau4tRhciT7DfILhM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=pXqxhMMl/EKO+1H+Np1mxi6D51ghHjUFVrCLWLN0cnsZPxSjC5Oo8uEAT33ES2RUvt
-         kxd5BHBzhpQDYvBh8M1/VcZ9zW71RBTLgEWAqZYEpQBF89vlUFtcMZfeywhRvqLeCn5/
-         cyOGx905YGfvJJHa8XrQrtj/f0TJ6sQdIKp94=
-Received: by 10.231.193.81 with SMTP id dt17mr2775861ibb.177.1284633197854;
- Thu, 16 Sep 2010 03:33:17 -0700 (PDT)
-Received: by 10.231.171.145 with HTTP; Thu, 16 Sep 2010 03:33:17 -0700 (PDT)
-In-Reply-To: <4C91B38D.8010106@viscovery.net>
+	id S1753844Ab0IPKl5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 06:41:57 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:41472 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752832Ab0IPKl4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 06:41:56 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8GAfgeu027660
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 16 Sep 2010 12:41:42 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8GAffO6027656;
+	Thu, 16 Sep 2010 12:41:41 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Thu, 16 Sep 2010 12:41:42 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156315>
 
-On Thu, Sep 16, 2010 at 06:05, Johannes Sixt <j.sixt@viscovery.net> wrote:
-> Am 9/16/2010 0:19, schrieb Junio C Hamano:
->> * ab/i18n (2010-09-14) 140 commits
->
-> This topic introduces two tests with number t0201. Please fix it.
+Peter Kjellerstedt:
 
-Maybe change:
+>>>> +#: builtin/commit.c:380
+>>>> +msgid "cannot do a partial commit during a merge."
+>>>> +msgstr "kan inte utf=F6ra en delvis incheckning under en sammansl=
+agning."
+>>> "delvis" -> "partiell"
+>> Is that better? Sounds a bit to technical to me.
+> Well, "en delvis incheckning" doesn't sound like correct Swedish...
 
-    t0200
-    t0200-gettext-basic.sh
-    t0201-gettext-fallbacks.sh
-    t0201-gettext-poison.sh
-    t0202
-    t0202-gettext-perl.sh
-    t0203-gettext-setlocale-sanity.sh
-    t0204-gettext-reencode-sanity.sh
+"Partiell" is something I connect with solar eclipses, can't say I can=20
+remember hearing it much elsewhere. But any ideas for better wording ar=
+e of=20
+course appreciated.
 
-To:
+>>>> +#: builtin/commit.c:737
+>>>> +msgid "Error building trees"
+>>>> +msgstr "Fel vid byggande av tr=E4d"
+>>> "byggande av tr=E4d" -> "tr=E4dbygge" ?
+>> That sounds even weirder to me.
+> Hmm, you may be right. Alternatives for "byggande" is
+> "konstruktion" and "skapande", don't know if either of those
+> make it sound better.
 
-    t0200
-    t0200-gettext-basic.sh
-    t0201-gettext-fallbacks.sh
-    t0202-gettext-poison.sh
-    t0210
-    t0210-gettext-perl.sh
-    t0220-gettext-setlocale-sanity.sh
-    t0221-gettext-reencode-sanity.sh
+Changing to "skapande", that sounds better IMHO.
 
-To leave room for more basic/perl tests?
+>>> "dekorerade" -> "annoterade"
+>> Is that a word?
+> Yes. At least it is in SAOL which I think should be indicative of its=
+=20
+> existence ;)
+
+I take your word (no pun intended) for it. Changing everywhere.
+
+>>>> +#: builtin/log.c:825
+>>>> +#, c-format
+>>>> +msgid "insane in-reply-to: %s"
+>>>> +msgstr "tokigt in-reply-to: %s"
+>>> "tokigt" -> "tokig"
+>> My sense of language says that it should be "neutrum", so "tokigt".
+> Well, I read it with an implicit "header" (i.e., as "insane in-reply-=
+to=20
+> header: %s")...
+
+Exactly. And "header" is "huvud", which is neuter.
+
+>>>> +#: builtin/merge.c:651
+>>>> +#, c-format
+>>>> +msgid "Unknown option for merge-recursive: -X%s"
+>>>> +msgstr "Felaktig flagga f=F6r merge-recursive: -X%s"
+>>> "merge-recursive" -> "rekursiv ihopslagning" ?
+>> No, merge-recursive is a name of a merge strategy.
+> Maybe add quotes around it then do indicate that?
+
+Added.
+
+>>> "t.ex" -> "t ex"
+>> I think it looks clearer with the full stop.
+> Then it should be "t. ex." according to SAOL.
+
+Yes, but then I overflow an 80 character line... :-/
+
+>>>> +#: builtin/revert.c:270
+>>>> +#, c-format
+>>>> +msgid "Error wrapping up %s"
+>>>> +msgstr "Fel vid ombrytning av %s"
+>>> I do not think this "wrapping up" refers to reformatting of the com=
+mit=20
+>>> message. I think it refers to finishing writing the message (a=20
+>>> rephrasing of the English message is advisable). Thus the Swedish=20
+>>> translation should probably be:
+>>>
+>>> "Fel vid avslutandet av %s"
+>> Are you sure about that? I was unable to figure it out when I looked=
+ at
+>> it.
+> I am pretty sure. That error message is output in case a file called=20
+> "somefile.lock" cannot be closed and renamed to "somefile" (see=20
+> lockfile.c:commit_lock_file().)
+
+Indeed. Fixed. Thanks for clarifying it.
+
+>>>> +#: builtin/tag.c:196
+>>>> +msgid "gpg did not accept the tag data"
+>>>> +msgstr "gpg godtog inte taggdata"
+>>> "taggdata" -> "taggdatan"
+>> "taggdatana" in that case. "data" is always plural.
+> Maybe better to use "tagginformationen"?
+
+Yes. Much better! Thanks.
+
+--=20
+\\// Peter - http://www.softwolves.pp.se/
