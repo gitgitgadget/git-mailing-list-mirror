@@ -1,127 +1,150 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 0/7] gitweb: allheads feature
-Date: Thu, 16 Sep 2010 23:26:00 +0200
-Message-ID: <201009162326.01656.jnareb@gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 1/7] gitweb: introduce remote_heads feature
+Date: Thu, 16 Sep 2010 23:41:19 +0200
+Message-ID: <201009162341.20380.jnareb@gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <1284629465-14798-2-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 16 23:26:17 2010
+X-From: git-owner@vger.kernel.org Thu Sep 16 23:41:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwLyC-0008AW-Ce
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 23:26:16 +0200
+	id 1OwMD0-0001Cj-Bp
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 23:41:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751704Ab0IPV0L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 17:26:11 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:63675 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750986Ab0IPV0K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 17:26:10 -0400
-Received: by ewy23 with SMTP id 23so829335ewy.19
-        for <git@vger.kernel.org>; Thu, 16 Sep 2010 14:26:09 -0700 (PDT)
+	id S1755627Ab0IPVl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Sep 2010 17:41:28 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41717 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753048Ab0IPVl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Sep 2010 17:41:28 -0400
+Received: by bwz11 with SMTP id 11so2031628bwz.19
+        for <git@vger.kernel.org>; Thu, 16 Sep 2010 14:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=GXIQ5dXXQHq4h+N7IsW31wI0hfp/Ho5xTDFfUxCzxo0=;
-        b=MSXbcJ7woL2RsqtBl3IwJNqQ60lGjldUqukX+y3Mg2rzyQU6cidR9AUZu3KqteH6LZ
-         v6PbdEO5R4yE+Gsocj5D7sZE5/x3Eq31iSKj/SbCAOxOCS6C2KQcHrRSbWrziEp1nBId
-         NCkxJJh6xWk20lWIGPgNOCWZzI/3Y+fIVk/+M=
+        bh=aw+YhbCeo+Gy4ZQNdg2AIh6oQ28ZIk0V8USc65AnxfA=;
+        b=JyOKuKQDIVKoXamF+0n8/lIDGWIjNse2YDCY7eicmPf6zcDSEE3+MTFJs92JpBYyJH
+         u1Tu2pfrCoLMLCs5/bdbEJ4cDGB1GPIFzW8WMa9H60gNK3ulO2XBC2wvas5SUG5cnZCZ
+         eQwdpHx9cIRveXMIK/leSvFXjhXVUg/YbKebM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=xr1MifJ5ovoyI/AkscrZUo6e9MD/Z2G+CwwzOqrhxj/ziGdZy5v42oAINMjwcSiRHT
-         9GjWAj9m413k4zjWIk5W8EFmTaFhJzF4OqRMkqhQCzy5JP8++cZhS9G6rp19DNal2q8d
-         sgvDFbnsC9ZAJNkBPaye1OQaJg4f8bQ3hie7c=
-Received: by 10.213.2.207 with SMTP id 15mr3208884ebk.9.1284672368686;
-        Thu, 16 Sep 2010 14:26:08 -0700 (PDT)
+        b=H6dRDq0/VYXKDCaxH1D9YXrlFvJImUDBOv7MfRy5VF7Qq6X02MOwbQEJheIzi3V+t0
+         tvA0Tfj6fWY+UZef04Nx3teDnOeIg+2xFC4/E/kZKW4Chno0AjO7Q3tBoHgaN9P64NWG
+         egzy1YupaVvsORYcwJUrUjxx2oGI9j5SosC14=
+Received: by 10.204.76.3 with SMTP id a3mr2621642bkk.190.1284673286711;
+        Thu, 16 Sep 2010 14:41:26 -0700 (PDT)
 Received: from [192.168.1.13] (abvm37.neoplus.adsl.tpnet.pl [83.8.210.37])
-        by mx.google.com with ESMTPS id u9sm4572659eeh.5.2010.09.16.14.26.05
+        by mx.google.com with ESMTPS id y19sm2912883bkw.6.2010.09.16.14.41.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Sep 2010 14:26:07 -0700 (PDT)
+        Thu, 16 Sep 2010 14:41:24 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1284629465-14798-2-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156356>
 
 On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
 
-> This is a rehash of an old patchset of mine that got stalled waiting for
-> other independent patches to go in first, and then for me to get the
-> time to work on it again.
+> With this feature enabled, remotes are retrieved (and displayed)
+> when getting (and displaying) the heads list. Typical usage would be for
+> local repository browsing, e.g. by using git-instaweb (or even a more
+> permanent gitweb setup), to check the repository status and the relation
+> between tracking branches and the originating remotes.
+
+Good idea.
+
 > 
-> The first 4 patches are IMO ready for inclusing in gitweb, and their
-> purpose is to introduce a new view (and a new summary block) that
-> display all the remote heads (assuming the feature is enabled).
-> Somebody suggested via email that this could even the basis for some
-> kind of 'social graph' for gitweb repositories, in a way similar to what
-> is found on sites like github or gitorious, but for me the feature in
-> itself can already be useful.
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> ---
+>  gitweb/gitweb.perl |   19 +++++++++++++++++--
+>  1 files changed, 17 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index a85e2f6..7116c26 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -486,6 +486,18 @@ our %feature = (
+>  		'sub' => sub { feature_bool('highlight', @_) },
+>  		'override' => 0,
+>  		'default' => [0]},
+> +
+> +	# Make gitweb show remotes too in the heads list
+> +
+> +	# To enable system wide have in $GITWEB_CONFIG
+> +	# $feature{'remote_heads'}{'default'} = [1];
+> +	# To have project specific config enable override in $GITWEB_CONFIG
+> +	# $feature{'remote_heads'}{'override'} = 1;
+> +	# and in project config gitweb.remote_heads = 0|1;
+> +	'remote_heads' => {
+> +		'sub' => sub { feature_bool('remote_heads', @_) },
+> +		'override' => 0,
+> +		'default' => [0]},
 
-We might want to make git-instaweb enable this feature (and probably
-other disabled-by-default features).  Otherwise some of information
-about git repository you examine is hidden.  So I agree that this 
-feature is useful by itself.
- 
-> The last three patches are more of the RFC side, in particular the last
-> one. The idea is to group remote heads 'by remote' instead of just
-> listing them serially. So I first introduce code and styling to have
-> 'blocks of stuff' in gitweb, and then use this concept to group together
-> remote heads belonging to the same remote.
+I agree both with this feature being turned off by default, and with
+it being per-project overridable.
 
-This is a good idea in itself; I'd take a look at implementation and
-styling when examining individual patches.
+>  );
+>  
+>  sub gitweb_get_feature {
+> @@ -3146,10 +3158,12 @@ sub git_get_heads_list {
+>  	my $limit = shift;
+>  	my @headslist;
+>  
+> +	my $remote_heads = gitweb_check_feature('remote_heads');
+> +
+>  	open my $fd, '-|', git_cmd(), 'for-each-ref',
+>  		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
+>  		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
+> -		'refs/heads'
+> +		'refs/heads', ( $remote_heads ? 'refs/remotes' : '')
 
-> The final result is rather curious and you can see it in action at
-> <http://git.oblomov.eu/rbot/remotes>, although it would be nice to find
-> a way to layout the blocks in a smarter way. 
+The usual way for optionally providing extra arguments to git commands
+in gitweb is to use empty list "()" and not empty argument "''", i.e.
+it would be:
 
-Thanks for providing demo site.
+  +		'refs/heads', ( $remote_heads ? 'refs/remotes' : ())
 
-Note that clicking on header for remote block, which should lead to
-displaying of only single remote displays all remotes, see e.g.
-http://git.oblomov.eu/rbot/remotes/a3li.  Moreover when I tried to
-handcraft URL i.e. http://git.oblomov.eu/rbot/remote/a3li (with
-'remote' rather than 'remotes' action) I get an empty list of heads.
+See for example git_get_references, parse_commits,... and evem the line
+with "($limit ? ...)" above in git_get_heads_list.
 
+>  		or return;
+>  	while (my $line = <$fd>) {
+>  		my %ref_item;
+> @@ -3160,8 +3174,9 @@ sub git_get_heads_list {
+>  		my ($committer, $epoch, $tz) =
+>  			($committerinfo =~ /^(.*) ([0-9]+) (.*)$/);
+>  		$ref_item{'fullname'}  = $name;
+> -		$name =~ s!^refs/heads/!!;
+> +		$name =~ s!^refs/(head|remote)s/!!;
+>  
+> +		$ref_item{'class'} = $1;
 
-About layout of 'remotes' view: to have remotes information aligned
-we would have to either put everything in one single table (with remotes
-headers being "colspan"), or style them with minimum width (which could
-be good idea anyway).
- 
-> What I really don't like (at the moment) is the way things come out
-> in summary view instead. 
+Is it used anywhere, or is it left to be used by a further commit in
+the series?  If it is the latter, perhaps it would be worth mentioning
+in the commit message?
 
-What you don't like about it?  Should it be smarter and display only
-list of remotes, perhaps even limited to 15 elements, if there are many
-remote-tracking branches?  Or is it something else?
-
-> The issue there is that we only gather 16 remote heads, so some remotes
-> might have no branches displayed, but it becomes difficult to detect and
-> indicate when remotes have incomplete information being displayed. A
-> possible solution would be to call show-ref N times (N being the number
-> of remotes) with a limit of 16/N heads, but that can be a lot of calls.
-> So I'm open to suggestions on how to improve this part (maybe just show
-> a flat view in the remotes section of summary view?)
-
-Ah, I see...
-
-Alternatively we could use smart limiting on the gitweb side.
+>  		$ref_item{'name'}  = $name;
+>  		$ref_item{'id'}    = $hash;
+>  		$ref_item{'title'} = $title || '(no commit message)';
+> -- 
+> 1.7.3.rc1.230.g8b572
+> 
+> 
 
 -- 
 Jakub Narebski
