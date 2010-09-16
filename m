@@ -1,78 +1,97 @@
-From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-Subject: Re: tig show <commit> not working anymore?
-Date: Thu, 16 Sep 2010 15:59:05 +0200
-Organization: ATLAS Elektronik GmbH
-Message-ID: <4C9222A9.4070801@atlas-elektronik.com>
-References: <20100916125337.GG5785@bowser.ece.utexas.edu> <4C922112.404@drmicha.warpmail.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 2/2] Add Swedish translation.
+Date: Thu, 16 Sep 2010 14:02:12 +0000
+Message-ID: <AANLkTim4M_KfuZoe5z_upPug5AT=P-_EfvPcxDe8-uPn@mail.gmail.com>
+References: <20100912202111.B11522FC00@perkele>
+	<alpine.DEB.2.00.1009151124100.11791@ds9.cixit.se>
+	<A612847CFE53224C91B23E3A5B48BAC749BFA3D12C@xmail3.se.axis.com>
+	<201009160046.47367.robin.rosenberg@dewire.com>
+	<alpine.DEB.2.00.1009161209500.18826@ds9.cixit.se>
+	<AANLkTin_5drpRva6jiwwC-OpMSxnYwJu5fJD4aU7P5jq@mail.gmail.com>
+	<4C92227B.70800@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	Jonas Fonseca <fonseca@diku.dk>
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Peter Krefting <peter@softwolves.pp.se>,
+	Robin Rosenberg <robin.rosenberg@dewire.com>,
+	Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	Git <git@vger.kernel.org>, Swedish <tp-sv@listor.tp-sv.se>
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Sep 16 15:58:45 2010
+X-From: git-owner@vger.kernel.org Thu Sep 16 16:02:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwEz5-0007Gi-V1
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 15:58:44 +0200
+	id 1OwF2e-0001Fe-Vx
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Sep 2010 16:02:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754869Ab0IPN6e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Sep 2010 09:58:34 -0400
-Received: from lxsrv96.atlas.de ([194.156.172.86]:57642 "EHLO mail96.atlas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754724Ab0IPN6e (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Sep 2010 09:58:34 -0400
-Received: from VSSRV01.atlas.de (vssrv01.atlas.de [10.200.101.18])
-	by mail96.atlas.de (Postfix) with ESMTP id AB5A71389F
-	for <git@vger.kernel.org>; Thu, 16 Sep 2010 15:58:32 +0200 (CEST)
-X-AuditID: 0ac86512-00001794000005d0-d7-4c92228832ce
-Received: from mgsrv01.atlas.de ([10.200.101.16]) by VSSRV01.atlas.de with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 16 Sep 2010 15:58:32 +0200
-Received: from mgsrv01.atlas.de (localhost [127.0.0.1])
-	by mail01-int.atlas.de (Postfix) with ESMTP id 291FA2717C;
-	Thu, 16 Sep 2010 15:58:32 +0200 (CEST)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on mgsrv01.atlas.de
-X-Spam-Level: 
-X-Spam-Status: No, score=-1.8 required=5.0 tests=ALL_TRUSTED,BAYES_50
-	autolearn=disabled version=3.2.5
-Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
-	by mail01.atlas.de (Postfix) with ESMTP id 165E92717B;
-	Thu, 16 Sep 2010 15:58:32 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
-In-Reply-To: <4C922112.404@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.1
-X-Brightmail-Tracker: AAAAAA==
+	id S1755172Ab0IPOCO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Sep 2010 10:02:14 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:38083 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754987Ab0IPOCN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Sep 2010 10:02:13 -0400
+Received: by gxk23 with SMTP id 23so407294gxk.19
+        for <git@vger.kernel.org>; Thu, 16 Sep 2010 07:02:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fFiJ7cQkERt19MbCdsZFkXDk5uBmgpJp8LbjvcMmd4c=;
+        b=rVgG3Mge+35RnH5/g+qERknGvjkohXDPva4yutdJxuA+7knrNYOKBfWKuBrbfBNqiN
+         laUS7YxitKx5Sv/Gz5O33bU8YdDizkt5aLK8eQMzxQRUKAKMKzQNE1TOyw+5uITdhZCE
+         loVm9XPHO1DkGx8IjIdY1MOdK4hVPwusNDP2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UETPL/yIugrI1t93irH4xzkeJWjgS/mT/Xz+WIGBq1mUcKXX97WU6Xj+TdMmwbZZ3u
+         7C170IqWqtNMZA25eqCveUJ5P08/2g37E2dEWG1+y5fqwU41xUkAlilYvDMhreraE+Li
+         X3NLitAjf37T94YFjfvYl666Ggn/F0/pSHpnQ=
+Received: by 10.150.140.1 with SMTP id n1mr3818937ybd.4.1284645732972; Thu, 16
+ Sep 2010 07:02:12 -0700 (PDT)
+Received: by 10.231.171.145 with HTTP; Thu, 16 Sep 2010 07:02:12 -0700 (PDT)
+In-Reply-To: <4C92227B.70800@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156335>
 
-On 9/16/2010 3:52 PM, Michael J Gruber wrote:
-> Kumar Appaiah venit, vidit, dixit 16.09.2010 14:53:
->> Hi!
+On Thu, Sep 16, 2010 at 13:58, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 16.09.2010=
+ 13:41:
+>> On Thu, Sep 16, 2010 at 11:23, Peter Krefting <peter@softwolves.pp.s=
+e> wrote:
+>>> Robin Rosenberg:
+>>>> (My comments are in swedish as it feels more natural in this conte=
+xt).
+>>>
+>>> While I do agree, I'm trying to reply in English since the Git list=
+ is in
+>>> English.
 >>
->> I observed that, since commit
->> 53c089443cd9885fa677becee4bf7ffd56c3c357, tig show <commit> doesn't
->> seem to work the same way as I had expected it to. The documentation
->> update doesn't seem to indicate that this was to be expected (or I
->> didn't understand it properly). Could someone please confirm that
->> tig show <commit> should actually do something similar to git show <commit> | tig ?
-> 
-> It seems that since that tig commit, "tig show <commit>" shows HEAD
-> rather than <commit>. OTOH, "tig <commit>" does navigate to <commit>.
+>> Usually yeah, but when a PO file is under discussion only people tha=
+t
+>> speak the language can contribute usefully anyway, so I think it's O=
+K
+>> if that discussion is not in English.
+>
+> How about "[L10N SE] etc." subject lines etc.? That way people can
+> easily filter out all L10N posts but keep those relevant to them
+> (including their language).
 
+Sounds good, but convincing people to submit posts with those subjects
+consistently is the hard part :)
 
-Oops...how true.
+> I'm trying to advocate "Marke" for DE ;)
+> In fact, subversion seems to be a good source for inspiration - at le=
+ast
+> for the terms...
 
-I tested 'tig show <commit>' and noticed it showed something but
-didn't look close enough 8-|
-
-Stefan
--- 
-----------------------------------------------------------------
-/dev/random says: Never argue with a woman when she's tired, or rested.
+Yeah, languages that benefit from existing SCM translations should
+definitely be looking at those, even if those SCM's aren't distributed
+there's a lot of common vocabulary.
