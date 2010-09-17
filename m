@@ -1,113 +1,90 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 5/7] gitweb: auxiliary functions to group data
-Date: Fri, 17 Sep 2010 19:17:44 +0200
-Message-ID: <201009171917.44979.jnareb@gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <201009171806.49774.jnareb@gmail.com> <AANLkTikjLNva7Jgh0xYeah1maFusfOiaLwY7+eixx8so@mail.gmail.com>
+Subject: Re: [PATCH 6/7] gitweb: group styling
+Date: Fri, 17 Sep 2010 19:22:53 +0200
+Message-ID: <201009171922.53396.jnareb@gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <201009171826.15454.jnareb@gmail.com> <AANLkTi=8x4JuK99W5BOfUBVUza1sUXE3e_mDOq9-wF_z@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 19:17:55 2010
+X-From: git-owner@vger.kernel.org Fri Sep 17 19:23:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OweZM-00009r-8H
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 19:17:52 +0200
+	id 1OweeL-00037n-4q
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 19:23:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754397Ab0IQRRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 13:17:47 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44225 "EHLO
+	id S1755132Ab0IQRW4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 13:22:56 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50696 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703Ab0IQRRq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 13:17:46 -0400
-Received: by bwz11 with SMTP id 11so2831234bwz.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 10:17:45 -0700 (PDT)
+	with ESMTP id S1752761Ab0IQRWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 13:22:55 -0400
+Received: by bwz11 with SMTP id 11so2835537bwz.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 10:22:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=Q7Omu8AsC7HK6iOxmaRDmCoMjIfl7g6Wj2t8uCDxRLg=;
-        b=BoNnh6sWlsOrGLGqM91RPxfhYmqnQqgiTMS8QjKhHEcQ/iSbfEa4f8c9cPocOi6Fd5
-         81EQT7cSN8okio6YLJ8t1s3KrqsqQt5qlNfUZDb8LxoVcPu4+6TCU9s3by0U/MANy/Hv
-         jKYvXKwr0tEMuSLT9i4xSDUA8A95vl/foUm/I=
+        bh=GJ+zhGfKAK99onaJv5+atqhuoklnvoQZJ/W7HU7gCeo=;
+        b=TtKYOyM4ItNlAZmaM4rJV8L58Um3+jSw4QUSTis2sr50Q2c75M7GiCuRwgtF+o2ma3
+         YUg8phKVqAoy/82LmdSKqYMB2yT0A19ZSGzGn+AMW36KrNoDcdp73MoLqrTKcugBVFx1
+         2NPgmiI6/IQlJyITZ3SqfthlyzXOcb12MurVQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=x9buiHUbYSo7sNFq8omlbKkozXwEhF7wklyqqUMKu4TQimPK2rV3IdCmh45978Bysp
-         2qNihYnBxbVEML65G3Eenyt58ARy62j2KUyU5Uq2JgOnffSzA7FQ9nMblIawZGoNZgBc
-         rVU0MT6/kpKjlV+WfH5ou8SpYTewxJR4Sz/YA=
-Received: by 10.204.50.204 with SMTP id a12mr4038315bkg.117.1284743865263;
-        Fri, 17 Sep 2010 10:17:45 -0700 (PDT)
+        b=mlV6AlIaSKi4w85Zdai7wLdXnh6RK97bZUujdrfBeS7Vo996R9ewCySueR6J1zDX79
+         tD/1SyO1ECEDa3bzkMZurMZwmfJ35y5ye/TBWxWPs8ASrB9+xrj/W77IZirMR0wCPdW6
+         o1roYuyd/6cO7BkZE4rJAr2jNbJDp3KeitP+c=
+Received: by 10.204.123.137 with SMTP id p9mr3767879bkr.206.1284744174078;
+        Fri, 17 Sep 2010 10:22:54 -0700 (PDT)
 Received: from [192.168.1.13] (abvo68.neoplus.adsl.tpnet.pl [83.8.212.68])
-        by mx.google.com with ESMTPS id x13sm3823561bki.0.2010.09.17.10.17.43
+        by mx.google.com with ESMTPS id y2sm3843140bkx.20.2010.09.17.10.22.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Sep 2010 10:17:44 -0700 (PDT)
+        Fri, 17 Sep 2010 10:22:52 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTikjLNva7Jgh0xYeah1maFusfOiaLwY7+eixx8so@mail.gmail.com>
+In-Reply-To: <AANLkTi=8x4JuK99W5BOfUBVUza1sUXE3e_mDOq9-wF_z@mail.gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156401>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156402>
 
-On Fri, 17 Sep 2010, Giuseppe Bilotta wrote:
-> On Fri, Sep 17, 2010 at 6:06 PM, Jakub Narebski <jnareb@gmail.com> wrote:
->> Giuseppe Bilotta wrote:
->>> On Fri, Sep 17, 2010 at 3:24 AM, Jakub Narebski <jnareb@gmail.com> wrote:
->>>>
->>>> ... but I think that having separate subroutines for opening and
->>>> closing tags is a bad design / bad API (except in some rare cases).
->>>> It is begging for unbalanced HTML.
->>>>
->>>> It would be better if it was a single subroutine wrapping 'div' around
->>>> contents given either as a string, or via callback (subroutine reference),
->>>> in my opinion.
->>>
->>> I'm not sure that in this case the string or callback approach would
->>> be any cleaner. I'll see if perl supports closures or something like
->>> that.
+Giuseppe Bilotta wrote:
+> 2010/9/17 Jakub Narebski <jnareb@gmail.com>:
+>> On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
 >>
->> Perl supports closures (thanks to anonymous subroutines 'sub { ... }'
->> and lexical variables 'my $var'), see perlsub and "Function Templates"
->> in perlref.
+>>> +div.group {
+>>> + =A0 =A0 margin: .5em;
+>>> + =A0 =A0 border: 1px solid #d9d8d1;
+>>> + =A0 =A0 display: inline-block;
 >>
->> I also recommend free ebook "Higher-Order Perl" http://hop.perl.plover.com/
-> 
-> Thanks for the suggestion. I'm still not convinced that such an
-> implementation would be better though. Aside from the general
-> aesthetical suckiness of passing closures around (and the experience
-> is not any more pleasurable in Perl), there's also the matter of the
-> calling convention to use. I can think of two options:
-> 
-> (1) we make the function callable as git_do_group($class, $id, sub {
-> <closure that prints the content> }, <paramters that go to
-> git_print_header_div>), which is somewhat illogical since we're
-> specifying the content before the header, 
+>> Is this 'display: inline-block;' really necessary? =A0I think we can=
+ do
+>> without it (and I've heard that there are problems with it, but thos=
+e
+>> might not matter in layout used by gitweb).
+>>
+>> Otherwise nice.
+>=20
+> I'm not aware of problems with inline-block (I can check
+> quirksmode.org though if necessary), but without it the divs will be
+> as large as the _containing_ block, meaning that each div will be
+> ultimately as large as the page. By using inline-block, instead, they
+> become as large as the _contained_ stuff, thus fitting the inner
+> table.
 
-Why not
+Errr... I am using old web browser that doesn't support 'inline-block',
+so I don't know what it should look like.  I'll check later.
 
-  git_do_group($class, $id, <print_header_div parameters>, sub { ... })
-
-or even use subroutine prototypes?  We can use 'pop @_' to get last
-argument of a subroutine.
-
-[...]
-> Overall, I still get the impression that the current API is
-> considerably cleaner, even with the small counterweight of the risk of
-> leaving groups open (which is not something so dramatic anyway, IMO).
-
-Might be.
-
-But as currently git_*group() is used in only one place, isn't it
-premature generalization ;-) ?
--- 
+But graceful degradation to 'block' doesn't look too bad.
+--=20
 Jakub Narebski
 Poland
