@@ -1,75 +1,59 @@
-From: =?UTF-8?Q?Marcin_Wi=C5=9Bnicki?= <mwisnicki@gmail.com>
-Subject: Cloning svn project with flat layout (remote wildcard inside path component)
-Date: Fri, 17 Sep 2010 23:14:33 +0200
-Message-ID: <AANLkTin7byfdi=K2eN_9Cqx_HQBJatm1qW7zO-te2F-1@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 17 23:14:40 2010
+From: Michael Scholl <michael@sch0ll.de>
+Subject: Question about svn:externals, submodules...
+Date: Fri, 17 Sep 2010 23:19:55 +0200
+Message-ID: <34843501-F376-4CF0-A367-46F3FF089A25@sch0ll.de>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 17 23:20:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwiGV-0001kD-N9
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 23:14:40 +0200
+	id 1OwiLz-0004g3-4c
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 23:20:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752410Ab0IQVOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 17:14:34 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:49132 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750782Ab0IQVOe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 17:14:34 -0400
-Received: by qwh6 with SMTP id 6so2236588qwh.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 14:14:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=1S/wXTi9tdf0Z7Wjb+MLbwE02M78v7WEeGjNmyrapRY=;
-        b=HHFnzElGDhDN5IXHnxguleiGhLCEmssWazDjJvkLgLRcGACp6pnNUNoEG9iALwABth
-         /Jyb5BBat8mV2GxBcltU0rgjza9zta+i1R1C5X0bfKojmhnBxiWzDZ7ofzniXQLeDW0a
-         w+hg4qMhJfYn2GFZAa7RflGWOyvWqibT5L4NU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=iXud2Ggj9oaznk7CDB9zsoTHdwob3XPVD5pMoIoCH1dYuNc5RimrcLawdePd0GWwbe
-         yHV4AWdqCWvxBZwBZPbvxcHzbY+aPnqUoH5UAqRv18/OWMpuiGNLMRRzZXwG10nn0zKF
-         j0btbbQrHMMrj3QJ/BL2FWK4g+vCmh5ry4j+0=
-Received: by 10.224.113.1 with SMTP id y1mr3676498qap.333.1284758073346; Fri,
- 17 Sep 2010 14:14:33 -0700 (PDT)
-Received: by 10.229.213.201 with HTTP; Fri, 17 Sep 2010 14:14:33 -0700 (PDT)
+	id S1754434Ab0IQVUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 17:20:05 -0400
+Received: from post.eye-motion.net ([94.23.163.123]:47307 "EHLO
+	post.eye-motion.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754381Ab0IQVT6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 17:19:58 -0400
+Received: from [10.36.3.42] (unknown [85.183.55.17])
+	by post.eye-motion.net (Postfix) with ESMTPSA id 882C3399C54
+	for <git@vger.kernel.org>; Fri, 17 Sep 2010 21:13:43 +0000 (UTC)
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156415>
 
-I'm trying to clone putty project from it's svn repository.
-Unfortunately they are using very nonstandard layout where everything
-is in a single directory:
+hi there, 
 
-/putty = trunk
-/putty-branches-* = release branches
-/putty-spinoffs = another branch
-/putty-0.* = release tags
+I try to change my svn setting to git and got the most things up running. But one thing I didnt understand how to handle with it, are my svn:external definitions. 
 
-To get it working I tried following:
+1. I used svn:externals to include other frameworks or libraries in a vendors folder. I got these cases covered with the git submodules, no problem so far.
 
-[svn-remote "svn"]
-        url = svn://svn.tartarus.org/sgt
-        fetch = putty:refs/remotes/trunk
-        branches = putty-branch-*:refs/remotes/branches/*
-        branches = putty-{spinoffs}:refs/remotes/branches/putty-*
-        tags = /putty-[0-9]*:refs/remotes/tags/*
+2. But I used svn:externals to fill up a working copy with checkout specific files. Imagine a web project with public folder, and subfolders for css and js files. Inside these folders there was a "projects" folder with svn:externals for this specific project. All this project specific files are stored in a separate repository with complex structure for storing all the project related files, like:
 
-Turns out however, such configuration is invalid since remote
-wildcards are supported only in place of whole path component, not as
-a part of it.
+project1
+ - js
+ - css
+ - img
+project2
+ - js
+ - css
+ - img
 
-Obviously, it would be nice if it was working. Consider this a feature
-request, if I may make one.
+So, while getting into git I didn't find any solution, that would help me to get my setting working nice with git. Submodules do not work for this case, it would need many different reps to build submodules from, because I cannot fetch any specific file path of some repository.
 
-Actually, I have another: support extended regular expressions (with
-capture groups) on remote side and back-references on local ref side,
-giving the user control over local branch names.
+Any ideas, how to find a solution, for keeping main project AND project related files under version control with git? 
+(I thought of symlinks and git ignore definitions, but perhaps there is a better way)?
+
+
+Cheers
+
+MS
