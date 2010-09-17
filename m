@@ -1,66 +1,78 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] remote-helpers: build in platform independent directory
-Date: Fri, 17 Sep 2010 18:17:56 +0200
-Message-ID: <36e03068ded278b5145fdf82658c3270a25c2762.1284740217.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 17 18:17:57 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 6/7] gitweb: group styling
+Date: Fri, 17 Sep 2010 18:26:15 +0200
+Message-ID: <201009171826.15454.jnareb@gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <1284629465-14798-7-git-send-email-giuseppe.bilotta@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 18:26:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwddM-0000tq-IC
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:17:56 +0200
+	id 1OwdlX-0006nl-2d
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:26:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755538Ab0IQQRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 12:17:52 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39319 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754596Ab0IQQRv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 12:17:51 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id CBC611E2;
-	Fri, 17 Sep 2010 12:17:50 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Fri, 17 Sep 2010 12:17:50 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=jVFxgaatkKLWULJZGyF7sp24Zps=; b=KV3M32xSy2gMazXXz6bnJ9FmjZ1yc6rM1x79bLADQXX1ILwWqiBFSvnuZb1FGegGklNNN4huvvHLwnr9RaXVIJMuNKKGx6MxkdhN8bPfHvfiM0RNJE3uhx5E7RCzkymhbm4VgKZ+kz1DYIHSJzT+u3yAssb8T3M4XtnjO36jfgY=
-X-Sasl-enc: SfynpjMNrOtwUz5E8Zj9uAVUZ7QTA373M5bddd9ic+cz 1284740270
-Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4C285408BE5;
-	Fri, 17 Sep 2010 12:17:50 -0400 (EDT)
-X-Mailer: git-send-email 1.7.3.rc2.221.gbf93f
+	id S1755830Ab0IQQ0S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 12:26:18 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:52874 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755794Ab0IQQ0R (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 12:26:17 -0400
+Received: by bwz11 with SMTP id 11so2785398bwz.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 09:26:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Trz1YM7W2Ybu0xzRTokQ3vFZpXSpbavtQN2tBdL7PKM=;
+        b=CdAzC9qxBTgfpinfIU0vTQ2UjtxHJEmKtGB9yOtN1vbGB4bwnT0soGmLur7T1/ne3e
+         o4zvhOnlCCkIk5jaxWGI27yzJaSIunHo+eMFDWmaEGife5PXClbqYJRtJ0wkKrH1K5y5
+         JSrJdnDCpbxofmt1aCNyzeK7gZ6Vh7yoEkMxs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=p7+v7jncInAPbdbeQfuwVn0YAF/PYI+muz/LpU3WzcCZCE7g1i1a+LX5A7T5YqpOzr
+         0QTA904xp2AeJb2wxMSkNFNWom8WwBRY8aWnEz/uh/Vt/7STKSFvxPV3XAqTkz5qJIhS
+         +JWFiVTJyks/hIjsg56BIqk337a+BncpWtEzA=
+Received: by 10.204.103.16 with SMTP id i16mr3704947bko.98.1284740776009;
+        Fri, 17 Sep 2010 09:26:16 -0700 (PDT)
+Received: from [192.168.1.13] (abvo68.neoplus.adsl.tpnet.pl [83.8.212.68])
+        by mx.google.com with ESMTPS id g12sm3782666bkb.14.2010.09.17.09.26.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Sep 2010 09:26:14 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1284629465-14798-7-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156395>
 
-The build directory which is used by distutils depends on the platform
-(e.g. build/lib on Fedora 13, build/lib.linux-i686-2.6 on Ubuntu 9.04).
-But test-lib.sh expects to find the build in build/lib which can cause
-t5800-remote-helpers.sh to fail early.
+On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
 
-Override distutils' choice so that the build is always in build/lib.
+> +div.group {
+> +	margin: .5em;
+> +	border: 1px solid #d9d8d1;
+> +	display: inline-block;
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- git_remote_helpers/Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Is this 'display: inline-block;' really necessary?  I think we can do
+without it (and I've heard that there are problems with it, but those
+might not matter in layout used by gitweb).
 
-diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
-index 74b05dc..e8172d3 100644
---- a/git_remote_helpers/Makefile
-+++ b/git_remote_helpers/Makefile
-@@ -26,7 +26,7 @@ PYLIBDIR=$(shell $(PYTHON_PATH) -c \
- 	 print 'lib/python%i.%i/site-packages' % sys.version_info[:2]")
- 
- all: $(pysetupfile)
--	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
-+	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build --build-purelib=build/lib --build-platlib=build/lib
- 
- install: $(pysetupfile)
- 	$(PYTHON_PATH) $(pysetupfile) install --prefix $(DESTDIR_SQ)$(prefix)
+Otherwise nice.
+
+> +}
+
 -- 
-1.7.3.rc2.221.gbf93f
+Jakub Narebski
+Poland
