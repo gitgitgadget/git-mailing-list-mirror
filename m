@@ -1,76 +1,66 @@
-From: Bryan Drewery <bryan@shatow.net>
-Subject: Re: [PATCH 1/2] commit: add message options for rebase --autosquash
-Date: Fri, 17 Sep 2010 11:14:03 -0500
-Message-ID: <4C9393CB.4010107@shatow.net>
-References: <1284687596-236-1-git-send-email-patnotz@gmail.com> <1284687596-236-2-git-send-email-patnotz@gmail.com> <4C93288B.7000908@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Pat Notz <patnotz@gmail.com>, git@vger.kernel.org
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 18:14:25 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] remote-helpers: build in platform independent directory
+Date: Fri, 17 Sep 2010 18:17:56 +0200
+Message-ID: <36e03068ded278b5145fdf82658c3270a25c2762.1284740217.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 17 18:17:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwdZv-0006p8-VD
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:14:24 +0200
+	id 1OwddM-0000tq-IC
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:17:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755410Ab0IQQOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 12:14:11 -0400
-Received: from secure.xzibition.com ([173.160.118.92]:50033 "EHLO
-	secure.xzibition.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754596Ab0IQQOK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 12:14:10 -0400
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=shatow.net; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sweb; b=irSNTp
-	94KEzlSFTCIiqGAlQafARbTe7qKTdwD6vePhCWXOPGoV8rJlzM7nJZlUfYhFrSdl
-	EXzJLiq6DGadZ5m+hcpClxqtZ2oa9kBofjqkRYhKZjdsPIydNkCeFMDqTmSFTGI3
-	KHrL3iZ/r6C2dLuupVw1MU53LQ94wfxe5ITFE=
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=shatow.net; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sweb; bh=89JvtMsvBvfM
-	D2hj5KDZVg0XVdVbiLs3hHr7xpy7WFE=; b=Q50CrpxQRWKPYGZw4pwKo6UeQJvq
-	F///4fuq0TBaCmqU2dSUIDT2yrLSA3MsWLDSfSmlyrTu+dIzkoW9NFYE+3iLZBwJ
-	W5atjJ434KCtaEJeMccvQeKIFQQudW4ImIDrN8gdv4hI6zgtdMsMwnMtRlPMeMxs
-	1cLUH2arbwP2ojg=
-Received: (qmail 44313 invoked from network); 17 Sep 2010 11:14:07 -0500
-Received: from unknown (HELO ?192.168.0.201?) (bryan@shatow.net@74.94.87.209)
-  by sweb.xzibition.com with ESMTPA; 17 Sep 2010 11:14:07 -0500
-User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
-In-Reply-To: <4C93288B.7000908@gmail.com>
+	id S1755538Ab0IQQRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 12:17:52 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:39319 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754596Ab0IQQRv (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 12:17:51 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id CBC611E2;
+	Fri, 17 Sep 2010 12:17:50 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 17 Sep 2010 12:17:50 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=jVFxgaatkKLWULJZGyF7sp24Zps=; b=KV3M32xSy2gMazXXz6bnJ9FmjZ1yc6rM1x79bLADQXX1ILwWqiBFSvnuZb1FGegGklNNN4huvvHLwnr9RaXVIJMuNKKGx6MxkdhN8bPfHvfiM0RNJE3uhx5E7RCzkymhbm4VgKZ+kz1DYIHSJzT+u3yAssb8T3M4XtnjO36jfgY=
+X-Sasl-enc: SfynpjMNrOtwUz5E8Zj9uAVUZ7QTA373M5bddd9ic+cz 1284740270
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4C285408BE5;
+	Fri, 17 Sep 2010 12:17:50 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.rc2.221.gbf93f
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156393>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156394>
 
-Stephen Boyd wrote:
-> On 09/16/2010 06:39 PM, Pat Notz wrote:
->   
->> These options make it convenient to construct commit messages for use
->> with 'rebase --autosquash'.  The resulting commit message will be
->> "fixup! ..." or "squash! ..." where "..." is the subject line of the
->> specified commit message.
->>
->> Example usage:
->>   $ git commit --fixup HEAD~2
->>   $ git commit --squash HEAD~5
->>
->> Signed-off-by: Pat Notz <patnotz@gmail.com>
->> ---
->>     
->
-> So far I've been using an alias for these, but I suppose making them
-> real features of git could be worthwhile. What are the benefits with
-> this approach vs. an alias?
->
->   
+The build directory which is used by distutils depends on the platform
+(e.g. build/lib on Fedora 13, build/lib.linux-i686-2.6 on Ubuntu 9.04).
+But test-lib.sh expects to find the build in build/lib which can cause
+t5800-remote-helpers.sh to fail early.
 
-I keep wanting to do these at commit time.
+Override distutils' choice so that the build is always in build/lib.
 
-What are the alternative aliases?
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ git_remote_helpers/Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Bryan
+diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefile
+index 74b05dc..e8172d3 100644
+--- a/git_remote_helpers/Makefile
++++ b/git_remote_helpers/Makefile
+@@ -26,7 +26,7 @@ PYLIBDIR=$(shell $(PYTHON_PATH) -c \
+ 	 print 'lib/python%i.%i/site-packages' % sys.version_info[:2]")
+ 
+ all: $(pysetupfile)
+-	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build
++	$(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETSETUP) build --build-purelib=build/lib --build-platlib=build/lib
+ 
+ install: $(pysetupfile)
+ 	$(PYTHON_PATH) $(pysetupfile) install --prefix $(DESTDIR_SQ)$(prefix)
+-- 
+1.7.3.rc2.221.gbf93f
