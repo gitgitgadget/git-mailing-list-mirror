@@ -1,93 +1,113 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH 1/2] commit: add message options for rebase --autosquash
-Date: Fri, 17 Sep 2010 10:07:52 -0700
-Message-ID: <AANLkTimBnzWQYy8z1duQw=4UL4YCaeyiMugXG1O-Q8yq@mail.gmail.com>
-References: <1284687596-236-1-git-send-email-patnotz@gmail.com>
- <1284687596-236-2-git-send-email-patnotz@gmail.com> <4C93288B.7000908@gmail.com>
- <4C9393CB.4010107@shatow.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 5/7] gitweb: auxiliary functions to group data
+Date: Fri, 17 Sep 2010 19:17:44 +0200
+Message-ID: <201009171917.44979.jnareb@gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <201009171806.49774.jnareb@gmail.com> <AANLkTikjLNva7Jgh0xYeah1maFusfOiaLwY7+eixx8so@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Notz <patnotz@gmail.com>, git@vger.kernel.org
-To: Bryan Drewery <bryan@shatow.net>
-X-From: git-owner@vger.kernel.org Fri Sep 17 19:08:19 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 19:17:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OweQ5-0002S0-JY
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 19:08:17 +0200
+	id 1OweZM-00009r-8H
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 19:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755077Ab0IQRIJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 13:08:09 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:48502 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753282Ab0IQRII convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 13:08:08 -0400
-Received: by mail-wy0-f174.google.com with SMTP id 22so2585964wyf.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 10:08:07 -0700 (PDT)
+	id S1754397Ab0IQRRr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 13:17:47 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44225 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752703Ab0IQRRq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 13:17:46 -0400
+Received: by bwz11 with SMTP id 11so2831234bwz.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 10:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=69aA4ec094aRXN0qWSKMgy3EumQj3rj1rYrjM8uSAIs=;
-        b=XrK++JRejYNAOVu9JxjVuftwKVcCp3sOJcsm7f4cPJ5o5UXYn7WFxdJ4ksUTipC3lU
-         XFbQ/6+983nCw/IsqDLG5/0QA11i4RIcjXU+BSEaRoPAq1xhBiaEm6qMjwmkllO6tlCe
-         yYKN+qSTtLNX7PJ/xX2o3eKDqq5UQHIEMyaxU=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Q7Omu8AsC7HK6iOxmaRDmCoMjIfl7g6Wj2t8uCDxRLg=;
+        b=BoNnh6sWlsOrGLGqM91RPxfhYmqnQqgiTMS8QjKhHEcQ/iSbfEa4f8c9cPocOi6Fd5
+         81EQT7cSN8okio6YLJ8t1s3KrqsqQt5qlNfUZDb8LxoVcPu4+6TCU9s3by0U/MANy/Hv
+         jKYvXKwr0tEMuSLT9i4xSDUA8A95vl/foUm/I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=jjw1HcidvOPs7W/1q7vIdH6UHsBOYR7pnoGGSwWw+UHm8f26wvzM8Tw6JUlJrvSVUJ
-         nNuULZybNdGCuGmDdR2tAoNP51YvJdQfPBUM2vSJggwoctsuy5BsSOLE2ItCoMlzK6x8
-         N3MOMAMfog42Q4nigT9951rShyOMu/o2KfLPU=
-Received: by 10.227.127.193 with SMTP id h1mr4455690wbs.139.1284743287867;
- Fri, 17 Sep 2010 10:08:07 -0700 (PDT)
-Received: by 10.227.143.15 with HTTP; Fri, 17 Sep 2010 10:07:52 -0700 (PDT)
-In-Reply-To: <4C9393CB.4010107@shatow.net>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=x9buiHUbYSo7sNFq8omlbKkozXwEhF7wklyqqUMKu4TQimPK2rV3IdCmh45978Bysp
+         2qNihYnBxbVEML65G3Eenyt58ARy62j2KUyU5Uq2JgOnffSzA7FQ9nMblIawZGoNZgBc
+         rVU0MT6/kpKjlV+WfH5ou8SpYTewxJR4Sz/YA=
+Received: by 10.204.50.204 with SMTP id a12mr4038315bkg.117.1284743865263;
+        Fri, 17 Sep 2010 10:17:45 -0700 (PDT)
+Received: from [192.168.1.13] (abvo68.neoplus.adsl.tpnet.pl [83.8.212.68])
+        by mx.google.com with ESMTPS id x13sm3823561bki.0.2010.09.17.10.17.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Sep 2010 10:17:44 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTikjLNva7Jgh0xYeah1maFusfOiaLwY7+eixx8so@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156401>
 
-On Fri, Sep 17, 2010 at 9:14 AM, Bryan Drewery <bryan@shatow.net> wrote=
-:
-> Stephen Boyd wrote:
->>
->> On 09/16/2010 06:39 PM, Pat Notz wrote:
->>
+On Fri, 17 Sep 2010, Giuseppe Bilotta wrote:
+> On Fri, Sep 17, 2010 at 6:06 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> Giuseppe Bilotta wrote:
+>>> On Fri, Sep 17, 2010 at 3:24 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>>
+>>>> ... but I think that having separate subroutines for opening and
+>>>> closing tags is a bad design / bad API (except in some rare cases).
+>>>> It is begging for unbalanced HTML.
+>>>>
+>>>> It would be better if it was a single subroutine wrapping 'div' around
+>>>> contents given either as a string, or via callback (subroutine reference),
+>>>> in my opinion.
 >>>
->>> These options make it convenient to construct commit messages for u=
-se
->>> with 'rebase --autosquash'. =C2=A0The resulting commit message will=
- be
->>> "fixup! ..." or "squash! ..." where "..." is the subject line of th=
-e
->>> specified commit message.
->>>
->>> Example usage:
->>> =C2=A0$ git commit --fixup HEAD~2
->>> =C2=A0$ git commit --squash HEAD~5
->>>
->>> Signed-off-by: Pat Notz <patnotz@gmail.com>
->>> ---
->>>
+>>> I'm not sure that in this case the string or callback approach would
+>>> be any cleaner. I'll see if perl supports closures or something like
+>>> that.
 >>
->> So far I've been using an alias for these, but I suppose making them
->> real features of git could be worthwhile. What are the benefits with
->> this approach vs. an alias?
+>> Perl supports closures (thanks to anonymous subroutines 'sub { ... }'
+>> and lexical variables 'my $var'), see perlsub and "Function Templates"
+>> in perlref.
 >>
->>
->
-> I keep wanting to do these at commit time.
->
-> What are the alternative aliases?
->
+>> I also recommend free ebook "Higher-Order Perl" http://hop.perl.plover.com/
+> 
+> Thanks for the suggestion. I'm still not convinced that such an
+> implementation would be better though. Aside from the general
+> aesthetical suckiness of passing closures around (and the experience
+> is not any more pleasurable in Perl), there's also the matter of the
+> calling convention to use. I can think of two options:
+> 
+> (1) we make the function callable as git_do_group($class, $id, sub {
+> <closure that prints the content> }, <paramters that go to
+> git_print_header_div>), which is somewhat illogical since we're
+> specifying the content before the header, 
 
-`git fixup' is aliased to `!f() { git commit -m "$(git show -s
---pretty=3D'format:fixup! %s%n%nFixup for %h%n' "$1")" $2; }; f'
-`git squash' is aliased to `!f() { git commit -m "$(git show -s
---pretty=3D'format:squash! %s%n%n' "$1")" -e $2; }; f'
+Why not
+
+  git_do_group($class, $id, <print_header_div parameters>, sub { ... })
+
+or even use subroutine prototypes?  We can use 'pop @_' to get last
+argument of a subroutine.
+
+[...]
+> Overall, I still get the impression that the current API is
+> considerably cleaner, even with the small counterweight of the risk of
+> leaving groups open (which is not something so dramatic anyway, IMO).
+
+Might be.
+
+But as currently git_*group() is used in only one place, isn't it
+premature generalization ;-) ?
+-- 
+Jakub Narebski
+Poland
