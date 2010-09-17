@@ -1,83 +1,76 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 5/7] gitweb: auxiliary functions to group data
-Date: Fri, 17 Sep 2010 18:06:48 +0200
-Message-ID: <201009171806.49774.jnareb@gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <201009170324.25801.jnareb@gmail.com> <AANLkTikk7vUFMr31Azdcpe+PK0-yA2sp2EcnHjdfw0Zn@mail.gmail.com>
+From: Bryan Drewery <bryan@shatow.net>
+Subject: Re: [PATCH 1/2] commit: add message options for rebase --autosquash
+Date: Fri, 17 Sep 2010 11:14:03 -0500
+Message-ID: <4C9393CB.4010107@shatow.net>
+References: <1284687596-236-1-git-send-email-patnotz@gmail.com> <1284687596-236-2-git-send-email-patnotz@gmail.com> <4C93288B.7000908@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 18:07:02 2010
+Cc: Pat Notz <patnotz@gmail.com>, git@vger.kernel.org
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 18:14:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwdSn-0005gT-LM
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:07:02 +0200
+	id 1OwdZv-0006p8-VD
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:14:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755450Ab0IQQGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 12:06:54 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:35423 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755215Ab0IQQGx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 12:06:53 -0400
-Received: by bwz11 with SMTP id 11so2767465bwz.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 09:06:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=nXPFoo6HTlSfsGgxs8NogynO81iZ76NGTg1afBKQsEM=;
-        b=TBEmEJhddiFJ4JwOONXHL96IL5AMr6auyGLHQWePsJNBc6J2+zIwL7gfJlYpWAhcZ4
-         UVAKooczW0Es+huFW/IFT+bectG+WA3cxzyPTGT8XnspSlqyOAhLwW93BwZkyn2MJ0R5
-         vuMOu4CoJS91VVq2hBNm8UsxRfSC88IX2Krz0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=K1YFdkSTvLZw59RwCrQpPt32vwQksPm+y2rL+PsZho//aPJT8RmxMRIsNvymavA5js
-         aODaD1on7T3kQV9QIy35yNugunBMt5zS4zFELBfaE93MoNpKchQ7+MdVprD04mEw/Mek
-         8tMkdqIZz+4PE/Xj7La3+9SeMaZmruigAwA1o=
-Received: by 10.204.53.142 with SMTP id m14mr3927629bkg.147.1284739612522;
-        Fri, 17 Sep 2010 09:06:52 -0700 (PDT)
-Received: from [192.168.1.13] (abvo68.neoplus.adsl.tpnet.pl [83.8.212.68])
-        by mx.google.com with ESMTPS id s34sm3764734bkk.13.2010.09.17.09.06.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Sep 2010 09:06:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTikk7vUFMr31Azdcpe+PK0-yA2sp2EcnHjdfw0Zn@mail.gmail.com>
-Content-Disposition: inline
+	id S1755410Ab0IQQOL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 12:14:11 -0400
+Received: from secure.xzibition.com ([173.160.118.92]:50033 "EHLO
+	secure.xzibition.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754596Ab0IQQOK (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 12:14:10 -0400
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=shatow.net; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=sweb; b=irSNTp
+	94KEzlSFTCIiqGAlQafARbTe7qKTdwD6vePhCWXOPGoV8rJlzM7nJZlUfYhFrSdl
+	EXzJLiq6DGadZ5m+hcpClxqtZ2oa9kBofjqkRYhKZjdsPIydNkCeFMDqTmSFTGI3
+	KHrL3iZ/r6C2dLuupVw1MU53LQ94wfxe5ITFE=
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=shatow.net; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=sweb; bh=89JvtMsvBvfM
+	D2hj5KDZVg0XVdVbiLs3hHr7xpy7WFE=; b=Q50CrpxQRWKPYGZw4pwKo6UeQJvq
+	F///4fuq0TBaCmqU2dSUIDT2yrLSA3MsWLDSfSmlyrTu+dIzkoW9NFYE+3iLZBwJ
+	W5atjJ434KCtaEJeMccvQeKIFQQudW4ImIDrN8gdv4hI6zgtdMsMwnMtRlPMeMxs
+	1cLUH2arbwP2ojg=
+Received: (qmail 44313 invoked from network); 17 Sep 2010 11:14:07 -0500
+Received: from unknown (HELO ?192.168.0.201?) (bryan@shatow.net@74.94.87.209)
+  by sweb.xzibition.com with ESMTPA; 17 Sep 2010 11:14:07 -0500
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <4C93288B.7000908@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156393>
 
-Giuseppe Bilotta wrote:
-> On Fri, Sep 17, 2010 at 3:24 AM, Jakub Narebski <jnareb@gmail.com> wrote:
-> >
-> > ... but I think that having separate subroutines for opening and
-> > closing tags is a bad design / bad API (except in some rare cases).
-> > It is begging for unbalanced HTML.
-> >
-> > It would be better if it was a single subroutine wrapping 'div' around
-> > contents given either as a string, or via callback (subroutine reference),
-> > in my opinion.
-> 
-> I'm not sure that in this case the string or callback approach would
-> be any cleaner. I'll see if perl supports closures or something like
-> that.
+Stephen Boyd wrote:
+> On 09/16/2010 06:39 PM, Pat Notz wrote:
+>   
+>> These options make it convenient to construct commit messages for use
+>> with 'rebase --autosquash'.  The resulting commit message will be
+>> "fixup! ..." or "squash! ..." where "..." is the subject line of the
+>> specified commit message.
+>>
+>> Example usage:
+>>   $ git commit --fixup HEAD~2
+>>   $ git commit --squash HEAD~5
+>>
+>> Signed-off-by: Pat Notz <patnotz@gmail.com>
+>> ---
+>>     
+>
+> So far I've been using an alias for these, but I suppose making them
+> real features of git could be worthwhile. What are the benefits with
+> this approach vs. an alias?
+>
+>   
 
-Perl supports closures (thanks to anonymous subroutines 'sub { ... }'
-and lexical variables 'my $var'), see perlsub and "Function Templates"
-in perlref.
+I keep wanting to do these at commit time.
 
-I also recommend free ebook "Higher-Order Perl" http://hop.perl.plover.com/
--- 
-Jakub Narebski
-Poland
+What are the alternative aliases?
+
+Bryan
