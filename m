@@ -1,94 +1,68 @@
-From: clemens fischer <ino-news@spotteswoode.dnsalias.org>
-Subject: Re: Reply-to-all when using gmane's web interface
-Date: Fri, 17 Sep 2010 20:26:07 +0200
-Message-ID: <veocm7xqu5.ln2@nntp.spotteswoode.dnsalias.org>
-References: <4C74194B.6080306@nextest.com> <20100825005959.GB10423@burratino>
-	<4C74E890.90900@nextest.com> <20100825223024.GB2850@burratino>
-Cc: git@vger.kernel.org
-To: gmane-discuss@hawk.netfonds.no
-X-From: gmane-discuss-bounces@hawk.netfonds.no Fri Sep 17 21:30:08 2010
-Return-path: <gmane-discuss-bounces@hawk.netfonds.no>
-Envelope-to: gd-gmane-discuss@m.gmane.org
-Received: from hawk.netfonds.no ([80.91.224.246])
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] remote-helpers: build in platform independent directory
+Date: Fri, 17 Sep 2010 23:00:53 +0200
+Message-ID: <705f70e3df519fc28e551b4c0bd7512277e7a190.1284757060.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 17 23:00:55 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <gmane-discuss-bounces@hawk.netfonds.no>)
-	id 1OwgdM-0001Lb-5p
-	for gd-gmane-discuss@m.gmane.org; Fri, 17 Sep 2010 21:30:08 +0200
-Received: from localhost ([127.0.0.1] helo=hawk.netfonds.no)
-	by hawk.netfonds.no with esmtp (Exim 3.36 #1 (Debian))
-	id 1OwgdM-0004qM-00; Fri, 17 Sep 2010 21:30:08 +0200
-Received: from lo.gmane.org ([80.91.229.12])
-	by hawk.netfonds.no with esmtp (Exim 3.36 #1 (Debian))
-	id 1OwgdK-0004qH-00
-	for <gmane-discuss@hawk.netfonds.no>; Fri, 17 Sep 2010 21:30:06 +0200
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gd-gmane-discuss@m.gmane.org>) id 1OwgdH-0001Gn-PW
-	for gmane-discuss@hawk.netfonds.no; Fri, 17 Sep 2010 21:30:03 +0200
-Received: from 95-89-61-84-dynip.superkabel.de ([95.89.61.84])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <gmane-discuss@hawk.netfonds.no>; Fri, 17 Sep 2010 21:30:03 +0200
-Received: from ino-news by 95-89-61-84-dynip.superkabel.de with local (Gmexim
-	0.1 (Debian)) id 1AlnuQ-0007hv-00
-	for <gmane-discuss@hawk.netfonds.no>; Fri, 17 Sep 2010 21:30:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-Mail-Followup-To: gmane-discuss@hawk.netfonds.no
-Followup-To: gmane.discuss
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 95-89-61-84-dynip.superkabel.de
-Cancel-Lock: sha1:txEI0wKNx6F8lcJx1xT0vB+kbCs=
-X-Archive: encrypt=none
-Mail-Copies-To: nobody
-User-Agent: tin/1.9.6-20100313 ("Lochruan") (UNIX) (Linux/2.6.35.4-spott
-	(i686))
-X-BeenThere: gmane-discuss@hawk.netfonds.no
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: gmane-discuss.hawk.netfonds.no
-List-Unsubscribe: <http://hawk.netfonds.no/cgi-bin/mailman/listinfo/gmane-discuss>,
-	<mailto:gmane-discuss-request@hawk.netfonds.no?subject=unsubscribe>
-List-Archive: <http://hawk.netfonds.no/pipermail/gmane-discuss>
-List-Post: <mailto:gmane-discuss@hawk.netfonds.no>
-List-Help: <mailto:gmane-discuss-request@hawk.netfonds.no?subject=help>
-List-Subscribe: <http://hawk.netfonds.no/cgi-bin/mailman/listinfo/gmane-discuss>,
-	<mailto:gmane-discuss-request@hawk.netfonds.no?subject=subscribe>
-Sender: gmane-discuss-bounces@hawk.netfonds.no
-Errors-To: gmane-discuss-bounces@hawk.netfonds.no
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156411>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Owi3C-0003UD-Iq
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 23:00:54 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1754211Ab0IQVAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 17:00:49 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51083 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751561Ab0IQVAs (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 17:00:48 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E91A63DA;
+	Fri, 17 Sep 2010 17:00:47 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 17 Sep 2010 17:00:47 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=QCsa3A0dS7cGQ8O3frrmEQuSHGk=; b=l0CqaoTTx+oGFtlPngr7h4JlLn8JTf75MOcyIOkwYvR5I//IGZLooqMcKlgrGZC1bKBCpPa9FQbpap9CPkNhXkngf8GWOwXCrLaFjCY/eX//+vUFEqdaZqKe/6WUeeBW905alVCzHmGBjs6+SNeJ+ps3vczCiNv7LpR4Z01zzKo=
+X-Sasl-enc: NZIZOBBjQHb0ZHL4KfVsvRko5VuRuwzrK9gIz3ILlBCR 1284757247
+Received: from localhost (p54858FBE.dip0.t-ipconnect.de [84.133.143.190])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3911A5E28D8;
+	Fri, 17 Sep 2010 17:00:47 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.rc2.221.gbf93f
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156412>
 
-(sorry to be late)
+The build directory which is used by distutils depends on the platform
+(e.g. build/lib on Fedora 13, build/lib.linux-i686-2.6 on Ubuntu 9.04).
+But test-lib.sh expects to find the build in build/lib which can cause
+t5800-remote-helpers.sh to fail early.
 
-On Thu-2010/08/26-00:30 Jonathan Nieder wrote in gmane.discuss:
+Override distutils' choice so that the build is always in build/lib.
 
-> (+cc: git@, gmane-discuss@)
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Sorry for the v2 so soon. With the previous version, the "make install" step
+would still possibly create a platform dependent build dir. This works but
+creates two lib dirs within build, which is unnecessary and confusing.
+The solution with setup.cfg avoids this and is cleaner anyways.
 
-f'up set to gmane.discuss.
+ git_remote_helpers/setup.cfg |    3 +++
+ 1 files changed, 3 insertions(+), 0 deletions(-)
+ create mode 100644 git_remote_helpers/setup.cfg
 
-> At any rate, here is my current (cumbersome) strategy for replying
-> to a message from the web archive.
-> 
-> 1. Find the message (in the classic news.gmane.org view).
-> 
-> 2. Click the subject in the upper pane.  The message shows up
->    in the lower pane.
-> 
-> 3. Click the subject in the lower pane.  Now the upper pane
->    shows the relevant thread.
-> 
-> 4. Examine the URL:
->    http://thread.gmane.org/gmane.comp.version-control.git/154241/focus=154296
->    Where n is the number after "focus=", rewrite it to
->    http://download.gmane.org/gmane.comp.version-control.git/<n>/<n + 1>
-> 
-> 5. Download that message:
->    $ wget http://download.gmane.org/gmane.comp.version-control.git/154296/154297
-> 
-> 6. Open in mail client and reply as usual.
->    $ mutt -f 154297
-
-I know of a patch to mutt allowing to access NNTP servers directly.  In
-general, I don't know why people would want to use anything but NNTP to
-access gmane.org.
-
-
-clemens
+diff --git a/git_remote_helpers/setup.cfg b/git_remote_helpers/setup.cfg
+new file mode 100644
+index 0000000..4bff887
+--- /dev/null
++++ b/git_remote_helpers/setup.cfg
+@@ -0,0 +1,3 @@
++[build]
++build_purelib = build/lib
++build_platlib = build/lib
+-- 
+1.7.3.rc2.221.gbf93f
