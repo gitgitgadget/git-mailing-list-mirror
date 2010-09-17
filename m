@@ -1,67 +1,94 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCH] git-rebase--interactive.sh: LF terminate line sent to
- cut
-Date: Fri, 17 Sep 2010 13:59:34 -0500
-Message-ID: <VzbuextQE2-OASqyG4sJxmg1IuyBq5BWWiDERv0h-YQdVcnL8Enurg@cipher.nrlssc.navy.mil>
-References: <60d13fc6a7d5b1b08f35f91b2d90eb7c13922390.1284733059.git.chris_johnsen@pobox.com> <XhMLJaG8mUbh4rzLnU3IrGDXbMd9-p7UFO6kn9Uke7n_H4NNOG6glg@cipher.nrlssc.navy.mil> <7vsk182p2q.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Chris Johnsen <chris_johnsen@pobox.com>, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 21:03:19 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+From: clemens fischer <ino-news@spotteswoode.dnsalias.org>
+Subject: Re: Reply-to-all when using gmane's web interface
+Date: Fri, 17 Sep 2010 20:26:07 +0200
+Message-ID: <veocm7xqu5.ln2@nntp.spotteswoode.dnsalias.org>
+References: <4C74194B.6080306@nextest.com> <20100825005959.GB10423@burratino>
+	<4C74E890.90900@nextest.com> <20100825223024.GB2850@burratino>
+Cc: git@vger.kernel.org
+To: gmane-discuss@hawk.netfonds.no
+X-From: gmane-discuss-bounces@hawk.netfonds.no Fri Sep 17 21:30:08 2010
+Return-path: <gmane-discuss-bounces@hawk.netfonds.no>
+Envelope-to: gd-gmane-discuss@m.gmane.org
+Received: from hawk.netfonds.no ([80.91.224.246])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwgDK-0002yw-N1
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 21:03:15 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754475Ab0IQTDI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 15:03:08 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:58368 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752804Ab0IQTDH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 15:03:07 -0400
-Received: by mail.nrlssc.navy.mil id o8HIxY2b019382; Fri, 17 Sep 2010 13:59:35 -0500
-In-Reply-To: <7vsk182p2q.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 17 Sep 2010 18:59:34.0556 (UTC) FILETIME=[77D485C0:01CB569A]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156410>
+	(envelope-from <gmane-discuss-bounces@hawk.netfonds.no>)
+	id 1OwgdM-0001Lb-5p
+	for gd-gmane-discuss@m.gmane.org; Fri, 17 Sep 2010 21:30:08 +0200
+Received: from localhost ([127.0.0.1] helo=hawk.netfonds.no)
+	by hawk.netfonds.no with esmtp (Exim 3.36 #1 (Debian))
+	id 1OwgdM-0004qM-00; Fri, 17 Sep 2010 21:30:08 +0200
+Received: from lo.gmane.org ([80.91.229.12])
+	by hawk.netfonds.no with esmtp (Exim 3.36 #1 (Debian))
+	id 1OwgdK-0004qH-00
+	for <gmane-discuss@hawk.netfonds.no>; Fri, 17 Sep 2010 21:30:06 +0200
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gd-gmane-discuss@m.gmane.org>) id 1OwgdH-0001Gn-PW
+	for gmane-discuss@hawk.netfonds.no; Fri, 17 Sep 2010 21:30:03 +0200
+Received: from 95-89-61-84-dynip.superkabel.de ([95.89.61.84])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <gmane-discuss@hawk.netfonds.no>; Fri, 17 Sep 2010 21:30:03 +0200
+Received: from ino-news by 95-89-61-84-dynip.superkabel.de with local (Gmexim
+	0.1 (Debian)) id 1AlnuQ-0007hv-00
+	for <gmane-discuss@hawk.netfonds.no>; Fri, 17 Sep 2010 21:30:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+Mail-Followup-To: gmane-discuss@hawk.netfonds.no
+Followup-To: gmane.discuss
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 95-89-61-84-dynip.superkabel.de
+Cancel-Lock: sha1:txEI0wKNx6F8lcJx1xT0vB+kbCs=
+X-Archive: encrypt=none
+Mail-Copies-To: nobody
+User-Agent: tin/1.9.6-20100313 ("Lochruan") (UNIX) (Linux/2.6.35.4-spott
+	(i686))
+X-BeenThere: gmane-discuss@hawk.netfonds.no
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: gmane-discuss.hawk.netfonds.no
+List-Unsubscribe: <http://hawk.netfonds.no/cgi-bin/mailman/listinfo/gmane-discuss>,
+	<mailto:gmane-discuss-request@hawk.netfonds.no?subject=unsubscribe>
+List-Archive: <http://hawk.netfonds.no/pipermail/gmane-discuss>
+List-Post: <mailto:gmane-discuss@hawk.netfonds.no>
+List-Help: <mailto:gmane-discuss-request@hawk.netfonds.no?subject=help>
+List-Subscribe: <http://hawk.netfonds.no/cgi-bin/mailman/listinfo/gmane-discuss>,
+	<mailto:gmane-discuss-request@hawk.netfonds.no?subject=subscribe>
+Sender: gmane-discuss-bounces@hawk.netfonds.no
+Errors-To: gmane-discuss-bounces@hawk.netfonds.no
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156411>
 
-On 09/17/2010 01:38 PM, Junio C Hamano wrote:
+(sorry to be late)
 
-> Agreed; the less use of 'cut' we see, the better ;-)
+On Thu-2010/08/26-00:30 Jonathan Nieder wrote in gmane.discuss:
 
-Double agreed.
+> (+cc: git@, gmane-discuss@)
 
-> As to portability guideline in our shell script:
+f'up set to gmane.discuss.
+
+> At any rate, here is my current (cumbersome) strategy for replying
+> to a message from the web archive.
 > 
->     ${param#word} ${param##word} ${param%word} ${param%%word}
+> 1. Find the message (in the classic news.gmane.org view).
 > 
-> are permissible POSIX constructs (together with more traditional -/=/?/+), and
-> their use is encouraged over 'cut', 'expr', etc. [*1*]
+> 2. Click the subject in the upper pane.  The message shows up
+>    in the lower pane.
 > 
->     ${param:ofs} ${param:ofs:len} ${param/pattern/string}
+> 3. Click the subject in the lower pane.  Now the upper pane
+>    shows the relevant thread.
 > 
-> are bashisms we avoid (unless of course in the bash completion script).
+> 4. Examine the URL:
+>    http://thread.gmane.org/gmane.comp.version-control.git/154241/focus=154296
+>    Where n is the number after "focus=", rewrite it to
+>    http://download.gmane.org/gmane.comp.version-control.git/<n>/<n + 1>
+> 
+> 5. Download that message:
+>    $ wget http://download.gmane.org/gmane.comp.version-control.git/154296/154297
+> 
+> 6. Open in mail client and reply as usual.
+>    $ mutt -f 154297
 
-It's been a long while since I've reviewed Documentation/CodingGuidelines,
-but these are indeed in there, and have been for a very long time.  Maybe
-I should refresh my memory more often. :)
+I know of a patch to mutt allowing to access NNTP servers directly.  In
+general, I don't know why people would want to use anything but NNTP to
+access gmane.org.
 
-> We do not seem to use ${#param}, not because it is forbidden, but I think
-> because it is not very useful without ${param:ofs:len}.
 
-CodingGuidelines does say "No strlen ${#parameter}", so that could be part
-of the reason.  But like you say, it's not very useful without ${param:ofs:len}.
-
--Brandon
+clemens
