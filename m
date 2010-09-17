@@ -1,100 +1,97 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] remote-helpers: build in platform independent directory
-Date: Fri, 17 Sep 2010 18:31:53 +0200
-Message-ID: <AANLkTimzM+HQ6mvrkCL2mKK9jfOKe0FA6rv=AOfgwJF_@mail.gmail.com>
-References: <36e03068ded278b5145fdf82658c3270a25c2762.1284740217.git.git@drmicha.warpmail.net>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 5/7] gitweb: auxiliary functions to group data
+Date: Fri, 17 Sep 2010 18:41:06 +0200
+Message-ID: <AANLkTikjLNva7Jgh0xYeah1maFusfOiaLwY7+eixx8so@mail.gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <201009170324.25801.jnareb@gmail.com> <AANLkTikk7vUFMr31Azdcpe+PK0-yA2sp2EcnHjdfw0Zn@mail.gmail.com>
+ <201009171806.49774.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 18:32:27 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 18:41:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwdrP-00036Q-GG
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:32:27 +0200
+	id 1Owe0D-0001CK-2N
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 18:41:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754766Ab0IQQcO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 12:32:14 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:45710 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754693Ab0IQQcN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 12:32:13 -0400
-Received: by ywh1 with SMTP id 1so790453ywh.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 09:32:13 -0700 (PDT)
+	id S1751447Ab0IQQl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 12:41:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63386 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782Ab0IQQl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 12:41:27 -0400
+Received: by iwn5 with SMTP id 5so2115397iwn.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 09:41:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uYH/EUkKFgGPSNxB9EIxUm1e0C6aY2KUQhFnJKcirLg=;
-        b=Vd/w7cVd4lI4cc3gknCaRdgYjO2Zo7Qtb8frf1uPrm+6gI7zvimIfXBFdR3P44ZtQx
-         YFwpFblBGg22rR9FHeJ0RuwKanS//xusG0BAnFYCrOKLWAIODRk63+DPCjXOHEOaKrKN
-         o8fudxvNwJdry+WweWe5GV3GhDKGx2oxZMe2Q=
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=1OheDU2uPVDbOTImvWviMrJzd3DYZtczXpkQuNBb4rU=;
+        b=IDy1otOHlchmhePvmfi41XX1WNx5rU7qUAxpHCSMkM64Xm5M/S9j2LyFDVX6kv3IG5
+         nEQcUlj5mznJuvwH7MKeI5AteFSZCDNiheogOjcrxsy6+FoJJlFghtCbzXbC9k9QbN8z
+         WRgVAM1F/36CGuihp5Q924uHtkzkU142BufIc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=tUPRHAbo9E6FaepwV1VP+zHR3xFsKhmlDdaF+Z2dFrkobS1GWE9cdPtldcIy8ixeSv
-         vWU6RZDTk5OkHGEpftJ727HysShAOQVVHykoLBFViEULi+q7JufAQWblouhffaoooQJn
-         qAKJAEHAhxqq+sC1V0j98JQcChWRg8yz4aguA=
-Received: by 10.150.215.21 with SMTP id n21mr1761200ybg.298.1284741133131;
- Fri, 17 Sep 2010 09:32:13 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Fri, 17 Sep 2010 09:31:53 -0700 (PDT)
-In-Reply-To: <36e03068ded278b5145fdf82658c3270a25c2762.1284740217.git.git@drmicha.warpmail.net>
+         :cc:content-type;
+        b=fytv4ab5F+bZS02EZZ8lr2l2b6Kwj6XQR0nwcDPwPoxT/LQlaQAlb4Gl3eoPcZxdA2
+         ju4T0vL5UZv0l6EHekLUg2rkmmjLtf+DmN/WPg4RVPjShhYgNXJZweGyMXQaKNI1s7v7
+         OD6KsBXki3H+l2trqhY2YsdwmnK1Y6DPUoVVA=
+Received: by 10.231.34.139 with SMTP id l11mr5411283ibd.141.1284741686254;
+ Fri, 17 Sep 2010 09:41:26 -0700 (PDT)
+Received: by 10.231.150.202 with HTTP; Fri, 17 Sep 2010 09:41:06 -0700 (PDT)
+In-Reply-To: <201009171806.49774.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156397>
 
-Heya,
-
-[+Jonathan]
-
-On Fri, Sep 17, 2010 at 18:17, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> The build directory which is used by distutils depends on the platfor=
-m
-> (e.g. build/lib on Fedora 13, build/lib.linux-i686-2.6 on Ubuntu 9.04=
-).
-> But test-lib.sh expects to find the build in build/lib which can caus=
-e
-> t5800-remote-helpers.sh to fail early.
+On Fri, Sep 17, 2010 at 6:06 PM, Jakub Narebski <jnareb@gmail.com> wrote:
+> Giuseppe Bilotta wrote:
+>> On Fri, Sep 17, 2010 at 3:24 AM, Jakub Narebski <jnareb@gmail.com> wrote:
+>> >
+>> > ... but I think that having separate subroutines for opening and
+>> > closing tags is a bad design / bad API (except in some rare cases).
+>> > It is begging for unbalanced HTML.
+>> >
+>> > It would be better if it was a single subroutine wrapping 'div' around
+>> > contents given either as a string, or via callback (subroutine reference),
+>> > in my opinion.
+>>
+>> I'm not sure that in this case the string or callback approach would
+>> be any cleaner. I'll see if perl supports closures or something like
+>> that.
 >
-> Override distutils' choice so that the build is always in build/lib.
+> Perl supports closures (thanks to anonymous subroutines 'sub { ... }'
+> and lexical variables 'my $var'), see perlsub and "Function Templates"
+> in perlref.
 >
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> =C2=A0git_remote_helpers/Makefile | =C2=A0 =C2=A02 +-
-> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git_remote_helpers/Makefile b/git_remote_helpers/Makefil=
-e
-> index 74b05dc..e8172d3 100644
-> --- a/git_remote_helpers/Makefile
-> +++ b/git_remote_helpers/Makefile
-> @@ -26,7 +26,7 @@ PYLIBDIR=3D$(shell $(PYTHON_PATH) -c \
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 print 'lib/python%i.%i/site-packages' % s=
-ys.version_info[:2]")
->
-> =C2=A0all: $(pysetupfile)
-> - =C2=A0 =C2=A0 =C2=A0 $(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETS=
-ETUP) build
-> + =C2=A0 =C2=A0 =C2=A0 $(QUIET)$(PYTHON_PATH) $(pysetupfile) $(QUIETS=
-ETUP) build --build-purelib=3Dbuild/lib --build-platlib=3Dbuild/lib
->
-> =C2=A0install: $(pysetupfile)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$(PYTHON_PATH) $(pysetupfile) install --pr=
-efix $(DESTDIR_SQ)$(prefix)
+> I also recommend free ebook "Higher-Order Perl" http://hop.perl.plover.com/
 
-I don't know if this works on all platforms etc, Jonathan?
+Thanks for the suggestion. I'm still not convinced that such an
+implementation would be better though. Aside from the general
+aesthetical suckiness of passing closures around (and the experience
+is not any more pleasurable in Perl), there's also the matter of the
+calling convention to use. I can think of two options:
 
---=20
-Cheers,
+(1) we make the function callable as git_do_group($class, $id, sub {
+<closure that prints the content> }, <paramters that go to
+git_print_header_div>), which is somewhat illogical since we're
+specifying the content before the header, or
 
-Sverre Rabbelier
+(2) we make it like git_do_group($class, $id, sub { <closure that
+prints header div> }, sub {<closure that prints the content>}), which
+is even more horrible since the header div is just a
+git_print_header_div
+
+Overall, I still get the impression that the current API is
+considerably cleaner, even with the small counterweight of the risk of
+leaving groups open (which is not something so dramatic anyway, IMO).
+
+-- 
+Giuseppe "Oblomov" Bilotta
