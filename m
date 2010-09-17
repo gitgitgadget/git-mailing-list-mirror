@@ -1,83 +1,128 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 1/7] gitweb: introduce remote_heads feature
-Date: Fri, 17 Sep 2010 17:39:58 +0200
-Message-ID: <AANLkTin43YXnfETqK2ZJASaT5gMemrJqiX+xzfn13s7n@mail.gmail.com>
+Subject: Re: [PATCH 2/7] gitweb: git_get_heads_list accepts an optional list
+ of refs.
+Date: Fri, 17 Sep 2010 17:52:23 +0200
+Message-ID: <AANLkTi=fF7QGNrAepy8WbzgzQYUbKESO49QBtDLCHgcV@mail.gmail.com>
 References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1284629465-14798-2-git-send-email-giuseppe.bilotta@gmail.com> <201009162341.20380.jnareb@gmail.com>
+ <1284629465-14798-3-git-send-email-giuseppe.bilotta@gmail.com> <201009170014.12483.jnareb@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 17:40:27 2010
+X-From: git-owner@vger.kernel.org Fri Sep 17 17:52:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owd34-0002OC-0e
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 17:40:26 +0200
+	id 1OwdF5-0002oi-DC
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 17:52:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755020Ab0IQPkU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 11:40:20 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34910 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753955Ab0IQPkT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 11:40:19 -0400
-Received: by iwn5 with SMTP id 5so2083285iwn.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 08:40:18 -0700 (PDT)
+	id S1754496Ab0IQPwq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 11:52:46 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:33106 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753258Ab0IQPwp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 11:52:45 -0400
+Received: by gyd8 with SMTP id 8so767448gyd.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 08:52:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
          :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=r6vkdwXlzjZu8GU3CMwSe/Ikg9/QvHhbBnBlmR4+kBM=;
-        b=tHGk5x5YLWNMQb7DMdnPoig25ywnzKxo0EYcBmeW6VsihLjURZTlkYL9NayHfYYyPw
-         3ttzRv88pZW9bTyzSgnGlBDP6Tt1YyTDsEhY47SBKfBUr71+JCfmOxNTw6nslz93oQYt
-         TTDbZipXSvCWgysiRjObhZWHJ37BhTvFu9tPc=
+        bh=rZWkgZy/z0hmzkLJ5P/WNZpS73NNYxBnpqYXZOTsBag=;
+        b=lJwR/fGjVoLEHnRjnG4FrVcJc8ilHL+fgnMaS+GekLg57egWrhULcdJ2iJVkDAOV52
+         a3TsomKakWeH0z6OOaU81QLPXqiPkFuV+oSP4ldbUbGWmkNKBgH7oqSZj2QEajIWmgMs
+         vhIxeADCQOXWce0MLxO0xNu0rDY28IZH0XEcA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=ISe2BOGDFWgm3Vo9w4MQcoFRExxOYDS5mJZRxQ0ij5T7ivF+IBwYBb0uTXkO48uk6w
-         ArGtyGP4+RbBUyLm6ed0lG2fAXb4HahBe7mA7zx8Bs9hs39450vRhg6BKuDEYS2gZKT4
-         JzsPlf5RDLY8jG5JC2PgSzOXKv1d1x9UGggu4=
-Received: by 10.231.59.83 with SMTP id k19mr4883039ibh.178.1284738018385; Fri,
- 17 Sep 2010 08:40:18 -0700 (PDT)
-Received: by 10.231.150.202 with HTTP; Fri, 17 Sep 2010 08:39:58 -0700 (PDT)
-In-Reply-To: <201009162341.20380.jnareb@gmail.com>
+        b=FRVyyu5feadOjnZ+529i9cHqnq1j3STkad/JBCeAInxooJR0tDXgs2MqdiykeIx7d+
+         Pf6SKLvAE+6AqO+WBs0QN/k1kKQD3AIzjRB2MZLEENsQp+Dw6V+pHqVchML9pP5ZwRE2
+         hV2uZvKu8R8ZAQC8+g2XBAvDGFVkFnI13NUpo=
+Received: by 10.90.49.18 with SMTP id w18mr3522834agw.64.1284738764146; Fri,
+ 17 Sep 2010 08:52:44 -0700 (PDT)
+Received: by 10.231.150.202 with HTTP; Fri, 17 Sep 2010 08:52:23 -0700 (PDT)
+In-Reply-To: <201009170014.12483.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156390>
 
-2010/9/16 Jakub Narebski <jnareb@gmail.com>:
+2010/9/17 Jakub Narebski <jnareb@gmail.com>:
 > On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 or return;
->> =A0 =A0 =A0 while (my $line =3D <$fd>) {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 my %ref_item;
->> @@ -3160,8 +3174,9 @@ sub git_get_heads_list {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 my ($committer, $epoch, $tz) =3D
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ($committerinfo =3D~ /^(=
-=2E*) ([0-9]+) (.*)$/);
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 $ref_item{'fullname'} =A0=3D $name;
->> - =A0 =A0 =A0 =A0 =A0 =A0 $name =3D~ s!^refs/heads/!!;
->> + =A0 =A0 =A0 =A0 =A0 =A0 $name =3D~ s!^refs/(head|remote)s/!!;
->>
->> + =A0 =A0 =A0 =A0 =A0 =A0 $ref_item{'class'} =3D $1;
 >
-> Is it used anywhere, or is it left to be used by a further commit in
-> the series? =A0If it is the latter, perhaps it would be worth mention=
-ing
-> in the commit message?
+>> git_get_heads_list(limit, class1, class2, ...) can now be used to re=
+trieve
+>> refs/class1, refs/class2 etc. Defaults to ('heads') or ('heads', 're=
+motes')
+>> depending on the remote_heads option.
+>
+> I like this API very much.
 
-Actually, I think this might be a leftover from some previous
-iteration (IIRC my first version of this patchset listed all heads
-under 'heads' grouping them by the class defined here, whereas now we
-have the two separate sections). I should probably scratch it (even
-though a similar mechanism is already in place in format_ref_marker
-and it might be useful to coalesce this when parsing refs)
+Thank you.
+
+>> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>> ---
+>> =A0gitweb/gitweb.perl | =A0 11 +++++++----
+>> =A01 files changed, 7 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> index 7116c26..21e83bb 100755
+>> --- a/gitweb/gitweb.perl
+>> +++ b/gitweb/gitweb.perl
+>> @@ -3155,15 +3155,18 @@ sub parse_from_to_diffinfo {
+>> =A0## parse to array of hashes functions
+>>
+>> =A0sub git_get_heads_list {
+>> - =A0 =A0 my $limit =3D shift;
+>> + =A0 =A0 my ($limit, @class) =3D @_;
+>
+> Nitpick: @class or @classes.
+
+Right, the general gitweb style is for plural for arrays.
+
+>> + =A0 =A0 unless (defined @class) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 my $remote_heads =3D gitweb_check_feature(=
+'remote_heads');
+>> + =A0 =A0 =A0 =A0 =A0 =A0 @class =3D ('heads', $remote_heads ? 'remo=
+tes' : undef);
+>
+> Same comment as for previous patch:
+>
+> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 @class =3D ('heads', $remote_heads ? 're=
+motes' : ());
+>
+> Or alternative solution:
+>
+> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 @class =3D 'heads';
+> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 push @class, 'remotes' if gitweb_check_f=
+eature('remote_heads');
+>
+
+I like the () solution better. Less verbosity
+
+>> =A0 =A0 =A0 my @headslist;
+>>
+>> - =A0 =A0 my $remote_heads =3D gitweb_check_feature('remote_heads');
+>> -
+>> =A0 =A0 =A0 open my $fd, '-|', git_cmd(), 'for-each-ref',
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 ($limit ? '--count=3D'.($limit+1) : ()),=
+ '--sort=3D-committerdate',
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 '--format=3D%(objectname) %(refname) %(s=
+ubject)%00%(committer)',
+>> - =A0 =A0 =A0 =A0 =A0 =A0 'refs/heads', ( $remote_heads ? 'refs/remo=
+tes' : '')
+>> + =A0 =A0 =A0 =A0 =A0 =A0 @refs
+>
+> Nitpick: it is called '<pattern>...' in git-for-each-ref manpage...
+
+I'm not particularly enamoured with @refs, so @patterns it is (if I
+get what you mean here)
 
 --=20
 Giuseppe "Oblomov" Bilotta
