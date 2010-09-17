@@ -1,53 +1,92 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] fetch: Get submodule paths from index and not from .gitmodules
-Date: Fri, 17 Sep 2010 16:14:04 +0200
-Message-ID: <4C9377AC.7070001@viscovery.net>
-References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org> <4C9221B6.7070807@web.de> <AF9B7F7E-0956-4814-A3A8-BAD7619A043D@sb.org> <4C9351A7.7050609@web.de> <4C9359D4.2030109@viscovery.net> <4C935D77.3080008@web.de> <4C935FF2.7080502@viscovery.net> <4C9374B5.9020907@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Sep 17 16:14:18 2010
+From: Chris Johnsen <chris_johnsen@pobox.com>
+Subject: [PATCH] git-rebase--interactive.sh: LF terminate line sent to cut
+Date: Fri, 17 Sep 2010 09:17:43 -0500
+Message-ID: <60d13fc6a7d5b1b08f35f91b2d90eb7c13922390.1284733059.git.chris_johnsen@pobox.com>
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Chris Johnsen <chris_johnsen@pobox.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 16:20:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owbhi-0006YB-5o
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 16:14:18 +0200
+	id 1OwbnZ-0001z0-4L
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 16:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753591Ab0IQOOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 10:14:10 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:10148 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752195Ab0IQOOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 10:14:09 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OwbhV-0002U7-IE; Fri, 17 Sep 2010 16:14:05 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4B7DC1660F;
-	Fri, 17 Sep 2010 16:14:05 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100824 Thunderbird/3.0.7
-In-Reply-To: <4C9374B5.9020907@web.de>
-X-Enigmail-Version: 1.0.1
-X-Spam-Score: -1.4 (-)
+	id S1753653Ab0IQOT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 10:19:59 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61803 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754684Ab0IQOT6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 10:19:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DF1CCD6257;
+	Fri, 17 Sep 2010 10:19:54 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; s=sasl; bh=qtElxMebGyefRWz/eH+PJzmKtFI
+	=; b=N3R+rS5vLinUwvfYQy0+DhAMS9k7I7UKWZz9SVk+Yszo9JCzZoKTxnBJPee
+	LdeSUR3Xg2chZ4X+oZnVMUMfTjKOivJtQGbyBWz+8ZPV/SEFBixPwIDGu/PJLrwW
+	+O1OSRTWanJ7qgDj9ei85XVZWb075n7NMSF0BdYq0pPGAnbk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
+	:subject:date:message-id; q=dns; s=sasl; b=duD9Pbslnyht4KArhEFYT
+	9679rQma9njss06XB+SSTkRy+OsczGa6pnBXTWowJQewUy52BRJaZXIUBaef24ve
+	NjNWoUZvTFVhgph9hMJ2e839yIJo3lCB/TAAN2+1rpuuccfPnzPjA5u2ro1FglNx
+	mASh1GTfqAzmsuGGYGGhew=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89CC9D624E;
+	Fri, 17 Sep 2010 10:19:50 -0400 (EDT)
+Received: from Blinky.local.net (unknown [75.53.36.236]) (using TLSv1 with
+ cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
+ by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81AA7D624D; Fri, 17
+ Sep 2010 10:19:45 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.rc2
+X-Pobox-Relay-ID: A2091D32-C266-11DF-960E-030CEE7EF46B-07245699!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156385>
 
-Am 9/17/2010 16:01, schrieb Jens Lehmann:
-> But I was trying to fix a problem introduced by 496b35e7 in current next,
-> where the new function fetch_populated_submodules() is located there. And
-> in that function the output is not read and so cp.out = 0 is the right
-> thing to do here.
+Some versions of cut do not cope well with lines that do not end in
+an LF. Add '\n' to the printf format string to ensure that the
+generated output ends in a LF.
 
-Got it! You are right.
+I found this problem when t3404's "avoid unnecessary reset" failed
+due to the "rebase -i" not avoiding updating the tested timestamp.
 
--- Hannes
+On a Mac OS X 10.4.11 system:
+
+    % printf '%s' 'foo bar' | /usr/bin/cut -d ' ' -f 1
+    cut: stdin: Illegal byte sequence
+    % printf '%s\n' 'foo bar' | /usr/bin/cut -d ' ' -f 1
+    foo
+
+Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+
+---
+It looks like the cut on my system is derived from FreeBSD. It is
+probably an old version though (possibly too old to care about).
+
+The cut from GNU coreutils does not to have this problem, so using
+it serves as a workaround.
+---
+ git-rebase--interactive.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index eb2dff5..834460a 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -626,7 +626,7 @@ skip_unnecessary_picks () {
+ 		case "$fd,$command" in
+ 		3,pick|3,p)
+ 			# pick a commit whose parent is current $ONTO -> skip
+-			sha1=$(printf '%s' "$rest" | cut -d ' ' -f 1)
++			sha1=$(printf '%s\n' "$rest" | cut -d ' ' -f 1)
+ 			case "$(git rev-parse --verify --quiet "$sha1"^)" in
+ 			"$ONTO"*)
+ 				ONTO=$sha1
+-- 
+1.7.3.rc2
