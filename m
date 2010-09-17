@@ -1,102 +1,74 @@
-From: Pat Notz <patnotz@gmail.com>
-Subject: Re: [PATCH 1/2] dir.c: fix uninitialized memory warning
-Date: Fri, 17 Sep 2010 11:23:13 -0600
-Message-ID: <AANLkTinMQ49hPPatgCmxZW6PbU_N8963-XuV3k5f29E2@mail.gmail.com>
-References: <1284670403-90716-1-git-send-email-patnotz@gmail.com>
- <1284670403-90716-2-git-send-email-patnotz@gmail.com> <AANLkTim4SiuX=aWLeYXKpgvD+Nh1trH8qgf3V36iVa9w@mail.gmail.com>
- <AANLkTik1X0i-OYZCxokw-W3Kt+vEDtBvFeCwQU3q40ap@mail.gmail.com>
- <AANLkTin52McRcJcNocSGMxA7PUCiygSwQTHc1SWcMeOk@mail.gmail.com>
- <AANLkTikbd-RQtRQWta+_Ogdicsz-1gFLnXaDYzh3wAfG@mail.gmail.com> <AANLkTinfgZMuap+hiji3zH6fL4aOS-FrfgxPJfVE1xO6@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 7/7] gitweb: group remote heads
+Date: Fri, 17 Sep 2010 19:25:43 +0200
+Message-ID: <201009171925.43590.jnareb@gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <1284629465-14798-8-git-send-email-giuseppe.bilotta@gmail.com> <201009171854.03476.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 19:23:41 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 19:25:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oweey-0003V4-Gs
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 19:23:40 +0200
+	id 1Oweh4-0004dQ-KU
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 19:25:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755538Ab0IQRXf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 13:23:35 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:50399 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754028Ab0IQRXe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 13:23:34 -0400
-Received: by ewy23 with SMTP id 23so1093607ewy.19
-        for <git@vger.kernel.org>; Fri, 17 Sep 2010 10:23:33 -0700 (PDT)
+	id S1753111Ab0IQRZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 13:25:45 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63154 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752472Ab0IQRZo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 13:25:44 -0400
+Received: by bwz11 with SMTP id 11so2838410bwz.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 10:25:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=j2djhzJtpSM/ZTUrP1EXlO39Z4t1hqApEyBKXwdkByI=;
-        b=OunyhIwBFoHN3VIZSFQiOhJfcwWnJWEGZceqFit9mLOb9vDxHNKShUPenTVZoCn1lg
-         EAiXSCqOkTtldWgojXN9HPG2kDhGubSNVuopUabrePurG7qyLICDGrLm1Y5+auuaiiiS
-         fcVgZNGWNYG23+vyJUSBPvx4KtuNUZABVqU2A=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=j34y9UMeJTBt2Un455oRiTralLKB18+ztwPTPRw2UkA=;
+        b=i+ZY5Wq6LlZRSorw7bw5FbjEoXWKtNHiLkPRg4ptEh0Pj5GAOGtYfwdE0EDcjjW7v0
+         3y6f0I/DhKFQUTlILxr9xaJHFUkFGHOtVlLvYc3353xPdLJPbQuHLXVthJHrVoTjhQ4u
+         EFbKdelGqA1fCD+xFz6+lcqwNyS2FkyT+RoTE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=GdnTydzo3DHCjIsqvPdVKxexEWCR03MGwagSdooeAXALIh+ZH1vWIALa8EHOgOxVI0
-         0JONJr6icBCbStKr/cf+lGCKYr7zXVf+f1XQecF8zdFbQsvI2AXLHuHaJ+BvabuiByNo
-         HDi7OaMtQlcupK8XZEGFGAuL4FC4IxTvPQy4k=
-Received: by 10.239.132.71 with SMTP id 7mr226844hbq.182.1284744213248; Fri,
- 17 Sep 2010 10:23:33 -0700 (PDT)
-Received: by 10.239.185.65 with HTTP; Fri, 17 Sep 2010 10:23:13 -0700 (PDT)
-In-Reply-To: <AANLkTinfgZMuap+hiji3zH6fL4aOS-FrfgxPJfVE1xO6@mail.gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=AWeRVL4lds6RdKlHFIB7/6zwJXZwmZZ7/PVVhcz88FWyhwv1bpZdxWDs9NskeweI7x
+         hXZM7aLQ3e3t46koaumwGSJrU6vkXmpVizclb3YT0oAo5EuofzycrbvbQFnP1XKEjgN6
+         ojj9ZdrgiNw0BqbwfBXK327ceikMkG3kzL+3g=
+Received: by 10.204.71.84 with SMTP id g20mr4171010bkj.60.1284744343589;
+        Fri, 17 Sep 2010 10:25:43 -0700 (PDT)
+Received: from [192.168.1.13] (abvo68.neoplus.adsl.tpnet.pl [83.8.212.68])
+        by mx.google.com with ESMTPS id g12sm3832611bkb.2.2010.09.17.10.25.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Sep 2010 10:25:42 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201009171854.03476.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156404>
 
-=46or anyone who care, this warning was actually emitted by the version
-of GCC that ships with MacOS 10.5: i686-apple-darwin9-gcc-4.0.1 (GCC)
-4.0.1 (Apple Inc. build 5493).
+On Fri, 17 Sep 2010, Jakub Narebski wrote:
+> On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
 
-GCC 4.4.4 does *not* git this warning.
+> > +		my @remoteheads = grep { $_->{'name'} =~ s!^\Q$remote\E/!! } @allheads;
+> 
+> Should we display remote even if it doesn't have any remote heads
+> associated with it?
 
-Sorry for the confusion, my IDE was using a different $PATH than my she=
-ll.
+By the way, it would be place where we could limit number of 
+remote-tracking branches displayed in each remote block.
 
-
-On Thu, Sep 16, 2010 at 7:13 PM, Pat Notz <patnotz@gmail.com> wrote:
-> On Thu, Sep 16, 2010 at 7:04 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.=
-com> wrote:
->> On Fri, Sep 17, 2010 at 10:32 AM, Pat Notz <patnotz@gmail.com> wrote=
-:
->>>> I don't see any case that "size" can be used uninitialized. Maybe =
-the
->>>> compiler was confused by
->>>>
->>>> if (!check_index ||
->>>> =A0 =A0(buf =3D read_skip_worktree_file_from_index(fname, &size)) =
-=3D=3D NULL)
->>>> =A0 =A0 =A0 =A0return -1;
->>>>
->>>
->>> No, line 245: if(size=3D=3D0)
->>
->> The only chance for that line to be executed is read_skip_*() is
->> executed and returns non-NULL buf. read_skip*() returns a non-NULL
->> buffer at the end of function and does set size right before
->> returning.
->>
->> To me it looks like a false alarm. But again, no objection to the pa=
-tch.
->
-> I agree that it's a false alarm which is why I wasn't too interested
-> in looking into it very deeply. =A0Just looking to keep the code warn=
-ing
-> free is all.
->
->> --
->> Duy
->>
->
+-- 
+Jakub Narebski
+Poland
