@@ -1,160 +1,149 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/2] po/de.po: add German translation
-Date: Fri, 17 Sep 2010 09:23:32 +0200
-Message-ID: <4C931774.9060808@drmicha.warpmail.net>
-References: <20100915093313.44396t6yr62ixccg@webmail.tu-harburg.de> <20100916125751.163d8691@jk.gs> <4C9204BE.800@drmicha.warpmail.net> <20100916184803.39576fd2@jk.gs>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 0/7] gitweb: allheads feature
+Date: Fri, 17 Sep 2010 09:24:37 +0200
+Message-ID: <AANLkTinQaad7vDCqRKQkDcdRY=M+wLmx6eD3ftg6Nxh=@mail.gmail.com>
+References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com> <201009162326.01656.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Stimming <stimming@tuhh.de>, trast@student.ethz.ch,
-	avarab@gmail.com, git <git@vger.kernel.org>
-To: =?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Fri Sep 17 09:23:34 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 09:25:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwVID-0003NN-Eq
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 09:23:33 +0200
+	id 1OwVJg-0004C9-SK
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 09:25:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212Ab0IQHX2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 03:23:28 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:43526 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750788Ab0IQHX1 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 03:23:27 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 00E6039E;
-	Fri, 17 Sep 2010 03:23:27 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Fri, 17 Sep 2010 03:23:27 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=GDD9oN6/TMeztEtYVDC0uIFR9U0=; b=bqeRONfCEn8v5kTHpcGnZker64xnP4cezTw/nCIV2T4rToM34pO1aO7YxGDbetb3UL0LPNorRu55yl0I/fPDYJS3bRK+G9mkhKx3xF4gFaO2mZd3DP/A58ts3Ds8GqMjS7ES1FJYMKm50Ve9hok5LVtPNAaCAnAu+dQpGywytng=
-X-Sasl-enc: HPZo/0dpL07HC5ylW0m3f3dROHcTUJ0IG2gWgcpv51AN 1284708206
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id E8F675E6DBA;
-	Fri, 17 Sep 2010 03:23:25 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.3
-In-Reply-To: <20100916184803.39576fd2@jk.gs>
+	id S1751603Ab0IQHY7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 03:24:59 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42595 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750788Ab0IQHY6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 03:24:58 -0400
+Received: by iwn5 with SMTP id 5so1751643iwn.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 00:24:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/uB/znr4txFeT9yFxumb+0Mmz9FG99Al0JGzsR8h6K4=;
+        b=GhlvS4BBgWslBzoG3nWuniWbEpPTALAUW+bSxt9k2WV/1H9WU23+UMXxI4gGIUnWrJ
+         eQEvOAoEFKOtSXm7PQQZZDhCEaUt858GiMxyQCPXhz4PDR2L2ITyC4zjvnRESW8LE45w
+         WTMOeUngWq/q61pekE+s9NYHzYtZm9/xjwivw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=wO/OvU2yCm/xzz6xVdW9rcLqnTRJ7OZEx8i8SuWKunlWlDu+iMmZgi0KHBEx6b8Xt1
+         hwoAbISCwsV35p4A3cMyeId8QJrGAdsMYOQ3LKUsPKW8KbdqR9OOLnVEp+U6eaVY+AOc
+         oIWhT3YyB4KjilbeX9E6alhXveO4jALJlpRh4=
+Received: by 10.231.160.17 with SMTP id l17mr4769501ibx.102.1284708297124;
+ Fri, 17 Sep 2010 00:24:57 -0700 (PDT)
+Received: by 10.231.150.202 with HTTP; Fri, 17 Sep 2010 00:24:37 -0700 (PDT)
+In-Reply-To: <201009162326.01656.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156374>
 
-[snipping most parts to make this shorter]
-
-Jan Kr=C3=BCger venit, vidit, dixit 16.09.2010 18:48:
-> Michael J Gruber <git@drmicha.warpmail.net> wrote:
->=20
->>> Translating these terms into German does not change anything about
->>> that. All terms still need to be explained.
+2010/9/16 Jakub Narebski <jnareb@gmail.com>:
+> On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
+>
+>> This is a rehash of an old patchset of mine that got stalled waiting=
+ for
+>> other independent patches to go in first, and then for me to get the
+>> time to work on it again.
 >>
->> Absolutely true, and absolutely irrelevant for the decision whether =
-to
->> translate these, since they need to be explained in any case.
->=20
-> The argument for translating them in the first place was that that
-> makes it easier to understand the text. My argument was that the
-> translated terms are not more understandable because they still need =
-to
-> be explained. How is that irrelevant? I consider the original argumen=
-t
+>> The first 4 patches are IMO ready for inclusing in gitweb, and their
+>> purpose is to introduce a new view (and a new summary block) that
+>> display all the remote heads (assuming the feature is enabled).
+>> Somebody suggested via email that this could even the basis for some
+>> kind of 'social graph' for gitweb repositories, in a way similar to =
+what
+>> is found on sites like github or gitorious, but for me the feature i=
+n
+>> itself can already be useful.
+>
+> We might want to make git-instaweb enable this feature (and probably
+> other disabled-by-default features). =A0Otherwise some of information
+> about git repository you examine is hidden. =A0So I agree that this
+> feature is useful by itself.
 
-If it makes no difference then it is irrelevant for the decision. It's
-neither pro nor con, other arguments have to be brought up.
+I'll add a patch to that effect in the next iteration.
 
->> I really have to oppose this reasoning. Are you seriously suggesting
->> we should not translate the following words as a matter of principle=
-?
->=20
-> I would indeed keep quite a few of them as they are. But you're
-> right, the fact that they would likely be kept as command names just
-> makes me feel better about keeping them untranslated; the main reason
-> is that I can't find good translations. Let's step through them one
-> by one, against my better judgement.
+>> The final result is rather curious and you can see it in action at
+>> <http://git.oblomov.eu/rbot/remotes>, although it would be nice to f=
+ind
+>> a way to layout the blocks in a smarter way.
+>
+> Thanks for providing demo site.
+>
+> Note that clicking on header for remote block, which should lead to
+> displaying of only single remote displays all remotes, see e.g.
+> http://git.oblomov.eu/rbot/remotes/a3li. =A0Moreover when I tried to
+> handcraft URL i.e. http://git.oblomov.eu/rbot/remote/a3li (with
+> 'remote' rather than 'remotes' action) I get an empty list of heads.
 
-This was not meant as a list to be worked through, but as an argument
-that the principle "do not translate command names at all" (i.e. in *no=
-*
-context) is not viable.
+The /remote/<thing> is just the standard behavior of git when any
+random string is passed as PATH_INFO (try
+http://git.oblomov.eu/rbot/whatever), so I cannot fix that unless I
+map remote to remotes. The remotes/<headname> is a TODO
 
->>> I believe that the English "tag" is a much better metaphor than the
->>> German "Markierung". One use of "tag" refers to a small label that
->>> is attached to, for example, baggage. This is exactly the concept
->>> we have in git. "Markierung" doesn't come close at all to
->>> describing the same concept. Conflicts markers are "Markierungen";
->>> tags are not.
->>
->> That's exactly why I suggested "Marke", see my earlier reply also fo=
-r
->> the other terms. It conveys the same multiple metaphorical
->> associations.
->=20
-> I disagree. Arguably, the strongest association is
-> "Briefmarke" (postage stamp), probably followed by
-> "Erkennungsmarke/Markenzeichen" (trademark) and perhaps
-> "Plakette" (insignia). None of these reflect what a "tag" is about:
-> (more or less) loosely attaching an identifier to a revision, as in t=
-he
-> case of a baggage tag or a dog tag. What's more, the word "Tag" is
+(This led me to think: do we want heads/<headname> to point to the
+shortlog of that head? It currently does nothing)
 
-dog tag is Hundemarke. I really think Marke conveys most meanings of
-tag, especially those relevant to the meaning of tag in Git context. If
-you insist on translating all aspects and connotations of a word then
-there is no translation at all.
+> About layout of 'remotes' view: to have remotes information aligned
+> we would have to either put everything in one single table (with remo=
+tes
+> headers being "colspan"), or style them with minimum width (which cou=
+ld
+> be good idea anyway).
 
-> already widely used in German version control lingo. For example, the
-> German translation of the SVN red book uses it.
->=20
->> You know, there's a reason why translating is a profession. You need
->> to be proficient in both languages, as well as creative. In fact, I
->> don't think the majority of people are proficient enough for that
->> even in their native language (as a translation target), but every
->> native speaker thinks he or she is, of course. (This is a general
->> remark not aimed at anyone specifically.)
->=20
-> The whole profession argument has never sat well with me. I know
-> hobbyists who have ten times the skills of some professionals. I agre=
-e
+I don't like the 'one single table' approach because, in contrast to
+the current approach it doesn't allow for automatic block
+rearrangement based on the window width.
+The minimum width helps align the blocks vertically, but it doesn't
+align the contents of the tables in it, so it's not really that big an
+improvement (actually, I find it even funnier that way because of the
+illusion of alignment provided by the blocks).
 
-I talked about "profession", not about hobbyists vs. professionals. And
-I don't like it when you turn around my words in my mouth.
+>> What I really don't like (at the moment) is the way things come out
+>> in summary view instead.
+>
+> What you don't like about it? =A0Should it be smarter and display onl=
+y
+> list of remotes, perhaps even limited to 15 elements, if there are ma=
+ny
+> remote-tracking branches? =A0Or is it something else?
+>
+>> The issue there is that we only gather 16 remote heads, so some remo=
+tes
+>> might have no branches displayed, but it becomes difficult to detect=
+ and
+>> indicate when remotes have incomplete information being displayed. A
+>> possible solution would be to call show-ref N times (N being the num=
+ber
+>> of remotes) with a limit of 16/N heads, but that can be a lot of cal=
+ls.
+>> So I'm open to suggestions on how to improve this part (maybe just s=
+how
+>> a flat view in the remotes section of summary view?)
+>
+> Ah, I see...
+>
+> Alternatively we could use smart limiting on the gitweb side.
 
-> that translating is a nontrivial task, though... and I, personally,
-> will not be involved in anything less than a very good translation. I
-> have outlined what I perceive as shortcomings in a number of
-> suggestions made here. I'll be glad to look at alternative suggestion=
-s,
-> but so far, for a number of terms, I haven't seen a satisfactory
-> alternative to adopting the English ones.
->=20
-> (FWIW, I've bounced some of the more controversial of my translations
-> off a couple of git users, but also off a graduate of German language
-> and literature studies who uses neither git nor English. I'm just
-> mentioning that due to your totally-not-aimed-at-anyone remark, thoug=
-h;
+That was an option I was considering. I thought the limiting to 16
+refs and tags in summary view was for performance reasons, so I
+thought that grabbing all remote heads would kind of kill the remote
+view, but for sure it's more efficient than doing a ref retrieval for
+each remote. OTOH, once we get all the refs, why would we only display
+some of them?
 
-You can take that for face-value - it was not aimed at anyone, and you
-have no reason to claim otherwise.
-
-> I don't think it should actually make any difference.)
->=20
-> At any rate, I will stop working on translating git as long as this
-> discussion goes on. And, of course, should you guys end up insisting =
-on
-> bad translations, I'll leave you to writing it that way. Under
-> protest. :)
-
-We simply have to decide about a concept, about an approach first, abou=
-t
-what is "bad" and what is "good" (for the yet to be determined target
-audience) as you put it, before flooding the single de.po with
-translation pieces without an agreement on a glossary for the main term=
-s.
-
-But, given the direction this discussion is taking now, I'm really
-pessimistic that this is going to happen. Maybe switching to DE would
-help, I dunno.
-
-Michael
+--=20
+Giuseppe "Oblomov" Bilotta
