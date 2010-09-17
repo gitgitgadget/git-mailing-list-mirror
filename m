@@ -1,92 +1,67 @@
-From: Chris Johnsen <chris_johnsen@pobox.com>
-Subject: [PATCH] git-rebase--interactive.sh: LF terminate line sent to cut
-Date: Fri, 17 Sep 2010 09:17:43 -0500
-Message-ID: <60d13fc6a7d5b1b08f35f91b2d90eb7c13922390.1284733059.git.chris_johnsen@pobox.com>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Chris Johnsen <chris_johnsen@pobox.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 16:20:21 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: git log --pretty=format joins lines in the subject of commit
+ message
+Date: Fri, 17 Sep 2010 10:55:22 -0400
+Message-ID: <20100917145522.GB2860@sigill.intra.peff.net>
+References: <DDB24DEE-934B-4C8D-8DAA-595905035AC4@jetbrains.com>
+ <AANLkTikXwKBUKvrNs3ezKWjBh35Y87q6gZKSyZ=1cZyG@mail.gmail.com>
+ <4D8D88A4-FEBF-4FA9-A39F-410D76289E4B@jetbrains.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Fri Sep 17 16:54:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwbnZ-0001z0-4L
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 16:20:21 +0200
+	id 1OwcL1-0007yg-Fs
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 16:54:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753653Ab0IQOT7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 10:19:59 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61803 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754684Ab0IQOT6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 10:19:58 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DF1CCD6257;
-	Fri, 17 Sep 2010 10:19:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to:cc
-	:subject:date:message-id; s=sasl; bh=qtElxMebGyefRWz/eH+PJzmKtFI
-	=; b=N3R+rS5vLinUwvfYQy0+DhAMS9k7I7UKWZz9SVk+Yszo9JCzZoKTxnBJPee
-	LdeSUR3Xg2chZ4X+oZnVMUMfTjKOivJtQGbyBWz+8ZPV/SEFBixPwIDGu/PJLrwW
-	+O1OSRTWanJ7qgDj9ei85XVZWb075n7NMSF0BdYq0pPGAnbk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:cc
-	:subject:date:message-id; q=dns; s=sasl; b=duD9Pbslnyht4KArhEFYT
-	9679rQma9njss06XB+SSTkRy+OsczGa6pnBXTWowJQewUy52BRJaZXIUBaef24ve
-	NjNWoUZvTFVhgph9hMJ2e839yIJo3lCB/TAAN2+1rpuuccfPnzPjA5u2ro1FglNx
-	mASh1GTfqAzmsuGGYGGhew=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89CC9D624E;
-	Fri, 17 Sep 2010 10:19:50 -0400 (EDT)
-Received: from Blinky.local.net (unknown [75.53.36.236]) (using TLSv1 with
- cipher DHE-RSA-AES256-SHA (256/256 bits)) (No client certificate requested)
- by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 81AA7D624D; Fri, 17
- Sep 2010 10:19:45 -0400 (EDT)
-X-Mailer: git-send-email 1.7.3.rc2
-X-Pobox-Relay-ID: A2091D32-C266-11DF-960E-030CEE7EF46B-07245699!a-pb-sasl-quonix.pobox.com
+	id S1754858Ab0IQOyu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 10:54:50 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:37632 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754282Ab0IQOyt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 10:54:49 -0400
+Received: (qmail 24663 invoked by uid 111); 17 Sep 2010 14:54:47 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 17 Sep 2010 14:54:47 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 17 Sep 2010 10:55:22 -0400
+Content-Disposition: inline
+In-Reply-To: <4D8D88A4-FEBF-4FA9-A39F-410D76289E4B@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156386>
 
-Some versions of cut do not cope well with lines that do not end in
-an LF. Add '\n' to the printf format string to ensure that the
-generated output ends in a LF.
+On Fri, Sep 17, 2010 at 03:56:53PM +0400, Kirill Likhodedov wrote:
 
-I found this problem when t3404's "avoid unnecessary reset" failed
-due to the "rebase -i" not avoiding updating the tested timestamp.
+> I think that if it is a feature, it should be reflected in the
+> documentation for custom pretty formats.
 
-On a Mac OS X 10.4.11 system:
+I agree it should be documented. I'm not sure where, though. The
+subject-munging affects more than just pretty formats. For example, at
+least git format-patch also has --keep-subjects to turn off munging. I
+guess a note should be made in a all relevant places.
 
-    % printf '%s' 'foo bar' | /usr/bin/cut -d ' ' -f 1
-    cut: stdin: Illegal byte sequence
-    % printf '%s\n' 'foo bar' | /usr/bin/cut -d ' ' -f 1
-    foo
+> Anyway, that doesn't seem consistent enough: Git knows that the
+> subject is "first line\nsecond line\nthird line" (because it shows it
+> correctly in full or raw formats). Why does it join the lines in the
+> custom format's %s?
 
-Signed-off-by: Chris Johnsen <chris_johnsen@pobox.com>
+Because then the consumer of "git log --format=%s" knows that they will
+get exactly one line per commit.
 
----
-It looks like the cut on my system is derived from FreeBSD. It is
-probably an old version though (possibly too old to care about).
+The convention in git is to do "subject\n\nbody", with subject on a
+single line. However, we often see commits imported from other version
+control systems without this format. The subject-munging is an attempt
+to make them useful in git-aware tools (e.g., gitk or gitweb, which show
+the subject). Showing just the first line of a multi-line subject is
+often useless. People complained, and we got the behavior we have today.
 
-The cut from GNU coreutils does not to have this problem, so using
-it serves as a workaround.
----
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index eb2dff5..834460a 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -626,7 +626,7 @@ skip_unnecessary_picks () {
- 		case "$fd,$command" in
- 		3,pick|3,p)
- 			# pick a commit whose parent is current $ONTO -> skip
--			sha1=$(printf '%s' "$rest" | cut -d ' ' -f 1)
-+			sha1=$(printf '%s\n' "$rest" | cut -d ' ' -f 1)
- 			case "$(git rev-parse --verify --quiet "$sha1"^)" in
- 			"$ONTO"*)
- 				ONTO=$sha1
--- 
-1.7.3.rc2
+-Peff
