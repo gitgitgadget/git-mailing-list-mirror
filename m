@@ -1,90 +1,96 @@
-From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-Subject: Bug: git log --follow doesn't show history for a file created while merge
-Date: Fri, 17 Sep 2010 16:13:44 +0400
-Message-ID: <E68F7D53-50A6-4FD3-B176-600942B8A66C@jetbrains.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 17 14:14:10 2010
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH] fetch: Get submodule paths from index and not from .gitmodules
+Date: Fri, 17 Sep 2010 14:22:15 +0200
+Message-ID: <4C935D77.3080008@web.de>
+References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org> <4C9221B6.7070807@web.de> <AF9B7F7E-0956-4814-A3A8-BAD7619A043D@sb.org> <4C9351A7.7050609@web.de> <4C9359D4.2030109@viscovery.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Ballard <kevin@sb.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Sep 17 14:24:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwZpR-0001S1-Kb
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 14:14:09 +0200
+	id 1OwZzi-0007zO-7l
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 14:24:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753712Ab0IQMNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 08:13:47 -0400
-Received: from mail.intellij.net ([213.182.181.98]:50776 "EHLO
-	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753686Ab0IQMNq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 08:13:46 -0400
-Received: (qmail 20445 invoked by uid 89); 17 Sep 2010 12:13:44 -0000
-Received: by simscan 1.1.0 ppid: 20406, pid: 20436, t: 0.0256s
-         scanners: regex: 1.1.0 clamav: 0.96
-/m: 52
-Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
-  by mail.intellij.net with ESMTPA; 17 Sep 2010 12:13:44 -0000
-X-Mailer: Apple Mail (2.1081)
+	id S1753447Ab0IQMYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 08:24:40 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:52405 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752800Ab0IQMYj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 08:24:39 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 7298916076808;
+	Fri, 17 Sep 2010 14:22:16 +0200 (CEST)
+Received: from [93.240.125.96] (helo=[192.168.178.29])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1OwZxI-00017U-00; Fri, 17 Sep 2010 14:22:16 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <4C9359D4.2030109@viscovery.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+h2/+3bDZHDkJimEnLu2usBqtyK/G/oqUHRT1Z
+	KhH8GmNToz09omckJWTu3dIxDzwivuLrmHfKtH/NQ++u7LnhsF
+	EMo10XDkSb48GGc/aS4g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156380>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156381>
+
+Am 17.09.2010 14:06, schrieb Johannes Sixt:
+> Am 9/17/2010 13:31, schrieb Jens Lehmann:
+>> But I think I found the real issue, the stdout of the forked "git fetch"
+>> was swallowed due to a copy & paste bug while the actual fetch commands
+>> were executed nonetheless. Please try the following change:
+>>
+>>
+>> diff --git a/submodule.c b/submodule.c
+>> index e2c3bae..4fb1071 100644
+>> --- a/submodule.c
+>> +++ b/submodule.c
+>> @@ -260,7 +260,8 @@ int fetch_populated_submodules(int forced)
+>>         cp.env = local_repo_env;
+>>         cp.git_cmd = 1;
+>>         cp.no_stdin = 1;
+>> -       cp.out = -1;
+>> +       cp.out = 1;
+>> +       cp.err = 1;
+> 
+> This cannot be correct. Subsequent code reads the stdout of the child
+> process, i.e., you want a pipe; hence, cp.out = -1 is correct (this
+> requests a pipe; later code correctly closes cp.out).
+
+Thanks for catching this! I copied this code from a spot where stdout
+is read via a pipe (and is then closed afterwards), but that isn't the
+case here.
 
 
-When a file is created during a conflicting merge merge and then committed, 'git log --follow' shows no history, while 'git log' behaves correctly.
+> As far as stderr of the child is concerned, if you only want to re-use the
+> standard error of the parent, then not assigning anything to cp.err is
+> correct (it was set to 0 in the memset before this hunk). But perhaps you
+> want to achieve something else?
 
-Steps to reproduce:
-1. Make a conflicting merge.
-2. While manually resolving the merge, create a file.
-3. Commit the new file together with the merge resolve.
+Nope. You are right, setting both to 0 (via the memset) to inherit the
+channel from the parent is just what is needed here.
 
-More precisely (trivial outputs are skipped):
-# git init
-# echo 'initial content' > a.txt
-# git add .
-# git commit -m "initial"
+So the correct fix should look like this:
 
-# git checkout -b mybranch
-Switched to a new branch 'mybranch'
-# echo 'branchy' > a.txt
-# git add . 
-# git commit -m "branchy to a"
 
-# git checkout master
-# echo 'mastery' > a.txt 
-# git add . 
-# git commit -m "mastery to a"
+diff --git a/submodule.c b/submodule.c
+index e2c3bae..209efa4 100644
+--- a/submodule.c
++++ b/submodule.c
+@@ -260,7 +260,6 @@ int fetch_populated_submodules(int forced)
+        cp.env = local_repo_env;
+        cp.git_cmd = 1;
+        cp.no_stdin = 1;
+-       cp.out = -1;
 
-# git merge mybranch
-Auto-merging a.txt
-CONFLICT (content): Merge conflict in a.txt
-Automatic merge failed; fix conflicts and then commit the result.
-# echo 'content' > b.txt
-# git add .
-# git commit -m "resolved merge for a.txt, added b.txt"
-
-# git log b.txt 
-commit 1bf7b74c8e53ed065dd615771a602de803f87b6f
-Merge: 7b9b988 a82daa2
-Author: Kirill Likhodedov <kirill.likhodedov@jetbrains.com>
-Date:   Fri Sep 17 16:01:24 2010 +0400
-
-    resolved merge for a.txt, added b.txt
-# git log --follow b.txt 
-#
-
-I know that Linus doesn't like following renames :) but in this case there are no renames at all. It seems to be just a bug in --follow.
-
-Btw, after additional commits to b.txt, the history gets not empty, but the merge commit is still not listed there. 
-
-Thanks.
-
-----------------------------------
-Kirill Likhodedov
-JetBrains, Inc
-http://www.jetbrains.com
-"Develop with pleasure!"
+        for (i = 0; i < active_nr; i++) {
+                struct strbuf submodule_path = STRBUF_INIT;
