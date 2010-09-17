@@ -1,93 +1,71 @@
-From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-Subject: Re: git log --pretty=format joins lines in the subject of commit message
-Date: Fri, 17 Sep 2010 15:56:53 +0400
-Message-ID: <4D8D88A4-FEBF-4FA9-A39F-410D76289E4B@jetbrains.com>
-References: <DDB24DEE-934B-4C8D-8DAA-595905035AC4@jetbrains.com> <AANLkTikXwKBUKvrNs3ezKWjBh35Y87q6gZKSyZ=1cZyG@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 13:57:03 2010
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] fetch: Get submodule paths from index and not from .gitmodules
+Date: Fri, 17 Sep 2010 14:06:44 +0200
+Message-ID: <4C9359D4.2030109@viscovery.net>
+References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org> <4C9221B6.7070807@web.de> <AF9B7F7E-0956-4814-A3A8-BAD7619A043D@sb.org> <4C9351A7.7050609@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Ballard <kevin@sb.org>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Fri Sep 17 14:07:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwZYr-00084d-TN
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 13:57:02 +0200
+	id 1OwZiW-0005uC-Mm
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 14:07:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063Ab0IQL44 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 07:56:56 -0400
-Received: from mail.intellij.net ([213.182.181.98]:49120 "EHLO
-	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752332Ab0IQL4z convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 07:56:55 -0400
-Received: (qmail 3679 invoked by uid 89); 17 Sep 2010 11:56:54 -0000
-Received: by simscan 1.1.0 ppid: 3634, pid: 3669, t: 0.0712s
-         scanners: regex: 1.1.0 clamav: 0.96
-/m: 52
-Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
-  by mail.intellij.net with ESMTPA; 17 Sep 2010 11:56:54 -0000
-In-Reply-To: <AANLkTikXwKBUKvrNs3ezKWjBh35Y87q6gZKSyZ=1cZyG@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1753127Ab0IQMGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Sep 2010 08:06:51 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:43057 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752738Ab0IQMGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Sep 2010 08:06:50 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OwZiH-0006Pb-Vz; Fri, 17 Sep 2010 14:06:46 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id D03451660F;
+	Fri, 17 Sep 2010 14:06:44 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100824 Thunderbird/3.0.7
+In-Reply-To: <4C9351A7.7050609@web.de>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156379>
 
-I think that if it is a feature, it should be reflected in the document=
-ation for custom pretty formats.
+Am 9/17/2010 13:31, schrieb Jens Lehmann:
+> But I think I found the real issue, the stdout of the forked "git fetch"
+> was swallowed due to a copy & paste bug while the actual fetch commands
+> were executed nonetheless. Please try the following change:
+> 
+> 
+> diff --git a/submodule.c b/submodule.c
+> index e2c3bae..4fb1071 100644
+> --- a/submodule.c
+> +++ b/submodule.c
+> @@ -260,7 +260,8 @@ int fetch_populated_submodules(int forced)
+>         cp.env = local_repo_env;
+>         cp.git_cmd = 1;
+>         cp.no_stdin = 1;
+> -       cp.out = -1;
+> +       cp.out = 1;
+> +       cp.err = 1;
 
-Anyway, that doesn't seem consistent enough: Git knows that the subject=
- is "first line\nsecond line\nthird line" (because it shows it correctl=
-y in full or raw formats). Why does it join the lines in the custom for=
-mat's %s?=20
+This cannot be correct. Subsequent code reads the stdout of the child
+process, i.e., you want a pipe; hence, cp.out = -1 is correct (this
+requests a pipe; later code correctly closes cp.out).
 
-I know I can just use raw format, I'm just concerned about git log beha=
-vior consistency.
+As far as stderr of the child is concerned, if you only want to re-use the
+standard error of the parent, then not assigning anything to cp.err is
+correct (it was set to 0 in the memset before this hunk). But perhaps you
+want to achieve something else?
 
-
-15.09.2010, =D0=B2 17:01, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =D0=BD=
-=D0=B0=D0=BF=D0=B8=D1=81=D0=B0=D0=BB(=D0=B0):
-
-> On Wed, Sep 15, 2010 at 12:55, Kirill Likhodedov
-> <Kirill.Likhodedov@jetbrains.com> wrote:
->> Commit something to a git repository with a commit message with seve=
-ral newlines like this:
->>=20
->> =3D=3D=3D=3D commit message starts below =3D=3D=3D
->> first line
->> second line
->> third line
->>=20
->> fifth line
->> =3D=3D=3D commit message ends above =3D=3D=3D
->>=20
->> Git treats the first 3 lines as commit message subject and the last =
-line as its body.
->>=20
->> 'git log' shows the commit message correctly - exactly like I've ent=
-ered. So does 'git log --pretty=3Draw'
->>=20
->> But 'git log --pretty=3Dformat:%s#%b' joins the first three lines:
->> first line second line third line#fifth line
->>=20
->> Is it a bug or a feature?
->=20
-> It's probably a feature. We delimit the subject by "\n\n", not
-> "\n". And IIRC subjects in E-Mail can contain \n.
->=20
->> If it is a feature how can I acquire the original subject of the com=
-mit message by using custom format?
->=20
-> Use a log format that gives you the complete message, then pipe it
-> through perl or something to parse it?
-
-----------------------------------
-Kirill Likhodedov
-JetBrains, Inc
-http://www.jetbrains.com
-"Develop with pleasure!"
+-- Hannes
