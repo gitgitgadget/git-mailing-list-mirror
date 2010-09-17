@@ -1,71 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-rebase--interactive.sh: replace cut with ${v%% *}
-Date: Fri, 17 Sep 2010 14:57:42 -0700
-Message-ID: <7v8w302fu1.fsf@alter.siamese.dyndns.org>
-References: <7vsk182p2q.fsf@alter.siamese.dyndns.org>
- <0eafa42f1da5f66465a1eb9da170416363cf72e0.1284759770.git.chris_johnsen@pobox.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC/PATCH 0/3] fast-import: give importers access to the object store
+Date: Sat, 18 Sep 2010 01:24:58 +0200
+Message-ID: <AANLkTikoQb9R06ppYnPAHujnuXtGD7s14Z7AqhgcPUeN@mail.gmail.com>
+References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino>
+ <20100817170216.GA14491@kytes> <20100905031528.GA2344@burratino> <1284596048.3298.3.camel@wilber>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
-	Brandon Casey <drafnel@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Chris Johnsen <chris_johnsen@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 17 23:58:14 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Sat Sep 18 01:25:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owiwd-00070C-Sb
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Sep 2010 23:58:12 +0200
+	id 1OwkJ3-0004ON-V3
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 01:25:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753321Ab0IQV54 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Sep 2010 17:57:56 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46865 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752125Ab0IQV5z (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Sep 2010 17:57:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43CFCD6BF7;
-	Fri, 17 Sep 2010 17:57:55 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=U7fQwH5dLUHeVplVsZpTMUU3wC0=; b=ltiaqo
-	4SBz7UYUBL05cBmVxFJjeXf36HzdeI6bzJ4x7b4U844ZQEvgYd8Lg8hZtmBKyFfY
-	aMcbXl6R9WNDWO3nb3nUiQqxNCmd2SS+ax80x/ls62+2Lxu7qQMsQ+M/wvVFhGT8
-	Nj8a87q1enkU+y6eglOuVELb88fdmxzqnSSio=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZzcUmH1kTdrjR2HhlwP6aU9PkrLcU5Al
-	CP9i3G1KaGT3gDcHOeiyVXUXdnhlnbnbV91/mVxFhie+MzsYp4nlWLOmSdO+M6Yv
-	wqBgBEbqNZzxzIxVQRgf/6RPxckiO1wgXue76dCs198yAr3gUshdxW2WA5l1gnQ/
-	remGiaAzNJA=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E6766D6BF5;
-	Fri, 17 Sep 2010 17:57:49 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0CDFED6BF4; Fri, 17 Sep
- 2010 17:57:43 -0400 (EDT)
-In-Reply-To: <0eafa42f1da5f66465a1eb9da170416363cf72e0.1284759770.git.chris_johnsen@pobox.com> (Chris Johnsen's message of "Fri\, 17 Sep 2010 16\:42\:51 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9D05BC56-C2A6-11DF-87D3-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751450Ab0IQXZU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Sep 2010 19:25:20 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:58952 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750782Ab0IQXZT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Sep 2010 19:25:19 -0400
+Received: by gxk23 with SMTP id 23so888960gxk.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 16:25:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8ux79x0/9IBXu8+xIfM+r19SMfLPZ50C+bKqanhAGYc=;
+        b=hNwXG60JHeTotb5rb++1r5rQ8rc4MsQkLWs6fouXaTra9LajwuuuVxIBWk8SzKoV6O
+         stC5y7QllF2y6vbKE1TmKaC1J+g/MkHm5DfA9qnHL88ucjCXVcEfM/SL3T1BW37HhDa0
+         7jIsYTx5kV2UaLSrIC4vOVeRDBU20IggQEt4w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=sKHeF947bih6c4utHm5fPefIP89Mp3uGXhRTUqnjwxRGO/x57jPXvvw/ESS3DBHeVu
+         Wq87OAKivVY6LdAXCpaWj8NnJtVQ9b1tzwHNLl1YwurecDbsgaIn/w1AdCF1LL50eHbl
+         1bK5w6eTGQTvDaTGCuC2v/Jk3UZ4LGEi+QokU=
+Received: by 10.150.134.18 with SMTP id h18mr6391875ybd.436.1284765918291;
+ Fri, 17 Sep 2010 16:25:18 -0700 (PDT)
+Received: by 10.151.82.3 with HTTP; Fri, 17 Sep 2010 16:24:58 -0700 (PDT)
+In-Reply-To: <1284596048.3298.3.camel@wilber>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156418>
 
-Chris Johnsen <chris_johnsen@pobox.com> writes:
+Heya,
 
-> It seems like the other uses of cut in git-rebase--interactive.sh
-> would be more awkward if they were replaced with equivalent
-> processing done in-shell with parameter expansions...
+On Thu, Sep 16, 2010 at 02:14, Sam Vilain <sam@vilain.net> wrote:
+> This is probably quite a late comment, but I don't think that
+> 'report-fd=3D3' is a good idea in a protocol like this. =C2=A0It shou=
+ld not
+> take an argument and just respond down the appropriate selected file
+> descriptor. =C2=A0ie, default to standard output. =C2=A0If standard i=
+nput is a
+> socket, then use that bidirectionally. =C2=A0If --report-fd is used o=
+n the
+> command line, use that.
 
-More importantly, they are fed output from rev-list and do not have
-breakage you observed on your Mac OS box, do they?
+I understand your point, the generated stream is not very reusable if
+the fd is 'hardcoded'. On the other hand, the primary use for this
+feature is the case where an exporter feeds directly into an importer.
+What use case do you see for re-use of a stream where the report-fd is
+used? Or are your objections based on some other ground?
 
-IOW, I don't see anything that needs fixing in other uses.
+--=20
+Cheers,
 
-In any case, thanks for the fix.
+Sverre Rabbelier
