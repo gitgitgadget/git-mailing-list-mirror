@@ -1,96 +1,86 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: Find out on which branch a commit was originally made
-Date: Sat, 18 Sep 2010 17:26:08 +0200
-Message-ID: <1jp0xnn.1gyr9a31jn4r7cM%lists@haller-berlin.de>
-References: <AANLkTiknoBS7x2za3qzghfS0TD6UUL83eoZz7LFBPUuc@mail.gmail.com>
+From: Peter Weseloh <peter.weseloh@googlemail.com>
+Subject: Can 'git push' reset refs of the 'from' repo?
+Date: Sat, 18 Sep 2010 17:46:27 +0200
+Message-ID: <AANLkTi=H=1Ako5pbfmxU-s7XvgrzSc37gPJMzxi283de@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: avarab@gmail.com (=?ISO-8859-1?Q?=C6var_Arnfj=F6r=3F_Bjarmason?=)
-X-From: git-owner@vger.kernel.org Sat Sep 18 17:26:31 2010
+To: git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 18 17:46:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwzJ9-0001rk-72
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 17:26:31 +0200
+	id 1Owzcl-0003hM-Ln
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 17:46:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab0IRP0N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Sep 2010 11:26:13 -0400
-Received: from mail.ableton.net ([62.96.12.115]:45181 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751291Ab0IRP0N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Sep 2010 11:26:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=CBwe1XaebBsH7XBRvhQXoKQmzzTdCGnu/HdTQoEHSYs=;
-	b=UZwKvP3u/Sl3TeDjKTgVI2+EaT+n1lSnpKgBQFrLYGUAk2m21w0mvixwu9q/y4aM66xbhdtzxtWPqxgMGGDGhm965DeVl97YeHUu1tddoO0cdp262uu67/9sXcLWB5oaUgkGrEr/VKTlNJ1CGxfvyRyRN0Lh3Khf5YtyLM2liG4=;
-Received: from [10.1.15.231]
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1OwzHd-0001ms-8w; Sat, 18 Sep 2010 17:24:57 +0200
-In-Reply-To: <AANLkTiknoBS7x2za3qzghfS0TD6UUL83eoZz7LFBPUuc@mail.gmail.com>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
+	id S1752008Ab0IRPq3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 11:46:29 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:46986 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751421Ab0IRPq3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Sep 2010 11:46:29 -0400
+Received: by eyb6 with SMTP id 6so1275803eyb.19
+        for <git@vger.kernel.org>; Sat, 18 Sep 2010 08:46:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=RC63MH7ce0FOyd0eAa/4kpbC4vGh4RJ+qvnbKynmXLw=;
+        b=qLJWViV9H6dS8qGmyTI0aqsbwVEI5uQ7zmlDUchXaSb2f6dbkv/o0CzK72q5BsZJ91
+         3Rgxe2irt1Ksa76K8NcKh3F/7vheFLtW3ufTWixJ9d3OnzX9YQq0y4gHszOQPg+tB0Pz
+         IuUIH01znnjMqUNrcr2ev7BTvk/JaLNxVof6s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=Gwmp+h8j4sLFsaPrv+3c6+Pm83Ui/5L7H+Fu8oUJgp6LTpAQgpCN/FRFgNq+waAvni
+         F1lKk8HEYnk0w23f7ZRogqLh1mlXVONX71lcw4vGC0h20raBKC8SyusUt6/SzuU+tsuj
+         GpGJi7+GxrmxA9wH08uGzBPwjPR9rtb8vgpiM=
+Received: by 10.213.10.198 with SMTP id q6mr5209430ebq.8.1284824787487; Sat,
+ 18 Sep 2010 08:46:27 -0700 (PDT)
+Received: by 10.14.121.142 with HTTP; Sat, 18 Sep 2010 08:46:27 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156461>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156462>
 
-=C6var Arnfj=F6r? Bjarmason <avarab@gmail.com> wrote:
+Hi,
 
->     You want to do X, and you think Y is the best way of doing so.
-> Instead of asking about X, you ask about Y.
+Since a few days we have a very strange problem with our (bare)
+central git repo.
+Every night some refs in refs/heads get reset to older CSs.
+It is not clear why that happens. The repo has the config
+'receive.denyNonFastForwards = true' so it cannot be due to a push to
+the central repo, right?
+I also don't think that someone does a 'git reset' or something
+directly on the central repo.
 
-Erm, not really; I explicitly mentioned Y as "a possible workaround"
-only.  Anyway...
+Today it happened again and luckily no new changes were pushed to the
+central repo after the event so I inspected the files in refs/heads.
 
-> Why do your co-workers think this is essential to the point that they
-> can't get by without it? What problem are they trying to solve?
+The modification time and owner of the "tampered" refs seam to
+indicate that it was a cron job that changed them.
+The cron job does a 'git --git-dir=<path_to_central_repo> push foo' to
+update a remote repo 'foo' which was added to the central repo with
+'git remote add --mirror foo ssh://<host>/<path_to_foo>'.
+This setup was working well for quite a while.
 
-It's a common situation that you want to know why a certain piece of
-code is written the way it is.  So you blame it, you eventually end up
-at a certain interesting changeset, and hopefully the commit message
-tells you enough about why the change was made.  If it doesn't, then it
-can help a lot to know a bit more about the context of the change, i.e.
-what topic it was part of.
+Is it possible that the 'git push' changes refs in the central repo,
+i.e. the 'from' repo?
 
-> What Git *does* track however when you do `git merge topic` is the
-> name of the `topic` branch you're merging into some other branch,
-> e.g. here (from git-merge(1)):
->=20
->                      A---B---C topic
->                     /         \
->                D---E---F---G---H master
->=20
-> Even though A B and C might have been commited on branches called
-> `blah`, `bluh` and `blarghl` you'll never know. You'll just know that
-> someone put them all together on a branch called `topic` and that
-> someone later merged that into master in the main repository. E.g.:
->=20
->     Merge: A G
->     Author: Some Guy <some-guy@example.com>
->     Date:   <....>
->=20
->         Merge branch 'topic'
->=20
-> From there you can *infer* that A-B-C came from the topic branch,
+Another interesting information might be that I now also get an email
+from the cron job every night:
+yp_all: clnt_call: RPC: Unable to receive; errno = Connection reset by peer
 
-OK, that's pretty much the same as what I had in mind.  (We're
-simple-minded, so for us "original branch" and topic branch is the same
-most of the time.)
+That started at the same night I first saw the reset of the refs.
+I now replaced that cron job with another one running on the remote
+host that does a ''git remote update --prune" on the remote repo.
+Hopefully that resolves the problem.
 
-The question is the same though: if I hit commit B while blaming, how d=
-o
-I know what topic it was a part of?  For that, I need to find commit H
-which will tell me, right?  How do I do that?
+Any feedback on what might be going on is highly appreciated.
 
--Stefan
+Oh, the OS is Linux (RHEL4.8) and the git version is 1.7.0
 
-
---=20
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+Thanks in advance,
+Peter
