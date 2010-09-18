@@ -1,11 +1,12 @@
 From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: [PATCH (girocco) 1/3] taskd/clone: Store git-svn refs under svn-origin remote
-Date: Sat, 18 Sep 2010 13:58:52 +0400
-Message-ID: <4ade10555225aa1bfeb8f3a3ba89580d1aeae99c.1284803429.git.kirr@landau.phys.spbu.ru>
+Subject: [PATCH (girocco) 2/3] taskd/clone: ask git-svn to store branches under svn-origin/heads/* instead of svn-origin/*
+Date: Sat, 18 Sep 2010 13:58:53 +0400
+Message-ID: <9b21791c9138823862157c5889181543ac4f1f2a.1284803429.git.kirr@landau.phys.spbu.ru>
 References: <cover.1284803429.git.kirr@landau.phys.spbu.ru>
 Cc: git@vger.kernel.org, Kirill Smelkov <kirr@landau.phys.spbu.ru>,
 	Andrew Steinborn <g33kdyoo@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>
+	Miklos Vajna <vmiklos@frugalware.org>,
+	Eric Wong <normalperson@yhbt.net>
 To: Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
 X-From: git-owner@vger.kernel.org Sat Sep 18 11:57:35 2010
 Return-path: <git-owner@vger.kernel.org>
@@ -13,20 +14,20 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwuAo-0005f1-GH
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 11:57:34 +0200
+	id 1OwuAp-0005f1-25
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 11:57:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755446Ab0IRJ5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Sep 2010 05:57:25 -0400
-Received: from landau.phys.spbu.ru ([195.19.235.38]:42935 "EHLO
+	id S1755451Ab0IRJ5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 05:57:32 -0400
+Received: from landau.phys.spbu.ru ([195.19.235.38]:42943 "EHLO
 	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755387Ab0IRJ5X (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Sep 2010 05:57:23 -0400
+	with ESMTP id S1755387Ab0IRJ5b (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Sep 2010 05:57:31 -0400
 Received: by landau.phys.spbu.ru (Postfix, from userid 506)
-	id C8982FF66F; Sat, 18 Sep 2010 13:57:22 +0400 (MSD)
+	id EBEE0FF6F3; Sat, 18 Sep 2010 13:57:30 +0400 (MSD)
 Received: from kirr by landau.phys.spbu.ru with local (Exim 4.72)
 	(envelope-from <kirr@roro3.zxlink>)
-	id 1OwuCK-0002c8-J4; Sat, 18 Sep 2010 13:59:08 +0400
+	id 1OwuCS-0002cE-Mg; Sat, 18 Sep 2010 13:59:16 +0400
 X-Mailer: git-send-email 1.7.3.rc2.1.g63647
 In-Reply-To: <cover.1284803429.git.kirr@landau.phys.spbu.ru>
 In-Reply-To: <cover.1284803429.git.kirr@landau.phys.spbu.ru>
@@ -35,42 +36,53 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156447>
 
-Previously git-svn stored everything right under refs/remotes/ , and now
-I'm putting svn-mirrored refs under refs/remotes/svn-origin/ .
+The trick originally suggested by Mikls Vajna does the following:
 
-This makes sense, since it helps debugging svn-mirroring problems - e.g.
-at present we don't forward to visible git namespace svn branches at
-all.
+    refs/remotes/svn-origin/heads/*     ->  refs/heads/*
+    refs/remotes/svn-origin/trunk       ->  refs/heads/master
+    refs/remotes/svn-origin/tags/*      ->  refs/tags/*
+
+The problem is git-svn now stores svn branches under
+refs/remotes/svn-origin/* (not refs/remotes/svn-origin/heads/* as we
+used to expect), and so the first mapping does nothing, and we end up
+without svn branches in refs/heads/ namespace.
+
+So, to avoid the problem let's ask git-svn to put svn branches under
+svn-origin/heads/* -- then our mapping will work as expected, and it
+will fix girocco problem of not propagating svn branches (except trunk)
+to git refs/heads/ namespace.
+
+Note: we can't write ``+refs/remotes/svn-origin/*:refs/heads/*'' in the
+mapping instead, because then it will recursively put everything from
+under svn-origin/ into refs/heads/ , at least including tags/ .
+
+( Eric, at least it seems a bit unflexible for storing svn branches right under
+  $prefix/ -- as you can see for automated git mirroring of svn repos, I
+  had to tweak git config by hand... )
 
 Cc: Andrew Steinborn <g33kdyoo@gmail.com>
 Cc: Miklos Vajna <vmiklos@frugalware.org>
+Cc: Eric Wong <normalperson@yhbt.net>
 ---
- taskd/clone.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ taskd/clone.sh |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
 diff --git a/taskd/clone.sh b/taskd/clone.sh
-index 9a6409c..8d56e1e 100755
+index 8d56e1e..12363e5 100755
 --- a/taskd/clone.sh
 +++ b/taskd/clone.sh
-@@ -25,13 +25,13 @@ case "$url" in
- 	svn://* | svn+http://* | svn+https://*)
+@@ -26,6 +26,10 @@ case "$url" in
  		# we just remote svn+ here, so svn+http://... becomes http://...
  		svnurl="${url#svn+}"
--		GIT_DIR=. git svn init -s "$svnurl"
-+		GIT_DIR=. git svn init -s --prefix=svn-origin/ "$svnurl"
+ 		GIT_DIR=. git svn init -s --prefix=svn-origin/ "$svnurl"
++		# ask git-svn to store branches under svn-origin/heads/* instead of svn-origin/*
++		GIT_DIR=. git config svn-remote.svn.branches	\
++			"$(git config --get svn-remote.svn.branches |	\
++			   sed 's|:refs/remotes/svn-origin/\*$|:refs/remotes/svn-origin/heads/*|')"
  		GIT_DIR=. git svn fetch
  		# Neat Trick suggested by Miklos Vajna
  		GIT_DIR=. git config remote.origin.url .
--		GIT_DIR=. git config remote.origin.fetch '+refs/remotes/heads/*:refs/heads/*'
--		GIT_DIR=. git config --add remote.origin.fetch '+refs/remotes/trunk:refs/heads/master'
--		GIT_DIR=. git config --add remote.origin.fetch '+refs/remotes/tags/*:refs/tags/*'
-+		GIT_DIR=. git config remote.origin.fetch '+refs/remotes/svn-origin/heads/*:refs/heads/*'
-+		GIT_DIR=. git config --add remote.origin.fetch '+refs/remotes/svn-origin/trunk:refs/heads/master'
-+		GIT_DIR=. git config --add remote.origin.fetch '+refs/remotes/svn-origin/tags/*:refs/tags/*'
- 		GIT_DIR=. git fetch
- 		;;
-       	darcs://*)
 -- 
 1.7.3.rc2.1.g63647
