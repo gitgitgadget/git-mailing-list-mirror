@@ -1,94 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG, PATCH 0/3] Fix {blame,cat-file} --textconv for cases with
- symlinks
-Date: Sat, 18 Sep 2010 13:01:17 -0700
-Message-ID: <7vpqwa254i.fsf@alter.siamese.dyndns.org>
-References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
- <vpqhbhmx6tg.fsf@bauges.imag.fr>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH] smart-http: Don't change POST to GET when following redirect
+Date: Sat, 18 Sep 2010 17:00:25 -0400
+Message-ID: <AANLkTimwkXTs==+zT=Ue3jFNyRLL+7A1FFhoDuF-5zZ3@mail.gmail.com>
+References: <877hijvff7.fsf@catnip.gol.com> <20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
+ <m262y3cvpy.fsf@whitebox.home> <m21v8rcua1.fsf_-_@whitebox.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sat Sep 18 22:01:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Sat Sep 18 23:01:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ox3bZ-0002R6-Kq
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 22:01:49 +0200
+	id 1Ox4Ws-0000UH-SJ
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 23:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753424Ab0IRUBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Sep 2010 16:01:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62620 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752137Ab0IRUBf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Sep 2010 16:01:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2919ED75BC;
-	Sat, 18 Sep 2010 16:01:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5UgoQ7n5/+xAW1YGTRH/Dg/ryGw=; b=F+aMlg
-	efNrXujjHOhRa4eDaazl6qmZ816bj0J1u084FRW8gca29N5l3D/h5S+jR+aX5MJh
-	tbzPjLxJfhPU4oSvt6CWb4AXjxo+KBmoRfSgRGYoqrtjkIPdCBKkQd+LMBQp5m8m
-	YwgZRDrJsw4jtzZ2waetpda1XQoPx2PiIMUBk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vhTphzkREV02Py0zw/zR63fV16a9AHf4
-	tdOKcdN7TMJLW7JcCCe2+dLKV1o2Ex2NPrE91SidKX5CPTfMqBDjah+uyWdBNhMT
-	VdGXNSZ8Zpc0FG252vksMqMcl+yD/E3Q/YKWRjttJevSyv9h/p/lQwCX7ZshQsCq
-	MQo5JcZBPv0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9269DD75BA;
-	Sat, 18 Sep 2010 16:01:26 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 82C75D75A8; Sat, 18 Sep
- 2010 16:01:19 -0400 (EDT)
-In-Reply-To: <vpqhbhmx6tg.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Sat\, 18 Sep 2010 20\:08\:59 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 850959D2-C35F-11DF-8FCD-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754533Ab0IRVA4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Sep 2010 17:00:56 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:55427 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753105Ab0IRVA4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Sep 2010 17:00:56 -0400
+Received: by vws3 with SMTP id 3so2356460vws.19
+        for <git@vger.kernel.org>; Sat, 18 Sep 2010 14:00:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jZ6i25er4ALQQbfwvQpvBTw74B9EFcEzAWBXOIIPvVM=;
+        b=UUCBbPMLfxxkqQsGorNPtjXJJGqqYvC6aS6Stgj1TmhdURE33GEtKBIb50FDn7xCle
+         L0IQ84W6K86cn1dNtIUMR2i4K9Dxyl35RZQvuS+eBADvm0+0CJ6RQw5rTOhRNZWuPRPa
+         oh1cxWCjgIj9IZTSHOlSeMEkYqlmevQjR9Vbs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=IUQ8/YlOW/I3Slnr3Bnbuitgoo1I0tSuAwruo3ZRrr8IfJYRnxIqW/9RbTr6JOUMVV
+         AjoisBI6A6KGXfMjonY+lbt9IIkTVnwNZPxPa38/tDvvdYSaFI+5on5/HJWu6TTGpgty
+         pDLc/MH2ZNm+wv98e6DFBc3ekJx+RlUkf+DaU=
+Received: by 10.220.50.94 with SMTP id y30mr386754vcf.48.1284843655230; Sat,
+ 18 Sep 2010 14:00:55 -0700 (PDT)
+Received: by 10.220.70.141 with HTTP; Sat, 18 Sep 2010 14:00:25 -0700 (PDT)
+In-Reply-To: <m21v8rcua1.fsf_-_@whitebox.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156474>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+On Sat, Sep 18, 2010 at 4:47 AM, Andreas Schwab <schwab@linux-m68k.org>=
+ wrote:
+> + =C2=A0 =C2=A0 =C2=A0 curl_easy_setopt(slot->curl, CURLOPT_POSTREDIR=
+, CURL_REDIR_POST_ALL);
 
-> Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
->
->> Recently I've spot a bug in git blame --textconv, which was wrongly
->> calling pdftotext (my *.pdf conversion program) on a symlink.pdf,
->
-> No time for a detailed review now, but textconv is also called by diff
-> (that's the original implementation). Does "git diff" work properly on
-> symlinks in the same case?
+Not sure what git's minimum supported libcurl is, but this define was
+added in 7.19.1 (November 5 2008).
 
-diff knows symlinks and regular files are different, and produces "delete
-old then add new" if you changed a regular file to a symlink.
-
-That said, if you changed a symlink from pointing at A to pointing at B,
-it does run the textual diff between the string we get from readlink(3).
-
-I happen to think that textconv, if specified, for such a path should be
-honored, so that people can keep doing whatever munging they have been
-doing in their existing textconv filters.
-
-I didn't look at the thread or problem description, but are we running the
-textconv filter on the file that symlink points at, instead of the
-pathname stored in the symlink?  If so I'd call that a bug.
-
-On the other hand, if we are running the textconv filter on the pathname,
-then I don't think we are doing anything wrong.  If you have a filter that
-is meant to munge a PDF file to some other format, and if you do not want
-to apply that filter to munge a pathname a symlink that happens to be
-named "foo.pdf", either the filter itself or the attributes pattern you
-are using to choose what paths to apply that filter might want to be
-written more carefully, that's all.
+j.
