@@ -1,108 +1,62 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: [PATCH] smart-http: Don't change POST to GET when following redirect
-Date: Sat, 18 Sep 2010 10:47:50 +0200
-Message-ID: <m21v8rcua1.fsf_-_@whitebox.home>
-References: <877hijvff7.fsf@catnip.gol.com>
-	<20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
-	<m262y3cvpy.fsf@whitebox.home>
+From: Jess McKenzie - JZM Web Development <jessmckenzie@ihug.co.nz>
+Subject: Re: Libcurl
+Date: Sat, 18 Sep 2010 20:48:07 +1200
+Message-ID: <4C947CC7.8030209@ihug.co.nz>
+References: <4C943BF9.9040104@ihug.co.nz> <4C947B2B.308@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat Sep 18 10:48:10 2010
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sat Sep 18 10:48:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owt5e-000446-2n
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 10:48:10 +0200
+	id 1Owt5s-0004DW-TH
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 10:48:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755300Ab0IRIrx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Sep 2010 04:47:53 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:38416 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630Ab0IRIrw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Sep 2010 04:47:52 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id A9A4A1C001BB;
-	Sat, 18 Sep 2010 10:47:50 +0200 (CEST)
-X-Auth-Info: lb3X7l44CYoC3EQHdNTwJY0rZjxxcM+299gUnz7kDNk=
-Received: from whitebox.home (ppp-88-217-109-67.dynamic.mnet-online.de [88.217.109.67])
-	by mail.mnet-online.de (Postfix) with ESMTPA id 99F761C00268;
-	Sat, 18 Sep 2010 10:47:50 +0200 (CEST)
-Received: by whitebox.home (Postfix, from userid 501)
-	id 5F79C1E5311; Sat, 18 Sep 2010 10:47:50 +0200 (CEST)
-X-Yow: This MUST be a good party -- My RIB CAGE is being painfully
- pressed up against someone's MARTINI!!
-In-Reply-To: <m262y3cvpy.fsf@whitebox.home> (Andreas Schwab's message of "Sat,
-	18 Sep 2010 10:16:41 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1755305Ab0IRIsM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 04:48:12 -0400
+Received: from mailfilter65.ihug.co.nz ([203.109.136.65]:28241 "EHLO
+	mailfilter65.ihug.co.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754630Ab0IRIsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Sep 2010 04:48:11 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AusLACYZlEx2XeUR/2dsb2JhbAChMYEAcsALhUAEijOHPw
+X-IronPort-AV: E=Sophos;i="4.56,385,1280664000"; 
+   d="scan'208";a="59236228"
+Received: from 118-93-229-17.dsl.dyn.ihug.co.nz (HELO Jess-McKenzies-MacBook.local) ([118.93.229.17])
+  by cust.filter1.content.vf.net.nz with ESMTP; 18 Sep 2010 20:48:07 +1200
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.9) Gecko/20100825 Thunderbird/3.1.3
+In-Reply-To: <4C947B2B.308@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156439>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156440>
 
-When the remote HTTP server returns a redirect the default libcurl action
-is to change a POST request into a GET request while following the
-redirect, but the remote http backend does not expect that.  Tell libcurl
-to always keep the POST request.
+  The system is cent os 5.5:
 
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
----
-Andreas Schwab <schwab@linux-m68k.org> writes:
+I get:
 
-> Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+No package libcurl-devel available.
+Nothing to do
+
+
+
+
+
+On 18/09/10 8:41 PM, Andreas Ericsson wrote:
+> On 09/18/2010 06:11 AM, Jess McKenzie - JZM Web Development wrote:
+>> How do I compile git with libcurl
+> You install curl and its development package before you build git.
+> If you're on windows, I think it's bundled. Otherwise
 >
->> On Sat, Sep 18, 2010 at 01:33:48PM +0900, Miles Bader wrote:
->>
->>> The savannah.gnu.org admins are trying out the git "smart http" server,
->>> but it doesn't seem to handle http redirects properly... should it?
->>> Is this a bug with the git server?
->>> 
->>> The follow is from Sylvain Beucler;
->>> > Hmmm, actually it works, but it doesn't support a HTTP redirect
->>> > (namely git.sv.gnu.org -> git.savannah.gnu.org).
->>> >
->>> > $ git clone http://git.sv.gnu.org/r/freedink.git
->>> > Initialized empty Git repository in /tmp/freedink/.git/
->>> > error: RPC failed; result=22, HTTP code = 405
->>
->> 405 (Method not allowed)? Can you see what request it is trying to send
->> and to where (the request that fails with 405 that is)?
+>    yum install libcurl-devel
 >
-> I think this is a bug in the apache setup at savannnah.  It is
-> responding to POST .../git-upload-pack with both 301 and 405.  This does
-> not happen if you use the redirected address directly.
-
-Looking closer, this is actually a bug in git.  It does not set the
-POSTREDIR option, so that libcurl changes the POST into GET when
-following a redirection.
-
-Andreas.
-
----
- remote-curl.c |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/remote-curl.c b/remote-curl.c
-index 04d4813..309b024 100644
---- a/remote-curl.c
-+++ b/remote-curl.c
-@@ -393,6 +393,7 @@ static int post_rpc(struct rpc_state *rpc)
- 	curl_easy_setopt(slot->curl, CURLOPT_POST, 1);
- 	curl_easy_setopt(slot->curl, CURLOPT_URL, rpc->service_url);
- 	curl_easy_setopt(slot->curl, CURLOPT_ENCODING, "");
-+	curl_easy_setopt(slot->curl, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
- 
- 	headers = curl_slist_append(headers, rpc->hdr_content_type);
- 	headers = curl_slist_append(headers, rpc->hdr_accept);
--- 
-1.7.2.3
-
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> should do the trick if you're on any kind of redhat derived system.
+> OTOH, you'd probably be better off just installing the precompiled
+> packages on any sort of unixy system.
+>
