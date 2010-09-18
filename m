@@ -1,132 +1,74 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 5/7] gitweb: auxiliary functions to group data
-Date: Sat, 18 Sep 2010 09:51:13 +0200
-Message-ID: <AANLkTimN+rGCS7pokwSDVT75_LsU4aAsaHmw7Xi_HVm+@mail.gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
- <201009171806.49774.jnareb@gmail.com> <AANLkTikjLNva7Jgh0xYeah1maFusfOiaLwY7+eixx8so@mail.gmail.com>
- <201009171917.44979.jnareb@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git "smart http" server vs. http redirects
+Date: Sat, 18 Sep 2010 10:16:41 +0200
+Message-ID: <m262y3cvpy.fsf@whitebox.home>
+References: <877hijvff7.fsf@catnip.gol.com>
+	<20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 18 09:51:56 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sat Sep 18 10:17:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OwsDA-0005dW-VP
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 09:51:53 +0200
+	id 1Owsbe-0007MJ-9E
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 10:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754824Ab0IRHvf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Sep 2010 03:51:35 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60466 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754444Ab0IRHve convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Sep 2010 03:51:34 -0400
-Received: by iwn5 with SMTP id 5so2599353iwn.19
-        for <git@vger.kernel.org>; Sat, 18 Sep 2010 00:51:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8E2IoLtavnzFxTnHafHWhsDWf8r06Aw1lVTfBX2L+N0=;
-        b=BetqRvs2G40ok0H9w8Ugm0xzzfaBPbFBr1dK0kgRvT7+l1SHLIpkNQ1P9L9nAmrqun
-         cIZ4oUdGQ0taIm05JBLRUqg27lmwPXTg8IUbl2Z0p+xsMohTWKGcCaM3z9Gs14ThLX7l
-         PLfQ0dr03cw0VG9x2/oTfgnUzrNzWBp+5oO/o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=J93s95Fdug0FycvKQObFB64Yjo+ci4GWrUiTA/SS8ZzySwhD3AOVNMUhWKd7zP+njS
-         ocnv4ozcoITrm3/x3p3dadhPmhGO8GzSPuUrX4jTiO4152jpjIi9X9VxjuJv08FuO1rK
-         eLzmYKd+svLnZ7DCjqnOvLFb0HcVchrItRH9o=
-Received: by 10.231.148.20 with SMTP id n20mr6360024ibv.196.1284796293445;
- Sat, 18 Sep 2010 00:51:33 -0700 (PDT)
-Received: by 10.231.150.202 with HTTP; Sat, 18 Sep 2010 00:51:13 -0700 (PDT)
-In-Reply-To: <201009171917.44979.jnareb@gmail.com>
+	id S1755007Ab0IRIQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 04:16:46 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:41519 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754877Ab0IRIQp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Sep 2010 04:16:45 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 11A111C1566D;
+	Sat, 18 Sep 2010 10:16:42 +0200 (CEST)
+X-Auth-Info: Qqx/JX8YZkdKkeotE2rsAuCKMpI65vx0/gy4SvZsuWs=
+Received: from whitebox.home (ppp-88-217-109-67.dynamic.mnet-online.de [88.217.109.67])
+	by mail.mnet-online.de (Postfix) with ESMTPA id E1A2B1C005B7;
+	Sat, 18 Sep 2010 10:16:42 +0200 (CEST)
+Received: by whitebox.home (Postfix, from userid 501)
+	id 44B801E5311; Sat, 18 Sep 2010 10:16:41 +0200 (CEST)
+X-Yow: Is this the line for the latest whimsical YUGOSLAVIAN drama which also
+ makes you want to CRY and reconsider the VIETNAM WAR?
+In-Reply-To: <20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
+	(Ilari Liusvaara's message of "Sat, 18 Sep 2010 10:03:15 +0300")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156436>
 
-On Fri, Sep 17, 2010 at 7:17 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> On Fri, 17 Sep 2010, Giuseppe Bilotta wrote:
->> On Fri, Sep 17, 2010 at 6:06 PM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
->>> Giuseppe Bilotta wrote:
->>>> On Fri, Sep 17, 2010 at 3:24 AM, Jakub Narebski <jnareb@gmail.com>=
- wrote:
->>>>>
->>>>> ... but I think that having separate subroutines for opening and
->>>>> closing tags is a bad design / bad API (except in some rare cases=
-).
->>>>> It is begging for unbalanced HTML.
->>>>>
->>>>> It would be better if it was a single subroutine wrapping 'div' a=
-round
->>>>> contents given either as a string, or via callback (subroutine re=
-ference),
->>>>> in my opinion.
->>>>
->>>> I'm not sure that in this case the string or callback approach wou=
-ld
->>>> be any cleaner. I'll see if perl supports closures or something li=
-ke
->>>> that.
->>>
->>> Perl supports closures (thanks to anonymous subroutines 'sub { ... =
-}'
->>> and lexical variables 'my $var'), see perlsub and "Function Templat=
-es"
->>> in perlref.
->>>
->>> I also recommend free ebook "Higher-Order Perl" http://hop.perl.plo=
-ver.com/
->>
->> Thanks for the suggestion. I'm still not convinced that such an
->> implementation would be better though. Aside from the general
->> aesthetical suckiness of passing closures around (and the experience
->> is not any more pleasurable in Perl), there's also the matter of the
->> calling convention to use. I can think of two options:
->>
->> (1) we make the function callable as git_do_group($class, $id, sub {
->> <closure that prints the content> }, <paramters that go to
->> git_print_header_div>), which is somewhat illogical since we're
->> specifying the content before the header,
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+
+> On Sat, Sep 18, 2010 at 01:33:48PM +0900, Miles Bader wrote:
 >
-> Why not
+>> The savannah.gnu.org admins are trying out the git "smart http" server,
+>> but it doesn't seem to handle http redirects properly... should it?
+>> Is this a bug with the git server?
+>> 
+>> The follow is from Sylvain Beucler;
+>> > Hmmm, actually it works, but it doesn't support a HTTP redirect
+>> > (namely git.sv.gnu.org -> git.savannah.gnu.org).
+>> >
+>> > $ git clone http://git.sv.gnu.org/r/freedink.git
+>> > Initialized empty Git repository in /tmp/freedink/.git/
+>> > error: RPC failed; result=22, HTTP code = 405
 >
-> =A0git_do_group($class, $id, <print_header_div parameters>, sub { ...=
- })
->
-> or even use subroutine prototypes? =A0We can use 'pop @_' to get last
-> argument of a subroutine.
+> 405 (Method not allowed)? Can you see what request it is trying to send
+> and to where (the request that fails with 405 that is)?
 
-Ah, I hadn't thought about pop to get the last parameter. I think it
-makes sense. Ok, I'll give this syntax a try,
+I think this is a bug in the apache setup at savannnah.  It is
+responding to POST .../git-upload-pack with both 301 and 405.  This does
+not happen if you use the redirected address directly.
 
-> [...]
->> Overall, I still get the impression that the current API is
->> considerably cleaner, even with the small counterweight of the risk =
-of
->> leaving groups open (which is not something so dramatic anyway, IMO)=
-=2E
->
-> Might be.
->
-> But as currently git_*group() is used in only one place, isn't it
-> premature generalization ;-) ?
+Andreas.
 
-I noticed the same comment to patch 7/7, still writing the reply for
-that patch. I believe the feature is useful enough to deem the
-refactoring, and since it's written already why go back? ;-) (it also
-makes the code cleaner IMO).
-
-
---=20
-Giuseppe "Oblomov" Bilotta
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
