@@ -1,99 +1,77 @@
-From: "Neal Kreitzinger" <nkreitzinger@gmail.com>
-Subject: symlink impact: parent dir of working tree is a symlink
-Date: Fri, 17 Sep 2010 20:11:30 -0500
-Message-ID: <i713k3$nco$1@dough.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 18 07:05:15 2010
+From: Chris Johnsen <chris_johnsen@pobox.com>
+Subject: Re: [PATCH v2] git-rebase--interactive.sh: replace cut with ${v%% *}
+Date: Sat, 18 Sep 2010 00:25:16 -0500
+Message-ID: <AANLkTi=9rDR0chmPrjK3eAKgg_ECbAjcUYhvP_GELdvc@mail.gmail.com>
+References: <7vsk182p2q.fsf@alter.siamese.dyndns.org>
+	<0eafa42f1da5f66465a1eb9da170416363cf72e0.1284759770.git.chris_johnsen@pobox.com>
+	<7v8w302fu1.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org,
+	Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	Brandon Casey <drafnel@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 18 07:25:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owpbu-0002lE-2N
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 07:05:14 +0200
+	id 1Owpvd-000189-Ds
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 07:25:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab0IRFFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Sep 2010 01:05:05 -0400
-Received: from lo.gmane.org ([80.91.229.12]:35472 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751309Ab0IRFFF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Sep 2010 01:05:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Owpbj-0002gH-Sw
-	for git@vger.kernel.org; Sat, 18 Sep 2010 07:05:03 +0200
-Received: from 24-155-210-59.dyn.grandenetworks.net ([24.155.210.59])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 18 Sep 2010 07:05:03 +0200
-Received: from nkreitzinger by 24-155-210-59.dyn.grandenetworks.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 18 Sep 2010 07:05:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 24-155-210-59.dyn.grandenetworks.net
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5994
+	id S1752140Ab0IRFZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 01:25:19 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57532 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752090Ab0IRFZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Sep 2010 01:25:17 -0400
+Received: by bwz11 with SMTP id 11so3292065bwz.19
+        for <git@vger.kernel.org>; Fri, 17 Sep 2010 22:25:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        bh=8eJ5GamcAqoA3XFKnpukqmdUd0cIIEMHPPuIoIQdUiE=;
+        b=PecfWt+Dx28q7SUqWAeNZisbPNLxyE3HLQLeXoylKAIrXC7xKcl/YC43yYTrkl6uK5
+         W8joAcBs+CbHYI8IfvNOxSmx2f4TJ0aLkANdv/Ui4fJVoMg3YfE+rZ516ju9fpnchQ49
+         xabtdzAz2ez9bDnDyDaMH9Z38YMobK/P77QsE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=ACIodPD3xrG5Rn/scdKbI1gDuurJL8WP7WuO1pJP1EiE4XFjj3D8O6XnBGfmyfiCTG
+         FxI2y2B/on4/o0Qn0ar9WAG2PmTtGIBZ3zyUX8BBJ9etxohERQ++y0mOdLddgQ+Gi84/
+         sJX6tKZ4SfjgDs8FcTntARd1A3IbkqBNyeJrk=
+Received: by 10.223.103.203 with SMTP id l11mr2328451fao.82.1284787516231;
+ Fri, 17 Sep 2010 22:25:16 -0700 (PDT)
+Received: by 10.223.124.134 with HTTP; Fri, 17 Sep 2010 22:25:16 -0700 (PDT)
+In-Reply-To: <7v8w302fu1.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: YwrmtYymP0vXCv-mJN56bXQTHV0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156430>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156431>
 
-      What is the impact if the parent directory of a git repo is a symlink?
+Junio C Hamano <gitster@pobox.com> wrote:
+> Chris Johnsen <chris_johnsen@pobox.com> writes:
+>> It seems like the other uses of cut in git-rebase--interactive.sh
+>> would be more awkward if they were replaced with equivalent
+>> processing done in-shell with parameter expansions...
+>
+> More importantly, they are fed output from rev-list and do not have
+> breakage you observed on your Mac OS box, do they?
+>
+> IOW, I don't see anything that needs fixing in other uses.
 
-      In the git release notes I've noticed a trend of symlinks not playing 
-well with git.  I don't normally use symlinks, but my impression is that the 
-git release notes were referring to the scenario when a subset of files in 
-your working tree are symlinks.  I have a symlink scenario I now have to 
-deal with and I'm not sure what impact it will have on my git results.  Here 
-is the scenario:
+Right, the other uses of cut do not cause any problems on my system.
 
-      *At this time, all of our git repos reside on the root partition of a 
-single linux server.
-      *We have two systems under development and they have separate 
-"development environments":
-      (a)One dev environment uses the linux command line to maneuver the 
-file system and to run their git commands.
-      (b)The other dev environment uses an in-house developed menu system 
-that is text-based using bash scripts to run the git commands.  The users 
-are not supposed to run any git commands from command line in this dev 
-environment (This was not my decision so please don't hold it against me.)
-      *System (a) gets periodically merged into (b) by rebasing (a) onto 
-(b).  (a) is the legacy system and (b) is the future system.  (a) resides 
-under /home/user/ where there are several users, and (b) resides under 
-/opt/xyz/
-      *We have a goldbox (baremetal linux server) that contains several git 
-repos and they are all full copy clones made with the file:/// url.  The 
-goldbox is a "powerful" box.
-      *We have a betabox (baremetal linux server) that is for testing risky 
-procedures before implementing them on the goldbox.  The betabox is a 
-"weaker" box.
-      *I need to bring the betabox up-to-date with the goldbox, but the 
-development environment on the root partition of the goldbox is too big to 
-fit on the root partition of the betabox.  Therefore, we have symlinked the 
-/opt/xyz/ and /home/ directories to the /u/ partition (which resides on the 
-same hard-disk as the root partition) which has plenty of space to hold the 
-development environment.
-      *As a result, the scripts that point to /opt/xyz/ and /home/user/ to 
-find the git repos on the root partition of the goldbox will still work on 
-the betabox, but on the betabox these paths are symlinked to /u/ partition.
-      */opt/xyz/ and /home/ are the only symlinks.  There are no symlinks in 
-the working trees or .git directories or git template directories.  None of 
-the "external" git files, e.g. gitconfig, .gitconfig, or template files are 
-symlinks.
-      *Is this betabox setup still valid for a beta test for the goldbox? 
-Has this symlink setup that I've introduced on the betabox introduced  a 
-difference that could cause git to produce different results?  If I have 
-introduced a such a difference, how much impact do you think it will have? 
-How valid do you think the results on such a betabox would be for proving 
-their safety on the goldbox?
+Any remaining reason to change them would be along the lines of your
+"the less of 'cut' we see, the better" and the possible efficency of
+in-shell processing (e.g. for msys/cygwin).
 
-      If this betabox setup with symlinks is a valid beta test for the 
-goldbox, this would save us from having to rebuild the betabox with a larger 
-root partition.  Thanks!
-
-      v/r,
-      Neal
+-- 
+Chris
