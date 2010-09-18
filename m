@@ -1,74 +1,94 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: git "smart http" server vs. http redirects
-Date: Sat, 18 Sep 2010 10:16:41 +0200
-Message-ID: <m262y3cvpy.fsf@whitebox.home>
-References: <877hijvff7.fsf@catnip.gol.com>
-	<20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: did anyone see my message re "git smart http server ..."?
+Date: Sat, 18 Sep 2010 10:36:55 +0200
+Message-ID: <4C947A27.6070102@op5.se>
+References: <AANLkTikz8eKkXt7hsnR5nunq3Z8Ub5nvetctUsa1vOto@mail.gmail.com> <20100918032351.GA30282@LK-Perkele-V2.elisa-laajakaista.fi> <AANLkTi=-k_qWW2LuUGrq8U_8_cMLYVrMy6j5_s9zkyf6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat Sep 18 10:17:10 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Git Mailing List <git@vger.kernel.org>
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Sat Sep 18 10:37:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owsbe-0007MJ-9E
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 10:17:10 +0200
+	id 1OwsvQ-0007oy-4r
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 10:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755007Ab0IRIQq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Sep 2010 04:16:46 -0400
-Received: from mail-out.m-online.net ([212.18.0.9]:41519 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754877Ab0IRIQp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Sep 2010 04:16:45 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 11A111C1566D;
-	Sat, 18 Sep 2010 10:16:42 +0200 (CEST)
-X-Auth-Info: Qqx/JX8YZkdKkeotE2rsAuCKMpI65vx0/gy4SvZsuWs=
-Received: from whitebox.home (ppp-88-217-109-67.dynamic.mnet-online.de [88.217.109.67])
-	by mail.mnet-online.de (Postfix) with ESMTPA id E1A2B1C005B7;
-	Sat, 18 Sep 2010 10:16:42 +0200 (CEST)
-Received: by whitebox.home (Postfix, from userid 501)
-	id 44B801E5311; Sat, 18 Sep 2010 10:16:41 +0200 (CEST)
-X-Yow: Is this the line for the latest whimsical YUGOSLAVIAN drama which also
- makes you want to CRY and reconsider the VIETNAM WAR?
-In-Reply-To: <20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
-	(Ilari Liusvaara's message of "Sat, 18 Sep 2010 10:03:15 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1755226Ab0IRIhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 04:37:04 -0400
+Received: from na3sys009aog113.obsmtp.com ([74.125.149.209]:48467 "HELO
+	na3sys009aog113.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1755158Ab0IRIhB (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Sep 2010 04:37:01 -0400
+Received: from source ([209.85.215.49]) by na3sys009aob113.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTJR6KeZVcCrpomtdGz7O7lHenI4SDhaW@postini.com; Sat, 18 Sep 2010 01:37:01 PDT
+Received: by ewy9 with SMTP id 9so1572336ewy.36
+        for <git@vger.kernel.org>; Sat, 18 Sep 2010 01:36:57 -0700 (PDT)
+Received: by 10.213.108.194 with SMTP id g2mr651665ebp.2.1284799016861;
+        Sat, 18 Sep 2010 01:36:56 -0700 (PDT)
+Received: from clix.int.op5.se (fw1-sth-pio.op5.com [109.228.142.130])
+        by mx.google.com with ESMTPS id u9sm7201165eeh.5.2010.09.18.01.36.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 18 Sep 2010 01:36:55 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Thunderbird/3.0.6 ThunderGit/0.1a
+In-Reply-To: <AANLkTi=-k_qWW2LuUGrq8U_8_cMLYVrMy6j5_s9zkyf6@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156437>
 
-Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
+On 09/18/2010 05:26 AM, Miles Bader wrote:
+> On Sat, Sep 18, 2010 at 12:23 PM, Ilari Liusvaara
+> <ilari.liusvaara@elisanet.fi>  wrote:
+>> On Sat, Sep 18, 2010 at 11:18:20AM +0900, Miles Bader wrote:
+>>> I sent a message to the git mailing list yesterday, with the subject line:
+>>>
+>>>    Subject:  git "smart http" server vs. http redirects
+>>>
+>>> Did anyone see my message?  Is there some kind of spam filtering on
+>>> the list that might have eaten it...?
+>>
+>> I searched my own git mailbox, no match.
+>>
+>> The most important filter on mailinglist is that all messages even
+>> containing HTML part are junked. There are also some forbidden words
+>> (and word combinations) that cause message to be dropped.
+> 
+> yay.  Nothing like ad-hoc spam filters that silently drop messages!
+> 
 
-> On Sat, Sep 18, 2010 at 01:33:48PM +0900, Miles Bader wrote:
->
->> The savannah.gnu.org admins are trying out the git "smart http" server,
->> but it doesn't seem to handle http redirects properly... should it?
->> Is this a bug with the git server?
->> 
->> The follow is from Sylvain Beucler;
->> > Hmmm, actually it works, but it doesn't support a HTTP redirect
->> > (namely git.sv.gnu.org -> git.savannah.gnu.org).
->> >
->> > $ git clone http://git.sv.gnu.org/r/freedink.git
->> > Initialized empty Git repository in /tmp/freedink/.git/
->> > error: RPC failed; result=22, HTTP code = 405
->
-> 405 (Method not allowed)? Can you see what request it is trying to send
-> and to where (the request that fails with 405 that is)?
+Replying to spam is actually worse, since it's impossible to know the
+real source address of email. Many spammers used spamfilters to send
+spam when the filters used to reply to spam.
 
-I think this is a bug in the apache setup at savannnah.  It is
-responding to POST .../git-upload-pack with both 301 and 405.  This does
-not happen if you use the redirected address directly.
+Nowadays one usually gets a "here's some spam I'm not sure about" mail
+every once in a while, but that's obviously not going to work for a
+mailing list.
 
-Andreas.
+> My message contained some examples of an http output stream, i dunno
+> maybe it's unhappy with some of that...
+> 
+> So... what is one supposed to do in this situation?  Randomly delete
+> parts of the message and resend it until something gets through?
+> 
+
+Rephrase it, and possibly get rid of pasted output. I'm sure you've
+seen enough spam to know what triggers spamfilters. Removing 'smart',
+and especially 'git smart' from the subject line would probably be a
+good idea. Levenshtein distance does matter, and 1 is not very far.
+It's so very convenient to concatenate with just about anything if
+you want to sell something to someone.
 
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
