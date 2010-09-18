@@ -1,96 +1,69 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: Find out on which branch a commit was originally made
-Date: Sat, 18 Sep 2010 13:28:25 +0200
-Message-ID: <AANLkTim4cqAhWPTY5tSsFq7S1A_f=9QFy=3Mrp9ZFwXT@mail.gmail.com>
-References: <1jp0h7e.lgk0kp19qe5bbM%lists@haller-berlin.de>
-	<AANLkTiknoBS7x2za3qzghfS0TD6UUL83eoZz7LFBPUuc@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCHv2] remote-helpers: build in platform independent directory
+Date: Sat, 18 Sep 2010 14:36:56 +0200
+Message-ID: <4C94B268.2050904@drmicha.warpmail.net>
+References: <705f70e3df519fc28e551b4c0bd7512277e7a190.1284757060.git.git@drmicha.warpmail.net> <AANLkTi=ye=Xkz2XaiBaqX3NsZOe0N1NRTaVpPcsSM8o9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Stefan Haller <lists@haller-berlin.de>
-X-From: git-owner@vger.kernel.org Sat Sep 18 13:28:35 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 18 14:37:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Owvaq-0004Dz-QD
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 13:28:33 +0200
+	id 1Owwfi-00044H-37
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Sep 2010 14:37:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814Ab0IRL20 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Sep 2010 07:28:26 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:43698 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754520Ab0IRL20 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Sep 2010 07:28:26 -0400
-Received: by qwh6 with SMTP id 6so2475514qwh.19
-        for <git@vger.kernel.org>; Sat, 18 Sep 2010 04:28:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=glft4fT24mRw32I1GOByJKJtqLphYfBCPUhW/5USYJw=;
-        b=QOt5C76xYMxm/BvWKU7/ukRnExcVwmWM6LMJtaXDbtG8DEEz6BdRTy5XIsDDRvHg0i
-         IqG2Jz7Hh3LzcpbjiKt2SVljvGNvXNthmtYeVPZrUF7dE8xyBBeu698PI2sB4U6Bzp22
-         Bi/5LKR5ugSjI0JngwafzxDv2zazdLEu3ornQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=u0/gWK5ES5RfSQoo14snPZ9Ah9WYCdwlqcafADOuZedmirq6NB7BZ22QOCSQV8VA7y
-         uSE8z0M79nm5tCOpb2Z17rQgzvYTKuCakuZPv9BtJuQGR8I9MOp3hIsFePtdThTU542w
-         Li7TlueyQk2y8f4SyU0vjbOBA9jIcIyBNx/qo=
-Received: by 10.224.80.133 with SMTP id t5mr4181975qak.341.1284809305424; Sat,
- 18 Sep 2010 04:28:25 -0700 (PDT)
-Received: by 10.229.62.98 with HTTP; Sat, 18 Sep 2010 04:28:25 -0700 (PDT)
-In-Reply-To: <AANLkTiknoBS7x2za3qzghfS0TD6UUL83eoZz7LFBPUuc@mail.gmail.com>
-X-Google-Sender-Auth: r9FuZzb9FrI0jJCs1NsA2B7gmZg
+	id S1755069Ab0IRMh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Sep 2010 08:37:26 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:41554 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754954Ab0IRMg6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 18 Sep 2010 08:36:58 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EF578BB;
+	Sat, 18 Sep 2010 08:36:57 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Sat, 18 Sep 2010 08:36:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=jeZXaxov7ICPcDO6cFYMdjhNN2c=; b=KjKJ+u5JB5O/DkSWK+Klxrg6Lt0YgdJS47jS48dqmRURLbg/HtpO08m8noulBSnfeTgD4yBtFUtm9aKk4E+Lchjo0K6pOUfby/XEhyGSnLaxfNhCZNv+iVDjcUCa7GT3lMdSc6SKtx31ZSS2JV/x27rjsido9FmVSf8oSMlSNRY=
+X-Sasl-enc: kn8FfZHnmdBCF8quKgBx4gugw1Soj4gcxe3XVNHqZo5L 1284813417
+Received: from localhost.localdomain (p548594B1.dip0.t-ipconnect.de [84.133.148.177])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 925F0408001;
+	Sat, 18 Sep 2010 08:36:56 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.3
+In-Reply-To: <AANLkTi=ye=Xkz2XaiBaqX3NsZOe0N1NRTaVpPcsSM8o9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156453>
 
-On Sat, Sep 18, 2010 at 11:58, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gm=
-ail.com> wrote:
-[..]
-> What Git *does* track however when you do `git merge topic` is the
-> name of the `topic` branch you're merging into some other branch,
-> e.g. here (from git-merge(1)):
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 A---B---C topic
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0/ =A0 =A0 =A0 =A0 \
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 D---E---F---G---H master
->
-> Even though A B and C might have been commited on branches called
-> `blah`, `bluh` and `blarghl` you'll never know. You'll just know that
-> someone put them all together on a branch called `topic` and that
-> someone later merged that into master in the main repository. E.g.:
->
-> =A0 =A0Merge: A G
-> =A0 =A0Author: Some Guy <some-guy@example.com>
-> =A0 =A0Date: =A0 <....>
->
-> =A0 =A0 =A0 =A0Merge branch 'topic'
->
-> >From there you can *infer* that A-B-C came from the topic branch,
-> because of that merge commit and that the DAG doesn't meet master
-> until commit E.
-[..]
+Sverre Rabbelier venit, vidit, dixit 17.09.2010 23:07:
+> Heya,
+> 
+> [+Jonathan again]
+> 
+> On Fri, Sep 17, 2010 at 23:00, Michael J Gruber
+> <git@drmicha.warpmail.net> wrote:
+>> The solution with setup.cfg avoids this and is cleaner anyways.
+> 
+> This does feel a lot cleaner, I like this approach better than the v1
+> one. I suspect Junio's question still stands though:
+> 
+> On Fri, Sep 17, 2010 at 20:41, Junio C Hamano <gitster@pobox.com> wrote:
+>> Hmm, wouldn't this interfere with the install target if you do not tell
+>> the "setup.py install" where your built stuff lives?
+> 
 
-However, you can see it explictly if you add --log when merging, i.e.
-git merge --no-ff --log topic
-(you'll get a list of one-line commit messages from those commits
-merged into master from topic).
-It doesn't identify the commits, only the commit messages. Therefore I
-add problem report IDs into my oneline-messages, and I get a shortlist
-of exactly what was fixed by a given merge. This is sufficient support
-for me, I too don't care where a commit _originally_ came from, before
-it arrived into the branch that I at some point merge to the delivery
-branch.
+No, it addresses that also. Maybe my note after the boiler plate was not
+clear enough, but the "build" setting in setup.cfg also governs the
+build phase of "setup.py install". Install would work with v1 also but
+would possibly create another dir during the build phase, with v2 both
+build phases (that of the build subcommand as well as that of the
+install subcommand) use the same setting.
 
--Tor
+Michael
