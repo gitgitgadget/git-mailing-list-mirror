@@ -1,79 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG, PATCH 0/3] Fix {blame,cat-file} --textconv for cases with
- symlinks
-Date: Sun, 19 Sep 2010 11:17:28 -0700
-Message-ID: <7vd3s9y4w7.fsf@alter.siamese.dyndns.org>
-References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
- <vpqhbhmx6tg.fsf@bauges.imag.fr> <7vpqwa254i.fsf@alter.siamese.dyndns.org>
- <vpq8w2yt8hc.fsf@bauges.imag.fr>
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Find out on which branch a commit was originally made
+Date: Sun, 19 Sep 2010 20:30:21 +0200
+Message-ID: <201009192030.21659.robin.rosenberg@dewire.com>
+References: <1jp0xnn.1gyr9a31jn4r7cM%lists@haller-berlin.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 19 20:18:03 2010
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?iso-8859-1?q?=C6var_Arnfj=F6r=3F?= Bjarmason" <avarab@gmail.com>,
+	git@vger.kernel.org
+To: Stefan Haller <lists@haller-berlin.de>
+X-From: git-owner@vger.kernel.org Sun Sep 19 20:30:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxOSg-0005wS-Hh
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 20:18:03 +0200
+	id 1OxOen-0002Ox-Nk
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 20:30:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754998Ab0ISSRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Sep 2010 14:17:46 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57723 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754806Ab0ISSRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Sep 2010 14:17:45 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 94C81D7697;
-	Sun, 19 Sep 2010 14:17:44 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=d0yu/c4stL0iqSyCHepG/JeiJsM=; b=tHyOlw
-	B0162v6Q9aEqvBd7lsu3A19sW7n4mtyPeftPKMRcB51joWH0VDKfpcAwZKyKfUK7
-	FL4nbU/NaZWZlUpblEWkDlw0js4N0QZX0Z7qOU1MgWdglA1wkHfvhOzZUGJDNNsn
-	oDxCEuq8AUpXhvSxOPQPdQKn4a2RE5hRxC/I4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UoVdbqCS9w8kPENb5IcR/zP8eSqEDysE
-	LnlqbpJCe1qyrCNskPalcdGnk9Ze8yh58p8ZiMoPnvvPLGlI3ftnihO0FJLIh1lO
-	0P16Gk8o3/xcHgtW6Vrs50+1q0j6aN45evBEb0P7lW+sU24LR/kaVA9gP7EDATR2
-	9MFtdeGtUxM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 197C3D768B;
-	Sun, 19 Sep 2010 14:17:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D704D767C; Sun, 19 Sep
- 2010 14:17:30 -0400 (EDT)
-In-Reply-To: <vpq8w2yt8hc.fsf@bauges.imag.fr> (Matthieu Moy's message of
- "Sun\, 19 Sep 2010 10\:58\:55 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2EF9F8F6-C41A-11DF-BB4D-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755145Ab0ISSa0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 14:30:26 -0400
+Received: from mail.dewire.com ([83.140.172.130]:14404 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753923Ab0ISSa0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 14:30:26 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id E00A61396D8F;
+	Sun, 19 Sep 2010 20:30:24 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8uReqYzFoZfu; Sun, 19 Sep 2010 20:30:24 +0200 (CEST)
+Received: from sleipner.localnet (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 69CB1800353;
+	Sun, 19 Sep 2010 20:30:24 +0200 (CEST)
+User-Agent: KMail/1.13.2 (Linux/2.6.32-25-generic; KDE/4.4.2; i686; ; )
+In-Reply-To: <1jp0xnn.1gyr9a31jn4r7cM%lists@haller-berlin.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156505>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156506>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+l=F6rdagen den 18 september 2010 17.26.08 skrev  Stefan Haller:
+> =C6var Arnfj=F6r? Bjarmason <avarab@gmail.com> wrote:
+> >     You want to do X, and you think Y is the best way of doing so.
+> >=20
+> > Instead of asking about X, you ask about Y.
+>=20
+> Erm, not really; I explicitly mentioned Y as "a possible workaround"
+> only.  Anyway...
+>=20
+> > Why do your co-workers think this is essential to the point that th=
+ey
+> > can't get by without it? What problem are they trying to solve?
+>=20
+> It's a common situation that you want to know why a certain piece of
+> code is written the way it is.  So you blame it, you eventually end u=
+p
+> at a certain interesting changeset, and hopefully the commit message
+> tells you enough about why the change was made.  If it doesn't, then =
+it
+> can help a lot to know a bit more about the context of the change, i.=
+e.
+> what topic it was part of.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> That said, if you changed a symlink from pointing at A to pointing at B,
->> it does run the textual diff between the string we get from readlink(3).
->
-> Yes, and my question was to make sure we don't run the textconv filter
-> on these strings.
->
-> I've just checked, and from my little tests, git diff doesn't try to
-> textconv the pathnames, it runs the textual diff without textconv,
-> which is the expected behavior.
+What most people do (I think) is to include a reference to a ticket in =
+a issue=20
+tracker. JGit/EGit adds Bug:-line in the footer. Others add the ticket =
+number=20
+in the Subject. This much informative than a branch name.  It also allo=
+ws
+you to fix unrelated bugs on your branch.=20
 
-Ok, then I think it makes sense to make sure we don't run the textconv
-filter on them.
+-- robin
