@@ -1,102 +1,76 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: [PATCH 2/2] mergetool-lib: add a three-way diff view for vim/gvim
-Date: Sun, 19 Sep 2010 12:48:48 +0300
-Message-ID: <AANLkTim_hwduHk-ENM73dwHUj9XbwfihZPRfsHX+M3DE@mail.gmail.com>
-References: <1284517303-17244-1-git-send-email-dpmcgee@gmail.com>
-	<1284517303-17244-2-git-send-email-dpmcgee@gmail.com>
-	<20100918073428.GA9850@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Dan McGee <dpmcgee@gmail.com>, git@vger.kernel.org,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Charles Bailey <charles@hashpling.org>
-To: David Aguilar <davvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 19 11:49:00 2010
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Patch id tests and diff performance optimization
+Date: Sun, 19 Sep 2010 11:59:26 +0200
+Message-ID: <1284890369-4136-1-git-send-email-drizzd@aon.at>
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 19 11:59:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxGVy-00014c-Cp
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 11:48:54 +0200
+	id 1OxGg3-0005KY-5h
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 11:59:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752945Ab0ISJsu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 05:48:50 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60245 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752338Ab0ISJst convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 05:48:49 -0400
-Received: by iwn5 with SMTP id 5so3326357iwn.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 02:48:48 -0700 (PDT)
+	id S1753032Ab0ISJ7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Sep 2010 05:59:14 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44960 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752338Ab0ISJ7N (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 05:59:13 -0400
+Received: by bwz11 with SMTP id 11so3701062bwz.19
+        for <git@vger.kernel.org>; Sun, 19 Sep 2010 02:59:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=CSqqzDnBt24RvAuY5tSGZUCIhaatRdxo9ILCIswfCVA=;
-        b=u0ffhVwdpWaFB53LJ8Xk3wqJPGc8ZTtGomL31RNtWHAQ6cZ8hyANZGkdr4E+GQdzQa
-         dSNmGJAxxXN359Vicj+UAf/XZALLRV6Dgy5/oPv9/UYMmR5RHdpmaygx4iCxUlrDc4X3
-         KHb4PfBYUcnpdeIthoHP4R1b5z4N0teiKNXfM=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:from:to:cc
+         :subject:date:message-id:x-mailer;
+        bh=fSaDfWyH9e0oAaw1zJz6aecp1qrO45hrGJ4dKDm/OQk=;
+        b=AKbmAJ4RuDkBGjHpZNg4mCSg8p6+w5ftVRcEr7MAV4V4E79oD78UR2/af4cco4bA0R
+         BG5iGoL2bseeMXnmf7jnfkOTKgO8/Dzg6QxhzEYItLHhvrB1UhMTfwgCd0R70Dh+wtFK
+         VNKfxwDh0P38XFzAn9F6M1KvmHma6kCSpkcIg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=S3Z/XnSVshsOW3giVWc93N3GQ7glGSBOB6KRs8iym3rsHdIoR6ThkGGbIIbeYbpX6l
-         yCnur98IeJiz6ha2SeUMkca3cfCG5cxAOgnJncHb3OW+tdXT8QZL03F6QUVbQb/fLJcS
-         4Mkrog9f2KDSTDohqSgJRs1SDuMFsMG9a8erI=
-Received: by 10.231.130.99 with SMTP id r35mr7075114ibs.171.1284889728515;
- Sun, 19 Sep 2010 02:48:48 -0700 (PDT)
-Received: by 10.231.160.6 with HTTP; Sun, 19 Sep 2010 02:48:48 -0700 (PDT)
-In-Reply-To: <20100918073428.GA9850@gmail.com>
+        d=googlemail.com; s=gamma;
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        b=AQm61ISXwgAhfWvRsN1riVVH/VgtByw7ifsrJrLpa3XBtr0SDDG7IZy7Ahro9mliJc
+         mV4mZPXT9KDfF34r4V2dYMGkmh48pndZTiXMvggqqiVM5Apren/pBsZv8LrybGAuSFGn
+         DnW0Y6ekI7iJYmhLIknGuj5IZsxgekq2voKic=
+Received: by 10.204.126.205 with SMTP id d13mr5587275bks.126.1284890351675;
+        Sun, 19 Sep 2010 02:59:11 -0700 (PDT)
+Received: from darc.lan (p549A467A.dip.t-dialin.net [84.154.70.122])
+        by mx.google.com with ESMTPS id y19sm5435667bkw.18.2010.09.19.02.59.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 19 Sep 2010 02:59:10 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OxGgf-00015Q-30; Sun, 19 Sep 2010 11:59:57 +0200
+X-Mailer: git-send-email 1.7.1.571.gba4d01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156489>
 
-On Sat, Sep 18, 2010 at 10:34 AM, David Aguilar <davvid@gmail.com> wrot=
-e:
-> On Tue, Sep 14, 2010 at 09:21:43PM -0500, Dan McGee wrote:
->> When the base version is available, use a three-way, four panel view=
- by
->> default. This shows the (local, base, remote) revisions up top and t=
-he
->> merged result by itself in the lower pane. All revisions will still =
-scroll
->> together by default, and the cursor still defaults to the merged res=
-ult edit
->> pane.
->>
->> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
->> ---
->>
->> Vim was one of the few diff commands to not support a three-way merg=
-e showing
->> the base revision, so this is a stab at resolving that shortfall. Th=
-e biggest
->> objection I can see to this is making the interface a bit more cumbe=
-rsome and
->> bloated.
->>
->> An example screenshot of what this produces:
->> http://www.toofishes.net/media/extra/vim_three_way.png
->>
->> -Dan
->
->
-> Patch 1/2 of this series looks good to me.
->
-> Is it worth keeping the old behavior and calling this new
-> mode "vimdiff3" or something along those lines?
->
-> I'm not a vimdiff user so I'm not be the best person to
-> judge the merits of this change. =C2=A0I like what it's trying
-> to accomplish, though. =C2=A0Are there any vimdiff users
-> with strong feelings either way?
+Hi,
 
-I think this is a definite improvement; the old mode wasn't really
-useful for me.
+I finally came around to de-bashify my patch ID test script. Here we go.
 
---=20
-=46elipe Contreras
+[PATCH 1/3] add rebase patch id tests
+[PATCH 2/3] do not search functions for patch ID
+[PATCH 3/3] use cache for function names in hunk headers
+
+The first patch adds correctness and (optional) performance tests for the patch
+"hash binary sha1 into patch id"
+http://thread.gmane.org/gmane.comp.version-control.git/153468/focus=155919 .
+
+The test reveals a performance problem with the search for function names for
+the hunk headers. This is fixed for patch ID computation by the second patch
+and for diff in general by the third patch.
+
+Clemens
+---
+
+ diff.c                     |    2 +-
+ t/t3419-rebase-patch-id.sh |  109 ++++++++++++++++++++++++++++++++++++++++++++
+ xdiff/xemit.c              |   44 +++++++++++++-----
+ 3 files changed, 142 insertions(+), 13 deletions(-)
