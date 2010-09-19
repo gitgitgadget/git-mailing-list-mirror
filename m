@@ -1,82 +1,49 @@
-From: Jonas Fonseca <fonseca@diku.dk>
-Subject: Re: tig show <commit> not working anymore?
-Date: Sun, 19 Sep 2010 14:46:22 -0400
-Message-ID: <AANLkTinwTSOVfdZkt8CM9DHy9mm9nPt133nvUNjUcQO1@mail.gmail.com>
-References: <20100916125337.GG5785@bowser.ece.utexas.edu> <4C922112.404@drmicha.warpmail.net>
- <20100918050122.GA24656@bluemoon.alumni.iitm.ac.in>
+From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+Subject: Re: [ANNOUNCE] tig-0.16.1
+Date: Sun, 19 Sep 2010 14:15:23 -0500
+Message-ID: <20100919191523.GA23119@bowser.ece.utexas.edu>
+References: <20100919183556.GA22302@diku.dk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sun Sep 19 20:47:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Sun Sep 19 21:15:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxOui-0000YV-7L
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 20:47:00 +0200
+	id 1OxPMO-0005xT-NT
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 21:15:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755203Ab0ISSqn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 14:46:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35386 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754484Ab0ISSqn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 14:46:43 -0400
-Received: by iwn5 with SMTP id 5so3610250iwn.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 11:46:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=mnYCzimEF1rK/14dUt4jYIpeME/7O16TBQOyPHR3edE=;
-        b=F41OqySK4BgbOj16A5urLnmTHht8+turWzZ6GWTDqPmGv++6hzkB6C4X6C3mjSJP3y
-         0X+RHHm/igoIzhJE2HUNBGOMGcwi/m0cce54VoP/ZcFbFEK5iP0ZHKpVwNDDz2z49oDY
-         vaaWt9mlGkuZ1+fI6M3+NvN+5aOPHZhjiQYds=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=Uvkfdd2JR9T73PVR+F/KF5l1evKj6S3MHLXdU0ZjK1kPzx6BzdO3Zv9qmxZ0HFajJf
-         SbrpwBpc2MGrNawHMv/3sxTxqWE3/orjNsCbsqV483OJVJm5wgvUVF6n3ux8J7nAomBi
-         MAbR3OoMpPYIhiOLVAlgBW9sKMA7qKGUo63Xk=
-Received: by 10.231.194.219 with SMTP id dz27mr7897150ibb.104.1284922002191;
- Sun, 19 Sep 2010 11:46:42 -0700 (PDT)
-Received: by 10.231.39.138 with HTTP; Sun, 19 Sep 2010 11:46:22 -0700 (PDT)
-In-Reply-To: <20100918050122.GA24656@bluemoon.alumni.iitm.ac.in>
-X-Google-Sender-Auth: W49crtowyMKcut9_9-owoZgA2b4
+	id S1753023Ab0ISTP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Sep 2010 15:15:29 -0400
+Received: from ironclad.mail.utexas.edu ([146.6.25.7]:43214 "EHLO
+	ironclad.mail.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751645Ab0ISTP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 15:15:29 -0400
+X-IronPort-MID: 55486448
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAIr+lUyAU36M/2dsb2JhbACiPXHBKIVBBIROhWo
+Received: from wb4-a.mail.utexas.edu ([128.83.126.140])
+  by ironclad.mail.utexas.edu with ESMTP; 19 Sep 2010 14:15:27 -0500
+Received: (qmail 98626 invoked from network); 19 Sep 2010 19:15:27 -0000
+Received: from bowser.ece.utexas.edu (a.kumar@146.6.33.245)
+  by wb4.mail.utexas.edu with (RC4-SHA encrypted) ESMTPSSA; 19 Sep 2010 19:15:27 -0000
+Content-Disposition: inline
+In-Reply-To: <20100919183556.GA22302@diku.dk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156510>
 
-On Sat, Sep 18, 2010 at 01:01, Kumar Appaiah <a.kumar@alumni.iitm.ac.in=
-> wrote:
-> Please bear in mind that I am totally new to the code, and not a powe=
-r
-> user of git either. So please don't club me! ;-)
+Dear Jonas,
 
-OK, I will give you a hug. :-)
+On Sun, Sep 19, 2010 at 08:35:56PM +0200, Jonas Fonseca wrote:
+>  - Fix 'tig show <commit>' to show the provided commit.
 
-> Well, I was exploring the code a little, and I could not understand
-> some aspects fully. First, I discovered that the following hack fixes
-> the problem to an extent:
->
-> [snip]
->
-> However, I am pretty certain that that is not the intended use of
-> opt_rev_args and ref_commit, and that they should be used in a
-> different way. For example, tig show HEAD^^^..HEAD should show me
-> three commits combined, but it shows me only one, since I haven't run
-> it through rev-list or the like=C2=B8 probably.
+Thank you for fixing this. :-)
 
-You fix is not that far off but to fix the second issue I had to do
-change the function responsible for expanding %(commit). Anyway,
-should be fixed in 0.16.1.
-
---=20
-Jonas Fonseca
+Kumar
