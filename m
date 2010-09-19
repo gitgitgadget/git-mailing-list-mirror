@@ -1,136 +1,85 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 2/2] Add testcases showing how pathspecs are handled with rev-list --objects
-Date: Mon, 20 Sep 2010 09:24:29 +1000
-Message-ID: <1284938669-16753-3-git-send-email-pclouds@gmail.com>
-References: <1284938669-16753-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 0/5] Globbing support in diff family
+Date: Mon, 20 Sep 2010 09:29:55 +1000
+Message-ID: <1284939000-16907-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 01:25:03 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 20 01:30:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxTFm-0008RK-HO
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 01:25:02 +0200
+	id 1OxTKt-0001QI-1q
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 01:30:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754962Ab0ISXYw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 19:24:52 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:64060 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754348Ab0ISXYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Sep 2010 19:24:51 -0400
-Received: by pxi10 with SMTP id 10so1010992pxi.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 16:24:50 -0700 (PDT)
+	id S1755020Ab0ISXaL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 19:30:11 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:56730 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754199Ab0ISXaK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 19:30:10 -0400
+Received: by pzk34 with SMTP id 34so1009603pzk.19
+        for <git@vger.kernel.org>; Sun, 19 Sep 2010 16:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=zeHGsHbMom7JGv507tx/xi5zLMNXHc6nJ5Cz8VTd2HI=;
-        b=s1LdYj8tUQn26DPD6gYb3iubRJiIKA+I8v8YPumXDdk6O6yUyIdvf4xeyyckrlZrv1
-         nxNfN6+aZlAjBuYCQF/kxMQnBQKH7ZWk8kb+psOFI40C9NSNJZThkD3KcBpR6JmIEbLv
-         3rN7pajuYhjKOp8YxGyIQu0mDMm4KCp67BqbI=
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=+FXv8EPOeH1+YCtXvAIhQO8oBsrlu5UJo1HLXPZuxgk=;
+        b=XUk44jBKqEt4u8TQ4bxLfDcB01RklJYCcAMTK9WAHBAVEPrcfz1oDdZW81pXlzUS/v
+         M4HUDVU5+/ByBp5FyevNYXZUmcu1ZbgTys6bgHw+UeCDiYjOpfxMkzrpsT6fEfLmW7mw
+         LaFe/ZycRTmhVxozZQM9QRqtXmr1Vu4hSDTts=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=WPVeK4WE2fl+/o3n0dnOGhWtZ4o2uR15akKtry36/nWEB4swpcSnsziu/7Tw6e6z0u
-         WtPh2Jxns9OJ+6Nry2G6vpjhs/yVGc+MIhj6qkujJvH4NHzpRZeDV4mF6qsNLhSOKow6
-         dKNHGlPt5W10BPycsb+cWm81MPqvo2XCO2bEA=
-Received: by 10.114.39.18 with SMTP id m18mr9041305wam.196.1284938690824;
-        Sun, 19 Sep 2010 16:24:50 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=NvpWC0dWvnqIbLVw4/2aF2/LYdJzfiA0qP0YSIb/JjVYaCk/BEvUaQt2WXF2vwuB+o
+         TSHC79bs3Y7obJ/T7N/PNea+0sLKg0JCAWoTuD6uRyuTuR7M1BACXBuog1njGF/cA6zd
+         WrTcuaouyu45IUdARf3SketoYVFJdzFKt34Po=
+Received: by 10.142.230.1 with SMTP id c1mr6993660wfh.16.1284939010017;
+        Sun, 19 Sep 2010 16:30:10 -0700 (PDT)
 Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id o17sm12270129wal.9.2010.09.19.16.24.47
+        by mx.google.com with ESMTPS id o9sm6227217wfd.4.2010.09.19.16.30.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Sep 2010 16:24:49 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Mon, 20 Sep 2010 09:24:44 +1000
+        Sun, 19 Sep 2010 16:30:09 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Mon, 20 Sep 2010 09:30:04 +1000
 X-Mailer: git-send-email 1.7.1.rc1.70.g788ca
-In-Reply-To: <1284938669-16753-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156531>
 
-=46rom: Elijah Newren <newren@gmail.com>
+This is on top of the pathspec struct series
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- t/t6000-rev-list-misc.sh |   51 ++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 51 insertions(+), 0 deletions(-)
- create mode 100755 t/t6000-rev-list-misc.sh
+http://mid.gmane.org/1284938514-16663-1-git-send-email-pclouds@gmail.co=
+m
 
-diff --git a/t/t6000-rev-list-misc.sh b/t/t6000-rev-list-misc.sh
-new file mode 100755
-index 0000000..b10685a
---- /dev/null
-+++ b/t/t6000-rev-list-misc.sh
-@@ -0,0 +1,51 @@
-+#!/bin/sh
-+
-+test_description=3D'miscellaneous rev-list tests'
-+
-+. ./test-lib.sh
-+
-+test_expect_success setup '
-+	echo content1 >wanted_file &&
-+	echo content2 >unwanted_file &&
-+	git add wanted_file unwanted_file &&
-+	git commit -m one
-+'
-+
-+test_expect_success 'rev-list --objects heeds pathspecs' '
-+	git rev-list --objects HEAD -- wanted_file >output &&
-+	grep wanted_file output &&
-+	! grep unwanted_file output
-+'
-+
-+test_expect_success 'rev-list --objects with pathspecs and deeper path=
-s' '
-+	mkdir foo &&
-+	>foo/file &&
-+	git add foo/file &&
-+	git commit -m two &&
-+
-+	git rev-list --objects HEAD -- foo >output &&
-+	grep foo/file output &&
-+
-+	git rev-list --objects HEAD -- foo/file >output &&
-+	grep foo/file output &&
-+	! grep unwanted_file output
-+'
-+
-+test_expect_success 'rev-list --objects with pathspecs and copied file=
-s' '
-+	git checkout --orphan junio-testcase &&
-+	git rm -rf . &&
-+
-+	mkdir two &&
-+	echo frotz >one &&
-+	cp one two/three &&
-+	git add one two/three &&
-+	test_tick &&
-+	git commit -m that &&
-+
-+	ONE=3D$(git rev-parse HEAD:one)
-+	git rev-list --objects HEAD two >output &&
-+	grep "$ONE two/three" output &&
-+	! grep one output
-+'
-+
-+test_done
---=20
-1.7.1.rc1.70.g788ca
+One question to document experts: where to document "pathspec", git.txt=
+?
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
+  pathspec: mark wildcard pathspecs from the beginning
+  pathspec: add tree_recursive_diff parameter
+  tree_entry_interesting: turn to match_pathspec if wildcard is present
+  Convert ce_path_match() to use struct pathspec
+  ce_path_match: drop prefix matching in favor of match_pathspec
+
+ builtin/update-index.c   |    8 ++++++--
+ cache.h                  |    5 ++++-
+ diff-lib.c               |   10 ++++++++--
+ dir.c                    |    7 ++++++-
+ preload-index.c          |    5 ++++-
+ read-cache.c             |   25 ++-----------------------
+ revision.c               |    5 ++++-
+ t/t4010-diff-pathspec.sh |   23 +++++++++++++++++++++++
+ tree-diff.c              |    1 +
+ tree-walk.c              |   18 ++++++++++++++++++
+ wt-status.c              |    5 ++++-
+ 11 files changed, 80 insertions(+), 32 deletions(-)
