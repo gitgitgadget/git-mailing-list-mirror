@@ -1,56 +1,71 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Re: Missing git-svn on cygwin
-Date: Sun, 19 Sep 2010 20:58:09 +0000 (UTC)
-Message-ID: <loom.20100919T225127-586@post.gmane.org>
-References: <loom.20100919T144741-228@post.gmane.org> <loom.20100919T162933-499@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Find out on which branch a commit was originally made
+Date: Sun, 19 Sep 2010 18:03:09 -0400
+Message-ID: <201009192203.o8JM39PE011067@no.baka.org>
+References: <1jp0h7e.lgk0kp19qe5bbM%lists@haller-berlin.de> <201009192030.21659.robin.rosenberg@dewire.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Sep 19 22:58:40 2010
+X-From: git-owner@vger.kernel.org Mon Sep 20 00:27:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxQy8-0002Ay-4h
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 22:58:40 +0200
+	id 1OxSLf-0006N8-KT
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 00:27:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104Ab0ISU6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Sep 2010 16:58:22 -0400
-Received: from lo.gmane.org ([80.91.229.12]:45763 "EHLO lo.gmane.org"
+	id S1753104Ab0ISW0o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Sep 2010 18:26:44 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:57270 "EHLO tsutomu.baka.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751268Ab0ISU6V (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Sep 2010 16:58:21 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OxQxo-00025M-9y
-	for git@vger.kernel.org; Sun, 19 Sep 2010 22:58:20 +0200
-Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 22:58:20 +0200
-Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 22:58:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.61)
+	id S1752241Ab0ISW0n (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 18:26:43 -0400
+X-Greylist: delayed 1411 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Sep 2010 18:26:43 EDT
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8JM3A1h000901
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sun, 19 Sep 2010 18:03:11 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8JM39PE011067
+	for <git@vger.kernel.org>; Sun, 19 Sep 2010 18:03:10 -0400
+In-reply-to: <201009192030.21659.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156517>
 
-pf rouleau <pfrouleau <at> gmail.com> writes:
 
-> What version of CygWin did you install? Do you use the lastest installer?
+>>>                A---B---C topic
+>>>               /         \
+>>>          D---E---F---G---H---I---J---K---L---M---N master
+>>>                                   \         /
+>>>                                    O---P---Q another-topic
 
-I had no idea what I was using, so I downloaded new setup.exe from cygwin.com, 
-selected a different mirror (just in case), and it works. It looks like my 
-version was simply incomplete and the problem was not related to git at all. I 
-have no clue how it came, but it seems to be a problem with cygwin or with the 
-mirror I was using before. Actually, I should have tried it without having to 
-ask first, but thank you.
+>> No, that's not what I need either.  After thinking about it more, I
+>> think what I want is "of all merges in the ancestry path from B to
+>> master, show only those whose first parent can't reach B."  The result
+>> is the list of all merges that were involved in bringing B to master.
+
+
+> This would work, and i don't see a way to optimize it in git-speak,
+> given that you don't want to see any extra trailing merges. [...]
+
+The provided command actually doesn't work for me for all cases.  It
+works for the simple case of "B", but does not work for "F", because F
+saw merge H & M.  I think we need --not --first-parent, except that
+doesn't actually work in this case either.  However, if we get the
+full --first-parent rev-list and look for our commit, that works.
+This is incredibly painful, though.
+
+----------------------------------------------------------------------
+#!/bin/sh
+TARGET=`git rev-list -n 1 $1`
+git branch -a --contains $1 | sed 's/^\** *//' | grep -v ' -> ' |
+while read br; do
+ if git rev-list --first-parent $br | grep -q "$TARGET"; then
+  echo $br
+ fi
+done
+----------------------------------------------------------------------
+
+					-Seth Robertson
