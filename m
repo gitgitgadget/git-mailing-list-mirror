@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: git am should recognize >From
-Date: Sun, 19 Sep 2010 17:24:55 +0300
-Message-ID: <AANLkTin_5qzDkMU_1stYZcJpfW-W7K0kxy=0K2dA7SwO@mail.gmail.com>
+Date: Sun, 19 Sep 2010 17:32:11 +0300
+Message-ID: <AANLkTinOa+s-28PYXHhtKr_POu2D33ibfgKDKk4Wqi=9@mail.gmail.com>
+References: <AANLkTin_5qzDkMU_1stYZcJpfW-W7K0kxy=0K2dA7SwO@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Cc: Git Mailing List <git@vger.kernel.org>,
@@ -10,54 +11,77 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Jeff King <peff@peff.net>,
 	Christian Himpel <chressie@googlemail.com>
 To: Russ Allbery <rra@debian.org>
-X-From: git-owner@vger.kernel.org Sun Sep 19 16:25:06 2010
+X-From: git-owner@vger.kernel.org Sun Sep 19 16:32:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxKpF-00040x-GH
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 16:25:05 +0200
+	id 1OxKwI-0007NQ-JA
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 16:32:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754085Ab0ISOY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Sep 2010 10:24:57 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35547 "EHLO
+	id S1753705Ab0ISOcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Sep 2010 10:32:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63580 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753993Ab0ISOY4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Sep 2010 10:24:56 -0400
-Received: by iwn5 with SMTP id 5so3462525iwn.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 07:24:55 -0700 (PDT)
+	with ESMTP id S1751566Ab0ISOcM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 10:32:12 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 5so3466459iwn.19
+        for <git@vger.kernel.org>; Sun, 19 Sep 2010 07:32:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type;
-        bh=owIA3lFFWvFeEm80sSpywbHSaf+d2sRKmWnV6xXdfNY=;
-        b=QtDHIE5MjDj1eVNP6ddE2hmX4HcA6PckJ0/NZh1wwHIsay9SobmVJbSpuexpT5CXsH
-         kWIThe+NeEA7c99Fgj82aUyWU1B10Q5LZoG/MxYV0MuMcRB3wh8ErOwcyMYxnOzzNoO6
-         9X6kKSBsgTvi1uMiAWvs+43C0AqvwUil+3f0M=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=aaosy3OR2sRhOjZd+3kLeN4vug1d3IaDYlJB/Nx0J98=;
+        b=vwasRRRi0iC7us62nrLMU6RI7kl3iXnhuxXa5I4zLBF2Bs6R1gtXXNCerh2ybLhwXB
+         ZTldaHr4q/s08gGd24rPKRKr5dmmBFMAhs9FNribMygWzGfBI0dhISNwzee0oIp21aEs
+         Uke3R688UZLXhlPB6szIiMxUahvBQJKHtPY50=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type;
-        b=wAcn8kqnd+5r+a2sjG6ZQqTDHg07APDnF/8poIzqi39tJ7LoRXrHAgWpxhBfFCejo2
-         XXeuIOJeki4/KXU63w/iypItCCS5Q36YNLO6xmlBhNgDYi54RsVmvbWZKNfYhWgfIAfi
-         TA7dovsKx4MHGeMwfskEP0fDKCN84hwVch4n4=
-Received: by 10.231.154.73 with SMTP id n9mr8786724ibw.10.1284906295845; Sun,
- 19 Sep 2010 07:24:55 -0700 (PDT)
-Received: by 10.231.15.12 with HTTP; Sun, 19 Sep 2010 07:24:55 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=XicdsTdAC+3yUlmupdPxT7zIXMw/zR9L4mJECZGptAeC3AfXNTncVA9rAu38+Y3oiN
+         ptv/vyJp8H1OLytW+Iq2B4lfx6Py0r2JUSHRXOFm6HYoizdgZ12kysVnrq15X4DCIqaZ
+         knpUKX4FapQScwlGeIIL6KsI8RvJOaVB9VZ+I=
+Received: by 10.231.174.5 with SMTP id r5mr8507085ibz.132.1284906731960; Sun,
+ 19 Sep 2010 07:32:11 -0700 (PDT)
+Received: by 10.231.15.12 with HTTP; Sun, 19 Sep 2010 07:32:11 -0700 (PDT)
+In-Reply-To: <AANLkTin_5qzDkMU_1stYZcJpfW-W7K0kxy=0K2dA7SwO@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156499>
-
-(+cc: some "git am" people. Unfortunately I will probably be hard to
-reach for another week or so.)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156500>
 
 Russ Allbery wrote:
 
-> I process a lot of git format-patch patches as attachments, but it's
-> common for mailers to mangle the leading "From " line by adding a >.
-> This causes git am to not recognize the patch
+> I process a lot of git format-patch patches as attachments,
 
-Ignoring a leading ">" sounds sane to me at first glance; thanks. (The
-file to patch is git-am.sh, hint hint. ;-))
+Aside: it seems that many format-patch users are not using it to
+generate an mbox with a template message, as originally intended;
+instead, they just write a cover letter and attach the generated
+patches to it. Are we not advertising the "am --scissors" facility[1]
+well enough?
+
+Maybe format-patch could provide another mode to produce patches that
+do not include unnecessary headers (in particular, leaving out the
+difficult "From " line and using UTF-8 instead of quoted-printable for
+the "From: " line).
+
+All that is irrelevant to the "git am" feature suggestion, of course.
+
+Thanks for a reminder,
+Jonathan
+
+[1]
+ > lorem ipsum etc etc
+ ... reply as usual ...
+ ...
+ How about this patch?
+ -- 8< --
+ From: Patch Author <au.thor@example.com>
+ Subject: foo: do "bar" better
+
+ patch description
+ ---
+ ... patch ...
