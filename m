@@ -1,80 +1,82 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: Make format-patch produce UTF-8 `From:' header (was Re: git am should recognize >From)
-Date: Sun, 19 Sep 2010 20:38:50 +0200
-Message-ID: <87y6axshmt.fsf_-_@gmail.com>
-References: <AANLkTin_5qzDkMU_1stYZcJpfW-W7K0kxy=0K2dA7SwO@mail.gmail.com>
-	<AANLkTinOa+s-28PYXHhtKr_POu2D33ibfgKDKk4Wqi=9@mail.gmail.com>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: tig show <commit> not working anymore?
+Date: Sun, 19 Sep 2010 14:46:22 -0400
+Message-ID: <AANLkTinwTSOVfdZkt8CM9DHy9mm9nPt133nvUNjUcQO1@mail.gmail.com>
+References: <20100916125337.GG5785@bowser.ece.utexas.edu> <4C922112.404@drmicha.warpmail.net>
+ <20100918050122.GA24656@bluemoon.alumni.iitm.ac.in>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Russ Allbery <rra@debian.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Stefan-W. Hahn" <stefan.hahn@s-hahn.de>,
-	Lukas =?utf-8?Q?Sandstr=C3=B6?= =?utf-8?Q?m?= 
-	<luksan@gmail.com>, Jeff King <peff@peff.net>,
-	Christian Himpel <chressie@googlemail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 19 20:39:44 2010
+To: git@vger.kernel.org, Jonas Fonseca <fonseca@diku.dk>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Sun Sep 19 20:47:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxOnf-0005p4-Kf
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 20:39:44 +0200
+	id 1OxOui-0000YV-7L
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 20:47:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755245Ab0ISSji convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 14:39:38 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57459 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754817Ab0ISSji convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 14:39:38 -0400
-Received: by bwz11 with SMTP id 11so3836801bwz.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 11:39:36 -0700 (PDT)
+	id S1755203Ab0ISSqn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 14:46:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:35386 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484Ab0ISSqn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 14:46:43 -0400
+Received: by iwn5 with SMTP id 5so3610250iwn.19
+        for <git@vger.kernel.org>; Sun, 19 Sep 2010 11:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=lE5zswa08lOTolLVCLoauHTwoWc6HYbzICHJuaxospM=;
-        b=C4lGsw+GF5+FM18D57AzMVbYalLdpIYS3h5EYcObS1lT2KzPAV93hX6KVAIL48yCL0
-         ghDDaYi7eCWgx0XJ3cMSe5CqOxsB0F+ir0jX/oKfDELPIGZo0X2NbGHCwuP4JwItkRVI
-         A2yvmJpM9v0RVznyl6eRkl150KnZ7WNmNPUZo=
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=mnYCzimEF1rK/14dUt4jYIpeME/7O16TBQOyPHR3edE=;
+        b=F41OqySK4BgbOj16A5urLnmTHht8+turWzZ6GWTDqPmGv++6hzkB6C4X6C3mjSJP3y
+         0X+RHHm/igoIzhJE2HUNBGOMGcwi/m0cce54VoP/ZcFbFEK5iP0ZHKpVwNDDz2z49oDY
+         vaaWt9mlGkuZ1+fI6M3+NvN+5aOPHZhjiQYds=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=Mm+kRj6eRLTOUkbvHGgLepMWzNT2IwmOGazD8WbDFYKlaQk7f6vFuWIPXGHMEG9ZNO
-         IJSdv84XgwWp7eYOUOSpfMfivDiltlm2w/Nka5RwvhzGNF7hfD3jGTIxRtlKVYlC+NqU
-         mULPKTGqWr2WsbDy9aZ+eGdHT3KpZ3kucCb7o=
-Received: by 10.204.74.195 with SMTP id v3mr6136433bkj.35.1284921576813;
-        Sun, 19 Sep 2010 11:39:36 -0700 (PDT)
-Received: from localhost ([88.103.132.186])
-        by mx.google.com with ESMTPS id g12sm5755058bkb.14.2010.09.19.11.39.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Sep 2010 11:39:35 -0700 (PDT)
-In-Reply-To: <AANLkTinOa+s-28PYXHhtKr_POu2D33ibfgKDKk4Wqi=9@mail.gmail.com>
-	(Jonathan Nieder's message of "Sun, 19 Sep 2010 17:32:11 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=Uvkfdd2JR9T73PVR+F/KF5l1evKj6S3MHLXdU0ZjK1kPzx6BzdO3Zv9qmxZ0HFajJf
+         SbrpwBpc2MGrNawHMv/3sxTxqWE3/orjNsCbsqV483OJVJm5wgvUVF6n3ux8J7nAomBi
+         MAbR3OoMpPYIhiOLVAlgBW9sKMA7qKGUo63Xk=
+Received: by 10.231.194.219 with SMTP id dz27mr7897150ibb.104.1284922002191;
+ Sun, 19 Sep 2010 11:46:42 -0700 (PDT)
+Received: by 10.231.39.138 with HTTP; Sun, 19 Sep 2010 11:46:22 -0700 (PDT)
+In-Reply-To: <20100918050122.GA24656@bluemoon.alumni.iitm.ac.in>
+X-Google-Sender-Auth: W49crtowyMKcut9_9-owoZgA2b4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156508>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156509>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Maybe format-patch could provide another mode to produce patches that
-> do not include unnecessary headers (in particular, leaving out the
-> difficult "From " line and using UTF-8 instead of quoted-printable fo=
+On Sat, Sep 18, 2010 at 01:01, Kumar Appaiah <a.kumar@alumni.iitm.ac.in=
+> wrote:
+> Please bear in mind that I am totally new to the code, and not a powe=
 r
-> the "From: " line).
+> user of git either. So please don't club me! ;-)
 
-=46WIW, the quoted-printable `From:' encoding has always annoyed me -- =
-I
-replace it manually with my name & address in UTF-8 every time I send
-out a patch. What is the reason format-patch does that (and if there is
-a reason not to change the default, could an option to disable it be
-provided)?
+OK, I will give you a hug. :-)
 
-=C5=A0t=C4=9Bp=C3=A1n
+> Well, I was exploring the code a little, and I could not understand
+> some aspects fully. First, I discovered that the following hack fixes
+> the problem to an extent:
+>
+> [snip]
+>
+> However, I am pretty certain that that is not the intended use of
+> opt_rev_args and ref_commit, and that they should be used in a
+> different way. For example, tig show HEAD^^^..HEAD should show me
+> three commits combined, but it shows me only one, since I haven't run
+> it through rev-list or the like=C2=B8 probably.
+
+You fix is not that far off but to fix the second issue I had to do
+change the function responsible for expanding %(commit). Anyway,
+should be fixed in 0.16.1.
+
+--=20
+Jonas Fonseca
