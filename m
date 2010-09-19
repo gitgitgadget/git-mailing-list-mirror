@@ -1,232 +1,110 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 7/7] gitweb: group remote heads
-Date: Sun, 19 Sep 2010 07:39:11 +0200
-Message-ID: <AANLkTinkikwt5cUxuXECfeQrKZthu271U82F3ebSrEmd@mail.gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1284629465-14798-8-git-send-email-giuseppe.bilotta@gmail.com> <201009171854.03476.jnareb@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [BUG, PATCH 0/3] Fix {blame,cat-file} --textconv for cases with symlinks
+Date: Sun, 19 Sep 2010 10:58:55 +0200
+Message-ID: <vpq8w2yt8hc.fsf@bauges.imag.fr>
+References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
+	<vpqhbhmx6tg.fsf@bauges.imag.fr>
+	<7vpqwa254i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 19 07:39:40 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Sep 19 11:00:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxCcl-00066u-Qz
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 07:39:40 +0200
+	id 1OxFkn-0003eE-JJ
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Sep 2010 11:00:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752142Ab0ISFjd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 01:39:33 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:49490 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751561Ab0ISFjc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 01:39:32 -0400
-Received: by iwn5 with SMTP id 5so3224676iwn.19
-        for <git@vger.kernel.org>; Sat, 18 Sep 2010 22:39:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kaczLhIDpG2H6pLQ6ZFdWIVBASbcJTQsebi06B7Unug=;
-        b=avfs+Cnxyi6ZhiYSvAGSeHKJefGt+TuDl+M4B7VcGCBOkNqRRxrDyx1mxR1qTzezs4
-         IZBJSPtw0MHXJo0xw1T8i413LquiU5LWOET/cy/7TX0Ksi9oN0My0DkH7P+E/rf2yuE2
-         EuB0/ddNA5g0+VdEt2B+O+NBpk5fMedmiVzDw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=fCtZeLs8R53c4Bp75GeBJ2r1dNgDZf/UVAJfd8o2UycVC800uy4+uXGgZ42aWxgUH4
-         j1/2YSKnrwIPLq1S040V+1xLBqWZSBSU/Wyxh4qeH4VbGkUQ99JC95+9QUhJdFlYoooF
-         aJXJuu6HMz+iPX+CpOI9+tU+V7imlNUwXV0+E=
-Received: by 10.231.11.4 with SMTP id r4mr7879436ibr.66.1284874771246; Sat, 18
- Sep 2010 22:39:31 -0700 (PDT)
-Received: by 10.231.150.202 with HTTP; Sat, 18 Sep 2010 22:39:11 -0700 (PDT)
-In-Reply-To: <201009171854.03476.jnareb@gmail.com>
+	id S1752187Ab0ISJAB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Sep 2010 05:00:01 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:36629 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751946Ab0ISI77 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 04:59:59 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o8J8sR2P026758
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 19 Sep 2010 10:54:27 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OxFjc-0003c0-5c; Sun, 19 Sep 2010 10:58:56 +0200
+In-Reply-To: <7vpqwa254i.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 18 Sep 2010 13\:01\:17 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 19 Sep 2010 10:54:27 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o8J8sR2P026758
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1285491269.54245@bbMAr9fZLGEa1vp6ljzf3A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156486>
 
-Hello,
+Junio C Hamano <gitster@pobox.com> writes:
 
-as I mentioned, this patch was the one I had most doubts about. I will
-therefore skip over the stylistic suggestions (which I _am_ following
-for the next release of this patchset) and only reply to the more
-technical remarks.
+> That said, if you changed a symlink from pointing at A to pointing at B,
+> it does run the textual diff between the string we get from readlink(3).
 
-On Fri, Sep 17, 2010 at 6:54 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> On Thu, 16 Sep 2010, Giuseppe Bilotta wrote:
->
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index 92551e4..66b5400 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
->> @@ -2758,6 +2758,16 @@ sub git_get_last_activity {
->> =A0 =A0 =A0 return (undef, undef);
->> =A0}
->>
->> +sub git_get_remotes {
+Yes, and my question was to make sure we don't run the textconv filter
+on these strings.
 
-[snip]
+I've just checked, and from my little tests, git diff doesn't try to
+textconv the pathnames, it runs the textual diff without textconv,
+which is the expected behavior.
 
->> + =A0 =A0 my @remoteheads =3D git_get_heads_list($limit, 'remotes');
->> + =A0 =A0 return (\@remotes, \@remoteheads);
->
-> Why do you want for git_get_remotes() to also return remote-tracking
-> branches (refs/remotes/)? =A0Those are separate issues, and I think i=
-t
-> would be better API for git_get_remotes() to provide only list of
-> remotes, i.e.
->
-> =A0+ =A0 =A0 return @remotes;
->
-> Especially that we might want in the summary view to only list remote=
-s,
-> without listing remote-tracking branches.
->
-> That would require more changes to the code.
+> I didn't look at the thread or problem description, but are we running the
+> textconv filter on the file that symlink points at, instead of the
+> pathname stored in the symlink?  If so I'd call that a bug.
 
-This is kind of the main issue with this patch. What do we want to do
-with the remotes list in summary view and the remotes view? We
-basically have three possibilities:
+No, we don't do that. And yes, it's good not to do that: AFAIK, Git
+never looks at the file symlinks points to (which allows one to store
+broken symlinks or symlinks pointing outside the repository).
 
-(1) we can make the remotes list in summary view be a 'reduced
-remotes' view: this would make it behave the most similarly to the
-other components of summary view
-(2) we can make the remotes list be much more stripped down, by only
-listing the remotes and possibly some summarizing property such as the
-number of branches in it or when it was last updated
-(3) we can make the remotes list be just a copy of the full remotes vie=
-w.
+> On the other hand, if we are running the textconv filter on the pathname,
+> then I don't think we are doing anything wrong.  If you have a filter that
+> is meant to munge a PDF file to some other format, and if you do not want
+> to apply that filter to munge a pathname a symlink that happens to be
+> named "foo.pdf", either the filter itself or the attributes pattern you
+> are using to choose what paths to apply that filter might want to be
+> written more carefully, that's all.
 
-The third option is surely the easiest to implement. The second option
-with _only_ a list of remotes (no extra info) is also very easy to
-implement _and_ fast to render. The second option with extra info, or
-the first option, on the other hand, require the retrieval of some
-additional data which, maybe due to my limited knowledge of git,
-essentially means retrieving _all_ the remote heads and then doing the
-filtering in gitweb. But once we're getting all the information, why
-not display it all? isn't it faster to just display all of it, in
-which case we go back to option 3?
+If a symlink points to "foo.pdf", then you really want to call the
+string "foo.pdf" a pathname, not a "content", although it happens to
+be stored in a blob content.
 
-If we go with option 3, it does make sense to get all remote names and
-all remote branches at once, and thus to make the git_get_remotes()
-call do all of the work.
+If you have a program that can textconv PDF files, then you really
+want to say
 
->> +}
->> +
->> =A0sub git_get_references {
->> =A0 =A0 =A0 my $type =3D shift || "";
->> =A0 =A0 =A0 my %refs;
->> @@ -4979,7 +4989,7 @@ sub git_heads_body {
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "<td class=3D\"link\">" .
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $cgi->a({-href =3D> href(act=
-ion=3D>"shortlog", hash=3D>$ref{'fullname'})}, "shortlog") . " | " .
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $cgi->a({-href =3D> href(act=
-ion=3D>"log", hash=3D>$ref{'fullname'})}, "log") . " | " .
->> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $cgi->a({-href =3D> href(actio=
-n=3D>"tree", hash=3D>$ref{'fullname'}, hash_base=3D>$ref{'name'})}, "tr=
-ee") .
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $cgi->a({-href =3D> href(actio=
-n=3D>"tree", hash=3D>$ref{'fullname'}, hash_base=3D>$ref{'fullname'})},=
- "tree") .
->
-> This is independent change, and should be in a separate commit, isn't=
- it?
+*.pdf textconv=the-driver-for-that-program
 
-Probably yes, with an explanation of the why.
+in your .gitattributes file, and let Git call the program on _files_,
+not pathnames, and hence not symlink target (i.e. result of readlink).
 
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "</td>\n" .
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "</tr>";
->> =A0 =A0 =A0 }
->> @@ -4991,6 +5001,19 @@ sub git_heads_body {
->> =A0 =A0 =A0 print "</table>\n";
->> =A0}
->>
->> +sub git_remotes_body {
->> + =A0 =A0 my ($remotedata, $head) =3D @_;
->> + =A0 =A0 my @remotenames =3D @{$remotedata->[0]};
->> + =A0 =A0 my @allheads =3D @{$remotedata->[1]};
->
-> Why not
->
-> =A0+ =A0 =A0 my ($remotenames, $allheads, $head) =3D @_;
->
-> Beside, isn't it $remote_heads and not $allheads?
+If you think Git should call the textconv filter on pathnames, and let
+the driver decide whether to call it depending on whether it's a file
+content or a symlink target, then you should 1) give a use-case where
+it's usefull to textconv symlink targets (I really don't see any, and
+even on highly artificial examples, I can't imagine one where the same
+driver should textconv file content and pathnames), and 2) tell us the
+syntax to use in .gitattributes or in the driver to call it only on
+file content (I don't know any, and the .gitattribute manpage doesn't
+containt either "link" or "mode", so I don't think there is actually
+any).
 
-I think it's a leftover name choice from the first version of the
-patch. Can change.
+So, I'm pretty sure either I misunderstood you or you misunderstood
+something ;-).
 
->> + =A0 =A0 foreach my $remote (@remotenames) {
->
-> It would be then
->
-> =A0+ =A0 =A0 foreach my $remote (@$remotenames) {
->
->> + =A0 =A0 =A0 =A0 =A0 =A0 my @remoteheads =3D grep { $_->{'name'} =3D=
-~ s!^\Q$remote\E/!! } @allheads;
->
-> Should we display remote even if it doesn't have any remote heads
-> associated with it?
->
-> By the way, it would be place where we could limit number of
-> remote-tracking branches displayed in each remote block.
-
-But does it make sense to reduce the number of displayed branches
-after we got the information about all of them? I think it depends on
-what summary view is intended to do exactly.
-
->> + =A0 =A0 =A0 =A0 =A0 =A0 git_begin_group("remotes", $remote, "remot=
-es/$remote",$remote);
->> + =A0 =A0 =A0 =A0 =A0 =A0 git_heads_body(\@remoteheads, $head);
->> + =A0 =A0 =A0 =A0 =A0 =A0 git_end_group();
->
-> This would have to be modified with change to git_begin_group() /
-> / git_end_group().
-
-Of course.
-
-> BTW isn't it premature generalization? =A0It is only place AFAIKS tha=
-t
-> uses git_*_group() subroutines.
-
-It's the only current use but I believe that, since it's factored out
-now already and since it may be used in other views too (think:
-grouping heads or tags by prefix) it might make sense to keep it this
-way.
-
->> + =A0 =A0 }
->> +
->> +}
->> +
->> =A0sub git_search_grep_body {
->> =A0 =A0 =A0 my ($commitlist, $from, $to, $extra) =3D @_;
->> =A0 =A0 =A0 $from =3D 0 unless defined $from;
->> @@ -5137,7 +5160,7 @@ sub git_summary {
->> =A0 =A0 =A0 # there are more ...
->> =A0 =A0 =A0 my @taglist =A0=3D git_get_tags_list(16);
->> =A0 =A0 =A0 my @headlist =3D git_get_heads_list(16, 'heads');
->> - =A0 =A0 my @remotelist =3D $remote_heads ? git_get_heads_list(16, =
-'remotes') : ();
->> + =A0 =A0 my @remotelist =3D $remote_heads ? git_get_remotes(16) : (=
-);
->
-> No change of git_get_remotes() does only one thing: returning list
-> of remotes.
-
-See above about what should git_get_remotes() do. Even better, I was
-thinking about git_get_remotes() returning a hash (mapping remote
-names to the heads from that remote)
-
-So the big question (which essentially determines the functionality
-provided by this last patch in the set) is: what do we want to do in
-summary view?
-
---=20
-Giuseppe "Oblomov" Bilotta
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
