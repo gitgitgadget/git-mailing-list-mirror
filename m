@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 26/37] merge-recursive: Avoid doubly merging rename/add conflict contents
-Date: Mon, 20 Sep 2010 02:28:59 -0600
-Message-ID: <1284971350-30590-27-git-send-email-newren@gmail.com>
+Subject: [PATCH 28/37] merge-recursive: Move handling of double rename of one file to other file
+Date: Mon, 20 Sep 2010 02:29:01 -0600
+Message-ID: <1284971350-30590-29-git-send-email-newren@gmail.com>
 References: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,104 +11,100 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxblJ-0006R4-KI
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:30:09 +0200
+	id 1OxblK-0006R4-LN
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:30:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755910Ab0ITI21 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 04:28:27 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:49332 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755906Ab0ITI2Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 04:28:24 -0400
-Received: by mail-pw0-f46.google.com with SMTP id 3so1146755pwi.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:28:24 -0700 (PDT)
+	id S1755917Ab0ITI2a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 04:28:30 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:63878 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755897Ab0ITI23 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 04:28:29 -0400
+Received: by mail-px0-f174.google.com with SMTP id 10so1072016pxi.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:28:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=l3ECINW1xjblV062xNyj2xwlt+akNe3jbS0wfy10NW8=;
-        b=lP9GW7iezIIF7jfVR0ZffWEngmYUAuvJzHb5CRYmQQhacqrCw0f3y0uGHDbZJFPSVj
-         0u9T95qMwTnLqkVaEpzUBIxvYIjXauchpRIiK/YplziNygxp5VGAIxsi15nS5Sr5oG8Y
-         ciftaaXS5DcfgRPe7yMSIb+NRGZ77uAUQbvz8=
+        bh=MNPyBLDrGWsiR9qcgooges4Pc5qHo5oLWIWCyW7Cmzw=;
+        b=LygA498CbALQabueR5cYEdeqVc8YK+ZeXyIoDGcKijXVay9co9gvNcs4zFe9js3CqD
+         vqBd5lTUPmkmqNOgm7UG9m0OpUPQIwNHlMMIftUPNBei42TyMbyMYtgNobqst8Vi2ZQV
+         LHzIuzAgBmyI1zYWudCrLHv3T7KV+6whILtKo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=cndLyAGZl0OY/Y1aRM7bMG+33AsCdBYaVlqKsvLxHqyztAMyCu22f+iZBJ5nKRZT3n
-         O494ErgJ2dMwGOqMNziZgRbpVKE9iS1ILVB2Q69L7sAEsd+9v0/2GDTdpDf2uzCR71Fm
-         KQ/QzgVdQO89pL+7RZMplIPwvhMQeLYVb3DK4=
-Received: by 10.142.52.8 with SMTP id z8mr7410140wfz.33.1284971304662;
-        Mon, 20 Sep 2010 01:28:24 -0700 (PDT)
+        b=FjsQyijy4RCbdsNNz9TICFx39mYct5vmC/0+V8fffgY1f2YC86utT4EDk67JaX49RP
+         WF7FCwRlAqQCsgkshJAaTmWp0msIjXP/e23ZOTvzsUzxkkhCLl9jHgt7TUBSKy5e7HVZ
+         b/lYJZyfKBhRfox/nxbpF68VF9IRI1zDX6a5k=
+Received: by 10.142.119.7 with SMTP id r7mr487415wfc.85.1284971308828;
+        Mon, 20 Sep 2010 01:28:28 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.28.22
+        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.28.26
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 01:28:23 -0700 (PDT)
+        Mon, 20 Sep 2010 01:28:27 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.271.g16009
 In-Reply-To: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156590>
 
-When a commit moves A to B while another commit created B (or moved C to
-B), and these two different commits serve as different merge-bases for a
-later merge, c94736a (merge-recursive: don't segfault while handling
-rename clashes 2009-07-30) added some special code to avoid segfaults.
-Since that commit, the two versions of B are merged in place (which could
-be potentially conflicting) and the intermediate result is used as the
-virtual ancestor.
-
-However, right before this special merge, try_merge was turned on, meaning
-that process_renames() would try an alternative merge that ignores the
-'add' part of the conflict, and, if the merge is clean, store that as the
-new virtual ancestor.  This could cause incorrect merging of criss-cross
-merges; it would typically result in just recording a slightly confusing
-merge base, but in some cases it could cause silent acceptance of one side
-of a merge as the final resolution when a conflict should have been
-flagged.
-
-When we do a special merge for such a rename/add conflict between
-merge-bases, turn try_merge off to avoid an inappropriate second merge.
+Move the handling of rename/rename conflicts where one file is renamed on
+both sides to the same file, from process_renames() to process_entry().
+Here we avoid the three way merge logic by just using
+update_stages_and_entry() to move the higher stage entries in the index
+from the rename source to the rename destination, and then allow
+process_entry() to do its magic.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c                 |    1 +
- t/t6036-recursive-corner-cases.sh |    4 ++--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ merge-recursive.c |   32 ++++++--------------------------
+ 1 files changed, 6 insertions(+), 26 deletions(-)
 
 diff --git a/merge-recursive.c b/merge-recursive.c
-index 5f528c1..178bbd8 100644
+index e219d62..21b52d4 100644
 --- a/merge-recursive.c
 +++ b/merge-recursive.c
-@@ -1061,6 +1061,7 @@ static int process_renames(struct merge_options *o,
- 						    mfi.sha,
- 						    mfi.mode,
- 						    ren1_dst);
-+					try_merge = 0;
- 				} else {
- 					new_path = unique_path(o, ren1_dst, branch2);
- 					output(o, 1, "Adding as %s instead", new_path);
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index 6c2b2bf..a2e5c5c 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -120,7 +120,7 @@ test_expect_success 'setup criss-cross + rename merges with basic modification'
- 	git tag R2
- '
- 
--test_expect_failure 'merge criss-cross + rename merges with basic modification' '
-+test_expect_success 'merge criss-cross + rename merges with basic modification' '
- 	git reset --hard &&
- 	git checkout L2^0 &&
- 
-@@ -202,7 +202,7 @@ test_expect_success 'setup differently handled merges of rename/add conflict' '
- 	git tag E
- '
- 
--test_expect_failure 'git detects differently handled merges conflict' '
-+test_expect_success 'git detects differently handled merges conflict' '
- 	git reset --hard &&
- 	git checkout D^0 &&
- 
+@@ -971,33 +971,13 @@ static int process_renames(struct merge_options *o,
+ 				remove_file(o, 0, ren1_dst, 0);
+ 				/* ren2_dst not in head, so no need to delete */
+ 			} else {
+-				struct merge_file_info mfi;
+ 				remove_file(o, 1, ren1_src, 1);
+-				mfi = merge_file(o,
+-						 ren1->pair->one,
+-						 ren1->pair->two,
+-						 ren2->pair->two,
+-						 branch1,
+-						 branch2);
+-				if (mfi.merge || !mfi.clean)
+-					output(o, 1, "Renaming %s->%s", src, ren1_dst);
+-
+-				if (mfi.merge)
+-					output(o, 2, "Auto-merging %s", ren1_dst);
+-
+-				if (!mfi.clean) {
+-					output(o, 1, "CONFLICT (content): merge conflict in %s",
+-					       ren1_dst);
+-					clean_merge = 0;
+-
+-					if (!o->call_depth)
+-						update_stages(ren1_dst,
+-							      ren1->pair->one,
+-							      ren1->pair->two,
+-							      ren2->pair->two,
+-							      1 /* clear */);
+-				}
+-				update_file(o, mfi.clean, mfi.sha, mfi.mode, ren1_dst);
++				update_stages_and_entry(ren1_dst,
++							ren1->dst_entry,
++							ren1->pair->one,
++							ren1->pair->two,
++							ren2->pair->two,
++							1 /* clear */);
+ 			}
+ 		} else {
+ 			/* Renamed in 1, maybe changed in 2 */
 -- 
 1.7.3.271.g16009
