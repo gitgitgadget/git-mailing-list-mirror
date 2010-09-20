@@ -1,181 +1,108 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Reduced privileges install
-Date: Mon, 20 Sep 2010 17:01:28 +0000
-Message-ID: <AANLkTimbTUp4r8HPiYv2HxD-pLrrxW1qHiNhBHiknvkB@mail.gmail.com>
-References: <325786BC-5F54-47B5-AEF5-7FDAD9BEA4BA@kellerfarm.com>
-	<BvHZDf7-epsPOl8y5QrLcsmYgobmFUo7HwZanlekCciU8I-jiKPVRw@cipher.nrlssc.navy.mil>
-	<23ECDEF1-BDEC-45CC-B0CC-7E1A7BFE00BB@kellerfarm.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH 3/3] use cache for function names in hunk headers
+Date: Mon, 20 Sep 2010 19:36:05 +0200
+Message-ID: <20100920173605.GA13057@localhost>
+References: <1284890369-4136-1-git-send-email-drizzd@aon.at>
+ <1284890369-4136-4-git-send-email-drizzd@aon.at>
+ <AANLkTikArADX8XviB99VtkkmKmVbs9jHPHw9PNSmiOc3@mail.gmail.com>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git List <git@vger.kernel.org>
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 19:01:36 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="d6Gm4EdcadzBjdND"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 19:35:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxjkF-0002wm-KE
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:01:36 +0200
+	id 1OxkH6-00040E-Tr
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:35:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756866Ab0ITRB3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 13:01:29 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58781 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752876Ab0ITRB3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 13:01:29 -0400
-Received: by iwn5 with SMTP id 5so4375452iwn.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:01:28 -0700 (PDT)
+	id S1754619Ab0ITRf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 13:35:26 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53569 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754120Ab0ITRfZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 13:35:25 -0400
+Received: by bwz11 with SMTP id 11so4439432bwz.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:35:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MZs3ehmsaV7eJLRfGbXiOGYCoq4e9jmxvtENRkUyEDU=;
-        b=WtyDTZUoWldrxWO0VYWOQgVED5fwvJXnKJszjBi7NxLMw3xvZUGVf682bpV/Ex1K4G
-         vVM0+rou1UJcQNZjNBIIkz2p/mo8rY1/gY1iFR3ueB8Cio2FmW/BQeZTkC5y+W4PA26Q
-         2cZ4EUAPJJeNnCdH1EbcDA4oILZ8uacb3nWP0=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z9vnGNoE7MNLKuZui+gK+ZUWHNglp0KE/5ljhLpRn24=;
+        b=WUAj3GJhJoSInYIM8Ydz18+fwBPcEvL2iRtNUiuuA/82brnl4AJmhSl1e3aMVyP3/0
+         C1ssw21kraRkEsoF1nONChntMkwsI+CHASo46HXDfvKFe1q+MhJc1GjTgkZB39f0+OtX
+         aUxce+xq1d+Cgq55X+OUlEZlyXaXfBtRJv7eg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Xz9yqeIIjJAJ2+5mqe9SxNDevP6Ar/YR0BqHVBBAniNP6ByBrKeurM0J05V5juFIRU
-         1vCRWelTFgEoNjo3cYURHbC1vVik4bDtPFsLtsaUlJA4ph2JLADSmFCmS+cUt8LQXzT6
-         WfVJs2XpKQXXLiKEZoECGT8VZgLMxYjv2CI+A=
-Received: by 10.231.191.136 with SMTP id dm8mr10567377ibb.75.1285002088546;
- Mon, 20 Sep 2010 10:01:28 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Mon, 20 Sep 2010 10:01:28 -0700 (PDT)
-In-Reply-To: <23ECDEF1-BDEC-45CC-B0CC-7E1A7BFE00BB@kellerfarm.com>
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=jfmlnOBzU3+nAFS49yHRijuswWGB3rdWQ5XZtfZmbHgWer45q9cTm+3549kc6WIKGr
+         g031g51yk8iMt3bYPqe6GSUybPD5MJRLi28wxCeTJuqetVF9krnyY0uTXCTyl03U8SoG
+         h9MhY4jr7g1SweXi2GcOE8KtI5MOn9gXQY448=
+Received: by 10.204.112.84 with SMTP id v20mr6713925bkp.213.1285004124194;
+        Mon, 20 Sep 2010 10:35:24 -0700 (PDT)
+Received: from darc.lan (p549A4F70.dip.t-dialin.net [84.154.79.112])
+        by mx.google.com with ESMTPS id f18sm6733603bkf.15.2010.09.20.10.35.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Sep 2010 10:35:23 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1OxkHd-0003QK-Sy; Mon, 20 Sep 2010 19:36:05 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTikArADX8XviB99VtkkmKmVbs9jHPHw9PNSmiOc3@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156641>
 
-On Mon, Sep 20, 2010 at 16:56, Andrew Keller <andrew@kellerfarm.com> wr=
-ote:
-> On Sep 20, 2010, at 10:53 AM, Brandon Casey wrote:
->> On 09/19/2010 06:50 PM, Andrew Keller wrote:
->>
->>> Hello, all. =C2=A0Quick question:
->>>
->>> I'm trying to build and install git 1.7.2.3 from source on a server=
- at school used for my class.
->>> 'uname -a' is 'SunOS bloch 5.9 Generic_122300-54 sun4u sparc SUNW,U=
-ltraAX-i2'.
->>>
->>> There were a few hiccups at first =E2=80=93 things like CC not bein=
-g defined, tclsh not existing, the path to python being wrong, etc, but=
- they were all relatively easy to work around. =C2=A0This last error, h=
-owever, not so much luck.
->>>
->>> Because I do not own the server and my account has restricted privi=
-leges, I attempted to augment my PATH to include a directory in my home=
- folder, and then install git in there by specifying a prefix at the co=
-nfigure stage. =C2=A0The configure and the make work, but the make inst=
-all fails. =C2=A0Here's the last section of the log:
->>>
->>>
->>> $ make install
->>>
->>> ...
->>>
->>> make -C templates DESTDIR=3D'' install
->>> make[1]: Entering directory `/usr/users/students/ak4390/Downloads/g=
-it-1.7.2.3/templates'
->>> /usr/ucb/install -d -m 755 '/usr/users/students/ak4390/.local/share=
-/git-core/templates'
->>> (cd blt && gtar cf - .) | \
->>> =C2=A0 =C2=A0 =C2=A0 =C2=A0(cd '/usr/users/students/ak4390/.local/s=
-hare/git-core/templates' && umask 022 && gtar xof -)
->>> make[1]: Leaving directory `/usr/users/students/ak4390/Downloads/gi=
-t-1.7.2.3/templates'
->>> make -C perl prefix=3D'/usr/users/students/ak4390/.local' DESTDIR=3D=
-'' install
->>> make[1]: Entering directory `/usr/users/students/ak4390/Downloads/g=
-it-1.7.2.3/perl'
->>> make[2]: Entering directory `/usr/users/students/ak4390/Downloads/g=
-it-1.7.2.3/perl'
->>> Warning: You do not have permissions to install into /usr/perl5/sit=
-e_perl/5.6.1/sun4-solaris-64int at /usr/perl5/5.6.1/lib/ExtUtils/Instal=
-l.pm line 85.
->>> Installing /usr/perl5/site_perl/5.6.1/Error.pm
->>> Installing /usr/perl5/site_perl/5.6.1/Git.pm
->>> mkdir /usr/perl5/site_perl/5.6.1/sun4-solaris-64int/auto: Permissio=
-n denied at /usr/perl5/5.6.1/lib/ExtUtils/Install.pm line 165
->>> make[2]: *** [pure_site_install] Error 255
->>> make[2]: Leaving directory `/usr/users/students/ak4390/Downloads/gi=
-t-1.7.2.3/perl'
->>> make[1]: *** [install] Error 2
->>> make[1]: Leaving directory `/usr/users/students/ak4390/Downloads/gi=
-t-1.7.2.3/perl'
->>> make: *** [install] Error 2
->>>
->>>
->>> So anyways, it appears that it is trying to install into a director=
-y in which I do not have write permissions. =C2=A0But why? =C2=A0I thou=
-ght that setting the prefix to a folder in my home directory would chan=
-ge that. =C2=A0Is there another parameter I'm forgetting about at the c=
-onfigure stage?
->>>
->>> Thanks,
->>> Andrew Keller
->>>
->>> PS: not sure if it matters, but just in case...
->>> path to perl: /bin/perl
->>> version of perl: 5.6.1
->>
->> By chance could INSTALL_BASE be set in your environment?
->>
->> =C2=A0 $ echo $INSTALL_BASE
->
-> env says that INSTALL_BASE is not currently set.
->
->> A patch was recently made to unset that variable so that it
->> could not influence perl's makemaker. =C2=A0Though the commit messag=
-e
->> indicates that makemaker complains loudly when both INSTALL_BASE
->> and PREFIX are set, so perhaps this is not the problem.
->>
->> If INSTALL_BASE is set, then unset it, and try again.
->>
->> Alternatively, you could avoid makemaker altogether by setting
->> NO_PERL_MAKEMAKER on the make command line and git will build
->> its own make file:
->>
->> =C2=A0 make NO_PERL_MAKEMAKER=3D1 install
->
-> Setting NO_PERL_MAKEMAKER at the build stage seems to make the instal=
-l stage work. =C2=A0Yay!
->
-> This is what it took to compile Git on this server without root privi=
-leges (Solaris 8 / Sparc):
->
-> # create a location for apps in my home folder:
-> mkdir ~/.local
-> export PATH=3D$PATH:/usr/users/students/ak4390/.local/bin
-> export MANPATH=3D$MANPATH:/usr/users/students/ak4390/.local/share/man
->
-> # compile and install git
-> $ ln -s /usr/local/bin/tclsh8.4 /usr/users/students/ak4390/.local/bin=
-/tclsh
-> $ export CC=3D/usr/local/bin/gcc
-> $ cd <path-to-git-src>
-> $ ./configure --prefix=3D/usr/users/students/ak4390/.local --with-pyt=
-hon=3D/usr/local/bin/python --enable-pthreads=3Dno
-> $ make NO_PERL_MAKEMAKER=3D1 all install
->
-> Letting the configure figure out the threading did not seem to work. =
-=C2=A0The compile and install worked, with lots of warnings from gcc ab=
-out not recognizing -pthreads, but when you try to do a clone, git comp=
-lained about not being able to fork off the demultiplexer. =C2=A0So I j=
-ust turned off threading and it works.
->
-> The quick-install-man target still failed, but it's not really a big =
-deal since I can just install it myself.
 
-What does this return for you:
+--d6Gm4EdcadzBjdND
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    perl -MExtUtils::MakeMaker -le 'print $ExtUtils::MakeMaker::VERSION=
-'
+On Sun, Sep 19, 2010 at 10:24:52PM +0200, Sverre Rabbelier wrote:
+>=20
+> On Sun, Sep 19, 2010 at 11:59, Clemens Buchacher <drizzd@aon.at> wrote:
+> > 2.78user 0.01system 0:02.82elapsed 99%CPU
+> > 0.05user 0.01system 0:00.06elapsed 96%CPU
+>=20
+> Very nice. It would improve the commit message if you could explain
+> what exactly it is this optimizes though, saving the reader from
+> having to read through t3419 to find out.
+
+Ok.
+
+The test creates a file with 50000 lines and a one-line change
+every 10 lines, i.e., about 5000 hunks. Since none of the lines
+matches a function definition, previous to this optimization, the
+file was searched 5000 times.
+
+Clemens
+
+--d6Gm4EdcadzBjdND
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMl5uFAAoJELKdZexG8uqMONcH/0bJy83PlEDOVVxw7qRHeshz
+mcsIicqsyplBR76/V4fF4mQRtZ7JZfHCQqW3qb/ZDO3/39YGHrI2BjqrwUVUQt8f
+4N08WhNTNjUGovhwk4scgheY/7iHR6qQK5Sls8XakQAU4dUXtncRPYbYRK100w8F
+I32RumC1gasUVeLlmh2sgEIDKk/BwcMtY26h9HW5vFvGT3r5dQwUJeKg9micWh4M
+sDPSCve506v/fE9IyCmOhQ/5HeSgcF0u9tNFTM8YSbiOQ8r3AdgydlncwOpHAzLC
+KbZda0CB00hbg9VtmZJzv6l2ICrdehkoz0wz9pI039+k8401LZXB2t2Jp0vYwQM=
+=2wcg
+-----END PGP SIGNATURE-----
+
+--d6Gm4EdcadzBjdND--
