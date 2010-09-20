@@ -1,55 +1,58 @@
-From: kinley <arjuncode@gmail.com>
-Subject: Re: Newbie question
-Date: Sun, 19 Sep 2010 17:50:06 -0700 (PDT)
-Message-ID: <1284943806785-5548842.post@n2.nabble.com>
-References: <1284940287810-5548737.post@n2.nabble.com> <04E0C626-C16F-43A9-9AB7-41760B682F13@kellerfarm.com>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: Reduced privileges install
+Date: Sun, 19 Sep 2010 18:07:30 -0700
+Message-ID: <86k4mhfcj1.fsf@red.stonehenge.com>
+References: <325786BC-5F54-47B5-AEF5-7FDAD9BEA4BA@kellerfarm.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 20 02:50:22 2010
+Cc: Git List <git@vger.kernel.org>
+To: Andrew Keller <andrew@kellerfarm.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 03:17:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxUaG-0007YD-1M
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 02:50:16 +0200
+	id 1OxV0b-0006eu-0x
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 03:17:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754792Ab0ITAuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Sep 2010 20:50:08 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:46780 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754408Ab0ITAuH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Sep 2010 20:50:07 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <arjuncode@gmail.com>)
-	id 1OxUa6-00031t-PX
-	for git@vger.kernel.org; Sun, 19 Sep 2010 17:50:06 -0700
-In-Reply-To: <04E0C626-C16F-43A9-9AB7-41760B682F13@kellerfarm.com>
+	id S1754914Ab0ITBRK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Sep 2010 21:17:10 -0400
+Received: from red.stonehenge.com ([208.79.95.2]:35015 "EHLO
+	red.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754792Ab0ITBRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Sep 2010 21:17:09 -0400
+X-Greylist: delayed 579 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Sep 2010 21:17:09 EDT
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 185EA1522; Sun, 19 Sep 2010 18:07:30 -0700 (PDT)
+x-mayan-date: Long count = 12.19.17.12.16; tzolkin = 12 Cib; haab = 9 Chen
+In-Reply-To: <325786BC-5F54-47B5-AEF5-7FDAD9BEA4BA@kellerfarm.com> (Andrew
+	Keller's message of "Sun, 19 Sep 2010 19:50:59 -0400")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156542>
 
+>>>>> "Andrew" == Andrew Keller <andrew@kellerfarm.com> writes:
 
-Thanks for your help.
+Andrew> Because I do not own the server and my account has restricted
+Andrew> privileges, I attempted to augment my PATH to include a
+Andrew> directory in my home folder, and then install git in there by
+Andrew> specifying a prefix at the configure stage.  The configure and
+Andrew> the make work, but the make install fails.  Here's the last
+Andrew> section of the log:
 
-Actually now I tried doing this
+What's your PREFIX set to?  If you set your prefix, the Perl modules are
+installed below the prefix, not in the system dirs.
 
-git clone ssh://user@host/~/GPUProject/Histogram
+Andrew> $ make install
 
-but getting
+Yeah, I don't see a prefix here, unless you set it in your Makefile.
 
-bash: git-upload-pack: command not found
-fatal: The remote end hung up unexpectedly
-
-I tried several ways of specifying the path of the URL assuming that this
-could be a path issue but every time it gives the same error.
-
-Thanks once again.
 -- 
-View this message in context: http://git.661346.n2.nabble.com/Newbie-question-tp5548737p5548842.html
-Sent from the git mailing list archive at Nabble.com.
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.vox.com/ for Smalltalk and Seaside discussion
