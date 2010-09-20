@@ -1,59 +1,62 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Shouldn't git fetch also fetch the tags?
-Date: Tue, 21 Sep 2010 02:00:37 +0300
-Message-ID: <AANLkTinb=g=Y=s9AqPtLEOqMxPJVqFxRa_2cB4=iNZ4k@mail.gmail.com>
+From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+Subject: Re: [tig] Re: compilation error: undefined reference to
+ `set_tabsize'
+Date: Mon, 20 Sep 2010 18:05:59 -0500
+Message-ID: <20100920230559.GJ23119@bowser.ece.utexas.edu>
+References: <20100920174200.GA13017@vidovic>
+ <loom.20100920T203217-346@post.gmane.org>
+ <20100920204344.GB13017@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 21 01:00:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Stefan =?iso-8859-1?Q?N=E4we?= <stefan.naewe@googlemail.com>,
+	git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Tue Sep 21 01:06:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxpLn-0004d2-Pu
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:00:44 +0200
+	id 1OxpR2-0006Kp-Qe
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:06:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754474Ab0ITXAi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 19:00:38 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34407 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752208Ab0ITXAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 19:00:38 -0400
-Received: by iwn5 with SMTP id 5so4577811iwn.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 16:00:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=h/83SflW1xPA4HLzRUgGzvS6ACfMHRuUyDt7tvMREoE=;
-        b=CctLVlDdbh7ovXZlbgdFAQ6G5us9hCUfKTwOFmlxmxhNZ9OaEPyx/gapw3GN6tPKD5
-         gZGxgL70YWK1HRn0okpdYGaD1+Oby3VDXLn2ProJSdTxdgcHPVl5bAp2HQmzLZhnfvzb
-         8C2mEIMAvRxuAcypWCpO5QQ7KErUDIARqr6TM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=cGdfEYjViQTri3YoREBwetjCyj6aeOsl04AgyYzXvQYFMOK1zkAzK9fo6m0tVgxczH
-         hJok3PlJeYHjbxzlIEcXSq/r+pVK00nqEHkS1YVRSkuMXdBIcJXDigu/ITz82FXNYaCD
-         YSVVa0zfaWtrap4StXt55sXnDCEoh/aAUNhQU=
-Received: by 10.231.13.139 with SMTP id c11mr10803452iba.188.1285023637385;
- Mon, 20 Sep 2010 16:00:37 -0700 (PDT)
-Received: by 10.231.160.6 with HTTP; Mon, 20 Sep 2010 16:00:37 -0700 (PDT)
+	id S1756731Ab0ITXGD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 19:06:03 -0400
+Received: from irongate.mail.utexas.edu ([146.6.25.6]:41491 "EHLO
+	irongate.mail.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754703Ab0ITXGC (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 19:06:02 -0400
+X-IronPort-MID: 55927329
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAPOFl0yAU36S/2dsb2JhbACiIHHEe4VBBIROhWqEeA
+Received: from wb7-a.mail.utexas.edu ([128.83.126.146])
+  by irongate.mail.utexas.edu with ESMTP; 20 Sep 2010 18:06:01 -0500
+Received: (qmail 42537 invoked from network); 20 Sep 2010 23:06:00 -0000
+Received: from bowser.ece.utexas.edu (a.kumar@146.6.33.245)
+  by wb7.mail.utexas.edu with (RC4-SHA encrypted) ESMTPSSA; 20 Sep 2010 23:06:00 -0000
+Content-Disposition: inline
+In-Reply-To: <20100920204344.GB13017@vidovic>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156676>
 
-Hi,
+On Mon, Sep 20, 2010 at 10:43:44PM +0200, Nicolas Sebrecht wrote:
+> > That change works for me on Cygwin, Ubuntu 10.04, Debian 5.0.6
+> > 
+> > Maybe you should say something about your system/OS version ?
+> 
+> Naturally. I'm running on Gentoo.
+> 
 
-Usually when I do 'git fetch' the tags are fetched too, however, there
-is one repo:
-git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.35.y
+Ack that this also breaks build on CentOS. The simple reason is that
+the ncurses version on CentOS 5.5 is ncurses-5.5, while that on Debian
+Lenny is 5.7+. According to the changelog, 5.6 onwards has
+set_tabsize, so checking for that version of ncurses might be a good
+option.
 
-Where it doesn't happen, and I manually have to 'git fetch --tags'.
+Thanks.
 
-What's going on?
-
--- 
-Felipe Contreras
+Kumar
