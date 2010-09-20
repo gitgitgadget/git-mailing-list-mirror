@@ -1,98 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Makefile: add CC to TRACK_CFLAGS
-Date: Sun, 19 Sep 2010 18:46:16 -0700
-Message-ID: <7viq21uqzb.fsf@alter.siamese.dyndns.org>
-References: <1284331065-3394-1-git-send-email-avarab@gmail.com>
- <AANLkTikBP3pJ7ZN9jC9yQeVKssgr2KMpaY-nQtpJZiP-@mail.gmail.com>
+From: Imran M Yousuf <imyousuf@gmail.com>
+Subject: Re: Newbie question
+Date: Mon, 20 Sep 2010 07:47:33 +0600
+Message-ID: <AANLkTi=GV2WKKBS=_oCO6qyusyXFxj_Gp5LWuPV6yeOj@mail.gmail.com>
+References: <1284940287810-5548737.post@n2.nabble.com>
+	<04E0C626-C16F-43A9-9AB7-41760B682F13@kellerfarm.com>
+	<1284943806785-5548842.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 03:46:34 2010
+To: kinley <arjuncode@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 03:47:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxVSh-0008Ag-0r
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 03:46:31 +0200
+	id 1OxVTo-00005D-AA
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 03:47:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755373Ab0ITBq0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 21:46:26 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50031 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755245Ab0ITBqZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 21:46:25 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0B159D7A23;
-	Sun, 19 Sep 2010 21:46:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=LOV5GiXQ8GTYe0hwEq0fEUFHX
-	S0=; b=s8Kn8KHLJB0YQgUKTB4vxW2pwpgyQpmVzZrq3MEt7BaoSeH4pDzD8aOXY
-	tQiYNtbSS0LAQXgDlmvbnELKuAcirCzKxGrF6c2sxpqiNl98HqAdEi6bHoiY70uN
-	jvlkr6OrJ6FSURrg3UlYEZlvwYydqDuTp3HH38A4s9/b4TtWk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=MBy9TPw/EY+TW5eSDr/
-	yvuUDWfMclYZJrDnclId6jbuTwSoJsnret10mfgSqGStDEhOfMADaQGSjdVHpkOp
-	Nbo/KikgG6e/455J2QbFHZkGekj7bCZAqKGBSbLhFrLJ4F53B+AZiL63UfCL7VN5
-	Y7A4oMOmMMgYGmWNM0tDCFhc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DC50BD7A1F;
-	Sun, 19 Sep 2010 21:46:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 334C3D7A1D; Sun, 19 Sep
- 2010 21:46:18 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DE3780A2-C458-11DF-A39E-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755396Ab0ITBrf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 21:47:35 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:47196 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755245Ab0ITBrf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 21:47:35 -0400
+Received: by wyf22 with SMTP id 22so3868241wyf.19
+        for <git@vger.kernel.org>; Sun, 19 Sep 2010 18:47:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V8sV713Y0CwOM+JxGb8ozfwXwzN1tZUziQhu6PYdgr8=;
+        b=XJ+9jPUva6d4RvU0hB5ganzhED+FT6j6xCPoPxD8h/jQ8jm8IDIl1zQkqLw5al5SJE
+         lNei82iTIocECymJNHwRtgujaLozfSN1S/5hhidNY8zsR+LZi5NNnc4KMmbg41O9Hu3q
+         LiuXlw9zfK7DtGVTzNTsINqZK0wR/qljr/bm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=FHSJGriZ2/eNQWD75v2uvzwVLcpqmfABzEdhjTe/U+s9aHP1TohQNoPtCF9XlyyJOD
+         WqyEuO8SV1L+Yjc4hQNPyCIY1I7pnkjtXT4I6NJq7h09GtYF3gdLtYUgEtmefukv58IR
+         kpv0lodjaTPYyIWilfPJ10Gwb1vJ5iwSG0XOw=
+Received: by 10.216.5.21 with SMTP id 21mr3762095wek.20.1284947253816; Sun, 19
+ Sep 2010 18:47:33 -0700 (PDT)
+Received: by 10.216.187.68 with HTTP; Sun, 19 Sep 2010 18:47:33 -0700 (PDT)
+In-Reply-To: <1284943806785-5548842.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156545>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156546>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+Try:
+git clone user@host:/home/user/GPUProject/Histogram/.git/
 
-> Is there a reason for why this didn't get picked up other than fallin=
-g
-> through the cracks?
+I added .git assuming that, that is the folder to which you gave the
+ls output in your first email, the path should be upto that folder.
 
-Simply because I wasn't actively collecting new topics during feature
-freeze, especially for small stuff that I knew that resending after
-release would be trivial and more efficient use of my time than queuing=
- it
-in 'pu' and having to look at it every time I do another push-out in or=
-der
-to decide when to merge it to 'next'.
+On Mon, Sep 20, 2010 at 6:50 AM, kinley <arjuncode@gmail.com> wrote:
+>
+> Thanks for your help.
+>
+> Actually now I tried doing this
+>
+> git clone ssh://user@host/~/GPUProject/Histogram
+>
+> but getting
+>
+> bash: git-upload-pack: command not found
+> fatal: The remote end hung up unexpectedly
+>
+> I tried several ways of specifying the path of the URL assuming that =
+this
+> could be a path issue but every time it gives the same error.
+>
+> Thanks once again.
+> --
+> View this message in context: http://git.661346.n2.nabble.com/Newbie-=
+question-tp5548737p5548842.html
+> Sent from the git mailing list archive at Nabble.com.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>
 
-After a feature release like 1.7.3, my preference is to do these in thi=
-s
-order:
 
- (0) take a deep breath and have bit of break ;-);
 
- (1) rewind 'next' to match 1.7.3 with selected topics that has been
-     cooking there, rename 'maint' to 'maint-1.7.2', and start 'maint' =
-at
-     1.7.3;
-
- (2) have a quiet period for at least a few days, not touching 'master'=
- at
-     all, to make sure things are stable, giving users time to give us
-     feedback, and giving us time to assess potential damages caused by
-     unanticipated regressions;
-
- (3) collect brown-paper-bag regression fixes, if necessary, during the
-     period overlapping with (2), queuing them to 'next';
-
- (4) have (3) graduate and issue 1.7.3.1 out of 'maint';
-
-And after all that, open the 1.7.4 cycle, queuing new topics.  That wou=
-ld
-also be a good time to backmerge the safe fixes (but not new features)
-that went to 1.7.3 to maint-1.7.2, and cut 1.7.2.4, so that it will be =
-a
-reasonably solid base to apply later security fixes if necessary.
+--=20
+Imran M Yousuf
+Entrepreneur & CEO
+Smart IT Engineering Ltd.
+Dhaka, Bangladesh
+Twitter: @imyousuf - http://twitter.com/imyousuf
+Blog: http://imyousuf-tech.blogs.smartitengineering.com/
+Mobile: +880-1711402557
