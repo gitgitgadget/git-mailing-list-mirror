@@ -1,153 +1,99 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 08/37] t6022: Add tests for rename/rename combined with D/F conflicts
-Date: Mon, 20 Sep 2010 02:28:41 -0600
-Message-ID: <1284971350-30590-9-git-send-email-newren@gmail.com>
+Subject: [PATCH 14/37] merge-recursive: Small code clarification -- variable name and comments
+Date: Mon, 20 Sep 2010 02:28:47 -0600
+Message-ID: <1284971350-30590-15-git-send-email-newren@gmail.com>
 References: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 20 10:28:18 2010
+X-From: git-owner@vger.kernel.org Mon Sep 20 10:28:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxbjR-0005rH-Nx
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:28:14 +0200
+	id 1OxbjT-0005rH-Qd
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755810Ab0ITI1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 04:27:51 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:63878 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755797Ab0ITI1s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 04:27:48 -0400
-Received: by mail-px0-f174.google.com with SMTP id 10so1072016pxi.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:27:47 -0700 (PDT)
+	id S1755858Ab0ITI2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 04:28:04 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:37157 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755848Ab0ITI2A (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 04:28:00 -0400
+Received: by mail-pv0-f174.google.com with SMTP id 2so1071833pvg.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:28:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=3kes3LnjSV7Vvo00/glKPaU6wTvB/onZRfOyv//btAA=;
-        b=YbEMIJ5zotMLN/zef8MQ/RE5Bm54WxUAxYHd+Zt9jim22z3QZ1p3TzDlPYGFRHgmsx
-         gQRcleOcvRPqWLJD+W+7xITfE/6sNFaVjP7iuYXhgI1H3k1Zk2J+guE66dXr0JSH6hv/
-         r68xF2oGLy53GkyV8CdwIuGcpPtBLEp/BQNZo=
+        bh=5KAtg5U9wB3qZ9nRhFQSG+pbYsBGNGgWD1dzSs0do68=;
+        b=udjf3YtyvMiJWet4t/i9tVgv6/ttl0iqU7VmCHjTnSE8ImS/x1EYEK2QIDCfwcAgOo
+         AAZMW1KyE+354FEMQRPQyFFoFJUoF0LvIVQLBKgfo+QV0JRS9OFuGr+7RhYl9DarM1tE
+         dmEI9XuYR6hFZ+aT+23FDyAuj/K7afyK3HjoM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=sYMVBk+rXgQrYj5JYd6GI2PaHxKc5TiAhLrHr9zCwIiKd9bICIf/pKbXOXQfWyjAtJ
-         UawCE8JSeeDdH42pMtQz2poA7uo96FqWG83BP1c4YDdO3XOcyFtx4vNOxLEI4gxKzd9P
-         q97gQWiWocOLwUGMieNnl70Wq5z2H9d97EDdY=
-Received: by 10.142.232.5 with SMTP id e5mr7338421wfh.300.1284971267881;
-        Mon, 20 Sep 2010 01:27:47 -0700 (PDT)
+        b=Cyf0QGf9YWHXBESRaa7JOsnOJo//dWByLwSDGiOTxO5IoBsKGIk6O4McxISLQBXK6S
+         aMj3rWGVQcYFnMvHmIWwNuwvMJ4KsRdUQDREaq9AdaIYv0gn2TOpphQdE+E60Pbg7DP5
+         zYqRBvo5kw/0uIyJpWs/B8XUNxV+WYE3J8Tno=
+Received: by 10.142.199.18 with SMTP id w18mr7317290wff.336.1284971280289;
+        Mon, 20 Sep 2010 01:28:00 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.27.45
+        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.27.58
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 01:27:46 -0700 (PDT)
+        Mon, 20 Sep 2010 01:27:59 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.271.g16009
 In-Reply-To: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156566>
 
-Add tests where one file is renamed to two different paths in different
-sides of history, and where each of the new files matches the name of a
-directory from the opposite side of history.  Include tests for both the
-case where the merge results in those directories not being cleanly
-removed, and where those directories are cleanly removed during the merge.
+process_renames() had a variable named "stage" and derived variables
+src_other and dst_other whose purpose was not immediately obvious; also,
+I want to extend the scope of this variable and use it later, so it should
+have a more descriptive name.  Do so, and add a brief comment explaining
+how it is used and what it relates to.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6022-merge-rename.sh |   79 +++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 79 insertions(+), 0 deletions(-)
+ merge-recursive.c |   20 ++++++++++++++------
+ 1 files changed, 14 insertions(+), 6 deletions(-)
 
-diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
-index a38b383..02dea16 100755
---- a/t/t6022-merge-rename.sh
-+++ b/t/t6022-merge-rename.sh
-@@ -628,4 +628,83 @@ test_expect_success 'pair rename to parent of other (D/F conflicts) w/ clean sta
- 	test "stuff" = $(cat two)
- '
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 4d9c165..8f45cec 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -925,15 +925,23 @@ static int process_renames(struct merge_options *o,
+ 			struct string_list_item *item;
+ 			/* we only use sha1 and mode of these */
+ 			struct diff_filespec src_other, dst_other;
+-			int try_merge, stage = a_renames == renames1 ? 3: 2;
++			int try_merge;
  
-+test_expect_success 'setup rename of one file to two, with directories in the way' '
-+	git reset --hard &&
-+	git checkout --orphan first-rename &&
-+	git rm -rf . &&
-+	git clean -fdqx &&
-+
-+	echo stuff >original &&
-+	git add -A &&
-+	git commit -m "Common commmit" &&
-+
-+	mkdir two &&
-+	>two/file &&
-+	git add two/file &&
-+	git mv original one &&
-+	git commit -m "Put two/file in the way, rename to one" &&
-+
-+	git checkout -b second-rename HEAD~1 &&
-+	mkdir one &&
-+	>one/file &&
-+	git add one/file &&
-+	git mv original two &&
-+	git commit -m "Put one/file in the way, rename to two"
-+'
-+
-+test_expect_failure 'check handling of differently renamed file with D/F conflicts' '
-+	git checkout -q first-rename^0 &&
-+	test_must_fail git merge --strategy=recursive second-rename &&
-+
-+	test 5 = "$(git ls-files -s | wc -l)" &&
-+	test 3 = "$(git ls-files -u | wc -l)" &&
-+	test 1 = "$(git ls-files -u one | wc -l)" &&
-+	test 1 = "$(git ls-files -u two | wc -l)" &&
-+	test 1 = "$(git ls-files -u original | wc -l)" &&
-+	test 2 = "$(git ls-files -o | wc -l)" &&
-+
-+	test -f one/file &&
-+	test -f two/file &&
-+	test -f one~HEAD &&
-+	test -f two~second-rename &&
-+	! test -f original
-+'
-+
-+test_expect_success 'setup rename one file to two; directories moving out of the way' '
-+	git reset --hard &&
-+	git checkout --orphan first-rename-redo &&
-+	git rm -rf . &&
-+	git clean -fdqx &&
-+
-+	echo stuff >original &&
-+	mkdir one two &&
-+	touch one/file two/file &&
-+	git add -A &&
-+	git commit -m "Common commmit" &&
-+
-+	git rm -rf one &&
-+	git mv original one &&
-+	git commit -m "Rename to one" &&
-+
-+	git checkout -b second-rename-redo HEAD~1 &&
-+	git rm -rf two &&
-+	git mv original two &&
-+	git commit -m "Rename to two"
-+'
-+
-+test_expect_failure 'check handling of differently renamed file with D/F conflicts' '
-+	git checkout -q first-rename-redo^0 &&
-+	test_must_fail git merge --strategy=recursive second-rename-redo &&
-+
-+	test 3 = "$(git ls-files -u | wc -l)" &&
-+	test 1 = "$(git ls-files -u one | wc -l)" &&
-+	test 1 = "$(git ls-files -u two | wc -l)" &&
-+	test 1 = "$(git ls-files -u original | wc -l)" &&
-+	test 0 = "$(git ls-files -o | wc -l)" &&
-+
-+	test -f one &&
-+	test -f two &&
-+	! test -f original
-+'
-+
- test_done
+-			remove_file(o, 1, ren1_src, o->call_depth || stage == 3);
++			/*
++			 * unpack_trees loads entries from common-commit
++			 * into stage 1, from head-commit into stage 2, and
++			 * from merge-commit into stage 3.  We keep track
++			 * of which side corresponds to the rename.
++			 */
++			int renamed_stage = a_renames == renames1 ? 2 : 3;
++			int other_stage =   a_renames == renames1 ? 3 : 2;
+ 
+-			hashcpy(src_other.sha1, ren1->src_entry->stages[stage].sha);
+-			src_other.mode = ren1->src_entry->stages[stage].mode;
+-			hashcpy(dst_other.sha1, ren1->dst_entry->stages[stage].sha);
+-			dst_other.mode = ren1->dst_entry->stages[stage].mode;
++			remove_file(o, 1, ren1_src, o->call_depth || renamed_stage == 2);
+ 
++			hashcpy(src_other.sha1, ren1->src_entry->stages[other_stage].sha);
++			src_other.mode = ren1->src_entry->stages[other_stage].mode;
++			hashcpy(dst_other.sha1, ren1->dst_entry->stages[other_stage].sha);
++			dst_other.mode = ren1->dst_entry->stages[other_stage].mode;
+ 			try_merge = 0;
+ 
+ 			if (sha_eq(src_other.sha1, null_sha1)) {
 -- 
 1.7.3.271.g16009
