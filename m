@@ -1,122 +1,70 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [tig] Re: compilation error: undefined reference to `set_tabsize'
-Date: Mon, 20 Sep 2010 22:43:44 +0200
-Message-ID: <20100920204344.GB13017@vidovic>
-References: <20100920174200.GA13017@vidovic>
- <loom.20100920T203217-346@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: Stefan =?iso-8859-1?Q?N=E4we?= <stefan.naewe@googlemail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 22:44:36 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] sha1_name.c: update comment to mention :/foo syntax
+Date: Mon, 20 Sep 2010 23:01:17 +0200
+Message-ID: <1285016477-22222-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <7ab60e32582447ad792602ff405dcee464ef1414.1284830388.git.kirr@landau.phys.spbu.ru>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Sep 20 23:05:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxnDy-0006Zm-Rt
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 22:44:31 +0200
+	id 1OxnY9-0006rR-N6
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 23:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756387Ab0ITUoZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 16:44:25 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:45549 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753257Ab0ITUoY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 16:44:24 -0400
-Received: by wwj40 with SMTP id 40so18349wwj.1
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:44:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=vLSjXt5uhZlYnHCpbYB7gpefcZ3NmaEqbA5w0DOHSE4=;
-        b=Jc4xzFGkUO3bS6SGb6c6PSds3lI5Y/OdIX4ZxcM3M+rtw5OD4AxdmXXc5JEPRFASyA
-         BYMOtx2eKnDCwvvGG1O+BeCpSQmXtnWRV3Y3/pUMLFpA4mJ8pAXS48cA2ArVylFJWg59
-         zV4psjsAxHzipzVqZ8JTi0zLLpBBIGCnkPFP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=pQg4b8B200BMy1aaG7HZl/M4GmRWdHyQlKpKt5VogStzNCzEVyUsu0Jr2mY9RTKCBY
-         Xtu8Fj65D3LdTToFUMIIgbTxOowL9QQUtULYCWne1bIPnn58kBWLdNT3z9z+gzhW5CAg
-         mFV1SE3dnQYmECuA2LzuAuKAB9ouVWniiAP54=
-Received: by 10.227.133.18 with SMTP id d18mr2387580wbt.33.1285015427682;
-        Mon, 20 Sep 2010 13:43:47 -0700 (PDT)
-Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id bc3sm2180377wbb.20.2010.09.20.13.43.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 13:43:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <loom.20100920T203217-346@post.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756545Ab0ITVFM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 17:05:12 -0400
+Received: from imag.imag.fr ([129.88.30.1]:62861 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753637Ab0ITVFL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 17:05:11 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o8KL1Pwx016466
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 20 Sep 2010 23:01:25 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OxnUL-0008K5-5n; Mon, 20 Sep 2010 23:01:25 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1OxnUL-0005n2-1q; Mon, 20 Sep 2010 23:01:25 +0200
+X-Mailer: git-send-email 1.7.3.2.g257b5f
+In-Reply-To: <7ab60e32582447ad792602ff405dcee464ef1414.1284830388.git.kirr@landau.phys.spbu.ru>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Sep 2010 23:01:25 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156668>
 
-The 20/09/10, Stefan N=E4we wrote:
-> Nicolas Sebrecht <nicolas.s.dev <at> gmx.fr> writes:
->=20
-> >=20
-> > Hi,
-> >=20
-> > tig don't compile anymore here:
-> >=20
-> >   % make
-> >   gcc   tig.o  -lncursesw  -o tig
-> >   tig.o: In function `init_display': tig.c:7113: undefined referenc=
-e to=20
-> `set_tabsize'
-> >   collect2: ld returned 1 exit status
-> >   make: *** [tig] Error 1
-> >   %
-> >=20
-> > and bisected on
-> >=20
-> > commit f1fe753be71ef3ce5abcbb16c2a359f97e5c7e7d
-> > Author: Stefan Naewe <>
-> > Date:   Sun Sep 12 11:03:52 2010 +0200
-> >=20
-> >     Use function set_tabsize()
-> >=20
-> >     this fixes the following compile error on cygwin:
-> >     tig.c: In function `init_display':
-> >     tig.c:7112: error: invalid lvalue in assignment
->=20
-> That change works for me on Cygwin, Ubuntu 10.04, Debian 5.0.6
->=20
-> Maybe you should say something about your system/OS version ?
 
-Naturally. I'm running on Gentoo.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Noticed while reviewing the patch serie about textconv and symlinks.
+If we have comments, better have them up-to-date ;-).
 
-  % gcc -v
-  Using built-in specs.
-  Target: x86_64-pc-linux-gnu
-  Configured with:
-  /var/tmp/portage/sys-devel/gcc-4.1.2/work/gcc-4.1.2/configure
-  --prefix=3D/usr --bindir=3D/usr/x86_64-pc-linux-gnu/gcc-bin/4.1.2
-  --includedir=3D/usr/lib/gcc/x86_64-pc-linux-gnu/4.1.2/include
-  --datadir=3D/usr/share/gcc-data/x86_64-pc-linux-gnu/4.1.2
-  --mandir=3D/usr/share/gcc-data/x86_64-pc-linux-gnu/4.1.2/man
-  --infodir=3D/usr/share/gcc-data/x86_64-pc-linux-gnu/4.1.2/info
-  --with-gxx-include-dir=3D/usr/lib/gcc/x86_64-pc-linux-gnu/4.1.2/inclu=
-de/g++-v4
-  --host=3Dx86_64-pc-linux-gnu --build=3Dx86_64-pc-linux-gnu --disable-=
-altivec
-  --enable-nls --without-included-gettext --with-system-zlib
-  --disable-checking --disable-werror --enable-secureplt --enable-multi=
-lib
-  --enable-libmudflap --disable-libssp --enable-java-awt=3Dgtk
-  --enable-languages=3Dc,c++,java,treelang,fortran --enable-shared
-  --enable-threads=3Dposix --enable-__cxa_atexit --enable-clocale=3Dgnu
-  Thread model: posix
-  gcc version 4.1.2 (Gentoo 4.1.2 p1.3)
-  %
+ sha1_name.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
---=20
-Nicolas Sebrecht
+diff --git a/sha1_name.c b/sha1_name.c
+index 7b7e617..d7ab72a 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1062,6 +1062,7 @@ int get_sha1_with_context_1(const char *name, unsigned char *sha1,
+ 	/* sha1:path --> object name of path in ent sha1
+ 	 * :path -> object name of path in index
+ 	 * :[0-3]:path -> object name of path in index at stage
++	 * :/foo -> last commit whose subject starts with foo
+ 	 */
+ 	if (name[0] == ':') {
+ 		int stage = 0;
+-- 
+1.7.3.2.g257b5f
