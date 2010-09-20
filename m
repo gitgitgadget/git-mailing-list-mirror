@@ -1,100 +1,121 @@
-From: Nate Parsons <parsons.nate@gmail.com>
-Subject: Re: git .lock file error
-Date: Sun, 19 Sep 2010 22:42:11 -0400
-Message-ID: <AANLkTin+MRkYv7vL7eY+mdWG1vTg-E9pVpU4_QujoxdZ@mail.gmail.com>
-References: <AANLkTikjwW8jJ3qGCAM=8F_GBxsz9_KoSW0KDGPKhXGQ@mail.gmail.com>
+From: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+Subject: Re: tig show <commit> not working anymore?
+Date: Sun, 19 Sep 2010 23:25:22 -0500
+Message-ID: <20100920042522.GA21880@bluemoon.alumni.iitm.ac.in>
+References: <20100916125337.GG5785@bowser.ece.utexas.edu>
+ <4C922112.404@drmicha.warpmail.net>
+ <20100918050122.GA24656@bluemoon.alumni.iitm.ac.in>
+ <AANLkTinwTSOVfdZkt8CM9DHy9mm9nPt133nvUNjUcQO1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 20 04:42:39 2010
+Cc: git@vger.kernel.org
+To: Jonas Fonseca <fonseca@diku.dk>
+X-From: git-owner@vger.kernel.org Mon Sep 20 06:25:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxWKz-0006fa-TD
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 04:42:38 +0200
+	id 1OxXwq-0000hr-0g
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 06:25:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755443Ab0ITCmc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 22:42:32 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:36763 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754403Ab0ITCmb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 22:42:31 -0400
-Received: by iwn5 with SMTP id 5so3870042iwn.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 19:42:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=c+QocQpAyfeGVtIaCfH0l3sBNYQYxnIMmnnPQbFWnPI=;
-        b=T9mZpUU1jexNzeSe73Kjuye1Him3Dm4Y9orkWcXwOWht9w6c5Obt8qKOqD4kr8xytj
-         ZdmPbQ2yjCHNaIn+ZmBpvffLXz3SKN4snIkqQZfp3/MNyGX+u1DDVNSX6k/uDDYNlpGM
-         5jJJSWfZtGVMfcjXL+1APgIRfnk6Z59GN+nxE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=iLXhuzj37emVRtaoSzDYZbvxJasdr8nQixhaubvkWXK48uGHP/GINWEsPIoKoZPKYT
-         ZxS2wBr0qoo0+Kxf/VuKOZjT7JYuRYgxwbFsHR6Tc42NYE64CxZz7MfNxSFIeWtILLKd
-         aIp7MAsH20wPV8+YHnYOkS6d5Sj9iia25Hsi8=
-Received: by 10.231.183.67 with SMTP id cf3mr9353700ibb.187.1284950551299;
- Sun, 19 Sep 2010 19:42:31 -0700 (PDT)
-Received: by 10.231.113.141 with HTTP; Sun, 19 Sep 2010 19:42:11 -0700 (PDT)
-In-Reply-To: <AANLkTikjwW8jJ3qGCAM=8F_GBxsz9_KoSW0KDGPKhXGQ@mail.gmail.com>
+	id S1750773Ab0ITEZ3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 00:25:29 -0400
+Received: from ironclad.mail.utexas.edu ([146.6.25.7]:1401 "EHLO
+	ironclad.mail.utexas.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739Ab0ITEZ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 00:25:28 -0400
+X-IronPort-MID: 55525286
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAHJ/lkyAU36G/2dsb2JhbACiJHHDHYVBBIRO
+Received: from wb1-a.mail.utexas.edu ([128.83.126.134])
+  by ironclad.mail.utexas.edu with ESMTP; 19 Sep 2010 23:25:27 -0500
+Received: (qmail 73541 invoked from network); 20 Sep 2010 04:25:26 -0000
+Received: from cpe-24-27-28-128.austin.res.rr.com (HELO bluemoon.WORKGROUP) (a.kumar@24.27.28.128)
+  by wb1.mail.utexas.edu with (RC4-SHA encrypted) ESMTPSA; 20 Sep 2010 04:25:26 -0000
+Received: from kumar by bluemoon.WORKGROUP with local (Exim 4.72)
+	(envelope-from <a.kumar@alumni.iitm.ac.in>)
+	id 1OxXwQ-000755-Hj; Sun, 19 Sep 2010 23:25:22 -0500
+Mail-Followup-To: Jonas Fonseca <fonseca@diku.dk>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <AANLkTinwTSOVfdZkt8CM9DHy9mm9nPt133nvUNjUcQO1@mail.gmail.com>
+X-OS: Linux bluemoon 2.6.32-5-amd64 x86_64
+X-Operating-System: Linux bluemoon 2.6.32-5-amd64 x86_64
+X-Editor: GNU Emacs 22.3.1
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156548>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156549>
 
-Hello again,
+Dear Jonas,
 
-I realized I have=A0git-cheetah running as well, so I killed
-explorer.exe (the only process using git_shell_ext.exe), and tried
-again. That's when I noticed that running 'git=A0svn=A0fetch' spawned t=
-wo
-git=A0processes and a perl process (which later spawned another perl).
-Is this something that should be happening?
+On Sun, Sep 19, 2010 at 02:46:22PM -0400, Jonas Fonseca wrote:
+> > Well, I was exploring the code a little, and I could not understand
+> > some aspects fully. First, I discovered that the following hack fix=
+es
+> > the problem to an extent:
+> >
+> > [snip]
+> >
+> > However, I am pretty certain that that is not the intended use of
+> > opt_rev_args and ref_commit, and that they should be used in a
+> > different way. For example, tig show HEAD^^^..HEAD should show me
+> > three commits combined, but it shows me only one, since I haven't r=
+un
+> > it through rev-list or the like=B8 probably.
+>=20
+> You fix is not that far off but to fix the second issue I had to do
+> change the function responsible for expanding %(commit). Anyway,
+> should be fixed in 0.16.1.
 
-Thanks,
--Nate
+Unfortunately, this has introduced another (albeit minor) bug: it
+breaks the tree view in some cases. For example:
 
-On Mon, Sep 13, 2010 at 11:19 AM, Nate Parsons <parsons.nate@gmail.com>=
- wrote:
->
-> Hi everyone,
->
-> I'm trying to switch to git, so I apologize in advance for my
-> ignorance. For this, I'm using cygwin git, version 1.7.1 to talk to a
-> svn server running 1.4.2.
->
-> When I 'git svn clone' or 'git svn clone; git svn fetch', I sometimes
-> run into the following error.
-> > Couldn't open .git/svn/refs/remotes/0.0.0/.rev_map.b8cad480-e46b-48=
-b4-8317-a683ee46c2bd.lock: Device or resource busy
-> > =A0at /usr/lib/git-core/git-svn line 5210
->
-> And when I 'git svn rebase'
-> >=A0Couldn't open .git/svn/refs/remotes/git-svn/.rev_map.cc05479a-e8e=
-a-436f-8d71-e07493b7796c.lock: Device or resource busy
-> > at /usr/lib/git-core/git-svn line 1528
->
-> Sometimes the line number is different (578, I think?), but when I
-> retry the fetch command, it rebuilds the file corresponding to the
-> lockfile, and then continues a little farther before dying again.
->
-> When I watch the directory in question, I see the lock file appear,
-> and then disappearing a short time after the script gives up.
->
-> I don't have a series of steps to reproduce the problem, sometimes it
-> goes for an hour, and sometimes for just a few minutes/seconds.
->
-> I do have TortoiseGit running my machine, but this issue happens even
-> when TGitCache.exe is not running. If some other instance of git is
-> accessing the repository, I don't know which or how.
->
-> Thanks,
-> -Nate
+git clone git://gitorious.org/taggrepper/taggrepper.git
+
+and run tig there, and press `t'. It always gives me a blank tree.
+
+The cause for this is that view->parent is null when the tree view
+is invoked, but you merely pass !view->parent in the call to
+format_argv in prepare_io.
+
+A simple patch to fix this is attached below, but you might have other
+ideas or I might have missed something, or not added sufficient checks
+for the argv vector.
+
+As always, if I have missed something above, please do let me know.
+
+Thanks!
+
+Kumar
+
+=46rom 1295e58dbb3035bba3ebaf8686dc328b2b457ae2 Mon Sep 17 00:00:00 200=
+1
+=46rom: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+Date: Sun, 19 Sep 2010 23:19:16 -0500
+Subject: [PATCH] Add check to fix tree view
+
+---
+ tig.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/tig.c b/tig.c
+index 7bc5daa..08042ec 100644
+--- a/tig.c
++++ b/tig.c
+@@ -3332,7 +3332,7 @@ static bool
+ prepare_io(struct view *view, const char *dir, const char *argv[], boo=
+l replace)
+ {
+ 	view->dir =3D dir;
+-	return format_argv(&view->argv, argv, replace, !view->parent);
++	return format_argv(&view->argv, argv, replace, !view->parent && strcm=
+p(argv[1], "ls-tree"));
+ }
+=20
+ static bool
+--=20
+1.7.1
