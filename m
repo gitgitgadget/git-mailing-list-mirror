@@ -1,83 +1,76 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 36/37] merge-recursive: Make room for directories in D/F conflicts
-Date: Mon, 20 Sep 2010 10:06:00 -0600
-Message-ID: <AANLkTin0ra6JL+jbyOwfssvSxh9FB-BCnvFcR45_=ZkS@mail.gmail.com>
-References: <1284971350-30590-1-git-send-email-newren@gmail.com>
-	<1284971350-30590-37-git-send-email-newren@gmail.com>
-	<4C97483D.8030605@viscovery.net>
+From: Robert Buck <buck.robert.j@gmail.com>
+Subject: what file extensions must be explicitly configured with respect to
+ eol-type in gitattributes?
+Date: Mon, 20 Sep 2010 12:19:38 -0400
+Message-ID: <AANLkTikK2oL3sUYHdqoQ7C47nd6Pi53N17GSfh8nx6Q-@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Sep 20 18:06:11 2010
+To: "git@vger.kernel.org List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 20 18:19:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxisc-0003JU-4O
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 18:06:10 +0200
+	id 1Oxj5m-0001EV-W2
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 18:19:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756684Ab0ITQGD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 12:06:03 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38633 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752480Ab0ITQGB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 12:06:01 -0400
-Received: by fxm3 with SMTP id 3so747903fxm.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 09:06:00 -0700 (PDT)
+	id S1756831Ab0ITQTk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 12:19:40 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:64623 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752275Ab0ITQTk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 12:19:40 -0400
+Received: by eyb6 with SMTP id 6so1632172eyb.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 09:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1+Zht1LgTaB+YElhLQIphLznYZyBWE/lzT7v/Ifrz60=;
-        b=YI5bXMwuN2pgPBwYSH2YT7xA/YQJfyEq/a4ZBGtP0vr/rKCYa9c7CuTtE0MTdWbor1
-         0io+4D75DHniSdwcHs4NxzekevBrmdGRAMkKQP6ezwGBN6dFNtyUYq/RJfdTqx4R9OG1
-         B7qD9Gr1Hpmu+lwV67DdtDEXcJC8wOOmWXIMo=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=PO6wVV80nQnfwuZknZyrQWmtgkpU2PjdlVFRJ99i4Zo=;
+        b=dqQTAMeT39DHg5NB4r9MYzLgxHG7IFRnoF25B25SOpau2j59+tB0KN5nbOpErIYGd6
+         1LfRnAd3XU7Yvb27QUEYvPF0xtJ8pxMiFdyezYgjj78PeDivFtdF27IMnruwBwziH9DM
+         Z2zisAxeD2ufCq+g+dVefXl/d45okxG2pYc+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ceva+1DuYJNeXbGo6xC2rgEicTaLNnPPPcccGIdC23r43Mv/FiqFg9GpnNLD4OncJz
-         IMAXnX3q/DsUXcr4qhyZdYoyqwPMd6zegObGgWHCCkJoh5aA5slJCMFL0gSdbofEBrnr
-         e2UpCnnfuwf/c7Lx/TxMz7zV8ezzPlUAOhB5Q=
-Received: by 10.223.121.134 with SMTP id h6mr4783549far.74.1284998760266; Mon,
- 20 Sep 2010 09:06:00 -0700 (PDT)
-Received: by 10.223.119.209 with HTTP; Mon, 20 Sep 2010 09:06:00 -0700 (PDT)
-In-Reply-To: <4C97483D.8030605@viscovery.net>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=PVTvfAV439fNADu9QZwzWo5Dyuctt844hb6teofXRfo77v4Arez3IJ+yuZ9cBGkQvF
+         4RV3H7RCrBWwHm0xsb9gLKWBLgiLGmwrHreX7K3aa8NdRdwhpwBUwaNUbwvPLHdLvIrW
+         mXGlxAw/HSTC/Z9QbbRywH5uYMzXhm4Q77y8k=
+Received: by 10.213.36.3 with SMTP id r3mr2905413ebd.88.1284999578955; Mon, 20
+ Sep 2010 09:19:38 -0700 (PDT)
+Received: by 10.14.47.74 with HTTP; Mon, 20 Sep 2010 09:19:38 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156636>
 
-On Mon, Sep 20, 2010 at 5:40 AM, Johannes Sixt <j.sixt@viscovery.net> w=
-rote:
-> Am 9/20/2010 10:29, schrieb Elijah Newren:
->> + =C2=A0 =C2=A0 =C2=A0* NOTE: This function relies on the fact that =
-entries for a
->> + =C2=A0 =C2=A0 =C2=A0* D/F conflict will appear adjacent in the ind=
-ex, with the
->> + =C2=A0 =C2=A0 =C2=A0* entries for the file appearing before entrie=
-s for paths
->> + =C2=A0 =C2=A0 =C2=A0* below the corresponding directory.
->
-> I don't think that this is a generally valid assumption. There can be
-> other entries in between:
->
-> =C2=A0 this
-> =C2=A0 this.txt
-> =C2=A0 this/file
->
-> (where your focus is on "this").
+Hello,
 
-Ah, this was one of my two big remaining questions about this series
-(the other being whether all the o->call_depth > 0 cases have been
-fixed).  Thanks for the clarification.
+One project we have in house has approximately 160 different file
+extensions used for the files checked in. In our repository there are
+files that MUST be CRLF (.bat, .cmd, .vcproj, etc), files that MUST be
+LF (.xml, .xsl, .sh, etc), and files that MUST be binary. All others
+are just text and so long as they appear in native form I'd be happy.
 
-Would a sort of the entries string_list using df_name_compare() give
-me what I need?
+It would seem a default rule to handle text files would make sense:
 
-Elijah
+* text=auto
+
+But I have not found material explaining how git identifies binary
+files, so one concern would be that it could mangle binary file types
+in some cases.
+
+Do I have to explicitly mention all 160 file types in the gitattributes file?
+
+How does git internally determine whether a file is text vs binary?
+Does it use the 'file' command in Unix?
+
+And where I am going with this specifically is a question: what rules
+MUST be specifically stated in gitattributes and what rules are there
+implicitly?
+
+Thank you,
+
+Bob
