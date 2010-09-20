@@ -1,73 +1,57 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 0/6] Introduce pathspec struct
-Date: Tue, 21 Sep 2010 08:15:20 +1000
-Message-ID: <AANLkTikYpt75f7yGgzTwKj9fMUAytxkN+jHPRY=8W9hE@mail.gmail.com>
-References: <1284938514-16663-1-git-send-email-pclouds@gmail.com>
-	<AANLkTimR=mgjFYwdzqUF7_0j33ha4AJcrJbuL7VJunPK@mail.gmail.com>
+From: "Olsen, Alan R" <alan.r.olsen@intel.com>
+Subject: Questions on gitosis
+Date: Mon, 20 Sep 2010 15:15:02 -0700
+Message-ID: <26E9B811E137AB4B95200FD4C950886BA3AC1997@orsmsx507.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 00:15:29 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Sep 21 00:15:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxodz-0007eD-PQ
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 00:15:28 +0200
+	id 1OxoeC-0007iw-Bb
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 00:15:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754719Ab0ITWPW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 18:15:22 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40986 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752535Ab0ITWPV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 18:15:21 -0400
-Received: by wyf22 with SMTP id 22so4823607wyf.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 15:15:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BzbyytJfXytqwJsrx9Dlv7nbwmNyJZc7n/DBfEjuhGw=;
-        b=r/hRegw9Ioq5gjDX3YL/+pHyp8ZOzqsmImFTjkdoIzzzp/P2vFZT/vZlXruucQ1KPu
-         cAeBjn3LoSaQiwoODF4uSaIDEbqZRM8i7ES5NmZbhnwLlkSC73Y+kJh2+erAQ+2X6V5M
-         5BnOX8DXqlEWLSQVBWt9L9GVo4s3OBieSnIJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YgDr6YTmuxJbt6STMvWj2BNmUdTcp2v6VJ9UeTH7Lun2xqRmZPOMva88XG2wfLq7ur
-         3XBT4Pb7D/ntDTuZ1TQ6ZK1j81u/qh020wxl4EjkmzKUz0ictencZ0w6JnwJC3fp3RV3
-         wYPq6g8p79LYF2K4sjuy/evzTXnBUPiZsckxM=
-Received: by 10.216.12.139 with SMTP id 11mr8388094wez.63.1285020920739; Mon,
- 20 Sep 2010 15:15:20 -0700 (PDT)
-Received: by 10.216.171.134 with HTTP; Mon, 20 Sep 2010 15:15:20 -0700 (PDT)
-In-Reply-To: <AANLkTimR=mgjFYwdzqUF7_0j33ha4AJcrJbuL7VJunPK@mail.gmail.com>
+	id S1757304Ab0ITWP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 18:15:28 -0400
+Received: from mga09.intel.com ([134.134.136.24]:21570 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756753Ab0ITWP2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 18:15:28 -0400
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP; 20 Sep 2010 15:15:27 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.56,395,1280732400"; 
+   d="scan'208";a="659300265"
+Received: from orsmsx602.amr.corp.intel.com ([10.22.226.211])
+  by orsmga001.jf.intel.com with ESMTP; 20 Sep 2010 15:15:08 -0700
+Received: from orsmsx507.amr.corp.intel.com ([10.22.226.41]) by
+ orsmsx602.amr.corp.intel.com ([10.22.226.211]) with mapi; Mon, 20 Sep 2010
+ 15:15:08 -0700
+Thread-Topic: Questions on gitosis
+Thread-Index: ActZEUVcIhksov+hSeqmo+xw77FAzA==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-cr-puzzleid: {6684AC85-0AF8-4709-B97B-DF8EB28FD5D2}
+x-cr-hashedpuzzle: AZmn A2c+ EXlW FPJ6 FmXD F42K GY75 GelN HGpu HhHQ IaB7
+ Iwx7 JSJT Jyta KH6j
+ Kcs0;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{6684AC85-0AF8-4709-B97B-DF8EB28FD5D2};YQBsAGEAbgAuAHIALgBvAGwAcwBlAG4AQABpAG4AdABlAGwALgBjAG8AbQA=;Mon,
+ 20 Sep 2010 22:15:02
+ GMT;UQB1AGUAcwB0AGkAbwBuAHMAIABvAG4AIABnAGkAdABvAHMAaQBzAA==
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156673>
 
-2010/9/20 Elijah Newren <newren@gmail.com>:
-> 2010/9/19 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.co=
-m>:
->> This is base series for en/object-list-with-pathspec, the upcoming
->> wildcard support in diff family (i.e. tree_entry_interesting()) and
->> negative pathspec farther in future.
->
-> I briefly looked over the series. =C2=A0If I understand correctly, it=
-'s
-> pretty much the same as your previous series, except that it uses a
-> new data structure instead of exclude_list, and doesn't include my
-> two-patch series anymore or negated pathspecs. =C2=A0Is that correct?=
- =C2=A0If
-> so, it looks good to me.
+Is gitosis currently maintained? Who do I contact?
 
-Correct. The globbing series is in place of negated pathspecs now.
-Your two patch series are also resent elsewhere.
---=20
-Duy
+I have a list of bugs in the current version that I would like to see fixed. I can post them here if needed. (It will at least get them picked up by the usual search engines.)
+
+Thanks!
