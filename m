@@ -1,138 +1,92 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Survey 2011; now let's not forget the index/cache/stage
-Date: Mon, 20 Sep 2010 15:38:39 +0200
-Message-ID: <201009201538.41287.jnareb@gmail.com>
-References: <AANLkTi=Fp89-MuYVCNFtSA25hVufbQD5TCJL-ATUDCDH@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] Makefile: add CC to TRACK_CFLAGS
+Date: Mon, 20 Sep 2010 13:38:05 +0000
+Message-ID: <AANLkTikLCFb3GrMxP7dLPB=eggc2w6FOq=7ZpdSYpnki@mail.gmail.com>
+References: <1284331065-3394-1-git-send-email-avarab@gmail.com>
+	<AANLkTikBP3pJ7ZN9jC9yQeVKssgr2KMpaY-nQtpJZiP-@mail.gmail.com>
+	<7viq21uqzb.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 X-From: git-owner@vger.kernel.org Mon Sep 20 15:39:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxgaB-00082k-SL
+	id 1OxgaC-00082k-D3
 	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 15:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756475Ab0ITNix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 09:38:53 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43151 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755965Ab0ITNiw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 09:38:52 -0400
-Received: by fxm3 with SMTP id 3so603142fxm.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 06:38:51 -0700 (PDT)
+	id S1756485Ab0ITNi6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 09:38:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57351 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756479Ab0ITNi5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 09:38:57 -0400
+Received: by iwn5 with SMTP id 5so4287921iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 06:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:references:in-reply-to:mime-version:content-disposition
-         :cc:content-type:content-transfer-encoding:message-id;
-        bh=GNxGXSHwyYvhLIMcANKo4p0Azx1pP0IqzAHcYMSKEOU=;
-        b=tJrAJBMKS+Gp8HMvblQuR0+E+hNxVF2Y7vfMkIoY0ZVWQcpZ/WoUwpN/ACMfCr8FKZ
-         8WpQL/edytyaTsXgVnHBK8DiMHWu8gnKxI2tsZtB+0CAdxK93yfXZE8CRYpQpKwZAiqm
-         8HL+wWKvgu3zuu3CR2cRIMUtHFoI+lBNyk5/k=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lj7evtT95zHdKxdY5dl0Lx6kVTznu+UJMhb8aQ1dFU4=;
+        b=J9s+39YGqgQjhfgC/ESIRojG18xZePDlBRf6lMkvY5MoDi1ZVnl4his5UFExaVVv4o
+         ce63HzSC02z1A7gNVtOMVO4dg0lcg3DIiWX1JUZREeV0eC+pWXgnxRNcBaFOHsQy/HHW
+         nVDnOmj/NIWYAvKFGIBBd57NzkiER9qqxAqPU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
-         :content-disposition:cc:content-type:content-transfer-encoding
-         :message-id;
-        b=rQtAoumCXFYCXGCq/zqQyoB9/UGvfkRwIvewUUTkyFuJUUhh+x0A8v6QiDF0WAWzCT
-         JMtJ7nyRyrsvElf4z69UA8llHCFm4atGV93max0xTFIdznOWTgf6AqJEGT3a430tQPZn
-         5gbXp/cwNJZCtAH8aYuJqeeCAgG0gZgZtq0Ww=
-Received: by 10.223.124.197 with SMTP id v5mr4624786far.68.1284989930368;
-        Mon, 20 Sep 2010 06:38:50 -0700 (PDT)
-Received: from [192.168.1.13] (abwt29.neoplus.adsl.tpnet.pl [83.8.243.29])
-        by mx.google.com with ESMTPS id r4sm2916746faa.43.2010.09.20.06.38.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 06:38:49 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTi=Fp89-MuYVCNFtSA25hVufbQD5TCJL-ATUDCDH@mail.gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VqYBi4iy391n2JRls4WAG2ts3xWi8YeZ/YhXSTSMdhsxgcHMW55Uiq17NKjTXecfxn
+         d85awVia/xmIMAhik2WM/5hLegeaOXSf54oF3fpkuGNd4TBwg5rzdf311HFKB08R+iZF
+         pdwd2e5TsYF73z41HGUOXqzbh7BLyv88teoh4=
+Received: by 10.231.169.10 with SMTP id w10mr10418395iby.106.1284989886174;
+ Mon, 20 Sep 2010 06:38:06 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 20 Sep 2010 06:38:05 -0700 (PDT)
+In-Reply-To: <7viq21uqzb.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156621>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156622>
 
-On Mon, 20 Sep 2010, Felipe Contreras wrote:
+On Mon, Sep 20, 2010 at 01:46, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>> Is there a reason for why this didn't get picked up other than falli=
+ng
+>> through the cracks?
+>
+> Simply because I wasn't actively collecting new topics during feature
+> freeze, especially for small stuff that I knew that resending after
+> release would be trivial and more efficient use of my time than queui=
+ng it
+> in 'pu' and having to look at it every time I do another push-out in =
+order
+> to decide when to merge it to 'next'.
 
-> I am *extremely* disappointed with the fact the git survey doesn't
-> have a way to determine how many people really use the
-> index/cache/stage; I think it's one of the most important features of
-> git, and I'm fairly certain most users don't know about it.
+Rigth, I have no problem doing $whatever to get patches in, but the
+problem I often have is that I don't know what state things are in,
+and what I'm supposed to do at any given time.
 
-Doesn't "interactive commit / per-hunk comitting / partial commit" cover
-"git index / cache / stage" response by being what git index is used for 
-in explicit way?
- 
-> IMO the main purpose of the survey is to find out areas of improvement
-> in git, and I was hoping this year it would be obvious the stage
-> needed some help to make it more visible and accessible.
+E.g. in this case I submitted the "send-email: use catfile() to
+concatenate files" patch 2 days after this one, that one got into the
+next "What's cooking in git.git" post.
 
-I don't think that having "git index / cache / stage" as a choice of
-answer in multiple-choice '16) Which of the following features do you 
-use?' question would tell us that.
+Since both were trivial fixes and there was no comment on this one I
+was inclined to think that it just fell through.
 
-If there were "better support for staging / interacting with index"
-(perhaps with footnote describing it in more detail below) in the
-'17) Which of the following features would you like to see implemented 
-in git?' question, but IIRC it wasn't present in your proposal.
+Should I generally re-send patches that I've sent, haven't had
+comments, and haven't appeared in subsequent "What's cooking in
+git.git" posts (given that some reasonable amount of time has passed
+since the original send) ?
 
-> 
-> You agreed it would be there, and it's not, so I wonder what's the
-> point of asking for feedback if it's going to be forgotten. Next time
-> I think you should send the final version for review before
-> publishing.
+Then there's stuff like my "git-am: Ignore whitespace before patches"
+which had some comments, but which *I* still think is OK as-is. Should
+I just keep pushing stuff like that until someone tells me to stop?
 
-There were two issues conflated that contributed to this error
-of mine.
-
-First, I have re-checked *direct email* responses to request for 
-feedback on Git User's Survey 2010 questions proposal, but I have 
-forgot to re-check responses which were send only to git mailing list 
-without Cc (i.e. in my case *newsgroup* responses).  I am very sorry 
-for that.
-
-Second, I has a bit unplanned time away from Internet access at the end 
-of August, so I had only about a day to do re-check, edit and open the 
-survey on 1 September.  I should have edited survey as soon as i got 
-improvement suggestion, but the fact that one has to close all channels 
-before adding new answer to a multiple-choice question (I think 
-Survs.com did it for a good reason) made me postpone it.
-
-> 
-> I don't think I would care about the results this year, so can we have
-> a wiki with next years's survey? I *really* want to make sure it gets
-> there.
-
-Well, nobody prevents you from starting GitSurvey2011 page on git wiki.
-You can use older version of GitSurvey2010 as a template:
-  https://git.wiki.kernel.org/index.php?title=GitSurvey2010&oldid=8988
-(click edit and copy the contents).  Having a year for discussion about 
-what questions should there be in user's survey would only improve it.
-
-I can even post on git wiki (probably in sub-pages) the emails I have 
-send to git hosting sites to announce the survey.
-
-
-P.S. I can even add you as a member to 'git' account on Survs.com, so
-you would be able to view and even edit survey there, but the Premium 
-plan, which we have thanks to generosity of Survs.com administration 
-(received after Survs.com got out of beta - first survey on Survs.com 
-was run on beta), will downgrade to the Free plan on Sep 22, 2011.
-
-Currenly the survey has more than 5000 responses (in a not whole month),
-so any plan outside of Premium is out of question.  We can run 2011 
-survey earlier so it wouldn't hit downgrade time, try to move to other 
-survey site (http://survey.net.nz got closed, unfortunately), create 
-our own survey app e.g. on Google App, ask Survs.com admins for further 
-generosity, or pay for Premium account ($119/month) at least for the 
-time the survey runs.
-
--- 
-Jakub Narebski
-Poland
+Thanks, from a list member somewhat confused about the patch queue :)
