@@ -1,108 +1,91 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH 3/3] use cache for function names in hunk headers
-Date: Mon, 20 Sep 2010 19:36:05 +0200
-Message-ID: <20100920173605.GA13057@localhost>
-References: <1284890369-4136-1-git-send-email-drizzd@aon.at>
- <1284890369-4136-4-git-send-email-drizzd@aon.at>
- <AANLkTikArADX8XviB99VtkkmKmVbs9jHPHw9PNSmiOc3@mail.gmail.com>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
+From: <nolan.ring@emc.com>
+Subject: svn2git question:  error: unknown switch `t'
+Date: Mon, 20 Sep 2010 13:39:41 -0400
+Message-ID: <4E10ACF241081344B9702AA8C6440440C5B14FB331@MX01A.corp.emc.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="d6Gm4EdcadzBjdND"
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 19:35:33 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 20 19:40:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxkH6-00040E-Tr
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:35:33 +0200
+	id 1OxkLw-0005t7-7g
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:40:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754619Ab0ITRf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 13:35:26 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53569 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754120Ab0ITRfZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 13:35:25 -0400
-Received: by bwz11 with SMTP id 11so4439432bwz.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:35:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=Z9vnGNoE7MNLKuZui+gK+ZUWHNglp0KE/5ljhLpRn24=;
-        b=WUAj3GJhJoSInYIM8Ydz18+fwBPcEvL2iRtNUiuuA/82brnl4AJmhSl1e3aMVyP3/0
-         C1ssw21kraRkEsoF1nONChntMkwsI+CHASo46HXDfvKFe1q+MhJc1GjTgkZB39f0+OtX
-         aUxce+xq1d+Cgq55X+OUlEZlyXaXfBtRJv7eg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=jfmlnOBzU3+nAFS49yHRijuswWGB3rdWQ5XZtfZmbHgWer45q9cTm+3549kc6WIKGr
-         g031g51yk8iMt3bYPqe6GSUybPD5MJRLi28wxCeTJuqetVF9krnyY0uTXCTyl03U8SoG
-         h9MhY4jr7g1SweXi2GcOE8KtI5MOn9gXQY448=
-Received: by 10.204.112.84 with SMTP id v20mr6713925bkp.213.1285004124194;
-        Mon, 20 Sep 2010 10:35:24 -0700 (PDT)
-Received: from darc.lan (p549A4F70.dip.t-dialin.net [84.154.79.112])
-        by mx.google.com with ESMTPS id f18sm6733603bkf.15.2010.09.20.10.35.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 10:35:23 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1OxkHd-0003QK-Sy; Mon, 20 Sep 2010 19:36:05 +0200
-Content-Disposition: inline
-In-Reply-To: <AANLkTikArADX8XviB99VtkkmKmVbs9jHPHw9PNSmiOc3@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753372Ab0ITRkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 13:40:23 -0400
+Received: from mexforward.lss.emc.com ([128.222.32.20]:17792 "EHLO
+	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750771Ab0ITRkW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 13:40:22 -0400
+Received: from hop04-l1d11-si01.isus.emc.com (HOP04-L1D11-SI01.isus.emc.com [10.254.111.54])
+	by mexforward.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8KHeK4c021718
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:40:21 -0400
+Received: from mailhub.lss.emc.com (mailhub.lss.emc.com [10.254.221.145]) by hop04-l1d11-si01.isus.emc.com (RSA Interceptor) for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:40:15 -0400
+Received: from corpussmtp4.corp.emc.com (corpussmtp4.corp.emc.com [10.254.169.197])
+	by mailhub.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8KHdg5W008674
+	for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:39:44 -0400
+Received: from mxhub05.corp.emc.com ([128.221.46.113]) by corpussmtp4.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 20 Sep 2010 13:39:42 -0400
+Received: from MX01A.corp.emc.com ([169.254.1.232]) by mxhub05.corp.emc.com
+ ([128.221.46.113]) with mapi; Mon, 20 Sep 2010 13:39:42 -0400
+Thread-Topic: svn2git question:  error: unknown switch `t'
+Thread-Index: AQHLWOrNWRyv6DilqkeryTRaWP4YZg==
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
+X-OriginalArrivalTime: 20 Sep 2010 17:39:42.0831 (UTC) FILETIME=[CEFA8FF0:01CB58EA]
+X-EMM-MHVC: 1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156642>
 
+All,
 
---d6Gm4EdcadzBjdND
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm running the command svn2git -v --notags --branches REbranches <URL>
 
-On Sun, Sep 19, 2010 at 10:24:52PM +0200, Sverre Rabbelier wrote:
->=20
-> On Sun, Sep 19, 2010 at 11:59, Clemens Buchacher <drizzd@aon.at> wrote:
-> > 2.78user 0.01system 0:02.82elapsed 99%CPU
-> > 0.05user 0.01system 0:00.06elapsed 96%CPU
->=20
-> Very nice. It would improve the commit message if you could explain
-> what exactly it is this optimizes though, saving the reader from
-> having to read through t3419 to find out.
+and I'm getting the following:
 
-Ok.
+If you want to create a new branch from this checkout, you may do so
+(now or later) by using -b with the checkout command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at 38b1da3... Update NEO targets to point to NeoMain kernel
+Running command: git branch -t NeoMain@34 remotes/NeoMain@34
+error: unknown switch `t'
+usage: git branch [options] [-r | -a] [--merged | --no-merged]
+   or: git branch [options] [-l] [-f] <branchname> [<start-point>]
+   or: git branch [options] [-r] (-d | -D) <branchname>
+   or: git branch [options] (-m | -M) [<oldbranch>] <newbranch>
 
-The test creates a file with 50000 lines and a one-line change
-every 10 lines, i.e., about 5000 hunks. Since none of the lines
-matches a function definition, previous to this optimization, the
-file was searched 5000 times.
+Generic options
+    -v, --verbose         be verbose
+    --track               set up tracking mode (see git-pull(1))
+    --color               use colored output
+    -r                    act on remote-tracking branches
+    --contains <commit>   print only branches that contain the commit
+    --abbrev[=<n>]        use <n> digits to display SHA-1s
 
-Clemens
+Specific git-branch actions:
+    -a                    list both remote-tracking and local branches
+    -d                    delete fully merged branch
+    -D                    delete branch (even if not merged)
+    -m                    move/rename a branch and its reflog
+    -M                    move/rename a branch, even if target exists
+    -l                    create the branch's reflog
+    -f                    force creation (when already exists)
+    --no-merged <commit>  print only not merged branches
+    --merged <commit>     print only merged branches
 
---d6Gm4EdcadzBjdND
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+Where did the -t come from?  What is this telling me?
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Thanks much.
 
-iQEcBAEBAgAGBQJMl5uFAAoJELKdZexG8uqMONcH/0bJy83PlEDOVVxw7qRHeshz
-mcsIicqsyplBR76/V4fF4mQRtZ7JZfHCQqW3qb/ZDO3/39YGHrI2BjqrwUVUQt8f
-4N08WhNTNjUGovhwk4scgheY/7iHR6qQK5Sls8XakQAU4dUXtncRPYbYRK100w8F
-I32RumC1gasUVeLlmh2sgEIDKk/BwcMtY26h9HW5vFvGT3r5dQwUJeKg9micWh4M
-sDPSCve506v/fE9IyCmOhQ/5HeSgcF0u9tNFTM8YSbiOQ8r3AdgydlncwOpHAzLC
-KbZda0CB00hbg9VtmZJzv6l2ICrdehkoz0wz9pI039+k8401LZXB2t2Jp0vYwQM=
-=2wcg
------END PGP SIGNATURE-----
-
---d6Gm4EdcadzBjdND--
+Nolan 
