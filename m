@@ -1,105 +1,162 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: Reduced privileges install
-Date: Mon, 20 Sep 2010 18:20:05 -0500
-Message-ID: <4F4U1inRKcW4HHV1z2hCXRdyS9lEqRBQYwV2RNDETBIkkT7YIO_qHQ@cipher.nrlssc.navy.mil>
-References: <325786BC-5F54-47B5-AEF5-7FDAD9BEA4BA@kellerfarm.com> <BvHZDf7-epsPOl8y5QrLcsmYgobmFUo7HwZanlekCciU8I-jiKPVRw@cipher.nrlssc.navy.mil> <23ECDEF1-BDEC-45CC-B0CC-7E1A7BFE00BB@kellerfarm.com> <CWxE18Hq1ro8utv-_dFm1ZaVIKpCDTv-TbEB4u_l84GvbeJh1vKing@cipher.nrlssc.navy.mil> <5FA82BA4-AE76-44F5-9635-36E199E97B00@kellerfarm.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Git Survey 2011; now let's not forget the index/cache/stage
+Date: Tue, 21 Sep 2010 02:28:19 +0300
+Message-ID: <AANLkTik-2gaUMoWRC=SPfzY-0HdPw587n0ugnvvbMb_w@mail.gmail.com>
+References: <AANLkTi=Fp89-MuYVCNFtSA25hVufbQD5TCJL-ATUDCDH@mail.gmail.com>
+	<201009201538.41287.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>
-To: Andrew Keller <andrew@kellerfarm.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 01:20:18 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 01:28:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxpej-0001cr-V9
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:20:18 +0200
+	id 1Oxpmb-0003aK-Sp
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:28:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757398Ab0ITXUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 19:20:09 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33463 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754271Ab0ITXUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 19:20:08 -0400
-Received: by mail.nrlssc.navy.mil id o8KNK6Bv010180; Mon, 20 Sep 2010 18:20:06 -0500
-In-Reply-To: <5FA82BA4-AE76-44F5-9635-36E199E97B00@kellerfarm.com>
-X-OriginalArrivalTime: 20 Sep 2010 23:20:06.0764 (UTC) FILETIME=[5C976AC0:01CB591A]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1757665Ab0ITX2U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 19:28:20 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38316 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757412Ab0ITX2U convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 19:28:20 -0400
+Received: by iwn5 with SMTP id 5so4598559iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 16:28:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wZUJnAMYSILZRzZcfgw9J2/jQ/0AisBdkfMJRvT55SY=;
+        b=JVuphfIHgRFOawmA2fwHu2U7aVg4tK/SPo8B45hvJ2AZ/mUWsqUpq/f5ZHIBjozIBS
+         8S1dFMuq33HzY3d/0DlHwdoKZw2QcbhF2LbQ0aGeYkkHPsP9qHtZtXvKbkI9emwLmPw7
+         /I03k6xoaRRphyJhnu4LQNw8st9aLdRNk08v0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jkad1xhAxw331VrmBMDqrPnCQOgg6EyKLQbWOUHrojhE7kcNrrQwaXWuD2bGUNwJb+
+         jKCUhZ2bYZV97027aiClv51++NNPIxPGKKwcNltYIW1y7MXeqguo8fk6/fKx7Dxj8K06
+         +SnAMCH1JS7DbmGYQLfUUaNqSOdvH7r+mBd90=
+Received: by 10.231.10.200 with SMTP id q8mr10016678ibq.83.1285025299212; Mon,
+ 20 Sep 2010 16:28:19 -0700 (PDT)
+Received: by 10.231.160.6 with HTTP; Mon, 20 Sep 2010 16:28:19 -0700 (PDT)
+In-Reply-To: <201009201538.41287.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156680>
 
-On 09/20/2010 05:53 PM, Andrew Keller wrote:
-> On Sep 20, 2010, at 3:12 PM, Brandon Casey wrote:
->>  You could try
->> deleting the config.mak.autogen file that configure creates, and just run
->> make by itself.  Based on what you've describe, it would look something
->> like this:
->>
->>   cd <path-to-git-src>
->>   rm config.mak.autogen
->>   cat >config.mak <<EOF
->> CC=/usr/local/bin/gcc
->> PREFIX=/usr/users/students/ak4390/.local
->> PYTHON_PATH=/usr/local/bin/python
->> TCL_PATH=/usr/local/bin/tclsh8.4
->> NO_PERL_MAKEMAKER=1
->> EOF
->>   make
->>
->> Then add 'install' to the make command line when you are ready.
->>
->> Notice, I placed all of the make settings in a file named config.mak.  This
->> file is imported by the main Makefile automatically and is intended to be
->> used like this for user settings.  If you really need to disable pthreads,
->> then you can add NO_PTHREADS=1.  Check out the comments at the top of the
->> Makefile for a list of all variables that can be set.
-> 
-> Compiling as described above appears to go down in flames:
-> 
-> $ make
-> /bin/sh: curl-config: not found
+Hi,
 
-At this point, the above is just a warning that curl-config is not
-in your path.  If curl is not installed on your system, you need
-to set NO_CURL=1.
+On Mon, Sep 20, 2010 at 4:38 PM, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+> On Mon, 20 Sep 2010, Felipe Contreras wrote:
+>
+>> I am *extremely* disappointed with the fact the git survey doesn't
+>> have a way to determine how many people really use the
+>> index/cache/stage; I think it's one of the most important features o=
+f
+>> git, and I'm fairly certain most users don't know about it.
+>
+> Doesn't "interactive commit / per-hunk comitting / partial commit" co=
+ver
+> "git index / cache / stage" response by being what git index is used =
+for
+> in explicit way?
 
->     CC fast-import.o
-> In file included from builtin.h:4,
->                  from fast-import.c:147:
-> git-compat-util.h:140:25: openssl/ssl.h: No such file or directory
-> git-compat-util.h:141:25: openssl/err.h: No such file or directory
-<snip other related warnings>
+Well, that's one part of the stage usage; there's a subset of 'git
+checkout', and 'git diff --cached' that are totally uncovered. I think
+somebody might be doing 'git add -i' without understanding where the
+commit is going.
 
-Fixed by setting NO_OPENSSL=1.
+>> IMO the main purpose of the survey is to find out areas of improveme=
+nt
+>> in git, and I was hoping this year it would be obvious the stage
+>> needed some help to make it more visible and accessible.
+>
+> I don't think that having "git index / cache / stage" as a choice of
+> answer in multiple-choice '16) Which of the following features do you
+> use?' question would tell us that.
+>
+> If there were "better support for staging / interacting with index"
+> (perhaps with footnote describing it in more detail below) in the
+> '17) Which of the following features would you like to see implemente=
+d
+> in git?' question, but IIRC it wasn't present in your proposal.
 
-> And, this is the same source tree that just worked a minute ago, when
-> I used configure/make/make install.  I then copied the entire source
-> folder, with the modified config.mak file, to my laptop running Snow Leopard,
-> modified the variables in the config.mak file to match the system, and it
-> compiled and installed just fine.  So, this server seems to have a problem
-> with not running the configure script first.
+Well, if the users actually knew what the stage is, your idea would
+certainly be better, but I'm not so sure that's the case. A user might
+select "interactive commit / per-hunk comitting / partial commit"
+without realizing that's using the "stage", and just skip the question
+without thinking too much about it.
 
-git's configure script is a little different from the configure
-scripts in other projects.  All configure does in git is set variables
-that are used by the Makefile.  Using its rules, it tries to figure out
-what the best setting is for each variable.  Any of these variables can
-be set manually in the user's config.mak file.  Apparently, additional
-variables need to be modified from their default to handle your system.
-Once you determine the set of variables that need to be set, they most
-likely will not need to be changed when compiling future versions of
-git.
+So I think the first step would be to determine if people know what
+the stage is, and if they use it.
 
-The above two variables (NO_CURL, NO_OPENSSL) will likely fix the errors
-that you reported, but I don't guarantee that more errors will not be
-produced and will require additional settings.  All of the variables
-are described in the comments at the top of the Makefile.  It's an
-iterative process.  You could also use the config.mak.autogen as the
-baseline for you config.mak file.
+>> You agreed it would be there, and it's not, so I wonder what's the
+>> point of asking for feedback if it's going to be forgotten. Next tim=
+e
+>> I think you should send the final version for review before
+>> publishing.
+>
+> There were two issues conflated that contributed to this error
+> of mine.
+>
+> First, I have re-checked *direct email* responses to request for
+> feedback on Git User's Survey 2010 questions proposal, but I have
+> forgot to re-check responses which were send only to git mailing list
+> without Cc (i.e. in my case *newsgroup* responses). =C2=A0I am very s=
+orry
+> for that.
+>
+> Second, I has a bit unplanned time away from Internet access at the e=
+nd
+> of August, so I had only about a day to do re-check, edit and open th=
+e
+> survey on 1 September. =C2=A0I should have edited survey as soon as i=
+ got
+> improvement suggestion, but the fact that one has to close all channe=
+ls
+> before adding new answer to a multiple-choice question (I think
+> Survs.com did it for a good reason) made me postpone it.
 
--Brandon
+Ok, but still, I think a final notification one week or so before
+would help. Either posting the last version, or just point the wiki.
+
+>> I don't think I would care about the results this year, so can we ha=
+ve
+>> a wiki with next years's survey? I *really* want to make sure it get=
+s
+>> there.
+>
+> Well, nobody prevents you from starting GitSurvey2011 page on git wik=
+i.
+> You can use older version of GitSurvey2010 as a template:
+> =C2=A0https://git.wiki.kernel.org/index.php?title=3DGitSurvey2010&old=
+id=3D8988
+> (click edit and copy the contents). =C2=A0Having a year for discussio=
+n about
+> what questions should there be in user's survey would only improve it=
+=2E
+
+Ok, I'll do that when I have time :)
+
+> P.S. I can even add you as a member to 'git' account on Survs.com, so
+> you would be able to view and even edit survey there, but the Premium
+> plan, which we have thanks to generosity of Survs.com administration
+> (received after Survs.com got out of beta - first survey on Survs.com
+> was run on beta), will downgrade to the Free plan on Sep 22, 2011.
+
+Sure, but I only would feel comfortable of updating the site after
+some agreement has been reached on the wiki or ml.
+
+Cheers.
+
+--=20
+=46elipe Contreras
