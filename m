@@ -1,73 +1,95 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 01/37] t3030: Add a testcase for resolvable rename/add
- conflict with symlinks
-Date: Mon, 20 Sep 2010 11:15:22 +0200
-Message-ID: <4C97262A.9030501@viscovery.net>
-References: <1284971350-30590-1-git-send-email-newren@gmail.com> <1284971350-30590-2-git-send-email-newren@gmail.com>
+From: "Gaer, A." <Andreas.Gaer@baslerweb.com>
+Subject: git performance after directory copy
+Date: Mon, 20 Sep 2010 11:20:44 +0200
+Message-ID: <C5A8FDEFF7647F4C9CB927D7DEB307730F33B7C9@ahr075s.basler.corp>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "Schalk, Ken" <ken.schalk@intel.com>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 11:15:39 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 20 11:20:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxcTE-0000Mc-UU
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:15:33 +0200
+	id 1OxcYO-0002dp-TT
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:20:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756045Ab0ITJP1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 05:15:27 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:23324 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752719Ab0ITJP1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 05:15:27 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OxcT4-00088b-VF; Mon, 20 Sep 2010 11:15:23 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 989EC1660F;
-	Mon, 20 Sep 2010 11:15:22 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100914 Thunderbird/3.0.8
-In-Reply-To: <1284971350-30590-2-git-send-email-newren@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1756033Ab0ITJUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 05:20:47 -0400
+Received: from mail01.baslerweb.com ([80.156.24.166]:1213 "EHLO
+	mail01.baslerweb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755678Ab0ITJUr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 05:20:47 -0400
+Received: from mail.baslerweb.com ([80.156.24.162])
+  by mail01-out.baslerweb.com with ESMTP; 20 Sep 2010 11:21:31 +0200
+Received: (from smtpd@127.0.0.1) by mail.baslerweb.com (8.13.4/8.13.4)
+	id o8K9KjsZ012519 for <git@vger.kernel.org>; Mon, 20 Sep 2010 11:20:45 +0200
+Received: from unknown [80.156.24.166] by gateway id /processing/kwNR4Ln9; Mon Sep 20 11:20:45 2010
+Received: from unknown (HELO AHR075S.basler.corp) ([172.16.20.75])
+  by mail01-out.baslerweb.com with ESMTP; 20 Sep 2010 11:21:31 +0200
+X-MimeOLE: Produced By Microsoft Exchange V6.5
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Thread-Topic: git performance after directory copy
+Thread-Index: ActYovLGQazmCQdjTNmfdA3XvlVOoAAAfBDQ
+X-SecurE-Mail-Gateway: Version: 5.00.3.1 (smtpd: 6.53.8.7) Date: 20100920092045Z
+Content-class: urn:content-classes:message
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156603>
 
-Am 9/20/2010 10:28, schrieb Elijah Newren:
-> @@ -255,7 +259,16 @@ test_expect_success 'setup 8' '
->  	git mv a e &&
->  	git add e &&
->  	test_tick &&
-> -	git commit -m "rename a->e"
-> +	git commit -m "rename a->e" &&
-> +	if test_have_prereq SYMLINKS
-> +	then
-> +		git checkout rename-ln &&
-> +		git mv a e &&
-> +		ln -s e a &&
-> +		git add a e &&
-> +		test_tick &&
-> +		git commit -m "rename a->e, symlink a->e"
-> +	fi
->  '
+Hello all,
 
-You don't need the SYMLINKS prerequisite anywhere. Write this without ln -s:
+while moving a project directory around I stumbled over an interesting
+phenomenon. On a copied source directory "git status" seems to be about
+3 times slower than on the original directory. Only after a "git reset"
+both copies behave the same again. Is this connected to the timestamps
+of files & directories? Actually I would like to move the project
+directories of several software developers to a new partition and
+forcing them all to "git reset" in all of their repos is a little bit
+annoying. Any suggestions how to "repair" the repos less intrusive?
 
-	git commit -m "rename a->e" &&
-	git checkout rename-ln &&
-	git mv a e &&
-	sha1e=$(printf e | git hash-object -w --stdin) &&
-	git update-index --add --cacheinfo 120000 $sha1e a &&
-	test_tick &&
-	git commit -m "rename a->e, symlink a->e"
+Here's how I measured. The trees reside on an ext3 FS. I have lots of
+free RAM, so after the first operation all further "git status" seem to
+run from FS cache in RAM.
 
-and the new test case passes even when SYMLINKS are not available!
+$ git clone <path to your preferred kernel>
+$ cd kernel
+$ time git status # several times!
+...
+$ time git status
+# On branch master
+nothing to commit (working directory clean)
 
--- Hannes
+real    0m0.691s
+user    0m0.256s
+sys     0m0.356s
+
+$ cd ..
+$ rsync -a kernel/ kernel2/
+$ cd kernel2
+$ time git status # several times!
+...
+$ time git status
+# On branch master
+nothing to commit (working directory clean)
+
+real    0m2.705s
+user    0m1.724s
+sys     0m0.816s
+
+$ git reset
+$ time git status
+# On branch master
+nothing to commit (working directory clean)
+
+real    0m0.704s
+user    0m0.296s
+sys     0m0.348s
+
+Regards,
+ Andreas.
