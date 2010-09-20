@@ -1,82 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2 2/3] blame,cat-file: Demonstrate --textconv is wrongly running converter on symlinks
-Date: Mon, 20 Sep 2010 23:13:13 +0200
-Message-ID: <vpqvd6086fq.fsf@bauges.imag.fr>
-References: <cover.1285013802.git.kirr@landau.phys.spbu.ru>
-	<cover.1285013802.git.kirr@landau.phys.spbu.ru>
-	<3c344d9b8f014ccb96dc37dc42668426fb5a3c30.1285013802.git.kirr@landau.phys.spbu.ru>
+From: Jonas Fonseca <jonas.fonseca@gmail.com>
+Subject: Re: [tig] Re: compilation error: undefined reference to `set_tabsize'
+Date: Mon, 20 Sep 2010 17:48:23 -0400
+Message-ID: <AANLkTin6YnZTyfeKKoUtGvZx8rBvfYDPG98qYa0TXoW9@mail.gmail.com>
+References: <20100920174200.GA13017@vidovic> <loom.20100920T203217-346@post.gmane.org>
+ <20100920204344.GB13017@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Jeff King <peff@peff.net>
-To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Mon Sep 20 23:18:48 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?U3RlZmFuIE7DpHdl?= <stefan.naewe@googlemail.com>,
+	git@vger.kernel.org
+To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+X-From: git-owner@vger.kernel.org Mon Sep 20 23:48:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxnl9-0004M7-75
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 23:18:47 +0200
+	id 1OxoEE-0006wk-OB
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 23:48:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755156Ab0ITVSl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 17:18:41 -0400
-Received: from imag.imag.fr ([129.88.30.1]:64136 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754380Ab0ITVSl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 17:18:41 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o8KLDDwp017613
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 20 Sep 2010 23:13:13 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Oxnfl-0008SW-Qn; Mon, 20 Sep 2010 23:13:13 +0200
-In-Reply-To: <3c344d9b8f014ccb96dc37dc42668426fb5a3c30.1285013802.git.kirr@landau.phys.spbu.ru> (Kirill Smelkov's message of "Tue\, 21 Sep 2010 00\:39\:45 +0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 20 Sep 2010 23:13:14 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1757663Ab0ITVsp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 17:48:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39889 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751094Ab0ITVso convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 17:48:44 -0400
+Received: by iwn5 with SMTP id 5so4521777iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 14:48:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kIVaDuKfwLLxsdsKHZvV/Oep3D+FQxB1TqOdVe+2QH4=;
+        b=wEkK/rhdrtQ5L3mU30d3NWu6n6ydI6cy0MxYH1AJcPoh1iFc7vMI/pQH8LMzBgZUXd
+         zwoJ7VcqS5D0oS8GZBP7eDqWMG5kw7TMIGjRQ5IFRJaIF7xbj+sF4kD97v6NnbjAxueT
+         EevBrHV7pQfgEvMawG4dBBK7B3V+gogkeptr8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=sCBK6YH2X/Lciv4fs4RM+9ILaA6u/ey491TtBiDR3ARo5HMDTOl2/209oDTpS5JYIB
+         f9lxMRjS1QBHNLrQx8OSemCvEa5sxubLLSawYWDJDAPaDpHHzNvsROYtzlRqwhY8gnvD
+         2tCWJJPh3QY3T8iQEeeWSBgBaZ+VmUpdENhvU=
+Received: by 10.231.169.210 with SMTP id a18mr10817516ibz.5.1285019323842;
+ Mon, 20 Sep 2010 14:48:43 -0700 (PDT)
+Received: by 10.231.39.194 with HTTP; Mon, 20 Sep 2010 14:48:23 -0700 (PDT)
+In-Reply-To: <20100920204344.GB13017@vidovic>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156671>
 
-Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
-
-> (Description partly by Matthieu Moy)
-
-Better put such statements at the end, to avoid distracting the reader.
-
-> ~~~~
+On Mon, Sep 20, 2010 at 16:43, Nicolas Sebrecht <nicolas.s.dev@gmx.fr> =
+wrote:
+> The 20/09/10, Stefan N=C3=A4we wrote:
+>> Nicolas Sebrecht <nicolas.s.dev <at> gmx.fr> writes:
+>>
+>> > tig don't compile anymore here:
+>> >
+>> > =C2=A0 % make
+>> > =C2=A0 gcc =C2=A0 tig.o =C2=A0-lncursesw =C2=A0-o tig
+>> > =C2=A0 tig.o: In function `init_display': tig.c:7113: undefined re=
+ference to
+>> `set_tabsize'
+>> > =C2=A0 collect2: ld returned 1 exit status
+>> > =C2=A0 make: *** [tig] Error 1
+>> > =C2=A0 %
+>> >
+>> > and bisected on
+>> >
+>> > commit f1fe753be71ef3ce5abcbb16c2a359f97e5c7e7d
+>> > Author: Stefan Naewe <>
+>> > Date: =C2=A0 Sun Sep 12 11:03:52 2010 +0200
+>> >
+>> > =C2=A0 =C2=A0 Use function set_tabsize()
+>> >
+>> > =C2=A0 =C2=A0 this fixes the following compile error on cygwin:
+>> > =C2=A0 =C2=A0 tig.c: In function `init_display':
+>> > =C2=A0 =C2=A0 tig.c:7112: error: invalid lvalue in assignment
+>>
+>> That change works for me on Cygwin, Ubuntu 10.04, Debian 5.0.6
+>>
+>> Maybe you should say something about your system/OS version ?
 >
-> NOTE: git diff doesn't try to textconv the pathnames, it runs the
-> textual diff without textconv, which is the expected behavior.
+> Naturally. I'm running on Gentoo.
 
-It's not clear whether this is intended to stay in the commit message.
-If not, it should go below the ---. If yes, then I'd incorporate this
-into the message itself. The ~~~~ and NOTE look odd.
+One possibility is to add a check to configure, but I don't know if
+you are even using that. Alternatively, I think it would also be safe
+to simply just delete the line in question, since tig expands all tabs
+to strings since quite a few releases.
 
-For example (in next patch):
-
-| Instead get the mode from either worktree, index, .git, or origin
-| entries when blaming and pass it to textconv_object() as context.
-| 
-| The reason to do it is not to run textconv filters on symlinks
-+ (just like "git diff" already does).
-
-Anyway, I'm bikeshedding. With or without these remarks,
-
-Reviewed-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+--=20
+Jonas Fonseca
