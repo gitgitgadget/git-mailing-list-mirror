@@ -1,95 +1,52 @@
-From: "Gaer, A." <Andreas.Gaer@baslerweb.com>
-Subject: git performance after directory copy
-Date: Mon, 20 Sep 2010 11:20:44 +0200
-Message-ID: <C5A8FDEFF7647F4C9CB927D7DEB307730F33B7C9@ahr075s.basler.corp>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 09/37] t6020: Modernize style a bit
+Date: Mon, 20 Sep 2010 11:24:09 +0200
+Message-ID: <4C972839.9050303@viscovery.net>
+References: <1284971350-30590-1-git-send-email-newren@gmail.com> <1284971350-30590-10-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 20 11:20:54 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 11:24:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxcYO-0002dp-TT
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:20:53 +0200
+	id 1Oxcbg-00045f-SN
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:24:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756033Ab0ITJUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 05:20:47 -0400
-Received: from mail01.baslerweb.com ([80.156.24.166]:1213 "EHLO
-	mail01.baslerweb.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755678Ab0ITJUr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 05:20:47 -0400
-Received: from mail.baslerweb.com ([80.156.24.162])
-  by mail01-out.baslerweb.com with ESMTP; 20 Sep 2010 11:21:31 +0200
-Received: (from smtpd@127.0.0.1) by mail.baslerweb.com (8.13.4/8.13.4)
-	id o8K9KjsZ012519 for <git@vger.kernel.org>; Mon, 20 Sep 2010 11:20:45 +0200
-Received: from unknown [80.156.24.166] by gateway id /processing/kwNR4Ln9; Mon Sep 20 11:20:45 2010
-Received: from unknown (HELO AHR075S.basler.corp) ([172.16.20.75])
-  by mail01-out.baslerweb.com with ESMTP; 20 Sep 2010 11:21:31 +0200
-X-MimeOLE: Produced By Microsoft Exchange V6.5
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: git performance after directory copy
-Thread-Index: ActYovLGQazmCQdjTNmfdA3XvlVOoAAAfBDQ
-X-SecurE-Mail-Gateway: Version: 5.00.3.1 (smtpd: 6.53.8.7) Date: 20100920092045Z
-Content-class: urn:content-classes:message
+	id S1755931Ab0ITJYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 05:24:11 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:32747 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753480Ab0ITJYK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 05:24:10 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1OxcbZ-00007A-J8; Mon, 20 Sep 2010 11:24:09 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 55AF61660F;
+	Mon, 20 Sep 2010 11:24:09 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100914 Thunderbird/3.0.8
+In-Reply-To: <1284971350-30590-10-git-send-email-newren@gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156604>
 
-Hello all,
+Am 9/20/2010 10:28, schrieb Elijah Newren:
+> -test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" B master'
+> +test_expect_success 'Merge with d/f conflicts' '
+> +	test_must_fail git merge master
+> +'
 
-while moving a project directory around I stumbled over an interesting
-phenomenon. On a copied source directory "git status" seems to be about
-3 times slower than on the original directory. Only after a "git reset"
-both copies behave the same again. Is this connected to the timestamps
-of files & directories? Actually I would like to move the project
-directories of several software developers to a new partition and
-forcing them all to "git reset" in all of their repos is a little bit
-annoying. Any suggestions how to "repair" the repos less intrusive?
+The old version requested a particular kind of failure. Are you saying
+that with modern 'git merge' all non-zero exit codes mean the same kind of
+failure?
 
-Here's how I measured. The trees reside on an ext3 FS. I have lots of
-free RAM, so after the first operation all further "git status" seem to
-run from FS cache in RAM.
-
-$ git clone <path to your preferred kernel>
-$ cd kernel
-$ time git status # several times!
-...
-$ time git status
-# On branch master
-nothing to commit (working directory clean)
-
-real    0m0.691s
-user    0m0.256s
-sys     0m0.356s
-
-$ cd ..
-$ rsync -a kernel/ kernel2/
-$ cd kernel2
-$ time git status # several times!
-...
-$ time git status
-# On branch master
-nothing to commit (working directory clean)
-
-real    0m2.705s
-user    0m1.724s
-sys     0m0.816s
-
-$ git reset
-$ time git status
-# On branch master
-nothing to commit (working directory clean)
-
-real    0m0.704s
-user    0m0.296s
-sys     0m0.348s
-
-Regards,
- Andreas.
+-- Hannes
