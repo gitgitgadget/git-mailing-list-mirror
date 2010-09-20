@@ -1,65 +1,76 @@
-From: Peter Krefting <peter@softwolves.pp.se>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: [PATCH 1/2] Command names should not be translated.
-Date: Mon, 20 Sep 2010 12:32:27 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1009201230560.22862@ds9.cixit.se>
-References: <0001.Command.names.should.not.be.translated.20100920@softwolves.pp.se> <AANLkTin8FR7+N-zCTWYpd=ygtJ6=0m+6iVWXoaok_na=@mail.gmail.com>
+Date: Mon, 20 Sep 2010 11:37:09 +0000
+Message-ID: <AANLkTik5_n2CBNEmU2EB1QjXQ_ExxoRTUdRzq9_=dLTa@mail.gmail.com>
+References: <0001.Command.names.should.not.be.translated.20100920@softwolves.pp.se>
+	<AANLkTin8FR7+N-zCTWYpd=ygtJ6=0m+6iVWXoaok_na=@mail.gmail.com>
+	<alpine.DEB.2.00.1009201230560.22862@ds9.cixit.se>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 13:32:39 2010
+To: Peter Krefting <peter@softwolves.pp.se>
+X-From: git-owner@vger.kernel.org Mon Sep 20 13:37:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxebt-0004Pp-D8
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 13:32:37 +0200
+	id 1OxegQ-0005r5-0v
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 13:37:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756148Ab0ITLcb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 07:32:31 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:54319 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1755911Ab0ITLcb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 07:32:31 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8KBWR7o006560
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 20 Sep 2010 13:32:27 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8KBWRCn006556;
-	Mon, 20 Sep 2010 13:32:27 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <AANLkTin8FR7+N-zCTWYpd=ygtJ6=0m+6iVWXoaok_na=@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Mon, 20 Sep 2010 13:32:28 +0200 (CEST)
+	id S1756150Ab0ITLhL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 07:37:11 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52164 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753685Ab0ITLhK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 07:37:10 -0400
+Received: by iwn5 with SMTP id 5so4210057iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 04:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bGUhMPaD+Z4k7HBnJFQ8AhWBbu/nZi/9/YU+eVf5Ous=;
+        b=F83Dk3hgXgCAGVZSNiL/gRXh7x5bmirJrcbuKRoxEDV5eVcq6Yo0IxREABQQk3zrvx
+         3DiLYr4Gfq+3f3Xr8l+8wljFbEoHPNO8B25qg6jNtAUCtmRB6nxeYFaDO0YHHiMkrocS
+         zroyVsoXtgT8cQPtSHaIv54kujoPOnHM9ucv0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=eysCT8GJmmlwYusfX8m9Kwp5yjnwQzwRajDnojBr+9jkVMWm2tpGG7HAuJ/771/gjJ
+         9qKgOhy3fRwK7V2blP0Ff1Y8MibMfR9YBJeM6iQwww8aj/FlF15AnIbHy2nKnYJtvnej
+         mN0uWJ7hSbquvbcbxaYHwI+kRJ+KZQgl1qirM=
+Received: by 10.231.162.2 with SMTP id t2mr10162189ibx.57.1284982629382; Mon,
+ 20 Sep 2010 04:37:09 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 20 Sep 2010 04:37:09 -0700 (PDT)
+In-Reply-To: <alpine.DEB.2.00.1009201230560.22862@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156614>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156615>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+On Mon, Sep 20, 2010 at 11:32, Peter Krefting <peter@softwolves.pp.se> =
+wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>
+>> I *thought* I mentioned that somewhere, but if not sorry for making =
+you do
+>> un-needed work, and thanks a lot for the report about this issue.
+>
+> I thought you might have, but I didn't want to risk updating my work =
+branch
+> before submitting my changes, so I submitted it just in case. Just ig=
+nore it
+> then and keep patch that adds the sv.po file.
+>
+> There might be changes to the sv translation later on, we are still
+> discussing parts of it, but I will make that a patch on top of the on=
+e
+> submitted.
 
-> I *thought* I mentioned that somewhere, but if not sorry for making y=
-ou do=20
-> un-needed work, and thanks a lot for the report about this issue.
-
-I thought you might have, but I didn't want to risk updating my work br=
-anch=20
-before submitting my changes, so I submitted it just in case. Just igno=
-re it=20
-then and keep patch that adds the sv.po file.
-
-There might be changes to the sv translation later on, we are still=20
-discussing parts of it, but I will make that a patch on top of the one=20
-submitted.
-
---=20
-\\// Peter - http://www.softwolves.pp.se/
+OK, should I fold your newly submitted sv.po into the ab/i18n series
+I'm about to submit, or do you want to work more on it?
