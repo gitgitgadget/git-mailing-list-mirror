@@ -1,111 +1,138 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: use base64 instead of quoted-printable in format-patch headers (was Re: Make format-patch produce UTF-8 `From:' header)
-Date: Mon, 20 Sep 2010 14:20:40 +0200
-Message-ID: <87k4mgsj1j.fsf_-_@gmail.com>
-References: <AANLkTin_5qzDkMU_1stYZcJpfW-W7K0kxy=0K2dA7SwO@mail.gmail.com>
-	<AANLkTinOa+s-28PYXHhtKr_POu2D33ibfgKDKk4Wqi=9@mail.gmail.com>
-	<87y6axshmt.fsf_-_@gmail.com> <87mxrda6e3.fsf@windlord.stanford.edu>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Git Survey 2011; now let's not forget the index/cache/stage
+Date: Mon, 20 Sep 2010 15:38:39 +0200
+Message-ID: <201009201538.41287.jnareb@gmail.com>
+References: <AANLkTi=Fp89-MuYVCNFtSA25hVufbQD5TCJL-ATUDCDH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	"Stefan-W. Hahn" <stefan.hahn@s-hahn.de>,
-	Lukas =?utf-8?Q?Sandstr=C3=B6m?= <luksan@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Christian Himpel <chressie@googlemail.com>
-To: Russ Allbery <rra@debian.org>
-X-From: git-owner@vger.kernel.org Mon Sep 20 14:21:43 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 15:39:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxfNI-00069w-Rg
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 14:21:37 +0200
+	id 1OxgaB-00082k-SL
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 15:39:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755395Ab0ITMVa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 08:21:30 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60177 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752672Ab0ITMV3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 08:21:29 -0400
-Received: by bwz11 with SMTP id 11so4168607bwz.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 05:21:28 -0700 (PDT)
+	id S1756475Ab0ITNix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 09:38:53 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:43151 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755965Ab0ITNiw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 09:38:52 -0400
+Received: by fxm3 with SMTP id 3so603142fxm.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 06:38:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=q+SHL5hQs8PcHen8euYcm7uzag+TlKQuAqKxwSxhCPE=;
-        b=Pjwe6333/MIuv51y870GM541jp8lLwT3gK5QoH9P6Y2q9/XKuMZDg71m4bqxV5wb5v
-         ctIhQjQh+S73pKI4i2H2St1w7Y+Vsrzb+RpykEnt8SOS1OVaXQEwP95JKRwdjCesy00w
-         E3pdQtE5WpJvl1bybcoxlLCsPx1mVnMV86d1Y=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:references:in-reply-to:mime-version:content-disposition
+         :cc:content-type:content-transfer-encoding:message-id;
+        bh=GNxGXSHwyYvhLIMcANKo4p0Azx1pP0IqzAHcYMSKEOU=;
+        b=tJrAJBMKS+Gp8HMvblQuR0+E+hNxVF2Y7vfMkIoY0ZVWQcpZ/WoUwpN/ACMfCr8FKZ
+         8WpQL/edytyaTsXgVnHBK8DiMHWu8gnKxI2tsZtB+0CAdxK93yfXZE8CRYpQpKwZAiqm
+         8HL+wWKvgu3zuu3CR2cRIMUtHFoI+lBNyk5/k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=AwFSxNPf0QPi6YOUvaKUo32xf0bM7EoYGkMwHNgQvXeq4RVFdngSZPTZcrMohgpJ0B
-         twe7uaYKDvsVK+pKwKPR8mKIbSRvngAjW7cVz4j0mmbPT8AMrDHnAtERvTyXlcMm7G/3
-         YuAmuXiAb8RuVirsCvCNrpgKmmekuE5H2xiqM=
-Received: by 10.204.47.193 with SMTP id o1mr6545909bkf.134.1284985288480;
-        Mon, 20 Sep 2010 05:21:28 -0700 (PDT)
-Received: from localhost ([88.103.132.186])
-        by mx.google.com with ESMTPS id 24sm6429818bkr.7.2010.09.20.05.21.25
+        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
+         :content-disposition:cc:content-type:content-transfer-encoding
+         :message-id;
+        b=rQtAoumCXFYCXGCq/zqQyoB9/UGvfkRwIvewUUTkyFuJUUhh+x0A8v6QiDF0WAWzCT
+         JMtJ7nyRyrsvElf4z69UA8llHCFm4atGV93max0xTFIdznOWTgf6AqJEGT3a430tQPZn
+         5gbXp/cwNJZCtAH8aYuJqeeCAgG0gZgZtq0Ww=
+Received: by 10.223.124.197 with SMTP id v5mr4624786far.68.1284989930368;
+        Mon, 20 Sep 2010 06:38:50 -0700 (PDT)
+Received: from [192.168.1.13] (abwt29.neoplus.adsl.tpnet.pl [83.8.243.29])
+        by mx.google.com with ESMTPS id r4sm2916746faa.43.2010.09.20.06.38.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 05:21:26 -0700 (PDT)
-In-Reply-To: <87mxrda6e3.fsf@windlord.stanford.edu> (Russ Allbery's message of
-	"Sun, 19 Sep 2010 12:19:00 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+        Mon, 20 Sep 2010 06:38:49 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTi=Fp89-MuYVCNFtSA25hVufbQD5TCJL-ATUDCDH@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156621>
 
-Russ Allbery <rra@debian.org> writes:
+On Mon, 20 Sep 2010, Felipe Contreras wrote:
 
-> =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com> writes:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>> Maybe format-patch could provide another mode to produce patches th=
-at
->>> do not include unnecessary headers (in particular, leaving out the
->>> difficult "From " line and using UTF-8 instead of quoted-printable =
-for
->>> the "From: " line).
->
->> FWIW, the quoted-printable `From:' encoding has always annoyed me --=
- I
->> replace it manually with my name & address in UTF-8 every time I sen=
-d
->> out a patch. What is the reason format-patch does that (and if there=
- is
->> a reason not to change the default, could an option to disable it be
->> provided)?
->
-> Well, it's required if you're going to actually send the result direc=
-tly
-> as a mail message, since the RFC 5322 format requires headers be enco=
-ded
-> using RFC 2047 encoding.
+> I am *extremely* disappointed with the fact the git survey doesn't
+> have a way to determine how many people really use the
+> index/cache/stage; I think it's one of the most important features of
+> git, and I'm fairly certain most users don't know about it.
 
-Right... thanks for pointing that out. So the problem I'm seeing is
-actually different -- some software (including Mutt and the mailing
-list/archive software used by this list) appears to have problems with
-quoted-printable, but not with base64.
+Doesn't "interactive commit / per-hunk comitting / partial commit" cover
+"git index / cache / stage" response by being what git index is used for 
+in explicit way?
+ 
+> IMO the main purpose of the survey is to find out areas of improvement
+> in git, and I was hoping this year it would be obvious the stage
+> needed some help to make it more visible and accessible.
 
-To take my name as example: when I send mail from Mutt, it is encoded a=
-s
-"=3D?utf-8?B?xaB0xJtww6FuIE7Em21lYw=3D=3D?=3D", i.e. base64, and both M=
-utt and
-the vger archive seem to decode it properly, whereas the
-quoted-printable version produced by fromat-patch, i.e.
-"=3D?utf-8?q?=3DC5=3DA0t=3DC4=3D9Bp=3DC3=3DA1n=3D20N=3DC4=3D9Bmec?=3D" =
-in this case, is left
-undecoded by Mutt and mis-decoded in the ML archive as far as I have
-seen. I'm not sure about other software (Gnus seems to be able to deal
-with both correctly), but perhaps it would make sense to switch to
-base64 in format-patch?
+I don't think that having "git index / cache / stage" as a choice of
+answer in multiple-choice '16) Which of the following features do you 
+use?' question would tell us that.
 
-=C5=A0t=C4=9Bp=C3=A1n
+If there were "better support for staging / interacting with index"
+(perhaps with footnote describing it in more detail below) in the
+'17) Which of the following features would you like to see implemented 
+in git?' question, but IIRC it wasn't present in your proposal.
+
+> 
+> You agreed it would be there, and it's not, so I wonder what's the
+> point of asking for feedback if it's going to be forgotten. Next time
+> I think you should send the final version for review before
+> publishing.
+
+There were two issues conflated that contributed to this error
+of mine.
+
+First, I have re-checked *direct email* responses to request for 
+feedback on Git User's Survey 2010 questions proposal, but I have 
+forgot to re-check responses which were send only to git mailing list 
+without Cc (i.e. in my case *newsgroup* responses).  I am very sorry 
+for that.
+
+Second, I has a bit unplanned time away from Internet access at the end 
+of August, so I had only about a day to do re-check, edit and open the 
+survey on 1 September.  I should have edited survey as soon as i got 
+improvement suggestion, but the fact that one has to close all channels 
+before adding new answer to a multiple-choice question (I think 
+Survs.com did it for a good reason) made me postpone it.
+
+> 
+> I don't think I would care about the results this year, so can we have
+> a wiki with next years's survey? I *really* want to make sure it gets
+> there.
+
+Well, nobody prevents you from starting GitSurvey2011 page on git wiki.
+You can use older version of GitSurvey2010 as a template:
+  https://git.wiki.kernel.org/index.php?title=GitSurvey2010&oldid=8988
+(click edit and copy the contents).  Having a year for discussion about 
+what questions should there be in user's survey would only improve it.
+
+I can even post on git wiki (probably in sub-pages) the emails I have 
+send to git hosting sites to announce the survey.
+
+
+P.S. I can even add you as a member to 'git' account on Survs.com, so
+you would be able to view and even edit survey there, but the Premium 
+plan, which we have thanks to generosity of Survs.com administration 
+(received after Survs.com got out of beta - first survey on Survs.com 
+was run on beta), will downgrade to the Free plan on Sep 22, 2011.
+
+Currenly the survey has more than 5000 responses (in a not whole month),
+so any plan outside of Premium is out of question.  We can run 2011 
+survey earlier so it wouldn't hit downgrade time, try to move to other 
+survey site (http://survey.net.nz got closed, unfortunately), create 
+our own survey app e.g. on Google App, ask Survs.com admins for further 
+generosity, or pay for Premium account ($119/month) at least for the 
+time the survey runs.
+
+-- 
+Jakub Narebski
+Poland
