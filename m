@@ -1,113 +1,73 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: Re: Find out on which branch a commit was originally made
-Date: Mon, 20 Sep 2010 10:12:06 +0200
-Message-ID: <1jp42v5.w5dez21d3nlciM%lists@haller-berlin.de>
-References: <201009200547.o8K5ldI7010683@no.baka.org>
-Cc: git@vger.kernel.org
-To: in-gitvger@baka.org (Seth Robertson),
-	art.08.09@gmail.com (Artur Skawina)
-X-From: git-owner@vger.kernel.org Mon Sep 20 10:12:17 2010
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: [PATCH 1/2] Command names should not be translated.
+Date: Mon, 20 Sep 2010 09:00:00 +0100
+Message-ID: <0001.Command.names.should.not.be.translated.20100920@softwolves.pp.se>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org, avarab@gmail.com
+X-From: git-owner@vger.kernel.org Mon Sep 20 10:16:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxbU0-0008VE-DM
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:12:16 +0200
+	id 1OxbXd-0001Jb-5A
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:16:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567Ab0ITIMK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 04:12:10 -0400
-Received: from mail.ableton.net ([62.96.12.115]:49904 "EHLO mail.ableton.net"
+	id S1754054Ab0ITIPy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 04:15:54 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:45178 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755559Ab0ITIMJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 04:12:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=KC/WhfYryuJNcDjoO0ybBfCmaT/Y0jK3tQ28F/zk6Gg=;
-	b=lmwCcdWEQLWDhFPeD0JG2z64um0+CyE1ncfGNol610zsNwvQIGlaB6RrtIDXa1+eLfzZToGbZSEjXkYZFC3s/Ezjul7vM9VQh0VOIBwO+1rgcGwoMmXfiaWU20G74BeSMguTbXSupIeZJ4tTpH2JCr9sTmZux1NE+i/bik/SM0g=;
-Received: from macbook-stk.office.ableton.com ([10.1.12.2])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1OxbTr-0006TG-Fq; Mon, 20 Sep 2010 10:12:07 +0200
-In-Reply-To: <201009200547.o8K5ldI7010683@no.baka.org>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
+	id S1751767Ab0ITIPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 04:15:54 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L91003EQDMGX410@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 20 Sep 2010 10:15:53 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 5F1211798F5E_C971838B	for <git@vger.kernel.org>; Mon,
+ 20 Sep 2010 08:15:52 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 4A2201796CA0_C971838F	for <git@vger.kernel.org>; Mon,
+ 20 Sep 2010 08:15:52 +0000 (GMT)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L9100D7RDMGO010@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 20 Sep 2010 10:15:52 +0200 (MEST)
+Received: by perkele (Postfix, from userid 501)	id 0F0122FC00; Mon,
+ 20 Sep 2010 10:15:52 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156557>
 
-Seth Robertson <in-gitvger@baka.org> wrote:
+Signed-off-by: Peter Krefting <peter@softwolves.pp.se>
+---
+ wt-status.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-> In message <4C96B97D.6030209@gmail.com>, Artur Skawina writes:
-> 
->     On 09/20/10 01:54, Seth Robertson wrote:
-> 
->     > I'd like a command that would tell me the right branch something was
->     > on whether it was on master or topic or whatever.  If instead of
->     > "master" the branch was named "supertopic" and master commit AA had
->     > child D would that make a difference?
-> 
->     Like i said, "arguably". In theory, no, there is no difference. In
->     practice, some branches will be more long-lived than others -- and
->     certain conventions will apply. Hence, i think that answer /is/ the
->     right one, in context -- that script was specifically looking for
->     info on /another/ branch.
-> 
-> Only if the topic branch didn't have a merge on it.
-> 
->          -AA-- subtopic
->         /     \
->        A---B---C topic
->       /         \
->  D---E---F---G---H---I---J---K---L---M---N master
->                           \         /
->                            O---P---Q another-topic
-> 
-> 
-> In the above example, the subtopic branch merge from AA to C prevents
-> you from finding out what branch B is on using the original script.
+Re-sending with proper Message-Id. Sorry for the noise.
 
-When you say "the original script", are you talking about Artur's
-one-liner or my script?
-
-My script gives me exactly the information I want in all cases.  For a
-given command $1 and a target branch $2, it shows you all merges that
-were involved in bringing $1 into $2. For example:
-
-  Called with "B" "master", it returns H
-  Called with "AA" "master", it returns C, H
-    (and that's good, because for someone asking "what was AA's original
-     branch?" it's not clear if he will be more interested in topic or
-     sub-topic, so show him both)
-  Called with "F" "master", it returns nothing
-
-The one limitation is that the result is empty both when $1 started on
-$2, and when $1 is not reachable from $2 at all, in which case it should
-probably error out (like when you call it with "F" "topic").  That's
-easy to add as an additional check at the beginning of the script,
-though.
-
-
-The script works even in cases where you have a long-running topic
-branch that is occasionally brought up to date with master, like this:
-
-
-         F---G---H---I---J---O---P  topic
-        /       /       /         \
-   A---B---C---D---E---K---L---M---N---Q master
-
-
-When called with "F" "master", it returns only N, but not H or J.
-Exactly what I need.  (We have this kind of history a lot in our code
-base.)
-
-You could even call the script with "C" "topic" if you wanted to (in
-which case it would return H, but not J).  It's not quite clear why you
-would want to though.
-
-
+diff --git a/wt-status.c b/wt-status.c
+index f6946e1..7d4719f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -663,9 +663,9 @@ void wt_status_print(struct wt_status *s)
+ 		wt_status_print_submodule_summary(s, 1);  /* unstaged */
+ 	}
+ 	if (s->show_untracked_files) {
+-		wt_status_print_other(s, &s->untracked, _("Untracked"), _("add"));
++		wt_status_print_other(s, &s->untracked, _("Untracked"), "add");
+ 		if (s->show_ignored_files)
+-			wt_status_print_other(s, &s->ignored, _("Ignored"), _("add -f"));
++			wt_status_print_other(s, &s->ignored, _("Ignored"), "add -f");
+ 	} else if (s->commitable)
+ 		fprintf(s->fp, _("# Untracked files not listed%s\n"),
+ 			advice_status_hints
 -- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+1.7.1
