@@ -1,80 +1,105 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: Re: Questions on gitosis
-Date: Mon, 20 Sep 2010 23:07:25 +0000
-Message-ID: <robbat2-20100920T230503-994460874Z@orbis-terrarum.net>
-References: <26E9B811E137AB4B95200FD4C950886BA3AC1997@orsmsx507.amr.corp.intel.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: Reduced privileges install
+Date: Mon, 20 Sep 2010 18:20:05 -0500
+Message-ID: <4F4U1inRKcW4HHV1z2hCXRdyS9lEqRBQYwV2RNDETBIkkT7YIO_qHQ@cipher.nrlssc.navy.mil>
+References: <325786BC-5F54-47B5-AEF5-7FDAD9BEA4BA@kellerfarm.com> <BvHZDf7-epsPOl8y5QrLcsmYgobmFUo7HwZanlekCciU8I-jiKPVRw@cipher.nrlssc.navy.mil> <23ECDEF1-BDEC-45CC-B0CC-7E1A7BFE00BB@kellerfarm.com> <CWxE18Hq1ro8utv-_dFm1ZaVIKpCDTv-TbEB4u_l84GvbeJh1vKing@cipher.nrlssc.navy.mil> <5FA82BA4-AE76-44F5-9635-36E199E97B00@kellerfarm.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="9crTWz/Z+Zyzu20v"
-To: "Olsen, Alan R" <alan.r.olsen@intel.com>,
-	Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Sep 21 01:14:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git List <git@vger.kernel.org>
+To: Andrew Keller <andrew@kellerfarm.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 01:20:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxpZ1-0008Qf-WA
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:14:24 +0200
+	id 1Oxpej-0001cr-V9
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:20:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756910Ab0ITXOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 19:14:10 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:48574 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753940Ab0ITXOJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 19:14:09 -0400
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Mon, 20 Sep 2010 19:14:09 EDT
-Received: (qmail 24573 invoked from network); 20 Sep 2010 23:07:27 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Mon, 20 Sep 2010 23:07:27 +0000
-Received: (qmail 29975 invoked by uid 10000); 20 Sep 2010 23:07:25 -0000
-Content-Disposition: inline
-In-Reply-To: <26E9B811E137AB4B95200FD4C950886BA3AC1997@orsmsx507.amr.corp.intel.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757398Ab0ITXUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 19:20:09 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:33463 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754271Ab0ITXUI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 19:20:08 -0400
+Received: by mail.nrlssc.navy.mil id o8KNK6Bv010180; Mon, 20 Sep 2010 18:20:06 -0500
+In-Reply-To: <5FA82BA4-AE76-44F5-9635-36E199E97B00@kellerfarm.com>
+X-OriginalArrivalTime: 20 Sep 2010 23:20:06.0764 (UTC) FILETIME=[5C976AC0:01CB591A]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156679>
 
+On 09/20/2010 05:53 PM, Andrew Keller wrote:
+> On Sep 20, 2010, at 3:12 PM, Brandon Casey wrote:
+>>  You could try
+>> deleting the config.mak.autogen file that configure creates, and just run
+>> make by itself.  Based on what you've describe, it would look something
+>> like this:
+>>
+>>   cd <path-to-git-src>
+>>   rm config.mak.autogen
+>>   cat >config.mak <<EOF
+>> CC=/usr/local/bin/gcc
+>> PREFIX=/usr/users/students/ak4390/.local
+>> PYTHON_PATH=/usr/local/bin/python
+>> TCL_PATH=/usr/local/bin/tclsh8.4
+>> NO_PERL_MAKEMAKER=1
+>> EOF
+>>   make
+>>
+>> Then add 'install' to the make command line when you are ready.
+>>
+>> Notice, I placed all of the make settings in a file named config.mak.  This
+>> file is imported by the main Makefile automatically and is intended to be
+>> used like this for user settings.  If you really need to disable pthreads,
+>> then you can add NO_PTHREADS=1.  Check out the comments at the top of the
+>> Makefile for a list of all variables that can be set.
+> 
+> Compiling as described above appears to go down in flames:
+> 
+> $ make
+> /bin/sh: curl-config: not found
 
---9crTWz/Z+Zyzu20v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+At this point, the above is just a warning that curl-config is not
+in your path.  If curl is not installed on your system, you need
+to set NO_CURL=1.
 
-On Mon, Sep 20, 2010 at 03:15:02PM -0700,  Olsen, Alan R wrote:
-> Is gitosis currently maintained? Who do I contact?
-The original author hasn't touched anything since this time last year.
-We do have a fork of it at Gentoo:
-http://git.overlays.gentoo.org/gitweb/?p=3Dproj/gitosis-gentoo.git
+>     CC fast-import.o
+> In file included from builtin.h:4,
+>                  from fast-import.c:147:
+> git-compat-util.h:140:25: openssl/ssl.h: No such file or directory
+> git-compat-util.h:141:25: openssl/err.h: No such file or directory
+<snip other related warnings>
 
-However we are looking at migrating the Gentoo Gitosis instances to
-Gitolite in the near future.
+Fixed by setting NO_OPENSSL=1.
 
-> I have a list of bugs in the current version that I would like to see
-> fixed. I can post them here if needed. (It will at least get them
-> picked up by the usual search engines.)
-At the very least, I'd love to see them and perhaps apply them in
-Gentoo.
+> And, this is the same source tree that just worked a minute ago, when
+> I used configure/make/make install.  I then copied the entire source
+> folder, with the modified config.mak file, to my laptop running Snow Leopard,
+> modified the variables in the config.mak file to match the system, and it
+> compiled and installed just fine.  So, this server seems to have a problem
+> with not running the configure script first.
 
---=20
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+git's configure script is a little different from the configure
+scripts in other projects.  All configure does in git is set variables
+that are used by the Makefile.  Using its rules, it tries to figure out
+what the best setting is for each variable.  Any of these variables can
+be set manually in the user's config.mak file.  Apparently, additional
+variables need to be modified from their default to handle your system.
+Once you determine the set of variables that need to be set, they most
+likely will not need to be changed when compiling future versions of
+git.
 
---9crTWz/Z+Zyzu20v
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+The above two variables (NO_CURL, NO_OPENSSL) will likely fix the errors
+that you reported, but I don't guarantee that more errors will not be
+produced and will require additional settings.  All of the variables
+are described in the comments at the top of the Makefile.  It's an
+iterative process.  You could also use the config.mak.autogen as the
+baseline for you config.mak file.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.16 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAkyX6S0ACgkQPpIsIjIzwixSHQCfcCu+Xhxpa4yDdzENlju8Xduk
-vQYAoNmDkPAnI7mY/e2qHE82c0EJWZbs
-=fx6G
------END PGP SIGNATURE-----
-
---9crTWz/Z+Zyzu20v--
+-Brandon
