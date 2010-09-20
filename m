@@ -1,72 +1,81 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/3] RFC: blame,cat-file --textconv: Don't assume mode
- is ``S_IFREF | 0664''
-Date: Mon, 20 Sep 2010 14:21:28 -0400
-Message-ID: <20100920182128.GB1790@sigill.intra.peff.net>
-References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
- <7ab60e32582447ad792602ff405dcee464ef1414.1284830388.git.kirr@landau.phys.spbu.ru>
+From: Stefan =?utf-8?b?TsOkd2U=?= <stefan.naewe@googlemail.com>
+Subject: Re: [tig] compilation error: undefined reference to =?utf-8?b?YHNldF90YWJzaXplJw==?=
+Date: Mon, 20 Sep 2010 18:36:03 +0000 (UTC)
+Message-ID: <loom.20100920T203217-346@post.gmane.org>
+References: <20100920174200.GA13017@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Mon Sep 20 20:22:13 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 20 20:40:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxl0C-0008F5-F4
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 20:22:08 +0200
+	id 1OxlHn-0007Fd-Gd
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 20:40:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757071Ab0ITSVa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 14:21:30 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45766 "EHLO peff.net"
+	id S1754560Ab0ITSkK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 14:40:10 -0400
+Received: from lo.gmane.org ([80.91.229.12]:34847 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757062Ab0ITSV3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 14:21:29 -0400
-Received: (qmail 26887 invoked by uid 111); 20 Sep 2010 18:21:29 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 20 Sep 2010 18:21:29 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Sep 2010 14:21:28 -0400
-Content-Disposition: inline
-In-Reply-To: <7ab60e32582447ad792602ff405dcee464ef1414.1284830388.git.kirr@landau.phys.spbu.ru>
+	id S1750778Ab0ITSkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 14:40:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OxlHY-000781-1C
+	for git@vger.kernel.org; Mon, 20 Sep 2010 20:40:04 +0200
+Received: from dslc-082-083-192-154.pools.arcor-ip.net ([82.83.192.154])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 20:40:04 +0200
+Received: from stefan.naewe by dslc-082-083-192-154.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 20:40:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 82.83.192.154 (Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.62 Safari/534.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156648>
 
-On Sat, Sep 18, 2010 at 09:25:06PM +0400, Kirill Smelkov wrote:
+Nicolas Sebrecht <nicolas.s.dev <at> gmx.fr> writes:
 
-> Instead get the mode from either worktree, index, .git, or origin
-> entries when blaming and pass it to textconv_object() as context.
 > 
-> The reason to do it is not to run textconv filters on symlinks.
+> Hi,
+> 
+> tig don't compile anymore here:
+> 
+>   % make
+>   gcc   tig.o  -lncursesw  -o tig
+>   tig.o: In function `init_display': tig.c:7113: undefined reference to 
+`set_tabsize'
+>   collect2: ld returned 1 exit status
+>   make: *** [tig] Error 1
+>   %
+> 
+> and bisected on
+> 
+> commit f1fe753be71ef3ce5abcbb16c2a359f97e5c7e7d
+> Author: Stefan Naewe <>
+> Date:   Sun Sep 12 11:03:52 2010 +0200
+> 
+>     Use function set_tabsize()
+> 
+>     this fixes the following compile error on cygwin:
+>     tig.c: In function `init_display':
+>     tig.c:7112: error: invalid lvalue in assignment
 
-I think this is absolutely a bug, and your solution is definitely in the
-right direction. We obviously can't just ignore the mode when deciding
-whether to textconv. I suspect there is similar breakage for S_IFGITLINK
-files, though they are perhaps less likely in practice to match another
-filetype's extension.
+That change works for me on Cygwin, Ubuntu 10.04, Debian 5.0.6
 
-So all three patches look sane to me, with the caveat that I also don't
-know the blame code very well.
 
-I agree with Matthieu's points on cleaning up the commit messages, and
-there is a small comment typo in this third patch:
+Maybe you should say something about your system/OS version ?
 
-> @@ -313,21 +315,23 @@ static struct origin *get_origin(struct scoreboard *sb,
->   * for an origin is also used to pass the blame for the entire file to
->   * the parent to detect the case where a child's blob is identical to
->   * that of its parent's.
-> + *
-> + * This also fills origin->mode for correspoinding tree path.
+Regards,
 
-Typo: s/poind/pond
-
--Peff
+Stefan
