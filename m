@@ -1,91 +1,88 @@
-From: <nolan.ring@emc.com>
-Subject: svn2git question:  error: unknown switch `t'
-Date: Mon, 20 Sep 2010 13:39:41 -0400
-Message-ID: <4E10ACF241081344B9702AA8C6440440C5B14FB331@MX01A.corp.emc.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [tig] compilation error: undefined reference to `set_tabsize'
+Date: Mon, 20 Sep 2010 19:42:00 +0200
+Message-ID: <20100920174200.GA13017@vidovic>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 20 19:40:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, fonseca@diku.dk,
+	git@vger.kernel.org
+To: stefan.naewe@googlemail.com
+X-From: git-owner@vger.kernel.org Mon Sep 20 19:42:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxkLw-0005t7-7g
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:40:32 +0200
+	id 1OxkNZ-0006j5-5t
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:42:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753372Ab0ITRkX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 13:40:23 -0400
-Received: from mexforward.lss.emc.com ([128.222.32.20]:17792 "EHLO
-	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750771Ab0ITRkW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 13:40:22 -0400
-Received: from hop04-l1d11-si01.isus.emc.com (HOP04-L1D11-SI01.isus.emc.com [10.254.111.54])
-	by mexforward.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8KHeK4c021718
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:40:21 -0400
-Received: from mailhub.lss.emc.com (mailhub.lss.emc.com [10.254.221.145]) by hop04-l1d11-si01.isus.emc.com (RSA Interceptor) for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:40:15 -0400
-Received: from corpussmtp4.corp.emc.com (corpussmtp4.corp.emc.com [10.254.169.197])
-	by mailhub.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8KHdg5W008674
-	for <git@vger.kernel.org>; Mon, 20 Sep 2010 13:39:44 -0400
-Received: from mxhub05.corp.emc.com ([128.221.46.113]) by corpussmtp4.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Mon, 20 Sep 2010 13:39:42 -0400
-Received: from MX01A.corp.emc.com ([169.254.1.232]) by mxhub05.corp.emc.com
- ([128.221.46.113]) with mapi; Mon, 20 Sep 2010 13:39:42 -0400
-Thread-Topic: svn2git question:  error: unknown switch `t'
-Thread-Index: AQHLWOrNWRyv6DilqkeryTRaWP4YZg==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-OriginalArrivalTime: 20 Sep 2010 17:39:42.0831 (UTC) FILETIME=[CEFA8FF0:01CB58EA]
-X-EMM-MHVC: 1
+	id S1755122Ab0ITRmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 13:42:06 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:49009 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750960Ab0ITRmE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 13:42:04 -0400
+Received: by wyf22 with SMTP id 22so4546178wyf.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:42:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:mime-version:content-type:content-disposition
+         :user-agent;
+        bh=ddGfT0ljHPNwER2ikttSw8zAKa0yUXv3qCgZ5Rn30EY=;
+        b=syhmz2rm//OIrI51fFwfNKcZ91S7IuOed6xySKIjyvIOGDK72QsiZ8dRmchzkLboSB
+         kcOKIxTMxCu8u9wqmStN9+taq/f7LNok+nrFSe7xZv+gniww4jqJ2uXEl1oCv9RCnkCJ
+         li6p3nanGi35+r1oM9fqKMMOG8ug37W0CoSwQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=i/PLbH83cONKdy906s2Li6CmG9dkEBalRElGr89Aa0LRVQccdcEm76eXWKrUsjo3CP
+         riWmrji0APNINzZMds7i/n42Nxuh3ipcbO5o+LJpyytIaBKBB9Ezd9D33SPCKpFcQhXO
+         GGK+vvDpR1uI99IkC5TotEymkO0O0TcvtyksM=
+Received: by 10.216.93.10 with SMTP id k10mr4620870wef.38.1285004522892;
+        Mon, 20 Sep 2010 10:42:02 -0700 (PDT)
+Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
+        by mx.google.com with ESMTPS id b10sm5333170wer.41.2010.09.20.10.42.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 20 Sep 2010 10:42:02 -0700 (PDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156643>
 
-All,
+Hi,
 
-I'm running the command svn2git -v --notags --branches REbranches <URL>
+tig don't compile anymore here:
 
-and I'm getting the following:
+  % make
+  gcc   tig.o  -lncursesw  -o tig
+  tig.o: In function `init_display': tig.c:7113: undefined reference to `set_tabsize'
+  collect2: ld returned 1 exit status
+  make: *** [tig] Error 1
+  %
 
-If you want to create a new branch from this checkout, you may do so
-(now or later) by using -b with the checkout command again. Example:
-  git checkout -b <new_branch_name>
-HEAD is now at 38b1da3... Update NEO targets to point to NeoMain kernel
-Running command: git branch -t NeoMain@34 remotes/NeoMain@34
-error: unknown switch `t'
-usage: git branch [options] [-r | -a] [--merged | --no-merged]
-   or: git branch [options] [-l] [-f] <branchname> [<start-point>]
-   or: git branch [options] [-r] (-d | -D) <branchname>
-   or: git branch [options] (-m | -M) [<oldbranch>] <newbranch>
 
-Generic options
-    -v, --verbose         be verbose
-    --track               set up tracking mode (see git-pull(1))
-    --color               use colored output
-    -r                    act on remote-tracking branches
-    --contains <commit>   print only branches that contain the commit
-    --abbrev[=<n>]        use <n> digits to display SHA-1s
+and bisected on
 
-Specific git-branch actions:
-    -a                    list both remote-tracking and local branches
-    -d                    delete fully merged branch
-    -D                    delete branch (even if not merged)
-    -m                    move/rename a branch and its reflog
-    -M                    move/rename a branch, even if target exists
-    -l                    create the branch's reflog
-    -f                    force creation (when already exists)
-    --no-merged <commit>  print only not merged branches
-    --merged <commit>     print only merged branches
+commit f1fe753be71ef3ce5abcbb16c2a359f97e5c7e7d
+Author: Stefan Naewe <>
+Date:   Sun Sep 12 11:03:52 2010 +0200
 
-Where did the -t come from?  What is this telling me?
+    Use function set_tabsize()
+    
+    this fixes the following compile error on cygwin:
+    tig.c: In function `init_display':
+    tig.c:7112: error: invalid lvalue in assignment
+    
+    Signed-off-by: Stefan Naewe <>
+    Signed-off-by: Jonas Fonseca <>
 
-Thanks much.
 
-Nolan 
+Or did I missed something?
+
+-- 
+Nicolas Sebrecht
