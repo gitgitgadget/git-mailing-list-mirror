@@ -1,145 +1,64 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 7/7] gitweb: group remote heads
-Date: Mon, 20 Sep 2010 11:38:03 +0200
-Message-ID: <AANLkTi=20gzw8DOuT=NWRqbt86AyJDEPxoo-V9A3Rvim@mail.gmail.com>
-References: <1284629465-14798-1-git-send-email-giuseppe.bilotta@gmail.com>
- <201009200102.22960.jnareb@gmail.com> <AANLkTim0X-3PFccXTjH3Mo5eEHL+7zBcifqHu9hWp_RP@mail.gmail.com>
- <201009201059.07742.jnareb@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: git performance after directory copy
+Date: Mon, 20 Sep 2010 11:45:45 +0200
+Message-ID: <4C972D49.9040306@drmicha.warpmail.net>
+References: <C5A8FDEFF7647F4C9CB927D7DEB307730F33B7C9@ahr075s.basler.corp>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 11:38:36 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "Gaer, A." <Andreas.Gaer@baslerweb.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 11:45:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxcpR-0001HM-DE
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:38:29 +0200
+	id 1OxcwT-00045y-Fe
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:45:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119Ab0ITJiY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 05:38:24 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40901 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754485Ab0ITJiY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 05:38:24 -0400
-Received: by iwn5 with SMTP id 5so4132568iwn.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 02:38:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=x3wjRU/f4XbaJflJmf+Hk4GB6JYaecntnsFI/F9Sbuo=;
-        b=k6stgrECaxvER0mLp2BfyhzH639z0hhsvJp/XUduaNz4tMK/XHATdSsqL5n2I+JE0L
-         P8X1jlF0G8uRbTHGsfRaNx19he5zH3HDLUqVkVSUsCo0jBg6WqbMCNbwtgE+cHXk9n7W
-         XKSlAglA0Ec9iaJ0BbKFqVQrDzE/hxOHzPfXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=xhbBJaa4ucgVJ/k5i2T/YK3fWANzDrHrneY/9yFfmk/xMdajNTt449yWLt6HM/BAs4
-         EsGfuaSwPF8ZcOcUGwLFd199ttSNQkKlTjfyLLU3V2GcQqnomCRy/vSZPqlfbvH6tUQX
-         zFMIMQznpRg10x85ZDhWIfWow+1xtDq/E62aQ=
-Received: by 10.231.169.210 with SMTP id a18mr9994554ibz.5.1284975503327; Mon,
- 20 Sep 2010 02:38:23 -0700 (PDT)
-Received: by 10.231.150.202 with HTTP; Mon, 20 Sep 2010 02:38:03 -0700 (PDT)
-In-Reply-To: <201009201059.07742.jnareb@gmail.com>
+	id S1756173Ab0ITJpk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 05:45:40 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59573 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756091Ab0ITJpj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 05:45:39 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BBF6F7B78;
+	Mon, 20 Sep 2010 05:45:38 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 20 Sep 2010 05:45:38 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=wMw2QnMLsvsDaecrFZ/tYuUIX+Q=; b=dYDGw84bsMU5ZmHvTTGeKqkWBUnzTYu/k7L4UN96X5ZaoUCpMkw7dlWIF4XvMQm7yUhN0QWP/Bj8bSCuUIVjhDgzvhLCWtBfPwrNSw55L7e+T9CpqL9mWPVMUUDtqICxWHp/bJf72dgYh8r0drZuuNL11j3/tgY1Xr1fQxhtep4=
+X-Sasl-enc: 2cnJGM2uvvO+f3BZCHNo/RovYwxhDLXSSGgXVuovUpOM 1284975938
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4529B403CC8;
+	Mon, 20 Sep 2010 05:45:38 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.3
+In-Reply-To: <C5A8FDEFF7647F4C9CB927D7DEB307730F33B7C9@ahr075s.basler.corp>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156608>
 
-On Mon, Sep 20, 2010 at 10:59 AM, Jakub Narebski <jnareb@gmail.com> wro=
-te:
-> Giuseppe Bilotta wrote:
->> On Mon, Sep 20, 2010 at 1:02 AM, Jakub Narebski <jnareb@gmail.com> w=
-rote:
->> > The solution (1) i.e. limiting number of remote heads per remote, =
-with
->> > or without limiting number of remotes behaves, as you wrote, most
->> > similarly to other components of 'summary' view. =A0On the other h=
-and
->> > with large number of remotes, and large number of remote heads in =
-those
->> > remotes it might be too large for a *summary* view.
->>
->> So you maintain that limiting the amount of data in summary view
->> should be primary wrt to limiting the amount of time?
->
-> Well, what really affect gitweb performance is calling git commands, =
-both
-> because of fork overhead, and because it means disk access (and gitwe=
-b
-> performance from what I have heard is affected mainly by IO, and not =
-CPU).
-> With grouping (displaying remotes) the difference between displaying
-> remote-tracking branches (or information from them) and not displayin=
-g
-> them is an argument to git-for-each-ref. =A0So I don't think it would
-> affect performance much.
+Gaer, A. venit, vidit, dixit 20.09.2010 11:20:
+> Hello all,
+> 
+> while moving a project directory around I stumbled over an interesting
+> phenomenon. On a copied source directory "git status" seems to be about
+> 3 times slower than on the original directory. Only after a "git reset"
+> both copies behave the same again. Is this connected to the timestamps
+> of files & directories? Actually I would like to move the project
+> directories of several software developers to a new partition and
+> forcing them all to "git reset" in all of their repos is a little bit
+> annoying. Any suggestions how to "repair" the repos less intrusive?
+> 
 
-Getting the list of remote branches is, I would say, the most
-IO-intensive operation. I'm not sure how much I/O it would do though,
-even with a large number of remotes and heads. So maybe always gather
-all the information is the way to go.
+Since you clone from A to B, then copy from B several times, why don't
+you clone from A several times instead?
 
->> > The solution (3) i.e. displaying only list of remotes (perhaps lim=
-ited
->> > to 15 remotes) is simple and fast to render. =A0On the other hand =
-it offers
->> > least information and might be too little in the case of single re=
-mote.
->>
->> If time spent processing is not an issue, we can retrieve the number
->> of heads for each remote and display that, for example. Or even play
->> with some more dynamic stuff like making each group collapsible,
->> starting with it collapsed and then display the content when the use=
-r
->> hovers it with the mouse, for example.
->
-> The dynamic stuff is IMHO a good idea... provided we can either do it
-> without JavaScript, or we can ensure that browser supports JavaScript
-> (see current hack used for turning 'blame' into 'blame_incremental'
-> view in gitweb).
+If it's really about moving across file-system boundaries, then I don't
+think there's a way around: you need to refresh the index with the
+changed inodes information.
 
-What I had in mind was something that is very easy to implement with CS=
-S only.
-
-> Yet another solution would be to display only abbreviated list of rem=
-otes
-> if its more of them than some threshold, and list remotes with abbrev=
-iated
-> list of remote-tracking branches if there are only a few remotes.
-
-So something like this:
-
-(1) if there are more than N remotes, only show N remote _names_ (no he=
-ads)
-(2) if there are no more than N remotes, show all remote names, each
-with no more than M heads
-
-(with N and M to be decided, e.g. the usual 16)
-
->> Yes, this is something I have to take into consideration. Skip
->> displaying them is probably the best idea (unless we have other ways
->> to gather information about them).
->
-> Right.
-
-=46or this, it would be nice to have `git remote show`, but even if I
-sent a patch to this effect gitweb should probably be left able to
-cope with older git versions not supporting it ...
-
-> P.S. It is not necessary for this series, but I think we should think
-> about "single remote" view... also because your code currently links
-> to such views, which do not exist yet (remotes/<remote> in path_info:
-> how it would be represented in CGI query format?).
-
-Maybe pass the remote name as head parameter?
-
---=20
-Giuseppe "Oblomov" Bilotta
+Michael
