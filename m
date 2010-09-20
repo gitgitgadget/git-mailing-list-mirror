@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 17/37] merge-recursive: Move rename/delete handling into dedicated function
-Date: Mon, 20 Sep 2010 02:28:50 -0600
-Message-ID: <1284971350-30590-18-git-send-email-newren@gmail.com>
+Subject: [PATCH 04/37] t6022: Add test combinations of {content conflict?, D/F conflict remains?}
+Date: Mon, 20 Sep 2010 02:28:37 -0600
+Message-ID: <1284971350-30590-5-git-send-email-newren@gmail.com>
 References: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,101 +11,199 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxblR-0006R4-2O
+	id 1OxblR-0006R4-JK
 	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:30:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755987Ab0ITI33 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 04:29:29 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:63878 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755443Ab0ITI2G (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 04:28:06 -0400
-Received: by mail-px0-f174.google.com with SMTP id 10so1072016pxi.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:28:06 -0700 (PDT)
+	id S1756004Ab0ITI3o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 04:29:44 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49332 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755704Ab0ITI1j (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 04:27:39 -0400
+Received: by pwi3 with SMTP id 3so1146755pwi.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:27:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=dnN8vUCaukUCFIzJQGQoP+GkIVbHo3APtBQK5hXEz7A=;
-        b=VLcTOrUsyaU0vESLwewfNwksXyV+Xq3J99VsD3XzD/OtCPVnLSmkL2JdnWsbW5KeRv
-         BE3JXYdVk2azCOcuvFfcc5IN+SbW9eGPNmp222bjJkRHPcNx+cilL6Nt3U/Yt3f0Uajo
-         iT5x626hda7Z4xNVnoAHAm04+YcY7vN81/NJk=
+        bh=i7+lxEQRuDWUmGK+YdzTXG6gRzyqAhGflIWQ/dROBHw=;
+        b=uqZEv3dZIKi00iJAeZTJj+nTm2VEnvpk+KfcTgdvxAnRF1Ti8sjYO9yQC/pxhBkfLh
+         5BXdNAaFVlmvcM2qtIDwbAPBTmmu6n+UaNU2sXDU9ipUeT8bXzA6fsmchHu9kevKqKoX
+         AJ4xUuhW48RLpb60o1H4NiqZDlEectXp68PPw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=IchSWNjYnYZF7DWJzJzmS1hrfgHW8ql4uOBtkoug0wVX010KukwA0VJyQvYv5ON1JB
-         2DN2ZxPFpofpCpUwDYbHvkA++Kncs1V1ojLnUN4ooiz2vglCCaJ2ovg3mw/IZqEPilJ4
-         gZNvQ90l+CQuL0CJ6El8Ix0Vnf4GA8bnrG78U=
-Received: by 10.142.248.37 with SMTP id v37mr7328794wfh.349.1284971286663;
-        Mon, 20 Sep 2010 01:28:06 -0700 (PDT)
+        b=t2pxU7IsZwdy83Jgq2iaQt4VROOIZqTiBEihUTtOwY/8HZWVUND38EZASOyJL6MvvW
+         1E0R6gNb6xRw4hkw4BgZkKjb7+VaH2KsmGO31HbfXxfrYgo84jutSxUdf/28RhsO8X/q
+         QGDCOvUep01QWEJ1hLedfpNf/cMen+YW8bxGI=
+Received: by 10.142.207.15 with SMTP id e15mr7347100wfg.277.1284971258689;
+        Mon, 20 Sep 2010 01:27:38 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.28.04
+        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.27.36
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 01:28:05 -0700 (PDT)
+        Mon, 20 Sep 2010 01:27:37 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.271.g16009
 In-Reply-To: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156595>
 
-This move is in preparation for the function growing and being called from
-multiple places in order to handle D/F conflicts.
+Add testing of the various ways that a renamed file to a path involved in
+a directory/file conflict may be involved in.  This includes whether or not
+there are conflicts of the contents of the renamed file (if the file was
+modified on both sides of history), and whether the directory from the
+other side of the merge will disappear as a result of the merge or not.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- merge-recursive.c |   31 ++++++++++++++++++++-----------
- 1 files changed, 20 insertions(+), 11 deletions(-)
+ t/t6022-merge-rename.sh |  128 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 128 insertions(+), 0 deletions(-)
 
-diff --git a/merge-recursive.c b/merge-recursive.c
-index f7591a3..87be24c 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -731,6 +731,25 @@ static struct merge_file_info merge_file(struct merge_options *o,
- 	return result;
- }
+diff --git a/t/t6022-merge-rename.sh b/t/t6022-merge-rename.sh
+index b66544b..a992206 100755
+--- a/t/t6022-merge-rename.sh
++++ b/t/t6022-merge-rename.sh
+@@ -3,6 +3,11 @@
+ test_description='Merge-recursive merging renames'
+ . ./test-lib.sh
  
-+static void conflict_rename_delete(struct merge_options *o,
-+				   struct diff_filepair *pair,
-+				   const char *rename_branch,
-+				   const char *other_branch)
-+{
-+	char *dest_name = pair->two->path;
-+
-+	output(o, 1, "CONFLICT (rename/delete): Rename %s->%s in %s "
-+	       "and deleted in %s",
-+	       pair->one->path, pair->two->path, rename_branch,
-+	       other_branch);
-+	if (!o->call_depth)
-+		update_stages(dest_name, NULL,
-+			      rename_branch == o->branch1 ? pair->two : NULL,
-+			      rename_branch == o->branch1 ? NULL : pair->two,
-+			      1);
-+	update_file(o, 0, pair->two->sha1, pair->two->mode, dest_name);
++modify () {
++	sed -e "$1" <"$2" >"$2.x" &&
++	mv "$2.x" "$2"
 +}
 +
- static void conflict_rename_rename_1to2(struct merge_options *o,
- 					struct rename *ren1,
- 					const char *branch1,
-@@ -937,17 +956,7 @@ static int process_renames(struct merge_options *o,
+ test_expect_success setup \
+ '
+ cat >A <<\EOF &&
+@@ -341,4 +346,127 @@ test_expect_success 'merge of identical changes in a renamed file' '
+ 	GIT_MERGE_VERBOSITY=3 git merge change+rename | grep "^Skipped B"
+ '
  
- 			if (sha_eq(src_other.sha1, null_sha1)) {
- 				clean_merge = 0;
--				output(o, 1, "CONFLICT (rename/delete): Rename %s->%s in %s "
--				       "and deleted in %s",
--				       ren1_src, ren1_dst, branch1,
--				       branch2);
--				update_file(o, 0, ren1->pair->two->sha1, ren1->pair->two->mode, ren1_dst);
--				if (!o->call_depth)
--					update_stages(ren1_dst, NULL,
--							branch1 == o->branch1 ?
--							ren1->pair->two : NULL,
--							branch1 == o->branch1 ?
--							NULL : ren1->pair->two, 1);
-+				conflict_rename_delete(o, ren1->pair, branch1, branch2);
- 			} else if ((dst_other.mode == ren1->pair->two->mode) &&
- 				   sha_eq(dst_other.sha1, ren1->pair->two->sha1)) {
- 				/* Added file on the other side
++test_expect_success 'setup for rename + d/f conflicts' '
++	git reset --hard &&
++	git checkout --orphan dir-in-way &&
++	git rm -rf . &&
++
++	mkdir sub &&
++	mkdir dir &&
++	printf "1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n" >sub/file &&
++	echo foo >dir/file-in-the-way &&
++	git add -A &&
++	git commit -m "Common commmit" &&
++
++	echo 11 >>sub/file &&
++	echo more >>dir/file-in-the-way &&
++	git add -u &&
++	git commit -m "Commit to merge, with dir in the way" &&
++
++	git checkout -b dir-not-in-way &&
++	git reset --soft HEAD^ &&
++	git rm -rf dir &&
++	git commit -m "Commit to merge, with dir removed" -- dir sub/file &&
++
++	git checkout -b renamed-file-has-no-conflicts dir-in-way~1 &&
++	git rm -rf dir &&
++	git rm sub/file &&
++	printf "1\n2\n3\n4\n5555\n6\n7\n8\n9\n10\n" >dir &&
++	git add dir &&
++	git commit -m "Independent change" &&
++
++	git checkout -b renamed-file-has-conflicts dir-in-way~1 &&
++	git rm -rf dir &&
++	git mv sub/file dir &&
++	echo 12 >>dir &&
++	git add dir &&
++	git commit -m "Conflicting change"
++'
++
++printf "1\n2\n3\n4\n5555\n6\n7\n8\n9\n10\n11\n" >expected
++
++test_expect_success 'Rename+D/F conflict; renamed file merges + dir not in way' '
++	git reset --hard &&
++	git checkout -q renamed-file-has-no-conflicts^0 &&
++	git merge --strategy=recursive dir-not-in-way &&
++	git diff --quiet &&
++	test -f dir &&
++	test_cmp expected dir
++'
++
++test_expect_failure 'Rename+D/F conflict; renamed file merges but dir in way' '
++	git reset --hard &&
++	rm -rf dir~* &&
++	git checkout -q renamed-file-has-no-conflicts^0 &&
++	test_must_fail git merge --strategy=recursive dir-in-way >output &&
++
++	grep "CONFLICT (delete/modify): dir/file-in-the-way" output &&
++	grep "Auto-merging dir" output &&
++	grep "Adding as dir~HEAD instead" output &&
++
++	test 2 = "$(git ls-files -u | wc -l)" &&
++	test 2 = "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
++
++	test_must_fail git diff --quiet &&
++	test_must_fail git diff --cached --quiet &&
++
++	test -f dir/file-in-the-way &&
++	test -f dir~HEAD &&
++	test_cmp expected dir~HEAD
++'
++
++cat >expected <<\EOF &&
++1
++2
++3
++4
++5
++6
++7
++8
++9
++10
++<<<<<<< HEAD
++12
++=======
++11
++>>>>>>> dir-not-in-way
++EOF
++
++test_expect_failure 'Rename+D/F conflict; renamed file cannot merge, dir not in way' '
++	git reset --hard &&
++	rm -rf dir~* &&
++	git checkout -q renamed-file-has-conflicts^0 &&
++	test_must_fail git merge --strategy=recursive dir-not-in-way &&
++
++	test 3 = "$(git ls-files -u | wc -l)" &&
++	test 3 = "$(git ls-files -u dir | wc -l)" &&
++
++	test_must_fail git diff --quiet &&
++	test_must_fail git diff --cached --quiet &&
++
++	test -f dir &&
++	test_cmp expected dir
++'
++
++test_expect_failure 'Rename+D/F conflict; renamed file cannot merge and dir in the way' '
++	modify s/dir-not-in-way/dir-in-way/ expected &&
++
++	git reset --hard &&
++	rm -rf dir~* &&
++	git checkout -q renamed-file-has-conflicts^0 &&
++	test_must_fail git merge --strategy=recursive dir-in-way &&
++
++	test 5 = "$(git ls-files -u | wc -l)" &&
++	test 3 = "$(git ls-files -u dir | grep -v file-in-the-way | wc -l)" &&
++	test 2 = "$(git ls-files -u dir/file-in-the-way | wc -l)" &&
++
++	test_must_fail git diff --quiet &&
++	test_must_fail git diff --cached --quiet &&
++
++	test -f dir/file-in-the-way &&
++	test -f dir~HEAD &&
++	test_cmp expected dir~HEAD
++'
++
+ test_done
 -- 
 1.7.3.271.g16009
