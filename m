@@ -1,88 +1,58 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: [tig] compilation error: undefined reference to `set_tabsize'
-Date: Mon, 20 Sep 2010 19:42:00 +0200
-Message-ID: <20100920174200.GA13017@vidovic>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: svn2git question: error: unknown switch `t'
+Date: Mon, 20 Sep 2010 17:58:16 +0000
+Message-ID: <AANLkTik_ouA-AD+tmGEvvcJeZqVj4Rge=hcoJ5Bqgt-R@mail.gmail.com>
+References: <4E10ACF241081344B9702AA8C6440440C5B14FB331@MX01A.corp.emc.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, fonseca@diku.dk,
-	git@vger.kernel.org
-To: stefan.naewe@googlemail.com
-X-From: git-owner@vger.kernel.org Mon Sep 20 19:42:16 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: nolan.ring@emc.com
+X-From: git-owner@vger.kernel.org Mon Sep 20 19:58:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxkNZ-0006j5-5t
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:42:13 +0200
+	id 1OxkdE-0005zm-OB
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:58:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755122Ab0ITRmG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 13:42:06 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:49009 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750960Ab0ITRmE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 13:42:04 -0400
-Received: by wyf22 with SMTP id 22so4546178wyf.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:42:03 -0700 (PDT)
+	id S1753266Ab0ITR6S convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 13:58:18 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:64153 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868Ab0ITR6R convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 13:58:17 -0400
+Received: by pxi10 with SMTP id 10so1227312pxi.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:58:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:mime-version:content-type:content-disposition
-         :user-agent;
-        bh=ddGfT0ljHPNwER2ikttSw8zAKa0yUXv3qCgZ5Rn30EY=;
-        b=syhmz2rm//OIrI51fFwfNKcZ91S7IuOed6xySKIjyvIOGDK72QsiZ8dRmchzkLboSB
-         kcOKIxTMxCu8u9wqmStN9+taq/f7LNok+nrFSe7xZv+gniww4jqJ2uXEl1oCv9RCnkCJ
-         li6p3nanGi35+r1oM9fqKMMOG8ug37W0CoSwQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5O5MhD6u1A5yMvUeonRSF8rEBV+Yq0UGF3uvR1IJtWo=;
+        b=JUlo6EqsxzeTXGPH2lewXk0X2Ll3C1X2upvcValDVu8rFS4pQNRQVNG/BUY3v1lSrz
+         8mQoBjgSDLY0SPngveXc8mEc8Q59PcDDv5HnhW0AGuJNsyJRHNZHTM9aaeJoooh6gBXM
+         O61MVPRple7C+T9bssUVyHuXx/sd3bfSCiV5o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=i/PLbH83cONKdy906s2Li6CmG9dkEBalRElGr89Aa0LRVQccdcEm76eXWKrUsjo3CP
-         riWmrji0APNINzZMds7i/n42Nxuh3ipcbO5o+LJpyytIaBKBB9Ezd9D33SPCKpFcQhXO
-         GGK+vvDpR1uI99IkC5TotEymkO0O0TcvtyksM=
-Received: by 10.216.93.10 with SMTP id k10mr4620870wef.38.1285004522892;
-        Mon, 20 Sep 2010 10:42:02 -0700 (PDT)
-Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id b10sm5333170wer.41.2010.09.20.10.42.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 10:42:02 -0700 (PDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ndHuzNadjUqgmpDvF5uPWJ/dJ5KvB5Kc5N6k9RpzVlqAGrC8+IujtJjB0csK/26jSU
+         nqWNmJmB4VCVQc1G7yZQ5Fo1b82eq+zIeCqADMFn00dyMVd07n34SIqeFC0sSuhrdODL
+         Vm+fcxKw7gxKzkR4Dn+eR0aUXFBqzHIaFHV68=
+Received: by 10.142.170.9 with SMTP id s9mr929122wfe.120.1285005496643; Mon,
+ 20 Sep 2010 10:58:16 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 20 Sep 2010 10:58:16 -0700 (PDT)
+In-Reply-To: <4E10ACF241081344B9702AA8C6440440C5B14FB331@MX01A.corp.emc.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156643>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156644>
 
-Hi,
+On Mon, Sep 20, 2010 at 17:39,  <nolan.ring@emc.com> wrote:
+> Where did the -t come from? =C2=A0What is this telling me?
 
-tig don't compile anymore here:
-
-  % make
-  gcc   tig.o  -lncursesw  -o tig
-  tig.o: In function `init_display': tig.c:7113: undefined reference to `set_tabsize'
-  collect2: ld returned 1 exit status
-  make: *** [tig] Error 1
-  %
-
-
-and bisected on
-
-commit f1fe753be71ef3ce5abcbb16c2a359f97e5c7e7d
-Author: Stefan Naewe <>
-Date:   Sun Sep 12 11:03:52 2010 +0200
-
-    Use function set_tabsize()
-    
-    this fixes the following compile error on cygwin:
-    tig.c: In function `init_display':
-    tig.c:7112: error: invalid lvalue in assignment
-    
-    Signed-off-by: Stefan Naewe <>
-    Signed-off-by: Jonas Fonseca <>
-
-
-Or did I missed something?
-
--- 
-Nicolas Sebrecht
+git branch supports the -t or --track option. You obviously have too
+old a git with too new a svn2git.
