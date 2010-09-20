@@ -1,7 +1,7 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCH 11/37] t6036: Test index and worktree state, not just that merge fails
-Date: Mon, 20 Sep 2010 02:28:44 -0600
-Message-ID: <1284971350-30590-12-git-send-email-newren@gmail.com>
+Subject: [PATCH 15/37] merge-recursive: Rename conflict_rename_rename*() for clarity
+Date: Mon, 20 Sep 2010 02:28:48 -0600
+Message-ID: <1284971350-30590-16-git-send-email-newren@gmail.com>
 References: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
@@ -11,101 +11,116 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxbjS-0005rH-8S
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:28:14 +0200
+	id 1OxbjU-0005rH-B5
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 10:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755838Ab0ITI14 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 04:27:56 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:39104 "EHLO
+	id S1755871Ab0ITI2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 04:28:08 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:63516 "EHLO
 	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755828Ab0ITI1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 04:27:54 -0400
-Received: by mail-pz0-f46.google.com with SMTP id 34so1070490pzk.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:27:54 -0700 (PDT)
+	with ESMTP id S1755828Ab0ITI2C (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 04:28:02 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 34so1070478pzk.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 01:28:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=p9isWIF+PNKeA71UJ4/vFUowMkiL7JCWo6zRT4bJGKY=;
-        b=Xcb04VRuwx+ois+yzJNQK3e2iIIG0Jhjg+I5/Y1a02Rdtfh/IOIhF0cq6MB1FLL+9e
-         7BWkGoN4ljOpYsKvIy9AcOy/X9O4qX6StUveb5Aht2kkQM3MXzEes03j7TLoNxSybe79
-         qB/1hnG4H+Y9Q30Su4L9FK4EuK5PIp3A+VhOQ=
+        bh=+tJN12C/PGAYTlE9FMQ/t4l0HJC2aHLwHw8ApJX3Kso=;
+        b=bFXGZr4Nru+fwsDcvtMcY948F+DIJetZ7dv9xycLn3ykru75/z13YyduIAcCsmBYr7
+         w31CE/OtCXacdL/DNsvIfCRCmCsmGSC42xbY976bDZPViNZjiEpLU50PKVxme3HzuWGQ
+         5ZGlbINGRgS1/vjLY4rU3MyHeF6rsr6uxzIjM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=lC71NGUKpZlyuuBOWLWtLFfBYRmhLEwHmuLzApyEtn2d/KwzCUvjRrJCf1Ed4GeK28
-         Fn+166PXUWp9GcyDGkHYEBZrOMgjEad3g+is1ECZIrKFA9OzjIKCEymlTDDn+puA7Gsx
-         lPMbSO1NtQ9KS0kbDUuj6AuV2mZ4mP6yl3nOo=
-Received: by 10.142.162.13 with SMTP id k13mr7336998wfe.318.1284971273977;
-        Mon, 20 Sep 2010 01:27:53 -0700 (PDT)
+        b=Iu3ZCLBJsOMmrnJFZbzGYkdZlP4r8mtYNakoegWBgbVivIw8ZaUvfq5K8YZyt4GimO
+         be+/IR4ko0cz3v9NyixY0/BZSARpZ1w19grcq1Ivt+dxA92uUQ6ui3nbZJUMP8I3Xy7u
+         qFxxydeCZkSOj8HvZ7ucBn2ZdDztdSxYGG/xA=
+Received: by 10.142.233.16 with SMTP id f16mr7333849wfh.339.1284971282297;
+        Mon, 20 Sep 2010 01:28:02 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.27.52
+        by mx.google.com with ESMTPS id 9sm9288954wfd.0.2010.09.20.01.28.00
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Sep 2010 01:27:53 -0700 (PDT)
+        Mon, 20 Sep 2010 01:28:01 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.271.g16009
 In-Reply-To: <1284971350-30590-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156570>
 
-c94736a (merge-recursive: don't segfault while handling rename clashes
-2009-07-30) added this testcase with an interesting corner case test,
-which previously had cased git to segfault.  This test ensures that the
-segfault does not return and that the merge correctly fails; just add
-some checks that verify the state of the index and worktree after the merge
-are correct.
+The names conflict_rename_rename and conflict_rename_rename_2 did not make
+it clear what they were handling.  Since the first of these handles one
+file being renamed in both branches to different files, while the latter
+handles two different files being renamed to the same thing, add a little
+'1to2' and '2to1' suffix on these and an explanatory comment to make their
+intent clearer.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t6036-recursive-corner-cases.sh |   24 +++++++++++++++++++++---
- 1 files changed, 21 insertions(+), 3 deletions(-)
+ merge-recursive.c |   26 ++++++++++++++------------
+ 1 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/t/t6036-recursive-corner-cases.sh b/t/t6036-recursive-corner-cases.sh
-index b874141..1755073 100755
---- a/t/t6036-recursive-corner-cases.sh
-+++ b/t/t6036-recursive-corner-cases.sh
-@@ -14,7 +14,7 @@ test_description='recursive merge corner cases'
- #  R1  R2
- #
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 8f45cec..cc1ab92 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -731,12 +731,13 @@ static struct merge_file_info merge_file(struct merge_options *o,
+ 	return result;
+ }
  
--test_expect_success setup '
-+test_expect_success 'setup basic criss-cross + rename with no modifications' '
- 	ten="0 1 2 3 4 5 6 7 8 9"
- 	for i in $ten
- 	do
-@@ -45,11 +45,29 @@ test_expect_success setup '
- 	git tag R2
- '
+-static void conflict_rename_rename(struct merge_options *o,
+-				   struct rename *ren1,
+-				   const char *branch1,
+-				   struct rename *ren2,
+-				   const char *branch2)
++static void conflict_rename_rename_1to2(struct merge_options *o,
++					struct rename *ren1,
++					const char *branch1,
++					struct rename *ren2,
++					const char *branch2)
+ {
++	/* One file was renamed in both branches, but to different names. */
+ 	char *del[2];
+ 	int delp = 0;
+ 	const char *ren1_dst = ren1->pair->two->path;
+@@ -783,12 +784,13 @@ static void conflict_rename_dir(struct merge_options *o,
+ 	free(new_path);
+ }
  
--test_expect_success merge '
-+test_expect_success 'merge simple rename+criss-cross with no modifications' '
- 	git reset --hard &&
- 	git checkout L2^0 &&
+-static void conflict_rename_rename_2(struct merge_options *o,
+-				     struct rename *ren1,
+-				     const char *branch1,
+-				     struct rename *ren2,
+-				     const char *branch2)
++static void conflict_rename_rename_2to1(struct merge_options *o,
++					struct rename *ren1,
++					const char *branch1,
++					struct rename *ren2,
++					const char *branch2)
+ {
++	/* Two files were renamed to the same thing. */
+ 	char *new_path1 = unique_path(o, ren1->pair->two->path, branch1);
+ 	char *new_path2 = unique_path(o, ren2->pair->two->path, branch2);
+ 	output(o, 1, "Renaming %s to %s and %s to %s instead",
+@@ -890,7 +892,7 @@ static int process_renames(struct merge_options *o,
+ 					update_file(o, 0, ren1->pair->one->sha1,
+ 						    ren1->pair->one->mode, src);
+ 				}
+-				conflict_rename_rename(o, ren1, branch1, ren2, branch2);
++				conflict_rename_rename_1to2(o, ren1, branch1, ren2, branch2);
+ 			} else {
+ 				struct merge_file_info mfi;
+ 				remove_file(o, 1, ren1_src, 1);
+@@ -1005,7 +1007,7 @@ static int process_renames(struct merge_options *o,
+ 				       "Rename %s->%s in %s",
+ 				       ren1_src, ren1_dst, branch1,
+ 				       ren2->pair->one->path, ren2->pair->two->path, branch2);
+-				conflict_rename_rename_2(o, ren1, branch1, ren2, branch2);
++				conflict_rename_rename_2to1(o, ren1, branch1, ren2, branch2);
+ 			} else
+ 				try_merge = 1;
  
--	test_must_fail git merge -s recursive R2^0
-+	test_must_fail git merge -s recursive R2^0 &&
-+
-+	test 5 = $(git ls-files -s | wc -l) &&
-+	test 3 = $(git ls-files -u | wc -l) &&
-+	test 0 = $(git ls-files -o | wc -l) &&
-+
-+	test $(git rev-parse :0:one) = $(git rev-parse L2:one) &&
-+	test $(git rev-parse :0:two) = $(git rev-parse R2:two) &&
-+	test $(git rev-parse :2:three) = $(git rev-parse L2:three) &&
-+	test $(git rev-parse :3:three) = $(git rev-parse R2:three) &&
-+
-+	cp two merged &&
-+	>empty &&
-+	test_must_fail git merge-file \
-+		-L "Temporary merge branch 2" \
-+		-L "" \
-+		-L "Temporary merge branch 1" \
-+		merged empty one &&
-+	test $(git rev-parse :1:three) = $(git hash-object merged)
- '
- 
- test_done
 -- 
 1.7.3.271.g16009
