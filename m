@@ -1,67 +1,100 @@
-From: bill lam <cbill.lam@gmail.com>
-Subject: Re: [ANNOUNCE] tig-0.16.1
-Date: Mon, 20 Sep 2010 10:30:36 +0800
-Message-ID: <20100920023036.GB2548@debian.b2j>
-References: <20100919183556.GA22302@diku.dk>
+From: Nate Parsons <parsons.nate@gmail.com>
+Subject: Re: git .lock file error
+Date: Sun, 19 Sep 2010 22:42:11 -0400
+Message-ID: <AANLkTin+MRkYv7vL7eY+mdWG1vTg-E9pVpU4_QujoxdZ@mail.gmail.com>
+References: <AANLkTikjwW8jJ3qGCAM=8F_GBxsz9_KoSW0KDGPKhXGQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonas Fonseca <fonseca@diku.dk>
-X-From: git-owner@vger.kernel.org Mon Sep 20 04:31:13 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 20 04:42:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxW9x-0003mK-8n
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 04:31:13 +0200
+	id 1OxWKz-0006fa-TD
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 04:42:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755373Ab0ITCbF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Sep 2010 22:31:05 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:50236 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755023Ab0ITCav (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Sep 2010 22:30:51 -0400
-Received: by pxi10 with SMTP id 10so1030910pxi.19
-        for <git@vger.kernel.org>; Sun, 19 Sep 2010 19:30:51 -0700 (PDT)
+	id S1755443Ab0ITCmc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Sep 2010 22:42:32 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:36763 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754403Ab0ITCmb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 19 Sep 2010 22:42:31 -0400
+Received: by iwn5 with SMTP id 5so3870042iwn.19
+        for <git@vger.kernel.org>; Sun, 19 Sep 2010 19:42:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=QvHmyf5iNM9E6YxN5jCFpd5x/AGEMRoYW2t4euMVWj4=;
-        b=H+E1vZUCFAdKiIH/QpsGdP2I3fwVcQsebq0FjVW1EZIQ08NL9G3qu+gDDsPkE6tfze
-         x4VIW4FFyX6uyECKweOGxLBIOvse8XKPwFe5p4k/bPreUh/cw2EVcMof2Cz2N7vYTmlv
-         ZbLG0yMel1fdOk2KrtxowKHHUTK5JvJovxQXs=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=c+QocQpAyfeGVtIaCfH0l3sBNYQYxnIMmnnPQbFWnPI=;
+        b=T9mZpUU1jexNzeSe73Kjuye1Him3Dm4Y9orkWcXwOWht9w6c5Obt8qKOqD4kr8xytj
+         ZdmPbQ2yjCHNaIn+ZmBpvffLXz3SKN4snIkqQZfp3/MNyGX+u1DDVNSX6k/uDDYNlpGM
+         5jJJSWfZtGVMfcjXL+1APgIRfnk6Z59GN+nxE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Eu8xf6QOXgbJ3D0BJ0Ch2Zufh7PHCfGOdRJ9zQ61UOLOq0UH28z0SBGsZpTXtK/0K8
-         mROxH0KD7dKVW/4TWKSIOe+Yjvql38lL15ncQy4nJpsoLYH4PIx/ACSyYoyaGIYVGEeF
-         lfRZVrQ+yJat9VxNGQUUaXO1f6W3S7lIKZ94M=
-Received: by 10.142.142.8 with SMTP id p8mr7061124wfd.316.1284949851222;
-        Sun, 19 Sep 2010 19:30:51 -0700 (PDT)
-Received: from localhost (n11649177239.netvigator.com [116.49.177.239])
-        by mx.google.com with ESMTPS id k23sm12536037waf.5.2010.09.19.19.30.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Sep 2010 19:30:50 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100919183556.GA22302@diku.dk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        b=iLXhuzj37emVRtaoSzDYZbvxJasdr8nQixhaubvkWXK48uGHP/GINWEsPIoKoZPKYT
+         ZxS2wBr0qoo0+Kxf/VuKOZjT7JYuRYgxwbFsHR6Tc42NYE64CxZz7MfNxSFIeWtILLKd
+         aIp7MAsH20wPV8+YHnYOkS6d5Sj9iia25Hsi8=
+Received: by 10.231.183.67 with SMTP id cf3mr9353700ibb.187.1284950551299;
+ Sun, 19 Sep 2010 19:42:31 -0700 (PDT)
+Received: by 10.231.113.141 with HTTP; Sun, 19 Sep 2010 19:42:11 -0700 (PDT)
+In-Reply-To: <AANLkTikjwW8jJ3qGCAM=8F_GBxsz9_KoSW0KDGPKhXGQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156548>
 
-Thanks for update.
+Hello again,
 
-BTW, do you plan to port tig to windows?  Although I seldom use window but
-I know ncurses is available as pdcurses.
+I realized I have=A0git-cheetah running as well, so I killed
+explorer.exe (the only process using git_shell_ext.exe), and tried
+again. That's when I noticed that running 'git=A0svn=A0fetch' spawned t=
+wo
+git=A0processes and a perl process (which later spawned another perl).
+Is this something that should be happening?
 
--- 
-regards,
-====================================================
-GPG key 1024D/4434BAB3 2008-08-24
-gpg --keyserver subkeys.pgp.net --recv-keys 4434BAB3
+Thanks,
+-Nate
+
+On Mon, Sep 13, 2010 at 11:19 AM, Nate Parsons <parsons.nate@gmail.com>=
+ wrote:
+>
+> Hi everyone,
+>
+> I'm trying to switch to git, so I apologize in advance for my
+> ignorance. For this, I'm using cygwin git, version 1.7.1 to talk to a
+> svn server running 1.4.2.
+>
+> When I 'git svn clone' or 'git svn clone; git svn fetch', I sometimes
+> run into the following error.
+> > Couldn't open .git/svn/refs/remotes/0.0.0/.rev_map.b8cad480-e46b-48=
+b4-8317-a683ee46c2bd.lock: Device or resource busy
+> > =A0at /usr/lib/git-core/git-svn line 5210
+>
+> And when I 'git svn rebase'
+> >=A0Couldn't open .git/svn/refs/remotes/git-svn/.rev_map.cc05479a-e8e=
+a-436f-8d71-e07493b7796c.lock: Device or resource busy
+> > at /usr/lib/git-core/git-svn line 1528
+>
+> Sometimes the line number is different (578, I think?), but when I
+> retry the fetch command, it rebuilds the file corresponding to the
+> lockfile, and then continues a little farther before dying again.
+>
+> When I watch the directory in question, I see the lock file appear,
+> and then disappearing a short time after the script gives up.
+>
+> I don't have a series of steps to reproduce the problem, sometimes it
+> goes for an hour, and sometimes for just a few minutes/seconds.
+>
+> I do have TortoiseGit running my machine, but this issue happens even
+> when TGitCache.exe is not running. If some other instance of git is
+> accessing the repository, I don't know which or how.
+>
+> Thanks,
+> -Nate
