@@ -1,52 +1,65 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 09/37] t6020: Modernize style a bit
-Date: Mon, 20 Sep 2010 11:24:09 +0200
-Message-ID: <4C972839.9050303@viscovery.net>
-References: <1284971350-30590-1-git-send-email-newren@gmail.com> <1284971350-30590-10-git-send-email-newren@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 20 11:24:19 2010
+From: Sven Eckelmann <sven.eckelmann@gmx.de>
+Subject: [PATCH] contrib/ciabot: git-describe commit instead of HEAD
+Date: Mon, 20 Sep 2010 11:31:22 +0200
+Message-ID: <1284975082-25994-1-git-send-email-sven.eckelmann@gmx.de>
+Cc: esr@thyrsus.com, gitster@pobox.com,
+	Sven Eckelmann <sven.eckelmann@gmx.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 20 11:30:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxcbg-00045f-SN
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:24:17 +0200
+	id 1Oxchp-0006YO-FG
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 11:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755931Ab0ITJYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 05:24:11 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:32747 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753480Ab0ITJYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 05:24:10 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1OxcbZ-00007A-J8; Mon, 20 Sep 2010 11:24:09 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 55AF61660F;
-	Mon, 20 Sep 2010 11:24:09 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100914 Thunderbird/3.0.8
-In-Reply-To: <1284971350-30590-10-git-send-email-newren@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1756145Ab0ITJa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 05:30:27 -0400
+Received: from mailout-de.gmx.net ([213.165.64.23]:44163 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755959Ab0ITJa0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 05:30:26 -0400
+Received: (qmail invoked by alias); 20 Sep 2010 09:30:24 -0000
+Received: from vpnclient-194-208.hrz.tu-chemnitz.de (EHLO sven-desktop.lazhur.ath.cx) [134.109.194.208]
+  by mail.gmx.net (mp061) with SMTP; 20 Sep 2010 11:30:24 +0200
+X-Authenticated: #15668376
+X-Provags-ID: V01U2FsdGVkX19xQwkTT+FxK8Qqv/2wV5b38iUXcwplsWmaYvnajA
+	/rqEabqZUL8346
+X-Mailer: git-send-email 1.7.2.3
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156605>
 
-Am 9/20/2010 10:28, schrieb Elijah Newren:
-> -test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" B master'
-> +test_expect_success 'Merge with d/f conflicts' '
-> +	test_must_fail git merge master
-> +'
+For each commit a shorter version of the name will be generated. This is
+either the truncated hash or the output of git-describe. The
+call to git-describe was only made with an empty shell variable instead
+of an actual commit hash. Thus it only described the current HEAD and
+not each commit we want to submit to cia.vc.
 
-The old version requested a particular kind of failure. Are you saying
-that with modern 'git merge' all non-zero exit codes mean the same kind of
-failure?
+Signed-off-by: Sven Eckelmann <sven.eckelmann@gmx.de>
+---
+I send this patch already two weeks ago and got no reaction. This is a
+resent in case it was forgotton.
 
--- Hannes
+ contrib/ciabot/ciabot.py |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/ciabot/ciabot.py b/contrib/ciabot/ciabot.py
+index d0627e0..9775dff 100755
+--- a/contrib/ciabot/ciabot.py
++++ b/contrib/ciabot/ciabot.py
+@@ -122,7 +122,7 @@ def report(refname, merged):
+     branch = os.path.basename(refname)
+ 
+     # Compute a shortnane for the revision
+-    rev = do("git describe ${merged} 2>/dev/null") or merged[:12]
++    rev = do("git describe '"+ merged +"' 2>/dev/null") or merged[:12]
+ 
+     # Extract the neta-information for the commit
+     rawcommit = do("git cat-file commit " + merged)
+-- 
+1.7.2.3
