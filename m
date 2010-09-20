@@ -1,58 +1,90 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: svn2git question: error: unknown switch `t'
-Date: Mon, 20 Sep 2010 17:58:16 +0000
-Message-ID: <AANLkTik_ouA-AD+tmGEvvcJeZqVj4Rge=hcoJ5Bqgt-R@mail.gmail.com>
-References: <4E10ACF241081344B9702AA8C6440440C5B14FB331@MX01A.corp.emc.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG, PATCH 0/3] Fix {blame,cat-file} --textconv for cases
+ with symlinks
+Date: Mon, 20 Sep 2010 14:00:46 -0400
+Message-ID: <20100920180046.GA1790@sigill.intra.peff.net>
+References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
+ <vpqhbhmx6tg.fsf@bauges.imag.fr>
+ <7vpqwa254i.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: nolan.ring@emc.com
-X-From: git-owner@vger.kernel.org Mon Sep 20 19:58:25 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 20 20:00:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxkdE-0005zm-OB
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 19:58:25 +0200
+	id 1Oxkff-000793-1K
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Sep 2010 20:00:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266Ab0ITR6S convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 13:58:18 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:64153 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868Ab0ITR6R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 13:58:17 -0400
-Received: by pxi10 with SMTP id 10so1227312pxi.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 10:58:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5O5MhD6u1A5yMvUeonRSF8rEBV+Yq0UGF3uvR1IJtWo=;
-        b=JUlo6EqsxzeTXGPH2lewXk0X2Ll3C1X2upvcValDVu8rFS4pQNRQVNG/BUY3v1lSrz
-         8mQoBjgSDLY0SPngveXc8mEc8Q59PcDDv5HnhW0AGuJNsyJRHNZHTM9aaeJoooh6gBXM
-         O61MVPRple7C+T9bssUVyHuXx/sd3bfSCiV5o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ndHuzNadjUqgmpDvF5uPWJ/dJ5KvB5Kc5N6k9RpzVlqAGrC8+IujtJjB0csK/26jSU
-         nqWNmJmB4VCVQc1G7yZQ5Fo1b82eq+zIeCqADMFn00dyMVd07n34SIqeFC0sSuhrdODL
-         Vm+fcxKw7gxKzkR4Dn+eR0aUXFBqzHIaFHV68=
-Received: by 10.142.170.9 with SMTP id s9mr929122wfe.120.1285005496643; Mon,
- 20 Sep 2010 10:58:16 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Mon, 20 Sep 2010 10:58:16 -0700 (PDT)
-In-Reply-To: <4E10ACF241081344B9702AA8C6440440C5B14FB331@MX01A.corp.emc.com>
+	id S1755116Ab0ITSAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 14:00:48 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:56549 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753728Ab0ITSAr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 14:00:47 -0400
+Received: (qmail 26677 invoked by uid 111); 20 Sep 2010 18:00:46 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 20 Sep 2010 18:00:46 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 20 Sep 2010 14:00:46 -0400
+Content-Disposition: inline
+In-Reply-To: <7vpqwa254i.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156645>
 
-On Mon, Sep 20, 2010 at 17:39,  <nolan.ring@emc.com> wrote:
-> Where did the -t come from? =C2=A0What is this telling me?
+On Sat, Sep 18, 2010 at 01:01:17PM -0700, Junio C Hamano wrote:
 
-git branch supports the -t or --track option. You obviously have too
-old a git with too new a svn2git.
+> diff knows symlinks and regular files are different, and produces "delete
+> old then add new" if you changed a regular file to a symlink.
+> 
+> That said, if you changed a symlink from pointing at A to pointing at B,
+> it does run the textual diff between the string we get from readlink(3).
+> 
+> I happen to think that textconv, if specified, for such a path should be
+> honored, so that people can keep doing whatever munging they have been
+> doing in their existing textconv filters.
+
+I think you came to the conclusion later in the thread that this is a
+bad idea, if only because it is not how "git diff" works, but I wanted
+to make one additional point.
+
+I think that git, being symlink aware, needs to behave similarly to
+"lstat". That is, we should never dereference symlinks transparently
+when diffing or analyzing content, because otherwise there is no way to
+actually look at the symlink data itself. It is the user's
+responsibility to dereference symlinks in their diffs (e.g., I can get
+either the symlink data _or_ the actual file data by doing "git diff
+symlink-to-foo.bin" or "git diff foo.bin". If git dereferenced for me, I
+would get file data for _both_). Not to mention that we can't always
+dereference anyway because of broken links or links outside the repo, as
+Matthieu pointed out.
+
+So doing anything but a straight text diff for the pathnames in symlink
+blobs is, IMHO, a bug.
+
+The one thing this does not enable is using a special diff driver on the
+_pathnames_ of symlinks. Since these are by-definition text, I don't
+know why anyone would want to do that. But it is an orthogonal problem,
+anyway.  We would need some way in the .gitattributes or the .gitconfig
+to say "this is the diff driver to use not based on pathname matching,
+but based on the file's mode". E.g., a special "SYMLINK" diff driver
+like:
+
+  [diff "SYMLINK"]
+    textconv = pointless-munge
+
+But again, I have no idea why anyone would want such a feature, so it is
+not worth thinking too hard about it.
+
+-Peff
