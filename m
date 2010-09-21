@@ -1,65 +1,57 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] t1503: Fix arithmetic expansion syntax error when using dash
-Date: Tue, 21 Sep 2010 18:45:09 +0100
-Message-ID: <4C98EF25.4070700@ramsay1.demon.co.uk>
+From: Wilbert van Dolleweerd <wilbert@arentheym.com>
+Subject: [ANNOUNCE] TFS2GIT. Script that will import Microsoft Team Foundation
+ Server repositories in a Git repository.
+Date: Tue, 21 Sep 2010 19:55:27 +0200
+Message-ID: <AANLkTinmhhrerxPJGU8b2iuGSNV-=vz-Y6fCvHJODXAs@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>, jon.seymour@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 19:46:25 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 21 19:55:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy6v8-0000cw-8j
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 19:46:22 +0200
+	id 1Oy743-0005NE-GN
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 19:55:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754985Ab0IURqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 13:46:16 -0400
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:38719 "EHLO
-	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753013Ab0IURqP (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 13:46:15 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1Oy6ux-00056h-bJ; Tue, 21 Sep 2010 17:46:14 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1758006Ab0IURz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 13:55:29 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:38377 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757066Ab0IURz2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 13:55:28 -0400
+Received: by qwh6 with SMTP id 6so4436018qwh.19
+        for <git@vger.kernel.org>; Tue, 21 Sep 2010 10:55:27 -0700 (PDT)
+Received: by 10.229.1.143 with SMTP id 15mr7144092qcf.287.1285091727222; Tue,
+ 21 Sep 2010 10:55:27 -0700 (PDT)
+Received: by 10.229.44.196 with HTTP; Tue, 21 Sep 2010 10:55:27 -0700 (PDT)
+X-Originating-IP: [82.171.76.203]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156735>
 
+Hello,
 
-On systems which have dash as /bin/sh, such as Ubuntu, the final
-test (master@{n} for various n) fails with a syntax error while
-processing an arithmetic expansion. The syntax error is caused by
-using a bare name ('N') as a variable reference in the expression.
+I had a personal itch to import Microsoft Team Foundation Server
+repositories into a Git repository. I wrote a small Powershell script
+and released this on Github at
+http://github.com/WilbertOnGithub/TFS2GIT
 
-In order to avoid the syntax error, we spell the variable reference
-as '$N' rather than simply 'N'.
+I also wrote a small article about its usage at
+http://walkingthestack.wordpress.com/2010/09/21/importing-a-tfs-repository-into-a-git-repository-using-powershell/
 
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
- t/t1503-rev-parse-verify.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+This is the very first version and my first Powershell script, i.e. it
+works on my machine. You will need to modify it if you want to import
+your own repositories. This is explained in the above article.
 
-diff --git a/t/t1503-rev-parse-verify.sh b/t/t1503-rev-parse-verify.sh
-index 100f857..813cc1b 100755
---- a/t/t1503-rev-parse-verify.sh
-+++ b/t/t1503-rev-parse-verify.sh
-@@ -106,8 +106,8 @@ test_expect_success 'use --default' '
- 
- test_expect_success 'master@{n} for various n' '
- 	N=$(git reflog | wc -l) &&
--	Nm1=$((N-1)) &&
--	Np1=$((N+1)) &&
-+	Nm1=$(($N-1)) &&
-+	Np1=$(($N+1)) &&
- 	git rev-parse --verify master@{0} &&
- 	git rev-parse --verify master@{1} &&
- 	git rev-parse --verify master@{$Nm1} &&
+I'm hoping this can convince other Team Foundation users to start using Git ;-)
+
 -- 
-1.7.3
+Kind regards,
+
+Wilbert van Dolleweerd
+Blog: http://walkingthestack.wordpress.com/
+Twitter: http://www.twitter.com/wvandolleweerd
