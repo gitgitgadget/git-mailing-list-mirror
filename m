@@ -1,71 +1,99 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: can git-describe learn first-parent behavior?
-Date: Tue, 21 Sep 2010 11:34:38 +0200
-Message-ID: <4C987C2E.3060001@drmicha.warpmail.net>
-References: <AANLkTi=6o15y-6Q+tn40=hrPf9pmo+Y1Jd97hGxr5mH2@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Joshua Shrader <jshrader83@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 11:34:40 2010
+Subject: [RFC PATCH] git-describe: introduce --first-parent
+Date: Tue, 21 Sep 2010 11:35:28 +0200
+Message-ID: <7d63bc1d2c7408090501bade7e7f8a9eb43cffb3.1285061563.git.git@drmicha.warpmail.net>
+References: <4C987C2E.3060001@drmicha.warpmail.net>
+Cc: Joshua Shrader <jshrader83@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 21 11:35:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxzFH-0007Ug-VB
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 11:34:40 +0200
+	id 1OxzGD-0007tH-PJ
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 11:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756911Ab0IUJec (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 05:34:32 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:50626 "EHLO
+	id S1757092Ab0IUJfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 05:35:22 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:47764 "EHLO
 	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756349Ab0IUJeb (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 05:34:31 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0A86E4E8;
-	Tue, 21 Sep 2010 05:34:31 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 21 Sep 2010 05:34:31 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=IBmEGGtUyJ9qlstIEqa0lNUx1fk=; b=QobdXSkZHmnIoP2BULmoJd9MFBPj7HnF6uJoV1bFvZCm0sT4pT0VxDqfQY6kJNbtfCQPFOUZYk19FUip1wOakdpsFfaVdTaex770QarewmAXlq4QNfOezRxwYse2D5aD4v9NcPOA9Z/Qtmu7RJYXlLiNeB1xWbkjrW+H6F1xIj0=
-X-Sasl-enc: Ttcnrl8TBW3zKbxWZQbQyp3kTcLbv5hCkOmj7k7rqEVl 1285061670
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 87D38409FB1;
-	Tue, 21 Sep 2010 05:34:30 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.3
-In-Reply-To: <AANLkTi=6o15y-6Q+tn40=hrPf9pmo+Y1Jd97hGxr5mH2@mail.gmail.com>
+	by vger.kernel.org with ESMTP id S1757078Ab0IUJfV (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 05:35:21 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 08C7E4FC;
+	Tue, 21 Sep 2010 05:35:21 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 21 Sep 2010 05:35:21 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=SQrDWNSdbwVQOlMAHp+UKnM1F08=; b=q5DO4/X1MMTnfTQtqo68GtVxhK588xPnaeZ5LqSY7JL4qaDY/a2XtjTw1Ux9hniBhlLmhvFa++d1f6aPcbQobesieHCKBRLRdqVknzdzdcfHhf0R8dBi38WMwEemHvGliua4zdvCgl/K0Y5gI8Ie0TNOUObVn71edp//TSgZuUc=
+X-Sasl-enc: kZoieJgyV6xzlusAr0ozASST0LMzHXDn7sgyTqJw9WSh 1285061720
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 946955E46BB;
+	Tue, 21 Sep 2010 05:35:20 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.234.g7bba3
+In-Reply-To: <4C987C2E.3060001@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156703>
 
-Joshua Shrader venit, vidit, dixit 21.09.2010 07:58:
-> This seems like it would be a rather useful feature.  Suppose a
-> maintenance branch, maint/v1.0, is forked from master, and the branch
-> point is tagged something like "v1.0-stable".  The next commit on
-> master is tagged "v2.0-base", indicating that it is the first commit
-> of the new release.  Suppose two releases are made - a release for
-> public consumption of version 1.0, and a release for internal testing
-> from master (currently 2.0), and we want to embed the output of
-> git-describe into the builds.  If bugs were fixed on 1.0, and then 1.0
-> was merged into master, it seems perfectly possible to run
-> git-describe on master, but get the v1.0 tag in the output.
+so that git-describe searches first-parent history only when looking for
+a named commit. This is useful for describing commits by tags on their
+"main" (first-parent) branch.
 
-The earlier tag (in terms of depth) wins, yes.
+git describe --contains --first-parent is forbidden because git name-rev
+(which is called by that) favors first-parent transversal already,
+although not strictly so.
+
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Notes:
+    Is this considered useful? RFC because of lack of doc and test.
+    I consider it easier than (and different from) --match in some cases.
+
+ builtin/describe.c |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 43caff2..6b2b599 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -22,6 +22,7 @@ static int tags;	/* Allow lightweight tags */
+ static int longformat;
+ static int abbrev = DEFAULT_ABBREV;
+ static int max_candidates = 10;
++static int first_parent;
+ static int found_names;
+ static const char *pattern;
+ static int always;
+@@ -302,7 +303,7 @@ static void describe(const char *arg, int last_one)
+ 			if (!(p->object.flags & SEEN))
+ 				insert_by_date(p, &list);
+ 			p->object.flags |= c->object.flags;
+-			parents = parents->next;
++			parents = first_parent ? NULL : parents->next;
+ 		}
+ 	}
  
-> Is this just a poor workflow?  Am I using git-describe incorrectly?
-> Or, does a first-parent option to git-describe seem useful?
-> 
-> Thanks for the input.
-
-If you know you want to describe HEAD based on v2 tags you can use
-
-git describe --match v2\* --tags HEAD
-
-"git describe" does not use the revision walk machinery so that it does
-not have the --first-parent option. I'm not sure how useful that is, but
-it's easy to implement.
-
-Michael
+@@ -380,6 +381,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 			   "only consider tags matching <pattern>"),
+ 		OPT_BOOLEAN(0, "always",     &always,
+ 			   "show abbreviated commit object as fallback"),
++		OPT_BOOLEAN(0, "first-parent",     &first_parent,
++			   "follow first parents only"),
+ 		{OPTION_STRING, 0, "dirty",  &dirty, "mark",
+ 			   "append <mark> on dirty working tree (default: \"-dirty\")",
+ 		 PARSE_OPT_OPTARG, NULL, (intptr_t) "-dirty"},
+@@ -397,6 +400,9 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
+ 	if (longformat && abbrev == 0)
+ 		die("--long is incompatible with --abbrev=0");
+ 
++	if (contains && first-parent)
++		die("--contains is incompatible with --first-parent");
++
+ 	if (contains) {
+ 		const char **args = xmalloc((7 + argc) * sizeof(char *));
+ 		int i = 0;
+-- 
+1.7.3.234.g7bba3
