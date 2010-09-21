@@ -1,217 +1,128 @@
-From: Christopher Wilson <cwilson@cdwilson.us>
-Subject: Re: [PATCH] Enable highlight executable path as a configuration option
-Date: Tue, 21 Sep 2010 00:25:19 -0700
-Message-ID: <4C985DDF.8060807@cdwilson.us>
-References: <4C96938C.5050505@cdwilson.us> <201009201110.38271.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=22Alejandro_R=2E?= =?ISO-8859-1?Q?_Sede=F1o=22?= 
-	<asedeno@mit.edu>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 09:25:39 2010
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: [PATCH] git-gui: Work around freeze problem with dialogs in Mac OS X
+Date: Tue, 21 Sep 2010 10:26:44 +0200
+Message-ID: <1jp5xs1.ebxa6718bj9huM%lists@haller-berlin.de>
+References: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
+Cc: git@vger.kernel.org, dsteffen@apple.com (Daniel A Steffen)
+To: patthoyts@users.sourceforge.net (Pat Thoyts),
+	das@users.sourceforge.net (Daniel A. Steffen)
+X-From: git-owner@vger.kernel.org Tue Sep 21 10:27:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxxEP-0001GC-Pv
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 09:25:38 +0200
+	id 1OxyBu-0007Ep-7P
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 10:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756070Ab0IUHZb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 03:25:31 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:56294 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755145Ab0IUHZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 03:25:31 -0400
-Received: by pwi3 with SMTP id 3so1418892pwi.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 00:25:30 -0700 (PDT)
-Received: by 10.114.123.9 with SMTP id v9mr11475546wac.116.1285053928644;
-        Tue, 21 Sep 2010 00:25:28 -0700 (PDT)
-Received: from [192.168.1.10] (c-67-170-193-75.hsd1.ca.comcast.net [67.170.193.75])
-        by mx.google.com with ESMTPS id d2sm15001761wam.14.2010.09.21.00.25.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 21 Sep 2010 00:25:26 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <201009201110.38271.jnareb@gmail.com>
+	id S1756416Ab0IUI0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 04:26:51 -0400
+Received: from mail.ableton.net ([62.96.12.115]:40013 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755703Ab0IUI0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 04:26:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=btBD/3qBZAQlf5ZbXAqd698oZdupvfrSe91eINg7boI=;
+	b=iG6lKKXbAzbN8UYYrVdqzsCLOR7jHT6XyaZzF3dhbjKZGuWh1z2bXowP9BaqA5oRynUo4A1m6pTG4hjHM4u3SuUtFY0baCTvUIcShTevb0JgimBupHalCCmzC1x10yoyHWk1pD7bHjm79AtaAU7Vi0bD/8IC8uTLoxmMtET2IfI=;
+Received: from macbook-stk.office.ableton.com ([10.1.12.2])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1OxyBY-0006hE-WA; Tue, 21 Sep 2010 10:26:45 +0200
+In-Reply-To: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156696>
 
-On 9/20/10 2:10 AM, Jakub Narebski wrote:
-> On Mon, 20 Sep 2010, Christopher Wilson wrote:
-> 
->> Allow build-time/run-time configuration of the highlight executable. Defaults
->> to previous behavior which assumes that highlight is available on the server
->> PATH. However, if this is not the case, the path to the highlight executable
->> can be configured at build time as a configuration variable
->>
->>      HIGHLIGHT_BIN = /path/to/highlight
->>
->> or at runtime by configuring GITWEB_CONFIG
->>
->>      $highlight_bin = /path/to/highlight
->>
->> Signed-off-by: Christopher Wilson<cwilson@cdwilson.us>
-> 
-> Good idea... but I am not sure about shell quoting and the problem
-> with spaces in pathnames.  See comments below.
-> 
->> ---
->>   gitweb/Makefile    |    4 +++-
->>   gitweb/README      |    7 ++++++-
->>   gitweb/gitweb.perl |    6 +++++-
->>   3 files changed, 14 insertions(+), 3 deletions(-)
-> 
->> diff --git a/gitweb/README b/gitweb/README
->> index d481198..69f9860 100644
->> --- a/gitweb/README
->> +++ b/gitweb/README
->> @@ -114,6 +114,9 @@ You can specify the following configuration variables when building GIT:
->>      when gitweb.cgi is executed, then the file specified in the environment
->>      variable will be loaded instead of the file specified when gitweb.cgi was
->>      created.  [Default: /etc/gitweb.conf]
->> + * HIGHLIGHT_BIN
->> +   Path to the highlight executable to use. Useful if highlight is not
->> +   installed on your webserver's PATH. [Default: highlight]
-> 
-> I think it needs to be said that this 'highlight' executable must be
-> the one from http://www.andre-simon.de (assumptions about parameters and
-> output).
-> 
->> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->> index a85e2f6..e808485 100755
->> --- a/gitweb/gitweb.perl
->> +++ b/gitweb/gitweb.perl
-> [...]
->> @@ -3360,7 +3364,7 @@ sub run_highlighter {
->>   	close $fd
->>   		or die_error(404, "Reading blob failed");
->>   	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
->> -	          "highlight --xhtml --fragment --syntax $syntax |"
->> +	          "$highlight_bin --xhtml --fragment --syntax $syntax |"
-> 
-> I think you need
-> 
->    +	          quote_command($highlight_bin)." --xhtml --fragment --syntax $syntax |"
-> 
-> here
-> 
->>   		or die_error(500, "Couldn't open file or run syntax highlighter");
->>   	return $fd;
->>   }
->> -- 
->> 1.7.2.3
->>
->>
-> 
+Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
+binding will hang; see issue 3044863 in the Tk issue tracker.
+<http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
 
-Jakub, thanks for the helpful feedback.  I included the updated patch (see below) which includes the changes you suggested.
+To work around this, we perform commands that open a dialog after
+a brief delay; 150 ms seems to be a good compromise between short
+enough as to be not annoying, and long enough to reliably work
+around the issue.
 
-Allow build-time/run-time configuration of the highlight executable
-(must be the one from http://www.andre-simon.de due to assumptions
-about parameters and output).  Defaults to previous behavior which
-assumes that highlight is available on the server PATH. However, if
-this is not the case, the path to the highlight executable can be
-configured at build time as a configuration variable
-
-    HIGHLIGHT_BIN = /path/to/highlight
-
-or at runtime by configuring GITWEB_CONFIG
-
-    $highlight_bin = /path/to/highlight
-
-Signed-off-by: Christopher Wilson <cwilson@cdwilson.us>
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
 ---
- gitweb/Makefile    |    4 +++-
- gitweb/README      |   11 ++++++++++-
- gitweb/gitweb.perl |    9 ++++++++-
- 3 files changed, 21 insertions(+), 3 deletions(-)
- mode change 100644 => 100755 gitweb/README
+ git-gui.sh |   39 +++++++++++++++++++++++++++------------
+ 1 files changed, 27 insertions(+), 12 deletions(-)
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 2fb7c2d..e32ee76 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -35,6 +35,7 @@ GITWEB_FAVICON = static/git-favicon.png
- GITWEB_JS = static/gitweb.js
- GITWEB_SITE_HEADER =
- GITWEB_SITE_FOOTER =
-+HIGHLIGHT_BIN = highlight
- 
- # include user config
- -include ../config.mak.autogen
-@@ -129,7 +130,8 @@ GITWEB_REPLACE = \
- 	-e 's|++GITWEB_FAVICON++|$(GITWEB_FAVICON)|g' \
- 	-e 's|++GITWEB_JS++|$(GITWEB_JS)|g' \
- 	-e 's|++GITWEB_SITE_HEADER++|$(GITWEB_SITE_HEADER)|g' \
--	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g'
-+	-e 's|++GITWEB_SITE_FOOTER++|$(GITWEB_SITE_FOOTER)|g' \
-+	-e 's|++HIGHLIGHT_BIN++|$(HIGHLIGHT_BIN)|g'
- 
- GITWEB-BUILD-OPTIONS: FORCE
- 	@rm -f $@+
-diff --git a/gitweb/README b/gitweb/README
-old mode 100644
-new mode 100755
-index d481198..bf3664f
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -114,6 +114,11 @@ You can specify the following configuration variables when building GIT:
-    when gitweb.cgi is executed, then the file specified in the environment
-    variable will be loaded instead of the file specified when gitweb.cgi was
-    created.  [Default: /etc/gitweb.conf]
-+ * HIGHLIGHT_BIN
-+   Path to the highlight executable to use (must be the one from
-+   http://www.andre-simon.de due to assumptions about parameters and output).
-+   Useful if highlight is not installed on your webserver's PATH.
-+   [Default: highlight]
- 
- 
- Runtime gitweb configuration
-@@ -236,7 +241,11 @@ not include variables usually directly set during build):
-    If server load exceed this value then return "503 Service Unavailable" error.
-    Server load is taken to be 0 if gitweb cannot determine its value.  Set it to
-    undefined value to turn it off.  The default is 300.
--
-+ * $highlight_bin
-+   Path to the highlight executable to use (must be the one from
-+   http://www.andre-simon.de due to assumptions about parameters and output).
-+   Useful if highlight is not installed on your webserver's PATH.
-+   [Default: highlight]
- 
- Projects list file format
- ~~~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a85e2f6..e5910ce 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -165,6 +165,12 @@ our @diff_opts = ('-M'); # taken from git_commit
- # the gitweb domain.
- our $prevent_xss = 0;
- 
-+# Path to the highlight executable to use (must be the one from
-+# http://www.andre-simon.de due to assumptions about parameters and output).
-+# Useful if highlight is not installed on your webserver's PATH.
-+# [Default: highlight]
-+our $highlight_bin = "++HIGHLIGHT_BIN++";
-+
- # information about snapshot formats that gitweb is capable of serving
- our %known_snapshot_formats = (
- 	# name => {
-@@ -3360,7 +3366,8 @@ sub run_highlighter {
- 	close $fd
- 		or die_error(404, "Reading blob failed");
- 	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
--	          "highlight --xhtml --fragment --syntax $syntax |"
-+	          quote_command($highlight_bin).
-+	          " --xhtml --fragment --syntax $syntax |"
- 		or die_error(500, "Couldn't open file or run syntax highlighter");
- 	return $fd;
+diff --git a/git-gui.sh b/git-gui.sh
+index 4617f29..394c2a0 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3560,6 +3560,21 @@ if {[info exists repo_config(gui.wmstate)]} {
+    catch {wm state . $repo_config(gui.wmstate)}
  }
+ 
++proc mac_freeze_workaround {cmd} {
++   if {[is_MacOSX] && $::have_tk85} {
++       # Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
++       # binding will hang; see issue 3044863 in the Tk issue tracker.
++       # <http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
++       #
++       # To work around this, we perform commands that open a dialog after a brief
++       # delay; 150 ms seems to be a good compromise between short enough as to be
++       # not annoying, and long enough to reliably work around the issue.
++       after 150 $cmd
++   } else {
++       $cmd
++   }
++}
++
+ # -- Key Bindings
+ #
+ bind $ui_comm <$M1B-Key-Return> {do_commit;break}
+@@ -3567,8 +3582,8 @@ bind $ui_comm <$M1B-Key-t> {do_add_selection;break}
+ bind $ui_comm <$M1B-Key-T> {do_add_selection;break}
+ bind $ui_comm <$M1B-Key-u> {do_unstage_selection;break}
+ bind $ui_comm <$M1B-Key-U> {do_unstage_selection;break}
+-bind $ui_comm <$M1B-Key-j> {do_revert_selection;break}
+-bind $ui_comm <$M1B-Key-J> {do_revert_selection;break}
++bind $ui_comm <$M1B-Key-j> {mac_freeze_workaround do_revert_selection;break}
++bind $ui_comm <$M1B-Key-J> {mac_freeze_workaround do_revert_selection;break}
+ bind $ui_comm <$M1B-Key-i> {do_add_all;break}
+ bind $ui_comm <$M1B-Key-I> {do_add_all;break}
+ bind $ui_comm <$M1B-Key-x> {tk_textCut %W;break}
+@@ -3606,16 +3621,16 @@ bind $ui_diff <Control-Key-f> {catch {%W yview scroll  1 pages};break}
+ bind $ui_diff <Button-1>   {focus %W}
+ 
+ if {[is_enabled branch]} {
+-   bind . <$M1B-Key-n> branch_create::dialog
+-   bind . <$M1B-Key-N> branch_create::dialog
+-   bind . <$M1B-Key-o> branch_checkout::dialog
+-   bind . <$M1B-Key-O> branch_checkout::dialog
+-   bind . <$M1B-Key-m> merge::dialog
+-   bind . <$M1B-Key-M> merge::dialog
++   bind . <$M1B-Key-n> {mac_freeze_workaround branch_create::dialog}
++   bind . <$M1B-Key-N> {mac_freeze_workaround branch_create::dialog}
++   bind . <$M1B-Key-o> {mac_freeze_workaround branch_checkout::dialog}
++   bind . <$M1B-Key-O> {mac_freeze_workaround branch_checkout::dialog}
++   bind . <$M1B-Key-m> {mac_freeze_workaround merge::dialog}
++   bind . <$M1B-Key-M> {mac_freeze_workaround merge::dialog}
+ }
+ if {[is_enabled transport]} {
+-   bind . <$M1B-Key-p> do_push_anywhere
+-   bind . <$M1B-Key-P> do_push_anywhere
++   bind . <$M1B-Key-p> {mac_freeze_workaround do_push_anywhere}
++   bind . <$M1B-Key-P> {mac_freeze_workaround do_push_anywhere}
+ }
+ 
+ bind .   <Key-F5>     ui_do_rescan
+@@ -3625,8 +3640,8 @@ bind .   <$M1B-Key-s> do_signoff
+ bind .   <$M1B-Key-S> do_signoff
+ bind .   <$M1B-Key-t> do_add_selection
+ bind .   <$M1B-Key-T> do_add_selection
+-bind .   <$M1B-Key-j> do_revert_selection
+-bind .   <$M1B-Key-J> do_revert_selection
++bind .   <$M1B-Key-j> {mac_freeze_workaround do_revert_selection}
++bind .   <$M1B-Key-J> {mac_freeze_workaround do_revert_selection}
+ bind .   <$M1B-Key-i> do_add_all
+ bind .   <$M1B-Key-I> do_add_all
+ bind .   <$M1B-Key-minus> {show_less_context;break}
 -- 
-1.7.2.3
+1.7.3.4.g200b9
