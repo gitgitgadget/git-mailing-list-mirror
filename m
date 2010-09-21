@@ -1,66 +1,66 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: Questions on gitosis
-Date: Tue, 21 Sep 2010 16:39:01 +0530
-Message-ID: <AANLkTikEhAHe+7G72t_1HFMF=3WoD7n30QvcoWCZd=gy@mail.gmail.com>
-References: <ActZEUVcIhksov+hSeqmo+xw77FAzA==>
-	<26E9B811E137AB4B95200FD4C950886BA3AC1997@orsmsx507.amr.corp.intel.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: staging specific lines out of a hunk for a commit
+Date: Tue, 21 Sep 2010 13:31:11 +0200
+Message-ID: <vpqocbrjpts.fsf@bauges.imag.fr>
+References: <AANLkTin4U78N_8LV8fCWuinNH9AFeOsRBjnvHM0qt2ZH@mail.gmail.com>
+	<AANLkTim=FQyBHcaHEX92YLgODrvpesuA7e4xwXuWcFg4@mail.gmail.com>
+	<AANLkTinJRT7x-TS0R1C00-djVk3rKOt_Axys+orBhZfx@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Olsen, Alan R" <alan.r.olsen@intel.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 13:09:21 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Graeme Geldenhuys <graemeg.lists@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 13:31:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy0io-0004VU-7a
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 13:09:14 +0200
+	id 1Oy14D-0003sW-UH
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 13:31:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756231Ab0IULJI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 07:09:08 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:49246 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753085Ab0IULJH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 07:09:07 -0400
-Received: by gyd8 with SMTP id 8so1579226gyd.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 04:09:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=vtBujB2yrnwWQPN/X6EHeyd25NyMEbYoH9HBozyfB3Y=;
-        b=QJ3S8apQ17lv3goUSOK1WPIX8qmmyec5qiaBkLPsHUTfWVftX0tzO6YFu9E/b3Vu1N
-         bp1FQ6/xSFrk5EpJTJZiGBu4xJMq1sDqp4JSablEBJsxMovjDt4WTUWvadZGd3FvJyAd
-         zQ5b6C11MJgIw58vB/Ex21HqscDm8sbnVODdM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=swuNunB3M6AOnprpuEjhQxa7OHmJss2oW90+KIV/ailddZB4iYD9J0Z8EUKWFyjlug
-         rho7+aZP/d3r4ZwRaQFrk+GcAbATSAC0dc2D2Tz6HL/CMVuMjikyRHLkH0+ExR1Axdy1
-         HDMBHcpubjfQKfJ+vz0XAEUzMhqLy2Sn5XZXQ=
-Received: by 10.90.84.1 with SMTP id h1mr6578772agb.78.1285067341368; Tue, 21
- Sep 2010 04:09:01 -0700 (PDT)
-Received: by 10.90.83.17 with HTTP; Tue, 21 Sep 2010 04:09:01 -0700 (PDT)
-In-Reply-To: <26E9B811E137AB4B95200FD4C950886BA3AC1997@orsmsx507.amr.corp.intel.com>
+	id S1752157Ab0IULbQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 07:31:16 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:52337 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751767Ab0IULbP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 07:31:15 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o8LBQa0w022330
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 21 Sep 2010 13:26:36 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oy144-000154-32; Tue, 21 Sep 2010 13:31:12 +0200
+In-Reply-To: <AANLkTinJRT7x-TS0R1C00-djVk3rKOt_Axys+orBhZfx@mail.gmail.com> (Graeme Geldenhuys's message of "Tue\, 21 Sep 2010 13\:00\:39 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 21 Sep 2010 13:26:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o8LBQa0w022330
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1285673197.90138@qxeRI2fFCmsYifqOxRLnVg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156712>
 
-On Tue, Sep 21, 2010 at 3:45 AM, Olsen, Alan R <alan.r.olsen@intel.com> wrote:
-> Is gitosis currently maintained? Who do I contact?
+Graeme Geldenhuys <graemeg.lists@gmail.com> writes:
+
+> On 21 September 2010 12:52, Bert Wesarg wrote:
+>>
+>> Just select the lines you would like to add, and than you can stage
+>> them at once.
 >
-> I have a list of bugs in the current version that I would like to see fixed. I can post them here if needed. (It will at least get them picked up by the usual search engines.)
+> I tried that last night on my home laptop and it didn't work. Trying
+> it now at work, it indeed does work. Clearly my git versions are
+> different - when I thought they were the same. Thanks for the help.
 
-Could you post (or email if you prefer) those bugs anyway so I can see
-if they apply to gitolite?  At the very least I can tell you how far
-gitolite will be able to meet your needs.
-
-Gitosis itself has not seen a significant commit for more than 2 years
-now (there were a couple of minor ones a year ago I think).
+Otherwise, "git add -p", 'e' for 'e'dit, and delete the parts you
+don't want.
 
 -- 
-Sitaram
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
