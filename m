@@ -1,100 +1,82 @@
-From: Gustavo Narea <gnarea@tech.2degreesnetwork.com>
-Subject: Re: Multiple checkouts active for the same repository
-Date: Fri, 24 Sep 2010 12:55:11 +0100
-Organization: 2degrees Limited
-Message-ID: <4C9C919F.3040005@tech.2degreesnetwork.com>
-References: <4C9C6F8B.3090806@tech.2degreesnetwork.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Mirror plain directory under git
+Date: Tue, 21 Sep 2010 09:56:21 +0200
+Message-ID: <20100921075621.GA27575@nibiru.local>
+References: <AANLkTi=9nqfzR-Zo85LieBuhv97oudCVZCex8ZL3mM0t@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: suntong@cpan.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 24 13:55:30 2010
+X-From: git-owner@vger.kernel.org Fri Sep 24 14:07:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz6s7-0004KN-LZ
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 13:55:24 +0200
+	id 1Oz73v-0001nF-B1
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 14:07:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754186Ab0IXLzQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 07:55:16 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:40845 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752767Ab0IXLzP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 07:55:15 -0400
-Received: by wwd20 with SMTP id 20so192494wwd.1
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 04:55:14 -0700 (PDT)
-Received: by 10.227.37.212 with SMTP id y20mr2726592wbd.101.1285329314057;
-        Fri, 24 Sep 2010 04:55:14 -0700 (PDT)
-Received: from [192.168.0.69] (mail.2degreesnetwork.com [62.172.190.17])
-        by mx.google.com with ESMTPS id v44sm1256027weq.28.2010.09.24.04.55.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 04:55:13 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9pre) Gecko/20100217 Lightning/1.0b1 Shredder/3.0.3pre
-In-Reply-To: <4C9C6F8B.3090806@tech.2degreesnetwork.com>
+	id S1752867Ab0IXMH3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 08:07:29 -0400
+Received: from caprica.metux.de ([82.165.128.25]:38054 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752237Ab0IXMH3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 08:07:29 -0400
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o8OBuZHp005578;
+	Fri, 24 Sep 2010 14:08:05 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o8NKgxSa008244;
+	Thu, 23 Sep 2010 22:42:59 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o8L7uL3d031552;
+	Tue, 21 Sep 2010 09:56:21 +0200
+Mail-Followup-To: git@vger.kernel.org, suntong@cpan.org
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=9nqfzR-Zo85LieBuhv97oudCVZCex8ZL3mM0t@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156980>
 
-I guess it all comes down to one thing: How can I avoid Git's feature of
-making only one branch/checkout active at a time under the same path?
+* Tong Sun <suntong@cpan.org> wrote:
 
-I need to have the branches and their checkouts on different
-directories, and it seems like the only way to do it is having one
-repository per branch/checkout, which doesn't look like the ideal way of
-doing things in Git.
+Hi,
 
-Apart from the situation I describe in the initial email, there's
-another limitation in the development environment: Our IDE, Eclipse +
-Pydev, assumes each project (i.e., branch/checkout) to be on different
-directories and each project should have different settings (e.g., paths
-to dependencies, which could be different), but with GIt everything
-would be a single project because it's all on the same path.
+> How feasible it is to mirror a plain directory and put it under git
+> revision control (leaving the original intact)?
 
-Thanks in advance.
+Probably you'll want to have the .git dir outside of /etc, so
+--git-dir and --work-dir are your friend (man 1 git).
 
- - Gustavo.
+An cron-script could look something like that:
 
-On 24/09/10 10:29, Gustavo Narea wrote:
-> Hello.
-> 
-> We're currently migrating from another DVCS, which allows us to have
-> working copies of each branch in separate directories, so that their
-> code can be used simultaneously. However, I haven't found a way to do
-> this with Git, at least not an easy way. Can you please help me?
-> 
-> We are a team of Web developers and testers working on an application.
-> There are always a few development branches and a stable branch, and
-> testers need all the branches with the very latest code available at all
-> times.
-> 
-> The way we handle it at the moment is very simple because the server
-> hosting the remote repository is the same that hosts the deployed
-> instances of each branch, so when we push to the remote repository, the
-> code for each site is automatically updated.
-> 
-> We use the following structure:
-> /srv/repositories/project/branch1
-> /srv/repositories/project/branch2
-> /srv/repositories/project/branch3
-> 
-> Is there any simple way to do this with Git? I can only think of two
-> options that involve hooks:
-> 
->     * Have a hook that exports each branch to a directory like
->       /srv/repositories/project/branchN
->     * Have one Git repository per branch, so that each repository have a
->       different checkout active. Then the main remote repository will
->       have post-receive hooks that trigger a pull on each individual
-> 
-> I'm not particularly happy with either way. Is there a better solution?
-> 
+    #!/bin/bash
+
+    cd /var/my-etc-archive.git && \
+	git --work-dir=/etc add -A && \
+	git --work-dir=/etc commit -m "autocommit" && \
+	git push origin
+
+(perhaps filter the output a bit, so you don't get unncessary
+cron mails ;-))
 
 
+cu
 -- 
-Gustavo Narea.
-Software Developer.
-2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
