@@ -1,68 +1,81 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: more useful set-upstream
-Date: Tue, 21 Sep 2010 11:30:25 +0200
-Message-ID: <vpqfwx3phou.fsf@bauges.imag.fr>
-References: <AANLkTi=c51u=pQ3TLt3YE54mbwy8AqRb2rcsatEVo2U5@mail.gmail.com>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Update Webservers from a remote repository
+Date: Tue, 21 Sep 2010 11:02:51 +0200
+Message-ID: <4C9874BB.5060908@fechner.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ramana Kumar <ramana.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 11:30:38 2010
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 21 11:31:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxzBN-00062F-4w
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 11:30:37 +0200
+	id 1OxzBp-0006F3-Jr
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 11:31:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756650Ab0IUJaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 05:30:30 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:48554 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751980Ab0IUJa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 05:30:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o8L9HVPR008587
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 21 Sep 2010 11:17:31 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1OxzBB-0007MA-Ds; Tue, 21 Sep 2010 11:30:25 +0200
-In-Reply-To: <AANLkTi=c51u=pQ3TLt3YE54mbwy8AqRb2rcsatEVo2U5@mail.gmail.com> (Ramana Kumar's message of "Tue\, 21 Sep 2010 18\:55\:08 +1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 21 Sep 2010 11:17:31 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o8L9HVPR008587
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1285665453.76154@20wIY5/nSRA6K2mfll8F+w
+	id S1756692Ab0IUJaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 05:30:39 -0400
+Received: from anny.lostinspace.de ([80.190.182.2]:63775 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751980Ab0IUJai (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 05:30:38 -0400
+X-Greylist: delayed 1637 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Sep 2010 05:30:38 EDT
+Received: from server.idefix.lan (host-188-174-193-180.customer.m-online.net [188.174.193.180])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.4/8.14.4) with ESMTP id o8L93En8004514
+	for <git@vger.kernel.org>; Tue, 21 Sep 2010 11:03:18 +0200 (CEST)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (localhost [127.0.0.1])
+	by server.idefix.lan (Postfix) with ESMTP id E9AE5660D
+	for <git@vger.kernel.org>; Tue, 21 Sep 2010 11:03:13 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at server.idefix.lan
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nujq4PdkNrqS for <git@vger.kernel.org>;
+	Tue, 21 Sep 2010 11:02:53 +0200 (CEST)
+Received: from dhcp-10-27-1-64.internal.epo.org (unknown [192.168.20.6])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by server.idefix.lan (Postfix) with ESMTPSA
+	for <git@vger.kernel.org>; Tue, 21 Sep 2010 11:02:52 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.6 (anny.lostinspace.de [80.190.182.2]); Tue, 21 Sep 2010 11:03:18 +0200 (CEST)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156701>
 
-Ramana Kumar <ramana.kumar@gmail.com> writes:
+Dear list,
 
-> I don't understand why all my branches haven't automatically had the right
-> upstream set anyway - am I missing some configuration of pull and
-> push?
+I'm new to git but the more I use it I more I like/love it. :)
 
-If you keep it simple, they should:
+I have a central --bare git repository which is the master for all web 
+servers (I did a git clone http://xxx on each web server).
+If I now push changes from my devel station to the central repository I 
+would like to have them available on all server with a script.
 
-* git clone wherever => checks out the default branch, and sets the
-  upstream for it.
+If I understood everything correctly I execute the following commands on 
+each server:
+git checkout master (to be sure we are on branch master)
+git fetch (to fetch changes from the central repository)
+git merge origin (to update the repo to the changes on the central repo)
 
-* git checkout foo => if foo doesn't exist, and <remote>/foo exists,
-  foo is created and upstream is set to <remote>/foo (that's rather
-  recent)
+I use here origin because the remote name for the central server in the 
+.git/config file is named origin.
 
-But we could probably have a better way to set the upstream after the
-fact when the initialisation magic didn't do its job.
+Is that correct or did I missed something?
+
+Thanks,
+Matthias
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+"Programming today is a race between software engineers striving to 
+build bigger and better idiot-proof programs, and the universe trying to 
+produce bigger and better idiots. So far, the universe is winning." -- 
+Rich Cook
