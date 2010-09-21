@@ -1,73 +1,80 @@
-From: Jonas Fonseca <jonas.fonseca@gmail.com>
-Subject: Re: [tig] Re: compilation error: undefined reference to `set_tabsize'
-Date: Tue, 21 Sep 2010 08:57:11 -0400
-Message-ID: <AANLkTimvD32iGMwUw6vFhU8Ah+afru-x+opLGsq5Vt1j@mail.gmail.com>
-References: <20100920174200.GA13017@vidovic> <loom.20100920T203217-346@post.gmane.org>
- <20100920204344.GB13017@vidovic> <20100920230559.GJ23119@bowser.ece.utexas.edu>
- <20100920231349.GK23119@bowser.ece.utexas.edu> <loom.20100921T083551-528@post.gmane.org>
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.16.2
+Date: Tue, 21 Sep 2010 09:01:26 -0400
+Message-ID: <AANLkTin5FeRqEq3gN3Wi0m2xib7Cv5dK_bOwHXf_2vV0@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Stefan Naewe <stefan.naewe@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 14:57:38 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 21 15:02:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy2Pi-00084D-3g
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 14:57:38 +0200
+	id 1Oy2U8-0002Ey-1Z
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 15:02:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753587Ab0IUM5c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 08:57:32 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:44661 "EHLO
+	id S1752756Ab0IUNBs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 09:01:48 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:60288 "EHLO
 	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752823Ab0IUM5c (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 08:57:32 -0400
-Received: by gwj17 with SMTP id 17so1618795gwj.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 05:57:31 -0700 (PDT)
+	with ESMTP id S1753341Ab0IUNBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 09:01:47 -0400
+Received: by gwj17 with SMTP id 17so1620283gwj.19
+        for <git@vger.kernel.org>; Tue, 21 Sep 2010 06:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=yBb//rWTsc2hattW2OCb5sTcgzLHbrya2QJ7iYtNH/8=;
-        b=mcp0OIRAU9cY2hXPVGwIhIjrWOeeFY5Lq6Hr/AivXI9g36GbMn8HIWgqwQeTRUI9T+
-         eGbqo13wMGG1xzjzunbHah0PyyNXcUoSkZ0IOI+ImUJQ7RnwFlnvI+4f9cUaPQx5oELy
-         4vKmqqhfE/XuaYq3ohSJ25w6TuXH43jtw1Fi4=
+        h=domainkey-signature:received:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        bh=NizUZ0uLqCLa9P9+dP1Q/PjOdO5iLBOymI0CjrK0HBw=;
+        b=mzDNZb1YaX1lJQnVrjb1zCSRelvqG94aMHJoAmYeii3d/3rZcNELvnXLuizLMo4ym/
+         J9P/jzOfjfaJLDG39tvVIW1lA90QlhlalUC5d3GoGc87SlsnBNAzNPef8fxz8Q0Mp4hw
+         AIk9Sh3UgBR+gLgXukEPSGUUv7Z3PMdrykYRc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=Js3HP9R0U7BRDqNZCKgUmJ8K7A8aIWbWype6PKWWsJ4QWmEL6TaqgxvmsztHgNZnqs
-         8wyhQu+42c8z+UXZgfNRK1YGPfUdOHBWHY3vODGlyZDW/1Y4tWIC1Gqm1Q7PIeZR/KuK
-         b1XKPFEZpeCxF17GGelmX76ehVIQAiX6YgZO8=
-Received: by 10.100.239.14 with SMTP id m14mr11120532anh.28.1285073851449;
- Tue, 21 Sep 2010 05:57:31 -0700 (PDT)
-Received: by 10.231.39.194 with HTTP; Tue, 21 Sep 2010 05:57:11 -0700 (PDT)
-In-Reply-To: <loom.20100921T083551-528@post.gmane.org>
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        b=wQOALDMXjAZli2bQ7k1U38GIEE42nl4AelpW0YFIOQe+oQgz3fSaN4axXQnAywcLRM
+         SbAIt4SQdHMkQPnHgvRf/1mvaiGVtqMEgofDCMN12NCmBLC+X7YOeOolGHIramS+N9nq
+         0KssaijvY/a2PHETwwuKRx1sZ6hRlahnO4aFQ=
+Received: by 10.151.122.4 with SMTP id z4mr10533769ybm.136.1285074106500; Tue,
+ 21 Sep 2010 06:01:46 -0700 (PDT)
+Received: by 10.231.39.194 with HTTP; Tue, 21 Sep 2010 06:01:26 -0700 (PDT)
+X-Google-Sender-Auth: FEaL97p3ArOqke4mZujEiUbTjHU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156722>
 
-On Tue, Sep 21, 2010 at 02:37, Stefan Naewe <stefan.naewe@googlemail.com> wrote:
-> Kumar Appaiah <a.kumar <at> alumni.iitm.ac.in> writes:
->
->>
->> On Mon, Sep 20, 2010 at 06:05:59PM -0500, Kumar Appaiah wrote:
->> > Ack that this also breaks build on CentOS. The simple reason is that
->> > the ncurses version on CentOS 5.5 is ncurses-5.5, while that on Debian
->> > Lenny is 5.7+. According to the changelog, 5.6 onwards has
->> > set_tabsize, so checking for that version of ncurses might be a good
->> > option.
->>
->> I have attached a patch which uses the patch number to determine this:
->>
->
-> Good. Works for me on Debian 5.0.6 and Cygwin.
+Hello,
 
-Thanks both, patch applied.
+I decided to make a quick bug fix release that addresses the issues
+reported with 0.16.1.
+
+Release notes
+-------------
+Bug fixes:
+
+ - Fix regression causing empty tree view.
+ - Fix set_tabsize() compile error for older versions of ncurses.
+
+Change summary
+--------------
+The diffstat and log summary for changes made in this release.
+
+ NEWS                |    8 ++++++++
+ VERSION             |    2 +-
+ contrib/aspell.dict |    2 +-
+ tig.c               |    6 +++++-
+ 4 files changed, 15 insertions(+), 3 deletions(-)
+
+Jonas Fonseca (2):
+      Fix 'tig show <commit>' fix which causes empty tree views
+      tig-0.16.2
+
+Kumar Appaiah (1):
+      Check the ncurses version before using set_tabsize
 
 -- 
 Jonas Fonseca
