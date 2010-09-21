@@ -1,128 +1,93 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: [PATCH] git-gui: Work around freeze problem with dialogs in Mac OS X
-Date: Tue, 21 Sep 2010 10:26:44 +0200
-Message-ID: <1jp5xs1.ebxa6718bj9huM%lists@haller-berlin.de>
-References: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
-Cc: git@vger.kernel.org, dsteffen@apple.com (Daniel A Steffen)
-To: patthoyts@users.sourceforge.net (Pat Thoyts),
-	das@users.sourceforge.net (Daniel A. Steffen)
-X-From: git-owner@vger.kernel.org Tue Sep 21 10:27:12 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 000/160] [PULL] Update ab/i18n (again)
+Date: Tue, 21 Sep 2010 08:47:00 +0000
+Message-ID: <AANLkTikr4=K1e2VFU4WkawjpvCp0MvqGk-Sqv5ixj8fm@mail.gmail.com>
+References: <1285015029-23103-1-git-send-email-avarab@gmail.com>
+	<4C985A47.3030101@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	=?UTF-8?Q?Jan_Kr=C3=BCger?= <jk@jk.gs>,
+	Marcin Cieslak <saper@saper.info>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Sep 21 10:47:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxyBu-0007Ep-7P
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 10:27:06 +0200
+	id 1OxyVX-0005sD-VK
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 10:47:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756416Ab0IUI0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 04:26:51 -0400
-Received: from mail.ableton.net ([62.96.12.115]:40013 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755703Ab0IUI0u (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 04:26:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=btBD/3qBZAQlf5ZbXAqd698oZdupvfrSe91eINg7boI=;
-	b=iG6lKKXbAzbN8UYYrVdqzsCLOR7jHT6XyaZzF3dhbjKZGuWh1z2bXowP9BaqA5oRynUo4A1m6pTG4hjHM4u3SuUtFY0baCTvUIcShTevb0JgimBupHalCCmzC1x10yoyHWk1pD7bHjm79AtaAU7Vi0bD/8IC8uTLoxmMtET2IfI=;
-Received: from macbook-stk.office.ableton.com ([10.1.12.2])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1OxyBY-0006hE-WA; Tue, 21 Sep 2010 10:26:45 +0200
-In-Reply-To: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
+	id S1756503Ab0IUIrF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Sep 2010 04:47:05 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58024 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756714Ab0IUIrC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 04:47:02 -0400
+Received: by iwn5 with SMTP id 5so4981857iwn.19
+        for <git@vger.kernel.org>; Tue, 21 Sep 2010 01:47:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CoPqQVTQKbH9u//M7Gr2Nx6Q/3WPxFjtGff2PQ0GHss=;
+        b=EBGhl298x2hOXVr78wsNSp+ah/vBmN/QWkLU+rWvgG4CysT4d7SsNxDGYcMkHiZa7u
+         sSCsvnOF6oCr3xMoYxpSbrMIHrjwrDJ7Rtg/TZnPV7c97rvn4Fkz7ZJSlFv0o7AyEH0j
+         pmMMl8bKjr25h5r/DN7MykXOFPPvd9sMajxvE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Y/qHP2I/vcXh0UwAMWv4yAvbz8H08jtY/rGhE6HxQBF4k+NbKL/UIMqGyM1Q4N1Ma8
+         B3u/6ajLMa1Xb8hqKav5xrQigZLKJDxtJHBAA1j0GM/uz0lwIbRMmo4OHk5EwYGIzM54
+         gvTyrrSnH04WjCri9qGadgqQRPdMj39x4LyTM=
+Received: by 10.231.16.204 with SMTP id p12mr8127408iba.194.1285058820906;
+ Tue, 21 Sep 2010 01:47:00 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Tue, 21 Sep 2010 01:47:00 -0700 (PDT)
+In-Reply-To: <4C985A47.3030101@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156697>
 
-Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
-binding will hang; see issue 3044863 in the Tk issue tracker.
-<http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
+On Tue, Sep 21, 2010 at 07:09, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 20.09.2010=
+ 22:37:
+> Would it be possible to split the infrastructure part from the actual
+> translations, i.e. have two or more dependent branches (which is
+> probably easier than reordering on a single branch)?
+>
+> I know at least one locale where we're actually in the early stages o=
+f a
+> fundamental discussion about translation principles. Blocking the who=
+le
+> series because of that makes no sense.
+>
+> Also, the set of reviewers for infrastructure parts will be quite
+> different from that for individual translations.
 
-To work around this, we perform commands that open a dialog after
-a brief delay; 150 ms seems to be a good compromise between short
-enough as to be not annoying, and long enough to reliably work
-around the issue.
+=46irstly I'm hoping this gets merged soon so this all becomes a
+non-issue.
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
- git-gui.sh |   39 +++++++++++++++++++++++++++------------
- 1 files changed, 27 insertions(+), 12 deletions(-)
+But having multiple branches would be harder for me, I used to have
+three branches: infrastructure, gettextize and translations. Rebasing
+all of those on top of each other and testing each of them was a PITA,
+so I folded things back into one huge series.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 4617f29..394c2a0 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3560,6 +3560,21 @@ if {[info exists repo_config(gui.wmstate)]} {
-    catch {wm state . $repo_config(gui.wmstate)}
- }
- 
-+proc mac_freeze_workaround {cmd} {
-+   if {[is_MacOSX] && $::have_tk85} {
-+       # Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
-+       # binding will hang; see issue 3044863 in the Tk issue tracker.
-+       # <http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
-+       #
-+       # To work around this, we perform commands that open a dialog after a brief
-+       # delay; 150 ms seems to be a good compromise between short enough as to be
-+       # not annoying, and long enough to reliably work around the issue.
-+       after 150 $cmd
-+   } else {
-+       $cmd
-+   }
-+}
-+
- # -- Key Bindings
- #
- bind $ui_comm <$M1B-Key-Return> {do_commit;break}
-@@ -3567,8 +3582,8 @@ bind $ui_comm <$M1B-Key-t> {do_add_selection;break}
- bind $ui_comm <$M1B-Key-T> {do_add_selection;break}
- bind $ui_comm <$M1B-Key-u> {do_unstage_selection;break}
- bind $ui_comm <$M1B-Key-U> {do_unstage_selection;break}
--bind $ui_comm <$M1B-Key-j> {do_revert_selection;break}
--bind $ui_comm <$M1B-Key-J> {do_revert_selection;break}
-+bind $ui_comm <$M1B-Key-j> {mac_freeze_workaround do_revert_selection;break}
-+bind $ui_comm <$M1B-Key-J> {mac_freeze_workaround do_revert_selection;break}
- bind $ui_comm <$M1B-Key-i> {do_add_all;break}
- bind $ui_comm <$M1B-Key-I> {do_add_all;break}
- bind $ui_comm <$M1B-Key-x> {tk_textCut %W;break}
-@@ -3606,16 +3621,16 @@ bind $ui_diff <Control-Key-f> {catch {%W yview scroll  1 pages};break}
- bind $ui_diff <Button-1>   {focus %W}
- 
- if {[is_enabled branch]} {
--   bind . <$M1B-Key-n> branch_create::dialog
--   bind . <$M1B-Key-N> branch_create::dialog
--   bind . <$M1B-Key-o> branch_checkout::dialog
--   bind . <$M1B-Key-O> branch_checkout::dialog
--   bind . <$M1B-Key-m> merge::dialog
--   bind . <$M1B-Key-M> merge::dialog
-+   bind . <$M1B-Key-n> {mac_freeze_workaround branch_create::dialog}
-+   bind . <$M1B-Key-N> {mac_freeze_workaround branch_create::dialog}
-+   bind . <$M1B-Key-o> {mac_freeze_workaround branch_checkout::dialog}
-+   bind . <$M1B-Key-O> {mac_freeze_workaround branch_checkout::dialog}
-+   bind . <$M1B-Key-m> {mac_freeze_workaround merge::dialog}
-+   bind . <$M1B-Key-M> {mac_freeze_workaround merge::dialog}
- }
- if {[is_enabled transport]} {
--   bind . <$M1B-Key-p> do_push_anywhere
--   bind . <$M1B-Key-P> do_push_anywhere
-+   bind . <$M1B-Key-p> {mac_freeze_workaround do_push_anywhere}
-+   bind . <$M1B-Key-P> {mac_freeze_workaround do_push_anywhere}
- }
- 
- bind .   <Key-F5>     ui_do_rescan
-@@ -3625,8 +3640,8 @@ bind .   <$M1B-Key-s> do_signoff
- bind .   <$M1B-Key-S> do_signoff
- bind .   <$M1B-Key-t> do_add_selection
- bind .   <$M1B-Key-T> do_add_selection
--bind .   <$M1B-Key-j> do_revert_selection
--bind .   <$M1B-Key-J> do_revert_selection
-+bind .   <$M1B-Key-j> {mac_freeze_workaround do_revert_selection}
-+bind .   <$M1B-Key-J> {mac_freeze_workaround do_revert_selection}
- bind .   <$M1B-Key-i> do_add_all
- bind .   <$M1B-Key-I> do_add_all
- bind .   <$M1B-Key-minus> {show_less_context;break}
--- 
-1.7.3.4.g200b9
+But I don't think any of this is a problem for translators, they just
+have to pull down any version of the series and start cracking at
+"make pot && msginit ...". Maybe that POT file is *slightly* out of
+date, but the translation strings themselves are really stable at this
+point, so that's always going to be <1-2% of the translation that
+needs to be fixed up & unfuzzied.
+
+So just submit translations, maybe they'll make it as part of the
+initial ab/i18n merge and maybe they won't.
