@@ -1,82 +1,78 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Really beginner on Version Control
-Date: Tue, 21 Sep 2010 18:40:23 +0200
-Message-ID: <4C98DFF7.2030801@op5.se>
-References: <1285080133451-5555023.post@n2.nabble.com>
+From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
+Subject: [tig] Re: compilation error: undefined reference to `set_tabsize'
+Date: Tue, 21 Sep 2010 19:34:37 +0200
+Message-ID: <20100921173437.GA13013@vidovic>
+References: <20100920174200.GA13017@vidovic>
+ <loom.20100920T203217-346@post.gmane.org>
+ <20100920204344.GB13017@vidovic>
+ <20100920230559.GJ23119@bowser.ece.utexas.edu>
+ <20100920231349.GK23119@bowser.ece.utexas.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: FernandoBasso <FernandoBasso.br@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 18:40:44 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Stefan =?iso-8859-1?Q?N=E4we?= <stefan.naewe@googlemail.com>,
+	fonseca@diku.dk
+To: Kumar Appaiah <a.kumar@alumni.iitm.ac.in>
+X-From: git-owner@vger.kernel.org Tue Sep 21 19:35:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy5tY-0001Py-7V
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 18:40:40 +0200
+	id 1Oy6kY-0003nQ-5j
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 19:35:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757996Ab0IUQka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 12:40:30 -0400
-Received: from na3sys009aog101.obsmtp.com ([74.125.149.67]:35267 "HELO
-	na3sys009aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753740Ab0IUQk3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 12:40:29 -0400
-Received: from source ([209.85.215.50]) by na3sys009aob101.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTJjf+jVwizE2pagl8qYzzKTjnEC6ZRWi@postini.com; Tue, 21 Sep 2010 09:40:29 PDT
-Received: by mail-ew0-f50.google.com with SMTP id 24so2895465ewy.37
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 09:40:26 -0700 (PDT)
-Received: by 10.213.5.16 with SMTP id 16mr8527143ebt.12.1285087226590;
-        Tue, 21 Sep 2010 09:40:26 -0700 (PDT)
-Received: from clix.int.op5.se (fw1-sth-pio.op5.com [109.228.142.130])
-        by mx.google.com with ESMTPS id a48sm13098180eei.19.2010.09.21.09.40.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 21 Sep 2010 09:40:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Thunderbird/3.0.6 ThunderGit/0.1a
-In-Reply-To: <1285080133451-5555023.post@n2.nabble.com>
+	id S1757976Ab0IURfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 13:35:08 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33733 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757949Ab0IURfG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 13:35:06 -0400
+Received: by wwi17 with SMTP id 17so240197wwi.1
+        for <git@vger.kernel.org>; Tue, 21 Sep 2010 10:34:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=bi2cv4ma+lChwdtnFgq0Wa+zyFnoJe/ivxQEL5kstnc=;
+        b=o+tVSR/qDuNRyK8zUtEkmSXK8d3olZ+lpBsJtcNxsEVjApvCHovmuHcCVQhjO5kZzn
+         CSP7YgkdItloD6iTQhG/1Xi0FO7j8bQJ8H5BYYsRbgfrR3fynJUNfihYOXg/RJpzmQVZ
+         j9XyHWHEPBnMpAG04jLNv06+pMhAN83E7t7qE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=aehOsd3mgJQM/lNnZECZUfYh2oLC9+2yamP+tnr3NjXQhv7q4TtrtwzXttM2JPXWCA
+         ISsdTJui+WtitWX2ezME61U5jBW/7xZeXc4gi4q3lk0TxvOxYq0xNPguUT6mFASX2CER
+         x08jpDSb3RbCtdUqbjayxz+9QJwIb60qh6EnA=
+Received: by 10.227.142.136 with SMTP id q8mr3620698wbu.95.1285090481934;
+        Tue, 21 Sep 2010 10:34:41 -0700 (PDT)
+Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
+        by mx.google.com with ESMTPS id m5sm1706255wbc.9.2010.09.21.10.34.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 21 Sep 2010 10:34:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100920231349.GK23119@bowser.ece.utexas.edu>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156733>
 
-On 09/21/2010 04:42 PM, FernandoBasso wrote:
+The 20/09/10, Kumar Appaiah wrote:
+> On Mon, Sep 20, 2010 at 06:05:59PM -0500, Kumar Appaiah wrote:
+
+> > Ack that this also breaks build on CentOS. The simple reason is that
+> > the ncurses version on CentOS 5.5 is ncurses-5.5, while that on Debian
+> > Lenny is 5.7+. According to the changelog, 5.6 onwards has
+> > set_tabsize, so checking for that version of ncurses might be a good
+> > option.
 > 
-> I am really a beginner in. Bear with me please.
-> 
-> Why do we merge, say a testing branch into the master branch ? What is the
-> use of it ?
-> 
+> I have attached a patch which uses the patch number to determine this:
 
-Because the sum of the whole is greater than the parts. Most features in git
-for example are developed on topic branches. This makes it possible to keep
-unfinished code separate from the production branch that people actually use.
-
-> When there is a conflict when merging branches (merging the testing into the
-> current branch), should I edit the 'current' branch or the 'testing' branch
-> ?
-> 
-
-You should edit the working tree, since that's where the conflict will be
-staged. When you're done, commit the results and that will be a new commit
-on the branch you're on.
-
-> Should both branches have exactly the same code so that they can be merged
-> without conflicts ?
-> 
-
-Both branches should most definitely not have exactly the same code. If they
-did, there would be no point in merging them. The merge-result shouldn't
-have the same code as any of the branches either, unless you actually want
-to throw one branch away, in which case you'd be far better off doing just
-that.
+Thanks Kumar, it did it (with ncurses v5.6)! :-)
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Nicolas Sebrecht
