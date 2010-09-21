@@ -1,152 +1,100 @@
-From: Joshua Shrader <jshrader83@gmail.com>
-Subject: Re: can git-describe learn first-parent behavior?
-Date: Tue, 21 Sep 2010 15:57:07 -0400
-Message-ID: <AANLkTinDYae7yxSaRKNwOvkRe3yQ2GCBT=tiXhDe7NVR@mail.gmail.com>
-References: <AANLkTi=6o15y-6Q+tn40=hrPf9pmo+Y1Jd97hGxr5mH2@mail.gmail.com>
-	<4C987C2E.3060001@drmicha.warpmail.net>
-	<4C98830A.70203@viscovery.net>
-	<4C989BBD.80106@drmicha.warpmail.net>
-	<4C989E6B.1070703@viscovery.net>
-	<4C98A0B7.9050501@drmicha.warpmail.net>
-	<4C98A645.8070601@viscovery.net>
-	<4C98CEA1.2050405@drmicha.warpmail.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] sha1_name.c: update comment to mention :/foo syntax
+Date: Tue, 21 Sep 2010 22:06:31 +0200
+Message-ID: <vpq8w2ug8u0.fsf@bauges.imag.fr>
+References: <7ab60e32582447ad792602ff405dcee464ef1414.1284830388.git.kirr@landau.phys.spbu.ru>
+	<1285016477-22222-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7v62xzug94.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 21 21:57:28 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 22:11:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy8xw-0007C2-V2
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 21:57:25 +0200
+	id 1Oy9C2-00053j-Ik
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 22:11:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757945Ab0IUT5T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Sep 2010 15:57:19 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:57629 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756338Ab0IUT5R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 15:57:17 -0400
-Received: by gwj17 with SMTP id 17so1756668gwj.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 12:57:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=YFtfMwBV+kAyv+jx9n8BURjPjvO+/D+srSRmdPwWguU=;
-        b=MS/6isgGFK4ixi1dnBay5EARySnVfvFHhmPaiOmPrzioYoCQWbyz9ngwU3vcQiNkjo
-         ALUvPdQZpjldWwBxW1K9kBLWo+ggFAYwD8bez5HUXJOcec16yHM/bv5QrZFgV6zEVG7s
-         0nf0Bix/nRJ0Ah/hieIPiMi9ptDYX5+DS6W8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E0H5gOMl4N6X95xB6LXe7qpsa+tIHKDRtDuOeCZE3vvdS0EZ6q1y4uOlCpKzhOyJbk
-         pd7657P7go1eqqFdjCNLfEJ5KUhR8JThT0AgyoYWblKGDNg4bJXC4TllGtVGqFmArhB9
-         CHHM48Y+zIKfZlkgzCg5B167XcbGOgCpGOcjo=
-Received: by 10.150.216.2 with SMTP id o2mr11431287ybg.420.1285099028036; Tue,
- 21 Sep 2010 12:57:08 -0700 (PDT)
-Received: by 10.151.145.14 with HTTP; Tue, 21 Sep 2010 12:57:07 -0700 (PDT)
-In-Reply-To: <4C98CEA1.2050405@drmicha.warpmail.net>
+	id S1757314Ab0IUULv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Sep 2010 16:11:51 -0400
+Received: from imag.imag.fr ([129.88.30.1]:37196 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755990Ab0IUULu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 16:11:50 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o8LK6awY018657
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 21 Sep 2010 22:06:36 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Oy96l-000353-KS; Tue, 21 Sep 2010 22:06:31 +0200
+In-Reply-To: <7v62xzug94.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Tue\, 21 Sep 2010 11\:02\:31 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Tue, 21 Sep 2010 22:06:36 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156748>
 
-I think I need to apologize to the list.  I did not actually observe
-what I had stated in my original post.  Given the description (and my
-possibly naive understanding) of git-describe, I hypothesized that
-what I originally stated was possible. If git-describe is in fact
-implemented with a first-parent-like behavior, as some people believe
-to be true, then I believe it is working correctly - I've seen nothing
-to the contrary.  However, I do believe that the documentation is
-unclear if this is the case.  My interpretation of "depth," which I
-believe to be consistent with the graph-theoretical definition, does
-imply that what I stated could happen.
+Junio C Hamano <gitster@pobox.com> writes:
 
-
-On Tue, Sep 21, 2010 at 11:26 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Johannes Sixt venit, vidit, dixit 21.09.2010 14:34:
->> Am 9/21/2010 14:10, schrieb Michael J Gruber:
->>> Johannes Sixt venit, vidit, dixit 21.09.2010 14:00:
->>>> Am 9/21/2010 13:49, schrieb Michael J Gruber:
->>>>> searching to describe e5498e8a
->>>>> =A0annotated =A0 =A0 =A0 =A0 38 v1.7.1.1
->>>>> =A0annotated =A0 =A0 =A0 =A0252 v1.7.1
->>>>> =A0annotated =A0 =A0 =A0 =A0268 v1.7.1-rc2
->>>>> =A0annotated =A0 =A0 =A0 =A0318 v1.7.1-rc1
->>>>> =A0annotated =A0 =A0 =A0 =A0355 v1.7.1-rc0
->>>>> =A0annotated =A0 =A0 =A0 =A0478 v1.7.0.7
->>>>> =A0annotated =A0 =A0 =A0 =A0492 v1.7.0.6
->>>>> =A0annotated =A0 =A0 =A0 =A0512 v1.7.0.5
->>>>> =A0annotated =A0 =A0 =A0 =A0539 v1.7.0.4
->>>>> =A0annotated =A0 =A0 =A0 =A0564 v1.7.0.3
->>>>> traversed 1267 commits
->>>>> more than 10 tags found; listed 10 most recent
->>>>> gave up search at 97222d9634b5518cd3d328aa86b52746a16334a7
->>>>> v1.7.1.1-38-ge5498e8
->>>>>
->>>>> v1.7.1.1 clearly wins by depth priority.
->>>>
->>>> If "depth priority" is not the shortest ancestry path (and it obvi=
-ously is
->>>> not given the numbers above), what is it then, and why does it not=
- work
->>>> with Joshua's example? Wouldn't it be better to make it Just Work =
-instead
->>>> of adding a workaround that has to be enabled manually?
->>>
->>> I don't consider the existing behaviour wrong, though it may be a b=
-it
->>> tough to figure out. It may even be that the depth calculation has =
-an
->>> off-by-1 error which leads to this behaviour.
+> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
+>
+>> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+>> ---
+>> Noticed while reviewing the patch serie about textconv and symlinks.
+>> If we have comments, better have them up-to-date ;-).
 >>
->> I faintly recall that the current behavior was already made
->
-> Better faintly than faintingly ;)
->
->> --first-parent-like on purpose, exactly for cases like Joshua's and =
-the
->> one I cited. Why does it work with mine, but not with Joshua's?
+>>  sha1_name.c |    1 +
+>>  1 files changed, 1 insertions(+), 0 deletions(-)
 >>
->> Notice that v1.7.0.7 is an immediate parent of e5498e8a, but still i=
-ts
->> calculated "depth" is much higher than for v1.7.1.1, which is 25 com=
-mits
->> down in the history. Why? Why isn't it the same with Joshua's histor=
-y? Is
->> it due to the commit dates? Or the tag dates?
+>> diff --git a/sha1_name.c b/sha1_name.c
+>> index 7b7e617..d7ab72a 100644
+>> --- a/sha1_name.c
+>> +++ b/sha1_name.c
+>> @@ -1062,6 +1062,7 @@ int get_sha1_with_context_1(const char *name, =
+unsigned char *sha1,
+>>  	/* sha1:path --> object name of path in ent sha1
+>>  	 * :path -> object name of path in index
+>>  	 * :[0-3]:path -> object name of path in index at stage
+>> +	 * :/foo -> last commit whose subject starts with foo
 >
+> Documenting what hasn't been is a good thing, but is it really up-to-=
+date?
 >
-> By experimentation (inserting additional tag-less commits, not changi=
-ng
-> topology), I can make v2.0-base have the same, lower or higher depth
-> than v1.1-stable.
->
-> In fact, the (commit) date order is important here: For describing
-> <commit>, "describe" builds a 1 item list with commit, pops it, inser=
-ts
-> its parents in date order (!), looks at each item in that order, in e=
-ach
-> step again inserting the parents in date order. So, it's really that =
-the
-> branch with more newer commits wins (this is a lousy description, but
-> you get the idea).
->
-> Reading commit messages like 80dbae makes me think that this was
-> intended; and it is completely different from a first-parent approach=
-=2E
-> So I think the default really is a good default as is, and first-pare=
-nt
-> is useful and different in some cases.
->
-> Michael
->
+> Isn't it "a randomly chosen recent commit whose subject contains rege=
+xp
+> foo" these days?
+
+I don't know.
+
+I just tried to summarize what man git-rev-parse says:
+
+       =B7   A colon, followed by a slash, followed by a text (e.g.  :/=
+fix nasty bug):
+           this names a commit whose commit message starts with the spe=
+cified text.
+           This name returns the youngest matching commit which is reac=
+hable from any
+           ref. If the commit message starts with a !, you have to repe=
+at that; the
+           special sequence :/!, followed by something else than !  is =
+reserved for
+           now.
+
+If your description is more accurate than mine (especially about
+"randomly" Vs "last" and "regexp"), then the man should be updated.
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
