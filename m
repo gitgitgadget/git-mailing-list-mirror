@@ -1,162 +1,417 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Git Survey 2011; now let's not forget the index/cache/stage
-Date: Tue, 21 Sep 2010 02:28:19 +0300
-Message-ID: <AANLkTik-2gaUMoWRC=SPfzY-0HdPw587n0ugnvvbMb_w@mail.gmail.com>
-References: <AANLkTi=Fp89-MuYVCNFtSA25hVufbQD5TCJL-ATUDCDH@mail.gmail.com>
-	<201009201538.41287.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 01:28:26 2010
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Find out on which branch a commit was originally made
+Date: Mon, 20 Sep 2010 20:15:38 -0400
+Message-ID: <201009210015.o8L0FcJt020691@no.baka.org>
+References: <1jp42v5.w5dez21d3nlciM%lists@haller-berlin.de> <4C973E5B.4090201@gmail.com>
+        <4C9782A3.5010005@gmail.com>
+Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 02:15:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxpmb-0003aK-Sp
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 01:28:26 +0200
+	id 1OxqWc-0000JP-3w
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 02:15:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757665Ab0ITX2U convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Sep 2010 19:28:20 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38316 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757412Ab0ITX2U convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 19:28:20 -0400
-Received: by iwn5 with SMTP id 5so4598559iwn.19
-        for <git@vger.kernel.org>; Mon, 20 Sep 2010 16:28:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=wZUJnAMYSILZRzZcfgw9J2/jQ/0AisBdkfMJRvT55SY=;
-        b=JVuphfIHgRFOawmA2fwHu2U7aVg4tK/SPo8B45hvJ2AZ/mUWsqUpq/f5ZHIBjozIBS
-         8S1dFMuq33HzY3d/0DlHwdoKZw2QcbhF2LbQ0aGeYkkHPsP9qHtZtXvKbkI9emwLmPw7
-         /I03k6xoaRRphyJhnu4LQNw8st9aLdRNk08v0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=jkad1xhAxw331VrmBMDqrPnCQOgg6EyKLQbWOUHrojhE7kcNrrQwaXWuD2bGUNwJb+
-         jKCUhZ2bYZV97027aiClv51++NNPIxPGKKwcNltYIW1y7MXeqguo8fk6/fKx7Dxj8K06
-         +SnAMCH1JS7DbmGYQLfUUaNqSOdvH7r+mBd90=
-Received: by 10.231.10.200 with SMTP id q8mr10016678ibq.83.1285025299212; Mon,
- 20 Sep 2010 16:28:19 -0700 (PDT)
-Received: by 10.231.160.6 with HTTP; Mon, 20 Sep 2010 16:28:19 -0700 (PDT)
-In-Reply-To: <201009201538.41287.jnareb@gmail.com>
+	id S1757932Ab0IUAPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 20:15:47 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:40337 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755400Ab0IUAPq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 20:15:46 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8L0Febu003584
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 20 Sep 2010 20:15:41 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8L0FcJt020691;
+	Mon, 20 Sep 2010 20:15:38 -0400
+In-reply-to: <4C9782A3.5010005@gmail.com>
+Comments: In reply to a message from "Artur Skawina <art.08.09@gmail.com>" dated "Mon, 20 Sep 2010 17:49:55 +0200."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156681>
 
-Hi,
 
-On Mon, Sep 20, 2010 at 4:38 PM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> On Mon, 20 Sep 2010, Felipe Contreras wrote:
->
->> I am *extremely* disappointed with the fact the git survey doesn't
->> have a way to determine how many people really use the
->> index/cache/stage; I think it's one of the most important features o=
-f
->> git, and I'm fairly certain most users don't know about it.
->
-> Doesn't "interactive commit / per-hunk comitting / partial commit" co=
-ver
-> "git index / cache / stage" response by being what git index is used =
-for
-> in explicit way?
+In message <4C9782A3.5010005@gmail.com>, Artur Skawina writes:
 
-Well, that's one part of the stage usage; there's a subset of 'git
-checkout', and 'git diff --cached' that are totally uncovered. I think
-somebody might be doing 'git add -i' without understanding where the
-commit is going.
+    Received very little testing, i only tried it on a few commits, other
+    than the example from this thread, but so far seems to do the right
+    thing for all of them.
 
->> IMO the main purpose of the survey is to find out areas of improveme=
-nt
->> in git, and I was hoping this year it would be obvious the stage
->> needed some help to make it more visible and accessible.
->
-> I don't think that having "git index / cache / stage" as a choice of
-> answer in multiple-choice '16) Which of the following features do you
-> use?' question would tell us that.
->
-> If there were "better support for staging / interacting with index"
-> (perhaps with footnote describing it in more detail below) in the
-> '17) Which of the following features would you like to see implemente=
-d
-> in git?' question, but IIRC it wasn't present in your proposal.
+I've discovered an error case in your pike script's logic (as and if I
+understand it).  If there are multiple children of the commit in
+question and those two children both merge onto the target branch, the
+path your program prints is incorrect (specifically, for reference B
+it prints D and then G--the correct answer is G only or a least D+H).
+It does not check to see whether a specific reachable merge commit is
+reachable by the path you have started to print.
 
-Well, if the users actually knew what the stage is, your idea would
-certainly be better, but I'm not so sure that's the case. A user might
-select "interactive commit / per-hunk comitting / partial commit"
-without realizing that's using the "stage", and just skip the question
-without thinking too much about it.
+----master-----------G------H
+                    /      /
+                    |     /
+ --A-------D-----------F-
+          /         |
+ ----B---C          |
+      \             |
+       ----------E--/
 
-So I think the first step would be to determine if people know what
-the stage is, and if they use it.
+    Unpikifying is left as an exercise for the user. ;)
 
->> You agreed it would be there, and it's not, so I wonder what's the
->> point of asking for feedback if it's going to be forgotten. Next tim=
-e
->> I think you should send the final version for review before
->> publishing.
->
-> There were two issues conflated that contributed to this error
-> of mine.
->
-> First, I have re-checked *direct email* responses to request for
-> feedback on Git User's Survey 2010 questions proposal, but I have
-> forgot to re-check responses which were send only to git mailing list
-> without Cc (i.e. in my case *newsgroup* responses). =C2=A0I am very s=
-orry
-> for that.
->
-> Second, I has a bit unplanned time away from Internet access at the e=
-nd
-> of August, so I had only about a day to do re-check, edit and open th=
-e
-> survey on 1 September. =C2=A0I should have edited survey as soon as i=
- got
-> improvement suggestion, but the fact that one has to close all channe=
-ls
-> before adding new answer to a multiple-choice question (I think
-> Survs.com did it for a good reason) made me postpone it.
+I've converted it to perl and it now handles both your problem (which
+I now understand, I was distracted by the subject line) and mine
+(which I now better understand includes yours as well--we use --rebase
+a lot so don't have many unnamed branches).  I'm also being annoyed at
+git's default merge --ff option which causes the wrong branch to be
+labeled with the branch name.
 
-Ok, but still, I think a final notification one week or so before
-would help. Either posting the last version, or just point the wiki.
+Of course it still suffers from reporting branches created after the
+reference you are interested in was created.
 
->> I don't think I would care about the results this year, so can we ha=
-ve
->> a wiki with next years's survey? I *really* want to make sure it get=
-s
->> there.
->
-> Well, nobody prevents you from starting GitSurvey2011 page on git wik=
-i.
-> You can use older version of GitSurvey2010 as a template:
-> =C2=A0https://git.wiki.kernel.org/index.php?title=3DGitSurvey2010&old=
-id=3D8988
-> (click edit and copy the contents). =C2=A0Having a year for discussio=
-n about
-> what questions should there be in user's survey would only improve it=
-=2E
+					-Seth Robertson
 
-Ok, I'll do that when I have time :)
+git://github.com/SethRobertson/git-what-branch.git
 
-> P.S. I can even add you as a member to 'git' account on Survs.com, so
-> you would be able to view and even edit survey there, but the Premium
-> plan, which we have thanks to generosity of Survs.com administration
-> (received after Survs.com got out of beta - first survey on Survs.com
-> was run on beta), will downgrade to the Free plan on Sep 22, 2011.
+----------------------------------------------------------------------
+#!/usr/bin/perl
+#
+# Tell us what preferred branch a commit was made on and if has not
+# been made on any preferred branch, the earliest path the commit got
+# onto a named branch.
+#
+# Preferred meaning ignoring branches that are a descendant due to a
+# merge, close to the answer you would have gotten if you had asked
+# the question at the moment the commit/tag was made.
+#
+# If I am on a release branch and tag a commit, if I ask that question
+# I should be told the name of the release branch.  If I later merge
+# onto master and ask that question, being told that the tag was also
+# made on master is disingenious.  master is a descendant, but the tag
+# was not made on master.
+#
+# Thanks to Artur Skawina for his assistance in developing some
+# of the algorithms used by this script.
+#
+# License: GPL v2
+# Copyright (c) 2010 Seth Robertson
+#
+use warnings;
+no warnings "uninitialized";
+use Getopt::Long;
+use strict;
 
-Sure, but I only would feel comfortable of updating the site after
-some agreement has been reached on the wiki or ml.
+my $USAGE="$0: [--allref] [--all] [--quiet] [--reference-branch=branchname] [--reference=reference] <commit-hash/tag>...
 
-Cheers.
+--allref
+	Consider even remote branches as candidates for the branch a
+	reference is on
 
---=20
-=46elipe Contreras
+--all
+	Print all reachable branch names (and merge paths)
+
+--quiet
+	Print only the branch names, not the merge paths
+
+--reference-branch <branchname>
+	The command line arguments/reference are searched to see if
+	they can reach this branch.
+
+--reference <hash|tag>
+	Specify a particular commit you which you want to
+	know how the commit in question was reached
+";
+
+my(%OPTIONS);
+Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
+GetOptions(\%OPTIONS, 'a|allref', 'all', 'quiet', 'debug', 'reference-branch=s', 'reference=s', 'verbose|v+') || die $USAGE;
+
+my ($OPT_A);
+$OPT_A="-a" if ($OPTIONS{'a'});
+
+if ( $#ARGV < 0 )
+{
+    print STDERR $USAGE;
+    exit(2);
+}
+
+my ($MULTI);
+$MULTI=1 if ( $#ARGV > 0 );
+
+
+
+
+########################################
+#
+# Describe a hash if necessary
+#
+sub describep($)
+{
+  my ($ref) = @_;
+
+  if ($ref =~ /^[0-9a-f]{40}$/)
+  {
+    my $newref;
+    chomp($newref = `git describe $ref`);
+    $ref = $newref if ($newref && $? == 0);
+  }
+  $ref;
+}
+
+
+
+########################################
+#
+# Find shortest path through a dag
+# Return array of shortest path
+#
+sub find_shortest($$$$);
+sub find_shortest($$$$)
+{
+  my ($id,$target,$tree,$mark) = @_;
+
+  print STDERR "Looking at node $id\n" if ($OPTIONS{'debug'});
+
+  while ($id ne $target)
+  {
+    # Is this a merge commit?
+    if ($#{$tree->{$id}->{'parent'}} > 0)
+    {
+      # Is the first parent not a descendant?
+      if (!$mark->{$tree->{$id}->{'parent'}->[0]})
+      {
+	my (@minp);
+	my ($mindef);
+
+	# See which parent is the best connected
+	foreach my $parent (@{$tree->{$id}->{'parent'}})
+	{
+	  next unless $mark->{$parent};
+
+	  my (@tmp) = find_shortest($parent,$target,$tree,$mark);
+
+	  if (!$mindef || $#minp > $#tmp)
+	  {
+	    @minp = @tmp;
+	    $mindef = 1;
+	  }
+	}
+	unshift(@minp,$id);
+	return(@minp);
+      }
+    }
+
+    $id = $tree->{$id}->{'parent'}->[0];
+  }
+  ();
+}
+
+
+foreach my $f (@ARGV)
+{
+  print "Looking for $f\n++++++++++++++++++++++++++++++++++++++++\n" if ($MULTI);
+
+  # Translate into a commit hash
+  my ($TARGET)=`git rev-list -n 1 $f 2>/dev/null`;
+  die "Unknown reference $f\n" if ($?);
+  chomp($TARGET);
+
+  my (@first,@second);
+
+  if ($OPTIONS{'reference'})
+  {
+    my $tmp = `git rev-list -n 1 $OPTIONS{'reference'} 2>/dev/null`;
+    die "Unknown --reference $OPTIONS{'reference'}\n" if ($?);
+    chomp($tmp);
+    @first = ($tmp);
+  }
+  else
+  {
+    # Generate first pass list of candidate branches
+    @first = grep(s/^\*?\s+// && s/\n// && !/ -\> / && (!$OPTIONS{'reference-branch'} || $OPTIONS{'reference-branch'} eq $_),`git branch $OPT_A --contains $f`);
+
+    if ($#first < 0)
+    {
+      my $msg = "any named branch";
+      $msg = "any local named branch" unless ($OPTIONS{'a'});
+      $msg = "branch $OPTIONS{'reference-branch'}" if ($OPTIONS{'reference-branch'});
+      die "Commit $f has not merged onto $msg yet\n";
+    }
+  }
+
+  # Shortcut if we might only need direct commit branches
+  if (!$OPTIONS{'all'})
+  {
+    # Look for merge intos to exclude
+    foreach my $br (@first)
+    {
+      # Exclude branches that this commit was merged into
+      push(@second,$br) if (grep(/$TARGET/,`git rev-list --first-parent $br`));
+    }
+  }
+
+  if ($#second >= 0)
+  {
+    # If branch was subsequently forked via `git branch <old> <new>`
+    # we might have multiple answers.  Only one is right, but we
+    # cannot figure out which is the privledged branch because the
+    # branch creation information is not preserved.
+
+    print join("\n",@second)."\n";
+  }
+  else
+  {
+    # Commit is on an anonymous branch, find out where it merged
+
+    my (%brtree,%min);
+    foreach my $br (@first)
+    {
+      my (%commits,@commits);
+      my $SOURCE = `git rev-list -n 1 $br 2>/dev/null`;
+      die "Cannot find branch reference.  Huh?\n" if ($?);
+      chomp($SOURCE);
+      print STDERR "Checking branch $br\n" if ($OPTIONS{'debug'});
+
+      # Discover all "ancestry-path" commits between target and branch
+      my $cmd = qq^git rev-list --ancestry-path --date-order --format=raw "$TARGET".."$br"^;
+      my ($commit);
+      foreach my $line (`$cmd`)
+      {
+	my (@f) = split(/\s+/,$line);
+	if ($f[0] eq "commit")
+	{
+	  $commit = $f[1];
+	  $commit =~ s/^-//;	# I have never seen this myself, but Artur Skawina wrote code to defend against it
+	  unshift(@commits,$commit);
+	}
+	if ($f[0] eq "parent")
+	{
+	  push(@{$commits{$commit}->{'parent'}},$f[1]);
+	}
+	if ($f[0] eq "committer")
+	{
+	  $commits{$commit}->{'committime'} = $f[$#f-1];
+	}
+      }
+
+      print STDERR "Found $#commits+1\n" if ($OPTIONS{'debug'});
+
+      my (@path);
+
+      # Go through commit list (in forward chonological order)
+      my (%mark,$cnt);
+      $mark{$TARGET} = ++$cnt;
+      foreach my $id (@commits)
+      {
+	next unless $commits{$id}->{'parent'};
+
+	# Check to see if this commit is actually a descent of $TARGET
+	if (grep($mark{$_},@{$commits{$id}->{'parent'}}))
+	{
+	  $mark{$id} = ++$cnt;
+	}
+
+	# Is this a merge commit?
+	if ($#{$commits{$id}->{'parent'}} > 0)
+	{
+	  # Is the first parent not a descendant? (earliest merge)
+	  if (!$mark{$commits{$id}->{'parent'}->[0]})
+	  {
+	    push(@path,$id);
+	  }
+	}
+      }
+
+      # Check to make sure we have gone from TARGET or SOURCE via parents
+      if (!$mark{$SOURCE})
+      {
+	# Not connected
+	next;
+      }
+
+      print STDERR "Found $#path+1 initial path entries\n" if ($OPTIONS{'debug'});
+
+      if ($#path >= 0)
+      {
+	my $id = $path[$#path];
+	@path = find_shortest($id,$TARGET,\%commits,\%mark);
+	$brtree{$br}->{'path'} = \@path;
+	$brtree{$br}->{'cnt'} = $#path;
+	$brtree{$br}->{'tstamp'} = $commits{$id}->{'committime'};
+
+	if ($OPTIONS{'all'})
+	{
+	  if ($OPTIONS{'quiet'})
+	  {
+	    print "$br\n";
+	  }
+	  else
+	  {
+	    print "* $TARGET first merged onto $br using the following path:\n";
+	    my $last = describep($TARGET);
+	    foreach my $mp (@{$brtree{$br}->{'path'}})
+	    {
+	      my $newm = describep($mp);
+	      print "  $last merged up at $newm (@{[scalar(localtime($commits{$mp}->{'committime'}))]})\n";
+	      $last = $newm;
+	    }
+	    print "  $last is on $br\n";
+	  }
+	}
+	else
+	{
+	  if (!defined($min{'tstamp'}) || $min{'tstamp'} > $brtree{br}->{'tstamp'})
+	  {
+	    %min = %{$brtree{$br}};
+	    $min{'br'} = $br;
+	    $min{'commits'} = \%commits;
+	  }
+	}
+      }
+      else
+      {
+	if ($OPTIONS{'all'})
+	{
+	  print "$TARGET is on $br\n";
+	}
+	else
+	{
+	  print "$br\n";
+	}
+	$min{'tstamp'} = 0;
+	delete($min{'br'});
+      }
+    }
+
+    if (!$OPTIONS{'all'})
+    {
+      if ($min{'br'})
+      {
+	if ($OPTIONS{'quiet'})
+	{
+	  print "$min{'br'}\n";
+	}
+	else
+	{
+	  print "$f first merged onto $min{'br'} using the following minimal path:\n";
+	  my $last = describep($TARGET);
+	  foreach my $br (@{$min{'path'}})
+	  {
+	    my $newm = describep($br);
+	    print "  $last merged up at $newm (@{[scalar(localtime($min{'commits'}->{$br}->{'committime'}))]})\n";
+	    $last = $newm;
+	  }
+	  print "  $last is on $min{'br'}\n";
+	}
+      }
+      else
+      {
+	print "Could not find $f connected anywhere\n" unless defined($min{'tstamp'});
+      }
+    }
+  }
+  print "----------------------------------------\n" if ($MULTI);
+}
