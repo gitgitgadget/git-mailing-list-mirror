@@ -1,64 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v2 2/3] blame,cat-file: Demonstrate --textconv is
- wrongly running converter on symlinks
-Date: Tue, 21 Sep 2010 16:43:12 -0400
-Message-ID: <20100921204312.GC395@sigill.intra.peff.net>
-References: <cover.1285013802.git.kirr@landau.phys.spbu.ru>
- <cover.1285013802.git.kirr@landau.phys.spbu.ru>
- <3c344d9b8f014ccb96dc37dc42668426fb5a3c30.1285013802.git.kirr@landau.phys.spbu.ru>
- <vpqvd6086fq.fsf@bauges.imag.fr>
- <20100921183959.GB4390@landau.phys.spbu.ru>
- <vpqzkvaetq4.fsf@bauges.imag.fr>
+From: David Brown <davidb@codeaurora.org>
+Subject: Enforcing clone/fetch to use references.
+Date: Tue, 21 Sep 2010 13:44:56 -0700
+Message-ID: <20100921204456.GA24357@huya.qualcomm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Sep 21 22:43:18 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 21 22:45:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy9gM-00011D-Fq
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 22:43:18 +0200
+	id 1Oy9i3-0001Z1-07
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 22:45:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754613Ab0IUUnN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 16:43:13 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58458 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754407Ab0IUUnM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 16:43:12 -0400
-Received: (qmail 11563 invoked by uid 111); 21 Sep 2010 20:43:12 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 21 Sep 2010 20:43:12 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Sep 2010 16:43:12 -0400
+	id S1754637Ab0IUUo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 16:44:58 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:9256 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753038Ab0IUUo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 16:44:57 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6113"; a="55249571"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 21 Sep 2010 13:44:57 -0700
+Received: from huya.qualcomm.com (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id C849610004C8
+	for <git@vger.kernel.org>; Tue, 21 Sep 2010 13:44:53 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <vpqzkvaetq4.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156758>
 
-On Tue, Sep 21, 2010 at 10:18:11PM +0200, Matthieu Moy wrote:
+[resending with corrected subject]
 
-> > This note clearly says "git diff is not affected, that's why we don't
-> > write new tests for it".
-> 
-> I disagree with the implication. Git diff is not affected because it
-> was done right, but behaving correctly doesn't mean you don't need
-> tests. Checking the behavior of diff with tests wouldn't harm (but
-> that's not serious not to do it).
+Suppose I want to publish some changes to a tree.  I have a server
+available where I can run a git daemon, but for one reason or another
+I want to force people to use the another git repo as a reference.
+The reason could be one of bandwidth, or someone who isn't comfortable
+making all of the other source available.  Ideally, someone who
+already has the other git repo cloned, and just adds mine as a remote
+wouldn't notice the difference.
 
-Actually, there is some breakage in "git diff" with userdiffs, just not
-for textconv (but the fix covers both, so the problem is sort of a
-superset).  I'm about to send a patch that has some tests, so don't
-worry about them for this series.
+Is there a way to do this?  I've tried various ways of using
+alternates to keep the blobs out of the repository I want to export,
+but the daemon just follows the alternates.  If I remove the
+alternates, I then seem to have a broken repository.  Most things I
+try, at least carry objects for all of the files in the HEAD tree,
+which most of the time is a large portion of the data.
 
--Peff
+If there isn't a way of doing this currently, is this something that
+others would find useful?
+
+Thanks,
+David
+
+-- 
+Sent by an employee of the Qualcomm Innovation Center, Inc.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum.
