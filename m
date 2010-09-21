@@ -1,99 +1,133 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH v2 2/3] blame,cat-file: Demonstrate --textconv is wrongly running converter on symlinks
-Date: Tue, 21 Sep 2010 22:39:59 +0400
-Message-ID: <20100921183959.GB4390@landau.phys.spbu.ru>
-References: <cover.1285013802.git.kirr@landau.phys.spbu.ru> <cover.1285013802.git.kirr@landau.phys.spbu.ru> <3c344d9b8f014ccb96dc37dc42668426fb5a3c30.1285013802.git.kirr@landau.phys.spbu.ru> <vpqvd6086fq.fsf@bauges.imag.fr>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG, PATCH 0/3] Fix {blame,cat-file} --textconv for cases
+ with symlinks
+Date: Tue, 21 Sep 2010 14:42:41 -0400
+Message-ID: <20100921184241.GA28567@sigill.intra.peff.net>
+References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
+ <vpqhbhmx6tg.fsf@bauges.imag.fr>
+ <7vpqwa254i.fsf@alter.siamese.dyndns.org>
+ <20100920180046.GA1790@sigill.intra.peff.net>
+ <7vaanbuggr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
 	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	Cl?ment Poulain <clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Jeff King <peff@peff.net>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Sep 21 20:40:13 2010
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 20:42:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy7lD-0001wE-Hc
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 20:40:11 +0200
+	id 1Oy7nk-0003HM-Fh
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 20:42:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755882Ab0IUSkB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 14:40:01 -0400
-Received: from landau.phys.spbu.ru ([195.19.235.38]:52779 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753737Ab0IUSkA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 14:40:00 -0400
-Received: by landau.phys.spbu.ru (Postfix, from userid 506)
-	id A0059FF723; Tue, 21 Sep 2010 22:39:59 +0400 (MSD)
+	id S1757578Ab0IUSmn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 14:42:43 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40626 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753833Ab0IUSmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 14:42:42 -0400
+Received: (qmail 10177 invoked by uid 111); 21 Sep 2010 18:42:42 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 21 Sep 2010 18:42:42 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Sep 2010 14:42:41 -0400
 Content-Disposition: inline
-In-Reply-To: <vpqvd6086fq.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.6i
+In-Reply-To: <7vaanbuggr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156741>
 
-On Mon, Sep 20, 2010 at 11:13:13PM +0200, Matthieu Moy wrote:
-> Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
-> 
-> > (Description partly by Matthieu Moy)
-> 
-> Better put such statements at the end, to avoid distracting the reader.
+On Tue, Sep 21, 2010 at 10:57:56AM -0700, Junio C Hamano wrote:
 
-Ok
-
-> > ~~~~
+> >   [diff "SYMLINK"]
+> >     textconv = pointless-munge
 > >
-> > NOTE: git diff doesn't try to textconv the pathnames, it runs the
-> > textual diff without textconv, which is the expected behavior.
+> > But again, I have no idea why anyone would want such a feature, so it is
+> > not worth thinking too hard about it.
 > 
-> It's not clear whether this is intended to stay in the commit message.
-> If not, it should go below the ---. If yes, then I'd incorporate this
-> into the message itself. The ~~~~ and NOTE look odd.
+> I agree with you; pointless-munge would just be 'printf "%s\n"' ;-)
 
-I know about --- and that content after it and up to patch itself goes
-to /dev/null. The text here was intended to stay in the commit message,
-and ~~~~ served as a separator in that message (git commit hook merges
-several blank lines into one, so one can't separate text parts with
-several empty lines, that's why I used this separator).
+Almost. That would print the name of the tempfile; the actual pathname
+is the contents of the tempfile (unless you are proposing totally
+alternate semantics for the symlink diff section. :) ).
 
-If it's ugly, let's omit it - I don't insist, but i don't understand why
-'NOTE:' looks odd?
+Just for fun, the patch to make this work is as tiny as:
 
+diff --git a/diff.c b/diff.c
+index 6fb18ae..58c4477 100644
+--- a/diff.c
++++ b/diff.c
+@@ -1771,8 +1771,14 @@ static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two, char *pre
+ 
+ static void diff_filespec_load_driver(struct diff_filespec *one)
+ {
+-	if (!one->driver)
++	if (one->driver)
++		return;
++
++	if (S_ISLNK(one->mode))
++		one->driver = userdiff_find_by_name("SYMLINK");
++	else
+ 		one->driver = userdiff_find_by_path(one->path);
++
+ 	if (!one->driver)
+ 		one->driver = userdiff_find_by_name("default");
+ }
+@@ -1820,7 +1826,7 @@ struct userdiff_driver *get_textconv(struct diff_filespec *one)
+ {
+ 	if (!DIFF_FILE_VALID(one))
+ 		return NULL;
+-	if (!S_ISREG(one->mode))
++	if (!S_ISREG(one->mode) && !S_ISLNK(one->mode))
+ 		return NULL;
+ 	diff_filespec_load_driver(one);
+ 	if (!one->driver->textconv)
 
-And also, do you remember your first question to this series? It was
-about does git diff --textconv misbehaves too or not. So I consider this
-note is important to put into description, and isn't the right place for
-such a note this patch, where show tests that demonstrate fauilures?
+after which I successfully tested with:
 
-This note clearly says "git diff is not affected, that's why we don't
-write new tests for it".
+  git init repo && cd repo &&
+  echo content >file.txt &&
+  ln -s file.txt link.txt &&
+  echo '*.txt diff=txt' >.gitattributes &&
+  git add . && git commit -m foo &&
+  git config diff.txt.textconv "sed 's/^/converted: /'" &&
+  git config diff.SYMLINK.textconv "perl -pe 's/$/\n/'" &&
+  git show
 
-Something like that...
+It works with the whole range of diff config, so you could do something
+as awesomely stupid as:
 
-> 
-> For example (in next patch):
-> 
-> | Instead get the mode from either worktree, index, .git, or origin
-> | entries when blaming and pass it to textconv_object() as context.
-> | 
-> | The reason to do it is not to run textconv filters on symlinks
-> + (just like "git diff" already does).
+  $ git config diff.SYMLINK.binary true
+  $ git show link.txt
+  ...
+  diff --git a/link.txt b/link.txt
+  new file mode 120000
+  index 0000000..4c33073
+  Binary files /dev/null and b/link.txt differ
 
-See above about my rationale on the note place.
+If you really wanted the "dereference my symlinks" behavior, you could
+do:
 
-> Anyway, I'm bikeshedding. With or without these remarks,
-> 
-> Reviewed-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+  git config diff.SYMLINK.textconv 'sh -c "cat `cat $1`" -'
 
-Thanks :)
+but that is not quite right; you would actually need to dereference
+relative symlinks with respect to the link itself, which textconv never
+gets (plus you would probably want to handle broken links more
+gracefully).
 
-Is it for this one patch, or does it apply to the whole series?
+Anyway, as I said at the beginning, for me this was just for fun. I find
+the intended use rather silly, but maybe somebody else is interested. I
+do think it's the right way of implementing such a feature, because we
+already turn off textconv when making patches that are meant to be
+applied rather than viewed. However, I didn't do any testing or give
+much thought to whether this would affect any unintended code paths.
 
-
-Thanks,
-Kirill
+-Peff
