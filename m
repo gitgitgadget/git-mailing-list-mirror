@@ -1,89 +1,71 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: staging specific lines out of a hunk for a commit
-Date: Tue, 21 Sep 2010 12:52:38 +0200
-Message-ID: <AANLkTim=FQyBHcaHEX92YLgODrvpesuA7e4xwXuWcFg4@mail.gmail.com>
-References: <AANLkTin4U78N_8LV8fCWuinNH9AFeOsRBjnvHM0qt2ZH@mail.gmail.com>
+From: Matthias Fechner <idefix@fechner.net>
+Subject: Re: Update Webservers from a remote repository
+Date: Tue, 21 Sep 2010 12:52:52 +0200
+Message-ID: <4C988E84.8020702@fechner.net>
+References: <4C9874BB.5060908@fechner.net> <20100921094128.GA13619@LK-Perkele-V2.elisa-laajakaista.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Graeme Geldenhuys <graemeg.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 12:52:45 2010
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Tue Sep 21 12:53:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy0Sr-0006CW-0v
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 12:52:45 +0200
+	id 1Oy0Ta-0006R5-E8
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 12:53:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754195Ab0IUKwk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Sep 2010 06:52:40 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64792 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753279Ab0IUKwj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 06:52:39 -0400
-Received: by iwn5 with SMTP id 5so5068189iwn.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 03:52:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6czmFLNk6u3rhYch+3wI95zXlEpUw7jIZVr2mgnu+WM=;
-        b=aXO72XuIk8V7tcv4bOFK+bHfbcZnd1i2TI0JwX1ytPIrDQdwNOlW64+Yo0vHnoNZIb
-         eMz+/0UAqLFJ9ssWGyy4+duQzlXoC2eT/F8eWUlo4URfARAHC0ZWNkADsxhH/yIfcZLf
-         6Gs1cheNgEY8JMrbVT+YbdSZIYRXwQi+QTEpY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pDjQ2WSTULf9+kEWG0QBdKSQm2HPIUXVmibUvU77Y3JCpcK51r1on1DFWsup2APJFF
-         9t+Wf/WrTY48xaY5ldIhbzpsLRwrEA/BRmfHfhzadcAcJz4uw+UYwSDiQAjluO8mRrJO
-         N2NdKp3U4VsjqVDpDc5kfhUVbl6brk3yp5lfI=
-Received: by 10.231.35.138 with SMTP id p10mr11740079ibd.33.1285066358905;
- Tue, 21 Sep 2010 03:52:38 -0700 (PDT)
-Received: by 10.231.171.149 with HTTP; Tue, 21 Sep 2010 03:52:38 -0700 (PDT)
-In-Reply-To: <AANLkTin4U78N_8LV8fCWuinNH9AFeOsRBjnvHM0qt2ZH@mail.gmail.com>
+	id S1756703Ab0IUKxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 06:53:25 -0400
+Received: from anny.lostinspace.de ([80.190.182.2]:12195 "EHLO
+	anny.lostinspace.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753279Ab0IUKxY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 06:53:24 -0400
+Received: from server.idefix.lan (host-188-174-193-180.customer.m-online.net [188.174.193.180])
+	(authenticated bits=0)
+	by anny.lostinspace.de (8.14.4/8.14.4) with ESMTP id o8LArFE4023654;
+	Tue, 21 Sep 2010 12:53:19 +0200 (CEST)
+	(envelope-from idefix@fechner.net)
+Received: from server.idefix.lan (localhost [127.0.0.1])
+	by server.idefix.lan (Postfix) with ESMTP id 0153769EE;
+	Tue, 21 Sep 2010 12:53:14 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at server.idefix.lan
+Received: from server.idefix.lan ([127.0.0.1])
+	by server.idefix.lan (server.idefix.lan [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id TGdMN16hB9cZ; Tue, 21 Sep 2010 12:52:54 +0200 (CEST)
+Received: from dhcp-10-27-1-64.internal.epo.org (unknown [192.168.20.6])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(No client certificate requested)
+	by server.idefix.lan (Postfix) with ESMTPSA;
+	Tue, 21 Sep 2010 12:52:53 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; de; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <20100921094128.GA13619@LK-Perkele-V2.elisa-laajakaista.fi>
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.6 (anny.lostinspace.de [80.190.182.2]); Tue, 21 Sep 2010 12:53:19 +0200 (CEST)
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,UNPARSEABLE_RELAY
+	autolearn=ham version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on anny.lostinspace.de
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156708>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156709>
 
-Hi,
-
-On Tue, Sep 21, 2010 at 12:40, Graeme Geldenhuys
-<graemeg.lists@gmail.com> wrote:
-> Hi,
+Am 21.09.10 11:41, schrieb Ilari Liusvaara:
+> git checkout -f master
+> git fetch origin
+> git reset --hard origin/master
 >
-> I know 'git gui' has this cool feature where you can stage one line a=
-t
-> a time. This is really handy, but also very annoying, if you have a
-> large piece of code you want to commit.
->
-> eg: I have a single hunk, which can't be split into smaller hunks
-> because it is all new code. But that hunk fixes a few bugs, or
-> introduces a few new features.
->
-> Is there a way to use 'git add -i' or 'git add -p' or 'git gui' and
-> tell it to add for example lines 5-20 of the hunk to the index?
-> Currently with 'git gui', I have to right click and select 'Stage lin=
-e
-> for commit' 15+ times! :-(
+> You definitely do not want to run merge non-interactively (conflict risk!)
 
-Just select the lines you would like to add, and than you can stage
-them at once.
+oh good point, thanks a lot.
 
->
-> I'm using git-gui 0.12.0.64 and git version 1.7.0.4.
+Bye,
+Matthias
 
-But I don't know since when this feature is available.
-
-Bert
-
-
->
-> --
-> Regards,
-> =C2=A0 - Graeme -
+-- 
+"Programming today is a race between software engineers striving to 
+build bigger and better idiot-proof programs, and the universe trying to 
+produce bigger and better idiots. So far, the universe is winning." -- 
+Rich Cook
