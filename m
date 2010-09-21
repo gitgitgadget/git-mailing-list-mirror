@@ -1,81 +1,60 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: Announce gitslave - manage a superproject with slave repositories
-Date: Mon, 20 Sep 2010 21:39:01 -0400
-Message-ID: <201009210139.o8L1d1iY026728@no.baka.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 21 03:39:10 2010
+From: Jonas Fonseca <fonseca@diku.dk>
+Subject: Re: [ANNOUNCE] tig-0.16.1
+Date: Mon, 20 Sep 2010 21:48:04 -0400
+Message-ID: <AANLkTin128s7SBVVLJjHkOYCEapmi9xL7Envnd6eheD0@mail.gmail.com>
+References: <20100919183556.GA22302@diku.dk> <20100920023036.GB2548@debian.b2j>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: bill lam <cbill.lam@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 03:48:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxrp8-00048V-29
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 03:39:10 +0200
+	id 1OxryA-0006KW-QA
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 03:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751865Ab0IUBjE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 21:39:04 -0400
-Received: from tsutomu.baka.org ([66.114.72.182]:38503 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751391Ab0IUBjD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 21:39:03 -0400
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8L1d1eT008504
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Mon, 20 Sep 2010 21:39:01 -0400
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8L1d1iY026728
-	for <git@vger.kernel.org>; Mon, 20 Sep 2010 21:39:01 -0400
+	id S1752431Ab0IUBsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 21:48:25 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62096 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739Ab0IUBsZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Sep 2010 21:48:25 -0400
+Received: by iwn5 with SMTP id 5so4705124iwn.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 18:48:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type;
+        bh=BhVvHPd/GOtunAs9xzHnunvuOKC8YbseaTmLU9OWrvQ=;
+        b=aTsh3bXEtxwJjjXTnTO1txzp2Hjc58EtGHgyVNw349xHCMobOSpOU2Z2f6Cjgwda95
+         8DmMofL4WICLt2ltrLHWEtmLslgoow5qZYOlxqyRBwlybxaSlzTimej5QGFQlJFpqdOv
+         4NpjrS7X1Hdmc+heYXGBnRm2Ribt0IwaCNtVw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=qqwrJTvCPqxI7pjbTG0ZAdaagkUhbqv06xLpRB/5sdRwlkNgUqmVufSUEthHXNV9lU
+         qXSqTXQ0pB8Gg7AKJmxY2OBuXcg4NhDeEURAEB4UpCPUhdFApOzTCsi6ZxYiBfRZY0FK
+         vyEul/qdi0b6TBI8ISqsk+mT0rjRc7C0ECdxc=
+Received: by 10.231.14.5 with SMTP id e5mr10717447iba.175.1285033704238; Mon,
+ 20 Sep 2010 18:48:24 -0700 (PDT)
+Received: by 10.231.39.194 with HTTP; Mon, 20 Sep 2010 18:48:04 -0700 (PDT)
+In-Reply-To: <20100920023036.GB2548@debian.b2j>
+X-Google-Sender-Auth: sLlAqBvpiYALO0xXSSEReFp_WFU
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156686>
 
+On Sun, Sep 19, 2010 at 22:30, bill lam <cbill.lam@gmail.com> wrote:
+> BTW, do you plan to port tig to windows?
 
-I'd like to announce the first public version of gitslave.
+No, I do not. But I welcome patches.
 
-gitslave creates a group of related repositories all of which are
-concurrently developed on and on which all git operations should
-operate, so when you branch, each repository in the project is
-branched in turn.  Similarly when you commit, push, pull, merge,
-tag, checkout, status, log, etc; each git command will run on the
-superproject and all slave repositories in turn.  This sort of
-activity may be very familiar to CVS users and to a lesser extent
-subversion users where it was fairly normal to assemble a
-superproject in just this way.
-
-git-submodules is the legacy solution for a similar sort of
-activity, but went a different way.  With submodules you have a
-semi-fixed subrepository which you are typically not doing active
-development on and which git commands performed on the
-superproject will not recurse down into the submodules. Another
-option is to stick everything in one giant repository, but that
-does not work well if some subsets are shared with other
-superprojects.
-
-The gits wrapper around git combines (and occasionally
-post-processes for some special commands) the git output to make
-everything clearer, which is very useful when you have a few
-dozen slaves where looking at a concatenation of identical output
-for each git command would lose the wheat in the chaff.
-
-However, gitslave is not perfect. You can have partial success
-and failure (which is advertised), programs like `gitk` will not
-show the global systems' history only a specific repository's,
-and things can get a little squirrelly if different branches/tags
-have different slave modules associated with them and you
-checkout back and forth.  However, we have not had any
-significant problems in over two years of intensive work on a
-project using this script.
-
-If your development style or project lends itself to many
-individual repositories, and those repositories are under your
-direct control and all repositories should at identical
-branch names at the same time, gitslave might just be for you.
-
-http://gitslave.sourceforge.net/
-
-Current release as of 2010-09-20: 1.0.0
-http://sourceforge.net/projects/gitslave/files/gitslave-1.0.0.tar.gz/download
-
-                                        -Seth Robertson
+-- 
+Jonas Fonseca
