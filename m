@@ -1,417 +1,63 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: Re: Find out on which branch a commit was originally made
-Date: Mon, 20 Sep 2010 20:15:38 -0400
-Message-ID: <201009210015.o8L0FcJt020691@no.baka.org>
-References: <1jp42v5.w5dez21d3nlciM%lists@haller-berlin.de> <4C973E5B.4090201@gmail.com>
-        <4C9782A3.5010005@gmail.com>
-Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
-To: Artur Skawina <art.08.09@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 02:15:58 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: Shouldn't git fetch also fetch the tags?
+Date: Mon, 20 Sep 2010 18:03:25 -0700
+Message-ID: <4A6D7554-6CDD-4A92-9E90-27CF555A44CF@sb.org>
+References: <AANLkTinb=g=Y=s9AqPtLEOqMxPJVqFxRa_2cB4=iNZ4k@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 03:03:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OxqWc-0000JP-3w
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 02:15:58 +0200
+	id 1OxrGg-0003Qo-TE
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 03:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757932Ab0IUAPr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Sep 2010 20:15:47 -0400
-Received: from tsutomu.baka.org ([66.114.72.182]:40337 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755400Ab0IUAPq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Sep 2010 20:15:46 -0400
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8L0Febu003584
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 20 Sep 2010 20:15:41 -0400
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8L0FcJt020691;
-	Mon, 20 Sep 2010 20:15:38 -0400
-In-reply-to: <4C9782A3.5010005@gmail.com>
-Comments: In reply to a message from "Artur Skawina <art.08.09@gmail.com>" dated "Mon, 20 Sep 2010 17:49:55 +0200."
+	id S1754301Ab0IUBD3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Sep 2010 21:03:29 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:34514 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753447Ab0IUBD2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Sep 2010 21:03:28 -0400
+Received: by pxi10 with SMTP id 10so1294858pxi.19
+        for <git@vger.kernel.org>; Mon, 20 Sep 2010 18:03:28 -0700 (PDT)
+Received: by 10.142.216.2 with SMTP id o2mr8437020wfg.142.1285031008459;
+        Mon, 20 Sep 2010 18:03:28 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id o9sm7763184wfd.4.2010.09.20.18.03.26
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Sep 2010 18:03:27 -0700 (PDT)
+In-Reply-To: <AANLkTinb=g=Y=s9AqPtLEOqMxPJVqFxRa_2cB4=iNZ4k@mail.gmail.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156682>
 
+`git fetch` will fetch any tags that are reachable from any refs that were fetched. It will not fetch tags that are not otherwise reachable. `git fetch --tags` explicitly instructs git fetch to fetch all tags.
 
-In message <4C9782A3.5010005@gmail.com>, Artur Skawina writes:
+-Kevin Ballard
 
-    Received very little testing, i only tried it on a few commits, other
-    than the example from this thread, but so far seems to do the right
-    thing for all of them.
+On Sep 20, 2010, at 4:00 PM, Felipe Contreras wrote:
 
-I've discovered an error case in your pike script's logic (as and if I
-understand it).  If there are multiple children of the commit in
-question and those two children both merge onto the target branch, the
-path your program prints is incorrect (specifically, for reference B
-it prints D and then G--the correct answer is G only or a least D+H).
-It does not check to see whether a specific reachable merge commit is
-reachable by the path you have started to print.
-
-----master-----------G------H
-                    /      /
-                    |     /
- --A-------D-----------F-
-          /         |
- ----B---C          |
-      \             |
-       ----------E--/
-
-    Unpikifying is left as an exercise for the user. ;)
-
-I've converted it to perl and it now handles both your problem (which
-I now understand, I was distracted by the subject line) and mine
-(which I now better understand includes yours as well--we use --rebase
-a lot so don't have many unnamed branches).  I'm also being annoyed at
-git's default merge --ff option which causes the wrong branch to be
-labeled with the branch name.
-
-Of course it still suffers from reporting branches created after the
-reference you are interested in was created.
-
-					-Seth Robertson
-
-git://github.com/SethRobertson/git-what-branch.git
-
-----------------------------------------------------------------------
-#!/usr/bin/perl
-#
-# Tell us what preferred branch a commit was made on and if has not
-# been made on any preferred branch, the earliest path the commit got
-# onto a named branch.
-#
-# Preferred meaning ignoring branches that are a descendant due to a
-# merge, close to the answer you would have gotten if you had asked
-# the question at the moment the commit/tag was made.
-#
-# If I am on a release branch and tag a commit, if I ask that question
-# I should be told the name of the release branch.  If I later merge
-# onto master and ask that question, being told that the tag was also
-# made on master is disingenious.  master is a descendant, but the tag
-# was not made on master.
-#
-# Thanks to Artur Skawina for his assistance in developing some
-# of the algorithms used by this script.
-#
-# License: GPL v2
-# Copyright (c) 2010 Seth Robertson
-#
-use warnings;
-no warnings "uninitialized";
-use Getopt::Long;
-use strict;
-
-my $USAGE="$0: [--allref] [--all] [--quiet] [--reference-branch=branchname] [--reference=reference] <commit-hash/tag>...
-
---allref
-	Consider even remote branches as candidates for the branch a
-	reference is on
-
---all
-	Print all reachable branch names (and merge paths)
-
---quiet
-	Print only the branch names, not the merge paths
-
---reference-branch <branchname>
-	The command line arguments/reference are searched to see if
-	they can reach this branch.
-
---reference <hash|tag>
-	Specify a particular commit you which you want to
-	know how the commit in question was reached
-";
-
-my(%OPTIONS);
-Getopt::Long::Configure("bundling", "no_ignore_case", "no_auto_abbrev", "no_getopt_compat", "require_order");
-GetOptions(\%OPTIONS, 'a|allref', 'all', 'quiet', 'debug', 'reference-branch=s', 'reference=s', 'verbose|v+') || die $USAGE;
-
-my ($OPT_A);
-$OPT_A="-a" if ($OPTIONS{'a'});
-
-if ( $#ARGV < 0 )
-{
-    print STDERR $USAGE;
-    exit(2);
-}
-
-my ($MULTI);
-$MULTI=1 if ( $#ARGV > 0 );
-
-
-
-
-########################################
-#
-# Describe a hash if necessary
-#
-sub describep($)
-{
-  my ($ref) = @_;
-
-  if ($ref =~ /^[0-9a-f]{40}$/)
-  {
-    my $newref;
-    chomp($newref = `git describe $ref`);
-    $ref = $newref if ($newref && $? == 0);
-  }
-  $ref;
-}
-
-
-
-########################################
-#
-# Find shortest path through a dag
-# Return array of shortest path
-#
-sub find_shortest($$$$);
-sub find_shortest($$$$)
-{
-  my ($id,$target,$tree,$mark) = @_;
-
-  print STDERR "Looking at node $id\n" if ($OPTIONS{'debug'});
-
-  while ($id ne $target)
-  {
-    # Is this a merge commit?
-    if ($#{$tree->{$id}->{'parent'}} > 0)
-    {
-      # Is the first parent not a descendant?
-      if (!$mark->{$tree->{$id}->{'parent'}->[0]})
-      {
-	my (@minp);
-	my ($mindef);
-
-	# See which parent is the best connected
-	foreach my $parent (@{$tree->{$id}->{'parent'}})
-	{
-	  next unless $mark->{$parent};
-
-	  my (@tmp) = find_shortest($parent,$target,$tree,$mark);
-
-	  if (!$mindef || $#minp > $#tmp)
-	  {
-	    @minp = @tmp;
-	    $mindef = 1;
-	  }
-	}
-	unshift(@minp,$id);
-	return(@minp);
-      }
-    }
-
-    $id = $tree->{$id}->{'parent'}->[0];
-  }
-  ();
-}
-
-
-foreach my $f (@ARGV)
-{
-  print "Looking for $f\n++++++++++++++++++++++++++++++++++++++++\n" if ($MULTI);
-
-  # Translate into a commit hash
-  my ($TARGET)=`git rev-list -n 1 $f 2>/dev/null`;
-  die "Unknown reference $f\n" if ($?);
-  chomp($TARGET);
-
-  my (@first,@second);
-
-  if ($OPTIONS{'reference'})
-  {
-    my $tmp = `git rev-list -n 1 $OPTIONS{'reference'} 2>/dev/null`;
-    die "Unknown --reference $OPTIONS{'reference'}\n" if ($?);
-    chomp($tmp);
-    @first = ($tmp);
-  }
-  else
-  {
-    # Generate first pass list of candidate branches
-    @first = grep(s/^\*?\s+// && s/\n// && !/ -\> / && (!$OPTIONS{'reference-branch'} || $OPTIONS{'reference-branch'} eq $_),`git branch $OPT_A --contains $f`);
-
-    if ($#first < 0)
-    {
-      my $msg = "any named branch";
-      $msg = "any local named branch" unless ($OPTIONS{'a'});
-      $msg = "branch $OPTIONS{'reference-branch'}" if ($OPTIONS{'reference-branch'});
-      die "Commit $f has not merged onto $msg yet\n";
-    }
-  }
-
-  # Shortcut if we might only need direct commit branches
-  if (!$OPTIONS{'all'})
-  {
-    # Look for merge intos to exclude
-    foreach my $br (@first)
-    {
-      # Exclude branches that this commit was merged into
-      push(@second,$br) if (grep(/$TARGET/,`git rev-list --first-parent $br`));
-    }
-  }
-
-  if ($#second >= 0)
-  {
-    # If branch was subsequently forked via `git branch <old> <new>`
-    # we might have multiple answers.  Only one is right, but we
-    # cannot figure out which is the privledged branch because the
-    # branch creation information is not preserved.
-
-    print join("\n",@second)."\n";
-  }
-  else
-  {
-    # Commit is on an anonymous branch, find out where it merged
-
-    my (%brtree,%min);
-    foreach my $br (@first)
-    {
-      my (%commits,@commits);
-      my $SOURCE = `git rev-list -n 1 $br 2>/dev/null`;
-      die "Cannot find branch reference.  Huh?\n" if ($?);
-      chomp($SOURCE);
-      print STDERR "Checking branch $br\n" if ($OPTIONS{'debug'});
-
-      # Discover all "ancestry-path" commits between target and branch
-      my $cmd = qq^git rev-list --ancestry-path --date-order --format=raw "$TARGET".."$br"^;
-      my ($commit);
-      foreach my $line (`$cmd`)
-      {
-	my (@f) = split(/\s+/,$line);
-	if ($f[0] eq "commit")
-	{
-	  $commit = $f[1];
-	  $commit =~ s/^-//;	# I have never seen this myself, but Artur Skawina wrote code to defend against it
-	  unshift(@commits,$commit);
-	}
-	if ($f[0] eq "parent")
-	{
-	  push(@{$commits{$commit}->{'parent'}},$f[1]);
-	}
-	if ($f[0] eq "committer")
-	{
-	  $commits{$commit}->{'committime'} = $f[$#f-1];
-	}
-      }
-
-      print STDERR "Found $#commits+1\n" if ($OPTIONS{'debug'});
-
-      my (@path);
-
-      # Go through commit list (in forward chonological order)
-      my (%mark,$cnt);
-      $mark{$TARGET} = ++$cnt;
-      foreach my $id (@commits)
-      {
-	next unless $commits{$id}->{'parent'};
-
-	# Check to see if this commit is actually a descent of $TARGET
-	if (grep($mark{$_},@{$commits{$id}->{'parent'}}))
-	{
-	  $mark{$id} = ++$cnt;
-	}
-
-	# Is this a merge commit?
-	if ($#{$commits{$id}->{'parent'}} > 0)
-	{
-	  # Is the first parent not a descendant? (earliest merge)
-	  if (!$mark{$commits{$id}->{'parent'}->[0]})
-	  {
-	    push(@path,$id);
-	  }
-	}
-      }
-
-      # Check to make sure we have gone from TARGET or SOURCE via parents
-      if (!$mark{$SOURCE})
-      {
-	# Not connected
-	next;
-      }
-
-      print STDERR "Found $#path+1 initial path entries\n" if ($OPTIONS{'debug'});
-
-      if ($#path >= 0)
-      {
-	my $id = $path[$#path];
-	@path = find_shortest($id,$TARGET,\%commits,\%mark);
-	$brtree{$br}->{'path'} = \@path;
-	$brtree{$br}->{'cnt'} = $#path;
-	$brtree{$br}->{'tstamp'} = $commits{$id}->{'committime'};
-
-	if ($OPTIONS{'all'})
-	{
-	  if ($OPTIONS{'quiet'})
-	  {
-	    print "$br\n";
-	  }
-	  else
-	  {
-	    print "* $TARGET first merged onto $br using the following path:\n";
-	    my $last = describep($TARGET);
-	    foreach my $mp (@{$brtree{$br}->{'path'}})
-	    {
-	      my $newm = describep($mp);
-	      print "  $last merged up at $newm (@{[scalar(localtime($commits{$mp}->{'committime'}))]})\n";
-	      $last = $newm;
-	    }
-	    print "  $last is on $br\n";
-	  }
-	}
-	else
-	{
-	  if (!defined($min{'tstamp'}) || $min{'tstamp'} > $brtree{br}->{'tstamp'})
-	  {
-	    %min = %{$brtree{$br}};
-	    $min{'br'} = $br;
-	    $min{'commits'} = \%commits;
-	  }
-	}
-      }
-      else
-      {
-	if ($OPTIONS{'all'})
-	{
-	  print "$TARGET is on $br\n";
-	}
-	else
-	{
-	  print "$br\n";
-	}
-	$min{'tstamp'} = 0;
-	delete($min{'br'});
-      }
-    }
-
-    if (!$OPTIONS{'all'})
-    {
-      if ($min{'br'})
-      {
-	if ($OPTIONS{'quiet'})
-	{
-	  print "$min{'br'}\n";
-	}
-	else
-	{
-	  print "$f first merged onto $min{'br'} using the following minimal path:\n";
-	  my $last = describep($TARGET);
-	  foreach my $br (@{$min{'path'}})
-	  {
-	    my $newm = describep($br);
-	    print "  $last merged up at $newm (@{[scalar(localtime($min{'commits'}->{$br}->{'committime'}))]})\n";
-	    $last = $newm;
-	  }
-	  print "  $last is on $min{'br'}\n";
-	}
-      }
-      else
-      {
-	print "Could not find $f connected anywhere\n" unless defined($min{'tstamp'});
-      }
-    }
-  }
-  print "----------------------------------------\n" if ($MULTI);
-}
+> Hi,
+> 
+> Usually when I do 'git fetch' the tags are fetched too, however, there
+> is one repo:
+> git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-2.6.35.y
+> 
+> Where it doesn't happen, and I manually have to 'git fetch --tags'.
+> 
+> What's going on?
+> 
+> -- 
+> Felipe Contreras
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
