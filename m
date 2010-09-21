@@ -1,63 +1,68 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: Git Survey 2011; now let's not forget the index/cache/stage
-Date: Tue, 21 Sep 2010 11:13:44 +0200
-Organization: Bertin Technologies
-Message-ID: <20100921111344.647453d8@chalon.bertin.fr>
-References: <201009201538.41287.jnareb@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: more useful set-upstream
+Date: Tue, 21 Sep 2010 11:30:25 +0200
+Message-ID: <vpqfwx3phou.fsf@bauges.imag.fr>
+References: <AANLkTi=c51u=pQ3TLt3YE54mbwy8AqRb2rcsatEVo2U5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 21 11:22:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ramana Kumar <ramana.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 21 11:30:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oxz3L-0002hu-HI
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 11:22:19 +0200
+	id 1OxzBN-00062F-4w
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 11:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755981Ab0IUJWM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 05:22:12 -0400
-Received: from blois.bertin.fr ([195.68.26.9]:62052 "EHLO blois.bertin.fr"
+	id S1756650Ab0IUJaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 05:30:30 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:48554 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752171Ab0IUJWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 05:22:11 -0400
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id A0835541BA
-	for <git@vger.kernel.org>; Tue, 21 Sep 2010 11:22:09 +0200 (CEST)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 7C14554196
-	for <git@vger.kernel.org>; Tue, 21 Sep 2010 11:22:09 +0200 (CEST)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0L93004FRBCXXVA0@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Tue, 21 Sep 2010 11:22:09 +0200 (CEST)
-In-reply-to: <201009201538.41287.jnareb@gmail.com>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17656.006
+	id S1751980Ab0IUJa3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 05:30:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o8L9HVPR008587
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 21 Sep 2010 11:17:31 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OxzBB-0007MA-Ds; Tue, 21 Sep 2010 11:30:25 +0200
+In-Reply-To: <AANLkTi=c51u=pQ3TLt3YE54mbwy8AqRb2rcsatEVo2U5@mail.gmail.com> (Ramana Kumar's message of "Tue\, 21 Sep 2010 18\:55\:08 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 21 Sep 2010 11:17:31 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o8L9HVPR008587
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1285665453.76154@20wIY5/nSRA6K2mfll8F+w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156700>
 
->> You agreed it would be there, and it's not, so I wonder what's the
->> point of asking for feedback if it's going to be forgotten. Next time
->> I think you should send the final version for review before
->> publishing.
->
->There were two issues conflated that contributed to this error
->of mine.
->
->First, I have re-checked *direct email* responses to request for 
->feedback on Git User's Survey 2010 questions proposal, but I have 
->forgot to re-check responses which were send only to git mailing list 
->without Cc (i.e. in my case *newsgroup* responses).  I am very sorry 
->for that.
+Ramana Kumar <ramana.kumar@gmail.com> writes:
 
-Well, all that seems to call for a git-backed survey engine, so that
-suggestions could be straightforward patches !
+> I don't understand why all my branches haven't automatically had the right
+> upstream set anyway - am I missing some configuration of pull and
+> push?
+
+If you keep it simple, they should:
+
+* git clone wherever => checks out the default branch, and sets the
+  upstream for it.
+
+* git checkout foo => if foo doesn't exist, and <remote>/foo exists,
+  foo is created and upstream is set to <remote>/foo (that's rather
+  recent)
+
+But we could probably have a better way to set the upstream after the
+fact when the initialisation magic didn't do its job.
 
 -- 
-Yann Dirson - Bertin Technologies
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
