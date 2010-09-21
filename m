@@ -1,94 +1,72 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Announce gitslave - manage a superproject with slave repositories
-Date: Tue, 21 Sep 2010 14:47:44 -0700 (PDT)
-Message-ID: <m3r5gmkbw0.fsf@localhost.localdomain>
-References: <201009210139.o8L1d1iY026728@no.baka.org>
+From: David Brown <davidb@codeaurora.org>
+Subject: Re: Enforcing clone/fetch to use references.
+Date: Tue, 21 Sep 2010 15:12:29 -0700
+Message-ID: <20100921221229.GA29680@huya.qualcomm.com>
+References: <20100921204456.GA24357@huya.qualcomm.com>
+ <20100921213135.GB1255@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Seth Robertson <in-gitvger@baka.org>
-X-From: git-owner@vger.kernel.org Tue Sep 21 23:47:53 2010
+To: Arun Raghavan <ford_prefect@gentoo.org>
+X-From: git-owner@vger.kernel.org Wed Sep 22 00:12:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyAgq-0001e7-OX
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 23:47:53 +0200
+	id 1OyB4m-0002EE-RU
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 00:12:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755205Ab0IUVrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 17:47:48 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37130 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754092Ab0IUVrr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 17:47:47 -0400
-Received: by fxm3 with SMTP id 3so1810316fxm.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 14:47:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=4ATw5igsn8ZQCKTKU6SsQuDRGZrCEAnuu+5KsVSbrng=;
-        b=a++ofv9V+gbAYWs3xTxUgZhpefuSgbFTMxxmECTWHthYlGNZPG65RraSqbEp6mZ0Ai
-         mSNwYoExd6Rz3ELAkj/js09yx2w/+wnezY0cqevn3dt4qkBRrkjKWDR6MPHusZt8UMjU
-         5pPB52SvdgH1Sq2aQ+MIFK9uiu0x+KopetzyQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=VDYSY9McRc2hoRyUsSoMybOzCFkwVtjfxMB5YW/b/pZgb1jBGhrSINIvFA0BTCrVGP
-         Dh+9aQT+YyZvUctgmPPnXM6ApMbfpSf1RhZaJyDqgpsiIg4IKtf8woclpmumHS87LyPJ
-         Ayjb51gr+LKqoWcRu/UV2j7Ws+RwnRXD2vyYs=
-Received: by 10.223.107.130 with SMTP id b2mr6967399fap.27.1285105665967;
-        Tue, 21 Sep 2010 14:47:45 -0700 (PDT)
-Received: from localhost.localdomain (abvk112.neoplus.adsl.tpnet.pl [83.8.208.112])
-        by mx.google.com with ESMTPS id t6sm3906278faa.3.2010.09.21.14.47.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 21 Sep 2010 14:47:44 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8LLlC6P031850;
-	Tue, 21 Sep 2010 23:47:22 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8LLktLo031846;
-	Tue, 21 Sep 2010 23:46:55 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <201009210139.o8L1d1iY026728@no.baka.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1753641Ab0IUWMc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 18:12:32 -0400
+Received: from wolverine01.qualcomm.com ([199.106.114.254]:61645 "EHLO
+	wolverine01.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754278Ab0IUWMb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 18:12:31 -0400
+X-IronPort-AV: E=McAfee;i="5400,1158,6113"; a="55259109"
+Received: from pdmz-css-vrrp.qualcomm.com (HELO mostmsg01.qualcomm.com) ([199.106.114.130])
+  by wolverine01.qualcomm.com with ESMTP/TLS/ADH-AES256-SHA; 21 Sep 2010 15:12:30 -0700
+Received: from huya.qualcomm.com (pdmz-snip-v218.qualcomm.com [192.168.218.1])
+	by mostmsg01.qualcomm.com (Postfix) with ESMTPA id 524BD10004C8;
+	Tue, 21 Sep 2010 15:12:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100921213135.GB1255@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156765>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156766>
 
-Seth Robertson <in-gitvger@baka.org> writes:
-
-> I'd like to announce the first public version of gitslave.
+On Tue, Sep 21, 2010 at 05:31:35PM -0400, Jeff King wrote:
+> On Tue, Sep 21, 2010 at 01:44:56PM -0700, David Brown wrote:
 > 
-> gitslave creates a group of related repositories all of which are
-> concurrently developed on and on which all git operations should
-> operate, so when you branch, each repository in the project is
-> branched in turn.  Similarly when you commit, push, pull, merge,
-> tag, checkout, status, log, etc; each git command will run on the
-> superproject and all slave repositories in turn.  This sort of
-> activity may be very familiar to CVS users and to a lesser extent
-> subversion users where it was fairly normal to assemble a
-> superproject in just this way.
-[...]
-
-> http://gitslave.sourceforge.net/
+> > Suppose I want to publish some changes to a tree.  I have a server
+> > available where I can run a git daemon, but for one reason or another
+> > I want to force people to use the another git repo as a reference.
+> > The reason could be one of bandwidth, or someone who isn't comfortable
+> > making all of the other source available.  Ideally, someone who
+> > already has the other git repo cloned, and just adds mine as a remote
+> > wouldn't notice the difference.
 > 
-> Current release as of 2010-09-20: 1.0.0
-> http://sourceforge.net/projects/gitslave/files/gitslave-1.0.0.tar.gz/download
+> I think the gentoo people were talking about doing something like this.
+> They wanted you to use some faster and/or restartable protocol to clone
+> initially, and so they wanted to reject initial clones. I'm not sure if
+> they are doing that, and how (from the thread below, I suspect they run
+> a patched git).
+> 
+> The simplest thing would be a pre-upload-pack hook. There was some
+> discussion of that in this thread:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/137007
 
-Could you please add information about this project to
-InterfacesFrontendsAndTools page on Git Wiki:
-  https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
+Arun, did you ever get a chance to rework the upload-pack hooks to
+work only from git daemon?  If not, I'd like to take a look into
+implementing this.
 
-Somewhere in neighbourhood of 'repo' or 'git-subtree' could be good.
+Thanks,
+David
 
-Thanks in advance.
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Sent by an employee of the Qualcomm Innovation Center, Inc.
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum.
