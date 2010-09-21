@@ -1,105 +1,124 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: can git-describe learn first-parent behavior?
-Date: Tue, 21 Sep 2010 17:26:25 +0200
-Message-ID: <4C98CEA1.2050405@drmicha.warpmail.net>
-References: <AANLkTi=6o15y-6Q+tn40=hrPf9pmo+Y1Jd97hGxr5mH2@mail.gmail.com> <4C987C2E.3060001@drmicha.warpmail.net> <4C98830A.70203@viscovery.net> <4C989BBD.80106@drmicha.warpmail.net> <4C989E6B.1070703@viscovery.net> <4C98A0B7.9050501@drmicha.warpmail.net> <4C98A645.8070601@viscovery.net>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: Deleting of the specified ref during the post-receive hook
+Date: Tue, 21 Sep 2010 09:55:04 -0600
+Message-ID: <4C98D558.9090900@workspacewhiz.com>
+References: <4C98C3F2.9050006@workspacewhiz.com> <20100921145014.GH32601@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: Joshua Shrader <jshrader83@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Sep 21 17:26:29 2010
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Sep 21 17:55:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy4jj-0006UH-ML
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 17:26:28 +0200
+	id 1Oy5Bg-00035y-Tc
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 17:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754952Ab0IUP0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 11:26:19 -0400
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:53141 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753276Ab0IUP0S (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 11:26:18 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 94F31155;
-	Tue, 21 Sep 2010 11:26:17 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 21 Sep 2010 11:26:17 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=owiiMbkJdCmXR4NzO6LErLp4rGU=; b=KjWe/9DmtEKMHJCHdZE19hbQ0neLhRGQJrUjHPCo5ZRJ/LD9RHXQ7rz+deCAQKjArPVDVUiKp3Qy2oahsPsKXqnanPD6HkUHzX7aICusXuKOc/INTt+jSdF4R7mhe0itATqzJbHtAFeeXXGgaFO2uM98Ac1SyCM7SNPcI6K7Wh8=
-X-Sasl-enc: SprO79ndJEEYoENq/iuK8M1iVn24iligBu5mPh067kG0 1285082777
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 023C05E09C6;
-	Tue, 21 Sep 2010 11:26:16 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.3
-In-Reply-To: <4C98A645.8070601@viscovery.net>
+	id S1757432Ab0IUPzL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 11:55:11 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:54830 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756837Ab0IUPzJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 11:55:09 -0400
+Received: (qmail 7670 invoked by uid 399); 21 Sep 2010 09:55:07 -0600
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.196.198.56)
+  by hsmail.qwknetllc.com with ESMTPAM; 21 Sep 2010 09:55:07 -0600
+X-Originating-IP: 75.196.198.56
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100825 Lightning/1.0b3pre Thunderbird/3.1.3
+In-Reply-To: <20100921145014.GH32601@spearce.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156730>
 
-Johannes Sixt venit, vidit, dixit 21.09.2010 14:34:
-> Am 9/21/2010 14:10, schrieb Michael J Gruber:
->> Johannes Sixt venit, vidit, dixit 21.09.2010 14:00:
->>> Am 9/21/2010 13:49, schrieb Michael J Gruber:
->>>> searching to describe e5498e8a
->>>>  annotated         38 v1.7.1.1
->>>>  annotated        252 v1.7.1
->>>>  annotated        268 v1.7.1-rc2
->>>>  annotated        318 v1.7.1-rc1
->>>>  annotated        355 v1.7.1-rc0
->>>>  annotated        478 v1.7.0.7
->>>>  annotated        492 v1.7.0.6
->>>>  annotated        512 v1.7.0.5
->>>>  annotated        539 v1.7.0.4
->>>>  annotated        564 v1.7.0.3
->>>> traversed 1267 commits
->>>> more than 10 tags found; listed 10 most recent
->>>> gave up search at 97222d9634b5518cd3d328aa86b52746a16334a7
->>>> v1.7.1.1-38-ge5498e8
->>>>
->>>> v1.7.1.1 clearly wins by depth priority.
->>>
->>> If "depth priority" is not the shortest ancestry path (and it obviously is
->>> not given the numbers above), what is it then, and why does it not work
->>> with Joshua's example? Wouldn't it be better to make it Just Work instead
->>> of adding a workaround that has to be enabled manually?
+  ----- Original Message -----
+From: Shawn O. Pearce
+Date: 9/21/2010 8:50 AM
+> Joshua Jensen<jjensen@workspacewhiz.com>  wrote:
+>> My current line of thought has an auto-merging script that monitors the
+>> refs/for/ namespace (similar to Gerrit) and then applies --no-ff merges
+>> to the appropriate branch.  For instance, when the user pushes to
+>> refs/for/master, the post-receive hook creates a secondary ref called
+>> refs/for/master-SHA1-timestamp and then deletes the refs/for/master ref
 >>
->> I don't consider the existing behaviour wrong, though it may be a bit
->> tough to figure out. It may even be that the depth calculation has an
->> off-by-1 error which leads to this behaviour.
-> 
-> I faintly recall that the current behavior was already made
+> FWIW, you don't need `` around the git update-ref calls, because you
+> aren't using the output of the command as input to another command.
+You are right.  I believe I was early on, and it just got copied and 
+pasted around.
+> No.  If there are two concurrent pushes occurring, the script may
+> execute in parallel.
+Okay, so what I'm doing is bad.  Got it.
+> But you'll actually get something much worse.  receive-pack will
+> create refs/for/master for the first user... and then might be put
+> to sleep while another user's receive-pack starts.  That second
+> user will see refs/for/master existing, and will fail their push
+> because their concept of $newrev doesn't match what is currently
+> at refs/for/master.  Then the first user wakes up, runs your
+> post-receive, and the ref is cleared.
+Yep, this is exactly what I was trying to avoid by deleting the ref.
+> The better strategy would be to use an update hook that refuses to
+> permit the creation of refs/for/master:
+>
+>    #!/bin/sh
+>    ref=$1
+>    old=$2
+>    new=$3
+>
+>    case $ref in
+>    refs/for/*)
+>      timestamp=`date +%s`
+>      git update-ref $ref-$new-$timestamp $new
+>      echo "Created $ref-$new-$timestamp"
+>      exit 1
+>      ;;
+>    *)
+>      exit 0
+>      ;;
+>    esac
+>
+>
+> By exit 1 here we refuse the push attempt, so receive-pack won't
+> create refs/for/master, and another user pushing won't see that
+> false failure.  However, unlike with Gerrit, every user is now going
+> to receive a push failure message because the hook has appeared to
+> reject the value, even though it accepted it.
+Okay, I'll try this.  I can train people in the push failure, if 
+necessary.  Thanks!
 
-Better faintly than faintingly ;)
+>> Before I go too much deeper down this path, am I way off base here?
+> I'd have to ask why you are using gitolite and trying to abuse
+> git-receive-pack to do something that Gerrit does out of the box...
+>
+Oh, how I would love to just leave it to Gerrit to handle this.  (I 
+*really* like Gerrit.)  If you would like to just skip ahead, the actual 
+question related to this email message is in the final paragraph.
 
-> --first-parent-like on purpose, exactly for cases like Joshua's and the
-> one I cited. Why does it work with mine, but not with Joshua's?
-> 
-> Notice that v1.7.0.7 is an immediate parent of e5498e8a, but still its
-> calculated "depth" is much higher than for v1.7.1.1, which is 25 commits
-> down in the history. Why? Why isn't it the same with Joshua's history? Is
-> it due to the commit dates? Or the tag dates?
+We don't want to squash our topic branches before pushing them to 
+Gerrit.  That means we end up with a range of 'n' number of commits in 
+the Gerrit review screen.  Gerrit understands that commit 'n' is 
+dependent on 'n-1' and so on, but unfortunately, it doesn't show them in 
+a tree/group on the main page.  That's a minor gripe, but here is the 
+major issue.
 
+When I review Change 1, I can press a submit button, and Change 1 goes 
+live right then.  Unfortunately, changes 2 through n were left behind.
 
-By experimentation (inserting additional tag-less commits, not changing
-topology), I can make v2.0-base have the same, lower or higher depth
-than v1.1-stable.
+If I review Change 1 through n and then press the Submit button on 
+Change n and then on Change n-1 and then on Change n-2, Gerrit does the 
+'right' thing (for us) and makes live the entire dependency chain at the 
+same time.  Of course, I would prefer to just have a group Submit 
+button, but that's another story.
 
-In fact, the (commit) date order is important here: For describing
-<commit>, "describe" builds a 1 item list with commit, pops it, inserts
-its parents in date order (!), looks at each item in that order, in each
-step again inserting the parents in date order. So, it's really that the
-branch with more newer commits wins (this is a lousy description, but
-you get the idea).
+This has come up on the mailing list a few times, and I even think there 
+is an issue tracker item for it.
 
-Reading commit messages like 80dbae makes me think that this was
-intended; and it is completely different from a first-parent approach.
-So I think the default really is a good default as is, and first-parent
-is useful and different in some cases.
+Let's ignore the review+submit portion of Gerrit now.  Can Gerrit be 
+coaxed to take a refs/for/master and directly apply it to the master 
+branch WITHOUT the review cycle?  If so, then I'm wasting my time trying 
+to right a script.
 
-Michael
+Josh
