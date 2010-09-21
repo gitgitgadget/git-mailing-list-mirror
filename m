@@ -1,112 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG, PATCH 0/3] Fix {blame,cat-file} --textconv for cases
- with symlinks
-Date: Tue, 21 Sep 2010 14:56:13 -0400
-Message-ID: <20100921185613.GB28567@sigill.intra.peff.net>
-References: <cover.1284830388.git.kirr@landau.phys.spbu.ru>
- <vpqhbhmx6tg.fsf@bauges.imag.fr>
- <7vpqwa254i.fsf@alter.siamese.dyndns.org>
- <20100920180046.GA1790@sigill.intra.peff.net>
- <7vaanbuggr.fsf@alter.siamese.dyndns.org>
- <20100921184241.GA28567@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Enable highlight executable path as a configuration option
+Date: Tue, 21 Sep 2010 21:09:40 +0200
+Message-ID: <201009212109.41676.jnareb@gmail.com>
+References: <4C96938C.5050505@cdwilson.us> <201009201110.38271.jnareb@gmail.com> <4C985DDF.8060807@cdwilson.us>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 21 20:56:22 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Alejandro R. =?iso-8859-1?q?Sede=F1o?=" <asedeno@mit.edu>,
+	git@vger.kernel.org
+To: Christopher Wilson <cwilson@cdwilson.us>
+X-From: git-owner@vger.kernel.org Tue Sep 21 21:10:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oy80r-0001MD-8p
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 20:56:21 +0200
+	id 1Oy8E4-00086o-NG
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Sep 2010 21:10:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752104Ab0IUS4P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 14:56:15 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:42294 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751828Ab0IUS4O (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Sep 2010 14:56:14 -0400
-Received: (qmail 10379 invoked by uid 111); 21 Sep 2010 18:56:13 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 21 Sep 2010 18:56:13 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 21 Sep 2010 14:56:13 -0400
+	id S1755244Ab0IUTJy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 15:09:54 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53373 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752683Ab0IUTJy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 15:09:54 -0400
+Received: by bwz11 with SMTP id 11so5349572bwz.19
+        for <git@vger.kernel.org>; Tue, 21 Sep 2010 12:09:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=+pE4OzU/JwnIMDxx/sAzmXfAV2/CSpROBL1U8chVjJM=;
+        b=l8IjR4405apzFCxPDj06OOLR8EtCva5wDSasbS3dYPEhTtY91nikkfF1uQJnOEGXxz
+         pvnBPgv4rBoSaf9qU7xP6TwU2fyW2fNyyMfgyMW4H7L73P5v2Vk4PCi/xEbFAB6wY1DE
+         ++P1I78RTXmCQPQbLpKtn5aHgGKBd6Zvgawro=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Yeg73V2rt2N0d1xnXvIIu2yRHbXbR5M/pLWJn5MY6h4RLiJOrWmRavCVMdHDlofHV4
+         rlr9PZSrI4xoOAtxHUvTak98inXOc5xIpD15ipmlSU7fpIp2/AwFaAKrxuuCzpRFGJ5q
+         bwvsZDvx7t2fD5S7ei+buruMpz4pbFJCNLTug=
+Received: by 10.204.66.206 with SMTP id o14mr8046743bki.159.1285096192592;
+        Tue, 21 Sep 2010 12:09:52 -0700 (PDT)
+Received: from [192.168.1.13] (abvk112.neoplus.adsl.tpnet.pl [83.8.208.112])
+        by mx.google.com with ESMTPS id d27sm7908918bku.22.2010.09.21.12.09.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 21 Sep 2010 12:09:50 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4C985DDF.8060807@cdwilson.us>
 Content-Disposition: inline
-In-Reply-To: <20100921184241.GA28567@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156742>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156743>
 
-On Tue, Sep 21, 2010 at 02:42:41PM -0400, Jeff King wrote:
+On Tue, 21 Sep 2010, Christopher Wilson wrote:
 
-> diff --git a/diff.c b/diff.c
-> index 6fb18ae..58c4477 100644
-> --- a/diff.c
-> +++ b/diff.c
-> @@ -1771,8 +1771,14 @@ static void emit_binary_diff(FILE *file, mmfile_t *one, mmfile_t *two, char *pre
->  
->  static void diff_filespec_load_driver(struct diff_filespec *one)
->  {
-> -	if (!one->driver)
-> +	if (one->driver)
-> +		return;
-> +
-> +	if (S_ISLNK(one->mode))
-> +		one->driver = userdiff_find_by_name("SYMLINK");
-> +	else
->  		one->driver = userdiff_find_by_path(one->path);
-> +
->  	if (!one->driver)
->  		one->driver = userdiff_find_by_name("default");
->  }
-> @@ -1820,7 +1826,7 @@ struct userdiff_driver *get_textconv(struct diff_filespec *one)
->  {
->  	if (!DIFF_FILE_VALID(one))
->  		return NULL;
-> -	if (!S_ISREG(one->mode))
-> +	if (!S_ISREG(one->mode) && !S_ISLNK(one->mode))
->  		return NULL;
->  	diff_filespec_load_driver(one);
->  	if (!one->driver->textconv)
+> Jakub, thanks for the helpful feedback.  I included the updated patch
+> (see below) which includes the changes you suggested. 
 
-Actually, thinking about this a little more, I wonder if the test for
-S_ISREG should perhaps have been in diff_filespec_load_driver from the
-very beginning. With the current code, I can do:
+> -- >8 --
+> Subject: [PATCH] Enable highlight executable path as a configuration option
+> 
+> Allow build-time/run-time configuration of the highlight executable
+> (must be the one from http://www.andre-simon.de due to assumptions
+> about parameters and output).  Defaults to previous behavior which
+> assumes that highlight is available on the server PATH. However, if
+> this is not the case, the path to the highlight executable can be
+> configured at build time as a configuration variable
+> 
+>     HIGHLIGHT_BIN = /path/to/highlight
+> 
+> or at runtime by configuring GITWEB_CONFIG
+> 
+>     $highlight_bin = /path/to/highlight
+> 
+> Signed-off-by: Christopher Wilson <cwilson@cdwilson.us>
 
-  $ echo 'binary content' >file.bin
-  $ ln -s file.bin link.bin
-  $ echo '*.bin diff=bin' >.gitattributes
-  $ git config diff.bin.binary true
-  $ git add -N .
-  $ git diff
-  diff --git a/.gitattributes b/.gitattributes
-  index e69de29..d38ad2e 100644
-  --- a/.gitattributes
-  +++ b/.gitattributes
-  @@ -0,0 +1 @@
-  +*.bin diff=bin
-  diff --git a/file.bin b/file.bin
-  index e69de29..f55142d 100644
-  Binary files a/file.bin and b/file.bin differ
-  diff --git a/link.bin b/link.bin
-  index e69de29..dce41ec 120000
-  Binary files a/link.bin and b/link.bin differ
+For what it is worth it:
 
-which does not seem right. We are again acting on the symlink's
-contents, which are a text pathname, as if they represented the content
-of that pathname.
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
-So I think that is a bug, albeit one that is relatively uncommon to
-trigger. S_ISGITLINK files may have the same issues, but perhaps not, as
-I think they get routed out of the regular diff codepath early.
+It would certainly be nice to have tests for $highlight_bin, but even
+assuming that HIGHLIGHT prerequisite is met, I don't know how such test
+could be written.  It is not a show-stopper.
 
--Peff
+-- 
+Jakub Narebski
+Poland
