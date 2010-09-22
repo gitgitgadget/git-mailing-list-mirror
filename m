@@ -1,67 +1,85 @@
-From: Andrew Keller <andrew@kellerfarm.com>
-Subject: Re: Really beginner on Version Control
-Date: Tue, 21 Sep 2010 23:52:19 -0400
-Message-ID: <1AF8A1BC-1E52-4385-A0FC-16A04B4724FF@kellerfarm.com>
-References: <1285080133451-5555023.post@n2.nabble.com> <m3mxrak937.fsf@localhost.localdomain> <1285114417273-5557145.post@n2.nabble.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: FernandoBasso <FernandoBasso.br@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 05:54:36 2010
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH 09/37] t6020: Modernize style a bit
+Date: Tue, 21 Sep 2010 22:41:17 -0600
+Message-ID: <AANLkTintJNQKq9Tg0D9g0_Qz9u62mWWR+Pz5OS2f_p2+@mail.gmail.com>
+References: <1284971350-30590-1-git-send-email-newren@gmail.com>
+	<1284971350-30590-10-git-send-email-newren@gmail.com>
+	<4C972839.9050303@viscovery.net>
+	<AANLkTin3wXKUJoRtdk4e1KT5Gwo1H1+9H07LU313Ubo1@mail.gmail.com>
+	<7v7hietuvf.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 22 06:41:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyGPj-0000sT-6L
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 05:54:35 +0200
+	id 1OyH94-0003KM-Nl
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 06:41:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752352Ab0IVDwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Sep 2010 23:52:24 -0400
-Received: from sanjose.tchmachines.com ([208.76.86.38]:55713 "EHLO
-	leia.tchmachines.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751989Ab0IVDwX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 23:52:23 -0400
-Received: from c-208-53-115-13.customer.broadstripe.net ([208.53.115.13] helo=[192.168.0.101])
-	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <andrew@kellerfarm.com>)
-	id 1OyGNP-0000uT-3T; Tue, 21 Sep 2010 23:52:11 -0400
-In-Reply-To: <1285114417273-5557145.post@n2.nabble.com>
-X-Mailer: Apple Mail (2.1081)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - leia.tchmachines.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kellerfarm.com
+	id S1750811Ab0IVElU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 00:41:20 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44220 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750730Ab0IVElT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 00:41:19 -0400
+Received: by fxm3 with SMTP id 3so88403fxm.19
+        for <git@vger.kernel.org>; Tue, 21 Sep 2010 21:41:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Aztz10Jd7feqT7HiFoPQ5FiRff9ZhUZTECQ0K4WcQFQ=;
+        b=ZRQVCUS1IzxteugWhqYT8DJO0Ch4zaEqWH0mOyaZFmz2ZBdfj/49FIfnZ+zm06Jm7n
+         ea5JLk38bdqiKuOg5VAGs5jQgMvMdHPqI1+BOBVIyRFJcvx/5ri75tO+Rf9RdPZr/8uF
+         n1DHt47A42YdlqSaFL56SNyhopJRNQAo9T9IY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cSm7GZ8AZOrWaqoE0ELT7rrwcZHKg3rCwsXvgK46g6dMqSTSSVnoFBYWOIB9e+9+mD
+         pZVz308+ZUmfIAFmX+2l2+7W1pXLMuxvP/8uTsQckN8zUEga5vJQhyIZPneAAS+3Ap1e
+         zv4EJz8yAPH/LMZlQO1eZqfGvZ1tjjJ9h/438=
+Received: by 10.223.125.148 with SMTP id y20mr3741305far.94.1285130477420;
+ Tue, 21 Sep 2010 21:41:17 -0700 (PDT)
+Received: by 10.223.119.209 with HTTP; Tue, 21 Sep 2010 21:41:17 -0700 (PDT)
+In-Reply-To: <7v7hietuvf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156781>
 
-On Sep 21, 2010, at 8:13 PM, FernandoBasso wrote:
+On Tue, Sep 21, 2010 at 7:44 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Elijah Newren <newren@gmail.com> writes:
+>
+>>> The old version requested a particular kind of failure. Are you say=
+ing
+>>> that with modern 'git merge' all non-zero exit codes mean the same =
+kind of
+>>> failure?
+>>
+>> No, I'm saying that I don't think the test meant to try to distingui=
+sh
+>> between exit codes.
+>
+> The check for status 1 comes from 72d1216 (New test case: merge with
+> directory/file conflicts, 2005-12-03), and if you read git-merge.sh f=
+rom
+> that era, you would notice that at least we do not want to see status=
+ 2
+> (merge wrapper failed in a bad way) from this test. =C2=A0git-merge w=
+as
+> designed to exit with status 1 when (and only when) the merge request=
+ was
+> reasonable, it did its best effort and left conflict to be resolved i=
+n the
+> working tree.
 
-> I really appreciate your help. All of you. This is all starting to make sense
-> to me thanks to you guys.
-> 
-> Now, what are the possible ways that we can get to a conflict when merging
-> branches ? I'm doing some study tests, and some times I get conflicts, some
-> times I don't. I couldn't really understand what causes them or not yet. 
-> 
-> For instance, I have 'hello' in line 2 of site.php in the master branch. I
-> go to the  testing branch, edit site.php, change 'hello' for 'world' at the
-> same line, commit and got back to master. I merge testing into master and I
-> get no conflicts. Shouldn't it conflict ? (site.php in master also contains
-> the string 'world' in the place of 'hello' now).
-
-If I am understanding correctly, then this is an example of a fast-forward merge.
-
-It sometimes helps to think of a series of commits as a series of changes, rather than a series of snapshots.  A merge conflict will occur when you *modify* overlapping sections of the same file in each branch.  The key word here is modify.  When you ask git to merge testing into master, you are not asking git to look at the code and figure out which one is "correct".  Instead, you are asking git to take the changes in testing, and the changes in master, each since they diverged, and create a new commit that incorporates both changes.
-
-The only thing is, in your example, since master did not progress since testing diverged, git simply thinks of it as being "behind" testing, so you end up with a fast-forward merge, where master simply acquires the newer commits that testing has.  You can think of it as a special case optimization.  No need to make a merge commit if master is just behind and needs to be caught up.
-
-If you would like to cause a merge conflict, then you should modify the same line of the same file in two different branches, and then try to merge the branches.  This is similar to what you just did, except that both master and testing must progress individually before you merge.
-
-~ Andrew Keller
+Indeed; looks like I didn't check closely enough.
