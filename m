@@ -1,116 +1,132 @@
-From: Joshua Shrader <jshrader83@gmail.com>
-Subject: Re: can git-describe learn first-parent behavior?
-Date: Wed, 22 Sep 2010 13:45:29 -0400
-Message-ID: <AANLkTimMggJtWNifuRCcVCEZ5NSjhdc9dEjftkOtjUOu@mail.gmail.com>
-References: <AANLkTi=6o15y-6Q+tn40=hrPf9pmo+Y1Jd97hGxr5mH2@mail.gmail.com>
-	<4C987C2E.3060001@drmicha.warpmail.net>
-	<4C98830A.70203@viscovery.net>
-	<4C989BBD.80106@drmicha.warpmail.net>
-	<4C989E6B.1070703@viscovery.net>
-	<4C98A0B7.9050501@drmicha.warpmail.net>
-	<4C98A645.8070601@viscovery.net>
-	<4C98CEA1.2050405@drmicha.warpmail.net>
-	<AANLkTinDYae7yxSaRKNwOvkRe3yQ2GCBT=tiXhDe7NVR@mail.gmail.com>
-	<4C99A7BB.50401@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Sep 22 19:45:39 2010
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: [PATCH] git-gui: Work around freeze problem with dialogs in Mac OS X
+Date: Wed, 22 Sep 2010 19:46:52 +0200
+Message-ID: <1jp8k4n.1lz3bce9u857kM%lists@haller-berlin.de>
+References: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 22 19:47:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyTNy-0003E0-Lo
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 19:45:39 +0200
+	id 1OyTPJ-00044i-3i
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 19:47:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390Ab0IVRpb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 13:45:31 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:36388 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753096Ab0IVRpa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 13:45:30 -0400
-Received: by gwj17 with SMTP id 17so254227gwj.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 10:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5FebAH58cWEx6GmY4da5LrHMpF/qjvgzuozv9NLFgZI=;
-        b=Ksfsv+VSqdHaLw0nQ61jfBUeuRKUdINMyoeLlvskAp3w2MPW/AeaENrYky0Oh0fNlm
-         nLInM3KsweOycL3h2sLznT7Xv5mjGbnN2iMHsMKKtmGyU8+GIuhKAlrCBe0JPg2qST3h
-         qsiOHQRoHJhmGxjkYiEzK/ixvFsfO4Yuwrln8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=N1Pk9tQN2YUbP/+Y+bwY06FEkg3wt/jENYaBQTvciih/4zQeyJ86a4qLkms3C+9oLd
-         Lk9gPr8t3CoIGd+m4vPkpKLgqy5G631ecYirqua20E32pdBcps+V6/RNkgz5PouRQq0G
-         xx64bH9rtutNXSkTohrlb3J1Pkwb7VVQvU//E=
-Received: by 10.151.26.11 with SMTP id d11mr1533285ybj.192.1285177529880; Wed,
- 22 Sep 2010 10:45:29 -0700 (PDT)
-Received: by 10.151.145.14 with HTTP; Wed, 22 Sep 2010 10:45:29 -0700 (PDT)
-In-Reply-To: <4C99A7BB.50401@drmicha.warpmail.net>
+	id S1753605Ab0IVRqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 13:46:55 -0400
+Received: from mail.ableton.net ([62.96.12.115]:60671 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753096Ab0IVRqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 13:46:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:In-Reply-To:To; bh=y8WBPkx+PuYhDTSYVB3dXLaFYJda0PvgSXYKr8Gzvvk=;
+	b=AW9E8PXdb57XxIqiWBBzFh8o4w1lC4lf3GXIFhjLYl6l+RWZYlHr6n2xMCAOj7lzUs2xuTO1XMghU8vsQPpg4xD40DPCJ6bflCZ71QKVkpXbXmvXt0msLRMn2lxRDy9hXdRiJqCtsXg4EP3aXnqhfavZqyFBsXJS5n4Wrz43IUc=;
+Received: from dslb-088-073-104-214.pools.arcor-ip.net ([88.73.104.214] helo=[192.168.42.92])
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1OyTPA-0004Fm-OE
+	for git@vger.kernel.org; Wed, 22 Sep 2010 19:46:53 +0200
+In-Reply-To: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156812>
 
-Thanks for the response.  Since my last message, I have been able to
-get a tag on the v1.0 branch (although not the original v1.0-stable
-tag) to appear in the git describe output when run on v1.1 head, and
-thus I do think a --first-parent option would be useful.
+Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
+binding will hang; see issue 3044863 in the Tk issue tracker.
+<http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
 
-On Wed, Sep 22, 2010 at 2:52 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Joshua Shrader venit, vidit, dixit 21.09.2010 21:57:
->> I think I need to apologize to the list. =A0I did not actually obser=
-ve
->> what I had stated in my original post. =A0Given the description (and=
- my
->> possibly naive understanding) of git-describe, I hypothesized that
->> what I originally stated was possible. If git-describe is in fact
->> implemented with a first-parent-like behavior, as some people believ=
-e
->> to be true, then I believe it is working correctly - I've seen nothi=
-ng
->> to the contrary. =A0However, I do believe that the documentation is
->> unclear if this is the case. =A0My interpretation of "depth," which =
-I
->> believe to be consistent with the graph-theoretical definition, does
->> imply that what I stated could happen.
->
-> Josh, no need to apologize. You simply tried to understand "git
-> describe". The mere fact that a Git long time contributor (J6t) and a=
-n
-> occasional contributor (I) are discussing "git describe"'s behaviour
-> tells you that it can't be that easy ;)
->
-> The man page says "most recent tag", and that is true, but with a
-> definition of "most recent" that you wouldn't expect. The description
-> there under "Search Strategy" is wrong, and has been at least since
-> 80dbae03. I'll try to come up with a better explanation fit for the m=
-an
-> page, possibly after writing some more tests.
->
-> The intended behaviour is explained really well in Shawn's commit
-> message for 80dbae03. And if you look at the algorithm you see that t=
-he
-> order of the parents (as stored in a merge commit), in particular
-> first-parent relationship plays no role at all. The algo takes all
-> parents and inserts them in date order into a list to be looped over
-> afterwards.
->
-> The more I understand the algo the more I realize that --first-parent=
- is
-> useful and completely different, and that I can optimize more in my p=
-atch.
->
-> Cheers
-> Michael
->
+To work around this, we perform commands that open a dialog after
+a brief delay; 150 ms seems to be a good compromise between short
+enough as to be not annoying, and long enough to reliably work
+around the issue.
+
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+---
+I already sent this two days ago, but it didn't seem to appear on the
+list for some reason, so I'm resending it. Apologies if you see this
+twice.
+
+ git-gui.sh |   39 +++++++++++++++++++++++++++------------
+ 1 files changed, 27 insertions(+), 12 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 4617f29..394c2a0 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3560,6 +3560,21 @@ if {[info exists repo_config(gui.wmstate)]} {
+    catch {wm state . $repo_config(gui.wmstate)}
+ }
+ 
++proc mac_freeze_workaround {cmd} {
++   if {[is_MacOSX] && $::have_tk85} {
++       # Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
++       # binding will hang; see issue 3044863 in the Tk issue tracker.
++       # <http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
++       #
++       # To work around this, we perform commands that open a dialog after a brief
++       # delay; 150 ms seems to be a good compromise between short enough as to be
++       # not annoying, and long enough to reliably work around the issue.
++       after 150 $cmd
++   } else {
++       $cmd
++   }
++}
++
+ # -- Key Bindings
+ #
+ bind $ui_comm <$M1B-Key-Return> {do_commit;break}
+@@ -3567,8 +3582,8 @@ bind $ui_comm <$M1B-Key-t> {do_add_selection;break}
+ bind $ui_comm <$M1B-Key-T> {do_add_selection;break}
+ bind $ui_comm <$M1B-Key-u> {do_unstage_selection;break}
+ bind $ui_comm <$M1B-Key-U> {do_unstage_selection;break}
+-bind $ui_comm <$M1B-Key-j> {do_revert_selection;break}
+-bind $ui_comm <$M1B-Key-J> {do_revert_selection;break}
++bind $ui_comm <$M1B-Key-j> {mac_freeze_workaround do_revert_selection;break}
++bind $ui_comm <$M1B-Key-J> {mac_freeze_workaround do_revert_selection;break}
+ bind $ui_comm <$M1B-Key-i> {do_add_all;break}
+ bind $ui_comm <$M1B-Key-I> {do_add_all;break}
+ bind $ui_comm <$M1B-Key-x> {tk_textCut %W;break}
+@@ -3606,16 +3621,16 @@ bind $ui_diff <Control-Key-f> {catch {%W yview scroll  1 pages};break}
+ bind $ui_diff <Button-1>   {focus %W}
+ 
+ if {[is_enabled branch]} {
+-   bind . <$M1B-Key-n> branch_create::dialog
+-   bind . <$M1B-Key-N> branch_create::dialog
+-   bind . <$M1B-Key-o> branch_checkout::dialog
+-   bind . <$M1B-Key-O> branch_checkout::dialog
+-   bind . <$M1B-Key-m> merge::dialog
+-   bind . <$M1B-Key-M> merge::dialog
++   bind . <$M1B-Key-n> {mac_freeze_workaround branch_create::dialog}
++   bind . <$M1B-Key-N> {mac_freeze_workaround branch_create::dialog}
++   bind . <$M1B-Key-o> {mac_freeze_workaround branch_checkout::dialog}
++   bind . <$M1B-Key-O> {mac_freeze_workaround branch_checkout::dialog}
++   bind . <$M1B-Key-m> {mac_freeze_workaround merge::dialog}
++   bind . <$M1B-Key-M> {mac_freeze_workaround merge::dialog}
+ }
+ if {[is_enabled transport]} {
+-   bind . <$M1B-Key-p> do_push_anywhere
+-   bind . <$M1B-Key-P> do_push_anywhere
++   bind . <$M1B-Key-p> {mac_freeze_workaround do_push_anywhere}
++   bind . <$M1B-Key-P> {mac_freeze_workaround do_push_anywhere}
+ }
+ 
+ bind .   <Key-F5>     ui_do_rescan
+@@ -3625,8 +3640,8 @@ bind .   <$M1B-Key-s> do_signoff
+ bind .   <$M1B-Key-S> do_signoff
+ bind .   <$M1B-Key-t> do_add_selection
+ bind .   <$M1B-Key-T> do_add_selection
+-bind .   <$M1B-Key-j> do_revert_selection
+-bind .   <$M1B-Key-J> do_revert_selection
++bind .   <$M1B-Key-j> {mac_freeze_workaround do_revert_selection}
++bind .   <$M1B-Key-J> {mac_freeze_workaround do_revert_selection}
+ bind .   <$M1B-Key-i> do_add_all
+ bind .   <$M1B-Key-I> do_add_all
+ bind .   <$M1B-Key-minus> {show_less_context;break}
+-- 
+1.7.3.4.g200b9
+
