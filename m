@@ -1,108 +1,74 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC/PATCH 3/3] gitweb/Makefile: Add test-installed target
-Date: Wed, 22 Sep 2010 16:21:26 +0200
-Message-ID: <1285165286-12452-4-git-send-email-jnareb@gmail.com>
-References: <1285165286-12452-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 22 16:22:12 2010
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: ANNOUNCE git-what-branch (was Re: Find out on which branch a commit was originally made)
+Date: Wed, 22 Sep 2010 12:35:49 -0400
+Message-ID: <201009221635.o8MGZnLD024629@no.baka.org>
+References: <1jp42v5.w5dez21d3nlciM%lists@haller-berlin.de> <4C973E5B.4090201@gmail.com> <4C9782A3.5010005@gmail.com> <201009210015.o8L0FcJt020691@no.baka.org>
+        <4C981475.10404@gmail.com>
+Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 22 18:36:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyQD6-0005nk-Be
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 16:22:12 +0200
+	id 1OySIg-0001id-5s
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 18:36:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754643Ab0IVOVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 10:21:50 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40730 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753025Ab0IVOVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 10:21:49 -0400
-Received: by mail-bw0-f46.google.com with SMTP id 11so464599bwz.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 07:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=eEkNoMrESTQGnAh/UM9X7wEBU5TOhcaf4H3KBT5kdGk=;
-        b=FfpVYw4f75ZqPaW0ZNMS07IBS2HokW2+axju4IVaZ7Z41Dr+bD45I5VWrwIycshtc+
-         IsAL0YmcD7gjI5RzJfqqB0BFhYkL1gFGCKxI/Q78Birx+173UxcO8osIG1CaKwZT090v
-         /Tut9qx50e/5K01mGiP7BXoY/Xo7JLoHDR1wA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=EPtEH+U5+paybNs7xDs3jEW2L/yKJPax6dCQj8w3BKlFSsVkN/UAgFB68YqvKYU8q4
-         fYQAUC9aC18st0+OcuufvS6R23UHKaGUYsjaXcnDA01XHgWT7CPqKYPAIe8vKMRlqt5/
-         LUMi7OMKP2tGLJyITa3NRiOMvShYaNHfmidZo=
-Received: by 10.204.141.16 with SMTP id k16mr106827bku.177.1285165308303;
-        Wed, 22 Sep 2010 07:21:48 -0700 (PDT)
-Received: from localhost.localdomain (abva250.neoplus.adsl.tpnet.pl [83.8.198.250])
-        by mx.google.com with ESMTPS id x13sm8626411bki.12.2010.09.22.07.21.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 22 Sep 2010 07:21:47 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.1
-In-Reply-To: <1285165286-12452-1-git-send-email-jnareb@gmail.com>
+	id S1751603Ab0IVQf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 12:35:58 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:45353 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750819Ab0IVQf5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 12:35:57 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8MGZoUJ024916
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 22 Sep 2010 12:35:51 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8MGZnLD024629;
+	Wed, 22 Sep 2010 12:35:49 -0400
+In-reply-to: <4C981475.10404@gmail.com>
+Comments: In reply to a message from "Artur Skawina <art.08.09@gmail.com>" dated "Tue, 21 Sep 2010 04:12:05 +0200."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156807>
 
-The 'test-installed' target in gitweb/Makefile installs and tests
-installed gitweb.
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-RFC, because I am not 100% sure that 'test-installed' should have
-'install' target as a dependency.
+In message <4C981475.10404@gmail.com>, Artur Skawina writes:
 
-Probably should be marked .PHONY, but then there are some other
-targets that should be marked such beside 'test-installed'.
+    $ time git-what-branch 1f9c381fa3e0b9b9042e310c69df87eaf9b46ea4
+    1f9c381fa3e0b9b9042e310c69df87eaf9b46ea4 first merged onto v2.6.32.n using the following minimal path:
+      v2.6.12-rc3-450-g1f9c381 merged up at v2.6.12-rc4-39-gad34ea2 (Fri May 20 22:27:44 2005)
+      v2.6.12-rc4-39-gad34ea2 merged up at v2.6.12-rc3-590-gbfd4bda (Thu May  5 14:59:37 2005)
+      v2.6.12-rc3-590-gbfd4bda merged up at v2.6.12-rc3-461-g84e48b6 (Wed May  4 00:27:24 2005)
+      v2.6.12-rc3-461-g84e48b6 is on v2.6.32.n
+    18m29.771s user   0m29.681s system   18m4.897s elapsed   105.03% CPU
 
-The t/Makefile part is fairly uncontroversial, I think.
+I found two minor bugs in my script which caused it to return something
+other than the most optimal path in all cases.  I then got crazy and
+added a --date-order and --topo-order -- the former orders paths by
+commit date and the latter orders paths by the number of merges that
+took place (and then by commit date) and then path summarization if
+multiple branches were obtained through the same path.
 
- gitweb/Makefile |    4 ++++
- t/Makefile      |    4 ++++
- 2 files changed, 8 insertions(+), 0 deletions(-)
+    Results are similar, that one extra merge i'll have to take a look at
+    later, but the cost difference...
 
-diff --git a/gitweb/Makefile b/gitweb/Makefile
-index 88bcf08..90f7212 100644
---- a/gitweb/Makefile
-+++ b/gitweb/Makefile
-@@ -152,6 +152,10 @@ install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
- 	$(INSTALL) -m 644 $(GITWEB_FILES) '$(DESTDIR_SQ)$(gitwebstaticdir_SQ)'
- 
-+test-installed: install
-+	GITWEB_TEST_INSTALLED='$(DESTDIR_SQ)$(gitwebdir_SQ)' \
-+		$(MAKE) -C ../t gitweb-test
-+
- ### Cleaning rules
- 
- clean:
-diff --git a/t/Makefile b/t/Makefile
-index c7baefb..7aa409a 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -17,6 +17,7 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
- 
- T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
- TSVN = $(wildcard t91[0-9][0-9]-*.sh)
-+TGITWEB = $(wildcard t95[0-9][0-9]-*.sh)
- 
- all: pre-clean
- 	$(MAKE) aggregate-results-and-cleanup
-@@ -46,6 +47,9 @@ full-svn-test:
- 	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=1 LC_ALL=C
- 	$(MAKE) $(TSVN) GIT_SVN_NO_OPTIMIZE_COMMITS=0 LC_ALL=en_US.UTF-8
- 
-+gitweb-test:
-+	$(MAKE) $(TGITWEB)
-+
- valgrind:
- 	GIT_TEST_OPTS=--valgrind $(MAKE)
- 
--- 
-1.7.2.1
+As we discussed privately, the cost difference is because instead of
+looking at just one branch, it is looking at 150+ branches.  If you
+use --reference-branch to specify the one branch you are looking at,
+it takes a much more reasonable 15-20 seconds.  Likewise if you select
+a commit more recent than 2005, the number of branches that it could
+apply to goes down and the command runs faster.
+
+Also in my most recent version I was able to find an even shorter path
+(two merges to master).
+
+I have cleaned everything up and made a formal release out of it.
+
+It is available at:  http://github.com/SethRobertson/git-what-branch
+
+					-Seth Robertson
