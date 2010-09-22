@@ -1,103 +1,81 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
 Subject: Re: Really beginner on Version Control
-Date: Thu, 23 Sep 2010 02:10:27 +0400
-Message-ID: <AANLkTi=4qdjicBZs=yPWmAu5B+GePQeTpOr80PBi3+29@mail.gmail.com>
+Date: Thu, 23 Sep 2010 02:13:18 +0400
+Message-ID: <AANLkTin60S-6dtSmcYGqQTgBbpqXFLJWhJWfCWgpiA0E@mail.gmail.com>
 References: <1285080133451-5555023.post@n2.nabble.com>
+	<m3mxrak937.fsf@localhost.localdomain>
+	<1285114417273-5557145.post@n2.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: FernandoBasso <FernandoBasso.br@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 23 00:10:36 2010
+X-From: git-owner@vger.kernel.org Thu Sep 23 00:13:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyXWN-0005bb-2O
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 00:10:35 +0200
+	id 1OyXZ6-0006gA-Oh
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 00:13:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752626Ab0IVWK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 18:10:29 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:34409 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751942Ab0IVWK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 18:10:28 -0400
-Received: by qyk33 with SMTP id 33so1369708qyk.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 15:10:27 -0700 (PDT)
+	id S1752016Ab0IVWNU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 18:13:20 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51492 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751854Ab0IVWNT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 18:13:19 -0400
+Received: by qyk36 with SMTP id 36so5879143qyk.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 15:13:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=sa2zerO8AJLCFaQMEwTDz8T/Niv9NyDR3St/ee10y8E=;
-        b=KdmB+dWIOqnACHAHsdnDTQjdTmuQHyXjGxyy6/IH2JwBuA238MNr/cfBMbGQCTtd0Y
-         scV24z5bPkW1iftmPFONf4mhRfh8fhiYlQaXwoKovGTLxOeKn+qWqio/FE9cQo+7Tm91
-         vFd9UuOh1HUXbc0U15xNI1xv7J0ZLIqs7BGO8=
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=qU8U8yscQLm70SeiO23MUT11Dx88+zojCTm5VksajjA=;
+        b=sEd8KFLClc1Yu2py0s4QV63kf+dyuuRSevP1VnpIwqnMqtibnMrW8zn4niiWg9iMoe
+         HC9E79bVBvW7dZvlTK8IIL5YgBrUvRVf8tpPfVNz5A0oBI5MU3w1OjpBWJtcrSos7A44
+         YVBDtVfRKmG6SU3DPWiyJgyXNc8uMQ5TZg6XI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=dz+BoogsnAw3rvWBaoh82xsggoy/L5baq0iWdnRpN7h/ZWgE56euy6bJT4m9Dc9Yhu
-         3gnupeRbtHwUxhYsCPJR3w3c3sn7hFYKLQBC1KR2qtHspFBfCfx/fHMcGcDVcTe+Zb9t
-         SPE+q557JutmLPMEp1W+jm+lGzLghwmicFik8=
-Received: by 10.224.62.199 with SMTP id y7mr580378qah.293.1285193427473; Wed,
- 22 Sep 2010 15:10:27 -0700 (PDT)
-Received: by 10.229.215.6 with HTTP; Wed, 22 Sep 2010 15:10:27 -0700 (PDT)
-In-Reply-To: <1285080133451-5555023.post@n2.nabble.com>
+         :cc:content-type:content-transfer-encoding;
+        b=AjZAJd1TT5B8wy2PyiOXH1oviQd3r14UrFlJveq0eVRCAAlT+nJ62czNEbInN0DRlB
+         0kMBT2cWM2qraJQODOh3NUE9M7BZU1NepjUHCrrdQLHehLN2KbpqTxtOjbsOTOuiG3Qh
+         oXddJ2nGXPrpVN3nbTqePnWb4QgL9bk9nDndo=
+Received: by 10.224.9.205 with SMTP id m13mr668373qam.68.1285193598489; Wed,
+ 22 Sep 2010 15:13:18 -0700 (PDT)
+Received: by 10.229.215.6 with HTTP; Wed, 22 Sep 2010 15:13:18 -0700 (PDT)
+In-Reply-To: <1285114417273-5557145.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156838>
 
-On Tue, Sep 21, 2010 at 6:42 PM, FernandoBasso
+On Wed, Sep 22, 2010 at 4:13 AM, FernandoBasso
 <FernandoBasso.br@gmail.com> wrote:
 >
-> Why do we merge, say a testing branch into the master branch ? What is the
-> use of it ?
+> For instance, I have 'hello' in line 2 of site.php in the master bran=
+ch. I
+> go to the =A0testing branch, edit site.php, change 'hello' for 'world=
+' at the
+> same line, commit and got back to master. I merge testing into master=
+ and I
+> get no conflicts. Shouldn't it conflict ? (site.php in master also co=
+ntains
+> the string 'world' in the place of 'hello' now).
 
-We usually don't do that, because it goes against recommended git workflows
-http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
-
-With Git, you typically merge your stable branch to to your main
-development branch or you merge some feature branch to master if you
-consider it to be mature enough to be included in the next release.
-
-> When there is a conflict when merging branches (merging the testing into the
-> current branch), should I edit the 'current' branch or the 'testing' branch
-
-You edit files in your working directory to resolve conflicts, after
-you commit the result to your current branch.
-
-> Should both branches have exactly the same code so that they can be merged
-> without conflicts ?
-
-No... There are different merging strategies, and Git is flexible enough
-to allow you to specify your own merging strategy for some files. The
-default merging strategy relies on the context to find if there is any
-conflict. It means that the same file has been edited around the same
-place (around the same line), then it will generate a conflict.
-
-There is one important thing to keep in mind when it comes to merges.
-Merge conflict are your friends and not your enemies. In other words,
-they warn you about changes to some files that can contradict each
-other, so you need to use your brain to resolve them gracefully.
-Usually, they do pretty good job at that, but in some rare cases, merge
-without any merge conflict can produce unworkable code. So, after any
-non-trivial merge, you should do testing. If testing reveals some
-problem then you should correct them. Git allows you amend any last
-commit (including the merge commit) using:
-
-git commit --amend
-
-If two branches are diverged a long time ago, it is very useful to look
-at history of those branches to find what changes caused the conflict.
-You can do that using the following command:
-
-gitk --merge
-
-or if you are interested only in one particular file then:
-
-gitk --merge this-file
+Conflicts happen only if two branches have contradictory _changes_ to
+the same line. If you merge some branch, it means you accept all change=
+s
+from it. So, if one branch has no changes, and the other branch has som=
+e
+changes then all changes from the other branch will be accepted without
+any conflict. The special case when there is no changes on your current
+branch but only on the merged branch is often described as fast-forward
+merge, because the result merge does not produce any new commit, but
+only advance the current state to the state of the other branch.
 
 
 Dmitry
