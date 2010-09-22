@@ -1,79 +1,128 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: Really beginner on Version Control
-Date: Thu, 23 Sep 2010 02:15:38 +0400
-Message-ID: <AANLkTin27ny4f2rPZSRWDVj3gOF1oH0t17WmsKH8TYXz@mail.gmail.com>
-References: <1285080133451-5555023.post@n2.nabble.com>
-	<m3mxrak937.fsf@localhost.localdomain>
-	<1285114417273-5557145.post@n2.nabble.com>
-	<1AF8A1BC-1E52-4385-A0FC-16A04B4724FF@kellerfarm.com>
-	<1285155943433-5558696.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: FernandoBasso <FernandoBasso.br@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 23 00:15:49 2010
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: Find out on which branch a commit was originally made) (was ANNOUNCE git-what-branch)
+Date: Wed, 22 Sep 2010 19:26:19 -0400
+Message-ID: <201009222326.o8MNQJ2E022410@no.baka.org>
+References: <1jp42v5.w5dez21d3nlciM%lists@haller-berlin.de> <4C973E5B.4090201@gmail.com> <4C9782A3.5010005@gmail.com> <201009210015.o8L0FcJt020691@no.baka.org> <4C981475.10404@gmail.com> <201009221635.o8MGZnLD024629@no.baka.org>
+        <4C9A66AF.5000302@gmail.com>
+Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
+To: Artur Skawina <art.08.09@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 23 01:26:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyXbO-0007Re-Qx
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 00:15:47 +0200
+	id 1OyYhw-0005dG-Bd
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 01:26:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751662Ab0IVWPm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 18:15:42 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:62568 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750739Ab0IVWPl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 18:15:41 -0400
-Received: by qyk33 with SMTP id 33so1375407qyk.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 15:15:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uQDs5kZ8a78GdaYy0XCCDWpu0rbJmUasix1SxJSy8zw=;
-        b=SXmukwMalAz8dHTY5p3L58mfI6eq7PvTLhP/6gv4s5aPFVabJME/QF+9C7TjuzzOYT
-         JvMFOmzcvqGFQjgmB0k82MaXW1HjdaGqGFLHl6ZZrV5vDktvvHIpU5fjIOzLKwNEJDb3
-         8mUScvu97rt7N2f6o5L8z//4+HO5+Y+pcqDQk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=k7NiwFJmPJoCvWSz0sCyCyA4WoXuPoKCkYrSI4ejINwrrSIgr/IDKPAI+ZQ9WV7CgG
-         ywwoYP5NyLgoLg3pTNcO3JJS91Z1CAJElt9rwNT6hkW/IrT6LpTs+KmKND3jZWPktn2A
-         EpdqlFZaJR/1s571mcxyfBc8BjGEJwT7nvXZY=
-Received: by 10.224.65.138 with SMTP id j10mr600318qai.147.1285193738955; Wed,
- 22 Sep 2010 15:15:38 -0700 (PDT)
-Received: by 10.229.215.6 with HTTP; Wed, 22 Sep 2010 15:15:38 -0700 (PDT)
-In-Reply-To: <1285155943433-5558696.post@n2.nabble.com>
+	id S1751644Ab0IVX03 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 19:26:29 -0400
+Received: from tsutomu.baka.org ([66.114.72.182]:38560 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750782Ab0IVX02 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 19:26:28 -0400
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8MNQMAq019810
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 22 Sep 2010 19:26:22 -0400
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8MNQJ2E022410;
+	Wed, 22 Sep 2010 19:26:19 -0400
+In-reply-to: <4C9A66AF.5000302@gmail.com>
+Comments: In reply to a message from "Artur Skawina <art.08.09@gmail.com>" dated "Wed, 22 Sep 2010 22:27:27 +0200."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156839>
-
-On Wed, Sep 22, 2010 at 3:45 PM, FernandoBasso
-<FernandoBasso.br@gmail.com> wrote:
->
-> =A0On 09/22/2010 12:52 AM, Andrew Keller wrote:
->> The only thing is, in your example, since master did not progress si=
-nce
->> testing diverged,
->> git simply thinks of it as being "behind" testing...
->
->
-> You have used the word 'behind'. I think 'time' what is making me fai=
-l to
-> understand git merging. It depends on which branch I have changed las=
-t.
-
-Not really. Time is irrelevant, what matters is the common ancestor.
-Please, run gitk and take a look at the history graph. I think it will =
-make
-some things obvious. They say one picture is worth a thousand words...
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156840>
 
 
-Dmitry
+In message <4C9A66AF.5000302@gmail.com>, Artur Skawina writes:
+
+    This started in a thread about locating dead topic branche
+
+Isn't that pretty easy to do?  `git fsck --unreachable master | grep
+commits`?  Post-processing that to assemble branches would seem to be
+fairly simple.
+
+But yes, I wanted something completely different.  Something more
+like: if a bug was introduced in commit X, what releases or branches
+has it contaminated (or more positively, if a feature was introduced,
+where was it made available).  The simple case is figuring out on
+which branch a commit was originally made.
+
+I was unhappy when I realized that another way code could get out was
+through cherry-picks, and that there doesn't seem any non-brute force
+(computing checksums of patches for every patch in the tree) method to
+discover them.
+
+    Two things make the above trivial history a bit more complicated.
+    A) one side-branch can merge another, and build on top of changes that
+       are not yet available on 'master'; the result can then appear in master
+       via either one or both paths. This is why showing when and how a change
+       became visible on every side branch can be interesting.
+
+Quite.  I encountered this a few different ways and even when I fixed
+it during the reverse parse, I failed to learn my lesson and it was a
+problem during the forward parse.  I think the latest version is
+fairly bullet-proof.
+
+    B) when a side branch does not contain any new changes, but is
+       made uptodate wrt master, the resulting history could end up
+       like this:
+
+     m-> m -> m -> m -> m -> m -> m ->   master
+      \           /      \       /
+       b -> b -> b        c ->  c ->    side-branch#1
+
+       What happened was -- git "optimized" the simple merge away, turning it
+       into a fast-forward, saving one merge commit, but loosing the link
+       connecting the 'c' and 'b' parts of 'side-branch#1'.
+
+    Do you (anybody) happen to know a public repo, w/ history as above, ie
+    w/ more then one long-lived branch that has seen some fast-forwards?
+    I wonder how reliable recovering the missing link would be...
+
+I have a real (non-public, sorry) tree that did something approaching
+this:
+
+->m->m->m->m->m---------m
+       /     /         /
+b->b->b->b->b------b->b->
+ \     \     \    /
+  t->t->t->t->t->t
+
+However, due to fast-forwarding, it was turned into something like this:
+
+->m->m->m->m->m---------m
+       /     /         /
+b->?->?->?->?------b->b->
+ \     \     \    /
+  t->t->t->t->t->t
+  b  b  b  b  b  b
+
+I don't think there is any way to figure out what happened given git's
+available information.
+
+I was just saying on #git a few hours ago, though, that I think git
+needed a tree anonymizing program.  As long as one does not go
+overboard, it doesn't seem too difficult.  That probably means I just
+have not thought about the problem hard enough.  Of course, it would
+only replicate what is, not how you got there.
+
+    And there's no reason why this operation should take ~20 minutes, even
+    for the randomly chosen, but real, worst case. But finding a good repo
+    to test w/ would take longer than writing the code...
+
+It only takes 8 seconds per test on the linux kernel, which all things
+considered is rather fast.  The real problem is that each test is
+treated independently.  If someone got the complete history of the
+project and built a tree out of it, it would be extremely fast to run
+additional tests even ignoring the obvious optimiziations of not
+researching known paths.
+
+The question is, will this functionality be needed often enough to
+spend the time necessary to optimize it?
+
+
+					-Seth Robertson
