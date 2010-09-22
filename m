@@ -1,132 +1,89 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: [PATCH] git-gui: Work around freeze problem with dialogs in Mac OS X
-Date: Wed, 22 Sep 2010 19:46:52 +0200
-Message-ID: <1jp8k4n.1lz3bce9u857kM%lists@haller-berlin.de>
-References: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 22 19:47:01 2010
+From: Pat Notz <patnotz@gmail.com>
+Subject: Re: [PATCHv2 4/4] t7500: add tests of commit --squash
+Date: Wed, 22 Sep 2010 11:59:29 -0600
+Message-ID: <AANLkTinajr6DvYeyiK79xESYqg0kegUN1s8LxEqGoUc+@mail.gmail.com>
+References: <1284687596-236-1-git-send-email-patnotz@gmail.com>
+ <1285100703-49087-5-git-send-email-patnotz@gmail.com> <AANLkTinTA23Xf2AFLW+tzeLq1AWUhBBuca63qs_foXtr@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 22 20:00:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyTPJ-00044i-3i
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 19:47:01 +0200
+	id 1OyTbp-0001kG-5i
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 19:59:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605Ab0IVRqz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 13:46:55 -0400
-Received: from mail.ableton.net ([62.96.12.115]:60671 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753096Ab0IVRqy (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 13:46:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:In-Reply-To:To; bh=y8WBPkx+PuYhDTSYVB3dXLaFYJda0PvgSXYKr8Gzvvk=;
-	b=AW9E8PXdb57XxIqiWBBzFh8o4w1lC4lf3GXIFhjLYl6l+RWZYlHr6n2xMCAOj7lzUs2xuTO1XMghU8vsQPpg4xD40DPCJ6bflCZ71QKVkpXbXmvXt0msLRMn2lxRDy9hXdRiJqCtsXg4EP3aXnqhfavZqyFBsXJS5n4Wrz43IUc=;
-Received: from dslb-088-073-104-214.pools.arcor-ip.net ([88.73.104.214] helo=[192.168.42.92])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1OyTPA-0004Fm-OE
-	for git@vger.kernel.org; Wed, 22 Sep 2010 19:46:53 +0200
-In-Reply-To: <1jogy2y.tfhl6g1eq9mylM%lists@haller-berlin.de>
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
+	id S1754014Ab0IVR7v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 13:59:51 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53445 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753911Ab0IVR7u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 13:59:50 -0400
+Received: by fxm12 with SMTP id 12so215627fxm.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 10:59:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lHjokumrXfYaJ1KKZmKX4f/nflf+iY/YZfcCS7hp8FU=;
+        b=wjn/b4b5oqi4v66F9Rt2bmCkCC4TxEp1MDXvdCyYNZNqTHNOV2VCAV5+S95f79WnR3
+         RMpUQP0yKfn7r6QHz+CH8sBYS25TNvpFLXmeA7/j4pdaZmoXXAgRu4PfLhuYVFO+4xZM
+         2aErEeGlU8ZMkP0vxdF3TNgBYq44ZG/V6iwfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CiVALAJhTvj3xKA6JS2n9wvY+lwUhJNibCzmCaSVyTVwsb5YHxPLEpKPClCcfAncUY
+         rPZom2Vg2o3kmYMxqkP0wEC3zbYuBYVAbBeXtcPoEqHxJNvQIAbV9PEOic2FuhQW/Bhm
+         mj62k1YUlW53QWmdcji/szalwdjWWyG9FxbFw=
+Received: by 10.239.168.68 with SMTP id j4mr35055hbe.115.1285178389307; Wed,
+ 22 Sep 2010 10:59:49 -0700 (PDT)
+Received: by 10.239.185.65 with HTTP; Wed, 22 Sep 2010 10:59:29 -0700 (PDT)
+In-Reply-To: <AANLkTinTA23Xf2AFLW+tzeLq1AWUhBBuca63qs_foXtr@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156813>
 
-Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
-binding will hang; see issue 3044863 in the Tk issue tracker.
-<http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
+On Tue, Sep 21, 2010 at 2:36 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+>
+> On Tue, Sep 21, 2010 at 20:25, Pat Notz <patnotz@gmail.com> wrote:
+>
+> > +cat >editor <<\EOF
+> > +#!/bin/sh
+> > +sed -e "s/intermediate/edited/g" <"$1" >"$1-"
+> > +mv "$1-" "$1"
+> > +EOF
+> > +chmod 755 editor
+> > +
+> > +test_expect_success 'commit --squash works with -c' '
+> > + =A0 =A0 =A0 commit_for_rebase_autosquash_setup &&
+> > + =A0 =A0 =A0 EDITOR=3D./editor git commit --squash HEAD~1 -c HEAD =
+&&
+> > + =A0 =A0 =A0 commit_msg_is "squash! target message subject lineedi=
+ted commit"
+> > +'
+>
+> Why not put the editor in t/t7500/ and use test_set_editor() like the
+> other tests?
 
-To work around this, we perform commands that open a dialog after
-a brief delay; 150 ms seems to be a good compromise between short
-enough as to be not annoying, and long enough to reliably work
-around the issue.
+The real reason is that I'm new enough that I wasn't aware of this
+pattern.  I saw what was done in t7501-commit.sh and followed along.
+I missed the use of test_set_editor() right there in t7500-commit.sh.
+Doh!
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
-I already sent this two days ago, but it didn't seem to appear on the
-list for some reason, so I'm resending it. Apologies if you see this
-twice.
+I can certainly do that if it's preferred.  I must say, though, that I
+find it odd to put test inputs in a separate file in a separate
+directory from where the test transforms those into expected outputs.
+To see what the test is doing you have to load both files and trace
+through it.
 
- git-gui.sh |   39 +++++++++++++++++++++++++++------------
- 1 files changed, 27 insertions(+), 12 deletions(-)
-
-diff --git a/git-gui.sh b/git-gui.sh
-index 4617f29..394c2a0 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3560,6 +3560,21 @@ if {[info exists repo_config(gui.wmstate)]} {
-    catch {wm state . $repo_config(gui.wmstate)}
- }
- 
-+proc mac_freeze_workaround {cmd} {
-+   if {[is_MacOSX] && $::have_tk85} {
-+       # Tk 8.5 on Mac OS X has a bug whereby a dialog opened from a key
-+       # binding will hang; see issue 3044863 in the Tk issue tracker.
-+       # <http://sourceforge.net/tracker/?func=detail&aid=3044863&group_id=12997&atid=112997>
-+       #
-+       # To work around this, we perform commands that open a dialog after a brief
-+       # delay; 150 ms seems to be a good compromise between short enough as to be
-+       # not annoying, and long enough to reliably work around the issue.
-+       after 150 $cmd
-+   } else {
-+       $cmd
-+   }
-+}
-+
- # -- Key Bindings
- #
- bind $ui_comm <$M1B-Key-Return> {do_commit;break}
-@@ -3567,8 +3582,8 @@ bind $ui_comm <$M1B-Key-t> {do_add_selection;break}
- bind $ui_comm <$M1B-Key-T> {do_add_selection;break}
- bind $ui_comm <$M1B-Key-u> {do_unstage_selection;break}
- bind $ui_comm <$M1B-Key-U> {do_unstage_selection;break}
--bind $ui_comm <$M1B-Key-j> {do_revert_selection;break}
--bind $ui_comm <$M1B-Key-J> {do_revert_selection;break}
-+bind $ui_comm <$M1B-Key-j> {mac_freeze_workaround do_revert_selection;break}
-+bind $ui_comm <$M1B-Key-J> {mac_freeze_workaround do_revert_selection;break}
- bind $ui_comm <$M1B-Key-i> {do_add_all;break}
- bind $ui_comm <$M1B-Key-I> {do_add_all;break}
- bind $ui_comm <$M1B-Key-x> {tk_textCut %W;break}
-@@ -3606,16 +3621,16 @@ bind $ui_diff <Control-Key-f> {catch {%W yview scroll  1 pages};break}
- bind $ui_diff <Button-1>   {focus %W}
- 
- if {[is_enabled branch]} {
--   bind . <$M1B-Key-n> branch_create::dialog
--   bind . <$M1B-Key-N> branch_create::dialog
--   bind . <$M1B-Key-o> branch_checkout::dialog
--   bind . <$M1B-Key-O> branch_checkout::dialog
--   bind . <$M1B-Key-m> merge::dialog
--   bind . <$M1B-Key-M> merge::dialog
-+   bind . <$M1B-Key-n> {mac_freeze_workaround branch_create::dialog}
-+   bind . <$M1B-Key-N> {mac_freeze_workaround branch_create::dialog}
-+   bind . <$M1B-Key-o> {mac_freeze_workaround branch_checkout::dialog}
-+   bind . <$M1B-Key-O> {mac_freeze_workaround branch_checkout::dialog}
-+   bind . <$M1B-Key-m> {mac_freeze_workaround merge::dialog}
-+   bind . <$M1B-Key-M> {mac_freeze_workaround merge::dialog}
- }
- if {[is_enabled transport]} {
--   bind . <$M1B-Key-p> do_push_anywhere
--   bind . <$M1B-Key-P> do_push_anywhere
-+   bind . <$M1B-Key-p> {mac_freeze_workaround do_push_anywhere}
-+   bind . <$M1B-Key-P> {mac_freeze_workaround do_push_anywhere}
- }
- 
- bind .   <Key-F5>     ui_do_rescan
-@@ -3625,8 +3640,8 @@ bind .   <$M1B-Key-s> do_signoff
- bind .   <$M1B-Key-S> do_signoff
- bind .   <$M1B-Key-t> do_add_selection
- bind .   <$M1B-Key-T> do_add_selection
--bind .   <$M1B-Key-j> do_revert_selection
--bind .   <$M1B-Key-J> do_revert_selection
-+bind .   <$M1B-Key-j> {mac_freeze_workaround do_revert_selection}
-+bind .   <$M1B-Key-J> {mac_freeze_workaround do_revert_selection}
- bind .   <$M1B-Key-i> do_add_all
- bind .   <$M1B-Key-I> do_add_all
- bind .   <$M1B-Key-minus> {show_less_context;break}
--- 
-1.7.3.4.g200b9
-
+Still, I'd be happy to change do this if that's the preferred way.
