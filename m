@@ -1,119 +1,103 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Re*: [PATCH] t1503: Fix arithmetic expansion syntax error when using dash
-Date: Thu, 23 Sep 2010 07:38:24 +1000
-Message-ID: <AFB91AEE-2D2C-4864-A6CD-79780B68C2E9@gmail.com>
-References: <4C98EF25.4070700@ramsay1.demon.co.uk> <7viq1xsi7a.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (iPhone Mail 8B117)
-Content-Type: text/plain;
-	charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 23:39:01 2010
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: Really beginner on Version Control
+Date: Thu, 23 Sep 2010 02:10:27 +0400
+Message-ID: <AANLkTi=4qdjicBZs=yPWmAu5B+GePQeTpOr80PBi3+29@mail.gmail.com>
+References: <1285080133451-5555023.post@n2.nabble.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: FernandoBasso <FernandoBasso.br@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 23 00:10:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyX1k-00017h-LM
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 23:38:57 +0200
+	id 1OyXWN-0005bb-2O
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 00:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183Ab0IVViv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 17:38:51 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40671 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750782Ab0IVViu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 17:38:50 -0400
-Received: by iwn5 with SMTP id 5so820029iwn.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 14:38:50 -0700 (PDT)
+	id S1752626Ab0IVWK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 18:10:29 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:34409 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751942Ab0IVWK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 18:10:28 -0400
+Received: by qyk33 with SMTP id 33so1369708qyk.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 15:10:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:references:in-reply-to
-         :mime-version:content-transfer-encoding:content-type:message-id:cc
-         :x-mailer:from:subject:date:to;
-        bh=fwu/s3evKIqtTIZ3XfNX3pIm6GAUvz2cYU0tofnjddA=;
-        b=bxUUv3kPRaeZTfMqKdHfSOqcneIP476hyzzxR5juWA/lbiM1el7/OsQIgM6IoSHoFR
-         yqiZxJR2GZVBQEtUzZMelEPxZoocm2sLTW7eLi8I9FgyG4y2NOXAblR8ODeskWWaM2Jv
-         oHdd+X5V2HgW1pDExxSeMz+k5xMnnXhHxKl78=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=sa2zerO8AJLCFaQMEwTDz8T/Niv9NyDR3St/ee10y8E=;
+        b=KdmB+dWIOqnACHAHsdnDTQjdTmuQHyXjGxyy6/IH2JwBuA238MNr/cfBMbGQCTtd0Y
+         scV24z5bPkW1iftmPFONf4mhRfh8fhiYlQaXwoKovGTLxOeKn+qWqio/FE9cQo+7Tm91
+         vFd9UuOh1HUXbc0U15xNI1xv7J0ZLIqs7BGO8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=references:in-reply-to:mime-version:content-transfer-encoding
-         :content-type:message-id:cc:x-mailer:from:subject:date:to;
-        b=ruhvGcU6rLiVbRq9umgXi1MAfiZj1bdeSj8nYpaTGm7gIMStRKAsQxH9WRhoEMITOy
-         NADgmaQV1CmXdnBTDUbiRKtXR26WGvBiHl4uEPz9OwvsbN7kAsAjenchPOjNzZca+oAT
-         Uc7XM77aGIRXfHKOc2ZL7pRBCNbymMM5uwJFM=
-Received: by 10.231.151.198 with SMTP id d6mr680165ibw.86.1285191529311;
-        Wed, 22 Sep 2010 14:38:49 -0700 (PDT)
-Received: from [10.0.1.2] (124-169-3-134.dyn.iinet.net.au [124.169.3.134])
-        by mx.google.com with ESMTPS id h8sm13556ibk.15.2010.09.22.14.38.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Sep 2010 14:38:47 -0700 (PDT)
-In-Reply-To: <7viq1xsi7a.fsf@alter.siamese.dyndns.org>
-X-Mailer: iPhone Mail (8B117)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=dz+BoogsnAw3rvWBaoh82xsggoy/L5baq0iWdnRpN7h/ZWgE56euy6bJT4m9Dc9Yhu
+         3gnupeRbtHwUxhYsCPJR3w3c3sn7hFYKLQBC1KR2qtHspFBfCfx/fHMcGcDVcTe+Zb9t
+         SPE+q557JutmLPMEp1W+jm+lGzLghwmicFik8=
+Received: by 10.224.62.199 with SMTP id y7mr580378qah.293.1285193427473; Wed,
+ 22 Sep 2010 15:10:27 -0700 (PDT)
+Received: by 10.229.215.6 with HTTP; Wed, 22 Sep 2010 15:10:27 -0700 (PDT)
+In-Reply-To: <1285080133451-5555023.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156837>
 
-Ack. Thanks for the info and corrections.
+On Tue, Sep 21, 2010 at 6:42 PM, FernandoBasso
+<FernandoBasso.br@gmail.com> wrote:
+>
+> Why do we merge, say a testing branch into the master branch ? What is the
+> use of it ?
 
-jon.
+We usually don't do that, because it goes against recommended git workflows
+http://www.kernel.org/pub/software/scm/git/docs/gitworkflows.html
 
-On 23/09/2010, at 5:15, Junio C Hamano <gitster@pobox.com> wrote:
+With Git, you typically merge your stable branch to to your main
+development branch or you merge some feature branch to master if you
+consider it to be mature enough to be included in the next release.
 
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
-> 
->> On systems which have dash as /bin/sh, such as Ubuntu, the final
->> test (master@{n} for various n) fails with a syntax error while
->> processing an arithmetic expansion. The syntax error is caused by
->> using a bare name ('N') as a variable reference in the expression.
->> 
->> In order to avoid the syntax error, we spell the variable reference
->> as '$N' rather than simply 'N'.
->> 
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-> 
-> Thanks.
-> 
-> POSIX wants shells to support both "N" and "$N" and requires them to yield
-> the same answer to $((N)) and $(($N)), but we should aim for portability
-> in a case like this, especially when the price we pay to do so is so
-> small, i.e. a few extra dollars.
-> 
-> By the way, on my box, I get this:
-> 
->    $ ls l /bin/dash
->    -rwxr-xr-x 1 root root 104024 2008-08-26 02:36 /bin/dash*
->    $ dpkg -l dash | grep '^ii'
->    ii  dash              0.5.4-12          POSIX-compliant shell
->    $ /bin/dash -c 'N=20 ; echo $(( N + 3 ))'
->    23
-> 
-> I just left it vague by saying "e.g. older dash" in below, but we may want
-> to be more precise in the documentation.
-> 
-> -- >8 --
-> CodingGuidelines: spell Arithmetic Expansion with $(($var))
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
-> Documentation/CodingGuidelines |    4 ++++
-> 1 files changed, 4 insertions(+), 0 deletions(-)
-> 
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index b8bf618..2cdd76f 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -43,6 +43,10 @@ For shell scripts specifically (not exhaustive):
-> 
->  - We use Arithmetic Expansion $(( ... )).
-> 
-> + - Inside Arithmetic Expansion, spell shell variables with $ in front
-> +   of them, as some shells do not grok $((x)) while accepting $(($x))
-> +   just fine (e.g. older dash).
-> +
->  - No "Substring Expansion" ${parameter:offset:length}.
-> 
->  - No shell arrays.
+> When there is a conflict when merging branches (merging the testing into the
+> current branch), should I edit the 'current' branch or the 'testing' branch
+
+You edit files in your working directory to resolve conflicts, after
+you commit the result to your current branch.
+
+> Should both branches have exactly the same code so that they can be merged
+> without conflicts ?
+
+No... There are different merging strategies, and Git is flexible enough
+to allow you to specify your own merging strategy for some files. The
+default merging strategy relies on the context to find if there is any
+conflict. It means that the same file has been edited around the same
+place (around the same line), then it will generate a conflict.
+
+There is one important thing to keep in mind when it comes to merges.
+Merge conflict are your friends and not your enemies. In other words,
+they warn you about changes to some files that can contradict each
+other, so you need to use your brain to resolve them gracefully.
+Usually, they do pretty good job at that, but in some rare cases, merge
+without any merge conflict can produce unworkable code. So, after any
+non-trivial merge, you should do testing. If testing reveals some
+problem then you should correct them. Git allows you amend any last
+commit (including the merge commit) using:
+
+git commit --amend
+
+If two branches are diverged a long time ago, it is very useful to look
+at history of those branches to find what changes caused the conflict.
+You can do that using the following command:
+
+gitk --merge
+
+or if you are interested only in one particular file then:
+
+gitk --merge this-file
+
+
+Dmitry
