@@ -1,73 +1,79 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 0/3] Testing installed gitweb
-Date: Wed, 22 Sep 2010 16:21:23 +0200
-Message-ID: <1285165286-12452-1-git-send-email-jnareb@gmail.com>
+Subject: [PATCH/RFC 1/3] gitweb/Makefile: Include gitweb/config.mak
+Date: Wed, 22 Sep 2010 16:21:24 +0200
+Message-ID: <1285165286-12452-2-git-send-email-jnareb@gmail.com>
+References: <1285165286-12452-1-git-send-email-jnareb@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 22 16:21:51 2010
+X-From: git-owner@vger.kernel.org Wed Sep 22 16:21:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyQCl-0005b0-2l
+	id 1OyQCl-0005b0-JZ
 	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 16:21:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754046Ab0IVOVo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 10:21:44 -0400
+	id S1754055Ab0IVOVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 10:21:46 -0400
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:40730 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753025Ab0IVOVn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 10:21:43 -0400
-Received: by bwz11 with SMTP id 11so464599bwz.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 07:21:42 -0700 (PDT)
+	with ESMTP id S1753025Ab0IVOVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 10:21:45 -0400
+Received: by mail-bw0-f46.google.com with SMTP id 11so464599bwz.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 07:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=JK/efu43iqWRWouDtSv+Mxg+YVkNV2maODpE52hNxoY=;
-        b=DA0Rr3EPhYP8tBQuWdAGs5kGC4YD7+2EjHUKZHgoGgNc77B/IEK/BsVWWKIxMRlsx0
-         lb/QA89L/VOLDH8JVVI9SUV4jXInkqJLHtRLa3GkO96cVYQuMk0JJyNMbe7hNbJDpetr
-         ciCpn5he6ZgOi5SD8lbtBqXUeZGlm3hPvUJZ8=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=07EdkHW5E3zk3+tMGs9rKnV0wG6GRUtk6geRMb43QAw=;
+        b=sf9BBALh8uatjA1fm2wkVGvVhzieaa9jufDkSclSS8eJy9KFXNk622yspdMa34j6WQ
+         ubDkvp0TheeA1rNM1umAOpiiOYwtV5pS1sie0donRSR+I5Ikh2g0qUxP2niFJ4RfqPeh
+         R4AoH6TsfY4yVGkUHkVzd3k8Jg1KuhSPahEWc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=VNfUEP/HRsa9WN+K4gKPWueYxMFkarWOZPeHB2PvFUWXTHrffBwoJddWiAYAxwUCec
-         +iEEMXmmE5jN3E1/Bi4KtY4zxxQAZXf5hGQ03UgEDljkIOCmQAdZ6DGTQAZeUGsmNxz3
-         jkq8s/VFJXe/4VRRpj7t88bEZI0aeWAfoopt0=
-Received: by 10.204.65.145 with SMTP id j17mr76544bki.209.1285165302319;
-        Wed, 22 Sep 2010 07:21:42 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=UNMWVwGWR64d6fVTyUuBpAnYjngthmmJcsa0/ReVNBRW1aKksShoQTYh12e1+/gVti
+         kh9jMSZPgvRIToJfbVa2eDXY3LwuLcERAoOC5jcWXeqzkHnFXhqy7cW2lDClOkxrrjdT
+         gb3fBsS3JoiDkeKl/XVDFjhVg3mjp5zKidb90=
+Received: by 10.204.66.206 with SMTP id o14mr106826bki.159.1285165304347;
+        Wed, 22 Sep 2010 07:21:44 -0700 (PDT)
 Received: from localhost.localdomain (abva250.neoplus.adsl.tpnet.pl [83.8.198.250])
-        by mx.google.com with ESMTPS id x13sm8626411bki.12.2010.09.22.07.21.40
+        by mx.google.com with ESMTPS id x13sm8626411bki.12.2010.09.22.07.21.42
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 22 Sep 2010 07:21:41 -0700 (PDT)
+        Wed, 22 Sep 2010 07:21:43 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.1
+In-Reply-To: <1285165286-12452-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156803>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156804>
 
-This series add a mechanism to easy test installed gitweb, via
+Allow for gitweb-specific Makefile config to reside in config.mak file
+in the 'gitweb/' subdirectory.  This means that gitweb-specific
+build-time configuration variable can reside in gitweb-specific
+gitweb/config.mak
 
-  $ make -C gitweb test-installed
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+I'm not sure if it is really neccessary, and useful.  Still...
+This patch can be safely dropped from this series.
 
-This way we can check if the install procedure work correctly, when
-gitweb gets split into smaller modules.
+ gitweb/Makefile |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-This series applies on top of 'jn/gitweb-test-lib' branch, merged as
-4621733 into next, i.e. on top of commit 89d1b5b (t/gitweb-lib.sh: Use
-tabs for indent consistently, 2010-09-12).
-
-Jakub Narebski (3):
-  gitweb/Makefile: Include gitweb/config.mak
-  t/gitweb-lib.sh: Add support for GITWEB_TEST_INSTALLED
-  gitweb/Makefile: Add test-installed target
-
- gitweb/Makefile |    5 +++++
- t/Makefile      |    4 ++++
- t/gitweb-lib.sh |   21 +++++++++++++++++++--
- 3 files changed, 28 insertions(+), 2 deletions(-)
-
+diff --git a/gitweb/Makefile b/gitweb/Makefile
+index 2fb7c2d..88bcf08 100644
+--- a/gitweb/Makefile
++++ b/gitweb/Makefile
+@@ -39,6 +39,7 @@ GITWEB_SITE_FOOTER =
+ # include user config
+ -include ../config.mak.autogen
+ -include ../config.mak
++-include config.mak
+ 
+ # determine version
+ ../GIT-VERSION-FILE: .FORCE-GIT-VERSION-FILE
 -- 
 1.7.2.1
