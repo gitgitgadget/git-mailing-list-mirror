@@ -1,99 +1,51 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv2 4/4] t7500: add tests of commit --squash
-Date: Wed, 22 Sep 2010 18:12:09 +0000
-Message-ID: <AANLkTi=MjE3OBqAd8NqFCMdSb3qfNW_1QKvrL6-AK+Er@mail.gmail.com>
-References: <1284687596-236-1-git-send-email-patnotz@gmail.com>
-	<1285100703-49087-5-git-send-email-patnotz@gmail.com>
-	<AANLkTinTA23Xf2AFLW+tzeLq1AWUhBBuca63qs_foXtr@mail.gmail.com>
-	<AANLkTinajr6DvYeyiK79xESYqg0kegUN1s8LxEqGoUc+@mail.gmail.com>
+From: skillzero@gmail.com
+Subject: Restore annotated tag?
+Date: Wed, 22 Sep 2010 11:14:28 -0700
+Message-ID: <AANLkTinafiikD0Lzgw2gw1ti2pCK6cSTk5bQZFcCRJnS@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Pat Notz <patnotz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 20:12:22 2010
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 22 20:14:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyTnm-0007tt-OF
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 20:12:19 +0200
+	id 1OyTq0-0000fU-Of
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 20:14:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753964Ab0IVSML convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 14:12:11 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:59830 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753349Ab0IVSMK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 14:12:10 -0400
-Received: by gxk9 with SMTP id 9so266081gxk.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 11:12:09 -0700 (PDT)
+	id S1753850Ab0IVSOa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 14:14:30 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:44925 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753083Ab0IVSOa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 14:14:30 -0400
+Received: by wyb28 with SMTP id 28so116332wyb.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 11:14:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=f8dafWAWMrWNT6WpM55U10GhD7kITQNzCHkS/mlagW0=;
-        b=VQXv9ETA1Jqwk+8aLKqhyHFg3TBUlLHYLvY223rttJtIlsO3Dha5tdk3OrBwR+SkVx
-         w3847gv/pJULEpTxG415Lwyu+rePyCM56VF96q3rRlAYUN4+XGGOVJAOScTuHi5gvlYE
-         /oVKvv/UyjbeF9CNh9ousPiX3lxKtTTzMddaw=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=8AfZHHP4FdSAj4TlYHg2Xa5jQIueciqYa1CpNHwTYII=;
+        b=xGozvUmX9WPhVzZsgy9li8L9AdPRJeIeQe3DbDOm3MKRJgVjF4rEZ7VH8VnAFO28fx
+         sg1uRgheSGLaKEHhNI+TdVxdM18n9z1wKEw2bYKNcd4fvjmq6r9jjNoKcasyh8tkawLV
+         l7UnuVXParcpqUiiQO13IMmEkxEYk6q0j9OQE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fAQL/7urrRZrdA0UNPluLFDxozh3CcFeob8wuHdKuXbxQLgTjKVLUyEXwA44o1mMvh
-         9SYJS8hZKg5tty0DKGQ47Vicf39XpdaDUikyMdI+R+/qjn8S3txkBieDOLH5uQWYl2Nl
-         FzCAuIezBHyad8LFzUG8PcrG72uDYOFLzAddQ=
-Received: by 10.90.49.2 with SMTP id w2mr1096572agw.119.1285179129772; Wed, 22
- Sep 2010 11:12:09 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 22 Sep 2010 11:12:09 -0700 (PDT)
-In-Reply-To: <AANLkTinajr6DvYeyiK79xESYqg0kegUN1s8LxEqGoUc+@mail.gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=LOCpZ0kTpQwTGjKHzsKyImv5c85II5ZVRAhew7iZ3BjB8fmSVhV84MQJuGN/pWlUEa
+         NTPQax8kKSNBoqjj0TC5Krgg5Nm4KZDxKSAoQFxZH4rqYaALEq2oU122fb0thY65juwQ
+         ML1XXUkU7eFgwPBb0+hUsqkock13ZA80Ilo6g=
+Received: by 10.227.134.206 with SMTP id k14mr529324wbt.121.1285179268700;
+ Wed, 22 Sep 2010 11:14:28 -0700 (PDT)
+Received: by 10.227.135.202 with HTTP; Wed, 22 Sep 2010 11:14:28 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156816>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156817>
 
-On Wed, Sep 22, 2010 at 17:59, Pat Notz <patnotz@gmail.com> wrote:
-> On Tue, Sep 21, 2010 at 2:36 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on
-> <avarab@gmail.com> wrote:
->>
->> On Tue, Sep 21, 2010 at 20:25, Pat Notz <patnotz@gmail.com> wrote:
->>
->> > +cat >editor <<\EOF
->> > +#!/bin/sh
->> > +sed -e "s/intermediate/edited/g" <"$1" >"$1-"
->> > +mv "$1-" "$1"
->> > +EOF
->> > +chmod 755 editor
->> > +
->> > +test_expect_success 'commit --squash works with -c' '
->> > + =C2=A0 =C2=A0 =C2=A0 commit_for_rebase_autosquash_setup &&
->> > + =C2=A0 =C2=A0 =C2=A0 EDITOR=3D./editor git commit --squash HEAD~=
-1 -c HEAD &&
->> > + =C2=A0 =C2=A0 =C2=A0 commit_msg_is "squash! target message subje=
-ct lineedited commit"
->> > +'
->>
->> Why not put the editor in t/t7500/ and use test_set_editor() like th=
-e
->> other tests?
->
-> The real reason is that I'm new enough that I wasn't aware of this
-> pattern. =C2=A0I saw what was done in t7501-commit.sh and followed al=
-ong.
-> I missed the use of test_set_editor() right there in t7500-commit.sh.
-> Doh!
->
-> I can certainly do that if it's preferred. =C2=A0I must say, though, =
-that I
-> find it odd to put test inputs in a separate file in a separate
-> directory from where the test transforms those into expected outputs.
-> To see what the test is doing you have to load both files and trace
-> through it.
->
-> Still, I'd be happy to change do this if that's the preferred way.
-
-It's a bit odd, but it's best to following existing style within a
-test. Then maybe submit fixup patches to fix the whole thing later.
+Is there a way to restore an annotated tag? One was accidentally
+deleted and pushed. I can restore normal tags by just using git tag
+again, but for an annotated tag, there's a tag object and I'm not sure
+how to restore it.
