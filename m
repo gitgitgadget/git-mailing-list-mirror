@@ -1,71 +1,62 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 000/160] [PULL] Update ab/i18n (again)
-Date: Wed, 22 Sep 2010 18:52:02 +0000
-Message-ID: <AANLkTimKp+u2QGhR=zFYTSALcxRUr=LQewYRK83uh+U1@mail.gmail.com>
-References: <1285015029-23103-1-git-send-email-avarab@gmail.com>
-	<7vsk11sjf9.fsf@alter.siamese.dyndns.org>
+Subject: Advertising the Git User's Survey 2011
+Date: Wed, 22 Sep 2010 18:57:35 +0000
+Message-ID: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 20:52:14 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 22 20:57:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyUQQ-0002yz-35
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 20:52:14 +0200
+	id 1OyUVk-0005tZ-B8
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 20:57:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754788Ab0IVSwG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 14:52:06 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64488 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754638Ab0IVSwE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 14:52:04 -0400
-Received: by gyd8 with SMTP id 8so285849gyd.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 11:52:03 -0700 (PDT)
+	id S1754829Ab0IVS5h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 14:57:37 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45564 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754783Ab0IVS5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 14:57:36 -0400
+Received: by iwn5 with SMTP id 5so720403iwn.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 11:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=K21yAPxLbCb3EfcRVq2ezDzD9pmMTMs4fESH/fd8B+A=;
-        b=pCvFzzkkkEOfJn+cwK/xbE55GmdFOHmNTJ3otzJ9Pgie0vuZYLPdcnhv8Ab0qeKw0/
-         ZEDLsXqAMBhAun6UcEJQToAbwfAZtzEHuobEx+glS7AKUVX/kZmr3z202BBdn+Zn5d8W
-         W9S3lkMX1IW5PIdAv9qexdAGfvST8YtgL3UOA=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=iO6x1OHiRnjwFmAqxKsZtlTIy3lUhPMtPhvrtcofhac=;
+        b=et1a/LeZpPRp/+z3ziueBXsQ8lGzh7bkR48Zmd94qKWPTX1RQvRGFumPskdCWUgesm
+         L45541J9VzabXCgN336lr6qBMtFeh68OVz9xfzVd1nk+xaqkUWWgmEM6DuNzUu4DCXAV
+         3MkdcwZ6AqORgeK5nYssYSvC9YiFgHpaXR5Mc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hwF9kXaL6nXNKdntUYRFZX+j1MYrp5+BZgLvyLB3KY5JfHotxLONnm9oYnYb3Wv7aI
-         QlRMElDYmHLQelj9izfXURBaMluY2zpxGKomWXnTHqUAGP4xPBjByBK44eyN38xAELwn
-         eaA9BjL3CI65GsAZeKuXimSnmiabvLszuO/UE=
-Received: by 10.90.120.17 with SMTP id s17mr966306agc.98.1285181522535; Wed,
- 22 Sep 2010 11:52:02 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 22 Sep 2010 11:52:02 -0700 (PDT)
-In-Reply-To: <7vsk11sjf9.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=UjwYkwztDCZyISDirnxjoVj6KA3p3ISiguZWXf105JWSqbG0beif/zJFJm1qVmuM7V
+         DqUr/8E1WejK/OJokI/y4mS2V2Y31YBKgh96ZVsQxG3d6+Gz4a/0QVuQREAQbJSnjWH1
+         P9OUDa/pJ8QB+5L9laRUG+IbwOajZMvmsg5Kc=
+Received: by 10.231.161.68 with SMTP id q4mr627005ibx.79.1285181855901; Wed,
+ 22 Sep 2010 11:57:35 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Wed, 22 Sep 2010 11:57:35 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156824>
 
-On Wed, Sep 22, 2010 at 18:49, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> $ make doc
-> make -C Documentation all
-> make[1]: Entering directory `/scratch/junio/buildfarm/pu/Documentatio=
-n'
-> rm -f cmd-list.made && \
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0/usr/bin/perl ./cmd-list.perl ../command-l=
-ist.txt =C2=A0&& \
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0date >cmd-list.made
-> No such file git-sh-i18n.txt at ./cmd-list.perl line 10.
->
-> Hmm?
+On Mon, Sep 20, 2010 at 13:38, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Oops, I didn't try running "make doc". I could write a
-Documentation/git-sh-i18n.txt manpage, but it would probably be better
-to just remove the patch adding it to command-list.txt, no?
+> Currenly the survey has more than 5000 responses (in a not whole month)
+
+That seems somewhat low, but maybe people just aren't that interested
+in taking surveys.
+
+This may have to do with advertising however. Have you contacted sites
+like GitHub, Gitorious etc. asking them to advertise it? Is there
+maybe a list of people that have been contacted somewhere?
+
+I bet if we could get e.g. GitHub to advertise it in their regular
+news distribution system we could raise that number of 5000
+respondents significantly.
