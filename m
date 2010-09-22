@@ -1,112 +1,111 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: Advertising the Git User's Survey 2011
-Date: Wed, 22 Sep 2010 12:12:07 -0700
-Message-ID: <20100922191207.GD4711@vfa-6z.perlninja.com>
-References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re*: [PATCH] t1503: Fix arithmetic expansion syntax error when using
+ dash
+Date: Wed, 22 Sep 2010 12:15:37 -0700
+Message-ID: <7viq1xsi7a.fsf@alter.siamese.dyndns.org>
+References: <4C98EF25.4070700@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="Ycz6tD7Th1CMF4v7"
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 21:12:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT Mailing-list <git@vger.kernel.org>, jon.seymour@gmail.com
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Sep 22 21:15:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyUjt-0004sS-Nd
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 21:12:22 +0200
+	id 1OyUnK-0006Y6-MN
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 21:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755182Ab0IVTMN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 15:12:13 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:52094 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754200Ab0IVTML (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 15:12:11 -0400
-Received: by pxi10 with SMTP id 10so242958pxi.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 12:12:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:x-pgp-key:user-agent;
-        bh=ITOsyKEhMTkWzXf0j1FJLU+ufpVNcqNkKxycizSR1tc=;
-        b=x63zu1wjNVCJ56rWlKdvIijQ/5r8c2pva4Ps8+klAl7Ar9bGvGTC/wimXWdthnltZl
-         Xmt1V/18LzPGhxLSWtEcvo0TTwK2mcEwYh1QEGfUaUWRSK5dQvMen39XMif8Y/7i6hRe
-         io1zuOdZXeCsmhKNRsiqZ8abRDAsFYoU/XCIw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:x-pgp-key:user-agent;
-        b=QmWOkvIECIT3veLsMOHRQJWKVq8tUp+uY/vgdfRrXX1IZT79sXJXe2XGMwFc/pMQLG
-         Ez5pOzzwYc84ZFHnlf03uxVqymLlY/TKELWx7zz/dW15LlJn3xzL4q6dNygGA1YmurrH
-         ZRWc9+8STpB05J9EjE9vpCGCcLrfP1JvVsrZQ=
-Received: by 10.142.48.21 with SMTP id v21mr552494wfv.281.1285182730742;
-        Wed, 22 Sep 2010 12:12:10 -0700 (PDT)
-Received: from localhost (66.239.37.190.ptr.us.xo.net [66.239.37.190])
-        by mx.google.com with ESMTPS id c14sm11055785wfe.2.2010.09.22.12.12.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Sep 2010 12:12:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com>
-X-PGP-Key: http://technosorcery.net/pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755073Ab0IVTPs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 15:15:48 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48734 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754944Ab0IVTPr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 15:15:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 56902D6157;
+	Wed, 22 Sep 2010 15:15:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=11RDqzCGtQbrymHoewSC+h1N8f8=; b=yYZ4tB
+	we4O4jXJyIZgy9ifXJ2zCTy7V6P3nAkHLz3N7pDtGbIEfpGTqnQ0tf23RPoiTxkb
+	aoTMzEPGHjrs4sPP0sgDZEhmacjtdq1QPhXFRnWpVjSwxR9ZMy3qaB6jHLA/6bu7
+	7GqXant8o5qtQ6yRrTGqB4LJWkKyaYPIdYE2Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KAK6UYpdG4o/6+RUBHnUPOh0IJlNkWE9
+	rOsfVVNXudY3zBd357fb2dkWTMRR0yX4ERHF/yg7MYZR5I+tB+zO2ZW9BB3RqIlG
+	7n7ZdOxSadclMzzGIdFwlQhcKWpv3oimGf3dq679XbqOlAPGLgP272+IPzbMPJeD
+	qeX3/OiCJRM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 248B0D6156;
+	Wed, 22 Sep 2010 15:15:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4E51DD6153; Wed, 22 Sep
+ 2010 15:15:39 -0400 (EDT)
+In-Reply-To: <4C98EF25.4070700@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Tue\, 21 Sep 2010 18\:45\:09 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CB777F22-C67D-11DF-B381-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156826>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156827>
 
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
---Ycz6tD7Th1CMF4v7
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> On systems which have dash as /bin/sh, such as Ubuntu, the final
+> test (master@{n} for various n) fails with a syntax error while
+> processing an arithmetic expansion. The syntax error is caused by
+> using a bare name ('N') as a variable reference in the expression.
+>
+> In order to avoid the syntax error, we spell the variable reference
+> as '$N' rather than simply 'N'.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 
-On Wed, 22 Sep 2010 18:57:35 +0000, =C6var Arnfj=F6r=F0 Bjarmason wrote:
->=20
-> On Mon, Sep 20, 2010 at 13:38, Jakub Narebski <jnareb@gmail.com> wrote:
->=20
-> > Currenly the survey has more than 5000 responses (in a not whole month)
->=20
-> That seems somewhat low, but maybe people just aren't that interested
-> in taking surveys.
->=20
-> This may have to do with advertising however. Have you contacted sites
-> like GitHub, Gitorious etc. asking them to advertise it? Is there
-> maybe a list of people that have been contacted somewhere?
+Thanks.
 
-You mean, this?
+POSIX wants shells to support both "N" and "$N" and requires them to yield
+the same answer to $((N)) and $(($N)), but we should aim for portability
+in a case like this, especially when the price we pay to do so is so
+small, i.e. a few extra dollars.
 
-http://github.com/blog/717-git-user-survey-2010
+By the way, on my box, I get this:
 
->=20
-> I bet if we could get e.g. GitHub to advertise it in their regular
-> news distribution system we could raise that number of 5000
-> respondents significantly.
+    $ ls l /bin/dash
+    -rwxr-xr-x 1 root root 104024 2008-08-26 02:36 /bin/dash*
+    $ dpkg -l dash | grep '^ii'
+    ii  dash              0.5.4-12          POSIX-compliant shell
+    $ /bin/dash -c 'N=20 ; echo $(( N + 3 ))'
+    23
 
---=20
-Jacob Helwig
+I just left it vague by saying "e.g. older dash" in below, but we may want
+to be more precise in the documentation.
 
---Ycz6tD7Th1CMF4v7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+-- >8 --
+CodingGuidelines: spell Arithmetic Expansion with $(($var))
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/CodingGuidelines |    4 ++++
+ 1 files changed, 4 insertions(+), 0 deletions(-)
 
-iQGcBAEBAgAGBQJMmlUHAAoJEHJabXWGiqEB9CQL/jpKBMmCMwBSmywxaD8qadEk
-NgCJMTXyS7Z00zDcRGinp6zZv31LoSLczEThZPXIiJkIqz/F5AM4qJq28BiM8qTz
-C2fFEysA/tWHgTsuFJ6dZeB2SwYXTcPHNIK1ywkTD0Key6FV454kpbhfHl0nOSA6
-ABNgJagAu703I9YHvMCcTdH1J/mGEtgKw7J13J6b8UKEme0yBCn05BweOF5nILJX
-P1yDmACKkQkfYlIEDSoFk8lgn04PCp9GapN6qfQFQfT4wbeqAdopbboR/dg/zVzp
-ZQtNy23oKIFNhDkB3kpyk+1Pt09ai+zv+qWOifEz57FBfGnMj/GVShfbuayFKe/1
-1F8mmm6cOl0nLjNSH/h7rw0/Kxt5b20XvyX3s1+hWj5EVEuDg60zgMBIHME+LQp9
-217QwUns9/fwlACv+roi/BqbWMIk5KPLYSRDW4fRvmaz+dcupTABOc2kgq4nHuj2
-LkYL5cXtKiCEY/4XIX4gExmznBfS0VD3hJgsjsAzqQ==
-=4jXL
------END PGP SIGNATURE-----
-
---Ycz6tD7Th1CMF4v7--
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index b8bf618..2cdd76f 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -43,6 +43,10 @@ For shell scripts specifically (not exhaustive):
+ 
+  - We use Arithmetic Expansion $(( ... )).
+ 
++ - Inside Arithmetic Expansion, spell shell variables with $ in front
++   of them, as some shells do not grok $((x)) while accepting $(($x))
++   just fine (e.g. older dash).
++
+  - No "Substring Expansion" ${parameter:offset:length}.
+ 
+  - No shell arrays.
