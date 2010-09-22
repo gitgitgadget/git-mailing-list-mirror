@@ -1,82 +1,71 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Advertising the Git User's Survey 2011
-Date: Wed, 22 Sep 2010 19:26:58 +0000
-Message-ID: <AANLkTikPzUAFojzZY4i9wSWYEmGBS09zic04QVnmjkDy@mail.gmail.com>
-References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com>
-	<20100922191207.GD4711@vfa-6z.perlninja.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 000/160] [PULL] Update ab/i18n (again)
+Date: Wed, 22 Sep 2010 12:26:57 -0700
+Message-ID: <7veiclshoe.fsf@alter.siamese.dyndns.org>
+References: <1285015029-23103-1-git-send-email-avarab@gmail.com>
+ <7vsk11sjf9.fsf@alter.siamese.dyndns.org>
+ <AANLkTimKp+u2QGhR=zFYTSALcxRUr=LQewYRK83uh+U1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jacob Helwig <jacob.helwig@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 21:27:19 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 22 21:27:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyUyM-000406-Jn
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 21:27:18 +0200
+	id 1OyUyN-000406-4J
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 21:27:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755054Ab0IVT1B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 15:27:01 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:45755 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754560Ab0IVT1A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 15:27:00 -0400
-Received: by gxk9 with SMTP id 9so297669gxk.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 12:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=jm5M+EenQCFfw0FFmmCveQtCCbTU6NZaMTxfrGxc5FU=;
-        b=fETpXL2Xst8TjDPAo3Ta7Yjb+cvpnuJw2Xwsg20I6YFXTxvjiodB7lj/eMPJpzSu1V
-         UgBrP2aYe5ep6BfTNFgRDrcwq1DBXyNFNM7KChYCcQmVALWCGHa8V/1+cyboPt3O1hvJ
-         Y8khKqUkRK8kNsokl7KdRGSaX0TEMdLIq0T78=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=p8AMjEmYtBq1fKzR/BmqcexCD/bENUm3tpcfuTmzWJ31n7QeTukiqfPVKgq8VvJ6a3
-         EJM5M3O73gBgxIf3qgcxoJIa3pp1yGwheAlY0ApKxnFOodNwDYyhWMXSYO8ncuno/sT0
-         Ci52CAF68eiv6bk7ToB0SUcsZtIY04sjI79zo=
-Received: by 10.150.157.8 with SMTP id f8mr1571609ybe.367.1285183618560; Wed,
- 22 Sep 2010 12:26:58 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 22 Sep 2010 12:26:58 -0700 (PDT)
-In-Reply-To: <20100922191207.GD4711@vfa-6z.perlninja.com>
+	id S1755332Ab0IVT1H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 15:27:07 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58379 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755300Ab0IVT1G convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 15:27:06 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 91B0BD634E;
+	Wed, 22 Sep 2010 15:27:04 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=MdVtEFLbFPKg
+	TDCeEf8K+XDoC4w=; b=aAXZOP+Pi0pwjZodFjA1KSKkE2XX5QOAP+FtXFHX8Ji1
+	fPnKd68cqTzyYZ01x9zN1ihkV+gCR0D880WCHk+oCjgfY2RZQY9LYiexdQHIezu5
+	gwJ0x363l8AShdBjEXsEf1mkSi64LeO3/Tn40paVY4pqRuslXSIg9ZMOfUtXchE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fAi/ut
+	nrTH4zHTs4w4VcTnsFvDY6Q2GcOO98J7X9COB4SANUtAQzixipK4P+lKtfbjYLtK
+	dReDW5yN7fh72tbITwPFAz+qZxhPb5+fSWgEGovsVU1vUF9Cu4orLtFza6EddUXd
+	voav1mLnJO6G6qWPgfWprXUGmEenFCEf+2A7s=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6D5D6D634C;
+	Wed, 22 Sep 2010 15:27:02 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C5B43D634A; Wed, 22 Sep
+ 2010 15:26:59 -0400 (EDT)
+In-Reply-To: <AANLkTimKp+u2QGhR=zFYTSALcxRUr=LQewYRK83uh+U1@mail.gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Wed\, 22 Sep
+ 2010 18\:52\:02 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 605C1BC4-C67F-11DF-918A-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156830>
 
-On Wed, Sep 22, 2010 at 19:12, Jacob Helwig <jacob.helwig@gmail.com> wr=
-ote:
-> On Wed, 22 Sep 2010 18:57:35 +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjar=
-mason wrote:
->>
->> On Mon, Sep 20, 2010 at 13:38, Jakub Narebski <jnareb@gmail.com> wro=
-te:
->>
->> > Currenly the survey has more than 5000 responses (in a not whole m=
-onth)
->>
->> That seems somewhat low, but maybe people just aren't that intereste=
-d
->> in taking surveys.
->>
->> This may have to do with advertising however. Have you contacted sit=
-es
->> like GitHub, Gitorious etc. asking them to advertise it? Is there
->> maybe a list of people that have been contacted somewhere?
->
-> You mean, this?
->
-> http://github.com/blog/717-git-user-survey-2010
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-Ah, I hadn't seen it because GitHub Jobs advertisements hide the
-regular GitHub broadcasts, but if I dismiss those I can see it. That's
-some new "feature" of their system I wasn't taking into account.
+> Oops, I didn't try running "make doc". I could write a
+> Documentation/git-sh-i18n.txt manpage, but it would probably be bette=
+r
+> to just remove the patch adding it to command-list.txt, no?
+
+If it is not a documented end-user level command, it shouldn't be in th=
+e
+list.  Don't you however want to help developers by describing what the
+helper offers, similar to how e.g. Documentation/git-sh-setup.txt does?
