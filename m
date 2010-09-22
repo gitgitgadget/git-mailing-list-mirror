@@ -1,84 +1,53 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/2] diff: add a special SYMLINK user-diff driver
-Date: Wed, 22 Sep 2010 00:12:30 +0000
-Message-ID: <AANLkTi=zSPegcPNY8jr4S5qeXWHrxuC+0SY-h5EhyA+6@mail.gmail.com>
-References: <20100921205914.GA1166@sigill.intra.peff.net>
-	<20100921211303.GB1188@sigill.intra.peff.net>
+From: FernandoBasso <FernandoBasso.br@gmail.com>
+Subject: Re: Really beginner on Version Control
+Date: Tue, 21 Sep 2010 17:13:37 -0700 (PDT)
+Message-ID: <1285114417273-5557145.post@n2.nabble.com>
+References: <1285080133451-5555023.post@n2.nabble.com> <m3mxrak937.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?UTF-8?Q?Cl=C3=A9ment_Poulain?= <clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Sep 22 02:12:42 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 22 02:13:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyCwz-0004wa-H8
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 02:12:41 +0200
+	id 1OyCxy-0005Ei-NO
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 02:13:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754693Ab0IVAMb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Sep 2010 20:12:31 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48988 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751905Ab0IVAMb convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Sep 2010 20:12:31 -0400
-Received: by iwn5 with SMTP id 5so5553918iwn.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 17:12:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e34NnKkZ5wg1fLyhBTPA1QR+5sPbspzJf6nmV/DZtfc=;
-        b=bIh3GAqKtndipzmTRFPuujaNlytgcpeMdayRVOEHGdQxM8lWwjW4/KrsXhsHx9dXy5
-         MWE2B5y4ocvtyiZGP+0N3d2RZr+gxMb4LdYYshs3mUOyF4j0dVuzQC+o+Dfnnqyly6H5
-         BTEHpVld0trN/dyVMbb6MosW4G4YuHM8+aTXM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KgIHMziTGj37d8XNUpgDcEf3cz8+7wOL+53dLJ1mgDcygqk6g3xiKKKcqeLxeqvZfb
-         GyAKAK/IPvQm+w6/srJwv6ynLCNLIVym2KPsGoWeiJD4pA9W0Mn/73k/r2zoqkXCip/y
-         +u6X6mp8MNXh/mrSEdDsUYhlAOlrMC/97b0fQ=
-Received: by 10.231.183.200 with SMTP id ch8mr12780372ibb.124.1285114350426;
- Tue, 21 Sep 2010 17:12:30 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Tue, 21 Sep 2010 17:12:30 -0700 (PDT)
-In-Reply-To: <20100921211303.GB1188@sigill.intra.peff.net>
+	id S1755155Ab0IVANi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Sep 2010 20:13:38 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:48509 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751905Ab0IVANh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Sep 2010 20:13:37 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <FernandoBasso.br@gmail.com>)
+	id 1OyCxt-0007K9-98
+	for git@vger.kernel.org; Tue, 21 Sep 2010 17:13:37 -0700
+In-Reply-To: <m3mxrak937.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156772>
 
-2010/9/21 Jeff King <peff@peff.net>:
-> +However, it may happen that you do want to change the diff parameter=
-s
-> +specifically for symlinks. You can do that by configuring the specia=
-l
-> +"SYMLINK" diff driver. For example, to add a newline to the end of
-> +the symlink contents (and suppress the usual "no newline at end of f=
-ile"
-> +warning), you could configure:
-> +
-> +-----------------------------
-> +[diff "SYMLINK"]
-> + =C2=A0 =C2=A0 =C2=A0 textconv =3D perl -pe 's/$/\n/'
-> +-----------------------------
 
-That'll turn every \n in the stream into \n\n, not add a newline to
-the end of the file. Don't you mean:
+I really appreciate your help. All of you. This is all starting to make sense
+to me thanks to you guys.
 
-    perl -0666 -pe 's/$/\n/'
+Now, what are the possible ways that we can get to a conflict when merging
+branches ? I'm doing some study tests, and some times I get conflicts, some
+times I don't. I couldn't really understand what causes them or not yet. 
 
-Or, more efficiently:
+For instance, I have 'hello' in line 2 of site.php in the master branch. I
+go to the  testing branch, edit site.php, change 'hello' for 'world' at the
+same line, commit and got back to master. I merge testing into master and I
+get no conflicts. Shouldn't it conflict ? (site.php in master also contains
+the string 'world' in the place of 'hello' now).
 
-    perl -ple 'END { print }'
-
-?
+-- 
+View this message in context: http://git.661346.n2.nabble.com/Really-beginner-on-Version-Control-tp5555023p5557145.html
+Sent from the git mailing list archive at Nabble.com.
