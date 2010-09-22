@@ -1,85 +1,104 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH 09/37] t6020: Modernize style a bit
-Date: Tue, 21 Sep 2010 22:41:17 -0600
-Message-ID: <AANLkTintJNQKq9Tg0D9g0_Qz9u62mWWR+Pz5OS2f_p2+@mail.gmail.com>
-References: <1284971350-30590-1-git-send-email-newren@gmail.com>
-	<1284971350-30590-10-git-send-email-newren@gmail.com>
-	<4C972839.9050303@viscovery.net>
-	<AANLkTin3wXKUJoRtdk4e1KT5Gwo1H1+9H07LU313Ubo1@mail.gmail.com>
-	<7v7hietuvf.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2] diff: don't use pathname-based diff drivers for symlinks
+Date: Wed, 22 Sep 2010 07:40:51 +0200
+Message-ID: <vpqvd5ycp3w.fsf@bauges.imag.fr>
+References: <20100921205914.GA1166@sigill.intra.peff.net>
+	<20100921210124.GA1188@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 06:41:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?iso-8859-1?Q?Cl=E9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Sep 22 07:42:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyH94-0003KM-Nl
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 06:41:27 +0200
+	id 1OyI6J-0001kE-56
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 07:42:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750811Ab0IVElU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 00:41:20 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:44220 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750730Ab0IVElT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 00:41:19 -0400
-Received: by fxm3 with SMTP id 3so88403fxm.19
-        for <git@vger.kernel.org>; Tue, 21 Sep 2010 21:41:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Aztz10Jd7feqT7HiFoPQ5FiRff9ZhUZTECQ0K4WcQFQ=;
-        b=ZRQVCUS1IzxteugWhqYT8DJO0Ch4zaEqWH0mOyaZFmz2ZBdfj/49FIfnZ+zm06Jm7n
-         ea5JLk38bdqiKuOg5VAGs5jQgMvMdHPqI1+BOBVIyRFJcvx/5ri75tO+Rf9RdPZr/8uF
-         n1DHt47A42YdlqSaFL56SNyhopJRNQAo9T9IY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cSm7GZ8AZOrWaqoE0ELT7rrwcZHKg3rCwsXvgK46g6dMqSTSSVnoFBYWOIB9e+9+mD
-         pZVz308+ZUmfIAFmX+2l2+7W1pXLMuxvP/8uTsQckN8zUEga5vJQhyIZPneAAS+3Ap1e
-         zv4EJz8yAPH/LMZlQO1eZqfGvZ1tjjJ9h/438=
-Received: by 10.223.125.148 with SMTP id y20mr3741305far.94.1285130477420;
- Tue, 21 Sep 2010 21:41:17 -0700 (PDT)
-Received: by 10.223.119.209 with HTTP; Tue, 21 Sep 2010 21:41:17 -0700 (PDT)
-In-Reply-To: <7v7hietuvf.fsf@alter.siamese.dyndns.org>
+	id S1752051Ab0IVFma (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 01:42:30 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:35969 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750730Ab0IVFm3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 01:42:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o8M5aEXD009857
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 22 Sep 2010 07:36:14 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1OyI4Z-0007Qp-K4; Wed, 22 Sep 2010 07:40:51 +0200
+In-Reply-To: <20100921210124.GA1188@sigill.intra.peff.net> (Jeff King's message of "Tue\, 21 Sep 2010 17\:01\:24 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 22 Sep 2010 07:36:14 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o8M5aEXD009857
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1285738576.41977@Zp3vSpIJXCIiwP2R51dDYw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156782>
 
-On Tue, Sep 21, 2010 at 7:44 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Elijah Newren <newren@gmail.com> writes:
->
->>> The old version requested a particular kind of failure. Are you say=
-ing
->>> that with modern 'git merge' all non-zero exit codes mean the same =
-kind of
->>> failure?
->>
->> No, I'm saying that I don't think the test meant to try to distingui=
-sh
->> between exit codes.
->
-> The check for status 1 comes from 72d1216 (New test case: merge with
-> directory/file conflicts, 2005-12-03), and if you read git-merge.sh f=
-rom
-> that era, you would notice that at least we do not want to see status=
- 2
-> (merge wrapper failed in a bad way) from this test. =C2=A0git-merge w=
-as
-> designed to exit with status 1 when (and only when) the merge request=
- was
-> reasonable, it did its best effort and left conflict to be resolved i=
-n the
-> working tree.
+Jeff King <peff@peff.net> writes:
 
-Indeed; looks like I didn't check closely enough.
+> We can drop the check in the textconv code, which is now redundant.
+
+Am I correct if I say that this makes "[PATCH 3/3] RFC: blame,cat-file
+--textconv: Don't assume mode is ``S_IFREF | 0664''" obsolete?
+
+(but patches 1 and 2 are still useful to check the behavior)
+
+> Technically, this could be breaking somebody's setup if:
+>
+>   1. They found some use for userdiff config on symlinks. Textconv is
+>      already disabled. A custom diff driver might work.
+
+I'm wondering about cases other than regular files and symlinks here.
+Directories are not a problem, since for Git, they somehow don't
+exist, but for example, "git diff" shows diff for subprojects too.
+After little testing, it seem the textconv is never applied on
+subprojects, but I couldn't say why.
+
+> I find it unlikely, and given the potential breakage, it seems more like
+> exploiting a bug to get what you want.
+
+Agreed.
+
+> +cat >expect <<'EOF'
+> +diff --git a/file.bin b/file.bin
+> +index e69de29..d95f3ad 100644
+> +Binary files a/file.bin and b/file.bin differ
+> +diff --git a/link.bin b/link.bin
+> +index e69de29..dce41ec 120000
+> +--- a/link.bin
+> ++++ b/link.bin
+> +@@ -0,0 +1 @@
+> ++file.bin
+> +\ No newline at end of file
+> +EOF
+> +test_expect_success SYMLINKS 'symlinks do not respect userdiff config by path' '
+> +	git config diff.bin.binary true &&
+> +	git diff file.bin link.bin >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>  test_done
+
+It's recommanded to put these cat <<'EOF' within the
+test_expect_success, but otherwise, the code looks good.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
