@@ -1,89 +1,110 @@
 From: Pat Notz <patnotz@gmail.com>
-Subject: Re: [PATCHv2 4/4] t7500: add tests of commit --squash
-Date: Wed, 22 Sep 2010 11:59:29 -0600
-Message-ID: <AANLkTinajr6DvYeyiK79xESYqg0kegUN1s8LxEqGoUc+@mail.gmail.com>
-References: <1284687596-236-1-git-send-email-patnotz@gmail.com>
- <1285100703-49087-5-git-send-email-patnotz@gmail.com> <AANLkTinTA23Xf2AFLW+tzeLq1AWUhBBuca63qs_foXtr@mail.gmail.com>
+Subject: Re: [PATCHv2 1/4] commit: --fixup option for use with rebase --autosquash
+Date: Wed, 22 Sep 2010 12:01:13 -0600
+Message-ID: <AANLkTinKCuFRYf4Bu856nhtfA3gPY5FZpQ6jcik=4=GC@mail.gmail.com>
+References: <1284687596-236-1-git-send-email-patnotz@gmail.com> <1285100703-49087-2-git-send-email-patnotz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 22 20:00:02 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 22 20:01:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OyTbp-0001kG-5i
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 19:59:57 +0200
+	id 1OyTdV-0002fE-W6
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 20:01:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014Ab0IVR7v convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 13:59:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53445 "EHLO
+	id S1754018Ab0IVSBg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Sep 2010 14:01:36 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59414 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753911Ab0IVR7u convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 13:59:50 -0400
-Received: by fxm12 with SMTP id 12so215627fxm.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 10:59:49 -0700 (PDT)
+	with ESMTP id S1753865Ab0IVSBf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Sep 2010 14:01:35 -0400
+Received: by fxm12 with SMTP id 12so217224fxm.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 11:01:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+         :references:from:date:message-id:subject:to:content-type
          :content-transfer-encoding;
-        bh=lHjokumrXfYaJ1KKZmKX4f/nflf+iY/YZfcCS7hp8FU=;
-        b=wjn/b4b5oqi4v66F9Rt2bmCkCC4TxEp1MDXvdCyYNZNqTHNOV2VCAV5+S95f79WnR3
-         RMpUQP0yKfn7r6QHz+CH8sBYS25TNvpFLXmeA7/j4pdaZmoXXAgRu4PfLhuYVFO+4xZM
-         2aErEeGlU8ZMkP0vxdF3TNgBYq44ZG/V6iwfY=
+        bh=xMfuXXotisPYvzdMKpLu1n+kJyeLqHQ19DoIKr5+0AQ=;
+        b=q9LlZyk+41Bs0Hcde4W+y7bPIxXXz2H04ZuACGYT9+vd4RnnZyJfmXLhh18fDeN0Uf
+         ilq6Y/cabQ1TDUTHeqlYLH2JBPhpviCJN2oEQcmC6HIPK0t6gH9w7q2XDmtidhR9HgiV
+         zb+XBojQxo6SP3vyCEHDkmVpxe054kbSQh4Cc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=CiVALAJhTvj3xKA6JS2n9wvY+lwUhJNibCzmCaSVyTVwsb5YHxPLEpKPClCcfAncUY
-         rPZom2Vg2o3kmYMxqkP0wEC3zbYuBYVAbBeXtcPoEqHxJNvQIAbV9PEOic2FuhQW/Bhm
-         mj62k1YUlW53QWmdcji/szalwdjWWyG9FxbFw=
-Received: by 10.239.168.68 with SMTP id j4mr35055hbe.115.1285178389307; Wed,
- 22 Sep 2010 10:59:49 -0700 (PDT)
-Received: by 10.239.185.65 with HTTP; Wed, 22 Sep 2010 10:59:29 -0700 (PDT)
-In-Reply-To: <AANLkTinTA23Xf2AFLW+tzeLq1AWUhBBuca63qs_foXtr@mail.gmail.com>
+         :content-type:content-transfer-encoding;
+        b=tjsoaoQ8p9NRt0yuw3yu1QSdD3XumkwNTT18GKSKarGPS4uZ76iPPNPrpc2CDIPkYY
+         pUpRWytz+VKWpn6oNki3wD/mq0xVfoBzU1j8pNAPkHhjG/IHWKYuLcTX4/XnlozmZNEH
+         d5hLJqmja9bRkfIM0i+blpfOXc1i8/0FDGl2I=
+Received: by 10.239.155.70 with SMTP id h6mr31846hbc.94.1285178494101; Wed, 22
+ Sep 2010 11:01:34 -0700 (PDT)
+Received: by 10.239.185.65 with HTTP; Wed, 22 Sep 2010 11:01:13 -0700 (PDT)
+In-Reply-To: <1285100703-49087-2-git-send-email-patnotz@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156814>
 
-On Tue, Sep 21, 2010 at 2:36 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
+On Tue, Sep 21, 2010 at 2:25 PM, Pat Notz <patnotz@gmail.com> wrote:
+> This option makes it convenient to construct commit messages for use
+> with 'rebase --autosquash'. =A0The resulting commit message will be
+> "fixup! ..." where "..." is the subject line of the specified commit
+> message.
 >
-> On Tue, Sep 21, 2010 at 20:25, Pat Notz <patnotz@gmail.com> wrote:
+> Example usage:
+> =A0$ git commit --fixup HEAD~2
 >
-> > +cat >editor <<\EOF
-> > +#!/bin/sh
-> > +sed -e "s/intermediate/edited/g" <"$1" >"$1-"
-> > +mv "$1-" "$1"
-> > +EOF
-> > +chmod 755 editor
-> > +
-> > +test_expect_success 'commit --squash works with -c' '
-> > + =A0 =A0 =A0 commit_for_rebase_autosquash_setup &&
-> > + =A0 =A0 =A0 EDITOR=3D./editor git commit --squash HEAD~1 -c HEAD =
-&&
-> > + =A0 =A0 =A0 commit_msg_is "squash! target message subject lineedi=
-ted commit"
-> > +'
+> Signed-off-by: Pat Notz <patnotz@gmail.com>
+> ---
+> =A0Documentation/git-commit.txt | =A0 13 +++++++++----
+> =A0builtin/commit.c =A0 =A0 =A0 =A0 =A0 =A0 | =A0 23 ++++++++++++++++=
++++----
+> =A02 files changed, 28 insertions(+), 8 deletions(-)
 >
-> Why not put the editor in t/t7500/ and use test_set_editor() like the
-> other tests?
+> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.=
+txt
+> index 42fb1f5..3367f8f 100644
+> --- a/Documentation/git-commit.txt
+> +++ b/Documentation/git-commit.txt
+> @@ -9,10 +9,10 @@ SYNOPSIS
+> =A0--------
+> =A0[verse]
+> =A0'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [=
+--dry-run]
+> - =A0 =A0 =A0 =A0 =A0[(-c | -C) <commit>] [-F <file> | -m <msg>] [--r=
+eset-author]
+> - =A0 =A0 =A0 =A0 =A0[--allow-empty] [--allow-empty-message] [--no-ve=
+rify] [-e] [--author=3D<author>]
+> - =A0 =A0 =A0 =A0 =A0[--date=3D<date>] [--cleanup=3D<mode>] [--status=
+ | --no-status] [--]
+> - =A0 =A0 =A0 =A0 =A0[[-i | -o ]<file>...]
+> + =A0 =A0 =A0 =A0 =A0[(-c | -C | --fixup) <commit>] [-F <file> | -m <=
+msg>]
+> + =A0 =A0 =A0 =A0 =A0[--reset-author] [--allow-empty] [--allow-empty-=
+message] [--no-verify]
+> + =A0 =A0 =A0 =A0 =A0[-e] [--author=3D<author>] [--date=3D<date>] [--=
+cleanup=3D<mode>]
+> + =A0 =A0 =A0 =A0 =A0[--status | --no-status] [--] [[-i | -o ]<file>.=
+=2E.]
+>
+> =A0DESCRIPTION
+> =A0-----------
+> @@ -70,6 +70,11 @@ OPTIONS
+> =A0 =A0 =A0 =A0Like '-C', but with '-c' the editor is invoked, so tha=
+t
+> =A0 =A0 =A0 =A0the user can further edit the commit message.
+>
+> +--fixup=3D<commit>::
+> + =A0 =A0 =A0 Construct a commit message for use with `rebase --autos=
+quash`.
+> + =A0 =A0 =A0 The commit message will be the subject line from the sp=
+ecified
+> + =A0 =A0 =A0 commit with a prefix of "fixup! ".
+> +
 
-The real reason is that I'm new enough that I wasn't aware of this
-pattern.  I saw what was done in t7501-commit.sh and followed along.
-I missed the use of test_set_editor() right there in t7500-commit.sh.
-Doh!
-
-I can certainly do that if it's preferred.  I must say, though, that I
-find it odd to put test inputs in a separate file in a separate
-directory from where the test transforms those into expected outputs.
-To see what the test is doing you have to load both files and trace
-through it.
-
-Still, I'd be happy to change do this if that's the preferred way.
+I should add links to the git-rebase man page here.
