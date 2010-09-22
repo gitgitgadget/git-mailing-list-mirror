@@ -1,95 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Survey 2011; now let's not forget the index/cache/stage
-Date: Wed, 22 Sep 2010 09:38:31 -0700 (PDT)
-Message-ID: <m3tylhhgyz.fsf@localhost.localdomain>
-References: <201009201538.41287.jnareb@gmail.com>
-	<20100921111344.647453d8@chalon.bertin.fr>
+From: Jonathan Gossage <jgossage@gmail.com>
+Subject: Newbie .gitignore problem
+Date: Wed, 22 Sep 2010 12:41:01 -0400
+Message-ID: <AANLkTin=BwgjqWQ3NfNdL9a1fUnVnFMrmAsmnZjHS=gL@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Felipe Contreras <felipe.contreras@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Wed Sep 22 18:38:42 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 22 18:41:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OySLB-00037G-LQ
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 18:38:42 +0200
+	id 1OySNb-0004FJ-RM
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Sep 2010 18:41:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752550Ab0IVQig (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 12:38:36 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33271 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751931Ab0IVQif (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 12:38:35 -0400
-Received: by fxm12 with SMTP id 12so140465fxm.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 09:38:34 -0700 (PDT)
+	id S1752802Ab0IVQlF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 12:41:05 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54453 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751764Ab0IVQlE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 12:41:04 -0400
+Received: by bwz11 with SMTP id 11so595472bwz.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 09:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=gs8+h+E9PiMmK8B3PupVyg1pcolCOp5TBKEPeX3oiNc=;
-        b=kpUhj7eVLwroWjFW4mC+u+3nRv9rbYe4IztXmQj5B0S1vsGuQWimJe8+wAtXJjhN3O
-         lm2Lv/DXr3jiRloDdorJgHvYd8t9cTimRlkOXBKKcJTyFfwEkXR8jTmqjgdzNVYBSYpk
-         e49FjFC22c9dOf1yk/0sAj3xwXVL7Y5FWDzXA=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=CfLizPYCDcdGdhyGlITp/QKhyB77LApCJJlRxB8eyHk=;
+        b=bxTmihbvwWSy+4UVwsitCjV5lELbZ9vOE3KIH4PvgZgQ3NtokjiPswgJ3us0aQIuoy
+         OyADuMRqhQMuB0BDlJAy0UyC43e7XZ1z+gJe0b42Keuiqrj8wau97q6WZJvdE7UiDbwB
+         YucktdLLNwQ7qCbzxRstLDlHU0u0r+nFRNQEY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=TNxUPmWj0Pg6fDBt14iHhUPAsJDgdHlzo9fhmQZmeyWT3RTSkLydgbMe8miUOW5JEY
-         Rl0OPX/m7c6wJnuaFCL2zZP7j36qDkSV7Urcfyu7AepVMgLUrufFalOyNjda3vfFzSKY
-         g6wXAoKGgKpIonoh5VGAdqQN6IWKXJEmyeniY=
-Received: by 10.223.123.145 with SMTP id p17mr541059far.90.1285173513922;
-        Wed, 22 Sep 2010 09:38:33 -0700 (PDT)
-Received: from localhost.localdomain (abva250.neoplus.adsl.tpnet.pl [83.8.198.250])
-        by mx.google.com with ESMTPS id e17sm4338521faa.39.2010.09.22.09.38.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Sep 2010 09:38:31 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8MGbw0G031492;
-	Wed, 22 Sep 2010 18:38:09 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8MGbeQN031482;
-	Wed, 22 Sep 2010 18:37:40 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20100921111344.647453d8@chalon.bertin.fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=nRYNdzeNsOajksgp8mmwpUcBpSEszZVbI1xzWoFHFinPfr5raFxMq5dz/NCHzARIoM
+         i979R/6I1N4fva7rK6TFbg0zij9ym71AzmW8W7ERhfaRbjLI1mKJDvKyYZI+5hhOOp3e
+         mKF77JXnGNYjfVis/9rWV4LcgL0sTE7xTEG+c=
+Received: by 10.204.126.223 with SMTP id d31mr231751bks.146.1285173661806;
+ Wed, 22 Sep 2010 09:41:01 -0700 (PDT)
+Received: by 10.204.152.219 with HTTP; Wed, 22 Sep 2010 09:41:01 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156809>
 
-Yann Dirson <dirson@bertin.fr> writes:
-
-> > > You agreed it would be there, and it's not, so I wonder what's the
-> > > point of asking for feedback if it's going to be forgotten. Next time
-> > > I think you should send the final version for review before
-> > > publishing.
-> >
-> > There were two issues conflated that contributed to this error
-> > of mine.
-> >
-> > First, I have re-checked *direct email* responses to request for 
-> > feedback on Git User's Survey 2010 questions proposal, but I have 
-> > forgot to re-check responses which were send only to git mailing list 
-> > without Cc (i.e. in my case *newsgroup* responses).  I am very sorry 
-> > for that.
-> 
-> Well, all that seems to call for a git-backed survey engine, so that
-> suggestions could be straightforward patches !
-
-While it could be quite straighforward to design survey engine which
-uses git as backend for storing survey schema (the structure of
-survey, including questions and choices), I don't think that git as
-backend would work for storing answers, if it were to be possible to
-(re)edit own answers.
-
-And of course there is problem with *hosting* a survey app...
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+SSBhbSBoYXZpbmcgYSBwcm9ibGVtIHNwZWNpZnlpbmcgLmdpdGlnbm9yZSBmaWx0ZXJzIHByb3Bl
+cmx5CkkgaGF2ZSBhIGRpcmVjdG9yeSBzdHJ1Y3R1cmUgYXMgZm9sbG93czoKCsKgwqAgwqAgwqAg
+wqAgwqByZXBvLXJvb3QKwqDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8CsKgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLQrCoMKgIMKgIMKgIMKgIMKgIMKgIMKgIHwgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqB8CiDCoCDCoCDCoCDCoCDCoCB8CsKgwqAgwqAgwqAgwqAgwqAgwqAgwqBk
+aXIxIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGRpcjIgwqAoc3ltbGluaykKwqAgwqAgwqAgwqAgwqAg
+wqAgwqBkaXIzCsKgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqB8CsKgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAtLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KwqDCoCDCoCDCoCDCoCDCoCDCoCDCoCB8IMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIHwKwqDCoCDCoCDCoCDCoCDCoG1hbnkgZGlyZWN0b3JpZXMgYW5kIGZp
+bGVzIMKgIMKgIMKgIMKgIMKgIMKgIMKgICAgIGRpcjQKCk15IHByb2JsZW0gaXMgdGhhdCBJIHdh
+bnQgdG8gZXhjbHVkZSBhbGwgZmlsZXMgYW5kIHN1Yi1kaXJlY3RvcmllcyBpbiBkaXIyCmV4Y2Vw
+dCBmb3IgZGlyNCBmcm9tIGNvbnRyb2wgYnkgR2l0LgpJIHRyaWVkIGEgbnVtYmVyIG9mIHZhcmlh
+dGlvbnMgb24gdGhlIGZvbGxvd2luZyAuZ2l0aWdub3JlIGZpbGUgaW4gZGlyMiBidXQKZWl0aGVy
+IGV2ZXJ5dGhpbmcgd2FzIGV4Y2x1ZGVkIG9yIGV2ZXJ5dGhpbmcgd2FzIGluY2x1ZGVkLiBJIHRl
+c3RlZCB1c2luZwpnaXQgYWRkIC11YWxsIC1uCgpUaGUgZmluYWwgLmdpdGlnbm9yZSBmaWxlIHdh
+cwoqCiovKgohZGlyNAoKCkhvdyBzaG91bGQgSSBnbyBhYm91dCB0YWNrbGluZyB0aGlzLiBUaGUg
+LmdpdGlnbm9yZSBtYW4gcGFnZXMgd2VyZQp1bmNsZWFyIHRvIG1lLgoKSm9uYXRoYW4gR29zc2Fn
+ZQo=
