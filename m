@@ -1,109 +1,102 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC PATCH] sit-send-email.pl: Add --to-cmd
-Date: Thu, 23 Sep 2010 17:50:05 +0000
-Message-ID: <AANLkTinCx=+n6bMZw4tQqrQ7WC1o_aeGG_n_PxywTyb8@mail.gmail.com>
-References: <AANLkTinsM5jdU194FR8L3hTvBXk0Tr_oV2E5752NOUpq@mail.gmail.com>
-	<AANLkTikkJNwF4LS9rx5=bHM2R0Pm751Y1u9V8iAt0w1A@mail.gmail.com>
-	<1285227413.7286.47.camel@Joe-Laptop>
-	<Pine.LNX.4.64.1009231054230.15528@ask.diku.dk>
-	<20100923090931.GA29789@albatros>
-	<20100923120024.GA26715@albatros>
-	<1285253867.31572.13.camel@Joe-Laptop>
-	<Pine.LNX.4.64.1009231757090.11585@ask.diku.dk>
-	<1285262237.31572.18.camel@Joe-Laptop>
-	<AANLkTin_Y8w4ujNGTqGJPNDNfYz7hcjBVLcOG0emBjYn@mail.gmail.com>
-	<1285263993.31572.25.camel@Joe-Laptop>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 1/4] commit: --fixup option for use with rebase
+ --autosquash
+Date: Thu, 23 Sep 2010 10:56:10 -0700
+Message-ID: <7vsk10qr7p.fsf@alter.siamese.dyndns.org>
+References: <1285262076-20134-1-git-send-email-patnotz@gmail.com>
+ <1285262076-20134-2-git-send-email-patnotz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Julia Lawall <julia@diku.dk>, git <git@vger.kernel.org>,
-	Vasiliy Kulikov <segooon@gmail.com>,
-	matt mooney <mfmooney@gmail.com>,
-	kernel-janitors@vger.kernel.org, Dan Carpenter <error27@gmail.com>
-To: Joe Perches <joe@perches.com>
-X-From: git-owner@vger.kernel.org Thu Sep 23 19:50:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Pat Notz" <patnotz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 23 19:57:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oypw0-0004A9-KO
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 19:50:17 +0200
+	id 1Oyq2Z-0007Fy-Na
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 19:57:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755887Ab0IWRuI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Sep 2010 13:50:08 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:53620 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754421Ab0IWRuG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 13:50:06 -0400
-Received: by iwn5 with SMTP id 5so1620171iwn.19
-        for <multiple recipients>; Thu, 23 Sep 2010 10:50:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=XQtgyscrBTs2HfsXPpP44z6MqTZyFtOxWqDMKQt81GI=;
-        b=oe1nfPIFke8DbeclFEG0AJoD8kPLu7PTJTzivfkCrIhTMBSIkOmGUnw/MySMmvUqmk
-         1qO4ETmv/eABv03xrNy16i77WieY7S0DpYiqkfaFNL2/Zdb27Aa/8Mbr9jch4rjDivVQ
-         y2nzIv1xJnCCUYrWMrvNQcw7MLud0Y/daxz28=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F7+8S1AUkiIX9PUOnr6q0YeKy1cqYT9ihUGqlvP5tphHL8gUYbGvspAOWZ+FyPVS1z
-         xUK1bW21wT//n5A3Zu+mER75MK7akDpKk/JJZmhYW/O42Fy/P7ICxCpwTymqeVc3Zovo
-         Igt4VgQPsA7iYeQYS8PBlx9mA4/8S63J/kkEo=
-Received: by 10.231.162.2 with SMTP id t2mr2348852ibx.57.1285264205066; Thu,
- 23 Sep 2010 10:50:05 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Thu, 23 Sep 2010 10:50:05 -0700 (PDT)
-In-Reply-To: <1285263993.31572.25.camel@Joe-Laptop>
+	id S1756015Ab0IWR4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 13:56:21 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51166 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755902Ab0IWR4T (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Sep 2010 13:56:19 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E878D802E;
+	Thu, 23 Sep 2010 13:56:17 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=8OrkT9o/98OmmXV49tZhNpHS/ig=; b=QFVOOj
+	GohkTawt5Rc6QR9DqTC/kdNIqmkT72mlsIfbJPxmK7v1n6lmbxtUC9CBKMaQQOIB
+	MjzJ6FACRRjs6ysqDL70LuTyB3youC4ZmGMiH39TWxQ+DOa0xEmGa9Z0hxji7vtW
+	leyiCe3pjypSZyRfNWtntf1V0eXRURqLLMzRA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=d5vcotLAUQkb/WG6XdOUdWZu6Sh/YCvp
+	dkdLP1lMbzW4xm8vJbcW5AWEJisZ3PQWqT2PywKJifKh1VUEE7i80N485LW0PGP/
+	zoRgssVV+RFzx1c4JX59nxJ1/c96Y3bQysimVG37JwMEJB/O00P9gisKtddbDU1+
+	diPbcqtu3HI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44789D802C;
+	Thu, 23 Sep 2010 13:56:15 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 85FA6D802B; Thu, 23 Sep
+ 2010 13:56:12 -0400 (EDT)
+In-Reply-To: <1285262076-20134-2-git-send-email-patnotz@gmail.com> (Pat
+ Notz's message of "Thu\, 23 Sep 2010 11\:14\:33 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DC02281A-C73B-11DF-B36B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156891>
 
-On Thu, Sep 23, 2010 at 17:46, Joe Perches <joe@perches.com> wrote:
-> On Thu, 2010-09-23 at 17:29 +0000, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarm=
-ason wrote:
->> On Thu, Sep 23, 2010 at 17:17, Joe Perches <joe@perches.com> wrote:
->> > I know there's a test harness in git, but
->> > I don't know how to wire up the new options.
->> You'd add the tests to t9001-send-email.sh and --tocmd out to some
->> program you create. Is there anything in particular you need help
->> with?
->
-> Just the doing. =C2=A0I was (am) being lazy.
->
->> > -if (!@to) {
->> > +if (!@to && $to_cmd eq "") {
->>
->> Why compare $to_cmd to "" instead of checking definedness?
->
-> No real reason. =C2=A0Using define is the style used in the rest of
-> the file and it should be changed.
->
->> > @@ -1238,6 +1242,23 @@ foreach my $t (@files) {
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->> > =C2=A0 =C2=A0 =C2=A0 =C2=A0close F;
->> >
->> > + =C2=A0 =C2=A0 =C2=A0 if (defined $to_cmd) {
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 open(F, "$to_cm=
-d \Q$t\E |")
->>
->> quotemeta() is for escaping regexes, not shell syntax. You probably
->> want IPC::Open2 or PC::Open3's functions which'll escape arguments f=
-or
->> you.
->
-> I just copied the style from the equivalent cc_cmd section below,
-> so if it's necessary, it should be changed there too.
->
->> I.e. do you need to strip whitespace from the beginning of the strin=
-g?
->
-> I think so.
+"Pat Notz" <patnotz@gmail.com> writes:
 
-This all sounds reasonable, but I really need to go through
-git-send-email.perl and fix all these bugs at some point...
+> +	} else if (fixup_message) {
+> +		unsigned char sha1[20];
+> +		struct commit *commit;
+> +		struct pretty_print_context ctx = {0};
+> +		if (get_sha1(fixup_message, sha1))
+> +			die("could not lookup commit %s", fixup_message);
+> +		commit = lookup_commit_reference(sha1);
+> +		if (!commit || parse_commit(commit))
+> +			die("could not parse commit %s", fixup_message);
+> +		format_commit_message(commit, "fixup! %s\n\n", &sb, &ctx);
+> +		hook_arg1 = "message";
+
+
+I notice that the above is a half-copy-and-paste from "if (use_message)"
+codepath that handles -c/-C.  A few issues to think about (i.e. not
+complaints; I haven't thought about them myself):
+
+ (1) Is it worth refactoring the original instead of copying;
+
+ (2) What happens/should happen when the original commit is encoded
+     differently from the current commit encoding?  -c/-C codepath takes
+     pains to re-encode.  Should we do so somewhere in this codepath, too?
+
+ (3) If the answer to (2) is "Yes", notice that format_commit_message()
+     does not re-encode the commit log message ("log" output codepath uses
+     pretty.c::pretty_print_commit(), which reencodes for log output
+     encoding).  Maybe we need an option to tell format_commit_message()
+     to do so?
+
+The last is not exactly an issue this patch alone should address, but I
+thought I'd better mention it anyway.
+
+My knee-jerk answers to the above are:
+
+ (1) The first handful of lines in this new "if (fixup_message)" codeblock
+     up to "die" might want to use a helper function shared with the
+     existing "if (use_message)" codepath;
+
+ (2) We probably want to re-encode to the log output encoding the string
+     we receive from format_commit_message() in this codepath.
+
+ (3) No need yet.
