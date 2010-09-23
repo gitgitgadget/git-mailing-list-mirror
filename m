@@ -1,69 +1,58 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: recursive aliases
-Date: Thu, 23 Sep 2010 13:34:02 +0200
-Message-ID: <4C9B3B2A.2080604@op5.se>
-References: <AANLkTi=VDmyhUDYKc38bOZWLncZ_twQGB2n5KgbgP_tf@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ramana Kumar <ramana.kumar@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 23 13:34:21 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] contrib/completion: --no-index option to git diff
+Date: Thu, 23 Sep 2010 14:33:51 +0200
+Message-ID: <7d6649a466d452ed428e6d378cba11bc2360a788.1285245189.git.git@drmicha.warpmail.net>
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 23 14:33:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oyk4B-0000EO-R6
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 13:34:20 +0200
+	id 1Oykzm-0003Z1-S9
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 14:33:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754597Ab0IWLeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Sep 2010 07:34:09 -0400
-Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:49528 "HELO
-	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1754532Ab0IWLeI (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 07:34:08 -0400
-Received: from source ([209.85.215.41]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTJs7LREX+58RoYGd0izcCQguox+I6nX5@postini.com; Thu, 23 Sep 2010 04:34:07 PDT
-Received: by ewy28 with SMTP id 28so501504ewy.28
-        for <git@vger.kernel.org>; Thu, 23 Sep 2010 04:34:05 -0700 (PDT)
-Received: by 10.213.4.80 with SMTP id 16mr6331628ebq.57.1285241645192;
-        Thu, 23 Sep 2010 04:34:05 -0700 (PDT)
-Received: from clix.int.op5.se (fw1-sth-pio.op5.com [109.228.142.130])
-        by mx.google.com with ESMTPS id u9sm1064647eeh.11.2010.09.23.04.34.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Sep 2010 04:34:04 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Thunderbird/3.0.6 ThunderGit/0.1a
-In-Reply-To: <AANLkTi=VDmyhUDYKc38bOZWLncZ_twQGB2n5KgbgP_tf@mail.gmail.com>
+	id S1755150Ab0IWMdp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 08:33:45 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59288 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755062Ab0IWMdo (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 08:33:44 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id C0A48728;
+	Thu, 23 Sep 2010 08:33:43 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Thu, 23 Sep 2010 08:33:43 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=nH9GwdmEQNhv4dflHwFvai1qE1g=; b=I8r55O1AoEfruykrvbBJZqyZ1y6cQRtO5D+C0a28X7mMiLB+et+n9I/HJGbWBcsQ1f7Vf7hyQKca3YkGvMbe7XYU4TDGTfs0RZAIzREDimq1+PplyXmoiToIT/G3MH7wmvveJkocfEHJ0ssSksefiwNh07sgJX+vSDVvZwlzM0Y=
+X-Sasl-enc: fnEtCPTZgteMe3029KjxalChlQdOwbeSkILsh502XdVM 1285245223
+Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 3F87F5E9779;
+	Thu, 23 Sep 2010 08:33:43 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.67.g2a10b7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156864>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156865>
 
-On 09/23/2010 08:07 AM, Ramana Kumar wrote:
-> Are recursive aliases in any way allowed?
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ contrib/completion/git-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-They're not just not allowed; they're not even possible.
-
-> What about aliases that don't refer to themselves, but refer to other aliases?
-> 
-
-Again, this isn't possible. How could you configure something like that?
-
-> Obviously I can just call git from the shell with a ! alias, but
-> wondering if there's any better way.
-
-There isn't. The simple aliases are there to let you run certain
-commands with certain default parameters as a new command. Normal
-commands have no way of calling other commands (or themselves)
-recursively. That's what shell-scripts are for.
-
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index feab651..64341d5 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1131,7 +1131,7 @@ _git_diff ()
+ 	case "$cur" in
+ 	--*)
+ 		__gitcomp "--cached --staged --pickaxe-all --pickaxe-regex
+-			--base --ours --theirs
++			--base --ours --theirs --no-index
+ 			$__git_diff_common_options
+ 			"
+ 		return
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+1.7.3.67.g2a10b7
