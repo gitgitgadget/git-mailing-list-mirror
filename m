@@ -1,100 +1,123 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH] mingw: do not crash on open(NULL, ...)
-Date: Thu, 23 Sep 2010 17:35:25 +0000
-Message-ID: <1285263325-2016-1-git-send-email-kusmabite@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 2/4] t7500: add tests of commit --fixup
+Date: Thu, 23 Sep 2010 10:42:41 -0700
+Message-ID: <7vzkv8qru6.fsf@alter.siamese.dyndns.org>
+References: <1285262076-20134-1-git-send-email-patnotz@gmail.com>
+ <1285262076-20134-3-git-send-email-patnotz@gmail.com>
 Mime-Version: 1.0
-Cc: git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: msysgit@googlegroups.com
-X-From: msysgit+bncCOPdven-DxC8n-7kBBoE7Hrpqg@googlegroups.com Thu Sep 23 19:35:20 2010
-Return-path: <msysgit+bncCOPdven-DxC8n-7kBBoE7Hrpqg@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-px0-f186.google.com ([209.85.212.186])
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Pat Notz" <patnotz@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 23 19:42:57 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxC8n-7kBBoE7Hrpqg@googlegroups.com>)
-	id 1OyphV-0004rH-OU
-	for gcvm-msysgit@m.gmane.org; Thu, 23 Sep 2010 19:35:17 +0200
-Received: by pxi18 with SMTP id 18sf567672pxi.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 23 Sep 2010 10:35:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:mime-version:x-beenthere:received
-         :received:received:received:received-spf:received:received:received
-         :from:to:cc:subject:date:message-id:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        bh=Ea14NBJ3zmGWi84wFjCKCkGzPsedzrWYT0HeVSMlWVc=;
-        b=kYK1jD2fgPjKGUuVhTqpsit9uG71slBm4Modssng80fbRxQo6PGjFFYK8p2RnKDSTP
-         mNxnOgdwmgx0/Y4S6zdqlrV7YkV6/yNENgTdK0MPEOnylzW8QENkNAeikj3jo0xZUsg6
-         59qTa6iobbEJr9Ns15Jy7sC72TwavSvT6H4+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
-         :message-id:x-mailer:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        b=mSXabvNgDcnH4EHp/hXsCknwO3Ey9DEp3du4yeRv+7EAI3vBEFWgvgGCkdWwcfzXNB
-         E+1vtAkMcJsQORWGSewZRLzRvBz7Qb8dwrYwhcUxUgKYJJ5GMdZKwGBYCN7E3THdhAho
-         M1zGET33INzT3uNEhJKoyQnzddmKuX6lqPex8=
-Received: by 10.142.133.10 with SMTP id g10mr126895wfd.15.1285263292785;
-        Thu, 23 Sep 2010 10:34:52 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.142.117.2 with SMTP id p2ls1349723wfc.1.p; Thu, 23 Sep 2010
- 10:34:52 -0700 (PDT)
-Received: by 10.142.202.10 with SMTP id z10mr370821wff.31.1285263292203;
-        Thu, 23 Sep 2010 10:34:52 -0700 (PDT)
-Received: by 10.142.202.10 with SMTP id z10mr370820wff.31.1285263292174;
-        Thu, 23 Sep 2010 10:34:52 -0700 (PDT)
-Received: from mail-pv0-f179.google.com (mail-pv0-f179.google.com [74.125.83.179])
-        by gmr-mx.google.com with ESMTP id e3si1274063wfh.3.2010.09.23.10.34.51;
-        Thu, 23 Sep 2010 10:34:51 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 74.125.83.179 as permitted sender) client-ip=74.125.83.179;
-Received: by mail-pv0-f179.google.com with SMTP id 13so681459pvg.38
-        for <msysgit@googlegroups.com>; Thu, 23 Sep 2010 10:34:51 -0700 (PDT)
-Received: by 10.114.126.3 with SMTP id y3mr2204271wac.74.1285263288616;
-        Thu, 23 Sep 2010 10:34:48 -0700 (PDT)
-Received: from localhost ([209.133.114.32])
-        by mx.google.com with ESMTPS id d2sm1764125wam.14.2010.09.23.10.34.47
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Sep 2010 10:34:47 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.3.msysgit.0.207.gda0b3
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 74.125.83.179 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156887>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Oypou-0000I0-P2
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 19:42:57 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755648Ab0IWRmv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 13:42:51 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39428 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754037Ab0IWRmu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Sep 2010 13:42:50 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EEF92D8E06;
+	Thu, 23 Sep 2010 13:42:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5tu0QhGzThL9A/cmojnXLbJVtbM=; b=qOLpd5
+	oLkX1Qfj+nEmLAho9QQ7Aaroh/vKW4SFmGg7u04KZxv48K9+Bt8ejwWFfI47EpAx
+	l6a63G0IWh+jBzto5o0ILElzqQMXZLTJKp2mZtWjItmWDhq+l+QpkE6GjwD6Ttmb
+	4ldeP8CxOiUXkRuqmJ9UJ61WDkGDdyhguLUFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=u0k07d9o6G7deB6iW9cuXnxmtwc0xKWr
+	hIrMkYFsFJerVg4b/WUkvH4l8gA2bN7nvcvkZwPfXjAe3gr1h9v0Ij30u8zssm+b
+	M0oTiN2dBZc/Tofr55UESZ1wOTEVc2n/rLTfq4Tu0S7CuUNMlv4gVgiEdhT+zXX5
+	ROepomtYvg0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C8839D8E05;
+	Thu, 23 Sep 2010 13:42:46 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CFB72D8E04; Thu, 23 Sep
+ 2010 13:42:43 -0400 (EDT)
+In-Reply-To: <1285262076-20134-3-git-send-email-patnotz@gmail.com> (Pat
+ Notz's message of "Thu\, 23 Sep 2010 11\:14\:34 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FA211704-C739-11DF-B719-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156888>
 
-Since open() already sets errno correctly for the NULL-case, let's just
-avoid the problematic strcmp.
+"Pat Notz" <patnotz@gmail.com> writes:
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- compat/mingw.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> Signed-off-by: Pat Notz <patnotz@gmail.com>
+> ---
+>  t/t7500-commit.sh |   33 +++++++++++++++++++++++++++++++++
+>  1 files changed, 33 insertions(+), 0 deletions(-)
+>
+> diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
+> index aa9c577..db82264 100755
+> --- a/t/t7500-commit.sh
+> +++ b/t/t7500-commit.sh
+> @@ -215,4 +215,37 @@ test_expect_success 'Commit a message with --allow-empty-message' '
+>  	commit_msg_is "hello there"
+>  '
+>  
+> +commit_for_rebase_autosquash_setup() {
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index b0ad919..b408c3c 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -297,7 +297,7 @@ int mingw_open (const char *filename, int oflags, ...)
- 	mode = va_arg(args, int);
- 	va_end(args);
- 
--	if (!strcmp(filename, "/dev/null"))
-+	if (filename && !strcmp(filename, "/dev/null"))
- 		filename = "nul";
- 
- 	fd = open(filename, oflags, mode);
--- 
-1.7.2.3.msysgit.0.207.gda0b3
+A SP after "_setup", i.e. "..._setup () {".
+
+> +	echo "first content for testing commit messages for rebase --autosquash" >>foo &&
+
+Did you really need this long line here?
+
+> +	git add foo &&
+> +	cat >log <<EOF &&
+> +target message subject line
+> +
+> +target message body line 1
+> +target message body line 2
+> +EOF
+> +	git commit -F log &&
+> +	echo "second content for testing commit messages for rebase --autosquash" >>foo &&
+> +	git add foo &&
+> +	git commit -m "intermediate commit" &&
+> +	echo "third content for testing commit messages for rebase --autosquash" >>foo &&
+> +	git add foo
+> +}
+> +
+> +test_expect_success 'commit --fixup provides correct one-line commit message' '
+> +	commit_for_rebase_autosquash_setup &&
+> +	git commit --fixup HEAD~1 &&
+> +	commit_msg_is "fixup! target message subject line"
+> +'
+
+What should be the right output when "target message subject line" has
+some metacharacters, i.e. "." (regexp) or "?" (glob)?
+
+Don't we also want to make sure that "rebase --autosquash" correctly groks
+the history you prepared in this test?
+
+> +test_expect_success 'invalid message options when using --fixup' '
+> +	echo changes >>foo &&
+> +	echo "message" >log &&
+> +	git add foo &&
+> +	test_must_fail git commit --fixup HEAD~1 --C HEAD~2 &&
+> +	test_must_fail git commit --fixup HEAD~1 --c HEAD~2 &&
+
+Double dashes before "C" and "c" look fishy.  Don't.
+
+> +	test_must_fail git commit --fixup HEAD~1 -m "cmdline message" &&
+> +	test_must_fail git commit --fixup HEAD~1 -F log
+> +'
+> +
+>  test_done
+> -- 
+> 1.7.3
