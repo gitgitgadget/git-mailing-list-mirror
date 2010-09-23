@@ -1,85 +1,69 @@
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH] get_author_ident_from_commit(): remove useless quoting
-Date: Thu, 23 Sep 2010 11:22:10 +0200
-Message-ID: <1285233730-30611-1-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <20100922212302.GA22368@pengutronix.de>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: recursive aliases
+Date: Thu, 23 Sep 2010 13:34:02 +0200
+Message-ID: <4C9B3B2A.2080604@op5.se>
+References: <AANLkTi=VDmyhUDYKc38bOZWLncZ_twQGB2n5KgbgP_tf@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 23 11:22:28 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Ramana Kumar <ramana.kumar@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 23 13:34:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oyi0Y-0003dB-Tf
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 11:22:27 +0200
+	id 1Oyk4B-0000EO-R6
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 13:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752527Ab0IWJWQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Sep 2010 05:22:16 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:60208 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752124Ab0IWJWP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Sep 2010 05:22:15 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Oyi0M-0006Vv-Jk; Thu, 23 Sep 2010 11:22:14 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Oyi0K-0007yE-Mp; Thu, 23 Sep 2010 11:22:12 +0200
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <20100922212302.GA22368@pengutronix.de>
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754597Ab0IWLeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 07:34:09 -0400
+Received: from na3sys009aog110.obsmtp.com ([74.125.149.203]:49528 "HELO
+	na3sys009aog110.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1754532Ab0IWLeI (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 07:34:08 -0400
+Received: from source ([209.85.215.41]) by na3sys009aob110.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTJs7LREX+58RoYGd0izcCQguox+I6nX5@postini.com; Thu, 23 Sep 2010 04:34:07 PDT
+Received: by ewy28 with SMTP id 28so501504ewy.28
+        for <git@vger.kernel.org>; Thu, 23 Sep 2010 04:34:05 -0700 (PDT)
+Received: by 10.213.4.80 with SMTP id 16mr6331628ebq.57.1285241645192;
+        Thu, 23 Sep 2010 04:34:05 -0700 (PDT)
+Received: from clix.int.op5.se (fw1-sth-pio.op5.com [109.228.142.130])
+        by mx.google.com with ESMTPS id u9sm1064647eeh.11.2010.09.23.04.34.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 23 Sep 2010 04:34:04 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.11) Gecko/20100720 Fedora/3.0.6-1.fc12 Thunderbird/3.0.6 ThunderGit/0.1a
+In-Reply-To: <AANLkTi=VDmyhUDYKc38bOZWLncZ_twQGB2n5KgbgP_tf@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156864>
 
-The command 's/'\''/'\''\'\'\''/g' only triples single quotes:
+On 09/23/2010 08:07 AM, Ramana Kumar wrote:
+> Are recursive aliases in any way allowed?
 
-	$ echo "What's up?" | sed 's/'\''/'\''\'\'\''/g'
-	What'''s up?
+They're not just not allowed; they're not even possible.
 
-This doesn't hurt as compared to a single single quote it only adds an
-empty string, but it makes the script needlessly complicated and hard t=
-o
-understand.  The useful quoting is done by s/'\''/'\''\\'\'\''/g at the
-beginning of the script and only once for all three variables.
+> What about aliases that don't refer to themselves, but refer to other aliases?
+> 
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- git-sh-setup.sh |    3 ---
- 1 files changed, 0 insertions(+), 3 deletions(-)
+Again, this isn't possible. How could you configure something like that?
 
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 6131670..8d54b73 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -151,17 +151,14 @@ get_author_ident_from_commit () {
- 		s/'\''/'\''\\'\'\''/g
- 		h
- 		s/^author \([^<]*\) <[^>]*> .*$/\1/
--		s/'\''/'\''\'\'\''/g
- 		s/.*/GIT_AUTHOR_NAME=3D'\''&'\''/p
-=20
- 		g
- 		s/^author [^<]* <\([^>]*\)> .*$/\1/
--		s/'\''/'\''\'\'\''/g
- 		s/.*/GIT_AUTHOR_EMAIL=3D'\''&'\''/p
-=20
- 		g
- 		s/^author [^<]* <[^>]*> \(.*\)$/\1/
--		s/'\''/'\''\'\'\''/g
- 		s/.*/GIT_AUTHOR_DATE=3D'\''&'\''/p
-=20
- 		q
---=20
-1.7.2.3
+> Obviously I can just call git from the shell with a ! alias, but
+> wondering if there's any better way.
+
+There isn't. The simple aliases are there to let you run certain
+commands with certain default parameters as a new command. Normal
+commands have no way of calling other commands (or themselves)
+recursively. That's what shell-scripts are for.
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
