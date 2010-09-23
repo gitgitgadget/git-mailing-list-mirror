@@ -1,152 +1,68 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: [PATCH] merge-recursive: option to specify rename threshold
-Date: Wed, 22 Sep 2010 17:45:24 -0700
-Message-ID: <1285202724-52474-1-git-send-email-kevin@sb.org>
-References: <A0604F16-CA84-4A84-B74B-CE8AB455DF77@sb.org>
-Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>
+From: Ramana Kumar <ramana.kumar@gmail.com>
+Subject: get-upstream
+Date: Thu, 23 Sep 2010 13:46:06 +1000
+Message-ID: <AANLkTikqJmsUo53dRngXcWsoEfcFzLQ-J1V5oZOGUL03@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 23 02:51:11 2010
+X-From: git-owner@vger.kernel.org Thu Sep 23 05:46:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oya1n-00041t-A6
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 02:51:11 +0200
+	id 1OyclV-0006wB-GM
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 05:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752048Ab0IWApo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Sep 2010 20:45:44 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:58842 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751818Ab0IWApn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Sep 2010 20:45:43 -0400
-Received: by pxi10 with SMTP id 10so291579pxi.19
-        for <git@vger.kernel.org>; Wed, 22 Sep 2010 17:45:43 -0700 (PDT)
-Received: by 10.114.52.17 with SMTP id z17mr1097727waz.71.1285202742978;
-        Wed, 22 Sep 2010 17:45:42 -0700 (PDT)
-Received: from localhost.localdomain ([69.170.160.74])
-        by mx.google.com with ESMTPS id 33sm270941wad.18.2010.09.22.17.45.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Sep 2010 17:45:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.68.ge6d63
-In-Reply-To: <A0604F16-CA84-4A84-B74B-CE8AB455DF77@sb.org>
+	id S1752208Ab0IWDq2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Sep 2010 23:46:28 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:39997 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751662Ab0IWDq1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Sep 2010 23:46:27 -0400
+Received: by qwh6 with SMTP id 6so876426qwh.19
+        for <git@vger.kernel.org>; Wed, 22 Sep 2010 20:46:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=yxaYW3uyG04BQdGGLp9VzP7DgvXpppbermbHhl9AW00=;
+        b=cRtyLEVvAQcFBYToJsHJPvmgg2odB2v5CjGjJzFCf9UYiBJkMjbP3oLiUtZi0+V4a9
+         Jo6PDloGt8P779x+mI32QfW8sRvQb0pWZxcAVjoZqfYb9JRdOtjIZw4IO/4FX0VRowEj
+         /5mcIVquJ7dir0MHgJoRRx++iDaDJpDmdk6vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=h0MwHxtrgO82vNK2pYxTbrqXrQpQ+S/MmEvTK8wfGmF2yvRVEO5ZffEX2nta2ONktS
+         80DXcgGtKtqvHporaw3p4f0seSynpQolKsSIylKmx797nhEnMPBPfBhYQX4EEtx4clBA
+         4KI7hzxmosFc2ADa5t+nRSRSj1ZH36lnopz2c=
+Received: by 10.220.158.73 with SMTP id e9mr565228vcx.60.1285213586751; Wed,
+ 22 Sep 2010 20:46:26 -0700 (PDT)
+Received: by 10.220.181.65 with HTTP; Wed, 22 Sep 2010 20:46:06 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156843>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156844>
 
-The recursive merge strategy turns on rename detection but leaves the
-rename score at the default. Add a strategy option to allow the user
-to specify a rename score to use.
+Is there an easy command to get a symbolic reference to the upstream
+branch of a tracking branch?
 
-Signed-off-by: Kevin Ballard <kevin@sb.org>
----
-This patch was generated off of the tip of the next branch.
+For example, to get the current branch name I can do this:
 
-As with the previous version, there are no tests included here. There seem
-to be no tests for the rename score in general, and I was not prepared to
-try to create my own.
+$ git symbolic-ref HEAD
+refs/heads/mybranchname
 
- Documentation/merge-strategies.txt |    4 ++++
- diff.c                             |    6 +++---
- diff.h                             |    2 ++
- merge-recursive.c                  |    6 ++++++
- merge-recursive.h                  |    1 +
- 5 files changed, 16 insertions(+), 3 deletions(-)
+Now I can see the upstream name as follows
 
-diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
-index 91faba5..05eb8f8 100644
---- a/Documentation/merge-strategies.txt
-+++ b/Documentation/merge-strategies.txt
-@@ -74,6 +74,10 @@ no-renormalize;;
- 	Disables the `renormalize` option.  This overrides the
- 	`merge.renormalize` configuration variable.
- 
-+rename-score=<n>;;
-+	Controls the similarity threshold used for rename detection.
-+	See also linkgit:git-diff[1] `-M`.
-+
- subtree[=path];;
- 	This option is a more advanced form of 'subtree' strategy, where
- 	the strategy makes a guess on how two trees must be shifted to
-diff --git a/diff.c b/diff.c
-index cc73061..d862234 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3323,7 +3323,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	return 1;
- }
- 
--static int parse_num(const char **cp_p)
-+int parse_rename_score(const char **cp_p)
- {
- 	unsigned long num, scale;
- 	int ch, dot;
-@@ -3369,7 +3369,7 @@ static int diff_scoreopt_parse(const char *opt)
- 	if (cmd != 'M' && cmd != 'C' && cmd != 'B')
- 		return -1; /* that is not a -M, -C nor -B option */
- 
--	opt1 = parse_num(&opt);
-+	opt1 = parse_rename_score(&opt);
- 	if (cmd != 'B')
- 		opt2 = 0;
- 	else {
-@@ -3379,7 +3379,7 @@ static int diff_scoreopt_parse(const char *opt)
- 			return -1; /* we expect -B80/99 or -B80 */
- 		else {
- 			opt++;
--			opt2 = parse_num(&opt);
-+			opt2 = parse_rename_score(&opt);
- 		}
- 	}
- 	if (*opt != 0)
-diff --git a/diff.h b/diff.h
-index 1fd44f5..0083d92 100644
---- a/diff.h
-+++ b/diff.h
-@@ -315,4 +315,6 @@ extern size_t fill_textconv(struct userdiff_driver *driver,
- 
- extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
- 
-+extern int parse_rename_score(const char **cp_p);
-+
- #endif /* DIFF_H */
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 325a97b..2e3ef44 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -334,6 +334,7 @@ static struct string_list *get_renames(struct merge_options *o,
- 	opts.rename_limit = o->merge_rename_limit >= 0 ? o->merge_rename_limit :
- 			    o->diff_rename_limit >= 0 ? o->diff_rename_limit :
- 			    500;
-+	opts.rename_score = o->rename_score;
- 	opts.warn_on_too_large_rename = 1;
- 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	if (diff_setup_done(&opts) < 0)
-@@ -1576,6 +1577,11 @@ int parse_merge_opt(struct merge_options *o, const char *s)
- 		o->renormalize = 1;
- 	else if (!strcmp(s, "no-renormalize"))
- 		o->renormalize = 0;
-+	else if (!prefixcmp(s, "rename-score=")) {
-+		const char *score = s + strlen("rename-score=");
-+		if ((o->rename_score = parse_rename_score(&score)) == -1 || *score != 0)
-+			return -1;
-+	}
- 	else
- 		return -1;
- 	return 0;
-diff --git a/merge-recursive.h b/merge-recursive.h
-index 2eb5d1a..c8135b0 100644
---- a/merge-recursive.h
-+++ b/merge-recursive.h
-@@ -19,6 +19,7 @@ struct merge_options {
- 	int verbosity;
- 	int diff_rename_limit;
- 	int merge_rename_limit;
-+	int rename_score;
- 	int call_depth;
- 	struct strbuf obuf;
- 	struct string_list current_file_set;
--- 
-1.7.3.68.ge6d63
+$ git branch -vv
+branch1 ...
+mybranchname sha [upstreamname: ahead n] ...
+branch3 ...
+
+My question is is there a way to get upstreamname directly to stdout,
+similar to the symbolic-ref command?
+
+(I don't want to have to type it manually; tab completion helps a
+little, but looking for more. Plus this would be necessary to avoid
+scraping in a script.)
