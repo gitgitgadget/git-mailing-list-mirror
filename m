@@ -1,65 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 3/4] commit: --squash option for use with rebase
- --autosquash
-Date: Thu, 23 Sep 2010 13:39:31 -0700
-Message-ID: <7vocboqjng.fsf@alter.siamese.dyndns.org>
-References: <1285262076-20134-1-git-send-email-patnotz@gmail.com>
- <1285262076-20134-4-git-send-email-patnotz@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Listing files in order they are changed
+Date: Thu, 23 Sep 2010 13:48:07 -0700 (PDT)
+Message-ID: <m3pqw4gpb2.fsf@localhost.localdomain>
+References: <AANLkTimHrCujEggj9KbAWWivY+WxnL0YqsXs+idhymBA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: "Pat Notz" <patnotz@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 23 22:39:47 2010
+To: Parag Kalra <paragkalra@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 23 22:48:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oysa2-0002OQ-P5
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 22:39:47 +0200
+	id 1OysiH-0006Tj-J8
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 22:48:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755174Ab0IWUjm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Sep 2010 16:39:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:59813 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754574Ab0IWUjl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Sep 2010 16:39:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5D8B3D8C28;
-	Thu, 23 Sep 2010 16:39:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KZYjq/eKW0UAlsKkefMt+VHWEBo=; b=wX9Tw8
-	KTEg3bEcH+SEBH4kFm11bgTgVsGebZ1KBFuZSq47zqlS/bb9LOduq1YXkR9FdOFN
-	DtU1JXwGP5o5/Y7neWGsVqn4Ju3Z6eoGQMFBPM3KllqEPTWnBj6OHOX4QZtzEcLs
-	29IT6MvwenwGkE6h7ibARsUrkOXr3dlqTd7X4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=UoTjBM383KRwC+FjsX7NFR6kYNgbMAEW
-	yoTR/3u1RFMpU5CKJ4fz49nrTWR35cGPcKKVRutDEbHLaaf1CIdwBnEZN0jOc/Aq
-	dkMnVjnlI2ZGR9yNgNzMXqrz//ocwQWgviro4IkJQLEIuP717BODbQ0xchJPtRgI
-	bTAVZj6MabQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2A3ACD8C27;
-	Thu, 23 Sep 2010 16:39:36 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 57564D8C26; Thu, 23 Sep
- 2010 16:39:33 -0400 (EDT)
-In-Reply-To: <1285262076-20134-4-git-send-email-patnotz@gmail.com> (Pat
- Notz's message of "Thu\, 23 Sep 2010 11\:14\:35 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ADC9A844-C752-11DF-8A96-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756544Ab0IWUsM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Sep 2010 16:48:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:38757 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755358Ab0IWUsL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 16:48:11 -0400
+Received: by wyb28 with SMTP id 28so1299399wyb.19
+        for <git@vger.kernel.org>; Thu, 23 Sep 2010 13:48:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=zcR/LuQpVDwTjb9naw1F1xYv8ogszJNtFCqWh+cDvRU=;
+        b=M87LbtHQsdrJh3EiWAFQsxV4nTyzyIVIhPbWaQgnEwzCgphejEna3UyfQV14wNejH+
+         yoD1Zl9tlUnJzSBZbMedEhgBSN1+AUNbvggneYsRSrnwppF5qu2Vpq5WILCMYGbF6Lm6
+         YahZiNgp4Gdaoab2VbLFgunk0BvmoxYIJhWds=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=RaDfaJgLKW487WLiLkii5zqvW+PiAWLwOK+XRA7ykIAKgxp4RptaLvOdxJwjO58xAq
+         4+oJIy84jAfStrCmjj4fZl7KmqBMWBQLysNhtVZU2s6VTu8oUXJB+HEZIbW7nahoZ9xT
+         o7nWzXAgEin6DWIs7s2ue89iQ/t/GNeDCN6ik=
+Received: by 10.227.134.135 with SMTP id j7mr1048684wbt.17.1285274888302;
+        Thu, 23 Sep 2010 13:48:08 -0700 (PDT)
+Received: from localhost.localdomain (abvh105.neoplus.adsl.tpnet.pl [83.8.205.105])
+        by mx.google.com with ESMTPS id bj11sm863798wbb.4.2010.09.23.13.48.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 23 Sep 2010 13:48:07 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8NKleJN022660;
+	Thu, 23 Sep 2010 22:47:50 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8NKlTK2022654;
+	Thu, 23 Sep 2010 22:47:29 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTimHrCujEggj9KbAWWivY+WxnL0YqsXs+idhymBA@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156907>
 
-"Pat Notz" <patnotz@gmail.com> writes:
+Parag Kalra <paragkalra@gmail.com> writes:
 
-> +		if(use_message && strcmp(use_message, squash_message) == 0)
+> Is there a way I can make Git list all the tracked=A0files in the
+> working directory=A0in order they are changed (modified, added or
+> deleted)
+>=20
+> Something like displayed by: git ls-files
 
-	"if (use_message && !strcmp(..., ...))"
+No, it is currently not possible, mainly because git thinks in terms
+of changes to project as a whole, not as changes to individual files.
 
-Otherwise this patch looks sane to me.
+The tree blame ("git blame <directory>"), if it existed (I have
+working prototype), would be of use here.
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
