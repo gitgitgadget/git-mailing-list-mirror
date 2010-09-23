@@ -1,90 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] mingw: do not crash on open(NULL, ...)
-Date: Thu, 23 Sep 2010 15:50:37 -0700
-Message-ID: <7vy6asoz0i.fsf@alter.siamese.dyndns.org>
-References: <1285263325-2016-1-git-send-email-kusmabite@gmail.com>
- <AANLkTinJ4kKRsKO6HyqQH4Oy12E1mdqCXxPb2z+59818@mail.gmail.com>
-Mime-Version: 1.0
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: git-reflog bails if branch points to bad commit
+Date: Thu, 23 Sep 2010 16:03:16 -0700
+Message-ID: <D1EE3839-DC24-4C2B-AA0A-3FD554E8E514@sb.org>
+References: <F628129C-56AE-4BB5-9227-4282763C5B7E@sb.org> <AANLkTimzQ5Jdw5oqiE17859YBiM0EQ6fnTp5+x6JR48k@mail.gmail.com> <6532E729-31B8-44D3-A26A-780DDD784703@sb.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
-Cc: msysgit@googlegroups.com, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Sep 24 00:50:56 2010
+Content-Transfer-Encoding: 8BIT
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 24 01:03:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oyucx-0007ee-6F
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 00:50:55 +0200
+	id 1Oyup3-0002w4-6M
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 01:03:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754406Ab0IWWuv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Sep 2010 18:50:51 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33686 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753357Ab0IWWuu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Sep 2010 18:50:50 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 487D0D8F5B;
-	Thu, 23 Sep 2010 18:50:49 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YyrPxX5ZHwJOTMndZGICePinYKA=; b=sIowvc
-	niKYyw7huGxIGpG0Sy/FAXA0s0Yk0eyhHxcaAZYfzSqzw7gWDi6kR0dm3lHwLFc/
-	ppjxzrlvzwHw+YzSmGgjJf04joHqJSI+cVc/lFeIDKBK3HJz2zPKs0ABevTJQPIZ
-	tEitYZg67o/goBB4xcCjnFdKzQHO6cDDY3YV0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pjSoS+bQFDk1HVeTt7ZMEAGd6yKHSyy2
-	rVKss8pACab4cid4gJ/aZ1e9fHebOZ/h6BzeISjsg0UQOeiHU4Bd8khfxyY2TBGz
-	mpZ+3+NMemfs5RdMhT64MpnnZ41d6hpGQJSqNxdp3ePPsCSmIQxtUBKwdGhXlZrC
-	EvOeijLHXE4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D13A8D8F5A;
-	Thu, 23 Sep 2010 18:50:44 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id BA4C9D8F59; Thu, 23 Sep
- 2010 18:50:39 -0400 (EDT)
-In-Reply-To: <AANLkTinJ4kKRsKO6HyqQH4Oy12E1mdqCXxPb2z+59818@mail.gmail.com>
- (Erik Faye-Lund's message of "Thu\, 23 Sep 2010 10\:59\:46 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FFE3B72A-C764-11DF-B7CD-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753540Ab0IWXDU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 19:03:20 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:40339 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752354Ab0IWXDT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 19:03:19 -0400
+Received: by pzk34 with SMTP id 34so474311pzk.19
+        for <git@vger.kernel.org>; Thu, 23 Sep 2010 16:03:19 -0700 (PDT)
+Received: by 10.114.46.4 with SMTP id t4mr2606142wat.40.1285282999289;
+        Thu, 23 Sep 2010 16:03:19 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id d38sm2302032wam.8.2010.09.23.16.03.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 23 Sep 2010 16:03:18 -0700 (PDT)
+In-Reply-To: <6532E729-31B8-44D3-A26A-780DDD784703@sb.org>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156924>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Sep 23, 2010, at 2:57 PM, Kevin Ballard wrote:
 
-> On Thu, Sep 23, 2010 at 10:35 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
->> Since open() already sets errno correctly for the NULL-case, let's just
->> avoid the problematic strcmp.
->>
->> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
->
-> I guess I should add a comment as to why this patch is needed:
->
-> This seems to be the culprit for issue 523 in the msysGit issue
-> tracker: http://code.google.com/p/msysgit/issues/detail?id=523
->
-> fetch_and_setup_pack_index() apparently pass a NULL-pointer to
-> parse_pack_index(), which in turn pass it to check_packed_git_idx(),
-> which again pass it to open(). This all looks intentional to my
-> (http.c-untrained) eye.
+> At this point, attempting to say `git reflog show foo` was complaining "fatal: Bad object foo" even though the reflog itself is perfectly valid, and in fact the only problem in the entire repository is the ref currently points to a hash that doesn't exist in the object database.
 
-Surely, open(NULL) should be rejected by a sane system, and your patch
-looks sane to me.
+It appears the problem is `git reflog show` uses the current value of the branch as the first entry in the reflog, rather than actually showing the latest entry in the reflog. It still uses the message from the latest reflog entry, but the commit hash shown is the actual value of the branch. Is there any reason for this behavior? I admit it may be confusing if the reflog for a branch doesn't actually show the current branch pointer, but that should not be possible under normal behavior, and in a corrupt repo I believe showing the reflog is more important than showing the branch pointer. If necessary, we could even make it display a warning in this case.
 
-But depending on and exploiting the fact sounds like a horrible hack in
-the caller of parse_pack_index(..., NULL) to me.
+Curiously, when the branch points to a commit not in the reflog, running `git rev-parse master@{0}` gives me something like
 
-Shawn may have intentionally done that in 750ef42 (http-fetch: Use
-temporary files for pack-*.idx until verified, 2010-04-19), but at least
-7b64469 (Allow parse_pack_index on temporary files, 2010-04-19) should
-have documented that idx_path is allowed to be NULL under what
-circumstance (and for what purpose it is useful to do so) when it
-introduced the second parameter to the API.
+warning: Log .git/logs/refs/heads/master unexpectedly ended on Thu, 23 Sep 2010 13:09:56 -0700.
+d73cfd127a564756f7790d2c4ae00af0126ead29
 
-What were we smoking?
+Note that the hash it shows is actually the current value of the branch rather than the latest reflog entry. Arguably, this should also use the reflog unambiguously, as again, under normal operations that should be identical to the current branch, and with a corrupt repo the user may care more about the reflog. I can't think of any scenario where I would expect master@{0} to give me back the master branch if it differs from what the reflog says.
+
+My proposal is twofold. First, modify `git reflog show` to only show the reflog and to not even attempt to show the current commit. It may also be worth extending it to not fail when it hits a bad object, but to simply log that and continue. And second, modify master@{0} to show the reflog entry in the event where it doesn't match the current value of the branch. Any comments/suggestions on this?
+
+-Kevin Ballard
