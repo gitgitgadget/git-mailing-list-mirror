@@ -1,57 +1,41 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] [PATCH] mingw: do not crash on open(NULL, ...)
-Date: Thu, 23 Sep 2010 22:08:56 +0200
-Message-ID: <201009232208.56916.j6t@kdbg.org>
-References: <1285263325-2016-1-git-send-email-kusmabite@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: msysgit@googlegroups.com, git@vger.kernel.org
-To: "Erik Faye-Lund" <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 23 22:09:06 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: git-reflog bails if branch points to bad commit
+Date: Thu, 23 Sep 2010 13:13:39 -0700
+Message-ID: <F628129C-56AE-4BB5-9227-4282763C5B7E@sb.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Sep 23 22:14:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oys6L-0003vp-JF
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 22:09:05 +0200
+	id 1OysB3-0006D3-94
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 22:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756490Ab0IWUI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Sep 2010 16:08:59 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:53501 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756437Ab0IWUI7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Sep 2010 16:08:59 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id B674DA7EDB;
-	Thu, 23 Sep 2010 22:08:57 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 046DF19F5C9;
-	Thu, 23 Sep 2010 22:08:57 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <1285263325-2016-1-git-send-email-kusmabite@gmail.com>
-Content-Disposition: inline
+	id S1755689Ab0IWUNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 16:13:47 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:36168 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753600Ab0IWUNq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Sep 2010 16:13:46 -0400
+Received: by pwj6 with SMTP id 6so431245pwj.19
+        for <git@vger.kernel.org>; Thu, 23 Sep 2010 13:13:46 -0700 (PDT)
+Received: by 10.142.226.8 with SMTP id y8mr1896869wfg.14.1285272826000;
+        Thu, 23 Sep 2010 13:13:46 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id c14sm1322347wfe.2.2010.09.23.13.13.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 23 Sep 2010 13:13:45 -0700 (PDT)
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156900>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156901>
 
-On Donnerstag, 23. September 2010, Erik Faye-Lund wrote:
-> @@ -297,7 +297,7 @@ int mingw_open (const char *filename, int oflags, ...)
->  	mode = va_arg(args, int);
->  	va_end(args);
->
-> -	if (!strcmp(filename, "/dev/null"))
-> +	if (filename && !strcmp(filename, "/dev/null"))
->  		filename = "nul";
->
->  	fd = open(filename, oflags, mode);
+Attempting to use `git reflog show foo` or `git log -g foo` will bail with "bad object: foo" if the tip commit of foo is invalid. This seems incredibly non-useful. Why should reflog care if foo points to a valid commit? This bug prevents reflog from being used in a time of great need, which someone just ran into on the #git IRC channel. Their power cut out and they ended up with a corrupt commit on the tip of their branch, and they simply could not view the reflog, which would have enabled them to roll the branch back to a previous commit. Does anybody know why reflog has this behavior?
 
-Good catch, thank you!
-
-Acked-by: Johannes Sixt <j6t@kdbg.org>
-
--- Hannes
+-Kevin Ballard
