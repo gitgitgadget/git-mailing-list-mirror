@@ -1,94 +1,70 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH] mingw: do not crash on open(NULL, ...)
-Date: Thu, 23 Sep 2010 10:59:46 -0700
-Message-ID: <AANLkTinJ4kKRsKO6HyqQH4Oy12E1mdqCXxPb2z+59818@mail.gmail.com>
-References: <1285263325-2016-1-git-send-email-kusmabite@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Knittl <knittl89@googlemail.com>
+Subject: Re: [PATCH] Improvements to `git checkout -h`
+Date: Thu, 23 Sep 2010 20:26:42 +0200
+Message-ID: <AANLkTikjqW5R4p90T3pWACPG9vGqd4uRETiE-Wb_BybS@mail.gmail.com>
+References: <AANLkTikra1iE5JpXvvPnNcwE=XEDF6B=ubCteEi77dqX@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: msysgit@googlegroups.com
-X-From: msysgit+bncCOPdven-DxCpq-7kBBoEY-0pnA@googlegroups.com Thu Sep 23 20:00:34 2010
-Return-path: <msysgit+bncCOPdven-DxCpq-7kBBoEY-0pnA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-pw0-f58.google.com ([209.85.160.58])
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 23 20:27:15 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxCpq-7kBBoEY-0pnA@googlegroups.com>)
-	id 1Oyq5x-0000Zr-De
-	for gcvm-msysgit@m.gmane.org; Thu, 23 Sep 2010 20:00:33 +0200
-Received: by pwi4 with SMTP id 4sf599154pwi.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 23 Sep 2010 11:00:32 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1OyqVn-0004tt-Ci
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Sep 2010 20:27:15 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755209Ab0IWS1H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Sep 2010 14:27:07 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:55691 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752952Ab0IWS1F (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Sep 2010 14:27:05 -0400
+Received: by pwj6 with SMTP id 6so375964pwj.19
+        for <git@vger.kernel.org>; Thu, 23 Sep 2010 11:27:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:received:mime-version:received
-         :reply-to:in-reply-to:references:from:date:message-id:subject:to:cc
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=tLvZR4d7tvA7GWkTYDFxBjL5L5pwTf/bZGtxFNtjwlU=;
-        b=HYWpZVxEQoMMLIIxFcAj98RvKWLSL7SR2KmMfAs/T/r+UpnLy1I45qAVq2bRePUEiz
-         zwJgpS79rVCc5E/33xX1dCr0RN+x6SQxB24ns6Tp3pb10yFMYVrpAvm1uHfYwlPXZ8ob
-         Lsm/SXVwGkRvMOmiZpcUZRPrlfJ2L9Jw/RFWY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=3vA0nLECp3vuPZ0HhMg1UeYljmjXN3Nr1N7AtGe99HQ=;
+        b=IVgAFmr8Se33rIV6//t/FKC/giTHZ06HUyZRMjWhzuKVJgSGMAQO9y8USMMAlSxN9H
+         qDfsmVRNWuwsqEyQGDu8Ou2hQzXHpF1LqDV3owm7JcuNYc3s2bfAqkYISkHqBMuNQG0T
+         MdLtPAphVHQCrqhSYwukS3YFdY6Y7rW3lJHF4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        b=4emiHOa54his9Pp7lThSI7BI9px/Eq2qjRw/mfHL2SgbKU8KmAX9DiZN9hwuUrG3w9
-         6eUgwbCuPQPCxSXIXFe0+WHgwBg+7/hCiaWCBqBHuPDOh2rJ3dQA5YhFrnbZere/FJ0N
-         7yo6ds/pv1OUbsGO3ft24YUlKI9BVl80dAGZo=
-Received: by 10.115.101.24 with SMTP id d24mr199124wam.6.1285264809397;
-        Thu, 23 Sep 2010 11:00:09 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.115.67.12 with SMTP id u12ls1168170wak.3.p; Thu, 23 Sep 2010
- 11:00:08 -0700 (PDT)
-Received: by 10.115.14.6 with SMTP id r6mr388409wai.7.1285264808756;
-        Thu, 23 Sep 2010 11:00:08 -0700 (PDT)
-Received: by 10.115.14.6 with SMTP id r6mr388408wai.7.1285264808732;
-        Thu, 23 Sep 2010 11:00:08 -0700 (PDT)
-Received: from mail-pw0-f41.google.com (mail-pw0-f41.google.com [209.85.160.41])
-        by gmr-mx.google.com with ESMTP id j18si1364639wan.1.2010.09.23.11.00.07;
-        Thu, 23 Sep 2010 11:00:07 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.160.41 as permitted sender) client-ip=209.85.160.41;
-Received: by mail-pw0-f41.google.com with SMTP id 6so800410pwj.14
-        for <msysgit@googlegroups.com>; Thu, 23 Sep 2010 11:00:07 -0700 (PDT)
-Received: by 10.142.212.14 with SMTP id k14mr1412851wfg.132.1285264807532;
- Thu, 23 Sep 2010 11:00:07 -0700 (PDT)
-Received: by 10.220.95.193 with HTTP; Thu, 23 Sep 2010 10:59:46 -0700 (PDT)
-In-Reply-To: <1285263325-2016-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.160.41 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156892>
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=YKjNli2b93Zy5+ZoIf8O9BpZoMnn8veUmd1EXiSu2800oOUg9//fBalkAvsxCNavSY
+         G2t36wgB1veTeIjGRK9MngFzR7BFXX5dyV0ia9zsbxm+AAlJf+lgX717dP1/3CN2oMWY
+         6IAZ8RO4ZfQQHyXczAoHSNSzWobZ04/SRvgmQ=
+Received: by 10.114.12.15 with SMTP id 15mr2294834wal.134.1285266423127; Thu,
+ 23 Sep 2010 11:27:03 -0700 (PDT)
+Received: by 10.220.189.200 with HTTP; Thu, 23 Sep 2010 11:26:42 -0700 (PDT)
+In-Reply-To: <AANLkTikra1iE5JpXvvPnNcwE=XEDF6B=ubCteEi77dqX@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156893>
 
-On Thu, Sep 23, 2010 at 10:35 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> Since open() already sets errno correctly for the NULL-case, let's just
-> avoid the problematic strcmp.
+any thoughts on this one?
+
+On Sun, Sep 19, 2010 at 9:41 PM, Knittl <knittl89@googlemail.com> wrote:
+> print more information in `git checkout -h` to stop people from
+> complaining about git's help ;)
 >
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> http://repo.or.cz/w/git/dkf.git/commitdiff/95209979cb1a0de071a3cceac593fbb40235b926
+>
+> cheers, daniel
+>
+> --
+> typed with http://neo-layout.org
+> myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
+>
 
-I guess I should add a comment as to why this patch is needed:
 
-This seems to be the culprit for issue 523 in the msysGit issue
-tracker: http://code.google.com/p/msysgit/issues/detail?id=523
 
-fetch_and_setup_pack_index() apparently pass a NULL-pointer to
-parse_pack_index(), which in turn pass it to check_packed_git_idx(),
-which again pass it to open(). This all looks intentional to my
-(http.c-untrained) eye.
-
-The code in mingw_open was introduced in commit 3e4a1ba (by Johannes
-Sixt), and the lack of a NULL-check looks like a simple oversight.
+-- 
+typed with http://neo-layout.org
+myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
