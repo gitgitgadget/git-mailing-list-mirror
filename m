@@ -1,146 +1,178 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2] smart-http: Don't change POST to GET when following redirect
-Date: Fri, 24 Sep 2010 14:20:23 +0800
-Message-ID: <1285309223-4348-1-git-send-email-rctay89@gmail.com>
-References: <AANLkTimwkXTs==+zT=Ue3jFNyRLL+7A1FFhoDuF-5zZ3@mail.gmail.com> <877hijvff7.fsf@catnip.gol.com> <20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi> <m262y3cvpy.fsf@whitebox.home> <m21v8rcua1.fsf_-_@whitebox.home>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Miles Bader <miles@gnu.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 24 08:21:47 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 00/24] Re: [PATCH 1/3] t9300 (fast-import): style tweaks
+Date: Fri, 24 Sep 2010 01:59:00 -0500
+Message-ID: <20100924065900.GA4666@burratino>
+References: <20100701031819.GA12524@burratino>
+ <20100701054849.GA14972@burratino>
+ <20100817170216.GA14491@kytes>
+ <20100905031528.GA2344@burratino>
+ <20100905032253.GB2344@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sam Vilain <sam@vilain.net>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 09:02:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz1fH-00053R-5h
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 08:21:47 +0200
+	id 1Oz2IE-00029A-SI
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 09:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751398Ab0IXGUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 02:20:45 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:65206 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750880Ab0IXGUp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 02:20:45 -0400
-Received: by pzk34 with SMTP id 34so530336pzk.19
-        for <git@vger.kernel.org>; Thu, 23 Sep 2010 23:20:44 -0700 (PDT)
+	id S1753724Ab0IXHB5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 03:01:57 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:39832 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751849Ab0IXHB4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 03:01:56 -0400
+Received: by ywh1 with SMTP id 1so854250ywh.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 00:01:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=W4YVVQKbA2XisO002lkCSiIEM70WQab+OgZiiidR0vA=;
-        b=Qq0UCYJ/llXJMzBTtxg0T057oLbkvSqhbgyWA2fLUoaI26AnzSKa0JjXOWqAqPiQ6s
-         x+IpSsgwmnaG1CtiKL7i0kMag/yYSBFzOOYusNFI16hX7B+D9O0q/S13NniUfZj85aNo
-         8cWQs82gFo5xDKy1TOrkTH2+4O8eYSo/cWls4=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7wLBqSbindyTyrihn7MrYRQDX1t4yJW7PUPkeYtgvjI=;
+        b=G29IkJpjwbgkCoYkCpqmELJSqStdNPEqQnSCGsOfj+T/mPyi/XJJ99jCRHlY2rJa9K
+         j1vfUKExEbPMQCSDFpfKdixjO3SXfAty4FKly52zHOkteyt1BuIYeFSAvJNS4kX5jAS1
+         irl9mwOm/VzuEYAL/B2MwOS0x4vX+237zo8yE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Z5VrpKvt+5WVx9UlR/mAHa5t7H2/gMv3v1tWAFMn00fiv8F1MH6PIu0vElnoxM8cPR
-         Vn7BSRAdDVbOmG1Lv6bXqyJ2cIer1g1ulNoZ+Ofe5ZHw2WTl3bAZBsqa/3dWGvlnUaAG
-         uH/wEslMiFy2sK1ggSejxlucBDSfNOfXDqs34=
-Received: by 10.114.46.20 with SMTP id t20mr3018189wat.181.1285309244435;
-        Thu, 23 Sep 2010 23:20:44 -0700 (PDT)
-Received: from localhost.localdomain (cm99.zeta153.maxonline.com.sg [116.87.153.99])
-        by mx.google.com with ESMTPS id d38sm2901686wam.20.2010.09.23.23.20.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Sep 2010 23:20:42 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <AANLkTimwkXTs==+zT=Ue3jFNyRLL+7A1FFhoDuF-5zZ3@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iT9Go5YN4GC9YhSryLLSmHYfneTUPDl1mmRn+vFelQdQSYovxqKB1AogaT5rFOSttz
+         1BB49etLqlRf+kj9a4zXL3Gy6wtiLp3TFCw+HHqsbFF99ZNPCw5iE23Z5u7tX+WKlwlR
+         rnLbmy3JwJ7tRmX/h1PY+gDR8ZJjkFVC2vO+Y=
+Received: by 10.150.195.9 with SMTP id s9mr3964757ybf.419.1285311715957;
+        Fri, 24 Sep 2010 00:01:55 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id q25sm1936660ybk.6.2010.09.24.00.01.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 00:01:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100905032253.GB2344@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156934>
 
-From: Andreas Schwab <schwab@linux-m68k.org>
+Hi,
 
-For a long time (29508e1 "Isolate shared HTTP request functionality", Fri
-Nov 18 11:02:58 2005), we've followed HTTP redirects with
-CURLOPT_FOLLOWLOCATION.
+Jonathan Nieder wrote:
 
-However, when the remote HTTP server returns a redirect the default
-libcurl action is to change a POST request into a GET request while
-following the redirect, but the remote http backend does not expect
-that.
+> Clarify dependencies between tests to make the fast-import test
+> script more approachable.  In particular:
+... many things ...
+> While at it:
+... more things ...
 
-Fix this by telling libcurl to always keep the request as type POST with
-CURLOPT_POSTREDIR.
+The patch was a lazy way for me to add new assertions to the
+fast-import test script without going crazy.  But it really was lazy:
+it has almost nothing to do with the "fast-import protocol
+experiments" series that it headed, and worse, that one patch did so
+many things at once that it was basically guaranteed that (1) no one
+would like all of it and (2) it bitrotted in a couple of days.
 
-Signed-off-by: Andreas Schwab <schwab@linux-m68k.org>
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
+Oh well.  Tomorrow I would like to re-roll the fast-import experiment
+so the svn-fe that understands deltas can get more attention, and of
+course that series does not require these style fixes at all.
 
-Added simple tests and made some changes to the patch message.
+So why resend them?  I end up mentally making these changes every time
+I add a new test to that script, so I imagine it would be nicer to
+make the changes once.  Maybe it would help newcomers to dive into the
+wonderful world of fast-import testing.
 
-Andreas:
-  shifted the setopt to right after FOLLOWLOCATION, since they're linked
-  closely.
+So here is a small chunk of that monster patch, ejected from the
+original series and split up.
 
-Jay: added the usual hexadecimal version checks.
+Patch 1 introduces a verify_packs () helper that makes the script much
+easier to read (by including only two copies of an unpleasant loop).
+The nominal justification is that giving the
 
- http.c                  |    3 +++
- t/lib-httpd/apache.conf |    7 +++++++
- t/t5551-http-fetch.sh   |    8 ++++++++
- 3 files changed, 18 insertions(+), 0 deletions(-)
+	for each pack
+	do
+		git verify-pack $pack ||
+		exit
+	done
 
-diff --git a/http.c b/http.c
-index 1320c50..25f8b45 100644
---- a/http.c
-+++ b/http.c
-@@ -275,6 +275,9 @@ static CURL *get_curl_handle(void)
- 	}
+loop its own function allows use to write "return" instead of "exit",
+resulting in better behavior when a test fails.
 
- 	curl_easy_setopt(result, CURLOPT_FOLLOWLOCATION, 1);
-+#if LIBCURL_VERSION_NUM >= 0x071301
-+	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-+#endif
+Patch 2 is the most important one to me.  It gets rid of some
+hardcoded tree and blob names, most of which were not doing any
+harm except to scare me.  At first glance it is not obvious when
+a stray test_tick, for example, will ruin later tests (it turns out
+never but there is at one test that does depend on the choice of
+hash function), and at first glance, it is not obvious what is
+actually the expected diff when a raw diff is presented as expected
+output.
 
- 	if (getenv("GIT_CURL_VERBOSE"))
- 		curl_easy_setopt(result, CURLOPT_VERBOSE, 1);
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 4961505..f41c7c6 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -17,6 +17,9 @@ ErrorLog error.log
- <IfModule !mod_env.c>
- 	LoadModule env_module modules/mod_env.so
- </IfModule>
-+<IfModule !mod_rewrite.c>
-+	LoadModule rewrite_module modules/mod_rewrite.so
-+</IFModule>
+The approach adopted is to introduce some symbolic constants, like
 
- Alias /dumb/ www/
+	empty_blob=$(git hash-object --stdin </dev/null)
 
-@@ -36,6 +39,10 @@ ScriptAlias /smart_noexport/ ${GIT_EXEC_PATH}/git-http-backend/
- 	Options ExecCGI
- </Files>
+and use them in the expected output.
 
-+RewriteEngine on
-+RewriteRule ^/smart-redir-perm/(.*)$ /smart/$1 [R=301]
-+RewriteRule ^/smart-redir-temp/(.*)$ /smart/$1 [R=302]
-+
- <IfDefine SSL>
- LoadModule ssl_module modules/mod_ssl.so
+Patches 3-6 just pick nits.  The dividends are better output
+with -v and more robust checking for failure of git commands.
 
-diff --git a/t/t5551-http-fetch.sh b/t/t5551-http-fetch.sh
-index fd19121..26d3557 100755
---- a/t/t5551-http-fetch.sh
-+++ b/t/t5551-http-fetch.sh
-@@ -101,5 +101,13 @@ test_expect_success 'used upload-pack service' '
- 	test_cmp exp act
- '
+Patch 7 changes some 4-space indents to tabs (since the latter
+is predominant in the file).
 
-+test_expect_success 'follow redirects (301)' '
-+	git clone $HTTPD_URL/smart-redir-perm/repo.git --quiet repo-p
-+'
-+
-+test_expect_success 'follow redirects (302)' '
-+	git clone $HTTPD_URL/smart-redir-temp/repo.git --quiet repo-t
-+'
-+
- stop_httpd
- test_done
---
-1.7.3.67.g2a10b
+Patches 8-24 change from traditional
+
+	test_expect_failure \
+		'description' \
+		'commands &&
+		 more commands'
+
+to modern
+
+	test_expect_success 'description' '
+		commands &&
+		more commands
+	'
+
+style.  They are meant to be squashed together and are only split
+in tiny pieces for easier review.
+
+Let's take whatever is useful and forget about the rest.
+
+Thanks,
+Jonathan Nieder (24):
+  t9300 (fast-import): avoid exiting early on failure
+  t9300 (fast-import): avoid hard-coded object names
+  t9300 (fast-import): guard "export large marks" test
+  t9300 (fast-import): check exit status from upstream of pipes
+  t9300 (fast-import): check exit status from command substitution
+  t9300 (fast-import): use test_cmp in place of test $(foo) = $(bar)
+  t9300 (fast-import): use tabs to indent
+  t9300 (fast-import), series A: re-indent
+  t9300 (fast-import), series B: re-indent
+  t9300 (fast-import), series C: re-indent
+  t9300 (fast-import), series D: re-indent
+  t9300 (fast-import), series E: re-indent
+  t9300 (fast-import), series F: re-indent
+  t9300 (fast-import), series H: re-indent
+  t9300 (fast-import), series I: re-indent
+  t9300 (fast-import), series J: re-indent
+  t9300 (fast-import), series K: re-indent
+  t9300 (fast-import), series L: re-indent
+  t9300 (fast-import), series M: re-indent
+  t9300 (fast-import), series N: re-indent
+  t9300 (fast-import), series O: re-indent
+  t9300 (fast-import), series P: re-indent
+  t9300 (fast-import), series Q: re-indent
+  t9300 (fast-import), series R: re-indent
+
+ t/t9300-fast-import.sh | 1010 ++++++++++++++++++++++++++----------------------
+ 1 files changed, 539 insertions(+), 471 deletions(-)
+
+-- 
+1.7.2.3
