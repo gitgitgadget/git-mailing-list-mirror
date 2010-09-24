@@ -1,83 +1,142 @@
-From: Tong Sun <suntong@cpan.org>
-Subject: Re: Mirror plain directory under git
-Date: Fri, 24 Sep 2010 11:24:55 -0400
-Message-ID: <AANLkTimYSBPvfAJH7HG+zuo6G4OEQ359t=XL3EncMhy9@mail.gmail.com>
-References: <AANLkTi=9nqfzR-Zo85LieBuhv97oudCVZCex8ZL3mM0t@mail.gmail.com>
-	<20100921075621.GA27575@nibiru.local>
-	<201009241036.45388.ComputerDruid@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH V3] git-send-email.perl: Add --to-cmd
+Date: Fri, 24 Sep 2010 08:32:25 -0700 (PDT)
+Message-ID: <m3lj6rgnub.fsf@localhost.localdomain>
+References: <AANLkTinsM5jdU194FR8L3hTvBXk0Tr_oV2E5752NOUpq@mail.gmail.com>
+	<AANLkTikkJNwF4LS9rx5=bHM2R0Pm751Y1u9V8iAt0w1A@mail.gmail.com>
+	<1285227413.7286.47.camel@Joe-Laptop>
+	<Pine.LNX.4.64.1009231054230.15528@ask.diku.dk>
+	<20100923090931.GA29789@albatros> <20100923120024.GA26715@albatros>
+	<1285253867.31572.13.camel@Joe-Laptop>
+	<Pine.LNX.4.64.1009231757090.11585@ask.diku.dk>
+	<1285262237.31572.18.camel@Joe-Laptop>
+	<AANLkTin_Y8w4ujNGTqGJPNDNfYz7hcjBVLcOG0emBjYn@mail.gmail.com>
+	<1285263993.31572.25.camel@Joe-Laptop>
+	<AANLkTinCx=+n6bMZw4tQqrQ7WC1o_aeGG_n_PxywTyb8@mail.gmail.com>
+	<1285267520.31572.34.camel@Joe-Laptop>
+	<7v62xwqe7i.fsf@alter.siamese.dyndns.org>
+	<1285291098.25928.220.camel@Joe-Laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, Enrico Weigelt <weigelt@metux.de>
-To: Daniel Johnson <computerdruid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 17:25:04 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Julia Lawall <julia@diku.dk>, git@vger.kernel.org,
+	Vasiliy Kulikov <segooon@gmail.com>,
+	Matt Mooney <mfmooney@gmail.com>,
+	kernel-janitors@vger.kernel.org, Dan Carpenter <error27@gmail.com>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 17:32:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzA92-0007Ae-6O
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 17:25:04 +0200
+	id 1OzAGJ-00010H-Bi
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 17:32:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756793Ab0IXPY5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 11:24:57 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:33052 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754259Ab0IXPY5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 11:24:57 -0400
-Received: by wyb28 with SMTP id 28so2011644wyb.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 08:24:55 -0700 (PDT)
+	id S1756744Ab0IXPc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 11:32:29 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:34155 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753518Ab0IXPc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 11:32:28 -0400
+Received: by wwd20 with SMTP id 20so99924wwd.1
+        for <multiple recipients>; Fri, 24 Sep 2010 08:32:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=RnjnJ9y2WYXutXnUKyHboNAu1zrCWfP38971mrTxj6o=;
-        b=wB10J+7LHKKG3NSaVXKP7nV73dIHA/TKZXzyn7t0YZNOWXNlSQikiHka0rnqKzeLau
-         7sUClVnwc10nYAsaMqHX7BGbCSlAs0Z+l/DQvD1q83nuccx4FYlmmFEs2h7W45bRv/3x
-         oeE3S8tk+ajrjIQkVEGXepW4pwhwe2/CmEp+U=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=haEyM8ymAVxkXYpV5L/j8ekzuort9U0EywmbrRxCHu0=;
+        b=RsoA+mipQ356WZ6vvzcTDp9qP5BIESAc8IbSnJFsdfuI1Y6vthXte9xvSyG9TeXGmZ
+         Ys/cFRSf8LRKYSVf8FCgf58BxVDJxuTPPZcMzFJFakGgYZJJL8Ueesndf97Rx1KS00pR
+         pIkG8fvo5bhdU6VFHItI34+2G95OWx1r85zJk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=Tq/f/IwxeU8yqVLtxsbKy0BpTbj617dvsaDvh7VLX67qBNWH6odZPIRVxpWuUZ8+Sr
-         fXueJDDeXW/wPBK6ajGgwckc5O1OUzyxjnJFif43gsTltcf0Kr5fxwX/UQz4MNBCNJZw
-         XY3ooU3xQ0X/Wzd8NQVY42VwbB6XPnkLQSV0M=
-Received: by 10.216.22.70 with SMTP id s48mr2232894wes.27.1285341895517; Fri,
- 24 Sep 2010 08:24:55 -0700 (PDT)
-Received: by 10.216.180.81 with HTTP; Fri, 24 Sep 2010 08:24:55 -0700 (PDT)
-In-Reply-To: <201009241036.45388.ComputerDruid@gmail.com>
-X-Google-Sender-Auth: WJkesS9oQjjP1j7JJlsbsjxWtJU
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=XmiBxhONfgbD+CyXtoRv41fAWeOO3eqB24dp/9HPWnpaxpHlw3ARxlVuCIhlQtPzxn
+         YZXjgViqsW+8EFZpBWl+qj1sPyUPgXkKD9A+qEk/mwzGRODJuWssyqUWC7RqqGDsgP9g
+         Ggy0xUH7KPAlL0vvRJaw2iErFPnnIAreWDYDE=
+Received: by 10.216.6.149 with SMTP id 21mr9585346wen.101.1285342346986;
+        Fri, 24 Sep 2010 08:32:26 -0700 (PDT)
+Received: from localhost.localdomain (abwq206.neoplus.adsl.tpnet.pl [83.8.240.206])
+        by mx.google.com with ESMTPS id n40sm1412794weq.5.2010.09.24.08.32.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 08:32:25 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8OFVpoP032719;
+	Fri, 24 Sep 2010 17:32:02 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8OFVPfs032714;
+	Fri, 24 Sep 2010 17:31:25 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1285291098.25928.220.camel@Joe-Laptop>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156998>
 
-First of all, thanks a lot Enrico for your answer. I was just about to
-gave up, and start coding for rcs. Your answer is extremely helpful.
+Joe Perches <joe@perches.com> writes:
 
-On Fri, Sep 24, 2010 at 10:36 AM, Daniel Johnson
-<computerdruid@gmail.com> wrote:
-> I know nothing about the subject matter of your email, but the date appears to
-> be wrong on this email message, hiding it back further in the history than it
-> should be. Just a warning, as the last few emails you sent all seem to be like
-> this.
+> +# Execute a command (ie: $to_cmd) to get a list of email addresses
+> +# and return a results array
+> +sub recipients_cmd(@) {
 
-Ok, I took the liberty to look into the issue, and it seems that,
-Enrico, it's your mailgate.caprica.metux.de mail gateway that is
-causing the delay -- taking 3 days for your email to come out of it:
+Do not use subroutine prototypes: they do not do what you think they
+do.  In this case using prototype is unnecessary and can be dangerous.
 
-Received: by x1.dev; 24 Sep 2010 12:07:27 -0000
-Received: by 16.mx.develooper.com (qpsmtpd/0.80); Fri, 24 Sep 2010
-05:07:22 -0700
-Received: by mailgate.caprica.metux.de (8.14.4/8.14.4); Fri, 24 Sep
-2010 14:08:05 +0200
-Received: (from uucp@localhost) by mailgate.caprica.metux.de
-(8.14.4/8.14.4/Submit); Thu, 23 Sep 2010 22:42:59 +0200
-Received: (from weigelt@localhost) by nibiru.metux.de
-(8.12.10/8.12.10) id o8L7uL3d031552; Tue, 21 Sep 2010 09:56:21 +0200
-Date: Tue, 21 Sep 2010 09:56:21 +0200
+> +	my ($prefix, $what, $cmd, $file) = @_;
+> +
+> +	my $sanitized_sender = sanitize_address($sender);
+> +	my @addresses = ();
+> +	open(F, "$cmd \Q$file\E |")
 
-HTH
+For the future: use lexical filehandles instead of globals
 
-Tong
+  +	open(my $fh, "$cmd \Q$file\E |")
+
+
+> +	    or die "($prefix) Could not execute '$cmd'";
+
+You should use quote_command from gitweb/gitweb.perl (should probably
+make it into Git.pm):
+
+  # quote the given arguments for passing them to the shell
+  # quote_command("command", "arg 1", "arg with ' and ! characters")
+  # => "'command' 'arg 1' 'arg with '\'' and '\!' characters'"
+  # Try to avoid using this function wherever possible.
+  sub quote_command {
+  	return join(' ',
+  		map { my $a = $_; $a =~ s/(['!])/'\\$1'/g; "'$a'" } @_ );
+  }
+
+Or use String::ShellQuote :-)
+
+But that is for a cleanup patch; you are using what it is already
+there.
+
+> +	while(<F>) {
+> +		my $address = $_;
+> +		$address =~ s/^\s*//g;
+> +		$address =~ s/\n$//g;
+
+Hmmm... why does it remove leading, but not trailing whitespace?
+
+> +		$address = sanitize_address($address);
+> +		next if ($address eq $sanitized_sender and $suppress_from);
+> +		push @addresses, $address;
+> +		printf("($prefix) Adding %s: %s from: '%s'\n",
+> +		       $what, $address, $cmd) unless $quiet;
+> +		}
+> +	close F
+> +	    or die "($prefix) failed to close pipe to '$cmd'";
+> +	return @addresses;
+> +}
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
