@@ -1,7 +1,7 @@
 From: Joe Perches <joe@perches.com>
-Subject: [PATCH V3] git-send-email.perl: Add --to-cmd
-Date: Thu, 23 Sep 2010 18:18:18 -0700
-Message-ID: <1285291098.25928.220.camel@Joe-Laptop>
+Subject: Re: [PATCH V2] git-send-email.perl: Add --to-cmd
+Date: Thu, 23 Sep 2010 18:20:54 -0700
+Message-ID: <1285291254.25928.223.camel@Joe-Laptop>
 References: <AANLkTinsM5jdU194FR8L3hTvBXk0Tr_oV2E5752NOUpq@mail.gmail.com>
 	 <AANLkTikkJNwF4LS9rx5=bHM2R0Pm751Y1u9V8iAt0w1A@mail.gmail.com>
 	 <1285227413.7286.47.camel@Joe-Laptop>
@@ -24,221 +24,103 @@ Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
 	matt mooney <mfmooney@gmail.com>,
 	kernel-janitors@vger.kernel.org, Dan Carpenter <error27@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 03:18:29 2010
+X-From: git-owner@vger.kernel.org Fri Sep 24 03:21:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oywvj-0008IB-6V
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 03:18:27 +0200
+	id 1OywyE-0000US-5k
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 03:21:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996Ab0IXBSV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Sep 2010 21:18:21 -0400
-Received: from mail.perches.com ([173.55.12.10]:2320 "EHLO mail.perches.com"
+	id S1756313Ab0IXBU4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Sep 2010 21:20:56 -0400
+Received: from mail.perches.com ([173.55.12.10]:2325 "EHLO mail.perches.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752546Ab0IXBST (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Sep 2010 21:18:19 -0400
+	id S1752504Ab0IXBUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Sep 2010 21:20:55 -0400
 Received: from [192.168.1.156] (unknown [192.168.1.156])
-	by mail.perches.com (Postfix) with ESMTP id B4A1C24368;
-	Thu, 23 Sep 2010 18:18:12 -0700 (PDT)
+	by mail.perches.com (Postfix) with ESMTP id AA1B024368;
+	Thu, 23 Sep 2010 18:20:48 -0700 (PDT)
 In-Reply-To: <7v62xwqe7i.fsf@alter.siamese.dyndns.org>
 X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156930>
 
-Add the ability to use a command line --to-cmd=3Dcmd
-to create the list of "To:" addresses.
-
-Used a shared routine for --cc-cmd and --to-cmd.
-
-Did not use IPC::Open2, leaving that for =C3=86var if
-ever he decides to fix the other bugs he might find.
-
-Signed-off-by: Joe Perches <joe@perches.com>
----
- Documentation/git-send-email.txt |    8 +++++-
- git-send-email.perl              |   51 +++++++++++++++++++++++++-----=
--------
- t/t9001-send-email.sh            |   18 +++++++++++++
- 3 files changed, 59 insertions(+), 18 deletions(-)
-
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-=
-email.txt
-index c283084..fff97a3 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -97,7 +97,7 @@ See the CONFIGURATION section for 'sendemail.multiedi=
-t'.
- 	Specify the primary recipient of the emails generated. Generally, thi=
-s
- 	will be the upstream maintainer of the project involved. Default is t=
+On Thu, 2010-09-23 at 15:37 -0700, Junio C Hamano wrote:
+> Joe Perches <joe@perches.com> writes:
+>=20
+> > +	if (defined $to_cmd) {
+> > +		open(F, "$to_cmd \Q$t\E |")
+> > +			or die "(to-cmd) Could not execute '$to_cmd'";
+> > +		while(<F>) {
+> > +			my $t =3D $_;
+>=20
+> "my $t" masks another $t in the outer scope; technically not a bug, b=
+ut
+> questionable as a style.
+>=20
+> > +			$t =3D~ s/^\s*//g;
+> > +			$t =3D~ s/\n$//g;
+> > +			next if ($t eq $sender and $suppress_from);
+> > +			push @to, parse_address_line($t)
+> > +			    if defined $t; # sanitized/validated later
+>=20
+> This "if defined $t" makes my head hurt.  Why?
+>=20
+>  * The "while (<F>)" loop wouldn't have given you an undef in $t in t=
 he
- 	value of the 'sendemail.to' configuration value; if that is unspecifi=
-ed,
--	this will be prompted for.
-+	and --to-cmd is not specified, this will be prompted for.
- +
- The --to option must be repeated for each user you want on the to list=
-=2E
-=20
-@@ -177,6 +177,12 @@ user is prompted for a password while the input is=
- masked for privacy.
- Automating
- ~~~~~~~~~~
-=20
-+--to-cmd=3D<command>::
-+	Specify a command to execute once per patch file which
-+	should generate patch file specific "To:" entries.
-+	Output of this command must be single email address per line.
-+	Default is the value of 'sendemail.tocmd' configuration value.
-+
- --cc-cmd=3D<command>::
- 	Specify a command to execute once per patch file which
- 	should generate patch file specific "Cc:" entries.
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 6dab3bf..e148269 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -70,6 +70,7 @@ git send-email [options] <file | directory | rev-list=
- options >
-=20
-   Automating:
-     --identity              <str>  * Use the sendemail.<id> options.
-+    --to-cmd                <str>  * Email To: via `<str> \$patch_path=
-`
-     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path=
-`
-     --suppress-cc           <str>  * author, self, sob, cc, cccmd, bod=
-y, bodycc, all.
-     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses.=
- Default on.
-@@ -187,7 +188,8 @@ sub do_edit {
- }
-=20
- # Variables with corresponding config settings
--my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_c=
-md);
-+my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc);
-+my ($to_cmd, $cc_cmd);
- my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption)=
-;
- my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts, $smtp_d=
-omain);
- my ($validate, $confirm);
-@@ -214,6 +216,7 @@ my %config_settings =3D (
-     "smtppass" =3D> \$smtp_authpass,
- 	"smtpdomain" =3D> \$smtp_domain,
-     "to" =3D> \@to,
-+    "tocmd" =3D> \$to_cmd,
-     "cc" =3D> \@initial_cc,
-     "cccmd" =3D> \$cc_cmd,
-     "aliasfiletype" =3D> \$aliasfiletype,
-@@ -272,6 +275,7 @@ my $rc =3D GetOptions("sender|from=3Ds" =3D> \$send=
-er,
-                     "in-reply-to=3Ds" =3D> \$initial_reply_to,
- 		    "subject=3Ds" =3D> \$initial_subject,
- 		    "to=3Ds" =3D> \@to,
-+		    "to-cmd=3Ds" =3D> \$to_cmd,
- 		    "no-to" =3D> \$no_to,
- 		    "cc=3Ds" =3D> \@initial_cc,
- 		    "no-cc" =3D> \$no_cc,
-@@ -711,7 +715,7 @@ if (!defined $sender) {
- 	$prompting++;
- }
-=20
--if (!@to) {
-+if (!@to && !defined $to_cmd) {
- 	my $to =3D ask("Who should the emails be sent to? ");
- 	push @to, parse_address_line($to) if defined $to; # sanitized/validat=
-ed later
- 	$prompting++;
-@@ -1238,21 +1242,10 @@ foreach my $t (@files) {
- 	}
- 	close F;
-=20
--	if (defined $cc_cmd && !$suppress_cc{'cccmd'}) {
--		open(F, "$cc_cmd \Q$t\E |")
--			or die "(cc-cmd) Could not execute '$cc_cmd'";
--		while(<F>) {
--			my $c =3D $_;
--			$c =3D~ s/^\s*//g;
--			$c =3D~ s/\n$//g;
--			next if ($c eq $sender and $suppress_from);
--			push @cc, $c;
--			printf("(cc-cmd) Adding cc: %s from: '%s'\n",
--				$c, $cc_cmd) unless $quiet;
--		}
--		close F
--			or die "(cc-cmd) failed to close pipe to '$cc_cmd'";
--	}
-+	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
-+		if defined $to_cmd;
-+	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
-+		if defined $cc_cmd && !$suppress_cc{'cccmd'};
-=20
- 	if ($broken_encoding{$t} && !$has_content_type) {
- 		$has_content_type =3D 1;
-@@ -1310,6 +1303,30 @@ foreach my $t (@files) {
- 	$message_id =3D undef;
- }
-=20
-+# Execute a command (ie: $to_cmd) to get a list of email addresses
-+# and return a results array
-+sub recipients_cmd(@) {
-+	my ($prefix, $what, $cmd, $file) =3D @_;
-+
-+	my $sanitized_sender =3D sanitize_address($sender);
-+	my @addresses =3D ();
-+	open(F, "$cmd \Q$file\E |")
-+	    or die "($prefix) Could not execute '$cmd'";
-+	while(<F>) {
-+		my $address =3D $_;
-+		$address =3D~ s/^\s*//g;
-+		$address =3D~ s/\n$//g;
-+		$address =3D sanitize_address($address);
-+		next if ($address eq $sanitized_sender and $suppress_from);
-+		push @addresses, $address;
-+		printf("($prefix) Adding %s: %s from: '%s'\n",
-+		       $what, $address, $cmd) unless $quiet;
-+		}
-+	close F
-+	    or die "($prefix) failed to close pipe to '$cmd'";
-+	return @addresses;
-+}
-+
- cleanup_compose_files();
-=20
- sub cleanup_compose_files() {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 71b3df9..36cf421 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -201,6 +201,24 @@ test_expect_success $PREREQ 'Prompting works' '
- 		grep "^To: to@example.com\$" msgtxt1
- '
-=20
-+test_expect_success $PREREQ 'tocmd works' '
-+	clean_fake_sendmail &&
-+	cp $patches tocmd.patch &&
-+	echo tocmd--tocmd@example.com >>tocmd.patch &&
-+	{
-+	  echo "#!$SHELL_PATH"
-+	  echo sed -n -e s/^tocmd--//p \"\$1\"
-+	} > tocmd-sed &&
-+	chmod +x tocmd-sed &&
-+	git send-email \
-+		--from=3D"Example <nobody@example.com>" \
-+		--to-cmd=3D./tocmd-sed \
-+		--smtp-server=3D"$(pwd)/fake.sendmail" \
-+		tocmd.patch \
-+		&&
-+	grep "^To: tocmd@example.com" msgtxt1
-+'
-+
- test_expect_success $PREREQ 'cccmd works' '
- 	clean_fake_sendmail &&
- 	cp $patches cccmd.patch &&
+>    first place;
+>=20
+>  * You would have got "Use of uninitialized value" warning at these t=
+wo
+>    s/// statements if $t were undef; and
+>=20
+>  * Even if $t were undef, these two s/// statements would have made $=
+t a
+>    defined, empty string.
+
+all true.
+
+> > +			printf("(to-cmd) Adding To: %s from: '%s'\n",
+> > +				$t, $to_cmd) unless $quiet;
+> > +		}
+> > +		close F
+> > +			or die "(to-cmd) failed to close pipe to '$to_cmd'";
+> > +	}
+>=20
+> In any case, this whole codeblock obviously is a copy-and-paste from
+> corresponding $cc_cmd codepath, and I wonder if you can refactor the
+> original into a common helper function first and then use it to make =
+the
+> addition of this feature a smaller patch.
+>=20
+> 	if (defined $cc_cmd) {
+>         	push @cc, recipients_cmd($cc_cmd, 'cc');
+> 	}
+>         if (defined $to_cmd) {
+> 	        push @to, recipients_cmd($to_cmd, 'to');
+> 	}
+
+Overall, I believe it'll be more code, but all right.
+
+> If you did so, the first patch that refactors to create a helper func=
+tion
+> can address issues =C3=86var raised in the review to clean things up,=
+ no?
+
+> I notice that you use parse_address_line() while $cc_cmd codepath doe=
+sn't.
+> I haven't studied other codepaths deeply, but my gut feeling is that =
+the
+> reason why the $cc_cmd codepath does not call parse_address_line() be=
+fore
+> pushing the result to @cc is _not_ because strings on @cc shouldn't b=
+e
+> sanitized (the codepath to parse "Cc: " calls parse_address_line and
+> pushes the result to @cc), but because the code is simply sloppy.
+
+Probably, I wrote some of those lines...
