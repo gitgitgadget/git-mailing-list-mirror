@@ -1,92 +1,142 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC PATCH 0/2] submodule aware grep
-Date: Fri, 24 Sep 2010 09:07:40 -0700
-Message-ID: <4C9CCCCC.4000909@gmail.com>
-References: <1285276627-7907-1-git-send-email-judge.packham@gmail.com> <20100924134748.GA576@book.hvoigt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Fri Sep 24 18:07:36 2010
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv5 03/12] gitweb: separate heads and remotes lists
+Date: Fri, 24 Sep 2010 18:02:38 +0200
+Message-ID: <1285344167-8518-4-git-send-email-giuseppe.bilotta@gmail.com>
+References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 24 18:08:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzAo8-0007KJ-BW
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 18:07:32 +0200
+	id 1OzApV-0007kq-D3
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 18:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932385Ab0IXQHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 12:07:24 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:51800 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755754Ab0IXQHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 12:07:23 -0400
-Received: by pxi10 with SMTP id 10so837888pxi.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 09:07:23 -0700 (PDT)
+	id S932399Ab0IXQIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 12:08:49 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45090 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756069Ab0IXQIs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 12:08:48 -0400
+Received: by wyb28 with SMTP id 28so2056550wyb.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 09:08:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=i5dPmP99MXJ3wP3mbyBwWW8gPXRkzxa5QuYY6SawHDk=;
-        b=HHqv9jsdWjYlhRnriRoC/Ixtuj2oiAF/UXnbTWv0AvIAnqFVEK1Dcu5vUGRA2vsxki
-         klSLUI+hY5zRbIyeDM/kQcac3vNvGDQctl+/QB5xZS0lBuwO/JC1eJSLMaIENq5R37jM
-         O4L8fft55kffpHK7ENYPjDh1gpyrQ3iDBbb0A=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=6aJNiWUF/iEe1oDEOZtVFXQ6R6mwgI8pxKtbmKAOe7U=;
+        b=l+zsyGHNT149s4NBqcxBuKmwW9+59gf9MFdJSirU7fwHEzudu26QcDXv15Cjz6q/ko
+         hokEvPNF5pcCpiL6VHnSyPcmkdfQxEAevp7C33V/wUqyfCPhoctc2h3nW5STWwTydIiP
+         vneEllQpFBJn8G1PEtmS+bB0NbQLbogwUdgJQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=xgEHsl8fq0K4ohJCdiRXwggTSvTvTgfuEqQcIBPbGa2qlR8k04m1nMT+JxY8Jhs5+P
-         jPUrspEvvU0/48rmKFORpHvMMCwbW9kPaNETF3q8XS4ULHytta0HG+HGQPPliD0QDevH
-         oPpDo6Mc16a+62avEWrnWyFq2D+MnEdCHOV9U=
-Received: by 10.114.201.18 with SMTP id y18mr3831073waf.138.1285344443069;
-        Fri, 24 Sep 2010 09:07:23 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id d2sm3791635wam.14.2010.09.24.09.07.21
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 09:07:21 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <20100924134748.GA576@book.hvoigt.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=J+r5NB5YnaNnJ4JWOHsbi7q/e6z+IzspFb0FRfvzzuif2ecvfd+q8XHDf6RSLejeYB
+         3rg8wlb1rTHRMfJZL2j4CFcDGHINprDyqppA56lZHz4Yh+vkpNO0NXiY/Ded4RDX4fzy
+         LwfNZoDquoVls5lpXjsRMthD3ahB2/5vdiRu4=
+Received: by 10.216.176.8 with SMTP id a8mr9646072wem.93.1285344194218;
+        Fri, 24 Sep 2010 09:03:14 -0700 (PDT)
+Received: from localhost ([151.60.177.109])
+        by mx.google.com with ESMTPS id u11sm1431002weq.31.2010.09.24.09.03.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 09:03:12 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.68.g6ec8
+In-Reply-To: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157015>
 
-On 24/09/10 06:47, Heiko Voigt wrote:
-> Hi,
-> 
-> On Thu, Sep 23, 2010 at 02:17:05PM -0700, Chris Packham wrote:
->> This series contains 2 RFC patches that both implement a grep feature for
->> submodules.  The first patch is a self-contained script for contrib that should
->> work with most current git versions. The 2nd is basically the same
->> implementation but done as a proper git submodule command with some of the
->> helper code moved to git-sh-setup.sh
->>
->> There are a couple of questions for this. Technically I'm making submodule 
->> grep-aware, should I be making grep submodule-aware instead? I haven't looked 
->> at the grep code yet but I imagine its harder.
-> 
-> Nice work! IMO it would be even nicer to have it as part of git grep.
-> Have a look at Jens branch about submodule checkout:
-> 
-> http://github.com/jlehmann/git-submod-enhancements (enhance_git_for_submodules)
-> 
-> particularly how checkout_submodule() is implemented. It forks a git
-> checkout inside the submodule. In a similar way you could fork a grep
-> there. Then you just have to teach the forked grep to prepend the
-> submodules path.
-> 
+We specialize the 'heads' action to only display local branches, and
+introduce a 'remotes' action to display the remote branches (only
+available when the remotes_head feature is enabled).
 
-I'll look into it, from following Jens code it doesn't look too hard
-(like you say just fork and pass a text prefix). I'm currently doing my
-git hacking on my main development machine so I should probably setup
-and environment where I can hack without affecting $dayjob work.
+Mirroring this, we also split the heads list in summary view into
+local and remote lists, each linking to the appropriate action.
 
-In the meantime I've got an updated patch for contrib if anyone is
-interested (it just adds some grep options to be passed through).
+Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+---
+ gitweb/gitweb.perl |   30 ++++++++++++++++++++++++++++--
+ 1 files changed, 28 insertions(+), 2 deletions(-)
 
-Thanks,
-Chris
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 27c455e..fe9f73e 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -712,6 +712,7 @@ our %actions = (
+ 	"log" => \&git_log,
+ 	"patch" => \&git_patch,
+ 	"patches" => \&git_patches,
++	"remotes" => \&git_remotes,
+ 	"rss" => \&git_rss,
+ 	"atom" => \&git_atom,
+ 	"search" => \&git_search,
+@@ -5111,6 +5112,7 @@ sub git_summary {
+ 	my %co = parse_commit("HEAD");
+ 	my %cd = %co ? parse_date($co{'committer_epoch'}, $co{'committer_tz'}) : ();
+ 	my $head = $co{'id'};
++	my $remote_heads = gitweb_check_feature('remote_heads');
+ 
+ 	my $owner = git_get_project_owner($project);
+ 
+@@ -5118,7 +5120,8 @@ sub git_summary {
+ 	# These get_*_list functions return one more to allow us to see if
+ 	# there are more ...
+ 	my @taglist  = git_get_tags_list(16);
+-	my @headlist = git_get_heads_list(16);
++	my @headlist = git_get_heads_list(16, 'heads');
++	my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
+ 	my @forklist;
+ 	my $check_forks = gitweb_check_feature('forks');
+ 
+@@ -5196,6 +5199,13 @@ sub git_summary {
+ 		               $cgi->a({-href => href(action=>"heads")}, "..."));
+ 	}
+ 
++	if (@remotelist) {
++		git_print_header_div('remotes');
++		git_heads_body(\@remotelist, $head, 0, 15,
++		               $#remotelist <= 15 ? undef :
++		               $cgi->a({-href => href(action=>"remotes")}, "..."));
++	}
++
+ 	if (@forklist) {
+ 		git_print_header_div('forks');
+ 		git_project_list_body(\@forklist, 'age', 0, 15,
+@@ -5503,13 +5513,29 @@ sub git_heads {
+ 	git_print_page_nav('','', $head,undef,$head);
+ 	git_print_header_div('summary', $project);
+ 
+-	my @headslist = git_get_heads_list();
++	my @headslist = git_get_heads_list(undef, 'heads');
+ 	if (@headslist) {
+ 		git_heads_body(\@headslist, $head);
+ 	}
+ 	git_footer_html();
+ }
+ 
++sub git_remotes {
++	gitweb_check_feature('remote_heads')
++		or die_error(403, "Remote heads view is disabled");
++
++	my $head = git_get_head_hash($project);
++	git_header_html();
++	git_print_page_nav('','', $head,undef,$head);
++	git_print_header_div('summary', $project);
++
++	my @remotelist = git_get_heads_list(undef, 'remotes');
++	if (@remotelist) {
++		git_heads_body(\@remotelist, $head);
++	}
++	git_footer_html();
++}
++
+ sub git_blob_plain {
+ 	my $type = shift;
+ 	my $expires;
+-- 
+1.7.3.68.g6ec8
