@@ -1,158 +1,92 @@
-From: Jacob Helwig <jacob.helwig@gmail.com>
-Subject: Re: [PATCH 2/2] mergetool-lib: add a three-way diff view for
- vim/gvim
-Date: Fri, 24 Sep 2010 12:09:28 -0700
-Message-ID: <20100924190928.GC3768@vfa-6z.perlninja.com>
-References: <1284517303-17244-1-git-send-email-dpmcgee@gmail.com>
- <1284517303-17244-2-git-send-email-dpmcgee@gmail.com>
- <20100918073428.GA9850@gmail.com>
- <AANLkTim_hwduHk-ENM73dwHUj9XbwfihZPRfsHX+M3DE@mail.gmail.com>
- <AANLkTin-BSAFwvuTyJ96BW6MqrKVEni+Af2M0u7WE_yZ@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Let's bump the minimum Perl version to 5.8
+Date: Fri, 24 Sep 2010 19:10:04 +0000
+Message-ID: <AANLkTimOpyvO+GZsKJPPWktVJTR1khLD2izyCKqNXwvA@mail.gmail.com>
+References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>
+	<AANLkTinRcGa3r_=D87G-4-qqdsFL9CKnawD=DCnRQ+7v@mail.gmail.com>
+	<AANLkTim8aPoOkzzf4c0JHbBDVa4zJY2xM3v9fXQ-px=V@mail.gmail.com>
+	<4C9CAEB7.1030606@op5.se>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="XMCwj5IQnwKtuyBG"
-Cc: Felipe Contreras <felipe.contreras@gmail.com>,
-	David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Charles Bailey <charles@hashpling.org>
-To: Dan McGee <dpmcgee@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 21:09:35 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tor Arntsen <tor@spacetec.no>, Tait <git.git@t41t.com>,
+	git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Fri Sep 24 21:10:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzDeH-0004W7-Lm
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 21:09:34 +0200
+	id 1OzDew-0005D6-Ew
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 21:10:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752179Ab0IXTJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 15:09:32 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:60380 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750976Ab0IXTJa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 15:09:30 -0400
-Received: by pvg2 with SMTP id 2so768848pvg.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 12:09:30 -0700 (PDT)
+	id S1753728Ab0IXTKH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 15:10:07 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:33451 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104Ab0IXTKF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 15:10:05 -0400
+Received: by gxk9 with SMTP id 9so1067542gxk.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 12:10:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:x-pgp-key:user-agent;
-        bh=JOn2DX075QWTV3f/JypCVbwNSVSOXzXaeaGUilA0vdA=;
-        b=Dh1+mzLGncboGuf0Ppa0G47cmHEt46FiDgK5S0El5G5H/1EUwEOlNkXEtYgP4vsEYx
-         1UjEYHUygyB1b1YPTinMBXNLWzVIHyrX7ohLi9v2HKcooE16aoKQvp0AjdXiTqnBG4a4
-         fTcOPOni6v4DcK57JQLJuohyht/jy+yb29quk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3fY2GjSq6Ti0hZE/ZU4eePv4Kj3qS8DLilh88rKfrhI=;
+        b=C5eN4o//6p5b8KKXjikazPeNB833Z0Wbxl9smqDPFip5T++K0AxPJtEhruexX+b+aC
+         muXqdhWgb0fFdw3ZRBf1kCV3WhUVza4NR+ZbB5HaRaZqCwUUX2CQe8m2Qfo92Oetn5fJ
+         wCzsmabl+/M0xSNj6oLJrkIznAfnOzQKvN7Vo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:x-pgp-key:user-agent;
-        b=F2jDESC2D09nXJzGilzyOYtXxzBVWXnFsOOOeLWB3VqnO3SBYc5/RScPSXbK+LAxlo
-         jHU95w4Qq5x7b6lEj8X+Ju0qsANA7Fo52BtM7JMaDyIIqHQP0Hvni9gxnN9eZFatNxkN
-         S/n380gpfNXfOLfn575g9UKsu2GTlCiLZeqGE=
-Received: by 10.115.18.12 with SMTP id v12mr4159552wai.114.1285355370260;
-        Fri, 24 Sep 2010 12:09:30 -0700 (PDT)
-Received: from localhost (66.239.37.190.ptr.us.xo.net [66.239.37.190])
-        by mx.google.com with ESMTPS id k23sm4042133waf.17.2010.09.24.12.09.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 12:09:29 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTin-BSAFwvuTyJ96BW6MqrKVEni+Af2M0u7WE_yZ@mail.gmail.com>
-X-PGP-Key: http://technosorcery.net/pubkey.asc
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Gziy3v+fE7AteT1LLbVV0uvoPFpoknRYeDx0NhadJo4pOSc/Odi3uGpcGTq1ivhIPP
+         fCKAoKzVqFohO3NyXcN6czU9LNx4oHYAfO/MVL4AkAYzFYp1mJ4qsjl2q5Mh1Im49glE
+         aItN63l3dtZHs5EzAncX4YtilSWJqIEn2A/+Y=
+Received: by 10.151.144.17 with SMTP id w17mr5073403ybn.196.1285355404464;
+ Fri, 24 Sep 2010 12:10:04 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 12:10:04 -0700 (PDT)
+In-Reply-To: <4C9CAEB7.1030606@op5.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157038>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157039>
 
+On Fri, Sep 24, 2010 at 13:59, Andreas Ericsson <ae@op5.se> wrote:
+> On 09/24/2010 03:32 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+>> On Fri, Sep 24, 2010 at 13:08, Tor Arntsen<tor@spacetec.no> =C2=A0wr=
+ote:
+>>> On Fri, Sep 24, 2010 at 14:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on<avarab@gmail.com> =C2=A0wrote:
+>>>
+>>>> However, I'd like to shift the discussion a bit: Do we want to sup=
+port
+>>>> the 5.6 line *at all* anymore? I don't think so. As you point out
+>>>> yourself you can just compile 5.8 or later on these machines.
+>>>
+>>> 5.8 as minimum is probably for the best. It's not that just you can
+>>> compile a newer version (5.8), more importantly, Perl 5.8 is availa=
+ble
+>>> as a package from those semi-official 3party repositories for most
+>>> systems (at least the *nix systems I have access to)
+>>
+>> Do those repositories also have 5.10 and 5.12?
+>>
+>
+> Fedora 13 ships with Perl 5.10.0. IIRC, Fedora 12 (or possibly 11)
+> shipped with Perl 5.8. Let's not ask for more angry users than we
+> can handle. Since the current code seems to work fine with 5.8 and
+> later, I think that's a safe minimum to require for full git
+> functionality.
 
---XMCwj5IQnwKtuyBG
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I didn't mean to suggest we bump to 5.10 now. I just thought I'd ask
+for the record in case we have this discussion again 3-4 years from
+now.
 
-On Fri, 24 Sep 2010 14:01:01 -0500, Dan McGee wrote:
->=20
-> On Sun, Sep 19, 2010 at 4:48 AM, Felipe Contreras
-> <felipe.contreras@gmail.com> wrote:
-> > On Sat, Sep 18, 2010 at 10:34 AM, David Aguilar <davvid@gmail.com> wrot=
-e:
-> >> On Tue, Sep 14, 2010 at 09:21:43PM -0500, Dan McGee wrote:
-> >>> When the base version is available, use a three-way, four panel view =
-by
-> >>> default. This shows the (local, base, remote) revisions up top and the
-> >>> merged result by itself in the lower pane. All revisions will still s=
-croll
-> >>> together by default, and the cursor still defaults to the merged resu=
-lt edit
-> >>> pane.
-> >>>
-> >>> Signed-off-by: Dan McGee <dpmcgee@gmail.com>
-> >>> ---
-> >>>
-> >>> Vim was one of the few diff commands to not support a three-way merge=
- showing
-> >>> the base revision, so this is a stab at resolving that shortfall. The=
- biggest
-> >>> objection I can see to this is making the interface a bit more cumber=
-some and
-> >>> bloated.
-> >>>
-> >>> An example screenshot of what this produces:
-> >>> http://www.toofishes.net/media/extra/vim_three_way.png
-> >>>
-> >>> -Dan
-> >>
-> >>
-> >> Patch 1/2 of this series looks good to me.
-> >>
-> >> Is it worth keeping the old behavior and calling this new
-> >> mode "vimdiff3" or something along those lines?
-> >>
-> >> I'm not a vimdiff user so I'm not be the best person to
-> >> judge the merits of this change. =A0I like what it's trying
-> >> to accomplish, though. =A0Are there any vimdiff users
-> >> with strong feelings either way?
-> >
-> > I think this is a definite improvement; the old mode wasn't really
-> > useful for me.
->=20
-> Not as much feedback as I had hoped, but thanks to those that did
-> speak up. I was thinking of adding a separate mode, but I think it
-> would then get under-used and as I said, every other merge tool was
-> already doing this anyway.
->=20
-> So are these patches good to go forward with? No major objections in a
-> over a week's time.
->=20
-> -Dan
+> Especially considering it was 3 years since we decided on 5.6, which
+> was by then 7 years old.
 
-I'd +1 David's suggestion of calling this "vimdiff3", I'd like to still
-be able to access the current behavior, since I have merge.conflictstyle
-=3D diff3, and already see the merge base when I use (g)vimdiff with
-mergetool.
-
---=20
-Jacob Helwig
-
---XMCwj5IQnwKtuyBG
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQGcBAEBAgAGBQJMnPdnAAoJEHJabXWGiqEBkysL/ic9x6528vZmkjJtgOYRYGun
-Cw3C/TSKo3r1qGsbJYlR84apNfPHMqlNSrUNeBBIaWkuMxIlWSHzrgZNZLpIAGdi
-6TT0Hz5P7c3AZZ7VD+wFhGzueBjt0av3rCmywCFrXm13tfNP6oSOnNYDfyFBzhri
-sHE2DGnZnI6bQQhcUJy9mxiT/L4ylpO28I+O3DB+qYEues/l6eCncpkANU0L6rzr
-8pEZIEqNNG8rcduEvqZlJEsI/njhD4EeRd44pxlC7RH9CLhVuLh3F8jQ0e5S/Ux0
-qsboqLnZAcMeBYxK/sGmn9lllgwwocKKtLp+bBOCQCVZd6b3NrO2C7Xz25nLqR8/
-wAEzp7dRKkwhU/JZsGi4NHSZa2AX9wjrugVWeB70pMtbEyP7xYNk+eCb0ZjXiUto
-Npf+6CFLhqKGLVHtgo3j5O4N2PXyIMFL3pO6UGC5Y1gV6mWZCN3QLgZ4QSZ32uo3
-EMzl+FkWhE7RDiMgef4ZxlkUxm81p7dHKVgzgtawsQ==
-=lm4p
------END PGP SIGNATURE-----
-
---XMCwj5IQnwKtuyBG--
+Do you happen to have a link to that discussion? I can't find it.
