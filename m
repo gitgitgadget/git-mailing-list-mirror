@@ -1,53 +1,65 @@
-From: Tait <git.git@t41t.com>
-Subject: Minimum Perl version?
-Date: Fri, 24 Sep 2010 03:00:19 -0700
-Message-ID: <20100924100019.GT23563@ece.pdx.edu>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Minimum Perl version?
+Date: Fri, 24 Sep 2010 10:23:11 +0000
+Message-ID: <AANLkTin_wrCnpz-fz=FuJ96j+xBHM1-5HTGG0vP7bmDY@mail.gmail.com>
+References: <20100924100019.GT23563@ece.pdx.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 24 12:13:19 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Tait <git.git@t41t.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 12:23:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz5HL-000604-F1
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 12:13:19 +0200
+	id 1Oz5R0-0003a8-8B
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 12:23:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752431Ab0IXKNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 06:13:06 -0400
-Received: from ehlo.cat.pdx.edu ([131.252.208.106]:51097 "EHLO
-	ehlo.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751292Ab0IXKNF (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 06:13:05 -0400
-X-Greylist: delayed 762 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Sep 2010 06:13:05 EDT
-Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
-	by ehlo.cat.pdx.edu (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id o8OA0KSe008668
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Fri, 24 Sep 2010 03:00:20 -0700
-Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
-	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id o8OA0JCN029396
-	for <git@vger.kernel.org>; Fri, 24 Sep 2010 03:00:19 -0700 (PDT)
-Received: (from tait@localhost)
-	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id o8OA0JmW029378
-	for git@vger.kernel.org; Fri, 24 Sep 2010 03:00:19 -0700 (PDT)
-X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.4 (ehlo.cat.pdx.edu [131.252.208.106]); Fri, 24 Sep 2010 03:00:20 -0700 (PDT)
-X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=unavailable
-	version=3.3.1
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on ehlo.cat.pdx.edu
-X-Virus-Scanned: clamav-milter 0.96.1 at ehlo
-X-Virus-Status: Clean
+	id S1753332Ab0IXKXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 06:23:13 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:43508 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752250Ab0IXKXM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 06:23:12 -0400
+Received: by iwn5 with SMTP id 5so2288343iwn.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 03:23:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=c06g/jRIVWPbroA1EbOQ041+o5J1tHB3WsTv6x/tMS0=;
+        b=UJTSTpcQw1bW+dRR+YD4/l3ZLZoUQI6gaK0VIfbxwHT6evGUvUjOi1igcatoHN1Ckg
+         zVg/GiRMTeRO9M9ekMZBPreMz2UBhZ7k88kdLHR/TKz/C0jkPvbfG4LVuZAdfSMas+Is
+         fCHzMzV0Q/M0P7R0pswnx/Knw5OnwrvGACE+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=rpH+c0yDhoc1pCHvVxO3y29OcF/1hlDS232pyHZMYck5Cy03ii7z5+RwzQpIilDw+g
+         qyASIPBRSLPrcljU8mIbITnFkcXolq++l2KgIna7ssL0l+/ZzQP+MKKVRo4XzYXaKv7X
+         Ztgte5NIVhhKZX3fUvYGYIEsvaQwP1OJaQZ4U=
+Received: by 10.231.190.149 with SMTP id di21mr3513893ibb.166.1285323791949;
+ Fri, 24 Sep 2010 03:23:11 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 03:23:11 -0700 (PDT)
+In-Reply-To: <20100924100019.GT23563@ece.pdx.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156968>
 
+On Fri, Sep 24, 2010 at 10:00, Tait <git.git@t41t.com> wrote:
+>
+> What is the minimum Perl version git expects to support?
+>
+> I ask, because f922df8... seems to have introduced a open() syntax that
+> is not compatible with some older Perl versions.
 
-What is the minimum Perl version git expects to support?
+We generally support 5.6 or above, but 5.8 or above for some other
+programs.
 
-I ask, because f922df8... seems to have introduced a open() syntax that
-is not compatible with some older Perl versions.
+As far as I can tell there was no new open syntax introduced in that
+series that wasn't supported before.
+
+What specifically is breaking for you, and on what perl version?
