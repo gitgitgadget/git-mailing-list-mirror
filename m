@@ -1,75 +1,92 @@
-From: Joe Perches <joe@perches.com>
-Subject: Re: [PATCH V3] git-send-email.perl: Add --to-cmd
-Date: Fri, 24 Sep 2010 09:06:34 -0700
-Message-ID: <1285344394.11616.23.camel@Joe-Laptop>
-References: <AANLkTinsM5jdU194FR8L3hTvBXk0Tr_oV2E5752NOUpq@mail.gmail.com>
-	 <AANLkTikkJNwF4LS9rx5=bHM2R0Pm751Y1u9V8iAt0w1A@mail.gmail.com>
-	 <1285227413.7286.47.camel@Joe-Laptop>
-	 <Pine.LNX.4.64.1009231054230.15528@ask.diku.dk>
-	 <20100923090931.GA29789@albatros> <20100923120024.GA26715@albatros>
-	 <1285253867.31572.13.camel@Joe-Laptop>
-	 <Pine.LNX.4.64.1009231757090.11585@ask.diku.dk>
-	 <1285262237.31572.18.camel@Joe-Laptop>
-	 <AANLkTin_Y8w4ujNGTqGJPNDNfYz7hcjBVLcOG0emBjYn@mail.gmail.com>
-	 <1285263993.31572.25.camel@Joe-Laptop>
-	 <AANLkTinCx=+n6bMZw4tQqrQ7WC1o_aeGG_n_PxywTyb8@mail.gmail.com>
-	 <1285267520.31572.34.camel@Joe-Laptop>
-	 <7v62xwqe7i.fsf@alter.siamese.dyndns.org>
-	 <1285291098.25928.220.camel@Joe-Laptop>
-	 <m3lj6rgnub.fsf@localhost.localdomain>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC PATCH 0/2] submodule aware grep
+Date: Fri, 24 Sep 2010 09:07:40 -0700
+Message-ID: <4C9CCCCC.4000909@gmail.com>
+References: <1285276627-7907-1-git-send-email-judge.packham@gmail.com> <20100924134748.GA576@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	Julia Lawall <julia@diku.dk>, git@vger.kernel.org,
-	Vasiliy Kulikov <segooon@gmail.com>,
-	Matt Mooney <mfmooney@gmail.com>,
-	kernel-janitors@vger.kernel.org, Dan Carpenter <error27@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 18:06:44 2010
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Fri Sep 24 18:07:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzAnL-00072x-DB
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 18:06:43 +0200
+	id 1OzAo8-0007KJ-BW
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 18:07:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932380Ab0IXQGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 12:06:37 -0400
-Received: from mail.perches.com ([173.55.12.10]:2333 "EHLO mail.perches.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932375Ab0IXQGg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 12:06:36 -0400
-Received: from [192.168.1.162] (unknown [192.168.1.162])
-	by mail.perches.com (Postfix) with ESMTP id 8C53A24368;
-	Fri, 24 Sep 2010 09:06:26 -0700 (PDT)
-In-Reply-To: <m3lj6rgnub.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.30.3 
+	id S932385Ab0IXQHY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 12:07:24 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:51800 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755754Ab0IXQHX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 12:07:23 -0400
+Received: by pxi10 with SMTP id 10so837888pxi.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 09:07:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=i5dPmP99MXJ3wP3mbyBwWW8gPXRkzxa5QuYY6SawHDk=;
+        b=HHqv9jsdWjYlhRnriRoC/Ixtuj2oiAF/UXnbTWv0AvIAnqFVEK1Dcu5vUGRA2vsxki
+         klSLUI+hY5zRbIyeDM/kQcac3vNvGDQctl+/QB5xZS0lBuwO/JC1eJSLMaIENq5R37jM
+         O4L8fft55kffpHK7ENYPjDh1gpyrQ3iDBbb0A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=xgEHsl8fq0K4ohJCdiRXwggTSvTvTgfuEqQcIBPbGa2qlR8k04m1nMT+JxY8Jhs5+P
+         jPUrspEvvU0/48rmKFORpHvMMCwbW9kPaNETF3q8XS4ULHytta0HG+HGQPPliD0QDevH
+         oPpDo6Mc16a+62avEWrnWyFq2D+MnEdCHOV9U=
+Received: by 10.114.201.18 with SMTP id y18mr3831073waf.138.1285344443069;
+        Fri, 24 Sep 2010 09:07:23 -0700 (PDT)
+Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id d2sm3791635wam.14.2010.09.24.09.07.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 09:07:21 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
+In-Reply-To: <20100924134748.GA576@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157014>
 
-On Fri, 2010-09-24 at 08:32 -0700, Jakub Narebski wrote:
-> Joe Perches <joe@perches.com> writes:
-> > +# Execute a command (ie: $to_cmd) to get a list of email addresses
-> > +# and return a results array
-> > +sub recipients_cmd(@) {
-> Do not use subroutine prototypes: they do not do what you think they
-> do.  In this case using prototype is unnecessary and can be dangerous.
- 
-It can be removed.  I was following the form of the
-other returned array in the code.
+On 24/09/10 06:47, Heiko Voigt wrote:
+> Hi,
+> 
+> On Thu, Sep 23, 2010 at 02:17:05PM -0700, Chris Packham wrote:
+>> This series contains 2 RFC patches that both implement a grep feature for
+>> submodules.  The first patch is a self-contained script for contrib that should
+>> work with most current git versions. The 2nd is basically the same
+>> implementation but done as a proper git submodule command with some of the
+>> helper code moved to git-sh-setup.sh
+>>
+>> There are a couple of questions for this. Technically I'm making submodule 
+>> grep-aware, should I be making grep submodule-aware instead? I haven't looked 
+>> at the grep code yet but I imagine its harder.
+> 
+> Nice work! IMO it would be even nicer to have it as part of git grep.
+> Have a look at Jens branch about submodule checkout:
+> 
+> http://github.com/jlehmann/git-submod-enhancements (enhance_git_for_submodules)
+> 
+> particularly how checkout_submodule() is implemented. It forks a git
+> checkout inside the submodule. In a similar way you could fork a grep
+> there. Then you just have to teach the forked grep to prepend the
+> submodules path.
+> 
 
-sub unique_email_list(@) {
+I'll look into it, from following Jens code it doesn't look too hard
+(like you say just fork and pass a text prefix). I'm currently doing my
+git hacking on my main development machine so I should probably setup
+and environment where I can hack without affecting $dayjob work.
 
-> > +	while(<F>) {
-> > +		my $address = $_;
-> > +		$address =~ s/^\s*//g;
-> > +		$address =~ s/\n$//g;
-> Hmmm... why does it remove leading, but not trailing whitespace?
- 
-Unmodified from the current.  I agree it should do both.
+In the meantime I've got an updated patch for contrib if anyone is
+interested (it just adds some grep options to be passed through).
+
+Thanks,
+Chris
