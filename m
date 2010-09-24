@@ -1,65 +1,67 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [RFC PATCH 00/95] Add missing &&'s in the testsuite
-Date: Fri, 24 Sep 2010 16:32:30 -0500
-Message-ID: <UA25cdpM3towJy13l2VNc8pgKHGybUWr88Zc0C9kQjUCExhj5gXkCQ@cipher.nrlssc.navy.mil>
-References: <1285362413-18265-1-git-send-email-newren@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] mergetool-lib: add a three-way diff view for
+ vim/gvim
+Date: Fri, 24 Sep 2010 17:38:52 -0400
+Message-ID: <20100924213852.GB19676@sigill.intra.peff.net>
+References: <1284517303-17244-1-git-send-email-dpmcgee@gmail.com>
+ <1284517303-17244-2-git-send-email-dpmcgee@gmail.com>
+ <20100918073428.GA9850@gmail.com>
+ <AANLkTim_hwduHk-ENM73dwHUj9XbwfihZPRfsHX+M3DE@mail.gmail.com>
+ <AANLkTin-BSAFwvuTyJ96BW6MqrKVEni+Af2M0u7WE_yZ@mail.gmail.com>
+ <20100924190928.GC3768@vfa-6z.perlninja.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 23:32:52 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Dan McGee <dpmcgee@gmail.com>,
+	Felipe Contreras <felipe.contreras@gmail.com>,
+	David Aguilar <davvid@gmail.com>, git@vger.kernel.org,
+	Markus Heidelberg <markus.heidelberg@web.de>,
+	Charles Bailey <charles@hashpling.org>
+To: Jacob Helwig <jacob.helwig@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 23:39:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzFsx-0000HK-BA
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 23:32:51 +0200
+	id 1OzFys-0002ER-Um
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 23:38:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757819Ab0IXVcq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 17:32:46 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41341 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755294Ab0IXVcp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 17:32:45 -0400
-Received: by mail.nrlssc.navy.mil id o8OLWVOY022816; Fri, 24 Sep 2010 16:32:31 -0500
-In-Reply-To: <1285362413-18265-1-git-send-email-newren@gmail.com>
-X-OriginalArrivalTime: 24 Sep 2010 21:32:31.0236 (UTC) FILETIME=[FE730440:01CB5C2F]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1758157Ab0IXVi4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 17:38:56 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35476 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758151Ab0IXViz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 17:38:55 -0400
+Received: (qmail 21655 invoked by uid 111); 24 Sep 2010 21:38:54 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 24 Sep 2010 21:38:54 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 24 Sep 2010 17:38:52 -0400
+Content-Disposition: inline
+In-Reply-To: <20100924190928.GC3768@vfa-6z.perlninja.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157064>
 
-On 09/24/2010 04:06 PM, Elijah Newren wrote:
-> I ran across three testfiles which were missing &&s; one was missing
-> several, while another would no longer pass after adding one and had
-> no comment to that effect.  So I decided it was time to look through
-> the testsuite.  Now I have a 95 patch series, which I'm worried might
-> be a bit too much spam for the mailing list.  So the patches are
-> available from
->    git://gitorious.org/~newren/git/en.git   add-missing-ands
-> Let me know if you're fine with mailing list spam, and I'd be happy
-> to flood all your inboxes.
+On Fri, Sep 24, 2010 at 12:09:28PM -0700, Jacob Helwig wrote:
+
+> > So are these patches good to go forward with? No major objections in a
+> > over a week's time.
+> > 
+> > -Dan
 > 
-> 80 of the 95 testfiles that needed changes were pretty mechanical --
-> just simple additions of '&&' in the appropriate place.  15 needed
-> other changes and I'm not entirely sure whether I made the right ones.
-> I've moved those 15 to the beginning of the series, so that you won't
-> have to hunt for them.  (If it makes sense to send just the first 15
-> to the list, let me know, and I'll do that.)
+> I'd +1 David's suggestion of calling this "vimdiff3", I'd like to still
+> be able to access the current behavior, since I have merge.conflictstyle
+> = diff3, and already see the merge base when I use (g)vimdiff with
+> mergetool.
 
-Sounds like it should be about a 16 patch series.
+Of course as soon as I say "nobody objected" in my other email, this
+arrives. :)
 
-The first 15 patches should rework the tests that will fail when
-they are hooked together properly with &&'s.
+Can we provide both, but make the vimdiff3 behavior the preferred
+default? It better matches the default merge.conflictstyle, and people
+who are using diff3 obviously understand how to tweak config.
 
-And then one patch to mechanically add the missing &&'s.
-
-Maybe even some of the first 15 patches could be squashed if any of
-them apply the same fix, just to different test files.
-
--Brandon
+-Peff
