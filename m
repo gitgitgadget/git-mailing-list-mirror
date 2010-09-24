@@ -1,106 +1,135 @@
-From: Daniel Johnson <computerdruid@gmail.com>
-Subject: Re: Mirror plain directory under git
-Date: Fri, 24 Sep 2010 10:36:39 -0400
-Message-ID: <201009241036.45388.ComputerDruid@gmail.com>
-References: <AANLkTi=9nqfzR-Zo85LieBuhv97oudCVZCex8ZL3mM0t@mail.gmail.com> <20100921075621.GA27575@nibiru.local>
+From: Gustavo Narea <gnarea@tech.2degreesnetwork.com>
+Subject: Re: Multiple checkouts active for the same repository
+Date: Fri, 24 Sep 2010 15:42:14 +0100
+Organization: 2degrees Limited
+Message-ID: <4C9CB8C6.1050101@tech.2degreesnetwork.com>
+References: <4C9C6F8B.3090806@tech.2degreesnetwork.com> <AANLkTikvyM9wXrewRiG7OdBp5LMfnHSkA9dqZGT1Twpc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart29918087.S20egQg2rD";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org, suntong@cpan.org
-X-From: git-owner@vger.kernel.org Fri Sep 24 16:36:31 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 16:42:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz9O2-0003bf-D3
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 16:36:30 +0200
+	id 1Oz9Tq-0006Db-01
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 16:42:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756711Ab0IXOgW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 10:36:22 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:64537 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754600Ab0IXOgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 10:36:21 -0400
-Received: by qwh6 with SMTP id 6so1862987qwh.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 07:36:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        bh=zks3+BQTHs8gkiuA+w0WPDk0W2NnQwotoCWPqGC4Tfs=;
-        b=B7X3qXfg7UtE/QOdS7UjGJAIrOBWL4TjZqftj2S4imruZFEjVIXAZZF43o2PMCUpw2
-         7K8DKsBUGRgMN4W1pje+aKy0AVpgy0Ilf3nvPOd2LrYIvgw67yOYL7aF1hKWB7JHz4j0
-         ZkSWP7I3TavwCzKP+DSQa8QLRaLN56D54Wbl8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:references:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:message-id;
-        b=ENU/erhPBG8JXp91AovW2teMY52RfLeB0RILrJ4nAnon61Igttkumj1asuGpMS7q9R
-         JnOY5bYicGWXYl4GkEDaclhRCdG6OjYMVZ1pWRZyaJknKqYSheHc4T1Y1USPPUoBZh0/
-         Jn9jpzzYs3QbTNkrFdekLxoFmes0EGG6Y3g/U=
-Received: by 10.229.11.14 with SMTP id r14mr2569824qcr.228.1285338963404;
-        Fri, 24 Sep 2010 07:36:03 -0700 (PDT)
-Received: from hyperion.localnet (hyperion.student.rit.edu [129.21.115.231])
-        by mx.google.com with ESMTPS id t1sm2407168qcs.21.2010.09.24.07.36.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 07:36:02 -0700 (PDT)
-User-Agent: KMail/1.13.5 (Linux/2.6.35.3; KDE/4.5.0; x86_64; ; )
-In-Reply-To: <20100921075621.GA27575@nibiru.local>
+	id S1754955Ab0IXOmS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 10:42:18 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:60964 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750897Ab0IXOmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 10:42:18 -0400
+Received: by wyb28 with SMTP id 28so1966709wyb.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 07:42:17 -0700 (PDT)
+Received: by 10.227.142.136 with SMTP id q8mr3033153wbu.95.1285339336804;
+        Fri, 24 Sep 2010 07:42:16 -0700 (PDT)
+Received: from [192.168.1.3] (cpc1-oxfd19-2-0-cust970.4-3.cable.virginmedia.com [86.30.183.203])
+        by mx.google.com with ESMTPS id e31sm1854362wbe.23.2010.09.24.07.42.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 07:42:16 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9pre) Gecko/20100217 Lightning/1.0b1 Shredder/3.0.3pre
+In-Reply-To: <AANLkTikvyM9wXrewRiG7OdBp5LMfnHSkA9dqZGT1Twpc@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156995>
 
---nextPart29918087.S20egQg2rD
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-I know nothing about the subject matter of your email, but the date appears=
- to=20
-be wrong on this email message, hiding it back further in the history than =
-it=20
-should be. Just a warning, as the last few emails you sent all seem to be l=
-ike=20
-this.
+On 24/09/10 14:07, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Fri, Sep 24, 2010 at 09:29, Gustavo Narea
+> <gnarea@tech.2degreesnetwork.com> wrote:
+>=20
+>> We're currently migrating from another DVCS.
+>=20
+> Which one?
 
-Some of the relevant mail headers from this mail:
+Bazaar.
 
->Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
->	id S1752826Ab0IXMH3 (ORCPT <rfc822;thleetest9@gmail.com>
->	+ 99 others); Fri, 24 Sep 2010 08:07:29 -0400
->Received: from caprica.metux.de ([82.165.128.25]:38054 "EHLO
->	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
->	by vger.kernel.org with ESMTP id S1752237Ab0IXMH3 (ORCPT
->	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 08:07:29 -0400
->Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1=
-])
->	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o8OBuZHp005578;
->	Fri, 24 Sep 2010 14:08:05 +0200
->Received: (from uucp@localhost)
->	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id=20
->	o8NKgxSa008244; Thu, 23 Sep 2010 22:42:59 +0200
->Received: (from weigelt@localhost)
->	by nibiru.metux.de (8.12.10/8.12.10) id o8L7uL3d031552;
->	Tue, 21 Sep 2010 09:56:21 +0200
->Date:	Tue, 21 Sep 2010 09:56:21 +0200
 
---nextPart29918087.S20egQg2rD
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+>> We are a team of Web developers and testers working on an applicatio=
+n.
+>> There are always a few development branches and a stable branch, and
+>> testers need all the branches with the very latest code available at=
+ all
+>> times.
+>>
+>> The way we handle it at the moment is very simple because the server
+>> hosting the remote repository is the same that hosts the deployed
+>> instances of each branch, so when we push to the remote repository, =
+the
+>> code for each site is automatically updated.
+>>
+>> We use the following structure:
+>> /srv/repositories/project/branch1
+>> /srv/repositories/project/branch2
+>> /srv/repositories/project/branch3
+>>
+>> Is there any simple way to do this with Git? I can only think of two
+>> options that involve hooks:
+>>
+>>    * Have a hook that exports each branch to a directory like
+>>      /srv/repositories/project/branchN
+>>    * Have one Git repository per branch, so that each repository hav=
+e a
+>>      different checkout active. Then the main remote repository will
+>>      have post-receive hooks that trigger a pull on each individual
+>>
+>> I'm not particularly happy with either way. Is there a better soluti=
+on?
+>=20
+> If you really need this the best solution is to just `git clone` the
+> project multiple times and check out each branch in its own dir. Then
+> have some shellscript to update them all.
+>=20
+> But just using the Git workflow would be better.
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.16 (GNU/Linux)
+OK, I'll do it that way.
 
-iEYEABECAAYFAkyct30ACgkQhP2Vm0oJTtyudgCfXFJzpRs0fxElwPnNcjqwTLm+
-gQgAn3tvz6M1PdDdUBsv87ujvfDyL81c
-=9wJL
------END PGP SIGNATURE-----
 
---nextPart29918087.S20egQg2rD--
+>> Apart from the situation I describe in the initial email, there's
+>> another limitation in the development environment: Our IDE, Eclipse =
++
+>> Pydev, assumes each project (i.e., branch/checkout) to be on differe=
+nt
+>> directories and each project should have different settings (e.g., p=
+aths
+>> to dependencies, which could be different), but with GIt everything
+>> would be a single project because it's all on the same path.
+>=20
+> Can't you just modify your build environment to check the output of
+> `git symbolic-ref HEAD` or equivalent, instead of checking paths?
+
+Yes, that's what I intend to do for the build system, but that wouldn't
+solve the problem with the IDE:
+
+Eclipse and PyDev (Python plugin) store their settings in the project
+directory. For example, the one from PyDev contains the absolute paths
+to all the dependencies, which makes features like auto-completion work=
+;
+I would have to mark these files are ignored because they change from
+machine to machine, and sometimes from branch to branch.
+
+So, no matter what the active branch is, I will always get the settings
+for the first branch I configured. And if I change them, all the other
+branches will be affected.
+
+Any suggestions?
+
+I tried playing with --git-dir and --work-tree, so that I could have th=
+e
+repository in one place and the checkout for each branch on different
+repositories, but it doesn't seem to be a good solution because we
+cannot specify the branch in commands like git-status.
+
+Thank you very much.
+--=20
+Gustavo Narea.
+Software Developer.
+2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
