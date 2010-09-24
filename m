@@ -1,65 +1,88 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Testing for a merge conflict without a working copy
-Date: Tue, 21 Sep 2010 17:02:17 +0200
-Message-ID: <20100921150217.GB14711@nibiru.local>
-References: <4C98C4FC.1080904@workspacewhiz.com>
-Reply-To: weigelt@metux.de
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Minimum Perl version?
+Date: Fri, 24 Sep 2010 11:05:24 +0000
+Message-ID: <AANLkTimUE=hyJ-y_XzpvCokb77KvRGw3gnM+9Xxui9tG@mail.gmail.com>
+References: <20100924100019.GT23563@ece.pdx.edu>
+	<AANLkTi=3xNSV0y-i=0KUSDRBJ8HmfSfGO7TBHTPiv_KM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 24 12:44:35 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Tait <git.git@t41t.com>, git@vger.kernel.org
+To: Tor Arntsen <tor@spacetec.no>
+X-From: git-owner@vger.kernel.org Fri Sep 24 13:05:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz5la-00046B-Cj
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 12:44:34 +0200
+	id 1Oz65r-00057R-K8
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 13:05:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab0IXKo3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 06:44:29 -0400
-Received: from caprica.metux.de ([82.165.128.25]:47142 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752672Ab0IXKo3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 06:44:29 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o8OAdHb4010681
-	for <git@vger.kernel.org>; Fri, 24 Sep 2010 12:45:14 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o8NK00UM031249
-	for git@vger.kernel.org; Thu, 23 Sep 2010 22:00:00 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o8LF2HVr026997
-	for git@vger.kernel.org; Tue, 21 Sep 2010 17:02:17 +0200
-Mail-Followup-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Disposition: inline
-In-Reply-To: <4C98C4FC.1080904@workspacewhiz.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1754686Ab0IXLF0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 07:05:26 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58766 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752272Ab0IXLFZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 07:05:25 -0400
+Received: by iwn5 with SMTP id 5so2319007iwn.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 04:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=DKyWTBcaptP+l/qiZNrsSR1LDuHfmztUy//TVyvjHz4=;
+        b=GfaGtR3pcSBZS96xjImNxI4cac3MuGuLD9Gz4NnzvntXno79VVmJLwjiZLs/bhmq3n
+         d4HBl45/eT1Il2RiVilVn6PQVvZpk4cQh2dpmTDTYjm2iWNM18ViYTEzAuZtymaSMHYV
+         tV7Vkf+yr1lV+zbccNm3UBrtagH5pFaOrq3pE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ln9excE32p0HZ3PgEr7Dr7YoyrQk9aI+OMtU5SaSjWXth/kCb2DOLUml7TgA3LIX9y
+         sgHut8FP7v4UGh5sS3UGhgbqKqOlwz2GucopASOuiKE5/nvYzg21rciaF2j2PIL0F4Yz
+         Ot8QhjfqDVPF+t9BPLolaF95uqHe/grg7RK90=
+Received: by 10.231.33.205 with SMTP id i13mr3641938ibd.59.1285326324590; Fri,
+ 24 Sep 2010 04:05:24 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 04:05:24 -0700 (PDT)
+In-Reply-To: <AANLkTi=3xNSV0y-i=0KUSDRBJ8HmfSfGO7TBHTPiv_KM@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156973>
 
-* Joshua Jensen <jjensen@workspacewhiz.com> wrote:
->  If I simply want to determine whether a merge would conflict, is there 
-> a way to do it without a working copy?
+On Fri, Sep 24, 2010 at 10:27, Tor Arntsen <tor@spacetec.no> wrote:
+> On Fri, Sep 24, 2010 at 12:00, Tait <git.git@t41t.com> wrote:
+>>
+>> What is the minimum Perl version git expects to support?
+>>
+>> I ask, because f922df8... seems to have introduced a open() syntax t=
+hat
+>> is not compatible with some older Perl versions.
+>
+> I've found that for add -p you'll need 5.8.x or newer, due to stuff l=
+ike
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0my $fh =3D und=
+ef;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0open($fh, '-|'=
+, @_) or die;
+>
+> which fails in e.g. perl 5.6.
+> There could be some other stuff (in addition to add -p) that also doe=
+s
+> this kind of thing.
 
-hmm, you could do it in an temporary working copy (see --work-dir).
+If that's the case (I don't have a 5.6 here to do archeology on) then
+git add -p never worked in 5.6. That was added in 5cde71d6 when it was
+introduced in 2006:
 
+    +sub run_cmd_pipe {
+    +       my $fh =3D undef;
+    +       open($fh, '-|', @_) or die;
+    +       return <$fh>;
+    +}
 
-cu
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Can you show us the specific error you're getting, and the output of
+your `perl -V` ?
