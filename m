@@ -1,136 +1,79 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC PATCHv2 16/16] Add missing &&'s throughout the testsuite
-Date: Fri, 24 Sep 2010 23:18:06 +0000
-Message-ID: <AANLkTimfvo-nUDROSKWVFzB0HdAH4MfbH+oU4AP+pRqO@mail.gmail.com>
-References: <1285366976-22216-1-git-send-email-newren@gmail.com>
-	<1285366976-22216-17-git-send-email-newren@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC/PATCH 0/3] fast-import: give importers access to the object store
+Date: Sat, 25 Sep 2010 01:44:15 +0200
+Message-ID: <AANLkTinsotbGpg1LAXA+UchBHQrBK12tkX+o4tOFWUOF@mail.gmail.com>
+References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino>
+ <20100817170216.GA14491@kytes> <20100905031528.GA2344@burratino>
+ <1284596048.3298.3.camel@wilber> <20100924194313.GA8114@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 01:18:17 2010
+Cc: Sam Vilain <sam@vilain.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 01:44:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzHWw-0000n9-NC
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 01:18:15 +0200
+	id 1OzHwY-00080I-L9
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 01:44:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758373Ab0IXXSJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 19:18:09 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62987 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755361Ab0IXXSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 19:18:07 -0400
-Received: by iwn5 with SMTP id 5so2757617iwn.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 16:18:06 -0700 (PDT)
+	id S1755581Ab0IXXoh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 19:44:37 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:48552 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755224Ab0IXXog (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 19:44:36 -0400
+Received: by ywh1 with SMTP id 1so1138811ywh.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 16:44:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FUQG0FhTdhQroPvFpaWlLXYgXg6igmssmp1zDd8C49E=;
-        b=fSD+NQUlg2q0ZfkRZFF++lKcmzxXqll69+tEPRGIrFLxwlLhQUJ0lE1ONfjFL7pVCE
-         XRQYnrBT9FEwlqjahh/5vDA9ORDwBupxnxtA5/S80mI7x/9ifXGCRu6tN7cjMPKnqAFL
-         9i2fclppFhWNvPFq9bGhCwdg/PTEKXHDxzxFc=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=9qQGI6avdjbfiPLBNaqLAwMSWoZsOm2mqj9Qerg1+wc=;
+        b=YyAApsze1+yP003TO7MyXrtnaq+mPZyX+L7nvycXfiT3x7Co6tQMoh2da0RBUjXQjm
+         eI+HbpZGuZ+/ajvjQvJ7agWnGn9qvynJ5crQrNKj/vZ613w1EYK4TjthdQyyoI6eQ5WE
+         FUjbJ03GDKNz+Qrhy3rluK99gCtxUJOWGX+q0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AFiEY4ohZ9rm7V9Exr3nqlst8S3iZB2Bs8ijhhnhn+Q5dNKCi8I5gdN4cgJcszkG+3
-         X6GgCBMOGwmEQLt1lwT6eJBX8uv66oJcO0i4cabSfd3S6oj+CA8yRnwFFXThWjXMzMkd
-         zjssM5Tj7PPcaXNQPuVM5DYquZOFxWa04PKxA=
-Received: by 10.231.13.140 with SMTP id c12mr4464027iba.25.1285370286136; Fri,
- 24 Sep 2010 16:18:06 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 16:18:06 -0700 (PDT)
-In-Reply-To: <1285366976-22216-17-git-send-email-newren@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=r5NOH79HcGtoHQ2VL2aoup6YUTTvdMOkucFxyXZ4bl4ml8YbkxB4XQsdzT+feqsJSz
+         176IijCevAVaoeMWzJN0KWu0EzDTQ4FDAv153B/S4vsGdgj1ehts8AZgIq6Q9+iAbs6x
+         f62XRNBeiGkNhPYOW4LDUBaa7H3aOP1pVLt1w=
+Received: by 10.150.11.20 with SMTP id 20mr5419483ybk.407.1285371875646; Fri,
+ 24 Sep 2010 16:44:35 -0700 (PDT)
+Received: by 10.151.82.3 with HTTP; Fri, 24 Sep 2010 16:44:15 -0700 (PDT)
+In-Reply-To: <20100924194313.GA8114@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157103>
 
-T24gRnJpLCBTZXAgMjQsIDIwMTAgYXQgMjI6MjIsIEVsaWphaCBOZXdyZW4gPG5ld3JlbkBnbWFp
-bC5jb20+IHdyb3RlOgoKPiDCoHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3BsYWluJyAnCj4gwqAgwqAg
-wqAgwqAoCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1bnNldCBHSVRfRElSIEdJVF9XT1JLX1RS
-RUUKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVuc2V0IEdJVF9ESVIgR0lUX1dPUktfVFJFRSAm
-Jgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgbWtkaXIgcGxhaW4gJiYKPiDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoGNkIHBsYWluICYmCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBnaXQgaW5pdAo+
-IEBAIC00OCw3ICs0OCw3IEBAIHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ3BsYWluIHdpdGggR0lUX1dP
-UktfVFJFRScgJwo+Cj4gwqB0ZXN0X2V4cGVjdF9zdWNjZXNzICdwbGFpbiBiYXJlJyAnCj4gwqAg
-wqAgwqAgwqAoCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1bnNldCBHSVRfRElSIEdJVF9XT1JL
-X1RSRUUgR0lUX0NPTkZJRwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgdW5zZXQgR0lUX0RJUiBH
-SVRfV09SS19UUkVFIEdJVF9DT05GSUcgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoG1rZGly
-IHBsYWluLWJhcmUtMSAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgY2QgcGxhaW4tYmFyZS0x
-ICYmCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBnaXQgLS1iYXJlIGluaXQKPiBAQCAtNTgsNyAr
-NTgsNyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdwbGFpbiBiYXJlJyAnCj4KPiDCoHRlc3RfZXhw
-ZWN0X3N1Y2Nlc3MgJ3BsYWluIGJhcmUgd2l0aCBHSVRfV09SS19UUkVFJyAnCj4gwqAgwqAgwqAg
-wqBpZiAoCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1bnNldCBHSVRfRElSIEdJVF9DT05GSUcK
-PiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVuc2V0IEdJVF9ESVIgR0lUX0NPTkZJRyAmJgo+IMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgbWtkaXIgcGxhaW4tYmFyZS0yICYmCj4gwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqBjZCBwbGFpbi1iYXJlLTIgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoEdJ
-VF9XT1JLX1RSRUU9JChwd2QpIGdpdCAtLWJhcmUgaW5pdAo+IEBAIC03Miw3ICs3Miw3IEBAIHRl
-c3RfZXhwZWN0X3N1Y2Nlc3MgJ3BsYWluIGJhcmUgd2l0aCBHSVRfV09SS19UUkVFJyAnCj4gwqB0
-ZXN0X2V4cGVjdF9zdWNjZXNzICdHSVRfRElSIGJhcmUnICcKPgo+IMKgIMKgIMKgIMKgKAo+IC0g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgdW5zZXQgR0lUX0NPTkZJRwo+ICsgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgdW5zZXQgR0lUX0NPTkZJRyAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgbWtkaXIg
-Z2l0LWRpci1iYXJlLmdpdCAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgR0lUX0RJUj1naXQt
-ZGlyLWJhcmUuZ2l0IGdpdCBpbml0Cj4gwqAgwqAgwqAgwqApICYmCj4gQEAgLTgyLDcgKzgyLDcg
-QEAgdGVzdF9leHBlY3Rfc3VjY2VzcyAnR0lUX0RJUiBiYXJlJyAnCj4gwqB0ZXN0X2V4cGVjdF9z
-dWNjZXNzICdpbml0IC0tYmFyZScgJwo+Cj4gwqAgwqAgwqAgwqAoCj4gLSDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCB1bnNldCBHSVRfRElSIEdJVF9XT1JLX1RSRUUgR0lUX0NPTkZJRwo+ICsgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgdW5zZXQgR0lUX0RJUiBHSVRfV09SS19UUkVFIEdJVF9DT05GSUcgJiYK
-PiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoG1rZGlyIGluaXQtYmFyZS5naXQgJiYKPiDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoGNkIGluaXQtYmFyZS5naXQgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoGdpdCBpbml0IC0tYmFyZQo+IEBAIC05Myw3ICs5Myw3IEBAIHRlc3RfZXhwZWN0X3N1Y2Nl
-c3MgJ2luaXQgLS1iYXJlJyAnCj4gwqB0ZXN0X2V4cGVjdF9zdWNjZXNzICdHSVRfRElSIG5vbi1i
-YXJlJyAnCj4KPiDCoCDCoCDCoCDCoCgKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVuc2V0IEdJ
-VF9DT05GSUcKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVuc2V0IEdJVF9DT05GSUcgJiYKPiDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoG1rZGlyIG5vbi1iYXJlICYmCj4gwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqBjZCBub24tYmFyZSAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgR0lUX0RJUj0u
-Z2l0IGdpdCBpbml0Cj4gQEAgLTEwNCw3ICsxMDQsNyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdH
-SVRfRElSIG5vbi1iYXJlJyAnCj4gwqB0ZXN0X2V4cGVjdF9zdWNjZXNzICdHSVRfRElSICYgR0lU
-X1dPUktfVFJFRSAoMSknICcKPgo+IMKgIMKgIMKgIMKgKAo+IC0gwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgdW5zZXQgR0lUX0NPTkZJRwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgdW5zZXQgR0lUX0NP
-TkZJRyAmJgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgbWtkaXIgZ2l0LWRpci13dC0xLmdpdCAm
-Jgo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgR0lUX1dPUktfVFJFRT0kKHB3ZCkgR0lUX0RJUj1n
-aXQtZGlyLXd0LTEuZ2l0IGdpdCBpbml0Cj4gwqAgwqAgwqAgwqApICYmCj4gQEAgLTExNCw3ICsx
-MTQsNyBAQCB0ZXN0X2V4cGVjdF9zdWNjZXNzICdHSVRfRElSICYgR0lUX1dPUktfVFJFRSAoMSkn
-ICcKPiDCoHRlc3RfZXhwZWN0X3N1Y2Nlc3MgJ0dJVF9ESVIgJiBHSVRfV09SS19UUkVFICgyKScg
-Jwo+Cj4gwqAgwqAgwqAgwqBpZiAoCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1bnNldCBHSVRf
-Q09ORklHCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCB1bnNldCBHSVRfQ09ORklHICYmCj4gwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqBta2RpciBnaXQtZGlyLXd0LTIuZ2l0ICYmCj4gwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBHSVRfV09SS19UUkVFPSQocHdkKSBHSVRfRElSPWdpdC1kaXItd3QtMi5n
-aXQgZ2l0IC0tYmFyZSBpbml0Cj4gwqAgwqAgwqAgwqApCj4gQEAgLTEyNyw3ICsxMjcsNyBAQCB0
-ZXN0X2V4cGVjdF9zdWNjZXNzICdHSVRfRElSICYgR0lUX1dPUktfVFJFRSAoMiknICcKPiDCoHRl
-c3RfZXhwZWN0X3N1Y2Nlc3MgJ3JlaW5pdCcgJwo+Cj4gwqAgwqAgwqAgwqAoCj4gLSDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCB1bnNldCBHSVRfQ09ORklHIEdJVF9XT1JLX1RSRUUgR0lUX0NPTkZJRwo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgdW5zZXQgR0lUX0NPTkZJRyBHSVRfV09SS19UUkVFIEdJ
-VF9DT05GSUcgJiYKClRoZXNlIGFyZSBhbGwgYmFkLCBzZWUgYzI4OWMzMTVjMmJmY2Q1ZmRlOTlm
-OWU0ZGJiMTA5Zjg5ZTI5ZGZjZSBmb3IKd2h5LiBJZiBpdCdzIHBvc3NpYmxlIG1heWJlIHdlIHNo
-b3VsZCBoYXZlIGEgbmV3OgoKICAgIHRlc3RfcmV0dXJuc193aGF0ZXZlciB1bnNldCBGT08gJiYK
-ClRvIG1ha2UgdGhpcyBtb3JlIHNlbGYtZG9jdW1lbnRpbmcKCj4gLSDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBlY2hvICJbYXR0cl1ub3Rlc3QgIXRlc3QiCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCBl
-Y2hvICJmIHRlc3Q9ZiIKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGVjaG8gImEvaSB0ZXN0PWEv
-aSIKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGVjaG8gIm9ub2ZmIHRlc3QgLXRlc3QiCj4gLSDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCBlY2hvICJvZmZvbiAtdGVzdCB0ZXN0Igo+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgZWNobyAiW2F0dHJdbm90ZXN0ICF0ZXN0IiAmJgo+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgZWNobyAiZiB0ZXN0PWYiICYmCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBlY2hv
-ICJhL2kgdGVzdD1hL2kiICYmCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBlY2hvICJvbm9mZiB0
-ZXN0IC10ZXN0IiAmJgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgZWNobyAib2Zmb24gLXRlc3Qg
-dGVzdCIgJiYKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVjaG8gIm5vIG5vdGVzdCIKPiDCoCDC
-oCDCoCDCoCkgPi5naXRhdHRyaWJ1dGVzICYmCj4gwqAgwqAgwqAgwqAoCgpTaG91bGQganVzdCB1
-c2UgY2F0IDwuZ2l0YXR0cmlidXRlcyAuLi4KCj4gLSDCoCDCoCDCoCBIRUFEX2VudHJ5X2NvdW50
-PSQoZ2l0IHJlZmxvZyB8IHdjIC1sKQo+IC0gwqAgwqAgwqAgbWFzdGVyX2VudHJ5X2NvdW50PSQo
-Z2l0IHJlZmxvZyBzaG93IG1hc3RlciB8IHdjIC1sKQo+ICsgwqAgwqAgwqAgSEVBRF9lbnRyeV9j
-b3VudD0kKGdpdCByZWZsb2cgfCB3YyAtbCkgJiYKPiArIMKgIMKgIMKgIG1hc3Rlcl9lbnRyeV9j
-b3VudD0kKGdpdCByZWZsb2cgc2hvdyBtYXN0ZXIgfCB3YyAtbCkgJiYKCkFub3RoZXIgdGhpbmcg
-YmV0dGVyIGFzIHRlc3RfY21wIC4uCgo+IMKgdGVzdF9leHBlY3Rfc3VjY2VzcyAnZGlkIG5vdCB1
-c2UgdXBsb2FkLXBhY2sgc2VydmljZScgJwo+IC0gwqAgwqAgwqAgZ3JlcCAnL2dpdC11cGxvYWQt
-cGFjaycgPCIkSFRUUERfUk9PVF9QQVRIIi9hY2Nlc3MubG9nID5hY3QKPiAtIMKgIMKgIMKgIDog
-PmV4cAo+ICsgwqAgwqAgwqAgZ3JlcCAnL2dpdC11cGxvYWQtcGFjaycgPCIkSFRUUERfUk9PVF9Q
-QVRIIi9hY2Nlc3MubG9nID5hY3QgJiYKPiArIMKgIMKgIMKgIDogPmV4cCAmJgo+IMKgIMKgIMKg
-IMKgdGVzdF9jbXAgZXhwIGFjdAo+IMKgJwoKTWF5YmUgY2hhbmdlIHRoaXMgdGhpcyB0bzoKCiAg
-ICA+ZXhwICYmCgpPciBpbiBhIGxhdGVyIG5vbi0mJiBzZXJpZXMuCg==
+Heya,
+
+On Fri, Sep 24, 2010 at 21:43, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Yes, I guess "feature report-fd=3" is a protocol layering violation.
+> Unfortunately import-marks and export-marks have already set a
+> precedent.
+
+I don't agree, they (can) use a relative path name, allow the stream
+to be re-used at a different location.
+
+> Well-behaved streams could use that and rely on the fd to be set on
+> the command line, while poorly-behaved streams could still use
+> "feature report-fd=whatever" to get the effect of --report-fd=whatever
+> and avoid breaking UI consistency.
+
+Additionally you could have the commandline override whatever the
+stream sets, so that the stream can be re-used as long as the user
+specifies the appropriate commandline arguments?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
