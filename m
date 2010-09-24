@@ -1,41 +1,42 @@
 From: Brian Gernhardt <brian@gernhardtsoftware.com>
 Subject: [PATCH] git-stash: fix flag parsing
-Date: Fri, 24 Sep 2010 18:11:45 -0400
-Message-ID: <1285366305-10086-1-git-send-email-brian@gernhardtsoftware.com>
+Date: Fri, 24 Sep 2010 18:15:34 -0400
+Message-ID: <1285366534-10490-1-git-send-email-brian@gernhardtsoftware.com>
 References: <953B8952-8928-43B3-A05D-6AEDC5D4B565@gernhardtsoftware.com>
-Cc: Junio C Hamano <gitster@pobox.com>
+Cc: jon.seymour@gmail.com, robbat2@gentoo.org,
+	Brandon Casey <drafnel@gmail.com>
 To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 25 00:11:56 2010
+X-From: git-owner@vger.kernel.org Sat Sep 25 00:15:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzGUl-0005bU-GH
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 00:11:55 +0200
+	id 1OzGYd-0006t1-LH
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 00:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758208Ab0IXWLu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 18:11:50 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:41433 "EHLO
+	id S1758240Ab0IXWPl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 18:15:41 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:57378 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753384Ab0IXWLu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 18:11:50 -0400
+	with ESMTP id S1757290Ab0IXWPj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 18:15:39 -0400
 Received: by silverinsanity.com (Postfix, from userid 5001)
-	id C85031FFC6B6; Fri, 24 Sep 2010 22:11:41 +0000 (UTC)
+	id E70691FFC6B6; Fri, 24 Sep 2010 22:15:30 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.5
 Received: from localhost.localdomain (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
-	by silverinsanity.com (Postfix) with ESMTPA id 9693E1FFC544;
-	Fri, 24 Sep 2010 22:11:39 +0000 (UTC)
+	by silverinsanity.com (Postfix) with ESMTPA id BD57D1FFC544;
+	Fri, 24 Sep 2010 22:15:28 +0000 (UTC)
 X-Mailer: git-send-email 1.7.3.234.g7bba3
 In-Reply-To: <953B8952-8928-43B3-A05D-6AEDC5D4B565@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157070>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157071>
 
 Currently git-stash uses `git rev-parse --no-revs -- "$@"` to set its
 FLAGS variable.  This is the same as `FLAGS="-- $@"`.  It should use
@@ -50,6 +51,8 @@ Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
  I think we want to add the ability for git rev-parse to understand
  `git rev-parse --no-revs --flags -- "$@"`, but I'm not sure if that
  would break anything else and don't have the time to do it right now.
+
+ (This time with the right CC list.)
 
  git-stash.sh     |   15 +++++++++++----
  t/t3903-stash.sh |    8 ++++----
