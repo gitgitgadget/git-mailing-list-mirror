@@ -1,70 +1,83 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: 'git diff' against files outside a git repo
-Date: Fri, 24 Sep 2010 17:30:42 -0500
-Message-ID: <-30AUOVW2mMJiL1EZcTFG9LhiQWZDLcLpaLzWQHRY8tnzFEGXuZLuw@cipher.nrlssc.navy.mil>
-References: <AANLkTinR7BJpD-FOS_DShg=r0ucF2C9oE6p-YoZU-5En@mail.gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Minimum Perl version?
+Date: Fri, 24 Sep 2010 22:39:32 +0000
+Message-ID: <AANLkTinQQxsbUHiKLaCJ0b5-dcvdE4JhLMVWOV5P2bkh@mail.gmail.com>
+References: <20100924100019.GT23563@ece.pdx.edu>
+	<AANLkTin_wrCnpz-fz=FuJ96j+xBHM1-5HTGG0vP7bmDY@mail.gmail.com>
+	<20100924204032.GU23563@ece.pdx.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Avery Pennarun <apenwarr@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 00:31:04 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>
+To: Tait <git.git@t41t.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 00:39:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzGnE-0003bZ-0u
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 00:31:00 +0200
+	id 1OzGvc-00060X-Ba
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 00:39:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758329Ab0IXWaz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 18:30:55 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:60376 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755351Ab0IXWay (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 18:30:54 -0400
-Received: by mail.nrlssc.navy.mil id o8OMUhlD026531; Fri, 24 Sep 2010 17:30:43 -0500
-In-Reply-To: <AANLkTinR7BJpD-FOS_DShg=r0ucF2C9oE6p-YoZU-5En@mail.gmail.com>
-X-OriginalArrivalTime: 24 Sep 2010 22:30:43.0526 (UTC) FILETIME=[20042E60:01CB5C38]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1758303Ab0IXWjf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 18:39:35 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45780 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755460Ab0IXWje (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 18:39:34 -0400
+Received: by iwn5 with SMTP id 5so2731423iwn.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 15:39:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=/2V5By8WhLr2OhTLz4KseQ+WrMivaSytdRnvkXIa1Lk=;
+        b=Lvi3HexDoB/WCeHofCsc+iRk9jlYpC4zkOEAUHMuIIjpspO0i53q94Fms5Bj56shzV
+         z8SOOz7Fk+1xB5YzVuvVezLZk9VARkxKaWvVbm95jX2gx+3Zpswisca4pP/f667qNLn7
+         fwQdnFSyb5gWh84Hdg5SnobiqP3tCWe02ehZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=lylnHXm+m3hCo6Sp3umHsUCsC0F1MsS3IBhtpgp8roOiitWFaMyyFj8sqK5i/vWNgx
+         4VKikF0J/06sZRmxJWPv8/0xiDjTvAp6OBpeWulxaAHFujvYZLfEe+h+RN6mprSmZ5pf
+         6ArdmtRMqurZ+S1eNH3/6iXBbiNBD8cY9iy1g=
+Received: by 10.231.191.136 with SMTP id dm8mr4451042ibb.75.1285367972297;
+ Fri, 24 Sep 2010 15:39:32 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 15:39:32 -0700 (PDT)
+In-Reply-To: <20100924204032.GU23563@ece.pdx.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157092>
 
-On 09/24/2010 05:23 PM, Avery Pennarun wrote:
-> Hi all,
-> 
-> I'm interested in using 'git diff' on some files that aren't actually
-> inside a git repo at all.  Specifically, the --color-words and
-> --word-diff-regex are really cool and I happen to have a use for them
-> on files that aren't stored verbatim in git.  As a whole, git's
-> implementation of diff seems to be the fastest-moving one out there,
-> so I'd rather use it instead of another random diff implementation.
-> 
-> (For the curious: the particular "files" I want to compare are
-> actually split into a hierarchical tree of blobs using bup's rolling
-> checksum and *then* stored in git.  Obviously I have to reassemble
-> them before I can diff them, which is fine and easy, but I then want
-> to run 'git diff' against them, which seems to not be so easy.)
-> 
-> (For the extremely curious: the particular files I want to diff are
-> mega-gigantic csv files from database dumps.  Because of bup's tree
-> format, I should be able to zoom in on just the overall part of the
-> file that has changed, then diff only that, which will be much faster
-> than running a diff algorithm against the whole file.  Essentially
-> O(log n) vs. the file size.)
-> 
-> Is there already a way to get 'git diff' to do this?
+On Fri, Sep 24, 2010 at 20:40, Tait <git.git@t41t.com> wrote:
+>> > What is the minimum Perl version git expects to support?
+>> >
+>> > I ask, because f922df8... seems to have introduced a open() syntax that
+>> > is not compatible with some older Perl versions.
+>>
+>> We generally support 5.6 or above, but 5.8 or above for some other
+>> programs.
+>
+> I am having to use a system with 5.6.1 to do cvsimport and cvsexportcommit,
+> and interactive add. I haven't tried sendmail or other functions, yet. This
+> system was previously using git 1.6.5.something, and did not have these
+> problems as of that release, but now that I'm building git 1.7.3, they
+> have appeared.
 
-Doesn't
+Maybe marking everything as needing 5.8 or later isn't the right thing
+to do. E.g. the git-*cvs*.perl code mostly isn't touched, but
+cvsexportcommit does use Git.pm, so that would also need to be pinned
+at 5.6 if cvsexportcommit was.
 
-   git diff file.one file.two
+> Perl 5.6.1 doesn't support the list open syntax, so one must replace
+> open(my $fh, '-|', @list) with open(my $fh, '-|'), and then exec(@list).
+> I'm working up a patch set to fill my own needs on this system, but based
+> on the subsequent discussion about setting 5.8 as the minimum, it sounds
+> like it's not worth submitting.
 
-work?
-
-Or are you asking for something else?
-
--Brandon
+The issue isn't that we don't have a workaround for individual bits
+like open(my $fh, '-|', @list), but rather that keeping all of the
+code 5.6 compatible is a burden on ongoing maintenance for a very
+marginal benefit.
