@@ -1,111 +1,72 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Multiple checkouts active for the same repository
-Date: Fri, 24 Sep 2010 13:07:27 +0000
-Message-ID: <AANLkTikvyM9wXrewRiG7OdBp5LMfnHSkA9dqZGT1Twpc@mail.gmail.com>
-References: <4C9C6F8B.3090806@tech.2degreesnetwork.com>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: Let's bump the minimum Perl version to 5.8
+Date: Fri, 24 Sep 2010 15:08:50 +0200
+Message-ID: <AANLkTinRcGa3r_=D87G-4-qqdsFL9CKnawD=DCnRQ+7v@mail.gmail.com>
+References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Gustavo Narea <gnarea@tech.2degreesnetwork.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 15:07:34 2010
+Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
+	Alex Riesen <raa.lkml@gmail.com>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 15:08:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz7zy-00070V-Cm
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 15:07:34 +0200
+	id 1Oz81I-0007f6-LF
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 15:08:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893Ab0IXNH3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 09:07:29 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38870 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752024Ab0IXNH2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 09:07:28 -0400
-Received: by iwn5 with SMTP id 5so2409715iwn.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 06:07:27 -0700 (PDT)
+	id S1755930Ab0IXNIw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 09:08:52 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:51324 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752024Ab0IXNIv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 09:08:51 -0400
+Received: by qyk33 with SMTP id 33so3974707qyk.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 06:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=17lMQvlTWni2GifAUAqaL291kcWUPLv6rlNRbCz+h4k=;
-        b=P6a80Zomkj7mfeWax+bFUTYzemkjA12Rsb2o3GnrFY+m/OYmYnzxUsHhtVjdkSlIKm
-         JaUIZ+ziJ7H+k8ofkEdNGZQU4wd3GUVrnM+XPyBjmaBPU1jCIBMDDR3Yy98JnT/k0uhD
-         i5JqNZjcWhJX3fMxyFi4yyqxbaUFvwEnzKtm8=
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type:content-transfer-encoding;
+        bh=vl0AtFpr1jyHBhl4T1nWfRkhANnoCbRmd3MRzJd3Ph0=;
+        b=Wh7olfPKh6dxgPBUTtTgkxBEzCFQNYPAWaiXMio40atkYH8UksX2FFFEeiRmx4v5IS
+         AyCn0RfmeEWI+DKCKGAN8TYgoOqSleMaWEa+c4xUZadW5+SypjOSMRUn9rUBAflv8E6G
+         KgacFy7IVr4nard1F9Cx3zhUWHsmAxBCsXBFw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VWaJvh2usVQ2dLNvVVfsJcgj2KghCclJp4J0MIVtFaMXqAbpXEmm04FiCD8/8fTEc3
-         U3rNJ8kTypnskWxM4b1GPWGH6lyKFQAZmUxQUNMMFuBEZrgRx0eXq4M54xVVuWriYuT9
-         ZzurXxNAgDmPk/YtYM4xGlKaLyXuCgE8n3z/c=
-Received: by 10.231.11.8 with SMTP id r8mr3626123ibr.135.1285333647802; Fri,
- 24 Sep 2010 06:07:27 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 06:07:27 -0700 (PDT)
-In-Reply-To: <4C9C6F8B.3090806@tech.2degreesnetwork.com>
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=jsbeQNzO5NCPpiWxbzoCYIxgg7yg8ZKULhj6aZJo+G4rXACrU77l7BNRyaI2j5kNMA
+         ht1IjUr9tLbtmAL9BK5qqWlFcrUfOCQtt/LWANX46RMY7z7AD2pNActT6C8hgKnRel5A
+         whoHjKIaclLSTecl0O+uujD4lHcasn1DMoc2Q=
+Received: by 10.224.54.134 with SMTP id q6mr2386315qag.349.1285333730363; Fri,
+ 24 Sep 2010 06:08:50 -0700 (PDT)
+Received: by 10.229.62.98 with HTTP; Fri, 24 Sep 2010 06:08:50 -0700 (PDT)
+In-Reply-To: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>
+X-Google-Sender-Auth: 9u4zb3XjVpShdLNS0U1aTw5_TTQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156985>
 
-On Fri, Sep 24, 2010 at 09:29, Gustavo Narea
-<gnarea@tech.2degreesnetwork.com> wrote:
+On Fri, Sep 24, 2010 at 14:56, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gm=
+ail.com> wrote:
 
-> We're currently migrating from another DVCS.
-
-Which one?
-
-> We are a team of Web developers and testers working on an application=
-=2E
-> There are always a few development branches and a stable branch, and
-> testers need all the branches with the very latest code available at =
-all
-> times.
->
-> The way we handle it at the moment is very simple because the server
-> hosting the remote repository is the same that hosts the deployed
-> instances of each branch, so when we push to the remote repository, t=
-he
-> code for each site is automatically updated.
->
-> We use the following structure:
-> /srv/repositories/project/branch1
-> /srv/repositories/project/branch2
-> /srv/repositories/project/branch3
->
-> Is there any simple way to do this with Git? I can only think of two
-> options that involve hooks:
->
-> =C2=A0 =C2=A0* Have a hook that exports each branch to a directory li=
-ke
-> =C2=A0 =C2=A0 =C2=A0/srv/repositories/project/branchN
-> =C2=A0 =C2=A0* Have one Git repository per branch, so that each repos=
-itory have a
-> =C2=A0 =C2=A0 =C2=A0different checkout active. Then the main remote r=
-epository will
-> =C2=A0 =C2=A0 =C2=A0have post-receive hooks that trigger a pull on ea=
-ch individual
->
-> I'm not particularly happy with either way. Is there a better solutio=
-n?
-
-If you really need this the best solution is to just `git clone` the
-project multiple times and check out each branch in its own dir. Then
-have some shellscript to update them all.
-
-But just using the Git workflow would be better.
-
-> Apart from the situation I describe in the initial email, there's
-> another limitation in the development environment: Our IDE, Eclipse +
-> Pydev, assumes each project (i.e., branch/checkout) to be on differen=
+> However, I'd like to shift the discussion a bit: Do we want to suppor=
 t
-> directories and each project should have different settings (e.g., pa=
-ths
-> to dependencies, which could be different), but with GIt everything
-> would be a single project because it's all on the same path.
+> the 5.6 line *at all* anymore? I don't think so. As you point out
+> yourself you can just compile 5.8 or later on these machines.
 
-Can't you just modify your build environment to check the output of
-`git symbolic-ref HEAD` or equivalent, instead of checking paths?
+5.8 as minimum is probably for the best. It's not that just you can
+compile a newer version (5.8), more importantly, Perl 5.8 is available
+as a package from those semi-official 3party repositories for most
+systems (at least the *nix systems I have access to), except for those
+like Irix 6.2 where it's hopeless anyway (perl 5.0). But I only have
+access to irix/aix/solaris/tru64 in addition to Linux.
+
+-Tor
