@@ -1,83 +1,60 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Let's bump the minimum Perl version to 5.8
-Date: Fri, 24 Sep 2010 13:32:49 +0000
-Message-ID: <AANLkTim8aPoOkzzf4c0JHbBDVa4zJY2xM3v9fXQ-px=V@mail.gmail.com>
-References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>
-	<AANLkTinRcGa3r_=D87G-4-qqdsFL9CKnawD=DCnRQ+7v@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: [RFC PATCH 0/2] submodule aware grep
+Date: Fri, 24 Sep 2010 15:47:49 +0200
+Message-ID: <20100924134748.GA576@book.hvoigt.net>
+References: <1285276627-7907-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Fri Sep 24 15:33:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jens Lehmann <jens.lehmann@web.de>
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 15:50:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz8PD-00084U-Jl
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 15:33:39 +0200
+	id 1Oz8fm-00058D-8I
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 15:50:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756306Ab0IXNdX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 09:33:23 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:33938 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756296Ab0IXNdW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 09:33:22 -0400
-Received: by gwj17 with SMTP id 17so950413gwj.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 06:33:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e0tfQB1E9Y/OGvvIsO0TbYxZx2wg8G32/5U4nqo/0Yo=;
-        b=BkP1BcPk1Zxx+SpJCPJKmLSrt1zEb+dvccIq+/x2Ws6xL0s5ZtVmEiM9dJJOjCcFbe
-         l7m5vmBMaNjhxjbiEUrVg8H3+e9RRM6twBZx3TmCr/OHrhiAJ8TmqyAFtVwC/uElVsAw
-         /p4mCp/GtWHC6iahhOxr3BNDEDmCeE/95iNyY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UNAr7srhrV7sdas1SU8NmPvilPAEL1KATJ7eE449BHvGcWdAqkq0SJh0ZYO1zWpbiV
-         vnKThcI8bQheIkB0+Z9FCSBnHhCoosZykR4OjvWPznbIeh12ape/lhFYGM5BqhGJ77cx
-         Jr//QssmKfYhFuj9tmFL9PwGuBSpRkN/EosjI=
-Received: by 10.151.148.15 with SMTP id a15mr4618579ybo.123.1285335199713;
- Fri, 24 Sep 2010 06:33:19 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Fri, 24 Sep 2010 06:32:49 -0700 (PDT)
-In-Reply-To: <AANLkTinRcGa3r_=D87G-4-qqdsFL9CKnawD=DCnRQ+7v@mail.gmail.com>
+	id S1756356Ab0IXNrw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 09:47:52 -0400
+Received: from darksea.de ([83.133.111.250]:49294 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753125Ab0IXNrw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 09:47:52 -0400
+Received: (qmail 32245 invoked from network); 24 Sep 2010 15:47:48 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 24 Sep 2010 15:47:48 +0200
+Content-Disposition: inline
+In-Reply-To: <1285276627-7907-1-git-send-email-judge.packham@gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156987>
 
-On Fri, Sep 24, 2010 at 13:08, Tor Arntsen <tor@spacetec.no> wrote:
-> On Fri, Sep 24, 2010 at 14:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- <avarab@gmail.com> wrote:
->
->> However, I'd like to shift the discussion a bit: Do we want to suppo=
-rt
->> the 5.6 line *at all* anymore? I don't think so. As you point out
->> yourself you can just compile 5.8 or later on these machines.
->
-> 5.8 as minimum is probably for the best. It's not that just you can
-> compile a newer version (5.8), more importantly, Perl 5.8 is availabl=
-e
-> as a package from those semi-official 3party repositories for most
-> systems (at least the *nix systems I have access to)
+Hi,
 
-Do those repositories also have 5.10 and 5.12?
+On Thu, Sep 23, 2010 at 02:17:05PM -0700, Chris Packham wrote:
+> This series contains 2 RFC patches that both implement a grep feature for
+> submodules.  The first patch is a self-contained script for contrib that should
+> work with most current git versions. The 2nd is basically the same
+> implementation but done as a proper git submodule command with some of the
+> helper code moved to git-sh-setup.sh
+> 
+> There are a couple of questions for this. Technically I'm making submodule 
+> grep-aware, should I be making grep submodule-aware instead? I haven't looked 
+> at the grep code yet but I imagine its harder.
 
-> except for those like Irix 6.2 where it's hopeless anyway (perl
-> 5.0). But I only have access to irix/aix/solaris/tru64 in addition
-> to Linux.
+Nice work! IMO it would be even nicer to have it as part of git grep.
+Have a look at Jens branch about submodule checkout:
 
-Hrm, 6.2 is old, but 5.12 is known to compile on 6.5 at least. What
-are the issues with 6.2? Perhaps they could be solved if someone with
-such a machine contributed a smoker for the perl core.
+http://github.com/jlehmann/git-submod-enhancements (enhance_git_for_submodules)
 
-Perl is very portable with people willing to port it, the main
-limitation is usually that porters don't have access to obscure
-systems, not that there isn't interest.
+particularly how checkout_submodule() is implemented. It forks a git
+checkout inside the submodule. In a similar way you could fork a grep
+there. Then you just have to teach the forked grep to prepend the
+submodules path.
+
+Cheers Heiko
