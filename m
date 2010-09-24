@@ -1,68 +1,42 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: git-upload-pack bandwidth cap over SSH?
-Date: Fri, 24 Sep 2010 13:30:30 -0600
-Message-ID: <4C9CFC56.3030501@workspacewhiz.com>
-References: <4C9CB9E9.8010901@workspacewhiz.com>
+From: Eric Raible <raible@nextest.com>
+Subject: Re: Re: Really beginner on Version Control
+Date: Fri, 24 Sep 2010 12:33:19 -0700
+Message-ID: <4C9CFCFF.8070102@nextest.com>
+References: <1285080133451-5555023.post@n2.nabble.com> <20100921145922.GA14711@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 24 21:30:44 2010
+Cc: <weigelt@metux.de>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 24 21:33:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzDyk-0008O8-Vt
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 21:30:43 +0200
+	id 1OzE1X-0002sz-6J
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 21:33:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757747Ab0IXTad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 15:30:33 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:41229 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757573Ab0IXTac (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 15:30:32 -0400
-Received: (qmail 13165 invoked by uid 399); 24 Sep 2010 13:30:31 -0600
-Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.196.230.186)
-  by hsmail.qwknetllc.com with ESMTPAM; 24 Sep 2010 13:30:31 -0600
-X-Originating-IP: 75.196.230.186
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100915 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <4C9CB9E9.8010901@workspacewhiz.com>
+	id S1756482Ab0IXTd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 15:33:29 -0400
+Received: from exchange.domain1.nextest.com ([12.96.234.114]:34369 "EHLO
+	Exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751767Ab0IXTd3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 15:33:29 -0400
+Received: from [131.101.151.88] (131.101.151.88) by
+ Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
+ id 8.2.254.0; Fri, 24 Sep 2010 12:33:27 -0700
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.9) Gecko/20100915 Lightning/1.0b2 Thunderbird/3.1.4
+In-Reply-To: <20100921145922.GA14711@nibiru.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157043>
 
-  ----- Original Message -----
-From: Joshua Jensen
-Date: 9/24/2010 8:47 AM
->  Our Git repository central server is running on some kind of 
-> enterprise VM software.  I can push repository changes through the 
-> Gitolite-monitored SSH tunnel at 10+ megabytes per second.
->
-> A 'git pull' operation (even a fresh clone of the packed repository) 
-> always caps at 1.55 MiB/s, according to the "Receiving objects" line 
-> in the status text.
->
-> Thinking it might be a hardware issue (half duplex?), I installed 
-> VirtualBox on my Windows 7 64-bit machine and then made an Ubuntu 
-> Gitolite install.  Running on my local hardware, the push is roughly 
-> 12 megabytes per second.  The 'git pull' downstream again caps at 1.55 
-> MiB/s.
->
-> Are there any configuration settings within Git that may limit the 
-> git-upload-pack operation's speed?
->
-> I realize this could be a MinGW issue via the msysGit client.
->
-> Update: I just copied a large file via 'scp', and the downstream still 
-> capped at 1.55-ish megabytes per second.  So it isn't Git.
-Replying to my own message... I take that back.  I'm not sure what I was 
-seeing, but I can consistently run scp and copy files at 6+ megabytes 
-per second.
+On 11:59 AM, Enrico Weigelt wrote:
+> * FernandoBasso <FernandoBasso.br@gmail.com> wrote:
+> (use the -ff option on merge if it should show up in history
+> as merge instead of sequential additions - see "fast forward").
 
-With that in mind, I'm back to looking at Git's pull performance over 
-SSH.  It never exceeds 1.55 MiB/s.
-
-Josh
+Didn't you mean --no-ff?
