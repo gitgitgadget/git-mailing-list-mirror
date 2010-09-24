@@ -1,74 +1,79 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH v2] smart-http: Don't change POST to GET when following redirect
-Date: Fri, 24 Sep 2010 20:06:35 +0200
-Message-ID: <m21v8jaudw.fsf@igel.home>
-References: <AANLkTimwkXTs==+zT=Ue3jFNyRLL+7A1FFhoDuF-5zZ3@mail.gmail.com>
-	<877hijvff7.fsf@catnip.gol.com>
-	<20100918070315.GA30872@LK-Perkele-V2.elisa-laajakaista.fi>
-	<m262y3cvpy.fsf@whitebox.home> <m21v8rcua1.fsf_-_@whitebox.home>
-	<1285309223-4348-1-git-send-email-rctay89@gmail.com>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [PATCH v2 2/3] blame,cat-file: Demonstrate --textconv is wrongly running converter on symlinks
+Date: Fri, 24 Sep 2010 22:20:41 +0400
+Message-ID: <20100924182041.GA13943@landau.phys.spbu.ru>
+References: <cover.1285013802.git.kirr@landau.phys.spbu.ru> <cover.1285013802.git.kirr@landau.phys.spbu.ru> <3c344d9b8f014ccb96dc37dc42668426fb5a3c30.1285013802.git.kirr@landau.phys.spbu.ru> <vpqvd6086fq.fsf@bauges.imag.fr> <20100921183959.GB4390@landau.phys.spbu.ru> <vpqzkvaetq4.fsf@bauges.imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "Git Mailing List" <git@vger.kernel.org>,
-	"Junio C Hamano" <gitster@pobox.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Miles Bader <miles@gnu.org>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 20:06:51 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	Cl?ment Poulain <clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
+	Jeff King <peff@peff.net>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Sep 24 20:20:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzCfU-0004XT-KC
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 20:06:44 +0200
+	id 1OzCtG-0001xu-EI
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 20:20:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757178Ab0IXSGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 14:06:39 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:56265 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221Ab0IXSGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 14:06:39 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 4124D1C006E4;
-	Fri, 24 Sep 2010 20:06:36 +0200 (CEST)
-Received: from igel.home (ppp-93-104-152-223.dynamic.mnet-online.de [93.104.152.223])
-	by mail.mnet-online.de (Postfix) with ESMTP id 13F3C1C00457;
-	Fri, 24 Sep 2010 20:06:36 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id 995D4CA2A0; Fri, 24 Sep 2010 20:06:35 +0200 (CEST)
-X-Yow: I've got an IDEA!!  Why don't I STARE at you so HARD,
- you forget your SOCIAL SECURITY NUMBER!!
-In-Reply-To: <1285309223-4348-1-git-send-email-rctay89@gmail.com> (Tay Ray
-	Chuan's message of "Fri, 24 Sep 2010 14:20:23 +0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1757394Ab0IXSUp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 14:20:45 -0400
+Received: from landau.phys.spbu.ru ([195.19.235.38]:35535 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757385Ab0IXSUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 14:20:43 -0400
+Received: by landau.phys.spbu.ru (Postfix, from userid 506)
+	id 46E3BFF704; Fri, 24 Sep 2010 22:20:41 +0400 (MSD)
+Content-Disposition: inline
+In-Reply-To: <vpqzkvaetq4.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157029>
 
-Tay Ray Chuan <rctay89@gmail.com> writes:
+On Tue, Sep 21, 2010 at 10:18:11PM +0200, Matthieu Moy wrote:
+> Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
+> 
+> > I know about --- and that content after it and up to patch itself goes
+> > to /dev/null. The text here was intended to stay in the commit message,
+> > and ~~~~ served as a separator in that message (git commit hook merges
+> > several blank lines into one, so one can't separate text parts with
+> > several empty lines, that's why I used this separator).
+> >
+> > If it's ugly, let's omit it - I don't insist, but i don't understand why
+> > 'NOTE:' looks odd?
+> 
+> That was especially about the combination of both, but I don't really
+> care. Consider my remarks as food for thoughts, not real objections.
 
-> diff --git a/http.c b/http.c
-> index 1320c50..25f8b45 100644
-> --- a/http.c
-> +++ b/http.c
-> @@ -275,6 +275,9 @@ static CURL *get_curl_handle(void)
->  	}
->
->  	curl_easy_setopt(result, CURLOPT_FOLLOWLOCATION, 1);
-> +#if LIBCURL_VERSION_NUM >= 0x071301
-> +	curl_easy_setopt(result, CURLOPT_POSTREDIR, CURL_REDIR_POST_ALL);
-> +#endif
+Ok
 
-Should this fall back to CURLOPT_POST301 on older versions?  (Those
-won't handle 302 though, I think.)
+> > This note clearly says "git diff is not affected, that's why we don't
+> > write new tests for it".
+> 
+> I disagree with the implication. Git diff is not affected because it
+> was done right, but behaving correctly doesn't mean you don't need
+> tests. Checking the behavior of diff with tests wouldn't harm (but
+> that's not serious not to do it).
 
-Andreas.
+Yes, my implication was not correct, and I agree tests woudn't harm. But
+as Jeff already wrote in another mail, he'll test-cover the diff case,
+so I'll let myself to be lazy here (thanks Jeff!) :)
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+> >> Reviewed-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+> >
+> > Thanks :)
+> >
+> > Is it for this one patch, or does it apply to the whole series?
+> 
+> To the serie, yes.
+
+Thanks. Will repost v3 soon. Hopefuly it will be ok to merge it then.
+
+Kirill
