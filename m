@@ -1,103 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 08/24] t9300 (fast-import), series A: re-indent
-Date: Fri, 24 Sep 2010 02:35:59 -0500
-Message-ID: <20100924073559.GZ4666@burratino>
-References: <20100701031819.GA12524@burratino>
- <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes>
- <20100905031528.GA2344@burratino>
- <20100905032253.GB2344@burratino>
- <20100924065900.GA4666@burratino>
- <20100924071631.GI4666@burratino>
- <AANLkTimjD6LqMgQSez=t9N_KPsXaFXm3sMcrZc=qQug+@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Listing files in order they are changed
+Date: Fri, 24 Sep 2010 08:59:19 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1009240855080.31704@ds9.cixit.se>
+References: <AANLkTimHrCujEggj9KbAWWivY+WxnL0YqsXs+idhymBA@mail.gmail.com> <20100923203814.GA10951@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 09:38:59 2010
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Parag Kalra <paragkalra@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Sep 24 09:59:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz2rz-0007DY-1U
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 09:38:59 +0200
+	id 1Oz3Bu-0000Hv-MT
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 09:59:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750941Ab0IXHix convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 03:38:53 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:46929 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750885Ab0IXHiw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 03:38:52 -0400
-Received: by yxp4 with SMTP id 4so861022yxp.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 00:38:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=E7dBnqDGeyfIVcY7/FHgx6tH9AKhT01QYcS18fDbEqU=;
-        b=twb0kART7bX0ixTBrnq+YdZ/5nnhzAJAu0Jg7kprx2QFCeG+U/2OeQF3sA+HJNCFwt
-         3WbtaD6/Zga27A0urOATRFl4Ww5CRUROVvRIsMcPXILuVbse1c5mpYnDOHSVl9iuplN1
-         gPwED+CxgNhHFfEC20JR+8xT0kYStSGVDXuWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ek+efCZoDeDGHWnQwnNRVRzCzRL5BRWCYLXLI96KPkk14v7lO5wAa6PnuDmnQd5W+f
-         qFOF+Xz0f7QwWujVXFO9/vMaKa7sjh8S63PSWtA3aeNngeMfdVA0n3EvQNTzvsQ8DL5N
-         IosGFCymwnwJCAZ+7fZw2dlzNOIr+RlCuUhxY=
-Received: by 10.151.122.2 with SMTP id z2mr3851249ybm.435.1285313932111;
-        Fri, 24 Sep 2010 00:38:52 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id q31sm761005yba.12.2010.09.24.00.38.50
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 00:38:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimjD6LqMgQSez=t9N_KPsXaFXm3sMcrZc=qQug+@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752119Ab0IXH73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 03:59:29 -0400
+Received: from upper-gw.cixit.se ([92.43.32.133]:55525 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750898Ab0IXH73 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 03:59:29 -0400
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8O7xK0n000580
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 24 Sep 2010 09:59:20 +0200
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8O7xJGg000577;
+	Fri, 24 Sep 2010 09:59:20 +0200
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <20100923203814.GA10951@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 24 Sep 2010 09:59:20 +0200 (CEST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156961>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156962>
 
-Sverre Rabbelier wrote:
-> On Fri, Sep 24, 2010 at 09:16, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+Jeff King:
 
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_expect_success \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0'series A: fo=
-o bar baz' \
->
-> Sometimes this style is used if the test description is otherwise too=
- long.
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_expect_success 'series A: foo bar ba=
-z' '
->
-> So what do you do in the case that the line becomes too long?
+> git log --pretty=format: --name-only |
+>  grep . |
+>  perl -ne 'print unless $seen{$_}++'
 
-In this series that never happens.
+Nice one!
 
-In general, either
+That made me come up with this, which shows a timestamp next to each file:
 
- test_expect_success \
-		'series A: foo bar baz' '
-	... commands ...
- '
+   git log --pretty=format:/%ai --name-only |
+     grep . |
+ 	perl -ne 'if (m(^/(.*))) { $date = $1; } else { print "$date $_" unless $seen{$_}++; }'
 
-or
+(change %ai into whatever timestamp you want to show)
 
- test_expect_success \
-	'series A: foo bar baz' '
-	... commands ...
- '
+Mutating that into something that calls "touch" might be useful for those of 
+us who would like an initial check-out to have last-modified times like the 
+ones CVS would give you.
 
-looks fine to me for those cases where no shorter test description
-comes quickly to mind.
+-- 
+\\// Peter - http://www.softwolves.pp.se/
