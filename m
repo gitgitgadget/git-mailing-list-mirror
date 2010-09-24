@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 13/24] t9300 (fast-import), series F: re-indent
-Date: Fri, 24 Sep 2010 02:22:15 -0500
-Message-ID: <20100924072215.GN4666@burratino>
+Subject: [PATCH 14/24] t9300 (fast-import), series H: re-indent
+Date: Fri, 24 Sep 2010 02:22:51 -0500
+Message-ID: <20100924072251.GO4666@burratino>
 References: <20100701031819.GA12524@burratino>
  <20100701054849.GA14972@burratino>
  <20100817170216.GA14491@kytes>
@@ -15,45 +15,45 @@ Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
 	David Barr <david.barr@cordelta.com>,
 	Sam Vilain <sam@vilain.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 09:25:12 2010
+X-From: git-owner@vger.kernel.org Fri Sep 24 09:25:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz2ed-0001uD-Au
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 09:25:11 +0200
+	id 1Oz2fC-00025H-Ui
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 09:25:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753020Ab0IXHZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 03:25:04 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61813 "EHLO
+	id S1754806Ab0IXHZo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 03:25:44 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56869 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752579Ab0IXHZD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 03:25:03 -0400
-Received: by iwn5 with SMTP id 5so2163953iwn.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 00:25:02 -0700 (PDT)
+	with ESMTP id S1752613Ab0IXHZn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 03:25:43 -0400
+Received: by iwn5 with SMTP id 5so2164436iwn.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 00:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=9BIGcQjFaO4eB376VXdfNwWVRSvgHGxNK0qOctomS3E=;
-        b=JV8Yb350EquLAp/2NiAyYEPTCzg+bkdBDTwbSXM6XolWMCaFnBUGERJXq6aLX2T2Or
-         6mc+CkxU9dJ2VQ25IhDbjDlkKE1I0NyylCz0WGk5gak4zNstDr9o0F89tyPqGrSEqJ4I
-         YAjUGTE3oZbONywuQZO5iZF+CIYGlLVlXdO6M=
+        bh=tO8L9z2jlqZSpKR2fcvzqBfljLRa0NnbgYF2JzKPVIU=;
+        b=VqtXsmCB+50Z2qVyZuufS5WwtiVdsQ9rOlhnFzq8NnOrMFxTowb8qXAfC0av4UKn7p
+         4nsjiLbsv7SV+a7A8GlGvjonbKs5HYidxCeRhEcJMYVCeLa8skz2i37lttjTp6UMVlHU
+         dDO5Ec6CY7ghj4sR/lCPAerZGBSEdDV7bCqQg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=yCsVuGSXCjOHgy11usgoIh9cYz+aFv81TbhhDMkMh/DwEjENm87Wm20hmmwjRaI5YQ
-         Z1TN2xbYgphTKmqEpXAd8D+k0Y0fOlfuizRHECFkG2Gdg77vmmJYc7mDEcJPPHWFE7V0
-         yLsuI6eersM+FyqMn1+F4QNYtV5iRKUiYKCdQ=
-Received: by 10.231.147.131 with SMTP id l3mr3439314ibv.74.1285313102478;
-        Fri, 24 Sep 2010 00:25:02 -0700 (PDT)
+        b=GvSrWZpu6V9ZEk3oxTkWqD8RdMpzfkAtxaZ0wwgPBWFwltC8YRIUrmNSbp+bQVLIej
+         dhE+C1DoZVG+bE3fHneIvapyMHaG9wViZJ0h9ALC7ehspdeIvInYviBU2+bnqBMsXjYp
+         O//HxOkeiZB2SF69KS29qZfg2VEGVsAsf4iDs=
+Received: by 10.231.13.133 with SMTP id c5mr3274831iba.73.1285313142679;
+        Fri, 24 Sep 2010 00:25:42 -0700 (PDT)
 Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id o4sm1966493iba.0.2010.09.24.00.25.01
+        by mx.google.com with ESMTPS id g31sm1964695ibh.4.2010.09.24.00.25.42
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 00:25:01 -0700 (PDT)
+        Fri, 24 Sep 2010 00:25:42 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20100924065900.GA4666@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -61,96 +61,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156948>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156949>
 
 See "t9300 (fast-import), series A: re-indent".
 
 Cc: Shawn O. Pearce <spearce@spearce.org>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- t/t9300-fast-import.sh |   47 +++++++++++++++++++++++------------------------
- 1 files changed, 23 insertions(+), 24 deletions(-)
+ t/t9300-fast-import.sh |   28 ++++++++++++++--------------
+ 1 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 1324157..ab317d6 100755
+index ab317d6..875a951 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -488,13 +488,12 @@ reset refs/heads/other
- from refs/heads/branch
+@@ -573,13 +573,13 @@ $file5_data
+ EOF
  
  INPUT_END
 -test_expect_success \
--	'F: non-fast-forward update skips' \
--	'if git fast-import <input
--	 then
-+test_expect_success 'F: non-fast-forward update skips' '
-+	if git fast-import <input
-+	then
- 		echo BAD gfi did not fail
- 		return 1
--	 else
-+	else
- 		if test $old_branch = `git rev-parse --verify branch^0`
- 		then
- 			: branch unaffected and failure returned
-@@ -503,11 +502,11 @@ test_expect_success \
- 			echo BAD gfi changed branch $old_branch
- 			return 1
- 		fi
--	 fi
--	'
+-	'H: deletall, add 1' \
+-	'git fast-import <input &&
+-	 git whatchanged H'
 -test_expect_success \
--	'F: verify pack' \
+-	'H: verify pack' \
 -	'verify_packs'
-+	fi
++test_expect_success 'H: deletall, add 1' '
++	git fast-import <input &&
++	git whatchanged H
 +'
-+test_expect_success 'F: verify pack' '
++test_expect_success 'H: verify pack' '
 +	verify_packs
 +'
  
  cat >expect <<EOF
- tree `git rev-parse branch~1^{tree}`
-@@ -517,10 +516,10 @@ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
- 
- losing things already?
+ :100755 000000 $newf $zeroes D	file2/newf
+@@ -589,15 +589,15 @@ cat >expect <<EOF
+ :100755 000000 $file6_id $zeroes D	newdir/exec.sh
  EOF
+ git diff-tree -M -r H^ H >actual
 -test_expect_success \
--	'F: verify other commit' \
--	'git cat-file commit other >actual &&
--	test_cmp expect actual'
-+test_expect_success 'F: verify other commit' '
-+	git cat-file commit other >actual &&
+-	'H: validate old files removed, new files added' \
+-	'compare_diff_raw expect actual'
++test_expect_success 'H: validate old files removed, new files added' '
++	compare_diff_raw expect actual
++'
+ 
+ echo "$file5_data" >expect
+-test_expect_success \
+-	'H: verify file' \
+-	'git cat-file blob H:h/e/l/lo >actual &&
+-	 test_cmp expect actual'
++test_expect_success 'H: verify file' '
++	git cat-file blob H:h/e/l/lo >actual &&
 +	test_cmp expect actual
 +'
  
  ###
- ### series G
-@@ -538,16 +537,16 @@ COMMIT
- from refs/heads/branch~1
- 
- INPUT_END
--test_expect_success \
--	'G: non-fast-forward update forced' \
--	'git fast-import --force <input'
--test_expect_success \
--	'G: verify pack' \
--	'verify_packs'
--test_expect_success \
--	'G: branch changed, but logged' \
--	'test $old_branch != `git rev-parse --verify branch^0` &&
--	 test $old_branch = `git rev-parse --verify branch@{1}`'
-+test_expect_success 'G: non-fast-forward update forced' '
-+	git fast-import --force <input
-+'
-+test_expect_success 'G: verify pack' '
-+	verify_packs
-+'
-+test_expect_success 'G: branch changed, but logged' '
-+	test $old_branch != `git rev-parse --verify branch^0` &&
-+	test $old_branch = `git rev-parse --verify branch@{1}`
-+'
- 
- ###
- ### series H
+ ### series I
 -- 
 1.7.2.3
