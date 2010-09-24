@@ -1,122 +1,244 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: [PATCH] git-svn: allow the mergeinfo property to be set
-Date: Thu, 23 Sep 2010 20:52:33 -0400
-Message-ID: <1285289553-17998-1-git-send-email-stevenrwalter@gmail.com>
-Cc: Steven Walter <stevenrwalter@gmail.com>
-To: normalperson@yhbt.net, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Sep 24 02:52:45 2010
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH V3] git-send-email.perl: Add --to-cmd
+Date: Thu, 23 Sep 2010 18:18:18 -0700
+Message-ID: <1285291098.25928.220.camel@Joe-Laptop>
+References: <AANLkTinsM5jdU194FR8L3hTvBXk0Tr_oV2E5752NOUpq@mail.gmail.com>
+	 <AANLkTikkJNwF4LS9rx5=bHM2R0Pm751Y1u9V8iAt0w1A@mail.gmail.com>
+	 <1285227413.7286.47.camel@Joe-Laptop>
+	 <Pine.LNX.4.64.1009231054230.15528@ask.diku.dk>
+	 <20100923090931.GA29789@albatros> <20100923120024.GA26715@albatros>
+	 <1285253867.31572.13.camel@Joe-Laptop>
+	 <Pine.LNX.4.64.1009231757090.11585@ask.diku.dk>
+	 <1285262237.31572.18.camel@Joe-Laptop>
+	 <AANLkTin_Y8w4ujNGTqGJPNDNfYz7hcjBVLcOG0emBjYn@mail.gmail.com>
+	 <1285263993.31572.25.camel@Joe-Laptop>
+	 <AANLkTinCx=+n6bMZw4tQqrQ7WC1o_aeGG_n_PxywTyb8@mail.gmail.com>
+	 <1285267520.31572.34.camel@Joe-Laptop>
+	 <7v62xwqe7i.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	Julia Lawall <julia@diku.dk>, git <git@vger.kernel.org>,
+	Vasiliy Kulikov <segooon@gmail.com>,
+	matt mooney <mfmooney@gmail.com>,
+	kernel-janitors@vger.kernel.org, Dan Carpenter <error27@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 03:18:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OywWq-0001Uj-Me
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 02:52:45 +0200
+	id 1Oywvj-0008IB-6V
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 03:18:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755919Ab0IXAwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Sep 2010 20:52:39 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49506 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753996Ab0IXAwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Sep 2010 20:52:38 -0400
-Received: by gwj17 with SMTP id 17so799900gwj.19
-        for <git@vger.kernel.org>; Thu, 23 Sep 2010 17:52:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer;
-        bh=OKEVUp0YAOYuvWZ76MHEybId0Ph4nYuDE4OKZ87xxlU=;
-        b=P5VvfL/Ted7qSI5n/Lb/VC1BXwRfdJbVRpluCBv9QvgiHOfC7Iiuc9yjU6ViwNVnUF
-         IvXEAwp4MiEQqVCtYPJ7D0T18Lde4NgcNBKRwNeFoCRc69bWlqxZC3cDtItxQnehyk39
-         fo7aUP+zSqWmCLINqsXf05pzRQQQ6zVEs0Tr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=nM/HqQEskhtaIZRd4DhZ87Q/y3NojLgwaquAKli6EIlj7dkPZ473p+Nva7wdmGUpAJ
-         IFNc2CX4suqwo2TjoOgZom1qOMOUIoQ/4zJMtd6duyNOLi01Nxj99H0ZZeMxwdVqdtM0
-         sGhuDw2jSCCspA8lMm2m6j+87L3AAdrl+Pu3I=
-Received: by 10.150.229.17 with SMTP id b17mr3756511ybh.379.1285289557986;
-        Thu, 23 Sep 2010 17:52:37 -0700 (PDT)
-Received: from brock (adsl-234-158-248.bgk.bellsouth.net [74.234.158.248])
-        by mx.google.com with ESMTPS id 36sm363372ybr.8.2010.09.23.17.52.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 23 Sep 2010 17:52:37 -0700 (PDT)
-Received: from srwalter by brock with local (Exim 4.72)
-	(envelope-from <srwalter@dervierte>)
-	id 1OywWg-0004gm-Vw; Thu, 23 Sep 2010 20:52:35 -0400
-X-Mailer: git-send-email 1.7.1
+	id S1753996Ab0IXBSV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Sep 2010 21:18:21 -0400
+Received: from mail.perches.com ([173.55.12.10]:2320 "EHLO mail.perches.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752546Ab0IXBST (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Sep 2010 21:18:19 -0400
+Received: from [192.168.1.156] (unknown [192.168.1.156])
+	by mail.perches.com (Postfix) with ESMTP id B4A1C24368;
+	Thu, 23 Sep 2010 18:18:12 -0700 (PDT)
+In-Reply-To: <7v62xwqe7i.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156929>
 
-As a first step towards preserving merges across dcommit, we need a
-mechanism to update the svn:mergeinfo property.
+Add the ability to use a command line --to-cmd=3Dcmd
+to create the list of "To:" addresses.
+
+Used a shared routine for --cc-cmd and --to-cmd.
+
+Did not use IPC::Open2, leaving that for =C3=86var if
+ever he decides to fix the other bugs he might find.
+
+Signed-off-by: Joe Perches <joe@perches.com>
 ---
- git-svn.perl |   15 ++++++++++++++-
- 1 files changed, 14 insertions(+), 1 deletions(-)
+ Documentation/git-send-email.txt |    8 +++++-
+ git-send-email.perl              |   51 +++++++++++++++++++++++++-----=
+-------
+ t/t9001-send-email.sh            |   18 +++++++++++++
+ 3 files changed, 59 insertions(+), 18 deletions(-)
 
-diff --git a/git-svn.perl b/git-svn.perl
-index c7c4dcd..1612fd7 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -83,7 +83,7 @@ my ($_stdin, $_help, $_edit,
- 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
- 	$_merge, $_strategy, $_dry_run, $_local,
- 	$_prefix, $_no_checkout, $_url, $_verbose,
--	$_git_format, $_commit_url, $_tag);
-+	$_git_format, $_commit_url, $_tag, $_merge_info);
- $Git::SVN::_follow_parent = 1;
- $_q ||= 0;
- my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
-@@ -153,6 +153,7 @@ my %cmd = (
- 			  'commit-url=s' => \$_commit_url,
- 			  'revision|r=i' => \$_revision,
- 			  'no-rebase' => \$_no_rebase,
-+			  'mergeinfo=s' => \$_merge_info,
- 			%cmt_opts, %fc_opts } ],
- 	branch => [ \&cmd_branch,
- 	            'Create a branch in the SVN repository',
-@@ -568,6 +569,7 @@ sub cmd_dcommit {
- 			                       print "Committed r$_[0]\n";
- 			                       $cmt_rev = $_[0];
- 			                },
-+					mergeinfo => $_merge_info,
- 			                svn_path => '');
- 			if (!SVN::Git::Editor->new(\%ed_opts)->apply_diff) {
- 				print "No changes\n$d~1 == $d\n";
-@@ -4449,6 +4451,7 @@ sub new {
- 	$self->{path_prefix} = length $self->{svn_path} ?
- 	                       "$self->{svn_path}/" : '';
- 	$self->{config} = $opts->{config};
-+	$self->{mergeinfo} = $opts->{mergeinfo};
- 	return $self;
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-=
+email.txt
+index c283084..fff97a3 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -97,7 +97,7 @@ See the CONFIGURATION section for 'sendemail.multiedi=
+t'.
+ 	Specify the primary recipient of the emails generated. Generally, thi=
+s
+ 	will be the upstream maintainer of the project involved. Default is t=
+he
+ 	value of the 'sendemail.to' configuration value; if that is unspecifi=
+ed,
+-	this will be prompted for.
++	and --to-cmd is not specified, this will be prompted for.
+ +
+ The --to option must be repeated for each user you want on the to list=
+=2E
+=20
+@@ -177,6 +177,12 @@ user is prompted for a password while the input is=
+ masked for privacy.
+ Automating
+ ~~~~~~~~~~
+=20
++--to-cmd=3D<command>::
++	Specify a command to execute once per patch file which
++	should generate patch file specific "To:" entries.
++	Output of this command must be single email address per line.
++	Default is the value of 'sendemail.tocmd' configuration value.
++
+ --cc-cmd=3D<command>::
+ 	Specify a command to execute once per patch file which
+ 	should generate patch file specific "Cc:" entries.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 6dab3bf..e148269 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -70,6 +70,7 @@ git send-email [options] <file | directory | rev-list=
+ options >
+=20
+   Automating:
+     --identity              <str>  * Use the sendemail.<id> options.
++    --to-cmd                <str>  * Email To: via `<str> \$patch_path=
+`
+     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path=
+`
+     --suppress-cc           <str>  * author, self, sob, cc, cccmd, bod=
+y, bodycc, all.
+     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses.=
+ Default on.
+@@ -187,7 +188,8 @@ sub do_edit {
  }
- 
-@@ -4758,6 +4761,11 @@ sub change_file_prop {
- 	$self->SUPER::change_file_prop($fbat, $pname, $pval, $self->{pool});
+=20
+ # Variables with corresponding config settings
+-my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc, $cc_c=
+md);
++my ($thread, $chain_reply_to, $suppress_from, $signed_off_by_cc);
++my ($to_cmd, $cc_cmd);
+ my ($smtp_server, $smtp_server_port, $smtp_authuser, $smtp_encryption)=
+;
+ my ($identity, $aliasfiletype, @alias_files, @smtp_host_parts, $smtp_d=
+omain);
+ my ($validate, $confirm);
+@@ -214,6 +216,7 @@ my %config_settings =3D (
+     "smtppass" =3D> \$smtp_authpass,
+ 	"smtpdomain" =3D> \$smtp_domain,
+     "to" =3D> \@to,
++    "tocmd" =3D> \$to_cmd,
+     "cc" =3D> \@initial_cc,
+     "cccmd" =3D> \$cc_cmd,
+     "aliasfiletype" =3D> \$aliasfiletype,
+@@ -272,6 +275,7 @@ my $rc =3D GetOptions("sender|from=3Ds" =3D> \$send=
+er,
+                     "in-reply-to=3Ds" =3D> \$initial_reply_to,
+ 		    "subject=3Ds" =3D> \$initial_subject,
+ 		    "to=3Ds" =3D> \@to,
++		    "to-cmd=3Ds" =3D> \$to_cmd,
+ 		    "no-to" =3D> \$no_to,
+ 		    "cc=3Ds" =3D> \@initial_cc,
+ 		    "no-cc" =3D> \$no_cc,
+@@ -711,7 +715,7 @@ if (!defined $sender) {
+ 	$prompting++;
  }
- 
-+sub change_dir_prop {
-+	my ($self, $pbat, $pname, $pval) = @_;
-+	$self->SUPER::change_dir_prop($pbat, $pname, $pval, $self->{pool});
+=20
+-if (!@to) {
++if (!@to && !defined $to_cmd) {
+ 	my $to =3D ask("Who should the emails be sent to? ");
+ 	push @to, parse_address_line($to) if defined $to; # sanitized/validat=
+ed later
+ 	$prompting++;
+@@ -1238,21 +1242,10 @@ foreach my $t (@files) {
+ 	}
+ 	close F;
+=20
+-	if (defined $cc_cmd && !$suppress_cc{'cccmd'}) {
+-		open(F, "$cc_cmd \Q$t\E |")
+-			or die "(cc-cmd) Could not execute '$cc_cmd'";
+-		while(<F>) {
+-			my $c =3D $_;
+-			$c =3D~ s/^\s*//g;
+-			$c =3D~ s/\n$//g;
+-			next if ($c eq $sender and $suppress_from);
+-			push @cc, $c;
+-			printf("(cc-cmd) Adding cc: %s from: '%s'\n",
+-				$c, $cc_cmd) unless $quiet;
+-		}
+-		close F
+-			or die "(cc-cmd) failed to close pipe to '$cc_cmd'";
+-	}
++	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
++		if defined $to_cmd;
++	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
++		if defined $cc_cmd && !$suppress_cc{'cccmd'};
+=20
+ 	if ($broken_encoding{$t} && !$has_content_type) {
+ 		$has_content_type =3D 1;
+@@ -1310,6 +1303,30 @@ foreach my $t (@files) {
+ 	$message_id =3D undef;
+ }
+=20
++# Execute a command (ie: $to_cmd) to get a list of email addresses
++# and return a results array
++sub recipients_cmd(@) {
++	my ($prefix, $what, $cmd, $file) =3D @_;
++
++	my $sanitized_sender =3D sanitize_address($sender);
++	my @addresses =3D ();
++	open(F, "$cmd \Q$file\E |")
++	    or die "($prefix) Could not execute '$cmd'";
++	while(<F>) {
++		my $address =3D $_;
++		$address =3D~ s/^\s*//g;
++		$address =3D~ s/\n$//g;
++		$address =3D sanitize_address($address);
++		next if ($address eq $sanitized_sender and $suppress_from);
++		push @addresses, $address;
++		printf("($prefix) Adding %s: %s from: '%s'\n",
++		       $what, $address, $cmd) unless $quiet;
++		}
++	close F
++	    or die "($prefix) failed to close pipe to '$cmd'";
++	return @addresses;
 +}
 +
- sub _chg_file_get_blob ($$$$) {
- 	my ($self, $fbat, $m, $which) = @_;
- 	my $fh = $::_repository->temp_acquire("git_blob_$which");
-@@ -4851,6 +4859,11 @@ sub apply_diff {
- 			fatal("Invalid change type: $f");
- 		}
- 	}
+ cleanup_compose_files();
+=20
+ sub cleanup_compose_files() {
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index 71b3df9..36cf421 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -201,6 +201,24 @@ test_expect_success $PREREQ 'Prompting works' '
+ 		grep "^To: to@example.com\$" msgtxt1
+ '
+=20
++test_expect_success $PREREQ 'tocmd works' '
++	clean_fake_sendmail &&
++	cp $patches tocmd.patch &&
++	echo tocmd--tocmd@example.com >>tocmd.patch &&
++	{
++	  echo "#!$SHELL_PATH"
++	  echo sed -n -e s/^tocmd--//p \"\$1\"
++	} > tocmd-sed &&
++	chmod +x tocmd-sed &&
++	git send-email \
++		--from=3D"Example <nobody@example.com>" \
++		--to-cmd=3D./tocmd-sed \
++		--smtp-server=3D"$(pwd)/fake.sendmail" \
++		tocmd.patch \
++		&&
++	grep "^To: tocmd@example.com" msgtxt1
++'
 +
-+	if (defined($self->{mergeinfo})) {
-+		$self->change_dir_prop($self->{bat}{''}, "svn:mergeinfo",
-+			               $self->{mergeinfo});
-+	}
- 	$self->rmdirs if $_rmdir;
- 	if (@$mods == 0) {
- 		$self->abort_edit;
--- 
-1.7.3.4.g4d78d
+ test_expect_success $PREREQ 'cccmd works' '
+ 	clean_fake_sendmail &&
+ 	cp $patches cccmd.patch &&
