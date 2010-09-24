@@ -1,136 +1,53 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 03/24] t9300 (fast-import): guard "export large marks"
- test setup
-Date: Fri, 24 Sep 2010 15:08:52 +0530
-Message-ID: <20100924093847.GE22658@kytes>
-References: <20100701031819.GA12524@burratino>
- <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes>
- <20100905031528.GA2344@burratino>
- <20100905032253.GB2344@burratino>
- <20100924065900.GA4666@burratino>
- <20100924070950.GD4666@burratino>
+From: Tait <git.git@t41t.com>
+Subject: Minimum Perl version?
+Date: Fri, 24 Sep 2010 03:00:19 -0700
+Message-ID: <20100924100019.GT23563@ece.pdx.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Sep 24 11:40:29 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 24 12:13:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz4lT-0008TI-To
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 11:40:24 +0200
+	id 1Oz5HL-000604-F1
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 12:13:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753237Ab0IXJkR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 05:40:17 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:32952 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752168Ab0IXJkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 05:40:16 -0400
-Received: by pxi10 with SMTP id 10so729059pxi.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 02:40:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=k8OPPBYXXnFvvXWrowZO+fLC4eRhqQC890knVCpyDtw=;
-        b=n7Dp9nQSfWpUzodrC2zse8trF/LKJNJYEq/WcJFIUo7Psm4M1bRNP8kvLEcb9z1wad
-         IlUbVT2AtLvw5hDUObq5GVP9rwZXJQXNI2WcJi0FA6+/pwgZwIZj/zIEqoWhalySHYny
-         M7ya12zLC+1LelCZ4WaBW3zHoalW60V1ZdHpE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=akdSsR2AiTY7AFiqOA9BSSeVH14USGlxMYduIglIZTPC56u+QaIfbRFMfUKaXvG5mI
-         DmbV8QpQCgdpU4eNfzsUd8ih03BHs6O77QHLt3tFWduuXPi5F8YbtxaVfui7LRcU45s0
-         4s3fwKWk862MHW+IurLOoRTtFGE40KLTuXoT4=
-Received: by 10.114.52.2 with SMTP id z2mr3251941waz.84.1285321215938;
-        Fri, 24 Sep 2010 02:40:15 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id s5sm3208025wak.0.2010.09.24.02.40.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 02:40:14 -0700 (PDT)
+	id S1752431Ab0IXKNG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 06:13:06 -0400
+Received: from ehlo.cat.pdx.edu ([131.252.208.106]:51097 "EHLO
+	ehlo.cat.pdx.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751292Ab0IXKNF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 06:13:05 -0400
+X-Greylist: delayed 762 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Sep 2010 06:13:05 EDT
+Received: from nemo.ece.pdx.edu (root@nemo.ece.pdx.edu [131.252.209.162])
+	by ehlo.cat.pdx.edu (8.14.3/8.14.3/Debian-9.1ubuntu1) with ESMTP id o8OA0KSe008668
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
+	for <git@vger.kernel.org>; Fri, 24 Sep 2010 03:00:20 -0700
+Received: from nemo.ece.pdx.edu (tait@localhost [127.0.0.1])
+	by nemo.ece.pdx.edu (8.13.6/8.13.1) with ESMTP id o8OA0JCN029396
+	for <git@vger.kernel.org>; Fri, 24 Sep 2010 03:00:19 -0700 (PDT)
+Received: (from tait@localhost)
+	by nemo.ece.pdx.edu (8.13.6/8.12.6/Submit) id o8OA0JmW029378
+	for git@vger.kernel.org; Fri, 24 Sep 2010 03:00:19 -0700 (PDT)
+X-Authentication-Warning: nemo.ece.pdx.edu: tait set sender to git.git@t41t.com using -f
 Content-Disposition: inline
-In-Reply-To: <20100924070950.GD4666@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.3.4 (ehlo.cat.pdx.edu [131.252.208.106]); Fri, 24 Sep 2010 03:00:20 -0700 (PDT)
+X-Spam-Status: No, score=0.0 required=6.0 tests=none autolearn=unavailable
+	version=3.3.1
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on ehlo.cat.pdx.edu
+X-Virus-Scanned: clamav-milter 0.96.1 at ehlo
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156967>
 
-Hi,
 
-Jonathan Nieder writes:
->  test_expect_success 'A: export marks with large values' '
-> +	test_tick &&
-> +	mt=$(git hash-object --stdin </dev/null) &&
-> +	>input.blob &&
-> +	>marks.exp &&
-> +	>tree.exp &&
-> +
-> +	cat >input.commit <<-EOF &&
-> +	commit refs/heads/verify--dump-marks
-> +	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
-> +	data <<COMMIT
-> +	test the sparse array dumping routines with exponentially growing marks
+What is the minimum Perl version git expects to support?
 
-Ok, so we want marks to grow exponentially.
-
-> +	COMMIT
-> +	EOF
-> +
-> +	(
-> +		i=0 &&
-> +		l=4 &&
-> +		m=6 &&
-> +		n=7 &&
-
-Maybe use slightly less cryptic variable names?
-
-> +		while test "$i" -lt 27
-
-Something like for i in `seq 1 10` will atleast make it clear that i
-is just a loop variable. That's one arbitrary variable less.
-
-> +		do
-> +			cat >>input.blob <<-EOF &&
-> +			blob
-> +			mark :$l
-> +			data 0
-> +			blob
-> +			mark :$m
-> +			data 0
-> +			blob
-> +			mark :$n
-> +			data 0
-> +			EOF
-> +			{
-> +				echo "M 100644 :$l l$i" &&
-> +				echo "M 100644 :$m m$i" &&
-> +				echo "M 100644 :$n n$i"
-> +			} >>input.commit &&
-> +			{
-> +				echo ":$l $mt" &&
-> +				echo ":$m $mt" &&
-> +				echo ":$n $mt"
-> +			} >>marks.exp &&
-> +			{
-> +				printf "100644 blob $mt\tl$i\n" &&
-> +				printf "100644 blob $mt\tm$i\n" &&
-> +				printf "100644 blob $mt\tn$i\n"
-> +			} >>tree.exp &&
-> +			l=$(($l + $l)) &&
-> +			m=$(($m + $m)) &&
-> +			n=$(($l + $n)) &&
-
-Maybe l=$(($l * 2)) and similarly for m to emphasize that they're
-doubling in every loop iteration?
-
--- Ram
+I ask, because f922df8... seems to have introduced a open() syntax that
+is not compatible with some older Perl versions.
