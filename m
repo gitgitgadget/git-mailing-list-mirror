@@ -1,68 +1,75 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Commiting automatically
-Date: Fri, 24 Sep 2010 20:43:12 +0000 (UTC)
-Message-ID: <loom.20100924T224155-693@post.gmane.org>
-Mime-Version: 1.0
+From: Brian Gernhardt <benji@silverinsanity.com>
+Subject: Re: [PATCH] t/t3903-stash: improve testing of git-stash show
+Date: Fri, 24 Sep 2010 16:43:18 -0400
+Message-ID: <47BAA71F-CF5C-4A98-BBB9-C502C81E3230@silverinsanity.com>
+References: <00400143-1A23-4245-9D7C-4AC9093785F5@gernhardtsoftware.com> <BVPnfVXRBMtK-9WPRRt3RH05x0aSmoFQsrb6lVp2uyULwHxOV-DnAXrmucCvrGrPQX_-AdS0fnA@cipher.nrlssc.navy.mil>
+Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
+Content-Transfer-Encoding: 8BIT
+Cc: jon.seymour@gmail.com, robbat2@gentoo.org, git@vger.kernel.org,
+	Brandon Casey <drafnel@gmail.com>
+To: Brandon Casey <casey@nrlssc.navy.mil>
 X-From: git-owner@vger.kernel.org Fri Sep 24 22:43:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzF7D-00053n-LM
+	id 1OzF7E-00053n-6y
 	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 22:43:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755775Ab0IXUnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755751Ab0IXUnX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 24 Sep 2010 16:43:23 -0400
-Received: from lo.gmane.org ([80.91.229.12]:37690 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754990Ab0IXUnW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 16:43:22 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1OzF72-0004wM-DK
-	for git@vger.kernel.org; Fri, 24 Sep 2010 22:43:20 +0200
-Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 22:43:20 +0200
-Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 22:43:20 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.61)
+Received: from vs072.rosehosting.com ([216.114.78.72]:38557 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752884Ab0IXUnW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 16:43:22 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 1A7FC1FFC6B7; Fri, 24 Sep 2010 20:43:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.6 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 5AF731FFC6B5;
+	Fri, 24 Sep 2010 20:43:13 +0000 (UTC)
+In-Reply-To: <BVPnfVXRBMtK-9WPRRt3RH05x0aSmoFQsrb6lVp2uyULwHxOV-DnAXrmucCvrGrPQX_-AdS0fnA@cipher.nrlssc.navy.mil>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157056>
-
-I'm going to run periodically a process which uses the current working tree and 
-I'd like to protocol what happens. As a part of the protocol I need the exact 
-state of the working tree and that's what is git good for, right? But it must 
-neither disturb my normal workflow nor interfere with my ordinal commits. I 
-could probably use something like
-
-GIT_DIR=a_special_git_dir
-git reset --soft a_special_branch
-git add -A
-git commit -m "automatic"
-git push
-
-where the push would go to my ordinary external repository (used as a backup 
-here). I'm quite a beginner and unsure what problem should I expect here.
-
-Even if there were no problems, it's not very nice. It uses an additional 
-repository which is quite strange. Moreover, there's no way to find out how the 
-saved working tree snapshot is related to existing ordinal commits.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157057>
 
 
-PS: I don't want to post separate "thank you" messages, so let me thank to 
-everybody now. I've already had three questions and got three times a very 
-helpful answer in a very short time, just fantastic.
+On Sep 24, 2010, at 4:40 PM, Brandon Casey wrote:
+
+> From: Brandon Casey <drafnel@gmail.com>
+> 
+> Recently, the 'stash show' functionality was broken for the case when a
+> stash-like argument was supplied.  Since, commit 9bf09e, 'stash show' when
+> supplied a stash-like argument prints nothing and still exists with a zero
+> status.  Unfortunately, the flaw slipped through the test suite cracks
+> since the output of 'stash show' was not verified to be correct.
+> 
+> Improve and expand on the existing tests so that this flaws is detected.
+> 
+> Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
+> ---
+> 
+> 
+> On 09/24/2010 03:27 PM, Brian Gernhardt wrote:
+>> I bisected the issue to a9bf09e (detached-stash: simplify git stash show),
+>> which is when "git stash show" started using parse_flags_and_rev (via
+>> assert_stash_like()).
+>> 
+>> More worrying to me is that the tests for "git stash show" don't bother
+>> to test the output.  I'll be working on that now.
+> 
+> I was preparing these tests when your email came in.
+
+I spent longer finding the source of the problem than you did.  I was just putting the finishing touches on it when I got this.  Yours is more through than mine, so I won't bother finishing.
+
+~~ Brian
