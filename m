@@ -1,68 +1,77 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Listing files in order they are changed
-Date: Fri, 24 Sep 2010 08:59:19 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1009240855080.31704@ds9.cixit.se>
-References: <AANLkTimHrCujEggj9KbAWWivY+WxnL0YqsXs+idhymBA@mail.gmail.com> <20100923203814.GA10951@sigill.intra.peff.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 07/24] t9300 (fast-import): use tabs to indent
+Date: Fri, 24 Sep 2010 14:24:25 +0530
+Message-ID: <20100924085424.GD22658@kytes>
+References: <20100701031819.GA12524@burratino>
+ <20100701054849.GA14972@burratino>
+ <20100817170216.GA14491@kytes>
+ <20100905031528.GA2344@burratino>
+ <20100905032253.GB2344@burratino>
+ <20100924065900.GA4666@burratino>
+ <20100924071350.GH4666@burratino>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Parag Kalra <paragkalra@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Sep 24 09:59:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sam Vilain <sam@vilain.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Sep 24 10:55:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oz3Bu-0000Hv-MT
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 09:59:35 +0200
+	id 1Oz44T-0006aI-31
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 10:55:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119Ab0IXH73 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 03:59:29 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:55525 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1750898Ab0IXH73 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 03:59:29 -0400
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8O7xK0n000580
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 24 Sep 2010 09:59:20 +0200
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id o8O7xJGg000577;
-	Fri, 24 Sep 2010 09:59:20 +0200
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <20100923203814.GA10951@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 24 Sep 2010 09:59:20 +0200 (CEST)
+	id S1753230Ab0IXIzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 04:55:51 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:39673 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751758Ab0IXIzu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 04:55:50 -0400
+Received: by pvg2 with SMTP id 2so590472pvg.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 01:55:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=vEtyE9WS0VuU4FMP3Qkvz29rljJ3t4xov3q6WeK9WEY=;
+        b=OPP5sevrr/wBQ+ApdomSkexcFaMjbrSXEDpKsi0Vehh9gMm8aQt14cUcSIwLTH48B9
+         fVtJGifoG2/xBDOyApjNWLlQIg+SHutmdpGndWx1P8+P0Y88DKg/0lODLcP+62/nBFuL
+         aP3poHUoMBkHZe0oRoFb/p/D0/A03uWJHhfrA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=v9a6r84UgKgNwhxqOA5qCyYPxhODvrJ6hkUKGZRdJTAtUI2r2imA5gxMZmaNYmEbMC
+         g1aucebiS6lUViM6Npyo0JZxgJzr/R40URPg42cBOWk5QIxJ1h+jznOgxa6h8eHTe8wv
+         u5Gnu4UReih8lc8Chfp8SBvWAy3urA/0AY9YU=
+Received: by 10.114.13.2 with SMTP id 2mr3156700wam.155.1285318549733;
+        Fri, 24 Sep 2010 01:55:49 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id o17sm3133444wal.9.2010.09.24.01.55.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 01:55:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20100924071350.GH4666@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/156963>
 
-Jeff King:
+Hi Jonathan,
 
-> git log --pretty=format: --name-only |
->  grep . |
->  perl -ne 'print unless $seen{$_}++'
+Jonathan Nieder writes:
+> The test script mostly uses tabs to indent, but some 4-space indents
+> snuck in.
 
-Nice one!
+Patches 7-24 are boring non-functional changes that involve re-styling
+and re-indenting. Maybe put them all in one large commit? It's fairly
+trivial to review these changes anyway.
 
-That made me come up with this, which shows a timestamp next to each file:
-
-   git log --pretty=format:/%ai --name-only |
-     grep . |
- 	perl -ne 'if (m(^/(.*))) { $date = $1; } else { print "$date $_" unless $seen{$_}++; }'
-
-(change %ai into whatever timestamp you want to show)
-
-Mutating that into something that calls "touch" might be useful for those of 
-us who would like an initial check-out to have last-modified times like the 
-ones CVS would give you.
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+-- Ram
