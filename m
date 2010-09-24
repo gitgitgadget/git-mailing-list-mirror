@@ -1,87 +1,68 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: git-1.7.3 breakage: "git stash show xxx" doesn't show anything
-Date: Fri, 24 Sep 2010 19:19:37 +0000
-Message-ID: <robbat2-20100924T191752-102740530Z@orbis-terrarum.net>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: git-upload-pack bandwidth cap over SSH?
+Date: Fri, 24 Sep 2010 13:30:30 -0600
+Message-ID: <4C9CFC56.3030501@workspacewhiz.com>
+References: <4C9CB9E9.8010901@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="yBbBYFH0ZHvzMoI/"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Sep 24 21:20:00 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Sep 24 21:30:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzDoK-0005xM-UJ
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 21:19:57 +0200
+	id 1OzDyk-0008O8-Vt
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 21:30:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757624Ab0IXTTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 15:19:44 -0400
-Received: from b01.ext.isohunt.com ([208.71.112.51]:45936 "EHLO
-	mail.isohunt.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1757621Ab0IXTTm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 15:19:42 -0400
-Received: (qmail 30985 invoked from network); 24 Sep 2010 19:19:39 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.isohunt.com (qpsmtpd/0.33-dev on beta01) with (CAMELLIA256-SHA encrypted) ESMTPS; Fri, 24 Sep 2010 19:19:39 +0000
-Received: (qmail 9504 invoked by uid 10000); 24 Sep 2010 19:19:37 -0000
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757747Ab0IXTad (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 15:30:33 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:41229 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757573Ab0IXTac (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 15:30:32 -0400
+Received: (qmail 13165 invoked by uid 399); 24 Sep 2010 13:30:31 -0600
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.196.230.186)
+  by hsmail.qwknetllc.com with ESMTPAM; 24 Sep 2010 13:30:31 -0600
+X-Originating-IP: 75.196.230.186
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100915 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <4C9CB9E9.8010901@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157042>
 
+  ----- Original Message -----
+From: Joshua Jensen
+Date: 9/24/2010 8:47 AM
+>  Our Git repository central server is running on some kind of 
+> enterprise VM software.  I can push repository changes through the 
+> Gitolite-monitored SSH tunnel at 10+ megabytes per second.
+>
+> A 'git pull' operation (even a fresh clone of the packed repository) 
+> always caps at 1.55 MiB/s, according to the "Receiving objects" line 
+> in the status text.
+>
+> Thinking it might be a hardware issue (half duplex?), I installed 
+> VirtualBox on my Windows 7 64-bit machine and then made an Ubuntu 
+> Gitolite install.  Running on my local hardware, the push is roughly 
+> 12 megabytes per second.  The 'git pull' downstream again caps at 1.55 
+> MiB/s.
+>
+> Are there any configuration settings within Git that may limit the 
+> git-upload-pack operation's speed?
+>
+> I realize this could be a MinGW issue via the msysGit client.
+>
+> Update: I just copied a large file via 'scp', and the downstream still 
+> capped at 1.55-ish megabytes per second.  So it isn't Git.
+Replying to my own message... I take that back.  I'm not sure what I was 
+seeing, but I can consistently run scp and copy files at 6+ megabytes 
+per second.
 
---yBbBYFH0ZHvzMoI/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+With that in mind, I'm back to looking at Git's pull performance over 
+SSH.  It never exceeds 1.55 MiB/s.
 
-Downstream bug: http://bugs.gentoo.org/338586
-
-telling git-stash to show a specific stash no longer works with git-1.7.3:
-  git stash show stash@{0}
-  <no output!?>
-
-Downgrading to dev-vcs/git-1.7.2.3 and it works fine.
-Noticed on two stable amd64 systems.
-
-Reproduction:
-$ rm -rf foo && mkdir foo && cd foo
-$ git init
-Initialized empty Git repository in /home/vapier/foo/.git/
-$ echo f > f && git add f && git commit -qmm
-$ > f
-$ git stash
-Saved working directory and index state WIP on master: d287dea m
-HEAD is now at d287dea m
-$ git stash list | cat
-stash@{0}: WIP on master: d287dea m
-$ git stash show | cat
- f |    1 -
- 1 files changed, 0 insertions(+), 1 deletions(-)
-$ git stash show stash@{0} | cat
-<nothing!>
-
---=20
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
-
---yBbBYFH0ZHvzMoI/
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.16 (GNU/Linux)
-Comment: Robbat2 @ Orbis-Terrarum Networks - The text below is a digital signature. If it doesn't make any sense to you, ignore it.
-
-iEYEARECAAYFAkyc+ckACgkQPpIsIjIzwizPywCg9GBn/fgjodNgNGel6iuXS3Vc
-WqEAoO2AfYujHBz1Nj+/yYSLKud0mCFs
-=RoH2
------END PGP SIGNATURE-----
-
---yBbBYFH0ZHvzMoI/--
+Josh
