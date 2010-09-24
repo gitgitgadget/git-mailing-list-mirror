@@ -1,66 +1,55 @@
-From: Bryan Drewery <bryan@shatow.net>
-Subject: Re: Find out on which branch a commit was originally made
-Date: Fri, 24 Sep 2010 13:26:48 -0500
-Message-ID: <4C9CED68.50203@shatow.net>
-References: <1jp0h7e.lgk0kp19qe5bbM%lists@haller-berlin.de>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Getting rid of "mode change" on cygwin
+Date: Fri, 24 Sep 2010 18:57:59 +0000 (UTC)
+Message-ID: <loom.20100924T205622-57@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Stefan Haller <lists@haller-berlin.de>
-X-From: git-owner@vger.kernel.org Fri Sep 24 20:25:58 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Sep 24 20:58:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzCxz-0003uS-MF
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 20:25:52 +0200
+	id 1OzDTM-0002GA-Fj
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Sep 2010 20:58:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757288Ab0IXSZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 14:25:04 -0400
-Received: from secure.xzibition.com ([173.160.118.92]:50893 "EHLO
-	secure.xzibition.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754401Ab0IXSZB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 14:25:01 -0400
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=shatow.net; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=sweb; b=NKZGgV
-	1/DJeEPa3aAKvEtxJGW16BVB+WEP+oF3pq9slCh1ZoEUq2mu1+4CXnkoNqDmKFye
-	yb4S9EV0XLTisS5N5zNXXXShMId6F+LvfJZR92AzLL36cyQogbZDg7p8lrSZGBUI
-	MP8FSCpCc0fM8WCTItCdVprtEIM0xye0gIcHI=
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=shatow.net; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=sweb; bh=23fRwh9avsgD
-	OJCRSZzbpqF4+46G/adABGt14cdXkqQ=; b=yu4yP3haizXZGPjUoOhFhJdn+cWK
-	JHI9nBxLrjZGAhVElc9cHAmk9vU++Ql71PA/JrzkMWu33if9KDUImjAVn7rJfL+S
-	S+ThpGGeAaqhZ53p8WtnClFi4vWOfViuYFpaBfPyEGB9d1Ncq5f1YVsc+KLLIQZ0
-	J5E/jyTGW10pGDY=
-Received: (qmail 15952 invoked from network); 24 Sep 2010 13:25:00 -0500
-Received: from unknown (HELO ?192.168.0.201?) (bryan@shatow.net@74.94.87.209)
-  by sweb.xzibition.com with ESMTPA; 24 Sep 2010 13:25:00 -0500
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-In-Reply-To: <1jp0h7e.lgk0kp19qe5bbM%lists@haller-berlin.de>
+	id S1757472Ab0IXS6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 14:58:10 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47968 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754465Ab0IXS6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 14:58:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1OzDTD-00029U-VL
+	for git@vger.kernel.org; Fri, 24 Sep 2010 20:58:08 +0200
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 20:58:07 +0200
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 20:58:07 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.61)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157034>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157035>
 
-  On 9/18/2010 4:19 AM, Stefan Haller wrote:
-> I'm trying to pursuade my co-workers to switch from Subversion to Git;
-> some of them prefer Mercurial.
->
-> One concern that they are raising is that in Git there doesn't seem to
-> be an easy way to find out on which branch a given commit was originally
-> made, after the branch is merged back and deleted. They consider this a
-> show-stopper.  In Mercurial, branch information is meta data attached to
-> each commit, so you can easily get this information even after a branch
-> is closed.
->
-Use an issue tracker? Associate the commits with ticket numbers in the 
-commit msg.
+I just switched from svn to git and in my first git commit all files get status 
+modified with
 
-git commit -m "Blah Blah Blah (refs #someticket)"
+mode change 100644 => 100755
 
-Bryan Drewery
+I don't care about the file mode much, the 755 mode makes no sense but is 
+probably some cygwin magic, as it may be hard to emulate the perms, so it simply 
+considers all files as executables. I can't change the mode, since chmod a-x 
+does nothing at all. Actually, I don't care about the perms at all, I'd be happy 
+if git would show "no change" for unchanged files.
