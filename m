@@ -1,103 +1,64 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: svn-fe status
-Date: Sat, 25 Sep 2010 12:25:06 +0200
-Message-ID: <AANLkTi=sij9TeY+Cv85n61xt3R6nPbkpOyKdoDMzbtaD@mail.gmail.com>
-References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes> <20100905031528.GA2344@burratino>
- <20100905032253.GB2344@burratino> <20100924065900.GA4666@burratino> <20100925051926.GA19804@burratino>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC v2 2/4] rev-parse: Don't recognise --flags as an
+ option if --no-flags has been specified.
+Date: Sat, 25 Sep 2010 10:26:48 +0000
+Message-ID: <AANLkTi=1UJ+BJGE+-CXXGsfGeNcejPUT=0BA5MSXjjSv@mail.gmail.com>
+References: <1285405454-12521-1-git-send-email-jon.seymour@gmail.com>
+	<1285405454-12521-4-git-send-email-jon.seymour@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 12:25:34 2010
+Content-Transfer-Encoding: base64
+Cc: robbat2@gentoo.org, casey@nrlssc.navy.mil, git@vger.kernel.org,
+	brian@gernhardtsoftware.com
+To: Jon Seymour <jon.seymour@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 12:26:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzRwj-0007lf-MT
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 12:25:34 +0200
+	id 1OzRy5-0008KH-SB
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 12:26:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756108Ab0IYKZ2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Sep 2010 06:25:28 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49209 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755842Ab0IYKZ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Sep 2010 06:25:27 -0400
-Received: by gwj17 with SMTP id 17so1199384gwj.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 03:25:26 -0700 (PDT)
+	id S1756156Ab0IYK0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 06:26:52 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:57464 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755842Ab0IYK0w (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 06:26:52 -0400
+Received: by iwn5 with SMTP id 5so3104601iwn.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 03:26:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=DYnVffkg+gRWITmaXRZqspanb2Urqpa8IXDyQLrsahY=;
-        b=MHcm/VZ3glc7WT9W32gr1IILSFC4kQ4ggfw0dtlVOVzaa4U6KCuINGf848/qUE96zP
-         ehVQqga346UStD380A5IAM9tYWWJ4KU3vgF2jht9T9/WA3i0CxAzTwWfGT+5IvS3RyPO
-         puti8cKiQ3kDCmmmjILtPpjOavyoyBk8CPVOE=
+        bh=jlmVUpwB/gK3X7sEYi0uyUN4ocyUCS3oOfgvCU9JkLs=;
+        b=VQFaRMQ1C1CTI1W6EUrpwmWNaXwisOUdMjlIUvkaQ36rr3R1rIZwG7/h6oKAlFHiP5
+         t25K74ruii/XiFt+Ff5wTD2jZ6LPGHruPx6ckxs2owdI1sBsCab4uxtUVoqlvEvTbKv/
+         Xf8nHGiCqvp5pQAva2RAD72qe5qcm1CNYIB9o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=xYV+nqSnZDqDtPm5/uT4s03wSxTkS8T09KPyqBBHEbJz76tNrCoaam7YcvlF3sARZt
-         Y9gNqLIdA1x6gupOqCxF1w4MZsLNsYoaZmz2/04hSpqyl5wejN50uJ8lHR/0LQCNlcst
-         gSWjYW78yz1MSKk/Kq2ifqd0J0z5iTZiwWnpc=
-Received: by 10.150.177.17 with SMTP id z17mr5828401ybe.122.1285410326646;
- Sat, 25 Sep 2010 03:25:26 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Sat, 25 Sep 2010 03:25:06 -0700 (PDT)
-In-Reply-To: <20100925051926.GA19804@burratino>
+        b=jm0w7C1COuckycBfHDMINn4QFyxv85K5+Z5sRXzPr/u5lEUMq7lR+regRfl+UV2/n+
+         fxetCJZXyXr1xW/xtPJl1xIa4V6025QwlRzbe0FOUehGGTWt5tHLB9C30qYqTga1e/P9
+         PhHfKMfltOcujARq7D3RGw2Gbc7/OexmNx3MM=
+Received: by 10.231.190.75 with SMTP id dh11mr5327823ibb.189.1285410408709;
+ Sat, 25 Sep 2010 03:26:48 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Sat, 25 Sep 2010 03:26:48 -0700 (PDT)
+In-Reply-To: <1285405454-12521-4-git-send-email-jon.seymour@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157142>
 
-Heya,
-
-On Sat, Sep 25, 2010 at 07:19, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Now the features that would be most useful from fast-import become a
-> bit clearer. =C2=A0Since a single svn revision can make multiple chan=
-ges to
-> a file, the ability to read back the currently staged content for the
-> current revision would be helpful, like this:
-
-Yes, that makes sense.
-
-> =C2=A0from refs/remotes/origin/root^0
-> =C2=A0M 100644 :72:"trunk/README" "branches/topic/README"
-
-Shouldn't that be 'C' for copy? Of course, this should also be guarded
-by a feature.
-
-> =C2=A01. use ':<mark>:<path>' references to retrieve data from a
-> =C2=A0 =C2=A0previous revision
-
-I like this a lot better than the previous "catting the contents of a
-commit to find the tree to find the file hash to cat the file
-contents". I don't think there needs to be a colon after the mark
-though, I'd prefer reserving the colon character for marks and instead
-introduce a copy operation.
-
-> =C2=A02. use 'cat <path>' references to retrieve data from the
-> =C2=A0 =C2=A0current revision.
-
-You'll thank yourself later if you add an (optional?) mark to cat, so
-that you can cat previous versions of a file too? Doesn't svn ever
-give you a diff against -. ... never mind! You don't need that, since
-you can just copy the contents you want over first! Ok, great, that
-works :).
-
-> David's and Ram's discussions and patches from the last two weeks (or
-> at least the part I have understood) have been very helpful.
-
-Keep up the great work!
-
---=20
-Cheers,
-
-Sverre Rabbelier
+T24gU2F0LCBTZXAgMjUsIDIwMTAgYXQgMDk6MDQsIEpvbiBTZXltb3VyIDxqb24uc2V5bW91ckBn
+bWFpbC5jb20+IHdyb3RlOgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgaWYgKCEoZmlsdGVyICYgRE9fRkxBR1MpKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAvLyAtLXByZWNlZGluZyAt
+LW5vLWZsYWdzIG1lYW5zIC0tZmxhZ3MgaXMgaWdub3JlZAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgY29udGludWU7Cj4gKyDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9CgpQbGVhc2UgdXNlIGEg
+LyogQzg5IGNvbW1lbnQgKi8sIG5vdCB0aGUgQysrIC8gQzk5IHN0eWxlLgo=
