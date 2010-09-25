@@ -1,88 +1,85 @@
-From: Sascha Silbe <sascha-ml-reply-to-2010-3@silbe.org>
-Subject: custom merge driver vs. CONFLICT (delete/modify)
-Date: Sat, 25 Sep 2010 22:43:50 +0200
-Message-ID: <1285445444-sup-3857@flatty.sascha.silbe.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: .gitignore Bug Report on the behavior of *
+Date: Sat, 25 Sep 2010 20:53:57 +0000
+Message-ID: <AANLkTinF2Bk0O96hPiB+WFzWAwEqu=wqdXEnM39+JOoN@mail.gmail.com>
+References: <201009251923.o8PJNJYE031841@no.baka.org>
+	<201009252203.48820.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; boundary="=-1285447431-520943-23460-8392-3-="; protocol="application/pgp-signature"
-Content-Transfer-Encoding: 8bit
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Sep 25 22:50:47 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Seth Robertson <in-gitvger@baka.org>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Sep 25 22:54:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ozbhk-0005DR-Aw
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 22:50:44 +0200
+	id 1Ozbkw-00063w-Vz
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 22:54:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756934Ab0IYUuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 16:50:37 -0400
-Received: from setoy.chost.de ([217.160.209.225]:45040 "EHLO smtp.chost.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756789Ab0IYUuf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 16:50:35 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Sep 2010 16:50:35 EDT
-Received: (qmail 32439 invoked by uid 5015); 25 Sep 2010 20:44:03 -0000
-Received: (nullmailer pid 29141 invoked by uid 8193);
-	Sat, 25 Sep 2010 20:43:51 -0000
-Mail-followup-to: git <git@vger.kernel.org>
-User-Agent: Sup/git
+	id S1755018Ab0IYUx6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Sep 2010 16:53:58 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61890 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751700Ab0IYUx6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Sep 2010 16:53:58 -0400
+Received: by iwn5 with SMTP id 5so3454718iwn.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 13:53:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IProk7GlXScBcxsD9KdlNgl4ZD2KMWa2WGn149IrGKw=;
+        b=dbpiiB/dB4eRY7Idc2Bm8SdIhkSh+lfrJS66Dtzk8CIlSYGWZCBDY0dj96yZsP4igH
+         Jy2YvAOlvtOGdkxpMxhCXzPjFfbbYVp/w0T1RB2Au3n0nvQ44olQm7KL0NbZyhp3hvW6
+         iz89diAXxmCgjRH7EWaqEvwNu/IL/13fr/AF0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=UnOA2RAH9C6qMWPi7F0nZvY3oWTf68vyJ1kzkDPREkUb7hrUi4NWocl1IGzGHwt636
+         BIt5Vm4Zqw2wYQ37B19sO/OWRKlJhahW4+8vq7+1kK7KqkA46j+8fgaLRNnutOTvqnRW
+         TigrAtPzPeInG/VM4Z53kYOa6elCbkT6S16po=
+Received: by 10.231.14.72 with SMTP id f8mr1972383iba.171.1285448037600; Sat,
+ 25 Sep 2010 13:53:57 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Sat, 25 Sep 2010 13:53:57 -0700 (PDT)
+In-Reply-To: <201009252203.48820.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157199>
 
+On Sat, Sep 25, 2010 at 20:03, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Samstag, 25. September 2010, Seth Robertson wrote:
+>> # Properly shows X and B/XX as untracked, as I expected
+>> echo X > X; echo XX > B/XX; git status
+>>
+>> # I expected B/XX to show up as untracked
+>> rm -f .gitignore B/.gitignore
+>> echo '*' > .gitignore; echo '!*' > B/.gitignore; git status
+>
+> You should update your expectations to match what you got. ;-)
+>
+> To show why your expectations are wrong, consider a *huge* and *deep*
+> directory with thousands and thousands of subdirectories, call it "us=
+r", that
+> should be ignored. The .gitignore at the top-level would just say:
+>
+> =C2=A0/usr
+>
+> Do you really expect git to walk down this ignored directory, just to=
+ make
+> double-sure that really, really down there does nowhere exist a .giti=
+gnore
+> that says "oh, wait, don't ignore *this* file"?
 
---=-1285447431-520943-23460-8392-3-=
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+That wouldn't be so expensive if the expectation that the .gitignore
+in /usr would only be considered if it had already been commited. Then
+we'd just have to check if we have a tree for /usr, and whether
+there's a gitignore there.
 
-SGkhCgpJIGFtIChhdXRvbWF0aWNhbGx5KSBidWlsZGluZyBzbmFwc2hvdCBw
-YWNrYWdlcyBieSBjb21iaW5pbmcgdGhlIHBhY2thZ2luZwptYWludGFpbmVk
-IGluIG9uZSByZXBvc2l0b3J5IChidXQgYWxzbyBjb250YWluaW5nIHNvdXJj
-ZXMpIHdpdGggKG1vcmUKcmVjZW50KSB1cHN0cmVhbSBzb3VyY2VzIGZyb20g
-YW5vdGhlciByZXBvc2l0b3J5LgoKRm9yIHNvbWUgZmlsZXMgKHRob3NlIHRv
-dWNoZWQgYnkgcmVydW5uaW5nIGF1dG8qKSBJIHdhbnQgdGhlIGxvY2FsCnZl
-cnNpb24gdG8gYWx3YXlzIHRha2UgcHJlY2VkZW5jZS4gRm9yIHNvbWUgb3Ro
-ZXIgZmlsZXMgKGF1dG9nZW4uc2gsIFBPCmZpbGVzKSBJIHdhbnQgdGhlIHVw
-c3RyZWFtIHZlcnNpb24gdG8gdGFrZSBwcmVjZWRlbmNlLiBGb3IgYWxsIHRo
-ZSByZXN0Ckkgd2FudCBjb25mbGljdHMgdG8gcHJvZHVjZSBhbiBlcnJvci4K
-ClRoaXMgaGFzIHdvcmtlZCBmaW5lIHNvIGZhciBieSB1c2luZyBjdXN0b20g
-bWVyZ2UgZHJpdmVycywgYnV0IHdoaWxlCmFkZGluZyB0aGUgc2Vjb25kIG9u
-ZSBJIGVuY291bnRlcmVkIGEgcHJvYmxlbTogTWVyZ2UgZHJpdmVycyBhcmUg
-b25seQppbnZva2VkIGZvciBtb2RpZnkvbW9kaWZ5IChhbmQgbWF5YmUgYWRk
-L2FkZCkgY29uZmxpY3RzLgpNb3JlIHNwZWNpZmljYWxseSBhIGRlbGV0ZS9t
-b2RpZnkgY29uZmxpY3Qgd2lsbCBjYXVzZSBnaXQtbWVyZ2UgdG8gYmFpbApv
-dXQgZGlyZWN0bHkgd2l0aG91dCBjYWxsaW5nIHRoZSBtZXJnZSBkcml2ZXIg
-dG8gcmVzb2x2ZSB0aGUgY29uZmxpY3QuClN1Y2ggYSBjb25mbGljdCBvY2N1
-cnJlZCBiZWNhdXNlIHRoZSBwYWNrYWdpbmcgcGVvcGxlIHJlbW92ZWQgYXV0
-b2dlbi5zaAood2hpY2ggaXMgcmVhc29uYWJsZSBmb3IgdGhlbSwgYnV0IG5v
-dCBmb3IgbWUpLgoKSXMgdGhlcmUgYSB3YXkgdG8gZWl0aGVyIHJlc29sdmUg
-YWxsIGtpbmRzIG9mIGNvbmZsaWN0cyBpbiBmYXZvdXIgb2YKb25lIHNpZGUg
-KGxpa2UgLVggPHNpZGU+KSBvciBhbHdheXMgdGFrZSBvbmUgc2lkZSAobGlr
-ZSAtcyA8c2lkZT4pIGZvcgphIHNwZWNpZmljIHNldCBvZiBmaWxlcz8KQWx0
-ZXJuYXRpdmVseSwgaXMgdGhlcmUgYSB3YXkgdG8gZG8gYSBtZXJnZSBpbiBt
-dWx0aXBsZSAic3RlcHMiLApvcGVyYXRpbmcgb25seSBvbiBhIHN1YnNldCBv
-ZiB0aGUgZmlsZXMgZWFjaCB0aW1lIChzbyBJIGNhbiB1c2UKLXMgPHNpZGU+
-IC8gLVggPHNpZGU+IGZvciB0d28gb2YgdGhyZWUgc3RlcHMgcGVyIG1lcmdl
-KT8KClNhc2NoYQoKLS0KaHR0cDovL3Nhc2NoYS5zaWxiZS5vcmcvCmh0dHA6
-Ly93d3cuaW5mcmEtc2lsYmUuZGUvCg==
-
---=-1285447431-520943-23460-8392-3-=
-Content-Disposition: attachment; filename="signature.asc"
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBCgAGBQJMnl8HAAoJELpz82VMF3DaX60H/iUCVNuLWvjpHcGGljXv6cVP
-zjvhTzL90k1dl4QbJ7QurdCSNuD52oXZ0couYxwEibS/ZQiXGjJpzcuR5YJR0nAe
-Rd0O7ObGxuKONq1yF6k3h6rMWrju0zxYzpM88QUszNADlZHI4xU4jmueA4RHmptL
-YK+k8JnXhxHSFZ5ObYCFPzTdfwO5SrDWgYzhcPqo+pVSno2e5Y0lXshTrOaS5lDF
-R22W9uw8hT1NfFpoaSo7CLnx6viU/7ebFk3iINgXbfWjDHzbcs1dOPiBp7+2q3ln
-/f3h7b2p/sVnexa7RJ90XtUi1xgP/17ALIYA8MmQQPn/LvMMEmxmMBDZoMgkLLo=
-=mCpz
------END PGP SIGNATURE-----
-
---=-1285447431-520943-23460-8392-3-=--
+But doing this in the top-level .gitignore if possible is the best
+solution.
