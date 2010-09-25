@@ -1,82 +1,88 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: [PATCH] Re: .gitignore Bug Report on the behavior of *
-Date: Sat, 25 Sep 2010 16:40:39 -0400
-Message-ID: <201009252040.o8PKedbo004741@no.baka.org>
-References: <201009251923.o8PJNJYE031841@no.baka.org>
-        <201009252203.48820.j6t@kdbg.org>
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sat Sep 25 22:40:52 2010
+From: Sascha Silbe <sascha-ml-reply-to-2010-3@silbe.org>
+Subject: custom merge driver vs. CONFLICT (delete/modify)
+Date: Sat, 25 Sep 2010 22:43:50 +0200
+Message-ID: <1285445444-sup-3857@flatty.sascha.silbe.org>
+Mime-Version: 1.0
+Content-Type: multipart/signed; micalg="pgp-sha1"; boundary="=-1285447431-520943-23460-8392-3-="; protocol="application/pgp-signature"
+Content-Transfer-Encoding: 8bit
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Sep 25 22:50:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzbYC-000319-9x
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 22:40:52 +0200
+	id 1Ozbhk-0005DR-Aw
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 22:50:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754442Ab0IYUkq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 16:40:46 -0400
-Received: from tsutomu.baka.org ([66.114.72.182]:50403 "EHLO tsutomu.baka.org"
+	id S1756934Ab0IYUuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 16:50:37 -0400
+Received: from setoy.chost.de ([217.160.209.225]:45040 "EHLO smtp.chost.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750797Ab0IYUkp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 16:40:45 -0400
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id o8PKeeRX019641
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 25 Sep 2010 16:40:40 -0400
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id o8PKedbo004741;
-	Sat, 25 Sep 2010 16:40:39 -0400
-In-reply-to: <201009252203.48820.j6t@kdbg.org>
-Comments: In reply to a message from "Johannes Sixt <j6t@kdbg.org>" dated "Sat, 25 Sep 2010 22:03:48 +0200."
+	id S1756789Ab0IYUuf (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 16:50:35 -0400
+X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Sep 2010 16:50:35 EDT
+Received: (qmail 32439 invoked by uid 5015); 25 Sep 2010 20:44:03 -0000
+Received: (nullmailer pid 29141 invoked by uid 8193);
+	Sat, 25 Sep 2010 20:43:51 -0000
+Mail-followup-to: git <git@vger.kernel.org>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157198>
 
 
-In message <201009252203.48820.j6t@kdbg.org>, Johannes Sixt writes:
+--=-1285447431-520943-23460-8392-3-=
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 
-    On Samstag, 25. September 2010, Seth Robertson wrote:
-    > # Properly shows X and B/XX as untracked, as I expected
-    > echo X > X; echo XX > B/XX; git status
-    >
-    > # I expected B/XX to show up as untracked
-    > rm -f .gitignore B/.gitignore
-    > echo '*' > .gitignore; echo '!*' > B/.gitignore; git status
+SGkhCgpJIGFtIChhdXRvbWF0aWNhbGx5KSBidWlsZGluZyBzbmFwc2hvdCBw
+YWNrYWdlcyBieSBjb21iaW5pbmcgdGhlIHBhY2thZ2luZwptYWludGFpbmVk
+IGluIG9uZSByZXBvc2l0b3J5IChidXQgYWxzbyBjb250YWluaW5nIHNvdXJj
+ZXMpIHdpdGggKG1vcmUKcmVjZW50KSB1cHN0cmVhbSBzb3VyY2VzIGZyb20g
+YW5vdGhlciByZXBvc2l0b3J5LgoKRm9yIHNvbWUgZmlsZXMgKHRob3NlIHRv
+dWNoZWQgYnkgcmVydW5uaW5nIGF1dG8qKSBJIHdhbnQgdGhlIGxvY2FsCnZl
+cnNpb24gdG8gYWx3YXlzIHRha2UgcHJlY2VkZW5jZS4gRm9yIHNvbWUgb3Ro
+ZXIgZmlsZXMgKGF1dG9nZW4uc2gsIFBPCmZpbGVzKSBJIHdhbnQgdGhlIHVw
+c3RyZWFtIHZlcnNpb24gdG8gdGFrZSBwcmVjZWRlbmNlLiBGb3IgYWxsIHRo
+ZSByZXN0Ckkgd2FudCBjb25mbGljdHMgdG8gcHJvZHVjZSBhbiBlcnJvci4K
+ClRoaXMgaGFzIHdvcmtlZCBmaW5lIHNvIGZhciBieSB1c2luZyBjdXN0b20g
+bWVyZ2UgZHJpdmVycywgYnV0IHdoaWxlCmFkZGluZyB0aGUgc2Vjb25kIG9u
+ZSBJIGVuY291bnRlcmVkIGEgcHJvYmxlbTogTWVyZ2UgZHJpdmVycyBhcmUg
+b25seQppbnZva2VkIGZvciBtb2RpZnkvbW9kaWZ5IChhbmQgbWF5YmUgYWRk
+L2FkZCkgY29uZmxpY3RzLgpNb3JlIHNwZWNpZmljYWxseSBhIGRlbGV0ZS9t
+b2RpZnkgY29uZmxpY3Qgd2lsbCBjYXVzZSBnaXQtbWVyZ2UgdG8gYmFpbApv
+dXQgZGlyZWN0bHkgd2l0aG91dCBjYWxsaW5nIHRoZSBtZXJnZSBkcml2ZXIg
+dG8gcmVzb2x2ZSB0aGUgY29uZmxpY3QuClN1Y2ggYSBjb25mbGljdCBvY2N1
+cnJlZCBiZWNhdXNlIHRoZSBwYWNrYWdpbmcgcGVvcGxlIHJlbW92ZWQgYXV0
+b2dlbi5zaAood2hpY2ggaXMgcmVhc29uYWJsZSBmb3IgdGhlbSwgYnV0IG5v
+dCBmb3IgbWUpLgoKSXMgdGhlcmUgYSB3YXkgdG8gZWl0aGVyIHJlc29sdmUg
+YWxsIGtpbmRzIG9mIGNvbmZsaWN0cyBpbiBmYXZvdXIgb2YKb25lIHNpZGUg
+KGxpa2UgLVggPHNpZGU+KSBvciBhbHdheXMgdGFrZSBvbmUgc2lkZSAobGlr
+ZSAtcyA8c2lkZT4pIGZvcgphIHNwZWNpZmljIHNldCBvZiBmaWxlcz8KQWx0
+ZXJuYXRpdmVseSwgaXMgdGhlcmUgYSB3YXkgdG8gZG8gYSBtZXJnZSBpbiBt
+dWx0aXBsZSAic3RlcHMiLApvcGVyYXRpbmcgb25seSBvbiBhIHN1YnNldCBv
+ZiB0aGUgZmlsZXMgZWFjaCB0aW1lIChzbyBJIGNhbiB1c2UKLXMgPHNpZGU+
+IC8gLVggPHNpZGU+IGZvciB0d28gb2YgdGhyZWUgc3RlcHMgcGVyIG1lcmdl
+KT8KClNhc2NoYQoKLS0KaHR0cDovL3Nhc2NoYS5zaWxiZS5vcmcvCmh0dHA6
+Ly93d3cuaW5mcmEtc2lsYmUuZGUvCg==
 
-    You should update your expectations to match what you got. ;-)
+--=-1285447431-520943-23460-8392-3-=
+Content-Disposition: attachment; filename="signature.asc"
+Content-Type: application/pgp-signature; name="signature.asc"
 
-    To show why your expectations are wrong, consider a *huge* and
-    *deep* directory with thousands and thousands of subdirectories,
-    call it "usr", that should be ignored. The .gitignore at the
-    top-level would just say:
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
-      /usr
+iQEcBAEBCgAGBQJMnl8HAAoJELpz82VMF3DaX60H/iUCVNuLWvjpHcGGljXv6cVP
+zjvhTzL90k1dl4QbJ7QurdCSNuD52oXZ0couYxwEibS/ZQiXGjJpzcuR5YJR0nAe
+Rd0O7ObGxuKONq1yF6k3h6rMWrju0zxYzpM88QUszNADlZHI4xU4jmueA4RHmptL
+YK+k8JnXhxHSFZ5ObYCFPzTdfwO5SrDWgYzhcPqo+pVSno2e5Y0lXshTrOaS5lDF
+R22W9uw8hT1NfFpoaSo7CLnx6viU/7ebFk3iINgXbfWjDHzbcs1dOPiBp7+2q3ln
+/f3h7b2p/sVnexa7RJ90XtUi1xgP/17ALIYA8MmQQPn/LvMMEmxmMBDZoMgkLLo=
+=mCpz
+-----END PGP SIGNATURE-----
 
-    Do you really expect git to walk down this ignored directory, just to make
-    double-sure that really, really down there does nowhere exist a .gitignore
-    that says "oh, wait, don't ignore *this* file"?
-
-Hmm.  No, not really, but having a .gitignore in a directory which has
-tracked git files in it seems somehow different, and at least to me the
-documentation of .gitignore suggests a different algorithm.  How about
-this for a documentation patch?
-
-Signed-off-by: Seth Robertson <in-gitvger@baka.org>
-----------------------------------------------------------------------
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 7dc2e8b..4f825d8 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -33,6 +33,8 @@ precedence, the last matching pattern decides the outcome):
-    as the path, or in any parent directory, with patterns in the
-    higher level files (up to the toplevel of the work tree) being overridden
-    by those in lower level files down to the directory containing the file.
-+   Any pattern causing a directory to be ignored will cause
-+   any `.gitignore` file under that dirctory to be ignored.
-    These patterns match relative to the location of the
-    `.gitignore` file.  A project normally includes such
-    `.gitignore` files in its repository, containing patterns for
+--=-1285447431-520943-23460-8392-3-=--
