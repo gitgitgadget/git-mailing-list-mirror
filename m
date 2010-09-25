@@ -1,94 +1,88 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Commiting automatically
-Date: Sat, 25 Sep 2010 13:31:19 +0530
-Message-ID: <20100925080117.GC17928@kytes>
-References: <loom.20100924T224155-693@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Sat Sep 25 10:02:56 2010
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH/RFC v2 0/4] rev-parse: allow --flags to output rev-parse-like flags
+Date: Sat, 25 Sep 2010 19:04:09 +1000
+Message-ID: <1285405454-12521-1-git-send-email-jon.seymour@gmail.com>
+Cc: Jon Seymour <jon.seymour@gmail.com>
+To: robbat2@gentoo.org, casey@nrlssc.navy.mil, git@vger.kernel.org,
+	brian@gernhardtsoftware.com
+X-From: git-owner@vger.kernel.org Sat Sep 25 11:01:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzPib-0004g1-KE
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 10:02:49 +0200
+	id 1OzQdY-0001gS-Kg
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 11:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751989Ab0IYICh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 04:02:37 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:45632 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779Ab0IYICf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 04:02:35 -0400
-Received: by pvg2 with SMTP id 2so859839pvg.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 01:02:34 -0700 (PDT)
+	id S1753092Ab0IYJBZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 05:01:25 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49476 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751603Ab0IYJBY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 05:01:24 -0400
+Received: by pwj6 with SMTP id 6so815188pwj.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 02:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=nVwVlqq1t7v2QxTIxgByAmeqzQAYpJM1vQBhjvN/hno=;
-        b=n/ni/BVwZT2aeoW7EAQwIu3yUDCJh0qKdXsZ+C1TSY2pfPgQ4Tscrr8KZ8d/pVtj52
-         h4IDsmifdn4w75IZ3EYqZCGg/MmJfw0eTsbRU21X460brGtJbMBgjH80smTG0dNO9rI0
-         +RjEKOLUy1hbQJpPbGmi8KzcBRqYsccVdt5GE=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=WMs5NqyIxLVCP900IBxK846ECtoh6VTNzQZmG13nWfU=;
+        b=wLBzD1VQcVigNq4C6UzY+/kOGKWwqvrD8Xi5kHn7xgcVq7HzbP/zyuXlKDFVqgWNyy
+         UWxZgVHArRdoZVO1wkcDKLeTKZRIXSerYGvj9cqeR119SMU/OHwS26h+bFrNPj5y71NO
+         7uqbHtCvZ9GF1q1cFp2GNk4fiuNdb0ocS8PuE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=c9iHwvwHQ9m504oMU4ij6AbPghM+9r8wgE4M+/TIXus84Uk4gPPbHs3AaGSYovZEZS
-         KlDSZiOH8918FNbaBM/iuA7vdnMR/2n7CYKmq9y+9ir6eNP9GYaDjqkoBfLofatvNvL7
-         Sr3zx8knlL8U/D0e/a9ThjIpqdd7C01wQDBKo=
-Received: by 10.142.230.8 with SMTP id c8mr3763892wfh.313.1285401754528;
-        Sat, 25 Sep 2010 01:02:34 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id i20sm3499380wff.17.2010.09.25.01.02.31
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=YUaAJyIDuGH4IbCIA9TUE39CeDbQLv/qg0jDKh8eg3BQwZTMN64fgrOEuMY0YHzIZL
+         6ZCSzEdzhcV7ofO2MMreSliT3DValKhpE5DbOwL8aG8KRmqbtfgzIhxDPzwnHL7+hiis
+         1+02k33eqwiZsuNhCBaWr8GIIrU6gXACzJeM0=
+Received: by 10.142.216.2 with SMTP id o2mr3819242wfg.142.1285405283804;
+        Sat, 25 Sep 2010 02:01:23 -0700 (PDT)
+Received: from localhost.localdomain ([120.16.93.90])
+        by mx.google.com with ESMTPS id y36sm3574521wfd.6.2010.09.25.02.01.17
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Sep 2010 01:02:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <loom.20100924T224155-693@post.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Sat, 25 Sep 2010 02:01:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.1.gc81ce.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157133>
 
-Hi Maartin,
+This series allows git rev-parse --flags to output remaining flag-like arguments
+even if such arguments are valid options to git rev-parse itself.
 
-Maaartin writes:
-> I'm going to run periodically a process which uses the current working tree and 
-> I'd like to protocol what happens. As a part of the protocol I need the exact 
-> state of the working tree and that's what is git good for, right? But it must 
-> neither disturb my normal workflow nor interfere with my ordinal commits. I 
-> could probably use something like
-> 
-> GIT_DIR=a_special_git_dir
-> git reset --soft a_special_branch
-> git add -A
-> git commit -m "automatic"
-> git push
+Previously:
+  $> git rev-parse --flags -q -X --no-flags -- Y -Z
+  -X
 
-Instead of doing it by hand, I'd recommend using something nicer like
-Flashbake to do this [1].
+Now:
+  $> git rev-parse --flags -q -X --no-flags -- Y -Z
+  -q -X --no-flags
 
-> where the push would go to my ordinary external repository (used as a backup 
-> here). I'm quite a beginner and unsure what problem should I expect here.
+Also:
+  $> git rev-parse --symbolic --no-flags --flags -X HEAD
+  HEAD
 
-I suppose you can create another branch without common ancestry and
-keep committing there. I'd suggest using contrib/git-new-workdir to
-keep a working copy of that branch and using flashbake to commit to it
-without interrupting your working branch.
+Note: git rev-parse --flags still seems broken w.r.t. documentation because:
+  $> git rev-parse --symbolic --flags HEAD
+  HEAD
+even though the documentation states that --flags does not output non-flag
+arguments.
 
-> Even if there were no problems, it's not very nice. It uses an additional 
-> repository which is quite strange. Moreover, there's no way to find out how the 
-> saved working tree snapshot is related to existing ordinal commits.
+Jon Seymour (4):
+  rev-parse: stop interpreting flags as options to rev-parse once
+    --flags is specified
+  rev-parse: Don't recognise --flags as an option if --no-flags has
+    been specified.
+  rev-parse: add tests for git rev-parse --flags.
+  rev-parse: update documentation of --flags and --no-flags options
 
-The additional repository is eliminated now. You can use the complete
-Git infrastructure to play with the commits in your working branch and
-your flashbake branch.
+ Documentation/git-rev-parse.txt |   10 +++-
+ builtin/rev-parse.c             |   11 ++++
+ t/t1510-rev-parse-flags.sh      |  116 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 135 insertions(+), 2 deletions(-)
+ create mode 100755 t/t1510-rev-parse-flags.sh
 
--- Ram
-
-[1] http://bitbucketlabs.net/flashbake/
+-- 
+1.7.3.1.gc81ce.dirty
