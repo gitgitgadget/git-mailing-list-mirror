@@ -1,103 +1,339 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [PATCH v1] stash show: fix breakage in 1.7.3
-Date: Sat, 25 Sep 2010 13:32:01 +1000
-Message-ID: <1285385521-17012-1-git-send-email-jon.seymour@gmail.com>
-References: <robbat2-20100924T191752-102740530Z@orbis-terrarum.net>
-Cc: Jon Seymour <jon.seymour@gmail.com>
-To: robbat2@gentoo.org, git@vger.kernel.org,
-	brian@gernhardtsoftware.com
-X-From: git-owner@vger.kernel.org Sat Sep 25 05:29:08 2010
+From: David Ripton <dripton@ripton.net>
+Subject: Re: [RFC/PATCH] Add --exclude-dir option to git grep
+Date: Fri, 24 Sep 2010 20:35:42 -0700
+Message-ID: <20100925033530.GA21483@nulllenny.dreamhost.com>
+References: <20100924042614.GA25944@nulllenny.dreamhost.com> <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 05:35:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzLRj-0004o0-Jc
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 05:29:07 +0200
+	id 1OzLYC-0006Hp-1g
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 05:35:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565Ab0IYD3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 23:29:01 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:44490 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750816Ab0IYD3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 23:29:00 -0400
-Received: by pzk34 with SMTP id 34so790145pzk.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 20:29:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=bB+ggPkspAJW/jXBjT5ejEcMWcslHZoZ/y96oawHibQ=;
-        b=o001d6TjhUds4V+7R3UFbKMry0wYTkUglxDCWrBQTqa9WvizgoSwovd44QIC53EVZf
-         px42q90itcascSk8xUBMNTnUcnEEZoHXR/yQ1j0Kzd3bkjjXmawgwYe/xKRxPamvI+0G
-         0Lm8d64aPRbyiQEQeiwxuFpy4YpSzmPtkoKGQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=F6d/ShMc1AH25/Io9O0YPdBMa+c/QjI8inOZTgzFedwk8vSrW7Z3KWMUIaRvnKnQN8
-         TmAjT6r6B22oOSfdTEUgDc+JjInHr4uXKlPIEOP/9pqG5G+fRwE+NbaB+V3JoXVREY8j
-         GHuV6Jg5zB0QEm6VRpPjny+SXDovQ3chf37v4=
-Received: by 10.142.249.19 with SMTP id w19mr3570694wfh.189.1285385340055;
-        Fri, 24 Sep 2010 20:29:00 -0700 (PDT)
-Received: from localhost.localdomain (124-169-4-134.dyn.iinet.net.au [124.169.4.134])
-        by mx.google.com with ESMTPS id u16sm3185762wfg.20.2010.09.24.20.28.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 24 Sep 2010 20:28:58 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.14.g132f5.dirty
-In-Reply-To: <robbat2-20100924T191752-102740530Z@orbis-terrarum.net>
+	id S1754838Ab0IYDfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 23:35:43 -0400
+Received: from smarty.dreamhost.com ([208.113.175.8]:44589 "EHLO
+	smarty.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043Ab0IYDfm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 23:35:42 -0400
+X-Greylist: delayed 83368 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Sep 2010 23:35:42 EDT
+Received: from eridanus.dreamhost.com (eridanus.dreamhost.com [173.236.136.187])
+	by smarty.dreamhost.com (Postfix) with ESMTP id 608306E805A;
+	Fri, 24 Sep 2010 20:35:42 -0700 (PDT)
+Received: by eridanus.dreamhost.com (Postfix, from userid 59956)
+	id 5AB40D279C; Fri, 24 Sep 2010 20:35:42 -0700 (PDT)
+Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157112>
 
-The detached-stash series regressed support for
-   git stash show stash@{0}
+It works much like the same option in recent versions of GNU grep.
+Any directory name which matches the option will not be searched.
 
-due to a faulty assumption that:
-   git rev-parse --no-revs -- stash@{0}
+For example, "git grep --exclude-dir Documentation malloc"
 
-would treat stash@{0} as a revision reference and
-thus not output it.
-
-This patch restores the behaviour of git stash show
-so that git rev-parse is not used for parsing flags
-and only flag like options are assigned to
-the FLAGS variable.
-
-It has been tested with Brandon Casey's improved t3903 tests.
-
-Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+Signed-off-by: David Ripton <dripton@ripton.net>
 ---
- git-stash.sh |    5 +----
- 1 files changed, 1 insertions(+), 4 deletions(-)
+Version 2 of this patch, following Junio's comments:
+strdup() -> xstrdup()
+Fixed a declaration after code.
+Removed basenames from subdirs()
+Do not call subdirs() at all if exclude_dir_list is empty.
 
-This revision further simplifies the parsing code
-by removing use of git rev-parse for FLAGS parsing
-altogether.
+Unfortunately the other suggested optimization, moving the original test for
+max_depth < 0 in accept_subdir to the top, turned out to be unsafe.  And
+simplifying subdirs() to only deal with the last subdirectory rather than the
+whole path makes it difficult to exclude a multi-part directory like
+"Documentation/technical".  But now we totally skip the subdirs() call when
+exclude_dir_list is empty, so at least the cost is only born by those 
+actually using this option.
 
-diff --git a/git-stash.sh b/git-stash.sh
-index 7ce818b..8b18bb5 100755
---- a/git-stash.sh
-+++ b/git-stash.sh
-@@ -265,9 +265,6 @@ parse_flags_and_rev()
- 	i_tree=
+ builtin/grep.c |  130 +++++++++++++++++++++++++++++++++++++++++++++++++------
+ grep.h         |    2 +
+ 2 files changed, 117 insertions(+), 15 deletions(-)
+
+diff --git a/builtin/grep.c b/builtin/grep.c
+index da32f3d..220a7db 100644
+--- a/builtin/grep.c
++++ b/builtin/grep.c
+@@ -333,15 +333,68 @@ static int grep_config(const char *var, const char *value, void *cb)
+ 	return 0;
+ }
  
- 	REV=$(git rev-parse --no-flags --symbolic "$@" 2>/dev/null)
--	FLAGS=$(git rev-parse --no-revs -- "$@" 2>/dev/null)
++/* Return a sorted string_list of all possible directories within path.
++ *
++ * e.g. if path is "foo/bar/baz", then return a string_list with:
++ *                 "bar"
++ *                 "foo"
++ *                 "foo/bar"
++ *
++ *  (We do not need to return baz because the paths we receive always
++ *  end with a file not a directory.)
++ */
++static struct string_list subdirs(const char *path)
++{
++	struct string_list list = STRING_LIST_INIT_DUP;
++	/* Make a copy so we can chop off the end. */
++	char *path2 = xstrdup(path);
++	/* A pointer that advances along path2 */
++	char *path3 = path2;
++	/* Chop off the basename portion. */
++	if ((path3 = strrchr(path3, '/')) != NULL)
++		*path3 = '\0';
++	int again = 0;
++	do {
++		again = 0;
++		string_list_append(&list, path2);
++		path3 = path2;
++		while ((path3 = strchr(path3, '/')) != NULL) {
++			path3++;
++			string_list_append(&list, path3);
++		}
++		path3 = path2;
++		if ((path3 = strrchr(path3, '/')) != NULL) {
++			*path3 = '\0';
++			again = 1;
++		}
++	} while (again);
++	free(path2);
++	sort_string_list(&list);
++	return list;
++}
++
+ /*
+  * Return non-zero if max_depth is negative or path has no more then max_depth
+  * slashes.
+  */
+-static int accept_subdir(const char *path, int max_depth)
++static int accept_subdir(const char *path, int max_depth,
++				const struct string_list exclude_dir_list)
+ {
++	if (exclude_dir_list.nr > 0) {
++		struct string_list subdir_list = subdirs(path);
++		int i;
++		for (i = 0; i < subdir_list.nr; i++) {
++			if (string_list_has_string(&exclude_dir_list,
++					subdir_list.items[i].string)) {
++				string_list_clear(&subdir_list, 0);
++				return 0;
++			}
++		}
++		string_list_clear(&subdir_list, 0);
++	}
++
+ 	if (max_depth < 0)
+ 		return 1;
 -
--	set -- $FLAGS
+ 	while ((path = strchr(path, '/')) != NULL) {
+ 		max_depth--;
+ 		if (max_depth < 0)
+@@ -355,7 +408,8 @@ static int accept_subdir(const char *path, int max_depth)
+  * Return non-zero if name is a subdirectory of match and is not too deep.
+  */
+ static int is_subdir(const char *name, int namelen,
+-		const char *match, int matchlen, int max_depth)
++		const char *match, int matchlen, int max_depth,
++		const struct string_list exclude_dir_list)
+ {
+ 	if (matchlen > namelen || strncmp(name, match, matchlen))
+ 		return 0;
+@@ -364,7 +418,8 @@ static int is_subdir(const char *name, int namelen,
+ 		return 1;
  
- 	FLAGS=
- 	while test $# -ne 0
-@@ -282,7 +279,7 @@ parse_flags_and_rev()
- 			--)
- 				:
- 			;;
--			*)
-+			-*)
- 				FLAGS="${FLAGS}${FLAGS:+ }$1"
- 			;;
- 		esac
+ 	if (!matchlen || match[matchlen-1] == '/' || name[matchlen] == '/')
+-		return accept_subdir(name + matchlen + 1, max_depth);
++		return accept_subdir(name + matchlen + 1, max_depth,
++					exclude_dir_list);
+ 
+ 	return 0;
+ }
+@@ -373,18 +428,21 @@ static int is_subdir(const char *name, int namelen,
+  * git grep pathspecs are somewhat different from diff-tree pathspecs;
+  * pathname wildcards are allowed.
+  */
+-static int pathspec_matches(const char **paths, const char *name, int max_depth)
++static int pathspec_matches(const char **paths, const char *name,
++				int max_depth,
++				const struct string_list exclude_dir_list)
+ {
+ 	int namelen, i;
+ 	if (!paths || !*paths)
+-		return accept_subdir(name, max_depth);
++		return accept_subdir(name, max_depth, exclude_dir_list);
+ 	namelen = strlen(name);
+ 	for (i = 0; paths[i]; i++) {
+ 		const char *match = paths[i];
+ 		int matchlen = strlen(match);
+ 		const char *cp, *meta;
+ 
+-		if (is_subdir(name, namelen, match, matchlen, max_depth))
++		if (is_subdir(name, namelen, match, matchlen, max_depth,
++				exclude_dir_list))
+ 			return 1;
+ 		if (!fnmatch(match, name, 0))
+ 			return 1;
+@@ -595,14 +653,17 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
+ 		struct cache_entry *ce = active_cache[nr];
+ 		if (!S_ISREG(ce->ce_mode))
+ 			continue;
+-		if (!pathspec_matches(paths, ce->name, opt->max_depth))
++		if (!pathspec_matches(paths, ce->name, opt->max_depth,
++					opt->exclude_dir_list))
+ 			continue;
++
+ 		/*
+-		 * If CE_VALID is on, we assume worktree file and its cache entry
+-		 * are identical, even if worktree file has been modified, so use
+-		 * cache version instead
++		 * If CE_VALID is on, we assume worktree file and its cache
++		 * entry are identical, even if worktree file has been
++		 * modified, so use cache version instead
+ 		 */
+-		if (cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) {
++		if (cached || (ce->ce_flags & CE_VALID) ||
++			ce_skip_worktree(ce)) {
+ 			if (ce_stage(ce))
+ 				continue;
+ 			hit |= grep_sha1(opt, ce->sha1, ce->name, 0);
+@@ -656,7 +717,8 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
+ 			strbuf_addch(&pathbuf, '/');
+ 
+ 		down = pathbuf.buf + tn_len;
+-		if (!pathspec_matches(paths, down, opt->max_depth))
++		if (!pathspec_matches(paths, down, opt->max_depth,
++					opt->exclude_dir_list))
+ 			;
+ 		else if (S_ISREG(entry.mode))
+ 			hit |= grep_sha1(opt, entry.sha1, pathbuf.buf, tn_len);
+@@ -722,7 +784,8 @@ static int grep_objects(struct grep_opt *opt, const char **paths,
+ 	return hit;
+ }
+ 
+-static int grep_directory(struct grep_opt *opt, const char **paths)
++static int grep_directory(struct grep_opt *opt, const char **paths,
++				const struct string_list exclude_dir_list)
+ {
+ 	struct dir_struct dir;
+ 	int i, hit = 0;
+@@ -730,7 +793,12 @@ static int grep_directory(struct grep_opt *opt, const char **paths)
+ 	memset(&dir, 0, sizeof(dir));
+ 	setup_standard_excludes(&dir);
+ 
++	for (i = 0; i < exclude_dir_list.nr; i++)
++		add_exclude(exclude_dir_list.items[i].string, "", 0,
++				dir.exclude_list);
++
+ 	fill_directory(&dir, paths);
++
+ 	for (i = 0; i < dir.nr; i++) {
+ 		hit |= grep_file(opt, dir.entries[i]->name);
+ 		if (hit && opt->status_only)
+@@ -826,6 +894,29 @@ static int help_callback(const struct option *opt, const char *arg, int unset)
+ 	return -1;
+ }
+ 
++static int exclude_dir_callback(const struct option *opt, const char *arg,
++				int unset)
++{
++	struct string_list *exclude_dir_list = opt->value;
++	char *s1 = (char *)arg;
++	char *s2;
++	char *s3;
++	/* We do not want leading or trailing slashes. */
++	while (*s1 == '/') {
++		s1++;
++	}
++	s2 = xstrdup(s1);
++	s3 = s2 + strlen(s2) - 1;
++	while (s3 >= s2 && *s3 == '/') {
++		*s3 = '\0';
++		s3--;
++	}
++	string_list_append(exclude_dir_list, s2);
++	free(s2);
++	return 0;
++}
++
++
+ int cmd_grep(int argc, const char **argv, const char *prefix)
+ {
+ 	int hit = 0;
+@@ -837,6 +928,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	struct object_array list = OBJECT_ARRAY_INIT;
+ 	const char **paths = NULL;
+ 	struct string_list path_list = STRING_LIST_INIT_NODUP;
++	struct string_list exclude_dir_list = STRING_LIST_INIT_DUP;
+ 	int i;
+ 	int dummy;
+ 	int use_index = 1;
+@@ -920,6 +1012,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN(0, "all-match", &opt.all_match,
+ 			"show only matches from files that match all patterns"),
+ 		OPT_GROUP(""),
++		{ OPTION_CALLBACK, 0, "exclude-dir", &exclude_dir_list,
++		  "pattern", "exclude <pattern>", PARSE_OPT_NONEG,
++		  exclude_dir_callback },
++		OPT_GROUP(""),
+ 		{ OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
+ 			"pager", "show matching files in the pager",
+ 			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
+@@ -974,6 +1070,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			     PARSE_OPT_STOP_AT_NON_OPTION |
+ 			     PARSE_OPT_NO_INTERNAL_HELP);
+ 
++	sort_string_list(&exclude_dir_list);
++	opt.exclude_dir_list = exclude_dir_list;
++
+ 	if (use_index && !startup_info->have_repository)
+ 		/* die the same way as if we did it at the beginning */
+ 		setup_git_directory();
+@@ -1093,7 +1192,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			die("--cached cannot be used with --no-index.");
+ 		if (list.nr)
+ 			die("--no-index cannot be used with revs.");
+-		hit = grep_directory(&opt, paths);
++		hit = grep_directory(&opt, paths, exclude_dir_list);
+ 	} else if (!list.nr) {
+ 		if (!cached)
+ 			setup_work_tree();
+@@ -1110,5 +1209,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 	if (hit && show_in_pager)
+ 		run_pager(&opt, prefix);
+ 	free_grep_patterns(&opt);
++	string_list_clear(&exclude_dir_list, 0);
+ 	return !hit;
+ }
+diff --git a/grep.h b/grep.h
+index efa8cff..0400611 100644
+--- a/grep.h
++++ b/grep.h
+@@ -1,6 +1,7 @@
+ #ifndef GREP_H
+ #define GREP_H
+ #include "color.h"
++#include "string-list.h"
+ 
+ enum grep_pat_token {
+ 	GREP_PATTERN,
+@@ -99,6 +100,7 @@ struct grep_opt {
+ 	unsigned post_context;
+ 	unsigned last_shown;
+ 	int show_hunk_mark;
++	struct string_list exclude_dir_list;
+ 	void *priv;
+ 
+ 	void (*output)(struct grep_opt *opt, const void *data, size_t size);
+
 -- 
-1.7.2.14.g132f5.dirty
+David Ripton    dripton@ripton.net
