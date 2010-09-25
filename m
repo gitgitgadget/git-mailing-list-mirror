@@ -1,91 +1,135 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC/PATCH 0/3] fast-import: give importers access to the object store
-Date: Sat, 25 Sep 2010 02:17:09 +0200
-Message-ID: <AANLkTin_DvzhXSaT62Lr7D_CxD9V0vcaYE3u9PoQYZ+o@mail.gmail.com>
-References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes> <20100905031528.GA2344@burratino>
- <1284596048.3298.3.camel@wilber> <20100924194313.GA8114@burratino>
- <AANLkTinsotbGpg1LAXA+UchBHQrBK12tkX+o4tOFWUOF@mail.gmail.com> <20100925000156.GA23735@burratino>
+From: David Ripton <dripton@ripton.net>
+Subject: Re: [RFC/PATCH] Add --exclude-dir option to git grep
+Date: Fri, 24 Sep 2010 22:07:40 -0400
+Message-ID: <4C9D596C.4060906@ripton.net>
+References: <20100924042614.GA25944@nulllenny.dreamhost.com> <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sam Vilain <sam@vilain.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 02:17:43 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 04:08:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzISP-0000Ku-AM
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 02:17:37 +0200
+	id 1OzKBj-00029e-Mk
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 04:08:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754281Ab0IYARb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Sep 2010 20:17:31 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58095 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814Ab0IYARa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 24 Sep 2010 20:17:30 -0400
-Received: by ywh1 with SMTP id 1so1143074ywh.19
-        for <git@vger.kernel.org>; Fri, 24 Sep 2010 17:17:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=gp74uGYfQE5wPNLg1DkUgn08TgP2pgvl92zleru8K5o=;
-        b=nC+fmHIUWygTFr1a6hp/jYIg4GZeq/OLOe6CfmcH9bIQoB3x2irwC5b8KCc+5x3pum
-         061JzZJEn9NwOaOvjcy2+tiAD9rM6irtWSNytvHQRpIQ7+2XRLPi3OS5c1Razk6jBhNV
-         PO6UaL5nSw8OhDZzfYAI06TxDh6QlHTJTSvvw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=fJ/d0DOxnzesTNgRrkc/G4+w/RUtI6Pv+qSC2qZyTsxX9USpvnuHT9nAQR3z27u7dQ
-         u+mk3J6q7p7lH3Rsal0uWRkKv2TVEyyB+tvna/WMrFLiYUkoFVDjcS10WwyWJ09xfmwC
-         D+NG34DVojnQ/FNnu5JqU++3jPq0of9Jc6E9E=
-Received: by 10.150.11.20 with SMTP id 20mr5441893ybk.407.1285373850090; Fri,
- 24 Sep 2010 17:17:30 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Fri, 24 Sep 2010 17:17:09 -0700 (PDT)
-In-Reply-To: <20100925000156.GA23735@burratino>
+	id S1755221Ab0IYCIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 22:08:13 -0400
+Received: from hapkido.dreamhost.com ([66.33.216.122]:49418 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755180Ab0IYCIL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 22:08:11 -0400
+Received: from homiemail-a52.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id DA16817AD84
+	for <git@vger.kernel.org>; Fri, 24 Sep 2010 19:08:10 -0700 (PDT)
+Received: from homiemail-a52.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a52.g.dreamhost.com (Postfix) with ESMTP id 6C1E36B80C4;
+	Fri, 24 Sep 2010 19:07:43 -0700 (PDT)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=ripton.net; h=message-id:date
+	:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=ripton.net; b=
+	3bPkUmzWYp5AuVGdkTZ0jnvmZkuQkq5A9QrAMHnacffsJlrTTtK2CSBXSrLFcGCB
+	O7eG5UKL1xx2HlcsaCCwxHXWrE+OT/K9XZPsslrfsZuUtQfyszwxe4yQShRGpLBl
+	Va27DVUFUy1LDfOZPa9oIslynLXK1SPyGC3qDmRccA8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=ripton.net; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=ripton.net; bh=PgmQ/J
+	cPuBUC598m8GGeEqZYOQk=; b=T3qjWDLXZ3ntr6ibLZOo4rXmwEALJgLtl+mXmT
+	nmE/vqHJlkKOa/9qiE1t98zvrZTXZPwG9W0NL60rIvrNFDpNgcgGhRNlv41Dn7Rw
+	lBsTTp6tv72hQL3LM4UHIB9BrK/vgi4L0Z6hg8blDvRR08bKRVmgivLoDmn8jT3N
+	2Tops=
+Received: from [192.168.2.175] (pool-98-118-245-254.clppva.fios.verizon.net [98.118.245.254])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: dripton@ripton.net)
+	by homiemail-a52.g.dreamhost.com (Postfix) with ESMTPSA id 1CA026B80C0;
+	Fri, 24 Sep 2010 19:07:43 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100908 Lightning/1.0b3pre Thunderbird/3.1.3
+In-Reply-To: <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157106>
 
-Heya,
+On 09/24/10 16:33, Junio C Hamano wrote:
 
-On Sat, Sep 25, 2010 at 02:01, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> I was thinking of a frontend that reads or writes the marks
-> file itself, but import/export-marks features can also be used to jus=
-t
-> save/restore marks opaquely.
+> Thanks.
 
-That's exactly what git-remote-hg does :). The hg exporter and
-importer doesn't care about where git stores it's marks. As long as
-they both use the same marks it all works.
+Thank you for the code review.
 
-> Thus I have no precedent to fall back on. :)
+> Do you need to run this every time we visit a new directory, expanding
+> directory components over and over?
+>
+> It is not like we are jumping around directory hierarchies, visiting
+> "foo/bar" and then "xyzzy" and then "foo/baz", but rather we visit
+> directories in a nicer order (i.e. after leaving "foo/bar" but before
+> jumping to "xyzzy", we would visit "foo/baz"), don't we?
 
-Seems like it.
+I agree that there's room for optimization here.
 
-> Yep, that would work. =C2=A0Still I don't think it makes a lot of sen=
-se to
-> allow "feature report-fd=3D4" in the fast-import stream. =C2=A0If I c=
-an
-> ensure that fast-import has file descriptor 4 mapped to the right
-> place, then I am in control of the process that starts fast-import, s=
-o
-> a command-line option would be easy enough to use, no?
+>>   	if (max_depth<  0)
+>>   		return 1;
+>
+> Isn't this original check much cheaper than the new test based on many
+> comparisons and should be at the beginning of the function?
 
-True. Perhaps some more input from others would help.
+Yes.
 
---=20
-Cheers,
+>> @@ -826,6 +886,25 @@ static int help_callback(const struct option *opt, const char *arg, int unset)
+>>   	return -1;
+>>   }
+>>
+>> +static int exclude_dir_callback(const struct option *opt, const char *arg,
+>> +				int unset)
+>> +{
+>> +	struct string_list *exclude_dir_list = opt->value;
+>> +	char *s1 = (char *)arg;
+>
+> What is this cast for?
 
-Sverre Rabbelier
+It avoids:
+
+"builtin/grep.c:893: warning: initialization discards qualifiers from 
+pointer target type"
+
+>> +	/* We do not want leading or trailing slashes. */
+>> +	while (*s1 == '/') {
+>> +		s1++;
+>> +	}
+>
+> Can the result of this loop become an empty string, and what happens to
+> the rest of the logic when it happens?
+
+If the string is just forward slashes, then it will become an empty 
+string, which will strdup successfully, and then that particular 
+--exclude-dir will have no effect.  Just tested that case and did not 
+find a bug.
+
+>> +	char *s2 = strdup(s1);
+>
+> decl-after-statement.
+
+Oops.
+
+Sadly, "gcc -Wall -std=c89" does not warn for this.  ("-pedantic" does.)
+
+> Use xstrdup().
+
+Okay.
+
+>> +	while (*s2&&  s2[strlen(s2)-1] == '/') {
+>> +		s2[strlen(s2)-1] = '\0';
+>> +	}
+>
+> Don't scan s2 repeatedly to find its end by calling strlen(s2) on it.
+> Find its length once, and scan backwards from there yourself.
+
+Okay.  I'll try to send out a revised version of this patch soon.
+
+-- 
+David Ripton    dripton@ripton.net
