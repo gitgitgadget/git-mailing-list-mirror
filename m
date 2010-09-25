@@ -1,74 +1,146 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv3 12/16] t7001 (mv): add missing &&
-Date: Sat, 25 Sep 2010 13:07:03 -0600
-Message-ID: <1285441627-28233-13-git-send-email-newren@gmail.com>
+Subject: [PATCHv3 10/16] t6016 (rev-list-graph-simplify-history): add missing &&
+Date: Sat, 25 Sep 2010 13:07:01 -0600
+Message-ID: <1285441627-28233-11-git-send-email-newren@gmail.com>
 References: <1285441627-28233-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 25 21:06:37 2010
+X-From: git-owner@vger.kernel.org Sat Sep 25 21:06:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oza4v-0005Xq-Vj
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 21:06:34 +0200
+	id 1Oza4t-0005Xq-Pk
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 21:06:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756795Ab0IYTGE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 15:06:04 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:48425 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756682Ab0IYTFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 15:05:52 -0400
-Received: by mail-px0-f174.google.com with SMTP id 10so1062331pxi.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 12:05:52 -0700 (PDT)
+	id S1756672Ab0IYTFt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 15:05:49 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:54740 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756596Ab0IYTFs (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 15:05:48 -0400
+Received: by mail-pz0-f46.google.com with SMTP id 34so891416pzk.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 12:05:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ldfdKL8AAzXqWk1ZjS24N9LCnLOWoH0zKtZDdWSB2yw=;
-        b=jM5GjZEUdwq33+5r9ym0+cKlv67GY14cYmk/GkeMzhErVDwYm8icavCWadfIatiW1N
-         RZQ0YGCZnv60wnVx+bLlbNtb0eXxlEYNsoBmznwS72WkzfxLlsS8synJvAzxv+yfR0wV
-         V/51K4nKfplMMo6OBs/dIzfp2/q2JHr4jgJkU=
+        bh=jPpML8U3EvlmzM1HExJSGwgR6ViI6O3AsWBjh+kq5gA=;
+        b=vzZAk6gje3mXjSU/TVd/8/9IQSqFCD+aT9oxG8QidAXIGgiQcDVIkwke76q4TYgxz0
+         Jmc6o0artFzk2CXuSxrnwih4UKt8z+eV6fcQLLnIJGEzITqowRXRCBf7bkMhtTgYmSat
+         3Dk6WBBiOfDXzwnC7JOpa8VxP7cp4souangfc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=HOrlZk+wvsAih8hhwLnyBur5tZfeKnVuPd8893Yk6EeGP1Ogtt3HD9cSu33drpk7vS
-         tKesP89ZCr2RdOLbUtXmWe2WX2GtMdUovnCvtafw43intKVGBpd6kR1BdmJFraokZDIX
-         2ECFHn/4eytecCH6Iq0j3PUQjmonJENm1qPMo=
-Received: by 10.114.148.15 with SMTP id v15mr5668346wad.127.1285441552304;
-        Sat, 25 Sep 2010 12:05:52 -0700 (PDT)
+        b=VG2gqXjo8EZA6DigPDsVCP++VmV6A5f5WxGucFehKtBMwON8gr4cX3QDAjvgOXx0y5
+         ZJEExYv/aNrjTkeekjz8SOD+wTkTF8EClD79FWMIZBA8rMGPG3STkaUcLjFlXaMFep3R
+         XYJ0DtdachwmY7Mseg0xFuBE/WogkdP1sCNww=
+Received: by 10.114.36.2 with SMTP id j2mr4084014waj.117.1285441547942;
+        Sat, 25 Sep 2010 12:05:47 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id o17sm6338669wal.21.2010.09.25.12.05.50
+        by mx.google.com with ESMTPS id o17sm6338669wal.21.2010.09.25.12.05.46
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 25 Sep 2010 12:05:51 -0700 (PDT)
+        Sat, 25 Sep 2010 12:05:47 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.95.g14291
 In-Reply-To: <1285441627-28233-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157188>
 
-Also, prefix an expected-to-fail git mv command with 'test_must_fail'.
+Also removed several repeated tag and branch deletions, since the tags and
+branches had already been deleted.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t7001-mv.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ t/t6016-rev-list-graph-simplify-history.sh |   24 ++++++------------------
+ 1 files changed, 6 insertions(+), 18 deletions(-)
 
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 65a35d9..624e6d2 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -61,7 +61,7 @@ test_expect_success \
- test_expect_success \
-     'checking -f on untracked file with existing target' \
-     'touch path0/untracked1 &&
--     git mv -f untracked1 path0
-+     test_must_fail git mv -f untracked1 path0 &&
-      test ! -f .git/index.lock &&
-      test -f untracked1 &&
-      test -f path0/untracked1'
+diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-list-graph-simplify-history.sh
+index 27fd52b..e640c41 100755
+--- a/t/t6016-rev-list-graph-simplify-history.sh
++++ b/t/t6016-rev-list-graph-simplify-history.sh
+@@ -29,7 +29,7 @@ test_expect_success 'set up rev-list --graph test' '
+ 	# Octopus merge B and C into branch A
+ 	git checkout A &&
+ 	git merge B C &&
+-	git tag A4
++	git tag A4 &&
+ 
+ 	test_commit A5 bar.txt &&
+ 
+@@ -39,7 +39,7 @@ test_expect_success 'set up rev-list --graph test' '
+ 	test_commit C4 bar.txt &&
+ 	git checkout A &&
+ 	git merge -s ours C &&
+-	git tag A6
++	git tag A6 &&
+ 
+ 	test_commit A7 bar.txt &&
+ 
+@@ -90,7 +90,7 @@ test_expect_success '--graph --all' '
+ # that undecorated merges are interesting, even with --simplify-by-decoration
+ test_expect_success '--graph --simplify-by-decoration' '
+ 	rm -f expected &&
+-	git tag -d A4
++	git tag -d A4 &&
+ 	echo "* $A7" >> expected &&
+ 	echo "*   $A6" >> expected &&
+ 	echo "|\\  " >> expected &&
+@@ -119,9 +119,9 @@ test_expect_success '--graph --simplify-by-decoration' '
+ # Get rid of all decorations on branch B, and graph with it simplified away
+ test_expect_success '--graph --simplify-by-decoration prune branch B' '
+ 	rm -f expected &&
+-	git tag -d B2
+-	git tag -d B1
+-	git branch -d B
++	git tag -d B2 &&
++	git tag -d B1 &&
++	git branch -d B &&
+ 	echo "* $A7" >> expected &&
+ 	echo "*   $A6" >> expected &&
+ 	echo "|\\  " >> expected &&
+@@ -143,9 +143,6 @@ test_expect_success '--graph --simplify-by-decoration prune branch B' '
+ 
+ test_expect_success '--graph --full-history -- bar.txt' '
+ 	rm -f expected &&
+-	git tag -d B2
+-	git tag -d B1
+-	git branch -d B
+ 	echo "* $A7" >> expected &&
+ 	echo "*   $A6" >> expected &&
+ 	echo "|\\  " >> expected &&
+@@ -163,9 +160,6 @@ test_expect_success '--graph --full-history -- bar.txt' '
+ 
+ test_expect_success '--graph --full-history --simplify-merges -- bar.txt' '
+ 	rm -f expected &&
+-	git tag -d B2
+-	git tag -d B1
+-	git branch -d B
+ 	echo "* $A7" >> expected &&
+ 	echo "*   $A6" >> expected &&
+ 	echo "|\\  " >> expected &&
+@@ -181,9 +175,6 @@ test_expect_success '--graph --full-history --simplify-merges -- bar.txt' '
+ 
+ test_expect_success '--graph -- bar.txt' '
+ 	rm -f expected &&
+-	git tag -d B2
+-	git tag -d B1
+-	git branch -d B
+ 	echo "* $A7" >> expected &&
+ 	echo "* $A5" >> expected &&
+ 	echo "* $A3" >> expected &&
+@@ -196,9 +187,6 @@ test_expect_success '--graph -- bar.txt' '
+ 
+ test_expect_success '--graph --sparse -- bar.txt' '
+ 	rm -f expected &&
+-	git tag -d B2
+-	git tag -d B1
+-	git branch -d B
+ 	echo "* $A7" >> expected &&
+ 	echo "* $A6" >> expected &&
+ 	echo "* $A5" >> expected &&
 -- 
 1.7.3.95.g14291
