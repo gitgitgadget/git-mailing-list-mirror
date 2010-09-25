@@ -1,76 +1,98 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: RFC: what should git rev-parse --flags HEAD do?
-Date: Sun, 26 Sep 2010 05:38:02 +1000
-Message-ID: <AANLkTikW=4NiZ_jCq6geqta_XHiWJPUhWvvEtJ1Q3G9S@mail.gmail.com>
-References: <AANLkTimEToibgpUS1KTSruFRdggi3kbAJU5tfk9r6d2U@mail.gmail.com>
-	<7vfwwxogiv.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCHv3 15/16] Add missing &&'s throughout the testsuite
+Date: Sat, 25 Sep 2010 19:38:27 +0000
+Message-ID: <AANLkTi=5_vAu=X0Rg9WeOko1DrYsF6dc=FeHGfUHsUzd@mail.gmail.com>
+References: <1285441627-28233-1-git-send-email-newren@gmail.com>
+	<1285441627-28233-16-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 21:38:42 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 21:38:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ozaa2-0001Ou-HJ
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 21:38:42 +0200
+	id 1Ozaa3-0001Ou-1o
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 21:38:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756164Ab0IYTiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 15:38:05 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:52538 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753288Ab0IYTiE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 15:38:04 -0400
-Received: by qwh6 with SMTP id 6so2511744qwh.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 12:38:02 -0700 (PDT)
+	id S1756860Ab0IYTi2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Sep 2010 15:38:28 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50766 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756809Ab0IYTi2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 25 Sep 2010 15:38:28 -0400
+Received: by iwn5 with SMTP id 5so3418509iwn.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 12:38:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=hxX2En48S9uTtd0Coc6fZH2/BoK7VAGRCDWFwu5uxh0=;
-        b=ZBaEhhVHNw5+Kbd1qlaZNyZsNZgQnQ0QwOY8AuhqrIA1XBIy7AV9PFTr6Vq1zSHyIV
-         9JbFzpnSxQ2nNm6pliNeVdTVMw3gudDGcaouBR0KIJjqAL2FZgUDYpwKFGF7P+/WqzNp
-         nrXEOa6ifXhF5XstVVKGEfS6v09qNeYF4ckCE=
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=k3kQNqUqthRPepY+VkJGE2QLD08HQWq8HCsH3dTlc7Y=;
+        b=gdvOngEM1lOnA7gDuTidr0q8f9gM+hrHagXmnU3Y97nXBppRNooADfPec3GKL7df8W
+         Qp9cN1lAkymAcEKOKj9EDq2Zgpd83F1pSQdUNLRNIpiUrzNyZLuOSv014iXgM+0PHXoA
+         U8+ghWF8lA6hRCAcGiqDqw8P4L68Zb5W528Ak=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=vVYKMXcbW5uHowzs44W7qr0Cf+JttSBRD6kkwWzjKVxeneetIaUNKti1627LxsUCqH
-         U6S1Z8pbDUnLq0WU4ku1xk+nMxexWg99foo6CKK7GqSR7fC7C2vNv6EzeeLoH04WFbIX
-         OwHDsBjPJgiLEQse2PtaykaBfuUN31VxdFnlg=
-Received: by 10.224.71.143 with SMTP id h15mr3675137qaj.217.1285443482549;
- Sat, 25 Sep 2010 12:38:02 -0700 (PDT)
-Received: by 10.229.219.196 with HTTP; Sat, 25 Sep 2010 12:38:02 -0700 (PDT)
-In-Reply-To: <7vfwwxogiv.fsf@alter.siamese.dyndns.org>
+         :cc:content-type:content-transfer-encoding;
+        b=RHI1b0dPWBcLNor1Q7HrACSejNbX/JdN+TSetuyG7LPrmQ6/FkF4Na6i2u9Hkn9G1s
+         x6OyRlwGDEZ1ZEa/tUCfy0obNCmfCrWKi/7F45lYZwsZ7n8wn4ionYbIQGknFJ8aD9kB
+         DqZVgS3lu0gOTt5GZKzwXAlu2t1cjZDzDCgyw=
+Received: by 10.231.146.134 with SMTP id h6mr6131830ibv.170.1285443507450;
+ Sat, 25 Sep 2010 12:38:27 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Sat, 25 Sep 2010 12:38:27 -0700 (PDT)
+In-Reply-To: <1285441627-28233-16-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157192>
 
-On Sun, Sep 26, 2010 at 3:54 AM, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Perhaps you are missing --no-revs.
-> ...
+On Sat, Sep 25, 2010 at 19:07, Elijah Newren <newren@gmail.com> wrote:
 
-> "--flags" is an afterthought that filters out non-flags in other parts; I
-> do not think it applied to the "rev" part (i.e. giving --no-revs at the
-> same time would be a valid workaround if you know you do not want HEAD or
-> any revision traversal argument) in any released version of git.
->
+> + =C2=A0 =C2=A0 =C2=A0 cat <<EOF >.gitattributes
+> +[attr]notest !test
+> +f =C2=A0 =C2=A0 =C2=A0test=3Df
+> +a/i test=3Da/i
+> +onoff test -test
+> +offon -test test
+> +no notest
+> +EOF &&
+> + =C2=A0 =C2=A0 =C2=A0 cat <<EOF >a/.gitattributes
+> +g test=3Da/g
+> +b/g test=3Da/b/g
+> +EOF &&
+> + =C2=A0 =C2=A0 =C2=A0 cat <<EOF >a/b/.gitattributes
+> +h test=3Da/b/h
+> +d/* test=3Da/b/d/*
+> +d/yes notest
+> +EOF
+> =C2=A0'
 
-i am aware that --no-revs exists and can be used with --flags to
-ensure that only flag arguments are displayed.
+Why is the && at the end of the EOF, on my system with dash:
 
-The issue is that the documentation currently implies that --flags
-alone is sufficient to suppress anything that is not a flag when this
-is not, in fact, the case.
+    $ cat /tmp/meh.sh
+    #!/bin/sh
 
-If there is some reason --flags should not imply --no-revs, then the
-documentation should be updated to state:
+    cat <<EOF >/tmp/file
+    foo
+    bar
+    EOF &&
+    cat <<EOF >>/tmp/file
+    foo
+    bar
+    EOF
 
---flags::
+    $ /bin/dash /tmp/meh.sh ; cat /tmp/file
+    foo
+    bar
+    EOF &&
+    cat <<EOF >>/tmp/file
+    foo
+    bar
+
+The && should be directly after /tmp/file, no?
