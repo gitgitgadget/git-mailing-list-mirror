@@ -1,73 +1,65 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH v4 2/4] rev-parse: add tests for git rev-parse --flags.
-Date: Sat, 25 Sep 2010 14:27:02 +0000
-Message-ID: <AANLkTimj--jZdX++=ZjF3A0HE11FbkgVb2gs3ADVEGvx@mail.gmail.com>
-References: <1285421633-22684-1-git-send-email-jon.seymour@gmail.com>
-	<1285421633-22684-3-git-send-email-jon.seymour@gmail.com>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: Re: What exactly does 'needs update' mean?
+Date: Sat, 25 Sep 2010 08:31:13 -0600
+Message-ID: <4C9E07B1.50600@workspacewhiz.com>
+References: <4C9D8643.1040001@workspacewhiz.com> <7vk4manyql.fsf@alter.siamese.dyndns.org> <4C9E0427.9080901@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, robbat2@gentoo.org, casey@nrlssc.navy.mil
-To: Jon Seymour <jon.seymour@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 16:28:15 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Sep 25 16:31:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzVjW-00023U-Th
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 16:28:11 +0200
+	id 1OzVmc-0003bH-39
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 16:31:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751079Ab0IYO1F convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Sep 2010 10:27:05 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33792 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750944Ab0IYO1D convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Sep 2010 10:27:03 -0400
-Received: by iwn5 with SMTP id 5so3241899iwn.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 07:27:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=QUy1Dc2sfH05BsPscVm6Ut7DPP1aRzpwZ9QDvE2tV2w=;
-        b=Yq8WypghuU93Na6VT+U/QUMaZSt0PlXz6KVhMoSx0jDkJdWEE60JjpwqTRUKKDnc/r
-         7ZV5FcfeVYmswV71CTMdRQ2ykgegb3sIK5CcycxD8VAnYTV6I8NT88llFfvod5HLwWG2
-         uFaRAp4ObwUTeyPMNSRmLiuDF2F3Urjj4drE4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=mtfuT6WeJgP6Xsm0ViYJDDPN7zZorDO0qYANFCIEeiGOLved3iBHr2P5+r65VUsHZ8
-         /g09tNO2SsQ1rLNESpSkm+TujUS0MHVce7WBI+EKGBYAw/SYDlus/NivnmbLp7Whzs/i
-         jDVqUYRJZQocbecbLyPaYQf19FQx0isyfj2SE=
-Received: by 10.231.190.75 with SMTP id dh11mr5637282ibb.189.1285424822333;
- Sat, 25 Sep 2010 07:27:02 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Sat, 25 Sep 2010 07:27:02 -0700 (PDT)
-In-Reply-To: <1285421633-22684-3-git-send-email-jon.seymour@gmail.com>
+	id S1752082Ab0IYObO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 10:31:14 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:55930 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750793Ab0IYObN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 10:31:13 -0400
+Received: (qmail 12329 invoked by uid 399); 25 Sep 2010 08:31:13 -0600
+Received: from unknown (HELO ?192.168.1.100?) (jjensen@workspacewhiz.com@76.27.116.215)
+  by hsmail.qwknetllc.com with ESMTPAM; 25 Sep 2010 08:31:13 -0600
+X-Originating-IP: 76.27.116.215
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100915 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <4C9E0427.9080901@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157157>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157158>
 
-On Sat, Sep 25, 2010 at 13:33, Jon Seymour <jon.seymour@gmail.com> wrot=
-e:
+  ----- Original Message -----
+From: Joshua Jensen
+Date: 9/25/2010 8:16 AM
+>  ----- Original Message -----
+> From: Junio C Hamano
+> Date: 9/25/2010 12:06 AM
+>> Joshua Jensen<jjensen@workspacewhiz.com>  writes:
+>>>   I've come to accept the term 'needs update' when I've forgotten to
+>>> stash or commit before certain Git operations.  However, I got
+>>> cornered today and was asked to explain what it means.  I had to admit
+>>> I don't know.
+>> It came from "you need to run update-index on that path, as you have 
+>> local
+>> modification in the working tree".
+> Okay, your description makes sense to me, and I'll be able to explain 
+> what it means.
+>
+> I did a Google search before I posted here.  It turns out this phrase 
+> is *very* confusing to others.  Casual Joes don't use the plumbing 
+> commands (which I assume git update-index is).  Is there opposition to 
+> modernizing this turn to make it more clear based on the porcelain 
+> commands being run?
+<sigh> Just waking up for the day.
 
-> + =C2=A0 =C2=A0 =C2=A0 : >expected &&
+Is there opposition to modernizing this *term* to make it more clear 
+based on the porcelain commands being run?
 
-We've been dropping the ":>foo" style in favor of ">foo" in other
-tests. There's no need for the ":".
-
-> + =C2=A0 =C2=A0 =C2=A0 echo -X > expected &&
-> + =C2=A0 =C2=A0 =C2=A0 echo -q > expected &&
-> + =C2=A0 =C2=A0 =C2=A0 echo -X > expected &&
-> + =C2=A0 =C2=A0 =C2=A0 echo --no-flags > expected &&
-
-Maybe some echo implementations don't like flag-like params, and we nee=
-d:
-
-    printf "%s\n" "-X"
-
-here. I don't know whether that's the case.
+-Josh
