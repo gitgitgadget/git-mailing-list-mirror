@@ -1,339 +1,173 @@
-From: David Ripton <dripton@ripton.net>
-Subject: Re: [RFC/PATCH] Add --exclude-dir option to git grep
-Date: Fri, 24 Sep 2010 20:35:42 -0700
-Message-ID: <20100925033530.GA21483@nulllenny.dreamhost.com>
-References: <20100924042614.GA25944@nulllenny.dreamhost.com> <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 05:35:48 2010
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: [PATCH] git-svn: allow the mergeinfo property to be set
+Date: Fri, 24 Sep 2010 23:51:50 -0400
+Message-ID: <1285386710-27905-1-git-send-email-stevenrwalter@gmail.com>
+References: <20100924162704.GA4513@dcvr.yhbt.net>
+Cc: Steven Walter <stevenrwalter@gmail.com>
+To: normalperson@yhbt.net, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 25 05:52:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzLYC-0006Hp-1g
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 05:35:48 +0200
+	id 1OzLoJ-0001Yb-Sr
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 05:52:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754838Ab0IYDfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 23:35:43 -0400
-Received: from smarty.dreamhost.com ([208.113.175.8]:44589 "EHLO
-	smarty.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751043Ab0IYDfm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 23:35:42 -0400
-X-Greylist: delayed 83368 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Sep 2010 23:35:42 EDT
-Received: from eridanus.dreamhost.com (eridanus.dreamhost.com [173.236.136.187])
-	by smarty.dreamhost.com (Postfix) with ESMTP id 608306E805A;
-	Fri, 24 Sep 2010 20:35:42 -0700 (PDT)
-Received: by eridanus.dreamhost.com (Postfix, from userid 59956)
-	id 5AB40D279C; Fri, 24 Sep 2010 20:35:42 -0700 (PDT)
-Mail-Followup-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1754991Ab0IYDwW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 23:52:22 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:54587 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754762Ab0IYDwV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 23:52:21 -0400
+Received: by gyd8 with SMTP id 8so1181052gyd.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 20:52:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=cPP0+9kR8gJsLw/QRi3HzUVXEId6zNzqjyGDeOU5xZk=;
+        b=EfpCMjUJN7mV0O2Ht4LCrrkU9X+FfJFpSMj7PYaLL1yPfMUBA8YlnE+e8ZqXKfQboe
+         YTTHt0DFMnMGlfA1J4g5Ogi9Qo4WOGxwAyDb2mMuofDQaSlbC0tMhQibW9+bTL2Tr0wR
+         32OwApMYYqK8rd5sYGpGiNtamo+hSAuOOLBh0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=J0u3ZrYV/7uVMx0M+hD/jqAbgYx0341XjePHYuhvC1NyzOFSPRH3T9n+P7kWoJKy7T
+         qwGKXqS8LNPyfMaDR0LqDEo+P2zOoAwBFs6XNu4RTU63+60p5Q/xkxygnMpWWJKF896i
+         R+B9mwQvbrCY3qYaKLsQCAhw2YaQuplg23h2E=
+Received: by 10.100.131.18 with SMTP id e18mr4681340and.219.1285386740777;
+        Fri, 24 Sep 2010 20:52:20 -0700 (PDT)
+Received: from brock (adsl-234-158-248.bgk.bellsouth.net [74.234.158.248])
+        by mx.google.com with ESMTPS id d4sm4531917and.19.2010.09.24.20.52.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 20:52:19 -0700 (PDT)
+Received: from srwalter by brock with local (Exim 4.72)
+	(envelope-from <srwalter@dervierte>)
+	id 1OzLo9-0007Ge-6m; Fri, 24 Sep 2010 23:52:17 -0400
+X-Mailer: git-send-email 1.6.3.3
+In-Reply-To: <20100924162704.GA4513@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157113>
 
-It works much like the same option in recent versions of GNU grep.
-Any directory name which matches the option will not be searched.
+As a first step towards preserving merges across dcommit, we need a
+mechanism to update the svn:mergeinfo property.
 
-For example, "git grep --exclude-dir Documentation malloc"
-
-Signed-off-by: David Ripton <dripton@ripton.net>
+Signed-off-by: Steven Walter <stevenrwalter@gmail.com>
 ---
-Version 2 of this patch, following Junio's comments:
-strdup() -> xstrdup()
-Fixed a declaration after code.
-Removed basenames from subdirs()
-Do not call subdirs() at all if exclude_dir_list is empty.
+ git-svn.perl                 |   15 ++++++++++++++-
+ t/t9157-git-svn-mergeinfo.sh |   39 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 53 insertions(+), 1 deletions(-)
+ create mode 100644 t/t9157-git-svn-mergeinfo.sh
 
-Unfortunately the other suggested optimization, moving the original test for
-max_depth < 0 in accept_subdir to the top, turned out to be unsafe.  And
-simplifying subdirs() to only deal with the last subdirectory rather than the
-whole path makes it difficult to exclude a multi-part directory like
-"Documentation/technical".  But now we totally skip the subdirs() call when
-exclude_dir_list is empty, so at least the cost is only born by those 
-actually using this option.
-
- builtin/grep.c |  130 +++++++++++++++++++++++++++++++++++++++++++++++++------
- grep.h         |    2 +
- 2 files changed, 117 insertions(+), 15 deletions(-)
-
-diff --git a/builtin/grep.c b/builtin/grep.c
-index da32f3d..220a7db 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -333,15 +333,68 @@ static int grep_config(const char *var, const char *value, void *cb)
- 	return 0;
+diff --git a/git-svn.perl b/git-svn.perl
+index c7c4dcd..1612fd7 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -83,7 +83,7 @@ my ($_stdin, $_help, $_edit,
+ 	$_version, $_fetch_all, $_no_rebase, $_fetch_parent,
+ 	$_merge, $_strategy, $_dry_run, $_local,
+ 	$_prefix, $_no_checkout, $_url, $_verbose,
+-	$_git_format, $_commit_url, $_tag);
++	$_git_format, $_commit_url, $_tag, $_merge_info);
+ $Git::SVN::_follow_parent = 1;
+ $_q ||= 0;
+ my %remote_opts = ( 'username=s' => \$Git::SVN::Prompt::_username,
+@@ -153,6 +153,7 @@ my %cmd = (
+ 			  'commit-url=s' => \$_commit_url,
+ 			  'revision|r=i' => \$_revision,
+ 			  'no-rebase' => \$_no_rebase,
++			  'mergeinfo=s' => \$_merge_info,
+ 			%cmt_opts, %fc_opts } ],
+ 	branch => [ \&cmd_branch,
+ 	            'Create a branch in the SVN repository',
+@@ -568,6 +569,7 @@ sub cmd_dcommit {
+ 			                       print "Committed r$_[0]\n";
+ 			                       $cmt_rev = $_[0];
+ 			                },
++					mergeinfo => $_merge_info,
+ 			                svn_path => '');
+ 			if (!SVN::Git::Editor->new(\%ed_opts)->apply_diff) {
+ 				print "No changes\n$d~1 == $d\n";
+@@ -4449,6 +4451,7 @@ sub new {
+ 	$self->{path_prefix} = length $self->{svn_path} ?
+ 	                       "$self->{svn_path}/" : '';
+ 	$self->{config} = $opts->{config};
++	$self->{mergeinfo} = $opts->{mergeinfo};
+ 	return $self;
  }
  
-+/* Return a sorted string_list of all possible directories within path.
-+ *
-+ * e.g. if path is "foo/bar/baz", then return a string_list with:
-+ *                 "bar"
-+ *                 "foo"
-+ *                 "foo/bar"
-+ *
-+ *  (We do not need to return baz because the paths we receive always
-+ *  end with a file not a directory.)
-+ */
-+static struct string_list subdirs(const char *path)
-+{
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+	/* Make a copy so we can chop off the end. */
-+	char *path2 = xstrdup(path);
-+	/* A pointer that advances along path2 */
-+	char *path3 = path2;
-+	/* Chop off the basename portion. */
-+	if ((path3 = strrchr(path3, '/')) != NULL)
-+		*path3 = '\0';
-+	int again = 0;
-+	do {
-+		again = 0;
-+		string_list_append(&list, path2);
-+		path3 = path2;
-+		while ((path3 = strchr(path3, '/')) != NULL) {
-+			path3++;
-+			string_list_append(&list, path3);
-+		}
-+		path3 = path2;
-+		if ((path3 = strrchr(path3, '/')) != NULL) {
-+			*path3 = '\0';
-+			again = 1;
-+		}
-+	} while (again);
-+	free(path2);
-+	sort_string_list(&list);
-+	return list;
+@@ -4758,6 +4761,11 @@ sub change_file_prop {
+ 	$self->SUPER::change_file_prop($fbat, $pname, $pval, $self->{pool});
+ }
+ 
++sub change_dir_prop {
++	my ($self, $pbat, $pname, $pval) = @_;
++	$self->SUPER::change_dir_prop($pbat, $pname, $pval, $self->{pool});
 +}
 +
- /*
-  * Return non-zero if max_depth is negative or path has no more then max_depth
-  * slashes.
-  */
--static int accept_subdir(const char *path, int max_depth)
-+static int accept_subdir(const char *path, int max_depth,
-+				const struct string_list exclude_dir_list)
- {
-+	if (exclude_dir_list.nr > 0) {
-+		struct string_list subdir_list = subdirs(path);
-+		int i;
-+		for (i = 0; i < subdir_list.nr; i++) {
-+			if (string_list_has_string(&exclude_dir_list,
-+					subdir_list.items[i].string)) {
-+				string_list_clear(&subdir_list, 0);
-+				return 0;
-+			}
-+		}
-+		string_list_clear(&subdir_list, 0);
+ sub _chg_file_get_blob ($$$$) {
+ 	my ($self, $fbat, $m, $which) = @_;
+ 	my $fh = $::_repository->temp_acquire("git_blob_$which");
+@@ -4851,6 +4859,11 @@ sub apply_diff {
+ 			fatal("Invalid change type: $f");
+ 		}
+ 	}
++
++	if (defined($self->{mergeinfo})) {
++		$self->change_dir_prop($self->{bat}{''}, "svn:mergeinfo",
++			               $self->{mergeinfo});
 +	}
+ 	$self->rmdirs if $_rmdir;
+ 	if (@$mods == 0) {
+ 		$self->abort_edit;
+diff --git a/t/t9157-git-svn-mergeinfo.sh b/t/t9157-git-svn-mergeinfo.sh
+new file mode 100644
+index 0000000..8337e44
+--- /dev/null
++++ b/t/t9157-git-svn-mergeinfo.sh
+@@ -0,0 +1,39 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Steven Walter
++#
 +
- 	if (max_depth < 0)
- 		return 1;
--
- 	while ((path = strchr(path, '/')) != NULL) {
- 		max_depth--;
- 		if (max_depth < 0)
-@@ -355,7 +408,8 @@ static int accept_subdir(const char *path, int max_depth)
-  * Return non-zero if name is a subdirectory of match and is not too deep.
-  */
- static int is_subdir(const char *name, int namelen,
--		const char *match, int matchlen, int max_depth)
-+		const char *match, int matchlen, int max_depth,
-+		const struct string_list exclude_dir_list)
- {
- 	if (matchlen > namelen || strncmp(name, match, matchlen))
- 		return 0;
-@@ -364,7 +418,8 @@ static int is_subdir(const char *name, int namelen,
- 		return 1;
- 
- 	if (!matchlen || match[matchlen-1] == '/' || name[matchlen] == '/')
--		return accept_subdir(name + matchlen + 1, max_depth);
-+		return accept_subdir(name + matchlen + 1, max_depth,
-+					exclude_dir_list);
- 
- 	return 0;
- }
-@@ -373,18 +428,21 @@ static int is_subdir(const char *name, int namelen,
-  * git grep pathspecs are somewhat different from diff-tree pathspecs;
-  * pathname wildcards are allowed.
-  */
--static int pathspec_matches(const char **paths, const char *name, int max_depth)
-+static int pathspec_matches(const char **paths, const char *name,
-+				int max_depth,
-+				const struct string_list exclude_dir_list)
- {
- 	int namelen, i;
- 	if (!paths || !*paths)
--		return accept_subdir(name, max_depth);
-+		return accept_subdir(name, max_depth, exclude_dir_list);
- 	namelen = strlen(name);
- 	for (i = 0; paths[i]; i++) {
- 		const char *match = paths[i];
- 		int matchlen = strlen(match);
- 		const char *cp, *meta;
- 
--		if (is_subdir(name, namelen, match, matchlen, max_depth))
-+		if (is_subdir(name, namelen, match, matchlen, max_depth,
-+				exclude_dir_list))
- 			return 1;
- 		if (!fnmatch(match, name, 0))
- 			return 1;
-@@ -595,14 +653,17 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
- 		struct cache_entry *ce = active_cache[nr];
- 		if (!S_ISREG(ce->ce_mode))
- 			continue;
--		if (!pathspec_matches(paths, ce->name, opt->max_depth))
-+		if (!pathspec_matches(paths, ce->name, opt->max_depth,
-+					opt->exclude_dir_list))
- 			continue;
++test_description='git svn mergeinfo propagation'
 +
- 		/*
--		 * If CE_VALID is on, we assume worktree file and its cache entry
--		 * are identical, even if worktree file has been modified, so use
--		 * cache version instead
-+		 * If CE_VALID is on, we assume worktree file and its cache
-+		 * entry are identical, even if worktree file has been
-+		 * modified, so use cache version instead
- 		 */
--		if (cached || (ce->ce_flags & CE_VALID) || ce_skip_worktree(ce)) {
-+		if (cached || (ce->ce_flags & CE_VALID) ||
-+			ce_skip_worktree(ce)) {
- 			if (ce_stage(ce))
- 				continue;
- 			hit |= grep_sha1(opt, ce->sha1, ce->name, 0);
-@@ -656,7 +717,8 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
- 			strbuf_addch(&pathbuf, '/');
- 
- 		down = pathbuf.buf + tn_len;
--		if (!pathspec_matches(paths, down, opt->max_depth))
-+		if (!pathspec_matches(paths, down, opt->max_depth,
-+					opt->exclude_dir_list))
- 			;
- 		else if (S_ISREG(entry.mode))
- 			hit |= grep_sha1(opt, entry.sha1, pathbuf.buf, tn_len);
-@@ -722,7 +784,8 @@ static int grep_objects(struct grep_opt *opt, const char **paths,
- 	return hit;
- }
- 
--static int grep_directory(struct grep_opt *opt, const char **paths)
-+static int grep_directory(struct grep_opt *opt, const char **paths,
-+				const struct string_list exclude_dir_list)
- {
- 	struct dir_struct dir;
- 	int i, hit = 0;
-@@ -730,7 +793,12 @@ static int grep_directory(struct grep_opt *opt, const char **paths)
- 	memset(&dir, 0, sizeof(dir));
- 	setup_standard_excludes(&dir);
- 
-+	for (i = 0; i < exclude_dir_list.nr; i++)
-+		add_exclude(exclude_dir_list.items[i].string, "", 0,
-+				dir.exclude_list);
++. ./lib-git-svn.sh
 +
- 	fill_directory(&dir, paths);
++say 'define NO_SVN_TESTS to skip git svn tests'
 +
- 	for (i = 0; i < dir.nr; i++) {
- 		hit |= grep_file(opt, dir.entries[i]->name);
- 		if (hit && opt->status_only)
-@@ -826,6 +894,29 @@ static int help_callback(const struct option *opt, const char *arg, int unset)
- 	return -1;
- }
- 
-+static int exclude_dir_callback(const struct option *opt, const char *arg,
-+				int unset)
-+{
-+	struct string_list *exclude_dir_list = opt->value;
-+	char *s1 = (char *)arg;
-+	char *s2;
-+	char *s3;
-+	/* We do not want leading or trailing slashes. */
-+	while (*s1 == '/') {
-+		s1++;
-+	}
-+	s2 = xstrdup(s1);
-+	s3 = s2 + strlen(s2) - 1;
-+	while (s3 >= s2 && *s3 == '/') {
-+		*s3 = '\0';
-+		s3--;
-+	}
-+	string_list_append(exclude_dir_list, s2);
-+	free(s2);
-+	return 0;
-+}
++test_expect_success \
++    'initialize source svn repo' '
++        svn_cmd mkdir -m x "$svnrepo"/trunk &&
++        svn_cmd co "$svnrepo"/trunk "$SVN_TREE" &&
++        cd "$SVN_TREE" &&
++        touch foo &&
++        svn_cmd add foo &&
++        svn_cmd commit -m "initial commit" &&
++        cd .. &&
++        rm -rf "$SVN_TREE"'
 +
++test_expect_success \
++    'clone svn repo' '
++        git svn init "$svnrepo"/trunk &&
++        git svn fetch'
 +
- int cmd_grep(int argc, const char **argv, const char *prefix)
- {
- 	int hit = 0;
-@@ -837,6 +928,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	struct object_array list = OBJECT_ARRAY_INIT;
- 	const char **paths = NULL;
- 	struct string_list path_list = STRING_LIST_INIT_NODUP;
-+	struct string_list exclude_dir_list = STRING_LIST_INIT_DUP;
- 	int i;
- 	int dummy;
- 	int use_index = 1;
-@@ -920,6 +1012,10 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 		OPT_BOOLEAN(0, "all-match", &opt.all_match,
- 			"show only matches from files that match all patterns"),
- 		OPT_GROUP(""),
-+		{ OPTION_CALLBACK, 0, "exclude-dir", &exclude_dir_list,
-+		  "pattern", "exclude <pattern>", PARSE_OPT_NONEG,
-+		  exclude_dir_callback },
-+		OPT_GROUP(""),
- 		{ OPTION_STRING, 'O', "open-files-in-pager", &show_in_pager,
- 			"pager", "show matching files in the pager",
- 			PARSE_OPT_OPTARG, NULL, (intptr_t)default_pager },
-@@ -974,6 +1070,9 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			     PARSE_OPT_STOP_AT_NON_OPTION |
- 			     PARSE_OPT_NO_INTERNAL_HELP);
- 
-+	sort_string_list(&exclude_dir_list);
-+	opt.exclude_dir_list = exclude_dir_list;
++test_expect_success \
++    'change svn:mergeinfo' '
++        touch bar &&
++        git add bar &&
++        git commit -m "bar" &&
++        git svn dcommit --mergeinfo="/branches/foo:1-10"'
 +
- 	if (use_index && !startup_info->have_repository)
- 		/* die the same way as if we did it at the beginning */
- 		setup_git_directory();
-@@ -1093,7 +1192,7 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 			die("--cached cannot be used with --no-index.");
- 		if (list.nr)
- 			die("--no-index cannot be used with revs.");
--		hit = grep_directory(&opt, paths);
-+		hit = grep_directory(&opt, paths, exclude_dir_list);
- 	} else if (!list.nr) {
- 		if (!cached)
- 			setup_work_tree();
-@@ -1110,5 +1209,6 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
- 	if (hit && show_in_pager)
- 		run_pager(&opt, prefix);
- 	free_grep_patterns(&opt);
-+	string_list_clear(&exclude_dir_list, 0);
- 	return !hit;
- }
-diff --git a/grep.h b/grep.h
-index efa8cff..0400611 100644
---- a/grep.h
-+++ b/grep.h
-@@ -1,6 +1,7 @@
- #ifndef GREP_H
- #define GREP_H
- #include "color.h"
-+#include "string-list.h"
- 
- enum grep_pat_token {
- 	GREP_PATTERN,
-@@ -99,6 +100,7 @@ struct grep_opt {
- 	unsigned post_context;
- 	unsigned last_shown;
- 	int show_hunk_mark;
-+	struct string_list exclude_dir_list;
- 	void *priv;
- 
- 	void (*output)(struct grep_opt *opt, const void *data, size_t size);
-
++test_expect_success \
++    'verify svn:mergeinfo' '
++        [ `svn_cmd propget svn:mergeinfo "$svnrepo"/trunk` == "/branches/foo:1-10" ]'
++
++test_done
 -- 
-David Ripton    dripton@ripton.net
+1.6.3.3
