@@ -1,135 +1,91 @@
-From: David Ripton <dripton@ripton.net>
-Subject: Re: [RFC/PATCH] Add --exclude-dir option to git grep
-Date: Fri, 24 Sep 2010 22:07:40 -0400
-Message-ID: <4C9D596C.4060906@ripton.net>
-References: <20100924042614.GA25944@nulllenny.dreamhost.com> <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 04:08:32 2010
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] stash show: fix breakage in 1.7.3
+Date: Sat, 25 Sep 2010 12:54:33 +1000
+Message-ID: <1285383273-28378-1-git-send-email-jon.seymour@gmail.com>
+References: <robbat2-20100924T191752-102740530Z@orbis-terrarum.net>
+Cc: Jon Seymour <jon.seymour@gmail.com>
+To: robbat2@gentoo.org, git@vger.kernel.org,
+	brian@gernhardtsoftware.com
+X-From: git-owner@vger.kernel.org Sat Sep 25 04:51:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzKBj-00029e-Mk
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 04:08:32 +0200
+	id 1OzKrT-0004cb-BA
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 04:51:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755221Ab0IYCIN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Sep 2010 22:08:13 -0400
-Received: from hapkido.dreamhost.com ([66.33.216.122]:49418 "EHLO
-	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755180Ab0IYCIL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Sep 2010 22:08:11 -0400
-Received: from homiemail-a52.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
-	by hapkido.dreamhost.com (Postfix) with ESMTP id DA16817AD84
-	for <git@vger.kernel.org>; Fri, 24 Sep 2010 19:08:10 -0700 (PDT)
-Received: from homiemail-a52.g.dreamhost.com (localhost [127.0.0.1])
-	by homiemail-a52.g.dreamhost.com (Postfix) with ESMTP id 6C1E36B80C4;
-	Fri, 24 Sep 2010 19:07:43 -0700 (PDT)
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=ripton.net; h=message-id:date
-	:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; q=dns; s=ripton.net; b=
-	3bPkUmzWYp5AuVGdkTZ0jnvmZkuQkq5A9QrAMHnacffsJlrTTtK2CSBXSrLFcGCB
-	O7eG5UKL1xx2HlcsaCCwxHXWrE+OT/K9XZPsslrfsZuUtQfyszwxe4yQShRGpLBl
-	Va27DVUFUy1LDfOZPa9oIslynLXK1SPyGC3qDmRccA8=
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=ripton.net; h=message-id
-	:date:from:mime-version:to:cc:subject:references:in-reply-to
-	:content-type:content-transfer-encoding; s=ripton.net; bh=PgmQ/J
-	cPuBUC598m8GGeEqZYOQk=; b=T3qjWDLXZ3ntr6ibLZOo4rXmwEALJgLtl+mXmT
-	nmE/vqHJlkKOa/9qiE1t98zvrZTXZPwG9W0NL60rIvrNFDpNgcgGhRNlv41Dn7Rw
-	lBsTTp6tv72hQL3LM4UHIB9BrK/vgi4L0Z6hg8blDvRR08bKRVmgivLoDmn8jT3N
-	2Tops=
-Received: from [192.168.2.175] (pool-98-118-245-254.clppva.fios.verizon.net [98.118.245.254])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: dripton@ripton.net)
-	by homiemail-a52.g.dreamhost.com (Postfix) with ESMTPSA id 1CA026B80C0;
-	Fri, 24 Sep 2010 19:07:43 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100908 Lightning/1.0b3pre Thunderbird/3.1.3
-In-Reply-To: <7v1v8iq3tu.fsf@alter.siamese.dyndns.org>
+	id S1753078Ab0IYCve (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 24 Sep 2010 22:51:34 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41274 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752668Ab0IYCvd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Sep 2010 22:51:33 -0400
+Received: by pwj6 with SMTP id 6so775029pwj.19
+        for <git@vger.kernel.org>; Fri, 24 Sep 2010 19:51:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=bStJVR2M/v8XNHSCbYgBQNb7KlCGCxmHmswOCXMx2gU=;
+        b=gQhqNe1rxC9OC7sIF53d4XNELZU19DPxn6fwnLhBQNHCtwa4GzgT0nQRzuDXbwrqfv
+         0zZiP4yMh8HuXFDICzgVzdOio5KFYnOZx3+4hmqQbmmbdU+qbKdpm6JsyvF2WuQ4bCHL
+         5QTE11mFsK/XXVVs4OVMu21dbSmt6JD/Mtj1M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=UawK/CvQDuugHjgP+M/QIAYfF+5h+iLfWJpApwBJjJ09P+QAihriokHAWOvoQIiccn
+         BSw8GSSvVtdOAIRRaqioDXjxAIOAqHu52R5wdhcKKX6z0sN/4XtH0aZutP7qi/CWW9On
+         +CLVfoV3emiLZPlKT963lDINrydIGSiC/3mhA=
+Received: by 10.142.225.19 with SMTP id x19mr3522357wfg.322.1285383093222;
+        Fri, 24 Sep 2010 19:51:33 -0700 (PDT)
+Received: from localhost.localdomain (124-169-4-134.dyn.iinet.net.au [124.169.4.134])
+        by mx.google.com with ESMTPS id v3sm3145862wfv.23.2010.09.24.19.51.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Sep 2010 19:51:32 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.12.g8788e.dirty
+In-Reply-To: <robbat2-20100924T191752-102740530Z@orbis-terrarum.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157107>
 
-On 09/24/10 16:33, Junio C Hamano wrote:
+The detached-stash series regressed support for
+   git stash show stash@{0}
 
-> Thanks.
+due to a faulty assumption that
+git rev-parse --no-revs stash@{0} would treat
+stash@{0} as a revision reference and thus
+not display it.
 
-Thank you for the code review.
+This patch restores the behaviour of git stash show
+so that only flag like options are assigned
+to the FLAGS variable and thus does not
+depend git rev-parse behaviour so strongly.
 
-> Do you need to run this every time we visit a new directory, expanding
-> directory components over and over?
->
-> It is not like we are jumping around directory hierarchies, visiting
-> "foo/bar" and then "xyzzy" and then "foo/baz", but rather we visit
-> directories in a nicer order (i.e. after leaving "foo/bar" but before
-> jumping to "xyzzy", we would visit "foo/baz"), don't we?
+It has been tested with Brandon Casey's improved t3903 tests.
 
-I agree that there's room for optimization here.
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ Apologies for the breakage.
+ Brandon: thanks for improving the tests.
 
->>   	if (max_depth<  0)
->>   		return 1;
->
-> Isn't this original check much cheaper than the new test based on many
-> comparisons and should be at the beginning of the function?
+ git-stash.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yes.
-
->> @@ -826,6 +886,25 @@ static int help_callback(const struct option *opt, const char *arg, int unset)
->>   	return -1;
->>   }
->>
->> +static int exclude_dir_callback(const struct option *opt, const char *arg,
->> +				int unset)
->> +{
->> +	struct string_list *exclude_dir_list = opt->value;
->> +	char *s1 = (char *)arg;
->
-> What is this cast for?
-
-It avoids:
-
-"builtin/grep.c:893: warning: initialization discards qualifiers from 
-pointer target type"
-
->> +	/* We do not want leading or trailing slashes. */
->> +	while (*s1 == '/') {
->> +		s1++;
->> +	}
->
-> Can the result of this loop become an empty string, and what happens to
-> the rest of the logic when it happens?
-
-If the string is just forward slashes, then it will become an empty 
-string, which will strdup successfully, and then that particular 
---exclude-dir will have no effect.  Just tested that case and did not 
-find a bug.
-
->> +	char *s2 = strdup(s1);
->
-> decl-after-statement.
-
-Oops.
-
-Sadly, "gcc -Wall -std=c89" does not warn for this.  ("-pedantic" does.)
-
-> Use xstrdup().
-
-Okay.
-
->> +	while (*s2&&  s2[strlen(s2)-1] == '/') {
->> +		s2[strlen(s2)-1] = '\0';
->> +	}
->
-> Don't scan s2 repeatedly to find its end by calling strlen(s2) on it.
-> Find its length once, and scan backwards from there yourself.
-
-Okay.  I'll try to send out a revised version of this patch soon.
-
+diff --git a/git-stash.sh b/git-stash.sh
+index 7ce818b..c2f1b2a 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -282,7 +282,7 @@ parse_flags_and_rev()
+ 			--)
+ 				:
+ 			;;
+-			*)
++			-*)
+ 				FLAGS="${FLAGS}${FLAGS:+ }$1"
+ 			;;
+ 		esac
 -- 
-David Ripton    dripton@ripton.net
+1.7.2.12.g8788e.dirty
