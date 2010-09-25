@@ -1,191 +1,113 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv3 07/16] t4019 (diff-wserror): add lots of missing &&
-Date: Sat, 25 Sep 2010 13:06:58 -0600
-Message-ID: <1285441627-28233-8-git-send-email-newren@gmail.com>
+Subject: [PATCHv3 14/16] t7800 (difftool): add missing &&
+Date: Sat, 25 Sep 2010 13:07:05 -0600
+Message-ID: <1285441627-28233-15-git-send-email-newren@gmail.com>
 References: <1285441627-28233-1-git-send-email-newren@gmail.com>
 Cc: Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Sep 25 21:06:35 2010
+X-From: git-owner@vger.kernel.org Sat Sep 25 21:06:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Oza4s-0005Xq-4i
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 21:06:30 +0200
+	id 1Oza4v-0005Xq-ER
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 21:06:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756653Ab0IYTFp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 15:05:45 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:41285 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756596Ab0IYTFm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 15:05:42 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 2so931665pvg.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 12:05:42 -0700 (PDT)
+	id S1756784Ab0IYTF6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 15:05:58 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:39899 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756748Ab0IYTF4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 15:05:56 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 6so880409pwj.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 12:05:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=71ImvwPjZ6qRZ+lckFOmIhl5y+TB7mKC5MTmXvnjTk4=;
-        b=fN+qdbo8EMZK7qfQHvWySTz2F6b6KzuWYtefv5ObygVUUJUmcU4Pldo8+fekT9ceKv
-         riN+vqX47JQc4ohexW4NyAAzIGiXFR4jrm6e4Z08M0xl4eBpmli4mCHPe3oNXzSsbqXI
-         jBN6oFX5M9b8VrhKrxkt80pS1ltCoajxrMp2w=
+        bh=xp9Irg2uBRxItYR/hUwJQLkvFQtoEy+WDjAXrEUSagY=;
+        b=mJ/nPvP7L/CVFfAUsM0amrymA3cLY6oUleltQZtbkuvYNPJysBrDzmelb3IyfxK96S
+         vqwfS9ZxBnITg5dmC01x8V4m2jrNK7Cr8WaCNtAm5anW3D/rwOrzoV6rRnNDXMDOft3i
+         ynA7KMFtTcQy8d3S71XFgA2M898JB04mfF2S4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=FiUz/u9llB5dY9/hUqQObcu1JqFJa/sxFUtFAX0+RvO5wU1don6/HN0DXqJBBtlE4y
-         r3Ej/hzWwCTaYb40e7rswhTLJrHFn+M8Op5yRNiwicoRpQxJCnKedJFOaKI8FrFC9i28
-         UhULIyAiKhBNZqjeP45LSF5jVohk/TDERyEh0=
-Received: by 10.114.120.9 with SMTP id s9mr5670938wac.100.1285441541744;
-        Sat, 25 Sep 2010 12:05:41 -0700 (PDT)
+        b=lrVG+nptCvNkB4Y77kW2BoMZPokBDAfC9ej+7Yo6/bquWcGsW7Qc18iqhEa28+2fZF
+         ZNRZneJLkekEOcuTgot43CoxXabk9kdqzApr3h7AvFe8m1peQ85bKuWrzF6yXYa7NGco
+         KF9cUuzlz4z2JELLsGVBDITKNXCWlSHFfOMXY=
+Received: by 10.114.25.5 with SMTP id 5mr5648838way.137.1285441556465;
+        Sat, 25 Sep 2010 12:05:56 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id o17sm6338669wal.21.2010.09.25.12.05.38
+        by mx.google.com with ESMTPS id o17sm6338669wal.21.2010.09.25.12.05.54
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 25 Sep 2010 12:05:39 -0700 (PDT)
+        Sat, 25 Sep 2010 12:05:55 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.95.g14291
 In-Reply-To: <1285441627-28233-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157180>
 
-Also add a test_might_fail in front of the final git_config --unset
-core.whitespace as that value may have already been unset previously.
+Also remove a call to 'git config --unset difftool.prompt', since that is
+already unset by restore_test_defaults.
 
 Signed-off-by: Elijah Newren <newren@gmail.com>
 ---
- t/t4019-diff-wserror.sh |   52 +++++++++++++++++++++++-----------------------
- 1 files changed, 26 insertions(+), 26 deletions(-)
+ t/t7800-difftool.sh |   11 +++++------
+ 1 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index f6d1f1e..2557ec7 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -40,7 +40,7 @@ prepare_output () {
+diff --git a/t/t7800-difftool.sh b/t/t7800-difftool.sh
+index 58dc6f6..ffb1960 100755
+--- a/t/t7800-difftool.sh
++++ b/t/t7800-difftool.sh
+@@ -98,7 +98,7 @@ test_expect_success PERL 'difftool --gui works without configured diff.guitool'
  
- test_expect_success default '
+ # Specify the diff tool using $GIT_DIFF_TOOL
+ test_expect_success PERL 'GIT_DIFF_TOOL variable' '
+-	git config --unset diff.tool
++	git config --unset diff.tool &&
+ 	GIT_DIFF_TOOL=test-tool &&
+ 	export GIT_DIFF_TOOL &&
  
--	prepare_output
-+	prepare_output &&
+@@ -166,7 +166,6 @@ test_expect_success PERL 'difftool.prompt config variable is false' '
  
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -52,8 +52,8 @@ test_expect_success default '
+ # Test that we don't have to pass --no-prompt when mergetool.prompt is false
+ test_expect_success PERL 'difftool merge.prompt = false' '
+-	git config --unset difftool.prompt
+ 	git config mergetool.prompt false &&
  
- test_expect_success 'without -trail' '
+ 	diff=$(git difftool branch) &&
+@@ -211,7 +210,7 @@ test_expect_success PERL 'difftool last flag wins' '
+ # git-difftool falls back to git-mergetool config variables
+ # so test that behavior here
+ test_expect_success PERL 'difftool + mergetool config variables' '
+-	remove_config_vars
++	remove_config_vars &&
+ 	git config merge.tool test-tool &&
+ 	git config mergetool.test-tool.cmd "cat \$LOCAL" &&
  
--	git config core.whitespace -trail
--	prepare_output
-+	git config core.whitespace -trail &&
-+	prepare_output &&
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -65,9 +65,9 @@ test_expect_success 'without -trail' '
- 
- test_expect_success 'without -trail (attribute)' '
- 
--	git config --unset core.whitespace
--	echo "F whitespace=-trail" >.gitattributes
--	prepare_output
-+	git config --unset core.whitespace &&
-+	echo "F whitespace=-trail" >.gitattributes &&
-+	prepare_output &&
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -79,9 +79,9 @@ test_expect_success 'without -trail (attribute)' '
- 
- test_expect_success 'without -space' '
- 
--	rm -f .gitattributes
--	git config core.whitespace -space
--	prepare_output
-+	rm -f .gitattributes &&
-+	git config core.whitespace -space &&
-+	prepare_output &&
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -93,9 +93,9 @@ test_expect_success 'without -space' '
- 
- test_expect_success 'without -space (attribute)' '
- 
--	git config --unset core.whitespace
--	echo "F whitespace=-space" >.gitattributes
--	prepare_output
-+	git config --unset core.whitespace &&
-+	echo "F whitespace=-space" >.gitattributes &&
-+	prepare_output &&
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -107,9 +107,9 @@ test_expect_success 'without -space (attribute)' '
- 
- test_expect_success 'with indent-non-tab only' '
- 
--	rm -f .gitattributes
--	git config core.whitespace indent,-trailing,-space
--	prepare_output
-+	rm -f .gitattributes &&
-+	git config core.whitespace indent,-trailing,-space &&
-+	prepare_output &&
- 
- 	grep Eight error >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -121,9 +121,9 @@ test_expect_success 'with indent-non-tab only' '
- 
- test_expect_success 'with indent-non-tab only (attribute)' '
- 
--	git config --unset core.whitespace
--	echo "F whitespace=indent,-trailing,-space" >.gitattributes
--	prepare_output
-+	git config --unset core.whitespace &&
-+	echo "F whitespace=indent,-trailing,-space" >.gitattributes &&
-+	prepare_output &&
- 
- 	grep Eight error >/dev/null &&
- 	grep HT normal >/dev/null &&
-@@ -135,9 +135,9 @@ test_expect_success 'with indent-non-tab only (attribute)' '
- 
- test_expect_success 'with cr-at-eol' '
- 
--	rm -f .gitattributes
--	git config core.whitespace cr-at-eol
--	prepare_output
-+	rm -f .gitattributes &&
-+	git config core.whitespace cr-at-eol &&
-+	prepare_output &&
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -149,9 +149,9 @@ test_expect_success 'with cr-at-eol' '
- 
- test_expect_success 'with cr-at-eol (attribute)' '
- 
--	git config --unset core.whitespace
--	echo "F whitespace=trailing,cr-at-eol" >.gitattributes
--	prepare_output
-+	git config --unset core.whitespace &&
-+	echo "F whitespace=trailing,cr-at-eol" >.gitattributes &&
-+	prepare_output &&
- 
- 	grep Eight normal >/dev/null &&
- 	grep HT error >/dev/null &&
-@@ -179,11 +179,11 @@ test_expect_success 'trailing empty lines (2)' '
+@@ -254,17 +253,17 @@ test_expect_success PERL 'difftool -x cat' '
  '
  
- test_expect_success 'do not color trailing cr in context' '
--	git config --unset core.whitespace
-+	test_might_fail git config --unset core.whitespace &&
- 	rm -f .gitattributes &&
- 	echo AAAQ | tr Q "\015" >G &&
- 	git add G &&
--	echo BBBQ | tr Q "\015" >>G
-+	echo BBBQ | tr Q "\015" >>G &&
- 	git diff --color G | tr "\015" Q >output &&
- 	grep "BBB.*${blue_grep}Q" output &&
- 	grep "AAA.*\[mQ" output
+ test_expect_success PERL 'difftool --extcmd echo arg1' '
+-	diff=$(git difftool --no-prompt --extcmd sh\ -c\ \"echo\ \$1\" branch)
++	diff=$(git difftool --no-prompt --extcmd sh\ -c\ \"echo\ \$1\" branch) &&
+ 	test "$diff" = file
+ '
+ 
+ test_expect_success PERL 'difftool --extcmd cat arg1' '
+-	diff=$(git difftool --no-prompt --extcmd sh\ -c\ \"cat\ \$1\" branch)
++	diff=$(git difftool --no-prompt --extcmd sh\ -c\ \"cat\ \$1\" branch) &&
+ 	test "$diff" = master
+ '
+ 
+ test_expect_success PERL 'difftool --extcmd cat arg2' '
+-	diff=$(git difftool --no-prompt --extcmd sh\ -c\ \"cat\ \$2\" branch)
++	diff=$(git difftool --no-prompt --extcmd sh\ -c\ \"cat\ \$2\" branch) &&
+ 	test "$diff" = branch
+ '
+ 
 -- 
 1.7.3.95.g14291
