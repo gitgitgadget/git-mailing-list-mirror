@@ -1,65 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What exactly does 'needs update' mean?
-Date: Fri, 24 Sep 2010 23:06:26 -0700
-Message-ID: <7vk4manyql.fsf@alter.siamese.dyndns.org>
-References: <4C9D8643.1040001@workspacewhiz.com>
+From: Daniel DeLorme <dan-ml@dan42.com>
+Subject: [PATCH] git verify-pack -vs
+Date: Sat, 25 Sep 2010 14:45:29 +0900
+Message-ID: <4C9D8C79.2040101@dan42.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Sat Sep 25 08:09:55 2010
+Content-Type: multipart/mixed;
+ boundary="------------010009000701080605010104"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Sep 25 08:09:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzNxH-0001hy-8i
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 08:09:51 +0200
+	id 1OzNxI-0001hy-9w
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Sep 2010 08:09:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756019Ab0IYGGg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 02:06:36 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:44236 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754788Ab0IYGGf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 02:06:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E77D8D97B6;
-	Sat, 25 Sep 2010 02:06:32 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p+TRUS9GON/C4v3VkysvYYJMyLQ=; b=gza0XQ
-	oJ2JELfkbUsFXZv+FxNAYjv/1bRceX9iAAGIwoxHJaFFMY2a/GuyZqo8QUGMUHtr
-	aGsQ2/JKfI/RojybMA31R7wGFReJ5KEUji3AlTANaUobzbUaiLYyfJDhuVzemho/
-	5s+GRs8wa9sQmQVaFb92nH1VjATLjE7emvLjA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=yDTitIhfwPLSjVWHt+C6uyVKzukQLxHp
-	ynux/URco37EAcoM6X6SEwif8dVYsvir5jPjmzMWwoq3++4GOzqrxSRmfhln6NRl
-	TnwHI9pZwfRFXBWb+V4rQHtuTgk+z/U/pec+Z5aWGWrUBqGbNJWljdSJTA+u0JFr
-	D9hxxzifVcc=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C4448D97B3;
-	Sat, 25 Sep 2010 02:06:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2E9BCD97A4; Sat, 25 Sep
- 2010 02:06:28 -0400 (EDT)
-In-Reply-To: <4C9D8643.1040001@workspacewhiz.com> (Joshua Jensen's message of
- "Fri\, 24 Sep 2010 23\:18\:59 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0A823786-C86B-11DF-96B3-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756132Ab0IYGHq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 02:07:46 -0400
+Received: from wind.ocn.ne.jp ([122.28.30.139]:56426 "EHLO smtp.wind.ocn.ne.jp"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750949Ab0IYGHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 02:07:45 -0400
+X-Greylist: delayed 1332 seconds by postgrey-1.27 at vger.kernel.org; Sat, 25 Sep 2010 02:07:44 EDT
+Received: from [192.168.1.2] (p1179-ipbf2007hodogaya.kanagawa.ocn.ne.jp [123.220.138.179])
+	by smtp.wind.ocn.ne.jp (Postfix) with ESMTP id 912FE243B
+	for <git@vger.kernel.org>; Sat, 25 Sep 2010 14:45:29 +0900 (JST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.12) Gecko/20100915 Thunderbird/3.0.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157123>
 
-Joshua Jensen <jjensen@workspacewhiz.com> writes:
+This is a multi-part message in MIME format.
+--------------010009000701080605010104
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 
->  I've come to accept the term 'needs update' when I've forgotten to
-> stash or commit before certain Git operations.  However, I got
-> cornered today and was asked to explain what it means.  I had to admit
-> I don't know.
+According to git help verify-pack, when --stat-only and --verbose are 
+used together the "list of objects is also shown." But in fact it is 
+not; `git verify-pack -sv` has the same behavior as `git verify-pack -s`
+It seems like a trivial mistake in verify-pack.c (the verbose behavior 
+is triggered with !stat_only) so here is a patch that makes the behavior 
+fit the manual's description.
 
-It came from "you need to run update-index on that path, as you have local
-modification in the working tree".
+--
+Daniel DeLorme
+
+--------------010009000701080605010104
+Content-Type: text/x-patch;
+ name="verify-pack.patch"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment;
+ filename="verify-pack.patch"
+
+diff --git a/builtin/verify-pack.c b/builtin/verify-pack.c
+index b6079ae..ad67eb8 100644
+--- a/builtin/verify-pack.c
++++ b/builtin/verify-pack.c
+@@ -13,6 +13,7 @@ static void show_pack_info(struct packed_git *p, unsigned int flags)
+ {
+ 	uint32_t nr_objects, i;
+ 	int cnt;
++	int verbose = flags & VERIFY_PACK_VERBOSE;
+ 	int stat_only = flags & VERIFY_PACK_STAT_ONLY;
+ 	unsigned long chain_histogram[MAX_CHAIN+1], baseobjects;
+ 
+@@ -36,16 +37,16 @@ static void show_pack_info(struct packed_git *p, unsigned int flags)
+ 		type = packed_object_info_detail(p, offset, &size, &store_size,
+ 						 &delta_chain_length,
+ 						 base_sha1);
+-		if (!stat_only)
++		if (verbose)
+ 			printf("%s ", sha1_to_hex(sha1));
+ 		if (!delta_chain_length) {
+-			if (!stat_only)
++			if (verbose)
+ 				printf("%-6s %lu %lu %"PRIuMAX"\n",
+ 				       type, size, store_size, (uintmax_t)offset);
+ 			baseobjects++;
+ 		}
+ 		else {
+-			if (!stat_only)
++			if (verbose)
+ 				printf("%-6s %lu %lu %"PRIuMAX" %u %s\n",
+ 				       type, size, store_size, (uintmax_t)offset,
+ 				       delta_chain_length, sha1_to_hex(base_sha1));
+
+--------------010009000701080605010104--
