@@ -1,71 +1,108 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: [PATCH/RFC] perl: bump the required Perl version to 5.8 from 5.6.[21]
-Date: Sun, 26 Sep 2010 12:22:17 +0200
-Message-ID: <AANLkTimN++eDHhcnyYh=RLOLqgHe4x+fKKpzspFKh3LU@mail.gmail.com>
-References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>
-	<1285358453-19292-1-git-send-email-avarab@gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Minimum Perl version?
+Date: Sun, 26 Sep 2010 12:22:23 +0200
+Message-ID: <4C9F1EDF.1030104@op5.se>
+References: <20100924100019.GT23563@ece.pdx.edu>	<AANLkTin_wrCnpz-fz=FuJ96j+xBHM1-5HTGG0vP7bmDY@mail.gmail.com>	<20100924204032.GU23563@ece.pdx.edu> <AANLkTinQQxsbUHiKLaCJ0b5-dcvdE4JhLMVWOV5P2bkh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 26 12:22:25 2010
+Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
+	David Aguilar <davvid@gmail.com>
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 26 12:22:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzoNE-0006Df-Ea
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 12:22:24 +0200
+	id 1OzoNT-0006Gb-AN
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 12:22:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756787Ab0IZKWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 06:22:19 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:57628 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756075Ab0IZKWS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Sep 2010 06:22:18 -0400
-Received: by qwh6 with SMTP id 6so2724796qwh.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 03:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type:content-transfer-encoding;
-        bh=EjI6vtQ/CFveb1aYVKjfHS/nR+Q72YW76T36vruBvW4=;
-        b=ZTSdr3WLpDQEfRWo1V5lOscIa2sgVvn9IG7U7YU9FZhnErDjKpjsTynr1TfeohDYd+
-         z6kNAvfcbVDsgrHLlE8YGjjj8GzZeQa5FMh2aQV3p4myZ7pOleStlEWpl7pZWGZ/K8OZ
-         kTF9HJGvBo7T9IVW4yRMaYd+V7qSW5Z6pKIYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=YhhgQsAqbqCSbAy5/Flgd4C1d5Heh2SI7Ji3UBax52XZqnLZaxj1++Tc7j9jcgzXD3
-         V3+2FzD7FiPH9uK1WDsnVXuI3mlt1QvLeKzj4t9C+i/d+234PGCdJf2pIFXdkhHwvbsG
-         tw/VT3i1tVdKR+Y0Ql47UFMaxpdsEWv8lMBwg=
-Received: by 10.224.98.81 with SMTP id p17mr4173554qan.290.1285496537561; Sun,
- 26 Sep 2010 03:22:17 -0700 (PDT)
-Received: by 10.229.66.157 with HTTP; Sun, 26 Sep 2010 03:22:17 -0700 (PDT)
-In-Reply-To: <1285358453-19292-1-git-send-email-avarab@gmail.com>
-X-Google-Sender-Auth: LSCWKa8TalM7D3QWvqFjlLn7y9g
+	id S1756836Ab0IZKW3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 06:22:29 -0400
+Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:48734 "HELO
+	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1756075Ab0IZKW2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Sep 2010 06:22:28 -0400
+Received: from source ([209.85.215.45]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTJ8e4+ws5gzLPkaMT8ykLnahgMFPwr8u@postini.com; Sun, 26 Sep 2010 03:22:28 PDT
+Received: by ewy27 with SMTP id 27so1926142ewy.18
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 03:22:27 -0700 (PDT)
+Received: by 10.213.34.208 with SMTP id m16mr4671053ebd.87.1285496546832;
+        Sun, 26 Sep 2010 03:22:26 -0700 (PDT)
+Received: from clix.int.op5.se (90-227-176-162-no128.tbcn.telia.com [90.227.176.162])
+        by mx.google.com with ESMTPS id u9sm6429438eeh.11.2010.09.26.03.22.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 26 Sep 2010 03:22:25 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Thunderbird/3.0.7 ThunderGit/0.1a
+In-Reply-To: <AANLkTinQQxsbUHiKLaCJ0b5-dcvdE4JhLMVWOV5P2bkh@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157219>
 
-On Fri, Sep 24, 2010 at 22:00, =C6var Arnfj=F6r=F0 Bjarmason <avarab@gm=
-ail.com> wrote:
+On 09/25/2010 12:39 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+> On Fri, Sep 24, 2010 at 20:40, Tait<git.git@t41t.com>  wrote:
+>>>> What is the minimum Perl version git expects to support?
+>>>>
+>>>> I ask, because f922df8... seems to have introduced a open() syntax=
+ that
+>>>> is not compatible with some older Perl versions.
+>>>
+>>> We generally support 5.6 or above, but 5.8 or above for some other
+>>> programs.
+>>
+>> I am having to use a system with 5.6.1 to do cvsimport and cvsexport=
+commit,
+>> and interactive add. I haven't tried sendmail or other functions, ye=
+t. This
+>> system was previously using git 1.6.5.something, and did not have th=
+ese
+>> problems as of that release, but now that I'm building git 1.7.3, th=
+ey
+>> have appeared.
+>=20
+> Maybe marking everything as needing 5.8 or later isn't the right thin=
+g
+> to do. E.g. the git-*cvs*.perl code mostly isn't touched, but
+> cvsexportcommit does use Git.pm, so that would also need to be pinned
+> at 5.6 if cvsexportcommit was.
+>=20
+>> Perl 5.6.1 doesn't support the list open syntax, so one must replace
+>> open(my $fh, '-|', @list) with open(my $fh, '-|'), and then exec(@li=
+st).
+>> I'm working up a patch set to fill my own needs on this system, but =
+based
+>> on the subsequent discussion about setting 5.8 as the minimum, it so=
+unds
+>> like it's not worth submitting.
+>=20
+> The issue isn't that we don't have a workaround for individual bits
+> like open(my $fh, '-|', @list), but rather that keeping all of the
+> code 5.6 compatible is a burden on ongoing maintenance for a very
+> marginal benefit.
 
->
-> A follow-up to the discussion in "Let's bump the minimum Perl version
-> to 5.8". I took the liberty of adding Tor and Randal's Acked-by to th=
-e
-> patch based on their comments in the thread. Which is why this is an
-> RFC, if they're OK with it it can be applied.
+If someone steps up and makes various snippets of code 5.6 compatible w=
+hile
+not introducing any penalties for 5.8 users, I see no reason to drop th=
+ose
+patches.
 
-This is OK with me.
+Tait, submit your patches and I'm sure they'll be reviewed the same as
+everything else. If they make the code a lot harder to understand or a =
+lot
+slower, I'm sure they'll be dropped. If they don't, I'm reasonably cert=
+ain
+Junio will take them on. I barely speak Perl though, so reviewing them =
+will
+have to be done by someone else.
 
--Tor
+--=20
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
