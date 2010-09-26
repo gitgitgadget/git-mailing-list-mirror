@@ -1,90 +1,87 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/2] sh-setup: Write a new require_clean_work_tree
- function
-Date: Mon, 27 Sep 2010 00:21:17 +0530
-Message-ID: <20100926185115.GA14596@kytes>
-References: <4C9E07B1.50600@workspacewhiz.com>
- <1285514516-5112-2-git-send-email-artagnon@gmail.com>
- <vpqmxr4piyf.fsf@bauges.imag.fr>
- <20100926173956.GA15143@kytes>
- <vpqtylcgx75.fsf@bauges.imag.fr>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Splitting the mailing list up
+Date: Sun, 26 Sep 2010 18:54:43 +0000
+Message-ID: <AANLkTik3ES08H1VSaGxv7aDoV3Ki_Y2ea2dHYqem0S28@mail.gmail.com>
+References: <20100925230022.6e2fd389.coolzone@it.dk>
+	<AANLkTikXSfO0uGP1b20jkF09=Mfq0s0+4d4_ANeprXF_@mail.gmail.com>
+	<8AE74FC9-6C7F-433E-A162-E56644847198@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 26 20:52:49 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sebastien Douche <sdouche@gmail.com>, Rico Secada <coolzone@it.dk>,
+	git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Sun Sep 26 20:54:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzwL7-0001uY-CM
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 20:52:45 +0200
+	id 1OzwN8-000463-7L
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 20:54:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757440Ab0IZSwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 14:52:36 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:43253 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754860Ab0IZSwf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 14:52:35 -0400
-Received: by pzk34 with SMTP id 34so1021937pzk.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 11:52:35 -0700 (PDT)
+	id S1757376Ab0IZSyq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 14:54:46 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62184 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756178Ab0IZSyo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Sep 2010 14:54:44 -0400
+Received: by iwn5 with SMTP id 5so4077556iwn.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 11:54:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=NpTxb6l8i+jes7lK9qGfftafIRIaEY7RT3fbl72LmlA=;
-        b=xqlbFWiVPp75IDEmMBH4PehlSbAe6g3okb6dtdB7Fca6Na71wPt08JnqSZxmZFLnwE
-         WxTFheCjUyq0yYsVR4erMvzW6eqWNK2BTV+qm8tBkIGbxXY946Wg3Mpw0Avv0Dq0wZfj
-         ckWaM0OkGfPf34nxVXQ2ynHDhK4TJdz7V17sE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/AFaidlXOkdbU5xDItkYo2feSEATSpPotGP9aYuHl7s=;
+        b=eMTGKjwqXuPXAJLl8rHIUejPra7MBzuiYOHIKnkxyIKQHw+fNC8A7s16MBY8cSj5rs
+         kjixCPJAnTfRKHUbOqDlzBZEj+Liw/B0ln181y2lutN3SMC4XhWL9p9/MvbNdQRFjLMU
+         FRhnv1xL7OJQRei4J36tSC169KhCk3VxlYiJI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=q7w3PI6NkEPIVHrF9tDIZwaYOYTIbFx504vH6Iy/D+jPJdDmv+G1nkxvRdmbo40L5z
-         rwng74Y65ExNDMfmvo5aM/TYADkopqmII7mOWwR5yFA6inh48YX0ATPWaHbM3/8O8bOp
-         tPznLmnexUpOJlMkJRDJFwwdz1Q+deA2el1Ok=
-Received: by 10.142.249.19 with SMTP id w19mr5375122wfh.189.1285527155454;
-        Sun, 26 Sep 2010 11:52:35 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 9sm6202709wfd.0.2010.09.26.11.52.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 11:52:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <vpqtylcgx75.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=IVtoxs2Qu6NEEj4zMkjjPmJQOwK64FfG4aNYGKS022ckGb5yvpqOWVPeFofH0IdsLM
+         9DMZAgocMquYtuwrumpOjlWRKvfFqtEyM6hDdbOQ8qMJ8SUL5J4N1S4mrP/Hwf+oPrCO
+         V64ql6JLVJG8iaVmDtrXiOD19KgVzHq0nbAP4=
+Received: by 10.231.149.3 with SMTP id r3mr7670236ibv.109.1285527284022; Sun,
+ 26 Sep 2010 11:54:44 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Sun, 26 Sep 2010 11:54:43 -0700 (PDT)
+In-Reply-To: <8AE74FC9-6C7F-433E-A162-E56644847198@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157252>
 
-Hi Matthieu,
+On Sun, Sep 26, 2010 at 17:30, Wincent Colaiuta <win@wincent.com> wrote=
+:
+> El 26/09/2010, a las 18:02, Sebastien Douche escribi=C3=B3:
+>
+>> On Sat, Sep 25, 2010 at 23:00, Rico Secada <coolzone@it.dk> wrote:
+>>> Would it be a bad idea to split the Git mailing list up in several
+>>> sub-categories?
+>>>
+>>> Example:
+>>>
+>>> announce@
+>>> dev@
+>>> user@
+>>
+>> Why not, but the simple way is to create another ml for patchs.
+>> Without patchs, the traffic seems relatively low.
+>
+> This has come up many times, and been rejected each time. Check the a=
+rchives for the reasons why.
 
-Matthieu Moy writes:
-> Yes, but I find this very painfull when you
-> 
-> $ git do-something
-> error: you need X before you can do-something
-> $ do X
-> $ git do-something
-> error: Ah, you also need Y before you can do-something
+Right, but for the *main* mailing list. However if Rico, Walter and
+others would find a limited traffic mailing list valuable there's
+nothing stopping them from setting one up.
 
-Ah, yes. This would definitely be annoying.
+Jay linked to an archive where someone is running RSS feeds of the
+different parts of the git list, similarly you could set up a git-user
+list which would be a version of the git list filtered to reduce patch
+traffic.
 
-> A plain commit will get rid of staged changes, not of unstaged ones.
-> 
-> Your patch shows unstaged changes first. If the only problem was
-> unstaged changes, then "git stash --keep-index" would be a good
-> solution. As a user, I prefer knowing both problems to find the right
-> solution (and avoid trying to solve only unstaged changes before
-> noticing I need to solve the other one too).
-
-Good point. I'll make the error messages a little more comprehensive
-and focused in the next iteration.
-
--- Ram
+Maybe that list wouldn't make much sense when patches are intermingled
+with regular discussion, but it's worth a try.
