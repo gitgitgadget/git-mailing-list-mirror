@@ -1,186 +1,143 @@
 From: Elijah Newren <newren@gmail.com>
-Subject: [PATCHv4 00/15] Add missing &&'s in the testsuite
-Date: Sun, 26 Sep 2010 17:14:24 -0600
-Message-ID: <1285542879-16381-1-git-send-email-newren@gmail.com>
+Subject: [PATCHv4 02/15] t4017 (diff-retval): replace manual exit code check with test_expect_code
+Date: Sun, 26 Sep 2010 17:14:26 -0600
+Message-ID: <1285542879-16381-3-git-send-email-newren@gmail.com>
+References: <1285542879-16381-1-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 27 01:13:24 2010
+X-From: git-owner@vger.kernel.org Mon Sep 27 01:14:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P00PI-0005V8-Ow
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 01:13:21 +0200
+	id 1P00Pv-0005ch-JC
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 01:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757991Ab0IZXND convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 19:13:03 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:45170 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757639Ab0IZXNC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 19:13:02 -0400
-Received: by pxi10 with SMTP id 10so1218934pxi.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 16:13:01 -0700 (PDT)
+	id S1758103Ab0IZXNJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 19:13:09 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:37370 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758010Ab0IZXNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 19:13:06 -0400
+Received: by pvg2 with SMTP id 2so1087690pvg.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 16:13:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=aIF5XZSmI0gmPAJkVNkOasoqrc7uSD6ydmW4z7sviXA=;
-        b=ZUrhyE0l0iJoIupg/B+iobDYUB9iCor6xa+kX3lkV3T0ovsqnRreRKOEAn7TiyVnHB
-         BtLpzsjMZc59U1ucwgNyA3EWCSaGz9kzgX2+Z9oVNmbWUxhmO+qp+cXSeiSr69HpmR+g
-         JWK/E7yfvLwU3j3/Hwvjrvi5/DQ/iB9mvqW6Y=
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=huwi+0/WXA2vq0MBjKlmaLzqtyyETnphrFYOQN7+BEE=;
+        b=O8kHELe1FWqYLLRgC3S05zUTGQwLu3BDkVPGcahBwTsBnuo4wTWsP1OaHmMunGZDZg
+         HF+nBnz5v/8FZmlDTqIIvWDCoAv5KWD5Cm2XnLfzbZ3LFkh/bwhI5RwSBbXtSZp8lFzT
+         rzWBJIIWKARFvQ6/MwuyC1MeljUB1v2au5SdY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=c5ABtAUQ0Cy2Xhci7Te5vNtkZHAaBByoDDrwdXiET/fv6CQ0pZ3ApZPvKyP23Os9vh
-         +9or7pPkziiLMe/SKpmWonIVgQ9ya1+/zX6UxkOj0CmFSA6ny1/2D8EDddco6N5zpLrb
-         HDrjOHlv3GZVy+2cUANIMHhtywGqtO9vlJWD0=
-Received: by 10.114.136.19 with SMTP id j19mr7191845wad.170.1285542780938;
-        Sun, 26 Sep 2010 16:13:00 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=O/5ZteXQDDlG28sqPj7cuxOBTNTs98OCAH2p7yuwRZMWzCxuk+aDrZQpTZVI+HBpEN
+         ESAtpY1tn6e65NT/bbr8hXVyL9uVyUZivMd1OFwEGm53fQvKn+P0+6bR6FS2D3ZiySwx
+         9v5vJA6qGcsaPBFdlACCYBzrNeaQuJNGgjhHA=
+Received: by 10.114.80.10 with SMTP id d10mr7340447wab.180.1285542786098;
+        Sun, 26 Sep 2010 16:13:06 -0700 (PDT)
 Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
-        by mx.google.com with ESMTPS id c24sm9242157wam.19.2010.09.26.16.12.57
+        by mx.google.com with ESMTPS id c24sm9242157wam.19.2010.09.26.16.13.04
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 16:12:59 -0700 (PDT)
+        Sun, 26 Sep 2010 16:13:05 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.95.g14291
+In-Reply-To: <1285542879-16381-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157271>
 
-This patch series fixes many of the missing &&s in the testsuite.  I'm
-certain there are still others I have missed.
+Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t4017-diff-retval.sh |   30 ++++++++++--------------------
+ 1 files changed, 10 insertions(+), 20 deletions(-)
 
-Changes since v3:
-  * Dropped patch 11; Christian has submitted a more thorough fix that
-    includes my patch and more.
-  * Fixed issue in patch 15 of previous series (now patch 14) noted by =
-=C3=86var.
-  * Fixed subject line for patch 8, as noted by Jeff.
-  * Added acks from =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason and Jeff Kin=
-g
-
-Elijah Newren (15):
-  t3020 (ls-files-error-unmatch): remove stray '1' from end of file
-  t4017 (diff-retval): replace manual exit code check with
-    test_expect_code
-  t100[12] (read-tree-m-2way, read_tree_m_u_2way): add missing &&
-  t4002 (diff-basic): use test_might_fail for commands that might fail
-  t4202 (log): Replace '<git-command> || :' with test_might_fail
-  t3600 (rm): add lots of missing &&
-  t4019 (diff-wserror): add lots of missing &&
-  t4026 (color): remove unneeded and unchained command
-  t5602 (clone-remote-exec): add missing &&
-  t6016 (rev-list-graph-simplify-history): add missing &&
-  t7001 (mv): add missing &&
-  t7601 (merge-pull-config): add missing &&
-  t7800 (difftool): add missing &&
-  Add missing &&'s throughout the testsuite
-  Replace "unset VAR" with "unset VAR;" in testsuite as per t/README
-
- t/t0001-init.sh                             |   30 ++++++++--------
- t/t0003-attributes.sh                       |   41 ++++++++++---------=
---
- t/t0020-crlf.sh                             |    2 +-
- t/t0024-crlf-archive.sh                     |    4 +-
- t/t0026-eol-config.sh                       |    2 +-
- t/t0050-filesystem.sh                       |    6 ++--
- t/t1000-read-tree-m-3way.sh                 |    2 +-
- t/t1001-read-tree-m-2way.sh                 |   18 +++++-----
- t/t1002-read-tree-m-u-2way.sh               |   10 +++---
- t/t1302-repo-version.sh                     |    2 +-
- t/t1401-symbolic-ref.sh                     |    2 +-
- t/t1402-check-ref-format.sh                 |    4 +-
- t/t1410-reflog.sh                           |    8 ++--
- t/t1501-worktree.sh                         |    2 +-
- t/t1509-root-worktree.sh                    |    6 ++--
- t/t2007-checkout-symlink.sh                 |    2 +-
- t/t2016-checkout-patch.sh                   |    2 +-
- t/t2050-git-dir-relative.sh                 |    4 +-
- t/t2103-update-index-ignore-missing.sh      |    2 +-
- t/t2200-add-update.sh                       |    2 +-
- t/t3001-ls-files-others-exclude.sh          |    2 +-
- t/t3020-ls-files-error-unmatch.sh           |    1 -
- t/t3050-subprojects-fetch.sh                |    4 +-
- t/t3203-branch-output.sh                    |    6 ++--
- t/t3307-notes-man.sh                        |    2 +-
- t/t3406-rebase-message.sh                   |    6 ++--
- t/t3408-rebase-multi-line.sh                |    2 +-
- t/t3504-cherry-pick-rerere.sh               |    4 +-
- t/t3600-rm.sh                               |   38 +++++++++----------=
--
- t/t3903-stash.sh                            |    4 +-
- t/t3904-stash-patch.sh                      |    2 +-
- t/t4002-diff-basic.sh                       |   12 +++---
- t/t4017-diff-retval.sh                      |   30 +++++----------
- t/t4019-diff-wserror.sh                     |   52 +++++++++++++------=
--------
- t/t4021-format-patch-numbered.sh            |    2 +-
- t/t4026-color.sh                            |    1 -
- t/t4027-diff-submodule.sh                   |    2 +-
- t/t4103-apply-binary.sh                     |    8 ++--
- t/t4104-apply-boundary.sh                   |    4 +-
- t/t4111-apply-subdir.sh                     |    4 +-
- t/t4119-apply-config.sh                     |    2 +-
- t/t4124-apply-ws-rule.sh                    |    4 +-
- t/t4127-apply-same-fn.sh                    |   18 +++++-----
- t/t4130-apply-criss-cross-rename.sh         |    2 +-
- t/t4133-apply-filenames.sh                  |    6 ++--
- t/t4150-am.sh                               |    2 +-
- t/t4202-log.sh                              |    2 +-
- t/t5300-pack-object.sh                      |    4 +-
- t/t5301-sliding-window.sh                   |    2 +-
- t/t5302-pack-index.sh                       |    2 +-
- t/t5500-fetch-pack.sh                       |    2 +-
- t/t5502-quickfetch.sh                       |    2 +-
- t/t5503-tagfollow.sh                        |    4 +-
- t/t5510-fetch.sh                            |    2 +-
- t/t5516-fetch-push.sh                       |   20 +++++-----
- t/t5517-push-mirror.sh                      |   10 +++---
- t/t5519-push-alternates.sh                  |    2 +-
- t/t5531-deep-submodule-push.sh              |    2 +-
- t/t5541-http-push.sh                        |    2 +-
- t/t5550-http-fetch.sh                       |    6 ++--
- t/t5601-clone.sh                            |    6 ++--
- t/t5602-clone-remote-exec.sh                |   14 ++++----
- t/t5701-clone-local.sh                      |    8 ++--
- t/t5705-clone-2gb.sh                        |    2 +-
- t/t6009-rev-list-parent.sh                  |    2 +-
- t/t6010-merge-base.sh                       |    2 +-
- t/t6016-rev-list-graph-simplify-history.sh  |   24 +++---------
- t/t6022-merge-rename.sh                     |    2 +-
- t/t6024-recursive-merge.sh                  |    2 +-
- t/t6030-bisect-porcelain.sh                 |    8 ++--
- t/t6040-tracking-info.sh                    |    2 +-
- t/t7001-mv.sh                               |    2 +-
- t/t7004-tag.sh                              |   14 ++++----
- t/t7105-reset-patch.sh                      |    6 ++--
- t/t7300-clean.sh                            |    6 ++--
- t/t7501-commit.sh                           |    2 +-
- t/t7502-commit.sh                           |    6 ++--
- t/t7506-status-submodule.sh                 |    2 +-
- t/t7600-merge.sh                            |    2 +-
- t/t7601-merge-pull-config.sh                |   12 +++---
- t/t7610-mergetool.sh                        |    2 +-
- t/t7700-repack.sh                           |    2 +-
- t/t7800-difftool.sh                         |   11 +++---
- t/t8003-blame.sh                            |    6 ++--
- t/t9122-git-svn-author.sh                   |    4 +-
- t/t9123-git-svn-rebuild-with-rewriteroot.sh |    2 +-
- t/t9134-git-svn-ignore-paths.sh             |    6 ++--
- t/t9137-git-svn-dcommit-clobber-series.sh   |    2 +-
- t/t9138-git-svn-authors-prog.sh             |    6 ++--
- t/t9146-git-svn-empty-dirs.sh               |    6 ++--
- t/t9151-svn-mergeinfo.sh                    |   22 ++++++------
- t/t9200-git-cvsexportcommit.sh              |    4 +-
- t/t9401-git-cvsserver-crlf.sh               |    2 +-
- t/t9600-cvsimport.sh                        |    2 +-
- 94 files changed, 302 insertions(+), 332 deletions(-)
-
+diff --git a/t/t4017-diff-retval.sh b/t/t4017-diff-retval.sh
+index 6158985..6605e12 100755
+--- a/t/t4017-diff-retval.sh
++++ b/t/t4017-diff-retval.sh
+@@ -28,37 +28,29 @@ test_expect_success 'git diff --quiet -w  HEAD^ HEA=
+D' '
+ 	test_must_fail git diff --quiet -w HEAD^ HEAD
+ '
+=20
+-test_expect_success 'git diff-tree HEAD^ HEAD' '
++test_expect_code 1 'git diff-tree HEAD^ HEAD' '
+ 	git diff-tree --exit-code HEAD^ HEAD
+-	test $? =3D 1
+ '
+-test_expect_success 'git diff-tree HEAD^ HEAD -- a' '
++test_expect_code 0 'git diff-tree HEAD^ HEAD -- a' '
+ 	git diff-tree --exit-code HEAD^ HEAD -- a
+-	test $? =3D 0
+ '
+-test_expect_success 'git diff-tree HEAD^ HEAD -- b' '
++test_expect_code 1 'git diff-tree HEAD^ HEAD -- b' '
+ 	git diff-tree --exit-code HEAD^ HEAD -- b
+-	test $? =3D 1
+ '
+-test_expect_success 'echo HEAD | git diff-tree --stdin' '
++test_expect_code 1 'echo HEAD | git diff-tree --stdin' '
+ 	echo $(git rev-parse HEAD) | git diff-tree --exit-code --stdin
+-	test $? =3D 1
+ '
+-test_expect_success 'git diff-tree HEAD HEAD' '
++test_expect_code 0 'git diff-tree HEAD HEAD' '
+ 	git diff-tree --exit-code HEAD HEAD
+-	test $? =3D 0
+ '
+-test_expect_success 'git diff-files' '
++test_expect_code 0 'git diff-files' '
+ 	git diff-files --exit-code
+-	test $? =3D 0
+ '
+-test_expect_success 'git diff-index --cached HEAD' '
++test_expect_code 0 'git diff-index --cached HEAD' '
+ 	git diff-index --exit-code --cached HEAD
+-	test $? =3D 0
+ '
+-test_expect_success 'git diff-index --cached HEAD^' '
++test_expect_code 1 'git diff-index --cached HEAD^' '
+ 	git diff-index --exit-code --cached HEAD^
+-	test $? =3D 1
+ '
+ test_expect_success 'git diff-index --cached HEAD^' '
+ 	echo text >>b &&
+@@ -74,9 +66,8 @@ test_expect_success 'git diff-tree -Stext HEAD^ HEAD =
+-- b' '
+ 		test $? =3D 1
+ 	}
+ '
+-test_expect_success 'git diff-tree -Snot-found HEAD^ HEAD -- b' '
++test_expect_code 0 'git diff-tree -Snot-found HEAD^ HEAD -- b' '
+ 	git diff-tree -p --exit-code -Snot-found HEAD^ HEAD -- b
+-	test $? =3D 0
+ '
+ test_expect_success 'git diff-files' '
+ 	echo 3 >>c && {
+@@ -113,10 +104,9 @@ test_expect_success '--check --exit-code returns 3=
+ for a dirty difference' '
+=20
+ '
+=20
+-test_expect_success '--check with --no-pager returns 2 for dirty diffe=
+rence' '
++test_expect_code 2 '--check with --no-pager returns 2 for dirty differ=
+ence' '
+=20
+ 	git --no-pager diff --check
+-	test $? =3D 2
+=20
+ '
+=20
 --=20
 1.7.3.95.g14291
