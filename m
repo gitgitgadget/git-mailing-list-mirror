@@ -1,108 +1,95 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Minimum Perl version?
-Date: Sun, 26 Sep 2010 12:22:23 +0200
-Message-ID: <4C9F1EDF.1030104@op5.se>
-References: <20100924100019.GT23563@ece.pdx.edu>	<AANLkTin_wrCnpz-fz=FuJ96j+xBHM1-5HTGG0vP7bmDY@mail.gmail.com>	<20100924204032.GU23563@ece.pdx.edu> <AANLkTinQQxsbUHiKLaCJ0b5-dcvdE4JhLMVWOV5P2bkh@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] gitweb: Move call to evaluate_git_version after
+	evaluate_gitweb_config
+Date: Sun, 26 Sep 2010 13:34:56 +0200
+Message-ID: <20100926113431.28918.53550.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tait <git.git@t41t.com>, git@vger.kernel.org,
-	David Aguilar <davvid@gmail.com>
-To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 26 12:22:40 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Sep 26 13:35:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzoNT-0006Gb-AN
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 12:22:39 +0200
+	id 1OzpVs-0004uq-PI
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 13:35:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756836Ab0IZKW3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 06:22:29 -0400
-Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:48734 "HELO
-	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1756075Ab0IZKW2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Sep 2010 06:22:28 -0400
-Received: from source ([209.85.215.45]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTJ8e4+ws5gzLPkaMT8ykLnahgMFPwr8u@postini.com; Sun, 26 Sep 2010 03:22:28 PDT
-Received: by ewy27 with SMTP id 27so1926142ewy.18
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 03:22:27 -0700 (PDT)
-Received: by 10.213.34.208 with SMTP id m16mr4671053ebd.87.1285496546832;
-        Sun, 26 Sep 2010 03:22:26 -0700 (PDT)
-Received: from clix.int.op5.se (90-227-176-162-no128.tbcn.telia.com [90.227.176.162])
-        by mx.google.com with ESMTPS id u9sm6429438eeh.11.2010.09.26.03.22.24
+	id S1757496Ab0IZLfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 07:35:18 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56169 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757482Ab0IZLfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 07:35:16 -0400
+Received: by fxm3 with SMTP id 3so1371592fxm.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 04:35:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:date
+         :message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=OW2lOgbaWJog7CpiDF1B0zpz+j6xFbZfZ0cOkqP+Ros=;
+        b=AfBaLHjVSV1ILAoqFrywnFMORqPH+YhObT2guwHSFqcTGbLLHSWFKWXqAqWwztu75i
+         UyFsB0LtwLOlGP0+qoizdSksvP4GmvTIIzLm6rMJnVosxN1khQA2CGEogEyRaN6qwy0H
+         mLfRLH37IpEuiq53EMOoN2Cz4muL0x+sGnVVY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=VzZwo4fupJqPp+2p37fFRNFdzOQPXkuyK4byN7raA7y3qUTd1b4YHkZ2Ea6Cc1ePYk
+         Mb0n8ZIJXiXuTw2mwzvfyu/lhE8OVeYuIbrIrshDSMHL8+kXsWMP4iNFLWl8eA0EUdT8
+         oPy5BfUs0wYF7/u0wR/a9z08U/DWLxW/sktTc=
+Received: by 10.223.121.196 with SMTP id i4mr5899608far.66.1285500915207;
+        Sun, 26 Sep 2010 04:35:15 -0700 (PDT)
+Received: from localhost.localdomain (abwp12.neoplus.adsl.tpnet.pl [83.8.239.12])
+        by mx.google.com with ESMTPS id k25sm1892374fac.41.2010.09.26.04.35.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 03:22:25 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Thunderbird/3.0.7 ThunderGit/0.1a
-In-Reply-To: <AANLkTinQQxsbUHiKLaCJ0b5-dcvdE4JhLMVWOV5P2bkh@mail.gmail.com>
+        Sun, 26 Sep 2010 04:35:14 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8QBYuW9028954
+	for <git@vger.kernel.org>; Sun, 26 Sep 2010 13:35:07 +0200
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157220>
 
-On 09/25/2010 12:39 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
-> On Fri, Sep 24, 2010 at 20:40, Tait<git.git@t41t.com>  wrote:
->>>> What is the minimum Perl version git expects to support?
->>>>
->>>> I ask, because f922df8... seems to have introduced a open() syntax=
- that
->>>> is not compatible with some older Perl versions.
->>>
->>> We generally support 5.6 or above, but 5.8 or above for some other
->>> programs.
->>
->> I am having to use a system with 5.6.1 to do cvsimport and cvsexport=
-commit,
->> and interactive add. I haven't tried sendmail or other functions, ye=
-t. This
->> system was previously using git 1.6.5.something, and did not have th=
-ese
->> problems as of that release, but now that I'm building git 1.7.3, th=
-ey
->> have appeared.
->=20
-> Maybe marking everything as needing 5.8 or later isn't the right thin=
-g
-> to do. E.g. the git-*cvs*.perl code mostly isn't touched, but
-> cvsexportcommit does use Git.pm, so that would also need to be pinned
-> at 5.6 if cvsexportcommit was.
->=20
->> Perl 5.6.1 doesn't support the list open syntax, so one must replace
->> open(my $fh, '-|', @list) with open(my $fh, '-|'), and then exec(@li=
-st).
->> I'm working up a patch set to fill my own needs on this system, but =
-based
->> on the subsequent discussion about setting 5.8 as the minimum, it so=
-unds
->> like it's not worth submitting.
->=20
-> The issue isn't that we don't have a workaround for individual bits
-> like open(my $fh, '-|', @list), but rather that keeping all of the
-> code 5.6 compatible is a burden on ongoing maintenance for a very
-> marginal benefit.
+This means that call to evaluate_git_version() is now inside
+run_request(), which means that is called for each request instead of
+once per starting gitweb; this matter currently only when using
+FastCGI interface (gitweb.fcgi).
 
-If someone steps up and makes various snippets of code 5.6 compatible w=
-hile
-not introducing any penalties for 5.8 users, I see no reason to drop th=
-ose
-patches.
+This change was done becayse evaluate_git_version() uses $GIT
+variable, which can be set / modified by gitweb config file... and it
+is modified this way by gitweb config file used in gitweb tests.
+Without this change there is spurious extra output from t9500 test
+when tests are run with '--debug' option.
 
-Tait, submit your patches and I'm sure they'll be reviewed the same as
-everything else. If they make the code a lot harder to understand or a =
-lot
-slower, I'm sure they'll be dropped. If they don't, I'm reasonably cert=
-ain
-Junio will take them on. I barely speak Perl though, so reviewing them =
-will
-have to be done by someone else.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
 
---=20
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index a85e2f6..d521b4c 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1061,6 +1061,7 @@ sub run_request {
+ 
+ 	evaluate_uri();
+ 	evaluate_gitweb_config();
++	evaluate_git_version();
+ 	check_loadavg();
+ 
+ 	# $projectroot and $projects_list might be set in gitweb config file
+@@ -1113,7 +1114,6 @@ sub evaluate_argv {
+ 
+ sub run {
+ 	evaluate_argv();
+-	evaluate_git_version();
+ 
+ 	$pre_listen_hook->()
+ 		if $pre_listen_hook;
