@@ -1,74 +1,62 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] t6050 (replace): fix bogus "fetch branch with replacement"
-	test
-Date: Sun, 26 Sep 2010 07:20:18 +0200
-Message-ID: <20100926052019.13598.5764.chriscool@tuxfamily.org>
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Sep 26 07:25:45 2010
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Splitting the mailing list up
+Date: Sun, 26 Sep 2010 02:52:50 -0400
+Message-ID: <AANLkTineNLysroH+LGD6ah7WMcLp6e0sU1-uxmcgWHG5@mail.gmail.com>
+References: <20100925230022.6e2fd389.coolzone@it.dk> <AANLkTikHNhRTTvcpj_30fUBbxv8-qG9HfTTO+XkLJgam@mail.gmail.com>
+ <20100925231935.8fa0b946.coolzone@it.dk>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Rico Secada <coolzone@it.dk>
+X-From: git-owner@vger.kernel.org Sun Sep 26 08:53:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ozjk8-0002DO-SB
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 07:25:45 +0200
+	id 1Ozl71-0007YW-Sn
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 08:53:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750902Ab0IZFYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 01:24:01 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:47910 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750857Ab0IZFYB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 01:24:01 -0400
-Received: from style.boubyland (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 188DFA61E3;
-	Sun, 26 Sep 2010 07:23:54 +0200 (CEST)
-X-git-sha1: f9dcb29c9eb8e3f391113d4b5b649a8a651fa7ca 
-X-Mailer: git-mail-commits v0.5.2
+	id S1751229Ab0IZGxW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 02:53:22 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61756 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751061Ab0IZGxV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 02:53:21 -0400
+Received: by iwn5 with SMTP id 5so3703594iwn.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 23:53:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=Dk+f75siwIcaIIj/GPtYGuOtMDIEatKgCm5dgGe5pMg=;
+        b=QYaPevtzi3F36pHqwGcJxNvdTh/UqVVhYexrsYbC/N1FTFLtleowmEeeiM9sFxQ0ng
+         wgQC5iGin2kAtBgEpZbUB7KiR7e0WLWVLXeqIqTPnxvzJdaFojpR7CMuKqym3jQS68jm
+         4YoBUYv9Gk48BUl7byH+KGP6MC2pjvE6B8QYg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=uQ3vT5W0UPA6SswVbt4LHw9Mk+CThxqSvlKBIJ0dw7sDtCnIFwveHNy8hEl/njoD0c
+         T1FXVLxSEq/RbEWoZuIXKf6Ywwtk5I7EpkvBe/Lm2h+/HCvQufZx6lx8DYmIw9FBDH3W
+         CfAW4rB+kIqu2wki+FRQjmtJ5YFOrYtffkcqg=
+Received: by 10.231.174.196 with SMTP id u4mr6877050ibz.19.1285484000483; Sat,
+ 25 Sep 2010 23:53:20 -0700 (PDT)
+Received: by 10.231.157.198 with HTTP; Sat, 25 Sep 2010 23:52:50 -0700 (PDT)
+In-Reply-To: <20100925231935.8fa0b946.coolzone@it.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157212>
 
-The test was missing some "&&" at the end of some lines and it
-was wrong because, as the replacement refs were not fetched,
-the commits from the parallel branch should not show up. This
-was found by Elijah Newren.
+On Sat, Sep 25, 2010 at 5:19 PM, Rico Secada <coolzone@it.dk> wrote:
+> That's one way to do it, but I think splitting things up is better.
 
-This is fixed by checking that after the branch from HASH6 is
-fetched, the commits from the parallel branch don't show up,
-and then by fetching the replacement refs and checking that
-they do show up afterwards.
+Hi. You seem to be new here. Let me direct you to some previous
+discussions of this topic:
 
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
- t/t6050-replace.sh |   13 ++++++++++---
- 1 files changed, 10 insertions(+), 3 deletions(-)
+http://thread.gmane.org/gmane.comp.version-control.git/60610/focus=60655
+http://thread.gmane.org/gmane.comp.version-control.git/105417/focus=105606
 
-diff --git a/t/t6050-replace.sh b/t/t6050-replace.sh
-index c907523..95b180f 100755
---- a/t/t6050-replace.sh
-+++ b/t/t6050-replace.sh
-@@ -205,9 +205,16 @@ test_expect_success 'fetch branch with replacement' '
-      git branch tofetch $HASH6 &&
-      (
- 	  cd clone_dir &&
--	  git fetch origin refs/heads/tofetch:refs/heads/parallel3
--	  git log --pretty=oneline parallel3 | grep $PARA3
--	  git show $PARA3 | grep "A U Thor"
-+	  git fetch origin refs/heads/tofetch:refs/heads/parallel3 &&
-+	  git log --pretty=oneline parallel3 > output.txt &&
-+	  ! grep $PARA3 output.txt &&
-+	  git show $PARA3 > para3.txt &&
-+	  grep "A U Thor" para3.txt &&
-+	  git fetch origin "refs/replace/*:refs/replace/*" &&
-+	  git log --pretty=oneline parallel3 > output.txt &&
-+	  grep $PARA3 output.txt &&
-+	  git show $PARA3 > para3.txt &&
-+	  grep "O Thor" para3.txt
-      )
- '
- 
--- 
-1.7.3.256.g00e8a
+j.
