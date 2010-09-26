@@ -1,140 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 03/12] gitweb: separate heads and remotes lists
-Date: Sun, 26 Sep 2010 19:39:11 +0200
-Message-ID: <201009261939.12107.jnareb@gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <1285344167-8518-4-git-send-email-giuseppe.bilotta@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH 1/2] sh-setup: Write a new require_clean_work_tree
+ function
+Date: Sun, 26 Sep 2010 23:09:59 +0530
+Message-ID: <20100926173956.GA15143@kytes>
+References: <4C9E07B1.50600@workspacewhiz.com>
+ <1285514516-5112-2-git-send-email-artagnon@gmail.com>
+ <vpqmxr4piyf.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 26 19:39:45 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Sun Sep 26 19:41:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzvCQ-0000xj-Lc
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 19:39:43 +0200
+	id 1OzvDx-0001MM-Tl
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 19:41:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757946Ab0IZRjh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 13:39:37 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:37840 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757197Ab0IZRjg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 13:39:36 -0400
-Received: by bwz11 with SMTP id 11so2865795bwz.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 10:39:35 -0700 (PDT)
+	id S1757959Ab0IZRlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 13:41:13 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:49442 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757953Ab0IZRlN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 13:41:13 -0400
+Received: by pwj6 with SMTP id 6so1005225pwj.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 10:41:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=RmfbfKi2axfcW8yAjiVKczhGoCivI36G+JfJUAE2Rgo=;
-        b=ciAHtWeOJX6OcHIy2OcvahLpN19k8jTzPZFx+h9E4UvzrFsaHC8NmaOf4I4lXxDB7r
-         +oQm+WTEjFctrgHlRXEaSYcsx16O1ypMVBv6Hru/es6H+pP7+HCvF7UOeuGEaJi2bBsP
-         WCN/sUXRTXTs+5YrhU/ighc5APlozKKC6sSFw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=aAnwglN1tYcSsOCMJe+CTHsTPtdfR2KFTBPX3Va55MA=;
+        b=DeEXMB7cZVlC+ohf3kRSnojua8QwnyR69MEgZ/Rf3Ew1N9jkQxh7P/HZ7c/oyjXmyB
+         A0D+LfjnbCRsakqUgwQ8Hb6r2gcz3YynedjpXHILo2Wv1RUTK/+CtHbV2oHexOlCHDMu
+         Txfk1dqiBu+lSlkN/iVATm4UPW57sF3fn2UBE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=DHwwhSnGkQo6c0SMJX/O4W+8sN2Mdy0miHRqsh3Ly+FdKqxSmjgiwyG5pc1RuNlE6W
-         M2AipR8V6gqUGilyzb/aQtyb8OrxDIrA0UovPNwcKwuMdCBt3VfonUcwOtCAdGzKm7Y8
-         TWT0KCG3SRHpjS66LnTSzraOBgCH2jHXVAsIk=
-Received: by 10.204.117.136 with SMTP id r8mr4379273bkq.119.1285522760551;
-        Sun, 26 Sep 2010 10:39:20 -0700 (PDT)
-Received: from [192.168.1.13] (abwp12.neoplus.adsl.tpnet.pl [83.8.239.12])
-        by mx.google.com with ESMTPS id x13sm3565398bki.12.2010.09.26.10.39.18
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pr+6PjnT97KXq4oeyybgGgk0NRzYA+t2LNivfg11qR/jXNQOgc0e3yHshUwFPKk/pS
+         xydM/AriOZr7kIzC4+aZZ0fxkE/GuZ3pKCCfupbLcQSVFvh2aF8STIqtF2sAv6MtKbB4
+         szNXjEf/DbN+Wsa3jwcphVDmva4RKWIS2dTns=
+Received: by 10.142.199.18 with SMTP id w18mr5305153wff.336.1285522872610;
+        Sun, 26 Sep 2010 10:41:12 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id v6sm6109008wfg.3.2010.09.26.10.41.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 10:39:19 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1285344167-8518-4-git-send-email-giuseppe.bilotta@gmail.com>
+        Sun, 26 Sep 2010 10:41:11 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <vpqmxr4piyf.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157243>
 
-On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
+Hi Matthieu,
 
-> We specialize the 'heads' action to only display local branches, and
-> introduce a 'remotes' action to display the remote branches (only
-> available when the remotes_head feature is enabled).
+Matthieu Moy writes:
+> I totally agree on the idea, and the implementation is OK. On the
+> format of the message, you can try to make it more consistent with
+> other error messages, like:
+
+Thanks for the review.
+
+> $ git merge branch
+> error: The following untracked working tree files would be overwritten by merge:
+>         one
+> 	two
+> Please move or remove them before you can merge.
 > 
-> Mirroring this, we also split the heads list in summary view into
-> local and remote lists, each linking to the appropriate action.
+> That would give stg like:
 > 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> echo >&2 "error: The following files have unstaged changes:"
+> git diff-files --name-status -r --ignore-submodules -- >&2
+> echo >&2 "Please commit or stash them to proceed."
 
-Nice (and still uncontroversial) solution.  FWIW
+Ok, sounds good.
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+> Also, you probably want to give all the error before you "exit 1",
+> hence stg like:
 
-> @@ -5118,7 +5120,8 @@ sub git_summary {
->  	# These get_*_list functions return one more to allow us to see if
->  	# there are more ...
->  	my @taglist  = git_get_tags_list(16);
-> -	my @headlist = git_get_heads_list(16);
-> +	my @headlist = git_get_heads_list(16, 'heads');
-> +	my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
->  	my @forklist;
->  	my $check_forks = gitweb_check_feature('forks');
->  
-> @@ -5196,6 +5199,13 @@ sub git_summary {
->  		               $cgi->a({-href => href(action=>"heads")}, "..."));
->  	}
->  
-> +	if (@remotelist) {
-> +		git_print_header_div('remotes');
-> +		git_heads_body(\@remotelist, $head, 0, 15,
-> +		               $#remotelist <= 15 ? undef :
-> +		               $cgi->a({-href => href(action=>"remotes")}, "..."));
-> +	}
+Hm, is that a good idea? We want the output to be functional and
+indicative: it should tell the user what to do immediately. I'm afraid
+that displaying both errors will make the output very verbose. We can
+just tell the user about the unstaged changes, and wait for them to
+commit or stash it. Either way, both commit and stash will affect the
+index by default :)
 
-Nice thing.  This meanst that "remotes" section is displayed *only* if
-'remote_heads' feature is enabled and we actually have remote-tracking
-branches.
-
-> @@ -5503,13 +5513,29 @@ sub git_heads {
->  	git_print_page_nav('','', $head,undef,$head);
->  	git_print_header_div('summary', $project);
->  
-> -	my @headslist = git_get_heads_list();
-> +	my @headslist = git_get_heads_list(undef, 'heads');
-
-It's a pity that we can't simply write "git_get_heads_list('heads');",
-but I think it would be serious overengineering for a tiny little gain.
-
->  	if (@headslist) {
->  		git_heads_body(\@headslist, $head);
->  	}
->  	git_footer_html();
->  }
->  
-> +sub git_remotes {
-> +	gitweb_check_feature('remote_heads')
-> +		or die_error(403, "Remote heads view is disabled");
-> +
-> +	my $head = git_get_head_hash($project);
-> +	git_header_html();
-> +	git_print_page_nav('','', $head,undef,$head);
-> +	git_print_header_div('summary', $project);
-> +
-> +	my @remotelist = git_get_heads_list(undef, 'remotes');
-> +	if (@remotelist) {
-> +		git_heads_body(\@remotelist, $head);
-> +	}
-> +	git_footer_html();
-> +}
-
-Hmmmm... what we have there is a bit of code repetition with git_heads
-and git_remotes, but I think is unevitable... besides you would be 
-extending git_remotes subroutine in subsequent patches.  So it doesn't
-matter, I think.
-
--- 
-Jakub Narebski
-Poland
+-- Ram
