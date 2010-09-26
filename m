@@ -1,99 +1,113 @@
-From: Brandon Casey <drafnel@gmail.com>
-Subject: [PATCH] wt-status.c: don't leak directory entries when processing untracked,ignored
-Date: Sun, 26 Sep 2010 21:49:13 -0500
-Message-ID: <1285555753-15858-1-git-send-email-drafnel@gmail.com>
-Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 27 04:49:56 2010
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: custom merge driver vs. CONFLICT (delete/modify)
+Date: Sun, 26 Sep 2010 16:37:32 +0200
+Message-ID: <20100926143732.GA2984@nibiru.local>
+References: <1285445444-sup-3857@flatty.sascha.silbe.org>
+Reply-To: weigelt@metux.de
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Sep 27 04:55:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P03mt-0005DR-8v
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 04:49:55 +0200
+	id 1P03sf-0006Ni-SP
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 04:55:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758734Ab0I0Ctd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 22:49:33 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:52564 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758248Ab0I0Ctc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 22:49:32 -0400
-Received: by gwj17 with SMTP id 17so1408324gwj.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 19:49:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=3KuLygBDkPbXoNhskgYLMaiLLy/+GWm2iWOxBDQ+wKs=;
-        b=ILrkR2ec8OEEt5nD15z/tH4x2JH8e/bUoZnFPEgwtHXxwXXorvjxZX+MRxMgNPmUBf
-         3O1r2HElg7kCydF+JjwnLBHh9DQQNEeJd4UNlGw1mwryq1rIrZQGmp8Ds/ot/ocJVTiG
-         bqZ/rlDmt6ML5aHJRh6Nc+upqfY4S5X+acHTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=dMa3R93pdKrCCOd65TkvCKhHUT156Y04/H9/AKHACFHDIXL77Hwb+jUk6kr6DLI4D4
-         OdT9S2peCU8c1bnPCN4v73YGoSWE6wK1Gem3mLBf4s3QrPmPF3RNnuf4Zv7zDoH7w0xB
-         g+WDcI7DPmWU3izqYCthlqO0o1lcAhOfq53RU=
-Received: by 10.150.47.37 with SMTP id u37mr8147504ybu.47.1285555771415;
-        Sun, 26 Sep 2010 19:49:31 -0700 (PDT)
-Received: from localhost.localdomain ([96.19.141.3])
-        by mx.google.com with ESMTPS id q21sm7575552ybk.23.2010.09.26.19.49.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 19:49:31 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.1.g6772.dirty
+	id S932574Ab0I0Czt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 22:55:49 -0400
+Received: from caprica.metux.de ([82.165.128.25]:44731 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S932305Ab0I0Czs (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 26 Sep 2010 22:55:48 -0400
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o8R2q2N5018899
+	for <git@vger.kernel.org>; Mon, 27 Sep 2010 04:56:37 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o8QLctRk023820
+	for git@vger.kernel.org; Sun, 26 Sep 2010 23:38:55 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o8QEbW0N031103
+	for git@vger.kernel.org; Sun, 26 Sep 2010 16:37:32 +0200
+Mail-Followup-To: git <git@vger.kernel.org>
+Content-Disposition: inline
+In-Reply-To: <1285445444-sup-3857@flatty.sascha.silbe.org>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157289>
 
-When iterating through the list of directory entries, searching for
-untracked entries, only the entries added to the string_list were free'd.
-The rest (tracked or not matching the pathspec) were leaked.
+* Sascha Silbe <sascha-ml-reply-to-2010-3@silbe.org> wrote:
 
-Ditto for the "ignored" loop.
+Hi,
 
-Rearrange the loops so that all entries are free'd.
+> For some files (those touched by rerunning auto*) I want the local
+> version to always take precedence. For some other files (autogen.sh, PO
+> files) I want the upstream version to take precedence. For all the rest
+> I want conflicts to produce an error.
 
-Signed-off-by: Brandon Casey <drafnel@gmail.com>
----
- wt-status.c |   16 ++++++----------
- 1 files changed, 6 insertions(+), 10 deletions(-)
-
-diff --git a/wt-status.c b/wt-status.c
-index 54b6b03..fc2438f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -390,11 +390,9 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 	fill_directory(&dir, s->pathspec);
- 	for (i = 0; i < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
--		if (!cache_name_is_other(ent->name, ent->len))
--			continue;
--		if (!match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
--			continue;
--		string_list_insert(&s->untracked, ent->name);
-+		if (cache_name_is_other(ent->name, ent->len) &&
-+		    match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
-+			string_list_insert(&s->untracked, ent->name);
- 		free(ent);
- 	}
+Perhaps you better should use an downstream branch (which is frequently
+rebased onto upstream), which removes the autogenerated files and then
+always regenerate them from scratch. This is what I'm doing in in the
+OSS-QM project [1][2]. I'm also making sure that the source tree
+follows a set of rules [3] which are IMHO necessary for clean build
+process and fix it if needed in my downstream branches.
  
-@@ -404,11 +402,9 @@ static void wt_status_collect_untracked(struct wt_status *s)
- 		fill_directory(&dir, s->pathspec);
- 		for (i = 0; i < dir.nr; i++) {
- 			struct dir_entry *ent = dir.entries[i];
--			if (!cache_name_is_other(ent->name, ent->len))
--				continue;
--			if (!match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
--				continue;
--			string_list_insert(&s->ignored, ent->name);
-+			if (cache_name_is_other(ent->name, ent->len) &&
-+			    match_pathspec(s->pathspec, ent->name, ent->len, 0, NULL))
-+				string_list_insert(&s->ignored, ent->name);
- 			free(ent);
- 		}
- 	}
+Looks like we're doing quite similar things - maybe put or efforts
+together ? :)
+
+> This has worked fine so far by using custom merge drivers, but while
+> adding the second one I encountered a problem: Merge drivers are only
+> invoked for modify/modify (and maybe add/add) conflicts.
+> More specifically a delete/modify conflict will cause git-merge to bail
+> out directly without calling the merge driver to resolve the conflict.
+
+Yes. I've sometimes encountered the same problem. Someone here already
+suggested using git-filter-branch for that. I'll yet have to investigate
+such an transformation process is stable against incremental updates
+(meaning: strictly deterministic - hashes stay the same on repeated
+imports), so the history stays intact.
+
+> Such a conflict occurred because the packaging people removed autogen.sh
+> (which is reasonable for them, but not for me).
+
+In this case you probably want the conflict, to see what's happening
+and react in a comprehensive way (eg. re-adding it). It could become
+even more interesting when they someday reintroduce it, because maybe
+an autoreconf call won't suffice anymore - in that case you'll also
+want to know about this, and the conflict is the wakeup call.
+
+> Is there a way to either resolve all kinds of conflicts in favour of
+> one side (like -X <side>) or always take one side (like -s <side>) for
+> a specific set of files?
+
+Even if it does not answer your question: maybe this isn't really
+what you originally want (go back to the root question: "what is
+the real purpose of my project ?") and makes more trouble than
+what you're trying to go around. Perhaps better don't touch these
+files at all, but always regenerate them on each build.
+
+
+cu
+
+[1] https://sourceforge.net/p/oss-qm/home/
+[2] http://www.metux.de/download/oss-qm/normalized_repository.pdf
+[3] http://www.metux.de/index.php/de/component/content/article/57.html
 -- 
-1.7.3.1.geb284
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
