@@ -1,97 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 1/2] sh-setup: Write a new require_clean_work_tree
- function
-Date: Sun, 26 Sep 2010 23:09:59 +0530
-Message-ID: <20100926173956.GA15143@kytes>
-References: <4C9E07B1.50600@workspacewhiz.com>
- <1285514516-5112-2-git-send-email-artagnon@gmail.com>
- <vpqmxr4piyf.fsf@bauges.imag.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Sun Sep 26 19:41:21 2010
+From: Wincent Colaiuta <win@wincent.com>
+Subject: Re: Splitting the mailing list up
+Date: Sun, 26 Sep 2010 19:30:27 +0200
+Message-ID: <8AE74FC9-6C7F-433E-A162-E56644847198@wincent.com>
+References: <20100925230022.6e2fd389.coolzone@it.dk> <AANLkTikXSfO0uGP1b20jkF09=Mfq0s0+4d4_ANeprXF_@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Rico Secada <coolzone@it.dk>, git@vger.kernel.org
+To: Sebastien Douche <sdouche@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Sep 26 19:47:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzvDx-0001MM-Tl
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 19:41:18 +0200
+	id 1OzvKD-0002fy-Ar
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 19:47:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757959Ab0IZRlN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 13:41:13 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:49442 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757953Ab0IZRlN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 13:41:13 -0400
-Received: by pwj6 with SMTP id 6so1005225pwj.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 10:41:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=aAnwglN1tYcSsOCMJe+CTHsTPtdfR2KFTBPX3Va55MA=;
-        b=DeEXMB7cZVlC+ohf3kRSnojua8QwnyR69MEgZ/Rf3Ew1N9jkQxh7P/HZ7c/oyjXmyB
-         A0D+LfjnbCRsakqUgwQ8Hb6r2gcz3YynedjpXHILo2Wv1RUTK/+CtHbV2oHexOlCHDMu
-         Txfk1dqiBu+lSlkN/iVATm4UPW57sF3fn2UBE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pr+6PjnT97KXq4oeyybgGgk0NRzYA+t2LNivfg11qR/jXNQOgc0e3yHshUwFPKk/pS
-         xydM/AriOZr7kIzC4+aZZ0fxkE/GuZ3pKCCfupbLcQSVFvh2aF8STIqtF2sAv6MtKbB4
-         szNXjEf/DbN+Wsa3jwcphVDmva4RKWIS2dTns=
-Received: by 10.142.199.18 with SMTP id w18mr5305153wff.336.1285522872610;
-        Sun, 26 Sep 2010 10:41:12 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id v6sm6109008wfg.3.2010.09.26.10.41.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 10:41:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <vpqmxr4piyf.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757948Ab0IZRrk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 13:47:40 -0400
+Received: from outmail128145.authsmtp.net ([62.13.128.145]:64875 "EHLO
+	outmail128145.authsmtp.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757197Ab0IZRrk convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 13:47:40 -0400
+X-Greylist: delayed 1020 seconds by postgrey-1.27 at vger.kernel.org; Sun, 26 Sep 2010 13:47:39 EDT
+Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
+	by punt10.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o8QHUZFD045555;
+	Sun, 26 Sep 2010 18:30:35 +0100 (BST)
+Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
+	(authenticated bits=128)
+	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id o8QHUVcj047196
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Sun, 26 Sep 2010 18:30:32 +0100 (BST)
+Received: from [192.168.1.6] (7.Red-83-59-198.dynamicIP.rima-tde.net [83.59.198.7] (may be forged))
+	(authenticated bits=0)
+	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id o8QHUSSV007825
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
+	Sun, 26 Sep 2010 13:30:30 -0400
+In-Reply-To: <AANLkTikXSfO0uGP1b20jkF09=Mfq0s0+4d4_ANeprXF_@mail.gmail.com>
+X-Mailer: Apple Mail (2.1081)
+X-Server-Quench: c3ec09ad-c993-11df-97bb-002264978518
+X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
+X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJDkVH aBgdFVdLdwdEHAkR Am4BWFReU18/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNHGQQZHpS XB4aVRh7cUtDf3Z0 KxVhCyNbVRUuaBV0 S01JFGxSM3ppbzJN TUBYdQFSdApNdhpE Yh4dAXkdAiVbPz4k Hgk8dywxMH1aISVR QwcCZVYTWlpDAyZU 
+X-Authentic-SMTP: 61633436303433.1014:706
+X-AuthFastPath: 0 (Was 255)
+X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157243>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157244>
 
-Hi Matthieu,
+El 26/09/2010, a las 18:02, Sebastien Douche escribi=F3:
 
-Matthieu Moy writes:
-> I totally agree on the idea, and the implementation is OK. On the
-> format of the message, you can try to make it more consistent with
-> other error messages, like:
+> On Sat, Sep 25, 2010 at 23:00, Rico Secada <coolzone@it.dk> wrote:
+>> Would it be a bad idea to split the Git mailing list up in several
+>> sub-categories?
+>>=20
+>> Example:
+>>=20
+>> announce@
+>> dev@
+>> user@
+>=20
+> Why not, but the simple way is to create another ml for patchs.
+> Without patchs, the traffic seems relatively low.
 
-Thanks for the review.
+This has come up many times, and been rejected each time. Check the arc=
+hives for the reasons why.
 
-> $ git merge branch
-> error: The following untracked working tree files would be overwritten by merge:
->         one
-> 	two
-> Please move or remove them before you can merge.
-> 
-> That would give stg like:
-> 
-> echo >&2 "error: The following files have unstaged changes:"
-> git diff-files --name-status -r --ignore-submodules -- >&2
-> echo >&2 "Please commit or stash them to proceed."
-
-Ok, sounds good.
-
-> Also, you probably want to give all the error before you "exit 1",
-> hence stg like:
-
-Hm, is that a good idea? We want the output to be functional and
-indicative: it should tell the user what to do immediately. I'm afraid
-that displaying both errors will make the output very verbose. We can
-just tell the user about the unstaged changes, and wait for them to
-commit or stash it. Either way, both commit and stash will affect the
-index by default :)
-
--- Ram
+Cheers,
+Wincent
