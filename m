@@ -1,75 +1,66 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 09/12] gitweb: group styling
-Date: Mon, 27 Sep 2010 00:10:44 +0200
-Message-ID: <201009270010.45142.jnareb@gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <1285344167-8518-10-git-send-email-giuseppe.bilotta@gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 3/3 v2] use cache for function names in hunk headers
+Date: Mon, 27 Sep 2010 00:17:12 +0200
+Message-ID: <4C9FC668.8070701@lsrfire.ath.cx>
+References: <1284890369-4136-1-git-send-email-drizzd@aon.at> <20100923070439.GA29764@localhost> <4C9F7450.9060208@lsrfire.ath.cx> <20100926204318.GA19588@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 00:11:47 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Sep 27 00:17:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzzRi-0000bD-MZ
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 00:11:47 +0200
+	id 1OzzX5-0001ny-Tx
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 00:17:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757859Ab0IZWKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 18:10:55 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41518 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757790Ab0IZWKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 18:10:54 -0400
-Received: by bwz11 with SMTP id 11so2941360bwz.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 15:10:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=UqH4CroNlSOEWrBzv2Uj23WxjfvfIKQtwUhJaI1dZVE=;
-        b=XLEJB5JpzGjrXAzoOjRzN/KpU19gUE3jMIYhMJzdSgAHwXSizWXEbC5rUWjlsrWzS1
-         ls+dyYIgWh8WsV+N7PT+V4wd7LfDyGxH6X+nlkPkMIppUSw2jG3f6xaw4LD03d6ZAvd2
-         MEDC+BF7BfGarfbWeOW6+6TSom9GF7xnljfSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=FPAG1Y1+6z7uLo7kJzoQePFJ20D8drWpV4zJD8CPoGarlIxv6AJfq5bnTfO7R8UD3c
-         Z4gRfppDnPJvfzNZypVf51egpCot88T1+6iATZV1ViN2ZdTNN3yRN45SMleTS9B8Tcev
-         QcLHP6wzqPSG22xN4oCt/Kay6wq0L+8qAD56c=
-Received: by 10.204.7.88 with SMTP id c24mr4470872bkc.172.1285539053001;
-        Sun, 26 Sep 2010 15:10:53 -0700 (PDT)
-Received: from [192.168.1.13] (abwp12.neoplus.adsl.tpnet.pl [83.8.239.12])
-        by mx.google.com with ESMTPS id v7sm1026328bkx.16.2010.09.26.15.10.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 15:10:52 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1285344167-8518-10-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1758214Ab0IZWRR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 18:17:17 -0400
+Received: from india601.server4you.de ([85.25.151.105]:41806 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758210Ab0IZWRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 18:17:15 -0400
+Received: from [10.0.1.100] (p4FC5675F.dip.t-dialin.net [79.197.103.95])
+	by india601.server4you.de (Postfix) with ESMTPSA id 14A1A2F8084;
+	Mon, 27 Sep 2010 00:17:14 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <20100926204318.GA19588@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157263>
 
-On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
+Am 26.09.2010 22:43, schrieb Clemens Buchacher:
+> On Sun, Sep 26, 2010 at 06:26:56PM +0200, Ren=E9 Scharfe wrote:
+>> -	/*
+>> -	 * Be quite stupid about this for now.  Find a line in the old fil=
+e
+>> -	 * before the start of the hunk (and context) which starts with a
+>> -	 * plausible character.
+>> -	 */
+>>
+>> It also removes an outdated comment.
+>=20
+> Actually, in the default case, the comment is still correct and
+> helpful IMO.
 
-> +div.group {
-> +	margin: .5em;
-> +	border: 1px solid #d9d8d1;
-> +	display: inline-block;
-> +}
+The first sentence was probably written before the match function becam=
+e
+configurable.  The second one could be moved to def_ff().
 
-As I currently at this moment don't use web browser which supports 
-'display: inline-block;', I can't say much about this patch.  But
-it does degrade nicely.
+>> The inlining part should probably split out in its own patch..
+>=20
+> I am not sure what you mean here. Do you want to add the parameter
+> funclineprev to the function and remove the function in the next
+> page, or do you want to refactor the below into an inline function?
 
--- 
-Jakub Narebski
-Poland
+I'd suggest having a first patch for folding xdl_find_func() into
+xdl_emit_diff() without any functional change (manually inlining it) an=
+d
+a second one for adding funclineprev etc..
+
+Ren=E9
