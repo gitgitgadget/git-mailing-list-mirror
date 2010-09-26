@@ -1,79 +1,105 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 11/12] gitweb: use git_repo_url() in summary
-Date: Mon, 27 Sep 2010 00:36:08 +0200
-Message-ID: <201009270036.09100.jnareb@gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <1285344167-8518-12-git-send-email-giuseppe.bilotta@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Subject: [PATCHv4 04/15] t4002 (diff-basic): use test_might_fail for commands that might fail
+Date: Sun, 26 Sep 2010 17:14:28 -0600
+Message-ID: <1285542879-16381-5-git-send-email-newren@gmail.com>
+References: <1285542879-16381-1-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 00:36:22 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, Elijah Newren <newren@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Sep 27 01:13:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1OzzpV-0006QH-SG
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 00:36:22 +0200
+	id 1P00PK-0005V8-H9
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 01:13:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932384Ab0IZWgR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 18:36:17 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53201 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932321Ab0IZWgQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 18:36:16 -0400
-Received: by fxm3 with SMTP id 3so1506091fxm.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 15:36:15 -0700 (PDT)
+	id S1758236Ab0IZXNO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Sep 2010 19:13:14 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:43680 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758218Ab0IZXNL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 19:13:11 -0400
+Received: by pwj6 with SMTP id 6so1036112pwj.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 16:13:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=a1DXIEBAaxbivG5Wcl/jGLX6OFIaVL3bGmmQ2zOm+BA=;
-        b=u94EP6wD3nV5mQ4rdWnIIklX6opl5OHirP3Dq91IwDTs9SesaywASuTkFMR6mVfMws
-         GnrbroxrmOTT864PVzT7oRZ4GR1uFiaW2epVBsxWIzziBGlTy5xmCIeSEOdUH9aqlZaw
-         CDHzVkH1uf9Ud5dFbZTRU86fBFRYq4bDOWSsU=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=FAOCVN3kkeE6iBs+chIAAUcqwN5w+FT9oCBxSJYZxN8=;
+        b=TFF/HEVBigwcG+TWZqhDSsy0MUzW+r2N/xhkGgsaETlXYwDCRuZomsJdMm/fwX3MzR
+         5T+O2CLj/cuTiejtSIrdJpT6JgWDuWcqMgYzARU4uYZO3mFe3MfapJFZuzlzsIY9he+n
+         LN4FDeE2tT5RW1803nuWksPGz0xwzXNtGMuBs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=q7gazXvyVvRw5s/lYAWEZVkmL5iwQYV4z9HAHJCO5i2i8H5bZVXQqqx0ESmV+soESj
-         aiEt3GBgDfwQ82cVFt9i5hBzXCMnW1oF5N1EKvSUHvd4qS/qhwyD3+e97azlF8vQbSMn
-         iww9Z7NkGW3xBKOH2bV07zHtpv/+6uGsLq3yI=
-Received: by 10.223.117.15 with SMTP id o15mr5975982faq.51.1285540575235;
-        Sun, 26 Sep 2010 15:36:15 -0700 (PDT)
-Received: from [192.168.1.13] (abwp12.neoplus.adsl.tpnet.pl [83.8.239.12])
-        by mx.google.com with ESMTPS id 10sm2087466fax.42.2010.09.26.15.36.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 15:36:14 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1285344167-8518-12-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=bcxZ1JgtMLXr6byq4NUsjRPzzvEVOk2yM/ZULGa4UULZB++ecVfD2nV2yCIWJOJFLa
+         rLzUuzXl145Q6nMjZvS0TCzU4+qv7MB7t4XMQqdKSx7O6RizxOub+cJ3XDSxtBZ1YmYQ
+         7TlrCZ6q1OMj4TzA7+2vwqtM8A6Rj1TIYvh8g=
+Received: by 10.114.94.18 with SMTP id r18mr7354524wab.188.1285542790586;
+        Sun, 26 Sep 2010 16:13:10 -0700 (PDT)
+Received: from Miney.hsd1.nm.comcast.net. (c-76-113-57-218.hsd1.nm.comcast.net [76.113.57.218])
+        by mx.google.com with ESMTPS id c24sm9242157wam.19.2010.09.26.16.13.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 26 Sep 2010 16:13:09 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.95.g14291
+In-Reply-To: <1285542879-16381-1-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157266>
 
-On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
+Also replace '|| return 1' by '&&' to allow chain of operations to be
+checked for proper return status.
 
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5190,7 +5190,7 @@ sub git_summary {
->  	@url_list = map { "$_/$project" } @git_base_url_list unless @url_list;
->  	foreach my $git_url (@url_list) {
->  		next unless $git_url;
-> -		print "<tr class=\"metadata_url\"><td>$url_tag</td><td>$git_url</td></tr>\n";
-> +		print git_repo_url($url_tag, $git_url);
->  		$url_tag = "";
->  	}
+Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ t/t4002-diff-basic.sh |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
-I think this patch should be squashed together with previous one.
-FWIW, ACK (after squashing of course).
-
--- 
-Jakub Narebski
-Poland
+diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+index 73441a5..340aa7d 100755
+--- a/t/t4002-diff-basic.sh
++++ b/t/t4002-diff-basic.sh
+@@ -205,8 +205,8 @@ test_expect_success \
+     'rm -fr Z [A-Z][A-Z] &&
+      git read-tree $tree_A &&
+      git checkout-index -f -a &&
+-     git read-tree --reset $tree_O || return 1
+-     git update-index --refresh >/dev/null ;# this can exit non-zero
++     git read-tree --reset $tree_O &&
++     test_might_fail git update-index --refresh >/dev/null &&
+      git diff-files >.test-a &&
+      cmp_diff_files_output .test-a .test-recursive-OA'
+=20
+@@ -215,8 +215,8 @@ test_expect_success \
+     'rm -fr Z [A-Z][A-Z] &&
+      git read-tree $tree_B &&
+      git checkout-index -f -a &&
+-     git read-tree --reset $tree_O || return 1
+-     git update-index --refresh >/dev/null ;# this can exit non-zero
++     git read-tree --reset $tree_O &&
++     test_might_fail git update-index --refresh >/dev/null &&
+      git diff-files >.test-a &&
+      cmp_diff_files_output .test-a .test-recursive-OB'
+=20
+@@ -225,8 +225,8 @@ test_expect_success \
+     'rm -fr Z [A-Z][A-Z] &&
+      git read-tree $tree_B &&
+      git checkout-index -f -a &&
+-     git read-tree --reset $tree_A || return 1
+-     git update-index --refresh >/dev/null ;# this can exit non-zero
++     git read-tree --reset $tree_A &&
++     test_might_fail git update-index --refresh >/dev/null &&
+      git diff-files >.test-a &&
+      cmp_diff_files_output .test-a .test-recursive-AB'
+=20
+--=20
+1.7.3.95.g14291
