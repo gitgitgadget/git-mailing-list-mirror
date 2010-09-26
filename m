@@ -1,108 +1,115 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 01/12] gitweb: introduce remote_heads feature
-Date: Sun, 26 Sep 2010 19:24:05 +0200
-Message-ID: <201009261924.06237.jnareb@gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <1285344167-8518-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv5 02/12] gitweb: git_get_heads_list accepts an optional list of refs.
+Date: Sun, 26 Sep 2010 19:27:02 +0200
+Message-ID: <201009261927.02414.jnareb@gmail.com>
+References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <1285344167-8518-3-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Sep 26 19:24:32 2010
+X-From: git-owner@vger.kernel.org Sun Sep 26 19:27:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ozuxi-0005oB-MY
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 19:24:31 +0200
+	id 1Ozv0Q-0006Pj-BF
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 19:27:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755916Ab0IZRYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 13:24:18 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33765 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755011Ab0IZRYR (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 13:24:17 -0400
-Received: by bwz11 with SMTP id 11so2861668bwz.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 10:24:15 -0700 (PDT)
+	id S1757804Ab0IZR1M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 13:27:12 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61167 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757081Ab0IZR1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 13:27:11 -0400
+Received: by fxm3 with SMTP id 3so1440541fxm.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 10:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=Bfhfw5V1EWKHx5STCNJNkrG+yOCxGXDGh1MEeGWnMIQ=;
-        b=ZnVtywO4g0JrrHGFjxkiGGrP0fg/iEbezUn3s02BLC5OOpd9QrTt/9skzmhzuk/06n
-         uqEd8V9x3CH6ZlhZK/PYBagGMM8aR3Ibfp+cC1fCkC1dfx4CZbW/LQZGwLddEieqsYCP
-         ZVTTNiJACGMR8iXNQienv9fIADn1C4wjNQO+Y=
+        bh=D1RSZJ6yXKNzJHNxMuI5I78l+PeFlGwLzZRx7KOzuG4=;
+        b=M8ds4PaPDgvqV/MXl7JoH0CoXW685Q2/WjO1CdxzYe7a0LevLsaKzWjTmfSP58L5Db
+         80OFm2OegxZe3QljYCgrH+2UPeMmubNZ3IOlcZA3/0h7wnmGofdeaXKahlxh1//1ABWY
+         jHAhFmBPIxWhKUN/dwcLw7iwpqMYF8LE3wJlw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=x7GgG+LqGfz+lcyHO9j4CgkNMEyaWJvoYGqkJPtDOI2RUrzoXndNe/PYrNvSLrRpeJ
-         9zZM+sfBQo8x/8UM4sDmHOBHVfeFdKiVX6rTg9O8TyrHegKXzIaiAQsOmqwMH6Wo8nej
-         Yqpegq3MYf237Hn2JOGeE6zN9E71jneT0rzfA=
-Received: by 10.204.115.2 with SMTP id g2mr4521952bkq.19.1285521855819;
-        Sun, 26 Sep 2010 10:24:15 -0700 (PDT)
+        b=xYOZ+ype9/Fe2HcQlRCANJz0orgPCKs51RnV7SG7U6Z0cL0GkMmuh+UyOytGu9QUhE
+         R1WMWHxgrSv1EElSB60gvdY7dHDqA1XcPO67an0HYgqUgrL07XHaoGHaldBXy4DN6nlh
+         /YaOm/fCZZAQqM8/ZRN1+wlH4DCK+KmohaT5c=
+Received: by 10.223.124.148 with SMTP id u20mr937064far.57.1285522029871;
+        Sun, 26 Sep 2010 10:27:09 -0700 (PDT)
 Received: from [192.168.1.13] (abwp12.neoplus.adsl.tpnet.pl [83.8.239.12])
-        by mx.google.com with ESMTPS id 24sm3560740bkr.7.2010.09.26.10.24.13
+        by mx.google.com with ESMTPS id f28sm2000790faa.0.2010.09.26.10.27.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 10:24:14 -0700 (PDT)
+        Sun, 26 Sep 2010 10:27:08 -0700 (PDT)
 User-Agent: KMail/1.9.3
-In-Reply-To: <1285344167-8518-2-git-send-email-giuseppe.bilotta@gmail.com>
+In-Reply-To: <1285344167-8518-3-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157241>
 
 On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
 
-> With this feature enabled, remotes are retrieved (and displayed)
-> when getting (and displaying) the heads list. Typical usage would be for
-> local repository browsing, e.g. by using git-instaweb (or even a more
-> permanent gitweb setup), to check the repository status and the relation
-> between tracking branches and the originating remotes.
+> git_get_heads_list(limit, class1, class2, ...) can now be used to retrieve
+> refs/class1, refs/class2 etc. Defaults to ('heads') or ('heads', 'remotes')
+> depending on the remote_heads option.
+
+Possible (very minor) nitpick:
+
+s/on remote_heads option/on 'remote_heads' feature/
+
 > 
 > Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 
-Nice and straighforward.  For what it is worth:
+Very nice extension of an API.  Good work.  FWIW
 
 Acked-by: Jakub Narebski <jnareb@gmail.com>
 
 > ---
->  gitweb/gitweb.perl |   18 ++++++++++++++++--
->  1 files changed, 16 insertions(+), 2 deletions(-)
+>  gitweb/gitweb.perl |   11 +++++++----
+>  1 files changed, 7 insertions(+), 4 deletions(-)
 > 
 > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index a85e2f6..f09fcee 100755
+> index f09fcee..27c455e 100755
 > --- a/gitweb/gitweb.perl
 > +++ b/gitweb/gitweb.perl
-> @@ -486,6 +486,18 @@ our %feature = (
->  		'sub' => sub { feature_bool('highlight', @_) },
->  		'override' => 0,
->  		'default' => [0]},
-> +
-> +	# Make gitweb show remotes too in the heads list
-
-Very minor nitpick: it should probably be (but I am not a native
-English speaker, so I migh be mistaken)
-
-  +	# Make gitweb show also remotes in the heads list
-
-> +
-> +	# To enable system wide have in $GITWEB_CONFIG
-> +	# $feature{'remote_heads'}{'default'} = [1];
-> +	# To have project specific config enable override in $GITWEB_CONFIG
-> +	# $feature{'remote_heads'}{'override'} = 1;
-> +	# and in project config gitweb.remote_heads = 0|1;
-> +	'remote_heads' => {
-> +		'sub' => sub { feature_bool('remote_heads', @_) },
-> +		'override' => 0,
-> +		'default' => [0]},
-[...]
+> @@ -3155,15 +3155,18 @@ sub parse_from_to_diffinfo {
+>  ## parse to array of hashes functions
+>  
+>  sub git_get_heads_list {
+> -	my $limit = shift;
+> +	my ($limit, @classes) = @_;
+> +	unless (defined @classes) {
+> +		my $remote_heads = gitweb_check_feature('remote_heads');
+> +		@classes = ('heads', $remote_heads ? 'remotes' : ());
+> +	}
+> +	my @patterns = map { "refs/$_" } @classes;
+>  	my @headslist;
+>  
+> -	my $remote_heads = gitweb_check_feature('remote_heads');
+> -
+>  	open my $fd, '-|', git_cmd(), 'for-each-ref',
+>  		($limit ? '--count='.($limit+1) : ()), '--sort=-committerdate',
+>  		'--format=%(objectname) %(refname) %(subject)%00%(committer)',
+> -		'refs/heads', ($remote_heads ? 'refs/remotes' : ())
+> +		@patterns
+>  		or return;
+>  	while (my $line = <$fd>) {
+>  		my %ref_item;
+> -- 
+> 1.7.3.68.g6ec8
+> 
+> 
 
 -- 
 Jakub Narebski
