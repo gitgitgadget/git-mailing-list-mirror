@@ -1,66 +1,68 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: [RE: v6 0/4] rev-parse: allow --flags to output rev-parse-like flags
-Date: Sun, 26 Sep 2010 11:24:20 +1000
-Message-ID: <AANLkTinuM=TiNC-AhcnNyQdh+AFij4jNU=bBqjJ0HXbC@mail.gmail.com>
-References: <1285431515-21321-1-git-send-email-jon.seymour@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] Documentation: Refer to git-commit-tree in
+ git-filter-branch help
+Date: Sat, 25 Sep 2010 20:04:59 -0600
+Message-ID: <AANLkTin+CiNBqn-Zbz4h6M9P7fhYRd3mvwYJ9tzXL-2r@mail.gmail.com>
+References: <1284389994-16892-1-git-send-email-wjl@icecavern.net>
+	<201009241012.44861.wjl@icecavern.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Jon Seymour <jon.seymour@gmail.com>
-To: git@vger.kernel.org, robbat2@gentoo.org, casey@nrlssc.navy.mil,
-	avarab@gmail.com
-X-From: git-owner@vger.kernel.org Sun Sep 26 03:24:30 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Sun Sep 26 04:05:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ozfyd-0005OA-NU
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 03:24:28 +0200
+	id 1Ozgc2-0003vU-Gx
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 04:05:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754940Ab0IZBYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Sep 2010 21:24:22 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:49998 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752459Ab0IZBYV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Sep 2010 21:24:21 -0400
-Received: by qyk33 with SMTP id 33so5867557qyk.19
-        for <git@vger.kernel.org>; Sat, 25 Sep 2010 18:24:20 -0700 (PDT)
+	id S1757265Ab0IZCFC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Sep 2010 22:05:02 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61876 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756116Ab0IZCFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Sep 2010 22:05:00 -0400
+Received: by fxm3 with SMTP id 3so1303994fxm.19
+        for <git@vger.kernel.org>; Sat, 25 Sep 2010 19:04:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type;
-        bh=vjP1z3MPQLW7fhRA+pThOqFGV4EKnZMTLdC0FC83bsg=;
-        b=ak1DUgJM9czb6R201oAWhownqaQ5K3Ap8wDPX61NFUpOMjkgfi8zAqtnnSJkYDQgRw
-         rfMsxGT7Xxl5h0rJzhlECcvc/x0J6TF3R5iXEC+nvFa9NnoSH2giVmkmYpuXXxBup2Cv
-         diIuRZPI/Fg3Vzt9lsxEC2GWjfy2ZZ94LlxUc=
+        bh=oOIFS2DIb0O/YmWYV6Wwx/b1MoTAvgSW+8nTjg0OHJ4=;
+        b=rngykjc8OttW4WI8YpsboZIkt3HKCIqyH+Py+y88AeKRED/XglQrEGFXRhOKaMhdvf
+         kZTq/TZ7KsaNs5wfibXOwuj3YgPTHRladM9Q4DZNF5XWVyhzt97dWPFzME3s+O/p07zL
+         QjFIUuYMWob2OVllBuLjI7KobuX0Ev0ZAnaP8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=MwoZA+WkXxOtIDtU93VqLvF0R6687enfCXp9lIGGkZnG/PjzgN+5GZym7SsK4M4gKE
-         Rw6pZurp0WD2KDOd7VcpaCf08647jcWIIR/cVV+LcoTbbL59RBeMXlivJ28H+A1f46MZ
-         j78UpY7jo2+O4xZOk1MoKPvQ4c9MnhR1dY5dY=
-Received: by 10.224.28.134 with SMTP id m6mr3952292qac.86.1285464260680; Sat,
- 25 Sep 2010 18:24:20 -0700 (PDT)
-Received: by 10.229.219.196 with HTTP; Sat, 25 Sep 2010 18:24:20 -0700 (PDT)
-In-Reply-To: <1285431515-21321-1-git-send-email-jon.seymour@gmail.com>
+        b=gCIYNQw2Zr/6uDIMwXljXkPAJhdbpHymLehQjPMTZxozVe223CDvjkNSTC/Hu8k+0i
+         F06epDxwzYIkM1KRc5/z7YAFCxwdrvseDn1v84icsEQcDTsfwbkNOBy71n6DCN/yVckk
+         tQ9ZGFldZoXldIndChknpCi93bchn8dAa+gmI=
+Received: by 10.223.115.19 with SMTP id g19mr5458102faq.70.1285466699589; Sat,
+ 25 Sep 2010 19:04:59 -0700 (PDT)
+Received: by 10.223.119.209 with HTTP; Sat, 25 Sep 2010 19:04:59 -0700 (PDT)
+In-Reply-To: <201009241012.44861.wjl@icecavern.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157208>
 
-Those interested in the latest version of this series can poll
-the stop-interpreting-after-flags branch on git://github.com/jonseymour/git.git
+On Fri, Sep 24, 2010 at 10:12 AM, Wesley J. Landaker <wjl@icecavern.net> wrote:
+> On Monday, September 13, 2010 08:59:54 Wesley J. Landaker wrote:
+>> Currently, the help for git filter-branch refers users of --env-filter
+>> to git-commit for information about environment variables affecting
+>> commits. However, this information is not contained in the git-commit
+>> help, but is very explicitly detailed in git-commit-tree.
+>
+> Was there something disagreeable about this patch, or did it just get lost?
+>
+> I'd like to help make it easier for others who might find themselves on a
+> hunt for the right environment variables for --env-filter like I was.
 
-I have tagged v6 which is re-organized slightly w.r.t v5 so that tests
-and documentation of existing behaviour are cleanly separated from
-proposed changes.
-
-I will post another version of this series to the list if/when I
-receive additional
-feedback or a final ack.
-
-Regards,
-
-jon seymour.
+I'm guessing it just got lost; the patch looks good to me, and I think
+it makes for a nice improvement for folks trying to find the
+information they need.
