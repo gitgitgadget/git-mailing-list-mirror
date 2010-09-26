@@ -1,98 +1,79 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 1/2] sh-setup: Write a new require_clean_work_tree function
-Date: Sun, 26 Sep 2010 20:51:55 +0530
-Message-ID: <1285514516-5112-2-git-send-email-artagnon@gmail.com>
-References: <4C9E07B1.50600@workspacewhiz.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Sep 26 17:23:48 2010
+From: walter harms <wharms@bfs.de>
+Subject: Re: Splitting the mailing list up
+Date: Sun, 26 Sep 2010 17:58:57 +0200
+Message-ID: <4C9F6DC1.3080506@bfs.de>
+References: <20100925230022.6e2fd389.coolzone@it.dk>
+Reply-To: wharms@bfs.de
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Rico Secada <coolzone@it.dk>
+X-From: git-owner@vger.kernel.org Sun Sep 26 17:59:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ozt4r-0001ms-Jl
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 17:23:45 +0200
+	id 1Oztd9-0001rB-BI
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Sep 2010 17:59:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754456Ab0IZPX2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 11:23:28 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:42137 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753072Ab0IZPX1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 11:23:27 -0400
-Received: by pwj6 with SMTP id 6so992413pwj.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 08:23:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=VtB9QnU/4OQbfgZd3Fv4oaIFxfCB/vk8SBPIV6a2I2c=;
-        b=PD+zcTL95ski2wBKzYFSlFgDDU+Y0R245XTQyXDJncY7Ihz6Fq3bUYDimc3wCBfXLL
-         3jQcCkYO51YuPs2JqGzuxpkLX5+NMD5ilkVg+5HKLBA3eh+UJr6xDNVTD1GSygm+gbc6
-         RqJdV6vr/GnJpOQSj0Ba2m7uAvR19GdcbqyOk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=FOseHUR+8QyU1fUAh9iDwovNUhd6anrY4aINhXiAl61mCLAe1xz5uZOmAON1qHEDiL
-         nT6omeg/7dBcIm5YWSDYGU1eUWbMXzE1feD6JkwxJ7XV7TLy2NfeavYBvYvGn8wFT/4+
-         sgMuFHHvwbWfeZQWt55c4oDvkQV+Adfy+rW9w=
-Received: by 10.114.130.5 with SMTP id c5mr6864706wad.125.1285514607051;
-        Sun, 26 Sep 2010 08:23:27 -0700 (PDT)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id d39sm8436936wam.16.2010.09.26.08.23.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 08:23:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.256.g00e8a.dirty
-In-Reply-To: <4C9E07B1.50600@workspacewhiz.com>
+	id S1757049Ab0IZP7D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 11:59:03 -0400
+Received: from mx01.sz.bfs.de ([194.94.69.103]:17199 "EHLO mx01.sz.bfs.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753664Ab0IZP7B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 11:59:01 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mx01.sz.bfs.de (Postfix) with ESMTP id B10C44AF04;
+	Sun, 26 Sep 2010 17:58:59 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mx01.sz.bfs.de (Postfix) with ESMTP id 95FFA4AF07;
+	Sun, 26 Sep 2010 17:58:59 +0200 (CEST)
+X-Virus-Scanned: by amavisd-new-2.4.2 (20060627) (Debian) at bfs.de
+Received: from mx01.sz.bfs.de ([127.0.0.1])
+	by localhost (dc-slave-mx01.bfs.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id jJpLVT+9ntRd; Sun, 26 Sep 2010 17:58:59 +0200 (CEST)
+Received: from dc-slave2-fr.fr.bfs.de (dc-slave2-fr.bfs.de [10.177.18.200])
+	by mx01.sz.bfs.de (Postfix) with ESMTP id 597C94AF04;
+	Sun, 26 Sep 2010 17:58:59 +0200 (CEST)
+Received: from [134.92.181.33] (unknown [134.92.181.33])
+	by dc-slave2-fr.fr.bfs.de (Postfix) with ESMTP id D30847B4441;
+	Sun, 26 Sep 2010 17:58:58 +0200 (CEST)
+User-Agent: Thunderbird 2.0.0.24 (X11/20100302)
+In-Reply-To: <20100925230022.6e2fd389.coolzone@it.dk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157234>
 
-Write a new require_clean_work_tree function to error out when working
-tree contains unstaged changes or index contains uncommitted changes.
++1
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- git-sh-setup.sh |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
-
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 6131670..3a337da 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -145,6 +145,29 @@ require_work_tree () {
- 	die "fatal: $0 cannot be used without a working tree."
- }
- 
-+require_clean_work_tree () {
-+	# Update the index
-+	git update-index -q --ignore-submodules --refresh
-+
-+	# Disallow unstaged changes in the working tree
-+	if ! git diff-files --quiet --ignore-submodules --
-+	then
-+		echo >&2 "cannot $1: you have unstaged changes."
-+		echo >&2 "Please commit or stash them."
-+		git diff-files --name-status -r --ignore-submodules -- >&2
-+		exit 1
-+	fi
-+
-+	# Disallow uncommitted changes in the index
-+	if ! git diff-index --cached --quiet --ignore-submodules HEAD --
-+	then
-+		echo >&2 "cannot $1: your index contains uncommitted changes."
-+		echo >&2 "Please commit or stash them."
-+		git diff-index --cached --name-status -r --ignore-submodules HEAD -- >&2
-+		exit 1
-+	fi
-+}
-+
- get_author_ident_from_commit () {
- 	pick_author_script='
- 	/^author /{
--- 
-1.7.2.2.409.gdbb11.dirty
+Rico Secada schrieb:
+> Hi all.
+> 
+> Would it be a bad idea to split the Git mailing list up in several
+> sub-categories?
+> 
+> Example:
+> 
+> announce@
+> dev@
+> user@
+> 
+> etc.
+> 
+> The list receives a lot of traffic and it might be beneficial to split
+> things up.
+> 
+> Anyway, just a suggestion.
+> 
+> Best regards.
+> 
+> Rico
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> 
