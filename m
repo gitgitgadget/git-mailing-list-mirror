@@ -1,91 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] merge-recursive: option to specify rename threshold
-Date: Sun, 26 Sep 2010 23:04:56 -0700
-Message-ID: <7vk4m73enr.fsf@alter.siamese.dyndns.org>
-References: <A0604F16-CA84-4A84-B74B-CE8AB455DF77@sb.org>
- <1285202724-52474-1-git-send-email-kevin@sb.org>
- <7vk4m7n7uo.fsf@alter.siamese.dyndns.org>
- <D5046A0E-7A35-421D-856F-5278FBE02914@sb.org>
- <7vocbj3gjk.fsf@alter.siamese.dyndns.org>
- <F6C23FD9-37C4-4C20-83E7-26A1A2FC2275@sb.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv5 01/12] gitweb: introduce remote_heads feature
+Date: Mon, 27 Sep 2010 08:42:54 +0200
+Message-ID: <AANLkTi=QOMW3CaoiWja-it7+U0H2Nz95CC8-nkJ60jm2@mail.gmail.com>
+References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1285344167-8518-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <201009261924.06237.jnareb@gmail.com> <AANLkTikotGEOOeUOwz03xtL09fV+oycV3yG1O4hQhoQB@mail.gmail.com>
+ <4C9FA35F.4090800@ripton.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Mon Sep 27 08:05:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: David Ripton <dripton@ripton.net>
+X-From: git-owner@vger.kernel.org Mon Sep 27 08:43:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P06pz-0001an-9v
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 08:05:19 +0200
+	id 1P07RA-0003Nu-AK
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 08:43:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932202Ab0I0GFI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 02:05:08 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54211 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232Ab0I0GFH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 02:05:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D5DAFD996B;
-	Mon, 27 Sep 2010 02:05:03 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QKAeJIDKtqpPDpbgEjOwK7mTvQ4=; b=uJXWfy
-	01MNzhFhVTcEJvP/oJsz2Je9EK6OHmPI9eFW/h5kVDeWsy2pCcdTJ+aBIRz7jShN
-	FqhHUMOPR6IpD2P+l7EBzgUdZjIizP9605oDGVA9BIC0oZu5Vq1u1l1bGPbnR6Lt
-	P1IWXxjzNDB5Ndye+Qj1ik1YY02jycrnycqjc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=m8qG2CUcITuCnT2L+M4F9Z+RZKCkQOKb
-	Esp1LCUykD8HgxI+XSXPgt/EJN7WgMms56A1T2jC1kWXyKl5XSzxg9gqo7fGKmc6
-	wkGZzgqxSJtDVNTO4VQhGhzzRORHFbMusuU/5YWdfh+B5h3ytoIycy3/+rRiWOUn
-	fw9MfPMgqxU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B0606D9968;
-	Mon, 27 Sep 2010 02:05:01 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DFF19D9967; Mon, 27 Sep
- 2010 02:04:57 -0400 (EDT)
-In-Reply-To: <F6C23FD9-37C4-4C20-83E7-26A1A2FC2275@sb.org> (Kevin Ballard's
- message of "Sun\, 26 Sep 2010 22\:34\:58 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2A3CDC82-C9FD-11DF-96AA-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1758716Ab0I0GnR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 02:43:17 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:60985 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758676Ab0I0GnQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 02:43:16 -0400
+Received: by iwn5 with SMTP id 5so4523220iwn.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 23:43:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FtrxkRZ38ykOtzQbJlCIxjA7DZSOQGudzOeLWYnhEbM=;
+        b=xefrVT/+jAiFhkK/PotXH+chZIdhv+quzX8t3Drct+uKO9m3httDGMEyEWCqQB8/sJ
+         vzUVjBYpZ6V0dA14wCB5pUl2ONy+wSGmPOP2C8J85xzeAt02+tWeBHPQLwri7TfDsNU+
+         S8uWiYg9f+Rq8/eqYktbrZjsxSIwLnnKJ2dXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CrjS4QnwXRQtFGRwSntz8cI7OznMcDNNJSLOm2RzKnWQ/nKCZ2QTCihr0XG0YQhYHG
+         zRbUta1mLFz3eJT68MathANXjag1/Gje8QV3FSTe+R2jgQ+shRpZbHRKVTL6nB5Pucri
+         v56gl3fSS3XSRWPDUOLMYhLL7akO22Yiud1mI=
+Received: by 10.231.157.11 with SMTP id z11mr8565774ibw.147.1285569795894;
+ Sun, 26 Sep 2010 23:43:15 -0700 (PDT)
+Received: by 10.231.166.145 with HTTP; Sun, 26 Sep 2010 23:42:54 -0700 (PDT)
+In-Reply-To: <4C9FA35F.4090800@ripton.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157304>
 
-Kevin Ballard <kevin@sb.org> writes:
+On Sun, Sep 26, 2010 at 9:47 PM, David Ripton <dripton@ripton.net> wrot=
+e:
+> On 09/26/10 15:19, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+>>
+>> 2010/9/26 Jakub Narebski<jnareb@gmail.com>:
+>>>
+>>> On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
+>>>>
+>>>> + =A0 =A0 # Make gitweb show remotes too in the heads list
+>>>
+>>> Very minor nitpick: it should probably be (but I am not a native
+>>> English speaker, so I migh be mistaken)
+>>>
+>>> =A0+ =A0 =A0 # Make gitweb show also remotes in the heads list
+>>
+>> Maybe:
+>>
+>> =A0 =A0 # Configure the display of remotes in the heads list
+>>
+>> or
+>>
+>> =A0 =A0 # Toggle the display of remotes in the heads list
+>
+> IMO either of those are fine. =A0Or you could just swap a couple of w=
+ords in
+> the original message to make it sound a bit more natural:
+>
+> # Make gitweb also show remotes in the heads list
 
-> On Sep 26, 2010, at 10:24 PM, Junio C Hamano wrote:
->
->> Kevin Ballard <kevin@sb.org> writes:
->> 
->>>> At the end-user level, this new option to merge-recursive has exactly the
->>>> same meaning as existing -M given to "diff" family; people would probably
->>>> want to see it made available as a synonym to "diff" family as well, no?
->>> 
->>> You mean so you can type `git diff --rename-score=50% foo`? A reasonable
->>> suggestion, but then what do we do with -B and -C? It doesn't make much
->>> sense to give a longer name to only one of the three options. This patch
->>> was concerned with simply exposing the functionality to the merge
->>> strategy and doesn't attempt to address the problem of providing long
->>> names for this trio of options.
->> 
->> I would call them --break-threshold and --copy-threshold respectively.
->> 
->> I have been happy without long option names when we originally had only
->> short names, but some people seem to be able to be more explicit, so...
->
-> Fair enough. Expect that naming in the next iteration of the patch.
->
->> While we are at it, would it make sense to have "merge-recursive -M20" as
->> a shorthand as well?
->
-> So it would be invoked like `git merge -s recursive -X M20 foo`? Looks a bit odd to me. I can add that if you think it's worthwhile though.
+I think I like the 'Configure the display' one better. I'll rephrase
+the comment in the next rehash of the series.
 
-I agree it looks odd, too ;-)
+--=20
+Giuseppe "Oblomov" Bilotta
