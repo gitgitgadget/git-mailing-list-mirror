@@ -1,111 +1,174 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git-checkout(1) Manual Page
-Date: Mon, 27 Sep 2010 12:18:09 -0700
-Message-ID: <AANLkTi=on_oo9ipZQJXd1tmyS+1nf5L5_02e+3Atwyxq@mail.gmail.com>
-References: <29C9CE22-0DB6-4B81-AD9E-E3F185A0201A@krankikom.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [BUG] git clean -X behaviour when .gitignore has sub-directory
+ entries
+Date: Mon, 27 Sep 2010 15:36:52 -0500
+Message-ID: <20100927203652.GB11957@burratino>
+References: <4CA0AB9A.4050002@nuecho.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016363b87c6f4058404914297bc
-To: Rainer Standke <rainer.standke@krankikom.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 21:18:38 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Shawn Bohrer <shawn.bohrer@gmail.com>
+To: Jean-Philippe =?utf-8?Q?Gari=C3=A9py?= 
+	<jean-philippe.gariepy@nuecho.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 22:40:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0JDh-0007az-Rd
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 21:18:38 +0200
+	id 1P0KUR-0006Md-Qk
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 22:40:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933415Ab0I0TSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 15:18:32 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:48544 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933311Ab0I0TSb (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 15:18:31 -0400
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o8RJIUVx018520
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:18:30 -0700
-Received: by iwn5 with SMTP id 5so4956894iwn.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:18:30 -0700 (PDT)
-Received: by 10.231.183.134 with SMTP id cg6mr9453554ibb.197.1285615110063;
- Mon, 27 Sep 2010 12:18:30 -0700 (PDT)
-Received: by 10.231.209.201 with HTTP; Mon, 27 Sep 2010 12:18:09 -0700 (PDT)
-In-Reply-To: <29C9CE22-0DB6-4B81-AD9E-E3F185A0201A@krankikom.de>
-X-Spam-Status: No, hits=-2.857 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1759374Ab0I0Ujy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 16:39:54 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:48031 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755801Ab0I0Ujy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 16:39:54 -0400
+Received: by wwj40 with SMTP id 40so5700wwj.1
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 13:39:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=oZ7CjlZIiGM+B1KAjWU0CLiZN1pBk5awcEoSy7Bw0gQ=;
+        b=EmaWSFBJEofqXyd3KsTkFrN2NSB+XCnVdF+J16S51PNbKwD2r0gO5oyRhmT7sXjAlN
+         XN8M/IITIXQIdGqlwFtW7vMtbs0hq4pym0eknjGOz0Ccyde/IQmZFCHqh8a2uFxxoNBj
+         PVKlo5afiXJs+vfNndo7M9gF315qqHTaZEhYM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=o4OBJqBlk01zqQUuWWFYYDik5RaoYkDBOBLp43lEGTZ0s/qknNNEjIYlvdX/G4UTNd
+         bX3VmH6Oc9g+SLbeDuY5+hF+R90A1sJZvrUGtCAI5kctmU8oedCmtPkBYVLyMFe5WuxD
+         hl1Hqa0KYpYeQKcg/wG/Qs7IlVRdXPbV2xqB8=
+Received: by 10.227.156.196 with SMTP id y4mr6714584wbw.219.1285619992455;
+        Mon, 27 Sep 2010 13:39:52 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id g9sm5235657wbh.13.2010.09.27.13.39.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 13:39:50 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4CA0AB9A.4050002@nuecho.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157365>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157366>
 
---0016363b87c6f4058404914297bc
-Content-Type: text/plain; charset=ISO-8859-1
+Hi,
 
-Junio,
- as reported by Rainer.. Trivial patch attached if you want to use
-that, or just do it yourself.
+Jean-Philippe Gari=C3=A9py wrote:
 
-                         Linus
+> When using sub-directory entries in .gitignore, while the entry is
+> ignored as expected, "git clean -X" doesn't clean the ignored
+> sub-directory.
 
-On Mon, Sep 27, 2010 at 11:37 AM, Rainer Standke
-<rainer.standke@krankikom.de> wrote:
-> Hello Mr. Torvalds,
->
-> I am wondering if you might need to add 'does' to the following line in the manual:
-> "When <paths> or --patch are given, git checkout not switch branches."
->
-> It might then read:
-> "When <paths> or --patch are given, git checkout does not switch branches."
->
-> Respectfully,
->
-> Rainer Standke
+Thanks for reporting.
 
---0016363b87c6f4058404914297bc
-Content-Type: text/x-patch; charset=US-ASCII; 
-	name="0001-Fix-missing-does-in-man-page-for-git-checkout.patch"
-Content-Disposition: attachment; 
-	filename="0001-Fix-missing-does-in-man-page-for-git-checkout.patch"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gelpzjko0
+ $ cat test.sh
+ rm -fr test &&
+ git init test &&
+ (
+	cd test &&
+	mkdir -p a/b/c &&
+	>a/b/c/f &&
+	echo '/a/b/' >.gitignore &&
+	git status -s &&
+	git clean -X -d -n &&
+	git ls-files -o -i --exclude-standard &&
+	git ls-files -o --directory -i --exclude-standard &&
+	git clean -X -d -f &&
+	echo ... drumroll ... &&
+	! test -e a/b/c/f
+ )
+ $ sh test.sh || echo fail
+ Initialized empty Git repository in /tmp/test/.git/
+ ?? .gitignore
+ ... drumroll ...
+ fail
 
-RnJvbSA4Mzk2N2I5NWRkODJmYTBiZGNjNzJhODAxYzkzZTU5MWQwNTYwZTJhIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBMaW51cyBUb3J2YWxkcyA8dG9ydmFsZHNAbGludXgtZm91bmRh
-dGlvbi5vcmc+CkRhdGU6IE1vbiwgMjcgU2VwIDIwMTAgMTI6MTQ6NTcgLTA3MDAKU3ViamVjdDog
-W1BBVENIXSBGaXggbWlzc2luZyAnZG9lcycgaW4gbWFuLXBhZ2UgZm9yICdnaXQgY2hlY2tvdXQn
-CgpSZXBvcnRlZC1ieTogUmFpbmVyIFN0YW5ka2UgPHJhaW5lci5zdGFuZGtlQGtyYW5raWtvbS5k
-ZT4KU2lnbmVkLW9mZi1ieTogTGludXMgVG9ydmFsZHMgPHRvcnZhbGRzQGxpbnV4LWZvdW5kYXRp
-b24ub3JnPgotLS0KIERvY3VtZW50YXRpb24vZ2l0LWNoZWNrb3V0LnR4dCB8ICAgMTYgKysrKysr
-KystLS0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCA4IGluc2VydGlvbnMoKyksIDggZGVsZXRpb25z
-KC0pCgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtY2hlY2tvdXQudHh0IGIvRG9jdW1l
-bnRhdGlvbi9naXQtY2hlY2tvdXQudHh0CmluZGV4IGY4OGU5OTcuLjIyZDM2MTEgMTAwNjQ0Ci0t
-LSBhL0RvY3VtZW50YXRpb24vZ2l0LWNoZWNrb3V0LnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL2dp
-dC1jaGVja291dC50eHQKQEAgLTQ1LDE0ICs0NSwxNCBAQCBzdWNjZXNzZnVsLgogCiAnZ2l0IGNo
-ZWNrb3V0JyBbLS1wYXRjaF0gWzx0cmVlLWlzaD5dIFstLV0gPHBhdGhzcGVjPi4uLjo6CiAKLQlX
-aGVuIDxwYXRocz4gb3IgYC0tcGF0Y2hgIGFyZSBnaXZlbiwgJ2dpdCBjaGVja291dCcgKm5vdCog
-c3dpdGNoCi0JYnJhbmNoZXMuICBJdCB1cGRhdGVzIHRoZSBuYW1lZCBwYXRocyBpbiB0aGUgd29y
-a2luZyB0cmVlIGZyb20KLQl0aGUgaW5kZXggZmlsZSBvciBmcm9tIGEgbmFtZWQgPHRyZWUtaXNo
-PiAobW9zdCBvZnRlbiBhIGNvbW1pdCkuICBJbgotCXRoaXMgY2FzZSwgdGhlIGAtYmAgYW5kIGAt
-LXRyYWNrYCBvcHRpb25zIGFyZSBtZWFuaW5nbGVzcyBhbmQgZ2l2aW5nCi0JZWl0aGVyIG9mIHRo
-ZW0gcmVzdWx0cyBpbiBhbiBlcnJvci4gVGhlIDx0cmVlLWlzaD4gYXJndW1lbnQgY2FuIGJlCi0J
-dXNlZCB0byBzcGVjaWZ5IGEgc3BlY2lmaWMgdHJlZS1pc2ggKGkuZS4gY29tbWl0LCB0YWcgb3Ig
-dHJlZSkKLQl0byB1cGRhdGUgdGhlIGluZGV4IGZvciB0aGUgZ2l2ZW4gcGF0aHMgYmVmb3JlIHVw
-ZGF0aW5nIHRoZQotCXdvcmtpbmcgdHJlZS4KKwlXaGVuIDxwYXRocz4gb3IgYC0tcGF0Y2hgIGFy
-ZSBnaXZlbiwgJ2dpdCBjaGVja291dCcgZG9lcyAqbm90KgorCXN3aXRjaCBicmFuY2hlcy4gIEl0
-IHVwZGF0ZXMgdGhlIG5hbWVkIHBhdGhzIGluIHRoZSB3b3JraW5nIHRyZWUKKwlmcm9tIHRoZSBp
-bmRleCBmaWxlIG9yIGZyb20gYSBuYW1lZCA8dHJlZS1pc2g+IChtb3N0IG9mdGVuIGEKKwljb21t
-aXQpLiAgSW4gdGhpcyBjYXNlLCB0aGUgYC1iYCBhbmQgYC0tdHJhY2tgIG9wdGlvbnMgYXJlCisJ
-bWVhbmluZ2xlc3MgYW5kIGdpdmluZyBlaXRoZXIgb2YgdGhlbSByZXN1bHRzIGluIGFuIGVycm9y
-LiAgVGhlCisJPHRyZWUtaXNoPiBhcmd1bWVudCBjYW4gYmUgdXNlZCB0byBzcGVjaWZ5IGEgc3Bl
-Y2lmaWMgdHJlZS1pc2gKKwkoaS5lLiAgY29tbWl0LCB0YWcgb3IgdHJlZSkgdG8gdXBkYXRlIHRo
-ZSBpbmRleCBmb3IgdGhlIGdpdmVuCisJcGF0aHMgYmVmb3JlIHVwZGF0aW5nIHRoZSB3b3JraW5n
-IHRyZWUuCiArCiBUaGUgaW5kZXggbWF5IGNvbnRhaW4gdW5tZXJnZWQgZW50cmllcyBiZWNhdXNl
-IG9mIGEgcHJldmlvdXMgZmFpbGVkIG1lcmdlLgogQnkgZGVmYXVsdCwgaWYgeW91IHRyeSB0byBj
-aGVjayBvdXQgc3VjaCBhbiBlbnRyeSBmcm9tIHRoZSBpbmRleCwgdGhlCi0tIAoxLjcuMwoK
---0016363b87c6f4058404914297bc--
+Variations:
+
+ 1) echo '/a/' >.gitignore
+ 2) echo '/a/b/c/f' >.gitignore
+ 3) >a/b/f
+
+(1) does not fail; (2) and (3) still do.
+
+Okay, so why does this happen?  Tracing:
+
+-- 8< --
+diff --git a/dir.c b/dir.c
+index 133f472..5707ad0 100644
+--- a/dir.c
++++ b/dir.c
+@@ -693,6 +693,9 @@ static enum path_treatment treat_one_path(struct di=
+r_struct *dir,
+ 					  int dtype, struct dirent *de)
+ {
+ 	int exclude =3D excluded(dir, path, &dtype);
++
++	trace_printf("treat_one_path: path=3D%s exclude=3D%d\n", path, exclud=
+e);
++
+ 	if (exclude && (dir->flags & DIR_COLLECT_IGNORED)
+ 	    && exclude_matches_pathspec(path, *len, simplify))
+ 		dir_add_ignored(dir, path, *len);
+-- >8 --
+
+ $ GIT_TRACE=3Dtrue PATH=3D/home/jrn/src/git/bin-wrappers:$PATH sh test=
+=2Esh=20
+ trace: built-in: git 'init' 'test'
+ Initialized empty Git repository in /tmp/test/.git/
+ trace: built-in: git 'status' '-s'
+ treat_one_path: path=3D.gitignore exclude=3D0
+ treat_one_path: path=3Da exclude=3D0
+ treat_one_path: path=3Da/b exclude=3D1
+ ?? .gitignore
+ trace: built-in: git 'clean' '-X' '-d' '-n'
+ treat_one_path: path=3D.gitignore exclude=3D0
+ treat_one_path: path=3Da exclude=3D0
+ trace: built-in: git 'ls-files' '-o' '-i' '--exclude-standard'
+ treat_one_path: path=3D.gitignore exclude=3D0
+ treat_one_path: path=3Da exclude=3D0
+ treat_one_path: path=3Da/b exclude=3D1
+ treat_one_path: path=3Da/b/c exclude=3D0
+ treat_one_path: path=3Da/b/c/f exclude=3D0
+ trace: built-in: git 'ls-files' '-o' '--directory' '-i' '--exclude-sta=
+ndard'
+ treat_one_path: path=3D.gitignore exclude=3D0
+ treat_one_path: path=3Da exclude=3D0
+ trace: built-in: git 'clean' '-X' '-d' '-f'
+ treat_one_path: path=3D.gitignore exclude=3D0
+ treat_one_path: path=3Da exclude=3D0
+ ... drumroll ...
+ $
+
+ 1) a/b/f is not actually considered excluded; only its containing
+    directory is.
+
+ 2) git clean does not even examine a/b to consider whether to remove
+    it: since a/ does not contain any tracked files, it stopped there.
+
+The following would cause "git clean -ndx" to print more than it
+should, but hopefully it illustrates the idea.
+
+diff --git a/builtin/clean.c b/builtin/clean.c
+index b508d2c..91624c2 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -84,8 +84,6 @@ int cmd_clean(int argc, const char **argv, const char=
+ *prefix)
+ 	if (force > 1)
+ 		rm_flags =3D 0;
+=20
+-	dir.flags |=3D DIR_SHOW_OTHER_DIRECTORIES;
+-
+ 	if (read_cache() < 0)
+ 		die("index file corrupt");
+=20
+--=20
