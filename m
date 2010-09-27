@@ -1,94 +1,144 @@
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: Re: Let's bump the minimum Perl version to 5.8
-Date: Mon, 27 Sep 2010 09:59:59 +0200
-Message-ID: <4CA04EFF.6010805@statsbiblioteket.dk>
-References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>	<AANLkTinRcGa3r_=D87G-4-qqdsFL9CKnawD=DCnRQ+7v@mail.gmail.com>	<AANLkTim8aPoOkzzf4c0JHbBDVa4zJY2xM3v9fXQ-px=V@mail.gmail.com> <AANLkTimNGZom6FfKivg=QNmovz=xf656XHbXCmsjfrxD@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 08/12] gitweb: auxiliary function to group data
+Date: Mon, 27 Sep 2010 10:12:22 +0200
+Message-ID: <201009271012.23175.jnareb@gmail.com>
+References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <201009262347.15779.jnareb@gmail.com> <AANLkTimOJ7RXDWXy=tF+rZf1gnfB7_GHCZuU5bZ5Wc91@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-2
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Tait <git.git@t41t.com>, git@vger.kernel.org,
-	Alex Riesen <raa.lkml@gmail.com>
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Mon Sep 27 10:00:10 2010
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 10:13:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P08d6-0007vr-Sz
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 10:00:09 +0200
+	id 1P08ph-0003lY-25
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 10:13:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755249Ab0I0IAB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 04:00:01 -0400
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:51268 "EHLO
-	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752450Ab0I0IAA (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 04:00:00 -0400
-Received: from [130.225.25.159] (130.225.25.159) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.1.436.0; Mon, 27 Sep 2010 10:00:00 +0200
-User-Agent: Thunderbird 2.0.0.24 (X11/20100916)
-In-Reply-To: <AANLkTimNGZom6FfKivg=QNmovz=xf656XHbXCmsjfrxD@mail.gmail.com>
+	id S932798Ab0I0IMo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 04:12:44 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63001 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758901Ab0I0IMd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 04:12:33 -0400
+Received: by fxm3 with SMTP id 3so1632203fxm.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 01:12:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Zw+wM9tQSuxPKqN/fV8LRjpBY2lOZ0LuCn8KUBjW600=;
+        b=cLDKSX7j19HOP8h1+lieXUuhujwNMabwvI5OXugp/fhhD+PaL1BhDzQao8B7+vF9ev
+         ymx8FkauV0m3c6LVESbthNOTMSrjuVH2EBL0E4TzT6xR8McHz/CeYszq6+cYVHFk4TcK
+         t02oi+qWgrmYFHO48zq2sM/TkL/T0ayLeEDhg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=ul3Zk9NioSIIsbalBnSZIPhF7EU5AB5edwOlGSTInya6Fo43lSZJjuyHkJB1V/5DF+
+         o8naamI1VSbv6UKwU2CXQ3LrVRleV/ZIOFqMAVZ1fmJEgkF5sX4kOsz8BaZN2y0W0mjV
+         Xhoj+HU8hzYkmfb171Qgq6vcYtLnoH/pI/vBg=
+Received: by 10.223.119.210 with SMTP id a18mr5825036far.38.1285575151778;
+        Mon, 27 Sep 2010 01:12:31 -0700 (PDT)
+Received: from [192.168.1.13] (abvz242.neoplus.adsl.tpnet.pl [83.8.223.242])
+        by mx.google.com with ESMTPS id c20sm2247120fak.33.2010.09.27.01.12.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 01:12:30 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTimOJ7RXDWXy=tF+rZf1gnfB7_GHCZuU5bZ5Wc91@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157318>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157319>
 
-Tor Arntsen wrote:
-> On Fri, Sep 24, 2010 at 15:32, =C6var Arnfj=F6r=F0 Bjarmason <avarab@=
-gmail.com> wrote:
->> On Fri, Sep 24, 2010 at 13:08, Tor Arntsen <tor@spacetec.no> wrote:
->>> On Fri, Sep 24, 2010 at 14:56, =C6var Arnfj=F6r=F0 Bjarmason <avara=
-b@gmail.com> wrote:
+Dnia poniedzia=B3ek 27. wrze=B6nia 2010 09:26, Giuseppe Bilotta napisa=B3=
+:
+> 2010/9/26 Jakub Narebski <jnareb@gmail.com>:
+>> On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
+>>
+>>> Subject: gitweb: auxiliary function to group data
 >>>
->>>> However, I'd like to shift the discussion a bit: Do we want to sup=
-port
->>>> the 5.6 line *at all* anymore? I don't think so. As you point out
->>>> yourself you can just compile 5.8 or later on these machines.
->>> 5.8 as minimum is probably for the best. It's not that just you can
->>> compile a newer version (5.8), more importantly, Perl 5.8 is availa=
-ble
->>> as a package from those semi-official 3party repositories for most
->>> systems (at least the *nix systems I have access to)
->> Do those repositories also have 5.10 and 5.12?
+>>
+>> Errr... what!? =A0git_group() is not "auxiliary function to group da=
+ta",
+>> but a template for output of group of data.
 >=20
-> Anything later than 5.8 seems to very unusual except for Linux (and
-> presumably *bsd).
->=20
-In Linux land atleast the current crop of RHEL dists are on 5.8.x and=20
-for RHEL5 this is supported until 2014 (2017 with ELS).
+> I will rephrase
 
->>> except for those like Irix 6.2 where it's hopeless anyway (perl
->>> 5.0). But I only have access to irix/aix/solaris/tru64 in addition
->>> to Linux.
->> Hrm, 6.2 is old, but 5.12 is known to compile on 6.5 at least. What
->> are the issues with 6.2? Perhaps they could be solved if someone wit=
-h
->> such a machine contributed a smoker for the perl core.
->=20
-> IRIX 6.2 is simply suffering for being old. Unless you have to
-> maintain a legacy system (as I do) you would probably have upgraded t=
-o
-> IRIX 6.5 anyway.
-> (Actually it turns out that I wasn't entirely correct in what I wrote
-> earlier - the SGI freeware version of Perl for IRIX 6.5 is still at
-> 5.6.1, because they stopped updating that repository. There's another
-> 3party semi-official repo for IRIX now, not hosted by SGI, but I'm no=
-t
-> familiar with it.
->=20
-There are currently 2 maintained options for IRIX users:
-nekochan (requires IRIX 6.5.21 or better)
-tgcware (IRIX 5.3 & 6.2, will also run on 6.3, 6.4, 6.5).
+Though I don't know how such rephrasing should look like.
 
-I maintain tgcware and have prebuilt git packages available (1.7.2.3).
+>> It would be probably good to describe how this output looks like
+>> (using e.g. ASCII-art mockup) in a commit message.
+>=20
+> Well, that would depend on the CSS that is used ... should I squash
+> the styling in this patch then?
 
-Git does not build on IRIX < 6.3 without adding some sort of thirdparty=
+No, I don't think it is needed, but it can be done.
+
+>>> +sub git_group {
+>>
+>> Name?
+>=20
+> git_collection? git_collect_data? I'm a little short on ideas.
+> git_section? git_subsection? the function (with different styling) ca=
+n
+> probably be used even for the main sections in each view (think
+> summary view in particular).
+
+git_group_html / git_subgroup_html / git_subsection_html
+print_group / print_subgroup / print_section / print_subsection
+
+It needs either *_html suffix (like git_header_html), or print_* prefix
+to denote that it prints HTML fragment, I think.
+
+>>> + =A0 =A0 $content_func->() if defined $content_func;
+>>
+>> More defensive programming would be to use
+>>
+>> =A0+ =A0 =A0 $content_func->() if ref($content_func) eq 'CODE';
+>>
+>> Or even:
+>>
+>> =A0+ =A0 =A0 if (ref($content) eq 'CODE') {
+>> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 $content->();
+>> =A0+ =A0 =A0 } elsif (ref($content) eq 'ARRAY') {
+>> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 print @$content;
+
+The 'ARRAY' part is probably unnecessary overengineering.
+
+>> =A0+ =A0 =A0 } elsif (!ref($content) && defined($content)) {
+>> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 print $content;
+>> =A0+ =A0 =A0 }
+
+Or even (in the vein of further overengineering)
+
+    +     } elsif (ref($content) eq 'SCALAR') {
+    +             print esc_html($$content);
+    +     } elsif (!ref($content) && defined($content)) {
+    +             print $content;
+    +     }
+
+or vice versa ;-)
+
+>>
+>> Well, $content could be also open filehandle...
+
+Though I don't know how to check that.  ref on filehandles return
+'GLOB'... well, we can use 'openhandle' from Scalar::Util (core).
+But that is probably unnecessary overengineering.
 =20
-(v)snprintf code since those functions are missing in libc. I use the=20
-ctrio library for this purpose.
+> Ah, very interesting and very flexible, I'll steal your idea.
+>=20
+> --=20
+> Giuseppe "Oblomov" Bilotta
+>=20
 
--tgc
+--=20
+Jakub Narebski
+Poland
