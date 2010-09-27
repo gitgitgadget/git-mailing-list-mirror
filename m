@@ -1,127 +1,117 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 06/12] gitweb: allow extra text after action in page header
-Date: Mon, 27 Sep 2010 09:42:13 +0200
-Message-ID: <201009270942.14731.jnareb@gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <201009262011.28211.jnareb@gmail.com> <AANLkTinpZ5gusCG4SoKbi54URyn7T4THNp2NeVM6uFL2@mail.gmail.com>
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: Re: [PATCH/RFC] perl: bump the required Perl version to 5.8 from
+ 5.6.[21]
+Date: Mon, 27 Sep 2010 09:36:32 +0200
+Message-ID: <4CA04980.3070300@statsbiblioteket.dk>
+References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com> <1285358453-19292-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 09:42:32 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Tor Arntsen <tor@spacetec.no>,
+	"Randal L. Schwartz" <merlyn@stonehenge.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 09:46:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P08M4-0002km-C9
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 09:42:32 +0200
+	id 1P08Q8-00046H-AV
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 09:46:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758857Ab0I0Hm1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 03:42:27 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:64680 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753744Ab0I0Hm0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 03:42:26 -0400
-Received: by fxm3 with SMTP id 3so1623593fxm.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 00:42:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=o+MBjHPSvwp0pZypbc7/NEHAS08mTme3ugMIggAMCmM=;
-        b=ekv7pc8UprLGa6hGKW33jVTXw6ptEdA75cGiijv2sISVJ2rX9YE0zsnrbHo58H8n9z
-         TbjzqAYEiKOBizeBNxcJgdM6yZThlKp1CGk0fChi2n205K2XLxifIG+h9D1p7Rcb/ueu
-         /RJIWCX8T5JT4yL2n6NCusqedvsmzxlMbIdr8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=YYcMhAEp1aHh/o1209lMeBJaXNgc5ozLLj9OEh7VBsCKG8mENuncbVIC3XYmnmTv20
-         407+g/NIouS7jBk1MO+qYspyEw8wW026o2tg4owjgekwrKXr16VKIa4DsZkgRBywChqM
-         y0nckDFusg7DTBZupM24hCKDSdonZW/Hqi0qY=
-Received: by 10.223.163.80 with SMTP id z16mr1086308fax.62.1285573344606;
-        Mon, 27 Sep 2010 00:42:24 -0700 (PDT)
-Received: from [192.168.1.13] (abvz242.neoplus.adsl.tpnet.pl [83.8.223.242])
-        by mx.google.com with ESMTPS id 10sm2237950fax.18.2010.09.27.00.42.22
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Sep 2010 00:42:23 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTinpZ5gusCG4SoKbi54URyn7T4THNp2NeVM6uFL2@mail.gmail.com>
-Content-Disposition: inline
+	id S1758903Ab0I0Hqj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 03:46:39 -0400
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:50991 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755201Ab0I0Hqj (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 03:46:39 -0400
+X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Sep 2010 03:46:38 EDT
+Received: from [130.225.25.159] (130.225.25.159) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.1.436.0; Mon, 27 Sep 2010 09:36:32 +0200
+User-Agent: Thunderbird 2.0.0.24 (X11/20100916)
+In-Reply-To: <1285358453-19292-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157316>
 
-On Mon, 27 Sep 2010, Giuseppe Bilotta wrote:
-> 2010/9/26 Jakub Narebski <jnareb@gmail.com>:
->> On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
-
->>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>> index e70897e..76cf806 100755
->>> --- a/gitweb/gitweb.perl
->>> +++ b/gitweb/gitweb.perl
->>> @@ -3514,7 +3514,15 @@ EOF
->>> =A0 =A0 =A0 if (defined $project) {
->>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 print $cgi->a({-href =3D> href(action=3D=
->"summary")}, esc_html($project));
->>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (defined $action) {
->>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print " / $action";
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 my $action_print =3D $act=
-ion ;
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (defined $opts{'header=
-_extra'}) {
-[...]
-
->> I also think that we can think of better name for this option than
->> 'header_extra', although what this name could be eludes me.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> Formalize our dependency on perl 5.8, bumped from 5.6.[12]. We alread=
+y
+> used the three-arg form of open() which was introduced in 5.6.1, but
+> t/t9700/test.pl explicitly depended on 5.6.2.
 >=20
-> I will add the dash to the option. Naming it header_extra keeps the
-> meaning of this extra text generic, but considering that the intended
-> use is mostly for the single-remote view (or similar, if/when they ar=
+> However git-add--interactive.pl has been failing on the 5.6 line sinc=
 e
-> added) we could call it something related (I can only think of
-> 'main_argument' right now but I think this would suck more than
-> header_extra).
-
-Perhaps name this argument '-subaction' or '-action_argument', or
-something like that; the meaning of this argument (as shown by the fact
-that action name is hyperlinked) is to specify subaction of given actio=
-n,
-i.e. (possibly) more detailed view of some part of generic (argument-le=
-ss)
-action output.
-=20
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print " / $action_print";
->>> + =A0 =A0 =A0 =A0 =A0 =A0 }
->>> + =A0 =A0 =A0 =A0 =A0 =A0 if (defined $opts{'header_extra'}) {
->>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 print " / $opts{'header_e=
-xtra'}";
->>
->> Hmmm...
+> it was introduced in v1.5.0-rc0~12^2~2 back in 2006 due to this open
+> syntax:
 >=20
-> You don't sound very convinced. I had some doubts myself about whethe=
-r
-> the slash should be inserted autmatically or whether it should be up
-> to the caller to include it in header_extra, but I'm not sure this is
-> what you are perplexed about.
+>     sub run_cmd_pipe {
+>            my $fh =3D undef;
+>            open($fh, '-|', @_) or die;
+>            return <$fh>;
+>     }
+>=20
+This issue and possible solutions was previously discussed in-depth her=
+e:
+http://article.gmane.org/gmane.comp.version-control.git/94394
 
-Ah, I'm sorry, I have misunderstood the control flow here.  I see now
-that it is about adding subaction specifier after action, so that
-'remotes' view for single remote 'origin' (<URL>/remotes/origin path_in=
-fo
-URL, see comments for patch introducing single-remote view) has
+> Which when executed dies on "Can't use an undefined value as
+> filehandle reference". Several of our tests also fail on 5.6 (even
+> more when compiled with NO_PERL_MAKEMAKER=3D1):
+>=20
+>     t2016-checkout-patch.sh
+>     t3904-stash-patch.sh
+>     t3701-add-interactive.sh
+>     t7105-reset-patch.sh
+>     t7501-commit.sh
+>     t9700-perl-git.sh
+>=20
+> Our code is bitrotting on 5.6 with no-one interested in fixing it, an=
+d
+> pinning us to such an ancient release of Perl is keeping us from usin=
+g
+> useful features introduced in the 5.8 release.
+>=20
+=46WIW I build rpms and run git on RHEL 2.1 with perl 5.6.1.
 
-  _projects_ / _repo.git_ / _remotes_ / origin
+These are the settings I use:
+NO_CURL=3D1 (curl 7.8.1 is too old)
+NO_TCLTK=3D1 (tcl/tk 8.3 is too old)
+NO_NSEC=3D1
+NO_EXTERNAL_GREP=3D1 (GNU grep 2.4.2 is apparently too old)
+NO_REGEX=3D1 (glibc regex breaks t7008.11, also needed for el3)
+NO_PERL_MAKEMAKER=3D1 (ExtUtils::MakeMaker is too old)
 
-in the "breadcrumbs" navigation in page header.
+GIT_SKIP_TESTS=3D"t2016 t3701 t3904 t7105 t7501.21"
 
-This should be better described in the commit message.
---=20
-Jakub Narebski
-Poland
+Additionally to fix NO_PERL_MAKEMAKER I use this patch:
+http://article.gmane.org/gmane.comp.version-control.git/130159
+
+To build with OpenSSL 0.9.6 I also add this in git-compat-util.h:
+# if SSLEAY_VERSION_NUMBER < 0x00907000L
+# define HMAC_CTX_cleanup    HMAC_cleanup
+# endif
+
+With these settings I have zero testsuite failures (just verified with=20
+1.7.3).
+t9700 is automatically skipped because Test::More is not available in=20
+perl 5.6.1. gitweb requires 5.8 and is also skipped automatically.
+I do not have subversion available on RHEL 2.1 so those tests are also=20
+skipped.
+CVS server/import tests are skipped because I do not have cvsps and=20
+perl-SQLite available.
+
+IIRC there has been no change in the functionality with perl 5.6.1 sinc=
+e=20
+the last time the 'open syntax' issue was discussed.
+
+Having the specific parts known not to work with perl 5.6.x fail=20
+gracefully at runtime would be an improvement.
+
+-tgc
