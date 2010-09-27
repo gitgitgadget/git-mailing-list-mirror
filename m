@@ -1,91 +1,111 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv5 08/12] gitweb: auxiliary function to group data
-Date: Mon, 27 Sep 2010 21:17:49 +0200
-Message-ID: <AANLkTinudc8zX33o=vxxo=nf0L9KxFiJR8UYNomMfajN@mail.gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com>
- <201009262347.15779.jnareb@gmail.com> <AANLkTimOJ7RXDWXy=tF+rZf1gnfB7_GHCZuU5bZ5Wc91@mail.gmail.com>
- <201009271012.23175.jnareb@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: git-checkout(1) Manual Page
+Date: Mon, 27 Sep 2010 12:18:09 -0700
+Message-ID: <AANLkTi=on_oo9ipZQJXd1tmyS+1nf5L5_02e+3Atwyxq@mail.gmail.com>
+References: <29C9CE22-0DB6-4B81-AD9E-E3F185A0201A@krankikom.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 21:18:19 2010
+Content-Type: multipart/mixed; boundary=0016363b87c6f4058404914297bc
+To: Rainer Standke <rainer.standke@krankikom.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 21:18:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0JDO-0007WC-UN
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 21:18:19 +0200
+	id 1P0JDh-0007az-Rd
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 21:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933413Ab0I0TSL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 15:18:11 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:47632 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933311Ab0I0TSK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 15:18:10 -0400
-Received: by ywh1 with SMTP id 1so1615368ywh.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:18:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=sCl26892NEb5cN5h99O2wKxeF3EszwWyV8dC8oRvJXU=;
-        b=WHF8VtvGvkBz/QYQ0SdV4E3AzzAlKHAdeS6mqoSqE6aXcxVQbsQTnchhUUW5kIrdIL
-         jeUCIEXMC+7+Ed7hmuut1wKQca2/bzu1ZX6XWjXity4JwcmW/rx7wq5RKVdJwD4yvyZ3
-         iJTV0AW9RNNNeaxyy8HtCqiuccSl/zn0R+4gs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=mWlkg49csSBJShHh/dJOVIK5f+yel6lMNIctRyvhNVe0eDk9Su20DboBJoLbIwsTas
-         RC+PftsKIcRIaJ9R67CJ4ru5wRV1jsDtK8KinlGOE67ttFTk2gh53j/VFbayw8NnUKb+
-         gxtKy9Xt1GyxXYfm0ASvz21y9oFb1b+UfyBBE=
-Received: by 10.150.138.2 with SMTP id l2mr9268073ybd.41.1285615089615; Mon,
- 27 Sep 2010 12:18:09 -0700 (PDT)
-Received: by 10.231.166.145 with HTTP; Mon, 27 Sep 2010 12:17:49 -0700 (PDT)
-In-Reply-To: <201009271012.23175.jnareb@gmail.com>
+	id S933415Ab0I0TSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Sep 2010 15:18:32 -0400
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:48544 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S933311Ab0I0TSb (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 15:18:31 -0400
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o8RJIUVx018520
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:18:30 -0700
+Received: by iwn5 with SMTP id 5so4956894iwn.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:18:30 -0700 (PDT)
+Received: by 10.231.183.134 with SMTP id cg6mr9453554ibb.197.1285615110063;
+ Mon, 27 Sep 2010 12:18:30 -0700 (PDT)
+Received: by 10.231.209.201 with HTTP; Mon, 27 Sep 2010 12:18:09 -0700 (PDT)
+In-Reply-To: <29C9CE22-0DB6-4B81-AD9E-E3F185A0201A@krankikom.de>
+X-Spam-Status: No, hits=-2.857 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157365>
 
-2010/9/27 Jakub Narebski <jnareb@gmail.com>:
->>> =A0+ =A0 =A0 if (ref($content) eq 'CODE') {
->>> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 $content->();
->>> =A0+ =A0 =A0 } elsif (ref($content) eq 'ARRAY') {
->>> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 print @$content;
->
-> The 'ARRAY' part is probably unnecessary overengineering.
->
->>> =A0+ =A0 =A0 } elsif (!ref($content) && defined($content)) {
->>> =A0+ =A0 =A0 =A0 =A0 =A0 =A0 print $content;
->>> =A0+ =A0 =A0 }
->
-> Or even (in the vein of further overengineering)
->
-> =A0 =A0+ =A0 =A0 } elsif (ref($content) eq 'SCALAR') {
-> =A0 =A0+ =A0 =A0 =A0 =A0 =A0 =A0 print esc_html($$content);
-> =A0 =A0+ =A0 =A0 } elsif (!ref($content) && defined($content)) {
-> =A0 =A0+ =A0 =A0 =A0 =A0 =A0 =A0 print $content;
-> =A0 =A0+ =A0 =A0 }
->
-> or vice versa ;-)
->
->>>
->>> Well, $content could be also open filehandle...
->
-> Though I don't know how to check that. =A0ref on filehandles return
-> 'GLOB'... well, we can use 'openhandle' from Scalar::Util (core).
-> But that is probably unnecessary overengineering.
+--0016363b87c6f4058404914297bc
+Content-Type: text/plain; charset=ISO-8859-1
 
-I have made cases for closures, scalar refs and scalar values. I've
-also added a case for GLOB or IO::Handle to allow a file handle to be
-passed as either *handle or *handle{IO}. I've also added a comment
-block explaining the syntax better.
+Junio,
+ as reported by Rainer.. Trivial patch attached if you want to use
+that, or just do it yourself.
 
---=20
-Giuseppe "Oblomov" Bilotta
+                         Linus
+
+On Mon, Sep 27, 2010 at 11:37 AM, Rainer Standke
+<rainer.standke@krankikom.de> wrote:
+> Hello Mr. Torvalds,
+>
+> I am wondering if you might need to add 'does' to the following line in the manual:
+> "When <paths> or --patch are given, git checkout not switch branches."
+>
+> It might then read:
+> "When <paths> or --patch are given, git checkout does not switch branches."
+>
+> Respectfully,
+>
+> Rainer Standke
+
+--0016363b87c6f4058404914297bc
+Content-Type: text/x-patch; charset=US-ASCII; 
+	name="0001-Fix-missing-does-in-man-page-for-git-checkout.patch"
+Content-Disposition: attachment; 
+	filename="0001-Fix-missing-does-in-man-page-for-git-checkout.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gelpzjko0
+
+RnJvbSA4Mzk2N2I5NWRkODJmYTBiZGNjNzJhODAxYzkzZTU5MWQwNTYwZTJhIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBMaW51cyBUb3J2YWxkcyA8dG9ydmFsZHNAbGludXgtZm91bmRh
+dGlvbi5vcmc+CkRhdGU6IE1vbiwgMjcgU2VwIDIwMTAgMTI6MTQ6NTcgLTA3MDAKU3ViamVjdDog
+W1BBVENIXSBGaXggbWlzc2luZyAnZG9lcycgaW4gbWFuLXBhZ2UgZm9yICdnaXQgY2hlY2tvdXQn
+CgpSZXBvcnRlZC1ieTogUmFpbmVyIFN0YW5ka2UgPHJhaW5lci5zdGFuZGtlQGtyYW5raWtvbS5k
+ZT4KU2lnbmVkLW9mZi1ieTogTGludXMgVG9ydmFsZHMgPHRvcnZhbGRzQGxpbnV4LWZvdW5kYXRp
+b24ub3JnPgotLS0KIERvY3VtZW50YXRpb24vZ2l0LWNoZWNrb3V0LnR4dCB8ICAgMTYgKysrKysr
+KystLS0tLS0tLQogMSBmaWxlcyBjaGFuZ2VkLCA4IGluc2VydGlvbnMoKyksIDggZGVsZXRpb25z
+KC0pCgpkaWZmIC0tZ2l0IGEvRG9jdW1lbnRhdGlvbi9naXQtY2hlY2tvdXQudHh0IGIvRG9jdW1l
+bnRhdGlvbi9naXQtY2hlY2tvdXQudHh0CmluZGV4IGY4OGU5OTcuLjIyZDM2MTEgMTAwNjQ0Ci0t
+LSBhL0RvY3VtZW50YXRpb24vZ2l0LWNoZWNrb3V0LnR4dAorKysgYi9Eb2N1bWVudGF0aW9uL2dp
+dC1jaGVja291dC50eHQKQEAgLTQ1LDE0ICs0NSwxNCBAQCBzdWNjZXNzZnVsLgogCiAnZ2l0IGNo
+ZWNrb3V0JyBbLS1wYXRjaF0gWzx0cmVlLWlzaD5dIFstLV0gPHBhdGhzcGVjPi4uLjo6CiAKLQlX
+aGVuIDxwYXRocz4gb3IgYC0tcGF0Y2hgIGFyZSBnaXZlbiwgJ2dpdCBjaGVja291dCcgKm5vdCog
+c3dpdGNoCi0JYnJhbmNoZXMuICBJdCB1cGRhdGVzIHRoZSBuYW1lZCBwYXRocyBpbiB0aGUgd29y
+a2luZyB0cmVlIGZyb20KLQl0aGUgaW5kZXggZmlsZSBvciBmcm9tIGEgbmFtZWQgPHRyZWUtaXNo
+PiAobW9zdCBvZnRlbiBhIGNvbW1pdCkuICBJbgotCXRoaXMgY2FzZSwgdGhlIGAtYmAgYW5kIGAt
+LXRyYWNrYCBvcHRpb25zIGFyZSBtZWFuaW5nbGVzcyBhbmQgZ2l2aW5nCi0JZWl0aGVyIG9mIHRo
+ZW0gcmVzdWx0cyBpbiBhbiBlcnJvci4gVGhlIDx0cmVlLWlzaD4gYXJndW1lbnQgY2FuIGJlCi0J
+dXNlZCB0byBzcGVjaWZ5IGEgc3BlY2lmaWMgdHJlZS1pc2ggKGkuZS4gY29tbWl0LCB0YWcgb3Ig
+dHJlZSkKLQl0byB1cGRhdGUgdGhlIGluZGV4IGZvciB0aGUgZ2l2ZW4gcGF0aHMgYmVmb3JlIHVw
+ZGF0aW5nIHRoZQotCXdvcmtpbmcgdHJlZS4KKwlXaGVuIDxwYXRocz4gb3IgYC0tcGF0Y2hgIGFy
+ZSBnaXZlbiwgJ2dpdCBjaGVja291dCcgZG9lcyAqbm90KgorCXN3aXRjaCBicmFuY2hlcy4gIEl0
+IHVwZGF0ZXMgdGhlIG5hbWVkIHBhdGhzIGluIHRoZSB3b3JraW5nIHRyZWUKKwlmcm9tIHRoZSBp
+bmRleCBmaWxlIG9yIGZyb20gYSBuYW1lZCA8dHJlZS1pc2g+IChtb3N0IG9mdGVuIGEKKwljb21t
+aXQpLiAgSW4gdGhpcyBjYXNlLCB0aGUgYC1iYCBhbmQgYC0tdHJhY2tgIG9wdGlvbnMgYXJlCisJ
+bWVhbmluZ2xlc3MgYW5kIGdpdmluZyBlaXRoZXIgb2YgdGhlbSByZXN1bHRzIGluIGFuIGVycm9y
+LiAgVGhlCisJPHRyZWUtaXNoPiBhcmd1bWVudCBjYW4gYmUgdXNlZCB0byBzcGVjaWZ5IGEgc3Bl
+Y2lmaWMgdHJlZS1pc2gKKwkoaS5lLiAgY29tbWl0LCB0YWcgb3IgdHJlZSkgdG8gdXBkYXRlIHRo
+ZSBpbmRleCBmb3IgdGhlIGdpdmVuCisJcGF0aHMgYmVmb3JlIHVwZGF0aW5nIHRoZSB3b3JraW5n
+IHRyZWUuCiArCiBUaGUgaW5kZXggbWF5IGNvbnRhaW4gdW5tZXJnZWQgZW50cmllcyBiZWNhdXNl
+IG9mIGEgcHJldmlvdXMgZmFpbGVkIG1lcmdlLgogQnkgZGVmYXVsdCwgaWYgeW91IHRyeSB0byBj
+aGVjayBvdXQgc3VjaCBhbiBlbnRyeSBmcm9tIHRoZSBpbmRleCwgdGhlCi0tIAoxLjcuMwoK
+--0016363b87c6f4058404914297bc--
