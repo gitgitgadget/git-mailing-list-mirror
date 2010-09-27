@@ -1,117 +1,131 @@
-From: Martin Pettersson <martin@siamect.com>
-Subject: Re: Multiple checkouts active for the same repository
-Date: Mon, 27 Sep 2010 18:53:53 +0700
-Message-ID: <201009271853.53564.martin@siamect.com>
-References: <4C9C6F8B.3090806@tech.2degreesnetwork.com> <14b089955184bbb677b6434993682403@212.159.54.234> <4CA072FC.3020004@tech.2degreesnetwork.com>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: [Alt. PATCH 1/2] repack: add -F flag to let user choose between
+ --no-reuse-delta/object
+Date: Mon, 27 Sep 2010 14:19:36 +0200
+Message-ID: <20100927141936.590d71b3@jk.gs>
+References: <20100927133104.25ce5285@jk.gs>
+	<alpine.LFD.2.00.1009270742250.1146@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Sep 27 14:03:16 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Mon Sep 27 14:19:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0CQN-0006pB-TD
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 14:03:16 +0200
+	id 1P0CgL-0005EW-II
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 14:19:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758821Ab0I0MDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 08:03:09 -0400
-Received: from smtp5.34sp.com ([80.82.115.204]:33490 "EHLO smtp5.34sp.com"
+	id S1756663Ab0I0MTk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 08:19:40 -0400
+Received: from zoidberg.org ([88.198.6.61]:38313 "EHLO cthulhu.zoidberg.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753549Ab0I0MDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 08:03:08 -0400
-X-Greylist: delayed 548 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Sep 2010 08:03:08 EDT
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp5.34sp.com (Postfix) with ESMTP id 6127FEF01D3
-	for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:53:59 +0100 (BST)
-Received: from smtp5.34sp.com ([127.0.0.1])
-	by localhost (smtp5.34sp.com [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id DKRDTlsTfFjJ for <git@vger.kernel.org>;
-	Mon, 27 Sep 2010 12:53:59 +0100 (BST)
-Received: from our-server.localnet (ppp-124-120-240-129.revip2.asianet.co.th [124.120.240.129])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: controlcentres.com)
-	by smtp5.34sp.com (Postfix) with ESMTP id EDDB7F13E37
-	for <git@vger.kernel.org>; Mon, 27 Sep 2010 12:53:58 +0100 (BST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-22-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <4CA072FC.3020004@tech.2degreesnetwork.com>
+	id S1755967Ab0I0MTj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 08:19:39 -0400
+Received: from jk.gs (xdsl-89-0-0-81.netcologne.de [::ffff:89.0.0.81])
+  (AUTH: LOGIN jast, SSL: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Mon, 27 Sep 2010 14:19:39 +0200
+  id 004000B7.4CA08BDB.00004E36
+In-Reply-To: <alpine.LFD.2.00.1009270742250.1146@xanadu.home>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157327>
 
-On Monday, September 27, 2010 05:33:32 pm Gustavo Narea wrote:
-> Hello,
-> 
-> Thanks! I've given git-new-workdir a try and it seems to be what I was
-> searching for.
-> 
->  - Gustavo.
-> 
-> On 24/09/10 16:33, Julian Phillips wrote:
-> > On Fri, 24 Sep 2010 10:29:47 +0100, Gustavo Narea
-> > 
-> > <gnarea@tech.2degreesnetwork.com> wrote:
-> >> Hello.
-> >> 
-> >> We're currently migrating from another DVCS, which allows us to have
-> >> working copies of each branch in separate directories, so that their
-> >> code can be used simultaneously. However, I haven't found a way to do
-> >> this with Git, at least not an easy way. Can you please help me?
-> > 
-> > The git-new-workdir script to be found in contrib/workdir allows multiple
-> > working copies to share the same repository - though there are some
-> > 
-> > caveats:
-> >  1) uses symbolic links, so doesn't work on Windows
-> >  2) the working copies are not aware of each other, so if you change a
-> > 
-> > checked out branch from another working copy you have to remember to git
-> > reset your working copy before doing anything with it to get it back in
-> > sync with the branch
-> > 
-> >  3) you have to remember not to delete the actual clone
-> >  4) the working copies are not aware of each other, so it is possible for
-> > 
-> > objects needed by one working copy to get pruned from another one
-> > 
-> > Personally, I use this script all the time to checkout multiple branches
-> > at the same time taking care to stay away from the issues above, and
-> > everything hums along nicely.
-> > 
-> >> We are a team of Web developers and testers working on an application.
-> >> There are always a few development branches and a stable branch, and
-> >> testers need all the branches with the very latest code available at all
-> >> times.
-> >> 
-> >> The way we handle it at the moment is very simple because the server
-> >> hosting the remote repository is the same that hosts the deployed
-> >> instances of each branch, so when we push to the remote repository, the
-> >> code for each site is automatically updated.
-> >> 
-> >> We use the following structure:
-> >> /srv/repositories/project/branch1
-> >> /srv/repositories/project/branch2
-> >> /srv/repositories/project/branch3
-> >> 
-> >> Is there any simple way to do this with Git? I can only think of two
-> >> 
-> >> options that involve hooks:
-> >>     * Have a hook that exports each branch to a directory like
-> >>     
-> >>       /srv/repositories/project/branchN
-> >>     
-> >>     * Have one Git repository per branch, so that each repository have a
-> >>     
-> >>       different checkout active. Then the main remote repository will
-> >>       have post-receive hooks that trigger a pull on each individual
-> >> 
-> >> I'm not particularly happy with either way. Is there a better solution?
-just check out the branch you need... If you are absolutely in big need of 
-reaching multiple branches at the same time just make a couple of clones...
-Martin
+In 479b56ba ('make "repack -f" imply "pack-objects --no-reuse-object"')=
+,
+git repack -f was changed to include recompressing all objects on the
+zlib level on the assumption that if the user wants to spend that much
+time already, some more time won't hurt (and recompressing is useful if
+the user changed the zlib compression level).
+
+However, "some more time" can be quite long with very big repositories,
+so some users are going to appreciate being able to choose. If we are
+going to give them the choice, --no-reuse-object will probably be
+interesting a lot less frequently than --no-reuse-delta. Hence, this
+reverts -f to the old behaviour (--no-reuse-delta) and adds a new -F
+option that replaces the current -f.
+
+Measurements taken using this patch on a current clone of git.git
+indicate a 17% decrease in time being made available to users:
+
+git repack -Adf  34.84s user 0.56s system 145% cpu 24.388 total
+git repack -AdF  38.79s user 0.56s system 133% cpu 29.394 total
+
+Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+---
+
+--- Nicolas Pitre <nico@fluxnic.net> wrote:
+
+> I personally don't find --no-reuse-object particularly useful.  I
+> hardly imagine that people are changing the pack compression level
+> that often if at all.  So I doubt moving the current
+> --no-reuse-object behavior to -F and reverting -f to
+> --no-reuse-delta would cause any serious inconvenience.  It certainly
+> won't _break_ anything.  So you have my ACK to do that change.
+
+Here we go.
+
+ Documentation/git-repack.txt |    6 +++++-
+ git-repack.sh                |    6 ++++--
+ 2 files changed, 9 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-repack.txt b/Documentation/git-repack.tx=
+t
+index 8c67d17..9566727 100644
+--- a/Documentation/git-repack.txt
++++ b/Documentation/git-repack.txt
+@@ -8,7 +8,7 @@ git-repack - Pack unpacked objects in a repository
+=20
+ SYNOPSIS
+ --------
+-'git repack' [-a] [-A] [-d] [-f] [-l] [-n] [-q] [--window=3DN] [--dept=
+h=3DN]
++'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [--window=3DN] [-=
+-depth=3DN]
+=20
+ DESCRIPTION
+ -----------
+@@ -62,6 +62,10 @@ other objects in that pack they already have locally=
+=2E
+ 	linkgit:git-pack-objects[1].
+=20
+ -f::
++	Pass the `--no-reuse-delta` option to `git-pack-objects`, see
++	linkgit:git-pack-objects[1].
++
++-F::
+ 	Pass the `--no-reuse-object` option to `git-pack-objects`, see
+ 	linkgit:git-pack-objects[1].
+=20
+diff --git a/git-repack.sh b/git-repack.sh
+index 1eb3bca..769baaf 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -10,7 +10,8 @@ git repack [options]
+ a               pack everything in a single pack
+ A               same as -a, and turn unreachable objects loose
+ d               remove redundant packs, and run git-prune-packed
+-f               pass --no-reuse-object to git-pack-objects
++f               pass --no-reuse-delta to git-pack-objects
++F               pass --no-reuse-object to git-pack-objects
+ n               do not run git-update-server-info
+ q,quiet         be quiet
+ l               pass --local to git-pack-objects
+@@ -34,7 +35,8 @@ do
+ 		unpack_unreachable=3D--unpack-unreachable ;;
+ 	-d)	remove_redundant=3Dt ;;
+ 	-q)	GIT_QUIET=3Dt ;;
+-	-f)	no_reuse=3D--no-reuse-object ;;
++	-f)	no_reuse=3D--no-reuse-delta ;;
++	-F)	no_reuse=3D--no-reuse-object ;;
+ 	-l)	local=3D--local ;;
+ 	--max-pack-size|--window|--window-memory|--depth)
+ 		extra=3D"$extra $1=3D$2"; shift ;;
+--=20
+1.7.2.3.392.g02377.dirty
