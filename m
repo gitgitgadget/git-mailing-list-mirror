@@ -1,93 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: svn-fe status
-Date: Sun, 26 Sep 2010 21:54:58 -0500
-Message-ID: <20100927025458.GA8921@burratino>
-References: <20100701031819.GA12524@burratino>
- <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes>
- <20100905031528.GA2344@burratino>
- <20100905032253.GB2344@burratino>
- <20100924065900.GA4666@burratino>
- <20100925051926.GA19804@burratino>
- <AANLkTi=sij9TeY+Cv85n61xt3R6nPbkpOyKdoDMzbtaD@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 04:58:02 2010
+From: Brandon Casey <drafnel@gmail.com>
+Subject: [PATCH] git-send-email.perl: ensure $domain is defined before using it
+Date: Sun, 26 Sep 2010 22:18:01 -0500
+Message-ID: <1285557481-16357-1-git-send-email-drafnel@gmail.com>
+Cc: git@vger.kernel.org, brian@gernhardtsoftware.com,
+	Brandon Casey <drafnel@gmail.com>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Sep 27 05:18:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P03uj-0006np-Nu
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 04:58:02 +0200
+	id 1P04Eg-000283-0Y
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 05:18:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932615Ab0I0C55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 22:57:57 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:47797 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932581Ab0I0C54 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Sep 2010 22:57:56 -0400
-Received: by qyk33 with SMTP id 33so7121115qyk.19
-        for <git@vger.kernel.org>; Sun, 26 Sep 2010 19:57:55 -0700 (PDT)
+	id S1758686Ab0I0DSd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 23:18:33 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:56020 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758362Ab0I0DSc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 23:18:32 -0400
+Received: by gxk9 with SMTP id 9so1414376gxk.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 20:18:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=4wjy5TMY6OW62bHdiXI4rtV7WUBv6zDrXXLbthSzWj8=;
-        b=HmOFw3oZ8AbX63h4Vbx0J/XQfblYnZ9f4R64aSU+8azo15rAoNSBDMeJCLWUe9ssXG
-         ey7oqRP5w8TqdlQkvdf4xAff5CIgtn0BfrTcLgZil4DWo+KiARhx4jfpDNBI6KdaTbe3
-         1FMLYfOIoyOKFtBsxuSkaa9N0tC9yqUJ1jn0Q=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=2nD0t4yq8qOpwdf6r6aPWDCjpz5ISSUQEylbV+Kvjvc=;
+        b=O6IkOZdQLhSEPChyeNM8iGzJ0hwH+TgzeKBPdvw/LZp3YKQWmPoM4bwtbuFSIhnCNm
+         2khYm43ctMMOIvIGRluJT1KSEQYklbukjWnkCPqWw/nfq+CcH31cgFTWuY6Z5yk4HcoQ
+         dVDV8+hvW0XrJL+aziVRdulTs+oHy/OO/aCLs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ocm4wTDXp7YStkVxs2xJc2quSlPZAaTj/WJtSRSgIOIlBQytpRst/L0eNusxe+ZsQm
-         zRIxeNzapd6hrA+mgYPdYSG3hNUJBrzgslxUIr13EQdJ76B43lVJkYARnijSU4fDsd91
-         8EJRLIlLq2XCp1Pna3/bkzpcqzIPOmWRnIGNM=
-Received: by 10.224.29.16 with SMTP id o16mr4988641qac.55.1285556275706;
-        Sun, 26 Sep 2010 19:57:55 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id t18sm5932792qco.20.2010.09.26.19.57.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 26 Sep 2010 19:57:54 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=sij9TeY+Cv85n61xt3R6nPbkpOyKdoDMzbtaD@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=gu0MJY5BrP+HUBmFy7Pj0DdltdLqgf7BkzIKsp/0vsSPFWhRKlCC886yBqhLBVWS1u
+         KbeVrORjdDpWZjZEkqZJtFEX2jYA/woiJmDdh3E+fLmGcV80wpSbn1KninUkO0OI5+jy
+         tnzpXl5GX+3v5b5QiO1k0Vw3xEGuU4j0roOVc=
+Received: by 10.151.139.16 with SMTP id r16mr8140888ybn.168.1285557511398;
+        Sun, 26 Sep 2010 20:18:31 -0700 (PDT)
+Received: from localhost.localdomain ([96.19.141.3])
+        by mx.google.com with ESMTPS id m11sm7620585ybn.4.2010.09.26.20.18.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 26 Sep 2010 20:18:30 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.1.geb284
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157291>
 
-Sverre Rabbelier wrote:
+valid_fqdn() may attempt to operate on an undefined value if
+Net::Domain::domainname fails to determine the domain name.  This causes
+perl to emit unpleasant warnings.
 
-> Shouldn't that be 'C' for copy?
+So, add a check for whether $domain has been defined before using it.
 
-Yep, that is better.
+Signed-off-by: Brandon Casey <drafnel@gmail.com>
+---
+ git-send-email.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
- feature copyfromrev
- ...
- C :72 "trunk/README" "branches/topic/README"
-
-We can peek ahead to make sure
-
- C :72 branches/topic/README
-
-still copies a file named ":72".
-
-> You'll thank yourself later if you add an (optional?) mark to cat, so
-> that you can cat previous versions of a file too? Doesn't svn ever
-> give you a diff against -. ... never mind!
-
-For completeness it probably does make sense to allow
-
- cat <dataref> <path>
-
-too, with <dataref> pointing to a tree (as before) or to a tag or
-commit.  I just suspect svn-fe would not use it.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 6dab3bf..e1f29a7 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -895,7 +895,7 @@ sub sanitize_address {
+ 
+ sub valid_fqdn {
+ 	my $domain = shift;
+-	return !($^O eq 'darwin' && $domain =~ /\.local$/) && $domain =~ /\./;
++	return defined $domain && !($^O eq 'darwin' && $domain =~ /\.local$/) && $domain =~ /\./;
+ }
+ 
+ sub maildomain_net {
+-- 
+1.7.3.1.geb284
