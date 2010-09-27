@@ -1,113 +1,93 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: custom merge driver vs. CONFLICT (delete/modify)
-Date: Sun, 26 Sep 2010 16:37:32 +0200
-Message-ID: <20100926143732.GA2984@nibiru.local>
-References: <1285445444-sup-3857@flatty.sascha.silbe.org>
-Reply-To: weigelt@metux.de
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: svn-fe status
+Date: Sun, 26 Sep 2010 21:54:58 -0500
+Message-ID: <20100927025458.GA8921@burratino>
+References: <20100701031819.GA12524@burratino>
+ <20100701054849.GA14972@burratino>
+ <20100817170216.GA14491@kytes>
+ <20100905031528.GA2344@burratino>
+ <20100905032253.GB2344@burratino>
+ <20100924065900.GA4666@burratino>
+ <20100925051926.GA19804@burratino>
+ <AANLkTi=sij9TeY+Cv85n61xt3R6nPbkpOyKdoDMzbtaD@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Sep 27 04:55:58 2010
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>,
+	Sam Vilain <sam@vilain.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 04:58:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P03sf-0006Ni-SP
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 04:55:54 +0200
+	id 1P03uj-0006np-Nu
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 04:58:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932574Ab0I0Czt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Sep 2010 22:55:49 -0400
-Received: from caprica.metux.de ([82.165.128.25]:44731 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932305Ab0I0Czs (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 26 Sep 2010 22:55:48 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o8R2q2N5018899
-	for <git@vger.kernel.org>; Mon, 27 Sep 2010 04:56:37 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o8QLctRk023820
-	for git@vger.kernel.org; Sun, 26 Sep 2010 23:38:55 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o8QEbW0N031103
-	for git@vger.kernel.org; Sun, 26 Sep 2010 16:37:32 +0200
-Mail-Followup-To: git <git@vger.kernel.org>
+	id S932615Ab0I0C55 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Sep 2010 22:57:57 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:47797 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932581Ab0I0C54 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Sep 2010 22:57:56 -0400
+Received: by qyk33 with SMTP id 33so7121115qyk.19
+        for <git@vger.kernel.org>; Sun, 26 Sep 2010 19:57:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=4wjy5TMY6OW62bHdiXI4rtV7WUBv6zDrXXLbthSzWj8=;
+        b=HmOFw3oZ8AbX63h4Vbx0J/XQfblYnZ9f4R64aSU+8azo15rAoNSBDMeJCLWUe9ssXG
+         ey7oqRP5w8TqdlQkvdf4xAff5CIgtn0BfrTcLgZil4DWo+KiARhx4jfpDNBI6KdaTbe3
+         1FMLYfOIoyOKFtBsxuSkaa9N0tC9yqUJ1jn0Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Ocm4wTDXp7YStkVxs2xJc2quSlPZAaTj/WJtSRSgIOIlBQytpRst/L0eNusxe+ZsQm
+         zRIxeNzapd6hrA+mgYPdYSG3hNUJBrzgslxUIr13EQdJ76B43lVJkYARnijSU4fDsd91
+         8EJRLIlLq2XCp1Pna3/bkzpcqzIPOmWRnIGNM=
+Received: by 10.224.29.16 with SMTP id o16mr4988641qac.55.1285556275706;
+        Sun, 26 Sep 2010 19:57:55 -0700 (PDT)
+Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
+        by mx.google.com with ESMTPS id t18sm5932792qco.20.2010.09.26.19.57.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 26 Sep 2010 19:57:54 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1285445444-sup-3857@flatty.sascha.silbe.org>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+In-Reply-To: <AANLkTi=sij9TeY+Cv85n61xt3R6nPbkpOyKdoDMzbtaD@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157290>
 
-* Sascha Silbe <sascha-ml-reply-to-2010-3@silbe.org> wrote:
+Sverre Rabbelier wrote:
 
-Hi,
+> Shouldn't that be 'C' for copy?
 
-> For some files (those touched by rerunning auto*) I want the local
-> version to always take precedence. For some other files (autogen.sh, PO
-> files) I want the upstream version to take precedence. For all the rest
-> I want conflicts to produce an error.
+Yep, that is better.
 
-Perhaps you better should use an downstream branch (which is frequently
-rebased onto upstream), which removes the autogenerated files and then
-always regenerate them from scratch. This is what I'm doing in in the
-OSS-QM project [1][2]. I'm also making sure that the source tree
-follows a set of rules [3] which are IMHO necessary for clean build
-process and fix it if needed in my downstream branches.
- 
-Looks like we're doing quite similar things - maybe put or efforts
-together ? :)
+ feature copyfromrev
+ ...
+ C :72 "trunk/README" "branches/topic/README"
 
-> This has worked fine so far by using custom merge drivers, but while
-> adding the second one I encountered a problem: Merge drivers are only
-> invoked for modify/modify (and maybe add/add) conflicts.
-> More specifically a delete/modify conflict will cause git-merge to bail
-> out directly without calling the merge driver to resolve the conflict.
+We can peek ahead to make sure
 
-Yes. I've sometimes encountered the same problem. Someone here already
-suggested using git-filter-branch for that. I'll yet have to investigate
-such an transformation process is stable against incremental updates
-(meaning: strictly deterministic - hashes stay the same on repeated
-imports), so the history stays intact.
+ C :72 branches/topic/README
 
-> Such a conflict occurred because the packaging people removed autogen.sh
-> (which is reasonable for them, but not for me).
+still copies a file named ":72".
 
-In this case you probably want the conflict, to see what's happening
-and react in a comprehensive way (eg. re-adding it). It could become
-even more interesting when they someday reintroduce it, because maybe
-an autoreconf call won't suffice anymore - in that case you'll also
-want to know about this, and the conflict is the wakeup call.
+> You'll thank yourself later if you add an (optional?) mark to cat, so
+> that you can cat previous versions of a file too? Doesn't svn ever
+> give you a diff against -. ... never mind!
 
-> Is there a way to either resolve all kinds of conflicts in favour of
-> one side (like -X <side>) or always take one side (like -s <side>) for
-> a specific set of files?
+For completeness it probably does make sense to allow
 
-Even if it does not answer your question: maybe this isn't really
-what you originally want (go back to the root question: "what is
-the real purpose of my project ?") and makes more trouble than
-what you're trying to go around. Perhaps better don't touch these
-files at all, but always regenerate them on each build.
+ cat <dataref> <path>
 
-
-cu
-
-[1] https://sourceforge.net/p/oss-qm/home/
-[2] http://www.metux.de/download/oss-qm/normalized_repository.pdf
-[3] http://www.metux.de/index.php/de/component/content/article/57.html
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+too, with <dataref> pointing to a tree (as before) or to a tag or
+commit.  I just suspect svn-fe would not use it.
