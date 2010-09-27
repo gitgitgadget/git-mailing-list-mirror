@@ -1,85 +1,146 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] merge-recursive: option to specify rename threshold
-Date: Mon, 27 Sep 2010 18:53:55 -0500
-Message-ID: <20100927235355.GG11957@burratino>
-References: <A0604F16-CA84-4A84-B74B-CE8AB455DF77@sb.org>
- <1285202724-52474-1-git-send-email-kevin@sb.org>
- <7vk4m7n7uo.fsf@alter.siamese.dyndns.org>
- <D5046A0E-7A35-421D-856F-5278FBE02914@sb.org>
- <7vocbj3gjk.fsf@alter.siamese.dyndns.org>
- <FFDB2371-6C96-472C-A650-412546636450@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Sep 28 01:57:00 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCHv2 1/2] merge-recursive: option to specify rename threshold
+Date: Mon, 27 Sep 2010 16:58:25 -0700
+Message-ID: <1285631906-18200-1-git-send-email-kevin@sb.org>
+References: <FFDB2371-6C96-472C-A650-412546636450@sb.org>
+Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 28 01:59:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0NZ6-0002FI-As
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 01:57:00 +0200
+	id 1P0NbE-0002ld-Oz
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 01:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757726Ab0I0X4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 19:56:55 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:56654 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757470Ab0I0X4y (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 19:56:54 -0400
-Received: by qyk33 with SMTP id 33so8534624qyk.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 16:56:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=8NAQ6VVDLskEHupmWQHLJC+rmqbayup1niahxYo+2g4=;
-        b=KzzfwRq9Z39Gc7k3UPNo7xsmCV6tZmTNc0kGiklPwKDxw/v+ckVlYNMyfQG1asQZQC
-         DfssYijoB9Qv6ml9VSxz2zdq74X8QUd7ZJuPaqSUnnqjtxDJsG6eGqf7fGM+o+/WIroZ
-         54g3x/Zxklkp/8fRBI0tvh3aq888pIR7d+eRk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=OZhGqC/OISgFXkSCRS9+tRLtpLMrFgm5FTkJ7Y4ZgHywKupcZr+sTvl/WOzOizIn/q
-         IHTHrtaE564+sp7UAGojUtBoUCrM5PWayjiTr5L2YUhuvkwML1rYaqZaa2BTLByia2CN
-         TN0jq/96JhYqW+QSgtezfg/NM1Lpg7RmxI6Ss=
-Received: by 10.224.10.211 with SMTP id q19mr6064726qaq.227.1285631813503;
-        Mon, 27 Sep 2010 16:56:53 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id u2sm1764230vcr.32.2010.09.27.16.56.52
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 27 Sep 2010 16:56:52 -0700 (PDT)
-Content-Disposition: inline
+	id S1757814Ab0I0X7H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Sep 2010 19:59:07 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:48080 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756013Ab0I0X7G (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 19:59:06 -0400
+Received: by pxi10 with SMTP id 10so1566226pxi.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 16:59:04 -0700 (PDT)
+Received: by 10.142.225.19 with SMTP id x19mr7132660wfg.322.1285631944027;
+        Mon, 27 Sep 2010 16:59:04 -0700 (PDT)
+Received: from localhost.localdomain ([69.170.160.74])
+        by mx.google.com with ESMTPS id 9sm8046929wfd.12.2010.09.27.16.59.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 16:59:03 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.72.g8af0.dirty
 In-Reply-To: <FFDB2371-6C96-472C-A650-412546636450@sb.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157377>
 
-Kevin Ballard wrote:
+The recursive merge strategy turns on rename detection but leaves the
+rename threshold at the default. Add a strategy option to allow the user
+to specify a rename threshold to use.
 
-> After taking a look at this, it raises another question. -B, -M, and
-> -C all have optional arguments, but the long-form names don't seem
-> to support that.
-[...]
->                       if I make it support `git diff
-> --rename-threshold foo` that would also work, but the name doesn't
-> seem appropriate without the argument.
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+ Documentation/merge-strategies.txt |    4 ++++
+ diff.c                             |    6 +++---
+ diff.h                             |    2 ++
+ merge-recursive.c                  |    6 ++++++
+ merge-recursive.h                  |    1 +
+ 5 files changed, 16 insertions(+), 3 deletions(-)
 
-Right --- with merge-recursive the argument doesn't need to be
-optional, but with git diff it does.
-
-How about
-
-	--detect-renames=<threshold>
-	--detect-copies=<threshold>
-	--detect-rewrites=<threshold>/<threshold>
-
-?
-
-Ciao,
-Jonathan
+diff --git a/Documentation/merge-strategies.txt b/Documentation/merge-strategies.txt
+index 91faba5..77f2606 100644
+--- a/Documentation/merge-strategies.txt
++++ b/Documentation/merge-strategies.txt
+@@ -74,6 +74,10 @@ no-renormalize;;
+ 	Disables the `renormalize` option.  This overrides the
+ 	`merge.renormalize` configuration variable.
+ 
++rename-threshold=<n>;;
++	Controls the similarity threshold used for rename detection.
++	See also linkgit:git-diff[1] `-M`.
++
+ subtree[=path];;
+ 	This option is a more advanced form of 'subtree' strategy, where
+ 	the strategy makes a guess on how two trees must be shifted to
+diff --git a/diff.c b/diff.c
+index cc73061..d862234 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3323,7 +3323,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 	return 1;
+ }
+ 
+-static int parse_num(const char **cp_p)
++int parse_rename_score(const char **cp_p)
+ {
+ 	unsigned long num, scale;
+ 	int ch, dot;
+@@ -3369,7 +3369,7 @@ static int diff_scoreopt_parse(const char *opt)
+ 	if (cmd != 'M' && cmd != 'C' && cmd != 'B')
+ 		return -1; /* that is not a -M, -C nor -B option */
+ 
+-	opt1 = parse_num(&opt);
++	opt1 = parse_rename_score(&opt);
+ 	if (cmd != 'B')
+ 		opt2 = 0;
+ 	else {
+@@ -3379,7 +3379,7 @@ static int diff_scoreopt_parse(const char *opt)
+ 			return -1; /* we expect -B80/99 or -B80 */
+ 		else {
+ 			opt++;
+-			opt2 = parse_num(&opt);
++			opt2 = parse_rename_score(&opt);
+ 		}
+ 	}
+ 	if (*opt != 0)
+diff --git a/diff.h b/diff.h
+index 1fd44f5..0083d92 100644
+--- a/diff.h
++++ b/diff.h
+@@ -315,4 +315,6 @@ extern size_t fill_textconv(struct userdiff_driver *driver,
+ 
+ extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
+ 
++extern int parse_rename_score(const char **cp_p);
++
+ #endif /* DIFF_H */
+diff --git a/merge-recursive.c b/merge-recursive.c
+index 325a97b..875859f 100644
+--- a/merge-recursive.c
++++ b/merge-recursive.c
+@@ -334,6 +334,7 @@ static struct string_list *get_renames(struct merge_options *o,
+ 	opts.rename_limit = o->merge_rename_limit >= 0 ? o->merge_rename_limit :
+ 			    o->diff_rename_limit >= 0 ? o->diff_rename_limit :
+ 			    500;
++	opts.rename_score = o->rename_score;
+ 	opts.warn_on_too_large_rename = 1;
+ 	opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	if (diff_setup_done(&opts) < 0)
+@@ -1576,6 +1577,11 @@ int parse_merge_opt(struct merge_options *o, const char *s)
+ 		o->renormalize = 1;
+ 	else if (!strcmp(s, "no-renormalize"))
+ 		o->renormalize = 0;
++	else if (!prefixcmp(s, "rename-threshold=")) {
++		const char *score = s + strlen("rename-threshold=");
++		if ((o->rename_score = parse_rename_score(&score)) == -1 || *score != 0)
++			return -1;
++	}
+ 	else
+ 		return -1;
+ 	return 0;
+diff --git a/merge-recursive.h b/merge-recursive.h
+index 2eb5d1a..c8135b0 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -19,6 +19,7 @@ struct merge_options {
+ 	int verbosity;
+ 	int diff_rename_limit;
+ 	int merge_rename_limit;
++	int rename_score;
+ 	int call_depth;
+ 	struct strbuf obuf;
+ 	struct string_list current_file_set;
+-- 
+1.7.3.72.g8af0.dirty
