@@ -1,125 +1,94 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 07/12] gitweb: remotes view for a single remote
-Date: Mon, 27 Sep 2010 09:53:52 +0200
-Message-ID: <201009270953.52562.jnareb@gmail.com>
-References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <201009262255.45959.jnareb@gmail.com> <AANLkTimemfDPdMycasFmqUvk0eF-eD9z7P1RFnitLD9G@mail.gmail.com>
+From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
+Subject: Re: Let's bump the minimum Perl version to 5.8
+Date: Mon, 27 Sep 2010 09:59:59 +0200
+Message-ID: <4CA04EFF.6010805@statsbiblioteket.dk>
+References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com>	<AANLkTinRcGa3r_=D87G-4-qqdsFL9CKnawD=DCnRQ+7v@mail.gmail.com>	<AANLkTim8aPoOkzzf4c0JHbBDVa4zJY2xM3v9fXQ-px=V@mail.gmail.com> <AANLkTimNGZom6FfKivg=QNmovz=xf656XHbXCmsjfrxD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 09:54:11 2010
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Tait <git.git@t41t.com>, git@vger.kernel.org,
+	Alex Riesen <raa.lkml@gmail.com>
+To: Tor Arntsen <tor@spacetec.no>
+X-From: git-owner@vger.kernel.org Mon Sep 27 10:00:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P08XL-0006L1-00
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 09:54:11 +0200
+	id 1P08d6-0007vr-Sz
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 10:00:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755505Ab0I0HyF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 03:54:05 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:36542 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195Ab0I0HyD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 03:54:03 -0400
-Received: by fxm3 with SMTP id 3so1626789fxm.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 00:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=41Vp5i0PUCrDGNXMShwEt2ZEJbyY29TLGPlfR4aS83A=;
-        b=Dg02Y3Qv0pXmPDZs45QMQdMn1dEGxKSSBjU4eMaJl+NQufwhYJ+bRwTKH32JfZTD/B
-         U5A1G1YoA3GSece9sfezhqNvfxBe+onNddBii6eqIyCpq1K2P7ATDn+HgQzke06mnjYt
-         /yet1PkPymIG93/H6/ZO7ZkEYepF3yaqTHiSE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=EhIqSpx7RjjC2n2Yb86g9/Q8SzQCZth1YOtVx+i74QG7dc8ogdZNX5or4i2WZcC4iH
-         EL9LEWX5vwHvotw3UiN/D5WoY2W0/oF1mGj2uMchyYj7qMHHnnmTbelgO/NNc9I5fK/D
-         BE36bYkkMOMZQfFYfCRNZzsvszumJT3bP3H1w=
-Received: by 10.223.118.73 with SMTP id u9mr7128168faq.36.1285574041756;
-        Mon, 27 Sep 2010 00:54:01 -0700 (PDT)
-Received: from [192.168.1.13] (abvz242.neoplus.adsl.tpnet.pl [83.8.223.242])
-        by mx.google.com with ESMTPS id c20sm2242779fak.9.2010.09.27.00.53.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Sep 2010 00:54:00 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTimemfDPdMycasFmqUvk0eF-eD9z7P1RFnitLD9G@mail.gmail.com>
-Content-Disposition: inline
+	id S1755249Ab0I0IAB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 04:00:01 -0400
+Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:51268 "EHLO
+	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752450Ab0I0IAA (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 04:00:00 -0400
+Received: from [130.225.25.159] (130.225.25.159) by
+ sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
+ 8.1.436.0; Mon, 27 Sep 2010 10:00:00 +0200
+User-Agent: Thunderbird 2.0.0.24 (X11/20100916)
+In-Reply-To: <AANLkTimNGZom6FfKivg=QNmovz=xf656XHbXCmsjfrxD@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157318>
 
-On Mon, 27 Sep 2010, Giuseppe Bilotta wrote:
-> 2010/9/26 Jakub Narebski <jnareb@gmail.com>:
->> On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
+Tor Arntsen wrote:
+> On Fri, Sep 24, 2010 at 15:32, =C6var Arnfj=F6r=F0 Bjarmason <avarab@=
+gmail.com> wrote:
+>> On Fri, Sep 24, 2010 at 13:08, Tor Arntsen <tor@spacetec.no> wrote:
+>>> On Fri, Sep 24, 2010 at 14:56, =C6var Arnfj=F6r=F0 Bjarmason <avara=
+b@gmail.com> wrote:
+>>>
+>>>> However, I'd like to shift the discussion a bit: Do we want to sup=
+port
+>>>> the 5.6 line *at all* anymore? I don't think so. As you point out
+>>>> yourself you can just compile 5.8 or later on these machines.
+>>> 5.8 as minimum is probably for the best. It's not that just you can
+>>> compile a newer version (5.8), more importantly, Perl 5.8 is availa=
+ble
+>>> as a package from those semi-official 3party repositories for most
+>>> systems (at least the *nix systems I have access to)
+>> Do those repositories also have 5.10 and 5.12?
+>=20
+> Anything later than 5.8 seems to very unusual except for Linux (and
+> presumably *bsd).
+>=20
+In Linux land atleast the current crop of RHEL dists are on 5.8.x and=20
+for RHEL5 this is supported until 2014 (2017 with ELS).
 
->>> +
->>> + =A0 =A0 git_header_html(undef, undef, 'header_extra' =3D> $remote=
-);
->>
->> I don't quite like the name of this parameter, and I am not sure
->> if I like the API either.
-
-Explanation: what I don't like (a tiny bit) about API is the need for
-those 'undef, undef'... but this might be unavoidable, at least without
-heavy hackery for little gain, because of the way Perl passes arguments
-to subroutines.  (And no, rewrite of gitweb in Perl 6 is not a viable
-solution ;-))
-
-> As I mentioned in my replies to the other respective patches, I think
-> it makes sense to make "all remotes" view easily accessible from the
-> "single remote" view, and there are two ways I can think of: one is
-> the "extra header text" way, by making the action name before it poin=
+>>> except for those like Irix 6.2 where it's hopeless anyway (perl
+>>> 5.0). But I only have access to irix/aix/solaris/tru64 in addition
+>>> to Linux.
+>> Hrm, 6.2 is old, but 5.12 is known to compile on 6.5 at least. What
+>> are the issues with 6.2? Perhaps they could be solved if someone wit=
+h
+>> such a machine contributed a smoker for the perl core.
+>=20
+> IRIX 6.2 is simply suffering for being old. Unless you have to
+> maintain a legacy system (as I do) you would probably have upgraded t=
+o
+> IRIX 6.5 anyway.
+> (Actually it turns out that I wasn't entirely correct in what I wrote
+> earlier - the SGI freeware version of Perl for IRIX 6.5 is still at
+> 5.6.1, because they stopped updating that repository. There's another
+> 3party semi-official repo for IRIX now, not hosted by SGI, but I'm no=
 t
-> to "all remotes". The other is to enable 'remotes' in the page nav
-> submenu when we are in single remotes view (which is why I had the
-> $current in format_ref_views instead of $action, and which is what is
-> done by this change).  IMO it makes sense to have both ways available=
-,
-> but I'm open to suggestions about different approaches.
+> familiar with it.
+>=20
+There are currently 2 maintained options for IRIX users:
+nekochan (requires IRIX 6.5.21 or better)
+tgcware (IRIX 5.3 & 6.2, will also run on 6.3, 6.4, 6.5).
 
-Now I understand it, and I completly agree that it is a very good
-solution.  But it needs better description in the commit message.
+I maintain tgcware and have prebuilt git packages available (1.7.2.3).
 
-Sidenote: http://git.oblomov.eu/rbot/remotes/anonj2 looks like doesn't
-have this patch.  In the navigation bar it has
-
-  _projects_ / _rbot_ / remotes
-
-and not
-
-  _projects_ / _rbot_ / _remotes_ / anonj2
-
->>> -     git_print_page_nav('','', $head,undef,$head,format_ref_views(=
-'remotes'));
-[...]
->>> +     git_print_page_nav('', '',  $head, undef, $head,
-
-Why not
-
-    +     git_print_page_nav('','', $head,undef,$head,
-
->>> +             format_ref_views($remote ? '' : 'remotes'));
->>
->> Why this change?
-
-I might be not clear, but I meant here the change in formatting of call
-to git_print_page_nav... and what I have not noticed is the fact that
-format_ref_views is passed diferent argument.
-
-And I see now here why passing action-like parameter ($current) to
-format_ref_views allow for this.  I withdraw then proposal for using
-$action global variable in place of $current argument; this API is
-better (though perhaps this could be described in commit message)..
+Git does not build on IRIX < 6.3 without adding some sort of thirdparty=
 =20
---=20
-Jakub Narebski
-Poland
+(v)snprintf code since those functions are missing in libc. I use the=20
+ctrio library for this purpose.
+
+-tgc
