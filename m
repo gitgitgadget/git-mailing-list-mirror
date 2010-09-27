@@ -1,117 +1,125 @@
-From: "Tom G. Christensen" <tgc@statsbiblioteket.dk>
-Subject: Re: [PATCH/RFC] perl: bump the required Perl version to 5.8 from
- 5.6.[21]
-Date: Mon, 27 Sep 2010 09:36:32 +0200
-Message-ID: <4CA04980.3070300@statsbiblioteket.dk>
-References: <AANLkTikp0mkFHYCdgqThfoFr3VkVECDmW6qE3+DSSHaq@mail.gmail.com> <1285358453-19292-1-git-send-email-avarab@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 07/12] gitweb: remotes view for a single remote
+Date: Mon, 27 Sep 2010 09:53:52 +0200
+Message-ID: <201009270953.52562.jnareb@gmail.com>
+References: <1285344167-8518-1-git-send-email-giuseppe.bilotta@gmail.com> <201009262255.45959.jnareb@gmail.com> <AANLkTimemfDPdMycasFmqUvk0eF-eD9z7P1RFnitLD9G@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Tor Arntsen <tor@spacetec.no>,
-	"Randal L. Schwartz" <merlyn@stonehenge.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 09:46:44 2010
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 09:54:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P08Q8-00046H-AV
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 09:46:44 +0200
+	id 1P08XL-0006L1-00
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 09:54:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758903Ab0I0Hqj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 03:46:39 -0400
-Received: from sbexch03.sb.statsbiblioteket.dk ([130.225.24.68]:50991 "EHLO
-	sbexch03.sb.statsbiblioteket.dk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755201Ab0I0Hqj (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 03:46:39 -0400
-X-Greylist: delayed 604 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Sep 2010 03:46:38 EDT
-Received: from [130.225.25.159] (130.225.25.159) by
- sbexch03.sb.statsbiblioteket.dk (130.225.24.68) with Microsoft SMTP Server id
- 8.1.436.0; Mon, 27 Sep 2010 09:36:32 +0200
-User-Agent: Thunderbird 2.0.0.24 (X11/20100916)
-In-Reply-To: <1285358453-19292-1-git-send-email-avarab@gmail.com>
+	id S1755505Ab0I0HyF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 03:54:05 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36542 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751195Ab0I0HyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 03:54:03 -0400
+Received: by fxm3 with SMTP id 3so1626789fxm.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 00:54:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=41Vp5i0PUCrDGNXMShwEt2ZEJbyY29TLGPlfR4aS83A=;
+        b=Dg02Y3Qv0pXmPDZs45QMQdMn1dEGxKSSBjU4eMaJl+NQufwhYJ+bRwTKH32JfZTD/B
+         U5A1G1YoA3GSece9sfezhqNvfxBe+onNddBii6eqIyCpq1K2P7ATDn+HgQzke06mnjYt
+         /yet1PkPymIG93/H6/ZO7ZkEYepF3yaqTHiSE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=EhIqSpx7RjjC2n2Yb86g9/Q8SzQCZth1YOtVx+i74QG7dc8ogdZNX5or4i2WZcC4iH
+         EL9LEWX5vwHvotw3UiN/D5WoY2W0/oF1mGj2uMchyYj7qMHHnnmTbelgO/NNc9I5fK/D
+         BE36bYkkMOMZQfFYfCRNZzsvszumJT3bP3H1w=
+Received: by 10.223.118.73 with SMTP id u9mr7128168faq.36.1285574041756;
+        Mon, 27 Sep 2010 00:54:01 -0700 (PDT)
+Received: from [192.168.1.13] (abvz242.neoplus.adsl.tpnet.pl [83.8.223.242])
+        by mx.google.com with ESMTPS id c20sm2242779fak.9.2010.09.27.00.53.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 00:54:00 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTimemfDPdMycasFmqUvk0eF-eD9z7P1RFnitLD9G@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157317>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> Formalize our dependency on perl 5.8, bumped from 5.6.[12]. We alread=
-y
-> used the three-arg form of open() which was introduced in 5.6.1, but
-> t/t9700/test.pl explicitly depended on 5.6.2.
->=20
-> However git-add--interactive.pl has been failing on the 5.6 line sinc=
-e
-> it was introduced in v1.5.0-rc0~12^2~2 back in 2006 due to this open
-> syntax:
->=20
->     sub run_cmd_pipe {
->            my $fh =3D undef;
->            open($fh, '-|', @_) or die;
->            return <$fh>;
->     }
->=20
-This issue and possible solutions was previously discussed in-depth her=
-e:
-http://article.gmane.org/gmane.comp.version-control.git/94394
+On Mon, 27 Sep 2010, Giuseppe Bilotta wrote:
+> 2010/9/26 Jakub Narebski <jnareb@gmail.com>:
+>> On Fri, 24 Sep 2010, Giuseppe Bilotta wrote:
 
-> Which when executed dies on "Can't use an undefined value as
-> filehandle reference". Several of our tests also fail on 5.6 (even
-> more when compiled with NO_PERL_MAKEMAKER=3D1):
->=20
->     t2016-checkout-patch.sh
->     t3904-stash-patch.sh
->     t3701-add-interactive.sh
->     t7105-reset-patch.sh
->     t7501-commit.sh
->     t9700-perl-git.sh
->=20
-> Our code is bitrotting on 5.6 with no-one interested in fixing it, an=
-d
-> pinning us to such an ancient release of Perl is keeping us from usin=
-g
-> useful features introduced in the 5.8 release.
->=20
-=46WIW I build rpms and run git on RHEL 2.1 with perl 5.6.1.
+>>> +
+>>> + =A0 =A0 git_header_html(undef, undef, 'header_extra' =3D> $remote=
+);
+>>
+>> I don't quite like the name of this parameter, and I am not sure
+>> if I like the API either.
 
-These are the settings I use:
-NO_CURL=3D1 (curl 7.8.1 is too old)
-NO_TCLTK=3D1 (tcl/tk 8.3 is too old)
-NO_NSEC=3D1
-NO_EXTERNAL_GREP=3D1 (GNU grep 2.4.2 is apparently too old)
-NO_REGEX=3D1 (glibc regex breaks t7008.11, also needed for el3)
-NO_PERL_MAKEMAKER=3D1 (ExtUtils::MakeMaker is too old)
+Explanation: what I don't like (a tiny bit) about API is the need for
+those 'undef, undef'... but this might be unavoidable, at least without
+heavy hackery for little gain, because of the way Perl passes arguments
+to subroutines.  (And no, rewrite of gitweb in Perl 6 is not a viable
+solution ;-))
 
-GIT_SKIP_TESTS=3D"t2016 t3701 t3904 t7105 t7501.21"
+> As I mentioned in my replies to the other respective patches, I think
+> it makes sense to make "all remotes" view easily accessible from the
+> "single remote" view, and there are two ways I can think of: one is
+> the "extra header text" way, by making the action name before it poin=
+t
+> to "all remotes". The other is to enable 'remotes' in the page nav
+> submenu when we are in single remotes view (which is why I had the
+> $current in format_ref_views instead of $action, and which is what is
+> done by this change).  IMO it makes sense to have both ways available=
+,
+> but I'm open to suggestions about different approaches.
 
-Additionally to fix NO_PERL_MAKEMAKER I use this patch:
-http://article.gmane.org/gmane.comp.version-control.git/130159
+Now I understand it, and I completly agree that it is a very good
+solution.  But it needs better description in the commit message.
 
-To build with OpenSSL 0.9.6 I also add this in git-compat-util.h:
-# if SSLEAY_VERSION_NUMBER < 0x00907000L
-# define HMAC_CTX_cleanup    HMAC_cleanup
-# endif
+Sidenote: http://git.oblomov.eu/rbot/remotes/anonj2 looks like doesn't
+have this patch.  In the navigation bar it has
 
-With these settings I have zero testsuite failures (just verified with=20
-1.7.3).
-t9700 is automatically skipped because Test::More is not available in=20
-perl 5.6.1. gitweb requires 5.8 and is also skipped automatically.
-I do not have subversion available on RHEL 2.1 so those tests are also=20
-skipped.
-CVS server/import tests are skipped because I do not have cvsps and=20
-perl-SQLite available.
+  _projects_ / _rbot_ / remotes
 
-IIRC there has been no change in the functionality with perl 5.6.1 sinc=
-e=20
-the last time the 'open syntax' issue was discussed.
+and not
 
-Having the specific parts known not to work with perl 5.6.x fail=20
-gracefully at runtime would be an improvement.
+  _projects_ / _rbot_ / _remotes_ / anonj2
 
--tgc
+>>> -     git_print_page_nav('','', $head,undef,$head,format_ref_views(=
+'remotes'));
+[...]
+>>> +     git_print_page_nav('', '',  $head, undef, $head,
+
+Why not
+
+    +     git_print_page_nav('','', $head,undef,$head,
+
+>>> +             format_ref_views($remote ? '' : 'remotes'));
+>>
+>> Why this change?
+
+I might be not clear, but I meant here the change in formatting of call
+to git_print_page_nav... and what I have not noticed is the fact that
+format_ref_views is passed diferent argument.
+
+And I see now here why passing action-like parameter ($current) to
+format_ref_views allow for this.  I withdraw then proposal for using
+$action global variable in place of $current argument; this API is
+better (though perhaps this could be described in commit message)..
+=20
+--=20
+Jakub Narebski
+Poland
