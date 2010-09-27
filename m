@@ -1,88 +1,116 @@
-From: Grant Erickson <gerickson@nuovations.com>
-Subject: Re: GIT and Cloning Remote Repositories into "Local Remote"
- Repositories
-Date: Mon, 27 Sep 2010 08:29:03 -0700
-Organization: Nuovation System Designs, LLC
-Message-ID: <C8C6064F.1E675%gerickson@nuovations.com>
-References: <20100927151807.GE31809@foucault.redhat.com>
-Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Casey Dahlin <cdahlin@redhat.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 17:29:23 2010
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: [PATCH] stash: simplify parsing fixes
+Date: Tue, 28 Sep 2010 01:32:45 +1000
+Message-ID: <1285601565-24709-1-git-send-email-jon.seymour@gmail.com>
+References: <7vzkv3hkg1.fsf@alter.siamese.dyndns.org>
+Cc: Jon Seymour <jon.seymour@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com, brian@gernhardtsoftware.com
+X-From: git-owner@vger.kernel.org Mon Sep 27 17:29:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0Fdq-0005j6-Q3
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 17:29:23 +0200
+	id 1P0FeN-0005zA-CK
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 17:29:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759600Ab0I0P3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 11:29:17 -0400
-Received: from relay01.pair.com ([209.68.5.15]:4471 "HELO relay01.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1759571Ab0I0P3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 11:29:16 -0400
-Received: (qmail 87774 invoked by uid 0); 27 Sep 2010 15:29:14 -0000
-Received: from 173.13.164.78 (HELO ?10.2.10.52?) (173.13.164.78)
-  by relay01.pair.com with SMTP; 27 Sep 2010 15:29:14 -0000
-X-pair-Authenticated: 173.13.164.78
-User-Agent: Microsoft-Entourage/12.26.0.100708
-Thread-Topic: GIT and Cloning Remote Repositories into "Local Remote"
- Repositories
-Thread-Index: ActeWLb3IccXActpx0emEPkdGY+0QQ==
-In-Reply-To: <20100927151807.GE31809@foucault.redhat.com>
+	id S1759657Ab0I0P3f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Sep 2010 11:29:35 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:60150 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759647Ab0I0P3d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 11:29:33 -0400
+Received: by pvg2 with SMTP id 2so1298594pvg.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 08:29:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=4dCNVb/iYCQtIBEWTupYPWEx6vcl5UDFNwQEkhW2q/s=;
+        b=xf6/zsKXhPLrE3fy7EoymLKJehwiXiPOTemIWPnq5IJIA+WZ01HRVZGbvRKnBpmzpI
+         P+YlE49/GwA1B9Ap/SNIP1A9XbPt9LlHfW0zS/kTz99Rq+9dMgT168LYg2hak2N5Rid3
+         drXW9MmSqh7DqKxrZxRF0dNS0lwxe5sp1qbzg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=u7A84dALrGZopvfD4LkwG9oGzpOndHHLaoHNrDmgAsc1qWjLPKMPMGW2SHT7dBN1tG
+         Qk1oEMJsVTzHfcoWj41sUV7QOkAgdDRhF3Ty5j+zqHIBWdyrOzphO1f/FhwGrXfSfxKK
+         Bzf7+rBTvRRvkrggIpWCv60YeobyxXK650aXE=
+Received: by 10.114.36.4 with SMTP id j4mr8699995waj.176.1285601372910;
+        Mon, 27 Sep 2010 08:29:32 -0700 (PDT)
+Received: from localhost.localdomain (124-169-19-228.dyn.iinet.net.au [124.169.19.228])
+        by mx.google.com with ESMTPS id r3sm6310149ibk.7.2010.09.27.08.29.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 08:29:31 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.2.g9027fa.dirty
+In-Reply-To: <7vzkv3hkg1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157342>
 
-On 9/27/10 8:18 AM, Casey Dahlin wrote:
-> On Sun, Sep 26, 2010 at 06:17:45PM -0700, Grant Erickson wrote:
->> On 9/20/10 6:37 PM, Casey Dahlin wrote:
->>> On Mon, Sep 20, 2010 at 06:22:09PM -0700, Grant Erickson wrote:
->>>> Perhaps 'submodules' are what I am looking for?
->>> 
->>> Yup, exactly :) the manpage git submodule should get you going.
->> 
->> Casey:
->> 
->> Thanks for the prompt reply.
->> 
->> I spent some time over the weekend playing with the various submodule
->> tutorials and I wasn't left feeling convinced that it's the right solution,
->> particularly with the added complexity around commits and pushes (trailing
->> slashes, etc.) that I am sure my users are going to get wrong more often
->> than right.
->> 
-> *snip*
->> 
->> And so on for the linux subtree as well. Any further tips or course
->> corrections you can offer, particularly relative to subtree merges?
->> 
-> 
-> Unfortunately I'm not an expert here. I know what submodules do but I haven't
-> used them much (in fact I last looked at them just after they were introduced.
-> They were even rougher back then).
-> 
-> I may have missed it but if you haven't I'd update the list on all of this
-> again.
+This patch simplifies Brian's fix for the recent regression by:
 
-Casey:
+* eliminating the extra loop
+* eliminating use of git rev-parse for parsing flags
+* making use of the for opt idiom for the retained loop
+* eliminating the redundant -- case
 
-Over the course of the weekend, I found a tool, braids, that does EXACTLY
-what I need. While it'd be great if it were integrated into GIT, I'll take
-it's external nature for now:
+The patch has been tested with the tests in current maint.
 
-    http://github.com/evilchelu/braid
+Signed-off-by: Jon Seymour <jon.seymour@gmail.com>
+---
+ git-stash.sh |   28 +++++++---------------------
+ 1 files changed, 7 insertions(+), 21 deletions(-)
 
-It would appear that in the background it uses the subtree merge strategy
-and a repository-local metadata files (.braids) to accomplish what it does.
-
-Best,
-
-Grant
+diff --git a/git-stash.sh b/git-stash.sh
+index 57f36ce..23a9ab5 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -264,36 +264,22 @@ parse_flags_and_rev()
+ 	b_tree=
+ 	i_tree=
+ 
+-	# Work around rev-parse --flags eating -q
+-	for opt
+-	do
+-		case "$opt" in
+-		-q|--quiet)
+-			GIT_QUIET=t
+-			;;
+-		esac
+-	done
+-
+ 	REV=$(git rev-parse --no-flags --symbolic "$@" 2>/dev/null)
+-	FLAGS=$(git rev-parse --no-revs --flags "$@" 2>/dev/null)
+-
+-	set -- $FLAGS
+ 
+ 	FLAGS=
+-	while test $# -ne 0
++	for opt
+ 	do
+-		case "$1" in
++		case "$opt" in
++			-q|--quiet)
++				GIT_QUIET=-t
++			;;
+ 			--index)
+ 				INDEX_OPTION=--index
+ 			;;
+-			--)
+-				:
+-			;;
+-			*)
+-				FLAGS="${FLAGS}${FLAGS:+ }$1"
++			-*)
++				FLAGS="${FLAGS}${FLAGS:+ }$opt"
+ 			;;
+ 		esac
+-		shift
+ 	done
+ 
+ 	set -- $REV
+-- 
+1.7.3.2.g9027fa.dirty
