@@ -1,61 +1,77 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git push on tracking branches
-Date: Mon, 27 Sep 2010 12:05:48 -0400
-Message-ID: <20100927160548.GA10256@sigill.intra.peff.net>
-References: <6958088.371432.1285602164529.JavaMail.root@mail.hq.genarts.com>
- <15793457.371451.1285603241207.JavaMail.root@mail.hq.genarts.com>
+Subject: Re: A sudden lack of permission
+Date: Mon, 27 Sep 2010 12:07:59 -0400
+Message-ID: <20100927160759.GB10256@sigill.intra.peff.net>
+References: <4CA0AFC4.1060001@llaisdy.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 18:06:09 2010
+To: Ivan Uemlianin <ivan@llaisdy.com>
+X-From: git-owner@vger.kernel.org Mon Sep 27 18:08:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0GDP-00044A-8e
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 18:06:07 +0200
+	id 1P0GFX-00055G-UP
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 18:08:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933180Ab0I0QFx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 12:05:53 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:42557 "EHLO peff.net"
+	id S1759728Ab0I0QIE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Sep 2010 12:08:04 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55191 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933161Ab0I0QFw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 12:05:52 -0400
-Received: (qmail 17490 invoked by uid 111); 27 Sep 2010 16:05:51 -0000
+	id S1756812Ab0I0QID (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 12:08:03 -0400
+Received: (qmail 17519 invoked by uid 111); 27 Sep 2010 16:08:02 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 27 Sep 2010 16:05:51 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Sep 2010 12:05:48 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 27 Sep 2010 16:08:02 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 27 Sep 2010 12:07:59 -0400
 Content-Disposition: inline
-In-Reply-To: <15793457.371451.1285603241207.JavaMail.root@mail.hq.genarts.com>
+In-Reply-To: <4CA0AFC4.1060001@llaisdy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157346>
 
-On Mon, Sep 27, 2010 at 12:00:41PM -0400, Stephen Bash wrote:
+On Mon, Sep 27, 2010 at 03:52:52PM +0100, Ivan Uemlianin wrote:
 
-> A coworker alerted me to some strange behavior with git push on tracking branches (maybe a documentation error?).  Pro Git (http://progit.org/book/ch3-5.html) says:
+> I have been using git quite happily for a good while, pushing to my
+> remote.  Suddenly this afternoon the remote told me I didn't have
+> permission:
 > 
-> "To set up a local branch with a different name than the remote branch, you can easily use the first version with a different local branch name:
->    $ git checkout -b sf origin/serverfix
->    Branch sf set up to track remote branch refs/remotes/origin/serverfix.
->    Switched to a new branch "sf"
-> Now, your local branch sf will automatically push to and pull from origin/serverfix."
+>     $ git push
+>     ivan@remote.org's password:
+>     Counting objects: 19, done.
+>     Delta compression using up to 2 threads.
+>     Compressing objects: 100% (11/11), done.
+>     Writing objects: 100% (11/11), 1.04 KiB, done.
+>     Total 11 (delta 8), reused 0 (delta 0)
+>     error: insufficient permission for adding an object to repository
+> database ./objects
+> 
+>     fatal: failed to write object
+>     error: unpack failed: unpack-objects abnormal exit
+>     To ivan@remote.org:/var/www/git/my_repos.git
+>      ! [remote rejected] master -> master (n/a (unpacker error))
+>     error: failed to push some refs to
+> 'ivan@remote.org:/var/www/git/my_repos.git'
+> 
+> I had sufficient permission even this morning!
+> 
+> Please could someone tell me what might have happened and, more
+> importantly, how I can start pushing to the remote again?  The
+> project in my_repos is large, so I'd rather not start a new repos
+> from scratch.
 
-That has never been the case by default. Push has always defaulted to
-pushing all matching branches (so of course if you use the same name, it
-will end up pushing to the tracking branch).  However, you can do:
+Presumably the permissions on the server changed for some reason. Can
+you ssh to the remote host and confirm that user "ivan" has permissions
+to write to the repo's objects dir? If not, then you will have to figure
+out what happened, but it is likely outside the scope of git (e.g., an
+overly inclusive chmod by some cron job or admin on the box).
 
-  git config --global push.default tracking
-
-to explicitly change the default to push the current branch to its
-upstream. See the entry for "push.default" in "git help config".
-
-It may be that Pro Git suggested setting up that config earlier. If not,
-you should probably submit a bug report for the book.
+If you do have permissions, then we will have to dig deeper into why git
+would fail, but the permissions would appear fine.
 
 -Peff
