@@ -1,86 +1,108 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: svn-fe status
-Date: Mon, 27 Sep 2010 11:15:41 +0200
-Message-ID: <AANLkTinv51AjZ4c7cgqhCzJgWDZOCOXHPsraEPXvLUgR@mail.gmail.com>
-References: <20100701031819.GA12524@burratino> <20100701054849.GA14972@burratino>
- <20100817170216.GA14491@kytes> <20100905031528.GA2344@burratino>
- <20100905032253.GB2344@burratino> <20100924065900.GA4666@burratino>
- <20100925051926.GA19804@burratino> <AANLkTi=sij9TeY+Cv85n61xt3R6nPbkpOyKdoDMzbtaD@mail.gmail.com>
- <20100927025458.GA8921@burratino>
+From: Gustavo Narea <gnarea@tech.2degreesnetwork.com>
+Subject: Re: Multiple checkouts active for the same repository
+Date: Mon, 27 Sep 2010 11:33:32 +0100
+Organization: 2degrees Limited
+Message-ID: <4CA072FC.3020004@tech.2degreesnetwork.com>
+References: <4C9C6F8B.3090806@tech.2degreesnetwork.com> <14b089955184bbb677b6434993682403@212.159.54.234>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 11:16:12 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Julian Phillips <julian@quantumfyre.co.uk>
+X-From: git-owner@vger.kernel.org Mon Sep 27 12:33:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P09oi-00075e-4t
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 11:16:12 +0200
+	id 1P0B1k-0005f4-6A
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 12:33:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759025Ab0I0JQF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 05:16:05 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:47333 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759011Ab0I0JQD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 05:16:03 -0400
-Received: by yxp4 with SMTP id 4so1462229yxp.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 02:16:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=T6cOEjV9k96kl3vTj0lSyBeTwKiewhtwIKi9T9gE3S8=;
-        b=BPzSxXV2Nie2RG2XVuMRB607eXwRLGHHo+nNCUd1QOKp6JU2ggeYJR+uBADLo05bEw
-         kUxA1X5a8kF64MWiP0/LzIn+xSL3qqSaiMRMsYMi6U7xPoN6cgcBBRmcf1VF8jRdYODh
-         lHN2kYMniqxIujdGNsWRt8AaprM0TUmij57AE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Q2G84nTMqgsfSuhWz/xH+djd3iTVO3LLUnZrsR2azFt5eyXl657GfSktVoFQof2mDb
-         4iPpGZE6f150ARtpGVkkm/3Let6ZX1kkxAXPN1iMd2ydUX4k5zCEVp3MayZXujjHi2uH
-         C43JaZCeSLxBFoywTmEL+ypQRPs52t9o1jpWY=
-Received: by 10.150.12.20 with SMTP id 20mr8630384ybl.65.1285578962772; Mon,
- 27 Sep 2010 02:16:02 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Mon, 27 Sep 2010 02:15:41 -0700 (PDT)
-In-Reply-To: <20100927025458.GA8921@burratino>
+	id S1754123Ab0I0Kdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Sep 2010 06:33:37 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:51793 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752658Ab0I0Kdh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 06:33:37 -0400
+Received: by wyb28 with SMTP id 28so3692408wyb.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 03:33:35 -0700 (PDT)
+Received: by 10.216.232.229 with SMTP id n79mr5952231weq.52.1285583615782;
+        Mon, 27 Sep 2010 03:33:35 -0700 (PDT)
+Received: from [192.168.0.69] (mail.2degreesnetwork.com [62.172.190.17])
+        by mx.google.com with ESMTPS id v44sm3466627weq.28.2010.09.27.03.33.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 03:33:34 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.9pre) Gecko/20100217 Lightning/1.0b1 Shredder/3.0.3pre
+In-Reply-To: <14b089955184bbb677b6434993682403@212.159.54.234>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157322>
 
-Heya,
+Hello,
 
-On Mon, Sep 27, 2010 at 04:54, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> We can peek ahead to make sure
->
-> =C2=A0C :72 branches/topic/README
->
-> still copies a file named ":72".
+Thanks! I've given git-new-workdir a try and it seems to be what I was
+searching for.
 
-Yes, I guess so, we have the entire line available when parsing, so
-that shouldn't be a problem.
+ - Gustavo.
 
-> For completeness it probably does make sense to allow
->
-> =C2=A0cat <dataref> <path>
->
-> too, with <dataref> pointing to a tree (as before) or to a tag or
-> commit. =C2=A0I just suspect svn-fe would not use it.
+On 24/09/10 16:33, Julian Phillips wrote:
+> On Fri, 24 Sep 2010 10:29:47 +0100, Gustavo Narea
+> <gnarea@tech.2degreesnetwork.com> wrote:
+>> Hello.
+>>
+>> We're currently migrating from another DVCS, which allows us to have
+>> working copies of each branch in separate directories, so that their
+>> code can be used simultaneously. However, I haven't found a way to do
+>> this with Git, at least not an easy way. Can you please help me?
+> 
+> The git-new-workdir script to be found in contrib/workdir allows multiple
+> working copies to share the same repository - though there are some
+> caveats:
+> 
+>  1) uses symbolic links, so doesn't work on Windows
+>  2) the working copies are not aware of each other, so if you change a
+> checked out branch from another working copy you have to remember to git
+> reset your working copy before doing anything with it to get it back in
+> sync with the branch
+>  3) you have to remember not to delete the actual clone
+>  4) the working copies are not aware of each other, so it is possible for
+> objects needed by one working copy to get pruned from another one
+> 
+> Personally, I use this script all the time to checkout multiple branches
+> at the same time taking care to stay away from the issues above, and
+> everything hums along nicely.
+> 
+>> We are a team of Web developers and testers working on an application.
+>> There are always a few development branches and a stable branch, and
+>> testers need all the branches with the very latest code available at all
+>> times.
+>>
+>> The way we handle it at the moment is very simple because the server
+>> hosting the remote repository is the same that hosts the deployed
+>> instances of each branch, so when we push to the remote repository, the
+>> code for each site is automatically updated.
+>>
+>> We use the following structure:
+>> /srv/repositories/project/branch1
+>> /srv/repositories/project/branch2
+>> /srv/repositories/project/branch3
+>>
+>> Is there any simple way to do this with Git? I can only think of two
+>> options that involve hooks:
+>>
+>>     * Have a hook that exports each branch to a directory like
+>>       /srv/repositories/project/branchN
+>>     * Have one Git repository per branch, so that each repository have a
+>>       different checkout active. Then the main remote repository will
+>>       have post-receive hooks that trigger a pull on each individual
+>>
+>> I'm not particularly happy with either way. Is there a better solution?
+> 
 
-I'd prefer to have one way to do it, then again, I don't use perl ;).
 
---=20
-Cheers,
-
-Sverre Rabbelier
+-- 
+Gustavo Narea.
+Software Developer.
+2degrees, Ltd. <http://dev.2degreesnetwork.com/>.
