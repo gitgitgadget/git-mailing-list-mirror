@@ -1,85 +1,137 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: [PATCH] builtin/revert.c: don't dereference a NULL pointer
-Date: Mon, 27 Sep 2010 12:29:45 -0500
-Message-ID: <op5xt5mU5aQhqmO9a_49Hhsxhtg2iW_beFHkzibXMWI534-yRKsOVCvL_25O3xS3R6hTEbD06Kc@cipher.nrlssc.navy.mil>
-References: <E2A2pg3JJJ3HO95lSjieK3cGmuaKW6JyYGAV6A_XDmFJCJGyAYa00A@cipher.nrlssc.navy.mil>
-Cc: zbyszek@in.waw.pl, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Sep 27 19:34:17 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3 v2] use cache for function names in hunk headers
+Date: Mon, 27 Sep 2010 10:52:22 -0700
+Message-ID: <7v39sv13c9.fsf@alter.siamese.dyndns.org>
+References: <1284890369-4136-1-git-send-email-drizzd@aon.at>
+ <20100923070439.GA29764@localhost> <4C9F7450.9060208@lsrfire.ath.cx>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Clemens Buchacher <drizzd@aon.at>, git@vger.kernel.org
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Sep 27 19:52:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0Hai-0004ex-Oe
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 19:34:17 +0200
+	id 1P0Hsb-0004VW-PN
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 19:52:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759218Ab0I0ReK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 13:34:10 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:41457 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753837Ab0I0ReJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 13:34:09 -0400
-Received: by mail.nrlssc.navy.mil id o8RHU3bw026603; Mon, 27 Sep 2010 12:30:04 -0500
-In-Reply-To: <E2A2pg3JJJ3HO95lSjieK3cGmuaKW6JyYGAV6A_XDmFJCJGyAYa00A@cipher.nrlssc.navy.mil>
-X-OriginalArrivalTime: 27 Sep 2010 17:30:04.0265 (UTC) FILETIME=[9F04A590:01CB5E69]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1759976Ab0I0Rwe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 13:52:34 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35778 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757056Ab0I0Rwd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 13:52:33 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C524FD9492;
+	Mon, 27 Sep 2010 13:52:31 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=tOQTJJlpOhDZ
+	F2Wf/sSoFAEa+jg=; b=sbGGztdoDOkLAAyuAVVE4OzNggaTkC1GfgTCYCKa1z2M
+	rjXg0CyOYVVPoV5LSc6L5Cf2xFSaGZVc5zSqlJNv4vdo2+YnzpJYu8/FWIe9chmb
+	n4BV0bKLw6FlVz0VFU2KUxb3HvAre1KynYgizQs78dDMjTPu3bj5/N3TLR4gJK4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=mYUDSV
+	K0VvP+R2Kx90G7iTMGMa1K1z37nODvI7XuI1jZJ5a3qTsKH8m0ljlAVXR/jkxf+K
+	bkhO1RkeMBk2YZOZVSS9pPoLfg8vCDeEh0I7bSBTZkELDp39akbpt5xbMuS9FdQU
+	Z9UylDRX8iCP/9giPR7Vnw6sgurvF+zb5SqlI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 930C1D9491;
+	Mon, 27 Sep 2010 13:52:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9F55DD948F; Mon, 27 Sep
+ 2010 13:52:24 -0400 (EDT)
+In-Reply-To: <4C9F7450.9060208@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sun\, 26 Sep 2010 18\:26\:56 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FE8BEF84-CA5F-11DF-9D79-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157358>
 
-From: Brandon Casey <drafnel@gmail.com>
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-cherry-pick will segfault when transplanting a root commit if the --ff
-option is used.  This happens because the "parent" pointer is set to NULL
-when the commit being cherry-picked has no parents.  Later, when "parent"
-is dereferenced, the cherry-pick segfaults.
+> How about something like this?  It also removes an outdated comment. =
+ The
+> inlining part should probably split out in its own patch..
+>
+>  xdiff/xemit.c |   38 ++++++++++++++------------------------
+>  1 files changed, 14 insertions(+), 24 deletions(-)
+>
+> diff --git a/xdiff/xemit.c b/xdiff/xemit.c
+> index c4bedf0..a663f21 100644
+> --- a/xdiff/xemit.c
+> +++ b/xdiff/xemit.c
+> @@ -85,27 +85,6 @@ static long def_ff(const char *rec, long len, char=
+ *buf, long sz, void *priv)
+>  	return -1;
+>  }
+> =20
+> -static void xdl_find_func(xdfile_t *xf, long i, char *buf, long sz, =
+long *ll,
+> -		find_func_t ff, void *ff_priv) {
+> -
+> -	/*
+> -	 * Be quite stupid about this for now.  Find a line in the old file
+> -	 * before the start of the hunk (and context) which starts with a
+> -	 * plausible character.
+> -	 */
+> -
+> -	const char *rec;
+> -	long len;
+> -
+> -	while (i-- > 0) {
+> -		len =3D xdl_get_rec(xf, i, &rec);
+> -		if ((*ll =3D ff(rec, len, buf, sz, ff_priv)) >=3D 0)
+> -			return;
+> -	}
+> -	*ll =3D 0;
+> -}
+> -
+> -
+>  static int xdl_emit_common(xdfenv_t *xe, xdchange_t *xscr, xdemitcb_=
+t *ecb,
+>                             xdemitconf_t const *xecfg) {
+>  	xdfile_t *xdf =3D &xe->xdf1;
+> @@ -127,6 +106,7 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr,=
+ xdemitcb_t *ecb,
+>  	xdchange_t *xch, *xche;
+>  	char funcbuf[80];
+>  	long funclen =3D 0;
+> +	long funclineprev =3D -1;
+>  	find_func_t ff =3D xecfg->find_func ?  xecfg->find_func : def_ff;
+> =20
+>  	if (xecfg->flags & XDL_EMIT_COMMON)
+> @@ -150,9 +130,19 @@ int xdl_emit_diff(xdfenv_t *xe, xdchange_t *xscr=
+, xdemitcb_t *ecb,
+>  		 */
+> =20
+>  		if (xecfg->flags & XDL_EMIT_FUNCNAMES) {
+> -			xdl_find_func(&xe->xdf1, s1, funcbuf,
+> -				      sizeof(funcbuf), &funclen,
+> -				      ff, xecfg->find_func_priv);
+> +			long l;
+> +			for (l =3D s1 - 1; l >=3D 0 && l > funclineprev; l--) {
+> +				const char *rec;
+> +				long reclen =3D xdl_get_rec(&xe->xdf1, l, &rec);
+> +				long newfunclen =3D ff(rec, reclen, funcbuf,
+> +						     sizeof(funcbuf),
+> +						     xecfg->find_func_priv);
+> +				if (newfunclen >=3D 0) {
+> +					funclen =3D newfunclen;
+> +					break;
+> +				}
+> +			}
+> +			funclineprev =3D s1 - 1;
+>  		}
+>  		if (xdl_emit_hunk_hdr(s1 + 1, e1 - s1, s2 + 1, e2 - s2,
+>  				      funcbuf, funclen, ecb) < 0)
 
-Fix this by checking whether "parent" is NULL before dereferencing it and
-add a test for this case of cherry-picking a root commit with --ff.
-
-Reported-by: Zbyszek Szmek <zbyszek@in.waw.pl>
-Signed-off-by: Brandon Casey <casey@nrlssc.navy.mil>
----
- builtin/revert.c          |    2 +-
- t/t3506-cherry-pick-ff.sh |   10 ++++++++++
- 2 files changed, 11 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 4b47ace..57b51e4 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -442,7 +442,7 @@ static int do_pick_commit(void)
- 	else
- 		parent = commit->parents->item;
- 
--	if (allow_ff && !hashcmp(parent->object.sha1, head))
-+	if (allow_ff && parent && !hashcmp(parent->object.sha1, head))
- 		return fast_forward_to(commit->object.sha1, head);
- 
- 	if (parent && parse_commit(parent) < 0)
-diff --git a/t/t3506-cherry-pick-ff.sh b/t/t3506-cherry-pick-ff.sh
-index e17ae71..51ca391 100755
---- a/t/t3506-cherry-pick-ff.sh
-+++ b/t/t3506-cherry-pick-ff.sh
-@@ -95,4 +95,14 @@ test_expect_success 'cherry pick a merge relative to nonexistent parent with --f
- 	test_must_fail git cherry-pick --ff -m 3 C
- '
- 
-+test_expect_success 'cherry pick a root commit with --ff' '
-+	git reset --hard first -- &&
-+	git rm file1 &&
-+	echo first >file2 &&
-+	git add file2 &&
-+	git commit --amend -m "file2" &&
-+	git cherry-pick --ff first &&
-+	test "$(git rev-parse --verify HEAD)" = "1df192cd8bc58a2b275d842cede4d221ad9000d1"
-+'
-+
- test_done
--- 
-1.7.3
+Looks much more straightforward ;-)
