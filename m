@@ -1,92 +1,79 @@
-From: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-Subject: Re: Splitting the mailing list up
-Date: Mon, 27 Sep 2010 18:53:56 +0200
-Message-ID: <20100927165356.GA13032@vidovic>
-References: <20100925230022.6e2fd389.coolzone@it.dk>
- <AANLkTikXSfO0uGP1b20jkF09=Mfq0s0+4d4_ANeprXF_@mail.gmail.com>
- <8AE74FC9-6C7F-433E-A162-E56644847198@wincent.com>
- <AANLkTik3ES08H1VSaGxv7aDoV3Ki_Y2ea2dHYqem0S28@mail.gmail.com>
+From: Nick <oinksocket@letterboxes.org>
+Subject: Re: git push on tracking branches
+Date: Mon, 27 Sep 2010 18:16:40 +0100
+Message-ID: <4CA0D178.6070704@letterboxes.org>
+References: <6958088.371432.1285602164529.JavaMail.root@mail.hq.genarts.com> <15793457.371451.1285603241207.JavaMail.root@mail.hq.genarts.com> <20100927160548.GA10256@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Wincent Colaiuta <win@wincent.com>,
-	Sebastien Douche <sdouche@gmail.com>,
-	Rico Secada <coolzone@it.dk>, git@vger.kernel.org,
-	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Sep 27 18:54:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stephen Bash <bash@genarts.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Sep 27 19:17:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0Gxu-0004Y0-RE
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 18:54:11 +0200
+	id 1P0HKG-0005sN-9M
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Sep 2010 19:17:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755067Ab0I0QyF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 12:54:05 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:47260 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750847Ab0I0QyE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 12:54:04 -0400
-Received: by wyb28 with SMTP id 28so4059069wyb.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 09:54:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=IsY0/zLZy/pDjMcOqWV+LyUfBd/M6PxgXUYxcwsZYY4=;
-        b=s6jpAyy4MIeliWLNExl1/EbWY4kKQulwdMMNHW2Kk4qoLgnzCJ9Z8DB96PPIoPiyOm
-         eCuI4hJHKtbCTDxuWpzEHYL8rNTJAEAfni6ocMCoZ/ZrfPyGSBR2jo+vzXdH1i9srjat
-         XSE/mcOgnqHrj7ONDTdsOGBBy3DNTE19xWehY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=JpwrrJ3WKayNyxLkmUXV1fh5TGJvB0VON6owfIMjlsnq0xVqz/BQs4ctBWg58hD05u
-         eT7cFxofqJmSaOfbEn6ug4PUNecaM0dnnWq7UCA0TqlkpNwdCWKmnQkcqUf8zCWa0qa2
-         LusaR90WdbLdiM7pwFLHHj+U9xnjbQ61xtNHA=
-Received: by 10.216.17.207 with SMTP id j57mr13101389wej.68.1285606441876;
-        Mon, 27 Sep 2010 09:54:01 -0700 (PDT)
-Received: from vidovic (aqu33-8-83-155-187-36.fbx.proxad.net [83.155.187.36])
-        by mx.google.com with ESMTPS id w14sm3758812weq.33.2010.09.27.09.53.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 27 Sep 2010 09:54:00 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTik3ES08H1VSaGxv7aDoV3Ki_Y2ea2dHYqem0S28@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1759881Ab0I0RQt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Sep 2010 13:16:49 -0400
+Received: from udon.noodlefactory.co.uk ([80.68.88.167]:45378 "EHLO
+	udon.noodlefactory.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759866Ab0I0RQt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Sep 2010 13:16:49 -0400
+Received: from 87-194-154-6.bethere.co.uk ([87.194.154.6] helo=[192.168.0.102])
+	by udon.noodlefactory.co.uk with esmtpsa (TLS-1.0:DHE_RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <oinksocket@letterboxes.org>)
+	id 1P0HJl-0004nr-IR; Mon, 27 Sep 2010 18:16:45 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.12) Gecko/20100826 Lightning/1.0b1 Thunderbird/3.0.7
+In-Reply-To: <20100927160548.GA10256@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157356>
 
-The 26/09/10, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+On 27/09/10 17:05, Jeff King wrote:
+> On Mon, Sep 27, 2010 at 12:00:41PM -0400, Stephen Bash wrote:
+> 
+>> A coworker alerted me to some strange behavior with git push on tracking branches (maybe a documentation error?).  Pro Git (http://progit.org/book/ch3-5.html) says:
+>>
+>> "To set up a local branch with a different name than the remote branch, you can easily use the first version with a different local branch name:
+>>    $ git checkout -b sf origin/serverfix
+>>    Branch sf set up to track remote branch refs/remotes/origin/serverfix.
+>>    Switched to a new branch "sf"
+>> Now, your local branch sf will automatically push to and pull from origin/serverfix."
+> 
+> That has never been the case by default. Push has always defaulted to
+> pushing all matching branches (so of course if you use the same name, it
+> will end up pushing to the tracking branch).  However, you can do:
+> 
+>   git config --global push.default tracking
+> 
+> to explicitly change the default to push the current branch to its
+> upstream. See the entry for "push.default" in "git help config".
 
-> Right, but for the *main* mailing list. However if Rico, Walter and
-> others would find a limited traffic mailing list valuable there's
-> nothing stopping them from setting one up.
->=20
-> Jay linked to an archive where someone is running RSS feeds of the
-> different parts of the git list, similarly you could set up a git-use=
-r
-> list which would be a version of the git list filtered to reduce patc=
-h
-> traffic.
->=20
-> Maybe that list wouldn't make much sense when patches are intermingle=
-d
-> with regular discussion, but it's worth a try.
+The "tracking" setting does seem more sensible and intuitive, given that current
+git practice requires setting up explicit tracking relationships between branches.
 
-zsh mailing lists(1) are splitted in users and workers where submission=
-s
-in the users list are forwarded to workers. This looks like a good
-solution for the git mailing list(s), IMHO.
+For example, I find it surprising, perhaps even alarming, that by default, git
+will try and push my changes on branch A to the branch origin/A - even if I
+created it to track origin/B.  Why allow the possibility of A tracking a
+non-matching branch origin/B, and have the default push setting ignore that?
 
-1. http://zsh.sourceforge.net/Arc/mlist.html
+Not only that, but I frequently get asked by puzzled colleagues, new to git, why
+"git push" seems to fail all the time when they're pushing their changes.  (The
+errors arise because of the default "matching" setting: many of the matching
+branches fail to push cleanly because the remote branch has silently changed. My
+latest answer is to tell them to set push.default to "tracking", or to do that
+for them.)
 
---=20
-Nicolas Sebrecht
+
+I'm curious: why isn't "tracking" the default and recommended option?
+"Historical reasons" might explain the first, but not the second.
+
+
+- Nick
