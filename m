@@ -1,155 +1,69 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Pull request for msysGit patches
-Date: Tue, 28 Sep 2010 10:46:40 +0100
-Message-ID: <87ocbitd33.fsf@fox.patthoyts.tk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] repack: add -F option that passes --no-reuse-delta to
+ pack-objects
+Date: Tue, 28 Sep 2010 02:49:34 -0700
+Message-ID: <7vtylatcy9.fsf@alter.siamese.dyndns.org>
+References: <20100927133104.25ce5285@jk.gs>
+ <7vbp7j2krn.fsf@alter.siamese.dyndns.org> <20100928084451.78c13d17@jk.gs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 28 11:48:53 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Git ML <git@vger.kernel.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Tue Sep 28 11:50:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0Wns-00023V-Kt
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 11:48:52 +0200
+	id 1P0WpB-0002UM-0W
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 11:50:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753576Ab0I1Jss (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 05:48:48 -0400
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:54060 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751964Ab0I1Jsr (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 05:48:47 -0400
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P0Wnj-0007jv-Fz; Tue, 28 Sep 2010 10:48:43 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out2.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P0Wll-0001ch-QA; Tue, 28 Sep 2010 10:46:41 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 1875624CDB; Tue, 28 Sep 2010 10:46:41 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-CC: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-CC: msysgit@googlegroups.com
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1758742Ab0I1Jtq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 05:49:46 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35010 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081Ab0I1Jtp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 05:49:45 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E7B20D937F;
+	Tue, 28 Sep 2010 05:49:44 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Eu0HqGXRt6cl
+	9zM49M3aIVAtiX0=; b=hW+1FeTXkDoT/gCon2zrIOSpgYsHoxcqTB42zgsaSy+C
+	EUY2X3Pc4ZsEwCeiGRIZ84VhXWtDN42TWzzPzBtpY8PuNHb6zusBCAx8NUf4gZsf
+	mEZGzU/VoqnxsujIG+FhW9LMZGLYho3W9yxXTJkc8EY++TsuUN7hH1qQKaFw6D8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Hkwai2
+	muXDk6GuO1+du7egnOw8ZUKRIgUVdsJz0Ds9o8jPUx24wA9y288c3RrcIy1vPSYT
+	276fkT0jzA9ZacJJ63B8UaFxdTBeXbEJ/+JT6ZYt2ASYXOVWZcQ9BelC7QQe1i7Y
+	pnHQk+jmgf8b7TkSLx1ZU1IiEGgPq9YaJLlUM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 30DD3D937E;
+	Tue, 28 Sep 2010 05:49:41 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5296BD937D; Tue, 28 Sep
+ 2010 05:49:36 -0400 (EDT)
+In-Reply-To: <20100928084451.78c13d17@jk.gs> ("Jan =?utf-8?Q?Kr=C3=BCger?=
+ =?utf-8?Q?=22's?= message of "Tue\, 28 Sep 2010 08\:44\:51 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B70B88B4-CAE5-11DF-B838-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157401>
 
-Junio,
+Jan Kr=C3=BCger <jk@jk.gs> writes:
 
-The msysGit tree currently tracks some 50+ patches on top of 'next'. I
-have gathered 42 of these that look good to move upstream. 
-Please pull from
-  git://repo.or.cz/git/mingw/4msysgit.git work/pt/for-junio
-also visible for inspection at
-  http://repo.or.cz/w/git/mingw/4msysgit.git/shortlog/refs/heads/work/pt/for-junio
+>> Please make it so.
+>
+> Already done.
 
-Output of git-request-pull....
+Yeah, I saw and queued them ;-)
 
-The following changes since commit 2a10b71f738b8b77ba8d243574f537a54dbf9a62:
-
-  Merge branch 'mg/reset-doc' into next (2010-09-22 09:38:57 -0700)
-
-are available in the git repository at:
-
-  git://repo.or.cz/git/mingw/4msysgit.git work/pt/for-junio
-
-Eric Sunshine (6):
-      Fix 'clone' failure at DOS root directory.
-      Fix Windows-specific macro redefinition warning.
-      Add MinGW-specific execv() override.
-      Side-step MSYS-specific path "corruption" leading to t5560 failure.
-      Side-step sed line-ending "corruption" leading to t6038 failure.
-      Side-step line-ending corruption leading to t3032 failures.
-
-Erik Faye-Lund (6):
-      core.hidedotfiles: hide '.git' dir by default
-      mingw: do not hide bare repositories
-      mingw: fix st_mode for symlink dirs
-      send-email: accept absolute path even on Windows
-      config.c: trivial fix for compile-time warning
-      mingw: do not crash on open(NULL, ...)
-
-Heiko Voigt (4):
-      mingw: move unlink wrapper to mingw.c
-      mingw: work around irregular failures of unlink on windows
-      mingw: make failures to unlink or move raise a question
-      mingw: add fallback for rmdir in case directory is in use
-
-Johannes Schindelin (11):
-      Avoid TAGS/tags warning from GNU Make
-      When initializing .git/, record the current setting of core.hideDotFiles
-      git-am: fix absolute path logic on Windows
-      mingw_rmdir: set errno=ENOTEMPTY when appropriate
-      Add a Windows-specific fallback to getenv("HOME");
-      Tests: make sure that $DIFF is non-empty
-      merge-octopus: Work around environment issue on Windows
-      Make sure that git_getpass() never returns NULL
-      Give commit message reencoding for output on MinGW a chance
-      Fix typo in pack-objects' usage
-      Fix compile error on MinGW
-
-Johannes Sixt (1):
-      criss cross rename failure workaround
-
-Karsten Blees (4):
-      Enable color output in Windows cmd.exe
-      Support Unicode console output on Windows
-      Detect console streams more reliably on Windows
-      Warn if the Windows console font doesn't support Unicode
-
-Pat Thoyts (6):
-      Skip t1300.70 and 71 on msysGit.
-      fix mingw stat() and lstat() implementations for handling symlinks
-      Report errors when failing to launch the html browser in mingw.
-      mingw: add tests for the hidden attribute on the git directory
-      Do not strip CR when grepping HTTP headers.
-      Skip 'git archive --remote' test on msysGit
-
-Sebastian Schuberth (2):
-      MinGW: Use pid_t more consequently, introduce uid_t for greater compatibility
-      MinGW: Add missing file mode bit defines
-
-bert Dvornik (2):
-      mingw: Don't ask the user yes/no questions if they can't see the question.
-      send-email: handle Windows paths for display just like we do for processing
-
- Documentation/config.txt            |    6 +
- Makefile                            |    2 +
- abspath.c                           |    7 +-
- builtin/config.c                    |    4 +-
- builtin/init-db.c                   |    1 +
- builtin/pack-objects.c              |    2 +-
- cache.h                             |    7 +
- compat/mingw.c                      |  296 +++++++++++++++++++++++++++++++++--
- compat/mingw.h                      |   63 +++++---
- compat/regex/regexec.c              |   20 ++-
- compat/winansi.c                    |  132 ++++++++++++----
- config.c                            |   11 ++-
- connect.c                           |    8 +-
- environment.c                       |    1 +
- git-am.sh                           |    2 +-
- git-compat-util.h                   |    8 +
- git-merge-octopus.sh                |    5 +
- git-send-email.perl                 |    4 +-
- log-tree.c                          |    3 +-
- path.c                              |    2 +-
- t/t0001-init.sh                     |   28 ++++
- t/t1300-repo-config.sh              |    6 +-
- t/t3032-merge-recursive-options.sh  |   11 +-
- t/t4130-apply-criss-cross-rename.sh |    4 +-
- t/t5000-tar-tree.sh                 |    2 +-
- t/t5503-tagfollow.sh                |    9 +-
- t/t5560-http-backend-noserver.sh    |    5 +-
- t/t6038-merge-text-auto.sh          |    4 +-
- t/test-lib.sh                       |    4 +
- 29 files changed, 556 insertions(+), 101 deletions(-)
+Thanks.
