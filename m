@@ -1,67 +1,64 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Makefile: implement help target
-Date: Tue, 28 Sep 2010 17:47:48 +0200
-Message-ID: <4CA20E24.90509@drmicha.warpmail.net>
-References: <4CA1E10F.4080906@op5.se> <c16e8df7c8e9b562ce0e6cd6e543a83779cd2b25.1285684868.git.git@drmicha.warpmail.net> <7vpqvxubl5.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: Another way to compare tools: is it possible to transfer full
+ history?
+Date: Tue, 28 Sep 2010 17:48:33 +0200
+Message-ID: <4CA20E51.1000503@alum.mit.edu>
+References: <loom.20100928T153519-936@post.gmane.org> <4CA20169.2040606@dbservice.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 17:47:48 2010
+Cc: Tuomo <tuo.tie@gmail.com>, git@vger.kernel.org
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 17:49:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0cPA-0001s3-H6
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 17:47:44 +0200
+	id 1P0cQV-0002N5-Iz
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 17:49:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753724Ab0I1Prj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 11:47:39 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51561 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752510Ab0I1Pri (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 11:47:38 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 1542E6D4;
-	Tue, 28 Sep 2010 11:47:38 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 28 Sep 2010 11:47:38 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=DL4z1A7UXFehjyacNx/0AwJyKQw=; b=KIkOz30i9Th2+Q63ezzpZhx8JbVKj/PE59+s0fPDTqsBv0qsic8k5u8UjDgKF5oAvxjc+p0ODFA4QXT5zKWS2VfTIxORv4P51KbpIqU+5cm+YU6Y5WN/hXVVhYnEI2S8X5xLJnCRo/UhuNHLC+wcdNy3qfrxCv9tB5GvRjWmf7c=
-X-Sasl-enc: jyLfVsXCFOrwqxAkcKWWQCzGZrg+OyAjnNkEdC/eqCo6 1285688857
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 3ACD35E0CB5;
-	Tue, 28 Sep 2010 11:47:37 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <7vpqvxubl5.fsf@alter.siamese.dyndns.org>
+	id S1753973Ab0I1PtC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 11:49:02 -0400
+Received: from einhorn.in-berlin.de ([192.109.42.8]:50622 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752955Ab0I1PtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 11:49:01 -0400
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.112] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id o8SFmXXL027026
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 28 Sep 2010 17:48:33 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.24) Gecko/20100317 Thunderbird/2.0.0.24 Mnenhy/0.7.6.666
+In-Reply-To: <4CA20169.2040606@dbservice.com>
+X-Enigmail-Version: 1.0.1
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157437>
 
-Junio C Hamano venit, vidit, dixit 28.09.2010 17:33:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> How's this for a version without maintenance issues?
-> 
-> Something along these lines would be closer to what I had in mind,
-> actually.
-> 
-> Traditionally a multi-line sed command embed in Makefile has been
-> portability nightmare, which is a bit worrysome.
+On 09/28/2010 04:53 PM, Tomas Carnecky wrote:
+> (shameless plug: just this weekend I started collecting the various fast
+> import/export tools and made a webpage about it:
+> http://caurea.org/fast-export-import/. It's far from complete though.
+> And if you know any tools that perform better than those I've listed,
+> I'd be glade to update the page).
 
-Yes, but I thought for "make help" it's not such problem if it works on
-most platforms only - others can read inline ;)
-
-If portability is an issue one can work around it - is "grep -A 1"
-portable? I'd also have to get rid of sort --key=2.
-
-> Isn't there a "makedoc" ala "perldoc" or "javadoc", by the way?
-
-There is a "makedoc" but that's something different...
+cvs2svn [1] (in particular the cvs2git [2] and cvs2bzr [3] variants,
+which are part of the same project) can convert from CVS to fast-import
+format.  It is mature and actively maintained [4], has a lot of features
+[5], help is available, and hopefully you agree that the documentation
+[6,7] is well-written.
 
 Michael
+
+[1] http://cvs2svn.tigris.org/
+[2] http://cvs2svn.tigris.org/cvs2git.html
+[3] http://cvs2svn.tigris.org/cvs2bzr.html
+[4] https://www.ohloh.net/p/cvs2svn
+[5] http://cvs2svn.tigris.org/features.html
+[6] http://cvs2svn.tigris.org/cvs2svn.html
+[7] http://cvs2svn.tigris.org/faq.html
