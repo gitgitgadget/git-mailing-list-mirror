@@ -1,79 +1,50 @@
-From: =?ISO-8859-2?Q?Gerg=F5_Balogh?= <geryxyz@gmail.com>
-Subject: using git on sourceforge
-Date: Wed, 29 Sep 2010 00:34:53 +0200
-Message-ID: <AANLkTimejXBmV0TGeZ1=DA3tTe3HkUre4MHN9_UMomYN@mail.gmail.com>
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCH] checkout: add a space between the commit and "..."
+Date: Tue, 28 Sep 2010 17:40:11 -0500
+Message-ID: <tNUxsuXC1ZklaaYn-pkW6hae44B_tB2hStuto66EU4k9w2Q79GA6LQ@cipher.nrlssc.navy.mil>
+References: <20100928222332.GA28859@soprano.nvidia.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 00:35:02 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, jkain@nvidia.com
+To: Aaron Plattner <aplattner@nvidia.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 00:40:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0ilH-0003hU-TV
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:35:00 +0200
+	id 1P0iqU-0005Jw-Qj
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:40:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752661Ab0I1Wez convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 18:34:55 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:55340 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751668Ab0I1Wey convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 18:34:54 -0400
-Received: by qyk33 with SMTP id 33so210860qyk.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 15:34:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=3cdq2z2XseopU6RcQXbdYMGkephpJTxpEhgAnrDOlVo=;
-        b=FxW4F8Pb+T4p9dewLvqHkjo92oH2uZLnwZp7gdMJdvuRAw3IhU4UuKa+l9BLjXuQK0
-         7TgKJ45ZiXNfFZ+FcaDI1MLJBrpuXURJiM+0mcxDPmSwy2J3g6csmS4vFTYrq5f8Mpo5
-         I4iCUFdY/UQhR790JF1SaU9/6serCoDjaba6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=AnbNM+GeYGEw9l4Ky6RY4kMh65Y0t3UMHMHf0+uk8Y2GiMiMhiqmXAkcPxuyIC/7WE
-         1T19ClD9cBn/q3xTJ0AMBkk3pLcoMQxPrbWZEyvE+yTGvfQPT863lrde2HAIhkBhoDtj
-         sMoyd3xmohljj35HxP90boPDpNfImuXhwz1ts=
-Received: by 10.224.44.151 with SMTP id a23mr526114qaf.6.1285713293794; Tue,
- 28 Sep 2010 15:34:53 -0700 (PDT)
-Received: by 10.229.28.66 with HTTP; Tue, 28 Sep 2010 15:34:53 -0700 (PDT)
+	id S1752846Ab0I1WkQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 18:40:16 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:53690 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750941Ab0I1WkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 18:40:16 -0400
+Received: by mail.nrlssc.navy.mil id o8SMeCIm014686; Tue, 28 Sep 2010 17:40:12 -0500
+In-Reply-To: <20100928222332.GA28859@soprano.nvidia.com>
+X-OriginalArrivalTime: 28 Sep 2010 22:40:12.0207 (UTC) FILETIME=[1CA103F0:01CB5F5E]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157493>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157494>
 
-hello
+On 09/28/2010 05:23 PM, Aaron Plattner wrote:
+> Switching to a detached head prints something like
+> 
+>   HEAD is now at 9d14017... dir.c: squelch false uninitialized memory warning
+> 
+> These dots get selected when you double-click on the abbreviated
+> commit hash, which makes it annoying to copy and paste.
 
-I just looking some help to using sourceforge with git. Special I
-can't push into my remove repo. I try the following command:
+This must be another gnome-terminal/konsole "innovation".
 
-git remote add origin
-ssh://geryxyz@kinim.git.sourceforge.net/gitroot/kinim/kinim
-git push origin master
+xterm still does the "right thing"(tm) _and_ it doesn't eat my
+alt keystrokes like alt-b to move the cursor back a word. /rant
 
-then I've got the following input and the git did not terminate (I
-didn't get the prompt back):
-
-Counting objects: 5, done.
-Compressing objects: 100% (4/4), done.
-Writing objects: 100% (5/5), 1.34 KiB, done.
-Total 5 (delta 0), reused 0 (delta 0)
-
-please anybody explain what does that mean, and (if I made some
-mistake) wher goes it wrong!
-I try to do it using the GIT Extension tool too. It open the a command
-line window at push and asking for the password. I type it then
-everything stop. the window stay I thing forever. somethimes I get
-this messages about the remote hung up the connection; the peer
-terminated it; or just a warning that I try to pull an empty repo.
-this last one is true.
-
-please somebody help to me it need for my education at the university.
-
---=20
-Gery [Balogh Gerg=F5]
+-Brandon
