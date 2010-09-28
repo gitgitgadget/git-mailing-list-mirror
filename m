@@ -1,140 +1,97 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Allow gitweb tab width to be set per project.
-Date: Tue, 28 Sep 2010 05:25:05 -0700 (PDT)
-Message-ID: <m34odagioh.fsf@localhost.localdomain>
-References: <1285673709-24924-1-git-send-email-magnus@hagander.net>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: [PATCH] Makefile: Add help target
+Date: Tue, 28 Sep 2010 14:35:27 +0200
+Message-ID: <4CA1E10F.4080906@op5.se>
+References: <1285661638-27741-1-git-send-email-bebarino@gmail.com> <7v39suurpw.fsf@alter.siamese.dyndns.org> <AANLkTi=beUW5j4WSGOB__LNP7o60Wep_Y9n4YXOZUMtU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Magnus Hagander <magnus@hagander.net>
-X-From: git-owner@vger.kernel.org Tue Sep 28 14:25:25 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 14:36:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0ZFM-0003oW-5p
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 14:25:24 +0200
+	id 1P0ZPq-0007fY-Q8
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 14:36:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753237Ab0I1MZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 08:25:17 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:53596 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752440Ab0I1MZQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 08:25:16 -0400
-Received: by ewy23 with SMTP id 23so1728460ewy.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 05:25:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=p84M4kvjNe6BMokfqItEUJe3jahJPwh8+dS5vCzOxfs=;
-        b=dkogzsIQnZEgUBijymRjxvnVPbwyGdnWc309LOaVUz62x4mYpYu66SXVamOVgGkxhL
-         jquA0qQe1YvXospc/QQzukhUdPjnSGElN0MDhgVKBv5bT5PsRsMg8ZwxtyQOzmP/MKgJ
-         RBIChlRLPZw7qpQ4yZlzcp0PZ++ZFywtFAL+I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=ljnNWVFkIE81xtu2WCkYXvKtTjhkGFZXGotHEEmf3xtItOtIvtVHqhLI6z8eZCR1TF
-         lfLD+dBXxIvFejxsdnj6chT/jjd+gNaJchTmQ1TpL4NiUat/RMTBrwUK4JUYvoml8+/O
-         oXKuTg4wvHSYUI7FSoohf4GmNko6IkSQS25pw=
-Received: by 10.213.33.1 with SMTP id f1mr7111497ebd.53.1285676715054;
-        Tue, 28 Sep 2010 05:25:15 -0700 (PDT)
-Received: from localhost.localdomain (abvm69.neoplus.adsl.tpnet.pl [83.8.210.69])
-        by mx.google.com with ESMTPS id a48sm10369062eei.6.2010.09.28.05.25.01
+	id S1753728Ab0I1MgI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 08:36:08 -0400
+Received: from na3sys009aog102.obsmtp.com ([74.125.149.69]:35108 "HELO
+	na3sys009aog102.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753325Ab0I1MgH (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 08:36:07 -0400
+Received: from source ([209.85.215.44]) by na3sys009aob102.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTKHhNM96dqsN5aPrWLNo9Zw+L9CTTNpP@postini.com; Tue, 28 Sep 2010 05:36:07 PDT
+Received: by mail-ew0-f44.google.com with SMTP id 26so2371417ewy.31
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 05:36:04 -0700 (PDT)
+Received: by 10.213.32.135 with SMTP id c7mr17341ebd.2.1285677364143;
+        Tue, 28 Sep 2010 05:36:04 -0700 (PDT)
+Received: from clix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id u9sm10367031eeh.17.2010.09.28.05.35.33
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Sep 2010 05:25:05 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8SCOUbS013209;
-	Tue, 28 Sep 2010 14:24:41 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8SCOEPE013205;
-	Tue, 28 Sep 2010 14:24:14 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1285673709-24924-1-git-send-email-magnus@hagander.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Tue, 28 Sep 2010 05:35:51 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Thunderbird/3.0.7 ThunderGit/0.1a
+In-Reply-To: <AANLkTi=beUW5j4WSGOB__LNP7o60Wep_Y9n4YXOZUMtU@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157416>
 
-Magnus Hagander <magnus@hagander.net> writes:
-
-> Allow the gitweb.tabwidth option to control how many spaces a tab
-> gets expanded to.
+On 09/28/2010 01:37 PM, Sverre Rabbelier wrote:
+> Heya,
 > 
-> Signed-off-by: Magnus Hagander <magnus@hagander.net>
-
-This might be a good idea, but the solution looks like it includes
-some unnecessary performance hit (see coment below).
-
-> ---
+> On Tue, Sep 28, 2010 at 11:45, Junio C Hamano<gitster@pobox.com>  wrote:
+>> I do not look forward to having to maintain a large number of lines that
+>> are doomed to go stale
 > 
-> In the PostgreSQL project, we're using 4-space tabs, but we have other projects
-> as well on our gitweb server, so we need to be able to control this on a
-> per-project basis.
-
-Some of this comment should IMHO make it into commit message, e.g.
-
-  Different project scan use different tab widths, even on the same
-  gitweb server.
-
-Or something like that.
-
+> How often have we changed makefile targets recently? The most recent
+> one that I can find is Jakub adding "install-gitweb" in 152d94348f,
+> which was back in May 1st. The next one before that is the addition of
+> 'gitweb' in 62331ef1637f which was back in January 30th. Besides,
+> 'make help' doesn't have to contain _all_ Makefile targets, just the
+> important ones that a user is most likely to need. Similar to 'git
+> help' itself.
 > 
+>> and every time we need to touch we need to deal
+>> with a lot of noise "@echo '"?
 > 
->  gitweb/gitweb.perl |    4 +++-
->  1 files changed, 3 insertions(+), 1 deletions(-)
+> I don't understand what is particularly bothersome about the leading
+> "@echo" lines. Adding or removing a target is still very easy even
+> with the leading @echo's, the only thing that would be a PITA is
+> reflowing paragraphs, currently, there _are_ no paragraphs, everything
+> fits on one line.
 > 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index a85e2f6..ef92a4f 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1465,9 +1465,11 @@ sub unquote {
->  # escape tabs (convert tabs to spaces)
->  sub untabify {
->  	my $line = shift;
-> +	my $tabwidth = git_get_project_config('tabwidth', '--int');
-
-Note that untabify() is called once for each _line_ in a file or a
-diff...
-
-This has acceptable performance only because gitweb config is cached
-in %config hash by git_get_project_config() subroutine.
-
-
-I'm not sure if it wouldn't be better to have $tabwidth be passed as
-an (optional) argument to untabify(), and calculated either in calling
-sites for untabify(), or be calculated per-request and save in a
-global variable.
-
-We might want to turn 'tabwidth' into a feature, though that is
-probably overengineering.
-
-> +	$tabwidth = 8 if ($tabwidth <= 0);
-
-git_get_project_config('tabwidth', '--int') can return 'undef' if a
-configuration key does not exist, resulting in
-
-  Use of uninitialized value in numeric le (<=) at 
-
-warning in web server logs.
-
->  
->  	while ((my $pos = index($line, "\t")) != -1) {
-> -		if (my $count = (8 - ($pos % 8))) {
-> +		if (my $count = ($tabwidth - ($pos % $tabwidth))) {
->  			my $spaces = ' ' x $count;
->  			$line =~ s/\t/$spaces/;
->  		}
-> -- 
-> 1.7.0.4
+>> It might be a bit less distasteful if it were plain text additions at the
+>> end of INSTALL file, though.
 > 
+> That does not help me nearly as much when I want to know how a
+> makefile target is called. Am I wrong in asserting that having a "make
+> help" target is an accepted "good practice" in the unix world?
+> 
+
+help:
+    @echo Available make targets:
+    @echo -----------------------
+    @$(MAKE) --print-data-base --question | \
+	sed -n -e '/^Makefile/d' -e 's/^\([a-z0-9_-]*\):.*/\1/p' | \
+	sort | uniq | grep -v -e ^git -e ^test-
+
+Automatically self-managing and seems to print most sensible targets.
+Adjust to taste with whatever's appropriate.
+
+Users with a too-old make program (pre 3.67, I think), won't be able
+to use the help target, but that's perfectly acceptable imo.
 
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
