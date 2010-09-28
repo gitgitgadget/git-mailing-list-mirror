@@ -1,133 +1,74 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [msysGit] Pull request for msysGit patches
-Date: Tue, 28 Sep 2010 23:20:38 +0200
-Message-ID: <AANLkTikpDwEJR8rAk+R0auXN5y-G1Cd4z8djoL0VzTYw@mail.gmail.com>
-References: <87ocbitd33.fsf@fox.patthoyts.tk> <201009282252.25688.j6t@kdbg.org>
- <AANLkTikSxpXJkeneWbJQ_2g32w1bV-CEdyk2_5G2Xd+u@mail.gmail.com> <201009282313.48278.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Pull request for msysGit patches
+Date: Tue, 28 Sep 2010 21:23:19 +0000
+Message-ID: <AANLkTinpSwuhT1_wtqNBeXLCud-F0bLBUgbohdtPp+8R@mail.gmail.com>
+References: <87ocbitd33.fsf@fox.patthoyts.tk>
+	<7vocbhsn03.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Sep 28 23:21:15 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	bert Dvornik <dvornik+git@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 23:23:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0hbq-0003Ti-Kv
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 23:21:10 +0200
+	id 1P0he7-0004EA-FH
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 23:23:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753798Ab0I1VU7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 17:20:59 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:63683 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753346Ab0I1VU6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 17:20:58 -0400
-Received: by gxk9 with SMTP id 9so47899gxk.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 14:20:58 -0700 (PDT)
+	id S1753898Ab0I1VXV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 17:23:21 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:43171 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753315Ab0I1VXU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 17:23:20 -0400
+Received: by iwn5 with SMTP id 5so120786iwn.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 14:23:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=QMgevTOwCBd9OaystPIW1YMIsB2+TqPmNmByZmaBcWI=;
-        b=ujGg0lU9pa9S1mSup1gk6Jluw9GiMVgkPd+Tw1zoc1S0AHA5y1JmLo26KCvK+++nBE
-         UdyEZxk6cd4QGSZKjn6xIWNUZxPMNTbQUufHqKb8HPRXb4eVQj58HdEPTA3Y1A1pyf2w
-         KhfsFMpFcIxKkRfYgdI8bU5h+2hPeZHGfhvDs=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=lzk6ly61FYqnIHqK/q1fj2z/i2H5mUxOgVjhXBSYkhc=;
+        b=f6ZI6mJaHKA/2d0QyzDtWlL1wAN5lgPXogiJKNDD43EdqF6jV/pjMVvB6g+V1uFV98
+         /qNvxSqGj/MowBF6GyQac87sI7J5fAKW81Zvgzy739zEnAWAcCEsN80g7kJPuV/Ch9sP
+         l3lmqTYxBT1+Ud3GNqj3wvMjIFeM8OEifHebE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=IhQJoznZa6sM9wwBI1SJOguFfP5Xqc/vTgm1lfJYLr807zoKkssYjtuJTWEPAD1Hp5
-         i46I2PDiYadxXG1sg52plZJ412Ztu3mxyTPm1Yz6NuhR9kmVgm6uSmj0k1fJCRp2M2y7
-         2gJJ7TVIOfy3UZPlR5OdDaz7E9IDH4qISF3DY=
-Received: by 10.236.111.1 with SMTP id v1mr243713yhg.17.1285708858332; Tue, 28
- Sep 2010 14:20:58 -0700 (PDT)
-Received: by 10.220.100.135 with HTTP; Tue, 28 Sep 2010 14:20:38 -0700 (PDT)
-In-Reply-To: <201009282313.48278.j6t@kdbg.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=PBf1nGgEu3RD2t397VG34bmNtnkwsobxFqBIsUULfNLEmzNE0oGCtZrGbJLhdWf+L2
+         ruJauCnSDk3Fk97wq293lcjzmsGyHQYJO6II9gY3pnzawVXSQeNZjoYgSs1DLV+qaPbe
+         HJHsUIjebkrC4KILsyqB9fr27S1+/judZ83hc=
+Received: by 10.231.36.77 with SMTP id s13mr531788ibd.190.1285708999627; Tue,
+ 28 Sep 2010 14:23:19 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Tue, 28 Sep 2010 14:23:19 -0700 (PDT)
+In-Reply-To: <7vocbhsn03.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157477>
 
-On Tue, Sep 28, 2010 at 11:13 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Dienstag, 28. September 2010, Erik Faye-Lund wrote:
->> On Tue, Sep 28, 2010 at 10:52 PM, Johannes Sixt <j6t@kdbg.org> wrote=
-:
->> >> =A0 =A0 =A0 mingw: do not crash on open(NULL, ...)
->> >
->> > This one is bogus, and as it stands, it must have my Ack removed. =
-:)
->> > Needs the same fix in mingw_fopen as mingw_freopen. (There remains=
- an
->> > unprotected dereference of filename.)
->>
->> I believe the version in for-junio already has this fix squashed in.
->> The following hunk, taken from
->> http://repo.or.cz/w/git/mingw/4msysgit.git/blobdiff/4e93566b07dcf47e=
-cb6484d
->>225418c04c1eedee6..b18500977d88b13803ecc60cf383538139ec09d8:/compat/m=
-ingw.c
->> shows that it is... Or are you thinking of something else?
->>
->> @@ -346,7 +346,7 @@ FILE *mingw_fopen (const char *filename, const c=
-har
->> =A0 =A0 =A0 if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
->> =A0 =A0 =A0 basename((char*)filename)[0] =3D=3D '.')
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0^^^^^^^^
-> This can crash, too.
+On Tue, Sep 28, 2010 at 19:10, Junio C Hamano <gitster@pobox.com> wrote:
+
+> git-send-email.perl
 >
+> Similar comment as is_absolute_path(), although in Perl environment I
+> suspect we can just use an existing package without adding our own.
 
-Ah, indeed. Thanks for pointing that out! I'll send out a new version,
-with this squashed on top:
+It seems to me that the code added by Erik Faye-Lund in
+33b2e81f84875bf515b4c0de830eeddfd04227dc and this new code in
+"send-email: handle Windows paths for display just like we do for
+processing" by bert could both be replaced by:
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 2fbe381..2584e9f 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -343,11 +343,13 @@ FILE *mingw_fopen (const char *filename, const
-char *otype)
- {
- 	int hide =3D 0;
- 	FILE *file;
--	if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
--	    basename((char*)filename)[0] =3D=3D '.')
--		hide =3D access(filename, F_OK);
--	if (filename && !strcmp(filename, "/dev/null"))
--		filename =3D "nul";
-+	if (filename) {
-+		if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
-+		    basename((char*)filename)[0] =3D=3D '.')
-+			hide =3D access(filename, F_OK);
-+		if (!strcmp(filename, "/dev/null"))
-+			filename =3D "nul";
-+	}
- 	file =3D fopen(filename, otype);
- 	if (file && hide && make_hidden(filename))
- 		warning("Could not mark '%s' as hidden.", filename);
-@@ -359,11 +361,13 @@ FILE *mingw_freopen (const char *filename, const
-char *otype, FILE *stream)
- {
- 	int hide =3D 0;
- 	FILE *file;
--	if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
--	    basename((char*)filename)[0] =3D=3D '.')
--		hide =3D access(filename, F_OK);
--	if (filename && !strcmp(filename, "/dev/null"))
--		filename =3D "nul";
-+	if (filename) {
-+		if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
-+		    basename((char*)filename)[0] =3D=3D '.')
-+			hide =3D access(filename, F_OK);
-+		if (!strcmp(filename, "/dev/null"))
-+			filename =3D "nul";
-+	}
- 	file =3D freopen(filename, otype, stream);
- 	if (file && hide && make_hidden(filename))
- 		warning("Could not mark '%s' as hidden.", filename);
+    use File::Spec::Functions qw(file_name_is_absolute);
+    file_name_is_absolute($some_path);
+
+And by doing so we'd also be compatible with e.g. VMS. Can the people
+with the odd non-Unix systems maybe try this out and see if it works?
+:)
