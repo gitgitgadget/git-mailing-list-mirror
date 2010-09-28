@@ -1,75 +1,84 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Another way to compare tools: is it possible to transfer full history?
-Date: Tue, 28 Sep 2010 22:55:24 +0200
-Message-ID: <AANLkTikvA-BkyGxJ14SpLerjsp1JpCDgegdc+9aT929x@mail.gmail.com>
-References: <loom.20100928T153519-936@post.gmane.org> <4CA20169.2040606@dbservice.com>
- <AANLkTi=oRv4NnG0yWCpmj+AVXijGU-EK5rAHUZ4dZLQV@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [msysGit] Pull request for msysGit patches
+Date: Tue, 28 Sep 2010 22:58:13 +0200
+Message-ID: <AANLkTikSxpXJkeneWbJQ_2g32w1bV-CEdyk2_5G2Xd+u@mail.gmail.com>
+References: <87ocbitd33.fsf@fox.patthoyts.tk> <201009282252.25688.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Tomas Carnecky <tom@dbservice.com>, Tuomo <tuo.tie@gmail.com>,
-	git@vger.kernel.org, Rocco Rutte <pdmef@gmx.net>,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 22:55:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Sep 28 22:58:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0hDL-0001GX-7q
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:55:51 +0200
+	id 1P0hG8-0002xe-EC
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:58:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752466Ab0I1Uzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 16:55:46 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:51184 "EHLO
+	id S1752811Ab0I1U6f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 16:58:35 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:43467 "EHLO
 	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752221Ab0I1Uzp (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 16:55:45 -0400
-Received: by gxk9 with SMTP id 9so36344gxk.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 13:55:44 -0700 (PDT)
+	with ESMTP id S1752273Ab0I1U6e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 16:58:34 -0400
+Received: by gxk9 with SMTP id 9so37668gxk.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 13:58:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=9pTveeeaj1JqSTZJenL6fLU3eMJWojtcrYWPot1JZwc=;
-        b=BwkHOa41fOgKpMmGamsjLeP6+NWiR+Y0TSly+r1zppF4/a0J18brAPvQiHAD6OwUKk
-         V2lqsLl/QpJKAYYe0JSU1f83sL4mLl24cs9WDlsiFAbd4hCOoXbNhluh85HnIYIwno2j
-         PQU2d0Sr6EypKXZqR5ERm8leaIXsvZNQ8lBzw=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=CRJJh09RPiUeq8ppy5xrteKn3Cs6/AZ5JZ7xAX1FBt4=;
+        b=XEKfu3xaC1cwuDQ6e+UZCtH1fXVYGR7OsKa39j5gaZ15zYAxfvcL44STNwRyWfiD7w
+         Zy3/ltNa9QOrtmosVAFH8lQiPOm2IgFquyworoMaTwLMgtAnbiQ7Fj6niugpSJRldU2v
+         BuNzaTSMXQmXFyyQ0vy/i80nGzi5ctszDnucg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=AvOmaRqYERtjPgzsh42PPca/VJ563xz9ACEadohrrPS5/bERtHeOf6hY3k0wz0sJYV
-         OAGyC85SmmKT6ZhULoCU0AwN7b94vouoAXBJEI9g8DhZDRwbD4Jz8yhEBQtfOco7d91E
-         yBf4MkhTTE1VnHaLgzMhrMuvnEvxrxF5nozj4=
-Received: by 10.150.177.17 with SMTP id z17mr808477ybe.122.1285707344668; Tue,
- 28 Sep 2010 13:55:44 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Tue, 28 Sep 2010 13:55:24 -0700 (PDT)
-In-Reply-To: <AANLkTi=oRv4NnG0yWCpmj+AVXijGU-EK5rAHUZ4dZLQV@mail.gmail.com>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=OIEpwzTE6go7rZ9oSg3bV/2s7RsQrWYEXHOCHx0dLGvzicQA3kSHLsDClwHn34KcS6
+         /yVSr7WH10d9jYmRxRW3e3Vvt9pDo9txaeOUaVAxH9s8jbeZtHR5+rYLeg2mXn3mkG1E
+         SlYq4dudZS5IPOeZ14QaxP/ycTQyn/KopzCf8=
+Received: by 10.151.40.7 with SMTP id s7mr851331ybj.33.1285707513539; Tue, 28
+ Sep 2010 13:58:33 -0700 (PDT)
+Received: by 10.220.100.135 with HTTP; Tue, 28 Sep 2010 13:58:13 -0700 (PDT)
+In-Reply-To: <201009282252.25688.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157470>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157471>
 
-Heya,
+On Tue, Sep 28, 2010 at 10:52 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+>> =A0 =A0 =A0 mingw: do not crash on open(NULL, ...)
+>
+> This one is bogus, and as it stands, it must have my Ack removed. :) =
+Needs the
+> same fix in mingw_fopen as mingw_freopen. (There remains an unprotect=
+ed
+> dereference of filename.)
+>
 
-On Tue, Sep 28, 2010 at 22:48, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> remote-hg (see git_remote_helpers/hg/ in
-> http://github.com/SRabbelier/git) contains a partial hg fast-export
-> implementation in exporter.py. I don't know how it compares to Rocco
-> Rutte's exporter.
+I believe the version in for-junio already has this fix squashed in.
+The following hunk, taken from
+http://repo.or.cz/w/git/mingw/4msysgit.git/blobdiff/4e93566b07dcf47ecb6=
+484d225418c04c1eedee6..b18500977d88b13803ecc60cf383538139ec09d8:/compat=
+/mingw.c
+shows that it is... Or are you thinking of something else?
 
-I wrote the exporter from scratch, I know that it works, but I haven't
-compared performance against other implementations (such as Rocco
-Rutte's)
-
-The accompanying fast-import is based off the bzr one. I'll use the
-new python fast-export library that's on pypi in the next iteration
-though, so only the part that hooks into hg is interesting.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+@@ -346,7 +346,7 @@ FILE *mingw_fopen (const char *filename, const char=
+ *otype)
+ 	if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
+ 	basename((char*)filename)[0] =3D=3D '.')
+ 		hide =3D access(filename, F_OK);
+-	if (!strcmp(filename, "/dev/null"))
++	if (filename && !strcmp(filename, "/dev/null"))
+ 		filename =3D "nul";
+ 	file =3D fopen(filename, otype);
+ 	if (file && hide && make_hidden(filename))
