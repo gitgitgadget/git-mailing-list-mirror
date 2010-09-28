@@ -1,107 +1,135 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH/RFC 0/2] use libcharset.h with gettext if available
-Date: Tue, 28 Sep 2010 23:47:38 +0200
-Message-ID: <AANLkTinxSqPD8H4Giigb1vbi7DC2wpDVqWmXGVZXmeKQ@mail.gmail.com>
-References: <AANLkTinHCETsaM=ytHuE9S5A+uAb=e3YLETsJJLga+DM@mail.gmail.com> <1285698577-28395-1-git-send-email-avarab@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+Subject: Re: [PATCHv2] Makefile: implement help target
+Date: Tue, 28 Sep 2010 17:00:25 -0500
+Message-ID: <r6bnW3ubJQeOuXWFRPisJu1hXBq3kXeHCvNe10M00ZM@cipher.nrlssc.navy.mil>
+References: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com> <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 23:49:34 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Sep 29 00:00:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0i3H-0004bt-3H
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 23:49:31 +0200
+	id 1P0iE7-0000xy-AK
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:00:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754381Ab0I1Vt0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 17:49:26 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35508 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752803Ab0I1VtZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 17:49:25 -0400
-Received: by gyh20 with SMTP id 20so56182gyh.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 14:49:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=OMuuFCbKnKRyFohUxovHY4sGADcChzqG+R7o4hlMLCc=;
-        b=u+ls3aPlHJ7Oo3LKYfh3oyxOLhMnb8EY+27cqo2K1QsnfdhscdvMI7YYvfpCU181wn
-         rU1IAzq6/JKpodBkGGckMg1ItD0Rg1mkuMWLxlzJtQSoB6Uq5hnAhV2YU86dkVrbuYFS
-         DQeAdhAmSfrMP7590puJCIMSmczmUqCkoVjQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=NHZTr/BfSAsTj0EE/xmhT1L+k9We4nwhji+5gvEeDp0HSvepvFhTqDjN1Yjyn54XQS
-         EcbNYFc+LibzSK+yiKGfLwClN/qCzStwJO6VuyuBQ4UYNvhUt2XVa7ImeWXPrvJOIDs/
-         w3I5EYI7I0rezYiU2yYsIDv34QMyPZl6A0dnc=
-Received: by 10.220.169.14 with SMTP id w14mr165276vcy.17.1285710478985; Tue,
- 28 Sep 2010 14:47:58 -0700 (PDT)
-Received: by 10.220.100.135 with HTTP; Tue, 28 Sep 2010 14:47:38 -0700 (PDT)
-In-Reply-To: <1285698577-28395-1-git-send-email-avarab@gmail.com>
+	id S1754179Ab0I1WAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 18:00:39 -0400
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47317 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752855Ab0I1WAi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 18:00:38 -0400
+Received: by mail.nrlssc.navy.mil id o8SM0P6n012003; Tue, 28 Sep 2010 17:00:25 -0500
+In-Reply-To: <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
+X-OriginalArrivalTime: 28 Sep 2010 22:00:25.0553 (UTC) FILETIME=[8E128410:01CB5F58]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157481>
 
-On Tue, Sep 28, 2010 at 8:29 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> Yeah, I'm hoping it'll get into next soon so we can get more
-> reports/fixes like these. Anyway, I amended your patches a bit, here
-> are the changes:
->
-> =A0* Split up the s/char*/const char*/ change into its own patch, or =
-is
-> =A0 there a reason for why this needs to be there along with the
-> =A0 libcharset.h change?
->
+On 09/28/2010 03:38 PM, Michael J Gruber wrote:
+> with automatic help text collection from lines starting with "# Help: " and
+> preceding a make target.
+> 
+> Suggested-by: Stephen Boyd <bebarino@gmail.com>
+> Helped-by: Andreas Ericsson <andreas.ericsson@op5.se>
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+> Now how's this for portability and such? New output:
+> 
+> Build targets:
+>     all:                Build the Git suite
+>     dist:               Build git-$(GIT_VERSION).tar.gz source
+>     dist-doc:           Build $(manpages).tar.gz and $(htmldocs).tar.gz
+<snip>
 
-The reason was that my version of locale_charset() returns a const
-char *, so I got a warning if I didn't. nl_langinfo() returns a char
-*, so I don't think that constness-fix patch makes sense in itself.
-But what might make more sense would be to squash it into the original
-commit for that line.
+>  Makefile |   43 +++++++++++++++++++++++++++++++++++++++++--
+>  1 files changed, 41 insertions(+), 2 deletions(-)
 
-> =A0* Added docs about the define to the Makefile
->
 
-Nice!
+Very nice.  Too bad we have more targets than fit in my 33-line terminal.
 
-> =A0* Added defaults for NO_LIBCHARSET to the default, I only changed =
-the
-> =A0 defaults for the MINGW entry, maybe it should be changed on Cygwi=
-n
-> =A0 and Windows too? And probably on OpenBSD and NetBSD too.
->
+/bikeshed
 
-I don't think NO_LIBCHARSET should be the default. libcharset is
-reported to be a bit better than nl_langinfo at normalizing the
-encoding, and GNU gettext depends on libcharset (through libiconv,
-which libcharset is distributed with). So in the case of a GNU
-gettext, libcharset should really be present.
+How about this micro-tweak:
 
-> Erik Faye-Lund (2):
-> =A0gettext: use const char* instead of char*
-> =A0gettext: use libcharset when available
->
-> =A0Makefile =A0 =A0 | =A0 17 +++++++++++++++++
-> =A0configure.ac | =A0 =A06 ++++++
-> =A0gettext.c =A0 =A0| =A0 10 +++++++++-
-> =A03 files changed, 32 insertions(+), 1 deletions(-)
->
-> --
-> 1.7.3.159.g610493
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+  1) Remove the colon from the targets so they sort correctly.
+     i.e. so "dist" sorts before "dist-doc" and "install" sorts
+          before "install-*"
+  2) Add " - " prefix to description strings and reduce target
+     width accordingly so we still have just as much room for
+     the description string.
+
+So the output looks like this:
+
+Build targets:
+    all                - Build the Git suite
+    dist               - Build git-$(GIT_VERSION).tar.gz source
+    dist-doc           - Build $(manpages).tar.gz and $(htmldocs).tar.gz
+    doc                - Build man pages and HTML docs
+    html               - Build HTML doc
+    info               - Build info docs
+    man                - Build man pages
+    pdf                - Build PDF docs
+    rpm                - Build source and binary RPM packages
+Clean targets:
+    clean              - Remove generated files but keep the configure script
+    distclean          - Remove generated files and the configure script
+Develop targets:
+    TAGS               - Generate tags using etags
+    cscope             - Generate cscope index
+    tags               - Generate tags using ctags
+Help targets:
+    help               - Show help for main make targets
+Install targets:
+    install            - Install the Git suite
+    install-doc        - Install man pages
+    install-html       - Install HTML docs
+    install-info       - Install info docs
+    install-man        - Install man pages
+    install-pdf        - Install PDF docs
+    quick-install-doc  - Install pregenerated man pages from origin/man
+    quick-install-html - Install pregenerated HTML pages from origin/html
+    quick-install-man  - Install pregenerated man pages from origin/man
+Test targets:
+    check-docs         - Check documentation coverage
+    cover_db_html      - Check test coverage and create HTML report
+    coverage           - Check test coverage
+    test               - Check the build by running the test suite
+
+
+(Warning: copy/pasted):
+
+diff --git a/Makefile b/Makefile
+index c7f0bb7..2803aa1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2398,10 +2398,10 @@ help:
+        @awk '/^# Help:/ { l=substr($$0,8); \
+                getline; \
+                j=index(l,":"); \
+-               print substr(l,1,j-1), substr($$0,1,index($$0,":")), substr(l,j+2); \
++               print substr(l,1,j-1), substr($$0,1,index($$0,":")-1), substr(l,j+2); \
+                }' <Makefile | sort | while read category target text; \
+        do \
+                test "$$category" = "$$currcat" || printf "$$category targets:\n"; \
+                currcat="$$category"; \
+-               printf "    %-20s%s\n" "$$target" "$$text"; \
++               printf "    %-18s - %s\n" "$$target" "$$text"; \
+        done
+
+
+Oh, by the way, tested and works on Solaris 10 and IRIX 6.5.
+
+-Brandon
