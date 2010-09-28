@@ -1,72 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Makefile: implement help target
-Date: Tue, 28 Sep 2010 16:48:40 +0200
-Message-ID: <AANLkTin9JZ1CErBaZjyLXBuBaX4Da7-2dgzotex+bu8X@mail.gmail.com>
-References: <4CA1E10F.4080906@op5.se> <c16e8df7c8e9b562ce0e6cd6e543a83779cd2b25.1285684868.git.git@drmicha.warpmail.net>
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: Re: Another way to compare tools: is it possible to transfer full
+ history?
+Date: Tue, 28 Sep 2010 16:53:29 +0200
+Message-ID: <4CA20169.2040606@dbservice.com>
+References: <loom.20100928T153519-936@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>, Andreas Ericsson <ae@op5.se>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Sep 28 16:52:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Tuomo <tuo.tie@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 16:53:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with smtp (Exim 4.69)
+	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0bXJ-0006ZV-H5
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 16:52:05 +0200
+	id 1P0bZ0-0007Bq-6y
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 16:53:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756140Ab0I1OtD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 10:49:03 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33232 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755505Ab0I1OtC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 10:49:02 -0400
-Received: by ywh1 with SMTP id 1so1934947ywh.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 07:49:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=IfacIvm7dpzk30FCfT8ufMQVb4vu3HUosyxj/haMZVw=;
-        b=vRx93NR4aaGAVhKGviiTh3wSoaEDEWugXxDUmvfdTD3y8ivx12JgICVbXFntJlR66f
-         hN3MpoY3nB/8X0fUGlko3+ulCiIze2sssJI4Hsp8Pav2dlcSDSOpN1CRak7zlnG3nSd9
-         Qut2vK5dgDZ8cuW6RDUlRyZ3/TD0x4jHN3O4w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=LSKZpn4uUcOoA+jFU4Igt+R55jUS+QamSqBF62takvDaB2ha6t/zxdGFcGCY0g3Xxh
-         QlUMFIsCnrhOaduQxK1Xzro8r+AO9kcHlGpU2zn+wDVDjj4gyItB2RqjBsC27JVam6y8
-         1pCTpb4VO2WiyFoRme+BEbmFFWaI/2ReahGdk=
-Received: by 10.150.11.20 with SMTP id 20mr120355ybk.407.1285685341177; Tue,
- 28 Sep 2010 07:49:01 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Tue, 28 Sep 2010 07:48:40 -0700 (PDT)
-In-Reply-To: <c16e8df7c8e9b562ce0e6cd6e543a83779cd2b25.1285684868.git.git@drmicha.warpmail.net>
+	id S1756522Ab0I1Oxn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 10:53:43 -0400
+Received: from office.neopsis.com ([78.46.209.98]:58296 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756335Ab0I1Oxm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 10:53:42 -0400
+X-Spam-Status: No, hits=0.0 required=5.0
+	tests=BAYES_00: -1.665,TOTAL_SCORE: -1.665,autolearn=ham
+X-Spam-Level: 
+Received: from calvin.caurea.org ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
+	Tue, 28 Sep 2010 16:53:31 +0200
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <loom.20100928T153519-936@post.gmane.org>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157430>
 
-Heya,
+On 9/28/10 3:44 PM, Tuomo wrote:
+> I have seen lots of comparisons between source control tools, 
+> but have not found a comparison that would explain the fundamental differences 
+> and similarities in a way that would really let me choose. 
+> So I decided to try a new approach: if one tries to transfer the full history 
+> of an application or a larger product/project, which features can I rely on 
+> finding in any decently recent tool?
+> 
+> Let's start from Git vs. Mercurial: is it possible to move the whole history 
+> of an application (with or without submodules) from Git to Mercurial? 
+> From Mercurial to Git? 
 
-On Tue, Sep 28, 2010 at 16:44, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> with automatic help text collection from lines starting with "#H# " and
-> preceding a make target.
+fast-import/export (man git-fast-export/import) seems to be the future.
+Git provides excellent support for it and other SCMs are adopting it as
+well. And then there are custom written conversion tools, just take a
+look at [1] to see which ones are available.
 
-I don't know about the "#H#" in particular, but documenting what each
-target does is a Good Thing (tm) in the first place, re-using that
-documentation for 'make help' is even better.
+(shameless plug: just this weekend I started collecting the various fast
+import/export tools and made a webpage about it:
+http://caurea.org/fast-export-import/. It's far from complete though.
+And if you know any tools that perform better than those I've listed,
+I'd be glade to update the page).
 
-> We could sort differently, of course, or at a category key (build, doc, etc.)
+> If it is not always possible, what is the feature that might completely 
+> prevent the whole attempt? If partial transfer is possible, what information 
+> might be missing in the result?
 
-I think just sorting alphabetically would be a good start. Maybe pipe
-the whole thing through sort?
+Not all SCMs have the same features. Subversion for example doesn't have
+real branches, tags nor merges (in the same sense that Git does). And
+even in distributed version control systems there can be differences.
+Git history can't be mapped 1:1 to Mercurial (octopus merges come to
+mind). Some of these things can be reasonably emulated, some can't and
+you loose that information.
 
--- 
-Cheers,
+tom
 
-Sverre Rabbelier
+[1]
+https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools#Interaction_with_other_Revision_Control_Systems
