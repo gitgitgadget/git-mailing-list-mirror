@@ -1,229 +1,269 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [GITK PATCH] gitk: add menuitem for file checkout from selected or
-	parent commit
-Date: Tue, 28 Sep 2010 22:03:45 +0200
-Message-ID: <20100928200344.GA12843@book.hvoigt.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Tue Sep 28 22:03:53 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] Makefile: implement help target
+Date: Tue, 28 Sep 2010 22:38:04 +0200
+Message-ID: <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
+References: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 28 22:38:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0gP2-00067s-Jc
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:03:52 +0200
+	id 1P0gwK-0003b7-Js
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:38:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756322Ab0I1UDs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 16:03:48 -0400
-Received: from darksea.de ([83.133.111.250]:45723 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752906Ab0I1UDr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 16:03:47 -0400
-Received: (qmail 14854 invoked from network); 28 Sep 2010 22:03:45 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 28 Sep 2010 22:03:45 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751164Ab0I1Uh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 16:37:57 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:36578 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750915Ab0I1Uh4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 16:37:56 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BC1C427C;
+	Tue, 28 Sep 2010 16:37:55 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 28 Sep 2010 16:37:55 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=8HhGHfGiJBgPRzx2cprc6iariyQ=; b=Gup+KcN6r6f5I/BSr3wmf/yguP1hD2zN4PJI8NcX00RdkTEm7GO2c7nY/jlW8jIeB8iUqmnEhSBUYN6XPdUtp5y6FmBxHr4BfTEW+vreuKnSDt5ZYSQRrpuKOJIPWa2fn9n5Bn/jwBoPqQAr/IYYyCOQv062rYXvpY2pnQfCxMA=
+X-Sasl-enc: 8C2zMzIp+T0nqSUSyK0FwNxLtUIxMaAh6Rl8Y+D/YTAt 1285706274
+Received: from localhost (p54858FBF.dip0.t-ipconnect.de [84.133.143.191])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 651475E2A8B;
+	Tue, 28 Sep 2010 16:37:54 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.98.g5ad7d
+In-Reply-To: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157466>
 
-This is useful if a user wants to checkout a file from a certain
-commit. This is equivalent to
+with automatic help text collection from lines starting with "# Help: " and
+preceding a make target.
 
-  git checkout $commit $file
-
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+Suggested-by: Stephen Boyd <bebarino@gmail.com>
+Helped-by: Andreas Ericsson <andreas.ericsson@op5.se>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- gitk     |   24 ++++++++++++++++++------
- po/de.po |    6 ++++++
- po/es.po |    6 ++++++
- po/fr.po |    6 ++++++
- po/hu.po |    6 ++++++
- po/it.po |    6 ++++++
- po/ja.po |    6 ++++++
- po/ru.po |    6 ++++++
- po/sv.po |    6 ++++++
- 9 files changed, 66 insertions(+), 6 deletions(-)
+Now how's this for portability and such? New output:
 
-diff --git a/gitk b/gitk
-index 45e3380..c582bb5 100755
---- a/gitk
-+++ b/gitk
-@@ -2497,6 +2497,8 @@ proc makewindow {} {
- 	{mc "Highlight this only" command {flist_hl 1}}
- 	{mc "External diff" command {external_diff}}
- 	{mc "Blame parent commit" command {external_blame 1}}
-+	{mc "Checkout from this commit" command {external_checkout}}
-+	{mc "Checkout from parent commit" command {external_checkout 1}}
-     }
-     $flist_menu configure -tearoff 0
-=20
-@@ -3533,6 +3535,20 @@ proc make_relative {f} {
- }
-=20
- proc external_blame {parent_idx {line {}}} {
+Build targets:
+    all:                Build the Git suite
+    dist:               Build git-$(GIT_VERSION).tar.gz source
+    dist-doc:           Build $(manpages).tar.gz and $(htmldocs).tar.gz
+    doc:                Build man pages and HTML docs
+    html:               Build HTML doc
+    info:               Build info docs
+    man:                Build man pages
+    pdf:                Build PDF docs
+    rpm:                Build source and binary RPM packages
+Clean targets:
+    clean:              Remove generated files but keep the configure script
+    distclean:          Remove generated files and the configure script
+Develop targets:
+    cscope:             Generate cscope index
+    tags:               Generate tags using ctags
+    TAGS:               Generate tags using etags
+Help targets:
+    help:               Show help for main make targets
+Install targets:
+    install-doc:        Install man pages
+    install-html:       Install HTML docs
+    install-info:       Install info docs
+    install:            Install the Git suite
+    install-man:        Install man pages
+    install-pdf:        Install PDF docs
+    quick-install-doc:  Install pregenerated man pages from origin/man
+    quick-install-html: Install pregenerated HTML pages from origin/html
+    quick-install-man:  Install pregenerated man pages from origin/man
+Test targets:
+    check-docs:         Check documentation coverage
+    coverage:           Check test coverage
+    cover_db_html:      Check test coverage and create HTML report
+    test:               Check the build by running the test suite
+
+ Makefile |   43 +++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 41 insertions(+), 2 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index db2efd6..497dd92 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,5 @@
+ # The default target of this Makefile is...
++# Help: Build: Build the Git suite
+ all::
+ 
+ # Define V=1 to have a more verbose compile.
+@@ -1952,29 +1953,37 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
+ $(VCSSVN_LIB): $(VCSSVN_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
+ 
++# Help: Build: Build man pages and HTML docs
+ doc:
+ 	$(MAKE) -C Documentation all
+ 
++# Help: Build: Build man pages
+ man:
+ 	$(MAKE) -C Documentation man
+ 
++# Help: Build: Build HTML doc
+ html:
+ 	$(MAKE) -C Documentation html
+ 
++# Help: Build: Build info docs
+ info:
+ 	$(MAKE) -C Documentation info
+ 
++# Help: Build: Build PDF docs
+ pdf:
+ 	$(MAKE) -C Documentation pdf
+ 
++# Help: Develop: Generate tags using etags
+ TAGS:
+ 	$(RM) TAGS
+ 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
+ 
++# Help: Develop: Generate tags using ctags
+ tags:
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+ 
++# Help: Develop: Generate cscope index
+ cscope:
+ 	$(RM) cscope*
+ 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
+@@ -2040,6 +2049,7 @@ export NO_SVN_TESTS
+ 
+ ### Testing rules
+ 
++# Help: Test: Check the build by running the test suite
+ test: all
+ 	$(MAKE) -C t/ all
+ 
+@@ -2099,6 +2109,7 @@ export gitexec_instdir
+ 
+ install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
+ 
++# Help: Install: Install the Git suite
+ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+@@ -2155,27 +2166,35 @@ endif
+ install-gitweb:
+ 	$(MAKE) -C gitweb install
+ 
++# Help: Install: Install man pages
+ install-doc:
+ 	$(MAKE) -C Documentation install
+ 
++# Help: Install: Install man pages
+ install-man:
+ 	$(MAKE) -C Documentation install-man
+ 
++# Help: Install: Install HTML docs
+ install-html:
+ 	$(MAKE) -C Documentation install-html
+ 
++# Help: Install: Install info docs
+ install-info:
+ 	$(MAKE) -C Documentation install-info
+ 
++# Help: Install: Install PDF docs
+ install-pdf:
+ 	$(MAKE) -C Documentation install-pdf
+ 
++# Help: Install: Install pregenerated man pages from origin/man
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
++# Help: Install: Install pregenerated man pages from origin/man
+ quick-install-man:
+ 	$(MAKE) -C Documentation quick-install-man
+ 
++# Help: Install: Install pregenerated HTML pages from origin/html
+ quick-install-html:
+ 	$(MAKE) -C Documentation quick-install-html
+ 
+@@ -2188,6 +2207,7 @@ git.spec: git.spec.in
+ 	mv $@+ $@
+ 
+ GIT_TARNAME=git-$(GIT_VERSION)
++# Help: Build: Build git-$(GIT_VERSION).tar.gz source
+ dist: git.spec git-archive$(X) configure
+ 	./git-archive --format=tar \
+ 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
+@@ -2203,6 +2223,7 @@ dist: git.spec git-archive$(X) configure
+ 	@$(RM) -r $(GIT_TARNAME)
+ 	gzip -f -9 $(GIT_TARNAME).tar
+ 
++# Help: Build: Build source and binary RPM packages
+ rpm: dist
+ 	$(RPMBUILD) \
+ 		--define "_source_filedigest_algorithm md5" \
+@@ -2211,6 +2232,8 @@ rpm: dist
+ 
+ htmldocs = git-htmldocs-$(GIT_VERSION)
+ manpages = git-manpages-$(GIT_VERSION)
 +
-+    set cmdline [list git gui blame]
-+    if {$line ne {} && $line > 1} {
-+	lappend cmdline "--line=3D$line"
-+    }
-+    run_command_on_selected_file $cmdline $parent_idx
-+}
++# Help: Build: Build $(manpages).tar.gz and $(htmldocs).tar.gz
+ dist-doc:
+ 	$(RM) -r .doc-tmp-dir
+ 	mkdir .doc-tmp-dir
+@@ -2230,10 +2253,11 @@ dist-doc:
+ 	$(RM) -r .doc-tmp-dir
+ 
+ ### Cleaning rules
+-
++# Help: Clean: Remove generated files and the configure script
+ distclean: clean
+ 	$(RM) configure
+ 
++# Help: Clean: Remove generated files but keep the configure script
+ clean:
+ 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
+ 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+@@ -2268,7 +2292,7 @@ endif
+ .PHONY: FORCE TAGS tags cscope
+ 
+ ### Check documentation
+-#
++# Help: Test: Check documentation coverage
+ check-docs::
+ 	@(for v in $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk; \
+ 	do \
+@@ -2335,6 +2359,7 @@ check-builtins::
+ #
+ .PHONY: coverage coverage-clean coverage-build coverage-report
+ 
++# Help: Test: Check test coverage
+ coverage:
+ 	$(MAKE) coverage-build
+ 	$(MAKE) coverage-report
+@@ -2370,5 +2395,19 @@ coverage-untested-functions: coverage-report
+ cover_db: coverage-report
+ 	gcov2perl -db cover_db *.gcov
+ 
++# Help: Test: Check test coverage and create HTML report
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
 +
-+proc external_checkout {{parent_idx 0}} {
-+    set cmdline [list git checkout]
-+    run_command_on_selected_file $cmdline $parent_idx
-+}
-+
-+proc run_command_on_selected_file {cmdline parent_idx} {
-     global flist_menu_file gitdir
-     global nullid nullid2
-     global parentlist selectedline currentid
-@@ -3548,17 +3564,13 @@ proc external_blame {parent_idx {line {}}} {
- 	return
-     }
-=20
--    set cmdline [list git gui blame]
--    if {$line ne {} && $line > 1} {
--	lappend cmdline "--line=3D$line"
--    }
-     set f [file join [file dirname $gitdir] $flist_menu_file]
--    # Unfortunately it seems git gui blame doesn't like
-+    # Unfortunately some commands do not like
-     # being given an absolute path...
-     set f [make_relative $f]
-     lappend cmdline $base_commit $f
-     if {[catch {eval exec $cmdline &} err]} {
--	error_popup "[mc "git gui blame: command failed:"] $err"
-+	error_popup "[mc "$cmdline: command failed:"] $err"
-     }
- }
-=20
-diff --git a/po/de.po b/po/de.po
-index bd194a3..8cfd299 100644
---- a/po/de.po
-+++ b/po/de.po
-@@ -1276,3 +1276,9 @@ msgstr "Falsche Kommandozeilen-Parameter f=C3=BCr=
- gitk:"
- #: gitk:11587
- msgid "Command line"
- msgstr "Kommandozeile"
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-diff --git a/po/es.po b/po/es.po
-index 0471dd0..a3092e0 100644
---- a/po/es.po
-+++ b/po/es.po
-@@ -909,3 +909,9 @@ msgstr "Argumentos incorrectos a Gitk:"
- #: gitk:10170
- msgid "Command line"
- msgstr "L=C3=ADnea de comandos"
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-diff --git a/po/fr.po b/po/fr.po
-index 5370ddc..e58cbdd 100644
---- a/po/fr.po
-+++ b/po/fr.po
-@@ -1252,3 +1252,9 @@ msgstr "Arguments invalides pour gitk :"
- #: gitk:11249
- msgid "Command line"
- msgstr "Ligne de commande"
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-diff --git a/po/hu.po b/po/hu.po
-index 7262b61..9237d2a 100644
---- a/po/hu.po
-+++ b/po/hu.po
-@@ -1293,3 +1293,9 @@ msgstr "Parancs sor"
- #~ msgstr ""
- #~ "Sajn=C3=A1ljuk, de a gitk nem futtathat=C3=B3 ezzel a Tcl/Tk verzi=
-=C3=B3val.\n"
- #~ "Gitk futtat=C3=A1s=C3=A1hoz legal=C3=A1bb Tcl/Tk 8.4 sz=C3=BCks=C3=
-=A9ges."
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-diff --git a/po/it.po b/po/it.po
-index a730d63..6e0b76f 100644
---- a/po/it.po
-+++ b/po/it.po
-@@ -1274,3 +1274,9 @@ msgstr "Gitk: argomenti errati:"
- #: gitk:11587
- msgid "Command line"
- msgstr "Linea di comando"
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-diff --git a/po/ja.po b/po/ja.po
-index 4f47051..b47faab 100644
---- a/po/ja.po
-+++ b/po/ja.po
-@@ -1253,3 +1253,9 @@ msgstr "gitk=E3=81=B8=E3=81=AE=E4=B8=8D=E6=AD=A3=E3=
-=81=AA=E5=BC=95=E6=95=B0:"
- #: gitk:11316
- msgid "Command line"
- msgstr "=E3=82=B3=E3=83=9E=E3=83=B3=E3=83=89=E8=A1=8C"
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-diff --git a/po/ru.po b/po/ru.po
-index c3d0285..f136ec1 100644
---- a/po/ru.po
-+++ b/po/ru.po
-@@ -1083,3 +1083,9 @@ msgstr "=D0=9D=D0=B5=D0=BF=D1=80=D0=B0=D0=B2=D0=B8=
-=D0=BB=D1=8C=D0=BD=D1=8B=D0=B5 =D0=B0=D1=80=D0=B3=D1=83=D0=BC=D0=B5=D0=BD=
-=D1=82=D1=8B =D0=B4=D0=BB=D1=8F gitk:"
- msgid "Command line"
- msgstr "=D0=9A=D0=BE=D0=BC=D0=B0=D0=BD=D0=B4=D0=BD=D0=B0=D1=8F =D1=81=D1=
-=82=D1=80=D0=BE=D0=BA=D0=B0"
-=20
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
-+
-diff --git a/po/sv.po b/po/sv.po
-index 386763a..b079016 100644
---- a/po/sv.po
-+++ b/po/sv.po
-@@ -1295,3 +1295,9 @@ msgstr "Kommandorad"
-=20
- #~ msgid "Name"
- #~ msgstr "Namn"
-+
-+msgid "Checkout from this commit"
-+msgstr ""
-+
-+msgid "Checkout from parent commit"
-+msgstr ""
---=20
-1.7.2.2.177.geec0d
++# Help: Help: Show help for main make targets
++help:
++	@awk '/^# Help:/ { l=substr($$0,8); \
++		getline; \
++		j=index(l,":"); \
++		print substr(l,1,j-1), substr($$0,1,index($$0,":")), substr(l,j+2); \
++		}' <Makefile | sort | while read category target text; \
++	do \
++		test "$$category" = "$$currcat" || printf "$$category targets:\n"; \
++		currcat="$$category"; \
++		printf "    %-20s%s\n" "$$target" "$$text"; \
++	done
+-- 
+1.7.3.98.g5ad7d
