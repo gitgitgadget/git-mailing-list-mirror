@@ -1,135 +1,74 @@
-From: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-Subject: Re: [PATCHv2] Makefile: implement help target
-Date: Tue, 28 Sep 2010 17:00:25 -0500
-Message-ID: <r6bnW3ubJQeOuXWFRPisJu1hXBq3kXeHCvNe10M00ZM@cipher.nrlssc.navy.mil>
-References: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com> <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 5/6] tree_entry_interesting(): remove dependency on struct diff_options
+Date: Wed, 29 Sep 2010 08:00:46 +1000
+Message-ID: <AANLkTikso2O5M_ZBr1pvr8jqg=h7jhd+U+fBGossdU0W@mail.gmail.com>
+References: <1284938514-16663-1-git-send-email-pclouds@gmail.com>
+	<1284938514-16663-6-git-send-email-pclouds@gmail.com>
+	<7vtylavnfx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Sep 29 00:00:45 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 00:01:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0iE7-0000xy-AK
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:00:43 +0200
+	id 1P0iEv-0001MI-D4
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:01:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754179Ab0I1WAj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 18:00:39 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:47317 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752855Ab0I1WAi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 18:00:38 -0400
-Received: by mail.nrlssc.navy.mil id o8SM0P6n012003; Tue, 28 Sep 2010 17:00:25 -0500
-In-Reply-To: <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
-X-OriginalArrivalTime: 28 Sep 2010 22:00:25.0553 (UTC) FILETIME=[8E128410:01CB5F58]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1754900Ab0I1WBQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 18:01:16 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:63828 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754887Ab0I1WBP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 18:01:15 -0400
+Received: by wwd20 with SMTP id 20so23873wwd.1
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 15:01:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YErBJkuTCahay6Rzugo8yTk+4hxhFMe0b6FXfAUU05c=;
+        b=SiWVf1bjAG9reamYTdidPz6s7m39luLF2ijb+26DWbAZJRf/acJf5cib/AEF1cuI2E
+         l43hShSsHRgBLTKmy0bL6OAV8ld8cSNhl/bZHapU4OCCfIDMEyADYcexD/SAa4IE8Zdu
+         mVskKXdwk5/IJZuytAoSq9LzmUPHgo66GYmhI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=k37DBFFA2oj6nPK77XKqw0UC7lm7glnBjCergCZoJwCqCORI8c4RqOeH2la2Z1ozEu
+         Y9jxY0qsFBidr46//LtkdZ/62iZNt45mjqENyQuBbzt+w8bQuXhw4vEi1AWWe4R3zL2h
+         kxvro5wXrPvxsJXeWJYYWUoR3FKmApLk4GsPI=
+Received: by 10.216.30.21 with SMTP id j21mr1681454wea.37.1285711247132; Tue,
+ 28 Sep 2010 15:00:47 -0700 (PDT)
+Received: by 10.216.153.195 with HTTP; Tue, 28 Sep 2010 15:00:46 -0700 (PDT)
+In-Reply-To: <7vtylavnfx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157482>
 
-On 09/28/2010 03:38 PM, Michael J Gruber wrote:
-> with automatic help text collection from lines starting with "# Help: " and
-> preceding a make target.
-> 
-> Suggested-by: Stephen Boyd <bebarino@gmail.com>
-> Helped-by: Andreas Ericsson <andreas.ericsson@op5.se>
-> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
-> ---
-> Now how's this for portability and such? New output:
-> 
-> Build targets:
->     all:                Build the Git suite
->     dist:               Build git-$(GIT_VERSION).tar.gz source
->     dist-doc:           Build $(manpages).tar.gz and $(htmldocs).tar.gz
-<snip>
+On Tue, Sep 28, 2010 at 8:20 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>
+>> This function can be potentially used in more places than just
+>> tree-diff.c. "struct diff_options" does not make much sense outside
+>> diff_tree_sha1().
+>
+> This does a bit more than that; it does not call tree_entry_extract()
+> anymore, and instead uses the knowledge of its underlying implementat=
+ion.
+> The mode of the entry that is passed to S_ISDIR() check is not cleans=
+ed
+> with canon_mode() anymore.
 
->  Makefile |   43 +++++++++++++++++++++++++++++++++++++++++--
->  1 files changed, 41 insertions(+), 2 deletions(-)
-
-
-Very nice.  Too bad we have more targets than fit in my 33-line terminal.
-
-/bikeshed
-
-How about this micro-tweak:
-
-  1) Remove the colon from the targets so they sort correctly.
-     i.e. so "dist" sorts before "dist-doc" and "install" sorts
-          before "install-*"
-  2) Add " - " prefix to description strings and reduce target
-     width accordingly so we still have just as much room for
-     the description string.
-
-So the output looks like this:
-
-Build targets:
-    all                - Build the Git suite
-    dist               - Build git-$(GIT_VERSION).tar.gz source
-    dist-doc           - Build $(manpages).tar.gz and $(htmldocs).tar.gz
-    doc                - Build man pages and HTML docs
-    html               - Build HTML doc
-    info               - Build info docs
-    man                - Build man pages
-    pdf                - Build PDF docs
-    rpm                - Build source and binary RPM packages
-Clean targets:
-    clean              - Remove generated files but keep the configure script
-    distclean          - Remove generated files and the configure script
-Develop targets:
-    TAGS               - Generate tags using etags
-    cscope             - Generate cscope index
-    tags               - Generate tags using ctags
-Help targets:
-    help               - Show help for main make targets
-Install targets:
-    install            - Install the Git suite
-    install-doc        - Install man pages
-    install-html       - Install HTML docs
-    install-info       - Install info docs
-    install-man        - Install man pages
-    install-pdf        - Install PDF docs
-    quick-install-doc  - Install pregenerated man pages from origin/man
-    quick-install-html - Install pregenerated HTML pages from origin/html
-    quick-install-man  - Install pregenerated man pages from origin/man
-Test targets:
-    check-docs         - Check documentation coverage
-    cover_db_html      - Check test coverage and create HTML report
-    coverage           - Check test coverage
-    test               - Check the build by running the test suite
-
-
-(Warning: copy/pasted):
-
-diff --git a/Makefile b/Makefile
-index c7f0bb7..2803aa1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -2398,10 +2398,10 @@ help:
-        @awk '/^# Help:/ { l=substr($$0,8); \
-                getline; \
-                j=index(l,":"); \
--               print substr(l,1,j-1), substr($$0,1,index($$0,":")), substr(l,j+2); \
-+               print substr(l,1,j-1), substr($$0,1,index($$0,":")-1), substr(l,j+2); \
-                }' <Makefile | sort | while read category target text; \
-        do \
-                test "$$category" = "$$currcat" || printf "$$category targets:\n"; \
-                currcat="$$category"; \
--               printf "    %-20s%s\n" "$$target" "$$text"; \
-+               printf "    %-18s - %s\n" "$$target" "$$text"; \
-        done
-
-
-Oh, by the way, tested and works on Solaris 10 and IRIX 6.5.
-
--Brandon
+Hmm.. missed that. Thanks for catching.
+--=20
+Duy
