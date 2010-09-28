@@ -1,147 +1,140 @@
-From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Subject: Re: [PATCH v3 1/3] tests: Prepare --textconv tests for correctly-failing conversion program
-Date: Tue, 28 Sep 2010 16:20:31 +0400
-Message-ID: <20100928122031.GC29525@landau.phys.spbu.ru>
-References: <cover.1285351816.git.kirr@landau.phys.spbu.ru> <66d4603c7e21561557f612690d6196e7ae0b38f9.1285351816.git.kirr@landau.phys.spbu.ru> <7vsk0vyriw.fsf@alter.siamese.dyndns.org> <20100928120722.GA29525@landau.phys.spbu.ru>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Allow gitweb tab width to be set per project.
+Date: Tue, 28 Sep 2010 05:25:05 -0700 (PDT)
+Message-ID: <m34odagioh.fsf@localhost.localdomain>
+References: <1285673709-24924-1-git-send-email-magnus@hagander.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	Cl??ment Poulain <clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 14:20:42 2010
+Cc: git@vger.kernel.org
+To: Magnus Hagander <magnus@hagander.net>
+X-From: git-owner@vger.kernel.org Tue Sep 28 14:25:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0ZAm-000256-Mn
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 14:20:41 +0200
+	id 1P0ZFM-0003oW-5p
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 14:25:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753069Ab0I1MUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 08:20:33 -0400
-Received: from landau.phys.spbu.ru ([195.19.235.38]:52148 "EHLO
-	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751185Ab0I1MUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 08:20:32 -0400
-Received: by landau.phys.spbu.ru (Postfix, from userid 506)
-	id 8EF8FFF72A; Tue, 28 Sep 2010 16:20:31 +0400 (MSD)
-Content-Disposition: inline
-In-Reply-To: <20100928120722.GA29525@landau.phys.spbu.ru>
-User-Agent: Mutt/1.5.6i
+	id S1753237Ab0I1MZR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 08:25:17 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:53596 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752440Ab0I1MZQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 08:25:16 -0400
+Received: by ewy23 with SMTP id 23so1728460ewy.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 05:25:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=p84M4kvjNe6BMokfqItEUJe3jahJPwh8+dS5vCzOxfs=;
+        b=dkogzsIQnZEgUBijymRjxvnVPbwyGdnWc309LOaVUz62x4mYpYu66SXVamOVgGkxhL
+         jquA0qQe1YvXospc/QQzukhUdPjnSGElN0MDhgVKBv5bT5PsRsMg8ZwxtyQOzmP/MKgJ
+         RBIChlRLPZw7qpQ4yZlzcp0PZ++ZFywtFAL+I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=ljnNWVFkIE81xtu2WCkYXvKtTjhkGFZXGotHEEmf3xtItOtIvtVHqhLI6z8eZCR1TF
+         lfLD+dBXxIvFejxsdnj6chT/jjd+gNaJchTmQ1TpL4NiUat/RMTBrwUK4JUYvoml8+/O
+         oXKuTg4wvHSYUI7FSoohf4GmNko6IkSQS25pw=
+Received: by 10.213.33.1 with SMTP id f1mr7111497ebd.53.1285676715054;
+        Tue, 28 Sep 2010 05:25:15 -0700 (PDT)
+Received: from localhost.localdomain (abvm69.neoplus.adsl.tpnet.pl [83.8.210.69])
+        by mx.google.com with ESMTPS id a48sm10369062eei.6.2010.09.28.05.25.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 28 Sep 2010 05:25:05 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o8SCOUbS013209;
+	Tue, 28 Sep 2010 14:24:41 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o8SCOEPE013205;
+	Tue, 28 Sep 2010 14:24:14 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1285673709-24924-1-git-send-email-magnus@hagander.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157415>
 
-On Tue, Sep 28, 2010 at 04:07:22PM +0400, Kirill Smelkov wrote:
-> On Mon, Sep 27, 2010 at 11:23:35AM -0700, Junio C Hamano wrote:
-> > Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
+Magnus Hagander <magnus@hagander.net> writes:
+
+> Allow the gitweb.tabwidth option to control how many spaces a tab
+> gets expanded to.
 > 
-> 
-> > > +sed 's/^bin:/converted:/' "$@" >helper.out
-> > 
-> > Minor nit: this is inconsistent with the check done with grep above that
-> > insists that the colon is followed by a SP.
-> 
-> Yes, you are right. I'll amend it.
-> 
-> > > diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
-> > > index 91f8198..7668099 100755
-> > > --- a/t/t4042-diff-textconv-caching.sh
-> > > +++ b/t/t4042-diff-textconv-caching.sh
-> > > @@ -5,18 +5,19 @@ test_description='test textconv caching'
-> > >  
-> > >  cat >helper <<'EOF'
-> > >  #!/bin/sh
-> > > -sed 's/^/converted: /' "$@" >helper.out
-> > > +grep -q '^bin: ' "$@" || { echo "E: $@ is not \"binary\" file" 1>&2; exit 1; }
-> > 
-> > You are not feeding arguments you think you are to the above "echo":
-> > 
-> >         $ cat >/var/tmp/j.sh <<\EOF
-> >         #!/bin/sh
-> >         e () {
-> >                 i=0
-> >                 for s
-> >                 do
-> >                         i=$(( $i + 1 ))
-> >                         echo "$i: $s"
-> >                 done
-> >         }
-> >         f () {
-> >                 e "E: $@ is not binary"
-> >         }
-> >         f 1 "2 3" 4
-> >         EOF
-> >         $ sh /var/tmp/j.sh
-> >         1: E: 1
-> >         2: 2 3
-> >         3: 4 is not binary
-> > 
-> > Granted, echo is forgiving and will concatenate the arguments it gets with
-> > a space in between, but you would either want to either:
-> > 
-> >  (1) make it more explicit that helper gets only one argument, by saying
-> >      "$1" instead of "$@", in all places in the helper script; or
-> > 
-> >  (2) if you are planning to make 'helper' capable of handling multiple
-> >      input files, show the error message for the ones that are not binary
-> >      (you would probably need a loop for that).
-> > 
-> > I think (1) would be sufficient in this case.
-> 
-> I too think (1) is right. It was just that originally there was $@
-> (which I now understand was wrong). So ok to apply the following patch
-> on top of this series? (I assume it's ok, and will repost the whole
-> thing)
-> 
-> ---- 8< ----
-> 
-> From: Kirill Smelkov <kirr@mns.spb.ru>
-> Date: Tue, 28 Sep 2010 15:34:48 +0400
-> Subject: [PATCH 4/4] t4042,t8006,t8007: Textconv converter should take only one argument
-> 
-> Textconv helper in this tests was incorrectly referencing $@, which goes
-> agains textconv "spec". I quote Documentation/gitattributes.txt
-> 
-> """ The `textconv` config option is used to define a program for
->     performing such a conversion. The program should take a single
->     argument, the name of a file to convert, and produce the
->     resulting text on stdout. """
-> 
-> So correct textconv helpers to use $1 instead.
-> 
-> Noticed-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+> Signed-off-by: Magnus Hagander <magnus@hagander.net>
+
+This might be a good idea, but the solution looks like it includes
+some unnecessary performance hit (see coment below).
+
 > ---
->  t/t4042-diff-textconv-caching.sh |    4 ++--
->  t/t8006-blame-textconv.sh        |    4 ++--
->  t/t8007-cat-file-textconv.sh     |    4 ++--
->  3 files changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
-> index 68fee12..6aaa10b 100755
-> --- a/t/t4042-diff-textconv-caching.sh
-> +++ b/t/t4042-diff-textconv-caching.sh
-> @@ -5,8 +5,8 @@ test_description='test textconv caching'
+> In the PostgreSQL project, we're using 4-space tabs, but we have other projects
+> as well on our gitweb server, so we need to be able to control this on a
+> per-project basis.
+
+Some of this comment should IMHO make it into commit message, e.g.
+
+  Different project scan use different tab widths, even on the same
+  gitweb server.
+
+Or something like that.
+
+> 
+> 
+>  gitweb/gitweb.perl |    4 +++-
+>  1 files changed, 3 insertions(+), 1 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index a85e2f6..ef92a4f 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -1465,9 +1465,11 @@ sub unquote {
+>  # escape tabs (convert tabs to spaces)
+>  sub untabify {
+>  	my $line = shift;
+> +	my $tabwidth = git_get_project_config('tabwidth', '--int');
+
+Note that untabify() is called once for each _line_ in a file or a
+diff...
+
+This has acceptable performance only because gitweb config is cached
+in %config hash by git_get_project_config() subroutine.
+
+
+I'm not sure if it wouldn't be better to have $tabwidth be passed as
+an (optional) argument to untabify(), and calculated either in calling
+sites for untabify(), or be calculated per-request and save in a
+global variable.
+
+We might want to turn 'tabwidth' into a feature, though that is
+probably overengineering.
+
+> +	$tabwidth = 8 if ($tabwidth <= 0);
+
+git_get_project_config('tabwidth', '--int') can return 'undef' if a
+configuration key does not exist, resulting in
+
+  Use of uninitialized value in numeric le (<=) at 
+
+warning in web server logs.
+
 >  
->  cat >helper <<'EOF'
->  #!/bin/sh
-> -grep -q '^bin: ' "$@" || { echo "E: $@ is not \"binary\" file" 1>&2; exit 1; }
-> -sed 's/^bin: /converted: /' "$@" >helper.out
-> +grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
-> +sed 's/^bin: /converted: /' "$1" >helper.out
->  cat helper.out
->  EOF
->  chmod +x helper
+>  	while ((my $pos = index($line, "\t")) != -1) {
+> -		if (my $count = (8 - ($pos % 8))) {
+> +		if (my $count = ($tabwidth - ($pos % $tabwidth))) {
+>  			my $spaces = ' ' x $count;
+>  			$line =~ s/\t/$spaces/;
+>  		}
+> -- 
+> 1.7.0.4
+> 
 
-Please ignore this - changing so breaks textconv cache tests in this
-file.
-
-I'll come up with updated patch.
-
-Sorry for the noise...
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
