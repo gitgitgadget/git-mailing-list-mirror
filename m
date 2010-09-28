@@ -1,82 +1,117 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] merge-recursive: option to specify rename threshold
-Date: Mon, 27 Sep 2010 19:24:42 -0500
-Message-ID: <20100928002442.GA2699@burratino>
-References: <A0604F16-CA84-4A84-B74B-CE8AB455DF77@sb.org>
- <1285202724-52474-1-git-send-email-kevin@sb.org>
- <7vk4m7n7uo.fsf@alter.siamese.dyndns.org>
- <D5046A0E-7A35-421D-856F-5278FBE02914@sb.org>
- <7vocbj3gjk.fsf@alter.siamese.dyndns.org>
- <FFDB2371-6C96-472C-A650-412546636450@sb.org>
- <20100927235355.GG11957@burratino>
- <385B97D7-03F5-4698-A659-15D5D1FA939B@sb.org>
- <20100928000837.GH11957@burratino>
- <7FEED963-13E1-4A77-959A-FFD06669ED13@sb.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 3/6] pathspec: cache string length when initialize pathspec
+Date: Tue, 28 Sep 2010 11:08:09 +1000
+Message-ID: <AANLkTinu5msupME4efxLLRcDPvM3gFd2q+k3RLw6tYuV@mail.gmail.com>
+References: <1284938514-16663-1-git-send-email-pclouds@gmail.com>
+	<1284938514-16663-4-git-send-email-pclouds@gmail.com>
+	<7v62xqx20o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Sep 28 02:28:00 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>, Elijah Newren <newren@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 03:08:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0O30-0001mo-Qn
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 02:27:55 +0200
+	id 1P0Og5-0003Pq-5z
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 03:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760139Ab0I1A1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Sep 2010 20:27:45 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:45702 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760043Ab0I1A1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Sep 2010 20:27:44 -0400
-Received: by qyk36 with SMTP id 36so5881059qyk.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 17:27:43 -0700 (PDT)
+	id S1757228Ab0I1BIM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 21:08:12 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:48125 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755510Ab0I1BIL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 21:08:11 -0400
+Received: by wyb28 with SMTP id 28so4487223wyb.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 18:08:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=uXrT94k2ze0TWmXLTgUqJuvYq30kG60T/TP1ueT7YyU=;
-        b=gzx8G5h2R/bC1BdZsHnDKnQvsNshXqoJ3SPXmuchvEovLyJt8D7cLyiKJUBrYr5ibB
-         E1oM8YgjtEhCniHl3ei1IaDwlkD16hTLuSi10sOdFXwffL+p9XYPFnLqOW/YzjtOj/l4
-         zRwKcCKXDgYb6cZCdu3TZvbffXX2eN1powDtc=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TyNTxOO8d0/so7FLJvNYLA4tnlvHOuswBBULyEBp4vw=;
+        b=xZOOw2PXi5Umngn6IbWtzJnza+IklrqzJnCgQKXBwVBIRXoFGfv3x2kZhhivYE3JMC
+         C3juNnUazo3Nw0KcDii5KndKb6lxoF7p8Onmp29ErQ96ORZH/59Pexo49AkU2AlhFTfj
+         e+l1ZoU1SPm2h5M+q/BsAFlq28Pd+iFiDYXwQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=i39+7fWMomqF2sWGrYxVaq2R3pcgMnDmYpMYHdxfSp0PBTQDele+kTNOChsIgM1q7P
-         6P1al+TlXdizS9UOpzImOTN/b1b/sn6IpKoiM4s/R5IagvdWBdnQvFKHN5qoqotZOHuj
-         UuRh+pIAA99Qp4K3Vm4jjpzsUJBCcsB6sXBOk=
-Received: by 10.220.124.196 with SMTP id v4mr903774vcr.183.1285633662929;
-        Mon, 27 Sep 2010 17:27:42 -0700 (PDT)
-Received: from burratino (dhcp-11-17.cs.uchicago.edu [128.135.11.176])
-        by mx.google.com with ESMTPS id w31sm4259221vbs.5.2010.09.27.17.27.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 27 Sep 2010 17:27:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7FEED963-13E1-4A77-959A-FFD06669ED13@sb.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Pk0VIiNUYbrfHVBfutD50i0GtflOLa3QiWdqVz2y/pIKnmCDtAZ8t3uKnQixVnn7Lf
+         vTW/dwHzmWoUEehIIxUtwmsgxcy5CMeRldoekK6GkyvB8/6FdSmVv46kkFVnZ0eOHcvP
+         z5a62E9fwRrUx3x26bYPHixXfukiORl80f1Rs=
+Received: by 10.216.159.143 with SMTP id s15mr338503wek.69.1285636089633; Mon,
+ 27 Sep 2010 18:08:09 -0700 (PDT)
+Received: by 10.216.153.195 with HTTP; Mon, 27 Sep 2010 18:08:09 -0700 (PDT)
+In-Reply-To: <7v62xqx20o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157383>
 
-Kevin Ballard wrote:
+2010/9/28 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>
+>> Subject: Re: [PATCH 3/6] pathspec: cache string length when initiali=
+ze pathspec
+>
+> s/initialize/initializing/;
+>
+>> This field will be used when tree_entry_interesting() is converted t=
+o
+>> use struct pathspec. Currently it uses pathlens[] in struct
+>> diff_options to avoid calculating string over and over again.
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
+>> =C2=A0cache.h | =C2=A0 =C2=A03 +++
+>> =C2=A0dir.c =C2=A0 | =C2=A0 11 ++++++++++-
+>> =C2=A02 files changed, 13 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/cache.h b/cache.h
+>> index 6227ddb..045c9fc 100644
+>> --- a/cache.h
+>> +++ b/cache.h
+>> @@ -495,6 +495,9 @@ extern int ie_modified(const struct index_state =
+*, struct cache_entry *, struct
+>> =C2=A0struct pathspec {
+>> =C2=A0 =C2=A0 =C2=A0 const char **raw;
+>> =C2=A0 =C2=A0 =C2=A0 int nr;
+>> + =C2=A0 =C2=A0 struct pathspec_item {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int len;
+>> + =C2=A0 =C2=A0 } *items;
+>
+> Hmm... I would have expected to see
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct pathspec_item {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *pa=
+ttern;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int len;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0};
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct pathspec {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0struct pathspe=
+c_item *items;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int nr;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0};
+>
+> as you would be allocating a structure anyway, but persumably many pl=
+aces
+> take their input as a NULL terminated "char **" array, and keeping su=
+ch an
+> array around as the "raw" field may be easier in refactoring.
 
-> I looked at the existing ones. I am unable to find any tests that
-> actually test setting the rename/copy score to anything other than
-> the default
-
-Yep, a quick grep shows there is none.  I think the precise meaning
-of the scores is subject to change, but a test for 1% should be
-reliable enough. :)  (Or 0%, except that that is a magic number
-with the current code.)
-
-I can look into it tomorrow if no one else gets around to it before
-then.
-
-'night,
-Jonathan
+pathspec_item.pattern is added later on when I implement negative
+pathspec so it's not too different from your expectation. "raw"
+however is kept. The reason (again in my WIP negative pathspec) is
+that I use "!" alone to denote a negative pathspec. So if user gives {
+"foo", "!", "foo/bar", NULL }, "raw" will contain exactly that, but
+there are only two pathspec_item for "foo" and "foo/bar" (with
+negative flag set).
+--=20
+Duy
