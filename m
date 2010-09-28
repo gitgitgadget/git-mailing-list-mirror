@@ -1,80 +1,62 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH v3 1/3] tests: Prepare --textconv tests for
- correctly-failing conversion program
-Date: Tue, 28 Sep 2010 09:23:57 -0400
-Message-ID: <20100928132356.GA5829@sigill.intra.peff.net>
-References: <cover.1285351816.git.kirr@landau.phys.spbu.ru>
- <66d4603c7e21561557f612690d6196e7ae0b38f9.1285351816.git.kirr@landau.phys.spbu.ru>
- <7vsk0vyriw.fsf@alter.siamese.dyndns.org>
- <20100928120722.GA29525@landau.phys.spbu.ru>
+From: Tuomo <tuo.tie@gmail.com>
+Subject: Another way to compare tools: is it possible to transfer full history?
+Date: Tue, 28 Sep 2010 13:44:53 +0000 (UTC)
+Message-ID: <loom.20100928T153519-936@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	Cl??ment Poulain <clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Tue Sep 28 15:24:16 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 28 15:50:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0aAB-0008JT-4t
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 15:24:07 +0200
+	id 1P0aZS-0000bA-Ni
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 15:50:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754685Ab0I1NYA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 09:24:00 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59700 "EHLO peff.net"
+	id S1753817Ab0I1NuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 09:50:07 -0400
+Received: from lo.gmane.org ([80.91.229.12]:54312 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754631Ab0I1NYA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 09:24:00 -0400
-Received: (qmail 28376 invoked by uid 111); 28 Sep 2010 13:23:59 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 28 Sep 2010 13:23:59 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 28 Sep 2010 09:23:57 -0400
-Content-Disposition: inline
-In-Reply-To: <20100928120722.GA29525@landau.phys.spbu.ru>
+	id S1753131Ab0I1NuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 09:50:05 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P0aZI-0000WK-3o
+	for git@vger.kernel.org; Tue, 28 Sep 2010 15:50:04 +0200
+Received: from esprx02x.nokia.com ([192.100.124.219])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 15:50:04 +0200
+Received: from tuo.tie by esprx02x.nokia.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 15:50:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 192.100.124.219 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157423>
 
-On Tue, Sep 28, 2010 at 04:07:22PM +0400, Kirill Smelkov wrote:
+I have seen lots of comparisons between source control tools, 
+but have not found a comparison that would explain the fundamental differences 
+and similarities in a way that would really let me choose. 
+So I decided to try a new approach: if one tries to transfer the full history 
+of an application or a larger product/project, which features can I rely on 
+finding in any decently recent tool?
 
-> > Granted, echo is forgiving and will concatenate the arguments it gets with
-> > a space in between, but you would either want to either:
-> > 
-> >  (1) make it more explicit that helper gets only one argument, by saying
-> >      "$1" instead of "$@", in all places in the helper script; or
-> > 
-> >  (2) if you are planning to make 'helper' capable of handling multiple
-> >      input files, show the error message for the ones that are not binary
-> >      (you would probably need a loop for that).
-> > 
-> > I think (1) would be sufficient in this case.
-> 
-> I too think (1) is right. It was just that originally there was $@
-> (which I now understand was wrong). So ok to apply the following patch
-> on top of this series? (I assume it's ok, and will repost the whole
-> thing)
+Let's start from Git vs. Mercurial: is it possible to move the whole history 
+of an application (with or without submodules) from Git to Mercurial? 
+From Mercurial to Git? 
+If it is not always possible, what is the feature that might completely 
+prevent the whole attempt? If partial transfer is possible, what information 
+might be missing in the result?
 
-No, "helper" is supposed to be able to take multiple arguments, at least
-in t4042. See the "changing textconv invalidates cache" test. The extra
-argument comes from the user, not from git.
-
->  t/t4042-diff-textconv-caching.sh |    4 ++--
-
-Why are we touching t4042 at all in this series? We are not actually
-adding any tests to it, AFAICT.
-
->  t/t8006-blame-textconv.sh        |    4 ++--
->  t/t8007-cat-file-textconv.sh     |    4 ++--
-
-These ones simply copied the helper script, and could be switched to use
-$1.
-
--Peff
+I am not interested in whether it is easy or fast in practice. 
+I am only interested in the concepts and finding equivalent classes 
+for the tools or at least their core concepts.
