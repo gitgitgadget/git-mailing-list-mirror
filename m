@@ -1,181 +1,90 @@
-From: John Clemens <clemej@gmail.com>
-Subject: mirroring and development with three levels of repositories?
-Date: Tue, 28 Sep 2010 13:25:40 -0400
-Message-ID: <AANLkTinFiOA6Grzk16W2D=k8Xt+EgTanrS7iryW2evop@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 28 19:25:57 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: Qn about git pull and git fetch
+Date: Tue, 28 Sep 2010 13:33:42 -0400
+Message-ID: <9732E43E-124D-4145-A289-2E78F2277ACE@gernhardtsoftware.com>
+References: <AANLkTi=-UU8X-7h8c4=UENRwNe+G2xGy54YhvWPnnY7y@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: suvayu ali <fatkasuvayu+linux@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 19:33:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0dw5-0005qW-AE
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 19:25:49 +0200
+	id 1P0e3z-00012H-4K
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 19:33:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755524Ab0I1RZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 13:25:42 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:61445 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752082Ab0I1RZl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 13:25:41 -0400
-Received: by bwz11 with SMTP id 11so4328327bwz.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 10:25:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=8KvoQqbbTI+nZzTbHCiCyRC3ZcNa2LTJooN95D5sBNU=;
-        b=nU7KvKBwspr4dweNdr6fnV+36EzsEd11LeVZULsCUyJ7WjlI//Nf1BaOus3ULlvGG/
-         4fqRtHeXHCOkVLq9x8YdkcH7+zTpSaISXnDysR191BA3O5ugO+3A8pvZ7YOIADRiDOat
-         CI2UvPjtCMxK06MkFcoYT3rs5YcrzAvMYMn+Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=WK4Z90uZCKb5zd6IZOlM+vd9TTccUhO/6xFu953xns3Hdm0nbpa82Ec9SITGb3dKID
-         lFk/Kckbb366AhOhpouuEU03YKyyJo1RPQlJSLLGUpnOWE5S5NrWUuOQOv60RDs8SmSW
-         2w8wC7TOZ/XIgo2vrKeSUGzbGZnZjtUr+VjAQ=
-Received: by 10.204.82.167 with SMTP id b39mr235575bkl.164.1285694740274; Tue,
- 28 Sep 2010 10:25:40 -0700 (PDT)
-Received: by 10.204.153.10 with HTTP; Tue, 28 Sep 2010 10:25:40 -0700 (PDT)
+	id S1754717Ab0I1Rdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 13:33:53 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:34367 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751010Ab0I1Rdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 13:33:52 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 1F2801FFC6B6; Tue, 28 Sep 2010 17:33:47 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 581DE1FFC544;
+	Tue, 28 Sep 2010 17:33:41 +0000 (UTC)
+In-Reply-To: <AANLkTi=-UU8X-7h8c4=UENRwNe+G2xGy54YhvWPnnY7y@mail.gmail.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157447>
 
-Apologies in advance for the long question.  I'm obviously doing something
-wrong, but I'm not sure what and searching hasn't provided me with anything.
-If there is a git-users mailing list this would be more appropriate for,
-please tell me.
 
-Short question:
-It it possible for a bare repository to have both local (company-wide) and
-remote (mirroring upstream) branches, as well as serving those branches to our
-devs? If so, how?
+On Sep 28, 2010, at 12:59 PM, suvayu ali wrote:
 
-Long question:
+> If I have a remote tracking repository, and I do a `git pull
+> origin master', the latest changes are merged into my currently
+> checked out branch. But the references to the remote repo are not.
 
-We're working on a project that's a collaboration between several companies.
-The full tree for everyone is stored on a central server that, for firewall
-reasons, only one person can access in the company.  So, that person creates
-and updates nightly a local mirror of the central server.  We then have a few
-branches of our own that we do development on inside the company, and
-periodically merge those branches into the main ones and push them upstream.
+> This is not an inconvenience for me, just a little puzzling since the
+> man page says git pull runs `git fetch' followed by `git mege'. Just
+> out of curiosity, is there any reason for this choice?
 
-In mercurial, we do the branching by cloning the local mirror on our internal
-server, having the devs push and pull from that repo, and then pushing those
-changes to our local mirror, which gets pushed to the central server.
+`git pull origin master` does the following:
+- `git fetch origin master` will fetch the master branch from remote
+   origin into FETCH_HEAD
+- `git merge` will then merge FETCH_HEAD into HEAD
 
-Now the central server has some things using git, and the git repo has
-6 branches within it, as opposed to individual repos.  The setup looks
-like this:
+It sounds like what you want is to get your branch as a tracking branch.
+If you see the following in `git remote show origin`:
 
-+----------+
-| upstream |  <--- contains tree with 6 branches
-+----------+
-    |
-------------- <---- firewall
-    |
-+--------------+
-| Local Mirror | <--- "git clone --mirror" from upstream.
-+--------------+
-    |
-    |---------|
-  +-----+     +-----+
-  | dev |     | dev |
-  +-----+     +-----+
-
-I would like to create two company-wide branches here that remain local,
-one that branches from upstream's HEAD, and one that branches from one
-of the existing branches on upstream (call it branch-a). I then want the devs
-to be able to git clone our mirror, and then switch to our company-local branch
-and hack away, putting thier changes on the company-wide server.
-
-I thought I'd do this in git by the following:
-
-(on client/dev machine):
-$ git clone http://local-server/local-mirror.git
-
-For later reference:
-$ git remote show origin
-* remote origin
-  Fetch URL: http://local-server/local-mirror.git
-  Push  URL: http://local-server/local-mirror.git
-  HEAD branch: xxx/stable
-  Remote branches:
-    feature             tracked
-    branch-a            tracked
-    xxx/master          tracked
-    xxx/feature1        tracked
-    xxx/feature2        tracked
-    xxx/stable          tracked
+[...]
   Local branch configured for 'git pull':
-    xxx/stable merges with remote xxx/stable
-  Local ref configured for 'git push':
-    xxx/stable pushes to xxx/stable (up to date)
+    master merges with remote master
+[...]
 
-Then, we create a new branch and push it to the server:
+Then all you have to do is `git pull`.  It will update all tracking
+branches for origin, then merge origin/master into master.  The command
+`git pull origin master` is telling git to override whatever defaults it
+has and merge the master branch from remote origin into your current HEAD.
 
-$ git branch company-name/test1
-$ git push origin company-name/test1
+Your branches should be set to track automatically but if they didn't for
+some reason and are using v1.7.0 or newer, you can:
 
-So far, so good, gitweb shows the new beanch in the mirror, pointing to
-HEAD.  Now lets create and push the other new company-wide branch:
+$ git branch --set-upstream master origin/next
+Branch master set up to track remote branch next from origin.
+$ git pull
 
-$ git checkout -b company-name/branch-a origin/branch-a
-$ git push origin company-name/branch-a
+If you're using git prior to v1.7.0, you can instead:
 
-Again, all seems well.  gitweb shows the new company-name/* branches on the
-local server.
+$ git config branch.master.remote origin
+$ git config branch.master.merge refs/heads/master
+$ git pull
 
-However, when you do a new clone of the local mirror, it now fails:
+(Note: You only have to use `git branch --set-upstream` or the `git
+config ...` lines once, not before every pull.)
 
-$ git clone http://local-server/local-mirror.git
-Initialized empty Git repository in /home/clemej/git/local-mirror/.git/
-warning: remote HEAD refers to nonexistent ref, unable to checkout.
-
-$ git branch -a
-remotes/origin/company-name/test1
-remotes/origin/company-name/branch-a
-
-Note the distinct absense of all the other branches in the repository.
-
-$ git remote show origin
-* remote origin
-  Fetch URL: http://local-server/local-mirror.git
-  Push  URL: http://lodql-server/local-mirror.git
-  HEAD branch: (unknown)
-  Remote branches:
-    company-name/test1       tracked
-    company-name/branch-a    tracked
-
-Jumping over to the server, we see:
-
-$ cd local-mirror.git/
-$ git remote show origin
-* remote origin
-  Fetch URL: http://upstream/tree.git
-  Push  URL: http://upstream/tree.git
-  HEAD branch: xxx/stable
-  Remote branches:
-    company-name/test1       stale (use 'git remote prune' to remove)
-    company-name/branch-a    stale (use 'git remote prune' to remove)
-    feature             tracked
-    branch-a            tracked
-    xxx/master          tracked
-    xxx/feature1        tracked
-    xxx/feature2        tracked
-    xxx/stable          tracked
-  Local refs will be mirrored by 'git push'
-
-So, I'm obviously not thinking about this the right way.  It it possible
-for a bare repository to have both local (company-wide) and remote (mirroring
-upstream) branches, as well as serving those branches to our devs?  If so, how?
-
-Thanks for your time,
-john.c
-
--- 
-John Clemens <clemej@gmail.com>
+~~ Brian
