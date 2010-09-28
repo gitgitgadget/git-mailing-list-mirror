@@ -1,94 +1,76 @@
-From: Bo Yang <struggleyb.nku@gmail.com>
-Subject: Re: [PATCH 0/6] Introduce pathspec struct
-Date: Tue, 28 Sep 2010 21:56:45 +0800
-Message-ID: <AANLkTinrOxDvzm2-zG+huNp=00+o4XqYwnsfhjOFEEoH@mail.gmail.com>
-References: <1284938514-16663-1-git-send-email-pclouds@gmail.com>
-	<7v7hi6us35.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH] send-email: Use To: headers in patch files
+Date: Tue, 28 Sep 2010 14:34:02 +0000
+Message-ID: <AANLkTimTmfORavF6pNGjC6L46_f+GOaz86jEzBPYUxF2@mail.gmail.com>
+References: <1285660964-26758-1-git-send-email-bebarino@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git <git@vger.kernel.org>, David Ripton <dripton@ripton.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 15:56:54 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Viresh Kumar <viresh.kumar@st.com>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 16:34:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0aft-00030k-M8
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 15:56:54 +0200
+	id 1P0bG8-00082t-Kg
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 16:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab0I1N4r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 09:56:47 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:35454 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753396Ab0I1N4r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 09:56:47 -0400
-Received: by iwn5 with SMTP id 5so6003688iwn.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 06:56:46 -0700 (PDT)
+	id S1755505Ab0I1OeM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 10:34:12 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:38819 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755090Ab0I1OeL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 10:34:11 -0400
+Received: by gyd8 with SMTP id 8so31309gyd.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 07:34:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=CtnE5/c7vxBlB4q4SyY1CaoQbddkmfoCKVUn6kQnphk=;
-        b=YHIhrSBIxIh4uTzgXJvTAySxd8RWZITw+M3cJHAtAmt+yeU578wQN6njyjIt7Q+qyb
-         1nDQr0MIPcd1FDHkzcWULKPo4vuI5gkEicYQA4pk49Iu89+rId+P7RHwwFewREnXHOgo
-         i7WoJP/V4LzQuwYNn8ORAnbxCvPiQCqTl+Kog=
+        bh=HX1zaeL2wLR8ywF1ZfIzvAwXIO4uTWz9TflMf0GlAec=;
+        b=S+YZW7EUF4k7hysVxEX554D5hkFVvy8KpyD5rCDsVygbnnWBrW0Wd/XvPb0Wnmg0Jd
+         rTKp3iK3ifxn6pAUIgOqXvEEWFj4D7ctp4586FdBr4fxboR190rn81sD261Og02LGOer
+         GoR8uXtoa8yxKWIib+lMf7zDMhf8OS6SsHWio=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=PAmooN+WmDur/cWscIsidp06bwMKuJ4oZMuH80Lay77c1wDTjKpUTMYpBWEQiU+aZu
-         N+9dS/an3mG3WDA5CfHLcHFw32HcZyMwVuDBTr+DpCmBF1lLvpzZfOFERnFUUMI2Tx10
-         DRmrnFNL4FUr6mh2eD7uWP6K20cY74RNY/2vM=
-Received: by 10.231.11.69 with SMTP id s5mr11030253ibs.38.1285682206016; Tue,
- 28 Sep 2010 06:56:46 -0700 (PDT)
-Received: by 10.231.13.197 with HTTP; Tue, 28 Sep 2010 06:56:45 -0700 (PDT)
-In-Reply-To: <7v7hi6us35.fsf@alter.siamese.dyndns.org>
+        b=fkeNSf5mPc5IOCaVOh3zw8MIMuxjT6CNjInoMHWTslq1O1v+tMdOTByjWIcD1Fbn1K
+         K0MSQDE8lJqcnhPYjv63TVISr9oxslxpHaYmhWYIxHGehPGM6TLvFffMbBJLpYlrzfWT
+         SosQnDE1IQAXj23UYjMl8WbNbWocPbsj1fPOk=
+Received: by 10.231.11.13 with SMTP id r13mr7677748ibr.137.1285684442226; Tue,
+ 28 Sep 2010 07:34:02 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Tue, 28 Sep 2010 07:34:02 -0700 (PDT)
+In-Reply-To: <1285660964-26758-1-git-send-email-bebarino@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157425>
 
-2010/9/28 Junio C Hamano <gitster@pobox.com>:
-> Just a couple of quick notes.
->
-> =A0- I had to eject Bo's "log -L range path" series in order to push =
-this
-> =A0 out on 'pu' as the range stuff adds new callsites to the old path=
-spec
-> =A0 API.
->
-> =A0 This is tentative and does not mean Bo's series is getting reject=
-ed;
-> =A0 I'd want to get its command line parsing around the pathnames fix=
-ed
-> =A0 anyway but I suspect the affected codepath would overlap between =
-the
-> =A0 two series. =A0Help is appreciated.
+On Tue, Sep 28, 2010 at 08:02, Stephen Boyd <bebarino@gmail.com> wrote:
 
-Ah, it is not very astonished to see this series put into 'pu' since I
-am not active these days. :)
+> +test_expect_success $PREREQ 'patches To headers are used by default'=
+ '
+> + =C2=A0 =C2=A0 =C2=A0 patch=3D`git format-patch -1 --to=3D"bodies@ex=
+ample.com"` &&
+> + =C2=A0 =C2=A0 =C2=A0 git send-email \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --dry-run \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --from=3D"Example =
+<nobody@example.com>" \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 --smtp-server rela=
+y.example.com \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $patch >stdout &&
+> + =C2=A0 =C2=A0 =C2=A0 grep "RCPT TO:<bodies@example.com>" stdout
+> +'
 
-Hmm, let me make a summary about the requirement for the pathname
-command line options:
-1. The syntax now 'git log <rev> -L l:m path1 -L l:m path2' got clash
-with current git command line style 'git subcommand dash-option <rev>
-path'. Since we support multiple paths with multiple ranges, I think
-the best way to comply with git command line style is to change it to
-'git log -L l:m path1 -L l:m path2 <rev>'.
+Why not:
 
-2. The way I parse the command line should make a little change, that
-in '-L' in callback to parse both range and path arguments.
-
-That's it?
-
---=20
-Regards!
-Bo
-----------------------------
-My blog: http://blog.morebits.org
-Why Git: http://www.whygitisbetterthanx.com/
+    git format-patch -1 --to=3D"bodies@example.com" &&
+    test_when_finished "rm *.patch" &&
+    git send-email [...] *.patch >out &&
+    [...]
