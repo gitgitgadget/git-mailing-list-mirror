@@ -1,66 +1,59 @@
-From: Adrian Buehlmann <adrian@cadifra.com>
-Subject: Re: Splitting the mailing list up
-Date: Tue, 28 Sep 2010 08:22:23 +0200
-Message-ID: <4CA1899F.2020509@cadifra.com>
-References: <20100925230022.6e2fd389.coolzone@it.dk>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: [PATCH] repack: add -F option that passes --no-reuse-delta to
+ pack-objects
+Date: Tue, 28 Sep 2010 08:44:51 +0200
+Message-ID: <20100928084451.78c13d17@jk.gs>
+References: <20100927133104.25ce5285@jk.gs>
+	<7vbp7j2krn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Rico Secada <coolzone@it.dk>
-X-From: git-owner@vger.kernel.org Tue Sep 28 08:29:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>, Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 08:44:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0Tgi-0003RG-R6
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 08:29:17 +0200
+	id 1P0Tvu-0007Sb-NP
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 08:44:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754192Ab0I1G3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 02:29:10 -0400
-Received: from relay01.pair.com ([209.68.5.15]:3051 "HELO relay01.pair.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750996Ab0I1G3J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 02:29:09 -0400
-X-Greylist: delayed 401 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Sep 2010 02:29:09 EDT
-Received: (qmail 90162 invoked from network); 28 Sep 2010 06:22:27 -0000
-Received: from 84.72.158.23 (HELO ?192.168.10.3?) (84.72.158.23)
-  by relay01.pair.com with SMTP; 28 Sep 2010 06:22:27 -0000
-X-pair-Authenticated: 84.72.158.23
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100825 Thunderbird/3.1.3
-In-Reply-To: <20100925230022.6e2fd389.coolzone@it.dk>
+	id S1753862Ab0I1Goy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 02:44:54 -0400
+Received: from zoidberg.org ([88.198.6.61]:49923 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753254Ab0I1Gox (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 02:44:53 -0400
+Received: from jk.gs ([::ffff:137.120.115.117])
+  (AUTH: LOGIN jast, SSL: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Tue, 28 Sep 2010 08:44:53 +0200
+  id 00400158.4CA18EE5.00000227
+In-Reply-To: <7vbp7j2krn.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157391>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157392>
 
-On 25.09.2010 23:00, Rico Secada wrote:
-> Hi all.
-> 
-> Would it be a bad idea to split the Git mailing list up in several
-> sub-categories?
-> 
-> Example:
-> 
-> announce@
-> dev@
-> user@
-> 
-> etc.
-> 
-> The list receives a lot of traffic and it might be beneficial to split
-> things up.
-> 
+--- Junio C Hamano <gitster@pobox.com> wrote:
 
-I think this would definitely be an improvement for git users. At least
-splitting up into dev and user, like Mercurial does it too (which I am
-used to). Not sure about announce though.
+> Jan Kr=C3=BCger <jk@jk.gs> writes:
+>=20
+> > Discussion point: it might make more sense to switch the meanings
+> > around, making -F do the 'bigger' routine and reverting -f to what
+> > it used to be. I don't feel strongly about that, however.
+>=20
+> That sounds sensible.  reuse_object is used only to z-recompress and
+> is not involved in precomputed delta selection, and under normal
+> circumstances it should not have much effect on the outcome.
+>=20
+> Please make it so.
 
-When I recently subscribed to this list (after having been a long time
-subscriber to the Mercurial lists too), I was interested in seeing
-discussions about git usage to help me get started with git.
+Already done. See the alternative patch (in a 2-series) at
+20100927141936.590d71b3@jk.gs
+<http://mid.gmane.org/20100927141936.590d71b3@jk.gs>. I Cc'd you and
+Nicolas acked it. Just saying. ;-)
 
-I also think searching the archives would be a bit easier if discussions
-of new git development details and its usage would be separated.
+-Jan
