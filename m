@@ -1,84 +1,124 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [msysGit] Pull request for msysGit patches
-Date: Tue, 28 Sep 2010 22:58:13 +0200
-Message-ID: <AANLkTikSxpXJkeneWbJQ_2g32w1bV-CEdyk2_5G2Xd+u@mail.gmail.com>
+Date: Tue, 28 Sep 2010 16:08:38 -0500
+Message-ID: <20100928210837.GA8317@capella.cs.uchicago.edu>
 References: <87ocbitd33.fsf@fox.patthoyts.tk> <201009282252.25688.j6t@kdbg.org>
-Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
 	msysgit@googlegroups.com, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Tue Sep 28 22:58:52 2010
+X-From: git-owner@vger.kernel.org Tue Sep 28 23:08:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0hG8-0002xe-EC
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:58:44 +0200
+	id 1P0hPp-0006zq-6K
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 23:08:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752811Ab0I1U6f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 16:58:35 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:43467 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752273Ab0I1U6e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 16:58:34 -0400
-Received: by gxk9 with SMTP id 9so37668gxk.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 13:58:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=CRJJh09RPiUeq8ppy5xrteKn3Cs6/AZ5JZ7xAX1FBt4=;
-        b=XEKfu3xaC1cwuDQ6e+UZCtH1fXVYGR7OsKa39j5gaZ15zYAxfvcL44STNwRyWfiD7w
-         Zy3/ltNa9QOrtmosVAFH8lQiPOm2IgFquyworoMaTwLMgtAnbiQ7Fj6niugpSJRldU2v
-         BuNzaTSMXQmXFyyQ0vy/i80nGzi5ctszDnucg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=OIEpwzTE6go7rZ9oSg3bV/2s7RsQrWYEXHOCHx0dLGvzicQA3kSHLsDClwHn34KcS6
-         /yVSr7WH10d9jYmRxRW3e3Vvt9pDo9txaeOUaVAxH9s8jbeZtHR5+rYLeg2mXn3mkG1E
-         SlYq4dudZS5IPOeZ14QaxP/ycTQyn/KopzCf8=
-Received: by 10.151.40.7 with SMTP id s7mr851331ybj.33.1285707513539; Tue, 28
- Sep 2010 13:58:33 -0700 (PDT)
-Received: by 10.220.100.135 with HTTP; Tue, 28 Sep 2010 13:58:13 -0700 (PDT)
+	id S1752855Ab0I1VIk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 17:08:40 -0400
+Received: from camembert.cs.uchicago.edu ([128.135.164.153]:45075 "EHLO
+	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750990Ab0I1VIj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 17:08:39 -0400
+Received: from capella.cs.uchicago.edu (capella.cs.uchicago.edu [128.135.24.228])
+	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 2D79CBA4D;
+	Tue, 28 Sep 2010 16:08:38 -0500 (CDT)
+Received: by capella.cs.uchicago.edu (Postfix, from userid 10442)
+	id 1FDB33085A; Tue, 28 Sep 2010 16:08:38 -0500 (CDT)
+Content-Disposition: inline
 In-Reply-To: <201009282252.25688.j6t@kdbg.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157472>
 
-On Tue, Sep 28, 2010 at 10:52 PM, Johannes Sixt <j6t@kdbg.org> wrote:
->> =A0 =A0 =A0 mingw: do not crash on open(NULL, ...)
+Johannes Sixt wrote:
+> On Dienstag, 28. September 2010, Pat Thoyts wrote:
+
+>> Johannes Schindelin (11):
+>>       Avoid TAGS/tags warning from GNU Make
 >
-> This one is bogus, and as it stands, it must have my Ack removed. :) =
-Needs the
-> same fix in mingw_fopen as mingw_freopen. (There remains an unprotect=
-ed
-> dereference of filename.)
->
+> OK.
 
-I believe the version in for-junio already has this fix squashed in.
-The following hunk, taken from
-http://repo.or.cz/w/git/mingw/4msysgit.git/blobdiff/4e93566b07dcf47ecb6=
-484d225418c04c1eedee6..b18500977d88b13803ecc60cf383538139ec09d8:/compat=
-/mingw.c
-shows that it is... Or are you thinking of something else?
+Wasn't this one reviewed on-list recently?
 
-@@ -346,7 +346,7 @@ FILE *mingw_fopen (const char *filename, const char=
- *otype)
- 	if (hide_dotfiles =3D=3D HIDE_DOTFILES_TRUE &&
- 	basename((char*)filename)[0] =3D=3D '.')
- 		hide =3D access(filename, F_OK);
--	if (!strcmp(filename, "/dev/null"))
-+	if (filename && !strcmp(filename, "/dev/null"))
- 		filename =3D "nul";
- 	file =3D fopen(filename, otype);
- 	if (file && hide && make_hidden(filename))
+-- 8< --
+From: Junio C Hamano <gitster@pobox.com>
+Subject: MinGW: avoid collisions between "tags" and "TAGS"
+
+On case insensitive filesystems, "tags" and "TAGS" target will try to
+overwrite the same file.  Allow MinGW to use "ETAGS" instead.
+
+These two targets do produce real files; do not put them on .PHONY target
+list.
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ Makefile |   15 +++++++++------
+ 1 files changed, 9 insertions(+), 6 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index b7a62cf..d3dcfb1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -390,6 +390,8 @@ SCRIPTS = $(patsubst %.sh,%,$(SCRIPT_SH)) \
+ 	  $(patsubst %.py,%,$(SCRIPT_PYTHON)) \
+ 	  git-instaweb
+ 
++ETAGS_TARGET = TAGS
++
+ # Empty...
+ EXTRA_PROGRAMS =
+ 
+@@ -1122,6 +1124,7 @@ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	NO_REGEX = YesPlease
+ 	NO_PYTHON = YesPlease
+ 	BLK_SHA1 = YesPlease
++	ETAGS_TARGET = ETAGS
+ 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/fnmatch -Icompat/win32
+ 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
+ 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/winansi.o \
+@@ -1961,11 +1964,11 @@ info:
+ pdf:
+ 	$(MAKE) -C Documentation pdf
+ 
+-TAGS:
+-	$(RM) TAGS
+-	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
++$(ETAGS_TARGET): FORCE
++	$(RM) $(ETAGS_TARGET)
++	$(FIND) . -name '*.[hcS]' -print | xargs etags -a -o $(ETAGS_TARGET)
+ 
+-tags:
++tags: FORCE
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+ 
+@@ -2235,7 +2238,7 @@ clean:
+ 	$(RM) $(TEST_PROGRAMS)
+ 	$(RM) -r bin-wrappers
+ 	$(RM) -r $(dep_dirs)
+-	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h TAGS tags cscope*
++	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
+ 	$(RM) -r autom4te.cache
+ 	$(RM) config.log config.mak.autogen config.mak.append config.status config.cache
+ 	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
+@@ -2259,7 +2262,7 @@ endif
+ 
+ .PHONY: all install clean strip
+ .PHONY: shell_compatibility_test please_set_SHELL_PATH_to_a_more_modern_shell
+-.PHONY: FORCE TAGS tags cscope
++.PHONY: FORCE cscope
+ 
+ ### Check documentation
+ #
+-- 
+1.7.3.1.gd86b1
