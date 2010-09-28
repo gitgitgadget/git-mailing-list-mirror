@@ -1,62 +1,94 @@
-From: Tuomo <tuo.tie@gmail.com>
-Subject: Another way to compare tools: is it possible to transfer full history?
-Date: Tue, 28 Sep 2010 13:44:53 +0000 (UTC)
-Message-ID: <loom.20100928T153519-936@post.gmane.org>
+From: Bo Yang <struggleyb.nku@gmail.com>
+Subject: Re: [PATCH 0/6] Introduce pathspec struct
+Date: Tue, 28 Sep 2010 21:56:45 +0800
+Message-ID: <AANLkTinrOxDvzm2-zG+huNp=00+o4XqYwnsfhjOFEEoH@mail.gmail.com>
+References: <1284938514-16663-1-git-send-email-pclouds@gmail.com>
+	<7v7hi6us35.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 28 15:50:15 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	git <git@vger.kernel.org>, David Ripton <dripton@ripton.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 15:56:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0aZS-0000bA-Ni
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 15:50:15 +0200
+	id 1P0aft-00030k-M8
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 15:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753817Ab0I1NuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 09:50:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:54312 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753131Ab0I1NuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 09:50:05 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P0aZI-0000WK-3o
-	for git@vger.kernel.org; Tue, 28 Sep 2010 15:50:04 +0200
-Received: from esprx02x.nokia.com ([192.100.124.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 15:50:04 +0200
-Received: from tuo.tie by esprx02x.nokia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 15:50:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 192.100.124.219 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8)
+	id S1754581Ab0I1N4r convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 09:56:47 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:35454 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753396Ab0I1N4r convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 09:56:47 -0400
+Received: by iwn5 with SMTP id 5so6003688iwn.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 06:56:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CtnE5/c7vxBlB4q4SyY1CaoQbddkmfoCKVUn6kQnphk=;
+        b=YHIhrSBIxIh4uTzgXJvTAySxd8RWZITw+M3cJHAtAmt+yeU578wQN6njyjIt7Q+qyb
+         1nDQr0MIPcd1FDHkzcWULKPo4vuI5gkEicYQA4pk49Iu89+rId+P7RHwwFewREnXHOgo
+         i7WoJP/V4LzQuwYNn8ORAnbxCvPiQCqTl+Kog=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=PAmooN+WmDur/cWscIsidp06bwMKuJ4oZMuH80Lay77c1wDTjKpUTMYpBWEQiU+aZu
+         N+9dS/an3mG3WDA5CfHLcHFw32HcZyMwVuDBTr+DpCmBF1lLvpzZfOFERnFUUMI2Tx10
+         DRmrnFNL4FUr6mh2eD7uWP6K20cY74RNY/2vM=
+Received: by 10.231.11.69 with SMTP id s5mr11030253ibs.38.1285682206016; Tue,
+ 28 Sep 2010 06:56:46 -0700 (PDT)
+Received: by 10.231.13.197 with HTTP; Tue, 28 Sep 2010 06:56:45 -0700 (PDT)
+In-Reply-To: <7v7hi6us35.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157423>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157424>
 
-I have seen lots of comparisons between source control tools, 
-but have not found a comparison that would explain the fundamental differences 
-and similarities in a way that would really let me choose. 
-So I decided to try a new approach: if one tries to transfer the full history 
-of an application or a larger product/project, which features can I rely on 
-finding in any decently recent tool?
+2010/9/28 Junio C Hamano <gitster@pobox.com>:
+> Just a couple of quick notes.
+>
+> =A0- I had to eject Bo's "log -L range path" series in order to push =
+this
+> =A0 out on 'pu' as the range stuff adds new callsites to the old path=
+spec
+> =A0 API.
+>
+> =A0 This is tentative and does not mean Bo's series is getting reject=
+ed;
+> =A0 I'd want to get its command line parsing around the pathnames fix=
+ed
+> =A0 anyway but I suspect the affected codepath would overlap between =
+the
+> =A0 two series. =A0Help is appreciated.
 
-Let's start from Git vs. Mercurial: is it possible to move the whole history 
-of an application (with or without submodules) from Git to Mercurial? 
-From Mercurial to Git? 
-If it is not always possible, what is the feature that might completely 
-prevent the whole attempt? If partial transfer is possible, what information 
-might be missing in the result?
+Ah, it is not very astonished to see this series put into 'pu' since I
+am not active these days. :)
 
-I am not interested in whether it is easy or fast in practice. 
-I am only interested in the concepts and finding equivalent classes 
-for the tools or at least their core concepts.
+Hmm, let me make a summary about the requirement for the pathname
+command line options:
+1. The syntax now 'git log <rev> -L l:m path1 -L l:m path2' got clash
+with current git command line style 'git subcommand dash-option <rev>
+path'. Since we support multiple paths with multiple ranges, I think
+the best way to comply with git command line style is to change it to
+'git log -L l:m path1 -L l:m path2 <rev>'.
+
+2. The way I parse the command line should make a little change, that
+in '-L' in callback to parse both range and path arguments.
+
+That's it?
+
+--=20
+Regards!
+Bo
+----------------------------
+My blog: http://blog.morebits.org
+Why Git: http://www.whygitisbetterthanx.com/
