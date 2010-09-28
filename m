@@ -1,269 +1,77 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] Makefile: implement help target
-Date: Tue, 28 Sep 2010 22:38:04 +0200
-Message-ID: <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
-References: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Andreas Ericsson <ae@op5.se>,
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Another way to compare tools: is it possible to transfer full history?
+Date: Tue, 28 Sep 2010 15:48:07 -0500
+Message-ID: <AANLkTi=oRv4NnG0yWCpmj+AVXijGU-EK5rAHUZ4dZLQV@mail.gmail.com>
+References: <loom.20100928T153519-936@post.gmane.org>
+	<4CA20169.2040606@dbservice.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Tuomo <tuo.tie@gmail.com>, git@vger.kernel.org,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Sep 28 22:38:20 2010
+	Rocco Rutte <pdmef@gmx.net>,
+	David Barr <david.barr@cordelta.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 22:48:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0gwK-0003b7-Js
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:38:17 +0200
+	id 1P0h69-0007Fd-5A
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 22:48:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751164Ab0I1Uh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 16:37:57 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:36578 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750915Ab0I1Uh4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 16:37:56 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id BC1C427C;
-	Tue, 28 Sep 2010 16:37:55 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 28 Sep 2010 16:37:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=8HhGHfGiJBgPRzx2cprc6iariyQ=; b=Gup+KcN6r6f5I/BSr3wmf/yguP1hD2zN4PJI8NcX00RdkTEm7GO2c7nY/jlW8jIeB8iUqmnEhSBUYN6XPdUtp5y6FmBxHr4BfTEW+vreuKnSDt5ZYSQRrpuKOJIPWa2fn9n5Bn/jwBoPqQAr/IYYyCOQv062rYXvpY2pnQfCxMA=
-X-Sasl-enc: 8C2zMzIp+T0nqSUSyK0FwNxLtUIxMaAh6Rl8Y+D/YTAt 1285706274
-Received: from localhost (p54858FBF.dip0.t-ipconnect.de [84.133.143.191])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 651475E2A8B;
-	Tue, 28 Sep 2010 16:37:54 -0400 (EDT)
-X-Mailer: git-send-email 1.7.3.98.g5ad7d
-In-Reply-To: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com>
+	id S1752131Ab0I1UsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 16:48:11 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:49700 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751361Ab0I1UsK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 16:48:10 -0400
+Received: by gxk9 with SMTP id 9so33014gxk.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 13:48:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=rEDWWG7ImtG19dRQvnU00K1quEqHhtKYaobGRwWwhYM=;
+        b=ZV60+x1jJnF4yZAZHhVqPePUla5HWuS5HyilEtQm1FnzeNVDRFL7l04hIDTUs8MXUh
+         X2lryL+jIRz39n+NPLISe/RnaoIcr6H6HRhfjuuDAoBpI89eCpfzi5SDu1UrG7ENROdH
+         LHpC27OZ66aM95OzKYJWfxbagmGgL2TzwIW/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=SjLfA2IhQL35Y5O+6Q4BirVolQivYk305vApDpNC3C+TviZ+wa3JhSCMAM6TnsiuNO
+         3+6lTeedaaVfiquexAyIkDk4ZeSlNKQp6DJ/NKLR81w9bGRlzwABlqh3z225XQNCeVhs
+         PpGjUDZ8WjgKqFFzuh13VcaAP+M0SCcfo8LVE=
+Received: by 10.231.173.3 with SMTP id n3mr557801ibz.56.1285706887302; Tue, 28
+ Sep 2010 13:48:07 -0700 (PDT)
+Received: by 10.231.11.65 with HTTP; Tue, 28 Sep 2010 13:48:07 -0700 (PDT)
+In-Reply-To: <4CA20169.2040606@dbservice.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157467>
 
-with automatic help text collection from lines starting with "# Help: " and
-preceding a make target.
+Tomas Carnecky wrote:
 
-Suggested-by: Stephen Boyd <bebarino@gmail.com>
-Helped-by: Andreas Ericsson <andreas.ericsson@op5.se>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Now how's this for portability and such? New output:
+> (shameless plug: just this weekend I started collecting the various fast
+> import/export tools and made a webpage about it:
+> http://caurea.org/fast-export-import/.
 
-Build targets:
-    all:                Build the Git suite
-    dist:               Build git-$(GIT_VERSION).tar.gz source
-    dist-doc:           Build $(manpages).tar.gz and $(htmldocs).tar.gz
-    doc:                Build man pages and HTML docs
-    html:               Build HTML doc
-    info:               Build info docs
-    man:                Build man pages
-    pdf:                Build PDF docs
-    rpm:                Build source and binary RPM packages
-Clean targets:
-    clean:              Remove generated files but keep the configure script
-    distclean:          Remove generated files and the configure script
-Develop targets:
-    cscope:             Generate cscope index
-    tags:               Generate tags using ctags
-    TAGS:               Generate tags using etags
-Help targets:
-    help:               Show help for main make targets
-Install targets:
-    install-doc:        Install man pages
-    install-html:       Install HTML docs
-    install-info:       Install info docs
-    install:            Install the Git suite
-    install-man:        Install man pages
-    install-pdf:        Install PDF docs
-    quick-install-doc:  Install pregenerated man pages from origin/man
-    quick-install-html: Install pregenerated HTML pages from origin/html
-    quick-install-man:  Install pregenerated man pages from origin/man
-Test targets:
-    check-docs:         Check documentation coverage
-    coverage:           Check test coverage
-    cover_db_html:      Check test coverage and create HTML report
-    test:               Check the build by running the test suite
+This is awesome --- thank you!
 
- Makefile |   43 +++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 41 insertions(+), 2 deletions(-)
+In development:
 
-diff --git a/Makefile b/Makefile
-index db2efd6..497dd92 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1,4 +1,5 @@
- # The default target of this Makefile is...
-+# Help: Build: Build the Git suite
- all::
- 
- # Define V=1 to have a more verbose compile.
-@@ -1952,29 +1953,37 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
- $(VCSSVN_LIB): $(VCSSVN_OBJS)
- 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
- 
-+# Help: Build: Build man pages and HTML docs
- doc:
- 	$(MAKE) -C Documentation all
- 
-+# Help: Build: Build man pages
- man:
- 	$(MAKE) -C Documentation man
- 
-+# Help: Build: Build HTML doc
- html:
- 	$(MAKE) -C Documentation html
- 
-+# Help: Build: Build info docs
- info:
- 	$(MAKE) -C Documentation info
- 
-+# Help: Build: Build PDF docs
- pdf:
- 	$(MAKE) -C Documentation pdf
- 
-+# Help: Develop: Generate tags using etags
- TAGS:
- 	$(RM) TAGS
- 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
- 
-+# Help: Develop: Generate tags using ctags
- tags:
- 	$(RM) tags
- 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
- 
-+# Help: Develop: Generate cscope index
- cscope:
- 	$(RM) cscope*
- 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
-@@ -2040,6 +2049,7 @@ export NO_SVN_TESTS
- 
- ### Testing rules
- 
-+# Help: Test: Check the build by running the test suite
- test: all
- 	$(MAKE) -C t/ all
- 
-@@ -2099,6 +2109,7 @@ export gitexec_instdir
- 
- install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
- 
-+# Help: Install: Install the Git suite
- install: all
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
- 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
-@@ -2155,27 +2166,35 @@ endif
- install-gitweb:
- 	$(MAKE) -C gitweb install
- 
-+# Help: Install: Install man pages
- install-doc:
- 	$(MAKE) -C Documentation install
- 
-+# Help: Install: Install man pages
- install-man:
- 	$(MAKE) -C Documentation install-man
- 
-+# Help: Install: Install HTML docs
- install-html:
- 	$(MAKE) -C Documentation install-html
- 
-+# Help: Install: Install info docs
- install-info:
- 	$(MAKE) -C Documentation install-info
- 
-+# Help: Install: Install PDF docs
- install-pdf:
- 	$(MAKE) -C Documentation install-pdf
- 
-+# Help: Install: Install pregenerated man pages from origin/man
- quick-install-doc:
- 	$(MAKE) -C Documentation quick-install
- 
-+# Help: Install: Install pregenerated man pages from origin/man
- quick-install-man:
- 	$(MAKE) -C Documentation quick-install-man
- 
-+# Help: Install: Install pregenerated HTML pages from origin/html
- quick-install-html:
- 	$(MAKE) -C Documentation quick-install-html
- 
-@@ -2188,6 +2207,7 @@ git.spec: git.spec.in
- 	mv $@+ $@
- 
- GIT_TARNAME=git-$(GIT_VERSION)
-+# Help: Build: Build git-$(GIT_VERSION).tar.gz source
- dist: git.spec git-archive$(X) configure
- 	./git-archive --format=tar \
- 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
-@@ -2203,6 +2223,7 @@ dist: git.spec git-archive$(X) configure
- 	@$(RM) -r $(GIT_TARNAME)
- 	gzip -f -9 $(GIT_TARNAME).tar
- 
-+# Help: Build: Build source and binary RPM packages
- rpm: dist
- 	$(RPMBUILD) \
- 		--define "_source_filedigest_algorithm md5" \
-@@ -2211,6 +2232,8 @@ rpm: dist
- 
- htmldocs = git-htmldocs-$(GIT_VERSION)
- manpages = git-manpages-$(GIT_VERSION)
-+
-+# Help: Build: Build $(manpages).tar.gz and $(htmldocs).tar.gz
- dist-doc:
- 	$(RM) -r .doc-tmp-dir
- 	mkdir .doc-tmp-dir
-@@ -2230,10 +2253,11 @@ dist-doc:
- 	$(RM) -r .doc-tmp-dir
- 
- ### Cleaning rules
--
-+# Help: Clean: Remove generated files and the configure script
- distclean: clean
- 	$(RM) configure
- 
-+# Help: Clean: Remove generated files but keep the configure script
- clean:
- 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
- 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
-@@ -2268,7 +2292,7 @@ endif
- .PHONY: FORCE TAGS tags cscope
- 
- ### Check documentation
--#
-+# Help: Test: Check documentation coverage
- check-docs::
- 	@(for v in $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk; \
- 	do \
-@@ -2335,6 +2359,7 @@ check-builtins::
- #
- .PHONY: coverage coverage-clean coverage-build coverage-report
- 
-+# Help: Test: Check test coverage
- coverage:
- 	$(MAKE) coverage-build
- 	$(MAKE) coverage-report
-@@ -2370,5 +2395,19 @@ coverage-untested-functions: coverage-report
- cover_db: coverage-report
- 	gcov2perl -db cover_db *.gcov
- 
-+# Help: Test: Check test coverage and create HTML report
- cover_db_html: cover_db
- 	cover -report html -outputdir cover_db_html cover_db
-+
-+# Help: Help: Show help for main make targets
-+help:
-+	@awk '/^# Help:/ { l=substr($$0,8); \
-+		getline; \
-+		j=index(l,":"); \
-+		print substr(l,1,j-1), substr($$0,1,index($$0,":")), substr(l,j+2); \
-+		}' <Makefile | sort | while read category target text; \
-+	do \
-+		test "$$category" = "$$currcat" || printf "$$category targets:\n"; \
-+		currcat="$$category"; \
-+		printf "    %-20s%s\n" "$$target" "$$text"; \
-+	done
--- 
-1.7.3.98.g5ad7d
+svn-fe (contrib/svn-fe in Git) converts from an svn dump file to a
+fast-import stream. Stale webpage:
+http://barrbrain.github.com/svn-dump-fast-export/
+
+remote-hg (see git_remote_helpers/hg/ in
+http://github.com/SRabbelier/git) contains a partial hg fast-export
+implementation in exporter.py. I don't know how it compares to Rocco
+Rutte's exporter.
+
+Not sure if these belong on your list yet, but thought you might like
+to know about them. :)
