@@ -1,153 +1,181 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] gettext: use libcharset when available
-Date: Tue, 28 Sep 2010 17:07:51 +0000
-Message-ID: <AANLkTin_fu02QN0cUX15+02iO7xJ+tii5aVBqR2V_AVc@mail.gmail.com>
-References: <1285689926-5048-1-git-send-email-kusmabite@gmail.com>
+From: John Clemens <clemej@gmail.com>
+Subject: mirroring and development with three levels of repositories?
+Date: Tue, 28 Sep 2010 13:25:40 -0400
+Message-ID: <AANLkTinFiOA6Grzk16W2D=k8Xt+EgTanrS7iryW2evop@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 19:08:03 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Sep 28 19:25:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0des-0007Pk-47
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 19:08:02 +0200
+	id 1P0dw5-0005qW-AE
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 19:25:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757114Ab0I1RHx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 13:07:53 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58615 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756947Ab0I1RHw convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 13:07:52 -0400
-Received: by iwn5 with SMTP id 5so6200474iwn.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 10:07:52 -0700 (PDT)
+	id S1755524Ab0I1RZm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 13:25:42 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:61445 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752082Ab0I1RZl (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 13:25:41 -0400
+Received: by bwz11 with SMTP id 11so4328327bwz.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 10:25:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3QVjxOcPHVWUguzADuM7jzgkgjEqhE64lDCwXBzXYzc=;
-        b=svnL/zYlnQtWpSJaguLGLHYquoX9GkYHaqEXNLPa8+a35p2gRWgJGUCcz8cGEDpX3W
-         h45UJvUtjSujOwWLLmCTe/3dHs7Cyb1YCI7/KLRDzV4P0sX5n2Mfa+IILHQPY9nCRHKt
-         B/PgAHXe6BXsu1faxbpjfYCLcKXnjs9PH8Rpw=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=8KvoQqbbTI+nZzTbHCiCyRC3ZcNa2LTJooN95D5sBNU=;
+        b=nU7KvKBwspr4dweNdr6fnV+36EzsEd11LeVZULsCUyJ7WjlI//Nf1BaOus3ULlvGG/
+         4fqRtHeXHCOkVLq9x8YdkcH7+zTpSaISXnDysR191BA3O5ugO+3A8pvZ7YOIADRiDOat
+         CI2UvPjtCMxK06MkFcoYT3rs5YcrzAvMYMn+Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ktwyQBbOsBpF2TFztgT4qYqN1eJjiiGF4LEJztTrtUEb2DQ37Av3synWpK7MUbCehG
-         g7B/vx/WykdOgbHuW876u9iMlwNECuK6iBHM4rJjwi4eNhcgwJh7rqoHYqr4Vc+Ye8Wr
-         kH5j9PAgSLVoeG+uC4/XsrW0FWr7vmpUf9OFM=
-Received: by 10.231.146.136 with SMTP id h8mr274062ibv.0.1285693671863; Tue,
- 28 Sep 2010 10:07:51 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Tue, 28 Sep 2010 10:07:51 -0700 (PDT)
-In-Reply-To: <1285689926-5048-1-git-send-email-kusmabite@gmail.com>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=WK4Z90uZCKb5zd6IZOlM+vd9TTccUhO/6xFu953xns3Hdm0nbpa82Ec9SITGb3dKID
+         lFk/Kckbb366AhOhpouuEU03YKyyJo1RPQlJSLLGUpnOWE5S5NrWUuOQOv60RDs8SmSW
+         2w8wC7TOZ/XIgo2vrKeSUGzbGZnZjtUr+VjAQ=
+Received: by 10.204.82.167 with SMTP id b39mr235575bkl.164.1285694740274; Tue,
+ 28 Sep 2010 10:25:40 -0700 (PDT)
+Received: by 10.204.153.10 with HTTP; Tue, 28 Sep 2010 10:25:40 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157446>
 
-On Tue, Sep 28, 2010 at 16:05, Erik Faye-Lund <kusmabite@gmail.com> wro=
-te:
-> libcharset provides an even more portable way of quering the charset
-> of the current locale.
->
-> Use that instead of nl_langinfo unless NO_LIBCHARSET is set.
->
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
->
-> Windows doesn't have langinfo.h and nl_langinfo(), but libcharset was
-> invented for this very purpose. With this patch on top, ab/i18n
-> compiles without errors in msysGit.
->
-> There's still a bunch of lower-level issues on Windows, like gettext
-> ending up overloading our winansi-wrappings for printf and friends,
-> but let's take thinks one step at the time :)
->
-> =C2=A0configure.ac | =C2=A0 =C2=A06 ++++++
-> =C2=A0gettext.c =C2=A0 =C2=A0| =C2=A0 10 +++++++++-
-> =C2=A02 files changed, 15 insertions(+), 1 deletions(-)
->
-> diff --git a/configure.ac b/configure.ac
-> index 1821d89..d3139cd 100644
-> --- a/configure.ac
-> +++ b/configure.ac
-> @@ -810,6 +810,12 @@ AC_CHECK_HEADER([libintl.h],
-> =C2=A0[NO_GETTEXT=3DYesPlease])
-> =C2=A0AC_SUBST(NO_GETTEXT)
-> =C2=A0#
-> +# Define NO_LIBCHARSET if you don't have libcharset.h
-> +AC_CHECK_HEADER([libcharset.h],
-> +[NO_LIBCHARSET=3D],
-> +[NO_LIBCHARSET=3DYesPlease])
-> +AC_SUBST(NO_LIBCHARSET)
-> +#
-> =C2=A0# Define NO_STRCASESTR if you don't have strcasestr.
-> =C2=A0GIT_CHECK_FUNC(strcasestr,
-> =C2=A0[NO_STRCASESTR=3D],
-> diff --git a/gettext.c b/gettext.c
-> index 8644098..902268c 100644
-> --- a/gettext.c
-> +++ b/gettext.c
-> @@ -1,13 +1,17 @@
-> =C2=A0#include "exec_cmd.h"
-> =C2=A0#include <locale.h>
-> =C2=A0#include <libintl.h>
-> +#ifndef NO_LIBCHARSET
-> +#include <libcharset.h>
-> +#else
-> =C2=A0#include <langinfo.h>
-> +#endif
-> =C2=A0#include <stdlib.h>
->
-> =C2=A0extern void git_setup_gettext(void) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0char *podir;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0char *envdir =3D getenv("GIT_TEXTDOMAINDIR=
-");
-> - =C2=A0 =C2=A0 =C2=A0 char *charset;
-> + =C2=A0 =C2=A0 =C2=A0 const char *charset;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (envdir) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(void)bindtext=
-domain("git", envdir);
-> @@ -20,7 +24,11 @@ extern void git_setup_gettext(void) {
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(void)setlocale(LC_MESSAGES, "");
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(void)setlocale(LC_CTYPE, "");
-> +#ifndef NO_LIBCHARSET
-> + =C2=A0 =C2=A0 =C2=A0 charset =3D locale_charset();
-> +#else
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0charset =3D nl_langinfo(CODESET);
-> +#endif
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(void)bind_textdomain_codeset("git", chars=
-et);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(void)setlocale(LC_CTYPE, "C");
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(void)textdomain("git");
+Apologies in advance for the long question.  I'm obviously doing something
+wrong, but I'm not sure what and searching hasn't provided me with anything.
+If there is a git-users mailing list this would be more appropriate for,
+please tell me.
 
-Thanks for porting it to Windows. Some points:
+Short question:
+It it possible for a bare repository to have both local (company-wide) and
+remote (mirroring upstream) branches, as well as serving those branches to our
+devs? If so, how?
 
- * Nit: Should be NEEDS_LIBCHARSET instead of NO_LIBCHARSET, all the
-   variables that set library inclusions in the Makefile use the
-   NEED_* names.
+Long question:
 
- * GHC had a patch like this, it seems it affects NetBSD and OpenBSD
-   too, can anyone with these systems confirm:
-   http://hackage.haskell.org/trac/ghc/ticket/4080
+We're working on a project that's a collaboration between several companies.
+The full tree for everyone is stored on a central server that, for firewall
+reasons, only one person can access in the company.  So, that person creates
+and updates nightly a local mirror of the central server.  We then have a few
+branches of our own that we do development on inside the company, and
+periodically merge those branches into the main ones and push them upstream.
 
- * Their patch compiles a program that includes libcharset.h and
-   compiles "const char* charset =3D locale_charset();". I don't know i=
-f
-   this is needed, or whether just checking the header name like
-   you've done will do.
+In mercurial, we do the branching by cloning the local mirror on our internal
+server, having the devs push and pull from that repo, and then pushing those
+changes to our local mirror, which gets pushed to the central server.
 
- * They also have a HAVE_LANGINFO_H define and fall back on just
-   returning "", which works on GNU iconv. Maybe we should do this
-   too?
+Now the central server has some things using git, and the git repo has
+6 branches within it, as opposed to individual repos.  The setup looks
+like this:
 
-I'm not sure about any of this, since I've just been testing on
-Solaris, Linux and FreeBSD.
++----------+
+| upstream |  <--- contains tree with 6 branches
++----------+
+    |
+------------- <---- firewall
+    |
++--------------+
+| Local Mirror | <--- "git clone --mirror" from upstream.
++--------------+
+    |
+    |---------|
+  +-----+     +-----+
+  | dev |     | dev |
+  +-----+     +-----+
+
+I would like to create two company-wide branches here that remain local,
+one that branches from upstream's HEAD, and one that branches from one
+of the existing branches on upstream (call it branch-a). I then want the devs
+to be able to git clone our mirror, and then switch to our company-local branch
+and hack away, putting thier changes on the company-wide server.
+
+I thought I'd do this in git by the following:
+
+(on client/dev machine):
+$ git clone http://local-server/local-mirror.git
+
+For later reference:
+$ git remote show origin
+* remote origin
+  Fetch URL: http://local-server/local-mirror.git
+  Push  URL: http://local-server/local-mirror.git
+  HEAD branch: xxx/stable
+  Remote branches:
+    feature             tracked
+    branch-a            tracked
+    xxx/master          tracked
+    xxx/feature1        tracked
+    xxx/feature2        tracked
+    xxx/stable          tracked
+  Local branch configured for 'git pull':
+    xxx/stable merges with remote xxx/stable
+  Local ref configured for 'git push':
+    xxx/stable pushes to xxx/stable (up to date)
+
+Then, we create a new branch and push it to the server:
+
+$ git branch company-name/test1
+$ git push origin company-name/test1
+
+So far, so good, gitweb shows the new beanch in the mirror, pointing to
+HEAD.  Now lets create and push the other new company-wide branch:
+
+$ git checkout -b company-name/branch-a origin/branch-a
+$ git push origin company-name/branch-a
+
+Again, all seems well.  gitweb shows the new company-name/* branches on the
+local server.
+
+However, when you do a new clone of the local mirror, it now fails:
+
+$ git clone http://local-server/local-mirror.git
+Initialized empty Git repository in /home/clemej/git/local-mirror/.git/
+warning: remote HEAD refers to nonexistent ref, unable to checkout.
+
+$ git branch -a
+remotes/origin/company-name/test1
+remotes/origin/company-name/branch-a
+
+Note the distinct absense of all the other branches in the repository.
+
+$ git remote show origin
+* remote origin
+  Fetch URL: http://local-server/local-mirror.git
+  Push  URL: http://lodql-server/local-mirror.git
+  HEAD branch: (unknown)
+  Remote branches:
+    company-name/test1       tracked
+    company-name/branch-a    tracked
+
+Jumping over to the server, we see:
+
+$ cd local-mirror.git/
+$ git remote show origin
+* remote origin
+  Fetch URL: http://upstream/tree.git
+  Push  URL: http://upstream/tree.git
+  HEAD branch: xxx/stable
+  Remote branches:
+    company-name/test1       stale (use 'git remote prune' to remove)
+    company-name/branch-a    stale (use 'git remote prune' to remove)
+    feature             tracked
+    branch-a            tracked
+    xxx/master          tracked
+    xxx/feature1        tracked
+    xxx/feature2        tracked
+    xxx/stable          tracked
+  Local refs will be mirrored by 'git push'
+
+So, I'm obviously not thinking about this the right way.  It it possible
+for a bare repository to have both local (company-wide) and remote (mirroring
+upstream) branches, as well as serving those branches to our devs?  If so, how?
+
+Thanks for your time,
+john.c
+
+-- 
+John Clemens <clemej@gmail.com>
