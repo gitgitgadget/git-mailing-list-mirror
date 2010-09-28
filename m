@@ -1,134 +1,111 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] checkout: do not switch branch during a rebase unless -f is given
-Date: Tue, 28 Sep 2010 14:55:02 +1000
-Message-ID: <1285649702-24773-1-git-send-email-pclouds@gmail.com>
-References: <1285649564-24737-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] pathspec: add tree_recursive_diff parameter
+Date: Mon, 27 Sep 2010 22:28:25 -0700
+Message-ID: <7vk4m6v3ly.fsf@alter.siamese.dyndns.org>
+References: <1284939000-16907-1-git-send-email-pclouds@gmail.com>
+ <1284939000-16907-3-git-send-email-pclouds@gmail.com>
+ <7vocbivnfs.fsf@alter.siamese.dyndns.org>
+ <AANLkTinZt8kish9L2F-ad_boXByZTUj-BnYTp-vtePk0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 06:55:19 2010
+Cc: git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 07:28:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0SDm-0005iR-P8
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 06:55:19 +0200
+	id 1P0Sk8-0005Rr-3Y
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 07:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754142Ab0I1EzM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 00:55:12 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:52500 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751041Ab0I1EzL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 00:55:11 -0400
-Received: by pzk34 with SMTP id 34so1427107pzk.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 21:55:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=HbB/0O1QpRbqmoSMNrU3+1OzusKMcfXsjt68QtLyDRU=;
-        b=a0CS9smgobaqIKFCc1HIhPG8RoHoUMZ59ItX/q2F5lOVAdtFubUSm9lXTkIrYOy3ib
-         xkqdSAM48XBWp2KmbZT/2vOuAiEk5yy18TvQBUGf7MKS7tq09UTLx59rpHCUpfKy2MxO
-         1AQuupbEzdhS20C2VMsTWXDkHFUCoLuKVyhWM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=X06580MMQxP2XsVH0CY39OYOZQbzs7JmqPjzDcVn/TnGGKeMf3w2z19PUZMu4JXlOC
-         gdGaRpcBsxm/kikedGg3Kz25gQtVzOrXknzgGpaNrIlqOVFWFmyMnudSUzXKlz+JR79E
-         NjN6MCEwbnXt14uvvBNmb6XNsR/+dkMEmMHGQ=
-Received: by 10.114.131.2 with SMTP id e2mr9716641wad.158.1285649710650;
-        Mon, 27 Sep 2010 21:55:10 -0700 (PDT)
-Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
-        by mx.google.com with ESMTPS id s5sm11786845wak.0.2010.09.27.21.55.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Sep 2010 21:55:09 -0700 (PDT)
-Received: by dektop (sSMTP sendmail emulation); Tue, 28 Sep 2010 14:55:03 +1000
-X-Mailer: git-send-email 1.7.1.rc1.70.g788ca
-In-Reply-To: <1285649564-24737-1-git-send-email-pclouds@gmail.com>
+	id S1753981Ab0I1F2j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 01:28:39 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41867 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753170Ab0I1F2i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 01:28:38 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 527A1D9B12;
+	Tue, 28 Sep 2010 01:28:37 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=6jDR7CWy46de
+	GKa0AOOOz55YBiA=; b=yKMgfDeqwSsEw1cuJ/inUGNIXtjWk3qR63y2t18BAKVQ
+	5dyM2IE8tizI5xlXBSFr06DL3SmjdWTNHBqjx9JXZZjItNPNgD6gHRNmgICEZulH
+	4G6w+lv93OeLt3EKZEmHsxKiIc2OtxFSyScGPxcPHaZcpxjC8z8TdSz/pXU1two=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=t+vLaB
+	vTEazKfQanY++RSoljNqJV2NoZu/AndqeAZyTSbBM6YVt0TgDegNkic6JMxGalXD
+	qUp8OFIFBx7vKlcWBJRi1DvyzKV8gAetVLu2JFH0mjbydX9NhcJALRZdIOiZ/G13
+	brShWkP/q3+jom/j33BvrrFy9pTJkMRaNFs0o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2FD51D9B11;
+	Tue, 28 Sep 2010 01:28:35 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7946FD9B10; Tue, 28 Sep
+ 2010 01:28:32 -0400 (EDT)
+In-Reply-To: <AANLkTinZt8kish9L2F-ad_boXByZTUj-BnYTp-vtePk0@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Tue\, 28 Sep 2010 12\:38\:55 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3D60D092-CAC1-11DF-88F1-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157386>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157387>
 
-It does not make much sense to switch branch when you are in a middle
-of a rebase. Sometimes you might want to switch away for a moment then
-back with "git checkout - ". But I find myself so many times switching
-away then forget that I was rebasing something.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Avoid doing that by default. Users can use -f if they really want to.
+> 2010/9/28 Junio C Hamano <gitster@pobox.com>:
+>> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
+:
+>> ...
+>>>  - If it's recursive diff, directories are just an intermediate ste=
+p.
+>>>    All path must end with a file name. Thus, directories will be
+>>>    unconditionally matched.
+>>
+>> Hmm, I am not sure what you mean by this.  If the pathspec says a/b*=
+/c,
+>> you are in "a" and are deciding if you should descend to its subdire=
+ctory,
+>> then you would surely want to be able to say:
+>>
+>>  (1) Ah, the subdirectory I am looking at is "bar" and it does match=
+ "b*".
+>>      It might contain "c"; I should descend into it.
+>>
+>>  (2) Nope, the subdirectory I am looking at is "frotz" and it can ne=
+ver
+>>      match "b*", so there is no point recursing into it.
+>
+> I did not go that far, trying to analyse the pattern. When I wrote
+> "immediate step" I was thinking of "*foo" pattern, which effectively
+> means descending to any reachable directories because '*' matches
+> slashes too. I think that's the worst case.
+>
+> Anyway I did not know that I could borrow some optimizations from
+> pathspec_matches() in builtin/grep.c.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Sorry, the previous patch had wrong subject line
+As you noticed, over time we have polished our re-implementations of th=
+e
+pathspec logic to avoid needlessly descending into subdirectories, and =
+the
+one in the grep may be the latest incarnation of it.  The logic that us=
+es
+the path_simplify structure in dir.c may also offer you some inspiratio=
+ns.
 
- I know there are other commands like rebase ("git am" comes to mind)
- but I don't use those. Feel free to put some more on top if somebody
- finds it a good thing to do.
+Note that the worst case will fall out as a natural consequence of doin=
+g
+the fallback in the dumb and simple way, so you do not have to worry to=
+o
+much about it ;-)  I would prefer to see the new, consolidated logic to=
+ at
+least know the easy optimizations we already have.
 
- builtin/checkout.c         |    7 +++++++
- t/t2018-checkout-branch.sh |   22 ++++++++++++++++++++++
- 2 files changed, 29 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index cc622c0..7d8ba04 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -571,6 +571,13 @@ static int switch_branches(struct checkout_opts *o=
-pts, struct branch_info *new)
- 	struct branch_info old;
- 	unsigned char rev[20];
- 	int flag;
-+	struct stat st;
-+
-+	if (!opts->force &&
-+	    ((!stat(git_path("rebase-merge"), &st) && S_ISDIR(st.st_mode)) ||
-+	     (!stat(git_path("rebase-apply"), &st) && S_ISDIR(st.st_mode))))
-+		die("You should not switch branch during a rebase. Use '-f' if you r=
-eally want to.");
-+
- 	memset(&old, 0, sizeof(old));
- 	old.path =3D resolve_ref("HEAD", rev, 0, &flag);
- 	old.commit =3D lookup_commit_reference_gently(rev, 1);
-diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
-index fa69016..95a1da8 100755
---- a/t/t2018-checkout-branch.sh
-+++ b/t/t2018-checkout-branch.sh
-@@ -169,4 +169,26 @@ test_expect_success 'checkout -f -B to an existing=
- branch with mergeable changes
- 	test_must_fail test_dirty_mergeable
- '
-=20
-+test_expect_success 'checkout fails during rebase' '
-+	git reset --hard &&
-+	git checkout branch1 &&
-+	mkdir .git/rebase-merge &&
-+	test_must_fail git checkout branch2 &&
-+	git checkout -f branch2
-+'
-+
-+test_expect_success 'checkout fails during rebase (2)' '
-+	rmdir .git/rebase-merge &&
-+	git reset --hard &&
-+	git checkout branch1 &&
-+	mkdir .git/rebase-apply &&
-+	test_must_fail git checkout branch2 &&
-+	git checkout -f branch2
-+'
-+
-+# this is to be incorporated to the next test
-+test_expect_success 'cleanup' '
-+	rmdir .git/rebase-apply
-+'
-+
- test_done
---=20
-1.7.1.rc1.70.g788ca
+Thanks.
