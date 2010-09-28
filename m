@@ -1,60 +1,73 @@
-From: Thell Fowler <git@tbfowler.name>
-Subject: Re: [PATCHv2 2/2] diff: add synonyms for -M, -C, -B
-Date: Tue, 28 Sep 2010 16:15:27 -0500 (Central Daylight Time)
-Message-ID: <alpine.WNT.2.00.1009281611310.6716@GWNotebook>
-References: <FFDB2371-6C96-472C-A650-412546636450@sb.org> <1285631906-18200-2-git-send-email-kevin@sb.org>
+From: Aaron Plattner <aplattner@nvidia.com>
+Subject: [PATCH] checkout: add a space between the commit and "..."
+Date: Tue, 28 Sep 2010 15:23:32 -0700
+Message-ID: <20100928222332.GA28859@soprano.nvidia.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Wed Sep 29 00:23:51 2010
+Content-Type: text/plain; charset="us-ascii"
+Cc: <jkain@nvidia.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Sep 29 00:25:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0iaU-0008Cv-2t
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:23:50 +0200
+	id 1P0ic1-0000EH-87
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 00:25:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754555Ab0I1WXN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 18:23:13 -0400
-Received: from 216.38.49.125.servint.net ([216.38.49.125]:40970 "EHLO
-	vps5.pyrapat.com" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1754192Ab0I1WXM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 18:23:12 -0400
-X-Greylist: delayed 4057 seconds by postgrey-1.27 at vger.kernel.org; Tue, 28 Sep 2010 18:23:12 EDT
-Received: from ip70-178-75-143.ks.ks.cox.net ([70.178.75.143] helo=GWNotebook)
-	by vps5.pyrapat.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <git@tbfowler.name>)
-	id 1P0hWQ-0005GM-9l; Tue, 28 Sep 2010 16:15:34 -0500
-In-Reply-To: <1285631906-18200-2-git-send-email-kevin@sb.org>
-User-Agent: Alpine 2.00 (WNT 1167 2008-08-23)
-X-X-Sender: git+tbfowler.name@tbfowler.name
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - vps5.pyrapat.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - tbfowler.name
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1755286Ab0I1WZM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 18:25:12 -0400
+Received: from hqemgate04.nvidia.com ([216.228.121.35]:2082 "EHLO
+	hqemgate04.nvidia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755263Ab0I1WZJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 18:25:09 -0400
+Received: from hqnvupgp04.nvidia.com (Not Verified[172.20.161.15]) by hqemgate04.nvidia.com
+	id <B4ca26aaf0003>; Tue, 28 Sep 2010 15:22:39 -0700
+Received: from hqemhub02.nvidia.com ([172.17.108.22])
+  by hqnvupgp04.nvidia.com (PGP Universal service);
+  Tue, 28 Sep 2010 15:25:09 -0700
+X-PGP-Universal: processed;
+	by hqnvupgp04.nvidia.com on Tue, 28 Sep 2010 15:25:09 -0700
+Received: from soprano.nvidia.com (172.16.173.9) by hqemhub02.nvidia.com
+ (172.17.98.27) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 28 Sep
+ 2010 15:23:33 -0700
+Content-Disposition: inline
+X-NVConfidentiality: public
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157483>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157484>
 
-Just wanted to throw support behind this patch as it is already helping 
-our project to ease merging of a project that can't/won't modify some 
-files that we have extensively altered.
+Switching to a detached head prints something like
 
-Thanks for doing this Kevin!
+  HEAD is now at 9d14017... dir.c: squelch false uninitialized memory warning
 
-Just to note:  We are using this applied to msysgit's devel branch by 
-manually removing the diff.h chunk, applying the first patch, manually 
-fixing diff.h, hen applying the second patch.  Which so far has worked 
-just fine.
+These dots get selected when you double-click on the abbreviated
+commit hash, which makes it annoying to copy and paste.
 
+Add a space between the abbreviated commit and the dots, to improve
+copy and pasteability.
+
+Reported-by: Joe Kain <jkain@nvidia.com>
+Signed-off-by: Aaron Plattner <aplattner@nvidia.com>
+---
+ builtin/checkout.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index a54583b..ca1cae3 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -303,7 +303,7 @@ static void describe_detached_head(char *msg, struct commit *commit)
+ 	struct pretty_print_context ctx = {0};
+ 	parse_commit(commit);
+ 	pretty_print_commit(CMIT_FMT_ONELINE, commit, &sb, &ctx);
+-	fprintf(stderr, "%s %s... %s\n", msg,
++	fprintf(stderr, "%s %s ... %s\n", msg,
+ 		find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV), sb.buf);
+ 	strbuf_release(&sb);
+ }
 -- 
-Thell
+1.7.0.4
