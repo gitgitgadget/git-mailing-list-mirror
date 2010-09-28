@@ -1,51 +1,72 @@
-From: Zbyszek Szmek <zbyszek@in.waw.pl>
-Subject: Re: [PATCH] Makefile: implement help target
-Date: Tue, 28 Sep 2010 16:57:13 +0200
-Message-ID: <20100928145713.GE6756@in.waw.pl>
-References: <4CA1E10F.4080906@op5.se> <c16e8df7c8e9b562ce0e6cd6e543a83779cd2b25.1285684868.git.git@drmicha.warpmail.net> <AANLkTin9JZ1CErBaZjyLXBuBaX4Da7-2dgzotex+bu8X@mail.gmail.com>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [PATCH v3 1/3] tests: Prepare --textconv tests for correctly-failing conversion program
+Date: Tue, 28 Sep 2010 19:09:10 +0400
+Message-ID: <20100928150910.GA30544@landau.phys.spbu.ru>
+References: <cover.1285351816.git.kirr@landau.phys.spbu.ru> <66d4603c7e21561557f612690d6196e7ae0b38f9.1285351816.git.kirr@landau.phys.spbu.ru> <7vsk0vyriw.fsf@alter.siamese.dyndns.org> <20100928120722.GA29525@landau.phys.spbu.ru> <20100928132356.GA5829@sigill.intra.peff.net> <20100928143540.GA30357@landau.phys.spbu.ru> <20100928143928.GA8918@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Stephen Boyd <bebarino@gmail.com>, Andreas Ericsson <ae@op5.se>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 16:57:28 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	Cl??ment Poulain <clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Sep 28 17:09:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0bcU-0008VG-Ft
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 16:57:26 +0200
+	id 1P0bnz-0004T7-Ib
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 17:09:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756618Ab0I1O5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 10:57:21 -0400
-Received: from cwm83.internetdsl.tpnet.pl ([83.19.120.83]:4793 "EHLO
-	cwm83.internetdsl.tpnet.pl" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754281Ab0I1O5U (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 10:57:20 -0400
-Received: from zbyszek by cwm83.internetdsl.tpnet.pl with local (Exim 4.69)
-	(envelope-from <zbyszek@in.waw.pl>)
-	id 1P0bcH-0006pf-OT; Tue, 28 Sep 2010 16:57:13 +0200
+	id S1754270Ab0I1PJM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 11:09:12 -0400
+Received: from landau.phys.spbu.ru ([195.19.235.38]:45095 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753643Ab0I1PJL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 11:09:11 -0400
+Received: by landau.phys.spbu.ru (Postfix, from userid 506)
+	id 316DCFF718; Tue, 28 Sep 2010 19:09:10 +0400 (MSD)
 Content-Disposition: inline
-In-Reply-To: <AANLkTin9JZ1CErBaZjyLXBuBaX4Da7-2dgzotex+bu8X@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+In-Reply-To: <20100928143928.GA8918@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157433>
 
-Hi,
-the original output (divided into documentation, building, cleaning, etc.)
-seems to be much more readable. Maybe a sort key could be added to the
-begging of the help message and then stripped before output?
-Something like:
-  # Help: Building: compile everything
-  all:
-  
-  # Help: Cleaning: remove things
-  clean:
+On Tue, Sep 28, 2010 at 10:39:28AM -0400, Jeff King wrote:
+> On Tue, Sep 28, 2010 at 06:35:40PM +0400, Kirill Smelkov wrote:
+> 
+> > > >  t/t4042-diff-textconv-caching.sh |    4 ++--
+> > > 
+> > > Why are we touching t4042 at all in this series? We are not actually
+> > > adding any tests to it, AFAICT.
+> > 
+> > Because we want to catch potential wrong textconv invocation on non
+> > "bin: " files there too?
+> 
+> But we don't actually add any tests that display the problem there, do
+> we? And even if we wanted to test the diff implementation, wouldn't
+> t4030 be the write place to do that? t4042 is specifically about
+> textconv caching.
 
-Best,
-Zbyszek
+Yes, I hadn't added new tests there, but at least I've changed
+already-in-there helper to bail out if it is called on non "binary"
+files, so a small step, but still step forward, no?
+
+And I've changed that helper after doing `git grep` for textconv, and
+ideally we shouldn't keep those copy-pasted helpers in several tests (we
+have 3 at present - in t4042, t8006 and t8007), but move them into one
+common place some day.
+
+So in order to at least keep copies consistent between each other, I've
+changed them all in uniform manner.
+
+That was my rationale.
+
+
+Thanks,
+Kirill
