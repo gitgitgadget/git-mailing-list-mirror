@@ -1,94 +1,130 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/5] pathspec: add tree_recursive_diff parameter
-Date: Tue, 28 Sep 2010 12:38:55 +1000
-Message-ID: <AANLkTinZt8kish9L2F-ad_boXByZTUj-BnYTp-vtePk0@mail.gmail.com>
-References: <1284939000-16907-1-git-send-email-pclouds@gmail.com>
-	<1284939000-16907-3-git-send-email-pclouds@gmail.com>
-	<7vocbivnfs.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] commit: do not switch branch during a rebase unless -f is given
+Date: Tue, 28 Sep 2010 14:52:44 +1000
+Message-ID: <1285649564-24737-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 04:39:10 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Sep 28 06:53:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0Q60-0008F9-1s
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 04:39:08 +0200
+	id 1P0SBX-0005BR-H7
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 06:52:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760573Ab0I1Ci6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 27 Sep 2010 22:38:58 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46405 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759113Ab0I1Ci5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 27 Sep 2010 22:38:57 -0400
-Received: by wyb28 with SMTP id 28so4538530wyb.19
-        for <git@vger.kernel.org>; Mon, 27 Sep 2010 19:38:56 -0700 (PDT)
+	id S1754068Ab0I1Ewy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 00:52:54 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:46398 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753952Ab0I1Ewx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 00:52:53 -0400
+Received: by pwi1 with SMTP id 1so214323pwi.19
+        for <git@vger.kernel.org>; Mon, 27 Sep 2010 21:52:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=FEbwGfUu/Wq6Pk7TbMb44pgrRoOJ3eRkvuX93xoq1M4=;
-        b=BrWqUsTL/eYx/H/FXcMftBXrl8yMT50cVQOX6iMo8IhAhCLMQEMlboSUcqH/zpNNBF
-         sEsTEikopiF/AGzO1woFRYOZzq8+u7TaIY8HcKNYUIfmDdnDsFYPk6G55KE2RSpSrmwv
-         xSSKSRu+CyFLTKYLZflJIDGdubSJ1b0JXx3zk=
+        bh=q+7KmH2+XQY4ARbdN9Fbxg8dTYvfZwnshKQuzF+op3c=;
+        b=B2JFTxpl4EUIwA/iKYV7k7KyXEcYvohgyNMIUyD6yqnhdcW1uRybAe1Wx64yc+NJ6g
+         iiDttUicqHl3hvsxKZu0YwirbWaJ+OQOx08ElYCNU/QBAuhrkCkOLcepjWabq/RTun6t
+         jfyuWASzJRy4+2766AHGsAUMSRYP9BHwdSUtc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EU7DY418CN8h+0oVDNJGeMqH/hLHBoqcIfbKmLKCyV2ULscnKspAWPl9Mu4A8OyZSF
-         I20Vmgg+ybjKGzJe1cR6N750Jbg/UR+DgnMyZV4DwETKOj4R5gxyYnMSQ5swnv0sblMA
-         z7+0t9PnPdbjK3/i/sc7EvDJs+eNsrbLAc+z8=
-Received: by 10.216.21.204 with SMTP id r54mr7017249wer.95.1285641535940; Mon,
- 27 Sep 2010 19:38:55 -0700 (PDT)
-Received: by 10.216.153.195 with HTTP; Mon, 27 Sep 2010 19:38:55 -0700 (PDT)
-In-Reply-To: <7vocbivnfs.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=YNJTetotHW+Q/468dLWE8J3Z2qjZMHQM1c9nrwY8MU4yqlWGqqGu47PGrFZCp6fjtC
+         HnzKhP9Zk0Yb3ddHxhtRMQgN2dB02+sXZ0sWdDsYP3siSqzcTXmXjmYnSmBysfSSYavd
+         d8a/7Jg3qFGbnH0VddLLh5SAoG1PWef59ApFE=
+Received: by 10.143.33.1 with SMTP id l1mr7354618wfj.249.1285649573016;
+        Mon, 27 Sep 2010 21:52:53 -0700 (PDT)
+Received: from dektop (dektec3.lnk.telstra.net [165.228.202.174])
+        by mx.google.com with ESMTPS id o16sm8301062wfh.7.2010.09.27.21.52.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 27 Sep 2010 21:52:52 -0700 (PDT)
+Received: by dektop (sSMTP sendmail emulation); Tue, 28 Sep 2010 14:52:45 +1000
+X-Mailer: git-send-email 1.7.1.rc1.70.g788ca
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157385>
 
-2010/9/28 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> When wildcard match is implemented, a full path is needed to do fina=
-l
->> match. What type of diff_tree is performed determines how to treat
->> directories:
->>
->> =C2=A0- If it's recursive diff, directories are just an intermediate=
- step.
->> =C2=A0 =C2=A0All path must end with a file name. Thus, directories w=
-ill be
->> =C2=A0 =C2=A0unconditionally matched.
->
-> Hmm, I am not sure what you mean by this. =C2=A0If the pathspec says =
-a/b*/c,
-> you are in "a" and are deciding if you should descend to its subdirec=
-tory,
-> then you would surely want to be able to say:
->
-> =C2=A0(1) Ah, the subdirectory I am looking at is "bar" and it does m=
-atch "b*".
-> =C2=A0 =C2=A0 It might contain "c"; I should descend into it.
->
-> =C2=A0(2) Nope, the subdirectory I am looking at is "frotz" and it ca=
-n never
-> =C2=A0 =C2=A0 match "b*", so there is no point recursing into it.
->
+It does not make much sense to switch branch when you are in a middle
+of a rebase. Sometimes you might want to switch away for a moment then
+back with "git checkout - ". But I find myself so many times switching
+away then forget that I was rebasing something.
 
-I did not go that far, trying to analyse the pattern. When I wrote
-"immediate step" I was thinking of "*foo" pattern, which effectively
-means descending to any reachable directories because '*' matches
-slashes too. I think that's the worst case.
+Avoid doing that by default. Users can use -f if they really want to.
 
-Anyway I did not know that I could borrow some optimizations from
-pathspec_matches() in builtin/grep.c.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ I know there are other commands like rebase ("git am" comes to mind)
+ but I don't use those. Feel free to put some more on top if somebody
+ finds it a good thing to do.
+
+ builtin/checkout.c         |    7 +++++++
+ t/t2018-checkout-branch.sh |   22 ++++++++++++++++++++++
+ 2 files changed, 29 insertions(+), 0 deletions(-)
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index cc622c0..7d8ba04 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -571,6 +571,13 @@ static int switch_branches(struct checkout_opts *o=
+pts, struct branch_info *new)
+ 	struct branch_info old;
+ 	unsigned char rev[20];
+ 	int flag;
++	struct stat st;
++
++	if (!opts->force &&
++	    ((!stat(git_path("rebase-merge"), &st) && S_ISDIR(st.st_mode)) ||
++	     (!stat(git_path("rebase-apply"), &st) && S_ISDIR(st.st_mode))))
++		die("You should not switch branch during a rebase. Use '-f' if you r=
+eally want to.");
++
+ 	memset(&old, 0, sizeof(old));
+ 	old.path =3D resolve_ref("HEAD", rev, 0, &flag);
+ 	old.commit =3D lookup_commit_reference_gently(rev, 1);
+diff --git a/t/t2018-checkout-branch.sh b/t/t2018-checkout-branch.sh
+index fa69016..95a1da8 100755
+--- a/t/t2018-checkout-branch.sh
++++ b/t/t2018-checkout-branch.sh
+@@ -169,4 +169,26 @@ test_expect_success 'checkout -f -B to an existing=
+ branch with mergeable changes
+ 	test_must_fail test_dirty_mergeable
+ '
+=20
++test_expect_success 'checkout fails during rebase' '
++	git reset --hard &&
++	git checkout branch1 &&
++	mkdir .git/rebase-merge &&
++	test_must_fail git checkout branch2 &&
++	git checkout -f branch2
++'
++
++test_expect_success 'checkout fails during rebase (2)' '
++	rmdir .git/rebase-merge &&
++	git reset --hard &&
++	git checkout branch1 &&
++	mkdir .git/rebase-apply &&
++	test_must_fail git checkout branch2 &&
++	git checkout -f branch2
++'
++
++# this is to be incorporated to the next test
++test_expect_success 'cleanup' '
++	rmdir .git/rebase-apply
++'
++
+ test_done
 --=20
-Duy
+1.7.1.rc1.70.g788ca
