@@ -1,85 +1,171 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] Makefile: Add help target
-Date: Tue, 28 Sep 2010 13:37:56 +0200
-Message-ID: <AANLkTi=beUW5j4WSGOB__LNP7o60Wep_Y9n4YXOZUMtU@mail.gmail.com>
-References: <1285661638-27741-1-git-send-email-bebarino@gmail.com> <7v39suurpw.fsf@alter.siamese.dyndns.org>
+From: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+Subject: Re: [PATCH v3 1/3] tests: Prepare --textconv tests for correctly-failing conversion program
+Date: Tue, 28 Sep 2010 16:07:22 +0400
+Message-ID: <20100928120722.GA29525@landau.phys.spbu.ru>
+References: <cover.1285351816.git.kirr@landau.phys.spbu.ru> <66d4603c7e21561557f612690d6196e7ae0b38f9.1285351816.git.kirr@landau.phys.spbu.ru> <7vsk0vyriw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Stephen Boyd <bebarino@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	Cl??ment Poulain <clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Jeff King <peff@peff.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Sep 28 13:38:26 2010
+X-From: git-owner@vger.kernel.org Tue Sep 28 14:07:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0YVt-0004a6-I2
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 13:38:25 +0200
+	id 1P0Yy2-0005au-NJ
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Sep 2010 14:07:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752915Ab0I1LiS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 07:38:18 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:35982 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752426Ab0I1LiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 07:38:17 -0400
-Received: by gxk9 with SMTP id 9so1872591gxk.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 04:38:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=39Ajz9zd8Gw4IAWgWCIWUI8OzYCbV2dea4jD6+hwRhM=;
-        b=TNqXxzjkyxQCAnPWQPtefgrXBALqTPCT1pE/lZ6LlW441JFhMgs5C6YAd6Pynpsubr
-         dSQTr7fsXJfodZGbprQh+61BPxNDX7fhc7zAd1PM0dlNYLWpOA5DKz+vPaT+tUM5smJU
-         pHe0e8iZfzHixn+HZl7YSy6cKyX0Q9DPeYK90=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=EIrJjZXQ72TD4gv/Sj3YJnJ62x/Y9lxRkYDc16YXac72amtPCwYw/34k1Lb1AtP1Rx
-         EuwjjAjOxaCEhm3IYPC90mrsoMCU9BaVaokg1Mt5RV6ImnrpVM5lDxePuZiEY6CjIBqo
-         EIJN7K1x422rnznTfUPAtRnpDa5CzMIoDswak=
-Received: by 10.150.206.10 with SMTP id d10mr10669740ybg.350.1285673896974;
- Tue, 28 Sep 2010 04:38:16 -0700 (PDT)
-Received: by 10.151.82.3 with HTTP; Tue, 28 Sep 2010 04:37:56 -0700 (PDT)
-In-Reply-To: <7v39suurpw.fsf@alter.siamese.dyndns.org>
+	id S1753183Ab0I1MHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 08:07:25 -0400
+Received: from landau.phys.spbu.ru ([195.19.235.38]:56881 "EHLO
+	landau.phys.spbu.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753102Ab0I1MHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 08:07:24 -0400
+Received: by landau.phys.spbu.ru (Postfix, from userid 506)
+	id 5F8A9FF718; Tue, 28 Sep 2010 16:07:22 +0400 (MSD)
+Content-Disposition: inline
+In-Reply-To: <7vsk0vyriw.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.6i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157411>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157412>
 
-Heya,
+On Mon, Sep 27, 2010 at 11:23:35AM -0700, Junio C Hamano wrote:
+> Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
 
-On Tue, Sep 28, 2010 at 11:45, Junio C Hamano <gitster@pobox.com> wrote:
-> I do not look forward to having to maintain a large number of lines that
-> are doomed to go stale
 
-How often have we changed makefile targets recently? The most recent
-one that I can find is Jakub adding "install-gitweb" in 152d94348f,
-which was back in May 1st. The next one before that is the addition of
-'gitweb' in 62331ef1637f which was back in January 30th. Besides,
-'make help' doesn't have to contain _all_ Makefile targets, just the
-important ones that a user is most likely to need. Similar to 'git
-help' itself.
+> > +sed 's/^bin:/converted:/' "$@" >helper.out
+> 
+> Minor nit: this is inconsistent with the check done with grep above that
+> insists that the colon is followed by a SP.
 
-> and every time we need to touch we need to deal
-> with a lot of noise "@echo '"?
+Yes, you are right. I'll amend it.
 
-I don't understand what is particularly bothersome about the leading
-"@echo" lines. Adding or removing a target is still very easy even
-with the leading @echo's, the only thing that would be a PITA is
-reflowing paragraphs, currently, there _are_ no paragraphs, everything
-fits on one line.
+> > diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
+> > index 91f8198..7668099 100755
+> > --- a/t/t4042-diff-textconv-caching.sh
+> > +++ b/t/t4042-diff-textconv-caching.sh
+> > @@ -5,18 +5,19 @@ test_description='test textconv caching'
+> >  
+> >  cat >helper <<'EOF'
+> >  #!/bin/sh
+> > -sed 's/^/converted: /' "$@" >helper.out
+> > +grep -q '^bin: ' "$@" || { echo "E: $@ is not \"binary\" file" 1>&2; exit 1; }
+> 
+> You are not feeding arguments you think you are to the above "echo":
+> 
+>         $ cat >/var/tmp/j.sh <<\EOF
+>         #!/bin/sh
+>         e () {
+>                 i=0
+>                 for s
+>                 do
+>                         i=$(( $i + 1 ))
+>                         echo "$i: $s"
+>                 done
+>         }
+>         f () {
+>                 e "E: $@ is not binary"
+>         }
+>         f 1 "2 3" 4
+>         EOF
+>         $ sh /var/tmp/j.sh
+>         1: E: 1
+>         2: 2 3
+>         3: 4 is not binary
+> 
+> Granted, echo is forgiving and will concatenate the arguments it gets with
+> a space in between, but you would either want to either:
+> 
+>  (1) make it more explicit that helper gets only one argument, by saying
+>      "$1" instead of "$@", in all places in the helper script; or
+> 
+>  (2) if you are planning to make 'helper' capable of handling multiple
+>      input files, show the error message for the ones that are not binary
+>      (you would probably need a loop for that).
+> 
+> I think (1) would be sufficient in this case.
 
-> It might be a bit less distasteful if it were plain text additions at the
-> end of INSTALL file, though.
+I too think (1) is right. It was just that originally there was $@
+(which I now understand was wrong). So ok to apply the following patch
+on top of this series? (I assume it's ok, and will repost the whole
+thing)
 
-That does not help me nearly as much when I want to know how a
-makefile target is called. Am I wrong in asserting that having a "make
-help" target is an accepted "good practice" in the unix world?
+---- 8< ----
 
+From: Kirill Smelkov <kirr@mns.spb.ru>
+Date: Tue, 28 Sep 2010 15:34:48 +0400
+Subject: [PATCH 4/4] t4042,t8006,t8007: Textconv converter should take only one argument
+
+Textconv helper in this tests was incorrectly referencing $@, which goes
+agains textconv "spec". I quote Documentation/gitattributes.txt
+
+""" The `textconv` config option is used to define a program for
+    performing such a conversion. The program should take a single
+    argument, the name of a file to convert, and produce the
+    resulting text on stdout. """
+
+So correct textconv helpers to use $1 instead.
+
+Noticed-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Kirill Smelkov <kirr@mns.spb.ru>
+---
+ t/t4042-diff-textconv-caching.sh |    4 ++--
+ t/t8006-blame-textconv.sh        |    4 ++--
+ t/t8007-cat-file-textconv.sh     |    4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/t/t4042-diff-textconv-caching.sh b/t/t4042-diff-textconv-caching.sh
+index 68fee12..6aaa10b 100755
+--- a/t/t4042-diff-textconv-caching.sh
++++ b/t/t4042-diff-textconv-caching.sh
+@@ -5,8 +5,8 @@ test_description='test textconv caching'
+ 
+ cat >helper <<'EOF'
+ #!/bin/sh
+-grep -q '^bin: ' "$@" || { echo "E: $@ is not \"binary\" file" 1>&2; exit 1; }
+-sed 's/^bin: /converted: /' "$@" >helper.out
++grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
++sed 's/^bin: /converted: /' "$1" >helper.out
+ cat helper.out
+ EOF
+ chmod +x helper
+diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
+index a8c311f..dbf623b 100755
+--- a/t/t8006-blame-textconv.sh
++++ b/t/t8006-blame-textconv.sh
+@@ -9,8 +9,8 @@ find_blame() {
+ 
+ cat >helper <<'EOF'
+ #!/bin/sh
+-grep -q '^bin: ' "$@" || { echo "E: $@ is not \"binary\" file" 1>&2; exit 1; }
+-sed 's/^bin: /converted: /' "$@"
++grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
++sed 's/^bin: /converted: /' "$1"
+ EOF
+ chmod +x helper
+ 
+diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.sh
+index 5e2e0d2..78a0085 100755
+--- a/t/t8007-cat-file-textconv.sh
++++ b/t/t8007-cat-file-textconv.sh
+@@ -5,8 +5,8 @@ test_description='git cat-file textconv support'
+ 
+ cat >helper <<'EOF'
+ #!/bin/sh
+-grep -q '^bin: ' "$@" || { echo "E: $@ is not \"binary\" file" 1>&2; exit 1; }
+-sed 's/^bin: /converted: /' "$@"
++grep -q '^bin: ' "$1" || { echo "E: $1 is not \"binary\" file" 1>&2; exit 1; }
++sed 's/^bin: /converted: /' "$1"
+ EOF
+ chmod +x helper
+ 
 -- 
-Cheers,
-
-Sverre Rabbelier
+1.7.3.19.g3fe0a
