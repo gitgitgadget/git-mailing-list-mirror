@@ -1,75 +1,56 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 00/18] git notes merge
-Date: Wed, 29 Sep 2010 17:20:52 +0200
-Message-ID: <AANLkTinjAoAYW2as1VfeWJ=t4MORjC9s7=eMCbYttier@mail.gmail.com>
-References: <1285719811-10871-1-git-send-email-johan@herland.net>
- <AANLkTi=gL_6ueBvO7URth-rbbHyZLpwYEAMwErh1ciba@mail.gmail.com> <201009291716.52831.johan@herland.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: [GITK PATCH] gitk: add menuitem for file checkout from
+	selected or parent commit
+Date: Wed, 29 Sep 2010 17:23:00 +0200
+Message-ID: <20100929152259.GA13887@book.hvoigt.net>
+References: <20100928200344.GA12843@book.hvoigt.net> <AANLkTi=GmR3kV-ChSNybcaw4c=Dwt5G98e31WVuzJcfC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
-	gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Wed Sep 29 17:21:18 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 17:23:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0yT6-0001w7-Vm
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 17:21:17 +0200
+	id 1P0yUv-0002bQ-Mf
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 17:23:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753564Ab0I2PVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 11:21:14 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37753 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753529Ab0I2PVN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 11:21:13 -0400
-Received: by ywh1 with SMTP id 1so310282ywh.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 08:21:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=jySm9W4SHphHyO0e0MGeiwEls+5t+whfjCpuELQ+b1s=;
-        b=aPXmtHuuJK55or0twnkDTJrhjjqMSz6vH/arIfPe6Uwvb/AOy5Rouj17ZT9zF7pMkP
-         p61p92TxLJxBBOJyzUl7XnMDzNGjGZpNyGFaSUrDtsGHShJLOdfB3xYZxo2iAKadEkuU
-         v+h+75NyvSxmdud/zVGwIaWwvWj9LVX4JlMA4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=aJtbpKK1pLGqxNVj33L4PNYfhHmNVAkt+n6ScQF6zlsfUS/ANjB2BQOFnl58T6qGur
-         cVjggNVSQX0zn/InTl7TIw2ZeKRq4Xu898tpCOY2TYXsc6q5i5y2//LKT/OJEI5+iXqV
-         AmvMipK/xhBw+viES1zBQu9jBD1mRFp9KrD1w=
-Received: by 10.150.135.5 with SMTP id i5mr2292703ybd.129.1285773672701; Wed,
- 29 Sep 2010 08:21:12 -0700 (PDT)
-Received: by 10.231.33.138 with HTTP; Wed, 29 Sep 2010 08:20:52 -0700 (PDT)
-In-Reply-To: <201009291716.52831.johan@herland.net>
+	id S1753381Ab0I2PXD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 11:23:03 -0400
+Received: from darksea.de ([83.133.111.250]:49819 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752761Ab0I2PXC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 11:23:02 -0400
+Received: (qmail 18994 invoked from network); 29 Sep 2010 17:23:00 +0200
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 29 Sep 2010 17:23:00 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=GmR3kV-ChSNybcaw4c=Dwt5G98e31WVuzJcfC@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157578>
 
-Heya,
+Hi,
 
-On Wed, Sep 29, 2010 at 17:16, Johan Herland <johan@herland.net> wrote:
-> Yeah, I'm torn as well. What about providing both? Or is that bloat?
+On Tue, Sep 28, 2010 at 09:09:43PM +0000, =C6var Arnfj=F6r=F0 Bjarmason=
+ wrote:
+> On Tue, Sep 28, 2010 at 20:03, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > This is useful if a user wants to checkout a file from a certain
+> > commit. This is equivalent to
+>=20
+> It looks like the existing msgid/msgstr pairs have line number
+> comments. Why not add that for the new strings? Presumably it might
+> inflate the patch a lot though, as old strings get displaced.
 
-Definitely not both, that would be confusing, and would limit us if we
-decide to add 'git merge --abort' later on.
+I was wondering what these numbers were for. Now it makes sense. I am
+not against doing it but I would need a script to update the existing
+ones. Is there something like that? Otherwise I would just add the line
+number for the two new msgs.
 
->> I know that there's no 'git merge --abort', but IIRC that's for
->> technical reasons only.
->
-> Maybe there _should_ be a 'git merge --abort' (as a synonym to 'git
-> reset --merge')?
-
-Hmmm, I don't know if that does what the user wants, (I haven't used
-'git reset --merge' before), but if it does, that sounds like a good
-solution.
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Cheers Heiko
