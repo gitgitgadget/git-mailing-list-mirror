@@ -1,182 +1,115 @@
 From: Chris Packham <judge.packham@gmail.com>
-Subject: [RFC PATCH 3/3] grep: add support for grepping in submodules
-Date: Wed, 29 Sep 2010 13:28:54 -0700
-Message-ID: <1285792134-26339-4-git-send-email-judge.packham@gmail.com>
+Subject: [RFC PATCH 2/3] grep: prepare grep for submodules
+Date: Wed, 29 Sep 2010 13:28:53 -0700
+Message-ID: <1285792134-26339-3-git-send-email-judge.packham@gmail.com>
 References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
 Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>
 To: Jens.Lehmann@web.de
-X-From: git-owner@vger.kernel.org Wed Sep 29 22:29:13 2010
+X-From: git-owner@vger.kernel.org Wed Sep 29 22:29:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P13H6-000285-LL
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:29:12 +0200
+	id 1P13HL-0002Fp-K7
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:29:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755845Ab0I2U3J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 16:29:09 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:60120 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755830Ab0I2U3H (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755842Ab0I2U3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 16:29:08 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:62995 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755829Ab0I2U3H (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 29 Sep 2010 16:29:07 -0400
-Received: by pwj5 with SMTP id 5so80109pwj.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:29:07 -0700 (PDT)
+Received: by pzk34 with SMTP id 34so291094pzk.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:29:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=lhKiUqOIKDj+Lsfr0++uKziAgAvGrzmLWA/aDcQdY0w=;
-        b=v7hfFNTPMzI8+rFk01XlT6zV8g6EFw1XnE7yfgkmHEAu1GxyfcvBK9RODKazHsLUNZ
-         HVOzW6M9eqxsnBNFAk1NJxlrdma+N8ukfY1RaRszMmTsp9uwKREXCV/+6g2kqWriXBZ3
-         eLAV7esDncCT8DBJLh45jeRfA8iaZH7G3P9BY=
+        bh=NvisYLwvKv1K2OiX21WwGuuXaTAMCCSfUWs6wgXi0Ck=;
+        b=V0uoDzqBdOGgMGmIwIXHxvTWUnFfmaQAzs6aht4ShUAK21POrGmB1WZTmqC8Vup3bw
+         xcn3wZp/FzPZD1Fx99L3SU7KPq3Q8G4htxS9oJDYCusZpPXgPnfimHwbUPmoyUvoGjeN
+         LXkYsof9RLfdq6O1LfCb7NsOnAnvQB7CLzqnU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mIXyl4JWOCWUnLHLkMbL8F8v1/2b00l6yMiJhh18ijQ1crvEhivBUferN+wUeY80b/
-         rcoDXtCRVXT3IxoNQNfKct6Oj36cyTcPQurBMysvb6z35FPZvVEm124ZcoKeLUvN4RR2
-         oYbRsHThQgVTM3VlZTpaAZXdrYhq3mB2PgivI=
-Received: by 10.114.52.2 with SMTP id z2mr2660045waz.84.1285792147472;
-        Wed, 29 Sep 2010 13:29:07 -0700 (PDT)
+        b=SEgrsmDhSyo73DIMzaXf4gQpQO7926JKzvPKvn5NJvgqS6OZnv4n/zNPm1IOqG21Gg
+         QB/3t5vuBWw/BnIJ+VSnZQrBCYdaAz5L9MrHvz1MkX6QTlsNVLO1L/MqTqRc1kWhxyjP
+         a9kcLIlb5zXtqgQ7/DLjnfH2GsXDu/NHkHZ9E=
+Received: by 10.114.61.1 with SMTP id j1mr2660458waa.76.1285792140200;
+        Wed, 29 Sep 2010 13:29:00 -0700 (PDT)
 Received: from localhost.localdomain (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id o17sm15169981wal.9.2010.09.29.13.29.05
+        by mx.google.com with ESMTPS id o17sm15169981wal.9.2010.09.29.13.28.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 29 Sep 2010 13:29:06 -0700 (PDT)
+        Wed, 29 Sep 2010 13:28:58 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.dirty
 In-Reply-To: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157601>
 
-When the --recurse-submodules option is given git grep will search in
-submodules as they are encountered.
+Add --submodule-prefix option to pass to subprocess grep invocations. The
+prefix is then used when outputting the results.
 
 Signed-off-by: Chris Packham <judge.packham@gmail.com>
 ---
- builtin/grep.c |   72 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ builtin/grep.c |    2 ++
+ grep.c         |    8 ++++++++
  grep.h         |    1 +
- 2 files changed, 73 insertions(+), 0 deletions(-)
+ 3 files changed, 11 insertions(+), 0 deletions(-)
 
 diff --git a/builtin/grep.c b/builtin/grep.c
-index 8315ff0..c9befdc 100644
+index da32f3d..8315ff0 100644
 --- a/builtin/grep.c
 +++ b/builtin/grep.c
-@@ -30,6 +30,9 @@ static char const * const grep_usage[] = {
- 
- static int use_threads = 1;
- 
-+static int saved_argc;
-+static const char **saved_argv;
-+
- #ifndef NO_PTHREADS
- #define THREADS 8
- static pthread_t threads[THREADS];
-@@ -585,6 +588,67 @@ static void run_pager(struct grep_opt *opt, const char *prefix)
- 	free(argv);
- }
- 
-+static const char **create_sub_grep_argv(struct grep_opt *opt, const char *path)
-+{
-+	#define NUM_ARGS 10
-+	struct strbuf buf = STRBUF_INIT;
-+	const char **argv;
-+	int i = 0;
-+
-+	argv = xcalloc(NUM_ARGS, sizeof(const char *));
-+	argv[i++] = "grep";
-+	strbuf_addf(&buf, "--submodule-prefix=\\\"%s\\\"", path);
-+	//argv[i++] = buf.buf;
-+
-+	if (opt->linenum)
-+		argv[i++] = "-n";
-+	if (opt->invert)
-+		argv[i++] = "-v";
-+	if (opt->ignore_case)
-+		argv[i++] = "-i";
-+	if (opt->count)
-+		argv[i++] = "-c";
-+	if (opt->name_only)
-+		argv[i++] = "-l";
-+
-+	argv[i++] = saved_argv[0];
-+	argv[i++] = NULL;
-+
-+	strbuf_release(&buf);
-+	return argv;
-+}
-+
-+static int grep_submodule(struct grep_opt *opt, const char *path)
-+{
-+	struct strbuf buf = STRBUF_INIT;
-+	struct child_process cp;	
-+	const char **argv = create_sub_grep_argv(opt, path);
-+	const char *git_dir;
-+	int hit = 0;
-+
-+	strbuf_addf(&buf, "%s/.git", path);
-+	git_dir = read_gitfile_gently(buf.buf);
-+	if (!git_dir)
-+		git_dir = buf.buf;
-+	if (!is_directory(git_dir)) {
-+		warning("submodule %s has not been initialized\n", path);
-+		goto out_free;
-+	}
-+
-+	memset(&cp, 0, sizeof(cp));
-+	cp.argv = argv;
-+	cp.env = local_repo_env;
-+	cp.git_cmd = 1;
-+	cp.no_stdin = 1;
-+	cp.dir = path;
-+	if (run_command(&cp) == 0)
-+		hit = 1;
-+out_free:
-+	free(argv);
-+	strbuf_release(&buf);
-+	return hit;
-+}
-+
- static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
- {
- 	int hit = 0;
-@@ -593,6 +657,10 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
- 
- 	for (nr = 0; nr < active_nr; nr++) {
- 		struct cache_entry *ce = active_cache[nr];
-+		if (S_ISGITLINK(ce->ce_mode) && opt->recurse_submodules) {
-+			hit |= grep_submodule(opt, ce->name);
-+			continue;
-+		}
- 		if (!S_ISREG(ce->ce_mode))
- 			continue;
- 		if (!pathspec_matches(paths, ce->name, opt->max_depth))
-@@ -929,9 +997,13 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+@@ -927,6 +927,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+ 			    "allow calling of grep(1) (ignored by this build)"),
+ 		{ OPTION_CALLBACK, 0, "help-all", &options, NULL, "show usage",
  		  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
- 		OPT_STRING(0, "submodule-prefix", &opt.submodule_prefix, "DIR",
- 			"prepend this to submodule path output"),
-+		OPT_BOOLEAN(0, "recurse-submodules", &opt.recurse_submodules,
-+			"recurse into submodules"),
++		OPT_STRING(0, "submodule-prefix", &opt.submodule_prefix, "DIR",
++			"prepend this to submodule path output"),
  		OPT_END()
  	};
  
-+	saved_argc = argc;
-+	saved_argv = argv;
- 	/*
- 	 * 'git grep -h', unlike 'git grep -h <pattern>', is a request
- 	 * to show usage information and exit.
+diff --git a/grep.c b/grep.c
+index 63c4280..36bec98 100644
+--- a/grep.c
++++ b/grep.c
+@@ -370,6 +370,10 @@ static void output_sep(struct grep_opt *opt, char sign)
+ 
+ static void show_name(struct grep_opt *opt, const char *name)
+ {
++	if (opt->submodule_prefix) {
++		output_color(opt, opt->submodule_prefix,
++			strlen(opt->submodule_prefix), opt->color_filename);
++	}
+ 	output_color(opt, name, strlen(name), opt->color_filename);
+ 	opt->output(opt, opt->null_following_name ? "\0" : "\n", 1);
+ }
+@@ -644,6 +648,10 @@ static void show_line(struct grep_opt *opt, char *bol, char *eol,
+ 	}
+ 	opt->last_shown = lno;
+ 
++	if (opt->submodule_prefix) {
++		output_color(opt, opt->submodule_prefix,
++			strlen(opt->submodule_prefix), opt->color_filename);
++	}
+ 	if (opt->pathname) {
+ 		output_color(opt, name, strlen(name), opt->color_filename);
+ 		output_sep(opt, sign);
 diff --git a/grep.h b/grep.h
-index d918da4..e3199c9 100644
+index 06621fe..d918da4 100644
 --- a/grep.h
 +++ b/grep.h
-@@ -102,6 +102,7 @@ struct grep_opt {
- 	unsigned post_context;
- 	unsigned last_shown;
- 	int show_hunk_mark;
-+	int recurse_submodules;
- 	void *priv;
- 
- 	void (*output)(struct grep_opt *opt, const void *data, size_t size);
+@@ -67,6 +67,7 @@ struct grep_opt {
+ 	struct grep_expr *pattern_expression;
+ 	const char *prefix;
+ 	int prefix_length;
++	const char *submodule_prefix;
+ 	regex_t regexp;
+ 	int linenum;
+ 	int invert;
 -- 
 1.7.3.dirty
