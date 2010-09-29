@@ -1,348 +1,177 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v3 1/3] Add bidirectional_transfer_loop()
-Date: Thu, 30 Sep 2010 20:07:00 +0300
-Message-ID: <1285866422-23964-2-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <1285866422-23964-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 30 19:02:35 2010
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: Re*: [PATCH] t1503: Fix arithmetic expansion syntax error when
+ using dash
+Date: Wed, 29 Sep 2010 20:57:40 +0100
+Message-ID: <4CA39A34.4030909@ramsay1.demon.co.uk>
+References: <4C98EF25.4070700@ramsay1.demon.co.uk>	<7viq1xsi7a.fsf@alter.siamese.dyndns.org>	<4C9E2CA6.2070805@ramsay1.demon.co.uk> <AANLkTimdUC++Lq1z4i5E8cw5ej7nQhZ6hcNoffQ1tM9i@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>, jon.seymour@gmail.com
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 19:14:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1MWd-00075D-Lr
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 19:02:32 +0200
+	id 1P1MiJ-0003ad-W2
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 19:14:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932232Ab0I3RBy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 13:01:54 -0400
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:52090 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932248Ab0I3RBw (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 13:01:52 -0400
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 1E2FDC7BA8
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 20:01:51 +0300 (EEST)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A01F571A922; Thu, 30 Sep 2010 20:01:51 +0300
-Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id F05FF158A64
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 20:01:48 +0300 (EEST)
-X-Mailer: git-send-email 1.7.1.rc2.10.g714149
-In-Reply-To: <1285866422-23964-1-git-send-email-ilari.liusvaara@elisanet.fi>
-X-Antivirus: VAMS
+	id S932275Ab0I3ROa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 13:14:30 -0400
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:64179 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755839Ab0I3RO3 (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 13:14:29 -0400
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1P1MiB-0001lP-bJ; Thu, 30 Sep 2010 17:14:28 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <AANLkTimdUC++Lq1z4i5E8cw5ej7nQhZ6hcNoffQ1tM9i@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157694>
 
-This helper function copies bidirectional stream of data between
-stdin/stdout and specified file descriptors.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Sat, Sep 25, 2010 at 17:08, Ramsay Jones <ramsay@ramsay1.demon.co.=
+uk> wrote:
+>> Junio C Hamano wrote:
+>>> I just left it vague by saying "e.g. older dash" in below, but we m=
+ay want
+>>> to be more precise in the documentation.
+>> I found a bug report:
+>>
+>>    http://bugs.launchpad.net/ubuntu/+source/dash/+bug/92189
+>>
+>> which had a post against it which implied that this was fixed in
+>> version 0.5.4-3. I went over to packages.debian.org to read the
+>> ChangeLog for this version, but I could not conclude anything
+>> from that text. :(
+>>
+>> Do we need to be more precise?
+>=20
+> If you want to spend the effort to track it down that would be
+> great. There's a dash git repository on kernel.org you can probably
+> bisect:
+>=20
+>     http://git.kernel.org/?p=3Dutils/dash/dash.git;a=3Dsummary
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
- compat/mingw.h     |    5 +
- transport-helper.c |  254 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- transport.h        |    1 +
- 3 files changed, 260 insertions(+), 0 deletions(-)
+I don't think we need to be more precise here, but just for the
+giggle, I cloned the dash repository to take a quick look.
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 3b2477b..f27a7b6 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -23,6 +23,9 @@ typedef int pid_t;
- #define WEXITSTATUS(x) ((x) & 0xff)
- #define WTERMSIG(x) SIGTERM
- 
-+#define EWOULDBLOCK EAGAIN
-+#define SHUT_WR SD_SEND
-+
- #define SIGHUP 1
- #define SIGQUIT 3
- #define SIGKILL 9
-@@ -50,6 +53,8 @@ struct pollfd {
- };
- #define POLLIN 1
- #define POLLHUP 2
-+#define POLLOUT 4
-+#define POLLNVAL 8
- #endif
- 
- typedef void (__cdecl *sig_handler_t)(int);
-diff --git a/transport-helper.c b/transport-helper.c
-index acfc88e..1ebcebc 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -862,3 +862,257 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->smart_options = &(data->transport_options);
- 	return 0;
- }
-+
-+
-+#define BUFFERSIZE 4096
-+#define PBUFFERSIZE 8192
-+
-+/* Print bidirectional transfer loop debug message. */
-+static void transfer_debug(const char *fmt, ...)
-+{
-+	va_list args;
-+	char msgbuf[PBUFFERSIZE];
-+	static int debug_enabled = -1;
-+
-+	if (debug_enabled < 0)
-+		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
-+	if (!debug_enabled)
-+		return;
-+
-+	sprintf(msgbuf, "Transfer loop debugging: ");
-+	va_start(args, fmt);
-+	vsprintf(msgbuf + strlen(msgbuf), fmt, args);
-+	va_end(args);
-+	fprintf(stderr, "%s\n", msgbuf);
-+}
-+
-+/* Load the parameters into poll structure. Return number of entries loaded */
-+static int load_poll_params(struct pollfd *polls, size_t inbufuse,
-+	size_t outbufuse, int in_hup, int out_hup, int in_closed,
-+	int out_closed, int socket_mode, int input_fd, int output_fd)
-+{
-+	int stdin_index = -1;
-+	int stdout_index = -1;
-+	int input_index = -1;
-+	int output_index = -1;
-+	int nextindex = 0;
-+	int i;
-+
-+	/*
-+	 * Inputs can't be waited at all if buffer is full since we can't
-+	 * do read on 0 bytes as it could do strange things.
-+	 */
-+	if (!in_hup && inbufuse < BUFFERSIZE) {
-+		stdin_index = nextindex++;
-+		polls[stdin_index].fd = 0;
-+		transfer_debug("Adding stdin to fds to wait for");
-+	}
-+	if (!out_hup && outbufuse < BUFFERSIZE) {
-+		input_index = nextindex++;
-+		polls[input_index].fd = input_fd;
-+		transfer_debug("Adding remote input to fds to wait for");
-+	}
-+	if (!out_closed && outbufuse > 0) {
-+		stdout_index = nextindex++;
-+		polls[stdout_index].fd = 1;
-+		transfer_debug("Adding stdout to fds to wait for");
-+	}
-+	if (!in_closed && inbufuse > 0) {
-+		if (socket_mode && input_index >= 0)
-+			output_index = input_index;
-+		else {
-+			output_index = nextindex++;
-+			polls[output_index].fd = output_fd;
-+		}
-+		transfer_debug("Adding remote output to fds to wait for");
-+	}
-+
-+	for (i = 0; i < nextindex; i++)
-+		polls[i].events = polls[i].revents = 0;
-+
-+	if (stdin_index >= 0) {
-+		polls[stdin_index].events |= POLLIN;
-+		transfer_debug("Waiting for stdin to become readable");
-+	}
-+	if (input_index >= 0) {
-+		polls[input_index].events |= POLLIN;
-+		transfer_debug("Waiting for remote input to become readable");
-+	}
-+	if (stdout_index >= 0) {
-+		polls[stdout_index].events |= POLLOUT;
-+		transfer_debug("Waiting for stdout to become writable");
-+	}
-+	if (output_index >= 0) {
-+		polls[output_index].events |= POLLOUT;
-+		transfer_debug("Waiting for remote output to become writable");
-+	}
-+
-+	/* Return number of indexes assigned. */
-+	return nextindex;
-+}
-+
-+static int transfer_handle_events(struct pollfd* polls, char *in_buffer,
-+	char *out_buffer, size_t *in_buffer_use, size_t *out_buffer_use,
-+	int *in_hup, int *out_hup, int *in_closed, int *out_closed,
-+	int socket_mode, int poll_count, int input, int output)
-+{
-+	int i, r;
-+	for(i = 0; i < poll_count; i++) {
-+		/* Handle stdin. */
-+		if (polls[i].fd == 0 && polls[i].revents & (POLLIN | POLLHUP)) {
-+			transfer_debug("stdin is readable");
-+			r = read(0, in_buffer + *in_buffer_use, BUFFERSIZE -
-+				*in_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("read(git) failed");
-+				return 1;
-+			} else if (r == 0) {
-+				transfer_debug("stdin EOF");
-+				*in_hup = 1;
-+				if (!*in_buffer_use) {
-+					if (socket_mode)
-+						shutdown(output, SHUT_WR);
-+					else
-+						close(output);
-+					*in_closed = 1;
-+					transfer_debug("Closed remote output");
-+				} else
-+					transfer_debug("Delaying remote output close because input buffer has data");
-+			} else if (r > 0) {
-+				*in_buffer_use += r;
-+				transfer_debug("Read %i bytes from stdin (buffer now at %i)", r, (int)*in_buffer_use);
-+			}
-+		}
-+
-+		/* Handle remote end input. */
-+		if (polls[i].fd == input &&
-+			polls[i].revents & (POLLIN | POLLHUP)) {
-+			transfer_debug("remote input is readable");
-+			r = read(input, out_buffer + *out_buffer_use,
-+				BUFFERSIZE - *out_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("read(connection) failed");
-+				return 1;
-+			} else if (r == 0) {
-+				transfer_debug("remote input EOF");
-+				*out_hup = 1;
-+				if (!*out_buffer_use) {
-+					close(1);
-+					*out_closed = 1;
-+					transfer_debug("Closed stdout");
-+				} else
-+					transfer_debug("Delaying stdout close because output buffer has data");
-+
-+			} else if (r > 0) {
-+				*out_buffer_use += r;
-+				transfer_debug("Read %i bytes from remote input (buffer now at %i)", r, (int)*out_buffer_use);
-+			}
-+		}
-+
-+		/* Handle stdout. */
-+		if (polls[i].fd == 1 && polls[i].revents & POLLNVAL) {
-+			error("Write pipe to Git unexpectedly closed.");
-+			return 1;
-+		}
-+		if (polls[i].fd == 1 && polls[i].revents & POLLOUT) {
-+			transfer_debug("stdout is writable");
-+			r = write(1, out_buffer, *out_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("write(git) failed");
-+				return 1;
-+			} else if (r > 0){
-+				*out_buffer_use -= r;
-+				transfer_debug("Wrote %i bytes to stdout (buffer now at %i)", r, (int)*out_buffer_use);
-+				if (*out_buffer_use > 0)
-+					memmove(out_buffer, out_buffer + r,
-+						*out_buffer_use);
-+				if (*out_hup && !*out_buffer_use) {
-+					close(1);
-+					*out_closed = 1;
-+					transfer_debug("Closed stdout");
-+				}
-+			}
-+		}
-+
-+		/* Handle remote end output. */
-+		if (polls[i].fd == output && polls[i].revents & POLLNVAL) {
-+			error("Write pipe to remote end unexpectedly closed.");
-+			return 1;
-+		}
-+		if (polls[i].fd == output && polls[i].revents & POLLOUT) {
-+			transfer_debug("remote output is writable");
-+			r = write(output, in_buffer, *in_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("write(connection) failed");
-+				return 1;
-+			} else if (r > 0) {
-+				*in_buffer_use -= r;
-+				transfer_debug("Wrote %i bytes to remote output (buffer now at %i)", r, (int)*in_buffer_use);
-+				if (*in_buffer_use > 0)
-+					memmove(in_buffer, in_buffer + r,
-+						*in_buffer_use);
-+				if (*in_hup && !*in_buffer_use) {
-+					if (socket_mode)
-+						shutdown(output, SHUT_WR);
-+					else
-+						close(output);
-+					*in_closed = 1;
-+					transfer_debug("Closed remote output");
-+				}
-+			}
-+		}
-+	}
-+	return 0;
-+}
-+
-+/* Copy data from stdin to output and from input to stdout. */
-+int bidirectional_transfer_loop(int input, int output)
-+{
-+	struct pollfd polls[4];
-+	char in_buffer[BUFFERSIZE];
-+	char out_buffer[BUFFERSIZE];
-+	size_t in_buffer_use = 0;
-+	size_t out_buffer_use = 0;
-+	int in_hup = 0;
-+	int out_hup = 0;
-+	int in_closed = 0;
-+	int out_closed = 0;
-+	int socket_mode = 0;
-+	int poll_count = 4;
-+
-+	if (input == output)
-+		socket_mode = 1;
-+
-+	while (1) {
-+		int r;
-+		poll_count = load_poll_params(polls, in_buffer_use,
-+			out_buffer_use, in_hup, out_hup, in_closed, out_closed,
-+			socket_mode, input, output);
-+		if (!poll_count) {
-+			transfer_debug("Transfer done");
-+			break;
-+		}
-+		transfer_debug("Waiting for %i file descriptors", poll_count);
-+		r = poll(polls, poll_count, -1);
-+		if (r < 0) {
-+			if (errno == EWOULDBLOCK || errno == EAGAIN ||
-+				errno == EINTR)
-+				continue;
-+			perror("poll failed");
-+			return 1;
-+		} else if (r == 0)
-+			continue;
-+
-+		r = transfer_handle_events(polls, in_buffer, out_buffer,
-+			&in_buffer_use, &out_buffer_use, &in_hup, &out_hup,
-+			&in_closed, &out_closed, socket_mode, poll_count,
-+			input, output);
-+		if (r)
-+			return r;
-+	}
-+	return 0;
-+}
-diff --git a/transport.h b/transport.h
-index c59d973..e803c0e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -154,6 +154,7 @@ int transport_connect(struct transport *transport, const char *name,
- 
- /* Transport methods defined outside transport.c */
- int transport_helper_init(struct transport *transport, const char *name);
-+int bidirectional_transfer_loop(int input, int output);
- 
- /* common methods used by transport.c and builtin-send-pack.c */
- void transport_verify_remote_names(int nr_heads, const char **heads);
--- 
-1.7.3.1.48.g4fe83
+It was actually very easy to spot the commit that adds the missing
+capability; I fired up gitk and (starting from v0.5.3) just scanned
+the commits "upward" until I found the culprit ;-) Having said that,
+I would not have found it just by reading the commit message; I had
+to read the "patch" text to discover the "fix", which I suppose
+could have been an unintended side effect! :-D
+
+BTW the answer is: commit f6e3b2f8a59922405f42c8bc283e0f5546c25d0e
+or, if you prefer:
+
+    $ git describe --tags f6e3b2f8
+    v0.5.4-26-gf6e3b2f
+
+[But this does not help too much in identifying the downstream
+version(s) from, say, the debian project.]
+
+I decided to actually perform a git-bisect to confirm that I had
+actually found the correct commit. I used a script (see below) to
+build and test dash, so that I could use "git bisect run ./test.sh"
+to find it automatically. (The script may seem to return backward
+results, but we need to consider a version that *does* support the
+extended syntax to be a *bad* commit for the purposes of bisect! ;-) )
+
+A transcript of the git-bisect run is given below.
+
+ATB,
+Ramsay Jones
+
+$ git tag -l
+v0.5.2
+v0.5.3
+v0.5.4
+v0.5.5
+v0.5.5.1
+v0.5.6
+v0.5.6.1
+
+$ cat -n test.sh
+     1	#!/bin/sh
+     2=09
+     3	make clean >/dev/null 2>&1
+     4	make >make-out 2>&1 || { echo CANNOT BUILD; exit 125; }
+     5=09
+     6	if src/dash -c 'N=3D20; echo $(( N + 3))'
+     7	then
+     8		echo "--- works OK =3D> BAD ---"
+     9		exit 1;
+    10	else
+    11		echo "--- syntax error =3D> GOOD ---"
+    12		exit 0;
+    13	fi
+
+$ git bisect start v0.5.5 v0.5.3
+Bisecting: 41 revisions left to test after this (roughly 5 steps)
+[aa82f69dea2f2d5fe4337dfb12cea54fabdab175] [BUILTIN] Use intmax_t arith=
+metic in test
+
+$ git bisect run ./test.sh
+running ./test.sh
+src/dash: arith: syntax error: " N + 3"
+--- syntax error =3D> GOOD ---
+Bisecting: 20 revisions left to test after this (roughly 4 steps)
+[f0f930d60cd62f5fe5ba28460b43f333e8062b94] [CD] Restored non-glibc getc=
+wd support
+running ./test.sh
+23
+--- works OK =3D> BAD ---
+Bisecting: 10 revisions left to test after this (roughly 3 steps)
+[d39c8628b8594c29d234427ba07a12538ab36f41] [PARSER] Fix here-doc corrup=
+tion
+running ./test.sh
+23
+--- works OK =3D> BAD ---
+Bisecting: 4 revisions left to test after this (roughly 2 steps)
+[7454c1e3b90f51a49e563323db38bafa50776533] [BUILTIN] Use setvarint to s=
+et OPTIND
+running ./test.sh
+23
+--- works OK =3D> BAD ---
+Bisecting: 2 revisions left to test after this (roughly 1 step)
+[f6e3b2f8a59922405f42c8bc283e0f5546c25d0e] [ARITH] Add assignment and i=
+ntmax_t support
+running ./test.sh
+23
+--- works OK =3D> BAD ---
+Bisecting: 0 revisions left to test after this (roughly 0 steps)
+[3df3edd13389ae768010bfacee5612346b413e38] [PARSER] Report substition e=
+rrors at expansion time
+running ./test.sh
+src/dash: arith: syntax error: " N + 3"
+--- syntax error =3D> GOOD ---
+f6e3b2f8a59922405f42c8bc283e0f5546c25d0e is the first bad commit
+commit f6e3b2f8a59922405f42c8bc283e0f5546c25d0e
+Author: Herbert Xu <herbert@gondor.apana.org.au>
+Date:   Thu Oct 11 22:36:28 2007 +0800
+
+    [ARITH] Add assignment and intmax_t support
+   =20
+    This patch adds assignment operator support in arithmetic expansion=
+s.  It
+    also changes the type used to intmax_t.
+
+:100644 100644 69ba464a3219d6979aa1150c15e279d3adf423ac 895c6072294f13f=
+2a434c52752dc839afd412c0b M	ChangeLog
+:040000 040000 6640114c4a8d35cbcfaf6fa44b888195270a3ae1 06a80af3e532959=
+cddd422f921e66cb679fc8760 M	src
+bisect run success
+
+$ git describe --tags f6e3b2f8
+v0.5.4-26-gf6e3b2f
+
+$=20
