@@ -1,96 +1,189 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv4 02/15] t4017 (diff-retval): replace manual exit code
- check with test_expect_code
-Date: Wed, 29 Sep 2010 18:45:57 +0000
-Message-ID: <AANLkTiksEBVUyJnrUETxManHa+ZMCT6+V3C83K75KW2A@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv4 07/15] t4019 (diff-wserror): add lots of missing &&
+Date: Wed, 29 Sep 2010 12:01:38 -0700
+Message-ID: <7v4od8nzl9.fsf@alter.siamese.dyndns.org>
 References: <1285542879-16381-1-git-send-email-newren@gmail.com>
-	<1285542879-16381-3-git-send-email-newren@gmail.com>
-	<7vd3rwo22t.fsf@alter.siamese.dyndns.org>
+ <1285542879-16381-8-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 20:46:04 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 21:02:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P11fH-00016W-RW
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 20:46:04 +0200
+	id 1P11vL-0006kA-UC
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 21:02:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755100Ab0I2Sp6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 14:45:58 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:65336 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754551Ab0I2Sp5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 14:45:57 -0400
-Received: by iwn5 with SMTP id 5so1349434iwn.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 11:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=YtAddNH58OmPBosReh+55wvTjWyFDbmRtTCLd3jGG1c=;
-        b=w7D/u+8P38SsnbihYDkB1OgucdAXVvAV3t9c8/A1RV3pheYfiDYYfW0XXNLBEsZVFA
-         PBmC/eB5hg+nUe3f0noKk3V5ALrXRL8Nb2a5tzZCm+MxFqt9PMU/fXHdvfa8SjxMGkvQ
-         LZldaitAuXZfO4ODSdJP1r6BT0jKJLGL6DX10=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZBvCQvhWwlTMVKZX5DaAL/HVfwvTbv/WmZG/6mhNBcUtfMSB/XCkgysmcwuEkvBk6s
-         fJF88a2xqOoRsOMGxdHDYdoFUT9yFMj+ESB5cZN/ZI1f/1WVNeUnKsuKQvSpYR/ofyPh
-         PozZt+XeSVm2Rj32DkA7KGvLvMfiVxzO+rOlg=
-Received: by 10.231.187.194 with SMTP id cx2mr1273246ibb.165.1285785957118;
- Wed, 29 Sep 2010 11:45:57 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 29 Sep 2010 11:45:57 -0700 (PDT)
-In-Reply-To: <7vd3rwo22t.fsf@alter.siamese.dyndns.org>
+	id S1755406Ab0I2TBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 15:01:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:39573 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755054Ab0I2TBr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 15:01:47 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0A769DA27F;
+	Wed, 29 Sep 2010 15:01:46 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M/JwB8+iN0Q5HCN8rPiCgweBRwA=; b=k+n1rT
+	JdPm05eF9qF5if9HosT5VW1gahUdl+Uajllfalark6GmBO2qqtK3ICxUF4U1JNkL
+	zrl2KZ/8ps4fWKECjbJbIxUWyr+47Ur2+4F1ZUejrpCSE1i8tjGGSb1USYwxQQqh
+	3nUdRstgJGpZqjz7iby1lPf+bcEqUs0kk4pdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JAeuWS/3M3LxOocVG4klrV0xT8YckR1j
+	Hb75cAX5caV3t1EPA1zqiMsFNyqf11bNWVoF93Ftq54Iqq1squgCJpyGYscIIcvJ
+	b+seNP+hXI12MoEiOgXBgCzSX+fawvWif646LDDDVS6RBQnoGS9tF9FXsnMg0puM
+	b1tel2VK8PE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BAAF9DA27D;
+	Wed, 29 Sep 2010 15:01:43 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3DCDFDA27C; Wed, 29 Sep
+ 2010 15:01:40 -0400 (EDT)
+In-Reply-To: <1285542879-16381-8-git-send-email-newren@gmail.com> (Elijah
+ Newren's message of "Sun\, 26 Sep 2010 17\:14\:31 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 000B9DC6-CBFC-11DF-886A-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157589>
 
-On Wed, Sep 29, 2010 at 18:07, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Elijah Newren <newren@gmail.com> writes:
->
->> Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> ---
->> =C2=A0t/t4017-diff-retval.sh | =C2=A0 30 ++++++++++-----------------=
----
->> =C2=A01 files changed, 10 insertions(+), 20 deletions(-)
->>
->> diff --git a/t/t4017-diff-retval.sh b/t/t4017-diff-retval.sh
->> index 6158985..6605e12 100755
->> --- a/t/t4017-diff-retval.sh
->> +++ b/t/t4017-diff-retval.sh
->> @@ -28,37 +28,29 @@ test_expect_success 'git diff --quiet -w =C2=A0H=
-EAD^ HEAD' '
->> =C2=A0 =C2=A0 =C2=A0 test_must_fail git diff --quiet -w HEAD^ HEAD
->> =C2=A0'
->>
->> -test_expect_success 'git diff-tree HEAD^ HEAD' '
->> +test_expect_code 1 'git diff-tree HEAD^ HEAD' '
->> =C2=A0 =C2=A0 =C2=A0 git diff-tree --exit-code HEAD^ HEAD
->> - =C2=A0 =C2=A0 test $? =3D 1
->> =C2=A0'
+Elijah Newren <newren@gmail.com> writes:
 
-It also looks like this will pass for for all exit codes that *aren't*
-1, because if $? !=3D 1 +test_expect_code will get the exit code of
-1. But if it's 1 then test $? =3D 0 will return 0, right?
+> Also add a test_might_fail in front of the final git_config --unset
+> core.whitespace as that value may have already been unset previously.
 
->> -test_expect_success 'git diff-tree HEAD^ HEAD -- a' '
->> +test_expect_code 0 'git diff-tree HEAD^ HEAD -- a' '
->> =C2=A0 =C2=A0 =C2=A0 git diff-tree --exit-code HEAD^ HEAD -- a
->> - =C2=A0 =C2=A0 test $? =3D 0
->> =C2=A0'
->
-> It probably is better to simply drop "test $? =3D 0" and keep the
-> expect-success, no?
+In general, if a previous one that is designed to set a variable failed
+for whatever reason, the next one that does --unset without might-fail
+will be broken.  So...
 
-Yes.
+> @@ -65,9 +65,9 @@ test_expect_success 'without -trail' '
+>  
+>  test_expect_success 'without -trail (attribute)' '
+>  
+> -	git config --unset core.whitespace
+> -	echo "F whitespace=-trail" >.gitattributes
+> -	prepare_output
+> +	git config --unset core.whitespace &&
+
+... I think you need might-fail in front of this one, and ...
+
+> +	echo "F whitespace=-trail" >.gitattributes &&
+> +	prepare_output &&
+>  
+>  	grep Eight normal >/dev/null &&
+>  	grep HT error >/dev/null &&
+> @@ -79,9 +79,9 @@ test_expect_success 'without -trail (attribute)' '
+>  
+>  test_expect_success 'without -space' '
+>  
+> -	rm -f .gitattributes
+> -	git config core.whitespace -space
+> -	prepare_output
+> +	rm -f .gitattributes &&
+> +	git config core.whitespace -space &&
+> +	prepare_output &&
+>  
+>  	grep Eight normal >/dev/null &&
+>  	grep HT normal >/dev/null &&
+> @@ -93,9 +93,9 @@ test_expect_success 'without -space' '
+>  
+>  test_expect_success 'without -space (attribute)' '
+>  
+> -	git config --unset core.whitespace
+> -	echo "F whitespace=-space" >.gitattributes
+> -	prepare_output
+> +	git config --unset core.whitespace &&
+
+... this one, ...
+
+> +	echo "F whitespace=-space" >.gitattributes &&
+> +	prepare_output &&
+>  
+>  	grep Eight normal >/dev/null &&
+>  	grep HT normal >/dev/null &&
+> @@ -107,9 +107,9 @@ test_expect_success 'without -space (attribute)' '
+>  
+>  test_expect_success 'with indent-non-tab only' '
+>  
+> -	rm -f .gitattributes
+> -	git config core.whitespace indent,-trailing,-space
+> -	prepare_output
+> +	rm -f .gitattributes &&
+> +	git config core.whitespace indent,-trailing,-space &&
+
+... this one, ...
+
+> +	prepare_output &&
+>  
+>  	grep Eight error >/dev/null &&
+>  	grep HT normal >/dev/null &&
+> @@ -121,9 +121,9 @@ test_expect_success 'with indent-non-tab only' '
+>  
+>  test_expect_success 'with indent-non-tab only (attribute)' '
+>  
+> -	git config --unset core.whitespace
+> -	echo "F whitespace=indent,-trailing,-space" >.gitattributes
+> -	prepare_output
+> +	git config --unset core.whitespace &&
+
+... this one, ...
+
+> +	echo "F whitespace=indent,-trailing,-space" >.gitattributes &&
+> +	prepare_output &&
+>  
+>  	grep Eight error >/dev/null &&
+>  	grep HT normal >/dev/null &&
+> @@ -135,9 +135,9 @@ test_expect_success 'with indent-non-tab only (attribute)' '
+>  
+>  test_expect_success 'with cr-at-eol' '
+>  
+> -	rm -f .gitattributes
+> -	git config core.whitespace cr-at-eol
+> -	prepare_output
+> +	rm -f .gitattributes &&
+> +	git config core.whitespace cr-at-eol &&
+> +	prepare_output &&
+>  
+>  	grep Eight normal >/dev/null &&
+>  	grep HT error >/dev/null &&
+> @@ -149,9 +149,9 @@ test_expect_success 'with cr-at-eol' '
+>  
+>  test_expect_success 'with cr-at-eol (attribute)' '
+>  
+> -	git config --unset core.whitespace
+> -	echo "F whitespace=trailing,cr-at-eol" >.gitattributes
+> -	prepare_output
+> +	git config --unset core.whitespace &&
+
+
+... and this one, too.
+
+> +	echo "F whitespace=trailing,cr-at-eol" >.gitattributes &&
+> +	prepare_output &&
+>  
+>  	grep Eight normal >/dev/null &&
+>  	grep HT error >/dev/null &&
+> @@ -179,11 +179,11 @@ test_expect_success 'trailing empty lines (2)' '
+>  '
+>  
+>  test_expect_success 'do not color trailing cr in context' '
+> -	git config --unset core.whitespace
+> +	test_might_fail git config --unset core.whitespace &&
+>  	rm -f .gitattributes &&
+>  	echo AAAQ | tr Q "\015" >G &&
+>  	git add G &&
+> -	echo BBBQ | tr Q "\015" >>G
+> +	echo BBBQ | tr Q "\015" >>G &&
+>  	git diff --color G | tr "\015" Q >output &&
+>  	grep "BBB.*${blue_grep}Q" output &&
+>  	grep "AAA.*\[mQ" output
+> -- 
+> 1.7.3.95.g14291
