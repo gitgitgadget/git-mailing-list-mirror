@@ -1,189 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] apply: Recognize epoch timestamps with : in the
-	timezone
-Date: Wed, 29 Sep 2010 16:41:08 -0500
-Message-ID: <20100929214107.GA4485@capella.cs.uchicago.edu>
-References: <alpine.DEB.2.00.1009291644440.15192@dr-wily.mit.edu>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] checkout: add a space between the commit and "..."
+Date: Wed, 29 Sep 2010 23:48:21 +0200
+Message-ID: <m28w2kb4re.fsf@igel.home>
+References: <20100928222332.GA28859@soprano.nvidia.com>
+	<tNUxsuXC1ZklaaYn-pkW6hae44B_tB2hStuto66EU4k9w2Q79GA6LQ@cipher.nrlssc.navy.mil>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Anders Kaseorg <andersk@ksplice.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 23:41:23 2010
+Cc: Aaron Plattner <aplattner@nvidia.com>, git@vger.kernel.org,
+	jkain@nvidia.com
+To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
+X-From: git-owner@vger.kernel.org Wed Sep 29 23:48:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P14Ov-0001A6-Mh
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 23:41:22 +0200
+	id 1P14Vr-0003T0-7a
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 23:48:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752042Ab0I2VlL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 17:41:11 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.164.153]:39670 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751101Ab0I2VlK (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 17:41:10 -0400
-Received: from capella.cs.uchicago.edu (capella.cs.uchicago.edu [128.135.24.228])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id 245CBBACD;
-	Wed, 29 Sep 2010 16:41:08 -0500 (CDT)
-Received: by capella.cs.uchicago.edu (Postfix, from userid 10442)
-	id DCFF9212A1; Wed, 29 Sep 2010 16:41:08 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <alpine.DEB.2.00.1009291644440.15192@dr-wily.mit.edu>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1751613Ab0I2VsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 17:48:25 -0400
+Received: from mail-out.m-online.net ([212.18.0.10]:35576 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751206Ab0I2VsY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 17:48:24 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 66C1F1C0050E;
+	Wed, 29 Sep 2010 23:48:21 +0200 (CEST)
+Received: from igel.home (ppp-88-217-126-240.dynamic.mnet-online.de [88.217.126.240])
+	by mail.mnet-online.de (Postfix) with ESMTP id E4AA91C000B4;
+	Wed, 29 Sep 2010 23:48:21 +0200 (CEST)
+Received: by igel.home (Postfix, from userid 501)
+	id A5C31CA2A0; Wed, 29 Sep 2010 23:48:21 +0200 (CEST)
+X-Yow: Why is it that when you DIE, you can't take your
+ HOME ENTERTAINMENT CENTER with you??
+In-Reply-To: <tNUxsuXC1ZklaaYn-pkW6hae44B_tB2hStuto66EU4k9w2Q79GA6LQ@cipher.nrlssc.navy.mil>
+	(Brandon Casey's message of "Tue, 28 Sep 2010 17:40:11 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157610>
 
-Hi Anders,
+Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
 
-Anders Kaseorg wrote:
-> Some patches have a timezone formatted like '-08:00' instead of
-> '-0800' (e.g. http://lwn.net/Articles/131729/)
+> On 09/28/2010 05:23 PM, Aaron Plattner wrote:
+>> Switching to a detached head prints something like
+>> 
+>>   HEAD is now at 9d14017... dir.c: squelch false uninitialized memory warning
+>> 
+>> These dots get selected when you double-click on the abbreviated
+>> commit hash, which makes it annoying to copy and paste.
+>
+> This must be another gnome-terminal/konsole "innovation".
 
-Odd.  Any idea what tool generates these patches?
+It's configurable in konsole at least (and not the default).
 
-> --- a/builtin/apply.c
-> +++ b/builtin/apply.c
-[...]
-> @@ -765,7 +765,9 @@ static int has_epoch_timestamp(const char *nameline)
->  	}
->  
->  	zoneoffset = strtol(timestamp + m[3].rm_so + 1, NULL, 10);
-> -	zoneoffset = (zoneoffset / 100) * 60 + (zoneoffset % 100);
-> +	if (m[4].rm_so == m[3].rm_so + 3)
-> +		zoneoffset /= 100;
-> +	zoneoffset = zoneoffset * 60 + strtol(timestamp + m[4].rm_so, NULL, 10);
+Andreas.
 
-Might be clearer to write
-
-	if (timestamp[m[3].rm_so + 3] != ':')
-
-With or without that change,
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Maybe something like this on top?
-
--- 8< --
-Subject: apply: handle patches with funny filename and colon in timezone
-
-Some patches have a timezone formatted like '-08:00' instead of
-'-0800' in their ---/+++ lines (e.g. http://lwn.net/Articles/131729/).
-Take this into account when searching for the start of the timezone
-(which is the end of the filename).
-
-This does not actually affect the outcome of patching unless (1) a
-file being patched has a non-' ' whitespace character (e.g., tab) in
-its filename, or (2) the patch is whitespace-damaged, so the tab
-between filename and timestamp has been replaced with spaces.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin/apply.c                  |   24 ++++++++++++++++++++++--
- t/t4135-apply-weird-filenames.sh |   16 ++++++++++++++++
- t/t4135/damaged-tz.diff          |    5 +++++
- t/t4135/funny-tz.diff            |    5 +++++
- 4 files changed, 48 insertions(+), 2 deletions(-)
- create mode 100644 t/t4135/damaged-tz.diff
- create mode 100644 t/t4135/funny-tz.diff
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 0fa9a8d..7d91d8f 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -449,7 +449,7 @@ static char *find_name_gnu(const char *line, char *def, int p_value)
- 	return squash_slash(strbuf_detach(&name, NULL));
- }
- 
--static size_t tz_len(const char *line, size_t len)
-+static size_t sane_tz_len(const char *line, size_t len)
- {
- 	const char *tz, *p;
- 
-@@ -467,6 +467,24 @@ static size_t tz_len(const char *line, size_t len)
- 	return line + len - tz;
- }
- 
-+static size_t tz_with_colon_len(const char *line, size_t len)
-+{
-+	const char *tz, *p;
-+
-+	if (len < strlen(" +08:00") || line[len - strlen(":00")] != ':')
-+		return 0;
-+	tz = line + len - strlen(" +08:00");
-+
-+	if (tz[0] != ' ' || (tz[1] != '+' && tz[1] != '-'))
-+		return 0;
-+	p = tz + 2;
-+	if (!isdigit(*p++) || !isdigit(*p++) || *p++ != ':' ||
-+	    !isdigit(*p++) || !isdigit(*p++))
-+		return 0;
-+
-+	return line + len - tz;
-+}
-+
- static size_t date_len(const char *line, size_t len)
- {
- 	const char *date, *p;
-@@ -561,7 +579,9 @@ static size_t diff_timestamp_len(const char *line, size_t len)
- 	if (!isdigit(end[-1]))
- 		return 0;
- 
--	n = tz_len(line, end - line);
-+	n = sane_tz_len(line, end - line);
-+	if (!n)
-+		n = tz_with_colon_len(line, end - line);
- 	end -= n;
- 
- 	n = short_time_len(line, end - line);
-diff --git a/t/t4135-apply-weird-filenames.sh b/t/t4135-apply-weird-filenames.sh
-index 1e5aad5..bf5dc57 100755
---- a/t/t4135-apply-weird-filenames.sh
-+++ b/t/t4135-apply-weird-filenames.sh
-@@ -72,4 +72,20 @@ test_expect_success 'whitespace-damaged traditional patch' '
- 	test_cmp expected postimage.txt
- '
- 
-+test_expect_success 'traditional patch with colon in timezone' '
-+	echo postimage >expected &&
-+	reset_preimage &&
-+	rm -f "post image.txt" &&
-+	git apply "$vector/funny-tz.diff" &&
-+	test_cmp expected "post image.txt"
-+'
-+
-+test_expect_success 'traditional, whitespace-damaged, colon in timezone' '
-+	echo postimage >expected &&
-+	reset_preimage &&
-+	rm -f "post image.txt" &&
-+	git apply "$vector/damaged-tz.diff" &&
-+	test_cmp expected "post image.txt"
-+'
-+
- test_done
-diff --git a/t/t4135/damaged-tz.diff b/t/t4135/damaged-tz.diff
-new file mode 100644
-index 0000000..07aaf08
---- /dev/null
-+++ b/t/t4135/damaged-tz.diff
-@@ -0,0 +1,5 @@
-+diff -urN -X /usr/people/jes/exclude-linux linux-2.6.12-rc2-mm3-vanilla/post image.txt linux-2.6.12-rc2-mm3/post image.txt
-+--- linux-2.6.12-rc2-mm3-vanilla/post image.txt 1969-12-31 16:00:00 -08:00
-++++ linux-2.6.12-rc2-mm3/post image.txt 2005-04-12 02:14:06 -07:00
-+@@ -0,0 +1 @@
-++postimage
-diff --git a/t/t4135/funny-tz.diff b/t/t4135/funny-tz.diff
-new file mode 100644
-index 0000000..998e3a8
---- /dev/null
-+++ b/t/t4135/funny-tz.diff
-@@ -0,0 +1,5 @@
-+diff -urN -X /usr/people/jes/exclude-linux linux-2.6.12-rc2-mm3-vanilla/post image.txt linux-2.6.12-rc2-mm3/post image.txt
-+--- linux-2.6.12-rc2-mm3-vanilla/post image.txt	1969-12-31 16:00:00 -08:00
-++++ linux-2.6.12-rc2-mm3/post image.txt	2005-04-12 02:14:06 -07:00
-+@@ -0,0 +1 @@
-++postimage
 -- 
-1.6.5
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
