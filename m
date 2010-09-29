@@ -1,360 +1,99 @@
-From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH v5 3/3] blame,cat-file --textconv: Don't assume mode is ``S_IFREF | 0664''
-Date: Wed, 29 Sep 2010 15:35:24 +0400
-Message-ID: <e5322cf954f769605968dbc632f0e1f74808ea2d.1285758714.git.kirr@mns.spb.ru>
-References: <cover.1285758714.git.kirr@mns.spb.ru>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] use libcharset.h with gettext if available
+Date: Wed, 29 Sep 2010 13:41:37 +0200
+Message-ID: <AANLkTikMWy2a0M6bFMj+Jb+2QewUGsUjMsbv=XyR1Tr9@mail.gmail.com>
+References: <AANLkTinHCETsaM=ytHuE9S5A+uAb=e3YLETsJJLga+DM@mail.gmail.com>
+ <1285698577-28395-1-git-send-email-avarab@gmail.com> <AANLkTinxSqPD8H4Giigb1vbi7DC2wpDVqWmXGVZXmeKQ@mail.gmail.com>
+ <AANLkTin90pKaVGVaG-4PW50TAhgfp1QVtrKpvyVxpnW0@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?UTF-8?q?Cl=C3=A9ment=20Poulain?= 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>,
-	Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 13:34:30 2010
+Cc: git@vger.kernel.org
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 13:42:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0uvd-00072Z-Be
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 13:34:29 +0200
+	id 1P0v32-0001X6-En
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 13:42:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753673Ab0I2LeR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 07:34:17 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:59120 "EHLO mail.mnsspb.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753469Ab0I2LeQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 07:34:16 -0400
-Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1P0uuO-0003f5-Ox; Wed, 29 Sep 2010 15:33:13 +0400
-Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
-	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1P0uwb-0001Qc-KK; Wed, 29 Sep 2010 15:35:29 +0400
-X-Mailer: git-send-email 1.7.3.19.g3fe0a
-In-Reply-To: <cover.1285758714.git.kirr@mns.spb.ru>
-In-Reply-To: <cover.1285758714.git.kirr@mns.spb.ru>
-References: <cover.1285758714.git.kirr@mns.spb.ru>
+	id S1751915Ab0I2LmC convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 07:42:02 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:43834 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046Ab0I2LmA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 07:42:00 -0400
+Received: by gye5 with SMTP id 5so142357gye.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 04:42:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=EvR5+psIgCtnWdSMIEtQ6FRf9HlbbE0kCqs/vgVzhUc=;
+        b=KFsI046va/cvhUaxVlIdc9gs9J3CuDqMaEaViHbQmhixj1o0CdNmQV56oZ3wn1JVJL
+         XPo/yOfmXN+qkSLeeoj8vjILgi2ZqhQ3OPPYs7ZRc6jCJC3yu9aLb862m7mVUdQ9BVGp
+         MwyZx9P5dHdwLfQsbbScXEA7QVAcl1nrQ9NBg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=N2EWg+5LybvT7EXShV6zU7aQFxcehe6GxUbKo80IiRq4brNMHXkyAvZ3Jav/dkqmvt
+         R3ALte86wD9/Y5nHiSQ9O7VL5zshM/x2q5SJKeVLbl9iUtzc7V+dloxJXlI/GvajifYn
+         YmUzcqqypwPL1XPtRRmL0wc7eJgjuFu0NNCjU=
+Received: by 10.151.141.17 with SMTP id t17mr1944966ybn.32.1285760520234; Wed,
+ 29 Sep 2010 04:42:00 -0700 (PDT)
+Received: by 10.220.100.135 with HTTP; Wed, 29 Sep 2010 04:41:37 -0700 (PDT)
+In-Reply-To: <AANLkTin90pKaVGVaG-4PW50TAhgfp1QVtrKpvyVxpnW0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157556>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157557>
 
-=46rom: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+On Wed, Sep 29, 2010 at 12:00 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Tue, Sep 28, 2010 at 21:47, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+>> On Tue, Sep 28, 2010 at 8:29 PM, =C6var Arnfj=F6r=F0 Bjarmason
+>>> =A0* Added defaults for NO_LIBCHARSET to the default, I only change=
+d the
+>>> =A0 defaults for the MINGW entry, maybe it should be changed on Cyg=
+win
+>>> =A0 and Windows too? And probably on OpenBSD and NetBSD too.
+>>>
+>>
+>> I don't think NO_LIBCHARSET should be the default. libcharset is
+>> reported to be a bit better than nl_langinfo at normalizing the
+>> encoding, and GNU gettext depends on libcharset (through libiconv,
+>> which libcharset is distributed with). So in the case of a GNU
+>> gettext, libcharset should really be present.
+>
+> I can't find any package (with apt-file) on Debian or Ubuntu that
+> provides libcharset.h, but I have langinfo.h on those systems.
+>
 
-Instead get the mode from either worktree, index, .git, or origin
-entries when blaming and pass it to textconv_object() as context.
+Strange. A 'make install' on libiconv installed libcharset.h to
+$prefix/include on my system. But looking a bit deeper, it seems that
+glibc supplies it's own iconv implementation (perhaps based on
+libiconv, I don't know). So yes, I tend to agree with you. GNU
+platforms should not be expected to have libcharset.
 
-The reason to do it is not to run textconv filters on symlinks.
+> The GNU gettext manual also reccomends the use of nl_langinfo in
+> "11.2.4 How to specify the output character set `gettext' uses", so i=
+t
+> seems that using that and not libiconv is the default way of doing
+> things on GNU gettext + GNU libc systems.
+>
 
-Cc: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
-Cc: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
-Cc: Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Cc: Jeff King <peff@peff.net>
-Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-Reviewed-by: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
----
+OK, fair enough. I based my comment on some comment by the GNU gettext
+maintainer (who is also the libcharset maintainer - libcharset does in
+fact use nl_langinfo if present), but since this is in the manual I
+fully withdraw my comment.
 
-v5:
-
- o No changes
-
-v4:
-
- o Update to resolve conflicts after patch 2 v4 update; no changes othe=
-rwise.
-
-v3:
-
- o Reviewed-by: Matthieu
-
-v2:
-
- o Thanks to Matthieu and Jeff got a bit more sure I'm not doing stupid=
- things,
-   so
- o My XXX were removed, and the patch is no longer an RFC
-
- builtin.h                    |    2 +-
- builtin/blame.c              |   33 ++++++++++++++++++++++-----------
- builtin/cat-file.c           |    2 +-
- sha1_name.c                  |    2 ++
- t/t8006-blame-textconv.sh    |    6 ++----
- t/t8007-cat-file-textconv.sh |    6 ++----
- 6 files changed, 30 insertions(+), 21 deletions(-)
-
-diff --git a/builtin.h b/builtin.h
-index 0398d24..9bf69ee 100644
---- a/builtin.h
-+++ b/builtin.h
-@@ -35,7 +35,7 @@ void finish_copy_notes_for_rewrite(struct notes_rewri=
-te_cfg *c);
-=20
- extern int check_pager_config(const char *cmd);
-=20
--extern int textconv_object(const char *path, const unsigned char *sha1=
-, char **buf, unsigned long *buf_size);
-+extern int textconv_object(const char *path, unsigned mode, const unsi=
-gned char *sha1, char **buf, unsigned long *buf_size);
-=20
- extern int cmd_add(int argc, const char **argv, const char *prefix);
- extern int cmd_annotate(int argc, const char **argv, const char *prefi=
-x);
-diff --git a/builtin/blame.c b/builtin/blame.c
-index 1015354..f5fccc1 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -83,6 +83,7 @@ struct origin {
- 	struct commit *commit;
- 	mmfile_t file;
- 	unsigned char blob_sha1[20];
-+	unsigned mode;
- 	char path[FLEX_ARRAY];
- };
-=20
-@@ -92,6 +93,7 @@ struct origin {
-  * Return 1 if the conversion succeeds, 0 otherwise.
-  */
- int textconv_object(const char *path,
-+		    unsigned mode,
- 		    const unsigned char *sha1,
- 		    char **buf,
- 		    unsigned long *buf_size)
-@@ -100,7 +102,7 @@ int textconv_object(const char *path,
- 	struct userdiff_driver *textconv;
-=20
- 	df =3D alloc_filespec(path);
--	fill_filespec(df, sha1, S_IFREG | 0664);
-+	fill_filespec(df, sha1, mode);
- 	textconv =3D get_textconv(df);
- 	if (!textconv) {
- 		free_filespec(df);
-@@ -125,7 +127,7 @@ static void fill_origin_blob(struct diff_options *o=
-pt,
-=20
- 		num_read_blob++;
- 		if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
--		    textconv_object(o->path, o->blob_sha1, &file->ptr, &file_size))
-+		    textconv_object(o->path, o->mode, o->blob_sha1, &file->ptr, &fil=
-e_size))
- 			;
- 		else
- 			file->ptr =3D read_sha1_file(o->blob_sha1, &type, &file_size);
-@@ -313,21 +315,23 @@ static struct origin *get_origin(struct scoreboar=
-d *sb,
-  * for an origin is also used to pass the blame for the entire file to
-  * the parent to detect the case where a child's blob is identical to
-  * that of its parent's.
-+ *
-+ * This also fills origin->mode for corresponding tree path.
-  */
--static int fill_blob_sha1(struct origin *origin)
-+static int fill_blob_sha1_and_mode(struct origin *origin)
- {
--	unsigned mode;
- 	if (!is_null_sha1(origin->blob_sha1))
- 		return 0;
- 	if (get_tree_entry(origin->commit->object.sha1,
- 			   origin->path,
--			   origin->blob_sha1, &mode))
-+			   origin->blob_sha1, &origin->mode))
- 		goto error_out;
- 	if (sha1_object_info(origin->blob_sha1, NULL) !=3D OBJ_BLOB)
- 		goto error_out;
- 	return 0;
-  error_out:
- 	hashclr(origin->blob_sha1);
-+	origin->mode =3D S_IFINVALID;
- 	return -1;
- }
-=20
-@@ -360,12 +364,14 @@ static struct origin *find_origin(struct scoreboa=
-rd *sb,
- 			/*
- 			 * If the origin was newly created (i.e. get_origin
- 			 * would call make_origin if none is found in the
--			 * scoreboard), it does not know the blob_sha1,
-+			 * scoreboard), it does not know the blob_sha1/mode,
- 			 * so copy it.  Otherwise porigin was in the
--			 * scoreboard and already knows blob_sha1.
-+			 * scoreboard and already knows blob_sha1/mode.
- 			 */
--			if (porigin->refcnt =3D=3D 1)
-+			if (porigin->refcnt =3D=3D 1) {
- 				hashcpy(porigin->blob_sha1, cached->blob_sha1);
-+				porigin->mode =3D cached->mode;
-+			}
- 			return porigin;
- 		}
- 		/* otherwise it was not very useful; free it */
-@@ -400,6 +406,7 @@ static struct origin *find_origin(struct scoreboard=
- *sb,
- 		/* The path is the same as parent */
- 		porigin =3D get_origin(sb, parent, origin->path);
- 		hashcpy(porigin->blob_sha1, origin->blob_sha1);
-+		porigin->mode =3D origin->mode;
- 	} else {
- 		/*
- 		 * Since origin->path is a pathspec, if the parent
-@@ -425,6 +432,7 @@ static struct origin *find_origin(struct scoreboard=
- *sb,
- 		case 'M':
- 			porigin =3D get_origin(sb, parent, origin->path);
- 			hashcpy(porigin->blob_sha1, p->one->sha1);
-+			porigin->mode =3D p->one->mode;
- 			break;
- 		case 'A':
- 		case 'T':
-@@ -444,6 +452,7 @@ static struct origin *find_origin(struct scoreboard=
- *sb,
-=20
- 		cached =3D make_origin(porigin->commit, porigin->path);
- 		hashcpy(cached->blob_sha1, porigin->blob_sha1);
-+		cached->mode =3D porigin->mode;
- 		parent->util =3D cached;
- 	}
- 	return porigin;
-@@ -486,6 +495,7 @@ static struct origin *find_rename(struct scoreboard=
- *sb,
- 		    !strcmp(p->two->path, origin->path)) {
- 			porigin =3D get_origin(sb, parent, p->one->path);
- 			hashcpy(porigin->blob_sha1, p->one->sha1);
-+			porigin->mode =3D p->one->mode;
- 			break;
- 		}
- 	}
-@@ -1099,6 +1109,7 @@ static int find_copy_in_parent(struct scoreboard =
-*sb,
-=20
- 			norigin =3D get_origin(sb, parent, p->one->path);
- 			hashcpy(norigin->blob_sha1, p->one->sha1);
-+			norigin->mode =3D p->one->mode;
- 			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p);
- 			if (!file_p.ptr)
- 				continue;
-@@ -2075,7 +2086,7 @@ static struct commit *fake_working_tree_commit(st=
-ruct diff_options *opt,
- 		switch (st.st_mode & S_IFMT) {
- 		case S_IFREG:
- 			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
--			    textconv_object(read_from, null_sha1, &buf.buf, &buf_len))
-+			    textconv_object(read_from, mode, null_sha1, &buf.buf, &buf_len)=
-)
- 				buf.len =3D buf_len;
- 			else if (strbuf_read_file(&buf, read_from, st.st_size) !=3D st.st_s=
-ize)
- 				die_errno("cannot open or read '%s'", read_from);
-@@ -2455,11 +2466,11 @@ parse_done:
- 	}
- 	else {
- 		o =3D get_origin(&sb, sb.final, path);
--		if (fill_blob_sha1(o))
-+		if (fill_blob_sha1_and_mode(o))
- 			die("no such path %s in %s", path, final_commit_name);
-=20
- 		if (DIFF_OPT_TST(&sb.revs->diffopt, ALLOW_TEXTCONV) &&
--		    textconv_object(path, o->blob_sha1, (char **) &sb.final_buf,
-+		    textconv_object(path, o->mode, o->blob_sha1, (char **) &sb.final=
-_buf,
- 				    &sb.final_buf_size))
- 			;
- 		else
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 76ec3fe..94632db 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -143,7 +143,7 @@ static int cat_one_file(int opt, const char *exp_ty=
-pe, const char *obj_name)
- 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
- 			    obj_name);
-=20
--		if (!textconv_object(obj_context.path, sha1, &buf, &size))
-+		if (!textconv_object(obj_context.path, obj_context.mode, sha1, &buf,=
- &size))
- 			die("git cat-file --textconv: unable to run textconv on %s",
- 			    obj_name);
- 		break;
-diff --git a/sha1_name.c b/sha1_name.c
-index 484081d..3e856b8 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -1069,6 +1069,7 @@ int get_sha1_with_context_1(const char *name, uns=
-igned char *sha1,
- 		struct cache_entry *ce;
- 		int pos;
- 		if (namelen > 2 && name[1] =3D=3D '/')
-+			/* don't need mode for commit */
- 			return get_sha1_oneline(name + 2, sha1);
- 		if (namelen < 3 ||
- 		    name[2] !=3D ':' ||
-@@ -1096,6 +1097,7 @@ int get_sha1_with_context_1(const char *name, uns=
-igned char *sha1,
- 				break;
- 			if (ce_stage(ce) =3D=3D stage) {
- 				hashcpy(sha1, ce->sha1);
-+				oc->mode =3D ce->ce_mode;
- 				return 0;
- 			}
- 			pos++;
-diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
-index 7c35959..dbf623b 100755
---- a/t/t8006-blame-textconv.sh
-+++ b/t/t8006-blame-textconv.sh
-@@ -94,8 +94,7 @@ test_expect_success SYMLINKS 'blame with --no-textcon=
-v (on symlink)' '
- 	test_cmp expected result
- '
-=20
--# fails with '...symlink.bin is not "binary" file'
--test_expect_failure SYMLINKS 'blame --textconv (on symlink)' '
-+test_expect_success SYMLINKS 'blame --textconv (on symlink)' '
- 	git blame --textconv symlink.bin >blame &&
- 	find_blame <blame >result &&
- 	test_cmp expected result
-@@ -114,8 +113,7 @@ EOF
- 	GIT_AUTHOR_NAME=3DNumber4 git commit -a -m Fourth --date=3D"2010-01-0=
-1 23:00:00"
- '
-=20
--# fails with '...symlink.bin is not "binary" file'
--test_expect_failure SYMLINKS 'blame on last commit (-C -C, symlink)' '
-+test_expect_success SYMLINKS 'blame on last commit (-C -C, symlink)' '
- 	git blame -C -C three.bin >blame &&
- 	find_blame <blame >result &&
- 	cat >expected <<\EOF &&
-diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.s=
-h
-index 98a3e1f..78a0085 100755
---- a/t/t8007-cat-file-textconv.sh
-+++ b/t/t8007-cat-file-textconv.sh
-@@ -79,8 +79,7 @@ test_expect_success SYMLINKS 'cat-file without --text=
-conv (symlink)' '
- '
-=20
-=20
--# fails because cat-file tries to run converter on symlink.bin
--test_expect_failure SYMLINKS 'cat-file --textconv on index (symlink)' =
-'
-+test_expect_success SYMLINKS 'cat-file --textconv on index (symlink)' =
-'
- 	! git cat-file --textconv :symlink.bin 2>result &&
- 	cat >expected <<\EOF &&
- fatal: git cat-file --textconv: unable to run textconv on :symlink.bin
-@@ -88,8 +87,7 @@ EOF
- 	test_cmp expected result
- '
-=20
--# fails because cat-file tries to run converter on symlink.bin
--test_expect_failure SYMLINKS 'cat-file --textconv on HEAD (symlink)' '
-+test_expect_success SYMLINKS 'cat-file --textconv on HEAD (symlink)' '
- 	! git cat-file --textconv HEAD:symlink.bin 2>result &&
- 	cat >expected <<EOF &&
- fatal: git cat-file --textconv: unable to run textconv on HEAD:symlink=
-=2Ebin
---=20
-1.7.3.19.g3fe0a
+Then again, if this is an opt-in rather than an opt-out, perhaps we
+should change the switch to HAVE_LIBCHARSET? I don't mean to go in
+circles here, but it sounds more self-documenting to me.
