@@ -1,74 +1,133 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] Makefile: implement help target
-Date: Wed, 29 Sep 2010 13:39:57 -0700
-Message-ID: <7vbp7gmggy.fsf@alter.siamese.dyndns.org>
-References: <7vhbh8r1zj.fsf@alter.siamese.dyndns.org>
- <d2da07fe51a3aba727165b0a0de299c266097145.1285791283.git.git@drmicha.warpmail.net>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC PATCH 1/3] add test for git grep --recursive
+Date: Wed, 29 Sep 2010 13:48:25 -0700
+Message-ID: <4CA3A619.70507@gmail.com>
+References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>	<1285792134-26339-2-git-send-email-judge.packham@gmail.com> <AANLkTikAUe=YWHcgF33aNFHesuxHtgCTXNZmbRoV99c-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>,
-	Andreas Ericsson <ae@op5.se>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Sep 29 22:40:22 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jens.Lehmann@web.de, git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 22:48:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P13Rt-0006C8-BD
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:40:21 +0200
+	id 1P13ZZ-0000Rw-Nu
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:48:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755295Ab0I2UkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 16:40:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50031 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753338Ab0I2UkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 16:40:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 684801491;
-	Wed, 29 Sep 2010 16:40:12 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=K3fOq1ONV3ESgr1CeG+OtEbWg9w=; b=axx6vn
-	TQIzcQB/8UObuquZ3mcBUqeEZozkE2uQ9UqF1ek8TYjrszwV58JuUxKGYhDjJIar
-	wKyDZwPtCH3Lr9hM2YP5NaD2nLGmPUJn7QV/STKXL95Oez7iWN7YpJCSjiYbR3zN
-	IgacA40OVgHgLKadYksbgbfKJZv7QUAUE3CoQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=F9Nl8b05yk0dS7Tm+0WbGVFWY5jhiJJP
-	ddzlxU5f18rsiya68WOpjfHUJdhNhmyMM/SCr5RIJtTZejMBETGl+2xCbj72SnxP
-	9vi8E41IzHu8+ZYxvufLwPn90v3NviL/eoBZ55W6Z9kvIrj3CiM8K8sJIHev1sV2
-	4fBzvMdxpIU=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E1F971490;
-	Wed, 29 Sep 2010 16:40:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9C6C1487; Wed, 29 Sep
- 2010 16:39:58 -0400 (EDT)
-In-Reply-To: <d2da07fe51a3aba727165b0a0de299c266097145.1285791283.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Wed\, 29 Sep 2010 22\:15\:55 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BE00F3BE-CC09-11DF-AF46-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755854Ab0I2UsN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 16:48:13 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:62029 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754404Ab0I2UsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 16:48:12 -0400
+Received: by pzk34 with SMTP id 34so293582pzk.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:48:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=DVeeVT6PjSLJeROLO32FSPeOyOmjhpBshMXPel/LYlc=;
+        b=U9yGPZqW+qRSA239uTWe+I1o8VPj9BRRud6m4BcCx9wtDNpmxUKVrbyO9pJgnxezdd
+         oBiCGoUJ+5ALrLsx3fZNnaJ6JsZTX/qV7RCeY0MS0NbTaL6lwwWRU1OKp+CFui4a6L+N
+         YiWRBw1WBHfF90fVfOgvkivHAoBhxvqbY3NJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=q36b5unGsXoxKWXIA+9x3qsi3BiNpldAqp0wO3S3SYYVRFG/Y5GZDaSXyA6TgzZz7o
+         GlzP8bqS7pRNQB4f9Sqwezm240/b9JGJvhZ/tkMWJd7/cMs1hEjOXs1oA1acH9vDKcY6
+         JFEVdZAtV8H7V8OPGRFR+7UlANqpXa4InT6zE=
+Received: by 10.114.135.11 with SMTP id i11mr2625883wad.37.1285793287007;
+        Wed, 29 Sep 2010 13:48:07 -0700 (PDT)
+Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id k23sm15198374waf.5.2010.09.29.13.48.04
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 29 Sep 2010 13:48:05 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
+In-Reply-To: <AANLkTikAUe=YWHcgF33aNFHesuxHtgCTXNZmbRoV99c-@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157604>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157605>
 
-Michael J Gruber <git@drmicha.warpmail.net> writes:
+On 29/09/10 13:35, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Wed, Sep 29, 2010 at 20:28, Chris Packham <judge.packham@gmail.com=
+> wrote:
+>> Signed-off-by: Chris Packham <judge.packham@gmail.com>
+>> ---
+>>  t/t7820-grep-recursive.sh |  101 ++++++++++++++++++++++++++++++++++=
++++++++++++
+>>  1 files changed, 101 insertions(+), 0 deletions(-)
+>>  create mode 100644 t/t7820-grep-recursive.sh
+>>
+>> diff --git a/t/t7820-grep-recursive.sh b/t/t7820-grep-recursive.sh
+>> new file mode 100644
+>> index 0000000..4bbd109
+>> --- /dev/null
+>> +++ b/t/t7820-grep-recursive.sh
+>> @@ -0,0 +1,101 @@
+>> +#!/bin/sh
+>> +#
+>> +# Copyright (c) 2010 Chris Packham
+>> +#
+>> +
+>> +test_description=3D'git grep --recursive test
+>> +
+>> +This test checks the ability of git grep to search within submodule=
+s when told
+>> +to do so with the --recursive option'
+>> +
+>> +. ./test-lib.sh
+>> +
+>> +test_expect_success 'setup - initial commit' '
+>> +       printf "one two three\nfour five six\n" >t &&
+>> +       git add t &&
+>> +       git commit -m "initial commit"
+>> +'
+>> +submodurl=3D$TRASH_DIRECTORY
+>> +
+>> +test_expect_success 'setup submodules for test' '
+>> +       for mod in $(seq 1 5 | sed "s/.*/submodule&/"); do
+>> +               git submodule add "$submodurl" $mod &&
+>> +               git submodule init $mod
+>> +       done
+>> +'
+>> +
+>> +test_expect_success 'update data in each submodule' '
+>> +       for n in $(seq 1 5); do
+>=20
+> seq isn't portable to windows, so we usually write out "1 2 3 4 5"
+> directly.
+>=20
+>> +               (cd submodule$n &&
+>> +                       sed -i "s/^four.*/& #$n/" t &&
+>> +                       git commit -a -m"update")
+>> +       done
+>> +'
+>> +
+>> +cat >expected <<EOF
+>> +t:four five six
+>> +EOF
+>> +test_expect_success 'non-recursive grep in base' '
+>> +       git grep "five" >actual &&
+>> +       test_cmp expected actual
+>> +'
+>=20
+> Put the "cat >expected <<EOF" inside the test:
+>=20
+>     test_expect_success 'non-recursive grep in base' '
+>         cat >expected <<\EOF &&
+>         t:four five six
+>         EOF
+>         git grep "five" >actual &&
+>         test_cmp expected actual
+>     '
+>=20
+> ditto for the rest.
 
-> diff --git a/Makefile b/Makefile
-> index db2efd6..371214d 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -1,4 +1,10 @@
->  # The default target of this Makefile is...
-> +help-Build::
-
-Heh, no way.  The default target of this Makefile should remain "all".
-
-Even though letting phony double-colon rules to implicitly collect members
-of groups and showing them is a neat idea, I do not think "make -j help"
-would do what you are expecting ;-)
+Thanks for the review, will be in next re-roll.
