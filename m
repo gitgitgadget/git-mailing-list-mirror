@@ -1,137 +1,95 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: [PATCHv2] send-email: Use To: headers in patch files
-Date: Wed, 29 Sep 2010 00:26:44 -0700
-Message-ID: <1285745204-22443-1-git-send-email-bebarino@gmail.com>
-References: <AANLkTimTmfORavF6pNGjC6L46_f+GOaz86jEzBPYUxF2@mail.gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Viresh Kumar <viresh.kumar@st.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 09:26:59 2010
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2] Makefile: implement help target
+Date: Wed, 29 Sep 2010 03:34:01 -0400
+Message-ID: <20100929073400.GA28010@sigill.intra.peff.net>
+References: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com>
+ <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
+ <20100929051640.GA26324@sigill.intra.peff.net>
+ <4CA2E4C7.305@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Sep 29 09:34:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0r46-0002v4-HL
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 09:26:58 +0200
+	id 1P0rBD-00051T-FP
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 09:34:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752579Ab0I2H0x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 03:26:53 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:41247 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752429Ab0I2H0w (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 03:26:52 -0400
-Received: by gwj17 with SMTP id 17so172434gwj.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 00:26:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=NwV9IiBvg1hWXwJ+zsg5NUAJnQHaIuy/xZFzG1+WPDU=;
-        b=nD/YzXv5Y9Eo+pd3NPU31RXbswJ73LCYC4+RuhpbZ8phs1+/pIqhcqMZ7WLP0eKkOb
-         /5Tk0D73f2m6C8xgegScNhYu0EZS1CnrEp6ucMgNC25Kij4ikhUIaboV4ds8hf08lGTj
-         htgh639FAazV8LqaJpQj1HDWlFJpq6i8E6Ggk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Gm78w1bQstDFigonfWxOWYSTZq7cEaQTA94NN6ZBpVL7V8Hiw4BSCcdOV8XEmXCGYq
-         Jsqv18zp3mzmVqkPc2HewdbSPij96cogeSPJ5/Wb7AL9HOmeM0ak4o2RvgEDqTEDVwaY
-         zidJqLCs56tSBOpi0btusTO5oqBDpss3VgGtQ=
-Received: by 10.151.113.8 with SMTP id q8mr1434992ybm.399.1285745211495;
-        Wed, 29 Sep 2010 00:26:51 -0700 (PDT)
-Received: from earth ([75.85.182.25])
-        by mx.google.com with ESMTPS id x3sm8232232ybl.22.2010.09.29.00.26.48
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 29 Sep 2010 00:26:50 -0700 (PDT)
-Received: by earth (sSMTP sendmail emulation); Wed, 29 Sep 2010 00:26:45 -0700
-X-Mailer: git-send-email 1.7.3.16.g5d4d9
-In-Reply-To: <AANLkTimTmfORavF6pNGjC6L46_f+GOaz86jEzBPYUxF2@mail.gmail.com>
+	id S1753380Ab0I2Hd7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 03:33:59 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59389 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753348Ab0I2Hd6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 03:33:58 -0400
+Received: (qmail 6959 invoked by uid 111); 29 Sep 2010 07:33:57 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 29 Sep 2010 07:33:57 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Sep 2010 03:34:01 -0400
+Content-Disposition: inline
+In-Reply-To: <4CA2E4C7.305@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157540>
 
-It's a minor annoyance when you take the painstaking time to setup To:
-headers for each patch in a large series, and then go out to send the
-series with git-send-email and watch git ignore the To: headers in the
-patch files.
+On Wed, Sep 29, 2010 at 09:03:35AM +0200, Michael J Gruber wrote:
 
-Therefore, always add To: headers from a patch file to the To: headers
-for that message. Keep the prompt for the blanket To: header so as to
-not break scripts (and user expectations). This means even if a patch
-has a To: header, git will prompt for the To: address. Otherwise, we'll
-need to introduce interface breakage to either request the header for
-each patch missing a To: header or default the header to whatever To:
-address is found first (be it in a patch or from user input). Both of
-these options don't seem very obvious/useful.
+> > Surely this is why we have perl?
+> 
+> I don't speak perl.
+> 
+> Honestly, this is slowly going on my nerves. Maybe it's because I'm
+> reading too many "can't we do it this way" responses in one go and
+> without being coffeinated, and without seeing how "different" is better.
+> [I've been heeding all advise on portability and readability, as you can
+> see.]
 
-Reported-by: Viresh Kumar <viresh.kumar@st.com>
-Signed-off-by: Stephen Boyd <bebarino@gmail.com>
-Tested-by: Viresh Kumar <viresh.kumar@st.com>
----
+I should have been more clear about my motivations. It was mainly "I
+wonder how short I can make this in perl?" The alternate sorting was
+something that happened incidentally, though it did make more sense to
+me.
 
-Changes since v1:
- - Added test_when_finished calls.
+So you can just ignore me if you like. :)
 
- git-send-email.perl   |    7 +++++++
- t/t9001-send-email.sh |   24 ++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 0 deletions(-)
+> > 	  -e 'for (sort keys(%h)) {' \
+> > 	  -e '  print "$$_:\n";' \
+> > 	  -e '  printf("    %-20s%s\n", @$$_) for (@{$$h{$$_}});' \
+> > 	  -e '}' Makefile
+> > 
+> 
+> How portable are the regexps and the array/dictionary push?
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index e1f29a7..d6028ec 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1176,6 +1176,13 @@ foreach my $t (@files) {
- 					$1, $_) unless $quiet;
- 				push @cc, $1;
- 			}
-+			elsif (/^To:\s+(.*)$/) {
-+				foreach my $addr (parse_address_line($1)) {
-+					printf("(mbox) Adding to: %s from line '%s'\n",
-+						$addr, $_) unless $quiet;
-+					push @to, sanitize_address($addr);
-+				}
-+			}
- 			elsif (/^Cc:\s+(.*)$/) {
- 				foreach my $addr (parse_address_line($1)) {
- 					if (unquote_rfc2047($addr) eq $sender) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 71b3df9..294e31f 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -947,6 +947,30 @@ test_expect_success $PREREQ '--no-bcc overrides sendemail.bcc' '
- 	! grep "RCPT TO:<other@ex.com>" stdout
- '
- 
-+test_expect_success $PREREQ 'patches To headers are used by default' '
-+	patch=`git format-patch -1 --to="bodies@example.com"` &&
-+	test_when_finished "rm $patch" &&
-+	git send-email \
-+		--dry-run \
-+		--from="Example <nobody@example.com>" \
-+		--smtp-server relay.example.com \
-+		$patch >stdout &&
-+	grep "RCPT TO:<bodies@example.com>" stdout
-+'
-+
-+test_expect_success $PREREQ 'patches To headers are appended to' '
-+	patch=`git format-patch -1 --to="bodies@example.com"` &&
-+	test_when_finished "rm $patch" &&
-+	git send-email \
-+		--dry-run \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server relay.example.com \
-+		$patch >stdout &&
-+	grep "RCPT TO:<bodies@example.com>" stdout &&
-+	grep "RCPT TO:<nobody@example.com>" stdout
-+'
-+
- test_expect_success $PREREQ 'setup expect' '
- cat >email-using-8bit <<EOF
- From fe6ecc66ece37198fe5db91fa2fc41d9f4fe5cc4 Mon Sep 17 00:00:00 2001
--- 
-1.7.3.16.g5d4d9
+AFAIK, it should work with any perl5. I don't have any ancient versions
+handy to test these days, though.
+
+> > Note that mine will actually print the targets in a heading in the order
+> > in which they appear in the Makefile, which I consider slightly more
+> > useful (especially in that we can tweak the order easily).
+> 
+> I don't think Makefile order would be useful. If you know exactly what
+> you're looking for you need no sorting, you can just search for that
+> term. (I would do a 'grep -A20 "^target:" Makefile' or hit "/^target" in
+> my vim but I'm sure there's a different way of doing it in perl...)
+
+What I was trying to say was more that alphabetical is not necessarily
+the most useful order to present things in the help screen. Probably
+there is some hand-selected order that presents the entries in the least
+confusing way. And one way of representing that is to have the topics in
+that order in the Makefile, which in theory probably makes reading the
+Makefile itself simpler.
+
+But yeah, this is way over-thinking the issue. It's a fricking list of
+Makefile targets. I am happy with your original patch.
+
+-Peff
