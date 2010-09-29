@@ -1,8 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCH 01/18] (trivial) notes.h: Minor documentation fixes to
- copy_notes()
-Date: Wed, 29 Sep 2010 02:23:14 +0200
-Message-ID: <1285719811-10871-2-git-send-email-johan@herland.net>
+Subject: [PATCH 02/18] notes.h: Make default_notes_ref() available in notes API
+Date: Wed, 29 Sep 2010 02:23:15 +0200
+Message-ID: <1285719811-10871-3-git-send-email-johan@herland.net>
 References: <1285719811-10871-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -10,33 +9,33 @@ Content-Transfer-Encoding: 7BIT
 Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
 	gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 02:23:55 2010
+X-From: git-owner@vger.kernel.org Wed Sep 29 02:23:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0kSg-0000uw-Kl
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 02:23:54 +0200
+	id 1P0kSh-0000uw-BM
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 02:23:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752285Ab0I2AXo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 20:23:44 -0400
+	id S1753002Ab0I2AXr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 20:23:47 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:44298 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751829Ab0I2AXo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 20:23:44 -0400
+	id S1751829Ab0I2AXp (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 20:23:45 -0400
 Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L9H003XLFRHTS70@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 29 Sep 2010 02:23:41 +0200 (MEST)
+ with ESMTP id <0L9H003YDFRITS70@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Wed, 29 Sep 2010 02:23:42 +0200 (MEST)
 Received: from get-mta-scan04.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id AFD341EEF82F_CA2870DB	for <git@vger.kernel.org>; Wed,
- 29 Sep 2010 00:23:41 +0000 (GMT)
+ with SMTP id B2E551EEF85E_CA2870EB	for <git@vger.kernel.org>; Wed,
+ 29 Sep 2010 00:23:42 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 51DA31EEF79D_CA2870DF	for <git@vger.kernel.org>; Wed,
+ with ESMTP id 7F8A81EEF852_CA2870EF	for <git@vger.kernel.org>; Wed,
  29 Sep 2010 00:23:41 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
@@ -48,35 +47,51 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157499>
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.h |    5 +++++
- 1 files changed, 5 insertions(+), 0 deletions(-)
+ notes.c |    2 +-
+ notes.h |   14 ++++++++++++++
+ 2 files changed, 15 insertions(+), 1 deletions(-)
 
+diff --git a/notes.c b/notes.c
+index 1978244..79fd850 100644
+--- a/notes.c
++++ b/notes.c
+@@ -898,7 +898,7 @@ static int notes_display_config(const char *k, const char *v, void *cb)
+ 	return 0;
+ }
+ 
+-static const char *default_notes_ref(void)
++const char *default_notes_ref(void)
+ {
+ 	const char *notes_ref = NULL;
+ 	if (!notes_ref)
 diff --git a/notes.h b/notes.h
-index 65fc3a6..c0288b0 100644
+index c0288b0..20db42f 100644
 --- a/notes.h
 +++ b/notes.h
-@@ -104,6 +104,10 @@ const unsigned char *get_note(struct notes_tree *t,
-  * Copy a note from one object to another in the given notes_tree.
-  *
-  * Fails if the to_obj already has a note unless 'force' is true.
+@@ -44,6 +44,20 @@ extern struct notes_tree {
+ } default_notes_tree;
+ 
+ /*
++ * Return the default notes ref.
 + *
-+ * IMPORTANT: The changes made by copy_note() to the given notes_tree structure
-+ * are not persistent until a subsequent call to write_notes_tree() returns
-+ * zero.
-  */
- int copy_note(struct notes_tree *t,
- 	      const unsigned char *from_obj, const unsigned char *to_obj,
-@@ -149,6 +153,7 @@ int copy_note(struct notes_tree *t,
-  * notes tree) from within the callback:
-  * - add_note()
-  * - remove_note()
-+ * - copy_note()
-  * - free_notes()
-  */
- typedef int each_note_fn(const unsigned char *object_sha1,
++ * The default notes ref is the notes ref that is used when notes_ref == NULL
++ * is passed to init_notes().
++ *
++ * This the first of the following to be defined:
++ * 1. The '--ref' option to 'git notes', if given
++ * 2. The $GIT_NOTES_REF environment variable, if set
++ * 3. The value of the core.notesRef config variable, if set
++ * 4. GIT_NOTES_DEFAULT_REF (i.e. "refs/notes/commits")
++ */
++const char *default_notes_ref(void);
++
++/*
+  * Flags controlling behaviour of notes tree initialization
+  *
+  * Default behaviour is to initialize the notes tree from the tree object
 -- 
 1.7.3.98.g5ad7d9
