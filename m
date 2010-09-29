@@ -1,61 +1,83 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH 2/2] Fix typo in pack-objects' usage
-Date: Wed, 29 Sep 2010 23:22:33 +0100
-Message-ID: <1285798953-15320-3-git-send-email-patthoyts@users.sourceforge.net>
-References: <7vocbhsn03.fsf@alter.siamese.dyndns.org>
-Cc: <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
+From: Pat Thoyts <patthoyts@gmail.com>
+Subject: Re: [msysGit] Pull request for msysGit patches
+Date: Wed, 29 Sep 2010 23:29:57 +0100
+Message-ID: <AANLkTimbiKGLKKxF-OL7SA7QQG2j4SRgD-MpOHPdW4sA@mail.gmail.com>
+References: <87ocbitd33.fsf@fox.patthoyts.tk>
+	<201009282252.25688.j6t@kdbg.org>
+	<20100928210837.GA8317@capella.cs.uchicago.edu>
+	<7vhbh8o2ui.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 00:23:46 2010
+X-From: git-owner@vger.kernel.org Thu Sep 30 00:30:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P153x-0006UH-NP
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 00:23:46 +0200
+	id 1P15A5-0008AN-8L
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 00:30:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753211Ab0I2WXk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 18:23:40 -0400
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:39618 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752379Ab0I2WXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 18:23:40 -0400
-Received: from [172.23.170.140] (helo=anti-virus02-07)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P153q-0005A7-SV; Wed, 29 Sep 2010 23:23:38 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P153f-0003Ig-Ev; Wed, 29 Sep 2010 23:23:27 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 7ABDA26646; Wed, 29 Sep 2010 23:23:25 +0100 (BST)
-X-Mailer: git-send-email 1.7.3
-In-Reply-To: <7vocbhsn03.fsf@alter.siamese.dyndns.org>
+	id S1753608Ab0I2W37 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 18:29:59 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:37983 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753177Ab0I2W36 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 18:29:58 -0400
+Received: by qyk36 with SMTP id 36so1642709qyk.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 15:29:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6qN+l6W3ia/ponEG2N6nHJTAyi0LglaPJu8Sd0Ur4LY=;
+        b=J92QD4xfYLrk2tdR7J/sCSYBI0bl6T+bfXQzKKbGYFVy5RA2rzfp2G9wOHbnFL3f+m
+         N9Pp+mTgoTFWf9Q8me19GMtEHS/BFFXa1aFyE0UA+Aeur+D6dWg4V4z4Q4ZLdGdNcMUD
+         5HZqQi67Xw23DgBvTFhZ4jXtzVZhOkVZs2dlw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=j958eEGBl+V3/kJj6BDkS6gDa8YghoOoQk5vAoEnkYTg4JrvxrSFLeVctvHv3hgCjF
+         kj8xxf2K8kMajDYEIUKfo79A0wcIac9kX38yUkqZWcC32xh7dnYMzLVsN22WKA7EKUcu
+         mPn8t0xypbneBomQmul+39uuBDEyxl8ll1Wns=
+Received: by 10.224.29.4 with SMTP id o4mr1709269qac.203.1285799397688; Wed,
+ 29 Sep 2010 15:29:57 -0700 (PDT)
+Received: by 10.229.229.5 with HTTP; Wed, 29 Sep 2010 15:29:57 -0700 (PDT)
+In-Reply-To: <7vhbh8o2ui.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157616>
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+On 29 September 2010 18:51, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> Johannes Sixt wrote:
+>>> On Dienstag, 28. September 2010, Pat Thoyts wrote:
+>>
+>>>> Johannes Schindelin (11):
+>>>> =C2=A0 =C2=A0 =C2=A0 Avoid TAGS/tags warning from GNU Make
+>>>
+>>> OK.
+>>
+>> Wasn't this one reviewed on-list recently?
+>
+> Yeah, I remember it vaguely ;-)
+>
+> Although I do not care very much either way, this probably is a bette=
+r
+> approach, I think, if there are people on MinGW and/or OS/X who use
+> tags/etags.
+>
+> Will queue.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- builtin/pack-objects.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 0e81673..3756cf3 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -30,7 +30,7 @@ static const char pack_usage[] =
-   "        [--no-reuse-delta] [--no-reuse-object] [--delta-base-offset]\n"
-   "        [--threads=N] [--non-empty] [--revs [--unpacked | --all]*]\n"
-   "        [--reflog] [--stdout | base-name] [--include-tag]\n"
--  "        [--keep-unreachable | --unpack-unreachable \n"
-+  "        [--keep-unreachable | --unpack-unreachable]\n"
-   "        [<ref-list | <object-list]";
- 
- struct object_entry {
--- 
-1.7.3
+I've just tested this suggested patch with msysGit and it's fine here.
+We can go with this rather than Johannes' original.
