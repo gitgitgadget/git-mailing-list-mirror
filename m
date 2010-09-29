@@ -1,81 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 13/16] send-email: extract_valid_address use qr// regexes
- and /o
-Date: Thu, 30 Sep 2010 10:25:54 -0700
-Message-ID: <7vocbfjg7x.fsf@alter.siamese.dyndns.org>
-References: <1285854189-10240-1-git-send-email-avarab@gmail.com>
- <1285854189-10240-14-git-send-email-avarab@gmail.com>
- <20100930161912.GA8707@sigill.intra.peff.net>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: Pull request for msysGit patches
+Date: Wed, 29 Sep 2010 21:48:20 +0100
+Message-ID: <4CA3A614.1010203@ramsay1.demon.co.uk>
+References: <87ocbitd33.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Ryan Anderson <rda@google.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Sep 30 19:27:05 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Sep 30 19:35:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1MuO-0007xh-2a
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 19:27:04 +0200
+	id 1P1N2g-0002ng-E2
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 19:35:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755672Ab0I3R0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 13:26:12 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58097 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754642Ab0I3R0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 13:26:11 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C3377DA888;
-	Thu, 30 Sep 2010 13:26:09 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=45mzOND5uS8ZqvgQHMG2AMneqrA=; b=MVvV/+
-	UzxAlwEPeqlaqyDIyxqaQF+Ci9+rcH4CP1bnuBy9JZznW2agmGCDQPz/sNavKQHu
-	LDaJbsuPbGZql/0tU9yb30lfzbD5BKgbJSKFXaolv4KOX4bPLFPlrPRTPPbomr35
-	J0+PJ/QMaWQpOK1ttQorudwQInRFCgvPvnhfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=dMwwU6W13afIuOvYdVb4PEjCO1wwk//t
-	B8DgAwjLx2R8HGsaXgMiJKXIeQsVGi7tE7OoGdNkYlFClDKTsCtdntjZpjL8+XiH
-	nnyfji/iXqcXHFTBWzMizzclT53b1pvwhE8l1kQXWAMReA9c5zvRxOQNO5Fh4Ki0
-	fRI7cXqUcZg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 54328DA87C;
-	Thu, 30 Sep 2010 13:26:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 48CA8DA863; Thu, 30 Sep
- 2010 13:25:56 -0400 (EDT)
-In-Reply-To: <20100930161912.GA8707@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 30 Sep 2010 12\:19\:12 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CCE6562C-CCB7-11DF-ABF2-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756797Ab0I3RfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 13:35:12 -0400
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:55973 "EHLO
+	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756785Ab0I3RfJ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 13:35:09 -0400
+X-Greylist: delayed 1206 seconds by postgrey-1.27 at vger.kernel.org; Thu, 30 Sep 2010 13:35:09 EDT
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1P1MiO-000502-d6; Thu, 30 Sep 2010 17:15:00 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <87ocbitd33.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157696>
 
-Jeff King <peff@peff.net> writes:
+Pat Thoyts wrote:
+> Junio,
+> 
+> The msysGit tree currently tracks some 50+ patches on top of 'next'. I
+> have gathered 42 of these that look good to move upstream. 
+> Please pull from
+>   git://repo.or.cz/git/mingw/4msysgit.git work/pt/for-junio
+> also visible for inspection at
+>   http://repo.or.cz/w/git/mingw/4msysgit.git/shortlog/refs/heads/work/pt/for-junio
+> 
+> Output of git-request-pull....
 
-> ...
-> But we are unnecessarily compiling the sub-regexes each time. Not that
-> this is probably a performance critical piece of code, but your "/o" is
-> doing very little, and this is exactly the sort perl wankery that I find
-> interesting.
+I am carrying a patch by Peter Harris (Modify MSVC wrapper script) in my
+repo, which I would hope could be included soon. I have never used 4msysgit.git
+(I thought it was no longer used, except for building installers!), but I
+just had a quick look via the web interface - the commit I'm referring to is
+commit 358f1be616da601b2169463521d409a8aa86466a (Modify MSVC wrapper script,
+2010-07-05).
 
-Well, isn't the _sole_ point of using qr// to optimize by avoiding
-recompilation?  If this is not a performance critical section of the code,
-what is the point of this change?
+[Note the "Fix MSVC build" companion commit was not needed on git.git]
 
-This [PATCH 13/16] and also [PATCH 12/16] rewrite strings using qr// but
-the patterns thus compiled are used exactly once before the control leaves
-the scope of the variables, so...
-
-It is a different story if the patch instead introduced module-level
-global variables to hold a pre-compiled regexp objects, but that is not
-what we are seeing here.
+ATB,
+Ramsay Jones
