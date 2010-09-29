@@ -1,83 +1,104 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [msysGit] Pull request for msysGit patches
-Date: Wed, 29 Sep 2010 00:17:34 -0400
-Message-ID: <4CA2BDDE.6040100@sunshineco.com>
-References: <87ocbitd33.fsf@fox.patthoyts.tk> <201009282252.25688.j6t@kdbg.org> <4CA2A32E.3050802@sunshineco.com> <7vfwwtrzi7.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/6] Introduce pathspec struct
+Date: Tue, 28 Sep 2010 21:26:42 -0700
+Message-ID: <7vzkv1qinx.fsf@alter.siamese.dyndns.org>
+References: <1284938514-16663-1-git-send-email-pclouds@gmail.com>
+ <7v7hi6us35.fsf@alter.siamese.dyndns.org>
+ <AANLkTinZ=dx1nBXTw0E=nLOmncsgNb7wv1-+ddWzPU+e@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 06:17:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git <git@vger.kernel.org>,
+	Bo Yang <struggleyb.nku@gmail.com>,
+	David Ripton <dripton@ripton.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 06:27:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0o6z-0006jm-Hd
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 06:17:45 +0200
+	id 1P0oGD-0000RN-HB
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 06:27:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751087Ab0I2ERj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 00:17:39 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:65363 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896Ab0I2ERi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 00:17:38 -0400
-Received: by gye5 with SMTP id 5so55977gye.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 21:17:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=dOux2t3/22DSk21s7vZhJiR6yedNpxg0PabZgcKHwYE=;
-        b=RUwSWt3xsh6EKzN+2ME2Bp/tdjOJO/Sdgm00rXbmnbgvURzPiVTCKiZ54pBk0l8OFf
-         KosiKsPZNpYUY/+8Y12jNIj3ZovacWflOooKShnFZcwqRptFfqDdkIcOraPAJzQyb/FT
-         L7Us/c3WQ0hM5ycywRFQ4/GB6WG19GAZFtOZ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=sdj8LGX8MJCvwkFSDNZhsGHxB/Io8N39zMfNIX+98Tuh8sCDr25wvExFgXCtjnOSc3
-         QVDCLhlbR6PRSXU0aA3AQf4y2o6ZhtE/rlbtUD6eb8SkUFHOtVG2H+ntPrd2GuubEsnL
-         XAN/6hMWmdXBg3prqiY5hCJP+2ofNVtdzfDS0=
-Received: by 10.100.138.6 with SMTP id l6mr1104618and.192.1285733857856;
-        Tue, 28 Sep 2010 21:17:37 -0700 (PDT)
-Received: from [192.168.1.1] (user-12l2cil.cable.mindspring.com [69.81.50.85])
-        by mx.google.com with ESMTPS id w1sm9397853ana.16.2010.09.28.21.17.35
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 28 Sep 2010 21:17:37 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-In-Reply-To: <7vfwwtrzi7.fsf@alter.siamese.dyndns.org>
+	id S1751293Ab0I2E05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 00:26:57 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58956 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751277Ab0I2E04 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 00:26:56 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 04EDBDA2D9;
+	Wed, 29 Sep 2010 00:26:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=QYC0k5vW1hla1H+VElNjjPKs+Ks=; b=D7hr9z
+	6I28MZ3MpoZeYSMWrC/LIVzDuyNYTGp1sEGdp/a1JRwQcAGkB3m13BopjxaJRf3T
+	5T6lXmNXYkPQJBUbGnjImpDRQC2HE1kL7fkLVgg/ZFzF2PxZVsSt8rz9xrYYGbd4
+	vObLdfW0pwhLcg1Y6fyiztbG5inYfttU+J4eI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=U5D6xINCw28gmi2Aa2VCRHJ/Q06w8LBq
+	+t+AxRvEzS5Q1Scusp3pUEhYhBnJne2EyvhVr16KDwxdCe2uD7Up9ewls2CfNAkE
+	B7TP1P3TJq8we/TXOCxngo0kKTKND6x6ZDZstKo9fPXPnG09A7r0ice/2Qx7Nivt
+	D2JXtUG8dw4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B85AEDA2D6;
+	Wed, 29 Sep 2010 00:26:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id AE985DA2D4; Wed, 29 Sep
+ 2010 00:26:44 -0400 (EDT)
+In-Reply-To: <AANLkTinZ=dx1nBXTw0E=nLOmncsgNb7wv1-+ddWzPU+e@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Wed\, 29 Sep 2010 08\:31\:08 +1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C7C5EBEE-CB81-11DF-974B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157526>
 
-On 9/28/2010 11:37 PM, Junio C Hamano wrote:
-> Eric Sunshine<sunshine@sunshineco.com>  writes:
->> I also normally avoid unportable 'export foo=bar'. In the particular
->> case of GREP_OPTIONS, when commenting on my original patch submission,
->> Dscho suggested 'test_have_prereq MINGW&&  export GREP_OPTIONS=foo' so
->> that is the form which made it into the final patch.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+
+>>  $ git log --exclude "Doc*" master..pu -- '*.txt'
+>>  $ git grep --exclude "t/" -e 'test .*-L' -- '*.sh'
 >
-> Well, since bbc09c2 (grep: rip out support for external grep, 2010-01-12)
-> we do not run external grep at all, so GREP_OPTIONS is irrelevant.
+> I was writing "but you would lose the ability to mix negative and
+> positive pathspecs together, something like 'exclude Documentation
+> except Documentation/technical'",...
+
+I think that is way overengineered.  We _could_ make the expressions
+arbitrarily complex and hard to use by using irregular syntax tricks, but
+let's not go there.  Let's just keep things simple and usable instead.
+
+ * Without pathspec, everything is included;
+ * pathspecs will filter everything that do not match;
+ * --exclude also filters what matches them from the remainder.
+
+So...
+
+> $ git log --exclude Documentation --exclude "!Documentation/technical"
+> master..pu -- '*.txt'
 >
-> Unless you are planning to run tests on installed version of git older
-> than v1.7.0, that is ;-).
+> does not sound too twisted to understand (I hope).
 
-The patches in question involve test scripts which themselves invoke 
-external grep for various reasons. An example is t5560 where external 
-grep is invoked to extract the Status: header from an HTTP response. The 
-patches fix instances where grep invocations give incorrect results on 
-Windows due to grep undesirably swallowing CR from CRLF line-terminators 
-in the few tests where those terminators are actually significant (such 
-as t5560). In the context of these test scripts, external grep is still 
-employed, so GREP_OPTIONS may still be relevant.
+...I would not vote for this.
 
--- ES
+> ... If David
+> needs "git grep --exclude-dir" now, he should keep working on
+> builtin/grep.c as he's doing now (maybe change --exclude-dir to
+> --exclude).
+
+That's not what I am saying.
+
+Because --exclude-dir is a special case of --exclude, it would be an
+efficient solution _if_ we can externally keep the command line option
+compatible with GNU grep as a syntax sugar, and turn it into something
+else internally that can be passed to your "pathspec with negative"
+engine.
+
+
+> ..., but his work on the
+> command line interface _and tests_ won't be wasted.
+
+Yup.
