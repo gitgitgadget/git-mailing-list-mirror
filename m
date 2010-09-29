@@ -1,9 +1,9 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH v2] gettext: use libcharset when available
-Date: Wed, 29 Sep 2010 13:40:32 +0000
-Message-ID: <1285767632-24852-1-git-send-email-avarab@gmail.com>
-References: <AANLkTinRsryfdnj_uUH++yZrV1r_M+NNoXLm9TSO9N+J@mail.gmail.com>
+Subject: [PATCH v3] gettext: use libcharset when available
+Date: Wed, 29 Sep 2010 13:43:34 +0000
+Message-ID: <1285767814-25857-1-git-send-email-avarab@gmail.com>
+References: <1285767632-24852-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,52 +12,52 @@ Cc: Erik Faye-Lund <kusmabite@gmail.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 15:41:31 2010
+X-From: git-owner@vger.kernel.org Wed Sep 29 15:44:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0wuW-0004hL-5q
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 15:41:28 +0200
+	id 1P0wxU-0005vh-OO
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 15:44:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756267Ab0I2Nko convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 09:40:44 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46894 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756212Ab0I2Nkj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 09:40:39 -0400
-Received: by wyb28 with SMTP id 28so724807wyb.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 06:40:38 -0700 (PDT)
+	id S1756350Ab0I2Nnp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 09:43:45 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62919 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756201Ab0I2Nno (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 09:43:44 -0400
+Received: by wwb39 with SMTP id 39so48653wwb.1
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 06:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=fN1Qc//U0xOSlWIr2eY155Kmhfs78hpeCBRl4nKD2l0=;
-        b=akMoK9dKiSrWKf5KYMM1iAHMSNhGGds3Xaha1N24F3YMI70+iyu+mgacOoup3+e+7N
-         TU+u+DLxVtISjAXcCTPWe9jyRkyNSMTIYYZ8sN2+sGpbMl3TIFP4yPsGxfkNSP+RbBIa
-         wrVBn9T/EhjpHdd9e63piPGf1F0wWVub+6d08=
+        bh=ANAi1JH4x/zNAvghXEW+/S206NW0jR919aZhbTymn80=;
+        b=ImVM87jxr/7VUhs/qlxzoYYQyJYD8Kmj5y7m7ERUMO6MTGr4dg3b57LqEbmdzjEfUH
+         dGgncnS1Lo/NBycVPyspOshZSp2jULgs/8uvfxQVOMYaIwaTa+/4bWDF6T7MmmcoCvj3
+         tBfldE4bP/j8c35XqX87clJuVbEhv7/npe2mE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=LThl7qQXxDG2Ff5+jzG/18+fvRd+WXJnlSSLYxk2L1Cb5z3jWz8ui7EYIxnh5RNMzX
-         46KPnysAjBT0ACyCDigzsnx+e7dpg8+j9ig4Cp8lK1GHmxwQeuf/y00ziJW/soVDB3IP
-         TYbOL2wGAalio3m9kq1quhjBXz1j5BmGZPXDo=
-Received: by 10.227.137.76 with SMTP id v12mr1482842wbt.113.1285767638223;
-        Wed, 29 Sep 2010 06:40:38 -0700 (PDT)
+        b=F8sBINDytC4IIPMjSa/GeZiZK4fYSslXfSnbkGuKVPYLo3Zlh3Z1Ltmiwq3cOJrQt4
+         RLdQGB0+kh+YSi37z8pY9oQxZ/JKB8HpxXHb8uhPtMf0Kqym3ZPPt62+k1pZjkrVoR8o
+         TfYPhVAA8egNfifccqzUm0b2dELTUcoDckbWM=
+Received: by 10.227.145.66 with SMTP id c2mr1565987wbv.42.1285767822976;
+        Wed, 29 Sep 2010 06:43:42 -0700 (PDT)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id bj11sm6956969wbb.10.2010.09.29.06.40.36
+        by mx.google.com with ESMTPS id fz1sm7172437wbb.0.2010.09.29.06.43.41
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 29 Sep 2010 06:40:37 -0700 (PDT)
+        Wed, 29 Sep 2010 06:43:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.159.g610493
-In-Reply-To: <AANLkTinRsryfdnj_uUH++yZrV1r_M+NNoXLm9TSO9N+J@mail.gmail.com>
+In-Reply-To: <1285767632-24852-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157570>
 
 =46rom: Erik Faye-Lund <kusmabite@gmail.com>
 
@@ -83,20 +83,26 @@ Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
 >
 ---
 
-On Wed, Sep 29, 2010 at 13:34, Erik Faye-Lund <kusmabite@gmail.com> wro=
-te:
-> Very minor nit: It's officially spelled MinGW, with an upper-case G.
+On Wed, Sep 29, 2010 at 13:40, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
+avarab@gmail.com> wrote:
+> From: Erik Faye-Lund <kusmabite@gmail.com>
+> On Wed, Sep 29, 2010 at 13:34, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+>> Very minor nit: It's officially spelled MinGW, with an upper-case G.
+>
+> Did s/MingW/MinGW/ in the content & message in this v2.
 
-Did s/MingW/MinGW/ in the content & message in this v2.
+Discard that one, I accidentally changed some unrelated mention of
+MingW to MinGW.
 
- Makefile      |   19 ++++++++++++++++++-
+ Makefile      |   17 +++++++++++++++++
  config.mak.in |    1 +
  configure.ac  |    6 ++++++
  gettext.c     |   10 +++++++++-
- 4 files changed, 34 insertions(+), 2 deletions(-)
+ 4 files changed, 33 insertions(+), 1 deletions(-)
 
 diff --git a/Makefile b/Makefile
-index 680e578..00cff39 100644
+index 680e578..49a3386 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -43,6 +43,12 @@ all::
@@ -112,16 +118,6 @@ index 680e578..00cff39 100644
  # Define GNU_GETTEXT if you're using the GNU implementation of
  # libintl. We define this everywhere except on Solaris, which has its
  # own gettext implementation. If GNU_GETTEXT is set we'll use GNU
-@@ -268,7 +274,7 @@ uname_P :=3D $(shell sh -c 'uname -p 2>/dev/null ||=
- echo not')
- uname_V :=3D $(shell sh -c 'uname -v 2>/dev/null || echo not')
-=20
- ifdef MSVC
--	# avoid the MingW and Cygwin configuration sections
-+	# avoid the MinGW and Cygwin configuration sections
- 	uname_S :=3D Windows
- 	uname_O :=3D Windows
- endif
 @@ -792,6 +798,10 @@ ifndef NO_GETTEXT
  	# Systems that don't use GNU gettext are the exception. Only
  	# Solaris has a mature non-GNU gettext implementation.
