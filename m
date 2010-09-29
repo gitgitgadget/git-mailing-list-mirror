@@ -1,7 +1,7 @@
 From: Kirill Smelkov <kirr@mns.spb.ru>
-Subject: [PATCH v5 2/3] blame,cat-file: Demonstrate --textconv is wrongly running converter on symlinks
-Date: Wed, 29 Sep 2010 15:35:23 +0400
-Message-ID: <c9b37682aedf2b29b1a774c4cfb1630543df41a6.1285758714.git.kirr@mns.spb.ru>
+Subject: [PATCH v5 3/3] blame,cat-file --textconv: Don't assume mode is ``S_IFREF | 0664''
+Date: Wed, 29 Sep 2010 15:35:24 +0400
+Message-ID: <e5322cf954f769605968dbc632f0e1f74808ea2d.1285758714.git.kirr@mns.spb.ru>
 References: <cover.1285758714.git.kirr@mns.spb.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -20,20 +20,20 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0uvc-00072Z-8t
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 13:34:28 +0200
+	id 1P0uvd-00072Z-Be
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 13:34:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752361Ab0I2LeB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 07:34:01 -0400
-Received: from mail.mnsspb.ru ([84.204.75.2]:58944 "EHLO mail.mnsspb.ru"
+	id S1753673Ab0I2LeR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 07:34:17 -0400
+Received: from mail.mnsspb.ru ([84.204.75.2]:59120 "EHLO mail.mnsspb.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751669Ab0I2Ld7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 07:33:59 -0400
+	id S1753469Ab0I2LeQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 07:34:16 -0400
 Received: from [192.168.0.127] (helo=tugrik.mns.mnsspb.ru)
-	by mail.mnsspb.ru with esmtps id 1P0uuN-0003f3-L0; Wed, 29 Sep 2010 15:33:11 +0400
+	by mail.mnsspb.ru with esmtps id 1P0uuO-0003f5-Ox; Wed, 29 Sep 2010 15:33:13 +0400
 Received: from kirr by tugrik.mns.mnsspb.ru with local (Exim 4.69)
 	(envelope-from <kirr@tugrik.mns.mnsspb.ru>)
-	id 1P0uwa-0001QZ-LV; Wed, 29 Sep 2010 15:35:28 +0400
+	id 1P0uwb-0001Qc-KK; Wed, 29 Sep 2010 15:35:29 +0400
 X-Mailer: git-send-email 1.7.3.19.g3fe0a
 In-Reply-To: <cover.1285758714.git.kirr@mns.spb.ru>
 In-Reply-To: <cover.1285758714.git.kirr@mns.spb.ru>
@@ -42,44 +42,14 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157556>
 
 =46rom: Kirill Smelkov <kirr@landau.phys.spbu.ru>
 
-git blame --textconv is wrongly calling the textconv filter on
-symlinks: symlinks are stored as blobs whose content is the target of
-the link, and blame calls the textconv filter on a temporary file
-filled-in with the content of this blob.
+Instead get the mode from either worktree, index, .git, or origin
+entries when blaming and pass it to textconv_object() as context.
 
-=46or example:
-
-    $ git blame -C -C regular-file.pdf
-    Error: May not be a PDF file (continuing anyway)
-    Error: PDF file is damaged - attempting to reconstruct xref table..=
-=2E
-    Error: Couldn't find trailer dictionary
-    Error: Couldn't read xref table
-    Warning: program returned non-zero exit code #1
-    fatal: unable to read files to diff
-
-That errors come from pdftotext run on symlink.pdf being extracted to
-/tmp/ with one-line plain-text content pointing to link destination.
-
-So several failures are demonstrated here:
-
-  - git cat-file --textconv :symlink.bin    # also HEAD:symlink.bin
-  - git blame --textconv symlink.bin
-  - git blame -C -C --textconv regular-file # but also looks on symlink=
-=2Ebin
-
-At present they all fail with something like.
-
-    E: /tmp/j3ELEs_symlink.bin is not "binary" file
-
-NOTE: git diff doesn't try to textconv the pathnames, it runs the
-textual diff without textconv, which is the expected behavior.
-
-(Description partly by Matthieu Moy)
+The reason to do it is not to run textconv filters on symlinks.
 
 Cc: Axel Bonnet <axel.bonnet@ensimag.imag.fr>
 Cc: Cl=C3=A9ment Poulain <clement.poulain@ensimag.imag.fr>
@@ -96,152 +66,295 @@ v5:
 
 v4:
 
- o As noticed by Junio add prereq on SYMLINKS where appropriate
+ o Update to resolve conflicts after patch 2 v4 update; no changes othe=
+rwise.
 
 v3:
 
- o Slight cleanup of the description
  o Reviewed-by: Matthieu
 
 v2:
 
- (As suggested by Matthieu)
- o Changed patch descriptio
- o Moved most of >expected preparation into test_expect_*
- o Changed multiple echo'es into cat <<EOF
- o Use printf "%s" instead echo -n, since latter is said to be not very
-   portable
+ o Thanks to Matthieu and Jeff got a bit more sure I'm not doing stupid=
+ things,
+   so
+ o My XXX were removed, and the patch is no longer an RFC
 
+ builtin.h                    |    2 +-
+ builtin/blame.c              |   33 ++++++++++++++++++++++-----------
+ builtin/cat-file.c           |    2 +-
+ sha1_name.c                  |    2 ++
+ t/t8006-blame-textconv.sh    |    6 ++----
+ t/t8007-cat-file-textconv.sh |    6 ++----
+ 6 files changed, 30 insertions(+), 21 deletions(-)
 
- t/t8006-blame-textconv.sh    |   49 ++++++++++++++++++++++++++++++++++=
-++++++++
- t/t8007-cat-file-textconv.sh |   29 ++++++++++++++++++++++++
- 2 files changed, 78 insertions(+), 0 deletions(-)
-
+diff --git a/builtin.h b/builtin.h
+index 0398d24..9bf69ee 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -35,7 +35,7 @@ void finish_copy_notes_for_rewrite(struct notes_rewri=
+te_cfg *c);
+=20
+ extern int check_pager_config(const char *cmd);
+=20
+-extern int textconv_object(const char *path, const unsigned char *sha1=
+, char **buf, unsigned long *buf_size);
++extern int textconv_object(const char *path, unsigned mode, const unsi=
+gned char *sha1, char **buf, unsigned long *buf_size);
+=20
+ extern int cmd_add(int argc, const char **argv, const char *prefix);
+ extern int cmd_annotate(int argc, const char **argv, const char *prefi=
+x);
+diff --git a/builtin/blame.c b/builtin/blame.c
+index 1015354..f5fccc1 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -83,6 +83,7 @@ struct origin {
+ 	struct commit *commit;
+ 	mmfile_t file;
+ 	unsigned char blob_sha1[20];
++	unsigned mode;
+ 	char path[FLEX_ARRAY];
+ };
+=20
+@@ -92,6 +93,7 @@ struct origin {
+  * Return 1 if the conversion succeeds, 0 otherwise.
+  */
+ int textconv_object(const char *path,
++		    unsigned mode,
+ 		    const unsigned char *sha1,
+ 		    char **buf,
+ 		    unsigned long *buf_size)
+@@ -100,7 +102,7 @@ int textconv_object(const char *path,
+ 	struct userdiff_driver *textconv;
+=20
+ 	df =3D alloc_filespec(path);
+-	fill_filespec(df, sha1, S_IFREG | 0664);
++	fill_filespec(df, sha1, mode);
+ 	textconv =3D get_textconv(df);
+ 	if (!textconv) {
+ 		free_filespec(df);
+@@ -125,7 +127,7 @@ static void fill_origin_blob(struct diff_options *o=
+pt,
+=20
+ 		num_read_blob++;
+ 		if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
+-		    textconv_object(o->path, o->blob_sha1, &file->ptr, &file_size))
++		    textconv_object(o->path, o->mode, o->blob_sha1, &file->ptr, &fil=
+e_size))
+ 			;
+ 		else
+ 			file->ptr =3D read_sha1_file(o->blob_sha1, &type, &file_size);
+@@ -313,21 +315,23 @@ static struct origin *get_origin(struct scoreboar=
+d *sb,
+  * for an origin is also used to pass the blame for the entire file to
+  * the parent to detect the case where a child's blob is identical to
+  * that of its parent's.
++ *
++ * This also fills origin->mode for corresponding tree path.
+  */
+-static int fill_blob_sha1(struct origin *origin)
++static int fill_blob_sha1_and_mode(struct origin *origin)
+ {
+-	unsigned mode;
+ 	if (!is_null_sha1(origin->blob_sha1))
+ 		return 0;
+ 	if (get_tree_entry(origin->commit->object.sha1,
+ 			   origin->path,
+-			   origin->blob_sha1, &mode))
++			   origin->blob_sha1, &origin->mode))
+ 		goto error_out;
+ 	if (sha1_object_info(origin->blob_sha1, NULL) !=3D OBJ_BLOB)
+ 		goto error_out;
+ 	return 0;
+  error_out:
+ 	hashclr(origin->blob_sha1);
++	origin->mode =3D S_IFINVALID;
+ 	return -1;
+ }
+=20
+@@ -360,12 +364,14 @@ static struct origin *find_origin(struct scoreboa=
+rd *sb,
+ 			/*
+ 			 * If the origin was newly created (i.e. get_origin
+ 			 * would call make_origin if none is found in the
+-			 * scoreboard), it does not know the blob_sha1,
++			 * scoreboard), it does not know the blob_sha1/mode,
+ 			 * so copy it.  Otherwise porigin was in the
+-			 * scoreboard and already knows blob_sha1.
++			 * scoreboard and already knows blob_sha1/mode.
+ 			 */
+-			if (porigin->refcnt =3D=3D 1)
++			if (porigin->refcnt =3D=3D 1) {
+ 				hashcpy(porigin->blob_sha1, cached->blob_sha1);
++				porigin->mode =3D cached->mode;
++			}
+ 			return porigin;
+ 		}
+ 		/* otherwise it was not very useful; free it */
+@@ -400,6 +406,7 @@ static struct origin *find_origin(struct scoreboard=
+ *sb,
+ 		/* The path is the same as parent */
+ 		porigin =3D get_origin(sb, parent, origin->path);
+ 		hashcpy(porigin->blob_sha1, origin->blob_sha1);
++		porigin->mode =3D origin->mode;
+ 	} else {
+ 		/*
+ 		 * Since origin->path is a pathspec, if the parent
+@@ -425,6 +432,7 @@ static struct origin *find_origin(struct scoreboard=
+ *sb,
+ 		case 'M':
+ 			porigin =3D get_origin(sb, parent, origin->path);
+ 			hashcpy(porigin->blob_sha1, p->one->sha1);
++			porigin->mode =3D p->one->mode;
+ 			break;
+ 		case 'A':
+ 		case 'T':
+@@ -444,6 +452,7 @@ static struct origin *find_origin(struct scoreboard=
+ *sb,
+=20
+ 		cached =3D make_origin(porigin->commit, porigin->path);
+ 		hashcpy(cached->blob_sha1, porigin->blob_sha1);
++		cached->mode =3D porigin->mode;
+ 		parent->util =3D cached;
+ 	}
+ 	return porigin;
+@@ -486,6 +495,7 @@ static struct origin *find_rename(struct scoreboard=
+ *sb,
+ 		    !strcmp(p->two->path, origin->path)) {
+ 			porigin =3D get_origin(sb, parent, p->one->path);
+ 			hashcpy(porigin->blob_sha1, p->one->sha1);
++			porigin->mode =3D p->one->mode;
+ 			break;
+ 		}
+ 	}
+@@ -1099,6 +1109,7 @@ static int find_copy_in_parent(struct scoreboard =
+*sb,
+=20
+ 			norigin =3D get_origin(sb, parent, p->one->path);
+ 			hashcpy(norigin->blob_sha1, p->one->sha1);
++			norigin->mode =3D p->one->mode;
+ 			fill_origin_blob(&sb->revs->diffopt, norigin, &file_p);
+ 			if (!file_p.ptr)
+ 				continue;
+@@ -2075,7 +2086,7 @@ static struct commit *fake_working_tree_commit(st=
+ruct diff_options *opt,
+ 		switch (st.st_mode & S_IFMT) {
+ 		case S_IFREG:
+ 			if (DIFF_OPT_TST(opt, ALLOW_TEXTCONV) &&
+-			    textconv_object(read_from, null_sha1, &buf.buf, &buf_len))
++			    textconv_object(read_from, mode, null_sha1, &buf.buf, &buf_len)=
+)
+ 				buf.len =3D buf_len;
+ 			else if (strbuf_read_file(&buf, read_from, st.st_size) !=3D st.st_s=
+ize)
+ 				die_errno("cannot open or read '%s'", read_from);
+@@ -2455,11 +2466,11 @@ parse_done:
+ 	}
+ 	else {
+ 		o =3D get_origin(&sb, sb.final, path);
+-		if (fill_blob_sha1(o))
++		if (fill_blob_sha1_and_mode(o))
+ 			die("no such path %s in %s", path, final_commit_name);
+=20
+ 		if (DIFF_OPT_TST(&sb.revs->diffopt, ALLOW_TEXTCONV) &&
+-		    textconv_object(path, o->blob_sha1, (char **) &sb.final_buf,
++		    textconv_object(path, o->mode, o->blob_sha1, (char **) &sb.final=
+_buf,
+ 				    &sb.final_buf_size))
+ 			;
+ 		else
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 76ec3fe..94632db 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -143,7 +143,7 @@ static int cat_one_file(int opt, const char *exp_ty=
+pe, const char *obj_name)
+ 			die("git cat-file --textconv %s: <object> must be <sha1:path>",
+ 			    obj_name);
+=20
+-		if (!textconv_object(obj_context.path, sha1, &buf, &size))
++		if (!textconv_object(obj_context.path, obj_context.mode, sha1, &buf,=
+ &size))
+ 			die("git cat-file --textconv: unable to run textconv on %s",
+ 			    obj_name);
+ 		break;
+diff --git a/sha1_name.c b/sha1_name.c
+index 484081d..3e856b8 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -1069,6 +1069,7 @@ int get_sha1_with_context_1(const char *name, uns=
+igned char *sha1,
+ 		struct cache_entry *ce;
+ 		int pos;
+ 		if (namelen > 2 && name[1] =3D=3D '/')
++			/* don't need mode for commit */
+ 			return get_sha1_oneline(name + 2, sha1);
+ 		if (namelen < 3 ||
+ 		    name[2] !=3D ':' ||
+@@ -1096,6 +1097,7 @@ int get_sha1_with_context_1(const char *name, uns=
+igned char *sha1,
+ 				break;
+ 			if (ce_stage(ce) =3D=3D stage) {
+ 				hashcpy(sha1, ce->sha1);
++				oc->mode =3D ce->ce_mode;
+ 				return 0;
+ 			}
+ 			pos++;
 diff --git a/t/t8006-blame-textconv.sh b/t/t8006-blame-textconv.sh
-index 3619f8a..7c35959 100755
+index 7c35959..dbf623b 100755
 --- a/t/t8006-blame-textconv.sh
 +++ b/t/t8006-blame-textconv.sh
-@@ -17,10 +17,16 @@ chmod +x helper
- test_expect_success 'setup ' '
- 	echo "bin: test 1" >one.bin &&
- 	echo "bin: test number 2" >two.bin &&
-+	if test_have_prereq SYMLINKS; then
-+		ln -s one.bin symlink.bin
-+	fi &&
- 	git add . &&
- 	GIT_AUTHOR_NAME=3DNumber1 git commit -a -m First --date=3D"2010-01-01=
- 18:00:00" &&
- 	echo "bin: test 1 version 2" >one.bin &&
- 	echo "bin: test number 2 version 2" >>two.bin &&
-+	if test_have_prereq SYMLINKS; then
-+		ln -sf two.bin symlink.bin
-+	fi &&
- 	GIT_AUTHOR_NAME=3DNumber2 git commit -a -m Second --date=3D"2010-01-0=
-1 20:00:00"
- '
-=20
-@@ -78,4 +84,47 @@ test_expect_success 'blame from previous revision' '
+@@ -94,8 +94,7 @@ test_expect_success SYMLINKS 'blame with --no-textcon=
+v (on symlink)' '
  	test_cmp expected result
  '
 =20
-+cat >expected <<EOF
-+(Number2 2010-01-01 20:00:00 +0000 1) two.bin
-+EOF
-+
-+test_expect_success SYMLINKS 'blame with --no-textconv (on symlink)' '
-+	git blame --no-textconv symlink.bin >blame &&
-+	find_blame <blame >result &&
-+	test_cmp expected result
-+'
-+
-+# fails with '...symlink.bin is not "binary" file'
-+test_expect_failure SYMLINKS 'blame --textconv (on symlink)' '
-+	git blame --textconv symlink.bin >blame &&
-+	find_blame <blame >result &&
-+	test_cmp expected result
-+'
-+
-+# cp two.bin three.bin  and make small tweak
-+# (this will direct blame -C -C three.bin to consider two.bin and syml=
-ink.bin)
-+test_expect_success SYMLINKS 'make another new commit' '
-+	cat >three.bin <<\EOF &&
-+bin: test number 2
-+bin: test number 2 version 2
-+bin: test number 2 version 3
-+bin: test number 3
-+EOF
-+	git add three.bin &&
-+	GIT_AUTHOR_NAME=3DNumber4 git commit -a -m Fourth --date=3D"2010-01-0=
+-# fails with '...symlink.bin is not "binary" file'
+-test_expect_failure SYMLINKS 'blame --textconv (on symlink)' '
++test_expect_success SYMLINKS 'blame --textconv (on symlink)' '
+ 	git blame --textconv symlink.bin >blame &&
+ 	find_blame <blame >result &&
+ 	test_cmp expected result
+@@ -114,8 +113,7 @@ EOF
+ 	GIT_AUTHOR_NAME=3DNumber4 git commit -a -m Fourth --date=3D"2010-01-0=
 1 23:00:00"
-+'
-+
-+# fails with '...symlink.bin is not "binary" file'
-+test_expect_failure SYMLINKS 'blame on last commit (-C -C, symlink)' '
-+	git blame -C -C three.bin >blame &&
-+	find_blame <blame >result &&
-+	cat >expected <<\EOF &&
-+(Number1 2010-01-01 18:00:00 +0000 1) converted: test number 2
-+(Number2 2010-01-01 20:00:00 +0000 2) converted: test number 2 version=
- 2
-+(Number3 2010-01-01 22:00:00 +0000 3) converted: test number 2 version=
- 3
-+(Number4 2010-01-01 23:00:00 +0000 4) converted: test number 3
-+EOF
-+	test_cmp expected result
-+'
-+
- test_done
+ '
+=20
+-# fails with '...symlink.bin is not "binary" file'
+-test_expect_failure SYMLINKS 'blame on last commit (-C -C, symlink)' '
++test_expect_success SYMLINKS 'blame on last commit (-C -C, symlink)' '
+ 	git blame -C -C three.bin >blame &&
+ 	find_blame <blame >result &&
+ 	cat >expected <<\EOF &&
 diff --git a/t/t8007-cat-file-textconv.sh b/t/t8007-cat-file-textconv.s=
 h
-index 71f4145..98a3e1f 100755
+index 98a3e1f..78a0085 100755
 --- a/t/t8007-cat-file-textconv.sh
 +++ b/t/t8007-cat-file-textconv.sh
-@@ -12,6 +12,9 @@ chmod +x helper
+@@ -79,8 +79,7 @@ test_expect_success SYMLINKS 'cat-file without --text=
+conv (symlink)' '
+ '
 =20
- test_expect_success 'setup ' '
- 	echo "bin: test" >one.bin &&
-+	if test_have_prereq SYMLINKS; then
-+		ln -s one.bin symlink.bin
-+	fi &&
- 	git add . &&
- 	GIT_AUTHOR_NAME=3DNumber1 git commit -a -m First --date=3D"2010-01-01=
- 18:00:00" &&
- 	echo "bin: test version 2" >one.bin &&
-@@ -68,4 +71,30 @@ test_expect_success 'cat-file --textconv on previous=
- commit' '
- 	git cat-file --textconv HEAD^:one.bin >result &&
+=20
+-# fails because cat-file tries to run converter on symlink.bin
+-test_expect_failure SYMLINKS 'cat-file --textconv on index (symlink)' =
+'
++test_expect_success SYMLINKS 'cat-file --textconv on index (symlink)' =
+'
+ 	! git cat-file --textconv :symlink.bin 2>result &&
+ 	cat >expected <<\EOF &&
+ fatal: git cat-file --textconv: unable to run textconv on :symlink.bin
+@@ -88,8 +87,7 @@ EOF
  	test_cmp expected result
  '
-+
-+test_expect_success SYMLINKS 'cat-file without --textconv (symlink)' '
-+	git cat-file blob :symlink.bin >result &&
-+	printf "%s" "one.bin" >expected
-+	test_cmp expected result
-+'
-+
-+
-+# fails because cat-file tries to run converter on symlink.bin
-+test_expect_failure SYMLINKS 'cat-file --textconv on index (symlink)' =
-'
-+	! git cat-file --textconv :symlink.bin 2>result &&
-+	cat >expected <<\EOF &&
-+fatal: git cat-file --textconv: unable to run textconv on :symlink.bin
-+EOF
-+	test_cmp expected result
-+'
-+
-+# fails because cat-file tries to run converter on symlink.bin
-+test_expect_failure SYMLINKS 'cat-file --textconv on HEAD (symlink)' '
-+	! git cat-file --textconv HEAD:symlink.bin 2>result &&
-+	cat >expected <<EOF &&
-+fatal: git cat-file --textconv: unable to run textconv on HEAD:symlink=
+=20
+-# fails because cat-file tries to run converter on symlink.bin
+-test_expect_failure SYMLINKS 'cat-file --textconv on HEAD (symlink)' '
++test_expect_success SYMLINKS 'cat-file --textconv on HEAD (symlink)' '
+ 	! git cat-file --textconv HEAD:symlink.bin 2>result &&
+ 	cat >expected <<EOF &&
+ fatal: git cat-file --textconv: unable to run textconv on HEAD:symlink=
 =2Ebin
-+EOF
-+	test_cmp expected result
-+'
-+
- test_done
 --=20
 1.7.3.19.g3fe0a
