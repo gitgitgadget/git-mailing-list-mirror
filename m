@@ -1,90 +1,86 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Splitting the mailing list up
-Date: Wed, 29 Sep 2010 15:30:18 +0200
-Message-ID: <AANLkTimLyYMpedvk1OWYxZDQWWY0VvVy9Sk3ZURUxQKd@mail.gmail.com>
-References: <20100925230022.6e2fd389.coolzone@it.dk> <4CA1899F.2020509@cadifra.com>
- <141CAFB5-D423-48FE-BEED-B755C5F2685B@sb.org> <4CA2FA76.6080501@cadifra.com>
- <4CA30201.5020006@drmicha.warpmail.net> <AANLkTimPdqM_29Aru7tAGp_REem+BYAuE8o-U-qkhS6T@mail.gmail.com>
- <4CA33D07.3000207@cadifra.com>
+Subject: Re: [PATCH] gettext: use libcharset when available
+Date: Wed, 29 Sep 2010 15:34:54 +0200
+Message-ID: <AANLkTinRsryfdnj_uUH++yZrV1r_M+NNoXLm9TSO9N+J@mail.gmail.com>
+References: <AANLkTikMWy2a0M6bFMj+Jb+2QewUGsUjMsbv=XyR1Tr9@mail.gmail.com> <1285765637-16381-1-git-send-email-avarab@gmail.com>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Kevin Ballard <kevin@sb.org>, Rico Secada <coolzone@it.dk>,
-	git@vger.kernel.org
-To: Adrian Buehlmann <adrian@cadifra.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 15:30:47 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 15:40:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0wkB-0000Cy-Ak
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 15:30:47 +0200
+	id 1P0wth-0004JU-3D
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 15:40:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756106Ab0I2Nam (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 09:30:42 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:36307 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752510Ab0I2Nal (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 09:30:41 -0400
-Received: by pzk34 with SMTP id 34so165878pzk.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 06:30:40 -0700 (PDT)
+	id S1756127Ab0I2NfS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 09:35:18 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:62376 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755450Ab0I2NfR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 09:35:17 -0400
+Received: by ewy23 with SMTP id 23so192744ewy.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 06:35:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:reply-to
          :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=YYvwBsqGemgQJH8StGmSjPFrE3efFvpAWB5oDyLqCQw=;
-        b=WeopE23iUcYd3H9FK4m472QVN//u70Y/Pi6hJhj2kLTKRHUVrB8o8YvRo7qQeqCKeL
-         hOp43qdjc8AioSV1b6v+pbEkJeh42sLWyWdKcI3wSNhpKFCb0cLTk6lGVhpBXBDctkxP
-         vdCfXVeU5NjbKX1Znptszz6RdNOzcYvFHmvQE=
+         :content-type:content-transfer-encoding;
+        bh=NXOQRx0w/Y9tyzywmDoPov5YHDYw0NFMqCeKY95D3AI=;
+        b=ou6vtezmsuNQc6d9HiOv2KxtckN+EA1o9xVx8eX1SyUp16j6MGVg6+FeX7Fv+lS2NA
+         Dera75VgJUG4Zo9W87Apm2cU54+pdtmNFGao6ATw05F5dFh1KqAnPYcliAGoB8apivn6
+         XKZfguoNO+HZ1wMKk4Hk/lMqk53Je7mgpHt3Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=nepN/rHue6jHdg3M6+L46bbMc1A20Mgkc9BdX7iWND6WFEI/ru1l8x1e97oK7IAfD2
-         AXc7w/Tm4NRwcs7rASePUzOKDSQ0v+4lgBs/c+9+hs2f5/yGsqamoNCf4naYCAg/oU1T
-         Srs5lfDTPSqgjENhoKl5oWPxkRQs+ZOzZmbqc=
-Received: by 10.114.13.9 with SMTP id 9mr1816666wam.195.1285767038650; Wed, 29
- Sep 2010 06:30:38 -0700 (PDT)
-Received: by 10.220.100.135 with HTTP; Wed, 29 Sep 2010 06:30:18 -0700 (PDT)
-In-Reply-To: <4CA33D07.3000207@cadifra.com>
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=kMT22OyFivLKMXU/sn7cLIaoIl14QUPR2u1Jz+TlWF+PLFA6xJqxID/+bQWJERkNpk
+         icwKrGETmRAWimqS8fwIwwY3NDktyMF6cW1cqfEhbgCPAvRFURGVZJ41kjYZa/AcZXx7
+         R0Y/nn27GSxefd71ZYqk1aSirkQOmqYt2ep+A=
+Received: by 10.213.48.131 with SMTP id r3mr1321584ebf.69.1285767315659; Wed,
+ 29 Sep 2010 06:35:15 -0700 (PDT)
+Received: by 10.220.100.135 with HTTP; Wed, 29 Sep 2010 06:34:54 -0700 (PDT)
+In-Reply-To: <1285765637-16381-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157567>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157568>
 
-On Wed, Sep 29, 2010 at 3:20 PM, Adrian Buehlmann <adrian@cadifra.com> wrote:
-> On 29.09.2010 15:00, Erik Faye-Lund wrote:
->> On Wed, Sep 29, 2010 at 11:08 AM, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Adrian Buehlmann venit, vidit, dixit 29.09.2010 10:36:
->>>> Of course, I would be fine if this list here would be simply defined as
->>>> the "git development centric list" and a new, more usage-centric list
->>>> could be started (git-users ?).
->>>
->>> You mean something like:
->>>
->>> git-users@googlegroups.com
->>>
->>> I don't participate there, but my impression is that it's really a user
->>> group.
->>>
->> http://groups.google.com/group/git-users says "This is the git mailing
->> list for users, feel free to ask any question about git usage.", so
->> yes. I think we already have that list. Perhaps all we need to do is
->> to add a link to it on the front-page of git-scm.com, next to the link
->> to this? Perhaps something like "You can also ask the Git development
->> community directly at our git@vger.kernel.org mailing list, or the Git
->> user community at git-users@googlegroups.com"?
->>
->> That would imply making it a bit more official, but perhaps it's a
->> good compromise?
+On Wed, Sep 29, 2010 at 3:07 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> From: Erik Faye-Lund <kusmabite@gmail.com>
 >
-> At least it could be mentioned on
-> https://git.wiki.kernel.org/index.php/GitCommunity
-> ?
+> Change the git_setup_gettext function to use libcharset to query the
+> character set of the current locale if it's available. I.e. use it
+> instead of nl_langinfo if HAVE_LIBCHARSET_H is set.
+>
+> The GNU gettext manual recommends using langinfo.h's
+> nl_langinfo(CODESET) to acquire the current character set, but on
+> systems that have libcharset.h's locale_charset() using the latter is
+> either saner, or the only option on those systems.
+>
+> GNU and Solaris have a nl_langinfo(CODESET), FreeBSD can use either,
+> but MingW and some others need to use libcharset.h's locale_charset()
+> instead.
 
-Done.
+Very minor nit: It's officially spelled MinGW, with an upper-case G.
+
+>
+> Since locale_charset returns a const char* instead of char* as
+> nl_langinfo does the type of the variable we're using to store the
+> charset in git_setup_gettext has been changed.
+>
+> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+> ---
+>
+> Junio, this goes on top of ab/i18n.
+>
+
+Wow, thanks for taking care of this!
