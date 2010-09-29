@@ -1,58 +1,73 @@
-From: Warren Turkal <wt@penguintechs.org>
-Subject: git-svn
-Date: Tue, 28 Sep 2010 21:51:55 -0700
-Message-ID: <AANLkTimd3qjiwtHw0K4S6XQnhrABzoa=ySxW=dXmOFD8@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCHv2] Makefile: implement help target
+Date: Wed, 29 Sep 2010 01:16:41 -0400
+Message-ID: <20100929051640.GA26324@sigill.intra.peff.net>
+References: <AANLkTikx2tL73gJQnqjG7yp3btcZJprKLf0z9QwcAUC1@mail.gmail.com>
+ <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Wed Sep 29 06:52:50 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Sep 29 07:17:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0oet-0006BY-PZ
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 06:52:48 +0200
+	id 1P0p2S-00034E-0M
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 07:17:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751407Ab0I2Ewm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 00:52:42 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:58247 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751272Ab0I2Ewl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 00:52:41 -0400
-Received: by qyk36 with SMTP id 36so437926qyk.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 21:52:16 -0700 (PDT)
-Received: by 10.229.223.210 with SMTP id il18mr770432qcb.133.1285735936226;
- Tue, 28 Sep 2010 21:52:16 -0700 (PDT)
-Received: by 10.229.24.196 with HTTP; Tue, 28 Sep 2010 21:51:55 -0700 (PDT)
-X-Originating-IP: [67.160.195.120]
+	id S1751734Ab0I2FQ6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 01:16:58 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38355 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751412Ab0I2FQ5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 01:16:57 -0400
+Received: (qmail 5477 invoked by uid 111); 29 Sep 2010 05:16:53 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 29 Sep 2010 05:16:53 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Sep 2010 01:16:41 -0400
+Content-Disposition: inline
+In-Reply-To: <4fd8b490b4badd13c0ea46408e44dc7b317dc0ed.1285706151.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157529>
 
-Eric,
+On Tue, Sep 28, 2010 at 10:38:04PM +0200, Michael J Gruber wrote:
 
-I see that you are the maintainter of git-svn. I have a couple
-questions about git-svn:
-* I've come across [1] in an effort to make a --use-log-author and
---add-log-from defaults. I've tested and it works. Would it be
-possible to pull in the patch at [2] to document this behavior in the
-manpage?
-* If it would be easier, should I redo the patch and make it available
-on a public git repo so that you can pull it into your repo?
+> +help:
+> +	@awk '/^# Help:/ { l=substr($$0,8); \
+> +		getline; \
+> +		j=index(l,":"); \
+> +		print substr(l,1,j-1), substr($$0,1,index($$0,":")), substr(l,j+2); \
+> +		}' <Makefile | sort | while read category target text; \
+> +	do \
+> +		test "$$category" = "$$currcat" || printf "$$category targets:\n"; \
+> +		currcat="$$category"; \
+> +		printf "    %-20s%s\n" "$$target" "$$text"; \
+> +	done
 
-As an aside, I grepped for addAuthorFrom and useLogAuthor in the git
-source and didn't find it. Does git svn do something like read svn
-section git configs for all options that transform like
---use-log-author to useLogAuthor? Can I specify any other command line
-options I want that way, or are --use-log-author and --add-log-from
-special some how?
+Surely this is why we have perl?
 
-[1]http://kerneltrap.org/mailarchive/git/2008/6/23/2205444
-[2]http://kerneltrap.org/mailarchive/git/2008/6/24/2215274
+help:
+	@perl -n0777 \
+	  -e 'push @{$$h{$$1}}, [$$3, $$2] while /^# Help: (.*?): (.*)\n(.*?):/mg;' \
+	  -e 'for (sort keys(%h)) {' \
+	  -e '  print "$$_:\n";' \
+	  -e '  printf("    %-20s%s\n", @$$_) for (@{$$h{$$_}});' \
+	  -e '}' Makefile
 
-Thanks a bunch,
-wt
+Note that mine will actually print the targets in a heading in the order
+in which they appear in the Makefile, which I consider slightly more
+useful (especially in that we can tweak the order easily). It would also
+be easy to sort the headers in some more meaningful way, but here I just
+did it lexically.
+
+-Peff
