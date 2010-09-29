@@ -1,9 +1,8 @@
 From: Chris Packham <judge.packham@gmail.com>
-Subject: [RFC PATCH 1/3] add test for git grep --recursive
-Date: Wed, 29 Sep 2010 13:28:52 -0700
-Message-ID: <1285792134-26339-2-git-send-email-judge.packham@gmail.com>
-References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
-Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>
+Subject: [RFC PATCH 0/3] grep: submodule support
+Date: Wed, 29 Sep 2010 13:28:51 -0700
+Message-ID: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
+Cc: git@vger.kernel.org
 To: Jens.Lehmann@web.de
 X-From: git-owner@vger.kernel.org Wed Sep 29 22:29:00 2010
 Return-path: <git-owner@vger.kernel.org>
@@ -11,157 +10,67 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P13Gt-00020m-3V
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:28:59 +0200
+	id 1P13Gs-00020m-Iy
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:28:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755821Ab0I2U2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 16:28:55 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:51467 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755733Ab0I2U2y (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 16:28:54 -0400
-Received: by pvg2 with SMTP id 2so290657pvg.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:28:54 -0700 (PDT)
+	id S1755704Ab0I2U2v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 16:28:51 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:40949 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755566Ab0I2U2u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 16:28:50 -0400
+Received: by pxi10 with SMTP id 10so292469pxi.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=htCxNMnu0Ttrt5UhzPmkyCSnQzBZrSjmbzr1IX/H26k=;
-        b=X7LTVjZi3y4jwvx0HzHXMcN1C3MrF2xnb7HZ0MH3CFlIOjquqCqs1vsj4PcNoe4WPz
-         hbxo+TPT7HhuuWGPfQSDrKfTI5JP1+OjE94Pl8X8ewaqLxxavDVI2aLe/dAah1gYu1ad
-         JdHeQEWEAE+P9yaB/3VV6Julsj6/ybTPnDZxs=
+         :message-id:x-mailer;
+        bh=Wa2Ne4O0dyngCIyIbkUPYQAv+nlEEXOSbI4iTVtvvzI=;
+        b=FcWCSGQ9RIx0kOeozBjE5qsATqw7Wg77bfeMBmds02PTjQFJXhaOJ0p8xfJr4zCoOn
+         2FzpgLlA4HFPSLWAmY48DsrbwzuB4CZHtzR9iGVorpNGkIw1KZWYeBskH2YN+NYzU9Dj
+         wxxln/IWiSCssw/QUxyC7Ppv1c3Ka+pS3FKhc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=n3ILV8xl6K7W4GYs2YDEkgZQaBhvmdmaPHZpLRn+VgfmdjuIIehGvTsHGH3h8Brv9t
-         HZZUaVgE5NVFhDR2L2iZ8vceqB/W+Ljptd6tOGYtlyFQz1noE5GeFqF5a2VFx1M7MUdZ
-         h7Z/t3rJOkpANUTs1PFd10XZ065dqvCqpxRh0=
-Received: by 10.114.127.10 with SMTP id z10mr2679006wac.62.1285792134528;
-        Wed, 29 Sep 2010 13:28:54 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=PbuXR/vWhmUuIewerzHphIHrSoLMG/1RPiS5BkyOvLHcL+RBpZFLiIxws/ceakxMhk
+         x1yoT+AzJt6jft47+hmnU/Ba4Gx5FHAaGbz+HO6qV5GPg3YSCi5e3z5npc2sFD66FcZx
+         jUp9lhMy0LOGEmrWxS5tPLRae+cZIpi4VVmOU=
+Received: by 10.114.136.19 with SMTP id j19mr2551025wad.54.1285792129802;
+        Wed, 29 Sep 2010 13:28:49 -0700 (PDT)
 Received: from localhost.localdomain (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id o17sm15169981wal.9.2010.09.29.13.28.52
+        by mx.google.com with ESMTPS id o17sm15169981wal.9.2010.09.29.13.28.48
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 29 Sep 2010 13:28:53 -0700 (PDT)
+        Wed, 29 Sep 2010 13:28:48 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.dirty
-In-Reply-To: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157599>
 
-Signed-off-by: Chris Packham <judge.packham@gmail.com>
----
- t/t7820-grep-recursive.sh |  101 +++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 101 insertions(+), 0 deletions(-)
- create mode 100644 t/t7820-grep-recursive.sh
+This patch series is my initial attempt to add submodule awareness to git grep.
+It's also the first time I've played with the git C code so expect bugs. The
+patches are based off apply on Jens Lehmann's 'enhance_git_for_submodules'
+branch in git://github.com/jlehmann/git-submod-enhancements.git
 
-diff --git a/t/t7820-grep-recursive.sh b/t/t7820-grep-recursive.sh
-new file mode 100644
-index 0000000..4bbd109
---- /dev/null
-+++ b/t/t7820-grep-recursive.sh
-@@ -0,0 +1,101 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Chris Packham
-+#
-+
-+test_description='git grep --recursive test
-+
-+This test checks the ability of git grep to search within submodules when told
-+to do so with the --recursive option'
-+
-+. ./test-lib.sh
-+
-+test_expect_success 'setup - initial commit' '
-+	printf "one two three\nfour five six\n" >t &&
-+	git add t &&
-+	git commit -m "initial commit"
-+'
-+submodurl=$TRASH_DIRECTORY
-+
-+test_expect_success 'setup submodules for test' '
-+	for mod in $(seq 1 5 | sed "s/.*/submodule&/"); do
-+		git submodule add "$submodurl" $mod &&
-+		git submodule init $mod
-+	done
-+'
-+
-+test_expect_success 'update data in each submodule' '
-+	for n in $(seq 1 5); do
-+		(cd submodule$n &&
-+			sed -i "s/^four.*/& #$n/" t &&
-+			git commit -a -m"update")
-+	done
-+'
-+
-+cat >expected <<EOF
-+t:four five six
-+EOF
-+test_expect_success 'non-recursive grep in base' '
-+	git grep "five" >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+foo/t:four five six
-+EOF
-+test_expect_success 'submodule-prefix option' '
-+	git grep --submodule-prefix=foo/ "five" >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >submodule1/expected <<EOF
-+t:four five six #1
-+EOF
-+test_expect_success 'non-recursive grep in submodule' '
-+	(
-+		cd submodule1 &&
-+		git grep "five" >actual &&
-+		test_cmp expected actual
-+	)
-+'
-+
-+cat >expected <<EOF
-+t:four five six #1
-+t:four five six #2
-+t:four five six #3
-+t:four five six #4
-+t:four five six #5
-+t:four five six
-+EOF
-+test_expect_success 'recursive grep' '
-+	git grep --recurse-submodules "five" >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+t:2:four five six #1
-+t:2:four five six #2
-+t:2:four five six #3
-+t:2:four five six #4
-+t:2:four five six #5
-+t:2:four five six
-+EOF
-+test_expect_success 'recursive grep (with -n)' '
-+	git grep --recurse-submodules -n "five" >actual &&
-+	test_cmp expected actual
-+'
-+
-+cat >expected <<EOF
-+t
-+t
-+t
-+t
-+t
-+t
-+EOF
-+test_expect_success 'recursive grep (with -l)' '
-+	git grep --recurse-submodules -l "five" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_done
--- 
-1.7.3.dirty
+The first patch adds some basic tests for grep with submodules. There is
+probably some overlap with other grep tests so I'll have a more in-depth look
+at what is needed later. I have a problem with the tests that when I invoke
+'git grep' using run_command I actually end up using the installed git which
+doesn't understand my new --submodule-prefix option.
+
+The 2nd patch just adds a --submodule-prefix option so that I can prepend some
+text to the output from the sub processes.
+
+The 3rd patch is the main implementation. Currently I rebuild a command line
+for the subprocess based on the opts structure and I make use of the modified
+argv[0] from the command. Neither of these are really optimal, it'd be much
+easier if I could just start my subprocess from cmd_grep (or even grep_cache).
+Any pointers to get me moving in this direction are welcome. Even if I retain
+the rebuilding of the command line I'd like to rebuild the pattern(s) instead
+of relying on the saved_argv[0].
+
+Chris Packham (3):
+      add test for git grep --recursive
+      grep: prepare grep for submodules
+      grep: add support for grepping in submodules
