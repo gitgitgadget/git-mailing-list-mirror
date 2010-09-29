@@ -1,134 +1,167 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv4 15/15] Replace "unset VAR" with "unset VAR;" in
- testsuite as per t/README
-Date: Wed, 29 Sep 2010 20:28:30 +0000
-Message-ID: <AANLkTimPQ+CHugJnMPCjCrcAF9sd86mh=Ors8sgwQTUU@mail.gmail.com>
-References: <1285542879-16381-1-git-send-email-newren@gmail.com>
-	<1285542879-16381-16-git-send-email-newren@gmail.com>
-	<7viq1omiv8.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 22:28:39 2010
+From: Chris Packham <judge.packham@gmail.com>
+Subject: [RFC PATCH 1/3] add test for git grep --recursive
+Date: Wed, 29 Sep 2010 13:28:52 -0700
+Message-ID: <1285792134-26339-2-git-send-email-judge.packham@gmail.com>
+References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
+Cc: git@vger.kernel.org, Chris Packham <judge.packham@gmail.com>
+To: Jens.Lehmann@web.de
+X-From: git-owner@vger.kernel.org Wed Sep 29 22:29:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P13GX-0001rB-Bj
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:28:37 +0200
+	id 1P13Gt-00020m-3V
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:28:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755089Ab0I2U2b convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 16:28:31 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50061 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754054Ab0I2U2b convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 16:28:31 -0400
-Received: by gye5 with SMTP id 5so308211gye.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:28:30 -0700 (PDT)
+	id S1755821Ab0I2U2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 16:28:55 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:51467 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755733Ab0I2U2y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 16:28:54 -0400
+Received: by pvg2 with SMTP id 2so290657pvg.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:28:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PHy1Evm9VpFEEnT74pysBElqycMvKj7L30d2QdxpOWE=;
-        b=NW+kIiO4fBRjAU3O61g03BWr4Zi5+oVI062TxYTmdEvu1dXgIaHYgP5xpodo0JJNqd
-         7B6nf/n+3fLSrL0J2Q/QmKSoPUDALC0R5J31rMl+P0UnQzL/eE1ClgdAEBYB91lu1Ngp
-         hmCIXdimUPmDQEFg1rtWSIvQYdJowCTzGBLoc=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=htCxNMnu0Ttrt5UhzPmkyCSnQzBZrSjmbzr1IX/H26k=;
+        b=X7LTVjZi3y4jwvx0HzHXMcN1C3MrF2xnb7HZ0MH3CFlIOjquqCqs1vsj4PcNoe4WPz
+         hbxo+TPT7HhuuWGPfQSDrKfTI5JP1+OjE94Pl8X8ewaqLxxavDVI2aLe/dAah1gYu1ad
+         JdHeQEWEAE+P9yaB/3VV6Julsj6/ybTPnDZxs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=b7l7i/c7DBloq87NgYCXPM7ldI+dct6mIX+wSoxDMoUro9MNV6ME8isTJXLkSvcGf1
-         utyxMsb1mdhWVVrtbzpNBYHNEpFk6/49FBLos/nkdDYOyuOFtEgbRCexQJueNGWGMRop
-         SQtZ1MgrrkqMjx0yVK5tjK/OqxONoxd16dEhs=
-Received: by 10.231.149.198 with SMTP id u6mr2407941ibv.7.1285792110054; Wed,
- 29 Sep 2010 13:28:30 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 29 Sep 2010 13:28:30 -0700 (PDT)
-In-Reply-To: <7viq1omiv8.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=n3ILV8xl6K7W4GYs2YDEkgZQaBhvmdmaPHZpLRn+VgfmdjuIIehGvTsHGH3h8Brv9t
+         HZZUaVgE5NVFhDR2L2iZ8vceqB/W+Ljptd6tOGYtlyFQz1noE5GeFqF5a2VFx1M7MUdZ
+         h7Z/t3rJOkpANUTs1PFd10XZ065dqvCqpxRh0=
+Received: by 10.114.127.10 with SMTP id z10mr2679006wac.62.1285792134528;
+        Wed, 29 Sep 2010 13:28:54 -0700 (PDT)
+Received: from localhost.localdomain (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id o17sm15169981wal.9.2010.09.29.13.28.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Sep 2010 13:28:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.dirty
+In-Reply-To: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157598>
 
-On Wed, Sep 29, 2010 at 19:48, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Elijah Newren <newren@gmail.com> writes:
->
->> Acked-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->> Signed-off-by: Elijah Newren <newren@gmail.com>
->> ---
->> @@ -175,8 +175,8 @@ test_expect_success 'init with init.templatedir =
-set' '
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git config -f "$tes=
-t_config" =C2=A0init.templatedir "${HOME}/templatedir-source" &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mkdir templatedir-s=
-et &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cd templatedir-set =
-&&
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_CONFIG_NOGLOBA=
-L &&
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_TEMPLATE_DIR &=
-&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_CONFIG_NOGLOBA=
-L;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_TEMPLATE_DIR;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 NO_SET_GIT_TEMPLATE=
-_DIR=3Dt &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 export NO_SET_GIT_T=
-EMPLATE_DIR &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git init
->> @@ -187,7 +187,7 @@ test_expect_success 'init with init.templatedir =
-set' '
->> =C2=A0test_expect_success 'init --bare/--shared overrides system/glo=
-bal config' '
->> =C2=A0 =C2=A0 =C2=A0 (
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_config=3D"$HOM=
-E"/.gitconfig &&
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_CONFIG_NOGLOBA=
-L &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_CONFIG_NOGLOBA=
-L;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git config -f "$tes=
-t_config" core.bare false &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git config -f "$tes=
-t_config" core.sharedRepository 0640 &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mkdir init-bare-sha=
-red-override &&
->> @@ -202,7 +202,7 @@ test_expect_success 'init --bare/--shared overri=
-des system/global config' '
->> =C2=A0test_expect_success 'init honors global core.sharedRepository'=
- '
->> =C2=A0 =C2=A0 =C2=A0 (
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 test_config=3D"$HOM=
-E"/.gitconfig &&
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_CONFIG_NOGLOBA=
-L &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unset GIT_CONFIG_NOGLOBA=
-L;
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git config -f "$tes=
-t_config" core.sharedRepository 0666 &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 mkdir shared-honor-=
-global &&
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cd shared-honor-glo=
-bal &&
->
-> These three hunks look wrong as they break the && cascades. =C2=A0All=
- others
-> (including the change to 7502) look Ok.
->
-> Personally I do not agree that ";" at the end is explicit enough as
-> t/README seems to think. =C2=A0If we want to be explicit, I'd say we =
-should do
-> so by saying something like:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0unset VAR ;# can fail
+Signed-off-by: Chris Packham <judge.packham@gmail.com>
+---
+ t/t7820-grep-recursive.sh |  101 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 101 insertions(+), 0 deletions(-)
+ create mode 100644 t/t7820-grep-recursive.sh
 
-Or, as previously suggested:
-
-    test_might_fail unset VAR &&
-
-Doesn't test_might_fail work for the unset build-in too?
+diff --git a/t/t7820-grep-recursive.sh b/t/t7820-grep-recursive.sh
+new file mode 100644
+index 0000000..4bbd109
+--- /dev/null
++++ b/t/t7820-grep-recursive.sh
+@@ -0,0 +1,101 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Chris Packham
++#
++
++test_description='git grep --recursive test
++
++This test checks the ability of git grep to search within submodules when told
++to do so with the --recursive option'
++
++. ./test-lib.sh
++
++test_expect_success 'setup - initial commit' '
++	printf "one two three\nfour five six\n" >t &&
++	git add t &&
++	git commit -m "initial commit"
++'
++submodurl=$TRASH_DIRECTORY
++
++test_expect_success 'setup submodules for test' '
++	for mod in $(seq 1 5 | sed "s/.*/submodule&/"); do
++		git submodule add "$submodurl" $mod &&
++		git submodule init $mod
++	done
++'
++
++test_expect_success 'update data in each submodule' '
++	for n in $(seq 1 5); do
++		(cd submodule$n &&
++			sed -i "s/^four.*/& #$n/" t &&
++			git commit -a -m"update")
++	done
++'
++
++cat >expected <<EOF
++t:four five six
++EOF
++test_expect_success 'non-recursive grep in base' '
++	git grep "five" >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++foo/t:four five six
++EOF
++test_expect_success 'submodule-prefix option' '
++	git grep --submodule-prefix=foo/ "five" >actual &&
++	test_cmp expected actual
++'
++
++cat >submodule1/expected <<EOF
++t:four five six #1
++EOF
++test_expect_success 'non-recursive grep in submodule' '
++	(
++		cd submodule1 &&
++		git grep "five" >actual &&
++		test_cmp expected actual
++	)
++'
++
++cat >expected <<EOF
++t:four five six #1
++t:four five six #2
++t:four five six #3
++t:four five six #4
++t:four five six #5
++t:four five six
++EOF
++test_expect_success 'recursive grep' '
++	git grep --recurse-submodules "five" >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++t:2:four five six #1
++t:2:four five six #2
++t:2:four five six #3
++t:2:four five six #4
++t:2:four five six #5
++t:2:four five six
++EOF
++test_expect_success 'recursive grep (with -n)' '
++	git grep --recurse-submodules -n "five" >actual &&
++	test_cmp expected actual
++'
++
++cat >expected <<EOF
++t
++t
++t
++t
++t
++t
++EOF
++test_expect_success 'recursive grep (with -l)' '
++	git grep --recurse-submodules -l "five" >actual &&
++	test_cmp expected actual
++'
++
++test_done
+-- 
+1.7.3.dirty
