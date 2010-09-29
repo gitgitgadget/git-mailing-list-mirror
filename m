@@ -1,509 +1,120 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCH 18/18] git notes merge: Add testcases for merging notes trees
- at different fanouts
-Date: Wed, 29 Sep 2010 02:23:31 +0200
-Message-ID: <1285719811-10871-19-git-send-email-johan@herland.net>
-References: <1285719811-10871-1-git-send-email-johan@herland.net>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: [PATCH] checkout: add a space between the commit and "..."
+Date: Tue, 28 Sep 2010 19:45:25 -0500
+Message-ID: <AANLkTikXEfBdd6sDS9iJ0ULN-jihha+U4JZxRFG+SRFG@mail.gmail.com>
+References: <20100928222332.GA28859@soprano.nvidia.com>
+	<tNUxsuXC1ZklaaYn-pkW6hae44B_tB2hStuto66EU4k9w2Q79GA6LQ@cipher.nrlssc.navy.mil>
+	<20100928233832.GA20224@soprano.nvidia.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
-Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
-	gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 02:24:51 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Joe Kain <JKain@nvidia.com>
+To: Aaron Plattner <aplattner@nvidia.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 02:45:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0kTU-0001F0-1H
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 02:24:44 +0200
+	id 1P0knn-0006Me-GM
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 02:45:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751832Ab0I2AYS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Sep 2010 20:24:18 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:44298 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754096Ab0I2AYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Sep 2010 20:24:03 -0400
-Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
- by get-mta-out02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L9H0030VFRRTS80@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 29 Sep 2010 02:23:51 +0200 (MEST)
-Received: from get-mta-scan04.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 5CD8A1EEF84D_CA28717B	for <git@vger.kernel.org>; Wed,
- 29 Sep 2010 00:23:51 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 959461EEF844_CA28716F	for <git@vger.kernel.org>; Wed,
- 29 Sep 2010 00:23:49 +0000 (GMT)
-Received: from alpha.herland ([84.215.68.234]) by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0L9H00IQEFRHZC10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 29 Sep 2010 02:23:43 +0200 (MEST)
-X-Mailer: git-send-email 1.7.3.98.g5ad7d9
-In-reply-to: <1285719811-10871-1-git-send-email-johan@herland.net>
+	id S1753049Ab0I2Api convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 20:45:38 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:56935 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751410Ab0I2Aph convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 20:45:37 -0400
+Received: by qyk36 with SMTP id 36so157424qyk.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 17:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=qC9ZaOwFZjtjynbL5qrQUXEtmNqor5iZJOmYMjjjAMI=;
+        b=Us5w/BLzhysMoxX8I8BqwdLFVCdVUgP6NJcoq8Fm30qOncASfeAMv0eeIoGuGPV+PB
+         x2kUCjMPKwrQCazHxgoQcrQSz+8liJGB3ypA0lZ8RnC8TMHIA4R92YnSa01URIPtDiNi
+         2O8AIaKMcspzGKeVpdL0aqJiA2/EgasdgtjlE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=fwCQ5DH9t4sga0YLQXlWrBsivf71CpPM7wmRQQrXp7CUa6IgiFNx5c6Q4Po2C04Ja4
+         O3ycTggR5sJKBhe+BkaIFbyHYhFoTQ9xQc8equWhEpCqt1E0J78Sj7Gt+aRHrdFY+PK/
+         H8WCQIFD3wabZI5q+09900c9X3XqTcy4wtfc0=
+Received: by 10.224.19.129 with SMTP id a1mr548620qab.324.1285721125783; Tue,
+ 28 Sep 2010 17:45:25 -0700 (PDT)
+Received: by 10.220.203.3 with HTTP; Tue, 28 Sep 2010 17:45:25 -0700 (PDT)
+In-Reply-To: <20100928233832.GA20224@soprano.nvidia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157517>
 
-Notes trees may exist at different fanout levels internally. This
-implementation detail should not be visible to the user, and it should
-certainly not affect the merging of notes tree.
+On Tue, Sep 28, 2010 at 6:38 PM, Aaron Plattner <aplattner@nvidia.com> =
+wrote:
+> On Tue, Sep 28, 2010 at 03:40:11PM -0700, Brandon Casey wrote:
+>> On 09/28/2010 05:23 PM, Aaron Plattner wrote:
+>> > Switching to a detached head prints something like
+>> >
+>> > =C2=A0 HEAD is now at 9d14017... dir.c: squelch false uninitialize=
+d memory warning
+>> >
+>> > These dots get selected when you double-click on the abbreviated
+>> > commit hash, which makes it annoying to copy and paste.
+>>
+>> This must be another gnome-terminal/konsole "innovation".
+>>
+>> xterm still does the "right thing"(tm) _and_ it doesn't eat my
+>> alt keystrokes like alt-b to move the cursor back a word. /rant
+>
+> How is your xterm configured? =C2=A0On my stock Ubuntu 9.10 system, i=
+t doesn't
+> do the "right thing"... the dots are selected. =C2=A0Gvim gets it rig=
+ht.
 
-This patch adds testcases verifying the correctness of 'git notes merge'
-when merging notes trees at different fanout levels.
+Nothing special, and nothing that would affect the double-click selecti=
+on
+functionality as far as I know.  Though I don't know what controls that=
+=2E
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- t/t3311-notes-merge-fanout.sh |  436 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 436 insertions(+), 0 deletions(-)
- create mode 100755 t/t3311-notes-merge-fanout.sh
+   $ cat ~/.Xresources
+   XTerm*geometry: 80x33
+   XTerm*faceName: Liberation Mono
+   XTerm*faceSize: 9
+   XTerm*foreground: green
+   XTerm*background: black
 
-diff --git a/t/t3311-notes-merge-fanout.sh b/t/t3311-notes-merge-fanout.sh
-new file mode 100755
-index 0000000..d1c7b69
---- /dev/null
-+++ b/t/t3311-notes-merge-fanout.sh
-@@ -0,0 +1,436 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Johan Herland
-+#
-+
-+test_description='Test notes merging at various fanout levels'
-+
-+. ./test-lib.sh
-+
-+verify_notes () {
-+	notes_ref="$1"
-+	commit="$2"
-+	if test -f "expect_notes_$notes_ref"
-+	then
-+		git -c core.notesRef="refs/notes/$notes_ref" notes |
-+			sort >"output_notes_$notes_ref" &&
-+		test_cmp "expect_notes_$notes_ref" "output_notes_$notes_ref" ||
-+			return 1
-+	fi &&
-+	git -c core.notesRef="refs/notes/$notes_ref" log --format="%H %s%n%N" \
-+		"$commit" >"output_log_$notes_ref" &&
-+	test_cmp "expect_log_$notes_ref" "output_log_$notes_ref"
-+}
-+
-+verify_fanout () {
-+	notes_ref="$1"
-+	# Expect entire notes tree to have a fanout == 1
-+	git rev-parse --quiet --verify "refs/notes/$notes_ref" >/dev/null &&
-+	git ls-tree -r --name-only "refs/notes/$notes_ref" |
-+	while read path
-+	do
-+		case "$path" in
-+		??/??????????????????????????????????????)
-+			: true
-+			;;
-+		*)
-+			echo "Invalid path \"$path\"" &&
-+			return 1
-+			;;
-+		esac
-+	done
-+}
-+
-+verify_no_fanout () {
-+	notes_ref="$1"
-+	# Expect entire notes tree to have a fanout == 0
-+	git rev-parse --quiet --verify "refs/notes/$notes_ref" >/dev/null &&
-+	git ls-tree -r --name-only "refs/notes/$notes_ref" |
-+	while read path
-+	do
-+		case "$path" in
-+		????????????????????????????????????????)
-+			: true
-+			;;
-+		*)
-+			echo "Invalid path \"$path\"" &&
-+			return 1
-+			;;
-+		esac
-+	done
-+}
-+
-+# Set up a notes merge scenario with different kinds of conflicts
-+test_expect_success 'setup a few initial commits with notes (notes ref: x)' '
-+	git config core.notesRef refs/notes/x &&
-+	for i in 1 2 3 4 5
-+	do
-+		test_commit "commit$i" >/dev/null &&
-+		git notes add -m "notes for commit$i" || return 1
-+	done
-+'
-+
-+commit_sha1=$(git rev-parse commit1^{commit})
-+commit_sha2=$(git rev-parse commit2^{commit})
-+commit_sha3=$(git rev-parse commit3^{commit})
-+commit_sha4=$(git rev-parse commit4^{commit})
-+commit_sha5=$(git rev-parse commit5^{commit})
-+
-+cat <<EOF | sort >expect_notes_x
-+aed91155c7a72c2188e781fdf40e0f3761b299db $commit_sha5
-+99fab268f9d7ee7b011e091a436c78def8eeee69 $commit_sha4
-+953c20ae26c7aa0b428c20693fe38bc687f9d1a9 $commit_sha3
-+6358796131b8916eaa2dde6902642942a1cb37e1 $commit_sha2
-+b02d459c32f0e68f2fe0981033bb34f38776ba47 $commit_sha1
-+EOF
-+
-+cat >expect_log_x <<EOF
-+$commit_sha5 commit5
-+notes for commit5
-+
-+$commit_sha4 commit4
-+notes for commit4
-+
-+$commit_sha3 commit3
-+notes for commit3
-+
-+$commit_sha2 commit2
-+notes for commit2
-+
-+$commit_sha1 commit1
-+notes for commit1
-+
-+EOF
-+
-+test_expect_success 'sanity check (x)' '
-+	verify_notes x commit5 &&
-+	verify_no_fanout x
-+'
-+
-+num=300
-+
-+cp expect_log_x expect_log_y
-+
-+test_expect_success 'Add a few hundred commits w/notes to trigger fanout (x -> y)' '
-+	git update-ref refs/notes/y refs/notes/x &&
-+	git config core.notesRef refs/notes/y &&
-+	i=5 &&
-+	while test $i -lt $num
-+	do
-+		i=$(($i + 1)) &&
-+		test_commit "commit$i" >/dev/null &&
-+		git notes add -m "notes for commit$i" || return 1
-+	done &&
-+	test "$(git rev-parse refs/notes/y)" != "$(git rev-parse refs/notes/x)" &&
-+	# Expected number of commits and notes
-+	test "$(git rev-list HEAD | wc -l)" = "$num" &&
-+	test "$(git notes list | wc -l)" = "$num" &&
-+	# 5 first notes unchanged
-+	verify_notes y commit5
-+'
-+
-+test_expect_success 'notes tree has fanout (y)' 'verify_fanout y'
-+
-+test_expect_success 'No-op merge (already included) (x => y)' '
-+	git update-ref refs/notes/m refs/notes/y &&
-+	git config core.notesRef refs/notes/m &&
-+	git notes merge x &&
-+	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/y)"
-+'
-+
-+test_expect_success 'Fast-forward merge (y => x)' '
-+	git update-ref refs/notes/m refs/notes/x &&
-+	git notes merge y &&
-+	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/y)"
-+'
-+
-+cat <<EOF | sort >expect_notes_z
-+9f506ee70e20379d7f78204c77b334f43d77410d $commit_sha3
-+23a47d6ea7d589895faf800752054818e1e7627b $commit_sha2
-+b02d459c32f0e68f2fe0981033bb34f38776ba47 $commit_sha1
-+EOF
-+
-+cat >expect_log_z <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+
-+$commit_sha3 commit3
-+notes for commit3
-+
-+appended notes for commit3
-+
-+$commit_sha2 commit2
-+new notes for commit2
-+
-+$commit_sha1 commit1
-+notes for commit1
-+
-+EOF
-+
-+test_expect_success 'change some of the initial 5 notes (x -> z)' '
-+	git update-ref refs/notes/z refs/notes/x &&
-+	git config core.notesRef refs/notes/z &&
-+	git notes add -f -m "new notes for commit2" commit2 &&
-+	git notes append -m "appended notes for commit3" commit3 &&
-+	git notes remove commit4 &&
-+	git notes remove commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree has no fanout (z)' 'verify_no_fanout z'
-+
-+cp expect_log_z expect_log_m
-+
-+test_expect_success 'successful merge without conflicts (y => z)' '
-+	git update-ref refs/notes/m refs/notes/z &&
-+	git config core.notesRef refs/notes/m &&
-+	git notes merge y &&
-+	verify_notes m commit5 &&
-+	# x/y/z unchanged
-+	verify_notes x commit5 &&
-+	verify_notes y commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+cat >expect_log_w <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+other notes for commit4
-+
-+$commit_sha3 commit3
-+other notes for commit3
-+
-+$commit_sha2 commit2
-+notes for commit2
-+
-+$commit_sha1 commit1
-+other notes for commit1
-+
-+EOF
-+
-+test_expect_success 'introduce conflicting changes (y -> w)' '
-+	git update-ref refs/notes/w refs/notes/y &&
-+	git config core.notesRef refs/notes/w &&
-+	git notes add -f -m "other notes for commit1" commit1 &&
-+	git notes add -f -m "other notes for commit3" commit3 &&
-+	git notes add -f -m "other notes for commit4" commit4 &&
-+	git notes remove commit5 &&
-+	verify_notes w commit5
-+'
-+
-+cat >expect_log_m <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+other notes for commit4
-+
-+$commit_sha3 commit3
-+other notes for commit3
-+
-+$commit_sha2 commit2
-+new notes for commit2
-+
-+$commit_sha1 commit1
-+other notes for commit1
-+
-+EOF
-+
-+test_expect_success 'successful merge using "ours" strategy (z => w)' '
-+	git update-ref refs/notes/m refs/notes/w &&
-+	git config core.notesRef refs/notes/m &&
-+	git notes merge -s ours z &&
-+	verify_notes m commit5 &&
-+	# w/x/y/z unchanged
-+	verify_notes w commit5 &&
-+	verify_notes x commit5 &&
-+	verify_notes y commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+cat >expect_log_m <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+
-+$commit_sha3 commit3
-+notes for commit3
-+
-+appended notes for commit3
-+
-+$commit_sha2 commit2
-+new notes for commit2
-+
-+$commit_sha1 commit1
-+other notes for commit1
-+
-+EOF
-+
-+test_expect_success 'successful merge using "theirs" strategy (z => w)' '
-+	git update-ref refs/notes/m refs/notes/w &&
-+	git notes merge -s theirs z &&
-+	verify_notes m commit5 &&
-+	# w/x/y/z unchanged
-+	verify_notes w commit5 &&
-+	verify_notes x commit5 &&
-+	verify_notes y commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+cat >expect_log_m <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+other notes for commit4
-+
-+$commit_sha3 commit3
-+other notes for commit3
-+
-+notes for commit3
-+
-+appended notes for commit3
-+
-+$commit_sha2 commit2
-+new notes for commit2
-+
-+$commit_sha1 commit1
-+other notes for commit1
-+
-+EOF
-+
-+test_expect_success 'successful merge using "union" strategy (z => w)' '
-+	git update-ref refs/notes/m refs/notes/w &&
-+	git notes merge -s union z &&
-+	verify_notes m commit5 &&
-+	# w/x/y/z unchanged
-+	verify_notes w commit5 &&
-+	verify_notes x commit5 &&
-+	verify_notes y commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+cat >expect_log_m <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+other notes for commit4
-+
-+$commit_sha3 commit3
-+appended notes for commit3
-+notes for commit3
-+other notes for commit3
-+
-+$commit_sha2 commit2
-+new notes for commit2
-+
-+$commit_sha1 commit1
-+other notes for commit1
-+
-+EOF
-+
-+test_expect_success 'successful merge using "cat_sort_uniq" strategy (z => w)' '
-+	git update-ref refs/notes/m refs/notes/w &&
-+	git notes merge -s cat_sort_uniq z &&
-+	verify_notes m commit5 &&
-+	# w/x/y/z unchanged
-+	verify_notes w commit5 &&
-+	verify_notes x commit5 &&
-+	verify_notes y commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+# We're merging z into w. Here are the conflicts we expect:
-+#
-+# commit | x -> w    | x -> z    | conflict?
-+# -------|-----------|-----------|----------
-+# 1      | changed   | unchanged | no, use w
-+# 2      | unchanged | changed   | no, use z
-+# 3      | changed   | changed   | yes (w, then z in conflict markers)
-+# 4      | changed   | deleted   | yes (w)
-+# 5      | deleted   | deleted   | no, deleted
-+
-+test_expect_success 'fails to merge using "manual" strategy (z => w)' '
-+	git update-ref refs/notes/m refs/notes/w &&
-+	test_must_fail git notes merge z
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+cat <<EOF | sort >expect_conflicts
-+$commit_sha3
-+$commit_sha4
-+EOF
-+
-+cat >expect_conflict_$commit_sha3 <<EOF
-+<<<<<<< refs/notes/m
-+other notes for commit3
-+=======
-+notes for commit3
-+
-+appended notes for commit3
-+>>>>>>> refs/notes/z
-+EOF
-+
-+cat >expect_conflict_$commit_sha4 <<EOF
-+other notes for commit4
-+EOF
-+
-+test_expect_success 'verify conflict entries (with no fanout)' '
-+	ls .git/NOTES_MERGE_WORKTREE >output_conflicts &&
-+	test_cmp expect_conflicts output_conflicts &&
-+	( for f in $(cat expect_conflicts); do
-+		test_cmp "expect_conflict_$f" ".git/NOTES_MERGE_WORKTREE/$f" ||
-+		exit 1
-+	done ) &&
-+	# Verify that current notes tree (pre-merge) has not changed (m == w)
-+	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
-+'
-+
-+cat >expect_log_m <<EOF
-+$commit_sha5 commit5
-+
-+$commit_sha4 commit4
-+other notes for commit4
-+
-+$commit_sha3 commit3
-+other notes for commit3
-+
-+appended notes for commit3
-+
-+$commit_sha2 commit2
-+new notes for commit2
-+
-+$commit_sha1 commit1
-+other notes for commit1
-+
-+EOF
-+
-+test_expect_success 'resolve and finalize merge (z => w)' '
-+	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha3 <<EOF &&
-+other notes for commit3
-+
-+appended notes for commit3
-+EOF
-+	git notes merge --commit &&
-+	verify_notes m commit5 &&
-+	# w/x/y/z unchanged
-+	verify_notes w commit5 &&
-+	verify_notes x commit5 &&
-+	verify_notes y commit5 &&
-+	verify_notes z commit5
-+'
-+
-+test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
-+
-+test_done
--- 
-1.7.3.98.g5ad7d9
+Centos5.X and Fedora11.
+
+I hesitate to ask, since you /seem/ to understand that xterm,
+gnome-terminal, and
+konsole are three different programs, but I can also imagine there are
+people who may
+use the word "xterm" in a generic way to refer to all X11-based
+terminal programs.
+So, no offense, but  are you sure you're running the program called
+"xterm"?  If the
+answer is yes, then please ignore the rest of this paragraph.  If you
+are just clicking
+on the terminal icon to pop-up a terminal, then try typing "xterm"
+into that terminal.
+The xterm program may not even be installed by default on Ubuntu
+anymore (I don't
+know).  But I'm thinking it probably is, and that gvim may merely be
+vim run inside
+an xterm, and that's why the selection is working properly.
+
+> Also, Alt-B appears to work fine in gnome-terminal. =C2=A0I don't hav=
+e Konsole
+> to try.
+
+Ok, they recently got rid of the Tab(with an underlined 'b') menu
+item. Try alt-f to go
+forward by a word then.  That's still intercepted by gnome.
+
+-Brandon
