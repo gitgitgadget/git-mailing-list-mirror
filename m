@@ -1,56 +1,54 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: [GITK PATCH] gitk: add menuitem for file checkout from
-	selected or parent commit
-Date: Wed, 29 Sep 2010 17:23:00 +0200
-Message-ID: <20100929152259.GA13887@book.hvoigt.net>
-References: <20100928200344.GA12843@book.hvoigt.net> <AANLkTi=GmR3kV-ChSNybcaw4c=Dwt5G98e31WVuzJcfC@mail.gmail.com>
+From: Michele Ballabio <barra_cuda@katamail.com>
+Subject: Re: [GITK PATCH] gitk: add menuitem for file checkout from selected or parent commit
+Date: Wed, 29 Sep 2010 17:27:44 +0200
+Message-ID: <201009291727.45467.barra_cuda@katamail.com>
+References: <20100928200344.GA12843@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 17:23:10 2010
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Wed Sep 29 17:32:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0yUv-0002bQ-Mf
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 17:23:10 +0200
+	id 1P0ye5-0005uq-0j
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 17:32:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753381Ab0I2PXD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 11:23:03 -0400
-Received: from darksea.de ([83.133.111.250]:49819 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752761Ab0I2PXC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 11:23:02 -0400
-Received: (qmail 18994 invoked from network); 29 Sep 2010 17:23:00 +0200
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 29 Sep 2010 17:23:00 +0200
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=GmR3kV-ChSNybcaw4c=Dwt5G98e31WVuzJcfC@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753684Ab0I2PcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 11:32:18 -0400
+Received: from smtp226-pc.aruba.it ([62.149.157.226]:52296 "HELO
+	smtp1-pc.aruba.it" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with SMTP id S1753639Ab0I2PcQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 11:32:16 -0400
+Received: (qmail 23738 invoked by uid 89); 29 Sep 2010 15:32:10 -0000
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on smtp1-pc.ad.aruba.it
+X-Spam-Level: **
+X-Spam-Status: No, score=2.5 required=6.5 tests=BAYES_50,FREEMAIL_FROM
+	autolearn=no version=3.3.1
+Received: from unknown (HELO darkstar.localnet) (barra?cuda@katamail.com@78.134.70.234)
+  by smtp1-pc.ad.aruba.it with SMTP; 29 Sep 2010 15:32:09 -0000
+User-Agent: KMail/1.13.5 (Linux/2.6.36-rc5-debug-2mike; KDE/4.5.1; i686; ; )
+In-Reply-To: <20100928200344.GA12843@book.hvoigt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157579>
 
-Hi,
+On Tuesday 28 September 2010, Heiko Voigt wrote:
+>  po/de.po |    6 ++++++
+>  po/es.po |    6 ++++++
+>  po/fr.po |    6 ++++++
+>  po/hu.po |    6 ++++++
+>  po/it.po |    6 ++++++
+>  po/ja.po |    6 ++++++
+>  po/ru.po |    6 ++++++
+>  po/sv.po |    6 ++++++
 
-On Tue, Sep 28, 2010 at 09:09:43PM +0000, =C6var Arnfj=F6r=F0 Bjarmason=
- wrote:
-> On Tue, Sep 28, 2010 at 20:03, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > This is useful if a user wants to checkout a file from a certain
-> > commit. This is equivalent to
->=20
-> It looks like the existing msgid/msgstr pairs have line number
-> comments. Why not add that for the new strings? Presumably it might
-> inflate the patch a lot though, as old strings get displaced.
-
-I was wondering what these numbers were for. Now it makes sense. I am
-not against doing it but I would need a script to update the existing
-ones. Is there something like that? Otherwise I would just add the line
-number for the two new msgs.
-
-Cheers Heiko
+You shouldn't change anything under po/ (unless you want to actually translate
+something, of course): translators will do it for you. There would be less
+of a chance of a conflicting merge.
