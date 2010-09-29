@@ -1,83 +1,75 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Re: [GITK PATCH] gitk: add menuitem for file checkout from
- selected or parent commit
-Date: Wed, 29 Sep 2010 15:48:03 +0000
-Message-ID: <AANLkTinn-_Npv4+wGRkS6Sonf1VRV-cEMtHBEtyQeq8O@mail.gmail.com>
-References: <20100928200344.GA12843@book.hvoigt.net>
-	<AANLkTi=GmR3kV-ChSNybcaw4c=Dwt5G98e31WVuzJcfC@mail.gmail.com>
-	<20100929152259.GA13887@book.hvoigt.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 00/18] git notes merge
+Date: Wed, 29 Sep 2010 18:04:13 +0200
+Message-ID: <201009291804.13404.johan@herland.net>
+References: <1285719811-10871-1-git-send-email-johan@herland.net> <201009291716.52831.johan@herland.net> <AANLkTinjAoAYW2as1VfeWJ=t4MORjC9s7=eMCbYttier@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
-	Michele Ballabio <barra_cuda@katamail.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Wed Sep 29 17:48:20 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
+	gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 18:05:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0ytD-0003pQ-CH
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 17:48:15 +0200
+	id 1P0z9m-0001Y1-2L
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 18:05:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753903Ab0I2PsG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 11:48:06 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:56187 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753056Ab0I2PsF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 11:48:05 -0400
-Received: by iwn5 with SMTP id 5so1173412iwn.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 08:48:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=R05Als+Oj6rYClKnQ3uKh4efnt1E7qEL8CxCpOJY29I=;
-        b=YkM1/bpb/KAvIBFQxKuNAHi3lqY7jjthJ0SOOd+EE3Unq2l67HKUvHwgRGinySNqRR
-         XPhUNHumtSTFF0cjQ25QExs0am97GbT5N82FPLNaNs95uxbZg0DVly1Fv2wEJT614Gq1
-         zwqVwGn6rezLr80qKMOMhTyixuoQAaKBER2So=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=UWMdykU/7vMM8MczpHpOB/YyMtFudRS1uJe9nFjENIqTBB2s3fh/1c7d4O7vtO+znk
-         5IRaMfC5dnnfEDb4CLN+3sJNwPLXVeUdgO0Zodgr4+KxjKOgVw6zGSbmToU3mG2K+8UX
-         q5T6XCHml987IJnwllnAxBRfK30RE27QXWBtQ=
-Received: by 10.231.147.131 with SMTP id l3mr2008350ibv.74.1285775283723; Wed,
- 29 Sep 2010 08:48:03 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 29 Sep 2010 08:48:03 -0700 (PDT)
-In-Reply-To: <20100929152259.GA13887@book.hvoigt.net>
+	id S1753634Ab0I2QFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 12:05:13 -0400
+Received: from smtp.opera.com ([213.236.208.81]:33595 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752162Ab0I2QFM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 12:05:12 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o8TG4DWi027444
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 29 Sep 2010 16:04:13 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <AANLkTinjAoAYW2as1VfeWJ=t4MORjC9s7=eMCbYttier@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157582>
 
-On Wed, Sep 29, 2010 at 15:23, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> Hi,
+On Wednesday 29 September 2010, Sverre Rabbelier wrote:
+> On Wed, Sep 29, 2010 at 17:16, Johan Herland wrote:
+> > Yeah, I'm torn as well. What about providing both? Or is that
+> > bloat?
 >
-> On Tue, Sep 28, 2010 at 09:09:43PM +0000, =C4=98var Arnfj=C3=B6r=C5=A1=
- Bjarmason wrote:
->> On Tue, Sep 28, 2010 at 20:03, Heiko Voigt <hvoigt@hvoigt.net> wrote=
-:
->> > This is useful if a user wants to checkout a file from a certain
->> > commit. This is equivalent to
->>
->> It looks like the existing msgid/msgstr pairs have line number
->> comments. Why not add that for the new strings? Presumably it might
->> inflate the patch a lot though, as old strings get displaced.
+> Definitely not both, that would be confusing, and would limit us if
+> we decide to add 'git merge --abort' later on.
+
+Yeah, but for consistency's sake I don't want to name it 'git notes 
+merge --abort' if there's not a corresponding 'git merge --abort'.
+
+> >> I know that there's no 'git merge --abort', but IIRC that's for
+> >> technical reasons only.
+> >
+> > Maybe there _should_ be a 'git merge --abort' (as a synonym to 'git
+> > reset --merge')?
 >
-> I was wondering what these numbers were for. Now it makes sense. I am
-> not against doing it but I would need a script to update the existing
-> ones. Is there something like that? Otherwise I would just add the li=
-ne
-> number for the two new msgs.
+> Hmmm, I don't know if that does what the user wants, (I haven't used
+> 'git reset --merge' before), but if it does, that sounds like a good
+> solution.
 
-You should update PO files with the msgmerge(1) program, the ab/i18n
-branch has docs on how to do that in po/README.
+>From git-merge(1):
 
-But as Michele points out you probably shouldn't update these, some
-projects do, but it probably makes more sense to leave these updates
-up to translators.
+"If you tried a merge which resulted in complex conflicts and want to 
+start over, you can recover with git reset --merge."
+
+AFAICS, there's no better candidate synonym for 'git merge --abort'.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
