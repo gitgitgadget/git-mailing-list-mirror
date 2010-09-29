@@ -1,65 +1,63 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] checkout: add a space between the commit and "..."
-Date: Wed, 29 Sep 2010 23:48:21 +0200
-Message-ID: <m28w2kb4re.fsf@igel.home>
-References: <20100928222332.GA28859@soprano.nvidia.com>
-	<tNUxsuXC1ZklaaYn-pkW6hae44B_tB2hStuto66EU4k9w2Q79GA6LQ@cipher.nrlssc.navy.mil>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] apply: Recognize epoch timestamps with : in the timezone
+Date: Wed, 29 Sep 2010 16:49:34 -0500
+Message-ID: <AANLkTikUoyiWmSkp5sdi1oA2k2fBweqeUj_oBZBEEP3T@mail.gmail.com>
+References: <alpine.DEB.2.00.1009291644440.15192@dr-wily.mit.edu>
+	<20100929214107.GA4485@capella.cs.uchicago.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Aaron Plattner <aplattner@nvidia.com>, git@vger.kernel.org,
-	jkain@nvidia.com
-To: Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil>
-X-From: git-owner@vger.kernel.org Wed Sep 29 23:48:32 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Anders Kaseorg <andersk@ksplice.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 23:49:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P14Vr-0003T0-7a
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 23:48:31 +0200
+	id 1P14Wz-0003lL-8K
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 23:49:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751613Ab0I2VsZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 17:48:25 -0400
-Received: from mail-out.m-online.net ([212.18.0.10]:35576 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751206Ab0I2VsY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 17:48:24 -0400
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 66C1F1C0050E;
-	Wed, 29 Sep 2010 23:48:21 +0200 (CEST)
-Received: from igel.home (ppp-88-217-126-240.dynamic.mnet-online.de [88.217.126.240])
-	by mail.mnet-online.de (Postfix) with ESMTP id E4AA91C000B4;
-	Wed, 29 Sep 2010 23:48:21 +0200 (CEST)
-Received: by igel.home (Postfix, from userid 501)
-	id A5C31CA2A0; Wed, 29 Sep 2010 23:48:21 +0200 (CEST)
-X-Yow: Why is it that when you DIE, you can't take your
- HOME ENTERTAINMENT CENTER with you??
-In-Reply-To: <tNUxsuXC1ZklaaYn-pkW6hae44B_tB2hStuto66EU4k9w2Q79GA6LQ@cipher.nrlssc.navy.mil>
-	(Brandon Casey's message of "Tue, 28 Sep 2010 17:40:11 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1753200Ab0I2Vtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 17:49:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:51980 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752042Ab0I2Vtf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 17:49:35 -0400
+Received: by iwn5 with SMTP id 5so1526082iwn.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 14:49:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=6LCDy450Svr+7p63G6o6ygrsoe+Of8cSE+3USsWb46Q=;
+        b=uEGH66ln/puJUvQT7oUmJwmSn8k74qhaggTo7ygBjRknnq0mNhjux/WsgkfdvA6tUz
+         cdyGWZwIoNjaHTkAsxiNO4VGrHEOoouxa1ifefYNEi37ulHOsH6TPcTxKSOoWXzFczqf
+         acSh7bs4z3vO9aG7SNb/y8WJfw8xi6Rg6BXzI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hTo0AD1FVX7E4doWpB3sU7F198wa8loK/ic6KuNYBQgPisJ6f7Gy1P9q6oVIFfk8kE
+         SApB+ymyRA1LTtszCxXpxL9YnJHnbLG4MKJgdDmp5Jc0YIT1TzGM52Ax/v/jYLxk3y/r
+         EOFQHP4RU953xqe/CoBqeqGOPPpUkYlaaZN84=
+Received: by 10.231.146.134 with SMTP id h6mr2434988ibv.170.1285796974588;
+ Wed, 29 Sep 2010 14:49:34 -0700 (PDT)
+Received: by 10.231.11.65 with HTTP; Wed, 29 Sep 2010 14:49:34 -0700 (PDT)
+In-Reply-To: <20100929214107.GA4485@capella.cs.uchicago.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157610>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157611>
 
-Brandon Casey <brandon.casey.ctr@nrlssc.navy.mil> writes:
+Jonathan Nieder wrote:
 
-> On 09/28/2010 05:23 PM, Aaron Plattner wrote:
->> Switching to a detached head prints something like
->> 
->>   HEAD is now at 9d14017... dir.c: squelch false uninitialized memory warning
->> 
->> These dots get selected when you double-click on the abbreviated
->> commit hash, which makes it annoying to copy and paste.
->
-> This must be another gnome-terminal/konsole "innovation".
+> Some patches have a timezone formatted like '-08:00' instead of
+> '-0800' in their ---/+++ lines (e.g. http://lwn.net/Articles/131729/).
+> Take this into account when searching for the start of the timezone
 
-It's configurable in konsole at least (and not the default).
+s/timezone/timestamp/
 
-Andreas.
+> (which is the end of the filename).
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Sorry for the noise.
