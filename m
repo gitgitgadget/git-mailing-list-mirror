@@ -1,102 +1,118 @@
-From: Tuomo <tuo.tie@gmail.com>
-Subject: Re: Another way to compare tools: is it possible to transfer full history?
-Date: Wed, 29 Sep 2010 11:03:48 +0000 (UTC)
-Message-ID: <loom.20100929T130008-795@post.gmane.org>
-References: <loom.20100928T153519-936@post.gmane.org> <4CA20169.2040606@dbservice.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Another way to compare tools: is it possible to transfer full
+ history?
+Date: Wed, 29 Sep 2010 13:19:31 +0200
+Message-ID: <4CA320C3.6090006@op5.se>
+References: <loom.20100928T153519-936@post.gmane.org> <4CA20169.2040606@dbservice.com> <loom.20100929T130008-795@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 13:04:11 2010
+Cc: git@vger.kernel.org
+To: Tuomo <tuo.tie@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 13:19:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0uSI-00044j-DW
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 13:04:10 +0200
+	id 1P0uhL-0000cn-4r
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 13:19:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752621Ab0I2LD7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 07:03:59 -0400
-Received: from lo.gmane.org ([80.91.229.12]:55662 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752008Ab0I2LD6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 07:03:58 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P0uS4-0003zl-Qq
-	for git@vger.kernel.org; Wed, 29 Sep 2010 13:03:56 +0200
-Received: from esprx02x.nokia.com ([192.100.124.219])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:03:56 +0200
-Received: from tuo.tie by esprx02x.nokia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 13:03:56 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 192.100.124.219 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.8) Gecko/20100722 Firefox/3.6.8)
+	id S1753573Ab0I2LTh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 07:19:37 -0400
+Received: from na3sys009aog108.obsmtp.com ([74.125.149.199]:44572 "HELO
+	na3sys009aog108.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753408Ab0I2LTh (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 07:19:37 -0400
+Received: from source ([209.85.215.178]) by na3sys009aob108.postini.com ([74.125.148.12]) with SMTP
+	ID DSNKTKMgx9Uc9LWYZ9BfZOW/9kUlRw4Puqc9@postini.com; Wed, 29 Sep 2010 04:19:36 PDT
+Received: by eyh6 with SMTP id 6so190098eyh.23
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 04:19:34 -0700 (PDT)
+Received: by 10.213.34.70 with SMTP id k6mr1242581ebd.65.1285759174558;
+        Wed, 29 Sep 2010 04:19:34 -0700 (PDT)
+Received: from clix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id a48sm12212554eei.19.2010.09.29.04.19.32
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Sep 2010 04:19:33 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Thunderbird/3.0.7 ThunderGit/0.1a
+In-Reply-To: <loom.20100929T130008-795@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157552>
 
-Tomas Carnecky <tom <at> dbservice.com> writes:
-
-> fast-import/export (man git-fast-export/import) seems to be the future.
-> Git provides excellent support for it and other SCMs are adopting it as
-> well. And then there are custom written conversion tools, just take a
-> look at [1] to see which ones are available.
+On 09/29/2010 01:03 PM, Tuomo wrote:
+> Tomas Carnecky<tom<at>  dbservice.com>  writes:
 > 
-> (shameless plug: just this weekend I started collecting the various fast
-> import/export tools and made a webpage about it:
-> http://caurea.org/fast-export-import/. It's far from complete though.
-> And if you know any tools that perform better than those I've listed,
-> I'd be glade to update the page).
+> Which tools belong to the same class with Git?
 
-Last time I was looking for conversions between source control tools, I could
-not find any (but my attempt may have been a bit limited). I am very happy to
-see that there is now not only a plethora of point-to-point conversion tools,
-but a common exchange format. It means that the field of source control is
-finally maturing, finding common concepts that most agree on.
+All repositories from pure distributed version control systems can be
+transformed into git repositories and git repos can be transformed into
+a repository of a pure distributed version control system, but not all
+repositories can do so without information loss since all dvcs systems
+store and represent things different and have (slightly) different
+capabilities.
 
-However, the scanty documentation for the tools does not answer my question.
-I'll try to formulate it again. You can move history from SCCS to RCS without
-losing anything, but you cannot move from RCS to SCCS, because SCCS does not
-handle sub-branches. You can move from RCS to CVS, but since RCS does not record
-evolutionary relationships between tags, the result does not record the history
-in the manner we'd expect in CVS. You can provide additional data to the
-conversion, but that additional data cannot be automatically deduced by any
-general algorithm. You can move stuff from CVS to RCS, but you lose the
-evolution of the whole configuration. So, SCCS, RCS and CVS all belong to a
-different class. Only the latest tools have enough in common that one can find
-enough of information to make a full transfer of history without loss of data
-that can be deduced by automatic means if a back-conversion is desired.
+Octopus merges have been mentioned. I'm sure there are other things,
+such as the three different tag-types we have in git, that can't be
+properly represented by other scm systems.
 
-Which tools belong to the same class with Git? Strictly speaking, I am talking
-about conversions that do not require us to inject any additional data,
-conversions that are fully automatic. The page http://wiki.darcs.net/DarcsGit
-mentions that Darcs->Git->Darcs roundtrip loses no information (but also notes
-that the tool is nowadays broken and needs fixing), but the same is not true for
-the other direction. That is the kind of information I am looking for.
+Exactly which those are and how it affects conversions from one
+system to another is something you seem to want to learn without
+actually doing the job of finding it out, and I doubt anyone on this
+list knows every detail you're looking for (although the complete
+information you're after might be available in scattered form among
+the population on this list).
 
-Is it possible to make a round-trip Mercurial->Git->Mercurial or
-Git->Mercurial->Git without loss of any information? I would expect that
-Mercurial->Git->Mercurial might produce some differences if files have been
-renamed or moved between directories, but other than that?
+> 
+> Is it possible to make a round-trip Mercurial->Git->Mercurial or
+> Git->Mercurial->Git without loss of any information?
 
-What particularly interests me is how the conversion handles unnamed Mercurial
-branches? I am asking this because at work, I had to ponder once if it would be
-possible to transfer histories from Synergy (ex Continuus) to some other tool,
-and found it very difficult to imagine how to create named branches from the
-version DAGs Synergy uses. You can never be sure if a new version is a successor
-of its predecessor on the same branch or the first version on a sub.branch,
-because Synergy doesn't treat them any differently. users often try to organize
-the branches in ways compatible with other tools, but since Synergy has no way
-of enforcing any of these methods, there is no guarantee of consistency. The
-worst-case scenario is that every single version is its own branch. So, I really
-would like to know how the unnamed branches from Mercurial are transferred to
-named branches in Git?
+That depends. If the git repository has no octopus merges and no tags
+of a type that can't be represented in mercurial, I believe it should
+be possible.
+
+Try and find out.
+
+> I would expect that
+> Mercurial->Git->Mercurial might produce some differences if files have been
+> renamed or moved between directories, but other than that?
+> 
+
+Possibly. Again though; Try and find out.
+
+> What particularly interests me is how the conversion handles unnamed Mercurial
+> branches?
+
+Probably as detached heads. There's nothing special with having commits with no
+refs attached to them in git.
+
+> I am asking this because at work, I had to ponder once if it would be
+> possible to transfer histories from Synergy (ex Continuus) to some other tool,
+> and found it very difficult to imagine how to create named branches from the
+> version DAGs Synergy uses. You can never be sure if a new version is a successor
+> of its predecessor on the same branch or the first version on a sub.branch,
+> because Synergy doesn't treat them any differently. users often try to organize
+> the branches in ways compatible with other tools, but since Synergy has no way
+> of enforcing any of these methods, there is no guarantee of consistency. The
+> worst-case scenario is that every single version is its own branch. So, I really
+> would like to know how the unnamed branches from Mercurial are transferred to
+> named branches in Git?
+> 
+
+So now we get to a proper use-case. You want to convert a Synergy repository to
+something else, and you've been looking at mercurial and git.
+
+So let me ask you a question; What have you done so far to find out the answer
+to the questions you're looking for, apart from asking here how a theoretical
+scenario would pan out?
+
+-- 
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
