@@ -1,115 +1,344 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: How to handle merge-recursive corner cases?
-Date: Wed, 29 Sep 2010 14:51:26 -0500
-Message-ID: <20100929195125.GA28181@capella.cs.uchicago.edu>
-References: <AANLkTimwUQafGDrjxWrfU9uY1uKoFLJhxYs=vssOPqdf@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 21:51:35 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv3] Makefile: implement help target
+Date: Wed, 29 Sep 2010 22:15:55 +0200
+Message-ID: <d2da07fe51a3aba727165b0a0de299c266097145.1285791283.git.git@drmicha.warpmail.net>
+References: <7vhbh8r1zj.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Stephen Boyd <bebarino@gmail.com>,
+	Andreas Ericsson <ae@op5.se>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Sep 29 22:16:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P12gg-0006M9-Od
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 21:51:35 +0200
+	id 1P134F-0005oP-Hl
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 22:15:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755037Ab0I2Tv2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 15:51:28 -0400
-Received: from camembert.cs.uchicago.edu ([128.135.164.153]:47479 "EHLO
-	smtp.cs.uchicago.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754422Ab0I2Tv1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 15:51:27 -0400
-Received: from capella.cs.uchicago.edu (capella.cs.uchicago.edu [128.135.24.228])
-	by smtp.cs.uchicago.edu (Postfix) with ESMTP id C6F04B9AC;
-	Wed, 29 Sep 2010 14:51:26 -0500 (CDT)
-Received: by capella.cs.uchicago.edu (Postfix, from userid 10442)
-	id 99B02DFB5C; Wed, 29 Sep 2010 14:51:26 -0500 (CDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimwUQafGDrjxWrfU9uY1uKoFLJhxYs=vssOPqdf@mail.gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1755776Ab0I2UPw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 16:15:52 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:51488 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755771Ab0I2UPw (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 16:15:52 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 93DE0A44;
+	Wed, 29 Sep 2010 16:15:46 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 29 Sep 2010 16:15:46 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=ureOEcp3q++vARslXPIYjPtsZTU=; b=HVGuJGAOZHwViX5bGKGbx+XmU0dssbRx+DjzzINtnBfOawTvtUlwOnsLeSylEGoBsiazGgikM+a8ayiEgcd8/AKMEcghK24vuEa6peogm/T1htSjA5ba6PZagHHkApz2Yyq4k4nve7LI0C+jgdF1YkaLauYFb8uz3HSFCCsTCbc=
+X-Sasl-enc: 06kMCdp+em7fieQgrf7DdjgCupF9syvn1qMVUtN+Z2+H 1285791345
+Received: from localhost (p54858F8F.dip0.t-ipconnect.de [84.133.143.143])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2170040695A;
+	Wed, 29 Sep 2010 16:15:45 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.98.g5ad7d
+In-Reply-To: <7vhbh8r1zj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157596>
 
-Hi Elijah,
+with automatic help text collection from "help-X::" targets, where X
+denotes a category for the target. This has the advantage (over a
+comment based solution) that we can use make's variable expansion inside
+the help text. Further exploitation of this feature is left for a future
+patch.
 
-Elijah Newren wrote:
+With this, "make help" produces:
 
-> #      B   D
-> #      o---o
-> #     / \ / \
-> #  A o   X   ? F
-> #     \ / \ /
-> #      o---o
-> #      C   E
-> In other words, there
-> 
-> Let's start with a simple though very contrived case that will
-> illustrate issues later, namely a repository with exactly one file
-> named 'file', with the following contents at different points in
-> history:
-> 
-> Commit A: file has contents 'A\n'
-> Commit B: file has contents 'B\n'
-> Commit C: file has contents 'C\n'
-> Commit D: file has contents 'D\n'
-> Commit E: file has the following 5 lines in it:
-> <<<<<<< Temporary merge branch 1
-> C
-> =======
-> B
-> >>>>>>> Temporary merge branch 2
-> 
-> Now, if we try to merge D & E, clearly there should be a conflict.
-> But git merges cleanly, giving file the contents 'D\n'.
+Help:
+    help               - Show help for main make targets
+    help-X             - Show help for category X (Build, Test, Install, Clean, Develop)
+Build Git and the documentation:
+    all                - Build the Git suite
+    doc                - Build man pages and HTML docs
+    man                - Build man pages
+    html               - Build HTML doc
+    info               - Build info docs
+    pdf                - Build PDF docs
+    dist               - Build git-1.7.3.99.gacf23.dirty.tar.gz source archive
+    rpm                - Build source and binary RPM packages
+    dist-doc           - Build git-manpages-1.7.3.99.gacf23.dirty.tar.gz and git-htmldocs-1.7.3.99.gacf23.dirty.tar.gz
+Testing source and build:
+    test               - Check the build by running the test suite
+    check-docs         - Check documentation coverage
+    coverage           - Check test coverage
+    cover_db_html      - Check test coverage and create HTML report
+Installing the Git suite and documentation:
+    install            - Install the Git suite
+    install-doc        - Install man pages
+    install-man        - Install man pages
+    install-html       - Install HTML docs
+    install-info       - Install info docs
+    install-pdf        - Install PDF docs
+    quick-install-doc  - Install pregenerated man pages from origin/man
+    quick-install-man  - Install pregenerated man pages from origin/man
+    quick-install-html - Install pregenerated HTML pages from origin/html
+Cleaning up after a build:
+    distclean          - Remove generated files and the configure script
+    clean              - Remove generated files but keep the configure script
+Making development easier:
+    TAGS               - Generate tags using etags
+    tags               - Generate tags using ctags
+    cscope             - Generate cscope index
 
-Funny.  A different problem is that with a less unusual history (i.e.
-no conflict hunks committed) with "[merge] conflictstyle=diff3", if
-there are conflicts in an early stage of recursive merge, we get
-nested conflict hunks, leaving rerere and humans confused.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+Does it seem as if I can't let this go?
 
-I have wondered: why doesn't merge-recursive implicitly use the union
-merge driver for its in-core merge of ancestors?  The resulting
-diff3-style conflict hunks from the final 3-way merge would be more
-readable, but now you've provided an answer: coincidences of matching
-content like you describe would become more likely.
+Anyhow, here's a make based variant which is a bit more chatty in the Makefile
+itself but has a ton of advantages, such as make variable expansion. Making
+good use of this for the install targets is left for another patch.
 
-[...]
-> It's wrong, but the only way to fix it is to somehow have an entry in
-> the virtual ancestor tree where the conflict region(s) of file are
-> guaranteed to not match the corresponding content locations of file
-> for either D or E.  (Perhaps by adding random content on the line
-> after the ='s?)
+ Makefile |  109 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 108 insertions(+), 1 deletions(-)
 
-Random content does not provides a guarantee.
-
-Maybe merge_recursive()/merge_trees() could steal a flag bit from
-struct object for "conflicted"?  No, that would give only one bit
-for the entire tree, and we need one bit per path.
-
-How about using index entries for this?
-
->From the signature of git_merge_trees(1, ...) it is not obvious
-to me where it reports conflicts.  From the start to
-write_tree_from_memory() I would guess it does not at all.
-
-[...]
-> Possibility 1: Virtual ancestor somehow contains both 'a' and 'a/file'
-> (currently impossible in git, since this virtual ancestor is written
-> as a tree
-[...]
-> The only way out of this that I see (and I'm hoping I'm just missing
-> something), is a modification of possibility 1: make the virtual
-> ancestor contain both 'a' and 'a/file'
-
-Hmm, D/F is a little harder than the content conflict case, I guess.
-;-)  But I think in general, the thing to do is to keep something
-other than a tree.
-
-Thanks for the food for thought.
-Jonathan
+diff --git a/Makefile b/Makefile
+index db2efd6..371214d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,4 +1,10 @@
+ # The default target of this Makefile is...
++help-Build::
++	$(H) 'Build Git and the documentation'
++
++help-Build::
++	$(HH) all 'Build the Git suite'
++
+ all::
+ 
+ # Define V=1 to have a more verbose compile.
+@@ -1952,29 +1958,56 @@ $(XDIFF_LIB): $(XDIFF_OBJS)
+ $(VCSSVN_LIB): $(VCSSVN_OBJS)
+ 	$(QUIET_AR)$(RM) $@ && $(AR) rcs $@ $(VCSSVN_OBJS)
+ 
++help-Build::
++	$(HH) doc 'Build man pages and HTML docs'
++
+ doc:
+ 	$(MAKE) -C Documentation all
+ 
++help-Build::
++	$(HH) man 'Build man pages'
++
+ man:
+ 	$(MAKE) -C Documentation man
+ 
++help-Build::
++	$(HH) html 'Build HTML doc'
++
+ html:
+ 	$(MAKE) -C Documentation html
+ 
++help-Build::
++	$(HH) info 'Build info docs'
++
+ info:
+ 	$(MAKE) -C Documentation info
+ 
++help-Build::
++	$(HH) pdf 'Build PDF docs'
++
+ pdf:
+ 	$(MAKE) -C Documentation pdf
+ 
++help-Develop::
++	$(H) 'Making development easier'
++
++help-Develop::
++	$(HH) TAGS 'Generate tags using etags'
++
+ TAGS:
+ 	$(RM) TAGS
+ 	$(FIND) . -name '*.[hcS]' -print | xargs etags -a
+ 
++help-Develop::
++	$(HH) tags 'Generate tags using ctags'
++
+ tags:
+ 	$(RM) tags
+ 	$(FIND) . -name '*.[hcS]' -print | xargs ctags -a
+ 
++help-Develop::
++	$(HH) cscope 'Generate cscope index'
++
+ cscope:
+ 	$(RM) cscope*
+ 	$(FIND) . -name '*.[hcS]' -print | xargs cscope -b
+@@ -2040,6 +2073,12 @@ export NO_SVN_TESTS
+ 
+ ### Testing rules
+ 
++help-Test::
++	$(H) 'Testing source and build'
++
++help-Test::
++	$(HH) test 'Check the build by running the test suite'
++
+ test: all
+ 	$(MAKE) -C t/ all
+ 
+@@ -2099,6 +2138,12 @@ export gitexec_instdir
+ 
+ install_bindir_programs := $(patsubst %,%$X,$(BINDIR_PROGRAMS_NEED_X)) $(BINDIR_PROGRAMS_NO_X)
+ 
++help-Install::
++	$(H) 'Installing the Git suite and documentation'
++
++help-Install::
++	$(HH) install 'Install the Git suite'
++
+ install: all
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bindir_SQ)'
+ 	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(gitexec_instdir_SQ)'
+@@ -2155,27 +2200,51 @@ endif
+ install-gitweb:
+ 	$(MAKE) -C gitweb install
+ 
++help-Install::
++	$(HH) install-doc 'Install man pages'
++
+ install-doc:
+ 	$(MAKE) -C Documentation install
+ 
++help-Install::
++	$(HH) install-man 'Install man pages'
++
+ install-man:
+ 	$(MAKE) -C Documentation install-man
+ 
++help-Install::
++	$(HH) install-html 'Install HTML docs'
++
+ install-html:
+ 	$(MAKE) -C Documentation install-html
+ 
++help-Install::
++	$(HH) install-info 'Install info docs'
++
+ install-info:
+ 	$(MAKE) -C Documentation install-info
+ 
++help-Install::
++	$(HH) install-pdf 'Install PDF docs'
++
+ install-pdf:
+ 	$(MAKE) -C Documentation install-pdf
+ 
++help-Install::
++	$(HH) quick-install-doc 'Install pregenerated man pages from origin/man'
++
+ quick-install-doc:
+ 	$(MAKE) -C Documentation quick-install
+ 
++help-Install::
++	$(HH) quick-install-man 'Install pregenerated man pages from origin/man'
++
+ quick-install-man:
+ 	$(MAKE) -C Documentation quick-install-man
+ 
++help-Install::
++	$(HH) quick-install-html 'Install pregenerated HTML pages from origin/html'
++
+ quick-install-html:
+ 	$(MAKE) -C Documentation quick-install-html
+ 
+@@ -2188,6 +2257,9 @@ git.spec: git.spec.in
+ 	mv $@+ $@
+ 
+ GIT_TARNAME=git-$(GIT_VERSION)
++help-Build::
++	$(HH) dist 'Build git-$(GIT_VERSION).tar.gz source archive'
++
+ dist: git.spec git-archive$(X) configure
+ 	./git-archive --format=tar \
+ 		--prefix=$(GIT_TARNAME)/ HEAD^{tree} > $(GIT_TARNAME).tar
+@@ -2203,6 +2275,9 @@ dist: git.spec git-archive$(X) configure
+ 	@$(RM) -r $(GIT_TARNAME)
+ 	gzip -f -9 $(GIT_TARNAME).tar
+ 
++help-Build::
++	$(HH) rpm 'Build source and binary RPM packages'
++
+ rpm: dist
+ 	$(RPMBUILD) \
+ 		--define "_source_filedigest_algorithm md5" \
+@@ -2211,6 +2286,10 @@ rpm: dist
+ 
+ htmldocs = git-htmldocs-$(GIT_VERSION)
+ manpages = git-manpages-$(GIT_VERSION)
++
++help-Build::
++	$(HH) dist-doc 'Build $(manpages).tar.gz and $(htmldocs).tar.gz'
++
+ dist-doc:
+ 	$(RM) -r .doc-tmp-dir
+ 	mkdir .doc-tmp-dir
+@@ -2230,10 +2309,18 @@ dist-doc:
+ 	$(RM) -r .doc-tmp-dir
+ 
+ ### Cleaning rules
++help-Clean::
++	$(H) 'Cleaning up after a build'
++
++help-Clean::
++	$(HH) distclean 'Remove generated files and the configure script'
+ 
+ distclean: clean
+ 	$(RM) configure
+ 
++help-Clean::
++	$(HH) clean 'Remove generated files but keep the configure script'
++
+ clean:
+ 	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
+ 		builtin/*.o $(LIB_FILE) $(XDIFF_LIB) $(VCSSVN_LIB)
+@@ -2268,7 +2355,9 @@ endif
+ .PHONY: FORCE TAGS tags cscope
+ 
+ ### Check documentation
+-#
++help-Test::
++	$(HH) check-docs 'Check documentation coverage'
++
+ check-docs::
+ 	@(for v in $(ALL_PROGRAMS) $(SCRIPT_LIB) $(BUILT_INS) git gitk; \
+ 	do \
+@@ -2335,6 +2424,9 @@ check-builtins::
+ #
+ .PHONY: coverage coverage-clean coverage-build coverage-report
+ 
++help-Test::
++	$(HH) coverage 'Check test coverage'
++
+ coverage:
+ 	$(MAKE) coverage-build
+ 	$(MAKE) coverage-report
+@@ -2370,5 +2462,20 @@ coverage-untested-functions: coverage-report
+ cover_db: coverage-report
+ 	gcov2perl -db cover_db *.gcov
+ 
++help-Test::
++	$(HH) cover_db_html 'Check test coverage and create HTML report'
++
+ cover_db_html: cover_db
+ 	cover -report html -outputdir cover_db_html cover_db
++
++H=@printf "%s:\n"
++HH=@printf "    %-18s - %s\n"
++
++help-Help::
++	$(H) Help
++
++help-Help::
++	$(HH) help 'Show help for main make targets'
++	$(HH) help-X 'Show help for category X (Build, Test, Install, Clean, Develop)'
++
++help: help-Help help-Build help-Test help-Install help-Clean help-Develop
+-- 
+1.7.3.98.g5ad7d
