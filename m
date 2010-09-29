@@ -1,57 +1,69 @@
-From: Bruce Stephens <bruce.stephens@isode.com>
-Subject: Re: Another way to compare tools: is it possible to transfer full
-         history?
-Date: Wed, 29 Sep 2010 15:00:56 +0100
-Message-ID: <80ocbgk5t3.fsf@tiny.isode.net>
-References: <loom.20100928T153519-936@post.gmane.org>
-            <4CA20169.2040606@dbservice.com>
-            <loom.20100929T130008-795@post.gmane.org>
-            <4CA320C3.6090006@op5.se>
-            <loom.20100929T145158-59@post.gmane.org>
-            <4CA33EE3.3090202@op5.se>
-            <loom.20100929T155226-300@post.gmane.org>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 00/18] git notes merge
+Date: Wed, 29 Sep 2010 16:56:28 +0200
+Message-ID: <AANLkTi=gL_6ueBvO7URth-rbbHyZLpwYEAMwErh1ciba@mail.gmail.com>
+References: <1285719811-10871-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tuomo <tuo.tie@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Sep 29 16:07:12 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
+	gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Wed Sep 29 16:56:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0xJQ-0006tT-49
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 16:07:12 +0200
+	id 1P0y5W-0000sl-EE
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 16:56:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751251Ab0I2OHD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 10:07:03 -0400
-Received: from rufus.isode.com ([62.3.217.251]:52246 "EHLO rufus.isode.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750927Ab0I2OHC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 10:07:02 -0400
-X-Greylist: delayed 362 seconds by postgrey-1.27 at vger.kernel.org; Wed, 29 Sep 2010 10:07:02 EDT
-Received: from tiny.isode.net (shiny.isode.com [62.3.217.250]) 
-          by rufus.isode.com (submission channel) via TCP with ESMTPA 
-          id <TKNGmABchrjm@rufus.isode.com>; Wed, 29 Sep 2010 15:00:56 +0100
-Received: by tiny.isode.net (sSMTP sendmail emulation);
-          Wed, 29 Sep 2010 15:00:56 +0100
-X-Hashcash: 1:20:100929:git@vger.kernel.org::1voY52oiFDHqxVWt:00000000000000000000000000000000000000000046el
-X-Hashcash: 1:20:100929:tuo.tie@gmail.com::93BY8/83Z62zpdH0:000000000000000000000000000000000000000000004NWr
-In-Reply-To: <loom.20100929T155226-300@post.gmane.org> (Tuomo's message of
-	"Wed, 29 Sep 2010 13:53:57 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1752623Ab0I2O4v convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 10:56:51 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:44728 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462Ab0I2O4u convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 10:56:50 -0400
+Received: by iwn5 with SMTP id 5so1122593iwn.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 07:56:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MzhmySIfl2I2TrtgRljx+qIVhBZspNVqjHvmwFZzABA=;
+        b=m90TNWRD2KiVQg6ZkZv2Y2ttCP5mUF2wC+HP6EGN7pgMlrBeWPX9rbgiths7f5kzK/
+         dr1ApN05Z1T7endwqbCpWAS+JRsw3fDX+tM6vabciAIKg2qPAPzigcyZj6qzvFhW+Uxc
+         cCTkomkYEBvK27bkAatiwJGUl1QfmLHYckWqE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=dKqjsPlZV3QAHoBjHmDZMcoWhr018EGO643oTQ5Y2/gy1mUkg1UiPhvKXN3WXRqsSm
+         v7sD37wmbz0CmENXDKBWa6q/UbOZCm7hpMLGIbKVVcQNuBkhjCUxN7lmYmfwkjlsYC9Q
+         m9/fkyA7gWLZrf8y9/nvIphHMVZT+XPMHM614=
+Received: by 10.231.30.76 with SMTP id t12mr1844424ibc.161.1285772209142; Wed,
+ 29 Sep 2010 07:56:49 -0700 (PDT)
+Received: by 10.231.33.138 with HTTP; Wed, 29 Sep 2010 07:56:28 -0700 (PDT)
+In-Reply-To: <1285719811-10871-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157574>
 
-Tuomo <tuo.tie@gmail.com> writes:
+Heya,
 
-[...]
+On Wed, Sep 29, 2010 at 02:23, Johan Herland <johan@herland.net> wrote:
+> =C2=A0Alternatively, the user can call 'git notes merge --reset' to a=
+bort
+> =C2=A0the notes merge.
 
-> Where has the general discussion moved?
+I'm torn, but I think that since we actually can here, we should call
+it 'git notes merge --abort'. I know that there's no 'git merge
+--abort', but IIRC that's for technical reasons only.
 
-Dunno.  There's a (extremely low-volume) revctrl mailing list with a
-marginally more active IRC channel.  Maybe that's it, or maybe people
-are using blogs?
+--=20
+Cheers,
+
+Sverre Rabbelier
