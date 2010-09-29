@@ -1,129 +1,102 @@
-From: John Clemens <clemej@gmail.com>
-Subject: Re: mirroring and development with three levels of repositories?
-Date: Tue, 28 Sep 2010 21:58:46 -0400
-Message-ID: <AANLkTimg9NKbL033Et9CgKw_KUZ97oDSCy2Wh7mz2p5E@mail.gmail.com>
-References: <AANLkTinFiOA6Grzk16W2D=k8Xt+EgTanrS7iryW2evop@mail.gmail.com>
-	<20100928173710.GA31419@nibiru.local>
-	<AANLkTin2UPUPn5Sr=7dqT5bxFB7a-BYFzJhGV74r6taF@mail.gmail.com>
-	<20100928184116.GA27401@nibiru.local>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [msysGit] Re: Pull request for msysGit patches
+Date: Tue, 28 Sep 2010 22:01:42 -0400
+Message-ID: <4CA29E06.705@sunshineco.com>
+References: <87ocbitd33.fsf@fox.patthoyts.tk> <7vocbhsn03.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: weigelt@metux.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 03:58:58 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 04:02:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0lwf-0007E7-3A
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 03:58:57 +0200
+	id 1P0lzX-0007uc-CS
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 04:01:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752617Ab0I2B6s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Sep 2010 21:58:48 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50005 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751611Ab0I2B6r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Sep 2010 21:58:47 -0400
-Received: by bwz11 with SMTP id 11so228356bwz.19
-        for <git@vger.kernel.org>; Tue, 28 Sep 2010 18:58:46 -0700 (PDT)
+	id S1752957Ab0I2CBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Sep 2010 22:01:50 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:58532 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611Ab0I2CBt (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Sep 2010 22:01:49 -0400
+Received: by gwj17 with SMTP id 17so120931gwj.19
+        for <git@vger.kernel.org>; Tue, 28 Sep 2010 19:01:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=OtQaI00Il7qQnyoiEpywf5AAnl3uoi8oBnO87kOpVog=;
-        b=CVF5py4rBTpemkvC3hkuBi4FqhgRFJJQLLDxRHjFg1x7p2t17QECQlB/ByGsELPjnb
-         7ZcExwycx88YZOL1sArjkHbhP0wcP2X+c0vXuFQEgnyjdNwRttl9CyzyrLFs9c5mT+zT
-         90tO+EedEzm/y5f0/WllLEpu0Z4lcO9dMQG7k=
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=VK5IRBhvhFG4jDszzPy8EbONu0IFZeyeFqjCut5arRU=;
+        b=l9pn4CQZ14NWdBy3SYCVtvYvcV5WDtuQcmL2+J9jnLrEtE9I7L3EoAhSNpXk56SXev
+         c5lAi3B+Vz7gHaBOw+d8mCT4RIw9iDD++jcmupGXGnI6WvpnVUrgm/jErC9HZN+pkWfr
+         L2h/isajTfufhYaBEJShqtav2FUCSV53u3zEU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=TYbscqzMEmnU9EbTIqEQDShZ36OLkvrxe7XIszsUjTpzfOGoB0N6CFNvoBAdtctxEe
-         oQ8jiCB1nVQIy8V3xeYOd1gh8Ltb6M1JPr5TYws/oicA8hpxHbkV41Pak40DLU08Vwro
-         UPyWgfv7nqKseQplXfJv77A5Z7hJg03g6ZYKg=
-Received: by 10.204.55.211 with SMTP id v19mr628222bkg.153.1285725526482; Tue,
- 28 Sep 2010 18:58:46 -0700 (PDT)
-Received: by 10.204.153.10 with HTTP; Tue, 28 Sep 2010 18:58:46 -0700 (PDT)
-In-Reply-To: <20100928184116.GA27401@nibiru.local>
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=h0HAXXOAd2htQyP15RlGBrVEwS1/I/aD/BajW6DlLxiw9MHFNXIMM2li5RV/MxjSf2
+         bqgDgRz0Bu2/CpXTm1oj0FbCnzQqbT3hYPVdk3MJq8cRsA66faGYonVES79nwSwv4HDJ
+         sY1CYKDw6S8aWb8fL1LGeaD1v2IA2KIhH0cko=
+Received: by 10.101.138.8 with SMTP id q8mr954952ann.164.1285725705410;
+        Tue, 28 Sep 2010 19:01:45 -0700 (PDT)
+Received: from [192.168.1.1] (user-12l2cil.cable.mindspring.com [69.81.50.85])
+        by mx.google.com with ESMTPS id c7sm9195435ana.38.2010.09.28.19.01.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 28 Sep 2010 19:01:44 -0700 (PDT)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <7vocbhsn03.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157519>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157520>
 
-Wait.  I just set up some dummy repositories in a working directory
-that mirror what we're trying to do, and it all worked.  I created a
-dummy "upstream" repo with some branches, then a local mirror repo
-with 'git clone --mirror'.  I'm able to check out from the local
-mirror, add "local" branches and push them to the mirror repo, and
-able to then commit to those "local" branches, no problem.
+Hi Junio,
 
-Since it all seems to work locally,  I suspect a problem with our
-webdav git server.  I'll check that out tomorrow.  Thanks for the help
-and sorry for the noise.
+On 9/28/2010 3:10 PM, Junio C Hamano wrote:
+> Pat Thoyts<patthoyts@users.sourceforge.net>  writes:
+>> Junio,
+>> The msysGit tree currently tracks some 50+ patches on top of 'next'. I
+>> have gathered 42 of these that look good to move upstream.
+>
+> A quick and superficial review follows.
+> ----------------------------------------------------------------
+> abspath.c
+>
+> @@ -108,10 +108,15 @@ const char *make_nonrelative_path(const char *path)
+>   		if (strlcpy(buf, path, PATH_MAX)>= PATH_MAX)
+>   			die("Too long path: %.*s", 60, path);
+>   	} else {
+> +		size_t len;
+> +		const char *fmt;
+>   		const char *cwd = get_pwd_cwd();
+>   		if (!cwd)
+>   			die_errno("Cannot determine the current working directory");
+> -		if (snprintf(buf, PATH_MAX, "%s/%s", cwd, path)>= PATH_MAX)
+> +		len = strlen(cwd);
+> +		/* For cwd c:/, return c:/foo rather than URL-like c://foo */
+>
+> For the patch to be regression free, the logic described by this comment
+> requires get_pwd_cmd() to return a string with trailing dir-sep only at
+> slash.  IOW, if you see any non-root path returned with a trailing dir-sep
+> for whatever reason, you are changing the behaviour in that case as well,
+> and that clearly is not "fix at the root level".
+> But if you label this as "avoid duplicated dir-sep", everything flows
+> smoothly ;-).
 
-john.c
+I am the author of this patch. Do I understand correctly that your 
+primary concern is that you find the comment misleading? I consider the code
 
-On Tue, Sep 28, 2010 at 2:41 PM, Enrico Weigelt <weigelt@metux.de> wrot=
-e:
-> * John Clemens <clemej@gmail.com> wrote:
->> > [remote "origin"]
->> > =A0 =A0url =3D ...
->> > =A0 =A0fetch =3D +refs/heads/*:refs/heads/origin/*
->> > =A0 =A0fetch =3D +refs/tags/*:refs/tags/origin/*
->>
->> Hmm.. I do actually see the branches on dev machine. =A0When I clone=
- from our
->> local mirror, everything works fine UNTIL I create a new branch and =
-push it
->> to our local mirror. =A0From that moment on, all new clones fail (mo=
-re precisely,
->> they do download all the blobs, but the refs only point to the newly=
- created
->> branches, and HEAD is messed up.
->>
->> config on the local mirror is this:
->>
->> [remote "origin"]
->> =A0 =A0 =A0 =A0 fetch =3D +refs/*:refs/*
->> =A0 =A0 =A0 =A0 mirror =3D true
->> =A0 =A0 =A0 =A0 url =3D xxx
->
-> Ah, maybe it corrupts refs/HEAD somehow ? What does it point to ?
->
-> Perhaps you better don't fetch the whole refs/* but refs/heads/* and
-> refs/tags/* namespaces separately (as described above).
->
->> On the local mirror, HEAD is:
->> ref: refs/heads/xxx/stable
->
-> Does that ref exist there ?
-> What does it tell on the upstream (big central) repo ?
->
->
-> cu
-> --
-> ---------------------------------------------------------------------=
--
-> =A0Enrico Weigelt, metux IT service -- http://www.metux.de/
->
-> =A0phone: =A0+49 36207 519931 =A0email: weigelt@metux.de
-> =A0mobile: +49 151 27565287 =A0icq: =A0 210169427 =A0 =A0 =A0 =A0 sky=
-pe: nekrad666
-> ---------------------------------------------------------------------=
--
-> =A0Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-> ---------------------------------------------------------------------=
--
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+   fmt = (len > 0 && is_dir_sep(cwd[len-1])) ? "%s%s" : "%s/%s";
 
+sufficiently self-documenting that the comment is superfluous, and would 
+be happy to remove the comment. Would you prefer the patch submitted 
+with the comment removed?
 
-
---=20
-John Clemens <clemej@gmail.com>
+-- ES
