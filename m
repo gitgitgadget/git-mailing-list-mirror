@@ -1,73 +1,71 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: msysGit patches for upstream
-Date: Wed, 29 Sep 2010 16:02:18 -0700
-Message-ID: <7vzkv0kvb9.fsf@alter.siamese.dyndns.org>
-References: <7vocbhsn03.fsf@alter.siamese.dyndns.org>
- <1285798953-15320-1-git-send-email-patthoyts@users.sourceforge.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 10/18] git notes merge: Handle real,
+ non-conflicting notes merges
+Date: Thu, 30 Sep 2010 01:25:29 +0200
+Message-ID: <201009300125.30301.johan@herland.net>
+References: <1285719811-10871-1-git-send-email-johan@herland.net>
+ <1285719811-10871-11-git-send-email-johan@herland.net>
+ <AANLkTingYp89fY9QxzmdJgF587C29cArxyBU--QcBY5G@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Sep 30 01:02:31 2010
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
+	gitster@pobox.com
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 01:25:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P15fS-0000Qy-8q
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 01:02:30 +0200
+	id 1P161q-0006MJ-EJ
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 01:25:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753098Ab0I2XCZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 19:02:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58177 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751680Ab0I2XCY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 19:02:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6C206DA06A;
-	Wed, 29 Sep 2010 19:02:24 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vMEXc40EhnGpabVlfF6NGo1vKcU=; b=Y91Mdq
-	gf27ScFHYPhXpj3LmjJOhqmk+J5xFosOZ1wxi70TzS+e88KnNsIFhL36T4WdvF2d
-	FU5KrSm+Jxz290u1n7vjHmgeSCTNwspsD2INSV3JgKiSCvWo5Vh88OS56AmKVgdg
-	2LCDRI0XwKjVxGLFwoDjLXKi3lEtVxxkGHPF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RfxPZ9SW+e6B9gVtZJ5dDsyBZQvTTy5/
-	pU67gma7BqAvt3wa85x1Hp3HDGFqWNh2zMG5U68Q5fW5KL+sEukayPuVXQRTbwhT
-	1m7hnjSxS7Dy0XzvUhq9/UYhkY4SFrjANJ1J/5lnjCVUW4eggDH5HF2MjNQbO0d+
-	O6aaIUE49aw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 370E6DA069;
-	Wed, 29 Sep 2010 19:02:22 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8A882DA068; Wed, 29 Sep
- 2010 19:02:19 -0400 (EDT)
-In-Reply-To: <1285798953-15320-1-git-send-email-patthoyts@users.sourceforge.net> (Pat
- Thoyts's message of "Wed\, 29 Sep 2010 23\:22\:31 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9E09C360-CC1D-11DF-8CE3-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751832Ab0I2XZd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 19:25:33 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:59348 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751299Ab0I2XZd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 19:25:33 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L9J00E4A7QJAL80@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 30 Sep 2010 01:25:31 +0200 (MEST)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 4368A1798F95_CA3CAEBB	for <git@vger.kernel.org>; Wed,
+ 29 Sep 2010 23:25:31 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 319D41797304_CA3CAEBF	for <git@vger.kernel.org>; Wed,
+ 29 Sep 2010 23:25:31 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0L9J009047QJTU10@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 30 Sep 2010 01:25:31 +0200 (MEST)
+User-Agent: KMail/1.13.5 (Linux/2.6.35-ARCH; KDE/4.5.1; x86_64; ; )
+In-reply-to: <AANLkTingYp89fY9QxzmdJgF587C29cArxyBU--QcBY5G@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157620>
 
-Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+On Wednesday 29 September 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =
+wrote:
+> On Wed, Sep 29, 2010 at 00:23, Johan Herland <johan@herland.net> wrot=
+e:
+> > +       o.commit_msg =3D msg.buf + 7; // skip "notes: " prefix
+>=20
+> Don't use C99 comments.
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> pack-objects.c usage string
->> connect.c use of unchecked git_getpass()
->>
->> Good eyes, but these should not be part of the series but applied to
->> maint.  If possible please send them separately.
->
-> Following up on this comment here are the two patches from msysGit.
+Thanks. Fix will be in the next iteration.
 
-Thanks.
+=2E..Johan
 
-Since you are forwarding the patch to me, I'll add your Sign-off
-(which was in the original series anyway) before applying them.
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
