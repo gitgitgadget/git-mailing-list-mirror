@@ -1,220 +1,115 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v3] gettext: use libcharset when available
-Date: Wed, 29 Sep 2010 13:43:34 +0000
-Message-ID: <1285767814-25857-1-git-send-email-avarab@gmail.com>
-References: <1285767632-24852-1-git-send-email-avarab@gmail.com>
+From: Jon Seymour <jon.seymour@gmail.com>
+Subject: Re: [PATCH 1/2] stash drops the stash even if creating the branch
+ fails because it already exists
+Date: Wed, 29 Sep 2010 23:53:32 +1000
+Message-ID: <AANLkTim4f75meriCZpvi58WspVTf0LEVQSYh2dxppYB9@mail.gmail.com>
+References: <1285673120-43354-1-git-send-email-tom@dbservice.com>
+	<1285679992-7638-2-git-send-email-jon.seymour@gmail.com>
+	<4CA1EBF3.7090701@dbservice.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Sep 29 15:44:33 2010
+Cc: git@vger.kernel.org, tla@land.ru, gitster@pobox.com
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 15:53:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0wxU-0005vh-OO
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 15:44:33 +0200
+	id 1P0x6K-00010m-E7
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 15:53:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756350Ab0I2Nnp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 09:43:45 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:62919 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756201Ab0I2Nno (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 09:43:44 -0400
-Received: by wwb39 with SMTP id 39so48653wwb.1
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 06:43:43 -0700 (PDT)
+	id S1752642Ab0I2Nxf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Sep 2010 09:53:35 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:33438 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751019Ab0I2Nxe convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Sep 2010 09:53:34 -0400
+Received: by qwh6 with SMTP id 6so538899qwh.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 06:53:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=ANAi1JH4x/zNAvghXEW+/S206NW0jR919aZhbTymn80=;
-        b=ImVM87jxr/7VUhs/qlxzoYYQyJYD8Kmj5y7m7ERUMO6MTGr4dg3b57LqEbmdzjEfUH
-         dGgncnS1Lo/NBycVPyspOshZSp2jULgs/8uvfxQVOMYaIwaTa+/4bWDF6T7MmmcoCvj3
-         tBfldE4bP/j8c35XqX87clJuVbEhv7/npe2mE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yMbFISj9E85V+i2enkAAfqahJxaTRgpmzrFjTFEcD1c=;
+        b=sDFvQfgZvvJYUXID+dH8TU39h0g/5TJNe8nStBBKLIBq5/cuoVhBggt6ynt5axXO+v
+         XlmFsPJQMWsjnMqRJersXjkDJBND0fnj33CSR++H8drNd0bfTj2fMRqOFmD7cXD3htRB
+         eMJXw/1H1syS8ccKaDRgPL26M8dgC6BW5v6qk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=F8sBINDytC4IIPMjSa/GeZiZK4fYSslXfSnbkGuKVPYLo3Zlh3Z1Ltmiwq3cOJrQt4
-         RLdQGB0+kh+YSi37z8pY9oQxZ/JKB8HpxXHb8uhPtMf0Kqym3ZPPt62+k1pZjkrVoR8o
-         TfYPhVAA8egNfifccqzUm0b2dELTUcoDckbWM=
-Received: by 10.227.145.66 with SMTP id c2mr1565987wbv.42.1285767822976;
-        Wed, 29 Sep 2010 06:43:42 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id fz1sm7172437wbb.0.2010.09.29.06.43.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 29 Sep 2010 06:43:41 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.159.g610493
-In-Reply-To: <1285767632-24852-1-git-send-email-avarab@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=B4eieJI64CzH8iTETzRC82tRu0aqJgKuFy/hP0jC6ywOQcP68q1CzUkzVptT1r8PLO
+         C0ynA5cdiubWZAmuWj+yRqgd8PKvryuJInVk+OXN6jYdyArXVltpJxJf4MpE9thUv/20
+         HCOIQ8/875Q4TS0JrJsNvFJmPC+6pxraKaAcE=
+Received: by 10.224.128.13 with SMTP id i13mr1238916qas.151.1285768413659;
+ Wed, 29 Sep 2010 06:53:33 -0700 (PDT)
+Received: by 10.229.219.196 with HTTP; Wed, 29 Sep 2010 06:53:32 -0700 (PDT)
+In-Reply-To: <4CA1EBF3.7090701@dbservice.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157570>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157571>
 
-=46rom: Erik Faye-Lund <kusmabite@gmail.com>
+Junio,
 
-Change the git_setup_gettext function to use libcharset to query the
-character set of the current locale if it's available. I.e. use it
-instead of nl_langinfo if HAVE_LIBCHARSET_H is set.
+Let me know if you want me to re-roll this series with Tomas'
+sign-off. I can also add my simplification of the Brian's fix and
+another fix I have made to have git stash save/create fail early in
+case the index contains merge conflicts.
 
-The GNU gettext manual recommends using langinfo.h's
-nl_langinfo(CODESET) to acquire the current character set, but on
-systems that have libcharset.h's locale_charset() using the latter is
-either saner, or the only option on those systems.
+jon.
 
-GNU and Solaris have a nl_langinfo(CODESET), FreeBSD can use either,
-but MinGW and some others need to use libcharset.h's locale_charset()
-instead.
-
-Since locale_charset returns a const char* instead of char* as
-nl_langinfo does the type of the variable we're using to store the
-charset in git_setup_gettext has been changed.
-
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+On Tue, Sep 28, 2010 at 11:21 PM, Tomas Carnecky <tom@dbservice.com> wr=
+ote:
+> On 9/28/10 3:19 PM, Jon Seymour wrote:
+>> From: Tomas Carnecky <tom@dbservice.com>
+>>
+>> This bug was disovered by someone on IRC when he tried to 'git stash=
+ branch <branch> <stash>'
+>> while <branch> already existed. In that case the stash is dropped ev=
+en though it isn't
+>> applied on any branch, so the stash is effectively lost. I think tha=
+t shouldn't happen,
+>> so here is a test.
 >
----
-
-On Wed, Sep 29, 2010 at 13:40, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <=
-avarab@gmail.com> wrote:
-> From: Erik Faye-Lund <kusmabite@gmail.com>
-> On Wed, Sep 29, 2010 at 13:34, Erik Faye-Lund <kusmabite@gmail.com> w=
-rote:
->> Very minor nit: It's officially spelled MinGW, with an upper-case G.
+> This line was missing from my original patch, sorry about that:
+> Signed-off-by: Tomas Carnecky <tom@dbservice.com>
 >
-> Did s/MingW/MinGW/ in the content & message in this v2.
-
-Discard that one, I accidentally changed some unrelated mention of
-MingW to MinGW.
-
- Makefile      |   17 +++++++++++++++++
- config.mak.in |    1 +
- configure.ac  |    6 ++++++
- gettext.c     |   10 +++++++++-
- 4 files changed, 33 insertions(+), 1 deletions(-)
-
-diff --git a/Makefile b/Makefile
-index 680e578..49a3386 100644
---- a/Makefile
-+++ b/Makefile
-@@ -43,6 +43,12 @@ all::
- # on platforms where we don't expect glibc (Linux, Hurd,
- # GNU/kFreeBSD), which includes libintl.
- #
-+# Define HAVE_LIBCHARSET_H if you haven't set NO_GETTEXT and you can't
-+# trust the langinfo.h's nl_langinfo(CODESET) function to return the
-+# current character set. GNU and Solaris have a nl_langinfo(CODESET),
-+# FreeBSD can use either, but MinGW and some others need to use
-+# libcharset.h's locale_charset() instead.
-+#
- # Define GNU_GETTEXT if you're using the GNU implementation of
- # libintl. We define this everywhere except on Solaris, which has its
- # own gettext implementation. If GNU_GETTEXT is set we'll use GNU
-@@ -792,6 +798,10 @@ ifndef NO_GETTEXT
- 	# Systems that don't use GNU gettext are the exception. Only
- 	# Solaris has a mature non-GNU gettext implementation.
- 	GNU_GETTEXT =3D YesPlease
-+
-+	# Since we assume a GNU gettext by default we also assume a
-+	# GNU-like langinfo.h by default
-+	HAVE_LIBCHARSET_H =3D
- endif
-=20
- # We choose to avoid "if .. else if .. else .. endif endif"
-@@ -1180,6 +1190,9 @@ ifneq (,$(wildcard ../THIS_IS_MSYSGIT))
- 	EXTLIBS +=3D /mingw/lib/libz.a
- 	NO_R_TO_GCC_LINKER =3D YesPlease
- 	INTERNAL_QSORT =3D YesPlease
-+ifndef NO_GETTEXT
-+	HAVE_LIBCHARSET_H =3D YesPlease
-+endif
- else
- 	NO_CURL =3D YesPlease
- endif
-@@ -1964,6 +1977,10 @@ config.s config.o: EXTRA_CPPFLAGS =3D -DETC_GITC=
-ONFIG=3D'"$(ETC_GITCONFIG_SQ)"'
-=20
- http.s http.o: EXTRA_CPPFLAGS =3D -DGIT_HTTP_USER_AGENT=3D'"git/$(GIT_=
-VERSION)"'
-=20
-+ifdef HAVE_LIBCHARSET_H
-+gettext.s gettext.o: EXTRA_CPPFLAGS =3D -DHAVE_LIBCHARSET_H
-+endif
-+
- ifdef NO_EXPAT
- http-walker.s http-walker.o: EXTRA_CPPFLAGS =3D -DNO_EXPAT
- endif
-diff --git a/config.mak.in b/config.mak.in
-index 9f47aa5..969cbaa 100644
---- a/config.mak.in
-+++ b/config.mak.in
-@@ -34,6 +34,7 @@ NO_CURL=3D@NO_CURL@
- NO_EXPAT=3D@NO_EXPAT@
- NO_LIBGEN_H=3D@NO_LIBGEN_H@
- HAVE_PATHS_H=3D@HAVE_PATHS_H@
-+HAVE_LIBCHARSET_H=3D@HAVE_LIBCHARSET_H@
- NO_GETTEXT=3D@NO_GETTEXT@
- NEEDS_LIBICONV=3D@NEEDS_LIBICONV@
- NEEDS_SOCKET=3D@NEEDS_SOCKET@
-diff --git a/configure.ac b/configure.ac
-index 1821d89..b06bad1 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -810,6 +810,12 @@ AC_CHECK_HEADER([libintl.h],
- [NO_GETTEXT=3DYesPlease])
- AC_SUBST(NO_GETTEXT)
- #
-+# Define HAVE_LIBCHARSET_H if have libcharset.h
-+AC_CHECK_HEADER([libcharset.h],
-+[HAVE_LIBCHARSET_H=3DYesPlease],
-+[HAVE_LIBCHARSET_H=3D])
-+AC_SUBST(HAVE_LIBCHARSET_H)
-+#
- # Define NO_STRCASESTR if you don't have strcasestr.
- GIT_CHECK_FUNC(strcasestr,
- [NO_STRCASESTR=3D],
-diff --git a/gettext.c b/gettext.c
-index 8644098..9bdac56 100644
---- a/gettext.c
-+++ b/gettext.c
-@@ -1,13 +1,17 @@
- #include "exec_cmd.h"
- #include <locale.h>
- #include <libintl.h>
-+#ifdef HAVE_LIBCHARSET_H
-+#include <libcharset.h>
-+#else
- #include <langinfo.h>
-+#endif
- #include <stdlib.h>
-=20
- extern void git_setup_gettext(void) {
- 	char *podir;
- 	char *envdir =3D getenv("GIT_TEXTDOMAINDIR");
--	char *charset;
-+	const char *charset;
-=20
- 	if (envdir) {
- 		(void)bindtextdomain("git", envdir);
-@@ -20,7 +24,11 @@ extern void git_setup_gettext(void) {
-=20
- 	(void)setlocale(LC_MESSAGES, "");
- 	(void)setlocale(LC_CTYPE, "");
-+#ifdef HAVE_LIBCHARSET_H
-+	charset =3D locale_charset();
-+#else
- 	charset =3D nl_langinfo(CODESET);
-+#endif
- 	(void)bind_textdomain_codeset("git", charset);
- 	(void)setlocale(LC_CTYPE, "C");
- 	(void)textdomain("git");
---=20
-1.7.3.159.g610493
+>> ---
+>> =C2=A0t/t3903-stash.sh | =C2=A0 11 +++++++++++
+>> =C2=A01 files changed, 11 insertions(+), 0 deletions(-)
+>>
+>> diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
+>> index 9ed2396..0f6b2e4 100755
+>> --- a/t/t3903-stash.sh
+>> +++ b/t/t3903-stash.sh
+>> @@ -545,4 +545,15 @@ test_expect_success 'invalid ref of the form st=
+ash@{n}, n >=3D N' '
+>> =C2=A0 =C2=A0 =C2=A0 git stash drop
+>> =C2=A0'
+>>
+>> +test_expect_failure 'stash branch should not drop the stash if the =
+branch exists' '
+>> + =C2=A0 =C2=A0 git stash clear &&
+>> + =C2=A0 =C2=A0 echo foo > file &&
+>> + =C2=A0 =C2=A0 git add file &&
+>> + =C2=A0 =C2=A0 git commit -m initial &&
+>> + =C2=A0 =C2=A0 echo bar > file &&
+>> + =C2=A0 =C2=A0 git stash &&
+>> + =C2=A0 =C2=A0 test_must_fail git stash branch master stash@{0} &&
+>> + =C2=A0 =C2=A0 git rev-parse stash@{0} --
+>> +'
+>> +
+>> =C2=A0test_done
+>
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
