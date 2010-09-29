@@ -1,74 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] diff: trivial fix for --output file error message
-Date: Wed, 29 Sep 2010 09:26:23 +0200
-Message-ID: <1285745183-7809-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Sep 29 09:35:40 2010
+From: Sebastien Douche <sdouche@gmail.com>
+Subject: Re: Splitting the mailing list up
+Date: Wed, 29 Sep 2010 09:56:20 +0200
+Message-ID: <AANLkTimes-ds-C1+_tdTW2vCdBR9gC7hTNhsyMoCu+rS@mail.gmail.com>
+References: <20100925230022.6e2fd389.coolzone@it.dk> <4CA1899F.2020509@cadifra.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Rico Secada <coolzone@it.dk>, git@vger.kernel.org
+To: Adrian Buehlmann <adrian@cadifra.com>
+X-From: git-owner@vger.kernel.org Wed Sep 29 09:57:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P0rCV-0005RV-Py
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 09:35:40 +0200
+	id 1P0rXR-0008BL-MM
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Sep 2010 09:57:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752796Ab0I2Hff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 03:35:35 -0400
-Received: from imag.imag.fr ([129.88.30.1]:56986 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750995Ab0I2Hfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 03:35:34 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o8T7QSOZ023620
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 29 Sep 2010 09:26:28 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1P0r3Y-0007rt-Pb; Wed, 29 Sep 2010 09:26:24 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1P0r3Y-00022X-Lc; Wed, 29 Sep 2010 09:26:24 +0200
-X-Mailer: git-send-email 1.7.3.2.g257b5f
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Wed, 29 Sep 2010 09:26:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1752922Ab0I2H5J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 03:57:09 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50921 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750938Ab0I2H5I (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 03:57:08 -0400
+Received: by iwn5 with SMTP id 5so706947iwn.19
+        for <git@vger.kernel.org>; Wed, 29 Sep 2010 00:57:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=jc9avm5yFKncuuPQ43eFXQh5uBNAsDNvdy424z029jw=;
+        b=Q+6ah6r2L5UcoQz8KR/lZjtWZQiCSMJQmYscr1ULFXVMqmOQ/29MzBmZbDI/r1MjZB
+         1EVqxxLuV8ioabQDUPpe7/2Z2XeMJS1RIdJPjO7h2sQcW0qWo4cRXDv52uqnJPexlu9a
+         qpb+QiLl56v+TwzchazCl6YYfrqz8oqHmwsJQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=vOoGdRMNKbcQ3RzUcshU40a8mbKcZtUq5CdmyKjLAgsA762aCZf3qs/paTRSFsqzxz
+         zoR77E80V/kEXu9N0wV5A3GFG8hVl/WaelTcLb6chkC/C+hphwxEWtKgdRIq9hr1IqIi
+         LBZCU9GmYaga3UNier9NszUYzkCMZGKwWgpzU=
+Received: by 10.231.172.75 with SMTP id k11mr1411506ibz.4.1285747027035; Wed,
+ 29 Sep 2010 00:57:07 -0700 (PDT)
+Received: by 10.231.197.143 with HTTP; Wed, 29 Sep 2010 00:56:20 -0700 (PDT)
+In-Reply-To: <4CA1899F.2020509@cadifra.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157542>
 
-Since we use parse_long_opt(), the option argument is either after
---output=... or in the next command-line argument. optarg is the reliable
-way to access it.
+On Tue, Sep 28, 2010 at 08:22, Adrian Buehlmann <adrian@cadifra.com> wrote:
+> I think this would definitely be an improvement for git users. At least
+> splitting up into dev and user, like Mercurial does it too (which I am
+> used to). Not sure about announce though.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
+So, what is the decision? Split or not split?
 
-On my system, it seems --output file works, probably because the
-argument array is stored as "--output\0file", but we should definitely
-not rely on that ...
-
- diff.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/diff.c b/diff.c
-index 276e029..38f5f9c 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3315,7 +3315,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 	else if ((argcount = parse_long_opt("output", av, &optarg))) {
- 		options->file = fopen(optarg, "w");
- 		if (!options->file)
--			die_errno("Could not open '%s'", arg + strlen("--output="));
-+			die_errno("Could not open '%s'", optarg);
- 		options->close_file = 1;
- 		return argcount;
- 	} else
 -- 
-1.7.3.2.g257b5f
+Sebastien Douche <sdouche@gmail.com>
+Twitter: http://bit.ly/afkrK (agile, lean, python, open source)
