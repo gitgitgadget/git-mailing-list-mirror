@@ -1,33 +1,33 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v2 1/3] Add bidirectional_transfer_loop()
-Date: Thu, 30 Sep 2010 14:52:57 +0300
-Message-ID: <1285847579-21954-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [PATCH v2 2/3] git-remote-fd
+Date: Thu, 30 Sep 2010 14:52:58 +0300
+Message-ID: <1285847579-21954-3-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1285847579-21954-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 30 13:48:01 2010
+X-From: git-owner@vger.kernel.org Thu Sep 30 13:48:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1HcE-0003MB-SQ
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 13:47:59 +0200
+	id 1P1HcG-0003MB-6y
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 13:48:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755162Ab0I3Lrv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755269Ab0I3Lry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 07:47:54 -0400
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:41417 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754870Ab0I3Lrv (ORCPT <rfc822;git@vger.kernel.org>);
 	Thu, 30 Sep 2010 07:47:51 -0400
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:51425 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754780Ab0I3Lru (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 07:47:50 -0400
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id B5C9CC83F4
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 14:47:48 +0300 (EEST)
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A04CA8B1A28; Thu, 30 Sep 2010 14:47:48 +0300
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 2B255EF561
+	for <git@vger.kernel.org>; Thu, 30 Sep 2010 14:47:50 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A07AE2EA95C; Thu, 30 Sep 2010 14:47:49 +0300
 Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 9C89141BE2
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 14:47:47 +0300 (EEST)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 0E2302BD4F
+	for <git@vger.kernel.org>; Thu, 30 Sep 2010 14:47:48 +0300 (EEST)
 X-Mailer: git-send-email 1.7.1.rc2.10.g714149
 In-Reply-To: <1285847579-21954-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -35,314 +35,214 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157645>
 
-This helper function copies bidirectional stream of data between
-stdin/stdout and specified file descriptors.
+This remote helper reflects raw smart remote transport stream back to the
+calling program. This is useful for example if some UI wants to handle
+ssh itself and not use hacks via GIT_SSH.
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- compat/mingw.h     |    5 +
- transport-helper.c |  254 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- transport.h        |    1 +
- 3 files changed, 260 insertions(+), 0 deletions(-)
+ Documentation/git-remote-fd.txt |   57 +++++++++++++++++++++++++
+ Makefile                        |    1 +
+ builtin.h                       |    1 +
+ builtin/remote-fd.c             |   88 +++++++++++++++++++++++++++++++++++++++
+ git.c                           |    1 +
+ 5 files changed, 148 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-remote-fd.txt
+ create mode 100644 builtin/remote-fd.c
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 3b2477b..f27a7b6 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -23,6 +23,9 @@ typedef int pid_t;
- #define WEXITSTATUS(x) ((x) & 0xff)
- #define WTERMSIG(x) SIGTERM
- 
-+#define EWOULDBLOCK EAGAIN
-+#define SHUT_WR SD_SEND
+diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
+new file mode 100644
+index 0000000..12e588a
+--- /dev/null
++++ b/Documentation/git-remote-fd.txt
+@@ -0,0 +1,57 @@
++git-remote-fd(1)
++=================
 +
- #define SIGHUP 1
- #define SIGQUIT 3
- #define SIGKILL 9
-@@ -50,6 +53,8 @@ struct pollfd {
- };
- #define POLLIN 1
- #define POLLHUP 2
-+#define POLLOUT 4
-+#define POLLNVAL 8
++NAME
++----
++git-remote-fd - Reflect smart transport back to caller.
++
++
++SYNOPSIS
++--------
++"fd::<fd>[/<anything>]" or "fd::<infd>,<outfd>[/<anything>]" (as URL)
++
++DESCRIPTION
++-----------
++This command uses specified file descriptors to connect to remote git server.
++
++If just <fd> is specified, <fd> is assumed to be socket that is
++transparently connected to git server program.
++
++If <infd> and <outfd> are specified, <infd> is assumed to be pipe from
++git server program and <outfd> is assumed to be pipe to git server program.
++
++It is assumed that any handshaking procedures have already been completed
++(such as sending service request for git://).
++
++<anything> can be any string. It is ignored. It is meant for provoding
++information to user in form of "URL".
++
++ENVIRONMENT VARIABLES:
++----------------------
++
++$GIT_TRANSLOOP_DEBUG (passed to git)::
++	If set, prints debugging information about various reads/writes.
++
++
++EXAMPLES:
++---------
++"fd::17"::
++	Connect using socket in file descriptor #17.
++
++"fd::17/foo"::
++	Same as above.
++
++"fd::7,8"::
++	Connect using pipes in file descriptors #7 and #8. The incoming
++	pipe is at fd #7 and the outgoing pipe at fd #8.
++
++"fd::7,8/bar"::
++	Same as above.
++
++Documentation
++--------------
++Documentation by Ilari Liusvaara.
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 8a56b9a..7da54d7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -728,6 +728,7 @@ BUILTIN_OBJS += builtin/read-tree.o
+ BUILTIN_OBJS += builtin/receive-pack.o
+ BUILTIN_OBJS += builtin/reflog.o
+ BUILTIN_OBJS += builtin/remote.o
++BUILTIN_OBJS += builtin/remote-fd.o
+ BUILTIN_OBJS += builtin/replace.o
+ BUILTIN_OBJS += builtin/rerere.o
+ BUILTIN_OBJS += builtin/reset.o
+diff --git a/builtin.h b/builtin.h
+index f2a25a0..748cc13 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -140,5 +140,6 @@ extern int cmd_verify_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_show_ref(int argc, const char **argv, const char *prefix);
+ extern int cmd_pack_refs(int argc, const char **argv, const char *prefix);
+ extern int cmd_replace(int argc, const char **argv, const char *prefix);
++extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+ 
  #endif
- 
- typedef void (__cdecl *sig_handler_t)(int);
-diff --git a/transport-helper.c b/transport-helper.c
-index acfc88e..1ebcebc 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -862,3 +862,257 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->smart_options = &(data->transport_options);
- 	return 0;
- }
+diff --git a/builtin/remote-fd.c b/builtin/remote-fd.c
+new file mode 100644
+index 0000000..08ff522
+--- /dev/null
++++ b/builtin/remote-fd.c
+@@ -0,0 +1,88 @@
++#include "git-compat-util.h"
++#include "transport.h"
++#include <errno.h>
++#include <stdlib.h>
++#include <string.h>
++#include <stdio.h>
++#include <unistd.h>
 +
 +
-+#define BUFFERSIZE 4096
-+#define PBUFFERSIZE 8192
++/*
++ * URL syntax:
++ *	'fd::<inoutfd>[/<anything>]'		Read/write socket pair
++ *						<inoutfd>.
++ *	'fd::<infd>,<outfd>[/<anything>]'	Read pipe <infd> and write
++ *						pipe <outfd>.
++ *	[foo] indicates 'foo' is optional. <anything> is any string.
++ *
++ * The data output to <outfd>/<inoutfd> should be passed unmolested to
++ * git-receive-pack/git-upload-pack/git-upload-archive and output of
++ * git-receive-pack/git-upload-pack/git-upload-archive should be passed
++ * unmolested to <infd>/<inoutfd>.
++ *
++ */
 +
-+/* Print bidirectional transfer loop debug message. */
-+static void transfer_debug(const char *fmt, ...)
++int input_fd = -1;
++int output_fd = -1;
++
++#define MAXCOMMAND 4096
++
++static int command_loop()
 +{
-+	va_list args;
-+	char msgbuf[PBUFFERSIZE];
-+	static int debug_enabled = -1;
-+
-+	if (debug_enabled < 0)
-+		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
-+	if (!debug_enabled)
-+		return;
-+
-+	sprintf(msgbuf, "Transfer loop debugging: ");
-+	va_start(args, fmt);
-+	vsprintf(msgbuf + strlen(msgbuf), fmt, args);
-+	va_end(args);
-+	fprintf(stderr, "%s\n", msgbuf);
-+}
-+
-+/* Load the parameters into poll structure. Return number of entries loaded */
-+static int load_poll_params(struct pollfd *polls, size_t inbufuse,
-+	size_t outbufuse, int in_hup, int out_hup, int in_closed,
-+	int out_closed, int socket_mode, int input_fd, int output_fd)
-+{
-+	int stdin_index = -1;
-+	int stdout_index = -1;
-+	int input_index = -1;
-+	int output_index = -1;
-+	int nextindex = 0;
-+	int i;
-+
-+	/*
-+	 * Inputs can't be waited at all if buffer is full since we can't
-+	 * do read on 0 bytes as it could do strange things.
-+	 */
-+	if (!in_hup && inbufuse < BUFFERSIZE) {
-+		stdin_index = nextindex++;
-+		polls[stdin_index].fd = 0;
-+		transfer_debug("Adding stdin to fds to wait for");
-+	}
-+	if (!out_hup && outbufuse < BUFFERSIZE) {
-+		input_index = nextindex++;
-+		polls[input_index].fd = input_fd;
-+		transfer_debug("Adding remote input to fds to wait for");
-+	}
-+	if (!out_closed && outbufuse > 0) {
-+		stdout_index = nextindex++;
-+		polls[stdout_index].fd = 1;
-+		transfer_debug("Adding stdout to fds to wait for");
-+	}
-+	if (!in_closed && inbufuse > 0) {
-+		if (socket_mode && input_index >= 0)
-+			output_index = input_index;
-+		else {
-+			output_index = nextindex++;
-+			polls[output_index].fd = output_fd;
-+		}
-+		transfer_debug("Adding remote output to fds to wait for");
-+	}
-+
-+	for (i = 0; i < nextindex; i++)
-+		polls[i].events = polls[i].revents = 0;
-+
-+	if (stdin_index >= 0) {
-+		polls[stdin_index].events |= POLLIN;
-+		transfer_debug("Waiting for stdin to become readable");
-+	}
-+	if (input_index >= 0) {
-+		polls[input_index].events |= POLLIN;
-+		transfer_debug("Waiting for remote input to become readable");
-+	}
-+	if (stdout_index >= 0) {
-+		polls[stdout_index].events |= POLLOUT;
-+		transfer_debug("Waiting for stdout to become writable");
-+	}
-+	if (output_index >= 0) {
-+		polls[output_index].events |= POLLOUT;
-+		transfer_debug("Waiting for remote output to become writable");
-+	}
-+
-+	/* Return number of indexes assigned. */
-+	return nextindex;
-+}
-+
-+static int transfer_handle_events(struct pollfd* polls, char *in_buffer,
-+	char *out_buffer, size_t *in_buffer_use, size_t *out_buffer_use,
-+	int *in_hup, int *out_hup, int *in_closed, int *out_closed,
-+	int socket_mode, int poll_count, int input, int output)
-+{
-+	int i, r;
-+	for(i = 0; i < poll_count; i++) {
-+		/* Handle stdin. */
-+		if (polls[i].fd == 0 && polls[i].revents & (POLLIN | POLLHUP)) {
-+			transfer_debug("stdin is readable");
-+			r = read(0, in_buffer + *in_buffer_use, BUFFERSIZE -
-+				*in_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("read(git) failed");
-+				return 1;
-+			} else if (r == 0) {
-+				transfer_debug("stdin EOF");
-+				*in_hup = 1;
-+				if (!*in_buffer_use) {
-+					if (socket_mode)
-+						shutdown(output, SHUT_WR);
-+					else
-+						close(output);
-+					*in_closed = 1;
-+					transfer_debug("Closed remote output");
-+				} else
-+					transfer_debug("Delaying remote output close because input buffer has data");
-+			} else if (r > 0) {
-+				*in_buffer_use += r;
-+				transfer_debug("Read %i bytes from stdin (buffer now at %i)", r, (int)*in_buffer_use);
-+			}
-+		}
-+
-+		/* Handle remote end input. */
-+		if (polls[i].fd == input &&
-+			polls[i].revents & (POLLIN | POLLHUP)) {
-+			transfer_debug("remote input is readable");
-+			r = read(input, out_buffer + *out_buffer_use,
-+				BUFFERSIZE - *out_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("read(connection) failed");
-+				return 1;
-+			} else if (r == 0) {
-+				transfer_debug("remote input EOF");
-+				*out_hup = 1;
-+				if (!*out_buffer_use) {
-+					close(1);
-+					*out_closed = 1;
-+					transfer_debug("Closed stdout");
-+				} else
-+					transfer_debug("Delaying stdout close because output buffer has data");
-+
-+			} else if (r > 0) {
-+				*out_buffer_use += r;
-+				transfer_debug("Read %i bytes from remote input (buffer now at %i)", r, (int)*out_buffer_use);
-+			}
-+		}
-+
-+		/* Handle stdout. */
-+		if (polls[i].fd == 1 && polls[i].revents & POLLNVAL) {
-+			error("Write pipe to Git unexpectedly closed.");
-+			return 1;
-+		}
-+		if (polls[i].fd == 1 && polls[i].revents & POLLOUT) {
-+			transfer_debug("stdout is writable");
-+			r = write(1, out_buffer, *out_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("write(git) failed");
-+				return 1;
-+			} else if (r > 0){
-+				*out_buffer_use -= r;
-+				transfer_debug("Wrote %i bytes to stdout (buffer now at %i)", r, (int)*out_buffer_use);
-+				if (*out_buffer_use > 0)
-+					memmove(out_buffer, out_buffer + r,
-+						*out_buffer_use);
-+				if (*out_hup && !*out_buffer_use) {
-+					close(1);
-+					*out_closed = 1;
-+					transfer_debug("Closed stdout");
-+				}
-+			}
-+		}
-+
-+		/* Handle remote end output. */
-+		if (polls[i].fd == output && polls[i].revents & POLLNVAL) {
-+			error("Write pipe to remote end unexpectedly closed.");
-+			return 1;
-+		}
-+		if (polls[i].fd == output && polls[i].revents & POLLOUT) {
-+			transfer_debug("remote output is writable");
-+			r = write(output, in_buffer, *in_buffer_use);
-+			if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+				errno != EINTR) {
-+				perror("write(connection) failed");
-+				return 1;
-+			} else if (r > 0) {
-+				*in_buffer_use -= r;
-+				transfer_debug("Wrote %i bytes to remote output (buffer now at %i)", r, (int)*in_buffer_use);
-+				if (*in_buffer_use > 0)
-+					memmove(in_buffer, in_buffer + r,
-+						*in_buffer_use);
-+				if (*in_hup && !*in_buffer_use) {
-+					if (socket_mode)
-+						shutdown(output, SHUT_WR);
-+					else
-+						close(output);
-+					*in_closed = 1;
-+					transfer_debug("Closed remote output");
-+				}
-+			}
-+		}
-+	}
-+	return 0;
-+}
-+
-+/* Copy data from stdin to output and from input to stdout. */
-+int bidirectional_transfer_loop(int input, int output)
-+{
-+	struct pollfd polls[4];
-+	char in_buffer[BUFFERSIZE];
-+	char out_buffer[BUFFERSIZE];
-+	size_t in_buffer_use = 0;
-+	size_t out_buffer_use = 0;
-+	int in_hup = 0;
-+	int out_hup = 0;
-+	int in_closed = 0;
-+	int out_closed = 0;
-+	int socket_mode = 0;
-+	int poll_count = 4;
-+
-+	if (input == output)
-+		socket_mode = 1;
++	char buffer[MAXCOMMAND];
 +
 +	while (1) {
-+		int r;
-+		poll_count = load_poll_params(polls, in_buffer_use,
-+			out_buffer_use, in_hup, out_hup, in_closed, out_closed,
-+			socket_mode, input, output);
-+		if (!poll_count) {
-+			transfer_debug("Transfer done");
-+			break;
-+		}
-+		transfer_debug("Waiting for %i file descriptors", poll_count);
-+		r = poll(polls, poll_count, -1);
-+		if (r < 0) {
-+			if (errno == EWOULDBLOCK || errno == EAGAIN ||
-+				errno == EINTR)
-+				continue;
-+			perror("poll failed");
-+			return 1;
-+		} else if (r == 0)
-+			continue;
++		if (!fgets(buffer, MAXCOMMAND - 1, stdin))
++			exit(0);
++		//Strip end of line characters.
++		while (isspace((unsigned char)buffer[strlen(buffer) - 1]))
++			buffer[strlen(buffer) - 1] = 0;
 +
-+		r = transfer_handle_events(polls, in_buffer, out_buffer,
-+			&in_buffer_use, &out_buffer_use, &in_hup, &out_hup,
-+			&in_closed, &out_closed, socket_mode, poll_count,
-+			input, output);
-+		if (r)
-+			return r;
++		if (!strcmp(buffer, "capabilities")) {
++			printf("*connect\n\n");
++			fflush(stdout);
++		} else if (!strncmp(buffer, "connect ", 8)) {
++			printf("\n");
++			fflush(stdout);
++			return bidirectional_transfer_loop(input_fd,
++				output_fd);
++		} else {
++			fprintf(stderr, "Bad command");
++			return 1;
++		}
 +	}
-+	return 0;
 +}
-diff --git a/transport.h b/transport.h
-index c59d973..e803c0e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -154,6 +154,7 @@ int transport_connect(struct transport *transport, const char *name,
- 
- /* Transport methods defined outside transport.c */
- int transport_helper_init(struct transport *transport, const char *name);
-+int bidirectional_transfer_loop(int input, int output);
- 
- /* common methods used by transport.c and builtin-send-pack.c */
- void transport_verify_remote_names(int nr_heads, const char **heads);
++
++int cmd_remote_fd(int argc, const char **argv, const char *prefix)
++{
++	char* end;
++	unsigned long r;
++
++	if (argc < 3) {
++		fprintf(stderr, "Error: URL missing");
++		exit(1);
++	}
++
++	r = strtoul(argv[2], &end, 10);
++	input_fd = (int)r;
++
++	if ((*end != ',' && *end !='/' && *end) || end == argv[2]) {
++		fprintf(stderr, "Error: Bad URL syntax");
++		exit(1);
++	}
++
++	if (*end == '/' || !*end) {
++		output_fd = input_fd;
++	} else {
++		char* end2;
++		r = strtoul(end + 1, &end2, 10);
++		output_fd = (int)r;
++
++		if ((*end2 !='/' && *end2) || end2 == end + 1) {
++			fprintf(stderr, "Error: Bad URL syntax");
++			exit(1);
++		}
++	}
++
++	return command_loop();
++}
+diff --git a/git.c b/git.c
+index 50a1401..250ecc5 100644
+--- a/git.c
++++ b/git.c
+@@ -374,6 +374,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "receive-pack", cmd_receive_pack },
+ 		{ "reflog", cmd_reflog, RUN_SETUP },
+ 		{ "remote", cmd_remote, RUN_SETUP },
++		{ "remote-fd", cmd_remote_fd, 0 },
+ 		{ "replace", cmd_replace, RUN_SETUP },
+ 		{ "repo-config", cmd_config, RUN_SETUP_GENTLY },
+ 		{ "rerere", cmd_rerere, RUN_SETUP },
 -- 
 1.7.2.3.401.g919b6e
