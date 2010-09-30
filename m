@@ -1,72 +1,74 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC PATCH 3/3] grep: add support for grepping in submodules
-Date: Thu, 30 Sep 2010 09:48:34 -0700
-Message-ID: <4CA4BF62.3030905@gmail.com>
-References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com> <1285792134-26339-4-git-send-email-judge.packham@gmail.com> <4CA3BBD7.3090006@web.de> <4CA3C569.4020309@gmail.com> <4CA4738A.9040503@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Sep 30 18:48:26 2010
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: [PATCH v3 0/3]  git-remote-fd & git-remote-ext
+Date: Thu, 30 Sep 2010 20:06:59 +0300
+Message-ID: <1285866422-23964-1-git-send-email-ilari.liusvaara@elisanet.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 30 19:01:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1MIz-0000F0-L2
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 18:48:25 +0200
+	id 1P1MW2-0006h8-8P
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 19:01:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932231Ab0I3QsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 12:48:18 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:40309 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932227Ab0I3QsR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 12:48:17 -0400
-Received: by pwj5 with SMTP id 5so340857pwj.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 09:48:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=AT+AY1BZjP/x8NbwlwziOb/dPE3R/ZZHYxgdw9Z3cX8=;
-        b=QScOqG4M8kylxL2JU5+PRxnhYJBBzUoTmLXBh8gpx2aSqhOUKc0syGFmo5m5QVkWYg
-         /AI1TN+OAmb0VYjAqcs/+sREkz8+KGCTktI92pkUf8V/CxlbDZLlC6a/tIYq5EhK6ZAn
-         A4ZUsGyV95acojJSqYitl0vA5ntvsSBd9IeYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=tkfAr++9B4Jm77/PsUV+1+YY6ab1pz2V9f2l9VIjAOxHsTVeLdiz5VJpR2W/JYkVYu
-         p7A8i5nyy17wteCEWajazcav+8x/rZb2hAIYuLf+neV+l9ErmisnTom+NkNJlBz6Zd7Z
-         46aiS6fGw9VFgB+AHYOYW4RQZ4CcMJn9U3wu0=
-Received: by 10.114.52.8 with SMTP id z8mr4618331waz.140.1285865296740;
-        Thu, 30 Sep 2010 09:48:16 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id q6sm79430waj.22.2010.09.30.09.48.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 30 Sep 2010 09:48:15 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <4CA4738A.9040503@web.de>
+	id S932256Ab0I3RBv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 13:01:51 -0400
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:45121 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932248Ab0I3RBu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 13:01:50 -0400
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 9503CEBB11
+	for <git@vger.kernel.org>; Thu, 30 Sep 2010 20:01:48 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A01F4E8FC10; Thu, 30 Sep 2010 20:01:48 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 859A62BD46
+	for <git@vger.kernel.org>; Thu, 30 Sep 2010 20:01:47 +0300 (EEST)
+X-Mailer: git-send-email 1.7.1.rc2.10.g714149
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157690>
 
-On 30/09/10 04:24, Jens Lehmann wrote:
-> Am 30.09.2010 01:02, schrieb Chris Packham:
->> Yeah this is the part I was struggling with a little. It would be easy
->> to save argv before any option processing but I wondered if that would
->> be frowned upon as an overhead for non-submodule usages.
-> 
-> Yup, but as you are only copying a pointer array the overhead is very
-> small. And if the code gets much easier that way (as I would expect)
-> that price is well paid.
+This adds two new remote helpers.
 
-With the talk of translating superproject --index into submodule SHA-1,
-re-formatting pathspecs and passing the superproject ref-name. It sounds
-like making a copy of argv is not going to be that useful. If we did
-copy it we'd have to scan it for the things we don't want passed to the
-submodule grep.
+* git-remote-fd, which connects to git service on given file descriptor(s),
+useful for graphical user interfaces that want to use internal ssh client.
+
+* git-remote-ext, which connect to git service using external program. Useful
+for connecting using odd one-off ssh options, to services in abstract
+namespace, using unix domain sockets, using TLS, etc...
+
+Changes from last time:
+* Actually include all needed files (oops)
+* Lots of documentation wording changes and some minor code changes.
+
+Ilari Liusvaara (3):
+  Add bidirectional_transfer_loop()
+  git-remote-fd
+  git-remote-ext
+
+ .gitignore                       |    2 +
+ Documentation/git-remote-ext.txt |  112 ++++++++++++++++
+ Documentation/git-remote-fd.txt  |   57 ++++++++
+ Makefile                         |    2 +
+ builtin.h                        |    2 +
+ builtin/remote-ext.c             |  261 ++++++++++++++++++++++++++++++++++++++
+ builtin/remote-fd.c              |   76 +++++++++++
+ compat/mingw.h                   |    5 +
+ git.c                            |    2 +
+ transport-helper.c               |  254 +++++++++++++++++++++++++++++++++++++
+ transport.h                      |    1 +
+ 11 files changed, 774 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-remote-ext.txt
+ create mode 100644 Documentation/git-remote-fd.txt
+ create mode 100644 builtin/remote-ext.c
+ create mode 100644 builtin/remote-fd.c
+
+-- 
+1.7.3.1.48.g4fe83
