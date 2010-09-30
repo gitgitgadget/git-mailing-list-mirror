@@ -1,98 +1,98 @@
-From: Dennis Huynh <dennis@brainstorm-digital.com>
-Subject: Re: problems installing git docs and gitweb on centos 5.5
-Date: Thu, 30 Sep 2010 18:44:20 -0400
-Message-ID: <4CA512C4.5090003@brainstorm-digital.com>
-References: <4CA3EFE6.2010306@brainstorm-digital.com> <20100930024059.GA2373@burratino> <4CA41FCC.8050704@kernel.org> <4CA49D39.1020403@brainstorm-digital.com> <4CA510AA.2010908@kernel.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Pull request for msysGit patches
+Date: Thu, 30 Sep 2010 22:52:23 +0000
+Message-ID: <AANLkTino48m1s7Zj5FrPuFqsmDR27isTd3o4w=WuRBqK@mail.gmail.com>
+References: <87ocbitd33.fsf@fox.patthoyts.tk>
+	<7vocbhsn03.fsf@alter.siamese.dyndns.org>
+	<AANLkTinpSwuhT1_wtqNBeXLCud-F0bLBUgbohdtPp+8R@mail.gmail.com>
+	<8739sqj2tt.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: "J.H." <warthog9@kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 01 00:44:32 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	bert Dvornik <dvornik+git@gmail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Oct 01 00:52:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1Rra-0001i7-Gd
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 00:44:30 +0200
+	id 1P1RzK-0003zQ-B0
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 00:52:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932192Ab0I3WoW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 18:44:22 -0400
-Received: from omr7.networksolutionsemail.com ([205.178.146.57]:47033 "EHLO
-	omr7.networksolutionsemail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756936Ab0I3WoV (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 18:44:21 -0400
-Received: from cm-omr8 (mail.networksolutionsemail.com [205.178.149.5] (may be forged))
-	by omr7.networksolutionsemail.com (8.13.6/8.13.6) with ESMTP id o8UMiKZM001335
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 18:44:20 -0400
-Authentication-Results: cm-omr8 smtp.user=dennis@brainstorm-digital.com; auth=pass (CRAM-MD5)
-X-Authenticated-UID: dennis@brainstorm-digital.com
-Received: from [38.117.157.152] ([38.117.157.152:11722] helo=[192.168.1.119])
-	by cm-omr8 (envelope-from <dennis@brainstorm-digital.com>)
-	(ecelerity 2.2.2.41 r(31179/31189)) with ESMTPA
-	id F9/58-22505-4C215AC4; Thu, 30 Sep 2010 18:44:20 -0400
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.1.5) Gecko/20091204 Thunderbird/3.0
-In-Reply-To: <4CA510AA.2010908@kernel.org>
+	id S932451Ab0I3WwY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 18:52:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:62010 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932296Ab0I3WwX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 18:52:23 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 5so2997292iwn.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 15:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PJi6RhRyUhN3uD28jrHaaM8RGWOH15xbeIJ7qx7OdmQ=;
+        b=ZN521uqdCkBHgf3cfr7Vz8/vPkmJU5a2Pt8q9Lb11dKmy+Q+cIZ08GljOHHhm9i183
+         L/BuETFlSrmyqpoDr+HpgMzWtNOBS7jMN+Cr4gXOKrgVv95ZZQQpxzOyMj20+BAKhTho
+         RZFOFCurzQZvnS/CdgaI6vR6o1vXBDn+ADCW0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=E5OBpMmwoW5bJp3/OB2qSYF/WAFs57h2qXylmau5QiLdNCnQIIMk9aUEKsWQIUy/AC
+         +qw0XQ1ECH1aGmbEO6ygW1E9t2hx/6ZBWbIGhpyN9nOVwqSjPF76zLv8t9uDaL2xmtX9
+         NX+hLDsYZ01yHqDUZ3kyd7y2RuTHGXZZ+P7Hk=
+Received: by 10.231.15.138 with SMTP id k10mr4581715iba.17.1285887143062; Thu,
+ 30 Sep 2010 15:52:23 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 15:52:23 -0700 (PDT)
+In-Reply-To: <8739sqj2tt.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157720>
 
-Its fine.  I'm going with the EPEL repo to start and learn from. If this 
-can be upgraded in the near future that would be dandy.  If not, I 
-should have a handle on maintaining a repository by then and be able to 
-build the latest and greatest myself.  Because of my inexperience with 
-maintaining this type of technology, I didn't realize the projectroot 
-was not consistent throughout the documentation.  Had I known, I 
-would've had an easier time, but doubt I'd have a working server up by 
-now.  Not that I have a working server up right now, but I'm getting 
-closer than I was yesterday.  If I have any questions I will be sure to 
-ask and when I understand more, hopefully I'll be able to contribute 
-better documentation myself as to where the original led me astray.  
-Thanks again for following up.  I'm sure you'll hear from me again if 
-you don't mind.
+On Thu, Sep 30, 2010 at 22:15, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>
+>>On Tue, Sep 28, 2010 at 19:10, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>>
+>>> git-send-email.perl
+>>>
+>>> Similar comment as is_absolute_path(), although in Perl environment=
+ I
+>>> suspect we can just use an existing package without adding our own.
+>>
+>>It seems to me that the code added by Erik Faye-Lund in
+>>33b2e81f84875bf515b4c0de830eeddfd04227dc and this new code in
+>>"send-email: handle Windows paths for display just like we do for
+>>processing" by bert could both be replaced by:
+>>
+>> =C2=A0 =C2=A0use File::Spec::Functions qw(file_name_is_absolute);
+>> =C2=A0 =C2=A0file_name_is_absolute($some_path);
+>>
+>>And by doing so we'd also be compatible with e.g. VMS. Can the people
+>>with the odd non-Unix systems maybe try this out and see if it works?
+>>:)
+>
+> I just looked into using this function with msysGit. Unfortunately it
+> doesn't work as our perl is msys-compiled and doesn't recognise c:\ a=
+s
+> an absolute path. It's using the unix path functions.
+> Possibly we could use a native perl if the git perl functions were
+> making more use of these platform-abstracting functions. Ultimately t=
+his
+> is the right way to go.
 
-
-On 9/30/10 6:35 PM, J.H. wrote:
-> On 09/30/2010 07:22 AM, Dennis Huynh wrote:
->    
->> Alright, I'm going with the Fedora EPEL repositories.  But last I
->> checked the latest version available via that method was 1.5.x.  Since
->> this is a server, I preferred to use the latest and greatest so to last
->> in the long run from any major patches or cover any major upgrades, but
->> if that's the version that's preferred, who am I to argue.  One problem
->> I recall in yum'ing the install for git however was the man pages
->> weren't installed either.  I could be wrong however.  I'll keep you guys
->> up to date.  Wish me luck!  Thanks for all your help and the timely
->> responses.
->>      
-> The stuff in EPEL is a bit older, I should have words with whoever is
-> maintaining those to see if we can get those upgraded.  There really
-> isn't any reason those should be lagging that much.
->
-> This is however why I suggested just recompiling the rpms present on
-> kernel.org, which would get you the latest and greatest and not,
-> completely, push you into maintaining the packages on your own.
->
->    
->> Also, is there how-tos you'd suggest I use in setting up the git/gitweb
->> combo with the yum install?  I noticed yum installs files in different
->> locations then the source does.  Thanks again!
->>      
-> They install into different locations though the instructions should be
-> relatively straight forward.
->
-> http://git.kernel.org/?p=git/warthog9/gitweb.git;a=blob;f=gitweb/README;h=ad6a04c464075c31afe3c67222f0bdeabc76f569;hb=HEAD
->
-> is the official documentation, but a quick glance at it shows that it
-> doesn't stay consistent on where the the document root is.  If you have
-> problems give me a holler and I'll throw up how I have it configured at
-> kernel.org on the kernel.org wiki as a reference point for people to a
-> specific installation.
->
-> - John 'Warthog9' Hawley
->
->
->    
+That sounds like something msysGit needs to patch in its Perl
+build. The path functions on Windows account for drive letters, but if
+they're just using the Unix versions on not-quite-Unix that might
+break.
