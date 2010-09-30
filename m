@@ -1,66 +1,66 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: Pull request for msysGit patches
-Date: Thu, 30 Sep 2010 22:52:23 +0000
-Message-ID: <AANLkTino48m1s7Zj5FrPuFqsmDR27isTd3o4w=WuRBqK@mail.gmail.com>
-References: <87ocbitd33.fsf@fox.patthoyts.tk>
-	<7vocbhsn03.fsf@alter.siamese.dyndns.org>
-	<AANLkTinpSwuhT1_wtqNBeXLCud-F0bLBUgbohdtPp+8R@mail.gmail.com>
-	<8739sqj2tt.fsf@fox.patthoyts.tk>
+Date: Fri, 1 Oct 2010 01:27:55 +0200
+Message-ID: <AANLkTik=dR25Z6SbOd7Mn3FE73vUrLTqDcSUN7G2X_48@mail.gmail.com>
+References: <87ocbitd33.fsf@fox.patthoyts.tk> <7vocbhsn03.fsf@alter.siamese.dyndns.org>
+ <AANLkTinpSwuhT1_wtqNBeXLCud-F0bLBUgbohdtPp+8R@mail.gmail.com> <8739sqj2tt.fsf@fox.patthoyts.tk>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	msysgit@googlegroups.com,
 	Erik Faye-Lund <kusmabite@googlemail.com>,
 	bert Dvornik <dvornik+git@gmail.com>
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Oct 01 00:52:33 2010
+X-From: git-owner@vger.kernel.org Fri Oct 01 01:28:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1RzK-0003zQ-B0
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 00:52:30 +0200
+	id 1P1SY3-0004oe-4h
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 01:28:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932451Ab0I3WwY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 18:52:24 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62010 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932296Ab0I3WwX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 18:52:23 -0400
-Received: by mail-iw0-f174.google.com with SMTP id 5so2997292iwn.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 15:52:23 -0700 (PDT)
+	id S1752973Ab0I3X2R convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 19:28:17 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:57277 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751550Ab0I3X2Q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 19:28:16 -0400
+Received: by gwj17 with SMTP id 17so975132gwj.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 16:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PJi6RhRyUhN3uD28jrHaaM8RGWOH15xbeIJ7qx7OdmQ=;
-        b=ZN521uqdCkBHgf3cfr7Vz8/vPkmJU5a2Pt8q9Lb11dKmy+Q+cIZ08GljOHHhm9i183
-         L/BuETFlSrmyqpoDr+HpgMzWtNOBS7jMN+Cr4gXOKrgVv95ZZQQpxzOyMj20+BAKhTho
-         RZFOFCurzQZvnS/CdgaI6vR6o1vXBDn+ADCW0=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=yxBRReX4zzni1EgZK1PKizbbjo+X5mvHSP+n02aS0D4=;
+        b=ue9UvccC6OrKU12ONO+Krb87zfV0Ote9eq74tdrCRmtS9vSZX+SjYokd7ubqWSnS7Z
+         QnV+7iz0DHDKG+HI2MgFaj514QMFF845Z/dblSlb9B/wjG38Ow/YcenedGC0v75QCGom
+         SHLm+JME7YGoMpKy7qhwoGiN4fc1PumG0mz58=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E5OBpMmwoW5bJp3/OB2qSYF/WAFs57h2qXylmau5QiLdNCnQIIMk9aUEKsWQIUy/AC
-         +qw0XQ1ECH1aGmbEO6ygW1E9t2hx/6ZBWbIGhpyN9nOVwqSjPF76zLv8t9uDaL2xmtX9
-         NX+hLDsYZ01yHqDUZ3kyd7y2RuTHGXZZ+P7Hk=
-Received: by 10.231.15.138 with SMTP id k10mr4581715iba.17.1285887143062; Thu,
- 30 Sep 2010 15:52:23 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 15:52:23 -0700 (PDT)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=XLWpmsIr71P9DzsSqZ3yiRUM6d9Z0yoq/hFnX8TcAUQLquL82n76yGMpeu3OLcJPhn
+         hicdzj2qMlQGiSY6XnalM341O0c2+LeJM6UFg8dCj2NmWq1guHCF426fgSpsSYSWJwHU
+         mwL6Tzwpb58v0RmK2FNt31siZB6gnk0fyvqbo=
+Received: by 10.220.168.10 with SMTP id s10mr1184653vcy.50.1285889295427; Thu,
+ 30 Sep 2010 16:28:15 -0700 (PDT)
+Received: by 10.220.100.135 with HTTP; Thu, 30 Sep 2010 16:27:55 -0700 (PDT)
 In-Reply-To: <8739sqj2tt.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157721>
 
-On Thu, Sep 30, 2010 at 22:15, Pat Thoyts
+On Fri, Oct 1, 2010 at 12:15 AM, Pat Thoyts
 <patthoyts@users.sourceforge.net> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+> =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 >
 >>On Tue, Sep 28, 2010 at 19:10, Junio C Hamano <gitster@pobox.com> wro=
 te:
@@ -76,8 +76,8 @@ te:
 >>"send-email: handle Windows paths for display just like we do for
 >>processing" by bert could both be replaced by:
 >>
->> =C2=A0 =C2=A0use File::Spec::Functions qw(file_name_is_absolute);
->> =C2=A0 =C2=A0file_name_is_absolute($some_path);
+>> =A0 =A0use File::Spec::Functions qw(file_name_is_absolute);
+>> =A0 =A0file_name_is_absolute($some_path);
 >>
 >>And by doing so we'd also be compatible with e.g. VMS. Can the people
 >>with the odd non-Unix systems maybe try this out and see if it works?
@@ -91,8 +91,8 @@ s
 > making more use of these platform-abstracting functions. Ultimately t=
 his
 > is the right way to go.
+>
 
-That sounds like something msysGit needs to patch in its Perl
-build. The path functions on Windows account for drive letters, but if
-they're just using the Unix versions on not-quite-Unix that might
-break.
+Unfortunately, changing our perl is easier said than done, see issue
+218 in the msysGit issue tracker for some of the nasty details:
+http://code.google.com/p/msysgit/issues/detail?id=3D218
