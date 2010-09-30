@@ -1,215 +1,146 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Advertising the Git User's Survey 2010 - report
-Date: Thu, 30 Sep 2010 12:51:37 +0200
-Message-ID: <201009301251.37878.jnareb@gmail.com>
-References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com> <201009222242.06975.jnareb@gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC PATCH 3/3] grep: add support for grepping in submodules
+Date: Thu, 30 Sep 2010 13:09:57 +0200
+Message-ID: <4CA47005.7030102@web.de>
+References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com> <1285792134-26339-4-git-send-email-judge.packham@gmail.com> <4CA3BBD7.3090006@web.de> <7v4od8ma0j.fsf@alter.siamese.dyndns.org> <4CA3D01B.6060600@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: "=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0?= Bjarmason" 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 12:52:02 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 13:10:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1Gk5-00025f-CB
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 12:52:01 +0200
+	id 1P1H1d-0007qG-3k
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 13:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122Ab0I3Kvy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 06:51:54 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33380 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751856Ab0I3Kvx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 06:51:53 -0400
-Received: by bwz11 with SMTP id 11so1236518bwz.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 03:51:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=i25qoHxARrPod/Z/kr24z9FzFm8OFLEsvG87jFpilCU=;
-        b=Ri3Y6ivJNnQU6CwBy/bu0PTukdYnpCFTjO0ADi6HWaSneM4F81syv8XK8dyetxY9WQ
-         OcRvVBX1QXV7EG4Z7Xj7ySez4sl+ZR5ZBCFsV5ccbFcCmhkqEz6bJrafx8m0OoDp/lfZ
-         GmdYUBxWeahCxS1syMn1ccRA6tddFwGiu/CV8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qQEC44Cl68dqNwWbgx5tDM3W6n8bh5/atzzTlzhY9P/C3btnnd/3u/q7vfiPhq7CkD
-         Ee/cku9Wbgn68hT1XvrZujDt7y64wR/gissmVGfJx+VCnTaHcjeRi8jDq2Z6eMMzBaKT
-         751keR915ubNYkk+DQR5s4Or4XZOi6w7SLpco=
-Received: by 10.204.79.223 with SMTP id q31mr2530857bkk.92.1285843911902;
-        Thu, 30 Sep 2010 03:51:51 -0700 (PDT)
-Received: from [192.168.1.13] (abwo12.neoplus.adsl.tpnet.pl [83.8.238.12])
-        by mx.google.com with ESMTPS id 24sm7643057bkr.19.2010.09.30.03.51.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Sep 2010 03:51:50 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201009222242.06975.jnareb@gmail.com>
-Content-Disposition: inline
+	id S1752102Ab0I3LKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 07:10:01 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:43347 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751684Ab0I3LKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 07:10:01 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 36F78173979F4;
+	Thu, 30 Sep 2010 13:10:00 +0200 (CEST)
+Received: from [93.240.103.152] (helo=[192.168.178.29])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1P1H1U-0007vN-00; Thu, 30 Sep 2010 13:10:00 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <4CA3D01B.6060600@gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18/WXBuho9nbgBpnWgOgSIOFYy5SL52d8XJVM/c
+	pEQD6YFvWFXazI40UtWHAY/lELch0c8jsRSwIF+dpRB/svFbrK
+	130qZBsejcP6hzDQsRrw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157638>
 
-On Wed, 22 Sep 2010, Jakub Nar=C4=99bski wrote:
-> On Wed, 22 Sep 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> > On Mon, Sep 20, 2010 at 13:38, Jakub Narebski <jnareb@gmail.com> wr=
-ote:
-> >=20
-> > > Currenly the survey has more than 5000 responses (in a not whole =
-month)
->=20
-> 6217 responses in 22 days now, see=20
->   https://www.survs.com/results/33Q0OZZE/MV653KSPI2
+Am 30.09.2010 01:47, schrieb Chris Packham:
+> On 29/09/10 15:59, Junio C Hamano wrote:
+>> A few more things to think about.
+>>
+>> 1. What does this mean:
+>>
+>>     $ git grep --recursive -e frotz master next
+>>
+>> It recurses into the submodule commits recorded in 'master' and 'next'
+>> commits in the superproject, right?
+>>
+>> How do the lines output from the above look like?  From the superproject,
+>> we will get lines like these:
+>>
+>>     master:t/README:  test_description='xxx test (option --frotz)
+>>     master:t/README:  and tries to run git-ls-files with option --frotz.'
+>>
+>> What if we have a submodule at git-gui in the superproject, and its README
+>> has string frotz in it?  Should we label the submodule commit we find in
+>> 'master' of superproject as 'master' as well, even if it is not at the tip
+>> of 'master' branch of the submodule?  Or do we get abbreviated hexadecimal
+>> SHA-1 name?  IOW, would we see:
+>>
+>>     master:git-gui/README: git-gui also knows frotz
+>>
+>> or
+>>
+>>     deadbeef:git-gui/README: git-gui also knows frotz
+>>
+>> where "deadbeaf...." is what "git rev-parse master:git-gui" would give us
+>> in the superproject?
+>>
+>> I tend to think the former is preferable, but then most likely you would
+>> need to pass not just submodule-prefix but the original ref name
+>> (i.e. 'master') you started from down to the recursive one.
 
-[...]
-> > This may have to do with advertising however. Have you contacted si=
-tes
-> > like GitHub, Gitorious etc. asking them to advertise it? Is there
-> > maybe a list of people that have been contacted somewhere?
-> >=20
-> > I bet if we could get e.g. GitHub to advertise it in their regular
-> > news distribution system we could raise that number of 5000
-> > respondents significantly.
->=20
-> It is announced both on GitHub Blog and in GitHub announcements, see
->   http://github.com/blog/717-git-user-survey-2010
->   http://img.skitch.com/20100914-q4wuyf6i8f2yt9ef2tnxaifc1a.png
->=20
-> Besides that, it is announced on Git Wiki, on Git Homepage, and also =
-on
-> repo.or.cz, git.kernel.org, GitHub, Gitorious, InDefero, Codaset,
-> Codebase, Unfuddle, Savannah, SourceForge and Beanstalk.  It would be
-> (or is) announced on Bettercodes.org.  I have send request for=20
-> announcement also to Codesion, Assembla, The Chaw, ProjectLocker,
-> CipherHive and GitFarm, but I didn't get any response yet (I might
-> not found and used correct contact information).
->=20
-> I am still sending announcements to other git hosting sites...
+Me too thinks that as you grep from inside the superproject it makes
+more sense to use the ref name used there and not the SHA-1 from the
+submodule.
 
-The Git User's Survey 2010 was announced on the following channels:
+> Passing the ref name is doable. There is a little potential for
+> confusion between who's "master" that actually is (the same confusion is
+> in theory possible with an abbreviated SHA-1). Maybe we should color the
+> submodule ref's differently
 
-1. Mailing lists:
-   * git mailing list
-   * LKML (linux kernel mailing list), as the Linux kernel development
-     was the inspiration for creating Git, and it is major project usin=
-g
-     Git as version control system
-   * =C3=86var forwarded announcement to perl5-porters mailing list
-   * I have also send announcement to (developers') mailing list for
-     various projects using Git.  Many of them are subscribe-only and
-     are awaiting moderation, some  outright refused non-subscribe
-     contributions.  If you plan announcing Git User's Survey 2010
-     in such channel, plese check if it wasn't already sent.
+Hmm, showing somehow that the grep result is from inside a submodule
+could be helpful. But using something like the following line seems a
+bit like overkill, so coloring might be a good alternative:
 
-2. Google Groups:
-   * "Git for Human Beings" and msysGit Google Groups cover git-related
-     mailing list channel
-   * I have also send announcements to GitHub and Gitorious Google Grou=
-ps.
+     master/deadbeef:git-gui/README: git-gui also knows frotz
 
-3. The Git User's Survey 2010 is announced on Git homepage, on Git Wiki=
-,
-   and in the #git IRC channel topic (channel description)
-
-4. Blogs (not counting blogs for Git hosting sites)
-   * gitster's journal (blog of Junio C Hamano)
-     http://gitster.livejournal.com/47343.html
-   * git blog - A git blog looking to be official
-     http://gitlog.wordpress.com/2010/09/01/git-user%E2%80%99s-survey-2=
-010/
-   * and probably other blogs (many thanks to bloggers who posted=20
-     announcements about Git User's Survey 2010)
-   - I asked to have it announced on Perlbuzz, and therefore on Perl bl=
-og
-     planets, and on Newren's blog, and therefore on GNOME planets, but
-     without results
-
-5. Social news sites:
-   * Hacker News (posted by =C3=86var)
-     http://news.ycombinator.com/item?id=3D1652126
-   * Reddit programming (posted by =C3=86var)
-     http://www.reddit.com/r/programming/comments/d835u/git_users_surve=
-y_2010/
-
-6. Git hosting sites and software hosting sites with Git support
-   * Those that replied to my request for announcing the survey,
-     in alphabetical order
-     - A2 Hosting
-     - Beanstalk
-     - BerliOS
-     - Bettercodes
-     - CodaSet
-     - Codebase
-     - GitHub
-     - Gitorious
-     - InDefero
-     - git.kernel.org
-     - repo.or.cz
-     - Savannah
-     - SourceForge
-     - SourceRepo
-     - Unfuddle
-     - XP-Dev
-   * Those that didn't reply, and I don't think they posted announcemen=
-t,
-     in alphabetical order
-     - Assembla
-     - The Chaw (posted on its Google Group, though)
-     - CipherHive
-     - Codesion
-     - GitFarm
-     - ProjectLocker
-     - repositoryhosting.com
-     - SSH Control
-     - Tux Family
-   * Those that I didn't know how to contact,
-     in alphabetical order
-     - Alioth / git.debian.org
-     - debian-hosted
-     - Fedora Hosted
-     - Project Kenai (if it is still active)
-     - USLA-Tracs (not in English)
-
-   If there are Git hosting sites that are missing from the above list,
-   that didn't already announced Git User's Survey 2010 somehow, and yo=
-u
-   know how to contact them, please try.  There are 2 weeks of survey
-   yet.
-
-7. Microblogging platforms: I announced Git User's Survey 2010 on Twitt=
-er
-   and Plurk, but I don't have much of following.  Some of git hosting
-   sites also announced survey via Twitter.
-
-8. Other: I have tried to announce the survey for Debian developers.
-   In previous years this announcement was relayed to debian-devel-anno=
-unce
-   mailing list through http://wiki.debian.org/DeveloperNews wiki page,
-   e.g.:
-     http://lists.debian.org/debian-devel-announce/2009/08/msg00002.htm=
-l
-     http://lists.debian.org/debian-devel-announce/2008/09/msg00003.htm=
-l
-     http://wiki.debian.org/ProjectNews/Issues/2008/11
-
-   But unfortunately not this year.
+But I don't have a strong opinion here.
 
 
-Are there channels that should be utilized missing from the above list?
-How next year Git User's Survey 2011 (if there would be one) should be
-announced?
+>> 2. Now how would this work with pathspecs?
+>>
+>>     $ git grep --recursive -e frotz -- dir/
+>>
+>> This should look for the string in the named directory in the superproject
+>> and if there are submodules in that directory, recurse into them as well,
+>> right?
+>>
+>> What pathspec, if any, will be in effect when we recurse into the
+>> submodule at dir/sub?  Limiting to dir/ feels wrong, no?
+>>
+>> 3. Corollary.
+>>
+>> Is it reasonable to expect that we will look into all shell scripts, both
+>> in the superproject and in submodules, with this:
+>>
+>>     $ git grep --recursive -e frotz -- '*.sh'
+>>
+>> Oops?  What happened to the "we restrict the recursion using pathspec, and
+>> we do not pass down the pathspec" that was suggested in 2.?
+>>
+> 
+> This is a bit of a grey area, I'm not sure what is the sensible thing to do.
+> 
+> Maybe we could pop a directory level per recursion e.g.
+>   user enters 'dir/sub/subsub/*.sh'
+>   first level recursion is passed 'sub/subsub/*.sh'
+>   second level recursion is passed 'subsub/*.sh'
+>   subsequent levels of recursion are passed '*.sh'
+> 
+> But that's not quite what the user thought they asked for (i.e. they
+> will end up with dir/sub/subsub/subsubsub/file.sh).
+> 
+> Or we could alter the behaviour based on whether their original pathspec
+> had an explicit trailing /.
 
-P.S. There are 7598 non-test responses to the survey now, see
-     https://www.survs.com/results/33Q0OZZE/MV653KSPI2
+I think we'll have to manipulate the pathspecs so we properly translate
+their meaning into the context of the submodule. What about this: If
+they point outside the submodule, they must be dropped. If they contain
+directories, the prefix part has to be stripped from the beginning.
+Examples for submodule 'dir/sub':
 
---=20
-Jakub Narebski
-Poland
+  * 'dir/' and 'dir/sub2/' get dropped as they point outside
+  * '*.sh' should just be passed on
+  * 'dir/sub/foo/*.sh' would become 'foo/*.sh'
+  * 'dir/sub/' gets dropped too (as the result of stripping the
+    prefix is '')
+
+That should lead to the expected behavior.
