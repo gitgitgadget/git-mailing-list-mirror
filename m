@@ -1,91 +1,96 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH v2 13/16] send-email: extract_valid_address use qr// regexes
-Date: Thu, 30 Sep 2010 19:03:31 +0000
-Message-ID: <1285873411-14045-1-git-send-email-avarab@gmail.com>
-References: <1285854189-10240-14-git-send-email-avarab@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: git .lock file error
+Date: Thu, 30 Sep 2010 19:13:02 +0000
+Message-ID: <AANLkTik364t7WEHOsZcB7FE4Y2gJQNxkXsRvW5guUWCi@mail.gmail.com>
+References: <AANLkTikjwW8jJ3qGCAM=8F_GBxsz9_KoSW0KDGPKhXGQ@mail.gmail.com>
+	<AANLkTin+MRkYv7vL7eY+mdWG1vTg-E9pVpU4_QujoxdZ@mail.gmail.com>
+	<AANLkTim2sFCx8qZ-6o4tiugX3a-EBN9T8wuCSWXb5L12@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Ryan Anderson <rda@google.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Sep 30 21:03:51 2010
+Cc: git@vger.kernel.org
+To: Nate Parsons <parsons.nate@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 21:13:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1OQ1-00066i-Tk
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 21:03:50 +0200
+	id 1P1OZ4-0001aW-GX
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 21:13:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932348Ab0I3TDm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 15:03:42 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:49800 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932076Ab0I3TDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 15:03:41 -0400
-Received: by wwj40 with SMTP id 40so278198wwj.1
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 12:03:40 -0700 (PDT)
+	id S1754650Ab0I3TNF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 15:13:05 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40872 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752018Ab0I3TND convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 15:13:03 -0400
+Received: by iwn5 with SMTP id 5so2786729iwn.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 12:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=CbZaHAY6W2isDkCa0e0sCZhXsoMViAHhP+cdB5ai50U=;
-        b=HU6PAz05pJWF+jK6UgnZFRbxkAPvhtOReUEFZfitbsb0nfHtOohiAmMshzdFl56C2G
-         DKgTfJFHBy3aGRTVzIEuDRNMd+T7heZV9BVd6OQj8CwOz86/0ct2hh65BH3YCditzdKo
-         n+cHirikwtVOKsQwM02t+rzn4qNoUWzGN6d2E=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=f5RS9aqH21FV2NE3Ro3tzTMH5RBShGCiT9Z0yE3rrrk=;
+        b=Vav+wHNZoqVpSwYN/WKTXpnKE/sT07iM5ld7HQey2RQaQYK3i5MzDH64sISujbYJee
+         OLWbUJAvU7Zzy/RSehEsuAvE8FIB8ycmrmYUJNoW/dNMZldeF8WESFbU6v2ow7J0IGlg
+         RNiagqAdizj+5cO+V/RLQIYk1zbKRRTHq6Z0o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=srHNpsMl9A/BE28gBbV+MyQqL/tPs8WxWtRVUr4XOO7FQyJzsX8FCcWSpKPgaBzmo5
-         7g1DG1lQfavv6Aj1kIh0ANrbvCH3JjPlhkxG+MmzqdsTZrvSikZmyrCrCGx++w/sco8e
-         qT/4SC3RZhXEaBoW3HFzgLQt/eFf7ZPCHXAPg=
-Received: by 10.227.146.149 with SMTP id h21mr3606972wbv.153.1285873420428;
-        Thu, 30 Sep 2010 12:03:40 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id g9sm167114wbh.19.2010.09.30.12.03.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 30 Sep 2010 12:03:39 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.159.g610493
-In-Reply-To: <1285854189-10240-14-git-send-email-avarab@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wlxc1hT4Cxg15Z3ZvgweSiNKxRTsePxKzx+BW7IYTsXR0722Vi61a2a8AXwtiXiV0K
+         TCBr0uDMARx5wqhi0F2eGdeV9m++09eLu7GgyfxHyWaWMxsvybBw4YKm2+/H3aMBIu51
+         8x2Svcqsn+dabj+bT9rrITMHuaEUvvh/AyyI0=
+Received: by 10.231.167.130 with SMTP id q2mr4247797iby.163.1285873982651;
+ Thu, 30 Sep 2010 12:13:02 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 12:13:02 -0700 (PDT)
+In-Reply-To: <AANLkTim2sFCx8qZ-6o4tiugX3a-EBN9T8wuCSWXb5L12@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157703>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157704>
 
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
+On Thu, Sep 30, 2010 at 18:00, Nate Parsons <parsons.nate@gmail.com> wr=
+ote:
+> OK, so this is definitely a win32 issue. I believe that the perl
+> script is simply creating .lock files too fast for Windows to keep up=
+=2E
+> Simply trying again fixes the problem for me.
 
-Here's v2 which omits the confusing /o addition and just uses the more
-correct qr// syntax over qq//.
+Sounds like something that might do with a non-hacky solution, but I
+don't know what that would be.
 
- git-send-email.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> - =C2=A0 =C2=A0 =C2=A0 sysopen(my $fh, $db_lock, O_RDWR | O_CREAT)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0or croak "Couldn't open $d=
+b_lock: $!\n";
+> + =C2=A0 my $fh;
+> + =C2=A0 my $tries=3D10;
+> + =C2=A0 for(; !sysopen($fh, $db_lock, O_RDWR | O_CREAT) && $tries>=3D=
+0; $tries--) { }
+> + =C2=A0 if($tries <=3D 0) { croak "Couldn't open $db_lock: $!\n"; }
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$update_ref eq 'reset' ? _rev_map_reset($f=
+h, $rev, $commit) :
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 _rev_map_set($fh, $rev, $com=
+mit);
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if ($sync) {
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index b87c3f2..30000b9 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -777,8 +777,8 @@ our ($message_id, %mail, $subject, $reply_to, $refe=
-rences, $message,
-=20
- sub extract_valid_address {
- 	my $address =3D shift;
--	my $local_part_regexp =3D '[^<>"\s@]+';
--	my $domain_regexp =3D '[^.<>"\s@]+(?:\.[^.<>"\s@]+)+';
-+	my $local_part_regexp =3D qr/[^<>"\s@]+/;
-+	my $domain_regexp =3D qr/[^.<>"\s@]+(?:\.[^.<>"\s@]+)+/;
-=20
- 	# check for a local address:
- 	return $address if ($address =3D~ /^($local_part_regexp)$/);
---=20
-1.7.3.159.g610493
+=46WIW I think this is more readable, but maybe we want to retry on all
+platforms:
+
+    my $fh;
+    if ($^O eq 'MSWin32' or $^O eq 'cygwin') {
+        # Try 10 times to open our lock file, in case Windows is laggin=
+g
+        for my $try (1..10) {
+            sysopen($fh, $db_lock, O_RDWR | O_CREAT);
+            last if $fh;
+        }
+    } else {
+        sysopen($fh, $db_lock, O_RDWR | O_CREAT);
+    }
+
+    warn "Couldnt open $db_lock: $!\n" unless $fh;'
