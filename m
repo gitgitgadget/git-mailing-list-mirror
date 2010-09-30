@@ -1,64 +1,61 @@
-From: <nolan.ring@emc.com>
-Subject: Svn2git: question about --branches
-Date: Thu, 30 Sep 2010 07:49:02 -0400
-Message-ID: <4E10ACF241081344B9702AA8C6440440C5B15CB469@MX01A.corp.emc.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v2 2/3] git-remote-fd
+Date: Thu, 30 Sep 2010 12:04:31 +0000
+Message-ID: <AANLkTimegoGAV3vVbOVnNLLcMjuPh6dK33siRxNoWRmM@mail.gmail.com>
+References: <1285847579-21954-1-git-send-email-ilari.liusvaara@elisanet.fi>
+	<1285847579-21954-3-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Sep 30 13:50:05 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Sep 30 14:04:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1HeD-0003yM-S4
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 13:50:02 +0200
+	id 1P1HsN-0008Sp-FV
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 14:04:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755287Ab0I3Lts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 07:49:48 -0400
-Received: from mexforward.lss.emc.com ([128.222.32.20]:53171 "EHLO
-	mexforward.lss.emc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754642Ab0I3Ltr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 07:49:47 -0400
-Received: from hop04-l1d11-si01.isus.emc.com (HOP04-L1D11-SI01.isus.emc.com [10.254.111.54])
-	by mexforward.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8UBnkbx010851
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 07:49:46 -0400
-Received: from mailhub.lss.emc.com (mailhub.lss.emc.com [10.254.221.251]) by hop04-l1d11-si01.isus.emc.com (RSA Interceptor) for <git@vger.kernel.org>; Thu, 30 Sep 2010 07:49:37 -0400
-Received: from corpussmtp5.corp.emc.com (corpussmtp5.corp.emc.com [128.221.166.229])
-	by mailhub.lss.emc.com (Switch-3.4.3/Switch-3.4.3) with ESMTP id o8UBn5if015319
-	for <git@vger.kernel.org>; Thu, 30 Sep 2010 07:49:05 -0400
-Received: from mxhub01.corp.emc.com ([10.254.141.103]) by corpussmtp5.corp.emc.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 30 Sep 2010 07:49:04 -0400
-Received: from MX01A.corp.emc.com ([169.254.1.232]) by mxhub01.corp.emc.com
- ([10.254.141.103]) with mapi; Thu, 30 Sep 2010 07:49:04 -0400
-Thread-Topic: Svn2git: question about --branches 
-Thread-Index: ActglXpNieCjN+O/QoSPFn9Cq7Tkbg==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
-X-OriginalArrivalTime: 30 Sep 2010 11:49:04.0609 (UTC) FILETIME=[7B5A2510:01CB6095]
-X-EMM-MHVC: 1
+	id S1753947Ab0I3MEd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 08:04:33 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64391 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750949Ab0I3MEc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 08:04:32 -0400
+Received: by iwn5 with SMTP id 5so2362463iwn.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 05:04:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dPzrucjBnmmNsDbsvt6dDuGuG8bU3AJPzbExms1u8fM=;
+        b=BFQX0pkWH8SA5D3fQObaEU9AUnzEqgU8sHyomexdEcsCcj114svVGWbeYuGHdISAml
+         jVQEakZSCX+LlbYBv6dIiYrJCfXBmPzmu/vnPmS1sbyv1PHtOXFIghDaqL1B4Eqtynbu
+         ejhOYBemnjcQjIymusLp0ycYjjP9SYbMfBopA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gMOGWyXx8fXbUc1bCSYyVZCsVFhCI+IMhPKTfDI1q9qeCIcDI7TuXyEarrdhKAJ5Vw
+         5V98DsO4Z4nS2rx3jByzc06N5uk0UT2luBJIQFov8mH2quEuIKY8cFt2rJOUsgPCUBDr
+         frVpE/Thgq6S31PDPBrLt4fIUg0LGE6NF8jYA=
+Received: by 10.231.187.194 with SMTP id cx2mr2471659ibb.165.1285848271860;
+ Thu, 30 Sep 2010 05:04:31 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 05:04:31 -0700 (PDT)
+In-Reply-To: <1285847579-21954-3-git-send-email-ilari.liusvaara@elisanet.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157647>
 
-Hi,
+On Thu, Sep 30, 2010 at 11:52, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
 
-Our svn directory structure at the top level is:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 //Strip end of lin=
+e characters.
 
-trunk
-branches
-REbranches
-tags
-
-Branches is developer branches; REbranches is release engineering branches.  Is there any way to specify both using --branches?  If not, what's the best way to convert both of them?
-
-Thanks much for your help.
-
-Nolan Ring
+Don't use a C++/C99 comment.
