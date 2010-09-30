@@ -1,101 +1,102 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 00/16] git-send-email cleanups
-Date: Thu, 30 Sep 2010 15:11:43 +0000
-Message-ID: <AANLkTikDFJ8jWnuSc9U3hZCRSA971h5Zc2FfJmNiqTUN@mail.gmail.com>
-References: <1285854189-10240-1-git-send-email-avarab@gmail.com>
-	<18E0A903-D625-4C7A-A575-AC5C5EF448C9@gernhardtsoftware.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [WIP PATCH] revision-walk: --parent option to find children of
+ a parent
+Date: Thu, 30 Sep 2010 17:12:51 +0200
+Message-ID: <4CA4A8F3.3010805@drmicha.warpmail.net>
+References: <99aa4cd5a60b2b2d3eae962acb8a49c2a62a8f77.1285842569.git.git@drmicha.warpmail.net> <20100930143234.GH4850@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Ryan Anderson <rda@google.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 17:16:59 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 17:16:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1KsR-00051l-OJ
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 17:16:56 +0200
+	id 1P1KsT-00051l-Ei
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 17:16:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755493Ab0I3PLp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 11:11:45 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33166 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753927Ab0I3PLo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 11:11:44 -0400
-Received: by iwn5 with SMTP id 5so2550618iwn.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 08:11:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Y+28bH7UgD/l2YYnK94qNDk+OrJWA1ia/uegB8fjhos=;
-        b=jckzoSOSivRZRDdINoywBZ2+9XZkTvqvj1hTK5UhHxNeqzeyfqDKhPLHpvPxFjrvST
-         x8JbJyWPNvt9kP8uznL+Pn8QYecFgixmDYebHCfbOI/a2YsBQ72e9MvFMu6PqI8vyAVC
-         ILsDndSs1/UVybD0YgvYELwBLzMhFXzOTGHe8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VcplG4dEiQoIGSYOgQQwTQUT96/n5wxcEunlUl+M7GQf4WhpSXATBCEuj+gn1+XXWV
-         f1UYfOAppOi8MCe58xBZeNwVA5E9HpJy2vxORAPrFbGsfUgolr+dXlWB7IAqgU8+MtFT
-         T0jKm0eBGB8dyAQ9F6uBPbXSyfySMdv6P4aTs=
-Received: by 10.231.30.193 with SMTP id v1mr3879846ibc.87.1285859503757; Thu,
- 30 Sep 2010 08:11:43 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 08:11:43 -0700 (PDT)
-In-Reply-To: <18E0A903-D625-4C7A-A575-AC5C5EF448C9@gernhardtsoftware.com>
+	id S1756638Ab0I3PMn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 11:12:43 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:45777 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753927Ab0I3PMm (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 11:12:42 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id F29F1AB;
+	Thu, 30 Sep 2010 11:12:41 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 30 Sep 2010 11:12:41 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=K4UbW1nRSdu1L81NS4gncqTQ0mg=; b=XugaJ404rhFhiCGAxdNDz2nmE0tna37uYem/vSFG1VBCPKYjN46YDxm9wBxBRqocAo02DKlmrb0QCPJaH9Dm4/mc4qsjA/iz0LqdCTrirOLK/dn0lM87mD/K5jTKNaIHO3x14JsrKYizCyjVbgZT9rQxljKe7o3gbmWunSQmfrc=
+X-Sasl-enc: cpmMZJ1b9QdbiY1403X+kPR+sWN41MbSkjMQoaJJ6gMo 1285859561
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4FCD25E1AF4;
+	Thu, 30 Sep 2010 11:12:41 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <20100930143234.GH4850@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157679>
 
-On Thu, Sep 30, 2010 at 14:30, Brian Gernhardt
-<brian@gernhardtsoftware.com> wrote:
+Jonathan Nieder venit, vidit, dixit 09/30/2010 04:32 PM:
+> Hi,
+> 
+> Michael J Gruber wrote:
+> 
+>> Introduce a new --parent=<commit> option for the revision walker which
+>> limits the commits to those which have <commit> as one of their parents.
+> 
+> So this lists the direct children for a given commit.  Could you
+> mention a use case?  Why would one want to use this instead of
+> 
+>  the_commit=$(git rev-parse --verify <commit>) &&
+>  git rev-list --parents ... ^<commit> |
+>  grep -F " $the_commit"
 
-> None of these subroutines strictly need the prototype, but it does
-> allow Perl to warn us if we send incorrect arguments. =C2=A0Why remov=
-e
-> them? =C2=A0Are they causing problems somewhere?
+| cut -d' ' -f1 # or such :)
 
-As Jeff pointed out prototypes are troublesome. If you want to be
-warned about too many arguments a better way is:
+> 
+> ?
 
-    sub foo {
-        warn sprintf "You gave me %d arguments", scalar @_ if @_ !=3D 1=
-;
+Full disclosure: I didn't see that it can be scripted that easily,
+simply because the description of "--parents" does not indicate at all
+that it lists the commit along with its parents. I had the impression
+that it outputs the parents only (same goes for --children.) so that
+looping over the rev-list output would be required, which would have
+been much slower.
 
-Or something like that, but there's no reason to do that for these
-subs in particular. There are 32 subroutines in git-send-email.perl,
-these weren't in any way more special than the rest.
+As a use case, it not only tells you whether a specific commit is a fork
+point, it's also a reverse of "rev-parse commit^@", so to say.
 
-They probably had prototypes in the first place because they were
-added by someone who was under the mistaken impression that Perl
-prototypes were remotely similar to C-like prototypes, they're not.
+Personally, this was some exercise with the revision walker before
+approaching something else there.
 
-The purpose of Perl prototypes is to rewrite the *caller* code, so
-that e.g. if you have:
+[It also helps with "Heck, I committed on top of a detached origin/next
+yesterday, how did I tag that commit.", but there are other solutions,
+of course...]
 
-    sub blah ($$) { ... }
+Speaking of that: It helps you "going forward(!)" from a commit that you
+checked out (maybe for inspection). Just imagine trying to understand a
+history by checking out versions iteratively. Say, you want to review
+the last 10 revs, do a "checkout HEAD~10", then a "checkout HEAD~9" and
+notice that's not quite the way to do it... (Again, there are
+alternatives, of course.)
 
-Perl will rewrite this call:
+>> --- a/revision.c
+>> +++ b/revision.c
+>> @@ -1149,6 +1149,7 @@ static int handle_revision_opt(struct rev_info *revs, int argc, const char **arg
+>>  {
+>>  	const char *arg = argv[0];
+>>  	const char *optarg;
+>> +	unsigned char sha1[20];
+> 
+> Could this be given narrower scope?
 
-    blah @foo, @bar;
+Sure! I expected more rough edges (and some resistance) which is why I
+sent a WIP first.
 
-As:
-
-    blah(scalar(@foo), scalar(@bar))
-
-While a blah without prototypes would just be:
-
-    blah(@foo, @bar);
-
-Using prototypes superfluously like this makes it harder to read the
-code, because you end up checking every call site for every subroutine
-call that uses prototypes to see if rewriting the argument list like
-this is producing some unexpected logic error.
+Michael
