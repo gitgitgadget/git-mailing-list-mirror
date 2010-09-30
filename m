@@ -1,83 +1,87 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCHv4 15/15] Replace "unset VAR" with "unset VAR;" in
- testsuite as per t/README
-Date: Thu, 30 Sep 2010 15:51:49 -0600
-Message-ID: <AANLkTimmSLwZaGvM1j7CQtTzd7mJXSiBDHztj4S97rOr@mail.gmail.com>
-References: <1285542879-16381-1-git-send-email-newren@gmail.com>
-	<1285542879-16381-16-git-send-email-newren@gmail.com>
-	<7viq1omiv8.fsf@alter.siamese.dyndns.org>
-	<AANLkTimgTAerCNcSHBR9t-s-ThWHLMXdsb2T=E2w8gpB@mail.gmail.com>
-	<7v39srkyax.fsf@alter.siamese.dyndns.org>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: Pull request for msysGit patches
+Date: Thu, 30 Sep 2010 23:15:10 +0100
+Message-ID: <8739sqj2tt.fsf@fox.patthoyts.tk>
+References: <87ocbitd33.fsf@fox.patthoyts.tk>
+	<7vocbhsn03.fsf@alter.siamese.dyndns.org>
+	<AANLkTinpSwuhT1_wtqNBeXLCud-F0bLBUgbohdtPp+8R@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 23:51:59 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	msysgit@googlegroups.com,
+	Erik Faye-Lund <kusmabite@googlemail.com>,
+	bert Dvornik <dvornik+git@gmail.com>
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 00:15:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1R2i-0002Ow-13
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 23:51:56 +0200
+	id 1P1RPw-0001xq-DQ
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 00:15:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932501Ab0I3Vvv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 17:51:51 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63612 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755505Ab0I3Vvv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 17:51:51 -0400
-Received: by fxm14 with SMTP id 14so271931fxm.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 14:51:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=HyJnwN/pIHF+I5GiOo++omxGtxQLLcpdayhEPY3SGmE=;
-        b=SgD3toHbOMyNfZo52giklWybZQmlhCU7FCRCdBQMyXqOR9iPhFIVJqnmdroBDJUbLk
-         iZNXShA4i0nRVL4uEz6+lMk+W9tbkyQgBRp57k2nABxtiaRBcvMhsO+Qm5nMlUlGW6tq
-         YKZPeqPwbrdNUH+nPBfD2DIFw91z1U8ZfvJpk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bmU7uwZ6JQV2qJRnJR0/oFNh95qZR3jb7NWWkBdvJ2Wls5xRUztbgupctOmn7+UBLD
-         Aa3OknNMUTiKglf+ERlZtU+rVu2k8RBM1BbD8XOoH/2Kce9VEtQFg8UkpCED/nVGGAYn
-         YQ4fRaTUiXxTzv1qevtuLoNgbvQxyrGc7Q8j8=
-Received: by 10.223.124.148 with SMTP id u20mr4534433far.57.1285883509503;
- Thu, 30 Sep 2010 14:51:49 -0700 (PDT)
-Received: by 10.223.126.70 with HTTP; Thu, 30 Sep 2010 14:51:49 -0700 (PDT)
-In-Reply-To: <7v39srkyax.fsf@alter.siamese.dyndns.org>
+	id S1756780Ab0I3WPY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 18:15:24 -0400
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:50519 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756723Ab0I3WPW convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 18:15:22 -0400
+Received: from [172.23.170.142] (helo=anti-virus02-09)
+	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1P1RPL-0002Xt-IU; Thu, 30 Sep 2010 23:15:19 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1P1RPG-0003fT-Ds; Thu, 30 Sep 2010 23:15:14 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 545532C997; Thu, 30 Sep 2010 23:15:13 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <AANLkTinpSwuhT1_wtqNBeXLCud-F0bLBUgbohdtPp+8R@mail.gmail.com>
+	(=?iso-8859-1?Q?=22=C6var_Arnfj=F6r=F0?= Bjarmason"'s message of "Tue, 28
+ Sep 2010 21:23:19
+	+0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157716>
 
-On Thu, Sep 30, 2010 at 10:09 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Elijah Newren <newren@gmail.com> writes:
->
->> They break the && cascades, but aren't the && cascades already
->> inherently broken due to the unportable return value of unset?
->
-> Of course; that is the breakage you are trying to fix, no? =C2=A0My c=
-omment was
-> that I understand you are trying to, but the patch is not actually fi=
-xing
-> it.
->
-> If anything, it is making it worse. Earlier we would have got a false
-> breakage that would make people notice and take a look. With your pat=
-ch
-> applied, we instead would let a breakage in parts earlier than these
-> "unset VAR;" go unnoticed, no?
+=C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
 
-Right.
+>On Tue, Sep 28, 2010 at 19:10, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+>
+>> git-send-email.perl
+>>
+>> Similar comment as is_absolute_path(), although in Perl environment =
+I
+>> suspect we can just use an existing package without adding our own.
+>
+>It seems to me that the code added by Erik Faye-Lund in
+>33b2e81f84875bf515b4c0de830eeddfd04227dc and this new code in
+>"send-email: handle Windows paths for display just like we do for
+>processing" by bert could both be replaced by:
+>
+>    use File::Spec::Functions qw(file_name_is_absolute);
+>    file_name_is_absolute($some_path);
+>
+>And by doing so we'd also be compatible with e.g. VMS. Can the people
+>with the odd non-Unix systems maybe try this out and see if it works?
+>:)
 
-What do you think of the previous suggestions in this thread for a
-portable_unset() function, or for using test_might_fail in front of
-all these unset commands (despite t/README saying that test_might_fail
-is only for running git commands)?
+I just looked into using this function with msysGit. Unfortunately it
+doesn't work as our perl is msys-compiled and doesn't recognise c:\ as
+an absolute path. It's using the unix path functions.
+Possibly we could use a native perl if the git perl functions were
+making more use of these platform-abstracting functions. Ultimately thi=
+s
+is the right way to go.
