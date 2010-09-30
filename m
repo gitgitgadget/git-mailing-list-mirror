@@ -1,64 +1,101 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: [RFC PATCH 3/3] grep: add support for grepping in submodules
-Date: Thu, 30 Sep 2010 17:07:05 +0200
-Message-ID: <4CA4A799.2060302@web.de>
-References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com> <1285792134-26339-4-git-send-email-judge.packham@gmail.com> <4CA3BBD7.3090006@web.de> <7v4od8ma0j.fsf@alter.siamese.dyndns.org> <4CA47478.6030207@viscovery.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH 00/16] git-send-email cleanups
+Date: Thu, 30 Sep 2010 15:11:43 +0000
+Message-ID: <AANLkTikDFJ8jWnuSc9U3hZCRSA971h5Zc2FfJmNiqTUN@mail.gmail.com>
+References: <1285854189-10240-1-git-send-email-avarab@gmail.com>
+	<18E0A903-D625-4C7A-A575-AC5C5EF448C9@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Thu Sep 30 17:08:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Ryan Anderson <rda@google.com>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 17:16:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1Kjr-0001lm-80
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 17:08:03 +0200
+	id 1P1KsR-00051l-OJ
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 17:16:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755438Ab0I3PH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 11:07:57 -0400
-Received: from fmmailgate03.web.de ([217.72.192.234]:39546 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755191Ab0I3PH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 11:07:57 -0400
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate03.web.de (Postfix) with ESMTP id DEA26162F272C;
-	Thu, 30 Sep 2010 17:07:05 +0200 (CEST)
-Received: from [93.240.117.111] (helo=[192.168.178.29])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1P1Kiv-00011A-00; Thu, 30 Sep 2010 17:07:05 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-In-Reply-To: <4CA47478.6030207@viscovery.net>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/BO2yn3/ATo1AqtQtRecBvnk0g79SDRTiJvuZA
-	SOXa/AJJCJcDo8wjTombZwUyefDShMtMjl8eHk3NTB5+mmrZgF
-	jlCiorvd4IDvlp9CLfNw==
+	id S1755493Ab0I3PLp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 11:11:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33166 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753927Ab0I3PLo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 11:11:44 -0400
+Received: by iwn5 with SMTP id 5so2550618iwn.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 08:11:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Y+28bH7UgD/l2YYnK94qNDk+OrJWA1ia/uegB8fjhos=;
+        b=jckzoSOSivRZRDdINoywBZ2+9XZkTvqvj1hTK5UhHxNeqzeyfqDKhPLHpvPxFjrvST
+         x8JbJyWPNvt9kP8uznL+Pn8QYecFgixmDYebHCfbOI/a2YsBQ72e9MvFMu6PqI8vyAVC
+         ILsDndSs1/UVybD0YgvYELwBLzMhFXzOTGHe8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VcplG4dEiQoIGSYOgQQwTQUT96/n5wxcEunlUl+M7GQf4WhpSXATBCEuj+gn1+XXWV
+         f1UYfOAppOi8MCe58xBZeNwVA5E9HpJy2vxORAPrFbGsfUgolr+dXlWB7IAqgU8+MtFT
+         T0jKm0eBGB8dyAQ9F6uBPbXSyfySMdv6P4aTs=
+Received: by 10.231.30.193 with SMTP id v1mr3879846ibc.87.1285859503757; Thu,
+ 30 Sep 2010 08:11:43 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 08:11:43 -0700 (PDT)
+In-Reply-To: <18E0A903-D625-4C7A-A575-AC5C5EF448C9@gernhardtsoftware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157678>
 
-Am 30.09.2010 13:28, schrieb Johannes Sixt:
-> Am 9/30/2010 0:59, schrieb Junio C Hamano:
->> A few more things to think about.
->>
->> 1. What does this mean:
->>
->>     $ git grep --recursive -e frotz master next
->>
->> It recurses into the submodule commits recorded in 'master' and 'next'
->> commits in the superproject, right?
-> 
-> And what does it mean if you add --cached? Does it grep in the index of
-> the submodules, or does it grep in the rev of the submodule that is
-> recorded in the index of the supermodule?
+On Thu, Sep 30, 2010 at 14:30, Brian Gernhardt
+<brian@gernhardtsoftware.com> wrote:
 
-Hmm, as you told grep to use the index of the superproject it should
-use the rev of the submodule that is recorded in the index of the
-superproject. Thus the "--cached" should be removed from and the
-appropriate rev must be added to the arguments of the grep forked in
-the submodule.
+> None of these subroutines strictly need the prototype, but it does
+> allow Perl to warn us if we send incorrect arguments. =C2=A0Why remov=
+e
+> them? =C2=A0Are they causing problems somewhere?
+
+As Jeff pointed out prototypes are troublesome. If you want to be
+warned about too many arguments a better way is:
+
+    sub foo {
+        warn sprintf "You gave me %d arguments", scalar @_ if @_ !=3D 1=
+;
+
+Or something like that, but there's no reason to do that for these
+subs in particular. There are 32 subroutines in git-send-email.perl,
+these weren't in any way more special than the rest.
+
+They probably had prototypes in the first place because they were
+added by someone who was under the mistaken impression that Perl
+prototypes were remotely similar to C-like prototypes, they're not.
+
+The purpose of Perl prototypes is to rewrite the *caller* code, so
+that e.g. if you have:
+
+    sub blah ($$) { ... }
+
+Perl will rewrite this call:
+
+    blah @foo, @bar;
+
+As:
+
+    blah(scalar(@foo), scalar(@bar))
+
+While a blah without prototypes would just be:
+
+    blah(@foo, @bar);
+
+Using prototypes superfluously like this makes it harder to read the
+code, because you end up checking every call site for every subroutine
+call that uses prototypes to see if rewriting the argument list like
+this is producing some unexpected logic error.
