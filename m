@@ -1,73 +1,106 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 15/15] Replace "unset VAR" with "unset VAR;" in
- testsuite as per t/README
-Date: Thu, 30 Sep 2010 09:09:58 -0700
-Message-ID: <7v39srkyax.fsf@alter.siamese.dyndns.org>
-References: <1285542879-16381-1-git-send-email-newren@gmail.com>
- <1285542879-16381-16-git-send-email-newren@gmail.com>
- <7viq1omiv8.fsf@alter.siamese.dyndns.org>
- <AANLkTimgTAerCNcSHBR9t-s-ThWHLMXdsb2T=E2w8gpB@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 13/16] send-email: extract_valid_address use qr//
+ regexes and /o
+Date: Thu, 30 Sep 2010 12:19:12 -0400
+Message-ID: <20100930161912.GA8707@sigill.intra.peff.net>
+References: <1285854189-10240-1-git-send-email-avarab@gmail.com>
+ <1285854189-10240-14-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 18:10:37 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Ryan Anderson <rda@google.com>,
+	Jay Soffian <jaysoffian@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Sep 30 18:19:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1LiP-0000gh-0T
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 18:10:37 +0200
+	id 1P1Lqy-0004UT-M3
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 18:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932182Ab0I3QKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 12:10:08 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61163 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752925Ab0I3QKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 12:10:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BBC3BDAA1E;
-	Thu, 30 Sep 2010 12:10:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NJr5R6qs+qqEAjS6zxek7X2EePo=; b=jy8IB5
-	wJLtmysIfj/+RvrnYAimLLZOOqjDyJXhsJqIXm4ApG29tdujsQABgtJSyVuFPCRo
-	/VKpnV4aN6oa/Tvzzl5twUEriH5EAa3YLQvN9caY9g1d3HWHSHbezYI6wxX8/y0C
-	JvTVM/yDitBc4dVzw6x+OdySXeNfCBTBbkWUg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XowmDXiUNKNKI/z/SCB1z/MmkmnhjKMF
-	BQgBqsOEjRaYzahDHkIkdW50TC50xIf1db+u2r8UjKS5y3KyCQVG0yo1k3IdpjaB
-	Ik+xhu8u5EKND8BOxbHQTcMyNt78+XsEoHvods1efNb54hNYiZJKgh091zQcG/QD
-	TlR+lB/v7M4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 995D4DAA19;
-	Thu, 30 Sep 2010 12:10:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EC927DAA18; Thu, 30 Sep
- 2010 12:10:00 -0400 (EDT)
-In-Reply-To: <AANLkTimgTAerCNcSHBR9t-s-ThWHLMXdsb2T=E2w8gpB@mail.gmail.com>
- (Elijah Newren's message of "Wed\, 29 Sep 2010 14\:30\:19 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F18E716-CCAD-11DF-A8AB-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756680Ab0I3QTO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 12:19:14 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:32865 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753531Ab0I3QTN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 12:19:13 -0400
+Received: (qmail 23088 invoked by uid 111); 30 Sep 2010 16:19:12 -0000
+Received: from 129-79-255-204.dhcp-bl.indiana.edu (HELO sigill.intra.peff.net) (129.79.255.204)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 30 Sep 2010 16:19:12 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Sep 2010 12:19:12 -0400
+Content-Disposition: inline
+In-Reply-To: <1285854189-10240-14-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157686>
 
-Elijah Newren <newren@gmail.com> writes:
+On Thu, Sep 30, 2010 at 01:43:06PM +0000, =C3=86var Arnfj=C3=B6r=C3=B0 =
+Bjarmason wrote:
 
-> They break the && cascades, but aren't the && cascades already
-> inherently broken due to the unportable return value of unset?
+> Change the regex fragment in extract_valid_address to use the qr//
+> syntax for compiled regexes, and when they're used add a /o flag so
+> they're only compiled once for the lifetime of the program.
+> [...]
+>  sub extract_valid_address {
+>  	my $address =3D shift;
+> -	my $local_part_regexp =3D '[^<>"\s@]+';
+> -	my $domain_regexp =3D '[^.<>"\s@]+(?:\.[^.<>"\s@]+)+';
+> +	my $local_part_regexp =3D qr/[^<>"\s@]+/;
+> +	my $domain_regexp =3D qr/[^.<>"\s@]+(?:\.[^.<>"\s@]+)+/;
+> =20
 
-Of course; that is the breakage you are trying to fix, no?  My comment was
-that I understand you are trying to, but the patch is not actually fixing
-it.
+Hmm. But these are lexical variables, so won't we recompile them each
+time we enter the subroutine? I don't think it affects correctness, as
+this "/o":
 
-If anything, it is making it worse. Earlier we would have got a false
-breakage that would make people notice and take a look. With your patch
-applied, we instead would let a breakage in parts earlier than these
-"unset VAR;" go unnoticed, no?
+> +	return $address if ($address =3D~ /^($local_part_regexp)$/o);
+
+means that we will compile and use the value from the first time we run
+the function.
+
+But we are unnecessarily compiling the sub-regexes each time. Not that
+this is probably a performance critical piece of code, but your "/o" is
+doing very little, and this is exactly the sort perl wankery that I fin=
+d
+interesting.
+
+Sadly, there is no real perl equivalent of C static local variables,
+which is what you really want.  Usually I would do:
+
+  {
+    my $local_part_regexp =3D qr/.../;
+    sub extract_valid_address {
+      ...
+    }
+  }
+
+but beware of the execution order. That works well in a module, where
+the module code is executed before anybody calls the function. But it
+breaks in something like this:
+
+  foo();
+  {
+    my $foo_static_local =3D 5;
+    sub foo {
+      print "$foo_static_local\n";
+    }
+  }
+
+I think you could get by with:
+
+  {
+    my $local_part_regexp;
+    sub extract_valid_address {
+      $local_part_regexp ||=3D qr/.../;
+      ...
+    }
+  }
+
+-Peff
