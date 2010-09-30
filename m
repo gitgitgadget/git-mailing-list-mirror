@@ -1,147 +1,78 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC PATCH 3/3] grep: add support for grepping in submodules
-Date: Wed, 29 Sep 2010 16:47:39 -0700
-Message-ID: <4CA3D01B.6060600@gmail.com>
-References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com> <1285792134-26339-4-git-send-email-judge.packham@gmail.com> <4CA3BBD7.3090006@web.de> <7v4od8ma0j.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.3.1
+Date: Wed, 29 Sep 2010 17:13:57 -0700
+Message-ID: <7vtyl8krzu.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 01:47:26 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Sep 30 02:14:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P16Mv-0006EG-RP
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 01:47:26 +0200
+	id 1P16mz-0004gB-TD
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 02:14:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751023Ab0I2XrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Sep 2010 19:47:20 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:44798 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750918Ab0I2XrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Sep 2010 19:47:20 -0400
-Received: by pvg2 with SMTP id 2so324954pvg.19
-        for <git@vger.kernel.org>; Wed, 29 Sep 2010 16:47:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=YvQmmS1oJsTbWcUTsfcd+YSuxxBw9POouZhfvdOQM7w=;
-        b=sZDSNn2+bTITp031JruVD8+QmYgY2aHqpIEd1HsgO5EqP0fWoSMvXEt9gTXYNktkSQ
-         yyZM3YaNSG07f1pcmSEsAVRAosK0zl0fbRHB+mutZuXrAcBYv95AX0hky4nObwrByot4
-         2ubXp9gjru7wbDtK+U0bvupHDM5OFjROAD3uY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=oZ3kpZ2GJJrzOXq9s3lQ+kqv6kRQhJ5PZejEi9crCeOLtw2fWPcOisE0s+YA47YEQ1
-         JxBhKAzCph3tgapW+fHvWpsPMEBT+8SAh3+C/nbAx3+mBnzyBAWVw2BGt9kCV28sJMj/
-         OxK2Py7o/dJMCxeakroqLRtd/HEBIi1Qf4Xg0=
-Received: by 10.114.103.6 with SMTP id a6mr2925262wac.199.1285804039643;
-        Wed, 29 Sep 2010 16:47:19 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id o17sm15442707wal.21.2010.09.29.16.47.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 29 Sep 2010 16:47:18 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <7v4od8ma0j.fsf@alter.siamese.dyndns.org>
+	id S1751707Ab0I3AOK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Sep 2010 20:14:10 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:41426 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023Ab0I3AOI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Sep 2010 20:14:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5068CDAA85;
+	Wed, 29 Sep 2010 20:14:06 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=zlEi
+	8pIsVufKMFG+iveESvXMZs4=; b=rIfR9Yn6pCF4k++ZhX2w4jVpjk3+Hh0vRegj
+	iykOb36WYmC1phv/rT97mmyP6EvXTvYXzG2eI+HWQ7sSSGV6OlfYoRHWyt9QPLEE
+	QElq+o85UNv3qlsevV1mOSF1b56+bDfK/BhlDfg746LQYeOKpu1NWFKHq9ZEwCRj
+	FxTzNqk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=FkO
+	0saHVZVP/xY4FAC9YpxHLHJ5rELm16R8ehs2A9q/jPujdpB5Yd812LpNzyGpzitP
+	K0PYLUSsojSYk08VvG+nBfy5yqkVl7ftOl91v288/FMWFiVo9cGqgCoXmkyzj9Gr
+	ASrg28UtyTFNLsZ1U6FmyhSHyBhdgbjyLHPLpmPA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1D68EDAA83;
+	Wed, 29 Sep 2010 20:14:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2D0CEDAA7E; Wed, 29 Sep
+ 2010 20:13:59 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A191A3B8-CC27-11DF-9126-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157623>
 
-On 29/09/10 15:59, Junio C Hamano wrote:
-> Jens Lehmann <Jens.Lehmann@web.de> writes:
-> 
->> Hm, at a quick glance it might be much easier to copy argc & argv
->> in cmd_grep() before parse_options() starts manipulating it.
-> 
-> Yes, I think that is a much saner direction to go.  Otherwise, you would
-> need to unparse grep boolean expressions as well.
+The first maintenance release of Git 1.7.3.X series, 1.7.3.1, is
+available at the usual places:
 
-I've got some of that working in my quest to not use saved_argv[0]. If
-we follow some of your points below about handling ref names then
-rebuilding the args actually starts to make life easier. I guess the
-same is true for just making these manipulations on the grep_opts. The
-only thing that is really clear is that saving the original argv is not
-going to help us.
+  http://www.kernel.org/pub/software/scm/git/
 
-> A few more things to think about.
-> 
-> 1. What does this mean:
-> 
->     $ git grep --recursive -e frotz master next
-> 
-> It recurses into the submodule commits recorded in 'master' and 'next'
-> commits in the superproject, right?
-> 
-> How do the lines output from the above look like?  From the superproject,
-> we will get lines like these:
-> 
->     master:t/README:  test_description='xxx test (option --frotz)
->     master:t/README:  and tries to run git-ls-files with option --frotz.'
-> 
-> What if we have a submodule at git-gui in the superproject, and its README
-> has string frotz in it?  Should we label the submodule commit we find in
-> 'master' of superproject as 'master' as well, even if it is not at the tip
-> of 'master' branch of the submodule?  Or do we get abbreviated hexadecimal
-> SHA-1 name?  IOW, would we see:
-> 
->     master:git-gui/README: git-gui also knows frotz
-> 
-> or
-> 
->     deadbeef:git-gui/README: git-gui also knows frotz
-> 
-> where "deadbeaf...." is what "git rev-parse master:git-gui" would give us
-> in the superproject?
-> 
-> I tend to think the former is preferable, but then most likely you would
-> need to pass not just submodule-prefix but the original ref name
-> (i.e. 'master') you started from down to the recursive one.
+  git-1.7.3.1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.3.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.3.1.tar.{gz,bz2}		(preformatted docs)
 
-Passing the ref name is doable. There is a little potential for
-confusion between who's "master" that actually is (the same confusion is
-in theory possible with an abbreviated SHA-1). Maybe we should color the
-submodule ref's differently
+The RPM binary packages for a few architectures are found in:
 
-> 2. Now how would this work with pathspecs?
-> 
->     $ git grep --recursive -e frotz -- dir/
-> 
-> This should look for the string in the named directory in the superproject
-> and if there are submodules in that directory, recurse into them as well,
-> right?
-> 
-> What pathspec, if any, will be in effect when we recurse into the
-> submodule at dir/sub?  Limiting to dir/ feels wrong, no?
-> 
-> 3. Corollary.
-> 
-> Is it reasonable to expect that we will look into all shell scripts, both
-> in the superproject and in submodules, with this:
-> 
->     $ git grep --recursive -e frotz -- '*.sh'
-> 
-> Oops?  What happened to the "we restrict the recursion using pathspec, and
-> we do not pass down the pathspec" that was suggested in 2.?
-> 
+  RPMS/$arch/git-*-1.7.3.1-1.fc11.$arch.rpm	(RPM)
 
-This is a bit of a grey area, I'm not sure what is the sensible thing to do.
+Git v1.7.3.1 Release Notes
+==========================
 
-Maybe we could pop a directory level per recursion e.g.
-  user enters 'dir/sub/subsub/*.sh'
-  first level recursion is passed 'sub/subsub/*.sh'
-  second level recursion is passed 'subsub/*.sh'
-  subsequent levels of recursion are passed '*.sh'
+Fixes since v1.7.3
+------------------
 
-But that's not quite what the user thought they asked for (i.e. they
-will end up with dir/sub/subsub/subsubsub/file.sh).
+ * "git stash show stash@{$n}" was accidentally broken in 1.7.3 ("git
+   stash show" without any argument still worked, though).
 
-Or we could alter the behaviour based on whether their original pathspec
-had an explicit trailing /.
+ * "git stash branch $branch stash@{$n}" was accidentally broken in
+   1.7.3 and started dropping the named stash even when branch creation
+   failed.
+
+And other minor fixes and documentation updates.
