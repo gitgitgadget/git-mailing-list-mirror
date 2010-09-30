@@ -1,57 +1,64 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC PATCH 3/3] grep: add support for grepping in submodules
-Date: Thu, 30 Sep 2010 13:28:56 +0200
-Message-ID: <4CA47478.6030207@viscovery.net>
-References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com> <1285792134-26339-4-git-send-email-judge.packham@gmail.com> <4CA3BBD7.3090006@web.de> <7v4od8ma0j.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: wierd git show syntax
+Date: Thu, 30 Sep 2010 13:32:31 +0200
+Message-ID: <vpqtyl7fovk.fsf@bauges.imag.fr>
+References: <AANLkTi=Zz-1dSC0imJ3NZXWcdvhXWXt-Kk94zwKe8+6Y@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 13:29:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: geoffrey.russell@gmail.com
+X-From: git-owner@vger.kernel.org Thu Sep 30 13:36:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1HK0-0005KF-GF
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 13:29:08 +0200
+	id 1P1HR4-0007e3-Gg
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 13:36:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498Ab0I3L3C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 07:29:02 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:26425 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750998Ab0I3L3B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 07:29:01 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1P1HJp-0000ej-7a; Thu, 30 Sep 2010 13:28:57 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id D6CEE1660F;
-	Thu, 30 Sep 2010 13:28:56 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.1.12) Gecko/20100914 Thunderbird/3.0.8
-In-Reply-To: <7v4od8ma0j.fsf@alter.siamese.dyndns.org>
-X-Spam-Score: -1.4 (-)
+	id S1751515Ab0I3Lfy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 07:35:54 -0400
+Received: from imag.imag.fr ([129.88.30.1]:64369 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750998Ab0I3Lfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 07:35:53 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o8UBWWxV000776
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 30 Sep 2010 13:32:32 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1P1HNI-0008A4-0K; Thu, 30 Sep 2010 13:32:32 +0200
+In-Reply-To: <AANLkTi=Zz-1dSC0imJ3NZXWcdvhXWXt-Kk94zwKe8+6Y@mail.gmail.com> (Geoff Russell's message of "Thu\, 30 Sep 2010 14\:32\:48 +0930")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 30 Sep 2010 13:32:32 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157641>
 
-Am 9/30/2010 0:59, schrieb Junio C Hamano:
-> A few more things to think about.
-> 
-> 1. What does this mean:
-> 
->     $ git grep --recursive -e frotz master next
-> 
-> It recurses into the submodule commits recorded in 'master' and 'next'
-> commits in the superproject, right?
+Geoff Russell <geoffrey.russell@gmail.com> writes:
 
-And what does it mean if you add --cached? Does it grep in the index of
-the submodules, or does it grep in the rev of the submodule that is
-recorded in the index of the supermodule?
+> Hi,
+>
+> $ git show XXXX:data/path/object.c
+>
+> Gives me what I want, a cat of the objects contents. However
+> for some files I get a message about ambiguous argument telling me to
+> separate paths from revisions with '--'.
 
--- Hannes
+This happens if data/path/object.c doesn't exist in XXXX.
+
+A common mistake is to write XXXX:relative/path when Git expects a
+path relative to the tree root. Git >= 1.7 would give you a more
+friendly error message in this case.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
