@@ -1,77 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 00/16] git-send-email cleanups
-Date: Thu, 30 Sep 2010 10:52:18 -0400
-Message-ID: <20100930145218.GB32728@sigill.intra.peff.net>
-References: <1285854189-10240-1-git-send-email-avarab@gmail.com>
- <18E0A903-D625-4C7A-A575-AC5C5EF448C9@gernhardtsoftware.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC PATCH 3/3] grep: add support for grepping in submodules
+Date: Thu, 30 Sep 2010 17:07:05 +0200
+Message-ID: <4CA4A799.2060302@web.de>
+References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com> <1285792134-26339-4-git-send-email-judge.packham@gmail.com> <4CA3BBD7.3090006@web.de> <7v4od8ma0j.fsf@alter.siamese.dyndns.org> <4CA47478.6030207@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Ryan Anderson <rda@google.com>,
-	Jay Soffian <jaysoffian@gmail.com>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Sep 30 16:52:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Chris Packham <judge.packham@gmail.com>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Sep 30 17:08:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1KUl-0004Ak-Gv
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 16:52:27 +0200
+	id 1P1Kjr-0001lm-80
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Sep 2010 17:08:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756610Ab0I3OwV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 10:52:21 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40322 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756412Ab0I3OwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 10:52:20 -0400
-Received: (qmail 21583 invoked by uid 111); 30 Sep 2010 14:52:18 -0000
-Received: from 129-79-255-204.dhcp-bl.indiana.edu (HELO sigill.intra.peff.net) (129.79.255.204)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 30 Sep 2010 14:52:18 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 30 Sep 2010 10:52:18 -0400
-Content-Disposition: inline
-In-Reply-To: <18E0A903-D625-4C7A-A575-AC5C5EF448C9@gernhardtsoftware.com>
+	id S1755438Ab0I3PH5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 11:07:57 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:39546 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755191Ab0I3PH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 11:07:57 -0400
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id DEA26162F272C;
+	Thu, 30 Sep 2010 17:07:05 +0200 (CEST)
+Received: from [93.240.117.111] (helo=[192.168.178.29])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1P1Kiv-00011A-00; Thu, 30 Sep 2010 17:07:05 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <4CA47478.6030207@viscovery.net>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/BO2yn3/ATo1AqtQtRecBvnk0g79SDRTiJvuZA
+	SOXa/AJJCJcDo8wjTombZwUyefDShMtMjl8eHk3NTB5+mmrZgF
+	jlCiorvd4IDvlp9CLfNw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157676>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157677>
 
-On Thu, Sep 30, 2010 at 10:30:31AM -0400, Brian Gernhardt wrote:
-
-> >  send-email: get_patch_subject doesn't need a prototype
-> >  send-email: file_declares_8bit_cte doesn't need a prototype
-> >  send-email: unique_email_list doesn't need a prototype
-> >  send-email: cleanup_compose_files doesn't need a prototype
+Am 30.09.2010 13:28, schrieb Johannes Sixt:
+> Am 9/30/2010 0:59, schrieb Junio C Hamano:
+>> A few more things to think about.
+>>
+>> 1. What does this mean:
+>>
+>>     $ git grep --recursive -e frotz master next
+>>
+>> It recurses into the submodule commits recorded in 'master' and 'next'
+>> commits in the superproject, right?
 > 
-> None of these subroutines strictly need the prototype, but it does
-> allow Perl to warn us if we send incorrect arguments.  Why remove
-> them?  Are they causing problems somewhere?
+> And what does it mean if you add --cached? Does it grep in the index of
+> the submodules, or does it grep in the rev of the submodule that is
+> recorded in the index of the supermodule?
 
-They don't necessarily do what you want:
-
-  perl -e 'sub want_scalar($) { print "got $_[0]\n" }
-           want_scalar("ok");
-           my @a = qw(totally broken);
-           want_scalar(@a);
-  '
-
-I get:
-
-  got ok
-  got 2
-
-And using "sub want_list(@)" basically does nothing at all (you can pass
-nothing, a scalar, or a list).
-
-For more details, read:
-
- http://www.perlmonks.org/?node_id=861966
-
-(If you're impatient, skip to the section "Problems with Regular
-Prototypes").
-
--Peff
+Hmm, as you told grep to use the index of the superproject it should
+use the rev of the submodule that is recorded in the index of the
+superproject. Thus the "--cached" should be removed from and the
+appropriate rev must be added to the arguments of the grep forked in
+the submodule.
