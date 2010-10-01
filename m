@@ -1,98 +1,241 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 02/15] t4017 (diff-retval): replace manual exit code
- check with test_expect_code
-Date: Fri, 01 Oct 2010 09:20:03 -0700
-Message-ID: <7vd3rtholo.fsf@alter.siamese.dyndns.org>
-References: <1285542879-16381-1-git-send-email-newren@gmail.com>
- <1285542879-16381-3-git-send-email-newren@gmail.com>
- <7vd3rwo22t.fsf@alter.siamese.dyndns.org>
- <AANLkTiksEBVUyJnrUETxManHa+ZMCT6+V3C83K75KW2A@mail.gmail.com>
- <20101001102315.GA6816@burratino>
- <AANLkTinqVTqxiHL5tEv+-SS6YURGUoWaPxCgpccZgjEq@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC PATCH 2/3] grep: prepare grep for submodules
+Date: Fri, 01 Oct 2010 09:26:29 -0700
+Message-ID: <4CA60BB5.4080202@gmail.com>
+References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>	<1285792134-26339-3-git-send-email-judge.packham@gmail.com>	<AANLkTik3bvJneak9gjG8O1A=LZeivPkFc6MF5_T7nbWo@mail.gmail.com>	<4CA4D820.5040100@gmail.com> <AANLkTikH+sd2kPAraGSTB-ik-Toz3s2nTLoLVOj86oSm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 18:20:23 2010
+Cc: "Jens.Lehmann" <Jens.Lehmann@web.de>, git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 18:26:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1iLP-0007ko-0Y
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 18:20:23 +0200
+	id 1P1iR8-0000yT-FM
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 18:26:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395Ab0JAQUQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 12:20:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:34325 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752345Ab0JAQUP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 12:20:15 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6ABF1DA5AD;
-	Fri,  1 Oct 2010 12:20:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=83z/Zrk/IIaN
-	p6zVyEWmuDdTCts=; b=Yjcu/hzjZFUPr4UTZ9lZWHAcn31Zj6E3QshzkXMwQHUU
-	goJqXSxX7CO6/Z5MsMbyi/cSmKnkrBEftuWAbtcxF9Tm2FfRzabUhXWzGpml941a
-	7v0qU8TFBDkFM7td4yUUAjOz0RBxG0moHRGrCFiL7qU6f6j290dHTjrWalOOXgo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=msvGQ5
-	DFU9IiungK2FL3qOoPLhTKDqU/moOchuSl15OFmo2JlsgWvOljnzpPCi8lVzsO71
-	8tioD8dExlRjsU25NXtDKNfnGbcD4Vi0YaLeqk9PL+/mSpS9p4+aeWxvgQa6dEwu
-	YThIodKOScFO5TejIRpyC2e/8to1IvlFlktv4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2673EDA5AC;
-	Fri,  1 Oct 2010 12:20:10 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30D7EDA5AA; Fri,  1 Oct
- 2010 12:20:05 -0400 (EDT)
-In-Reply-To: <AANLkTinqVTqxiHL5tEv+-SS6YURGUoWaPxCgpccZgjEq@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Fri\, 1 Oct
- 2010 10\:38\:32 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C3083286-CD77-11DF-9A82-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751935Ab0JAQ0M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 12:26:12 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:65529 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751075Ab0JAQ0M (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 12:26:12 -0400
+Received: by pzk34 with SMTP id 34so809811pzk.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 09:26:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=sZnIhFztviYejkjI7r+sapugCy4UNmi27MksPGPMaGk=;
+        b=CMc+lalnZ7VMYMPQ1yDOQrs6ROGmnJL4/z8s1COw33FR27EymvePt7NI9Y39E1Vajo
+         0dNSR1oqFvv8MtGtzIjnuxWtSOF6sMBctGJvmEAZXibG0bNqdQTgKtBPBrpgTEDDFJCY
+         S6TlIqPGIMzi8pq4cSsv7b0rYQfAdtuyiEmgY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=x70DqSq/XLD6hWQJzPZBL3l07KUrOVD+VBc224lwfe5t21mJoIG8YkmLLlSgjScH64
+         CaC6MjFY4yOW/ZkJqXx/HT6jKedWI/ME2oc9ujX/02NPnwRAYaSlo0RATnXuRE0UDafT
+         hcXYCpmvkrUhVjU1fLvGhbiFaP89M2fYXfbrg=
+Received: by 10.114.88.18 with SMTP id l18mr6488061wab.92.1285950370993;
+        Fri, 01 Oct 2010 09:26:10 -0700 (PDT)
+Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
+        by mx.google.com with ESMTPS id d39sm2146799wam.4.2010.10.01.09.26.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 01 Oct 2010 09:26:09 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
+In-Reply-To: <AANLkTikH+sd2kPAraGSTB-ik-Toz3s2nTLoLVOj86oSm@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157761>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 01/10/10 07:37, Nguyen Thai Ngoc Duy wrote:
+> On 10/1/10, Chris Packham <judge.packham@gmail.com> wrote:
+>>  > You can make setup_explicit_git_dir() realize that situation (cur=
+rent
+>>  > working directory outside $GIT_WORK_TREE), then calculate and sav=
+e the
+>>  > submodule prefix in startup_info struct. Then "git grep" or any
+>>  > commands can just read startup_info to find out the submodule pre=
+fix.
+>>
+>>
+>> Here's my first naive attempt at implementing what you describe. Nee=
+ds
+>>  tests, more comments, sign-off etc.
+>=20
+> Thanks.
+>=20
+>>  One situation that could be handled better is when the cwd is a
+>>  subdirectory of the specified worktree. At the moment this ends up
+>>  giving the full path to the worktree, the output would look much ni=
+cer
+>>  if it gave the relative path (e.g. ../../).
+>=20
+> Hmm.. if cwd is inside a worktree, prefix (the 3rd parameter in
+> cmd_grep) should be correctly set and "git grep" should also show
+> relative path. Or are you talking about another command?
 
-> On Fri, Oct 1, 2010 at 10:23, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
->
->>  test_expect_success 'git diff --quiet HEAD^^ HEAD^' '
->> -       test_must_fail git diff --quiet HEAD^^ HEAD^
->> +       check_exit_status 1 git diff --quiet HEAD^^ HEAD^
->>  '
->
-> In most uses of check_exit_status you're using it is the very last
-> command within a test_expect_success. Isn't it redundant to using jus=
+I was testing this with grep but also with my submodule changes. I
+should probably move this to its own topic branch and get it working
+then rebase my grep changes on top of it.
+
+>>
+>>  ---8<---
+>>  From: Chris Packham <judge.packham@gmail.com>
+>>  Date: Thu, 30 Sep 2010 11:19:29 -0700
+>>  Subject: [RFC PATCH] save the work tree prefix in startup_info
+>>
+>>  This is the relative path between the cwd and the worktree or the
+>>  absolute path of the worktree if the worktree is not a subdirectory
+>>  of the worktree.
+>>  ---
+>>   cache.h |    1 +
+>>   dir.c   |   26 ++++++++++++++++++++++++++
+>>   dir.h   |    1 +
+>>   setup.c |    4 ++++
+>>   4 files changed, 32 insertions(+), 0 deletions(-)
+>>
+>>  diff --git a/cache.h b/cache.h
+>>  index e1d3ffd..f320e78 100644
+>>  --- a/cache.h
+>>  +++ b/cache.h
+>>  @@ -1111,6 +1111,7 @@ const char *split_cmdline_strerror(int cmdlin=
+e_errno);
+>>   /* git.c */
+>>   struct startup_info {
+>>         int have_repository;
+>>  +       const char *prefix;
+>=20
+> You should use another name here to avoid confusion with the current
+> prefix, relative to worktree toplevel directory. I'm thinking of
+> outer_prefix or cwd_prefix, but I'm usually bad at naming.
+
+I couldn't come up with a better name either, that=E2=80=99s why I used
+"prefix". "cwd_prefix" seems sensible enough to me.
+
+>>   };
+>>   extern struct startup_info *startup_info;
+>>
+>>  diff --git a/dir.c b/dir.c
+>>  index 58ec1a1..2148730 100644
+>>  --- a/dir.c
+>>  +++ b/dir.c
+>>  @@ -1036,6 +1036,32 @@ char *get_relative_cwd(char *buffer, int siz=
+e,
+>>  const char *dir)
+>>         }
+>>   }
+>>
+>>  +char *get_relative_wt(char *buffer, int size, const char *dir)
+>>  +{
+>>  +       char *cwd =3D buffer;
+>>  +
+>>  +       if (!dir)
+>>  +               return NULL;
+>>  +       if (!getcwd(buffer, size))
+>>  +               die_errno("can't find the current directory");
+>>  +       if (!is_absolute_path(dir))
+>>  +               dir =3D make_absolute_path(dir);
+>>  +       if (strstr(dir, cwd)) {
+>=20
+> Why not strncmp?
+
+I actually tried strcmp first, expecting to get a number that I can
+increment dir by. What I actually got was -1, maybe I just screwed up
+the order of dir and cwd. I'll look into it.
+
+>=20
+>>  +               dir +=3D strlen(cwd);
+>>  +               switch(*dir){
+>>  +               case '\0':
+>>  +                       return NULL;
+>>  +               case '/':
+>>  +                       dir++;
+>>  +                       break;
+>=20
+> Yeah.
+>=20
+>>  +               default:
+>>  +                       break;
+>=20
+> Should we properly handle relative path that includes ".." here too?=20
+
+By now dir and cwd are both absolute paths. So I dn't think there is
+anything to handle
+
+>>  +               }
+>>  +       }
+>>  +       strncpy(buffer, dir, size);
+>=20
+> So if "cwd" is inside "dir", an absolute "dir" is returned? That does
+> not look like a prefix to me.
+
+That is a problem. Maybe I should be returning NULL in that case and le=
 t
-> "test_expect_code $code ..." there?
+the existing code handle the cwd inside dir case. I think if I wrote
+some tests first I could see the various permutations better.
 
-Doesn't
-
-	test_expect_code 1 'phoney' '
-        	foo && bar && (exit 1)
-	'
-
-incorrectly succeed if "foo" or "bar" happened to fail with exit status=
- 1?
-
-> So IMO the best thing to do would be to re-appropriate
-> "test_expect_code" so that it runs inside a test (i.e. does what your
-> check_exit_status does), and not at the top-level.
-
-I like it.  It should have been done the way you suggest from the
-beginning.  It is unfortunate that we didn't think of wrappers like
-test_must_fail and friends when we originally did test_expect_code, but=
- it
-is never too late to correct that mistake.
+>>  +       return buffer;
+>>  +}
+>>  +
+>>   int is_inside_dir(const char *dir)
+>>   {
+>>         char buffer[PATH_MAX];
+>>  diff --git a/dir.h b/dir.h
+>>  index b3e2104..d3c161f 100644
+>>  --- a/dir.h
+>>  +++ b/dir.h
+>>  @@ -81,6 +81,7 @@ extern void add_exclude(const char *string, const=
+ char
+>>  *base,
+>>   extern int file_exists(const char *);
+>>
+>>   extern char *get_relative_cwd(char *buffer, int size, const char *=
+dir);
+>>  +extern char *get_relative_wt(char *buffer, int size, const char *d=
+ir);
+>>   extern int is_inside_dir(const char *dir);
+>>
+>>   static inline int is_dot_or_dotdot(const char *name)
+>>  diff --git a/setup.c b/setup.c
+>>  index a3b76de..bd9d9fd 100644
+>>  --- a/setup.c
+>>  +++ b/setup.c
+>>  @@ -317,6 +317,7 @@ static const char *setup_explicit_git_dir(const=
+ char
+>>  *gitdirenv,
+>>                                 const char *work_tree_env, int *nong=
+it_ok)
+>>   {
+>>         static char buffer[1024 + 1];
+>>  +       static char wtbuf[1024 + 1];
+>>         const char *retval;
+>>
+>>         if (PATH_MAX - 40 < strlen(gitdirenv))
+>>  @@ -337,6 +338,9 @@ static const char *setup_explicit_git_dir(const=
+ char
+>>  *gitdirenv,
+>>         }
+>>         if (check_repository_format_gently(nongit_ok))
+>>                 return NULL;
+>>  +
+>>  +       startup_info->prefix=3Dget_relative_wt(wtbuf, sizeof(wtbuf)=
+ - 1,
+>>  +                       get_git_work_tree());
+>>         retval =3D get_relative_cwd(buffer, sizeof(buffer) - 1,
+>>                         get_git_work_tree());
+>>         if (!retval || !*retval)
+>>
+>> --
+>>  1.7.3.1
+>>
+>>
+>=20
+>=20
