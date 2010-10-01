@@ -1,89 +1,79 @@
-From: Darren Hart <darren@dvhart.com>
-Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Fri, 1 Oct 2010 13:18:00 -0700
-Message-ID: <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com>
-References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v2 1/2] sh-setup: Write a new require_clean_work_tree function
+Date: Fri, 1 Oct 2010 22:22:54 +0200
+Message-ID: <AANLkTi=91-TJ=C1dUKRXKYWYShWZ-LuLFG3hq1Ms+C+Y@mail.gmail.com>
+References: <1285877017-8060-1-git-send-email-artagnon@gmail.com>
+ <1285877017-8060-2-git-send-email-artagnon@gmail.com> <7v4od7hsqt.fsf@alter.siamese.dyndns.org>
+ <20101001045713.GE20098@kytes> <20101001053721.GB6184@burratino>
+ <20101001072149.GA24171@kytes> <20101001074039.GC6184@burratino>
+ <20101001125604.GA20713@kytes> <20101001182852.GA18692@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Steven Rostedt <rostedt@goodmis.org>
-To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Fri Oct 01 22:18:14 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git List <git@vger.kernel.org>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 22:23:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1m3X-0007TB-8H
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 22:18:11 +0200
+	id 1P1m8X-0000Bj-PG
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 22:23:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581Ab0JAUSF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 16:18:05 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:42268 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751414Ab0JAUSE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 16:18:04 -0400
-Received: by qyk36 with SMTP id 36so3784549qyk.19
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 13:18:03 -0700 (PDT)
-Received: by 10.224.74.1 with SMTP id s1mr4224713qaj.26.1285964280147; Fri, 01
- Oct 2010 13:18:00 -0700 (PDT)
-Received: by 10.229.26.82 with HTTP; Fri, 1 Oct 2010 13:18:00 -0700 (PDT)
-In-Reply-To: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
-X-Google-Sender-Auth: PIat9rCGA00qo79vTRMLJC34np0
+	id S1752832Ab0JAUXQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 16:23:16 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:48971 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751466Ab0JAUXQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 16:23:16 -0400
+Received: by iwn5 with SMTP id 5so4229899iwn.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 13:23:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=DeA2/fYcG7lkBEhbI51LP4bcjth0ewHzUniCwpGRSLk=;
+        b=BCk36bb113+/VmlmBLS4AnKPoB68Z4cWHuQ6PZcwsxuWl93UdRo0YR7nl9DYtDkfxQ
+         +GrE7+RX2pJTW+M8Hq+1JVoUy/Q16rXuCGe7xmLPeNCaKMAiH+vNG+fMagB4FgMeCt+P
+         VwlERD+eSnECoPPQpfp81rBFpAVreVwu6CgWk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=mq0ftH0/vXyP7q4vP3BcCCx53b1gpZQ+L/a2J4wrL1Y6Egre8BcyeHN+NESFiA/s6l
+         1LSFvpXKGI5kiRi56QB+EeT+9BEofXRgeYxq/jz4wimAtcVwvNdoF7suTlW3H29H4E1J
+         at5ZrLs/ZsIgu66sr850ppDrhwFCmZimsx15Q=
+Received: by 10.231.148.20 with SMTP id n20mr6139196ibv.196.1285964595410;
+ Fri, 01 Oct 2010 13:23:15 -0700 (PDT)
+Received: by 10.231.33.138 with HTTP; Fri, 1 Oct 2010 13:22:54 -0700 (PDT)
+In-Reply-To: <20101001182852.GA18692@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157778>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157779>
 
-2010/10/1 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
-> Some people in #linux-rt claimed that you cannot define "--mirror" wi=
-th
-> "mirror".
->
-> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+Heya,
 
-Acked-by: Darren 'Some People' Hart <darren@dvhart.com>
+Wow, I totally did not notice this very interesting sub-thread!
 
-> ---
-> =A0Documentation/git-clone.txt | =A0 11 ++++++++++-
-> =A01 files changed, 10 insertions(+), 1 deletions(-)
+On Fri, Oct 1, 2010 at 20:28, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Ramkumar Ramachandra wrote:
+>> +You can also create your own tag or use one that's in common usage
+>> +such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
 >
-> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.tx=
-t
-> index dc7d3d1..5eedfbd 100644
-> --- a/Documentation/git-clone.txt
-> +++ b/Documentation/git-clone.txt
-> @@ -128,7 +128,16 @@ objects from the source repository into a pack i=
-n the cloned repository.
-> =A0 =A0 =A0 =A0configuration variables are created.
->
-> =A0--mirror::
-> - =A0 =A0 =A0 Set up a mirror of the remote repository. =A0This impli=
-es `--bare`.
-> + =A0 =A0 =A0 Set up a mirror of the remote repository.
-> + =A0 =A0 =A0 Using
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git remote update origin
-> +
-> + =A0 =A0 =A0 (or `<name>` instead of `origin` if -o is given) in the=
- resulting
-> + =A0 =A0 =A0 repository overwrites the local branches without asking=
-=2E
-> + =A0 =A0 =A0 This implies `--bare`.
-> + =A0 =A0 =A0 Without --mirror (but with --bare) git remote update do=
-esn't touch any
-> + =A0 =A0 =A0 branches at all.
->
-> =A0--origin <name>::
-> =A0-o <name>::
-> --
-> 1.7.2.3
->
->
+> I like it.
 
+Thanks, Jonathan, for the looking up this stuff from the kernel's
+SubmittinPatches.
 
+FWIW I like Ram's patch to SubmittingPatches too.
 
---=20
-Darren Hart
+-- 
+Cheers,
+
+Sverre Rabbelier
