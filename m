@@ -1,77 +1,116 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4 03/15] t100[12] (read-tree-m-2way,
- read_tree_m_u_2way): add missing &&
-Date: Fri, 1 Oct 2010 05:27:24 -0500
-Message-ID: <20101001102724.GB6816@burratino>
+Subject: Re: [PATCHv4 04/15] t4002 (diff-basic): use test_might_fail for
+ commands that might fail
+Date: Fri, 1 Oct 2010 05:35:14 -0500
+Message-ID: <20101001103514.GC6816@burratino>
 References: <1285542879-16381-1-git-send-email-newren@gmail.com>
- <1285542879-16381-4-git-send-email-newren@gmail.com>
- <7v8w2ko14p.fsf@alter.siamese.dyndns.org>
+ <1285542879-16381-5-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 12:30:52 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 12:38:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1ct8-0002ow-Fy
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 12:30:50 +0200
+	id 1P1d0V-0005DT-Io
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 12:38:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756023Ab0JAKac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Oct 2010 06:30:32 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34999 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755078Ab0JAKab (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Oct 2010 06:30:31 -0400
-Received: by iwn5 with SMTP id 5so3654154iwn.19
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 03:30:30 -0700 (PDT)
+	id S1755078Ab0JAKiW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 06:38:22 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:39352 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754175Ab0JAKiV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 06:38:21 -0400
+Received: by gwj17 with SMTP id 17so1074007gwj.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 03:38:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=zcgdsa78xrgvevRU97YyqWA/vN+mxBCO7cdgfHBSZrA=;
-        b=FaeVfextZGnlZWW5dMUELznH0BpbQSNyDf6iXPX/RlfMUPo825OM4YvO6GE2GVKmPs
-         Z4Vh0932akLTZfUwLTrwPPlhSjKmSjKMySugEoEafDvve1mdLKpIJTu2SVZop3FeJXh4
-         TR5gdF57PH/7BYlFQM5eG66gJhf15AwNTx/j4=
+        bh=f9JUVNvm4FFHdCuFT7BCA8uIyUpMuf0W5fqorPW2/Bs=;
+        b=cauIJmDYESFZyaOhLIyPBDBGMS2bS+l0cQmG9bLA/Nt99AHqD8iNyeFf7lFXCLfnBK
+         1KaMeYywnScayyOFJAQeULOWpE02/szoM2VbrukDTSUyfjra/Ud4OOGLZoG24u5aXi1w
+         7T8R8i3ax/GLVginMXjunYlfJ6DdeKitqEoOI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=ub1PLnSTBPaQ925vvCZSyCdMGeoOxO0J9xWoG0wghHe4mRkSyaC/7GzpUPsilA/TA7
-         DN4Td9iiRvb2IbC5HCitog2NH06gVYL27cLRDSUS6SjHxQ7TufpszXpOYgKGnmRf4Gxe
-         6nHzwMaV9XE22SiiiNyVzaVtjG5wBceTf6Jjc=
-Received: by 10.231.10.134 with SMTP id p6mr5429373ibp.50.1285929029977;
-        Fri, 01 Oct 2010 03:30:29 -0700 (PDT)
+        b=O2QfOPu73LUSOkS07PzekT6YxuU524VwdnFqVjf1UdGdyRlo9qJs0vRFxJay9wTkvC
+         cj/cfnL44Dz9cMo3O9KBd6CO7+kEBiRbzm79hEmdx1iUpbtwDgBqPxwRu7TwEhh1UBOp
+         uCw01YHfMJ4PxGPtS1qGTBkfNHHMSyhqaX1nI=
+Received: by 10.100.236.25 with SMTP id j25mr326598anh.182.1285929500731;
+        Fri, 01 Oct 2010 03:38:20 -0700 (PDT)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id g31sm1055286ibh.16.2010.10.01.03.30.29
+        by mx.google.com with ESMTPS id l7sm1633586ane.19.2010.10.01.03.38.19
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 01 Oct 2010 03:30:29 -0700 (PDT)
+        Fri, 01 Oct 2010 03:38:20 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <7v8w2ko14p.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <1285542879-16381-5-git-send-email-newren@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157739>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157740>
 
-Junio C Hamano wrote:
-> Elijah Newren <newren@gmail.com> writes:
+Elijah Newren wrote:
 
->> --- a/t/t1001-read-tree-m-2way.sh
->> +++ b/t/t1001-read-tree-m-2way.sh
->> @@ -98,8 +98,8 @@ test_expect_success \
->>       git checkout-index -u -f -q -a &&
->>       git update-index --add yomin &&
->>       read_tree_twoway $treeH $treeM &&
->> -     git ls-files --stage >4.out || return 1
->> -     git diff --no-index M.out 4.out >4diff.out
->> +     git ls-files --stage >4.out &&
->> +     test_might_fail git diff --no-index M.out 4.out >4diff.out &&
->
-> Shouldn't this be must-fail, as we are expecting to see some differences?
+> --- a/t/t4002-diff-basic.sh
+> +++ b/t/t4002-diff-basic.sh
+> @@ -205,8 +205,8 @@ test_expect_success \
+>      'rm -fr Z [A-Z][A-Z] &&
+>       git read-tree $tree_A &&
+>       git checkout-index -f -a &&
+> -     git read-tree --reset $tree_O || return 1
+> -     git update-index --refresh >/dev/null ;# this can exit non-zero
+> +     git read-tree --reset $tree_O &&
+> +     test_might_fail git update-index --refresh >/dev/null &&
+>       git diff-files >.test-a &&
 
-I see you've fixed this up already.  Thanks.
+Makes sense; thanks.  But aren't we actually guaranteed that it will
+fail, since the index does not match the work tree?
+
+Meanwhile, what was the point of refreshing the index like this?
+I would guess it was to make sure that files that match the work tree
+are marked as matching, but if so, this is not guaranteed if
+update-index --refresh exits early.  Adding -q would fix that.
+
+Why redirect to /dev/null?  I would think the extra output would
+be useful while debugging with -v.
+---
+diff --git a/t/t4002-diff-basic.sh b/t/t4002-diff-basic.sh
+index 340aa7d..9fb8ca0 100755
+--- a/t/t4002-diff-basic.sh
++++ b/t/t4002-diff-basic.sh
+@@ -206,7 +206,7 @@ test_expect_success \
+      git read-tree $tree_A &&
+      git checkout-index -f -a &&
+      git read-tree --reset $tree_O &&
+-     test_might_fail git update-index --refresh >/dev/null &&
++     test_must_fail git update-index --refresh -q &&
+      git diff-files >.test-a &&
+      cmp_diff_files_output .test-a .test-recursive-OA'
+ 
+@@ -216,7 +216,7 @@ test_expect_success \
+      git read-tree $tree_B &&
+      git checkout-index -f -a &&
+      git read-tree --reset $tree_O &&
+-     test_might_fail git update-index --refresh >/dev/null &&
++     test_must_fail git update-index --refresh -q &&
+      git diff-files >.test-a &&
+      cmp_diff_files_output .test-a .test-recursive-OB'
+ 
+@@ -226,7 +226,7 @@ test_expect_success \
+      git read-tree $tree_B &&
+      git checkout-index -f -a &&
+      git read-tree --reset $tree_A &&
+-     test_might_fail git update-index --refresh >/dev/null &&
++     test_must_fail git update-index --refresh -q &&
+      git diff-files >.test-a &&
+      cmp_diff_files_output .test-a .test-recursive-AB'
+ 
+-- 
