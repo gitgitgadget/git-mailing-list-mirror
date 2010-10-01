@@ -1,320 +1,61 @@
-From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
-Subject: [PATCH] test-lib: make test_expect_code a test command
-Date: Fri,  1 Oct 2010 17:16:31 +0000
-Message-ID: <1285953391-29840-1-git-send-email-avarab@gmail.com>
-References: <7vd3rtholo.fsf@alter.siamese.dyndns.org>
+From: Eric Frederich <eric.frederich@gmail.com>
+Subject: cvs importing a forked project
+Date: Fri, 1 Oct 2010 13:38:56 -0400
+Message-ID: <AANLkTimvaH4UYzmL9eS1Yq7WNaS+jPRfkajKPP=hjZWV@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
-	<avarab@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 01 19:16:51 2010
+X-From: git-owner@vger.kernel.org Fri Oct 01 19:39:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1jDz-0007Sb-Ih
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 19:16:48 +0200
+	id 1P1jZX-0005oT-Hl
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 19:39:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670Ab0JARQl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 13:16:41 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:59121 "EHLO
+	id S1753665Ab0JARi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 13:38:58 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:51149 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501Ab0JARQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Oct 2010 13:16:40 -0400
-Received: by wwj40 with SMTP id 40so1621439wwj.1
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 10:16:39 -0700 (PDT)
+	with ESMTP id S1753121Ab0JARi5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 13:38:57 -0400
+Received: by wwj40 with SMTP id 40so1649423wwj.1
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 10:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=rTQ3bbE6cPAk+OLlcyIA4lCNdszytmz6JjZLC13NXqo=;
-        b=TRoLurE9pVYHISdzidPkz5KR6WyAZsPnObocAJrjff/fvOODseo/3NYhDs5HgIKxC/
-         9ulIytGI2NVRM86eQEIOOCk1I9Elog7gzRoYO6m6fayMjbNtOSxx663ZrQ1W9I5PCs4C
-         cwsM9iglvueEK8fpyZgUZBVsbaiKir0VNu3fA=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=Mup4OGXHrtKaGNHRX6mMWJXMPt1mV/FykvAJdmxYJOk=;
+        b=CeauCmP0h1n62wMJJTy4xB/wfZsy7HwRJFiR362B7SIFu1pomUeoFRz1taf2CRc+yJ
+         djBlinr99UFnKW/VOKentZvAeNM1NkFflpy2i/vpEWaLY/MBCRvkkaw9+axYFBB4b9ax
+         LDQ4+xbg4tDrpxGSgL0tztstLixqrOWp7l8dw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=j8YLLFSSHoW9M3UVyBN+IzuUVSLLzY4sfn4u646oYspPWzPLFOBksmH6BRG/92EZFB
-         /b1wx+SLSci1Pp36dKFKIRoJHSOkW7NenRg0rGI34JL2xWdP9fZaHPr7iXzAVh298dlC
-         n81IkL4AsOG7ygjUQu2nefdpMDPg2hBhpHmOU=
-Received: by 10.216.153.140 with SMTP id f12mr2345960wek.111.1285953398974;
-        Fri, 01 Oct 2010 10:16:38 -0700 (PDT)
-Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id u32sm935153weq.11.2010.10.01.10.16.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 01 Oct 2010 10:16:37 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.159.g610493
-In-Reply-To: <7vd3rtholo.fsf@alter.siamese.dyndns.org>
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=U0FsNtSl3o0Tu/HO0OxF/3IVZT0y1zP0qiRFAdFPzWZDI4hJtde4iI18iJlHqe2gyC
+         N4Uk5EMM1Tz8Rq9f9YzXHnJnR9JPJJ+kLilpc5+9RYpGQKa/ilVykqkajNkl/mXvAus/
+         9i88KqC8ceLByvMGXp7kiNPHtxgz4+6UZER8s=
+Received: by 10.216.231.97 with SMTP id k75mr4799673weq.4.1285954736595; Fri,
+ 01 Oct 2010 10:38:56 -0700 (PDT)
+Received: by 10.216.80.144 with HTTP; Fri, 1 Oct 2010 10:38:56 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157762>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157763>
 
-Change test_expect_code to be a normal test command instead of a
-top-level command.
+Hello,
 
-As a top-level command it would fail in cases like:
+I have a project (several actually) where development was done in cvs
+for 10 years.  Then, about 5 years ago, a copy of the latest was made
+and development continued in a new project.
+Development in the old project stopped for the most part.
 
-    test_expect_code 1 'phoney' '
-        foo && bar && (exit 1)
-    '
+Is there any way where I can combine these two projects in git?
+Basically, take the newer project's first commit and make its parent
+the the last commit of the older project.
+Development was pretty linear.
 
-Here the test might incorrectly succeed if "foo" or "bar" happened to
-fail with exit status 1. Instead we now do:
-
-    test_expect_success 'phoney' '
-        foo && bar && test_expect_code 1 "(exit 1)"
-    '
-
-Which will only succeed if "foo" and "bar" return status 0, and "(exit
-1)" returns status 1.
-
-Some test code in t0000-basic.sh relied on the old semantics of
-test_expect_code to test the test_when_finished command. I've
-converted that code to use an external test similar no the TODO test I
-added in v1.7.3-rc0~2^2~3.
-
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
-
-On Fri, Oct 1, 2010 at 16:20, Junio C Hamano <gitster@pobox.com> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
->> So IMO the best thing to do would be to re-appropriate
->> "test_expect_code" so that it runs inside a test (i.e. does what you=
-r
->> check_exit_status does), and not at the top-level.
->
-> I like it. =C2=A0It should have been done the way you suggest from th=
-e
-> beginning. =C2=A0It is unfortunate that we didn't think of wrappers l=
-ike
-> test_must_fail and friends when we originally did test_expect_code, b=
-ut it
-> is never too late to correct that mistake.
-
-Here's a patch to implement that. It goes on top of master so Elijah
-Newren's patch presumably will have to be re-done on top of it.
-
- t/README                |   16 +++++++------
- t/t0000-basic.sh        |   55 ++++++++++++++++++++++++++++++++++++++-=
--------
- t/t1504-ceiling-dirs.sh |    5 ++-
- t/t6020-merge-df.sh     |    4 ++-
- t/test-lib.sh           |   40 ++++++++++++++++++---------------
- 5 files changed, 82 insertions(+), 38 deletions(-)
-
-diff --git a/t/README b/t/README
-index a1eb7c8..c216e8c 100644
---- a/t/README
-+++ b/t/README
-@@ -395,13 +395,6 @@ library for your script to use.
-    Like test_expect_success this function can optionally use a three
-    argument invocation with a prerequisite as the first argument.
-=20
-- - test_expect_code [<prereq>] <code> <message> <script>
--
--   Analogous to test_expect_success, but pass the test if it exits
--   with a given exit <code>
--
-- test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" =
-B master'
--
-  - test_debug <script>
-=20
-    This takes a single argument, <script>, and evaluates it only
-@@ -482,6 +475,15 @@ library for your script to use.
- 	    'Perl API' \
- 	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
-=20
-+ - test_expect_code <exit-code> <git-command>
-+
-+   Run a git command and ensure that it exits with the given exit
-+   code. For example:
-+
-+	test_expect_success 'Merge with d/f conflicts' '
-+		test_expect_code 1 git merge "merge msg" B master
-+	'
-+
-  - test_must_fail <git-command>
-=20
-    Run a git command and ensure it fails in a controlled way.  Use
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index f688bd3..c2f5f8d 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -130,22 +130,57 @@ test_expect_success 'tests clean up after themsel=
-ves' '
-     test_when_finished clean=3Dyes
- '
-=20
--cleaner=3Dno
--test_expect_code 1 'tests clean up even after a failure' '
--    test_when_finished cleaner=3Dyes &&
--    (exit 1)
--'
--
--if test $clean$cleaner !=3D yesyes
-+if test $clean !=3D yes
- then
--	say "bug in test framework: cleanup commands do not work reliably"
-+	say "bug in test framework: basic cleanup command does not work relia=
-bly"
- 	exit 1
- fi
-=20
--test_expect_code 2 'failure to clean up causes the test to fail' '
--    test_when_finished "(exit 2)"
-+test_expect_success 'tests clean up even on failures' "
-+    mkdir failing-cleanup &&
-+    (cd failing-cleanup &&
-+    cat >failing-cleanup.sh <<EOF &&
-+#!$SHELL_PATH
-+
-+test_description=3D'Failing tests with cleanup commands'
-+
-+# Point to the t/test-lib.sh, which isn't in ../ as usual
-+TEST_DIRECTORY=3D\"$TEST_DIRECTORY\"
-+. \"\$TEST_DIRECTORY\"/test-lib.sh
-+
-+test_expect_success 'tests clean up even after a failure' '
-+    touch clean-after-failure &&
-+    test_when_finished rm clean-after-failure &&
-+    (exit 1)
- '
-=20
-+test_expect_success 'failure to clean up causes the test to fail' '
-+    test_when_finished \"(exit 2)\"
-+'
-+
-+test_done
-+EOF
-+    chmod +x failing-cleanup.sh &&
-+    test_must_fail ./failing-cleanup.sh >out 2>err &&
-+    ! test -s err &&
-+    ! test -f \"trash directory.failing-cleanup/clean-after-failure\" =
-&&
-+cat >expect <<EOF &&
-+not ok - 1 tests clean up even after a failure
-+#=09
-+#	    touch clean-after-failure &&
-+#	    test_when_finished rm clean-after-failure &&
-+#	    (exit 1)
-+#=09
-+not ok - 2 failure to clean up causes the test to fail
-+#=09
-+#	    test_when_finished \"(exit 2)\"
-+#=09
-+# failed 2 among 2 test(s)
-+1..2
-+EOF
-+    test_cmp expect out)
-+"
-+
- ################################################################
- # Basics of the basics
-=20
-diff --git a/t/t1504-ceiling-dirs.sh b/t/t1504-ceiling-dirs.sh
-index df5ad8c..cce87a5 100755
---- a/t/t1504-ceiling-dirs.sh
-+++ b/t/t1504-ceiling-dirs.sh
-@@ -9,8 +9,9 @@ test_prefix() {
- }
-=20
- test_fail() {
--	test_expect_code 128 "$1: prefix" \
--	"git rev-parse --show-prefix"
-+	test_expect_success "$1: prefix" '
-+		test_expect_code 128 git rev-parse --show-prefix
-+	'
- }
-=20
- TRASH_ROOT=3D"$PWD"
-diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
-index 490d397..5d91d05 100755
---- a/t/t6020-merge-df.sh
-+++ b/t/t6020-merge-df.sh
-@@ -20,7 +20,9 @@ echo "file dir" > dir &&
- git add dir &&
- git commit -m "File: dir"'
-=20
--test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" B=
- master'
-+test_expect_success 'Merge with d/f conflicts' '
-+	test_expect_code 1 git merge "merge msg" B master
-+'
-=20
- test_expect_success 'F/D conflict' '
- 	git reset --hard &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 830e5e7..d86edcd 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -473,24 +473,6 @@ test_expect_success () {
- 	echo >&3 ""
- }
-=20
--test_expect_code () {
--	test "$#" =3D 4 && { prereq=3D$1; shift; } || prereq=3D
--	test "$#" =3D 3 ||
--	error "bug in the test script: not 3 or 4 parameters to test-expect-c=
-ode"
--	if ! test_skip "$@"
--	then
--		say >&3 "expecting exit code $1: $3"
--		test_run_ "$3"
--		if [ "$?" =3D 0 -a "$eval_ret" =3D "$1" ]
--		then
--			test_ok_ "$2"
--		else
--			test_failure_ "$@"
--		fi
--	fi
--	echo >&3 ""
--}
--
- # test_external runs external test scripts that provide continuous
- # test output about their progress, and succeeds/fails on
- # zero/non-zero exit code.  It outputs the test output on stdout even
-@@ -658,6 +640,28 @@ test_might_fail () {
- 	return 0
- }
-=20
-+# Similar to test_must_fail and test_might_fail, but check that a
-+# given command exited with a given exit code. Meant to be used as:
-+#
-+#	test_expect_success 'Merge with d/f conflicts' '
-+#		test_expect_code 1 git merge "merge msg" B master
-+#	'
-+
-+test_expect_code () {
-+	want_code=3D$1
-+	shift
-+	"$@"
-+	exit_code=3D$?
-+	if test $exit_code =3D $want_code
-+	then
-+		echo >&2 "test_expect_code: command exited with $exit_code: $*"
-+		return 0
-+	else
-+		echo >&2 "test_expect_code: command exited with $exit_code, we wante=
-d $want_code $*"
-+		return 1
-+	fi
-+}
-+
- # test_cmp is a helper function to compare actual and expected output.
- # You can use it like:
- #
---=20
-1.7.3.159.g610493
+Thanks,
+~Eric
