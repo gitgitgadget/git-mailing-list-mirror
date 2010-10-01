@@ -1,145 +1,96 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] git-am: fix detection of absolute paths for windows
-Date: Thu, 30 Sep 2010 14:24:07 +0100
-Message-ID: <87iq1ly81q.fsf@fox.patthoyts.tk>
-References: <87ocbitd33.fsf@fox.patthoyts.tk>
-	<201009282252.25688.j6t@kdbg.org> <87tyl6hnu2.fsf_-_@fox.patthoyts.tk>
-	<201010011946.12481.j6t@kdbg.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Allow gitweb tab width to be set per project.
+Date: Fri, 1 Oct 2010 23:02:45 +0200
+Message-ID: <201010012302.47269.jnareb@gmail.com>
+References: <1285673709-24924-1-git-send-email-magnus@hagander.net> <201009291122.01272.jnareb@gmail.com> <AANLkTimPte3eQMuCE3NTS=03Vv+Q2-nnu8BmXq=4YCbA@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: msysgit@googlegroups.com, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Fri Oct 01 22:26:03 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Magnus Hagander <magnus@hagander.net>
+X-From: git-owner@vger.kernel.org Fri Oct 01 23:02:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1mB1-0000yh-MN
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 22:25:56 +0200
+	id 1P1mkh-0001iL-7N
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 23:02:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886Ab0JAUZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Oct 2010 16:25:51 -0400
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:40221 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752340Ab0JAUZu (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 16:25:50 -0400
-Received: from [172.23.170.144] (helo=anti-virus03-07)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P1mAq-0002qS-Uw; Fri, 01 Oct 2010 21:25:45 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out1.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P1mAk-00041B-B0; Fri, 01 Oct 2010 21:25:38 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 902F521B9C; Fri,  1 Oct 2010 21:25:37 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <201010011946.12481.j6t@kdbg.org> (Johannes Sixt's message of
-	"Fri, 1 Oct 2010 19:46:12 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1756232Ab0JAVCj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 17:02:39 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37685 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753817Ab0JAVCj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 17:02:39 -0400
+Received: by fxm14 with SMTP id 14so901402fxm.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 14:02:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=FSoEZ9csXugRV4KvnIeUbN06dvgpWdbiISezvrttRK0=;
+        b=a/1g+fVgMqDYSolIhA4Nh0pjOmZMea7hZ13vdJqAiiNe/9M2PCWO3/6hiPtTZeUMha
+         J8iw2aNQpesobtezkmSxCGVbh3f+SlAhs/0M6C4xhaRdcSeNSgRaXhl3kQfEhmwe4WIF
+         IY0H0GaXisVDZkKTwGdezPc3K46ELkqlqYW5A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=NHNKRp+ydoC4MQ7PEKYqwmKtsGamLw1ZzwILPhaXtgze7aBAFC2xff2pFi+tP8EG1U
+         QTX7fweLYp4Kro3N+Yh+BmlrEDtYNHvXdo72WRMAWmvChboIBuegx2RER+TUt6li0odY
+         sz3b7Uvj+0si6M0yjblrkqZo7sB4nsJKGsaeQ=
+Received: by 10.223.116.68 with SMTP id l4mr5978319faq.98.1285966957648;
+        Fri, 01 Oct 2010 14:02:37 -0700 (PDT)
+Received: from [192.168.1.13] (abwo184.neoplus.adsl.tpnet.pl [83.8.238.184])
+        by mx.google.com with ESMTPS id a6sm864057faa.44.2010.10.01.14.02.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 01 Oct 2010 14:02:35 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTimPte3eQMuCE3NTS=03Vv+Q2-nnu8BmXq=4YCbA@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157781>
 
-Add an is_absolute_path function to abstract out platform differences
-in checking for an absolute or relative path.
-Specifically fixes t4150-am on Windows.
+On Fri, 1 Oct 2010, Magnus Hagander wrote:
+> On Wed, Sep 29, 2010 at 11:22, Jakub Narebski <jnareb@gmail.com> wrote:
+>> On Wed, 29 Sep 2010, Magnus Hagander wrote:
+>>> On Tue, Sep 28, 2010 at 14:25, Jakub Narebski <jnareb@gmail.com> wrote:
+>>>> Magnus Hagander <magnus@hagander.net> writes:
 
-[PT: updated following suggestion from j6t to support \* and //*]
+>> Nevertheless it is a good practice to check if a change passess
+>> appropriate tests from git testsuite; t9500-gitweb-standalone-no-errors
+>> should detect this.
+> 
+> Good point. Now I just need to figure out how to be able to run the
+> tests :-) I guess I should just set off a job to build the whole tree,
+> and then it will just work..
+ 
+To test other parts of git, you need to first compile, and then run tests
+(e.g. by running "make test" after "make").  Gitweb tests check the 
+source version (for historical reason, namely that there were no gitweb
+target in main makefile, and gitweb didn't get compiled by default),
+so in that case you need to compile git once (to satisfy test suite),
+and then run e.g.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
+ # (cd t && ./t9500-gitweb-standalone-no-errors.sh)
+ 
+from the top directory of git repository.
 
-Johannes Sixt <j6t@kdbg.org> writes:
->On Donnerstag, 30. September 2010, Pat Thoyts wrote:
->> Add an is_absolute_path function to abstract out platform differences
->> in checking for an absolute or relative path.
->> Specifically fixes t4150-am on Windows.
->
->Thanks for tackling this!
->
->> @@ -209,5 +209,20 @@ case $(uname -s) in
->>  	find () {
->>  		/usr/bin/find "$@"
->>  	}
->> +	is_absolute_path () {
->> +		case "$1" in
->> +		/* | ?:* | \\\\*)
->
->Absolute paths can also start with a backslash, and UNC paths can start with 
->double-slash. Therefore, this should be:
->
->		[/\\]* | [A-Za-z]:*)
->
->> +			return 0 ;;
->> +		esac
->> +		return 1
->> +	}
->
->-- Hannes
+>> P.S. If it is not a %feature, we might want to add description of
+>> gitweb.tabwidth to the "Per-repository gitweb configuration" section
+>> in gitweb/README (as next to last item)
+> 
+> Ok. Will add that. Want me to send a new patch with these things included?
 
-I've modified the patch and added your signoff - hopefully that is ok?
+Yes, please do.
 
- git-am.sh       |   12 ++++++------
- git-sh-setup.sh |   15 +++++++++++++++
- 2 files changed, 21 insertions(+), 6 deletions(-)
-
-diff --git a/git-am.sh b/git-am.sh
-index e7f008c..9317b38 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -444,12 +444,12 @@ else
- 				set x
- 				first=
- 			}
--			case "$arg" in
--			/*)
--				set "$@" "$arg" ;;
--			*)
--				set "$@" "$prefix$arg" ;;
--			esac
-+			if is_absolute_path "$arg"
-+			then
-+				set "$@" "$arg"
-+			else
-+				set "$@" "$prefix$arg"
-+			fi
- 		done
- 		shift
- 	fi
-diff --git a/git-sh-setup.sh b/git-sh-setup.sh
-index 6131670..58d30c9 100644
---- a/git-sh-setup.sh
-+++ b/git-sh-setup.sh
-@@ -209,5 +209,20 @@ case $(uname -s) in
- 	find () {
- 		/usr/bin/find "$@"
- 	}
-+	is_absolute_path () {
-+		case "$1" in
-+		[/\\]* | [A-Za-z]:*)
-+			return 0 ;;
-+		esac
-+		return 1
-+	}
- 	;;
-+*)
-+	is_absolute_path () {
-+		case "$1" in
-+		/*)
-+			return 0 ;;
-+		esac
-+		return 1
-+	}
- esac
 -- 
-1.7.3
+Jakub Narebski
+Poland
