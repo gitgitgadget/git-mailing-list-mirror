@@ -1,70 +1,50 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv4 14/15] Add missing &&'s throughout the testsuite
-Date: Fri, 1 Oct 2010 00:48:29 +0000
-Message-ID: <AANLkTim6ca=8pis2X8Xrc1bGB0YCtYRxCpY3pMdA0QvU@mail.gmail.com>
-References: <1285542879-16381-1-git-send-email-newren@gmail.com>
-	<1285542879-16381-15-git-send-email-newren@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 02:48:37 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: lost connection in middle of interactive rebase
+Date: Thu, 30 Sep 2010 19:53:54 -0500
+Message-ID: <i83bg4$rl6$1@dough.gmane.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 01 02:54:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1Tng-00079P-AL
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 02:48:36 +0200
+	id 1P1Ttb-0008Td-79
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 02:54:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752743Ab0JAAsb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 20:48:31 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:41839 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784Ab0JAAsa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 20:48:30 -0400
-Received: by iwn5 with SMTP id 5so3110148iwn.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 17:48:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uZwjTZkwqUkbTzKbbFplcoRGXRUA1gLOR1DswCVUTJg=;
-        b=iTUmnOtIhJpOJl8cWj3m+4OgYsKeABZfgsiAE3oTXDEi/GS8ckUxivMZhjTQ8rijPQ
-         5taw8yfOUKZqr5pRvg/YrY4fIgpCFijh8S2ZgdWvleYRwJs4QPo4ESXHfDfXiVEkTIsb
-         UynJ3yayJyUHYWDP50n8v+dTWN/DdAivpJWTM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=OgQAalyj+/CDQQJkAasZv2ar7BYRjSON2lbZxT2C+3uCAd/9LzKQ8KYhYDqWyWJ3VY
-         MSztZSJZ/IAtCg6m7erUalqAqbxNRIlAPzvCnyzxwQNCkVJct5NpxKNpwdhPzm+EkSgH
-         AjSfxM8QvwXJrYj2KBLWxjLV5gW7nZCTuv9Oo=
-Received: by 10.231.145.16 with SMTP id b16mr4667548ibv.198.1285894109838;
- Thu, 30 Sep 2010 17:48:29 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 17:48:29 -0700 (PDT)
-In-Reply-To: <1285542879-16381-15-git-send-email-newren@gmail.com>
+	id S1754517Ab0JAAyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 20:54:38 -0400
+Received: from lo.gmane.org ([80.91.229.12]:49664 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754020Ab0JAAyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 20:54:37 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P1TtU-0008T6-JR
+	for git@vger.kernel.org; Fri, 01 Oct 2010 02:54:36 +0200
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 02:54:36 +0200
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 02:54:36 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157725>
 
-On Sun, Sep 26, 2010 at 23:14, Elijah Newren <newren@gmail.com> wrote:
+I use a terminal emulator in windows to connect to a remote linux box.  The 
+git repos are on the linux box.  If my network connection drops during the 
+middle of my interactive rebase, how do I recover?
 
-> =C2=A0test_expect_success 'did not use upload-pack service' '
-> - =C2=A0 =C2=A0 =C2=A0 grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/ac=
-cess.log >act
-> - =C2=A0 =C2=A0 =C2=A0 : >exp
-> + =C2=A0 =C2=A0 =C2=A0 grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/ac=
-cess.log >act &&
-> + =C2=A0 =C2=A0 =C2=A0 >exp &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_cmp exp act
-> =C2=A0'
-
-This test started failing in pu, I'm presuming you didn't spot it
-since you didn't run the tests with GIT_TEST_HTTPD=3D1.
-
-Anyway, that grep should be a "! grep" to work with &&.
+v/r,
+Neal 
