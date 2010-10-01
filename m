@@ -1,106 +1,139 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4 02/15] t4017 (diff-retval): replace manual exit code
- check with test_expect_code
-Date: Fri, 1 Oct 2010 06:52:24 -0500
-Message-ID: <20101001115224.GB18405@burratino>
-References: <1285542879-16381-1-git-send-email-newren@gmail.com>
- <1285542879-16381-3-git-send-email-newren@gmail.com>
- <7vd3rwo22t.fsf@alter.siamese.dyndns.org>
- <AANLkTiksEBVUyJnrUETxManHa+ZMCT6+V3C83K75KW2A@mail.gmail.com>
- <20101001102315.GA6816@burratino>
- <AANLkTinqVTqxiHL5tEv+-SS6YURGUoWaPxCgpccZgjEq@mail.gmail.com>
+From: Magnus Hagander <magnus@hagander.net>
+Subject: Re: [PATCH] Allow gitweb tab width to be set per project.
+Date: Fri, 1 Oct 2010 13:56:12 +0200
+Message-ID: <AANLkTimPte3eQMuCE3NTS=03Vv+Q2-nnu8BmXq=4YCbA@mail.gmail.com>
+References: <1285673709-24924-1-git-send-email-magnus@hagander.net>
+	<m34odagioh.fsf@localhost.localdomain>
+	<AANLkTikMjVQgEzLQ5Z95cmb5fkQ5iSzqfA4T=D1zzy=j@mail.gmail.com>
+	<201009291122.01272.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 13:55:38 2010
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 13:56:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1eDC-0004C8-4l
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 13:55:38 +0200
+	id 1P1eDq-0004RS-W6
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 13:56:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756036Ab0JALzd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 07:55:33 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:62973 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753643Ab0JALzc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 07:55:32 -0400
-Received: by gxk9 with SMTP id 9so1098127gxk.19
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 04:55:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=elkJAgMM2XJAWlmRg3auZkwmd8HPKYB3G8tNkl10JKw=;
-        b=KrXeb1DhQk3oJbEE4qHsymnmmSd0ztD4fk/jG/+lz0pxYGFfsLDUetZljksaM3YHNT
-         1UX43q4bmZtecsbddkvPW1JYnGDua1MJVQOrH8cqXnG4G6gNH1CHmE7TCAP8bu0+TmdF
-         7PeKSldh+/b0BxNn51cDZYnI1b/PiYqgW3WVI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=fDwiFAlH6j958fYCps2DWsfOHcod25wVPblGspNyxZgUFlfa1aOarPgm0BERTnK4Bg
-         PT5+2y8YqxsK1s3+gAiBkOQIsifbvBMkYxrRQbDwMeTlezuGRzZtKQzgWEZXUQKIL9qY
-         U6YmGBQ8EPG6MpBgXvaRwwKPTCgWboq9revgw=
-Received: by 10.90.50.5 with SMTP id x5mr1337104agx.62.1285934131651;
-        Fri, 01 Oct 2010 04:55:31 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id r20sm1741413anf.27.2010.10.01.04.55.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 01 Oct 2010 04:55:30 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinqVTqxiHL5tEv+-SS6YURGUoWaPxCgpccZgjEq@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1756643Ab0JAL4O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 07:56:14 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:33149 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755634Ab0JAL4O convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 07:56:14 -0400
+Received: by qwh6 with SMTP id 6so1450424qwh.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 04:56:13 -0700 (PDT)
+Received: by 10.224.112.204 with SMTP id x12mr3656393qap.170.1285934172917;
+ Fri, 01 Oct 2010 04:56:12 -0700 (PDT)
+Received: by 10.229.96.207 with HTTP; Fri, 1 Oct 2010 04:56:12 -0700 (PDT)
+In-Reply-To: <201009291122.01272.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157749>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157750>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Fri, Oct 1, 2010 at 10:23, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-
->> +check_exit_status () {
->> + =C2=A0 =C2=A0 =C2=A0 echo "$1" >expect.status
->> + =C2=A0 =C2=A0 =C2=A0 shift
->> + =C2=A0 =C2=A0 =C2=A0 "$@"
->> + =C2=A0 =C2=A0 =C2=A0 echo "$?" >actual.status
->> + =C2=A0 =C2=A0 =C2=A0 test_cmp expect.status actual.status
->> +}
+On Wed, Sep 29, 2010 at 11:22, Jakub Narebski <jnareb@gmail.com> wrote:
+> On Wed, 29 Sep 2010, Magnus Hagander wrote:
+>> On Tue, Sep 28, 2010 at 14:25, Jakub Narebski <jnareb@gmail.com> wro=
+te:
+>>> Magnus Hagander <magnus@hagander.net> writes:
 >
-> If we add this it should be in the test-lib.sh, it'll probably be
-> useful for other tests.
+>>>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>>>> index a85e2f6..ef92a4f 100755
+>>>> --- a/gitweb/gitweb.perl
+>>>> +++ b/gitweb/gitweb.perl
+>>>> @@ -1465,9 +1465,11 @@ sub unquote {
+>>>> =A0# escape tabs (convert tabs to spaces)
+>>>> =A0sub untabify {
+>>>> =A0 =A0 =A0 my $line =3D shift;
+>>>> + =A0 =A0 my $tabwidth =3D git_get_project_config('tabwidth', '--i=
+nt');
+>>>
+>>> Note that untabify() is called once for each _line_ in a file or a
+>>> diff...
+>>
+>> Ha, that's what I get for thinking it was too easy. It actually was =
+:-)
+>>
+>>
+>>> This has acceptable performance only because gitweb config is cache=
+d
+>>> in %config hash by git_get_project_config() subroutine.
+>>>
+>>>
+>>> I'm not sure if it wouldn't be better to have $tabwidth be passed a=
+s
+>>> an (optional) argument to untabify(), and calculated either in call=
+ing
+>>> sites for untabify(), or be calculated per-request and save in a
+>>> global variable.
+>>
+>> Given that it's cached, will it actually make a big difference?
+>
+> Well, I agree that with config cached it could be left like this...
+> but I would like very much to perhaps have a comment about this, so o=
+ther
+> people don't have to wonder.
 
-=46WIW a more generally useful function would have to look something
-like this:
+Check.
 
-test_exit_status () {
-	want_code=3D$1
-	shift
-	"$@"
-	exit_code=3D$?
-	if test $exit_code =3D $want_code
-	then
-		return 0
-	else
-		echo >&2 "test_exit_status $want_code: command had status $exit_code:=
- $*"
-		return 1
-	fi
-}
+>>>> + =A0 =A0 $tabwidth =3D 8 if ($tabwidth <=3D 0);
+>>>
+>>> git_get_project_config('tabwidth', '--int') can return 'undef' if a
+>>> configuration key does not exist, resulting in
+>>>
+>>> =A0Use of uninitialized value in numeric le (<=3D) at
+>>>
+>>> warning in web server logs.
+>>
+>> Ah, I knew that would go somewhere. Interestingly enough, it doesn't
+>> show up in the logs of the server I run it on now. But still should =
+be
+>> fixed.
+>
+> Whether such warning shows in web server logs might depend on whether
+> you are running gitweb under mod_perl, or as plain CGI script.
+> Nevertheless it is a good practice to check if a change passess
+> appropriate tests from git testsuite; t9500-gitweb-standalone-no-erro=
+rs
+> should detect this.
 
-to avoid touching the file system.
+Good point. Now I just need to figure out how to be able to run the
+tests :-) I guess I should just set off a job to build the whole tree,
+and then it will just work..
 
->                                                               and
-> change the tests using test_expect_code in t1504-ceiling-dirs.sh and
-> t6020-merge-df.sh to use test_expect_success + test_expect_code.
 
-Not a bad thing to do anyway.
+> Simply use
+>
+> =A0 =A0+ =A0 =A0 $tabwidth =3D 8 if (!defined $tabwidth || $tabwidth =
+<=3D 0);
+>
+> or
+>
+> =A0 =A0+ =A0 =A0 $tabwidth =3D 8 if (!$tabwidth || $tabwidth <=3D 0);
+>
+> (though second version is more cryptic).
+
+Yeah, i definitely prefer the first one - then again, I'm not really a
+perl guy...
+
+
+
+> P.S. If it is not a %feature, we might want to add description of
+> gitweb.tabwidth to the "Per-repository gitweb configuration" section
+> in gitweb/README (as next to last item)
+
+Ok. Will add that. Want me to send a new patch with these things includ=
+ed?
+
+
+--=20
+=A0Magnus Hagander
+=A0Me: http://www.hagander.net/
+=A0Work: http://www.redpill-linpro.com/
