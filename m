@@ -1,241 +1,320 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [RFC PATCH 2/3] grep: prepare grep for submodules
-Date: Fri, 01 Oct 2010 09:26:29 -0700
-Message-ID: <4CA60BB5.4080202@gmail.com>
-References: <1285792134-26339-1-git-send-email-judge.packham@gmail.com>	<1285792134-26339-3-git-send-email-judge.packham@gmail.com>	<AANLkTik3bvJneak9gjG8O1A=LZeivPkFc6MF5_T7nbWo@mail.gmail.com>	<4CA4D820.5040100@gmail.com> <AANLkTikH+sd2kPAraGSTB-ik-Toz3s2nTLoLVOj86oSm@mail.gmail.com>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH] test-lib: make test_expect_code a test command
+Date: Fri,  1 Oct 2010 17:16:31 +0000
+Message-ID: <1285953391-29840-1-git-send-email-avarab@gmail.com>
+References: <7vd3rtholo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Jens.Lehmann" <Jens.Lehmann@web.de>, git <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 18:26:19 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 01 19:16:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1iR8-0000yT-FM
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 18:26:18 +0200
+	id 1P1jDz-0007Sb-Ih
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 19:16:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751935Ab0JAQ0M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 12:26:12 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:65529 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075Ab0JAQ0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Oct 2010 12:26:12 -0400
-Received: by pzk34 with SMTP id 34so809811pzk.19
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 09:26:11 -0700 (PDT)
+	id S1751670Ab0JARQl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 13:16:41 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:59121 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751501Ab0JARQk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 13:16:40 -0400
+Received: by wwj40 with SMTP id 40so1621439wwj.1
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 10:16:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=sZnIhFztviYejkjI7r+sapugCy4UNmi27MksPGPMaGk=;
-        b=CMc+lalnZ7VMYMPQ1yDOQrs6ROGmnJL4/z8s1COw33FR27EymvePt7NI9Y39E1Vajo
-         0dNSR1oqFvv8MtGtzIjnuxWtSOF6sMBctGJvmEAZXibG0bNqdQTgKtBPBrpgTEDDFJCY
-         S6TlIqPGIMzi8pq4cSsv7b0rYQfAdtuyiEmgY=
+        bh=rTQ3bbE6cPAk+OLlcyIA4lCNdszytmz6JjZLC13NXqo=;
+        b=TRoLurE9pVYHISdzidPkz5KR6WyAZsPnObocAJrjff/fvOODseo/3NYhDs5HgIKxC/
+         9ulIytGI2NVRM86eQEIOOCk1I9Elog7gzRoYO6m6fayMjbNtOSxx663ZrQ1W9I5PCs4C
+         cwsM9iglvueEK8fpyZgUZBVsbaiKir0VNu3fA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=x70DqSq/XLD6hWQJzPZBL3l07KUrOVD+VBc224lwfe5t21mJoIG8YkmLLlSgjScH64
-         CaC6MjFY4yOW/ZkJqXx/HT6jKedWI/ME2oc9ujX/02NPnwRAYaSlo0RATnXuRE0UDafT
-         hcXYCpmvkrUhVjU1fLvGhbiFaP89M2fYXfbrg=
-Received: by 10.114.88.18 with SMTP id l18mr6488061wab.92.1285950370993;
-        Fri, 01 Oct 2010 09:26:10 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id d39sm2146799wam.4.2010.10.01.09.26.09
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=j8YLLFSSHoW9M3UVyBN+IzuUVSLLzY4sfn4u646oYspPWzPLFOBksmH6BRG/92EZFB
+         /b1wx+SLSci1Pp36dKFKIRoJHSOkW7NenRg0rGI34JL2xWdP9fZaHPr7iXzAVh298dlC
+         n81IkL4AsOG7ygjUQu2nefdpMDPg2hBhpHmOU=
+Received: by 10.216.153.140 with SMTP id f12mr2345960wek.111.1285953398974;
+        Fri, 01 Oct 2010 10:16:38 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id u32sm935153weq.11.2010.10.01.10.16.37
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 01 Oct 2010 09:26:09 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <AANLkTikH+sd2kPAraGSTB-ik-Toz3s2nTLoLVOj86oSm@mail.gmail.com>
+        Fri, 01 Oct 2010 10:16:37 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.159.g610493
+In-Reply-To: <7vd3rtholo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157761>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157762>
 
-On 01/10/10 07:37, Nguyen Thai Ngoc Duy wrote:
-> On 10/1/10, Chris Packham <judge.packham@gmail.com> wrote:
->>  > You can make setup_explicit_git_dir() realize that situation (cur=
-rent
->>  > working directory outside $GIT_WORK_TREE), then calculate and sav=
-e the
->>  > submodule prefix in startup_info struct. Then "git grep" or any
->>  > commands can just read startup_info to find out the submodule pre=
-fix.
->>
->>
->> Here's my first naive attempt at implementing what you describe. Nee=
-ds
->>  tests, more comments, sign-off etc.
->=20
-> Thanks.
->=20
->>  One situation that could be handled better is when the cwd is a
->>  subdirectory of the specified worktree. At the moment this ends up
->>  giving the full path to the worktree, the output would look much ni=
-cer
->>  if it gave the relative path (e.g. ../../).
->=20
-> Hmm.. if cwd is inside a worktree, prefix (the 3rd parameter in
-> cmd_grep) should be correctly set and "git grep" should also show
-> relative path. Or are you talking about another command?
+Change test_expect_code to be a normal test command instead of a
+top-level command.
 
-I was testing this with grep but also with my submodule changes. I
-should probably move this to its own topic branch and get it working
-then rebase my grep changes on top of it.
+As a top-level command it would fail in cases like:
 
->>
->>  ---8<---
->>  From: Chris Packham <judge.packham@gmail.com>
->>  Date: Thu, 30 Sep 2010 11:19:29 -0700
->>  Subject: [RFC PATCH] save the work tree prefix in startup_info
->>
->>  This is the relative path between the cwd and the worktree or the
->>  absolute path of the worktree if the worktree is not a subdirectory
->>  of the worktree.
->>  ---
->>   cache.h |    1 +
->>   dir.c   |   26 ++++++++++++++++++++++++++
->>   dir.h   |    1 +
->>   setup.c |    4 ++++
->>   4 files changed, 32 insertions(+), 0 deletions(-)
->>
->>  diff --git a/cache.h b/cache.h
->>  index e1d3ffd..f320e78 100644
->>  --- a/cache.h
->>  +++ b/cache.h
->>  @@ -1111,6 +1111,7 @@ const char *split_cmdline_strerror(int cmdlin=
-e_errno);
->>   /* git.c */
->>   struct startup_info {
->>         int have_repository;
->>  +       const char *prefix;
->=20
-> You should use another name here to avoid confusion with the current
-> prefix, relative to worktree toplevel directory. I'm thinking of
-> outer_prefix or cwd_prefix, but I'm usually bad at naming.
+    test_expect_code 1 'phoney' '
+        foo && bar && (exit 1)
+    '
 
-I couldn't come up with a better name either, that=E2=80=99s why I used
-"prefix". "cwd_prefix" seems sensible enough to me.
+Here the test might incorrectly succeed if "foo" or "bar" happened to
+fail with exit status 1. Instead we now do:
 
->>   };
->>   extern struct startup_info *startup_info;
->>
->>  diff --git a/dir.c b/dir.c
->>  index 58ec1a1..2148730 100644
->>  --- a/dir.c
->>  +++ b/dir.c
->>  @@ -1036,6 +1036,32 @@ char *get_relative_cwd(char *buffer, int siz=
-e,
->>  const char *dir)
->>         }
->>   }
->>
->>  +char *get_relative_wt(char *buffer, int size, const char *dir)
->>  +{
->>  +       char *cwd =3D buffer;
->>  +
->>  +       if (!dir)
->>  +               return NULL;
->>  +       if (!getcwd(buffer, size))
->>  +               die_errno("can't find the current directory");
->>  +       if (!is_absolute_path(dir))
->>  +               dir =3D make_absolute_path(dir);
->>  +       if (strstr(dir, cwd)) {
->=20
-> Why not strncmp?
+    test_expect_success 'phoney' '
+        foo && bar && test_expect_code 1 "(exit 1)"
+    '
 
-I actually tried strcmp first, expecting to get a number that I can
-increment dir by. What I actually got was -1, maybe I just screwed up
-the order of dir and cwd. I'll look into it.
+Which will only succeed if "foo" and "bar" return status 0, and "(exit
+1)" returns status 1.
 
->=20
->>  +               dir +=3D strlen(cwd);
->>  +               switch(*dir){
->>  +               case '\0':
->>  +                       return NULL;
->>  +               case '/':
->>  +                       dir++;
->>  +                       break;
->=20
-> Yeah.
->=20
->>  +               default:
->>  +                       break;
->=20
-> Should we properly handle relative path that includes ".." here too?=20
+Some test code in t0000-basic.sh relied on the old semantics of
+test_expect_code to test the test_when_finished command. I've
+converted that code to use an external test similar no the TODO test I
+added in v1.7.3-rc0~2^2~3.
 
-By now dir and cwd are both absolute paths. So I dn't think there is
-anything to handle
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
 
->>  +               }
->>  +       }
->>  +       strncpy(buffer, dir, size);
->=20
-> So if "cwd" is inside "dir", an absolute "dir" is returned? That does
-> not look like a prefix to me.
+On Fri, Oct 1, 2010 at 16:20, Junio C Hamano <gitster@pobox.com> wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+>> So IMO the best thing to do would be to re-appropriate
+>> "test_expect_code" so that it runs inside a test (i.e. does what you=
+r
+>> check_exit_status does), and not at the top-level.
+>
+> I like it. =C2=A0It should have been done the way you suggest from th=
+e
+> beginning. =C2=A0It is unfortunate that we didn't think of wrappers l=
+ike
+> test_must_fail and friends when we originally did test_expect_code, b=
+ut it
+> is never too late to correct that mistake.
 
-That is a problem. Maybe I should be returning NULL in that case and le=
-t
-the existing code handle the cwd inside dir case. I think if I wrote
-some tests first I could see the various permutations better.
+Here's a patch to implement that. It goes on top of master so Elijah
+Newren's patch presumably will have to be re-done on top of it.
 
->>  +       return buffer;
->>  +}
->>  +
->>   int is_inside_dir(const char *dir)
->>   {
->>         char buffer[PATH_MAX];
->>  diff --git a/dir.h b/dir.h
->>  index b3e2104..d3c161f 100644
->>  --- a/dir.h
->>  +++ b/dir.h
->>  @@ -81,6 +81,7 @@ extern void add_exclude(const char *string, const=
- char
->>  *base,
->>   extern int file_exists(const char *);
->>
->>   extern char *get_relative_cwd(char *buffer, int size, const char *=
-dir);
->>  +extern char *get_relative_wt(char *buffer, int size, const char *d=
-ir);
->>   extern int is_inside_dir(const char *dir);
->>
->>   static inline int is_dot_or_dotdot(const char *name)
->>  diff --git a/setup.c b/setup.c
->>  index a3b76de..bd9d9fd 100644
->>  --- a/setup.c
->>  +++ b/setup.c
->>  @@ -317,6 +317,7 @@ static const char *setup_explicit_git_dir(const=
- char
->>  *gitdirenv,
->>                                 const char *work_tree_env, int *nong=
-it_ok)
->>   {
->>         static char buffer[1024 + 1];
->>  +       static char wtbuf[1024 + 1];
->>         const char *retval;
->>
->>         if (PATH_MAX - 40 < strlen(gitdirenv))
->>  @@ -337,6 +338,9 @@ static const char *setup_explicit_git_dir(const=
- char
->>  *gitdirenv,
->>         }
->>         if (check_repository_format_gently(nongit_ok))
->>                 return NULL;
->>  +
->>  +       startup_info->prefix=3Dget_relative_wt(wtbuf, sizeof(wtbuf)=
- - 1,
->>  +                       get_git_work_tree());
->>         retval =3D get_relative_cwd(buffer, sizeof(buffer) - 1,
->>                         get_git_work_tree());
->>         if (!retval || !*retval)
->>
->> --
->>  1.7.3.1
->>
->>
->=20
->=20
+ t/README                |   16 +++++++------
+ t/t0000-basic.sh        |   55 ++++++++++++++++++++++++++++++++++++++-=
+-------
+ t/t1504-ceiling-dirs.sh |    5 ++-
+ t/t6020-merge-df.sh     |    4 ++-
+ t/test-lib.sh           |   40 ++++++++++++++++++---------------
+ 5 files changed, 82 insertions(+), 38 deletions(-)
+
+diff --git a/t/README b/t/README
+index a1eb7c8..c216e8c 100644
+--- a/t/README
++++ b/t/README
+@@ -395,13 +395,6 @@ library for your script to use.
+    Like test_expect_success this function can optionally use a three
+    argument invocation with a prerequisite as the first argument.
+=20
+- - test_expect_code [<prereq>] <code> <message> <script>
+-
+-   Analogous to test_expect_success, but pass the test if it exits
+-   with a given exit <code>
+-
+- test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" =
+B master'
+-
+  - test_debug <script>
+=20
+    This takes a single argument, <script>, and evaluates it only
+@@ -482,6 +475,15 @@ library for your script to use.
+ 	    'Perl API' \
+ 	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
+=20
++ - test_expect_code <exit-code> <git-command>
++
++   Run a git command and ensure that it exits with the given exit
++   code. For example:
++
++	test_expect_success 'Merge with d/f conflicts' '
++		test_expect_code 1 git merge "merge msg" B master
++	'
++
+  - test_must_fail <git-command>
+=20
+    Run a git command and ensure it fails in a controlled way.  Use
+diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+index f688bd3..c2f5f8d 100755
+--- a/t/t0000-basic.sh
++++ b/t/t0000-basic.sh
+@@ -130,22 +130,57 @@ test_expect_success 'tests clean up after themsel=
+ves' '
+     test_when_finished clean=3Dyes
+ '
+=20
+-cleaner=3Dno
+-test_expect_code 1 'tests clean up even after a failure' '
+-    test_when_finished cleaner=3Dyes &&
+-    (exit 1)
+-'
+-
+-if test $clean$cleaner !=3D yesyes
++if test $clean !=3D yes
+ then
+-	say "bug in test framework: cleanup commands do not work reliably"
++	say "bug in test framework: basic cleanup command does not work relia=
+bly"
+ 	exit 1
+ fi
+=20
+-test_expect_code 2 'failure to clean up causes the test to fail' '
+-    test_when_finished "(exit 2)"
++test_expect_success 'tests clean up even on failures' "
++    mkdir failing-cleanup &&
++    (cd failing-cleanup &&
++    cat >failing-cleanup.sh <<EOF &&
++#!$SHELL_PATH
++
++test_description=3D'Failing tests with cleanup commands'
++
++# Point to the t/test-lib.sh, which isn't in ../ as usual
++TEST_DIRECTORY=3D\"$TEST_DIRECTORY\"
++. \"\$TEST_DIRECTORY\"/test-lib.sh
++
++test_expect_success 'tests clean up even after a failure' '
++    touch clean-after-failure &&
++    test_when_finished rm clean-after-failure &&
++    (exit 1)
+ '
+=20
++test_expect_success 'failure to clean up causes the test to fail' '
++    test_when_finished \"(exit 2)\"
++'
++
++test_done
++EOF
++    chmod +x failing-cleanup.sh &&
++    test_must_fail ./failing-cleanup.sh >out 2>err &&
++    ! test -s err &&
++    ! test -f \"trash directory.failing-cleanup/clean-after-failure\" =
+&&
++cat >expect <<EOF &&
++not ok - 1 tests clean up even after a failure
++#=09
++#	    touch clean-after-failure &&
++#	    test_when_finished rm clean-after-failure &&
++#	    (exit 1)
++#=09
++not ok - 2 failure to clean up causes the test to fail
++#=09
++#	    test_when_finished \"(exit 2)\"
++#=09
++# failed 2 among 2 test(s)
++1..2
++EOF
++    test_cmp expect out)
++"
++
+ ################################################################
+ # Basics of the basics
+=20
+diff --git a/t/t1504-ceiling-dirs.sh b/t/t1504-ceiling-dirs.sh
+index df5ad8c..cce87a5 100755
+--- a/t/t1504-ceiling-dirs.sh
++++ b/t/t1504-ceiling-dirs.sh
+@@ -9,8 +9,9 @@ test_prefix() {
+ }
+=20
+ test_fail() {
+-	test_expect_code 128 "$1: prefix" \
+-	"git rev-parse --show-prefix"
++	test_expect_success "$1: prefix" '
++		test_expect_code 128 git rev-parse --show-prefix
++	'
+ }
+=20
+ TRASH_ROOT=3D"$PWD"
+diff --git a/t/t6020-merge-df.sh b/t/t6020-merge-df.sh
+index 490d397..5d91d05 100755
+--- a/t/t6020-merge-df.sh
++++ b/t/t6020-merge-df.sh
+@@ -20,7 +20,9 @@ echo "file dir" > dir &&
+ git add dir &&
+ git commit -m "File: dir"'
+=20
+-test_expect_code 1 'Merge with d/f conflicts' 'git merge "merge msg" B=
+ master'
++test_expect_success 'Merge with d/f conflicts' '
++	test_expect_code 1 git merge "merge msg" B master
++'
+=20
+ test_expect_success 'F/D conflict' '
+ 	git reset --hard &&
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 830e5e7..d86edcd 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -473,24 +473,6 @@ test_expect_success () {
+ 	echo >&3 ""
+ }
+=20
+-test_expect_code () {
+-	test "$#" =3D 4 && { prereq=3D$1; shift; } || prereq=3D
+-	test "$#" =3D 3 ||
+-	error "bug in the test script: not 3 or 4 parameters to test-expect-c=
+ode"
+-	if ! test_skip "$@"
+-	then
+-		say >&3 "expecting exit code $1: $3"
+-		test_run_ "$3"
+-		if [ "$?" =3D 0 -a "$eval_ret" =3D "$1" ]
+-		then
+-			test_ok_ "$2"
+-		else
+-			test_failure_ "$@"
+-		fi
+-	fi
+-	echo >&3 ""
+-}
+-
+ # test_external runs external test scripts that provide continuous
+ # test output about their progress, and succeeds/fails on
+ # zero/non-zero exit code.  It outputs the test output on stdout even
+@@ -658,6 +640,28 @@ test_might_fail () {
+ 	return 0
+ }
+=20
++# Similar to test_must_fail and test_might_fail, but check that a
++# given command exited with a given exit code. Meant to be used as:
++#
++#	test_expect_success 'Merge with d/f conflicts' '
++#		test_expect_code 1 git merge "merge msg" B master
++#	'
++
++test_expect_code () {
++	want_code=3D$1
++	shift
++	"$@"
++	exit_code=3D$?
++	if test $exit_code =3D $want_code
++	then
++		echo >&2 "test_expect_code: command exited with $exit_code: $*"
++		return 0
++	else
++		echo >&2 "test_expect_code: command exited with $exit_code, we wante=
+d $want_code $*"
++		return 1
++	fi
++}
++
+ # test_cmp is a helper function to compare actual and expected output.
+ # You can use it like:
+ #
+--=20
+1.7.3.159.g610493
