@@ -1,61 +1,91 @@
-From: Eric Frederich <eric.frederich@gmail.com>
-Subject: cvs importing a forked project
-Date: Fri, 1 Oct 2010 13:38:56 -0400
-Message-ID: <AANLkTimvaH4UYzmL9eS1Yq7WNaS+jPRfkajKPP=hjZWV@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] test-lib: make test_expect_code a test command
+Date: Fri, 1 Oct 2010 19:39:11 +0200
+Message-ID: <AANLkTim1_Zfbrt4G_S2hj1zfF0VX-fM1AkwFyPp0B1qE@mail.gmail.com>
+References: <7vd3rtholo.fsf@alter.siamese.dyndns.org> <1285953391-29840-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 01 19:39:06 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 19:39:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1jZX-0005oT-Hl
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 19:39:03 +0200
+	id 1P1ja6-00060T-IJ
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 19:39:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753665Ab0JARi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Oct 2010 13:38:58 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51149 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753121Ab0JARi5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Oct 2010 13:38:57 -0400
-Received: by wwj40 with SMTP id 40so1649423wwj.1
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 10:38:56 -0700 (PDT)
+	id S1752666Ab0JARjd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 13:39:33 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64630 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751928Ab0JARjc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 13:39:32 -0400
+Received: by iwn5 with SMTP id 5so4072980iwn.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 10:39:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=Mup4OGXHrtKaGNHRX6mMWJXMPt1mV/FykvAJdmxYJOk=;
-        b=CeauCmP0h1n62wMJJTy4xB/wfZsy7HwRJFiR362B7SIFu1pomUeoFRz1taf2CRc+yJ
-         djBlinr99UFnKW/VOKentZvAeNM1NkFflpy2i/vpEWaLY/MBCRvkkaw9+axYFBB4b9ax
-         LDQ4+xbg4tDrpxGSgL0tztstLixqrOWp7l8dw=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6/Yxv12h810SbR/IXP+fadWbtxT4bRXmiUlPKin9bGI=;
+        b=as3USAqrNVyRcm2+0yZWDkcRsVxtXOwisPdC/BjgJFc+h37lD+/uFEGbT+mg1b9+DK
+         WHQIB6rM6Dp9ptx4ajbmVdeg0A36Ej8XsNa7cpBSSe5h53qor7tPeQB3lc88eWldwdrO
+         jCK7cKVhXeTp7GMlYuC6aOktgYzwwC5zYFmqg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=U0FsNtSl3o0Tu/HO0OxF/3IVZT0y1zP0qiRFAdFPzWZDI4hJtde4iI18iJlHqe2gyC
-         N4Uk5EMM1Tz8Rq9f9YzXHnJnR9JPJJ+kLilpc5+9RYpGQKa/ilVykqkajNkl/mXvAus/
-         9i88KqC8ceLByvMGXp7kiNPHtxgz4+6UZER8s=
-Received: by 10.216.231.97 with SMTP id k75mr4799673weq.4.1285954736595; Fri,
- 01 Oct 2010 10:38:56 -0700 (PDT)
-Received: by 10.216.80.144 with HTTP; Fri, 1 Oct 2010 10:38:56 -0700 (PDT)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=LS/li5VqbY2YV6c8vT/ZiJaLJvVUDuA3LSFCwtARd8EsiZxf1Owdw7OXHOyTzQgFPo
+         Hox7E0S7otybjGZl/bJW10ODlM7lrHXEEkCYJPxlg7WKXtBfzKz6UVLadpXGvAfTE88Y
+         Bv3Yzvw6lfu7itshtsSx3FCdENYWzfr5JxYqw=
+Received: by 10.231.35.200 with SMTP id q8mr5963235ibd.191.1285954771789; Fri,
+ 01 Oct 2010 10:39:31 -0700 (PDT)
+Received: by 10.231.33.138 with HTTP; Fri, 1 Oct 2010 10:39:11 -0700 (PDT)
+In-Reply-To: <1285953391-29840-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157764>
 
-Hello,
+Heya,
 
-I have a project (several actually) where development was done in cvs
-for 10 years.  Then, about 5 years ago, a copy of the latest was made
-and development continued in a new project.
-Development in the old project stopped for the most part.
+On Fri, Oct 1, 2010 at 19:16, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <a=
+varab@gmail.com> wrote:
+> converted that code to use an external test similar no the TODO test =
+I
 
-Is there any way where I can combine these two projects in git?
-Basically, take the newer project's first commit and make its parent
-the the last commit of the older project.
-Development was pretty linear.
+s/no/to/
+> +cat >expect <<EOF &&
+> +not ok - 1 tests clean up even after a failure
+> +#
+> +# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0touch clean-after-failure &&
+> +# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test_when_finished rm clean-afte=
+r-failure &&
+> +# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(exit 1)
+> +#
+> +not ok - 2 failure to clean up causes the test to fail
+> +#
+> +# =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test_when_finished \"(exit 2)\"
+> +#
+> +# failed 2 among 2 test(s)
+> +1..2
+> +EOF
+> + =C2=A0 =C2=A0test_cmp expect out)
 
-Thanks,
-~Eric
+I still like the putting-the-code-in-a-separate-harness, but I'm
+wondering if we can't come up with something better than comparing
+with test output that could change in the future... unless we decide
+to standardize on TAP and not deviate from it? Either case, wouldn't
+it at least be a good idea to get rid of the parts after the # in the
+comparrison?
+
+--=20
+Cheers,
+
+Sverre Rabbelier
