@@ -1,114 +1,70 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v2 1/2] sh-setup: Write a new require_clean_work_tree
- function
-Date: Fri, 1 Oct 2010 18:26:09 +0530
-Message-ID: <20101001125604.GA20713@kytes>
-References: <1285877017-8060-1-git-send-email-artagnon@gmail.com>
- <1285877017-8060-2-git-send-email-artagnon@gmail.com>
- <7v4od7hsqt.fsf@alter.siamese.dyndns.org>
- <20101001045713.GE20098@kytes>
- <20101001053721.GB6184@burratino>
- <20101001072149.GA24171@kytes>
- <20101001074039.GC6184@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Advertising the Git User's Survey 2010 - report
+Date: Fri, 1 Oct 2010 21:05:00 +0700
+Message-ID: <AANLkTikS0=FxcbSFbZpU0gtD8Md64RGBsn394sq3dewC@mail.gmail.com>
+References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com>
+	<201009222242.06975.jnareb@gmail.com>
+	<201009301251.37878.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 14:57:30 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 16:05:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1fB2-0001Sl-Sn
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 14:57:29 +0200
+	id 1P1gEb-0006iF-Ks
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 16:05:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932559Ab0JAM5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Oct 2010 08:57:22 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:58760 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932457Ab0JAM5V (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Oct 2010 08:57:21 -0400
-Received: by pvg2 with SMTP id 2so740669pvg.19
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 05:57:21 -0700 (PDT)
+	id S932289Ab0JAOFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 10:05:05 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:57669 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932219Ab0JAOFE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 10:05:04 -0400
+Received: by wwj40 with SMTP id 40so1347133wwj.1
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 07:05:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=IDyKrXQFJddCjO89YGggw/76cOH5bellRpsr2bA8V2A=;
-        b=JJk1EZIhx0yo1JRVnBn+XHaYxze3oclY4j/Qkiq74CdjAlHOgT5OAXWzPmqi//faUO
-         uVYDbPq4rwMuoxdk6/zcRdMFQSnnzhvykCdyhb6tl8Ry9LEZADDR0Lf4UK7GAOJXRQY4
-         c6ArKOKvInzhu44JnHhdfZYryMuco88Hfj3rU=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=mmVGMPN3MeFFnlLWUMBLPhTfn1Rf1wunz/hcD7FoFEg=;
+        b=P+2X2KEeFOZ8A615nV5HC8+4xSIMN/pK00QddgOs5TnEh6WXn69YqhEFrLqghS6GVA
+         1teHKMRjbGfZdj2AUUKm20y0Q93TZjcu6KmtxHPjBnihvY92cZ1G9vBtI1IpwTBqY5f2
+         4QHy4uYrpNWO2CX4PI/p3gh+2GCl5mK5QSf/I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ny+h5Zl8kX2U+2tPJOTMpaR+LBZY7pW1CYAmTr/NRMYENX2bib5icsGmMlQuJGhBNw
-         5aw/dUnLs2NWFGmzkQ8CyVGR+CKR+9ckhoSbrQPHwWaTT6edFIO7V8ljhcownxDZ9tDi
-         cBTO1x6mjQGycjJO85C8mXm5IJtM+ByuyKQxI=
-Received: by 10.114.46.14 with SMTP id t14mr6208914wat.67.1285937840958;
-        Fri, 01 Oct 2010 05:57:20 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 33sm1830941wad.18.2010.10.01.05.57.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 01 Oct 2010 05:57:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20101001074039.GC6184@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hTthRLEed9Ql6nRr/BFS/tIkQMxyxVlT6+22QrC00BmW+RVq1leI0TdkaECiRjrUrQ
+         AmvSjlVcjFHwpn6gYkW++/T52Z9QNcS0M40jMM4S9ayKZ83yktDKl7GERNh4UtjHlWao
+         7C9oyT/zs0qgjTivhokUxXbBvUxMpQZb1+eCE=
+Received: by 10.216.237.100 with SMTP id x78mr4455848weq.114.1285941900203;
+ Fri, 01 Oct 2010 07:05:00 -0700 (PDT)
+Received: by 10.216.153.195 with HTTP; Fri, 1 Oct 2010 07:05:00 -0700 (PDT)
+In-Reply-To: <201009301251.37878.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157752>
 
-Hi Jonathan,
+On 9/30/10, Jakub Narebski <jnareb@gmail.com> wrote:
+>  Are there channels that should be utilized missing from the above list?
+>  How next year Git User's Survey 2011 (if there would be one) should be
+>  announced?
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
-> 
-> > Are all these tags useful?
-> 
-> Probably not. :)
-[...]
+>From the report, 77% answers question 21 as "this is my first survey",
+I think you have done a fantastic job.
 
-How about this then?
+By the way, for the next surveys maybe you should list git-lol [1] as
+a Git "GUI". I rarely use gitk. Ever since I discovered git-lol, I
+don't know if I need gitk again.
 
-Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-
--- 8< --
-diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
-index ece3c77..72741eb 100644
---- a/Documentation/SubmittingPatches
-+++ b/Documentation/SubmittingPatches
-@@ -264,12 +264,21 @@ the change to its true author (see (2) above).
- Also notice that a real name is used in the Signed-off-by: line. Please
- don't hide your real name.
- 
--Some people also put extra tags at the end.
--
--"Acked-by:" says that the patch was reviewed by the person who
--is more familiar with the issues and the area the patch attempts
--to modify.  "Tested-by:" says the patch was tested by the person
--and found to have the desired effect.
-+If you like, you can put extra tags at the end:
-+
-+1. "Reported-by:" is used to to credit someone who found the bug that
-+   the patch attempts to fix.
-+2. "Acked-by:" says that the person who is more familiar with the area
-+   the patch attempts to modify liked the patch.
-+3. "Reviewed-by:", unlike the other tags, can only be offered by the
-+   reviewer and means that she is completely satisfied that the patch
-+   is ready for application.  It is usually offered only after a
-+   detailed review.
-+4. "Tested-by:" is used to indicate that the person applied the patch
-+   and found it to have the desired effect.
-+
-+You can also create your own tag or use one that's in common usage
-+such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
- 
- ------------------------------------------------
- An ideal patch flow
+[1] http://andyjeffries.co.uk/articles/25-tips-for-intermediate-git-users
+(13. Viewing a Log)
+-- 
+Duy
