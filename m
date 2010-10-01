@@ -1,139 +1,114 @@
-From: Magnus Hagander <magnus@hagander.net>
-Subject: Re: [PATCH] Allow gitweb tab width to be set per project.
-Date: Fri, 1 Oct 2010 13:56:12 +0200
-Message-ID: <AANLkTimPte3eQMuCE3NTS=03Vv+Q2-nnu8BmXq=4YCbA@mail.gmail.com>
-References: <1285673709-24924-1-git-send-email-magnus@hagander.net>
-	<m34odagioh.fsf@localhost.localdomain>
-	<AANLkTikMjVQgEzLQ5Z95cmb5fkQ5iSzqfA4T=D1zzy=j@mail.gmail.com>
-	<201009291122.01272.jnareb@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2 1/2] sh-setup: Write a new require_clean_work_tree
+ function
+Date: Fri, 1 Oct 2010 18:26:09 +0530
+Message-ID: <20101001125604.GA20713@kytes>
+References: <1285877017-8060-1-git-send-email-artagnon@gmail.com>
+ <1285877017-8060-2-git-send-email-artagnon@gmail.com>
+ <7v4od7hsqt.fsf@alter.siamese.dyndns.org>
+ <20101001045713.GE20098@kytes>
+ <20101001053721.GB6184@burratino>
+ <20101001072149.GA24171@kytes>
+ <20101001074039.GC6184@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 13:56:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 14:57:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1eDq-0004RS-W6
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 13:56:19 +0200
+	id 1P1fB2-0001Sl-Sn
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 14:57:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756643Ab0JAL4O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 07:56:14 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:33149 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755634Ab0JAL4O convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 07:56:14 -0400
-Received: by qwh6 with SMTP id 6so1450424qwh.19
-        for <git@vger.kernel.org>; Fri, 01 Oct 2010 04:56:13 -0700 (PDT)
-Received: by 10.224.112.204 with SMTP id x12mr3656393qap.170.1285934172917;
- Fri, 01 Oct 2010 04:56:12 -0700 (PDT)
-Received: by 10.229.96.207 with HTTP; Fri, 1 Oct 2010 04:56:12 -0700 (PDT)
-In-Reply-To: <201009291122.01272.jnareb@gmail.com>
+	id S932559Ab0JAM5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 08:57:22 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:58760 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932457Ab0JAM5V (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 08:57:21 -0400
+Received: by pvg2 with SMTP id 2so740669pvg.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 05:57:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=IDyKrXQFJddCjO89YGggw/76cOH5bellRpsr2bA8V2A=;
+        b=JJk1EZIhx0yo1JRVnBn+XHaYxze3oclY4j/Qkiq74CdjAlHOgT5OAXWzPmqi//faUO
+         uVYDbPq4rwMuoxdk6/zcRdMFQSnnzhvykCdyhb6tl8Ry9LEZADDR0Lf4UK7GAOJXRQY4
+         c6ArKOKvInzhu44JnHhdfZYryMuco88Hfj3rU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ny+h5Zl8kX2U+2tPJOTMpaR+LBZY7pW1CYAmTr/NRMYENX2bib5icsGmMlQuJGhBNw
+         5aw/dUnLs2NWFGmzkQ8CyVGR+CKR+9ckhoSbrQPHwWaTT6edFIO7V8ljhcownxDZ9tDi
+         cBTO1x6mjQGycjJO85C8mXm5IJtM+ByuyKQxI=
+Received: by 10.114.46.14 with SMTP id t14mr6208914wat.67.1285937840958;
+        Fri, 01 Oct 2010 05:57:20 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id 33sm1830941wad.18.2010.10.01.05.57.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 01 Oct 2010 05:57:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101001074039.GC6184@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157751>
 
-On Wed, Sep 29, 2010 at 11:22, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Wed, 29 Sep 2010, Magnus Hagander wrote:
->> On Tue, Sep 28, 2010 at 14:25, Jakub Narebski <jnareb@gmail.com> wro=
-te:
->>> Magnus Hagander <magnus@hagander.net> writes:
->
->>>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>>> index a85e2f6..ef92a4f 100755
->>>> --- a/gitweb/gitweb.perl
->>>> +++ b/gitweb/gitweb.perl
->>>> @@ -1465,9 +1465,11 @@ sub unquote {
->>>> =A0# escape tabs (convert tabs to spaces)
->>>> =A0sub untabify {
->>>> =A0 =A0 =A0 my $line =3D shift;
->>>> + =A0 =A0 my $tabwidth =3D git_get_project_config('tabwidth', '--i=
-nt');
->>>
->>> Note that untabify() is called once for each _line_ in a file or a
->>> diff...
->>
->> Ha, that's what I get for thinking it was too easy. It actually was =
-:-)
->>
->>
->>> This has acceptable performance only because gitweb config is cache=
-d
->>> in %config hash by git_get_project_config() subroutine.
->>>
->>>
->>> I'm not sure if it wouldn't be better to have $tabwidth be passed a=
-s
->>> an (optional) argument to untabify(), and calculated either in call=
-ing
->>> sites for untabify(), or be calculated per-request and save in a
->>> global variable.
->>
->> Given that it's cached, will it actually make a big difference?
->
-> Well, I agree that with config cached it could be left like this...
-> but I would like very much to perhaps have a comment about this, so o=
-ther
-> people don't have to wonder.
+Hi Jonathan,
 
-Check.
+Jonathan Nieder writes:
+> Ramkumar Ramachandra wrote:
+> 
+> > Are all these tags useful?
+> 
+> Probably not. :)
+[...]
 
->>>> + =A0 =A0 $tabwidth =3D 8 if ($tabwidth <=3D 0);
->>>
->>> git_get_project_config('tabwidth', '--int') can return 'undef' if a
->>> configuration key does not exist, resulting in
->>>
->>> =A0Use of uninitialized value in numeric le (<=3D) at
->>>
->>> warning in web server logs.
->>
->> Ah, I knew that would go somewhere. Interestingly enough, it doesn't
->> show up in the logs of the server I run it on now. But still should =
-be
->> fixed.
->
-> Whether such warning shows in web server logs might depend on whether
-> you are running gitweb under mod_perl, or as plain CGI script.
-> Nevertheless it is a good practice to check if a change passess
-> appropriate tests from git testsuite; t9500-gitweb-standalone-no-erro=
-rs
-> should detect this.
+How about this then?
 
-Good point. Now I just need to figure out how to be able to run the
-tests :-) I guess I should just set off a job to build the whole tree,
-and then it will just work..
+Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 
-
-> Simply use
->
-> =A0 =A0+ =A0 =A0 $tabwidth =3D 8 if (!defined $tabwidth || $tabwidth =
-<=3D 0);
->
-> or
->
-> =A0 =A0+ =A0 =A0 $tabwidth =3D 8 if (!$tabwidth || $tabwidth <=3D 0);
->
-> (though second version is more cryptic).
-
-Yeah, i definitely prefer the first one - then again, I'm not really a
-perl guy...
-
-
-
-> P.S. If it is not a %feature, we might want to add description of
-> gitweb.tabwidth to the "Per-repository gitweb configuration" section
-> in gitweb/README (as next to last item)
-
-Ok. Will add that. Want me to send a new patch with these things includ=
-ed?
-
-
---=20
-=A0Magnus Hagander
-=A0Me: http://www.hagander.net/
-=A0Work: http://www.redpill-linpro.com/
+-- 8< --
+diff --git a/Documentation/SubmittingPatches b/Documentation/SubmittingPatches
+index ece3c77..72741eb 100644
+--- a/Documentation/SubmittingPatches
++++ b/Documentation/SubmittingPatches
+@@ -264,12 +264,21 @@ the change to its true author (see (2) above).
+ Also notice that a real name is used in the Signed-off-by: line. Please
+ don't hide your real name.
+ 
+-Some people also put extra tags at the end.
+-
+-"Acked-by:" says that the patch was reviewed by the person who
+-is more familiar with the issues and the area the patch attempts
+-to modify.  "Tested-by:" says the patch was tested by the person
+-and found to have the desired effect.
++If you like, you can put extra tags at the end:
++
++1. "Reported-by:" is used to to credit someone who found the bug that
++   the patch attempts to fix.
++2. "Acked-by:" says that the person who is more familiar with the area
++   the patch attempts to modify liked the patch.
++3. "Reviewed-by:", unlike the other tags, can only be offered by the
++   reviewer and means that she is completely satisfied that the patch
++   is ready for application.  It is usually offered only after a
++   detailed review.
++4. "Tested-by:" is used to indicate that the person applied the patch
++   and found it to have the desired effect.
++
++You can also create your own tag or use one that's in common usage
++such as "Thanks-to:", "Based-on-patch-by:", or "Mentored-by:".
+ 
+ ------------------------------------------------
+ An ideal patch flow
