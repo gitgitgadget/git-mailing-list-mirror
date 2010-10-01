@@ -1,78 +1,89 @@
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Fri,  1 Oct 2010 22:13:03 +0200
-Message-ID: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Darren Hart <darren@dvhart.com>
+Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
+Date: Fri, 1 Oct 2010 13:18:00 -0700
+Message-ID: <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com>
+References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Darren Hart <darren@dvhart.com>,
-	Steven Rostedt <rostedt@goodmis.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 01 22:13:18 2010
+Cc: git@vger.kernel.org, Steven Rostedt <rostedt@goodmis.org>
+To: =?ISO-8859-1?Q?Uwe_Kleine=2DK=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Fri Oct 01 22:18:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1lyo-0006Bw-5d
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 22:13:18 +0200
+	id 1P1m3X-0007TB-8H
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 22:18:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059Ab0JAUNL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 16:13:11 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:51676 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751466Ab0JAUNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 1 Oct 2010 16:13:10 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P1lyf-0004eg-NV; Fri, 01 Oct 2010 22:13:09 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P1lyd-0001TL-Vi; Fri, 01 Oct 2010 22:13:07 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752581Ab0JAUSF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 1 Oct 2010 16:18:05 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:42268 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414Ab0JAUSE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 16:18:04 -0400
+Received: by qyk36 with SMTP id 36so3784549qyk.19
+        for <git@vger.kernel.org>; Fri, 01 Oct 2010 13:18:03 -0700 (PDT)
+Received: by 10.224.74.1 with SMTP id s1mr4224713qaj.26.1285964280147; Fri, 01
+ Oct 2010 13:18:00 -0700 (PDT)
+Received: by 10.229.26.82 with HTTP; Fri, 1 Oct 2010 13:18:00 -0700 (PDT)
+In-Reply-To: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
+X-Google-Sender-Auth: PIat9rCGA00qo79vTRMLJC34np0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157777>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157778>
 
-Some people in #linux-rt claimed that you cannot define "--mirror" with
-"mirror".
+2010/10/1 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
+> Some people in #linux-rt claimed that you cannot define "--mirror" wi=
+th
+> "mirror".
+>
+> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
 
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- Documentation/git-clone.txt |   11 ++++++++++-
- 1 files changed, 10 insertions(+), 1 deletions(-)
+Acked-by: Darren 'Some People' Hart <darren@dvhart.com>
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index dc7d3d1..5eedfbd 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -128,7 +128,16 @@ objects from the source repository into a pack in =
-the cloned repository.
- 	configuration variables are created.
-=20
- --mirror::
--	Set up a mirror of the remote repository.  This implies `--bare`.
-+	Set up a mirror of the remote repository.
-+	Using
-+
-+		git remote update origin
-+
-+	(or `<name>` instead of `origin` if -o is given) in the resulting
-+	repository overwrites the local branches without asking.
-+	This implies `--bare`.
-+	Without --mirror (but with --bare) git remote update doesn't touch an=
-y
-+	branches at all.
-=20
- --origin <name>::
- -o <name>::
+> ---
+> =A0Documentation/git-clone.txt | =A0 11 ++++++++++-
+> =A01 files changed, 10 insertions(+), 1 deletions(-)
+>
+> diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.tx=
+t
+> index dc7d3d1..5eedfbd 100644
+> --- a/Documentation/git-clone.txt
+> +++ b/Documentation/git-clone.txt
+> @@ -128,7 +128,16 @@ objects from the source repository into a pack i=
+n the cloned repository.
+> =A0 =A0 =A0 =A0configuration variables are created.
+>
+> =A0--mirror::
+> - =A0 =A0 =A0 Set up a mirror of the remote repository. =A0This impli=
+es `--bare`.
+> + =A0 =A0 =A0 Set up a mirror of the remote repository.
+> + =A0 =A0 =A0 Using
+> +
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 git remote update origin
+> +
+> + =A0 =A0 =A0 (or `<name>` instead of `origin` if -o is given) in the=
+ resulting
+> + =A0 =A0 =A0 repository overwrites the local branches without asking=
+=2E
+> + =A0 =A0 =A0 This implies `--bare`.
+> + =A0 =A0 =A0 Without --mirror (but with --bare) git remote update do=
+esn't touch any
+> + =A0 =A0 =A0 branches at all.
+>
+> =A0--origin <name>::
+> =A0-o <name>::
+> --
+> 1.7.2.3
+>
+>
+
+
+
 --=20
-1.7.2.3
+Darren Hart
