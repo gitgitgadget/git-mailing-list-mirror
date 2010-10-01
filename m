@@ -1,206 +1,75 @@
-From: "Srood Sherif" <sroodsherif1@g.pl>
-Subject: For your interest
-Date: Fri, 1 Oct 2010 18:52:52 +0400
-Message-ID: <725e41af6881462c6575c6e04bfbcdc4.squirrel@72.55.168.116>
-Reply-To: srood.sherif1@g.pl
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 1/2] sh-setup: Write a new require_clean_work_tree
+ function
+Date: Fri, 01 Oct 2010 08:07:43 -0700
+Message-ID: <7vlj6igdds.fsf@alter.siamese.dyndns.org>
+References: <1285877017-8060-1-git-send-email-artagnon@gmail.com>
+ <1285877017-8060-2-git-send-email-artagnon@gmail.com>
+ <7v4od7hsqt.fsf@alter.siamese.dyndns.org> <20101001045713.GE20098@kytes>
+ <20101001053721.GB6184@burratino>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;boundary="----=_20101001185252_61111"
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Fri Oct 01 16:59:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 17:10:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1h4Y-00080r-9R
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 16:58:54 +0200
+	id 1P1hFU-0002r3-EP
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 17:10:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932608Ab0JAO6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 1 Oct 2010 10:58:45 -0400
-Received: from syscomptechweb.com ([72.55.168.116]:45687 "EHLO
-	cl-t085-170cl.privatedns.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S932393Ab0JAO6o (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 1 Oct 2010 10:58:44 -0400
-Received: from localhost ([127.0.0.1] helo=[72.55.168.116])
-	by cl-t085-170cl.privatedns.com with esmtpa (Exim 4.69)
-	(envelope-from <sroodsherif1@g.pl>)
-	id 1P1gyi-0003EI-LJ; Fri, 01 Oct 2010 10:52:52 -0400
-Received: from 94.203.252.7 ([94.203.252.7])
-        (SquirrelMail authenticated user marketing@harbal123.com)
-        by 72.55.168.116 with HTTP;
-        Fri, 1 Oct 2010 18:52:52 +0400
-User-Agent: SquirrelMail/1.4.21
-X-Priority: 3 (Normal)
-Importance: Normal
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cl-t085-170cl.privatedns.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - g.pl
+	id S1757288Ab0JAPH7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 1 Oct 2010 11:07:59 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37423 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757284Ab0JAPH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 1 Oct 2010 11:07:57 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4DC7BDB91A;
+	Fri,  1 Oct 2010 11:07:56 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=XKG4uOHhhHaZyAQ+6yZ0BiUD3bE=; b=Yv4w2n
+	HNFbpTPfaH1y1kLgURn6EN7BEasCT/RNxkDaDQTONCem8Rctk7inIzciCny0+fZ0
+	U827Xdd3YMh0QSWYqgOjL8xTpsQ1ZCZ4LzUVfa/ZPr3FN/MVtQZY2y1fojH4q/RM
+	wWl66TyVKytwOJ6gahYxZ8RU6rVF27EHQpuDY=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=skzP5eQu23PQSvHiE20OHAhPQS8srFEP
+	i5t4ciOdEIiE1LjYjdYxGu9PTDnKEXJvHALPf96thdU1yyPhzogx8diwOpwP6YuR
+	2G5sMuPF2bnfA69x6N3S36rccdIV4Mr6gBQZIS6myfv17II7EEIOF8NtkfL0eGAX
+	M0U6QXbny3s=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F14DEDB918;
+	Fri,  1 Oct 2010 11:07:50 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 10251DB917; Fri,  1 Oct
+ 2010 11:07:44 -0400 (EDT)
+In-Reply-To: <20101001053721.GB6184@burratino> (Jonathan Nieder's message of
+ "Fri\, 1 Oct 2010 00\:37\:21 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A8AEE1A0-CD6D-11DF-81BE-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.2 points;
- *  1.6 URG_BIZ BODY: Contains urgent matter
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  1.5 RAZOR2_CF_RANGE_E4_51_100 Razor2 gives engine 4 confidence level
- *      above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  3.7 PYZOR_CHECK Listed in Pyzor (http://pyzor.sf.net/)
- *  0.0 DIGEST_MULTIPLE Message hits more than one network digest check
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157757>
 
-------=_20101001185252_61111
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8bit
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
+> Some noise about Cc and Reviewed-by tags:
+>
+>    Checking Linux's Documentation/SubmittingPatches, I find that
+>    that is a misuse on my part (sorry).  A person passing on a patch
+>    to Linus is rather supposed to _add_ a Cc line in the rare event
+>    that they want to explain that a certain person had an opportunity
+>    to comment but did not comment (so Linus can know about their
+>    indifference to the patch, I guess).
 
-
-Greeting,
-
-My name is Mr. Srood A. Sherif, I live and work in
-Abu Dhabi UAE. I have an urgent business which I believe
-will interest you. Find the enclose for details.
-
-I wait for your response, Thank you.
-
-Regards
-
-Srood A. Sherif
-
-------=_20101001185252_61111
-Content-Type: application/pdf; name="For your interest.pdf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="For your interest.pdf"
-
-JVBERi0xLjMNJeLjz9MNCjQgMCBvYmoNPDwvTGluZWFyaXplZCAxL0wgNzA3MS9PIDYvRSAzMTUx
-L04gMS9UIDY5NDUvSCBbIDQ1NiAxMzldPj4NZW5kb2JqDSAgICAgICAgICAgICAgICAgICAgICAg
-DQp4cmVmDQo0IDgNCjAwMDAwMDAwMTYgMDAwMDAgbg0KMDAwMDAwMDU5NSAwMDAwMCBuDQowMDAw
-MDAwNjY3IDAwMDAwIG4NCjAwMDAwMDA4ODUgMDAwMDAgbg0KMDAwMDAwMjQ0MCAwMDAwMCBuDQow
-MDAwMDAyNjAyIDAwMDAwIG4NCjAwMDAwMDI4MzUgMDAwMDAgbg0KMDAwMDAwMDQ1NiAwMDAwMCBu
-DQp0cmFpbGVyDQo8PC9TaXplIDEyL1ByZXYgNjkzNS9Sb290IDUgMCBSL0luZm8gMyAwIFIvSURb
-PDFGQ0RFRjFENjAwODY3NDc4MUY5Mzc1NzA0NUQyRUZFPjw1NTQ0QTFBMkVCMUMwNzQyQUQ0REUz
-RTVFQzMyNDVGRT5dPj4NCnN0YXJ0eHJlZg0KMA0KJSVFT0YNCiAgICAgICAgICAgICAgICAgIA0K
-MTEgMCBvYmoNPDwvTGVuZ3RoIDYwL0ZpbHRlci9GbGF0ZURlY29kZS9JIDcwL1MgMzg+PnN0cmVh
-bQ0KeNpiYGBgZWBgEmAAAs4tDKiAEYhZGDgaEpDEWKGYgWERAze76BEGlkITEI+ZgUHyPlTPWoAA
-AwCoZwWrDQplbmRzdHJlYW0NZW5kb2JqDTUgMCBvYmoNPDwvTWV0YWRhdGEgMiAwIFIvUGFnZXMg
-MSAwIFIvVHlwZS9DYXRhbG9nL0xhbmcoZW4tVVMpPj4NZW5kb2JqDTYgMCBvYmoNPDwvQ3JvcEJv
-eFswIDAgNjEyIDc5Ml0vUGFyZW50IDEgMCBSL1RhYnMvUy9Db250ZW50cyA3IDAgUi9Sb3RhdGUg
-MC9Hcm91cDw8L0NTL0RldmljZVJHQi9TL1RyYW5zcGFyZW5jeS9UeXBlL0dyb3VwPj4vTWVkaWFC
-b3hbMCAwIDYxMiA3OTJdL1Jlc291cmNlczw8L0ZvbnQ8PC9UVDAgOCAwIFI+Pi9Qcm9jU2V0Wy9Q
-REYvVGV4dF0+Pi9UeXBlL1BhZ2U+Pg1lbmRvYmoNNyAwIG9iag08PC9MZW5ndGggMTQ4NS9GaWx0
-ZXIvRmxhdGVEZWNvZGU+PnN0cmVhbQ0KSImEVk1z2zYUvPtXvEM7Q3ZkhZIt2znajSdx2rQztXLo
-OD1AJCSypgEaIK3o33f3gXI9sdKeJOLj4WF33z5cLY/eLJeFzGbTxVyW66PzuZwXb6cnF7Ksju6y
-98HavslPM7eJE8nnmeR/LT8eFXI8O5liw7sjjCz/3g+cceQu+4QNu/z4NJPfzEN+nllp8pMsCoZv
-g/eV/qltaNYTzIqRK+Pu5fd1fpatm9JiNgimuQ0nyyU2rwZ5V5tVM9FQTvJF9tnlxxdZ02ONreQy
-mJUgwPVD/jZrgultnMqN6PmyDc14i8mrC9xla9+2mPTbxm3EIPZ55rvOh35w3NTjO92mccLo6cOv
-x1ylrw1y6mXbMEwrK4tPzDNW84BMFQMXreTHuIl1dq1xhal7Wfm+5uoBCefH30B89grjMekb5rJP
-rLKdCT1SSyf1PP9GqiaW/gk44piKyZiVwRpXeQfA4qDQ4ODPtz/M5pPzAp/FpCiKaVHIl2yJz61t
-n6x8wr0WWcucvZvIrX2y7gCMHwZXBQRegoUaG/wQjauUqdt0r0X2DpkltE2IX3IimgA3Zcnwg+uf
-4VQYWw/lSe/F5xeZs0zXD0EoFR8Q0FIOGyflEHtPciwxDlF+hQJIzqcwfQ3oXXZJXpogv9QI16gK
-ndwE88hbymqIDU5wNkauw9RWbySDW6suTJ/Pisy2ODwx0PrYS83NkQEUrLXl/XpsrAGiQcC0do6R
-s4nMi+IM/+Sa1GHN42Du7QFcQaOJPcEIjPfRkBgzkRsQSU3byPyNkPXaKPf3SYncAwJwJmUgC5LL
-GukInO+YvZ3KBytbg5HI6DeqDsSLjREPdhIWKDkdjEpkH3i9TpTe19iOBNIttiZK7bc4EwUNwV5k
-VhOsmyjKlKumdIPv2MryJypdOhuidwa62Rcf8TKQ5oocQ42Dw+9xHMoSlBH6oR3No/UlDlRYWN4s
-OWQS8lliL008WfUncCtz2VloUxjQ45jtVJY1icQkEGDNmL4BMjey8f2h66+D18rqa/UBFZW8JwNO
-BZrKk8gAqF7cv8omKmujBtY+W6iWNJFbgULgv8iG8ISMq72y5jzs/dCuSSOsEzay1JlgkbNFoq81
-Fa29l70gWVClp96jdXtX6oKNlEnKdlxHuWreaurOfmUKzPy+0Sp+I1dWJQlrxG9DHYSdRK9XZaAR
-FCow+NKqNUVG6FlguP8LIziA7ZMhaYOtKK4Uce9esC4aWDFFHMi8RNGqOqQzDdCraCI7PyRZxB7X
-tabiyYRaVTm2iH2OKzalUtlZw0kN72pTlSUpo1B21LDExpWHKtf5la+wKxFZs3CjRNQDBIvhTgWH
-P+OBpQpSO4ZgwnQdbGTB5pZ6HroYF49Zcu/pPniI+XMeoyyuVQx9spVcz++QQIf2w5rb9xktsT/s
-xoSK0fX6ym6sTWjYMNFEx84CrfZCTmWDd0GFk8+1FFN94s8EVPMo7bsXSGjYbCywhmhZfNsU1VIq
-453XaBqwgkdsHpTbySHaF8WbRfHjvl/SidEyO1WXwsFef9m2ODfYx4EjPASC9ltp9N2xo8gJDEiD
-U//saWTHPiVvGLhhb8P4OemuqPtFErB6eb9T56PjLQN6jaLsD3BunVm1qpQBXEPgZxkLBln0waj0
-TImxPnVTzAQ/bOop0YWjDCYYpy8a5H8xliexee6KamCIhsdGq63Kiv1KfsuB0oRYgCicwmgbIsYb
-fSI1zD+5F5cdQtkEHL7hlhfPCGbw7QOnC763pT5hFBZU1VoL+iE10lQVGFkFa7iu5ocWuRWCY+Cq
-/2X5f5KtIWzUTHrKBW7UeX1CnWYvrl5r+6/bncrS7cuj5HBnRkBIGuHo4Gklp19OdEqWQWTLt1Ec
-qJxF9sLw7tn5bJcqn2p6jRx7pEudR+Dzz52+PCSnA6+87z2kr6jVgOKkoqs4SYTM/mfzqMRvntpT
-3ZNe+/rUP5tNT06l4EM/bb9eHv0jwABq9E0/DQplbmRzdHJlYW0NZW5kb2JqDTggMCBvYmoNPDwv
-U3VidHlwZS9UcnVlVHlwZS9Gb250RGVzY3JpcHRvciA5IDAgUi9MYXN0Q2hhciAxMjEvV2lkdGhz
-IDEwIDAgUi9CYXNlRm9udC9UaW1lcyMyME5ldyMyMFJvbWFuL0ZpcnN0Q2hhciAzMi9FbmNvZGlu
-Zy9XaW5BbnNpRW5jb2RpbmcvVHlwZS9Gb250Pj4NZW5kb2JqDTkgMCBvYmoNPDwvU3RlbVYgNDAv
-Rm9udE5hbWUvVGltZXMjMjBOZXcjMjBSb21hbi9Gb250V2VpZ2h0IDQwMC9GbGFncyAzMi9NYXhX
-aWR0aCAyNTY4L0Rlc2NlbnQgLTIxNi9Gb250QkJveFstNTY4IC0yMTYgMjAwMCA2OTNdL0FzY2Vu
-dCA4OTEvQ2FwSGVpZ2h0IDY5My9YSGVpZ2h0IDI1MC9UeXBlL0ZvbnREZXNjcmlwdG9yL0l0YWxp
-Y0FuZ2xlIDAvTGVhZGluZyA0Mi9BdmdXaWR0aCA0MDE+Pg1lbmRvYmoNMTAgMCBvYmoNWzI1MCAw
-IDAgMCA1MDAgODMzIDAgMCAzMzMgMzMzIDAgMCAyNTAgMzMzIDI1MCAyNzggNTAwIDUwMCA1MDAg
-MCA1MDAgNTAwIDUwMCA1MDAgMCAwIDAgMCAwIDAgMCAwIDAgNzIyIDY2NyA2NjcgNzIyIDYxMSAw
-IDcyMiA3MjIgMzMzIDM4OSA3MjIgNjExIDg4OSA3MjIgNzIyIDAgMCA2NjcgNTU2IDYxMSA3MjIg
-MCAwIDAgNzIyIDAgMCAwIDAgMCAwIDAgNDQ0IDUwMCA0NDQgNTAwIDQ0NCAzMzMgNTAwIDUwMCAy
-NzggMCA1MDAgMjc4IDc3OCA1MDAgNTAwIDUwMCA1MDAgMzMzIDM4OSAyNzggNTAwIDUwMCA3MjIg
-NTAwIDUwMF0NZW5kb2JqDTEgMCBvYmoNPDwvQ291bnQgMS9UeXBlL1BhZ2VzL0tpZHNbNiAwIFJd
-Pj4NZW5kb2JqDTIgMCBvYmoNPDwvU3VidHlwZS9YTUwvTGVuZ3RoIDM0ODMvVHlwZS9NZXRhZGF0
-YT4+c3RyZWFtDQo8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6
-a2M5ZCI/Pgo8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9i
-ZSBYTVAgQ29yZSA0LjAtYzMyMSA0NC4zOTgxMTYsIFR1ZSBBdWcgMDQgMjAwOSAxNDoyNDozOSI+
-CiAgIDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYt
-c3ludGF4LW5zIyI+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAg
-ICAgIHhtbG5zOnhhcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx4
-YXA6Q3JlYXRlRGF0ZT4yMDEwLTA5LTI5VDEzOjI5WjwveGFwOkNyZWF0ZURhdGU+CiAgICAgICAg
-IDx4YXA6Q3JlYXRvclRvb2w+TWljcm9zb2Z0wq4gT2ZmaWNlIFdvcmQgMjAwNzwveGFwOkNyZWF0
-b3JUb29sPgogICAgICAgICA8eGFwOk1vZGlmeURhdGU+MjAxMC0wOS0yOVQxMzoyOTo0MCswNDow
-MDwveGFwOk1vZGlmeURhdGU+CiAgICAgICAgIDx4YXA6TWV0YWRhdGFEYXRlPjIwMTAtMDktMjlU
-MTM6Mjk6NDArMDQ6MDA8L3hhcDpNZXRhZGF0YURhdGU+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9u
-PgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczpk
-Yz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iPgogICAgICAgICA8ZGM6Zm9ybWF0
-PmFwcGxpY2F0aW9uL3BkZjwvZGM6Zm9ybWF0PgogICAgICAgICA8ZGM6Y3JlYXRvcj4KICAgICAg
-ICAgICAgPHJkZjpTZXE+CiAgICAgICAgICAgICAgIDxyZGY6bGk+Qk9SQTwvcmRmOmxpPgogICAg
-ICAgICAgICA8L3JkZjpTZXE+CiAgICAgICAgIDwvZGM6Y3JlYXRvcj4KICAgICAgPC9yZGY6RGVz
-Y3JpcHRpb24+CiAgICAgIDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiCiAgICAgICAgICAg
-IHhtbG5zOnBkZj0iaHR0cDovL25zLmFkb2JlLmNvbS9wZGYvMS4zLyI+CiAgICAgICAgIDxwZGY6
-UHJvZHVjZXI+TWljcm9zb2Z0wq4gT2ZmaWNlIFdvcmQgMjAwNzwvcGRmOlByb2R1Y2VyPgogICAg
-ICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIK
-ICAgICAgICAgICAgeG1sbnM6eGFwTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8i
-PgogICAgICAgICA8eGFwTU06RG9jdW1lbnRJRD51dWlkOjM3MmUyMzZkLTE0MmMtNGI1NC05Mzg4
-LTM5MWVlMzdlNWUyODwveGFwTU06RG9jdW1lbnRJRD4KICAgICAgICAgPHhhcE1NOkluc3RhbmNl
-SUQ+dXVpZDo3ZTVmMjgyNC1mNGQ4LTQ1ZDQtYmQxNC1hMGM0YmVmOGEyMDc8L3hhcE1NOkluc3Rh
-bmNlSUQ+CiAgICAgIDwvcmRmOkRlc2NyaXB0aW9uPgogICA8L3JkZjpSREY+CjwveDp4bXBtZXRh
-PgogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAog
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/
-eHBhY2tldCBlbmQ9InciPz4NCmVuZHN0cmVhbQ1lbmRvYmoNMyAwIG9iag08PC9DcmVhdGlvbkRh
-dGUoRDoyMDEwMDkyOTEzMjkwMFopL0F1dGhvcihCT1JBKS9DcmVhdG9yKE1pY3Jvc29mdK4gT2Zm
-aWNlIFdvcmQgMjAwNykvUHJvZHVjZXIoTWljcm9zb2Z0riBPZmZpY2UgV29yZCAyMDA3KS9Nb2RE
-YXRlKEQ6MjAxMDA5MjkxMzI5NDArMDQnMDAnKT4+DWVuZG9iag14cmVmDQowIDQNCjAwMDAwMDAw
-MDAgNjU1MzUgZg0KMDAwMDAwMzE1MSAwMDAwMCBuDQowMDAwMDAzMjAyIDAwMDAwIG4NCjAwMDAw
-MDY3NjIgMDAwMDAgbg0KdHJhaWxlcg0KPDwvU2l6ZSA0Pj4NCnN0YXJ0eHJlZg0KMTE2DQolJUVP
-Rg0K
-------=_20101001185252_61111--
+Ah, that makes sense.  Thanks for an explanation.
