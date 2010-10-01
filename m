@@ -1,73 +1,69 @@
-From: Nate Parsons <parsons.nate@gmail.com>
-Subject: Re: git .lock file error
-Date: Thu, 30 Sep 2010 20:57:20 -0400
-Message-ID: <AANLkTi=eMt_OduJ8d=5mhhnt+q-Mpb8b1iimt_0bws3f@mail.gmail.com>
-References: <AANLkTikjwW8jJ3qGCAM=8F_GBxsz9_KoSW0KDGPKhXGQ@mail.gmail.com>
- <AANLkTin+MRkYv7vL7eY+mdWG1vTg-E9pVpU4_QujoxdZ@mail.gmail.com>
- <AANLkTim2sFCx8qZ-6o4tiugX3a-EBN9T8wuCSWXb5L12@mail.gmail.com>
- <AANLkTik364t7WEHOsZcB7FE4Y2gJQNxkXsRvW5guUWCi@mail.gmail.com>
- <7vbp7fhtt0.fsf@alter.siamese.dyndns.org> <AANLkTinFJ5rSA7Om0ZxhuqzQiqEDvJ+JoEQFpz=NDvxE@mail.gmail.com>
- <AANLkTikV=f1ncAxQ1LWzntnOwiBKMfw_D8Mcuh+wCO3+@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Oct 01 02:57:49 2010
+From: Joshua Juran <jjuran@gmail.com>
+Subject: Re: lost connection in middle of interactive rebase
+Date: Thu, 30 Sep 2010 18:18:51 -0700
+Message-ID: <4F91C587-981C-4429-9FDD-24931BCC9DEA@gmail.com>
+References: <i83bg4$rl6$1@dough.gmane.org>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 03:18:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1Twa-0000oQ-UW
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 02:57:49 +0200
+	id 1P1UH5-0005ik-19
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 03:18:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754775Ab0JAA5l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 20:57:41 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:59165 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784Ab0JAA5l (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 20:57:41 -0400
-Received: by iwn5 with SMTP id 5so3119328iwn.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 17:57:40 -0700 (PDT)
+	id S1751032Ab0JABSy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Sep 2010 21:18:54 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:62430 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750706Ab0JABSx (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Sep 2010 21:18:53 -0400
+Received: by pvg2 with SMTP id 2so646267pvg.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 18:18:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=lpLOHXYe9e95DXFLbAG4o7fAzu/TLvz0DOUsnVq0amM=;
-        b=q1l4Ir2jtsjqn8Q5IrVnP0F0/luRZVrIqaZP/yrZjfAONMEKD+bze1k2XLmLMHU6HJ
-         WD3VlKjbuw0Oob2S+YqlkVCA11WtRssPGbYRc4GFH8SZwUY9UnpsoLLrdMiafyzGu05l
-         srzQxa+sGnfCXOnja7zzTpwzJNsRAyWdXixQ0=
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=4hagYIuHBCsOdwRp36QhDfbCzMZKfhE9YFzDnDgPaU0=;
+        b=M+dyr49odBuK+f5K/F3PdTaJlk9p4NlU+wPZAWDSgy9oG0hrj5qTzB5v3+3ioaLdN1
+         xenaFYn2zUaBfQUYAgts61b+hG5sXFoqjvFiPWhc/KvysTIwXLhM5UttI2E48wkP9SxL
+         px4ZUccsYsuCNjDcLckMKZ9STty6vai5hWjlo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=QTgZhIfH1lzKfNZCtFcoBeHaxqS9/YkwsFpKRWrCTcXEQtKkH2CTbmABgtqmM5bck7
-         0QGOL4nTsIf0Tq25T8Usv7SOfXHQktC/FvJyU3hQbvJ7NukYbw8+ojt7UXX5eWMnPMTB
-         NDlhJOoXSR36BeNIWI5qCf0e9RHtNrf9vrd0g=
-Received: by 10.231.30.76 with SMTP id t12mr4609965ibc.161.1285894660549; Thu,
- 30 Sep 2010 17:57:40 -0700 (PDT)
-Received: by 10.231.155.210 with HTTP; Thu, 30 Sep 2010 17:57:20 -0700 (PDT)
-In-Reply-To: <AANLkTikV=f1ncAxQ1LWzntnOwiBKMfw_D8Mcuh+wCO3+@mail.gmail.com>
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=ON9UnjgAQexoTMKQ2ozgFrBQXIrCSsFgsFhoU5a6QJFPSif6o+ebYHDWKs6phv6d9z
+         RBLnY6dU5la0ipBW3ZAp8lOsKZjmF05hi4qfzsU0OWvLSHUE6/hGAX8TNuw9fyayC/jC
+         hAPWgUS3gEvJ8+NQ2dwNIjJnnizWEx/b+Ael0=
+Received: by 10.142.252.21 with SMTP id z21mr4057388wfh.111.1285895933107;
+        Thu, 30 Sep 2010 18:18:53 -0700 (PDT)
+Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id o16sm547777wfh.19.2010.09.30.18.18.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 30 Sep 2010 18:18:52 -0700 (PDT)
+In-Reply-To: <i83bg4$rl6$1@dough.gmane.org>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157727>
 
-On Thu, Sep 30, 2010 at 7:45 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> Are you running some anti-virus, or from a Dropbox-folder (or
-> something similar)? If so, these applications tend to open files for a
-> short while and then release the file handle. This can some times
-> cause race conditions with other software, like Git.
->
-> I haven't looked into this particular code-path for what kind of
-> hazards might be, but this sounds very much like one such case to me.
->
+On Sep 30, 2010, at 5:53 PM, Neal Kreitzinger wrote:
 
-Any of these things are possible. As much as I'd like to find the root
-cause of this problem, isn't making Git more robust a good thing in
-general? Finding every program that could conflict with Git and
-disabling/uninstalling it isn't really a good long term solution, I
-think.
+> I use a terminal emulator in windows to connect to a remote linux  
+> box.  The
+> git repos are on the linux box.  If my network connection drops  
+> during the
+> middle of my interactive rebase, how do I recover?
+
+git rebase --abort
+
+Josh
