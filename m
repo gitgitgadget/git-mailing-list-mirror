@@ -1,70 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 3/3] git-remote-ext
-Date: Thu, 30 Sep 2010 19:30:22 -0500
-Message-ID: <20101001003022.GA16234@burratino>
-References: <1285847579-21954-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <1285847579-21954-4-git-send-email-ilari.liusvaara@elisanet.fi>
- <20100930134552.GF4850@burratino>
- <7vfwwrhud1.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCHv4 14/15] Add missing &&'s throughout the testsuite
+Date: Fri, 1 Oct 2010 00:48:29 +0000
+Message-ID: <AANLkTim6ca=8pis2X8Xrc1bGB0YCtYRxCpY3pMdA0QvU@mail.gmail.com>
+References: <1285542879-16381-1-git-send-email-newren@gmail.com>
+	<1285542879-16381-15-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 01 02:33:49 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 01 02:48:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1TZJ-0003qA-8u
-	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 02:33:45 +0200
+	id 1P1Tng-00079P-AL
+	for gcvg-git-2@lo.gmane.org; Fri, 01 Oct 2010 02:48:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753849Ab0JAAdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Sep 2010 20:33:37 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:59968 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752743Ab0JAAdg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Sep 2010 20:33:36 -0400
-Received: by qyk9 with SMTP id 9so83316qyk.19
-        for <git@vger.kernel.org>; Thu, 30 Sep 2010 17:33:35 -0700 (PDT)
+	id S1752743Ab0JAAsb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Sep 2010 20:48:31 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:41839 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751784Ab0JAAsa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Sep 2010 20:48:30 -0400
+Received: by iwn5 with SMTP id 5so3110148iwn.19
+        for <git@vger.kernel.org>; Thu, 30 Sep 2010 17:48:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=P6zpv+QcR4A5zPAD+FAZSytB7T+OYC4YF/pYPaWaS98=;
-        b=IaP6YGoi+dHWi7MAOIVlmjst52/cZETumtsCDsPC3xpEH+sRU00WnxHnro3pr+srlR
-         Mhaor8X3WZl3xBedOKHgd7K0/yLRVkPGa+xziN9+1QP2LtTDF9x5200jFhxXJLNuH3SK
-         Mz6mcst0BedOJfmRQ2YkY16n+xohwr/CCfh2g=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uZwjTZkwqUkbTzKbbFplcoRGXRUA1gLOR1DswCVUTJg=;
+        b=iTUmnOtIhJpOJl8cWj3m+4OgYsKeABZfgsiAE3oTXDEi/GS8ckUxivMZhjTQ8rijPQ
+         5taw8yfOUKZqr5pRvg/YrY4fIgpCFijh8S2ZgdWvleYRwJs4QPo4ESXHfDfXiVEkTIsb
+         UynJ3yayJyUHYWDP50n8v+dTWN/DdAivpJWTM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=kECPySwj4T6KNkN0s6sJ9/a42qtgVCnO46iCmmVad+I0NZNEiPytzG9Fz5sziKFiL3
-         aZ1C6I5/B0iw3qBu7whgb+pxYaGcbaFgAFj2rOCNfyS73QzGvs0KDmRPRGsfiNlHUuvl
-         xtl93o1DYtY70csTdTQTTWd7kW7wWLK8GiFW4=
-Received: by 10.220.87.70 with SMTP id v6mr1199222vcl.86.1285893215252;
-        Thu, 30 Sep 2010 17:33:35 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id l9sm536257vbp.11.2010.09.30.17.33.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 30 Sep 2010 17:33:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vfwwrhud1.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OgQAalyj+/CDQQJkAasZv2ar7BYRjSON2lbZxT2C+3uCAd/9LzKQ8KYhYDqWyWJ3VY
+         MSztZSJZ/IAtCg6m7erUalqAqbxNRIlAPzvCnyzxwQNCkVJct5NpxKNpwdhPzm+EkSgH
+         AjSfxM8QvwXJrYj2KBLWxjLV5gW7nZCTuv9Oo=
+Received: by 10.231.145.16 with SMTP id b16mr4667548ibv.198.1285894109838;
+ Thu, 30 Sep 2010 17:48:29 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Thu, 30 Sep 2010 17:48:29 -0700 (PDT)
+In-Reply-To: <1285542879-16381-15-git-send-email-newren@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157724>
 
-Junio C Hamano wrote:
+On Sun, Sep 26, 2010 at 23:14, Elijah Newren <newren@gmail.com> wrote:
 
-> Is it just me who finds the placeholders with backslashes somewhat out of
-> place where most other placeholders in git are per-cent prefixed?
+> =C2=A0test_expect_success 'did not use upload-pack service' '
+> - =C2=A0 =C2=A0 =C2=A0 grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/ac=
+cess.log >act
+> - =C2=A0 =C2=A0 =C2=A0 : >exp
+> + =C2=A0 =C2=A0 =C2=A0 grep '/git-upload-pack' <"$HTTPD_ROOT_PATH"/ac=
+cess.log >act &&
+> + =C2=A0 =C2=A0 =C2=A0 >exp &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_cmp exp act
+> =C2=A0'
 
-"\ " and "\\" seemed sane to me but the other ones left me more
-puzzled.
+This test started failing in pu, I'm presuming you didn't spot it
+since you didn't run the tests with GIT_TEST_HTTPD=3D1.
 
-It would be nicer when reading the code if it used strbuf_expand(),
-too.
+Anyway, that grep should be a "! grep" to work with &&.
