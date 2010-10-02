@@ -1,212 +1,81 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH v4 3/4] Allow hiding renames of individual files involved in a directory rename.
-Date: Sun,  3 Oct 2010 22:42:08 +0200
-Message-ID: <1286138529-6780-4-git-send-email-ydirson@altern.org>
-References: <1286138529-6780-1-git-send-email-ydirson@altern.org>
- <1286138529-6780-2-git-send-email-ydirson@altern.org>
- <1286138529-6780-3-git-send-email-ydirson@altern.org>
-Cc: Yann Dirson <ydirson@free.fr>
-To: git@vger.kernel.org
+From: "Mr. Peter Lee" <infovan2@aol.com>
+Subject: HELLO FRIEND
+Date: Sat, 02 Oct 2010 18:32:23 +0800
+Message-ID: <20101002183223.20053in2w447j2g4@webmail.stpeter.com.ph>
+Reply-To: peterlee333@aol.com
+Mime-Version: 1.0
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 7bit
+To: undisclosed-recipients:;
 X-From: git-owner@vger.kernel.org Sun Oct 03 22:32:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2VEh-000189-1V
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 22:32:43 +0200
+	id 1P2VEi-000189-2P
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 22:32:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755037Ab0JCUcc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Oct 2010 16:32:32 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:32889 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754980Ab0JCUca (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Oct 2010 16:32:30 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 5A7D1D48132;
-	Sun,  3 Oct 2010 22:32:24 +0200 (CEST)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1P2VNu-0001qW-8U; Sun, 03 Oct 2010 22:42:14 +0200
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1286138529-6780-3-git-send-email-ydirson@altern.org>
+	id S1755071Ab0JCUcj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 16:32:39 -0400
+Received: from pmx.stpeter.com.ph ([122.52.208.90]:43441 "EHLO
+	pmx.stpeter.com.ph" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755056Ab0JCUci (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 16:32:38 -0400
+X-Greylist: delayed 64921 seconds by postgrey-1.27 at vger.kernel.org; Sun, 03 Oct 2010 16:32:37 EDT
+Received: from pmx.stpeter.com.ph (pmx.stpeter.com.ph [127.0.0.1])
+	by localhost (Postfix) with SMTP id 389F91688B6;
+	Sat,  2 Oct 2010 18:05:28 +0800 (PHT)
+Received: from 192.168.1.6 (unknown [192.168.1.8])
+	by pmx.stpeter.com.ph (Postfix) with ESMTP id B8B3A168852;
+	Sat,  2 Oct 2010 18:05:27 +0800 (PHT)
+Received: from d136226.upc-d.chello.nl (d136226.upc-d.chello.nl
+	[213.46.136.226]) by webmail.stpeter.com.ph (Horde Framework) with HTTP;
+	Sat, 02 Oct 2010 18:32:23 +0800
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157918>
+X-Spam-Report: 9.1 points;
+ *  2.1 SUBJ_ALL_CAPS Subject is all capitals
+ *  2.7 DEAR_FRIEND BODY: Dear Friend? That's not very dear!
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  3.0 RCVD_IN_BL_SPAMCOP_NET RBL: Received via a relay in bl.spamcop.net
+ *      [Blocked - see <http://www.spamcop.net/bl.shtml?213.46.136.226>]
+ *  0.6 RCVD_IN_SORBS_WEB RBL: SORBS: sender is a abuseable web server
+ *      [213.46.136.226 listed in dnsbl.sorbs.net]
+ *  1.2 ADVANCE_FEE_2 Appears to be advance fee fraud (Nigerian 419)
+ *  1.4 ADVANCE_FEE_3 Appears to be advance fee fraud (Nigerian 419)
+ *  0.6 ADVANCE_FEE_4 Appears to be advance fee fraud (Nigerian 419)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157919>
 
-From: Yann Dirson <ydirson@free.fr>
+Dear Friend,
 
-Once --detect-dir-renames has identified groups of bulk-moved files, and then
-the --hide-dir-rename-details flag hides those of the individual renames
-which carry no other information (further name change, or content changes).
+I am Mr. Peter Lee a South Korean, happily married with children, and  
+i am a Director of Hang Seng Bank Ltd, in charge of the International  
+Remittance department. I have a confidential business suggestion for  
+you. I will need you to assist me in executing a business project from  
+Hong Kong to your country.
 
-This makes it much easier to a human reader to spot content changes
-in a commit that also moves a whole subtree.
----
- diff.c            |    7 +++++
- diff.h            |    3 ++
- diffcore-rename.c |   67 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- diffcore.h        |    1 +
- 4 files changed, 75 insertions(+), 3 deletions(-)
+It involves the transfer of a large sum of money. Everything  
+concerning this transaction shall be legally done without hitch.  
+Please endeavour to reply me if interested. Here is my private  
+Email:(peterlee333@aol.com)
 
-diff --git a/diff.c b/diff.c
-index 47ef7ea..2731c33 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3193,6 +3193,13 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		if (!options->detect_rename)
- 			options->detect_rename = DIFF_DETECT_RENAME;
- 	}
-+	else if (!strcmp(arg, "--hide-dir-rename-details")) {
-+		DIFF_OPT_SET(options, HIDE_DIR_RENAME_DETAILS);
-+		if (!DIFF_OPT_TST(options, DETECT_DIR_RENAMES))
-+			DIFF_OPT_SET(options, DETECT_DIR_RENAMES);
-+		if (!options->detect_rename)
-+			options->detect_rename = DIFF_DETECT_RENAME;
-+	}
- 	else if (!strcmp(arg, "--follow"))
- 		DIFF_OPT_SET(options, FOLLOW_RENAMES);
- 	else if (!strcmp(arg, "--color"))
-diff --git a/diff.h b/diff.h
-index 40c548d..ae1e2e7 100644
---- a/diff.h
-+++ b/diff.h
-@@ -79,6 +79,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 26)
- #define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 27)
- #define DIFF_OPT_DETECT_DIR_RENAMES  (1 << 28)
-+#define DIFF_OPT_HIDE_DIR_RENAME_DETAILS (1 << 29)
- 
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
-@@ -268,6 +269,8 @@ extern void diffcore_fix_diff_index(struct diff_options *);
- "                try unchanged files as candidate for copy detection.\n" \
- "  --detect-dir-renames\n" \
- "                detect wholesale directory renames.\n" \
-+"  --hide-dir-rename-details\n" \
-+"                hide renames of individual files in a directory rename.\n" \
- "  -l<n>         limit rename attempts up to <n> paths.\n" \
- "  -O<file>      reorder diffs according to the <file>.\n" \
- "  -S<string>    find filepair whose only one side contains the string.\n" \
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 06a8b6c..89e0b53 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -452,6 +452,34 @@ struct diff_dir_rename {
- 	struct diff_dir_rename* next;
- };
- 
-+/*
-+ * Marks as such file_rename if it is made uninteresting by dir_rename.
-+ * Returns -1 if the file_rename is outside of the range in which given
-+ * renames concerned by dir_rename are to be found (ie. end of loop),
-+ * 0 otherwise.
-+ */
-+static int maybe_mark_uninteresting(struct diff_rename_dst* file_rename,
-+				    struct diff_dir_rename* dir_rename,
-+				    int one_len, int two_len)
-+{
-+	if (!file_rename->pair) /* file add */
-+		return 0;
-+	if (strncmp(file_rename->two->path,
-+		    dir_rename->two->path, two_len))
-+		return -1;
-+	if (strncmp(file_rename->pair->one->path,
-+		    dir_rename->one->path, one_len) ||
-+	    !basename_same(file_rename->pair->one, file_rename->two) ||
-+	    file_rename->pair->score != MAX_SCORE)
-+		return 0;
-+
-+	file_rename->pair->uninteresting_rename = 1;
-+	fprintf (stderr, "[DBG] %s* -> %s* makes %s -> %s uninteresting\n",
-+		dir_rename->one->path, dir_rename->two->path,
-+		file_rename->pair->one->path, file_rename->two->path);
-+	return 0;
-+}
-+
- // FIXME: prevent possible overflow
- /*
-  * Copy dirname of src into dst, suitable to append a filename without
-@@ -497,7 +525,7 @@ static const char* copy_dirname(char* dst, const char* src)
-  * FIXME: ideas to consider under-threshold moves as part of bulk move ?
-  */
- static struct diff_dir_rename* factorization_candidates = NULL;
--static void diffcore_factorize_renames(void)
-+static void diffcore_factorize_renames(int opt_hide_renames)
- {
- 	char one_parent_path[PATH_MAX], two_parent_path[PATH_MAX];
- 	int i;
-@@ -616,6 +644,38 @@ static void diffcore_factorize_renames(void)
- 		/* all checks ok, we keep that entry */
- 	}
- 
-+	if (opt_hide_renames) {
-+		// flag as "uninteresting" those candidates hidden by dir move
-+		struct diff_dir_rename* candidate;
-+		for (candidate=factorization_candidates;
-+		     candidate; candidate = candidate->next) {
-+			int two_idx, i, one_len, two_len;
-+			if (candidate->discarded)
-+				continue;
-+
-+			// bisect to any entry within candidate dst dir
-+			struct diff_rename_dst* two_sample =
-+				locate_rename_dst_dir(candidate->two);
-+			if (!two_sample) {
-+				die ("PANIC: %s candidate of rename not in target tree (from %s)\n",
-+				     candidate->two->path, candidate->one->path);
-+			}
-+			two_idx = two_sample - rename_dst;
-+
-+			// now remove extraneous 100% files inside.
-+			one_len = strlen(candidate->one->path);
-+			two_len = strlen(candidate->two->path);
-+			for (i = two_idx; i < rename_dst_nr; i++)
-+				if (maybe_mark_uninteresting (rename_dst+i, candidate,
-+							      one_len, two_len) < 0)
-+					break;
-+			for (i = two_idx-1; i >= 0; i--)
-+				if (maybe_mark_uninteresting (rename_dst+i, candidate,
-+							      one_len, two_len) < 0)
-+					break;
-+		}
-+	}
-+
- 	return;
- }
- 
-@@ -788,7 +848,7 @@ void diffcore_rename(struct diff_options *options)
- 
- 	/* Now possibly factorize those renames and copies. */
- 	if (DIFF_OPT_TST(options, DETECT_DIR_RENAMES))
--		diffcore_factorize_renames();
-+		diffcore_factorize_renames(DIFF_OPT_TST(options, HIDE_DIR_RENAME_DETAILS));
- 
- 	DIFF_QUEUE_CLEAR(&outq);
- 
-@@ -821,7 +881,8 @@ void diffcore_rename(struct diff_options *options)
- 			struct diff_rename_dst *dst =
- 				locate_rename_dst(p->two, 0);
- 			if (dst && dst->pair) {
--				diff_q(&outq, dst->pair);
-+				if (!dst->pair->uninteresting_rename)
-+					diff_q(&outq, dst->pair);
- 				pair_to_free = p;
- 			}
- 			else
-diff --git a/diffcore.h b/diffcore.h
-index b8f1fde..beee596 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -69,6 +69,7 @@ struct diff_filepair {
- 	unsigned broken_pair : 1;
- 	unsigned renamed_pair : 1;
- 	unsigned is_unmerged : 1;
-+	unsigned uninteresting_rename : 1;
- };
- #define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
- 
--- 
-1.7.2.3
+Thanks,
+Best Regard,
+Mr. Peter Lee
+
+
+
+
+
+
+----------------------------------------------------------------
+This message was sent using IMP, the Internet Messaging Program.
