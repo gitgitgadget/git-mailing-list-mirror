@@ -1,54 +1,54 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/7] environment.c: remove unused variable
-Date: Sat, 2 Oct 2010 03:35:29 -0500
-Message-ID: <20101002083529.GD29638@burratino>
+Subject: [PATCH 4/7] setup: make sure git dir path is in a permanent buffer
+Date: Sat, 2 Oct 2010 03:36:52 -0500
+Message-ID: <20101002083652.GE29638@burratino>
 References: <wes62zknmki.fsf@kanis.fr>
  <7v1va760ip.fsf@alter.siamese.dyndns.org>
  <20100810032647.GA2386@burratino>
  <20101002082752.GA29638@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+Cc: git@vger.kernel.org, Lars Hjemli <hjemli@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 02 10:38:48 2010
+X-From: git-owner@vger.kernel.org Sat Oct 02 10:40:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1xcC-0003v5-Sa
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 10:38:45 +0200
+	id 1P1xdZ-0004Bh-6e
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 10:40:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752521Ab0JBIij (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Oct 2010 04:38:39 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46531 "EHLO
+	id S1752874Ab0JBIkD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Oct 2010 04:40:03 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63458 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751507Ab0JBIii (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Oct 2010 04:38:38 -0400
-Received: by iwn5 with SMTP id 5so4739992iwn.19
-        for <git@vger.kernel.org>; Sat, 02 Oct 2010 01:38:38 -0700 (PDT)
+	with ESMTP id S1752445Ab0JBIkB (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Oct 2010 04:40:01 -0400
+Received: by iwn5 with SMTP id 5so4740690iwn.19
+        for <git@vger.kernel.org>; Sat, 02 Oct 2010 01:40:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=xcWWKS3yuoHDYl8E/+MaR0UjFxnOh/qkr+gGz/XxITE=;
-        b=STEKXsC9yK8ar0XK/HNGWuGdi8aOOTgg875EVP9AxazWvH9dP9ehGWToMUpzUMqOPW
-         S+A++tqIpi+F3HBWbH6qLwjLVju58aKQHEHUCdVdM1GbJdtEU2btMZV7+bRSiozU4mQx
-         CusOcXwIsclwRX7yoJmjGzc0kqySQF914LXAE=
+        bh=k7WAxkcTv8+h/VaI4lwmlXDm13L8NcUaeypRlUkdoZ4=;
+        b=o1KAFKYpDjvzzjvhsd4TpdW2z4b0AZlbOKf4VXaKtNvYlM+anZsjsToaXgGSPqb8nA
+         ublOWQR1pON3UJfbiLD+xwBjUqxm/r+qukfXQfy716zKAUJ9JPIFfuGErAlevJ4ntJ2R
+         k5+aTHlLBNqVB4752sA2O1y0kbVpfNv53qIuk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=FGIBjXuMoeo9Dc5TNXs6MBkWsyOVqsQ/C5H5n6ESsEZA665xlpDvUHaJ/QWYMKWQDo
-         HeeF+d0MlsmAUq5bwBzjpetX8wjplkDMA6JLZtar99KvJfOZPOkzQU+fM2yJIKuNZw8l
-         4/uSNT5bcF9iOek0cKLm5gcbhmYIZBMGuZ880=
-Received: by 10.231.36.8 with SMTP id r8mr2240397ibd.128.1286008718131;
-        Sat, 02 Oct 2010 01:38:38 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id g31sm2230104ibh.4.2010.10.02.01.38.37
+        b=kWeMXTyae88t86qnnpkvMAl7jYnzMFdBZaPkl71zf1CQ0i/WoJB8/1m9ZKpu/F27kf
+         aZc1++ZxuSL9IuKpUpEfz3ZvFzWBIv6XDMDUc9zsPz18JZlnXG2lLrRU0u+TxzqE0ks0
+         c8b890s4ag6zOBVIOqaKzwy7SSKquiFKyNFoo=
+Received: by 10.231.157.195 with SMTP id c3mr6932230ibx.155.1286008800378;
+        Sat, 02 Oct 2010 01:40:00 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d13sm350162ibb.14.2010.10.02.01.39.59
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 02 Oct 2010 01:38:37 -0700 (PDT)
+        Sat, 02 Oct 2010 01:39:59 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20101002082752.GA29638@burratino>
 User-Agent: Mutt/1.5.20 (2009-06-14)
@@ -56,37 +56,46 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157799>
 
-After v1.6.0-rc0~230^2^ (environment.c: remove unused function,
-2008-06-19), git_refs_dir is not used any more.
+If setup_git_env() is run before the usual repository discovery
+sequence and .git is a file with the text
+
+	gitdir: <path>
+
+(with <path> any string) then the in-core git_dir variable is set to
+the result of converting <path> to an absolute path using
+make_absolute_path().
+
+Unfortunately make_absolute_path() returns its result in a static
+buffer that is overwritten by later calls.  Such a call could cause
+later accesses to git_dir (from git_pathdup(), for example) to read
+the wrong path, leaving git very confused.
+
+It is not obvious whether any existing code in git will trigger the
+problem, but in any case, it is worth a few dozen bytes to copy the
+return value from make_absolute_path() for some added peace of mind.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- environment.c |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+ environment.c |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
 
 diff --git a/environment.c b/environment.c
-index 2d0c315..c44a30b 100644
+index c44a30b..de5581f 100644
 --- a/environment.c
 +++ b/environment.c
-@@ -64,7 +64,7 @@ char *git_work_tree_cfg;
- static char *work_tree;
- 
- static const char *git_dir;
--static char *git_object_dir, *git_index_file, *git_refs_dir, *git_graft_file;
-+static char *git_object_dir, *git_index_file, *git_graft_file;
- 
- /*
-  * Repository-local GIT_* environment variables
-@@ -96,8 +96,6 @@ static void setup_git_env(void)
- 		git_object_dir = xmalloc(strlen(git_dir) + 9);
- 		sprintf(git_object_dir, "%s/objects", git_dir);
- 	}
--	git_refs_dir = xmalloc(strlen(git_dir) + 6);
--	sprintf(git_refs_dir, "%s/refs", git_dir);
- 	git_index_file = getenv(INDEX_ENVIRONMENT);
- 	if (!git_index_file) {
- 		git_index_file = xmalloc(strlen(git_dir) + 7);
+@@ -87,8 +87,10 @@ const char * const local_repo_env[LOCAL_REPO_ENV_SIZE + 1] = {
+ static void setup_git_env(void)
+ {
+ 	git_dir = getenv(GIT_DIR_ENVIRONMENT);
+-	if (!git_dir)
++	if (!git_dir) {
+ 		git_dir = read_gitfile_gently(DEFAULT_GIT_DIR_ENVIRONMENT);
++		git_dir = git_dir ? xstrdup(git_dir) : NULL;
++	}
+ 	if (!git_dir)
+ 		git_dir = DEFAULT_GIT_DIR_ENVIRONMENT;
+ 	git_object_dir = getenv(DB_ENVIRONMENT);
 -- 
 1.7.2.3
