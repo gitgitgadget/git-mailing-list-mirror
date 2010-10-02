@@ -1,68 +1,87 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [PATCH 2/7] lockfile: introduce alloc_lock_file() to avoid valgrind
- noise
-Date: Sat, 02 Oct 2010 18:30:25 +0200
-Message-ID: <4CA75E21.1090407@op5.se>
-References: <wes62zknmki.fsf@kanis.fr> <7v1va760ip.fsf@alter.siamese.dyndns.org> <20100810032647.GA2386@burratino> <20101002082752.GA29638@burratino> <20101002083216.GC29638@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] lockfile: introduce alloc_lock_file() to avoid
+ valgrind noise
+Date: Sat, 2 Oct 2010 11:43:25 -0500
+Message-ID: <20101002164325.GA19675@burratino>
+References: <wes62zknmki.fsf@kanis.fr>
+ <7v1va760ip.fsf@alter.siamese.dyndns.org>
+ <20100810032647.GA2386@burratino>
+ <20101002082752.GA29638@burratino>
+ <20101002083216.GC29638@burratino>
+ <4CA75E21.1090407@op5.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Pierre Habouzit <madcoder@debian.org>,
 	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 02 18:30:58 2010
+To: Andreas Ericsson <ae@op5.se>
+X-From: git-owner@vger.kernel.org Sat Oct 02 18:46:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P24zA-0004el-Tj
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 18:30:57 +0200
+	id 1P25EQ-0007xK-Hi
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 18:46:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755774Ab0JBQac (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Oct 2010 12:30:32 -0400
-Received: from na3sys009aog101.obsmtp.com ([74.125.149.67]:49510 "HELO
-	na3sys009aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753967Ab0JBQac (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 2 Oct 2010 12:30:32 -0400
-Received: from source ([209.85.215.172]) by na3sys009aob101.postini.com ([74.125.148.12]) with SMTP
-	ID DSNKTKdeJpcceJU9xia6OFxugnL4pjkUXQ3n@postini.com; Sat, 02 Oct 2010 09:30:31 PDT
-Received: by eyd10 with SMTP id 10so1483333eyd.3
-        for <git@vger.kernel.org>; Sat, 02 Oct 2010 09:30:30 -0700 (PDT)
-Received: by 10.213.113.206 with SMTP id b14mr6778643ebq.33.1286037028785;
-        Sat, 02 Oct 2010 09:30:28 -0700 (PDT)
-Received: from clix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id z55sm3866245eeh.15.2010.10.02.09.30.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 02 Oct 2010 09:30:27 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Thunderbird/3.0.7 ThunderGit/0.1a
-In-Reply-To: <20101002083216.GC29638@burratino>
+	id S1754707Ab0JBQqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Oct 2010 12:46:37 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52503 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753967Ab0JBQqh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Oct 2010 12:46:37 -0400
+Received: by iwn5 with SMTP id 5so5082219iwn.19
+        for <git@vger.kernel.org>; Sat, 02 Oct 2010 09:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=2gUJSQfHxXVK5ZO8H2SBA4/p8j9PtLL2eznf4xam/I8=;
+        b=loHFdNGM+6Ef4agrP0zE74ASmbYHwQ8I3PIwN5wJacW/JtWbWm0TSXpvnxYUNSubeQ
+         H7p+ZzzFpRkRSeHOm4zwGE58Q1rVRXYiMfru8Kn6//fMeIloM/kBWdG2Ajt1sM2ZHFn7
+         pvfYsxSvSVhoGK3Wujfqh84r99qPazjF23UyU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ceueWTQDvmusZeiwBGDKG0oyhtVHivVNRyBXxJkRttPEJ9Ptq6gWjY6T4vssxy3wbW
+         S7xl73RqBXrHZ3ChXpkRuAN733L6mhF24qLdpxUzEXdp7W2eXD4zpZMkyoHbCB9O5iXB
+         90/i0g7gCdK/1ihFzSU3IJJBn3q0Tc2NkoB+Y=
+Received: by 10.231.169.149 with SMTP id z21mr7535555iby.11.1286037996443;
+        Sat, 02 Oct 2010 09:46:36 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id n20sm2637110ibe.5.2010.10.02.09.46.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 02 Oct 2010 09:46:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <4CA75E21.1090407@op5.se>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157808>
 
-On 10/02/2010 10:32 AM, Jonathan Nieder wrote:
-> 
-> Add a alloc_lock_file() helper to make such tolerance easier.
-> Allocations made through this helper function will not be reported as
-> leaks by valgrind even if there is no corresponding free().  The
-> ((optimize("-fno-optimize-sibling-calls"))) attribute is needed on
-> platforms with GCC to ensure that the stack frame for
-> alloc_lock_file() is not replaced by the stack frame for xcalloc().
-> 
+Andreas Ericsson wrote:
 
-So we're basically increasing runtime to shut up a leakchecking tool
-and also making that leakchecking tool falsely not report positives.
-Hmm...
+> So we're basically increasing runtime to shut up a leakchecking tool
+> and also making that leakchecking tool falsely not report positives.
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+Yep, nice summary.  Probably I should have also mentioned:
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+ - An extra stack frame with no locals is not a lot of overhead, but
+   in any case these are by design not in performance-critical places.
+
+ - By using a special function like this, we make instances nicely
+   grep-able and give the leak prominence in t/valgrind/default.supp.
+   So a person can discover, for example, that writing a lot of trees
+   in a single process (like cherry-pick -n foo..bar currently does)
+   is going to be leaky.
+
+ - valgrind would be most useful if it can be used to identify
+   _regressions_ by running the test suite with --valgrind.  git is
+   deliberately leaky in a lot of places; it is not useful to record
+   that.
+
+ - valgrind does have the ability to turn suppressions off if you want.
