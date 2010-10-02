@@ -1,110 +1,247 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH 11/18] git notes merge: Add automatic conflict resolvers
- (ours, theirs, union)
-Date: Sat, 02 Oct 2010 02:14:46 -0700
-Message-ID: <4CA6F806.9030209@gmail.com>
-References: <1285719811-10871-1-git-send-email-johan@herland.net> <1285719811-10871-12-git-send-email-johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, jrnieder@gmail.com, gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Oct 02 11:15:14 2010
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: [RFC PATCH] git-svn: fix performance importing tagged subdirectories
+Date: Sat,  2 Oct 2010 06:01:12 -0700
+Message-ID: <1286024472-2255-1-git-send-email-ddkilzer@kilzer.net>
+Cc: Eric Wong <normalperson@yhbt.net>,
+	"David D. Kilzer" <ddkilzer@kilzer.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 02 15:17:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P1yBW-0002ZT-5Y
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 11:15:14 +0200
+	id 1P21xV-0001oq-RD
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 15:17:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753477Ab0JBJO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Oct 2010 05:14:58 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:40612 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752822Ab0JBJO5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Oct 2010 05:14:57 -0400
-Received: by pxi10 with SMTP id 10so950374pxi.19
-        for <git@vger.kernel.org>; Sat, 02 Oct 2010 02:14:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=z8yLZHRwFKORf6ZKv2z38AcjNybEKc90Q57In6C6Rrk=;
-        b=WF28O95R72s7cNJ9Mse4bAloPbs0fkcrJ5roaI8TQ8SgjJaX0jqV72c51p86TJYhSP
-         HaXZxfmy8wzoxI0Wgl2qQXQG1nP7U7ix2LvxoiJJo2sPdpKycBy6y2z7iFTd3wF4i1RS
-         wXGnNkqC523eKXdTkWvKiLFlWrhAjMINffAxk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=ZkjEsGI3Lky6TgbOO32d5WTxkC0ukto7GxfgIHZXwNjJcCf+9KpGT+wIn15W2EpCWa
-         VX81ncxN9DbpjZ6MsEtsi+nUzsDjzoAJIsmXP+HyepHBtekTg8VJ7nKm3bDo+Zux6/hb
-         eiURBGiiTBybJvD4nmWoIbrpnHPdHdXmC4YGc=
-Received: by 10.142.51.1 with SMTP id y1mr5887866wfy.193.1286010897139;
-        Sat, 02 Oct 2010 02:14:57 -0700 (PDT)
-Received: from [192.168.1.100] ([75.85.182.25])
-        by mx.google.com with ESMTPS id d10sm2605985wfe.10.2010.10.02.02.14.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 02 Oct 2010 02:14:56 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.8) Gecko/20100831 Lightning/1.0b2pre Thunderbird/3.1.2
-In-Reply-To: <1285719811-10871-12-git-send-email-johan@herland.net>
+	id S1755092Ab0JBNLE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Oct 2010 09:11:04 -0400
+Received: from mail-out4.apple.com ([17.254.13.23]:56911 "EHLO
+	mail-out4.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753014Ab0JBNLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Oct 2010 09:11:03 -0400
+X-Greylist: delayed 569 seconds by postgrey-1.27 at vger.kernel.org; Sat, 02 Oct 2010 09:11:03 EDT
+Received: from relay13.apple.com (relay13.apple.com [17.128.113.29])
+	by mail-out4.apple.com (Postfix) with ESMTP id 4B346B349D56;
+	Sat,  2 Oct 2010 06:01:32 -0700 (PDT)
+X-AuditID: 1180711d-b7b8eae0000035ac-45-4ca72d2cff32
+Received: from ddkilzer.apple.com (ddkilzer.apple.com [17.202.32.26])
+	by relay13.apple.com (Apple SCV relay) with SMTP id 1B.11.13740.C2D27AC4; Sat,  2 Oct 2010 06:01:32 -0700 (PDT)
+X-Mailer: git-send-email 1.7.2.1.158.gbd3a97
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157805>
 
-On 09/28/2010 05:23 PM, Johan Herland wrote:
-> @@ -788,6 +792,21 @@ static int merge(int argc, const char **argv, const char *prefix)
->  	expand_notes_ref(&remote_ref);
->  	o.remote_ref = remote_ref.buf;
->  
-> +	if (strategy) {
-> +		if (!strcmp(strategy, "manual"))
-> +			o.strategy = NOTES_MERGE_RESOLVE_MANUAL;
-> +		else if (!strcmp(strategy, "ours"))
-> +			o.strategy = NOTES_MERGE_RESOLVE_OURS;
-> +		else if (!strcmp(strategy, "theirs"))
-> +			o.strategy = NOTES_MERGE_RESOLVE_THEIRS;
-> +		else if (!strcmp(strategy, "union"))
-> +			o.strategy = NOTES_MERGE_RESOLVE_UNION;
-> +		else {
-> +			error("Unknown -X/--resolve strategy: %s", strategy);
+NOTE: This is an RFC patch because I'm pretty sure I should be
+using Git::SVN::Ra::can_do_switch() somewhere, and because I am
+very likely abusing git-svn internal methods in a way that will
+produce incorrect results in some cases.
 
-Is it -X/--resolve or -s/--strategy? This error confuses me.
+Dave
+--
 
-> diff --git a/notes-merge.c b/notes-merge.c
-> index f625ebd..6fa59d8 100644
-> --- a/notes-merge.c
-> +++ b/notes-merge.c
-> @@ -262,6 +262,35 @@ static void diff_tree_local(struct notes_merge_options *o,
->  	diff_tree_release_paths(&opt);
->  }
->  
-> +static int merge_one_change(struct notes_merge_options *o,
-> +			    struct notes_merge_pair *p, struct notes_tree *t)
-> +{
-> +	/*
-> +	 * Return 0 if change was resolved (and added to notes_tree),
-> +	 * 1 if conflict
-> +	 */
-> +	switch (o->strategy) {
-> +	case NOTES_MERGE_RESOLVE_MANUAL:
-> +		return 1;
-> +	case NOTES_MERGE_RESOLVE_OURS:
-> +		OUTPUT(o, 2, "Using local notes for %s", sha1_to_hex(p->obj));
-> +		/* nothing to do */
-> +		return 0;
-> +	case NOTES_MERGE_RESOLVE_THEIRS:
-> +		OUTPUT(o, 2, "Using remote notes for %s", sha1_to_hex(p->obj));
-> +		if (add_note(t, p->obj, p->remote, combine_notes_overwrite))
-> +			die("confused: combine_notes_overwrite failed");
+When an svn repository has multiple related projects checked in
+as individual directories under trunk:
 
-This will say:
+    trunk/project1/
+    trunk/project2/
+    trunk/project3/
 
-fatal: confused: combine_notes_overwrite failed
+and each project subdirectory is tagged instead of tagging
+trunk:
 
-Do we actually need the "confused" part? Heh, maybe we need a confused()
-function?
+    [...]
+    tags/project1-204
+    tags/project1-205
+    [...]
+    tags/project2-395
+    tags/project2-396
+    [...]
+    tags/project3-77
+    tags/project3-78
+    [...]
+
+then git-svn currently imports the entire history of each new
+tag beginning with r1.  This happens because git-svn uses the
+name of the branch or tag when attempting to fast-forward svn
+history.  For large svn repositories, the time required to
+import each additional tag grows exponentially.
+
+A better approach is to search through all known refs for a
+ref that has the same repository URL, but with a smaller max
+revision.  This ref could then be used to seed a new ref for
+the tag being imported, thus bypassing the majority of the
+work.
+
+This approach is implemented by changing find_by_url() to take
+an additional parameter ($rev) that tells it to return a ref
+that represents the closest match to the desired repo url while
+having a revision less than or equal to $rev.  When a brand new
+ref is created in other_gs(), the new find_by_url() behavior is
+used to find the closest matching ref and use it as a seed.
+---
+ git-svn.perl                          |   45 +++++++++++++++++++++---
+ t/t9157-git-svn-subdir-import-perf.sh |   59 +++++++++++++++++++++++++++++++++
+ 2 files changed, 98 insertions(+), 6 deletions(-)
+ create mode 100755 t/t9157-git-svn-subdir-import-perf.sh
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 9b046b6..af46f5f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1967,8 +1967,12 @@ sub init_remote_config {
+ 	$self->{url} = $url;
+ }
+ 
+-sub find_by_url { # repos_root and, path are optional
+-	my ($class, $full_url, $repos_root, $path) = @_;
++# Finds an exact match for a ref based on $full_url, $repos_root and
++# $path.  If no exact match is found and if $rev is specified, the
++# closest match with the same url and a revision <= $rev is returned.
++# Note that $repos_root, $path and $rev are optional.
++sub find_by_url {
++	my ($class, $full_url, $repos_root, $path, $rev) = @_;
+ 
+ 	return undef unless defined $full_url;
+ 	remove_username($full_url);
+@@ -1978,6 +1982,7 @@ sub find_by_url { # repos_root and, path are optional
+ 		$path = $full_url;
+ 		$path =~ s#^\Q$repos_root\E(?:/|$)##;
+ 	}
++	my ($closest_gs, $closest_max_rev);
+ 	foreach my $repo_id (keys %$remotes) {
+ 		my $u = $remotes->{$repo_id}->{url} or next;
+ 		remove_username($u);
+@@ -2009,11 +2014,22 @@ sub find_by_url { # repos_root and, path are optional
+ 			$p =~ s#^\Q$z\E(?:/|$)#$prefix# or next;
+ 		}
+ 		foreach my $f (keys %$fetch) {
+-			next if $f ne $p;
+-			return Git::SVN->new($fetch->{$f}, $repo_id, $f);
++			unless ($rev) {
++				next if $f ne $p;
++				return Git::SVN->new($fetch->{$f}, $repo_id, $f);
++			}
++			my $gs = Git::SVN->new($fetch->{$f}, $repo_id, $f);
++			my ($max_rev, $max_commit) = $gs->rev_map_max(1);
++			next if !$max_rev || !$max_commit;
++			my ($url) = ::cmt_metadata($max_commit);
++			next if $url ne $full_url || $max_rev > $rev;
++			if (!$closest_gs || $closest_max_rev < $max_rev) {
++				$closest_gs = $gs;
++				$closest_max_rev = $max_rev;
++			}
+ 		}
+ 	}
+-	undef;
++	$closest_gs && $rev ? $closest_gs : undef;
+ }
+ 
+ sub init {
+@@ -2969,18 +2985,35 @@ sub other_gs {
+ 			$u = $url;
+ 			$repo_id = $self->{repo_id};
+ 		}
++		my $max_commit;
+ 		while (1) {
+ 			# It is possible to tag two different subdirectories at
+ 			# the same revision.  If the url for an existing ref
+ 			# does not match, we must either find a ref with a
+ 			# matching url or create a new ref by growing a tail.
+ 			$gs = Git::SVN->init($u, $p, $repo_id, $ref_id, 1);
+-			my (undef, $max_commit) = $gs->rev_map_max(1);
++			(undef, $max_commit) = $gs->rev_map_max(1);
+ 			last if (!$max_commit);
+ 			my ($url) = ::cmt_metadata($max_commit);
+ 			last if ($url eq $gs->full_url);
+ 			$ref_id .= '-';
+ 		}
++		unless ($max_commit) {
++			# If a brand new ref was created, try to find a matching
++			# ref with the same url and a smaller revision to use as
++			# as a seed.  This avoids reloading the entire history
++			# of the repository when the same subdirectory is tagged
++			# frequently.
++			my $parent_gs = Git::SVN->find_by_url($new_url, $url,
++				$branch_from, $r);
++			if ($parent_gs) {
++				my ($parent_rev, $parent_commit) =
++					$parent_gs->rev_map_max(1);
++				$gs->rev_map_set($parent_rev, $parent_commit);
++				print STDERR "Using " . $parent_gs->{path} .
++					" as seed: $ref_id\n" unless $::_q > 1;
++			}
++		}
+ 		print STDERR "Initializing parent: $ref_id\n" unless $::_q > 1;
+ 	}
+ 	$gs
+diff --git a/t/t9157-git-svn-subdir-import-perf.sh b/t/t9157-git-svn-subdir-import-perf.sh
+new file mode 100755
+index 0000000..d28d0e0
+--- /dev/null
++++ b/t/t9157-git-svn-subdir-import-perf.sh
+@@ -0,0 +1,59 @@
++#!/bin/sh
++
++test_description='git svn import subdirectory performance'
++
++. ./lib-git-svn.sh
++
++test_expect_success 'setup svn repo' '
++	mkdir -p import/trunk/subdir &&
++	mkdir -p import/branches &&
++	mkdir -p import/tags &&
++	echo "base" >import/trunk/subdir/file &&
++	svn_cmd import -m "import for git svn" import "$svnrepo" &&
++	rm -rf import &&
++
++	svn_cmd co "$svnrepo/trunk" svn_project &&
++	j=4 &&
++	(cd svn_project &&
++		i=1 &&
++		while [ $i -le $j ]; do
++			echo "$i" >>subdir/file &&
++			svn_cmd ci -m "trunk change $i" subdir/file &&
++			i=$(($i+1))
++		done
++	) &&
++
++	svn_cmd cp -m "create tag mytag1" "$svnrepo/trunk/subdir" "$svnrepo/tags/mytag1" &&
++
++	(cd svn_project &&
++		i=$(($j+1)) &&
++		echo "$i" >>subdir/file &&
++		svn_cmd ci -m "trunk change $i" subdir/file
++	) &&
++
++	svn_cmd cp -m "create tag mytag2" "$svnrepo/trunk/subdir" "$svnrepo/tags/mytag2"
++
++	(cd svn_project &&
++		i=$(($j+2)) &&
++		echo "$i" >>subdir/file &&
++		svn_cmd ci -m "trunk change $i" subdir/file
++	) &&
++
++	svn_cmd cp -m "create tag mytag3" "$svnrepo/trunk/subdir" "$svnrepo/tags/mytag3"
++'
++
++test_expect_success 'import subdirectory performance' '
++	git svn init --stdlayout "$svnrepo" git_project &&
++	cd git_project &&
++	git svn fetch | tee fetch.txt &&
++
++	grep "refs/remotes/tags/mytag2@7" fetch.txt >actual.txt &&
++	grep "^r7" actual.txt >expected.txt &&
++	diff -u expected.txt actual.txt &&
++
++	git diff --exit-code tags/mytag1..tags/mytag2^^ &&
++	git diff --exit-code tags/mytag1..tags/mytag3^^^ &&
++	git diff --exit-code tags/mytag2..tags/mytag3^^
++'
++
++test_done
+-- 
+1.7.2.1.158.gbd3a97
