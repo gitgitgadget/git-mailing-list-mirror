@@ -1,87 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/7] lockfile: introduce alloc_lock_file() to avoid
- valgrind noise
-Date: Sat, 2 Oct 2010 11:43:25 -0500
-Message-ID: <20101002164325.GA19675@burratino>
-References: <wes62zknmki.fsf@kanis.fr>
- <7v1va760ip.fsf@alter.siamese.dyndns.org>
- <20100810032647.GA2386@burratino>
- <20101002082752.GA29638@burratino>
- <20101002083216.GC29638@burratino>
- <4CA75E21.1090407@op5.se>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 7/7] commit-tree: free commit message before exiting
+Date: Sat, 2 Oct 2010 20:14:35 +0200
+Message-ID: <AANLkTikZ5cn8biMvMPzXz6U2J=3yg1KJXayHD-7Cx8Me@mail.gmail.com>
+References: <wes62zknmki.fsf@kanis.fr> <7v1va760ip.fsf@alter.siamese.dyndns.org>
+ <20100810032647.GA2386@burratino> <20101002082752.GA29638@burratino> <20101002084100.GH29638@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>,
-	David Barr <david.barr@cordelta.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Sat Oct 02 18:46:43 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 02 20:19:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P25EQ-0007xK-Hi
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 18:46:42 +0200
+	id 1P26gd-0001XQ-30
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 20:19:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754707Ab0JBQqh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Oct 2010 12:46:37 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52503 "EHLO
+	id S1751162Ab0JBSO5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 2 Oct 2010 14:14:57 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58901 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753967Ab0JBQqh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Oct 2010 12:46:37 -0400
-Received: by iwn5 with SMTP id 5so5082219iwn.19
-        for <git@vger.kernel.org>; Sat, 02 Oct 2010 09:46:36 -0700 (PDT)
+	with ESMTP id S1750988Ab0JBSO4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 2 Oct 2010 14:14:56 -0400
+Received: by iwn5 with SMTP id 5so5146965iwn.19
+        for <git@vger.kernel.org>; Sat, 02 Oct 2010 11:14:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=2gUJSQfHxXVK5ZO8H2SBA4/p8j9PtLL2eznf4xam/I8=;
-        b=loHFdNGM+6Ef4agrP0zE74ASmbYHwQ8I3PIwN5wJacW/JtWbWm0TSXpvnxYUNSubeQ
-         H7p+ZzzFpRkRSeHOm4zwGE58Q1rVRXYiMfru8Kn6//fMeIloM/kBWdG2Ajt1sM2ZHFn7
-         pvfYsxSvSVhoGK3Wujfqh84r99qPazjF23UyU=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=p3ennDof1Yq5ROufLiH2L53Pf4nulrt2XzdN+9YRgsM=;
+        b=ijNw/8XH6ylrBeeYJHKYg7+/xXIxoeLxpkeQSOqDgkOvZxs+BXKC0sO8xsQDH0WWmd
+         Xi0U/ZrvpJ3V3fCGXGxEpRDw023DBH6p2EtlxqBfcUi3F2FiInoHRKi7rqlL1XzqjSuT
+         uCpNaDA4mDHkSn52w/2BMXgrHTz2BKwzcwW6Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ceueWTQDvmusZeiwBGDKG0oyhtVHivVNRyBXxJkRttPEJ9Ptq6gWjY6T4vssxy3wbW
-         S7xl73RqBXrHZ3ChXpkRuAN733L6mhF24qLdpxUzEXdp7W2eXD4zpZMkyoHbCB9O5iXB
-         90/i0g7gCdK/1ihFzSU3IJJBn3q0Tc2NkoB+Y=
-Received: by 10.231.169.149 with SMTP id z21mr7535555iby.11.1286037996443;
-        Sat, 02 Oct 2010 09:46:36 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id n20sm2637110ibe.5.2010.10.02.09.46.35
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 02 Oct 2010 09:46:35 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4CA75E21.1090407@op5.se>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=o4UFz+jisDqwWycqmNGDPpOXpXC3pV4l/1XFvSG/rJ3qS3nN92E7R4I+ekIERogtra
+         +RBe/V9gtGD5pkV1nB4pBzaCUvZJk/XV5lITv7v3upkulbdBG+CUDSdy854q9WZZ8xyX
+         H3hRB/3vRIEyrHUCr3zmYDa8knnbZXA16Ieh4=
+Received: by 10.231.60.4 with SMTP id n4mr7608513ibh.18.1286043295603; Sat, 02
+ Oct 2010 11:14:55 -0700 (PDT)
+Received: by 10.231.33.138 with HTTP; Sat, 2 Oct 2010 11:14:35 -0700 (PDT)
+In-Reply-To: <20101002084100.GH29638@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157809>
 
-Andreas Ericsson wrote:
+Heya,
 
-> So we're basically increasing runtime to shut up a leakchecking tool
-> and also making that leakchecking tool falsely not report positives.
+On Sat, Oct 2, 2010 at 10:41, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> That's the end of the series. =C2=A0Thanks for reading.
 
-Yep, nice summary.  Probably I should have also mentioned:
+Thanks, I've used git under valgrind a couple of times and always had
+to resort to running 'regular' git, looking at what valgrind reports
+for it, and then running my modified git, and try to make sure that I
+didn't introduce any new leaks. How does the current valgrind output
+look like, are we close to being leak free, or is this just a drop in
+(or perhaps out of :P) the bucket?
 
- - An extra stack frame with no locals is not a lot of overhead, but
-   in any case these are by design not in performance-critical places.
+--=20
+Cheers,
 
- - By using a special function like this, we make instances nicely
-   grep-able and give the leak prominence in t/valgrind/default.supp.
-   So a person can discover, for example, that writing a lot of trees
-   in a single process (like cherry-pick -n foo..bar currently does)
-   is going to be leaky.
-
- - valgrind would be most useful if it can be used to identify
-   _regressions_ by running the test suite with --valgrind.  git is
-   deliberately leaky in a lot of places; it is not useful to record
-   that.
-
- - valgrind does have the ability to turn suppressions off if you want.
+Sverre Rabbelier
