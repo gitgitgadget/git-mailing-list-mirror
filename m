@@ -1,76 +1,108 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 7/7] commit-tree: free commit message before exiting
-Date: Sat, 2 Oct 2010 15:50:44 -0500
-Message-ID: <20101002205044.GA30541@burratino>
-References: <wes62zknmki.fsf@kanis.fr>
- <7v1va760ip.fsf@alter.siamese.dyndns.org>
- <20100810032647.GA2386@burratino>
- <20101002082752.GA29638@burratino>
- <20101002084100.GH29638@burratino>
- <AANLkTikZ5cn8biMvMPzXz6U2J=3yg1KJXayHD-7Cx8Me@mail.gmail.com>
- <20101002182600.GB24523@burratino>
- <AANLkTim6hA5ShAYWm63vyybyTqRxgKVjv3EFcQ5dZWCW@mail.gmail.com>
+From: Brandon Casey <drafnel@gmail.com>
+Subject: Re: Splitting the mailing list up
+Date: Sat, 2 Oct 2010 16:33:04 -0500
+Message-ID: <AANLkTi=WRfbAa7Xb8PS63_DfKiZYwEsWSruivwtkVhWR@mail.gmail.com>
+References: <20100925230022.6e2fd389.coolzone@it.dk>
+	<4CA1899F.2020509@cadifra.com>
+	<141CAFB5-D423-48FE-BEED-B755C5F2685B@sb.org>
+	<4CA2FA76.6080501@cadifra.com>
+	<4CA30201.5020006@drmicha.warpmail.net>
+	<AANLkTimPdqM_29Aru7tAGp_REem+BYAuE8o-U-qkhS6T@mail.gmail.com>
+	<AANLkTim2Zrj+VUirUL+cyfFnHRw6L9TST-p01yx1rtZS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Cc: kusmabite@gmail.com, Michael J Gruber <git@drmicha.warpmail.net>,
+	Adrian Buehlmann <adrian@cadifra.com>,
+	Kevin Ballard <kevin@sb.org>, Rico Secada <coolzone@it.dk>,
+	git@vger.kernel.org
 To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 02 22:54:03 2010
+X-From: git-owner@vger.kernel.org Sat Oct 02 23:33:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P295m-0003wq-2W
-	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 22:54:02 +0200
+	id 1P29hy-0002zJ-EW
+	for gcvg-git-2@lo.gmane.org; Sat, 02 Oct 2010 23:33:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702Ab0JBUx5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 2 Oct 2010 16:53:57 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:61734 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751558Ab0JBUx4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 2 Oct 2010 16:53:56 -0400
-Received: by iwn5 with SMTP id 5so5247496iwn.19
-        for <git@vger.kernel.org>; Sat, 02 Oct 2010 13:53:56 -0700 (PDT)
+	id S1751202Ab0JBVdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 2 Oct 2010 17:33:13 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:33998 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751050Ab0JBVdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 2 Oct 2010 17:33:12 -0400
+Received: by qyk36 with SMTP id 36so1084920qyk.19
+        for <git@vger.kernel.org>; Sat, 02 Oct 2010 14:33:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=d7kKI2vZLz/ATE1PqY2Kyo85mnCINzJQ3Me28XV3lXA=;
-        b=gQ5aHDpguFj1zVggE4Y9fDjauw0ACSJI0tnJ5SJTC/fQdPvzBnsbyhbm1+TRAfAIMS
-         1++oacTT6hWZKES3tdYh2Z71yffOexGvxp+vkuyjhsdhMWiT0ryWsroAylIA2+a9SwUH
-         rpzS+6SHETdT2kTMnDrT5R3JG0cIKn5XvGJmw=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=nzL6kyS0J7pYDN/QTEi7HbcQSc5DMBS7Z9GZgN4JbRo=;
+        b=GaxN5ZPE97yE5miocNqAXkkl1Bvq2gJWd4W62QrL08QcMtT6S7MfXjBo00Gldj4aeQ
+         GmfygBdE5ahCq18l4bnrxedPOl0cGzvczTwOhfXvykNc/Kk5w2T47n570xUfpuCxDPtj
+         FJ4KejEVeGOUD97SlYNqn45kYDtIQiXFs7QgM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RBGggtuFUfAiB6cCNlC9iT3a+ViBs288ZdQWFGmkgwtw8Oi5jDu1hYE58OOccS1YPj
-         dG/jhWcs1cy44ywLSEAbPTP7PDNgcUioYRF7llx2ulfeOn63LQGdQy0OonTjkXUhpmmQ
-         NTQ5LjsluUIvp9Z8mcG33Ra8fDUvqcfqQzAXo=
-Received: by 10.231.193.11 with SMTP id ds11mr6154239ibb.192.1286052836317;
-        Sat, 02 Oct 2010 13:53:56 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d13sm947967ibb.20.2010.10.02.13.53.55
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 02 Oct 2010 13:53:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim6hA5ShAYWm63vyybyTqRxgKVjv3EFcQ5dZWCW@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=pUz6bXsGgC9TR0KK/z9Hg5MUGi5ak2m1m/CNd1f2R5/mEGNnsh1DGIYZrI1FoNyd/e
+         2WKAwHeUE+bzJYlWQH4aeHgjzBUzH0dLF76ra6A1nIpM8whiYfBbKWTvoCc7Ako+CYA2
+         oniGQpqyb8MgKhFGfekocMS0tpXYX0oLjwRK4=
+Received: by 10.220.63.136 with SMTP id b8mr1896499vci.175.1286055184779; Sat,
+ 02 Oct 2010 14:33:04 -0700 (PDT)
+Received: by 10.220.203.3 with HTTP; Sat, 2 Oct 2010 14:33:04 -0700 (PDT)
+In-Reply-To: <AANLkTim2Zrj+VUirUL+cyfFnHRw6L9TST-p01yx1rtZS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157814>
 
-Sverre Rabbelier wrote:
+On Wed, Sep 29, 2010 at 10:02 AM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
+> Heya,
+>
+> On Wed, Sep 29, 2010 at 15:00, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+>> http://groups.google.com/group/git-users says "This is the git mailing
+>> list for users, feel free to ask any question about git usage.", so
+>> yes. I think we already have that list. Perhaps all we need to do is
+>> to add a link to it on the front-page of git-scm.com, next to the link
+>> to this? Perhaps something like "You can also ask the Git development
+>> community directly at our git@vger.kernel.org mailing list, or the Git
+>> user community at git-users@googlegroups.com"?
+>>
+>> That would imply making it a bit more official, but perhaps it's a
+>> good compromise?
+>
+> Perhaps we can just at 'git@vger.kernel.org' as one of the list users,
+> so that all mails sent to git-users@googlegroups.com are forwarded to
+> the git list? As long as the git-users group is open to all, that
+> should Just Work, no?
 
-> The question of course is, is there anyone interested in cleaning up
-> this mess? Do you mean to keep it up and get the test suite to the
-> point where there are no leak warnings?
+If it worked, it would be just like the zsh mailing list setup that was
+suggested, which is a good thing IMHO.
 
-I was thinking more along the lines of maintaining a branch with
---valgrind set up to do leak checking, and collecting patches to deal
-with leak warnings as people write them.
+If gmane is to be trusted (and if I parsed the output of:
 
-My current itch is sussing out cherry-pick leaks.  So at the moment I
-only need to be able to run a small subset of the test suite.
+   http://gmane.org/output-rate.php?group=gmane.comp.version-control.git
+
+correclty), then the git mailing list has received an average of about
+80 messages per day in 2010.
+
+The "about" page for the git-users group seems to indicate that the
+group has received about 65 messages per _month_ over the last
+4 higher-traffic-than-normal months.  A drop in the bucket compared
+to the main mailing list.
+
+But, the "about" page here:
+
+   http://groups.google.com/group/git-users/about
+
+also says:
+
+   "Only members can post"
+
+That would need to be opened up so that non-members from the
+main git list could reply to posts originating from the "users"
+group.
+
+-Brandon
