@@ -1,70 +1,73 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/4] Allow hiding renames of individual files involved
- in a directory rename.
-Date: Sun, 03 Oct 2010 16:28:52 -0700
-Message-ID: <7vr5g6etzf.fsf@alter.siamese.dyndns.org>
-References: <1286138529-6780-1-git-send-email-ydirson@altern.org>
- <1286138529-6780-2-git-send-email-ydirson@altern.org>
- <1286138529-6780-3-git-send-email-ydirson@altern.org>
- <1286138529-6780-4-git-send-email-ydirson@altern.org>
- <AANLkTi=S0AkNdajK5MM60HUxHPG1R=Tp_iL8S8Ds4P+j@mail.gmail.com>
+Subject: Re: [PATCH] Documentation: mention environment variables
+ GIT_CONFIG_NO(GLOBAL|SYSTEM)
+Date: Sun, 03 Oct 2010 16:27:10 -0700
+Message-ID: <7vvd5ieu29.fsf@alter.siamese.dyndns.org>
+References: <20101003235329.6f4d2572@jk.gs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org,
-	Yann Dirson <ydirson@free.fr>
-To: Sverre Rabbelier <srabbelier@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git ML <git@vger.kernel.org>
+To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
 X-From: git-owner@vger.kernel.org Mon Oct 04 01:29:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2Xzd-0004vR-Qw
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 01:29:22 +0200
+	id 1P2Xzd-0004vR-AC
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 01:29:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751578Ab0JCX3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Oct 2010 19:29:05 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42910 "EHLO
+	id S1751485Ab0JCX1W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 19:27:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42016 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751528Ab0JCX3D (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Oct 2010 19:29:03 -0400
+	with ESMTP id S1751091Ab0JCX1V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 19:27:21 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F8DFDB1C7;
-	Sun,  3 Oct 2010 19:29:03 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AC4ADB19B;
+	Sun,  3 Oct 2010 19:27:17 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OAi6/GP/Lrxza1ed+zSKD1KjF38=; b=evTpXt
-	Ar/JpolY1btedvT/2gxSwB2/h+fBxbvLsRKRenNQbfjg2EMzbm7EQzlZyJ1Hqt8R
-	5WvEjJACuffyh8HpRPr/cpxaeto8FMpKuFnQ7sJslsLlrxdIqvQD5ool8W6Z8RJF
-	/YE9vsP2vOikW1kH9W4TROc2UMYKYcA5G96D4=
+	:content-type:content-transfer-encoding; s=sasl; bh=aCDoMZSdSff9
+	9txKbHqvbelx/yI=; b=S+ybFEPRD6TurkQobrJPZqfQBOW+MdYMoPhdtinFJv3y
+	kBB3d2TFiLTJBd3MvWh/9j7a3XeB5ZWaxjLfIOHI6PVrvjTmSaeZIjO2PDASVve3
+	MvPBZ7MwHWZmxJ9xlAQgC2yxyCa71W87PX7+ZNMTWaHCvPzLxPxwcNN/yiXHNN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iZgAeVaZgF0S0SSUzOl1BdMJa0qqhlle
-	p6q4Ambij+m7/5ftdK16XXhlvcAhb58Sw6GCGaL3X+1ZunYVyJlO+4dT+vZaSM1C
-	sqN1DZicMFUibsE7M6b9cHb0w3ef+nlJdBukcNQvycPiMWGB1xLtc9w0OH1cNXAp
-	tQSQSIONBrg=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZIVMlA
+	SWp9besmlaHNKRCcIr21bCaWiv19KBfZkehYG4/GdUHt33/HHDoLi2tlF06oDO1+
+	xAcwZJK1JyRzpVO0cK45p1+Li4nSgAIm9PVIOBoDTDDDuRoiFX5V17f+qm1lbBAe
+	AiUa0/EEDGbUaFGd8lmK9rv0bOUXLj+PghRIk=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FC6BDB1C6;
-	Sun,  3 Oct 2010 19:28:58 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EAED1DB19A;
+	Sun,  3 Oct 2010 19:27:14 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DFB4DB1C5; Sun,  3 Oct
- 2010 19:28:53 -0400 (EDT)
-In-Reply-To: <AANLkTi=S0AkNdajK5MM60HUxHPG1R=Tp_iL8S8Ds4P+j@mail.gmail.com>
- (Sverre Rabbelier's message of "Mon\, 4 Oct 2010 01\:06\:13 +0200")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 556E7DB199; Sun,  3 Oct
+ 2010 19:27:12 -0400 (EDT)
+In-Reply-To: <20101003235329.6f4d2572@jk.gs> ("Jan =?utf-8?Q?Kr=C3=BCger?=
+ =?utf-8?Q?=22's?= message of "Sun\, 3 Oct 2010 23\:53\:29 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FF00BAFE-CF45-11DF-8192-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: C16EA8B8-CF45-11DF-8192-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157946>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Jan Kr=C3=BCger <jk@jk.gs> writes:
 
-> I'd like to use this by default (but only for regular 'git diff', 'git
-> log', etc., not for 'git format-patch') if/when it gets merged, can
-> has config option?
+> The environment variables GIT_CONFIG_NOGLOBAL and GIT_CONFIG_NOSYSTEM
+> which have the opposite effect of the --global and --system switches =
+to
+> git-config are completely undocumented. This mentions them in the
+> 'files' and 'environment' sections of the manpage for git-config wher=
+e
+> GIT_CONFIG is already mentioned.
+>
+> Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
 
-Having a configuration variable might be a good idea, as long as there is
-a provision to avoid breaking scripted porcelains when the option is set.
+Aren't they undocumented because the use case for them is pretty much
+limited to the test scripts and nowhere else?  I am not absolutely sure
+about GIT_CONFIG_NOGLOBAL, but NOSYSTEM surely was started that way.
