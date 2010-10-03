@@ -1,73 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation: mention environment variables
- GIT_CONFIG_NO(GLOBAL|SYSTEM)
-Date: Sun, 03 Oct 2010 16:27:10 -0700
-Message-ID: <7vvd5ieu29.fsf@alter.siamese.dyndns.org>
-References: <20101003235329.6f4d2572@jk.gs>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Advertising the Git User's Survey 2011
+Date: Mon, 4 Oct 2010 01:29:21 +0200
+Message-ID: <201010040129.22302.jnareb@gmail.com>
+References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com> <201010031655.40521.jnareb@gmail.com> <20101003180743.GK328@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git ML <git@vger.kernel.org>
-To: Jan =?utf-8?Q?Kr=C3=BCger?= <jk@jk.gs>
-X-From: git-owner@vger.kernel.org Mon Oct 04 01:29:22 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 01:29:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2Xzd-0004vR-AC
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 01:29:21 +0200
+	id 1P2Xze-0004vR-CZ
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 01:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751485Ab0JCX1W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 19:27:22 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42016 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751091Ab0JCX1V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 19:27:21 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1AC4ADB19B;
-	Sun,  3 Oct 2010 19:27:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=aCDoMZSdSff9
-	9txKbHqvbelx/yI=; b=S+ybFEPRD6TurkQobrJPZqfQBOW+MdYMoPhdtinFJv3y
-	kBB3d2TFiLTJBd3MvWh/9j7a3XeB5ZWaxjLfIOHI6PVrvjTmSaeZIjO2PDASVve3
-	MvPBZ7MwHWZmxJ9xlAQgC2yxyCa71W87PX7+ZNMTWaHCvPzLxPxwcNN/yiXHNN8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=ZIVMlA
-	SWp9besmlaHNKRCcIr21bCaWiv19KBfZkehYG4/GdUHt33/HHDoLi2tlF06oDO1+
-	xAcwZJK1JyRzpVO0cK45p1+Li4nSgAIm9PVIOBoDTDDDuRoiFX5V17f+qm1lbBAe
-	AiUa0/EEDGbUaFGd8lmK9rv0bOUXLj+PghRIk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EAED1DB19A;
-	Sun,  3 Oct 2010 19:27:14 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 556E7DB199; Sun,  3 Oct
- 2010 19:27:12 -0400 (EDT)
-In-Reply-To: <20101003235329.6f4d2572@jk.gs> ("Jan =?utf-8?Q?Kr=C3=BCger?=
- =?utf-8?Q?=22's?= message of "Sun\, 3 Oct 2010 23\:53\:29 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C16EA8B8-CF45-11DF-8192-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751659Ab0JCX3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 19:29:08 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47819 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528Ab0JCX3G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 19:29:06 -0400
+Received: by fxm14 with SMTP id 14so1439314fxm.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 16:29:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=tEmIMJX/aP9GNC3fePXdMs9EQf/DUfUPDDBa5j6cZJI=;
+        b=TYos2iThG4Dq/l1uZ0xrGLqJWTs0YX8Qd4TyLy2G7IbHMZDGFcBBuI3Pw28E7S/ZV0
+         fvjrafoBKbvdJvLL+/e6nziAqxPQxn80x+g9nCEuu9NaBLWzCDaONjE3eiJEA+V9HthH
+         GyLIPUHTmdjdKPjIeWoIbrT85L/vP1aZ2R4oU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=D3fHd8rxDSaSt0IpnoXQ/07yQrNGRKk8kDifpFk616GQlvaOYlBoDN15PLE3Dv6dbO
+         8xtilxc7OmfWBluo6G3Fz+05tiV1g4e8ewJQ5RzypfHyeYs2GTaVT6ed/QJ9dXRibE6s
+         0agB3aIDhAJnwl79+oiQpzwlhbiGRcadLFQCc=
+Received: by 10.223.125.70 with SMTP id x6mr7984591far.85.1286148544981;
+        Sun, 03 Oct 2010 16:29:04 -0700 (PDT)
+Received: from [192.168.1.13] (abwo152.neoplus.adsl.tpnet.pl [83.8.238.152])
+        by mx.google.com with ESMTPS id r4sm1857858faa.43.2010.10.03.16.29.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 16:29:03 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20101003180743.GK328@kytes>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157947>
 
-Jan Kr=C3=BCger <jk@jk.gs> writes:
+Ramkumar Ramachandra wrote:
+> Jakub Narebski writes:
+>> On Sun, 3 Oct 2010, Ramkumar Ramachandra wrote:
+>>> Perhaps we can email survs.com and ask them?
+>> 
+>> Should I do it, or would you do it?
+> 
+> Er, why will they know who I am and give me this information? You've
+> been in touch with them before, I hope?
 
-> The environment variables GIT_CONFIG_NOGLOBAL and GIT_CONFIG_NOSYSTEM
-> which have the opposite effect of the --global and --system switches =
-to
-> git-config are completely undocumented. This mentions them in the
-> 'files' and 'environment' sections of the manpage for git-config wher=
-e
-> GIT_CONFIG is already mentioned.
->
-> Signed-off-by: Jan Kr=C3=BCger <jk@jk.gs>
+Well, I sent a bit of feedback, bugreports and feature requests while
+Survs.com was still in beta...
 
-Aren't they undocumented because the use case for them is pretty much
-limited to the test scripts and nowhere else?  I am not absolutely sure
-about GIT_CONFIG_NOGLOBAL, but NOSYSTEM surely was started that way.
+[...]
+>>> I suppose we could always work out a way to display the results from
+>>> the information Survs.com gives us.
+>> 
+>> Do you have any idea how to display such geographical information, and
+>> what tool to use for that visualization?
+> 
+> A quick Google search pointed me to several tools that parse a
+> plaintext file of (lattitude, longitude) entries and use the Google
+> Maps API to plot them. I'm sorry, but I don't know much more about
+> this.
+
+What we have is the names of countries (which can be quite large) rather
+than geographical coordinates.  Perhaps use color to mark countries on
+the political map, or something?
+
+>>> Nice histogram! How did we manage to do this in 2009? Did we use a
+>>> custom-made application to do the survey?
+>> 
+>> I used a Perl script, which uses Text::CSV to parse data exported from
+>> Survs.com in CSV format (and PerlIO::gzip to not have to decompress it).
+>> Each survey page on Git Wiki, except for the very first survey, contains
+>> link to file with such exported data.
+>> 
+>> For example for age it extracts digits from the response, and assumes
+>> that it is number of years.  It also creates this nice table of ranges
+>> that you can see in the mentioned section of GitSurvey2009 page.
+>> 
+>> I can publish this script, e.g. the one used for 2009 survey on the
+>> GitSurvey2009 page, but it is rough'n'dirty script.
+> 
+> Sounds good- we should create a small repository that contains all the
+> tools used, notes made, and results (in semantic format) of previous
+> surveys. Embarrassingly enough, I can't read Perl myself, but I'm sure
+> the others will find it useful. Also, isn't there some Perl module to
+> use Google Maps API to draw that map?
+
+Good idea.
+
+-- 
+Jakub Narebski
+Poland
