@@ -1,97 +1,116 @@
-From: Thomas Adam <thomas@xteddy.org>
-Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git ls-files
-Date: Sun, 3 Oct 2010 22:59:10 +0100
-Message-ID: <AANLkTimRa09+nBFTV9OtzKngAb=QrAP550a22S73cW_y@mail.gmail.com>
-References: <4CA847D5.4000903@workspacewhiz.com> <1286099806-25774-7-git-send-email-avarab@gmail.com>
- <AANLkTimH8Lj69qcOCmR3+5HYfgKnr5nyMvQU=9h0=FaB@mail.gmail.com> <201010032019.09244.j6t@kdbg.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [TopGit PATCH 2/6] tg-remote: use default remote if non is
+	given
+Date: Mon, 4 Oct 2010 00:00:52 +0200
+Message-ID: <20101003220052.GD28679@pengutronix.de>
+References: <AANLkTim3gnU+_krD2QM0BAMf9DZi2_4hva6dq4WXcatH@mail.gmail.com> <1286141157-30422-1-git-send-email-bert.wesarg@googlemail.com> <1286141157-30422-2-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Oct 03 23:59:34 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Petr Baudis <pasky@suse.cz>, git@vger.kernel.org,
+	Peter Simons <simons@cryp.to>,
+	Per Cederqvist <ceder@lysator.liu.se>,
+	Olaf Dabrunz <odabrunz@gmx.net>,
+	Thomas Moschny <thomas.moschny@gmx.de>,
+	martin f krafft <madduck@madduck.net>,
+	martin f krafft <madduck@debian.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 00:01:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2Waj-0000pC-E2
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 23:59:33 +0200
+	id 1P2WcA-00014W-OC
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 00:01:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752874Ab0JCV72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Oct 2010 17:59:28 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53421 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752850Ab0JCV71 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Oct 2010 17:59:27 -0400
-Received: by qwh6 with SMTP id 6so2686327qwh.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 14:59:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=oiGzsm6iR495uTSVWYI82vEOSGVhx8R3xWGGNKi6OjY=;
-        b=XdQccwbXlzTJYpPH/ANjSvfBjveJIYiVdmXt80y3D89VvLDfpy3c/q5eUoyPWQgTL/
-         n2k4Xid7NxiHp5LgUmsGU7QNrvmBLYbAkDD8JX+eDxW2Cr7j49eG5+yf+V8UNHQl3+Pr
-         22QsF8/9XFN7s9w5Iiul1Wkcbxj13m0f8erdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=AMLX1pqeggBrXnEnK4A+8Ko5ymM+eWwLLZIjqIhpYuMYwLsPU+9pu3Cus6VWYNlAi1
-         +GjhEDDfNV7GWyucxPQo3VMNjch1EXnbCewMIz/Y9crdwuRRaKLBMX5XcDE/RtY2ReHi
-         ZgbNUOJTyrf/eYebwKeCTG5inUZfg+c5U4RrI=
-Received: by 10.229.73.142 with SMTP id q14mr6333053qcj.26.1286143166375; Sun,
- 03 Oct 2010 14:59:26 -0700 (PDT)
-Received: by 10.229.23.13 with HTTP; Sun, 3 Oct 2010 14:59:10 -0700 (PDT)
-In-Reply-To: <201010032019.09244.j6t@kdbg.org>
-X-Google-Sender-Auth: fCl1eHtg_1roZYepMq-dhkvmmRQ
+	id S1753518Ab0JCWA5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 18:00:57 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:60558 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752922Ab0JCWA4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 18:00:56 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P2Wc2-0002CU-W2; Mon, 04 Oct 2010 00:00:54 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P2Wc0-0001wV-Vn; Mon, 04 Oct 2010 00:00:52 +0200
+Content-Disposition: inline
+In-Reply-To: <1286141157-30422-2-git-send-email-bert.wesarg@googlemail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157937>
 
-SGkgLS0KCk9uIDMgT2N0b2JlciAyMDEwIDE5OjE5LCBKb2hhbm5lcyBTaXh0IDxqNnRAa2RiZy5v
-cmc+IHdyb3RlOgo+IE9uIFNvbm50YWcsIDMuIE9rdG9iZXIgMjAxMCwgVGhvbWFzIEFkYW0gd3Jv
-dGU6Cj4+IEhpIC0tCj4+Cj4+IE9uIDMgT2N0b2JlciAyMDEwIDEwOjU2LCDDhnZhciBBcm5masO2
-csOwIEJqYXJtYXNvbiA8YXZhcmFiQGdtYWlsLmNvbT4gd3JvdGU6Cj4+ID4gKyDCoCDCoCDCoCBp
-ZiAoaWdub3JlX2Nhc2UpIHsKPj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGZvciAoOzspIHsK
-Pj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHVuc2lnbmVkIGNoYXIgYzEg
-PSB0b2xvd2VyKCptYXRjaCk7Cj4+ID4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCB1bnNpZ25lZCBjaGFyIGMyID0gdG9sb3dlcigqbmFtZSk7Cj4+ID4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoYzEgPT0gJ1wwJyB8fCBpc19nbG9iX3NwZWNpYWwoYzEp
-KQo+PiA+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYnJl
-YWs7Cj4+ID4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBpZiAoYzEgIT0gYzIp
-Cj4+ID4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCByZXR1
-cm4gMDsKPj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG1hdGNoKys7Cj4+
-ID4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBuYW1lKys7Cj4+ID4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBuYW1lbGVuLS07Cj4+ID4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCB9Cj4+ID4gKyDCoCDCoCDCoCB9IGVsc2Ugewo+PiA+ICsgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgZm9yICg7Oykgewo+PiA+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgdW5zaWduZWQgY2hhciBjMSA9ICptYXRjaDsKPj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIHVuc2lnbmVkIGNoYXIgYzIgPSAqbmFtZTsKPj4gPiArIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChjMSA9PSAnXDAnIHx8IGlzX2dsb2Jfc3BlY2lhbChj
-MSkpCj4+ID4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBi
-cmVhazsKPj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChjMSAhPSBj
-MikKPj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHJl
-dHVybiAwOwo+PiA+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgbWF0Y2grKzsK
-Pj4gPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG5hbWUrKzsKPj4gPiArIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIG5hbWVsZW4tLTsKPj4gPiArIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIH0KPj4gPiDCoCDCoCDCoCDCoH0KPj4KPj4gSXQncyBhIHJlYWwgc2hhbWUg
-YWJvdXQgdGhlIGNvZGUgZHVwbGljYXRpb24gaGVyZS4gwqBDYW4gd2Ugbm90IGF2b2lkCj4+IGl0
-IGp1c3QgYnkgZG9pbmc6Cj4+Cj4+IHVuc2lnbmVkIGNoYXIgYzEgPSAoaWdub3JlX2Nhc2UpID8g
-dG9sb3dlcigqbWF0Y2gpIDogKm1hdGNoOwo+PiB1bmlzZ25lZCBjaGFyIGMyID0gKGlnbm9yZV9j
-YXNlKSA/IHRvbG93ZXIoKm5hbWUpIDogKm5hbWU7Cj4+Cj4+IEkgYXBwcmVjaWF0ZSB0aGF0IHRv
-IHNvbWUgaXQgbWlnaHQgbG9vayBsaWtlIHBlcmwgZ29sZiwgYnV0Li4uCj4KPiBJdCBoYXMgYmVl
-biBkaXNjdXNzZWQsIGFuZCBJSVJDLCB0aGUgY29uY2Vuc3VzIHdhcyB0byBrZWVwIHRoZSBjb2Rl
-Cj4gZHVwbGljYXRpb24gYmVjYXVzZSB0aGlzIGlzIGFuIGlubmVyIGxvb3AuCgpJIG11c3QgaGF2
-ZSBtaXNzZWQgdGhlIGRpc2N1c3Npb24gLS0gYnV0IHdoeS9ob3cgZG9lcyBtYWtpbmcgaXQgYW4K
-aW5uZXItbG9vcCBzb21laG93IHByZXZlbnQgaXQgZnJvbSBzdWNoIGFuIG9idmlvdXMgKGFuZCBy
-ZWFkYWJsZSkKb3B0aW1pc2F0aW9uLCB3aGljaCB3b3VsZCBoYXZlIGZpdHRlZCBpbiB3ZWxsIGlu
-IG90aGVyIGFyZWFzLgoKLS0gVGhvbWFzIEFkYW0K
+Hello,
+
+On Sun, Oct 03, 2010 at 11:25:53PM +0200, Bert Wesarg wrote:
+> This is usefull if the remote has new topics and you need to populate=
+ the local
+> top-bases.
+>=20
+> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>=20
+> ---
+>  README       |    2 +-
+>  tg-remote.sh |    5 ++++-
+>  2 files changed, 5 insertions(+), 2 deletions(-)
+>=20
+> diff --git a/README b/README
+> index c418ff4..5a54468 100644 README
+> --- a/README
+> +++ b/README
+> @@ -327,7 +327,7 @@ tg remote
+>  	and 'git push' to operate on them. (Do NOT use 'git push --all'
+>  	for your pushes - plain 'git push' will do the right thing.)
+> =20
+> -	It takes a mandatory remote name argument, and optional
+> +	It takes a optional remote name argument, and optional
+>  	'--populate' switch - use that for your origin-style remote,
+>  	it will seed the local topic branch system based on the
+>  	remote topic branches. '--populate' will also make 'tg remote'
+> diff --git a/tg-remote.sh b/tg-remote.sh
+> index 86dcd9a..61774d7 100644 tg-remote.sh
+> --- a/tg-remote.sh
+> +++ b/tg-remote.sh
+> @@ -15,13 +15,16 @@ while [ -n "$1" ]; do
+>  	--populate)
+>  		populate=3D1;;
+>  	-*)
+> -		echo "Usage: tg [...] remote [--populate] REMOTE" >&2
+> +		echo "Usage: tg [...] remote [--populate] [REMOTE]" >&2
+>  		exit 1;;
+>  	*)
+>  		name=3D"$arg";;
+>  	esac
+>  done
+> =20
+> +[ -n "$name" ] ||
+> +	name=3D"$base_remote"
+> +
+Doesn't this need error checking, i.e. what happens if tg remote was
+never called before?  Hmm, seems to be a problem that already exists
+now?!  Took your patch anyhow.
+
+>  git config "remote.$name.url" >/dev/null || die "unknown remote '$na=
+me'"
+> =20
+> =20
+> --=20
+> tg: (29ab4cf..) bw/tg-remote-use-defualt-remote (depends on: master)
+>=20
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
