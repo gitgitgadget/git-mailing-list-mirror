@@ -1,169 +1,126 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv5 01/16] test-lib: make test_expect_code a test command
-Date: Sun, 3 Oct 2010 09:13:39 -0500
-Message-ID: <20101003141339.GB17084@burratino>
+Subject: Re: [PATCHv5 07/16] t3600 (rm): add lots of missing &&
+Date: Sun, 3 Oct 2010 09:28:55 -0500
+Message-ID: <20101003142855.GC17084@burratino>
 References: <1286082644-31595-1-git-send-email-newren@gmail.com>
- <1286082644-31595-2-git-send-email-newren@gmail.com>
+ <1286082644-31595-8-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
 To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 03 16:17:11 2010
+X-From: git-owner@vger.kernel.org Sun Oct 03 16:34:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2PNG-0000Ze-H1
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 16:17:10 +0200
+	id 1P2PeH-0004HP-5i
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 16:34:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752922Ab0JCOQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Oct 2010 10:16:57 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:59065 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751195Ab0JCOQ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Oct 2010 10:16:56 -0400
-Received: by qyk36 with SMTP id 36so1739972qyk.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 07:16:56 -0700 (PDT)
+	id S1751647Ab0JCOcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 10:32:14 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:39239 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751328Ab0JCOcN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 10:32:13 -0400
+Received: by iwn5 with SMTP id 5so5809479iwn.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 07:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=kU34cVC1nDmKCPoTSvn22S/Jy3UYYKKwJDsiVK24Pxg=;
-        b=mMDc4RLQeAXNq54zYLhLxRl0lWLhaeF7ai8HkDJs+BQcJ+o8jYLL/LtNsDssw/Tl9Y
-         NbPuRwnfgT2+UC4Cn/DrUSnnwzV97czioA6uuwBFdznbfO6szbRkgtIxcPLGBhJQMxqE
-         DM2AaujntwPBrIOlgedCfUuDe2hKA0pemu3eE=
+        bh=iiCcr7Yjdr8oCkViSoeUuz5jz8jAgriM9TFpKlB/6xQ=;
+        b=Ry6bapHLwI6rs07SbnG8lIVbvsVWmz0UmZ0yMHOUttD+NZJIAfzUBed/UI8tVTS0uM
+         xSL/GRIPCCx+BgzLwNtKYGPEiTnSnLHei5sKnJ8qkLgjduCoTzxqRf01OevtuOdK1Rp7
+         Z+6XqhSuu78atvVO/HWzqujBw88pVUlCexLgE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=xAIoK/vrB59Qg3M14NrJs2nw3KxT/wWAgRpcZdjqG2speP/6+KMpXb+X4A+tLyipnz
-         ZUz1yrxqdCzYR8qitwHFV679qvlriJ/vAll2obnbavq6GYF98Wfh57Drc9CviDmcvC77
-         qy27Z55qZCuLClUuRvmPSIGQg3rNDr+w+qi6I=
-Received: by 10.224.28.207 with SMTP id n15mr5796216qac.48.1286115416036;
-        Sun, 03 Oct 2010 07:16:56 -0700 (PDT)
+        b=DuMZBRbYvt66lVFC3Sv3lOXX02lAqAv38b2IDNLlZ7yRzj2GTI6tW9w5MeU6pEXw1L
+         7/8DMgBzNe1TnO2aFOkM5C7POUFLh+i2GlbmkLA9OZIShJpr4n3bDKXHKL2R+aZcluhG
+         UWxSv1OdbKIzE6toxqdBHqlif6B0DEdHQA/2Q=
+Received: by 10.231.155.7 with SMTP id q7mr8651423ibw.105.1286116332890;
+        Sun, 03 Oct 2010 07:32:12 -0700 (PDT)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id r38sm4080378qcs.14.2010.10.03.07.16.51
+        by mx.google.com with ESMTPS id h8sm3772355ibk.9.2010.10.03.07.32.09
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 03 Oct 2010 07:16:54 -0700 (PDT)
+        Sun, 03 Oct 2010 07:32:12 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1286082644-31595-2-git-send-email-newren@gmail.com>
+In-Reply-To: <1286082644-31595-8-git-send-email-newren@gmail.com>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157875>
 
 Elijah Newren wrote:
 
-> --- a/t/README
-> +++ b/t/README
-> @@ -482,6 +475,15 @@ library for your script to use.
->  	    'Perl API' \
->  	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
->
-> + - test_expect_code <exit-code> <git-command>
-> +
-> +   Run a git command and ensure that it exits with the given exit
-> +   code. For example:
-> +
-> +	test_expect_success 'Merge with d/f conflicts' '
-> +		test_expect_code 1 git merge "merge msg" B master
-> +	'
-
-Side note: this helper should be safe to use even for non-git
-commands.  "Huh?" you might ask. "But test_must_fail and
-test_might_fail..."  Well, the distinction is this: test_must_fail and
-test_might_fail rely on details of git's funny exit code conventions
---- e.g., that 130 is not a controlled failure and 129 is one ---
-while test_expect_code has simpler, more generally valid semantics.
-
-But maybe in practice this helper would only be used for git commands
-anyway.
-
-> --- a/t/t0000-basic.sh
-> +++ b/t/t0000-basic.sh
-> @@ -130,22 +130,57 @@ test_expect_success 'tests clean up after themselves' '
+> --- a/t/t3600-rm.sh
+> +++ b/t/t3600-rm.sh
+> @@ -38,37 +38,33 @@ test_expect_success \
 [...]
-> +test_expect_success 'tests clean up even on failures' "
-> +    mkdir failing-cleanup &&
-> +    (cd failing-cleanup &&
-> +    cat >failing-cleanup.sh <<EOF &&
-> +#!$SHELL_PATH
-
-Is $SHELL_PATH allowed to contain a shell metacharacter? (just
-curious).
-
-> +
-> +test_description='Failing tests with cleanup commands'
-> +
-> +# Point to the t/test-lib.sh, which isn't in ../ as usual
-> +TEST_DIRECTORY=\"$TEST_DIRECTORY\"
-> +. \"\$TEST_DIRECTORY\"/test-lib.sh
-
-Quoting issues?  I suspect the first $TEST_DIRECTORY here would
-be twice expanded and the second would be once expanded before
-failing-cleanup.sh is written.
-
-On the other hand, a $TEST_DIRECTORY with backslashes in it is
-asking for trouble for other reasons already.
-
-> +
-> +test_expect_success 'tests clean up even after a failure' '
-> +    touch clean-after-failure &&
-> +    test_when_finished rm clean-after-failure &&
-> +    (exit 1)
->  '
->  
-> +test_expect_success 'failure to clean up causes the test to fail' '
-> +    test_when_finished \"(exit 2)\"
-
-This changes the semantics of the test: before, it checked that
-the exit code was propagated out in these failure cases, but now
-it just checks that the test fails.
-
-The new semantics are probably more appropriate --- who relies on
-the exact exit status from a test script, anyway?
-
-> --- a/t/t1504-ceiling-dirs.sh
-> +++ b/t/t1504-ceiling-dirs.sh
-[...]
-> --- a/t/t6020-merge-df.sh
-> +++ b/t/t6020-merge-df.sh
+>  test_expect_success \
+>      'Test that git rm --cached foo fails if the index matches neither the file nor HEAD' '
+> -     echo content > foo
+> -     git add foo
+> -     git commit -m foo
+> +     git checkout HEAD -- foo &&
 [...]
 
-Nice. :)
+Why not
 
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -658,6 +640,28 @@ test_might_fail () {
->  	return 0
->  }
->  
-> +# Similar to test_must_fail and test_might_fail, but check that a
-> +# given command exited with a given exit code. Meant to be used as:
-> +#
-> +#	test_expect_success 'Merge with d/f conflicts' '
-> +#		test_expect_code 1 git merge "merge msg" B master
-> +#	'
-> +
-> +test_expect_code () {
-> +	want_code=$1
-> +	shift
-> +	"$@"
-> +	exit_code=$?
-> +	if test $exit_code = $want_code
-> +	then
-> +		echo >&2 "test_expect_code: command exited with $exit_code: $*"
-> +		return 0
+	-	echo content > foo
+	-	git add foo
+	-	git commit -m foo
+	+	echo content > foo &&
+	+	git add foo &&
+	+	git commit --allow-empty -m foo &&
 
-This makes the tests noisier on success.  I have no strong feelings
-either way about that, but it's probably worth mentioning in the commit
-message.
+?
 
-Anyway, for what it's worth,
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+Likewise for the next case.  Though in the long run, a helper function
+to prepare the HEAD, index, and work tree would probably be the way to
+go for this test.
 
-Thanks.
+With the change below (or whatever else is deemed appropriate),
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Sorry to draw this out so.
+---
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 9660ae0..53add72 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -46,13 +46,15 @@ test_expect_success \
+     'Test that git rm --cached foo succeeds if the index matches the file' \
+     'echo content > foo &&
+      git add foo &&
+-     git commit -m foo &&
++     git commit --allow-empty -m foo &&
+      echo "other content" > foo &&
+      git rm --cached foo'
+ 
+ test_expect_success \
+     'Test that git rm --cached foo fails if the index matches neither the file nor HEAD' '
+-     git checkout HEAD -- foo &&
++     echo content > foo &&
++     git add foo &&
++     git commit --allow-empty -m foo &&
+      echo "other content" > foo &&
+      git add foo &&
+      echo "yet another content" > foo &&
+@@ -61,7 +63,9 @@ test_expect_success \
+ 
+ test_expect_success \
+     'Test that git rm --cached -f foo works in case where --cached only did not' \
+-    'git checkout HEAD -- foo &&
++    'echo content > foo &&
++     git add foo &&
++     git commit --allow-empty -m foo &&
+      echo "other content" > foo &&
+      git add foo &&
+      echo "yet another content" > foo &&
+-- 
