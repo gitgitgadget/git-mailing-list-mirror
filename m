@@ -1,97 +1,70 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 5/6] Introduce the git fast-import-helper
-Date: Mon, 4 Oct 2010 01:15:36 +0200
-Message-ID: <AANLkTi=RASZU2e+WV6kXnUH=afE=g2SoGuJFZF1QJ4=D@mail.gmail.com>
-References: <4CA86A12.6080905@dbservice.com> <1286108511-55876-5-git-send-email-tom@dbservice.com>
- <20101003153144.GA18001@burratino> <4CA8A504.50009@dbservice.com>
- <AANLkTinZ6NCvKeALDBfP4z=ewkwWVwHBk=C_LmXM7OFh@mail.gmail.com> <4CA8BFB7.2050707@dbservice.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 3/4] Allow hiding renames of individual files involved
+ in a directory rename.
+Date: Sun, 03 Oct 2010 16:28:52 -0700
+Message-ID: <7vr5g6etzf.fsf@alter.siamese.dyndns.org>
+References: <1286138529-6780-1-git-send-email-ydirson@altern.org>
+ <1286138529-6780-2-git-send-email-ydirson@altern.org>
+ <1286138529-6780-3-git-send-email-ydirson@altern.org>
+ <1286138529-6780-4-git-send-email-ydirson@altern.org>
+ <AANLkTi=S0AkNdajK5MM60HUxHPG1R=Tp_iL8S8Ds4P+j@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 01:16:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org,
+	Yann Dirson <ydirson@free.fr>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 01:29:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2Xmz-0001bU-Bl
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 01:16:17 +0200
+	id 1P2Xzd-0004vR-Qw
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 01:29:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751425Ab0JCXP7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 19:15:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45113 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751045Ab0JCXP6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 19:15:58 -0400
-Received: by iwn5 with SMTP id 5so6167436iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 16:15:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=6/7RhZsZ3KtX0Y6repNQULLBGehixLGmxA10wAsu+DM=;
-        b=X5J9fPFVuY5s3G8Y/WCDjBx/zAVRG6sKAZQgQ3n15BZyw5AN/H0nHh/8C8d31TGfg3
-         fuMIgUkJ6yZD1MyotSn8hDFBtZFA7u65N1nsvY+RR/eZgz9VmoA9ClmOYsCDauujmeg/
-         SsiNCWGJ8z9NFSpJrgFkEgF2hkLmF5CSr0MlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=nWlffsJuIMkNOz+iQXI1WInBb7wLl7kFAvYxrZjqdgk8Rm1kBm4ao3IUkt2Z+Yvr+B
-         JnmP55UF1ETn1Lx0RYJavjeJqYFEeboUKI3zPZ4IRy+aBOcc1xfG8XJRJPFo9rXiTdKI
-         Wm+EZFdI90DFb8tB/C5nRKhp/PMmKmLmhzDMY=
-Received: by 10.231.190.149 with SMTP id di21mr9135564ibb.166.1286147757850;
- Sun, 03 Oct 2010 16:15:57 -0700 (PDT)
-Received: by 10.231.33.138 with HTTP; Sun, 3 Oct 2010 16:15:36 -0700 (PDT)
-In-Reply-To: <4CA8BFB7.2050707@dbservice.com>
+	id S1751578Ab0JCX3F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 19:29:05 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42910 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751528Ab0JCX3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 19:29:03 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F8DFDB1C7;
+	Sun,  3 Oct 2010 19:29:03 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OAi6/GP/Lrxza1ed+zSKD1KjF38=; b=evTpXt
+	Ar/JpolY1btedvT/2gxSwB2/h+fBxbvLsRKRenNQbfjg2EMzbm7EQzlZyJ1Hqt8R
+	5WvEjJACuffyh8HpRPr/cpxaeto8FMpKuFnQ7sJslsLlrxdIqvQD5ool8W6Z8RJF
+	/YE9vsP2vOikW1kH9W4TROc2UMYKYcA5G96D4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iZgAeVaZgF0S0SSUzOl1BdMJa0qqhlle
+	p6q4Ambij+m7/5ftdK16XXhlvcAhb58Sw6GCGaL3X+1ZunYVyJlO+4dT+vZaSM1C
+	sqN1DZicMFUibsE7M6b9cHb0w3ef+nlJdBukcNQvycPiMWGB1xLtc9w0OH1cNXAp
+	tQSQSIONBrg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3FC6BDB1C6;
+	Sun,  3 Oct 2010 19:28:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 6DFB4DB1C5; Sun,  3 Oct
+ 2010 19:28:53 -0400 (EDT)
+In-Reply-To: <AANLkTi=S0AkNdajK5MM60HUxHPG1R=Tp_iL8S8Ds4P+j@mail.gmail.com>
+ (Sverre Rabbelier's message of "Mon\, 4 Oct 2010 01\:06\:13 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FF00BAFE-CF45-11DF-8192-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157945>
 
-Heya,
+Sverre Rabbelier <srabbelier@gmail.com> writes:
 
-On Sun, Oct 3, 2010 at 19:39, Tomas Carnecky <tom@dbservice.com> wrote:
-> I also use a hash table (struct hash_table from hash.h). It's indexed=
- by
-> the atom. So it's about equally fast as the existing one but uses
-> slightly more memory. I measured the speed and fih is about 5% slower
-> than fi. Also, I found out that setting max_packfile to 32MB makes th=
-e
-> import much faster (from 10 minutes down to 3m to import the sources =
-of
-> git itself).
+> I'd like to use this by default (but only for regular 'git diff', 'git
+> log', etc., not for 'git format-patch') if/when it gets merged, can
+> has config option?
 
-That's curious.
-
-A 5% increase is significant. Imagine importing netbeans, (which is
-actually a use case of git-remote-hg), which takes about 4 hours. A 5%
-slowdown means the process will take more than 10 minutes longer.
-
-> I do: fprintf(stdout, "mark :%s %s\n", mark, sha1_to_hex(sha1));
-> One reason why not just write the plain hash is because that's the sa=
-me
-> syntax as the fih accepts in its input. This way you can do:
-> =C2=A0$ ( cat marks; cat fast-export-stream ) | git fast-import-helpe=
-r >> marks
-> and can restart at any time. Also, making the output a bit more
-> structured allows it to be easily extended in the future.
-
-I don't see much benefit tbh, if we want to do something like that it
-could (relatively) easy be added to regular git fast-import with a
-feature. So you'd start the stream with "feature new-marks-format" and
-only then follow up with "feature import-marks=3D...". Ditto on the
-commandline, `git fast-import --new-marks-format --import-marks=3D...".
-If it turns out to be very useful/popular it can be made the default
-after warning for a full release first.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Having a configuration variable might be a good idea, as long as there is
+a provision to avoid breaking scripted porcelains when the option is set.
