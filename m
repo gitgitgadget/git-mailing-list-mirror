@@ -1,105 +1,60 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git ls-files
-Date: Sun, 3 Oct 2010 20:19:09 +0200
-Message-ID: <201010032019.09244.j6t@kdbg.org>
-References: <4CA847D5.4000903@workspacewhiz.com> <1286099806-25774-7-git-send-email-avarab@gmail.com> <AANLkTimH8Lj69qcOCmR3+5HYfgKnr5nyMvQU=9h0=FaB@mail.gmail.com>
+From: =?UTF-8?B?SmVhbi1QaGlsaXBwZSBHYXJpw6lweQ==?= 
+	<jean-philippe.gariepy@nuecho.com>
+Subject: Re: [BUG] git clean -X behaviour when .gitignore has sub-directory
+ entries
+Date: Sun, 03 Oct 2010 14:55:48 -0400
+Organization: Nu Echo
+Message-ID: <4CA8D1B4.1020801@nuecho.com>
+References: <4CA0AB9A.4050002@nuecho.com> <20100927203652.GB11957@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Brandon Casey <drafnel@gmail.com>
-To: Thomas Adam <thomas@xteddy.org>
-X-From: git-owner@vger.kernel.org Sun Oct 03 20:19:21 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Shawn Bohrer <shawn.bohrer@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 03 20:56:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2T9c-0007yy-P8
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 20:19:21 +0200
+	id 1P2TjJ-0006pU-DL
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 20:56:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754462Ab0JCSTP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 14:19:15 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:30055 "EHLO bsmtp.bon.at"
+	id S1754557Ab0JCS4H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 14:56:07 -0400
+Received: from m.nuecho.com ([64.119.213.149]:57110 "EHLO m.nuecho.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754401Ab0JCSTP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Oct 2010 14:19:15 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id B208BCDF87;
-	Sun,  3 Oct 2010 20:19:09 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 5038A19F609;
-	Sun,  3 Oct 2010 20:19:09 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <AANLkTimH8Lj69qcOCmR3+5HYfgKnr5nyMvQU=9h0=FaB@mail.gmail.com>
-Content-Disposition: inline
+	id S1754523Ab0JCS4G (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 14:56:06 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by m.nuecho.com (Postfix) with ESMTP id 5D11FBF025B;
+	Sun,  3 Oct 2010 14:56:04 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at z.nuecho.com
+Received: from m.nuecho.com ([127.0.0.1])
+	by localhost (zimbra.nuecho.ad [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id m35FFYRakHma; Sun,  3 Oct 2010 14:56:03 -0400 (EDT)
+Received: from burton.nuecho.ad (modemcable108.22-130-66.mc.videotron.ca [66.130.22.108])
+	by m.nuecho.com (Postfix) with ESMTPSA id DC3E5BF01D1;
+	Sun,  3 Oct 2010 14:56:03 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <20100927203652.GB11957@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157891>
 
-On Sonntag, 3. Oktober 2010, Thomas Adam wrote:
-> Hi --
+  On 09/27/2010 04:36 PM, Jonathan Nieder wrote:
+> ...
+>   1) a/b/f is not actually considered excluded; only its containing
+>      directory is.
 >
-> On 3 October 2010 10:56, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avar=
-ab@gmail.com> wrote:
-> > + =C2=A0 =C2=A0 =C2=A0 if (ignore_case) {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (;;) {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 unsigned char c1 =3D tolower(*match);
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 unsigned char c2 =3D tolower(*name);
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 if (c1 =3D=3D '\0' || is_glob_special(c1))
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 if (c1 !=3D c2)
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 match++;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 name++;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 namelen--;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> > + =C2=A0 =C2=A0 =C2=A0 } else {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 for (;;) {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 unsigned char c1 =3D *match;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 unsigned char c2 =3D *name;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 if (c1 =3D=3D '\0' || is_glob_special(c1))
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 if (c1 !=3D c2)
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 0;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 match++;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 name++;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 namelen--;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> > =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> It's a real shame about the code duplication here.  Can we not avoid
-> it just by doing:
->
-> unsigned char c1 =3D (ignore_case) ? tolower(*match) : *match;
-> unisgned char c2 =3D (ignore_case) ? tolower(*name) : *name;
->
-> I appreciate that to some it might look like perl golf, but...
+>   2) git clean does not even examine a/b to consider whether to remove
+>      it: since a/ does not contain any tracked files, it stopped there.
 
-It has been discussed, and IIRC, the concensus was to keep the code=20
-duplication because this is an inner loop.
+Ok, thanks for your analysis.  Do you consider it a bug?
 
--- Hannes
+
+
+-- 
+Jean-Philippe
