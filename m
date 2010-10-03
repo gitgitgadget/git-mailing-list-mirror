@@ -1,153 +1,150 @@
-From: "Srood Sherif" <sroodsherif@gazeta.pl>
-Subject: For your interest
-Date: Sun, 3 Oct 2010 14:27:37 +0400
-Message-ID: <d8d6554a4c45d54288ee9ddc8ba96f21.squirrel@72.55.168.116>
-Reply-To: sroodsherif1@gazeta.pl
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: [RFC] New type of remote helpers
+Date: Sun, 03 Oct 2010 13:33:38 +0200
+Message-ID: <4CA86A12.6080905@dbservice.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;boundary="----=_20101003142737_14725"
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Oct 03 12:34:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Oct 03 13:33:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2LtM-0002xV-Cn
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 12:34:04 +0200
+	id 1P2MpH-0005RE-0x
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 13:33:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753088Ab0JCKdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Oct 2010 06:33:49 -0400
-Received: from syscomptechweb.com ([72.55.168.116]:53601 "EHLO
-	cl-t085-170cl.privatedns.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1753060Ab0JCKdr (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 06:33:47 -0400
-Received: from localhost ([127.0.0.1] helo=[72.55.168.116])
-	by cl-t085-170cl.privatedns.com with esmtpa (Exim 4.69)
-	(envelope-from <sroodsherif@gazeta.pl>)
-	id 1P2Ln7-0006dC-Cy; Sun, 03 Oct 2010 06:27:37 -0400
-Received: from 94.203.252.7 ([94.203.252.7])
-        (SquirrelMail authenticated user marketing@harbal123.com)
-        by 72.55.168.116 with HTTP;
-        Sun, 3 Oct 2010 14:27:37 +0400
-User-Agent: SquirrelMail/1.4.21
-X-Priority: 3 (Normal)
-Importance: Normal
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cl-t085-170cl.privatedns.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - gazeta.pl
+	id S1753158Ab0JCLdu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 07:33:50 -0400
+Received: from office.neopsis.com ([78.46.209.98]:48324 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753007Ab0JCLdt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 07:33:49 -0400
+X-Spam-Status: No, hits=0.0 required=5.0
+	tests=AWL: 0.000,BAYES_00: -1.665,TOTAL_SCORE: -1.665,autolearn=ham
+X-Spam-Level: 
+Received: from calvin.caurea.org ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits))
+	for git@vger.kernel.org;
+	Sun, 3 Oct 2010 13:33:41 +0200
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.2 points;
- *  1.6 URG_BIZ BODY: Contains urgent matter
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  1.5 RAZOR2_CF_RANGE_E4_51_100 Razor2 gives engine 4 confidence level
- *      above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  3.7 PYZOR_CHECK Listed in Pyzor (http://pyzor.sf.net/)
- *  0.0 DIGEST_MULTIPLE Message hits more than one network digest check
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157859>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157860>
 
-------=_20101003142737_14725
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8bit
+My work has the goal of making interaction with foreign SCMs more
+natural. The work that was done on remote helpers is the right
+direction. But the 'import' and 'export' commands are the wrong approach
+I think. The problem I have with 'import' is that updating the refs is
+left up to the remote helper (or git-fast-import). So you lose the nice
+output from ls-remote/fetch: non-ff and other warnings etc. I slightly
+modified how the remote helpers (and fast-import) work, now they behave
+exactly like 'core' git when fetching: Git tells the remote helper to
+fetch some refs, the helper does that and creates a pack and git then
+updates the refs (or not, depending on fast-forward etc). To test this
+approach I created a simple remote helper for svn.
+
+The work is available in the 'remote-helper-fixups' branch at
+http://github.com/wereHamster/git. No end-user or technical
+documentation is available as of yet. The svn remote helper is only an
+example how remote helpers can use the new commands. You can see it as a
+'technology preview', use with caution.
+
+Here is an example session of how I think foreign SCMs should integrate
+with git. For each command I explain what changes were needed. This is
+not just some theoretical output. This is a real, working example. I did
+not modify any of the output text.
+
+$ git ls-remote svn::/Volumes/Dump/Source/Mirror/Transmission/
+r1017 (impure)                            trunk
+r919 (impure)                             branches/nat-traversal
+r480 (impure)                             branches/0.6
+
+Git learned to understand version numbers from foreign SCMs. Git
+displays those as 'impure' because it knows that version exists but does
+not know yet which git commit that version maps to.
 
 
+$ git fetch svn::/Volumes/Dump/Source/Mirror/Transmission/
+*:refs/remotes/svn/*
+From svn::/Volumes/Dump/Source/Mirror/Transmission
+ * [new branch]      trunk      -> svn/trunk
+ * [new branch]      branches/nat-traversal -> svn/branches/nat-traversal
+ * [new branch]      branches/0.6 -> svn/branches/0.6
 
-Greeting,
+Git tells the remote helper to 'fetch r1017 trunk'.  The remote helper
+does that, creates the pack and then tells git that it imported r1017 as
+commit c5fed7ec. This is done with a new reply to the 'fetch' command:
+'map r1017 c5fed7ec'. The remote helper can use that to inform core git
+as which git commit the impure ref was imported. Git can then update the
+refs. At no point does the remote helper manipulate refs directly.
 
-My name is Mr. Srood A. Sherif, I live and work in
-Abu Dhabi UAE. I have an urgent business which I believe
-will interest you. Find the enclose for details.
+The pack is created by a heavily modified git-fast-import. The existing
+fast-import not only creates the pack but also updates the refs. This is
+no longer desired as git is in charge of updating the refs. My modified
+fast-import works like this: After creating a commit, it writes it's git
+object name to stdout. That way the remote helper can figure out as
+which git commits the svn revisions were imported and relay that back to
+core git using the above described 'map' reply.
 
-I wait for your response, Thank you.
 
-Regards
+$ git show --show-notes=svn svn/trunk
+commit c5fed7ecc318363523d3ea2045e1c16a378bb10c
+Author: livings124 <livings124@localhost>
+Date:   Wed Oct 18 13:57:19 2006 +0000
 
-Srood A. Sherif
+    more traditional toolbar icons for those afraid of change
 
-------=_20101003142737_14725
-Content-Type: application/pdf; name="For your interest.pdf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="For your interest.pdf"
+Notes (svn):
+    b4697c4a-7d4c-4a30-bd92-6745580d73b3/trunk@1017
 
-JVBERi0xLjUNCiW1tbW1DQoxIDAgb2JqDQo8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFIvTGFu
-Zyhlbi1VUykgPj4NCmVuZG9iag0KMiAwIG9iag0KPDwvVHlwZS9QYWdlcy9Db3VudCAxL0tpZHNb
-IDMgMCBSXSA+Pg0KZW5kb2JqDQozIDAgb2JqDQo8PC9UeXBlL1BhZ2UvUGFyZW50IDIgMCBSL1Jl
-c291cmNlczw8L0ZvbnQ8PC9GMSA1IDAgUj4+L1Byb2NTZXRbL1BERi9UZXh0L0ltYWdlQi9JbWFn
-ZUMvSW1hZ2VJXSA+Pi9NZWRpYUJveFsgMCAwIDYxMiA3OTJdIC9Db250ZW50cyA0IDAgUi9Hcm91
-cDw8L1R5cGUvR3JvdXAvUy9UcmFuc3BhcmVuY3kvQ1MvRGV2aWNlUkdCPj4vVGFicy9TPj4NCmVu
-ZG9iag0KNCAwIG9iag0KPDwvRmlsdGVyL0ZsYXRlRGVjb2RlL0xlbmd0aCAxOTI4Pj4NCnN0cmVh
-bQ0KeJyNWE1v40YSvRvwf6jDLkABHg6/JR3Hm9mJk8wGyCiHRbKHltgSCctsTpO0xv9+X1WTY1NB
-K4IBQySL1fXx6lUV7ze3N+//HVMch3lCm/3tTUwR/mJaJrSM1mG6os3T7U1EB/736fbmj+CT1bqv
-F1nQHLq7xf9o89PtzUfoud+8vh3H67B4q+CPgDyiOKhYF2F8jdwqCdfJKPcZFrws3mUB/Uc9LZaB
-pnqRBh3h9hdrTCk/Km3r/R2ekqJ71TzSr/tFEezrncZTS3jMr8EV+oCXtwP9UKltfSeqGlrkwe9N
-3WtclPTBqi3r/Pi0WAe1Vb3uQnogOdtncx5FYVLM7T7ZeoyeL3h5WnDYZm9dikqxDpeT3N4cj1Bu
-TnVzIAUXloFpW2P7oeFDe1y7oNUNsSPuwuzHkFBfKXjb06lmNUfasvN4zrrqJwREQt10mhbvEDDd
-6L3opZ5Ppa3pK5YeutBjcMbWruZGX3IuL8KsuEIuS8MkG+Ue2LfJ0VK3yvZw1Vnesz8PVNbdzjwj
-/TC7ZOfUVkGmKU2jS+oGySoc+f3LP+LkbhnhMrqLkM4ooj+DDS5P+vis6TPilAdHjoFp7uiLftaN
-L61xEUbZ3NJLHqURizu5H4emtDBsA/RWONAMnWpKAeiXxbsk4F8/wDOXfWU7j94kzsJlMdf95wJg
-8MlDMDuzxWdzkqZhOhd1AFS7HYdnaBxKKiU52OojGwwSod6QgWON5oibwfqgE6Vhnl1nTBYVfzF8
-z4Gz+Ke5vA8N7YauN1wFmsFsO/oFVc1V8Nn64JunCWfvKhs4icj5cmK2D1w/taWfK/hYCyk19GDV
-V0YPbYeuliB0Hcvh0Uky7Q13vhRL3p4wePNYrCTvb4X3wgpIRhwFkgtXL0fT9VSxSR2bJdDea+YL
-j+50tQxXq7nuzwqmO31JgZ93lERRQR+5EnNB8NdBPWovbS7D9My1S0FmXExyKGzVCWVbtvknxaWq
-7ugBpc2sqzuOvCLG4IjER8d1jubZZiYGyrncCRlpGTGm5QjpkH7UdGLnOtb+IHwBfV2tyIBEXBbR
-O+RmJ6XZWw5hi2SXflDNnbjgbL6OwnQizu9srTqqDKw6sT+VBv2tAi3OVXVHAu+m9GE6ifIwOdN8
-yYLlMoyvkSvS1/714JPLw1U2F/WqXIXnWlttO9MokB4w7ODG8FIg5i0Xsm7IWxIx3I2Lub53Xtkz
-G7tht0OhcmkMx3GCOJodAi6Q4uYrVKfJamFkufusZUJB4VFCLxo0TQ0zIycupE3FVYaHgA63H9XX
-gNQDHUzvxU3MmLkueghdHoXF1Ev31kiP6yvp8EJD9ImR3wgjukbJwALIemoMEOUImhG1VzIFHb/P
-YNJcGXVblA5wnweDfYbDJUnBa0r4sE/Dcc/lg9kLw9NGnlgNlzX5AJKnq3BdzG2/5GO6fJ0XOq0f
-uYLFRHAu7aTNdLqZ5pXW6o7L23k7yuEGid8yVTb6G7vAnj/W0s/e072PudKk4IFvZgWPSNwAa65V
-+0KdkZDygWPwmWGs2WkZRjo+qWeKRJxfW+ffQODtgZfCk2ThhJRnxZQ2IEVKHJxGHcw5PO1EIW6C
-AXfoRFJM1KoaCS65Xb+YwaG+6xFRrUo2mtEgpDPOt5N7Wx68dwKgPcYuOU07AnZMBQ59YYqirm52
-3qaQrsNVMfPgkqNxPIXfbE35vRtV3A866ipzAjfgdivliB+jsTsOipJRl/BAtS06IOwtx50A4zsL
-jx7yu9mkHFPX5MOE+o+C9b5y3U7Ob2FAi7nZS8d5vArfOnDBy2yN1nuF2CrjwcnJ/aYPypbshGTI
-x3jA1fmbGmFTFtx2x3vPOFGDGXpiZNMBe2GJQCyFhB01S+vvuPG6VWmF+AyHg+56psiT06i5qMbw
-7zHoomF9xYuD4NO7JEUZr6wzAy+FYBnzSOHk8uh9Hv1zWll4yMLW0kp5SmJ5s/twPMJkq78OfIdt
-BHOYE9WyYb4wm3CKAV2MS/8yPj7IcrHy7em+JpNm2JaLuaxxkVRsas0LBk5achmVTFm54xQZ0foX
-GTZ4K9hYzLWCQJ9ZOWjq7KRLsctXYTTBTDdqe5QCHlBGoKwiYKpEWHqrhBHUDvd6txHhiTXDoQoZ
-KWhlg7KqYWc0AroaiZlz/X3xlLYJbVhAjzIW+/ggAzfNLPOvAgnPp3Mvvmkm1mHc7QE6tC3lGOxQ
-C4U9wQthaS8hJfyN4yoTOIhZxlaMe5FFGA589pullGNxvn631ki0dsLQY3+ivfSLJ7dBOObEna3V
-ip2q+EJ6iCbOlDr5mCbNc14hZqZdcgGcUFwjBwLLJo7+L1fKYA/Mfmi7sBkttzXyBSELXrPMKweW
-sur4ImzSTCS749utS0Qp8GaUtWjcu3oarMYHreBSQbPmVb4buGrz4E1Xf+SxXLeu99S+JTmPhVNm
-blxy143PTo7n/8ZNhoRZaho+uP39tW59ecG4yTPPTPEFA9J1zOJ/L7eUJdDJ3TNvWfQCZrfS/yEP
-+y7gPXvVd0ScitlXybI5RX4Vdac5Vu4Jdmef9s4jKN8y5x8yY/4skc21vD3t/yPo6yUNCmVuZHN0
-cmVhbQ0KZW5kb2JqDQo1IDAgb2JqDQo8PC9UeXBlL0ZvbnQvU3VidHlwZS9UcnVlVHlwZS9OYW1l
-L0YxL0Jhc2VGb250L1RpbWVzIzIwTmV3IzIwUm9tYW4vRW5jb2RpbmcvV2luQW5zaUVuY29kaW5n
-L0ZvbnREZXNjcmlwdG9yIDYgMCBSL0ZpcnN0Q2hhciAzMi9MYXN0Q2hhciAxMjEvV2lkdGhzIDgg
-MCBSPj4NCmVuZG9iag0KNiAwIG9iag0KPDwvVHlwZS9Gb250RGVzY3JpcHRvci9Gb250TmFtZS9U
-aW1lcyMyME5ldyMyMFJvbWFuL0ZsYWdzIDMyL0l0YWxpY0FuZ2xlIDAvQXNjZW50IDg5MS9EZXNj
-ZW50IC0yMTYvQ2FwSGVpZ2h0IDY5My9BdmdXaWR0aCA0MDEvTWF4V2lkdGggMjU2OC9Gb250V2Vp
-Z2h0IDQwMC9YSGVpZ2h0IDI1MC9MZWFkaW5nIDQyL1N0ZW1WIDQwL0ZvbnRCQm94WyAtNTY4IC0y
-MTYgMjAwMCA2OTNdID4+DQplbmRvYmoNCjcgMCBvYmoNCjw8L0F1dGhvcihCT1JBKS9DcmVhdG9y
-KP7/AE0AaQBjAHIAbwBzAG8AZgB0AK4AIABPAGYAZgBpAGMAZQAgAFcAbwByAGQAIAAyADAAMAA3
-KS9DcmVhdGlvbkRhdGUoRDoyMDEwMTAwMjIzMzgxOCkgL01vZERhdGUoRDoyMDEwMTAwMjIzMzgx
-OCkgL1Byb2R1Y2VyKP7/AE0AaQBjAHIAbwBzAG8AZgB0AK4AIABPAGYAZgBpAGMAZQAgAFcAbwBy
-AGQAIAAyADAAMAA3KT4+DQplbmRvYmoNCjggMCBvYmoNClsgMjUwIDAgMCAwIDUwMCA4MzMgMCAw
-IDMzMyAzMzMgMCAwIDI1MCAzMzMgMjUwIDI3OCA1MDAgNTAwIDUwMCAwIDUwMCA1MDAgNTAwIDUw
-MCAwIDAgMCAwIDAgMCAwIDAgMCA3MjIgNjY3IDY2NyA3MjIgNjExIDAgNzIyIDcyMiAzMzMgMzg5
-IDcyMiA2MTEgODg5IDcyMiA3MjIgMCAwIDY2NyA1NTYgNjExIDcyMiAwIDAgMCA3MjIgMCAwIDAg
-MCAwIDAgMCA0NDQgNTAwIDQ0NCA1MDAgNDQ0IDMzMyA1MDAgNTAwIDI3OCAwIDUwMCAyNzggNzc4
-IDUwMCA1MDAgNTAwIDUwMCAzMzMgMzg5IDI3OCA1MDAgNTAwIDcyMiA1MDAgNTAwXSANCmVuZG9i
-ag0KOSAwIG9iag0KPDwvVHlwZS9YUmVmL1NpemUgOS9XWyAxIDQgMl0gL1Jvb3QgMSAwIFIvSW5m
-byA3IDAgUi9JRFs8MDYyMDAxQjY1RjU5OUM0OTkxOUI4ODcxRUI3RDc1RTE+PDA2MjAwMUI2NUY1
-OTlDNDk5MTlCODg3MUVCN0Q3NUUxPl0gL0ZpbHRlci9GbGF0ZURlY29kZS9MZW5ndGggNDQ+Pg0K
-c3RyZWFtDQp4nGNgAIL//xmBpCADA4jyg1BtYIoxBkxx6kOo22CK6ySY4l7LwAAAwwsF8A0KZW5k
-c3RyZWFtDQplbmRvYmoNCnhyZWYNCjAgMTANCjAwMDAwMDAwMDAgNjU1MzUgZg0KMDAwMDAwMDAx
-NyAwMDAwMCBuDQowMDAwMDAwMDc4IDAwMDAwIG4NCjAwMDAwMDAxMzQgMDAwMDAgbg0KMDAwMDAw
-MDM0OCAwMDAwMCBuDQowMDAwMDAyMzUxIDAwMDAwIG4NCjAwMDAwMDI1MjMgMDAwMDAgbg0KMDAw
-MDAwMjc2MSAwMDAwMCBuDQowMDAwMDAyOTg5IDAwMDAwIG4NCjAwMDAwMDMzMDkgMDAwMDAgbg0K
-dHJhaWxlcg0KPDwvU2l6ZSAxMC9Sb290IDEgMCBSL0luZm8gNyAwIFIvSURbPDA2MjAwMUI2NUY1
-OTlDNDk5MTlCODg3MUVCN0Q3NUUxPjwwNjIwMDFCNjVGNTk5QzQ5OTE5Qjg4NzFFQjdENzVFMT5d
-ID4+DQpzdGFydHhyZWYNCjM1NTANCiUlRU9GDQp4cmVmDQowIDANCnRyYWlsZXINCjw8L1NpemUg
-MTAvUm9vdCAxIDAgUi9JbmZvIDcgMCBSL0lEWzwwNjIwMDFCNjVGNTk5QzQ5OTE5Qjg4NzFFQjdE
-NzVFMT48MDYyMDAxQjY1RjU5OUM0OTkxOUI4ODcxRUI3RDc1RTE+XSAvUHJldiAzNTUwL1hSZWZT
-dG0gMzMwOT4+DQpzdGFydHhyZWYNCjM5MDUNCiUlRU9G
-------=_20101003142737_14725--
+The svn helper needs to be able to map svn revisions to git commits.
+git-svn does this by adding the 'git-svn-id' line to each commit
+message. I'm using git notes for that and it seems to work just fine.
+The note contains the repo UUID, path within the repo and revision.
+
+There was a challenge how to update the notes ref (refs/notes/svn). As
+with fast-import, I did not want the remote helper to do it. Neither the
+remote helper nor fast-import should be writing any refs. But core git
+can only update refs which were discovered during transport->fetch(). I
+modified the remote helper 'fetch' command and the transport->fetch()
+function to return an optional list of refs. These are the refs that the
+remote helper wants to update but which should not be presented to the
+user (because these are internally used refs, such as my svn notes).
+
+So the whole session between git and my svn remote helper looks like this:
+> list
+< :r1017 trunk
+> fetch :r1017 trunk
+[helper creates the pack including history up to r1017 and associated
+svn notes]
+< map r1017 <commit corresponding to r1017>
+< silent refs/notes/svn <new commit which stores the updated svn notes>
+
+
+$ git fetch svn::/Volumes/Dump/Source/Mirror/Transmission/
+*:refs/remotes/svn/*
+From svn::/Volumes/Dump/Source/Mirror/Transmission
+   c5fed7e..228eaf3  trunk      -> svn/trunk
+
+$ git fetch svn::/Volumes/Dump/Source/Mirror/Transmission/
+*:refs/remotes/svn/*
+From svn::/Volumes/Dump/Source/Mirror/Transmission
+   228eaf3..207e5e5  trunk      -> svn/trunk
+ * [new branch]      branches/scrape -> svn/branches/scrape
+ * [new branch]      branches/multitracker -> svn/branches/multitracker
+ * [new branch]      branches/io -> svn/branches/io
+
+Updating the svn branches works like expected. The remote helper
+automatically detects which branches it already imported (by going
+through all refs and the attached svn notes) and creates a new pack with
+the new commits. New branches are also detected. The svn notes are
+updated accordingly.
+
+tom
