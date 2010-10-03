@@ -1,67 +1,86 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: What's cooking in git.git (Sep 2010, #07; Wed, 29)
-Date: Sun, 3 Oct 2010 07:30:53 -0600
-Message-ID: <AANLkTim+GTjaCDHAGG1MGxyZ4sTSPan0eZHY_5Q1BZh2@mail.gmail.com>
-References: <7vocbgkrw5.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv5 03/16] t4017 (diff-retval): replace manual exit code
+ check with test_expect_code
+Date: Sun, 3 Oct 2010 08:47:58 -0500
+Message-ID: <20101003134757.GA17084@burratino>
+References: <1286082644-31595-1-git-send-email-newren@gmail.com>
+ <1286082644-31595-4-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 03 15:32:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 03 15:51:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2OfW-0000px-Rc
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 15:31:59 +0200
+	id 1P2OyR-0004Jb-M6
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 15:51:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605Ab0JCNaz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 09:30:55 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47823 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752322Ab0JCNaz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 09:30:55 -0400
-Received: by fxm14 with SMTP id 14so1320210fxm.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 06:30:53 -0700 (PDT)
+	id S1753897Ab0JCNvV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 09:51:21 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:42351 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753734Ab0JCNvU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 09:51:20 -0400
+Received: by qyk32 with SMTP id 32so1011971qyk.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 06:51:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=jreAXxnCC0vm3Qnk+lNc2oGA6TSVmLDUfNrEWok5Mos=;
-        b=lXFWyzJamTTs3NuB2qFHru/wLgcZyREIrmXywm2Z/puazBwL6bboSyILrLJejPIQsR
-         DcB5MJJvDP40NgoGf+psOZn7/Ve1Q5LxWSLbrLe17qKSjDOL+VWCszh7UixL1lu7bzXT
-         7tYVmyTCLNn7+cXAs1hmAeEjzto56TB5v+P98=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7Q+pgGnshqW3rx2u7/FoJcBE4lrA8U1Mfzni5Io7JN4=;
+        b=vPM0AqHj+sv/xnLCXNhV9hzsyxhd7c0boM1o+w9OBRwxjL+BVpOXRt0TOzsqKPPzRF
+         7pymnoKr5uhwEKArzhE5BmbCMdvjJBC2g+odvKtyeziY2jxWySHRkmm/qjLs1lO2imQq
+         WEkWSOyQpgLCSuAxl2H6R2fDhr+8vjfYjGVXM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=gFL8tqiLu1F6qRRSitOAde+M/TicskIosYbhZzEoKJm47JPPZLfhkzbMjfYjhTrqIW
-         4+AjnPUgQI/tj019CGucYujF3BClGE/0aDz55xW4eQpFE0aUKkR9QGDACumItlzzc8qU
-         l4aLhUPiCwYXCRO3//IjtztNkH/FiwWmlK0nY=
-Received: by 10.223.113.131 with SMTP id a3mr3541708faq.0.1286112653801; Sun,
- 03 Oct 2010 06:30:53 -0700 (PDT)
-Received: by 10.223.126.70 with HTTP; Sun, 3 Oct 2010 06:30:53 -0700 (PDT)
-In-Reply-To: <7vocbgkrw5.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Db7A1ozp1ysvM3iKeFjRol7F++D0e4itJCg2AQ7ZkRK9qfm47apO+kKW168S7bThm9
+         a7mWpbbjgmH31DKPaFmz/X7afax/9R4HfoME72qkD7wbTtyyHxQgx694dUbbccSIm2m4
+         R5L0KPHltKAaTzfli+IIlwsvBVoLy0rcE6/8k=
+Received: by 10.229.1.93 with SMTP id 29mr5818610qce.293.1286113879414;
+        Sun, 03 Oct 2010 06:51:19 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id f15sm4048241qcr.37.2010.10.03.06.51.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 06:51:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1286082644-31595-4-git-send-email-newren@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157872>
 
-On Wed, Sep 29, 2010 at 6:16 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> What's cooking in git.git (Sep 2010, #07; Wed, 29)
-> --------------------------------------------------
->
-> * en/object-list-with-pathspec (2010-09-20) 8 commits
-> =C2=A0- Add testcases showing how pathspecs are handled with rev-list=
- --objects
-> =C2=A0- Make rev-list --objects work together with pathspecs
+Elijah Newren wrote:
 
-These two commits (a3481510, facc50e04) each have two signoffs from
-you, Junio (in addition to one from Nguy=E1=BB=85n and one from me).  W=
-as this
-double sign-off intentional?
+> Signed-off-by: Elijah Newren <newren@gmail.com>
+
+For the confused: this patch takes advantage of patch 1 to clarify
+the t4017 (diff exit code) tests.  No functional change should be
+involved, except better error messages when tests fail with -v.
+
+> --- a/t/t4017-diff-retval.sh
+> +++ b/t/t4017-diff-retval.sh
+[...]
+> @@ -145,20 +122,14 @@ test_expect_success 'check honors conflict marker length' '
+>  	git reset --hard &&
+>  	echo ">>>>>>> boo" >>b &&
+>  	echo "======" >>a &&
+> -	git diff --check a &&
+> -	(
+> -		git diff --check b
+> -		test $? = 2
+> -	) &&
+> +	git diff --check a
+> +	test_expect_code 2 git diff --check b &&
+
+Missing &&?
+
+With that exception,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
