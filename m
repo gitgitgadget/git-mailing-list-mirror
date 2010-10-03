@@ -1,87 +1,139 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: planning a new topgit release
-Date: Sun, 3 Oct 2010 23:21:42 +0200
-Message-ID: <AANLkTim3gnU+_krD2QM0BAMf9DZi2_4hva6dq4WXcatH@mail.gmail.com>
-References: <20101003191532.GA28679@pengutronix.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [TopGit PATCH 1/6] Let tg-update take a branch parameter
+Date: Sun,  3 Oct 2010 23:25:52 +0200
+Message-ID: <1286141157-30422-1-git-send-email-bert.wesarg@googlemail.com>
+References: <AANLkTim3gnU+_krD2QM0BAMf9DZi2_4hva6dq4WXcatH@mail.gmail.com>
 Cc: git@vger.kernel.org, Peter Simons <simons@cryp.to>, pasky@suse.cz,
 	Per Cederqvist <ceder@lysator.liu.se>,
 	Olaf Dabrunz <odabrunz@gmx.net>,
 	Thomas Moschny <thomas.moschny@gmx.de>,
-	martin f krafft <madduck@madduck.net>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Sun Oct 03 23:21:55 2010
+	martin f krafft <madduck@madduck.net>,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 03 23:26:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2W0C-0002kM-Q3
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 23:21:49 +0200
+	id 1P2W4R-0003UE-6Z
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 23:26:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755179Ab0JCVVn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 17:21:43 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58054 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755106Ab0JCVVm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 17:21:42 -0400
-Received: by iwn5 with SMTP id 5so6094306iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 14:21:42 -0700 (PDT)
+	id S1755180Ab0JCV0D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 17:26:03 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41867 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755106Ab0JCV0B (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 17:26:01 -0400
+Received: by bwz11 with SMTP id 11so3198195bwz.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 14:26:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ND6ep32di+vQ7vbNC3hdNgNqijC6AGOfw65PAbjV4zA=;
-        b=KUqFPRDPKhw2kjn5Ly1plyQelNwDLVptR6XqypDE8fRMs27jfs9BA91kv0o4PM/8D7
-         7lx95+PEE9PGvyIZ4/KKzMQHFdG2czJmJ2bXH0M+YG48paaOZ9j7DSp5+43kyL+EJjag
-         AUfiwIP45iM9c2ieYtPhggfVCWYvh2WNpAMKw=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:to;
+        bh=QiV0xCRS6JrIyE9wce7DFvE8SLJYZVl699GThITs9Co=;
+        b=OK9flYAmFya0Xr+ZBp2ZRAk7vhmBq+4/aj7xtd2DxF2HmB5Igb9cJMWVyrRAU5J8E1
+         uF5qXaMGyvft6DMrRkQdQNBEMugAAiwl/RT+xahtt2/XL/mTI77Cugffp0NU5QSrA3wW
+         lAevtHRk6Ldk2TjIiCD7YkPRLMPX8LYlIs8r4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EBiDWpbkYzAGFoEOk0KnMeSdCHJWaIbKgeqBKq+06jgsw2H981Fw7DdbNM9MNtr0nW
-         1+h4JaHDYUP0v7XEwgCLf87OgFPCEEYFY4Tl2ZfhXK/eZ5cStBzSJwBJfzfi+TnE4WKt
-         +YLo9Z5ySkI28n5nTUUt46dHzlTJ3wQTvovbs=
-Received: by 10.231.32.130 with SMTP id c2mr8104836ibd.28.1286140902096; Sun,
- 03 Oct 2010 14:21:42 -0700 (PDT)
-Received: by 10.231.171.149 with HTTP; Sun, 3 Oct 2010 14:21:41 -0700 (PDT)
-In-Reply-To: <20101003191532.GA28679@pengutronix.de>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=HtNMs/2uJ50ogekofxIFW6xEJNVwuw+tP1Thcnl2Tlbgjyx8RzrmL/ZD9d2XW9TnOJ
+         iPRSWCL5ca++J5eLvdhUp3Ecr0lcj/PtSZmheYU+oYmcJPFNExOafqUGi8jdCw0xFLWJ
+         BCSbz+y5Wh5pxcBIM0LfhyJ/1KnOqZC8+mezM=
+Received: by 10.204.65.71 with SMTP id h7mr6100935bki.175.1286141160030;
+        Sun, 03 Oct 2010 14:26:00 -0700 (PDT)
+Received: from localhost (p5B0F7E04.dip.t-dialin.net [91.15.126.4])
+        by mx.google.com with ESMTPS id v7sm3041821bkx.16.2010.10.03.14.25.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 14:25:59 -0700 (PDT)
+To: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 1.7.1.1067.g5aeb7
+In-Reply-To: <AANLkTim3gnU+_krD2QM0BAMf9DZi2_4hva6dq4WXcatH@mail.gmail.com>
+To: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157928>
 
-Hey,
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-2010/10/3 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
-> Hello,
->
-> In the last few days I got two mails about the status of topgit and w=
-as
-> asked about a new release.
->
-> I'm willing to create a release as 0.8 was done quite some time ago a=
-nd
-> there were several patches merged since then---mostly bugfixes.
->
-> I'm sure I missed questions and patches in the recent past, so I ask =
-you
-> to resend anything you still have pending to me to get it included in
-> 0.9.
+---
+ README                     |    6 ++++--
+ contrib/tg-completion.bash |    7 ++++++-
+ tg-update.sh               |   18 ++++++++++++------
+ 3 files changed, 22 insertions(+), 9 deletions(-)
 
-Thanks for the heads-up. I will send my low and long hanging fruits in
-reply to this message. I haven't followed master recently. The missing
-important patch is the tg-graph one (which is probably my most used
-command these days). Which Per may find interesting, Maybe I find the
-time this week to update and send this out.
-
-Bert
-
->
-> Thanks
-> Uwe
+diff --git a/README b/README
+index c418ff4..dba2345 100644 README
+--- a/README
++++ b/README
+@@ -472,13 +472,15 @@ tg import
+ 
+ tg update
+ ~~~~~~~~~
+-	Update the current topic branch wrt. changes in the branches
+-	it depends on and remote branches.
++	Update the current or specified topic branch wrt. changes in the
++	branches it depends on and remote branches.
+ 	This is performed in two phases - first,
+ 	changes within the dependencies are merged to the base,
+ 	then the base is merged into the topic branch.
+ 	The output will guide you in case of conflicts.
+ 
++	After the update the current branch is the specified one.
++
+ 	In case your dependencies are not up-to-date, tg update
+ 	will first recurse into them and update these.
+ 
+diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
+index 0ee233c..5aabc92 100755 contrib/tg-completion.bash
+--- a/contrib/tg-completion.bash
++++ b/contrib/tg-completion.bash
+@@ -423,7 +423,12 @@ _tg_summary ()
+ 
+ _tg_update ()
+ {
+-	COMPREPLY=()
++	local cur="${COMP_WORDS[COMP_CWORD]}"
++
++	case "$cur" in
++	*)
++		__tgcomp "$(__tg_topics)"
++	esac
+ }
+ 
+ ### }}}
+diff --git a/tg-update.sh b/tg-update.sh
+index 73280c6..b256c7c 100644 tg-update.sh
+--- a/tg-update.sh
++++ b/tg-update.sh
+@@ -8,13 +8,19 @@ name=
+ 
+ ## Parse options
+ 
+-if [ -n "$1" ]; then
+-	echo "Usage: tg [...] update" >&2
+-	exit 1
+-fi
+-
+-
+-name="$(git symbolic-ref HEAD | sed 's#^refs/\(heads\|top-bases\)/##')"
++while [ -n "$1" ]; do
++	arg="$1"; shift
++	case "$arg" in
++	-*)
++		echo "Usage: tg [...] update [NAME]" >&2
++		exit 1;;
++	*)
++		[ -z "$name" ] || die "name already specified ($name)"
++		name="$arg";;
++	esac
++done
++
++[ -n "$name" ] || name="$(git symbolic-ref HEAD | sed 's#^refs/\(heads\|top-bases\)/##')"
+ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
+ 	die "not a TopGit-controlled branch"
+ 
+-- 
+tg: (29ab4cf..) bw/update-does-checkout (depends on: master)
