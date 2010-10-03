@@ -1,110 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Advertising the Git User's Survey 2010 - report
-Date: Sun, 3 Oct 2010 11:46:43 +0200
-Message-ID: <201010031146.43883.jnareb@gmail.com>
-References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com> <7vvd5lfqvr.fsf@alter.siamese.dyndns.org> <878w2h2yhu.fsf@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH/RFC v3 3/8] Add string comparison functions that respect the ignore_case variable.
+Date: Sun,  3 Oct 2010 09:56:41 +0000
+Message-ID: <1286099806-25774-4-git-send-email-avarab@gmail.com>
+References: <4CA847D5.4000903@workspacewhiz.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	"=?iso-8859-1?q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: "=?iso-8859-2?q?=A9t=ECp=E1n?= =?iso-8859-2?q?_N=ECmec?=" 
-	<stepnem@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 03 11:46:38 2010
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Johannes Sixt <j6t@kdbg.org>, Brandon Casey <drafnel@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 03 11:57:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2L9R-0003VA-CO
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 11:46:37 +0200
+	id 1P2LJv-0005Ca-85
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 11:57:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751892Ab0JCJqc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 05:46:32 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40954 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751429Ab0JCJqb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 3 Oct 2010 05:46:31 -0400
-Received: by bwz11 with SMTP id 11so3014387bwz.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 02:46:30 -0700 (PDT)
+	id S1752855Ab0JCJ5Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 05:57:24 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:44676 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752803Ab0JCJ5W (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 05:57:22 -0400
+Received: by mail-ww0-f44.google.com with SMTP id 40so2994753wwj.1
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 02:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=EHqZqGVFyKuKiPv+8kW4340DtSvRdOLoG+0IojdLp7k=;
-        b=reXVtpbpkt8XwLNF90L8n84bic8TU5BS+rExne02tPF6SRW+IsIwhFD+eFb382ehFX
-         I/xpv4WC6IX5NpwnfcnFXZKO3GkrSduAchAFkgxQalrpbb93Qf3nK/yeDI56qQSprr+N
-         QqxxppjXdHrGqOoCNn7DN+ZDeub8ksZbzyRG4=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=HMVrpgtAmVGnrDvvksdetcsM2Kr3nQzfdSWslDtG0s4=;
+        b=n77HdPy1vfiAJkBu+f0tpfCzhUes+tPpNtcgbik4/zOaSQ+yJtboYTIx8yIu/1kCrv
+         48VKqDafAH8XvovlZgbGetB2w98o1rauJ9t7Y5lIHvYdB94njVN6k/u8bEjHzFAEXtbr
+         5HDF5G0HA1sCRXM2PJYkwSrSBSyzUOYzmOisc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=NUUK0zRotMnR8EIZU4luxqJyKk7d0jCPcty6LS/L1bBNCLxHob5Iu2n1Y7JQ9MpOLI
-         xuTy4fidUZbryvWWXojMkTd2bVtKsvEeyIFnpOUkRG4snQ0ecBf6MMujz7BLkhD4tCEN
-         UmvjAuZxllCr33oC5NVtwmj1R/cyAAj0ehvkg=
-Received: by 10.204.63.9 with SMTP id z9mr5851091bkh.66.1286099190561;
-        Sun, 03 Oct 2010 02:46:30 -0700 (PDT)
-Received: from [192.168.1.13] (abwc112.neoplus.adsl.tpnet.pl [83.8.226.112])
-        by mx.google.com with ESMTPS id v7sm2595191bkx.16.2010.10.03.02.46.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 03 Oct 2010 02:46:29 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <878w2h2yhu.fsf@gmail.com>
-Content-Disposition: inline
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=xD+p9SJxcTkIiUIGuQps5zen1ge9CJE+ztQ7B5w9qbJMLmegEaARSjO5ssNDBVo64H
+         zEP0/NJ5RDEQ+9UFZfI8dT8Y1kgDNgLN3q4MlR4MBQuF9svN4zHDOWTV9/Mm64jJVoxw
+         gKEqPmB4p00S2dub2f7pa2Haw2XAfz3oeCOXw=
+Received: by 10.227.137.149 with SMTP id w21mr6338696wbt.169.1286099841695;
+        Sun, 03 Oct 2010 02:57:21 -0700 (PDT)
+Received: from v.nix.is (v.nix.is [109.74.193.250])
+        by mx.google.com with ESMTPS id h29sm2968435wbc.9.2010.10.03.02.57.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 02:57:20 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.159.g610493
+In-Reply-To: <4CA847D5.4000903@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157849>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157850>
 
-Dnia sobota 2. pa=BCdziernika 2010 03:07, =A9t=ECp=E1n N=ECmec napisa=B3=
-:
-> Junio C Hamano <gitster@pobox.com> writes:
->=20
->> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->>
->>> On 9/30/10, Jakub Narebski <jnareb@gmail.com> wrote:
->>>>  Are there channels that should be utilized missing from the above=
- list?
->>>>  How next year Git User's Survey 2011 (if there would be one) shou=
-ld be
->>>>  announced?
->>>
->>> From the report, 77% answers question 21 as "this is my first surve=
-y",
->>> I think you have done a fantastic job.
->>
->> That, or (more likely) these people have started to seriously look a=
-t git
->> within the past year.  There doesn't seem to be a more direct "How l=
-ong
->> have you been using git?" question, but look at #22 as a proxy.  54%=
- of
->> the people answer they cannot compare the current version of git and=
- the
->> one from one year ago.
+From: Joshua Jensen <jjensen@workspacewhiz.com>
 
-Hmmm... such question was removed from the survey, but perhaps we shoul=
-d
-re-introduce it, perhaps in tabularized (1 week, 1 month, few months,
-year, few years, 5 years or more) rather than free-form question?
+Multiple locations within this patch series alter a case sensitive
+string comparison call such as strcmp() to be a call to a string
+comparison call that selects case comparison based on the global
+ignore_case variable. Behaviorally, when core.ignorecase=false, the
+*_icase() versions are functionally equivalent to their C runtime
+counterparts.  When core.ignorecase=true, the *_icase() versions perform
+a case insensitive comparison.
 
->=20
-> Heh... I actually misunderstood that question as asking about the
-> _survey_, not the Git version... I suspect I'm not the only one, so
-> please make the question less ambiguous in future versions. :-)
+Like Linus' earlier ignorecase patch, these may ignore filename
+conventions on certain file systems. By isolating filename comparisons
+to certain functions, support for those filename conventions may be more
+easily met.
 
-Will fix.  It will be "How do you compare the current _Git_ version
-with the version from one year ago?". =20
+Signed-off-by: Joshua Jensen <jjensen@workspacewhiz.com>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ dir.c |   16 ++++++++++++++++
+ dir.h |    4 ++++
+ 2 files changed, 20 insertions(+), 0 deletions(-)
 
-Putting it just after "21. Did you participate in previous Git User's
-Surveys?" probably just increased the confusion, even though below
-this question is description what changed in *Git* since year ago.
-
---=20
-Jakub Narebski
-Poland
+diff --git a/dir.c b/dir.c
+index d1e5e5e..3432d58 100644
+--- a/dir.c
++++ b/dir.c
+@@ -18,6 +18,22 @@ static int read_directory_recursive(struct dir_struct *dir, const char *path, in
+ 	int check_only, const struct path_simplify *simplify);
+ static int get_dtype(struct dirent *de, const char *path, int len);
+ 
++/* helper string functions with support for the ignore_case flag */
++int strcmp_icase(const char *a, const char *b)
++{
++	return ignore_case ? strcasecmp(a, b) : strcmp(a, b);
++}
++
++int strncmp_icase(const char *a, const char *b, size_t count)
++{
++	return ignore_case ? strncasecmp(a, b, count) : strncmp(a, b, count);
++}
++
++int fnmatch_icase(const char *pattern, const char *string, int flags)
++{
++	return fnmatch(pattern, string, flags | (ignore_case ? FNM_CASEFOLD : 0));
++}
++
+ static int common_prefix(const char **pathspec)
+ {
+ 	const char *path, *slash, *next;
+diff --git a/dir.h b/dir.h
+index 278d84c..b3e2104 100644
+--- a/dir.h
++++ b/dir.h
+@@ -101,4 +101,8 @@ extern int remove_dir_recursively(struct strbuf *path, int flag);
+ /* tries to remove the path with empty directories along it, ignores ENOENT */
+ extern int remove_path(const char *path);
+ 
++extern int strcmp_icase(const char *a, const char *b);
++extern int strncmp_icase(const char *a, const char *b, size_t count);
++extern int fnmatch_icase(const char *pattern, const char *string, int flags);
++
+ #endif
+-- 
+1.7.3.159.g610493
