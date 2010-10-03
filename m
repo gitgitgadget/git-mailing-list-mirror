@@ -1,152 +1,287 @@
-From: "Srood Sherif" <sroodsherif1@g.pl>
-Subject: For your interest
-Date: Sun, 3 Oct 2010 12:21:34 +0400
-Message-ID: <706912ded2a29269af04a9bec6e8f7c4.squirrel@72.55.168.116>
-Reply-To: srood.sherif1@g.pl
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Advertising the Git User's Survey 2011
+Date: Sun, 3 Oct 2010 11:20:59 +0200
+Message-ID: <201010031121.03795.jnareb@gmail.com>
+References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com> <20101002062056.GB16626@kytes>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;boundary="----=_20101003122134_64898"
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Sun Oct 03 11:21:07 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "=?iso-8859-1?q?=C6var_Arnfj=F6r=F0?= Bjarmason" <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 03 11:21:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2Kkk-0006mK-HN
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 11:21:07 +0200
+	id 1P2Kkm-0006mK-67
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 11:21:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752816Ab0JCJUQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 3 Oct 2010 05:20:16 -0400
-Received: from syscomptechweb.com ([72.55.168.116]:54631 "EHLO
-	cl-t085-170cl.privatedns.com" rhost-flags-OK-FAIL-OK-OK)
-	by vger.kernel.org with ESMTP id S1752676Ab0JCJUP (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 05:20:15 -0400
-Received: from localhost ([127.0.0.1] helo=[72.55.168.116])
-	by cl-t085-170cl.privatedns.com with esmtpa (Exim 4.69)
-	(envelope-from <sroodsherif1@g.pl>)
-	id 1P2Jp8-00024G-Cf; Sun, 03 Oct 2010 04:21:34 -0400
-Received: from 94.203.252.7 ([94.203.252.7])
-        (SquirrelMail authenticated user info@harbal123.com)
-        by 72.55.168.116 with HTTP;
-        Sun, 3 Oct 2010 12:21:34 +0400
-User-Agent: SquirrelMail/1.4.21
-X-Priority: 3 (Normal)
-Importance: Normal
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - cl-t085-170cl.privatedns.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - g.pl
+	id S1752850Ab0JCJUw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 05:20:52 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45243 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752840Ab0JCJUu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 05:20:50 -0400
+Received: by bwz11 with SMTP id 11so3009937bwz.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 02:20:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=D/fP23R+NUy4L5UUMUrNuEtUArwIjGwvGENzdDG86U0=;
+        b=MIiyGtE1OKakehdKGZOhnNWsaI4iUv01/6mCM4sGYsFD3oURTLnspBWYfXyH5fRKeJ
+         hrKNqCRyrajTVv0DmUgVxyuCQQ+/wVlszzYKvAb71JxLTEULyicEkHbFIuWHyl0zVm0f
+         AFhTzhowbLBd8Sali3MRz/HCoFXuRiASUVqRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=TnS8vtPNqC0LvDBrzXssQpnbiTe6a8Mk0rBeiyWoh2T0XOmYybBfwZExlMYzqMpvhS
+         cJHS6RLHfugv8aZN0tppA1DOdPJn7IrVryf2g9F/+yhb/teYTJUxQHlQoRHsv5IJG+5I
+         EOgQ+6Q4YL3eZ6JM1dvImvC4yLpQcgcz3OfZY=
+Received: by 10.204.120.79 with SMTP id c15mr5652943bkr.188.1286097649113;
+        Sun, 03 Oct 2010 02:20:49 -0700 (PDT)
+Received: from [192.168.1.13] (abwc112.neoplus.adsl.tpnet.pl [83.8.226.112])
+        by mx.google.com with ESMTPS id g12sm2582745bkb.2.2010.10.03.02.20.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 02:20:46 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20101002062056.GB16626@kytes>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 8.2 points;
- *  1.6 URG_BIZ BODY: Contains urgent matter
- * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
- *      [score: 0.0000]
- *  1.5 RAZOR2_CF_RANGE_E4_51_100 Razor2 gives engine 4 confidence level
- *      above 50%
- *      [cf: 100]
- *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
- *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
- *      [cf: 100]
- *  3.7 PYZOR_CHECK Listed in Pyzor (http://pyzor.sf.net/)
- *  0.0 DIGEST_MULTIPLE Message hits more than one network digest check
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157848>
 
-------=_20101003122134_64898
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: 8bit
+On Sat, 2 Oct 2010, Ramkumar Ramachandra wrote:
+> =C6var Arnfj=F6r=F0 Bjarmason writes:
+> > On Mon, Sep 20, 2010 at 13:38, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
+> >=20
+> > > Currenly the survey has more than 5000 responses (in a not whole =
+month)
+> >=20
+> > That seems somewhat low, but maybe people just aren't that interest=
+ed
+> > in taking surveys.
+>=20
+> Nice work on the survey! This is our best year by far. Some general
+> observations:
+>=20
+> Interesting statistic: 24508 people viewed it, 7821 people completed
+> it, but 0 people started filling out information and later decided no=
+t
+> to submit it. It could mean that many people clicked through and foun=
+d
+> the survey, but probably left because it looked too long at a glance?
+
+Without the knowledge how those two numbers are calculated we can only
+speculate what do they mean.
+
+I think that '0' in 'Incomplete' statistics is here because this survey
+doesn't have compulsory questions: answering all questions are optional=
+,
+so it might mean that even if one question in the survey is answered,
+then the survey is considered complete by Survs.com statistics.
+
+I personally do not like the "wizard" formatting of surveys, i.e.=20
+dividing survey into page so you are not presented with very long page,
+but are presented withc chunks of survey at glance.  Even if you see
+how much survey did you fill in (how many pages there are in total),
+and even if you can go back to previous page.
+
+I'd prefer to create a better information about survey upfront.  We say
+that all questions are optional ("Note that you may skip questions as
+you like").  It is also stated that you can fill only a part of survey,
+and later go back to finish it... hmmm, I wonder if those cases where
+one edited his/her survey responses multiple times are counted as one
+finished survey, but multiple views.
+
+We could also write how much time it takes on average to fil the survey=
+=2E
+
+> The average time spent on the survery is 34 minutes
+
+It would be interesting to have more detailed statistics of time spent
+on the survey that only average time, a single number.  When one is
+filling open-form essay-length question, it would obviously take much
+more time than for one who doesn't.
+
+But Survs.com currently doesn't provide it.  I can try to ask for it,
+though (via feedback).
+
+> - I think we can bring that down to 10~15 minutes if we design
+> questions to extract more information. Also, there's little incentive
+> for taking the survey: while many companies actually give out
+> discounts/ coupons for taking surveys, the least we can do is present
+> real-time results in the most interesting manner possible ie. survey
+> takers should see the "results so far" immediately after taking the
+> survey; some visualizations such as pie charts?
+
+What we can do is after finishing the survey to redirect to the
+survey analysis page:
+
+  https://www.survs.com/results/33Q0OZZE/MV653KSPI2
+  http://tinyurl.com/GitSurvey2010Analysis
+
+instead of IIRC currently used redirect to
+
+  https://git.wiki.kernel.org/index.php/GitSurvey2010
 
 
+As far as I know Survs.com doesn't provide any API for extracting data
+or survey statistics required for creating such visualization.  Neither
+we have a place where such app could be created, I think.
 
-Greeting,
+>=20
+> In questions 5, 10, 12, 13, 16, cut down out the options that have
+> very few respondents and let them all go into "other". It probably
+> doesn't actually save the survey taker any time, but I think seeing a
+> long page with many options can be scary.
 
-My name is Mr. Srood A. Sherif, I live and work in
-Abu Dhabi UAE. I have an urgent business which I believe
-will interest you. Find the enclose for details.
+The "5. Which Git version(s) are you using?" is not that long.  We coul=
+d
+create a cut off a bit earlier, perhaps on 1.4 (i.e. have "pre 1.4") or
+even earlier, we could remove alternate implementations answers=20
+(git-bigfiles, JGit, other implementations), or even concatenate 'maste=
+r',
+'next', 'pu' into single response... but would it buy us much?
 
-I wait for your response, Thank you.
+The other side of removing choices, relying instead on "other, please
+specify" response is that it makes it harder to analyze results of surv=
+ey:
+different people use different words for the same thing (and there are
+also spelling mistakes), and make results less reliable: people do not
+fill "other" if there is at least partial match, or do not know how to
+specify their version.
 
-Regards
 
-Srood A. Sherif
-------=_20101003122134_64898
-Content-Type: application/pdf; name="For your interest.pdf"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="For your interest.pdf"
+In "10. What Git interfaces, implementations and frontends do you use?"
+we can remove tools marked as deprecated... if not for the fact that it
+is actively interesting to know how many people use such deprecated
+tools.  Besides, the list of answers to this question is not overly lon=
+g,
+I don't think.
 
-JVBERi0xLjUNCiW1tbW1DQoxIDAgb2JqDQo8PC9UeXBlL0NhdGFsb2cvUGFnZXMgMiAwIFIvTGFu
-Zyhlbi1VUykgPj4NCmVuZG9iag0KMiAwIG9iag0KPDwvVHlwZS9QYWdlcy9Db3VudCAxL0tpZHNb
-IDMgMCBSXSA+Pg0KZW5kb2JqDQozIDAgb2JqDQo8PC9UeXBlL1BhZ2UvUGFyZW50IDIgMCBSL1Jl
-c291cmNlczw8L0ZvbnQ8PC9GMSA1IDAgUj4+L1Byb2NTZXRbL1BERi9UZXh0L0ltYWdlQi9JbWFn
-ZUMvSW1hZ2VJXSA+Pi9NZWRpYUJveFsgMCAwIDYxMiA3OTJdIC9Db250ZW50cyA0IDAgUi9Hcm91
-cDw8L1R5cGUvR3JvdXAvUy9UcmFuc3BhcmVuY3kvQ1MvRGV2aWNlUkdCPj4vVGFicy9TPj4NCmVu
-ZG9iag0KNCAwIG9iag0KPDwvRmlsdGVyL0ZsYXRlRGVjb2RlL0xlbmd0aCAxOTI4Pj4NCnN0cmVh
-bQ0KeJyNWE1v40YSvRvwf6jDLkABHg6/JR3Hm9mJk8wGyCiHRbKHltgSCctsTpO0xv9+X1WTY1NB
-K4IBQySL1fXx6lUV7ze3N+//HVMch3lCm/3tTUwR/mJaJrSM1mG6os3T7U1EB/736fbmj+CT1bqv
-F1nQHLq7xf9o89PtzUfoud+8vh3H67B4q+CPgDyiOKhYF2F8jdwqCdfJKPcZFrws3mUB/Uc9LZaB
-pnqRBh3h9hdrTCk/Km3r/R2ekqJ71TzSr/tFEezrncZTS3jMr8EV+oCXtwP9UKltfSeqGlrkwe9N
-3WtclPTBqi3r/Pi0WAe1Vb3uQnogOdtncx5FYVLM7T7ZeoyeL3h5WnDYZm9dikqxDpeT3N4cj1Bu
-TnVzIAUXloFpW2P7oeFDe1y7oNUNsSPuwuzHkFBfKXjb06lmNUfasvN4zrrqJwREQt10mhbvEDDd
-6L3opZ5Ppa3pK5YeutBjcMbWruZGX3IuL8KsuEIuS8MkG+Ue2LfJ0VK3yvZw1Vnesz8PVNbdzjwj
-/TC7ZOfUVkGmKU2jS+oGySoc+f3LP+LkbhnhMrqLkM4ooj+DDS5P+vis6TPilAdHjoFp7uiLftaN
-L61xEUbZ3NJLHqURizu5H4emtDBsA/RWONAMnWpKAeiXxbsk4F8/wDOXfWU7j94kzsJlMdf95wJg
-8MlDMDuzxWdzkqZhOhd1AFS7HYdnaBxKKiU52OojGwwSod6QgWON5oibwfqgE6Vhnl1nTBYVfzF8
-z4Gz+Ke5vA8N7YauN1wFmsFsO/oFVc1V8Nn64JunCWfvKhs4icj5cmK2D1w/taWfK/hYCyk19GDV
-V0YPbYeuliB0Hcvh0Uky7Q13vhRL3p4wePNYrCTvb4X3wgpIRhwFkgtXL0fT9VSxSR2bJdDea+YL
-j+50tQxXq7nuzwqmO31JgZ93lERRQR+5EnNB8NdBPWovbS7D9My1S0FmXExyKGzVCWVbtvknxaWq
-7ugBpc2sqzuOvCLG4IjER8d1jubZZiYGyrncCRlpGTGm5QjpkH7UdGLnOtb+IHwBfV2tyIBEXBbR
-O+RmJ6XZWw5hi2SXflDNnbjgbL6OwnQizu9srTqqDKw6sT+VBv2tAi3OVXVHAu+m9GE6ifIwOdN8
-yYLlMoyvkSvS1/714JPLw1U2F/WqXIXnWlttO9MokB4w7ODG8FIg5i0Xsm7IWxIx3I2Lub53Xtkz
-G7tht0OhcmkMx3GCOJodAi6Q4uYrVKfJamFkufusZUJB4VFCLxo0TQ0zIycupE3FVYaHgA63H9XX
-gNQDHUzvxU3MmLkueghdHoXF1Ev31kiP6yvp8EJD9ImR3wgjukbJwALIemoMEOUImhG1VzIFHb/P
-YNJcGXVblA5wnweDfYbDJUnBa0r4sE/Dcc/lg9kLw9NGnlgNlzX5AJKnq3BdzG2/5GO6fJ0XOq0f
-uYLFRHAu7aTNdLqZ5pXW6o7L23k7yuEGid8yVTb6G7vAnj/W0s/e072PudKk4IFvZgWPSNwAa65V
-+0KdkZDygWPwmWGs2WkZRjo+qWeKRJxfW+ffQODtgZfCk2ThhJRnxZQ2IEVKHJxGHcw5PO1EIW6C
-AXfoRFJM1KoaCS65Xb+YwaG+6xFRrUo2mtEgpDPOt5N7Wx68dwKgPcYuOU07AnZMBQ59YYqirm52
-3qaQrsNVMfPgkqNxPIXfbE35vRtV3A866ipzAjfgdivliB+jsTsOipJRl/BAtS06IOwtx50A4zsL
-jx7yu9mkHFPX5MOE+o+C9b5y3U7Ob2FAi7nZS8d5vArfOnDBy2yN1nuF2CrjwcnJ/aYPypbshGTI
-x3jA1fmbGmFTFtx2x3vPOFGDGXpiZNMBe2GJQCyFhB01S+vvuPG6VWmF+AyHg+56psiT06i5qMbw
-7zHoomF9xYuD4NO7JEUZr6wzAy+FYBnzSOHk8uh9Hv1zWll4yMLW0kp5SmJ5s/twPMJkq78OfIdt
-BHOYE9WyYb4wm3CKAV2MS/8yPj7IcrHy7em+JpNm2JaLuaxxkVRsas0LBk5achmVTFm54xQZ0foX
-GTZ4K9hYzLWCQJ9ZOWjq7KRLsctXYTTBTDdqe5QCHlBGoKwiYKpEWHqrhBHUDvd6txHhiTXDoQoZ
-KWhlg7KqYWc0AroaiZlz/X3xlLYJbVhAjzIW+/ggAzfNLPOvAgnPp3Mvvmkm1mHc7QE6tC3lGOxQ
-C4U9wQthaS8hJfyN4yoTOIhZxlaMe5FFGA589pullGNxvn631ki0dsLQY3+ivfSLJ7dBOObEna3V
-ip2q+EJ6iCbOlDr5mCbNc14hZqZdcgGcUFwjBwLLJo7+L1fKYA/Mfmi7sBkttzXyBSELXrPMKweW
-sur4ImzSTCS749utS0Qp8GaUtWjcu3oarMYHreBSQbPmVb4buGrz4E1Xf+SxXLeu99S+JTmPhVNm
-blxy143PTo7n/8ZNhoRZaho+uP39tW59ecG4yTPPTPEFA9J1zOJ/L7eUJdDJ3TNvWfQCZrfS/yEP
-+y7gPXvVd0ScitlXybI5RX4Vdac5Vu4Jdmef9s4jKN8y5x8yY/4skc21vD3t/yPo6yUNCmVuZHN0
-cmVhbQ0KZW5kb2JqDQo1IDAgb2JqDQo8PC9UeXBlL0ZvbnQvU3VidHlwZS9UcnVlVHlwZS9OYW1l
-L0YxL0Jhc2VGb250L1RpbWVzIzIwTmV3IzIwUm9tYW4vRW5jb2RpbmcvV2luQW5zaUVuY29kaW5n
-L0ZvbnREZXNjcmlwdG9yIDYgMCBSL0ZpcnN0Q2hhciAzMi9MYXN0Q2hhciAxMjEvV2lkdGhzIDgg
-MCBSPj4NCmVuZG9iag0KNiAwIG9iag0KPDwvVHlwZS9Gb250RGVzY3JpcHRvci9Gb250TmFtZS9U
-aW1lcyMyME5ldyMyMFJvbWFuL0ZsYWdzIDMyL0l0YWxpY0FuZ2xlIDAvQXNjZW50IDg5MS9EZXNj
-ZW50IC0yMTYvQ2FwSGVpZ2h0IDY5My9BdmdXaWR0aCA0MDEvTWF4V2lkdGggMjU2OC9Gb250V2Vp
-Z2h0IDQwMC9YSGVpZ2h0IDI1MC9MZWFkaW5nIDQyL1N0ZW1WIDQwL0ZvbnRCQm94WyAtNTY4IC0y
-MTYgMjAwMCA2OTNdID4+DQplbmRvYmoNCjcgMCBvYmoNCjw8L0F1dGhvcihCT1JBKS9DcmVhdG9y
-KP7/AE0AaQBjAHIAbwBzAG8AZgB0AK4AIABPAGYAZgBpAGMAZQAgAFcAbwByAGQAIAAyADAAMAA3
-KS9DcmVhdGlvbkRhdGUoRDoyMDEwMTAwMjIzMzgxOCkgL01vZERhdGUoRDoyMDEwMTAwMjIzMzgx
-OCkgL1Byb2R1Y2VyKP7/AE0AaQBjAHIAbwBzAG8AZgB0AK4AIABPAGYAZgBpAGMAZQAgAFcAbwBy
-AGQAIAAyADAAMAA3KT4+DQplbmRvYmoNCjggMCBvYmoNClsgMjUwIDAgMCAwIDUwMCA4MzMgMCAw
-IDMzMyAzMzMgMCAwIDI1MCAzMzMgMjUwIDI3OCA1MDAgNTAwIDUwMCAwIDUwMCA1MDAgNTAwIDUw
-MCAwIDAgMCAwIDAgMCAwIDAgMCA3MjIgNjY3IDY2NyA3MjIgNjExIDAgNzIyIDcyMiAzMzMgMzg5
-IDcyMiA2MTEgODg5IDcyMiA3MjIgMCAwIDY2NyA1NTYgNjExIDcyMiAwIDAgMCA3MjIgMCAwIDAg
-MCAwIDAgMCA0NDQgNTAwIDQ0NCA1MDAgNDQ0IDMzMyA1MDAgNTAwIDI3OCAwIDUwMCAyNzggNzc4
-IDUwMCA1MDAgNTAwIDUwMCAzMzMgMzg5IDI3OCA1MDAgNTAwIDcyMiA1MDAgNTAwXSANCmVuZG9i
-ag0KOSAwIG9iag0KPDwvVHlwZS9YUmVmL1NpemUgOS9XWyAxIDQgMl0gL1Jvb3QgMSAwIFIvSW5m
-byA3IDAgUi9JRFs8MDYyMDAxQjY1RjU5OUM0OTkxOUI4ODcxRUI3RDc1RTE+PDA2MjAwMUI2NUY1
-OTlDNDk5MTlCODg3MUVCN0Q3NUUxPl0gL0ZpbHRlci9GbGF0ZURlY29kZS9MZW5ndGggNDQ+Pg0K
-c3RyZWFtDQp4nGNgAIL//xmBpCADA4jyg1BtYIoxBkxx6kOo22CK6ySY4l7LwAAAwwsF8A0KZW5k
-c3RyZWFtDQplbmRvYmoNCnhyZWYNCjAgMTANCjAwMDAwMDAwMDAgNjU1MzUgZg0KMDAwMDAwMDAx
-NyAwMDAwMCBuDQowMDAwMDAwMDc4IDAwMDAwIG4NCjAwMDAwMDAxMzQgMDAwMDAgbg0KMDAwMDAw
-MDM0OCAwMDAwMCBuDQowMDAwMDAyMzUxIDAwMDAwIG4NCjAwMDAwMDI1MjMgMDAwMDAgbg0KMDAw
-MDAwMjc2MSAwMDAwMCBuDQowMDAwMDAyOTg5IDAwMDAwIG4NCjAwMDAwMDMzMDkgMDAwMDAgbg0K
-dHJhaWxlcg0KPDwvU2l6ZSAxMC9Sb290IDEgMCBSL0luZm8gNyAwIFIvSURbPDA2MjAwMUI2NUY1
-OTlDNDk5MTlCODg3MUVCN0Q3NUUxPjwwNjIwMDFCNjVGNTk5QzQ5OTE5Qjg4NzFFQjdENzVFMT5d
-ID4+DQpzdGFydHhyZWYNCjM1NTANCiUlRU9GDQp4cmVmDQowIDANCnRyYWlsZXINCjw8L1NpemUg
-MTAvUm9vdCAxIDAgUi9JbmZvIDcgMCBSL0lEWzwwNjIwMDFCNjVGNTk5QzQ5OTE5Qjg4NzFFQjdE
-NzVFMT48MDYyMDAxQjY1RjU5OUM0OTkxOUI4ODcxRUI3RDc1RTE+XSAvUHJldiAzNTUwL1hSZWZT
-dG0gMzMwOT4+DQpzdGFydHhyZWYNCjM5MDUNCiUlRU9G
-------=_20101003122134_64898--
+
+We can remove those choices in "12. What Git GUIs (graphical user
+interfaces) do you use?" that got less than 1% rounded, or less than
+10 responses.  On the other hand some people stated earlier that the
+list of possible choices in the survey (not necessarily about this
+question in specific) serve as reminder / information about possible
+choices.
+
+
+The other side of removing options from "13. Which git hosting site(s)
+do you use for your project(s)?" is that when sending requests to=20
+announce the survey to those git hosting sites that are not on this
+list, some of them requested to be added (which is impossible after
+starting the survey; and before survey begins it is little sense to
+send announcements).
+
+Besides all of those below 1% rounded (Codesion, GitFarm, The Chaw,
+CipherHive) are also those that I didn't get response to request for
+announcing Git User's Survey 2010...
+=20
+We could make it more organized though, e.g. by sorting list of options
+alphabetically, or something like that.
+
+
+Removing options from "16. Which of the following features do you use?"
+would make it harder to analyze and less reliable.  Especially in this
+question different people consider different features important enough
+to mention, and describe feature in many different ways.
+
+Besides, each option except of "git cvsserver" got more than 1% rounded=
+,
+and having "git cvsserver" is interesting on its own (perhaps in other
+question?).
+
+> 1. Country of residence: we can probably make this a nice click-on-ma=
+p
+>    interface as opposed to freeform text. It'll be more useful to us,
+>    and more interesting to users when we advertise the results.
+
+It would be nice to have click-on-map (Google Maps or Bing Maps based),
+something like Ohloh provides, resulting in map of survey responders
+similar to the map of git users and git contributors on Ohloh
+
+  http://www.ohloh.net/p/git/map
+
+it isn't something that Survs.com offers currently.  I can only ask for
+it to be provided...
+
+
+Another solution would be to have pre-filled combo box (<select> field)
+with the list of countries to choose from, with GeoIP ised to pre-selec=
+t
+the country.  I can generate list of all countries myself
+
+  $ perl -MLocale::Country \
+    -wle 'print join("\n", sort (all_country_names()))'
+
+as far as I know Survs.com doesn't offer GeoIP nor any API to hook it
+to survey questions.
+
+> 2. Age: Maybe we restrict the input to 2-digit integers and draw a
+>    graph with all these integers to show a mean, median etc?
+
+Restricting input doesn't give us much.
+
+There is nice histogram of responder's age for Git User's Survey 2009
+
+  https://git.wiki.kernel.org/index.php/GitSurvey2009#02._How_old_are_y=
+ou_.28in_years.29.3F
+
+and tabularization of responses.  We can calculate mean, median, mode
+(aka modal score, i.e. most common response), perhaps after eliminating
+outliers, but would it give us much information?
+
+> 11. Just change this to an optional sometimes/ often? Why should user=
+s
+>     spend time clicking on "never"?
+
+"Never" is here because you can't un-click response in given row.
+I'm also not sure how not answering row is represented in the export
+of survey data (which we use for further analysis).
+
+> 17, 18: Merge perhaps?
+
+Those questions are split because of limitation of Survs.com; the=20
+"other, please specify" results in limited width _text field_, while
+it is much easier to write in-depth response in large _textarea_ field
+that wuestion 18 provides.
+
+> 24, 25: Merge into single question with options: "Yes, and my problem=
+s
+>         are solved more often than not", "Yes, but my problems often
+>         remain unresolved", "No, I don't go to others for help".
+
+Good idea.  Will do.
+
+> 26, 27: Merge into "How do you talk to other people using Git, either
+>         for technical help or otherwise?"
+
+I don't think it is good idea.  Those two issues, namely requesting
+help and being (perhaps silent) part of git community are two unrelated
+issues.
+
+> Ofcourse, I understand that there must be some technical constraints
+> due to which some things are not implementable (eg. survs doesn't
+> provide the feature?), but I've not taken that into consideration.
+
+Note that as it currently stands we can use Survs.com account only for
+2011 survey, provided that it is done earlier than this year (perhaps
+1 June -- 31 July?), as our Premium account which we got thanks to=20
+generosity of Survs.com admins (after Survs.com got out of beta) will
+downgrade to the Free plan (which is offersn much too low limits)
+on Sep 22, 2011.
+
+--=20
+Jakub Narebski
+Poland
