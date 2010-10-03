@@ -1,254 +1,169 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC] New type of remote helpers
-Date: Sun, 3 Oct 2010 15:56:16 +0200
-Message-ID: <AANLkTikQyVLyH-O-OH2yZ0B3_UKDqzcnNgtqefSCN68t@mail.gmail.com>
-References: <4CA86A12.6080905@dbservice.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv5 01/16] test-lib: make test_expect_code a test command
+Date: Sun, 3 Oct 2010 09:13:39 -0500
+Message-ID: <20101003141339.GB17084@burratino>
+References: <1286082644-31595-1-git-send-email-newren@gmail.com>
+ <1286082644-31595-2-git-send-email-newren@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Sun Oct 03 15:56:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
+To: Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 03 16:17:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2P3T-00052Y-CE
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 15:56:43 +0200
+	id 1P2PNG-0000Ze-H1
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 16:17:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753909Ab0JCN4i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 09:56:38 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:55107 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753849Ab0JCN4h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 09:56:37 -0400
-Received: by iwn5 with SMTP id 5so5782583iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 06:56:36 -0700 (PDT)
+	id S1752922Ab0JCOQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 3 Oct 2010 10:16:57 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:59065 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751195Ab0JCOQ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 10:16:56 -0400
+Received: by qyk36 with SMTP id 36so1739972qyk.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 07:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Uope/gmlAWefiwG0mShxeOK20V3R4byfZScw6/eeolM=;
-        b=Y8XefFVm+Shb01iWEy8GU3ycXtnXfpUDAXLHLxWwxi52Myh/OlVbuau9EPrA/XmCRw
-         DxXQ+X6riJ9a3rLhpytJUThdGGY+c+KbpwVk1HxuauWWEangKpt/rhKxOplalRm1CIo5
-         +UoqE4KEaIqbk5pqFxLkTgjI2cS+zGm/pysRI=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=kU34cVC1nDmKCPoTSvn22S/Jy3UYYKKwJDsiVK24Pxg=;
+        b=mMDc4RLQeAXNq54zYLhLxRl0lWLhaeF7ai8HkDJs+BQcJ+o8jYLL/LtNsDssw/Tl9Y
+         NbPuRwnfgT2+UC4Cn/DrUSnnwzV97czioA6uuwBFdznbfO6szbRkgtIxcPLGBhJQMxqE
+         DM2AaujntwPBrIOlgedCfUuDe2hKA0pemu3eE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=HJ1WZsp877mJ2t7ZlXVsghzLwapYofzmtivSKkHtJmlPpAzkdedExogCemKWClpTcq
-         PMtBaC/ifeyTm0GUySS4XrGb/FQrJFxt7KtDHSkP+YmjtIYOkkgXI8UcKOAq9KWERZ65
-         Lu6HbTgl6W3WiSNRRZsApKQ2vQdhuyfQKhLpI=
-Received: by 10.231.36.8 with SMTP id r8mr3905154ibd.128.1286114196220; Sun,
- 03 Oct 2010 06:56:36 -0700 (PDT)
-Received: by 10.231.33.138 with HTTP; Sun, 3 Oct 2010 06:56:16 -0700 (PDT)
-In-Reply-To: <4CA86A12.6080905@dbservice.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xAIoK/vrB59Qg3M14NrJs2nw3KxT/wWAgRpcZdjqG2speP/6+KMpXb+X4A+tLyipnz
+         ZUz1yrxqdCzYR8qitwHFV679qvlriJ/vAll2obnbavq6GYF98Wfh57Drc9CviDmcvC77
+         qy27Z55qZCuLClUuRvmPSIGQg3rNDr+w+qi6I=
+Received: by 10.224.28.207 with SMTP id n15mr5796216qac.48.1286115416036;
+        Sun, 03 Oct 2010 07:16:56 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id r38sm4080378qcs.14.2010.10.03.07.16.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 07:16:54 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1286082644-31595-2-git-send-email-newren@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157874>
 
-Heya,
+Elijah Newren wrote:
 
-On Sun, Oct 3, 2010 at 13:33, Tomas Carnecky <tom@dbservice.com> wrote:
-> My work has the goal of making interaction with foreign SCMs more
-> natural. The work that was done on remote helpers is the right
-> direction. But the 'import' and 'export' commands are the wrong appro=
-ach
-> I think.
-
-I'm not convinced that they are, but we'll see.
-
-> The problem I have with 'import' is that updating the refs is
-> left up to the remote helper (or git-fast-import). So you lose the ni=
-ce
-> output from ls-remote/fetch: non-ff and other warnings etc.
-
-This is a good point, and I like the patches addressing this.
-
-> I slightly
-> modified how the remote helpers (and fast-import) work, now they beha=
-ve
-> exactly like 'core' git when fetching: Git tells the remote helper to
-> fetch some refs, the helper does that and creates a pack and git then
-> updates the refs (or not, depending on fast-forward etc).
-
-Again, these patches I like, and would like to see them included. I'll
-probably pick them up and send them out as part of my next
-git-remote-hg reroll if nothing happens with them.
-
-> To test this
-> approach I created a simple remote helper for svn.
-
-I guess it suffices as a POC, but I'd have preferred to see
-collaboration with the people working on git-remote-svn instead
-(cc-ed).
-
-> $ git ls-remote svn::/Volumes/Dump/Source/Mirror/Transmission/
-> r1017 (impure) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0trunk
-> r919 (impure) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 branches/nat-traversal
-> r480 (impure) =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 branches/0.6
+> --- a/t/README
+> +++ b/t/README
+> @@ -482,6 +475,15 @@ library for your script to use.
+>  	    'Perl API' \
+>  	    "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
 >
-> Git learned to understand version numbers from foreign SCMs. Git
-> displays those as 'impure' because it knows that version exists but d=
-oes
-> not know yet which git commit that version maps to.
+> + - test_expect_code <exit-code> <git-command>
+> +
+> +   Run a git command and ensure that it exits with the given exit
+> +   code. For example:
+> +
+> +	test_expect_success 'Merge with d/f conflicts' '
+> +		test_expect_code 1 git merge "merge msg" B master
+> +	'
 
-Very interesting. This is a useful feature, I approve.
+Side note: this helper should be safe to use even for non-git
+commands.  "Huh?" you might ask. "But test_must_fail and
+test_might_fail..."  Well, the distinction is this: test_must_fail and
+test_might_fail rely on details of git's funny exit code conventions
+--- e.g., that 130 is not a controlled failure and 129 is one ---
+while test_expect_code has simpler, more generally valid semantics.
 
-> $ git fetch svn::/Volumes/Dump/Source/Mirror/Transmission/
-> *:refs/remotes/svn/*
-> From svn::/Volumes/Dump/Source/Mirror/Transmission
-> =C2=A0* [new branch] =C2=A0 =C2=A0 =C2=A0trunk =C2=A0 =C2=A0 =C2=A0->=
- svn/trunk
-> =C2=A0* [new branch] =C2=A0 =C2=A0 =C2=A0branches/nat-traversal -> sv=
-n/branches/nat-traversal
-> =C2=A0* [new branch] =C2=A0 =C2=A0 =C2=A0branches/0.6 -> svn/branches=
-/0.6
+But maybe in practice this helper would only be used for git commands
+anyway.
 
-Interesting, if you do 'git remote add svn
-svn::/Volumes/Dump/Source/Mirror/Transmission/' and then do 'git fetch
-svn', do you get (more or less) the same output?
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -130,22 +130,57 @@ test_expect_success 'tests clean up after themselves' '
+[...]
+> +test_expect_success 'tests clean up even on failures' "
+> +    mkdir failing-cleanup &&
+> +    (cd failing-cleanup &&
+> +    cat >failing-cleanup.sh <<EOF &&
+> +#!$SHELL_PATH
 
-> Git tells the remote helper to 'fetch r1017 trunk'. =C2=A0The remote =
-helper
-> does that, creates the pack and then tells git that it imported r1017=
- as
-> commit c5fed7ec. This is done with a new reply to the 'fetch' command=
-:
-> 'map r1017 c5fed7ec'. The remote helper can use that to inform core g=
-it
-> as which git commit the impure ref was imported. Git can then update =
-the
-> refs. At no point does the remote helper manipulate refs directly.
+Is $SHELL_PATH allowed to contain a shell metacharacter? (just
+curious).
 
-I love this. Very elegant.
+> +
+> +test_description='Failing tests with cleanup commands'
+> +
+> +# Point to the t/test-lib.sh, which isn't in ../ as usual
+> +TEST_DIRECTORY=\"$TEST_DIRECTORY\"
+> +. \"\$TEST_DIRECTORY\"/test-lib.sh
 
-> The pack is created by a heavily modified git-fast-import. The existi=
-ng
-> fast-import not only creates the pack but also updates the refs. This=
- is
-> no longer desired as git is in charge of updating the refs.
+Quoting issues?  I suspect the first $TEST_DIRECTORY here would
+be twice expanded and the second would be once expanded before
+failing-cleanup.sh is written.
 
-NAK. I object against forking git fast-import just for this purpose.
-I'd much rather just modify git fast-import to learn to learn not
-update refs, which should be easy enough.
+On the other hand, a $TEST_DIRECTORY with backslashes in it is
+asking for trouble for other reasons already.
 
-> My modified
-> fast-import works like this: After creating a commit, it writes it's =
-git
-> object name to stdout. That way the remote helper can figure out as
-> which git commits the svn revisions were imported and relay that back=
- to
-> core git using the above described 'map' reply.
+> +
+> +test_expect_success 'tests clean up even after a failure' '
+> +    touch clean-after-failure &&
+> +    test_when_finished rm clean-after-failure &&
+> +    (exit 1)
+>  '
+>  
+> +test_expect_success 'failure to clean up causes the test to fail' '
+> +    test_when_finished \"(exit 2)\"
 
-Work has been underway to teach git fast-import to do just this
-(courtesy of Jonathan), no need to fork git fast-import to achieve
-that.
+This changes the semantics of the test: before, it checked that
+the exit code was propagated out in these failure cases, but now
+it just checks that the test fails.
 
-> $ git show --show-notes=3Dsvn svn/trunk
-> commit c5fed7ecc318363523d3ea2045e1c16a378bb10c
-> Author: livings124 <livings124@localhost>
-> Date: =C2=A0 Wed Oct 18 13:57:19 2006 +0000
->
-> =C2=A0 =C2=A0more traditional toolbar icons for those afraid of chang=
-e
->
-> Notes (svn):
-> =C2=A0 =C2=A0b4697c4a-7d4c-4a30-bd92-6745580d73b3/trunk@1017
+The new semantics are probably more appropriate --- who relies on
+the exact exit status from a test script, anyway?
 
-Very nice! I'm definitely stealing the note-generating code for git-rem=
-ote-hg.
+> --- a/t/t1504-ceiling-dirs.sh
+> +++ b/t/t1504-ceiling-dirs.sh
+[...]
+> --- a/t/t6020-merge-df.sh
+> +++ b/t/t6020-merge-df.sh
+[...]
 
-> The svn helper needs to be able to map svn revisions to git commits.
-> git-svn does this by adding the 'git-svn-id' line to each commit
-> message. I'm using git notes for that and it seems to work just fine.
-> The note contains the repo UUID, path within the repo and revision.
+Nice. :)
 
-Very elegant.
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -658,6 +640,28 @@ test_might_fail () {
+>  	return 0
+>  }
+>  
+> +# Similar to test_must_fail and test_might_fail, but check that a
+> +# given command exited with a given exit code. Meant to be used as:
+> +#
+> +#	test_expect_success 'Merge with d/f conflicts' '
+> +#		test_expect_code 1 git merge "merge msg" B master
+> +#	'
+> +
+> +test_expect_code () {
+> +	want_code=$1
+> +	shift
+> +	"$@"
+> +	exit_code=$?
+> +	if test $exit_code = $want_code
+> +	then
+> +		echo >&2 "test_expect_code: command exited with $exit_code: $*"
+> +		return 0
 
-> There was a challenge how to update the notes ref (refs/notes/svn). A=
-s
-> with fast-import, I did not want the remote helper to do it. Neither =
-the
-> remote helper nor fast-import should be writing any refs. But core gi=
-t
-> can only update refs which were discovered during transport->fetch().=
- I
-> modified the remote helper 'fetch' command and the transport->fetch()
-> function to return an optional list of refs. These are the refs that =
-the
-> remote helper wants to update but which should not be presented to th=
-e
-> user (because these are internally used refs, such as my svn notes).
+This makes the tests noisier on success.  I have no strong feelings
+either way about that, but it's probably worth mentioning in the commit
+message.
 
-Nice.
+Anyway, for what it's worth,
+Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 
-> So the whole session between git and my svn remote helper looks like =
-this:
->> list
-> < :r1017 trunk
->> fetch :r1017 trunk
-> [helper creates the pack including history up to r1017 and associated
-> svn notes]
-> < map r1017 <commit corresponding to r1017>
-> < silent refs/notes/svn <new commit which stores the updated svn note=
-s>
-
-Looks good.
-
-> $ git fetch svn::/Volumes/Dump/Source/Mirror/Transmission/
-> *:refs/remotes/svn/*
-> From svn::/Volumes/Dump/Source/Mirror/Transmission
-> =C2=A0 c5fed7e..228eaf3 =C2=A0trunk =C2=A0 =C2=A0 =C2=A0-> svn/trunk
->
-> $ git fetch svn::/Volumes/Dump/Source/Mirror/Transmission/
-> *:refs/remotes/svn/*
-> From svn::/Volumes/Dump/Source/Mirror/Transmission
-> =C2=A0 228eaf3..207e5e5 =C2=A0trunk =C2=A0 =C2=A0 =C2=A0-> svn/trunk
-> =C2=A0* [new branch] =C2=A0 =C2=A0 =C2=A0branches/scrape -> svn/branc=
-hes/scrape
-> =C2=A0* [new branch] =C2=A0 =C2=A0 =C2=A0branches/multitracker -> svn=
-/branches/multitracker
-> =C2=A0* [new branch] =C2=A0 =C2=A0 =C2=A0branches/io -> svn/branches/=
-io
-
-Note to other reviewers: the repository was updated in between
-successive calls to 'git fetch', see below.
-
-> Updating the svn branches works like expected. The remote helper
-> automatically detects which branches it already imported (by going
-> through all refs and the attached svn notes) and creates a new pack w=
-ith
-> the new commits. New branches are also detected. The svn notes are
-> updated accordingly.
-
-I assume this only works for regular svn repositories? I guess it
-doesn't really matter to the rest of the series, since the
-'git-remote-svn' helper is more of a POC I think?
-
-Most of your extensions to the helper protocol make sense. However,
-after re-reading your series I think we _should_ keep the 'import' and
-'export' command, so that helpers don't have to invoke 'git
-fast-import' or 'git fast-import' themselves. I suspect it will be
-more efficient than your approach as well. Speed _is_ a very important
-concern, to have decent support for foreign
-remotes, imports/exports should be as fast as possible. Also, this
-series doesn't address pushing back to the foreign scm, which is very
-convenient through the 'export' command.
-
-Either way, thank you very much for working on this!
-
---=20
-Cheers,
-
-Sverre Rabbelier
+Thanks.
