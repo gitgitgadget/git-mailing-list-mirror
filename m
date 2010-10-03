@@ -1,78 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG] git clean -X behaviour when .gitignore has sub-directory
- entries
-Date: Sun, 3 Oct 2010 14:12:09 -0500
-Message-ID: <20101003191209.GA22743@burratino>
-References: <4CA0AB9A.4050002@nuecho.com>
- <20100927203652.GB11957@burratino>
- <4CA8D1B4.1020801@nuecho.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: planning a new topgit release
+Date: Sun, 3 Oct 2010 21:15:32 +0200
+Message-ID: <20101003191532.GA28679@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Shawn Bohrer <shawn.bohrer@gmail.com>
-To: Jean-Philippe =?utf-8?Q?Gari=C3=A9py?= 
-	<jean-philippe.gariepy@nuecho.com>
-X-From: git-owner@vger.kernel.org Sun Oct 03 21:15:34 2010
+Cc: Peter Simons <simons@cryp.to>, pasky@suse.cz,
+	Per Cederqvist <ceder@lysator.liu.se>,
+	Olaf Dabrunz <odabrunz@gmx.net>,
+	Thomas Moschny <thomas.moschny@gmx.de>,
+	martin f krafft <madduck@madduck.net>,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 03 21:15:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2U1z-0002fB-9T
-	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 21:15:31 +0200
+	id 1P2U2C-0002ie-IC
+	for gcvg-git-2@lo.gmane.org; Sun, 03 Oct 2010 21:15:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754669Ab0JCTP0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 15:15:26 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:56616 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753373Ab0JCTPZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 15:15:25 -0400
-Received: by qwh6 with SMTP id 6so2620071qwh.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 12:15:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=VudaU6jxqU5Ot/wDg3//1ruRWrchu7YIoGP+AFYq3tM=;
-        b=Md52NCiUnHodq/z8SZ5odFInhgG0a9KeBzsTaTtxj0RJ6DzvImC3ojkzt3HgjxI0+Z
-         16txOr0UYbRo26UPluSpdngtkumZ0d9427cDrs25qnMih35S7zODr9LeITaqD1HbvUF6
-         H6Ln9q7Q8eLZ+qf+ETCppnHA5TJ3u2wfqCJzk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=TvaO+thLcUN7c4yABfYBSTMz2wB2mbjZI4/SjH4nxoTNAVkDZOuqkBARno6UXsOWaH
-         ozj9plVeGy55UQrOxlHGgATnIU3LTltsDuu60+lyVatIz2rb+nK/g3FDqksYq2bcw9lo
-         mA+qhiLkF7AcvLAJgwvezGBxze3ozFnz34YeE=
-Received: by 10.229.189.74 with SMTP id dd10mr6183584qcb.73.1286133324489;
-        Sun, 03 Oct 2010 12:15:24 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id e6sm4368112qcr.5.2010.10.03.12.15.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 03 Oct 2010 12:15:23 -0700 (PDT)
+	id S1754677Ab0JCTPg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 15:15:36 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:49445 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753373Ab0JCTPg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 3 Oct 2010 15:15:36 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P2U23-0004eg-4V; Sun, 03 Oct 2010 21:15:35 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P2U20-0007hb-Pp; Sun, 03 Oct 2010 21:15:32 +0200
 Content-Disposition: inline
-In-Reply-To: <4CA8D1B4.1020801@nuecho.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157892>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157893>
 
-Jean-Philippe Gari=C3=A9py wrote:
->  On 09/27/2010 04:36 PM, Jonathan Nieder wrote:
+Hello,
 
->>...
->>  1) a/b/f is not actually considered excluded; only its containing
->>     directory is.
->>
->>  2) git clean does not even examine a/b to consider whether to remov=
-e
->>     it: since a/ does not contain any tracked files, it stopped ther=
-e.
->
-> Ok, thanks for your analysis.  Do you consider it a bug?
+In the last few days I got two mails about the status of topgit and was
+asked about a new release.
 
-Yes.
+I'm willing to create a release as 0.8 was done quite some time ago and
+there were several patches merged since then---mostly bugfixes.
+
+I'm sure I missed questions and patches in the recent past, so I ask yo=
+u
+to resend anything you still have pending to me to get it included in
+0.9.
+
+Thanks
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
