@@ -1,159 +1,108 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [TopGit PATCH] tg-patch: use pretty_tree
-Date: Mon,  4 Oct 2010 22:09:41 +0200
-Message-ID: <1286222981-28358-1-git-send-email-bert.wesarg@googlemail.com>
-References: <1286216867-14701-1-git-send-email-bert.wesarg@googlemail.com>
-Cc: git@vger.kernel.org, Peter Simons <simons@cryp.to>, pasky@suse.cz,
-	Per Cederqvist <ceder@lysator.liu.se>,
-	Olaf Dabrunz <odabrunz@gmx.net>,
-	Thomas Moschny <thomas.moschny@gmx.de>,
-	martin f krafft <madduck@madduck.net>,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Mon Oct 04 22:09:52 2010
+From: Stephen Bash <bash@genarts.com>
+Subject: Trac+Git: rev-list with pathspec performance?
+Date: Mon, 4 Oct 2010 16:21:50 -0400 (EDT)
+Message-ID: <27777603.436995.1286223710787.JavaMail.root@mail.hq.genarts.com>
+References: <13399611.436896.1286218134223.JavaMail.root@mail.hq.genarts.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 04 22:22:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2rM7-0006Bh-GX
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 22:09:51 +0200
+	id 1P2rY1-0001cT-5y
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 22:22:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757028Ab0JDUJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 16:09:47 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:32793 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756920Ab0JDUJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 16:09:46 -0400
-Received: by bwz11 with SMTP id 11so3951160bwz.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 13:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=nCjzxnSFtHk7hSIAVhWQ1kiSyzdG53bhQWLqYhkBW58=;
-        b=UFZkl3b5RE36NVT3uGrwGCYjnInlaMEZDKNEX/khTVN6Y/A2W+7Fl6o2uH8JYjSxA3
-         nfFvnz54tO80GLAVPSTByU1u6wophAsBWz1GFaqQzxr+dyRvCpp8IVusmADHcCvUbS2z
-         ZUgqHNUxwdxhstZoNJplwG5p/PBPkZK9QOiko=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=oLNDvxgBPE4MEYiVD6R+1Q5Qx7IUY161ghaOWPmtYzcpcqzS8S0rCIMDQHUsAGxg1G
-         t6S1NYBSOkA5lhjd7+rJYu5E2+HxXg92ECb3wwOKo9gDZKGaA0/RBJXdIjC2fPhfLGJC
-         mvnCKrrTnH6ykzlTzSEMi22dwMQEy187iH+Qs=
-Received: by 10.204.57.9 with SMTP id a9mr7523312bkh.104.1286222985472;
-        Mon, 04 Oct 2010 13:09:45 -0700 (PDT)
-Received: from localhost (p5B0F7A6E.dip.t-dialin.net [91.15.122.110])
-        by mx.google.com with ESMTPS id f10sm4126115bkl.5.2010.10.04.13.09.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 04 Oct 2010 13:09:44 -0700 (PDT)
-X-Mailer: git-send-email 1.7.1.1067.g5aeb7
-In-Reply-To: <1286216867-14701-1-git-send-email-bert.wesarg@googlemail.com>
+	id S932554Ab0JDUV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 16:21:59 -0400
+Received: from hq.genarts.com ([173.9.65.1]:51547 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S932232Ab0JDUV6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 16:21:58 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 5047A1E268E0
+	for <git@vger.kernel.org>; Mon,  4 Oct 2010 16:21:57 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id s58zibXSyjiW for <git@vger.kernel.org>;
+	Mon,  4 Oct 2010 16:21:50 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id D7CA41E268DB
+	for <git@vger.kernel.org>; Mon,  4 Oct 2010 16:21:50 -0400 (EDT)
+In-Reply-To: <13399611.436896.1286218134223.JavaMail.root@mail.hq.genarts.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158108>
 
-This applies the same treatment to tg-patch like tg-files got in v2.
+Hi all-
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+I'm trying to improve the performance of Trac [1], the GitPlugin for Trac[2], and Git.  Trac is being extremely sluggish while browsing source, and profiling revealed the majority of the time was the GitPlugin calling git rev-list.  When I directly entered the rev-list calls from the shell, I found Git itself was performing slower than I would expect...
 
----
- tg-patch.sh |   56 ++++++++++++++++++++++++++++++++------------------------
- 1 files changed, 32 insertions(+), 24 deletions(-)
+The bottleneck is while Trac is populating the "last change to file" column in the source browser (see the "rev" column of [3] for an *cough* SVN *cough* example).  This concept of "find the last change to a file" was discussed a few weeks ago [4], but unlike that thread, the GitPlugin is simply calling
+   git rev-list --max-count=1 branchName -- fileName
+for each file in the current directory.  For files modified recently this is very fast (thousandths of a second), but for older files rev-list takes a long time to come up with an answer (~2-3 seconds on our server).  
 
-diff --git a/tg-patch.sh b/tg-patch.sh
-index 7bafdfe..0ebef7a 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -4,11 +4,8 @@
- # GPLv2
- 
- name=
--
- topic=
--diff_opts=
--diff_committed_only=yes	# will be unset for index/worktree
--
-+topic_for_pretty_tree=
- 
- ## Parse options
- 
-@@ -16,12 +13,13 @@ while [ -n "$1" ]; do
- 	arg="$1"; shift
- 	case "$arg" in
- 	-i)
-+		[ -z "$topic" ] || die "-i and -w are mutually exclusive"
- 		topic='(i)'
--		diff_opts="$diff_opts --cached";
--		diff_committed_only=;;
-+		topic_for_pretty_tree=-i;;
- 	-w)
-+		[ -z "$topic" ] || die "-i and -w are mutually exclusive"
- 		topic='(w)'
--		diff_committed_only=;;
-+		topic_for_pretty_tree=-w;;
- 	-*)
- 		echo "Usage: tg [...] patch [-i | -w] [NAME]" >&2
- 		exit 1;;
-@@ -32,7 +30,7 @@ while [ -n "$1" ]; do
- done
- 
- 
--[ -n "$name"  -a  -z "$diff_committed_only" ]  &&
-+[ -n "$name" -a -n "$topic" ] &&
- 	die "-i/-w are mutually exclusive with NAME"
- 
- [ -n "$name" ] || name="$(git symbolic-ref HEAD | sed 's#^refs/\(heads\|top-bases\)/##')"
-@@ -46,22 +44,32 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
- 
- setup_pager
- 
--cat_file "$topic:.topmsg"
--echo
--[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
--
--# Evil obnoxious hack to work around the lack of git diff --exclude
--git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
--git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
--	fgrep -vx ".topdeps" |
--	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
--if [ -s "$git_is_stupid" ]; then
--	cd "$root_dir"
--	cat "$git_is_stupid" | xargs git diff -a --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
--else
--	echo "No changes."
--fi
--rm "$git_is_stupid"
-+# put out the commit message
-+# and put an empty line out, if the last one in the message was not an empty line
-+# and put out "---" if the commit message does not have one yet
-+cat_file "$topic:.topmsg" |
-+	awk '
-+/^---/ {
-+    has_3dash=1;
-+}
-+       {
-+    need_empty = 1;
-+    if ($0 == "")
-+        need_empty = 0;
-+    print;
-+}
-+END    {
-+    if (need_empty)
-+        print "";
-+    if (!has_3dash)
-+        print "---";
-+}
-+'
-+
-+b_tree=$(pretty_tree "$name" -b)
-+t_tree=$(pretty_tree "$name" $topic_for_pretty_tree)
-+
-+git diff-tree -p --stat -r $b_tree $t_tree
- 
- echo '-- '
- echo "tg: ($base_rev..) $name (depends on: $(cat_file "$topic:.topdeps" | paste -s -d' '))"
--- 
-tg: (c9ca19b..) bw/tg-patch-pretty_tree (depends on: bw/files)
+I created a script [5] that reproduces the rev-list behavior with 10k commits (ours is about 17k) and 500 files (we peaked at just under 600 in the root of our repo -- that's been cleaned up in the current version, but the history is still there).  On our system the test script fast case is:
+   real 0m0.003s, user 0m0.000s, sys 0m0.010s
+The slow case is
+   real 0m1.072s, user 0m1.050s, sys 0m0.000s
+
+If I naively profile Git I find the worst time offender is tree_entry_interesting with over 10 million calls in the slow case.  That seems high (even every commit, every file would be 500*10000=5 million), but I don't know anything about the actual search algorithm.
+
+Is there anything obvious I can do about this performance bottleneck or is it just the nature of our repository?  Is there potentially a bug in how rev-list works with a pathspec?  Is there a more efficient way to obtain the last commit that changed each file in a directory?  (A hack I'm currently testing is just always return the current commit when Trac asks for the last change... that speeds things up but changes the user experience)
+
+Thanks,
+Stephen
+
+References:
+[1] http://trac.edgewall.org
+[2] http://trac-hacks.org/wiki/GitPlugin
+[3] http://trac.edgewall.org/browser/trunk
+[4] http://article.gmane.org/gmane.comp.version-control.git/150183/
+[5]
+#!/bin/bash
+
+git init big-repo
+cd big-repo
+touch foo
+touch bar
+for ii in {1..500}
+do
+   # create some files for background noise
+   touch $ii
+done
+git add .
+git commit -qm "initial import"
+
+for ii in {1..10000}
+do
+   echo "Creating commit $ii"
+   echo $ii >> foo
+   git add foo
+   git commit -qm "simple change $ii"
+
+   if [ $(( $ii % 250 )) == 0 ]
+   then
+      echo "Running git gc ($ii)"
+      git gc --quiet
+   fi
+done
+
+# Fast case (last change is close to HEAD)
+echo "git rev-list --max-count=1 HEAD -- foo ..."
+time git rev-list --max-count=1 HEAD -- foo
+
+# Slow case (last change is long before HEAD)
+echo "git rev-list --max-count=1 HEAD -- bar ..."
+time git rev-list --max-count=1 HEAD -- bar
+
+cd ..
+
+#rm -rf big-repo
