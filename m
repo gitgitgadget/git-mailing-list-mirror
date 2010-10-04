@@ -1,123 +1,165 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Mon, 4 Oct 2010 10:50:50 +0200
-Message-ID: <20101004085050.GQ28679@pengutronix.de>
-References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de> <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com> <1285967766.6750.2.camel@gandalf.stny.rr.com> <4CA9815D.3040801@drmicha.warpmail.net> <20101004075015.GN28679@pengutronix.de> <4CA98EF1.1050102@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] xdiff: cast arguments for ctype functions to unsigned char
+Date: Mon, 4 Oct 2010 04:09:17 -0500
+Message-ID: <20101004090917.GA14566@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Oct 04 10:51:01 2010
+Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	Steven Drake <sdrake@xnet.co.nz>,
+	der Mouse <mouse@Rodents-Montreal.ORG>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 04 11:13:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2glB-0006Si-9g
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 10:51:01 +0200
+	id 1P2h6g-0005Da-Nx
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 11:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753589Ab0JDIuz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 04:50:55 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:43327 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753316Ab0JDIuz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 04:50:55 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P2gl1-0001pT-TU; Mon, 04 Oct 2010 10:50:51 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P2gl0-00033G-AT; Mon, 04 Oct 2010 10:50:50 +0200
+	id S1754002Ab0JDJMg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 05:12:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55707 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753639Ab0JDJMg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 05:12:36 -0400
+Received: by iwn5 with SMTP id 5so6671573iwn.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 02:12:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=Z2y2aSgq6Z4/8HYM67ykK4gA7hGGdCFKalnBO8nQ3q8=;
+        b=hTZh3DpgxglUmwIEgeQTsGCoHwASKBcWFoBgWCPjBmZxMO+xOTW0xdwkNThmgWb62r
+         6/qVN2tiU33wC0Av/wSJr+EhBDzyADkMstA3MCHq5DKPbzLRlmNAKYImvpNY1cZSA7lX
+         J8Eg0hLGZZ966bperwtmauXZnTSJUJhvx7vrA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=dORXwU7YVOipNcaKydZJewX22B0MRBN6gktT0qfRVoX7yfj4Tk9KeofGx0F/UEFjlr
+         o8HVMhEsUaFd7VIwAv6kt6ThgZzyJpYlRWwlev1bWp9J0l4iG5oHsKOgt2TBoBJdjAsQ
+         BpmvUECqTsqgcoOoNO4IVu8WUkqf71EeAJiGs=
+Received: by 10.231.79.77 with SMTP id o13mr9879256ibk.36.1286183555674;
+        Mon, 04 Oct 2010 02:12:35 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id h8sm4744115ibk.9.2010.10.04.02.12.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 02:12:34 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4CA98EF1.1050102@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158013>
 
-Hello Michael,
+The ctype functions isspace(), isalnum(), et al take an integer
+argument representing an unsigned character, or -1 for EOF.  On
+platforms with a signed char, it is unsafe to pass a char to them
+without casting it to unsigned char first.
 
-On Mon, Oct 04, 2010 at 10:23:13AM +0200, Michael J Gruber wrote:
-> Uwe Kleine-K=F6nig venit, vidit, dixit 04.10.2010 09:50:
-> > Hello Michael,
-> >=20
-> > On Mon, Oct 04, 2010 at 09:25:17AM +0200, Michael J Gruber wrote:
-> >> Steven Rostedt venit, vidit, dixit 01.10.2010 23:16:
-> >>> On Fri, 2010-10-01 at 13:18 -0700, Darren Hart wrote:
-> >>>> 2010/10/1 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
-> >>>>> Some people in #linux-rt claimed that you cannot define "--mirr=
-or" with
-> >>>>> "mirror".
-> >>>>>
-> >>
-> >> I'd say "mirror" is a commonly known term for an exact copy. Moreo=
-ver,
-> >> the text below doesn't explain what a mirror is either, only how
-> >> "update" behaves in it.
-> > hmm.  The --mirror option doesn't have any effect (apart from the
-> > changes in the config file) until you update.  So I think it's natu=
-ral
-> > to talk about git update.  No?
->=20
-> "git clone" (with or without --mirror) does a couple of things, and i=
-t
-> does them differently when "--mirror" is used. It mirrors each branch
-> from the source repo in the target repo under the same name, includin=
-g
-> for example any remote branches in the source repo. This is completel=
-y
-> different without "--mirror", where clone does not look at the source=
-'s
-> remote branches at all. Also, it sets up a mirroring refspec, i.e.
-> +refs/*:refs/*
-Ah, didn't notice that.
+Most of git is already shielded against this by the ctype
+implementation in git-compat-util.h, but xdiff, which uses libc
+ctype.h, ought to be fixed.
 
-> [...]
-> This makes me think that --mirror should be explained on top of --bar=
-e.
-OK.
+Noticed-by: der Mouse <mouse@Rodents-Montreal.ORG>
+Reported-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ xdiff/xmacros.h |    1 +
+ xdiff/xmerge.c  |    2 +-
+ xdiff/xutils.c  |   18 +++++++++---------
+ 3 files changed, 11 insertions(+), 10 deletions(-)
 
-> For example:
->=20
-> In addition to the mapping of local branches to local branches which
-> --bare does, --mirror maps all refs which the source has under the sa=
-me
-> name in the target (including remote branches, notes etc.) and sets u=
-p a
-> refspec configuration so that all these refs are updated by a `git
-> update` in the target repo.
-Hmm, I didn't understand this when I read it the first few times.  The
-special thing is that --mirror maps *all* refs, not *same name*.
-
-So maybe:
-
-	Set up a mirror of the remote repository.  This implies `--bare`.
-	Compared to `--bare`, `--mirror` doesn't only map local branches of
-	the remote to local branches of the target but all refs
-	(including remote branches, notes etc.) and sets up a refspec
-	configuration such that all these refs are overwritten by a
-	`git remote update` in the target repository.
-
-I choosed to write "overwritten" instead of "updated" to make it cleare=
-r
-that it makes no sence to push into these branches from a different
-source.  Should this be noted more explicit?
-
-Best regards
-Uwe
-
+diff --git a/xdiff/xmacros.h b/xdiff/xmacros.h
+index 8ef232c..165a895 100644
+--- a/xdiff/xmacros.h
++++ b/xdiff/xmacros.h
+@@ -30,6 +30,7 @@
+ #define XDL_MAX(a, b) ((a) > (b) ? (a): (b))
+ #define XDL_ABS(v) ((v) >=3D 0 ? (v): -(v))
+ #define XDL_ISDIGIT(c) ((c) >=3D '0' && (c) <=3D '9')
++#define XDL_ISSPACE(c) (isspace((unsigned char)(c)))
+ #define XDL_ADDBITS(v,b)	((v) + ((v) >> (b)))
+ #define XDL_MASKBITS(b)		((1UL << (b)) - 1)
+ #define XDL_HASHLONG(v,b)	(XDL_ADDBITS((unsigned long)(v), b) & XDL_MA=
+SKBITS(b))
+diff --git a/xdiff/xmerge.c b/xdiff/xmerge.c
+index 6d6fc1b..9e13b25 100644
+--- a/xdiff/xmerge.c
++++ b/xdiff/xmerge.c
+@@ -336,7 +336,7 @@ static int xdl_refine_conflicts(xdfenv_t *xe1, xdfe=
+nv_t *xe2, xdmerge_t *m,
+ static int line_contains_alnum(const char *ptr, long size)
+ {
+ 	while (size--)
+-		if (isalnum(*(ptr++)))
++		if (isalnum((unsigned char)*(ptr++)))
+ 			return 1;
+ 	return 0;
+ }
+diff --git a/xdiff/xutils.c b/xdiff/xutils.c
+index 22f9bd6..ab65034 100644
+--- a/xdiff/xutils.c
++++ b/xdiff/xutils.c
+@@ -211,18 +211,18 @@ int xdl_recmatch(const char *l1, long s1, const c=
+har *l2, long s2, long flags)
+ 			if (l1[i1++] !=3D l2[i2++])
+ 				return 0;
+ 		skip_ws:
+-			while (i1 < s1 && isspace(l1[i1]))
++			while (i1 < s1 && XDL_ISSPACE(l1[i1]))
+ 				i1++;
+-			while (i2 < s2 && isspace(l2[i2]))
++			while (i2 < s2 && XDL_ISSPACE(l2[i2]))
+ 				i2++;
+ 		}
+ 	} else if (flags & XDF_IGNORE_WHITESPACE_CHANGE) {
+ 		while (i1 < s1 && i2 < s2) {
+-			if (isspace(l1[i1]) && isspace(l2[i2])) {
++			if (XDL_ISSPACE(l1[i1]) && XDL_ISSPACE(l2[i2])) {
+ 				/* Skip matching spaces and try again */
+-				while (i1 < s1 && isspace(l1[i1]))
++				while (i1 < s1 && XDL_ISSPACE(l1[i1]))
+ 					i1++;
+-				while (i2 < s2 && isspace(l2[i2]))
++				while (i2 < s2 && XDL_ISSPACE(l2[i2]))
+ 					i2++;
+ 				continue;
+ 			}
+@@ -241,13 +241,13 @@ int xdl_recmatch(const char *l1, long s1, const c=
+har *l2, long s2, long flags)
+ 	 * while there still are characters remaining on both lines.
+ 	 */
+ 	if (i1 < s1) {
+-		while (i1 < s1 && isspace(l1[i1]))
++		while (i1 < s1 && XDL_ISSPACE(l1[i1]))
+ 			i1++;
+ 		if (s1 !=3D i1)
+ 			return 0;
+ 	}
+ 	if (i2 < s2) {
+-		while (i2 < s2 && isspace(l2[i2]))
++		while (i2 < s2 && XDL_ISSPACE(l2[i2]))
+ 			i2++;
+ 		return (s2 =3D=3D i2);
+ 	}
+@@ -260,10 +260,10 @@ static unsigned long xdl_hash_record_with_whitesp=
+ace(char const **data,
+ 	char const *ptr =3D *data;
+=20
+ 	for (; ptr < top && *ptr !=3D '\n'; ptr++) {
+-		if (isspace(*ptr)) {
++		if (XDL_ISSPACE(*ptr)) {
+ 			const char *ptr2 =3D ptr;
+ 			int at_eol;
+-			while (ptr + 1 < top && isspace(ptr[1])
++			while (ptr + 1 < top && XDL_ISSPACE(ptr[1])
+ 					&& ptr[1] !=3D '\n')
+ 				ptr++;
+ 			at_eol =3D (top <=3D ptr + 1 || ptr[1] =3D=3D '\n');
 --=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+1.7.2.3
