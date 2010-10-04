@@ -1,64 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: "S_IFREG | 0644" to "(S_IFREG | 0644)" to avoid
- warning
-Date: Mon, 04 Oct 2010 12:23:07 -0700
-Message-ID: <7v4od192zo.fsf@alter.siamese.dyndns.org>
-References: <1286184071-28457-1-git-send-email-avarab@gmail.com>
- <4CA9B217.6050600@lsrfire.ath.cx>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Move tags to branch
+Date: Mon, 4 Oct 2010 14:21:25 -0500
+Message-ID: <20101004192125.GE6466@burratino>
+References: <AANLkTinzGy62ETZdry5y1qTi0djkt9d72_3soCP6K_Qn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Dan McMahill <dmcmahill@NetBSD.org>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Oct 04 21:23:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 21:24:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2qdD-0007Yb-NO
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 21:23:28 +0200
+	id 1P2qeZ-00082T-I9
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 21:24:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932396Ab0JDTXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 15:23:21 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:42495 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932112Ab0JDTXU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 15:23:20 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CE87DBFB5;
-	Mon,  4 Oct 2010 15:23:19 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=wHeLihSbztUh
-	QX3wicMGU33ivnA=; b=ot3hPIVzo/kiSO5bZ7WnpXGkLXYLeklyanbVa/FECRRS
-	JP99u7WYZzkQ/4YBqgEcPAJYHDciAbiKMao2XrQf/378TMY5MCcG8QREtddoVlvh
-	RyVII2xzWiQiBgEN3oXl1F8jUfXl7tY5LT7+g2EINgYxq2h5rYlP+hnzmMtsMiQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=qFQIhZ
-	wyvpqQSx82+jqzntoIEw1Lufy80dvgJ9jNhNZnH+RpAfGl7i/F2xhaUDTFUaoqQt
-	+0wLL9iD+cK7/WFXfz6hCEHHN4Hk+BxR+si6yGH8m0n/qeZGgZaS4Hivxu6tRMgV
-	ALv1rkG4Bv/KcsCkLA7pZIfguvgoAFOIv+84U=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 496F8DBFB4;
-	Mon,  4 Oct 2010 15:23:15 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4C672DBFB0; Mon,  4 Oct
- 2010 15:23:09 -0400 (EDT)
-In-Reply-To: <4CA9B217.6050600@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Mon\, 04 Oct 2010 12\:53\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D5EC98E8-CFEC-11DF-869C-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932458Ab0JDTYp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 15:24:45 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:38130 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755768Ab0JDTYp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 15:24:45 -0400
+Received: by eyb6 with SMTP id 6so2142056eyb.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 12:24:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=uhKEC8yXQPEzWuM/rHKU6QtNeWRQ8fgUpmQh5DHX33s=;
+        b=uXVmo7EwFMbFehqD3OxMu8/WFYW7+nuMszLec8SCRTtQNgQtougRIBsn51By9Pkf34
+         MFrMiiXpREBpOamA7Au/QVv6+wluiv3qln3/3Y75ASIARVxjxwluEJjyfqhz8dD+Xreb
+         oycWZmWfn6nGN6rnrH5TyqrUGuF6adEaluwys=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=PJR7H02iPE+C3iuTpE5H/8dU8EjkdCP1Kz+7+1mV7AO+IG4U0Mr9Z1qYPhbNHylKpp
+         oyiizn/oe1eVgVrDJgZvKvMawuYyDkwhLsT8IY9WmaksScdhCe62hp5B3jPqeIeZoBTq
+         a3FBSRvb/9dE0SEMLh8seLshlhlgNCAGpKSsQ=
+Received: by 10.223.103.84 with SMTP id j20mr9631725fao.35.1286220283616;
+        Mon, 04 Oct 2010 12:24:43 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id a6sm2430049faa.20.2010.10.04.12.24.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 12:24:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinzGy62ETZdry5y1qTi0djkt9d72_3soCP6K_Qn@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158103>
 
-Looks much saner; thanks.  I think we can steal the log message from =C3=
-=86var
-v2 to explain what this change is about.
+Mathieu Malaterre wrote:
+
+> | * commit 5fd43e4a662b1a7d43d2e10de3dec40c58dcb6a4
+> |/  Author:
+> |   Date:   Wed Aug 18 10:23:12 2010 +0000
+> |
+> |       ENH: Tagging the  release
+> |
+> | * commit 8d16cdc21ea84158eba57d0bc8d9ae96427fd24a
+> |/  Author:
+> |   Date:   Mon Jul 12 09:42:49 2010 +0000
+> |
+> |       obfuscate niels emails
+> |
+> 
+> I would like:
+> 
+> | * commit 5fd43e4a662b1a7d43d2e10de3dec40c58dcb6a4
+> | | Author:
+> | | Date:   Wed Aug 18 10:23:12 2010 +0000
+> | |
+> | |     ENH: Tagging the  release
+> | |
+> | * commit 8d16cdc21ea84158eba57d0bc8d9ae96427fd24a
+> | | Author:
+> | | Date:   Mon Jul 12 09:42:49 2010 +0000
+> | |
+> | |     obfuscate niels emails
+> | |
+
+How would that work?  Would Niels's emails be obfuscated on
+the release branch?
