@@ -1,98 +1,98 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv6 01/16] test-lib: make test_expect_code a test command
-Date: Mon, 4 Oct 2010 03:37:16 +0000
-Message-ID: <AANLkTi=4_KN858sfXy59xgUSTCtj9ZkvW3+MrX3w3wWg@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv6 00/16] Add missing &&'s in the testsuite
+Date: Sun, 3 Oct 2010 22:44:46 -0500
+Message-ID: <20101004034446.GA24884@burratino>
 References: <1286136014-7728-1-git-send-email-newren@gmail.com>
-	<1286136014-7728-2-git-send-email-newren@gmail.com>
+ <AANLkTi=+N=jm1b3vpiwxR0tFwPGbsaJyEq39q3oAyAn_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 05:37:30 2010
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, Jeff King <peff@peff.net>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 05:48:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2brh-0006AI-OK
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 05:37:26 +0200
+	id 1P2c29-0008Tc-MX
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 05:48:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751859Ab0JDDhT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 23:37:19 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46149 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751630Ab0JDDhS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 23:37:18 -0400
-Received: by iwn5 with SMTP id 5so6377085iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 20:37:18 -0700 (PDT)
+	id S1751808Ab0JDDsG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 23:48:06 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:40430 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751559Ab0JDDsE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 23:48:04 -0400
+Received: by qwh6 with SMTP id 6so2847849qwh.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 20:48:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=2v5cTms2qEorKBGSeZQcR8BGfQPCzdVQ71v8ziLtcs8=;
-        b=NxgsgDTxhKZVDAz//5OSF82eOEFBPeT5iEZSjO8A/k426ec9M30ngv9fhmUzDt+svX
-         1ZrIQgbbuf1/67SSnzZa//rpRvCn+AQM80XqTIbhZGKfTGdCPe+aUs/RqnKUEETxIhV2
-         8LsYi1F0KG9IupMdST05UimrHdiEyIDEkhm2M=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=8qawQo/npEF7RawQI1gwtC5qpfLOWLheXc68fOp2/EA=;
+        b=qYs5pHlzPfLMv9m6Zn6ClzhADqKTDjgNXHksKlqzqU8bTCPsDT8xORKthS7M7pVKyU
+         avCZvgBEwzDrvdmNcKSdOhew/YA+a0qiXYjce0qieVUb9hWIpI54lkhPxu45qtmQ0EYb
+         sEOXUaFDyuvuITY0wMe9G+XVuRc63yI7WLEtE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CKtuyuK8tAyn541o2okn5bBFHguClQT2IIStSQxQIs6aghTlGqjH/kACcpngi0g77R
-         YKWDXPNay0/ZkpjCZ6QAvz1+PwcqvuBN+vvrT/KBuST7zRW/Nc8/pI/kxN30XCyEWcpI
-         rHXhrNv+LJuSS1qMpNbxuI3kKj0UeVsTrz9V4=
-Received: by 10.231.170.13 with SMTP id b13mr9471752ibz.62.1286163436638; Sun,
- 03 Oct 2010 20:37:16 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Sun, 3 Oct 2010 20:37:16 -0700 (PDT)
-In-Reply-To: <1286136014-7728-2-git-send-email-newren@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=sOGFsspt67MTJqm7U/PDz1tkZeXoH7sKZBlRwtLNJ849EJFDDdXvAbFArnqGZ6il9B
+         85p4wL3x1fL8amcUAarrhNDJ0TwXcUKjnPPXx0DBUUpJiIG8h25RDGMI6yahIrFxafMT
+         HNet2iAEDvc1CjAHeGA9bvyiyi8k2U8j4lGRQ=
+Received: by 10.224.71.151 with SMTP id h23mr6195900qaj.219.1286164083857;
+        Sun, 03 Oct 2010 20:48:03 -0700 (PDT)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id t24sm4906391qcs.11.2010.10.03.20.48.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 20:48:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=+N=jm1b3vpiwxR0tFwPGbsaJyEq39q3oAyAn_@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157967>
 
-On Sun, Oct 3, 2010 at 19:59, Elijah Newren <newren@gmail.com> wrote:
-> From: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
->
-> Change test_expect_code to be a normal test command instead of a
-> top-level command.
+Hi =C3=86var,
 
-> [...]
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
-om>
-> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: Elijah Newren <newren@gmail.com>
-> ---
-> =C2=A0t/README =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-| =C2=A0 16 +++++++------
-> =C2=A0t/t0000-basic.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 55 +++++++=
-+++++++++++++++++++++++++++++++--------
-> =C2=A0t/t1504-ceiling-dirs.sh | =C2=A0 =C2=A05 ++-
-> =C2=A0t/t6020-merge-df.sh =C2=A0 =C2=A0 | =C2=A0 =C2=A04 ++-
-> =C2=A0t/test-lib.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 40 ++=
-++++++++++++++++---------------
-> =C2=A05 files changed, 82 insertions(+), 38 deletions(-)
+> Since Jonathan says all but 7 & 15 are OK (and I looked at those) I
+> assume I don't need to hunt down some other discussion and comment on
+> that. I.e. unless someone replies here.
 
-This doc change looks. Here's the diff against my patch for reference:
+If you find time, it would be nice to take a look at
+http://thread.gmane.org/gmane.comp.version-control.git/157827/focus=3D1=
+57874
+(concerning patch 1/16), to consider quoting issues.
 
-    diff --git a/t/README b/t/README
-    index c216e8c..ee4c0cf 100644
-    --- a/t/README
-    +++ b/t/README
-    @@ -475,10 +475,10 @@ library for your script to use.
-                'Perl API' \
-                "$PERL_PATH" "$TEST_DIRECTORY"/t9700/test.pl
+Because of all the nested quoting (and funny indentation, too), I
+found the test hard to read.  Probably the best long-term solution
+would be to use something like the style[1] notmuch=E2=80=99s test suit=
+e uses.
 
-    - - test_expect_code <exit-code> <git-command>
-    + - test_expect_code <exit-code> <command>
+I can only see problems coming from this if the path to the test
+directory has shell metacharacters (especially '$') in it, which would
+seem to me to be a pretty unusual setup.
 
-    -   Run a git command and ensure that it exits with the given exit
-    -   code. For example:
-    +   Run a command and ensure that it exits with the given exit code=
-=2E
-    +   For example:
+[1] or as Jeff suggested recently:
 
-            test_expect_success 'Merge with d/f conflicts' '
-                    test_expect_code 1 git merge "merge msg" B master
+test_start 'setup'
+cat >expect <<EOF
+=2E.. whatever ...
+EOF
+test_end success
+
+test_start 'description'
+git frob >actual &&
+test_cmp expect actual
+test_end success
+
+http://thread.gmane.org/gmane.comp.version-control.git/155596/focus=3D1=
+55681
