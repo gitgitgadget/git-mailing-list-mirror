@@ -1,79 +1,83 @@
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [PATCH v3] Documentation/git-clone: describe --mirror more verbosely
-Date: Mon,  4 Oct 2010 19:28:27 +0200
-Message-ID: <1286213307-23600-1-git-send-email-u.kleine-koenig@pengutronix.de>
-References: <AANLkTikFzbWJ9CZ5skXe38+QF3QRWK5hfTWJhc5FOYK_@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
+Date: Mon, 04 Oct 2010 10:29:43 -0700
+Message-ID: <7vlj6d988o.fsf@alter.siamese.dyndns.org>
+References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
+ <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com>
+ <1285967766.6750.2.camel@gandalf.stny.rr.com>
+ <4CA9815D.3040801@drmicha.warpmail.net>
+ <20101004075015.GN28679@pengutronix.de>
+ <4CA98EF1.1050102@drmicha.warpmail.net>
+ <20101004085050.GQ28679@pengutronix.de>
+ <4CA99E43.1000204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Darren 'Some People' Hart <darren@dvhart.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 04 19:28:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 04 19:30:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2oqI-0001NL-G2
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:28:50 +0200
+	id 1P2orU-0001uj-90
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:30:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755608Ab0JDR2j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 13:28:39 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:44895 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752757Ab0JDR2i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 13:28:38 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P2oq5-0006b2-IA; Mon, 04 Oct 2010 19:28:37 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P2oq3-00069B-U2; Mon, 04 Oct 2010 19:28:35 +0200
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <AANLkTikFzbWJ9CZ5skXe38+QF3QRWK5hfTWJhc5FOYK_@mail.gmail.com>
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753553Ab0JDR37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 13:29:59 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37856 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752734Ab0JDR36 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 13:29:58 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F762DBB2C;
+	Mon,  4 Oct 2010 13:29:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=G2p8EppyoVMKVIeEGNi4LUBLa9w=; b=vAf4+O
+	WvqVlAagl6zHudlzX9Qu2klmep/qoHamn1Y7uKTzQ9tpIRUAfx08OnJqgtjP1Px3
+	1hNBeSnIZnRSWdsckLtjyNcMOxxSIj7krww8D+cAnjh9BgXHCu+W692EowTPnAIg
+	jrl9DoAmLVwjX/7dVpknUCOYRWKEsQLa442YE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XCKQ9HXg1EIXC0ZpUX4CEu8n0ZDMuGqQ
+	rLL4MJvpyP3z7HW2OQccnqRvyG8SsM/pRFHUqbfB/mSfSfRbcYCtjAlXQFEu5yzK
+	0KtKV0Ygq4Hz9bbf7WmSDCcdO8xsSmp0hREcmp2DHoygYjooEZiFtJMYoYAjJUDN
+	vu3KwiN5Ltw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id C8C53DBB1F;
+	Mon,  4 Oct 2010 13:29:51 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id B9FCBDBB1B; Mon,  4 Oct
+ 2010 13:29:45 -0400 (EDT)
+In-Reply-To: <4CA99E43.1000204@drmicha.warpmail.net> (Michael J. Gruber's
+ message of "Mon\, 04 Oct 2010 11\:28\:35 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FEB9BE14-CFDC-11DF-BE0B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158070>
 
-Some people in #linux-rt claimed that you cannot define "--mirror" with
-"mirror" only.
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Darren 'Some People' Hart <darren@dvhart.com>
-Cc: Michael J Gruber <git@drmicha.warpmail.net>
-Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
----
- Documentation/git-clone.txt |    7 ++++++-
- 1 files changed, 6 insertions(+), 1 deletions(-)
+>> I choosed to write "overwritten" instead of "updated" to make it clearer
+>> that it makes no sence to push into these branches from a different
+>> source.  Should this be noted more explicit?
+>
+> "update" may be more Git lingo but I think either is fine. "overwritten"
+> makes it clearer this is not a repo to do development in...
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index dc7d3d1..ab72933 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -128,7 +128,12 @@ objects from the source repository into a pack in =
-the cloned repository.
- 	configuration variables are created.
-=20
- --mirror::
--	Set up a mirror of the remote repository.  This implies `--bare`.
-+	Set up a mirror of the source repository.  This implies `--bare`.
-+	Compared to `--bare`, `--mirror` not only maps local branches of the
-+	source to local branches of the target, it maps all refs (including
-+	remote branches, notes etc.) and sets up a refspec configuration such
-+	that all these refs are overwritten by a `git remote update` in the
-+	target repository.
-=20
- --origin <name>::
- -o <name>::
---=20
-1.7.2.3
+In a repository with remote.origin.mirror set to true, "git fetch origin"
+does not seem to prune a ref that has been removed from the origin.  I
+think that is a design bug, albeit a minor one ("git fetch -p origin" can
+fix, but "-p" should not be necessary).  A "mirror"'s purpose is to, ehh,
+mirror a remote so that local people can share it as a nearby copy.
+
+A wording that also implies this automatic deletion of a stale ref would
+be nice; "overwritten" does not exactly sound like that, though.
