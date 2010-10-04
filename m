@@ -1,104 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: RFC: checkout/temporary branch switch restoring modification
- times
-Date: Mon, 4 Oct 2010 00:11:48 -0500
-Message-ID: <20101004051148.GG24884@burratino>
-References: <4CA95B18.5090008@cockos.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Justin Frankel <justin@cockos.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 07:15:14 2010
+From: Viresh KUMAR <viresh.kumar@st.com>
+Subject: [PATCH] send-email: Clear To: field for every mail
+Date: Mon,  4 Oct 2010 11:07:12 +0530
+Message-ID: <a9b17bd454e57abb75f6cd2a7da63ec7738f5e7b.1286170305.git.viresh.kumar@st.com>
+Cc: bebarino@gmail.com, Viresh Kumar <viresh.kumar@st.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Oct 04 07:37:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2dOL-0005rx-JZ
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 07:15:13 +0200
+	id 1P2dk0-00011H-3t
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 07:37:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752128Ab0JDFPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 01:15:05 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:36661 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751738Ab0JDFPE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 01:15:04 -0400
-Received: by gxk9 with SMTP id 9so1554985gxk.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 22:15:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=RpduE9zk6JhxfJ1NK2iqNCcnyQPlnjHknR2SVxHZHQw=;
-        b=sTsFmulJlPfUmrCsuTdYzcMicbPrEiMhelhadbEnN2hH0vbYRQiW+EheqM9+AxSu3g
-         xSbJJSCd9UolXLDNOWXIV3AheBq2taGpFWfySgTHVam/K6NL9H3sA1Yp3ImzqoiBJdhq
-         GdGSFZzrBu6b/DSoIXrQI8W6Qwd6UcwUrenX4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=d2goZSG3XZqS1Cm8aRFCJuZ/yioN0DV7Jalyux/oQwp6J8xutvvndGg2tXnLsb7j7u
-         HR+B6kmaV87t7UaUCBZKXxoUHy4lFbDVvKNXrpKOTP2W1dylcnfmJDTt80Vy1jhou/Fb
-         mI2/UZiAQfWfKxrXQaa2wJjaBkrQE5y2PBzIM=
-Received: by 10.100.142.5 with SMTP id p5mr4976349and.50.1286169303197;
-        Sun, 03 Oct 2010 22:15:03 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id q7sm8455300anf.26.2010.10.03.22.15.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 03 Oct 2010 22:15:02 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4CA95B18.5090008@cockos.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752144Ab0JDFh2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 01:37:28 -0400
+Received: from eu1sys200aog101.obsmtp.com ([207.126.144.111]:51672 "EHLO
+	eu1sys200aog101.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752017Ab0JDFh2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 01:37:28 -0400
+Received: from source ([164.129.1.35]) (using TLSv1) by eu1sys200aob101.postini.com ([207.126.147.11]) with SMTP
+	ID DSNKTKloDD7KZHZoQUzXPfqfaPDDB8F2epFn@postini.com; Mon, 04 Oct 2010 05:37:27 UTC
+Received: from zeta.dmz-eu.st.com (ns2.st.com [164.129.230.9])
+	by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 43FF179;
+	Mon,  4 Oct 2010 05:37:15 +0000 (GMT)
+Received: from mail2.dlh.st.com (mail2.dlh.st.com [10.199.8.22])
+	by zeta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 7CFFB1544;
+	Mon,  4 Oct 2010 05:37:14 +0000 (GMT)
+Received: from localhost ([10.199.16.92])
+	by mail2.dlh.st.com (MOS 3.8.7a)
+	with ESMTP id CUF01073 (AUTH viresh.kumar@st.com);
+	Mon, 4 Oct 2010 11:07:13 +0530 (IST)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157979>
 
-Hi,
+While sending multiple patches with a single git-send-email command,
+To: field is not cleared after every mail. This patch clears To: field
+after every patch sent.
 
-Justin Frankel wrote:
+Signed-off-by: Viresh Kumar <viresh.kumar@st.com>
+Tested-by: Viresh Kumar <viresh.kumar@st.com>
+---
+ git-send-email.perl |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
 
-> git cop master
-> ; build
-> git cop some-branch-that-affects-lots-of-files
-> ; edit some things, commit
-> git cop master
-> ; build (fast, nothing changed)
-
-Interesting.  I guess the intended use is that you only ever build
-on the master branch?
-
-Have you ever tried the contrib/workdir/git-new-workdir script?
-I find it fits the use case well for me:
-
- git clone $repo
- cd repo
- make
- # oh, shoot! I need to try something out real quick.
- cd ..
- git new-workdir repo repo2 origin/master
- cd repo2
- git am patch-to-test
- make
- # okay, back to what I was doing...
- cd ../repo
-
-Maybe it could be helpful for you, too?
-
-Limitations:
-
- - requires a file system with support for symbolic links
-   (I think Pierre Habouzit and Junio discussed changing
-   that);
-
- - workdirs share refs.  If you update master in one
-   workdir and another workdir also has master checked
-   out, the new changes will appear as staged changes.
-
- - workdirs do not share HEAD.  "git gc" from one
-   workdir can completely trash another if it has a
-   detached HEAD pointing to a commit that is not part
-   of any local or remote branch.
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 1ccfb80..cf17704 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1150,6 +1150,7 @@ foreach my $t (@files) {
+ 	my $author_encoding;
+ 	my $has_content_type;
+ 	my $body_encoding;
++	@to = ();
+ 	@cc = ();
+ 	@xh = ();
+ 	my $input_format = undef;
+-- 
+1.7.2.3
