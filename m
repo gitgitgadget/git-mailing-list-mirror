@@ -1,83 +1,87 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] diff: "S_IFREG | 0644" to "(S_IFREG | 0644)" to avoid warning
-Date: Mon, 04 Oct 2010 13:45:27 +0200
-Message-ID: <vpqsk0mp4fc.fsf@bauges.imag.fr>
-References: <1286184071-28457-1-git-send-email-avarab@gmail.com>
-	<4CA9B217.6050600@lsrfire.ath.cx>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: [PATCH v4 0/3] git-remote-fd & git-remote-ext
+Date: Mon, 4 Oct 2010 15:06:43 +0300
+Message-ID: <20101004120643.GA12948@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <1286190258-12724-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <20101004113043.GE4738@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Dan McMahill <dmcmahill@NetBSD.org>
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Oct 04 13:49:20 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 14:01:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2jXh-0003SV-R5
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 13:49:18 +0200
+	id 1P2jjF-0006Tk-Vg
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 14:01:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754893Ab0JDLtM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 07:49:12 -0400
-Received: from imag.imag.fr ([129.88.30.1]:50047 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754380Ab0JDLtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 07:49:12 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o94BjRZF014591
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 4 Oct 2010 13:45:27 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1P2jTz-0005mQ-EG; Mon, 04 Oct 2010 13:45:27 +0200
-In-Reply-To: <4CA9B217.6050600@lsrfire.ath.cx> (=?iso-8859-1?Q?=22Ren=E9?=
- Scharfe"'s message of "Mon\, 04 Oct 2010 12\:53\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 04 Oct 2010 13:45:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1754806Ab0JDMBH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 08:01:07 -0400
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:46935 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754340Ab0JDMBG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 08:01:06 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 396898C797;
+	Mon,  4 Oct 2010 15:01:05 +0300 (EEST)
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A05CBF35F57; Mon, 04 Oct 2010 15:01:05 +0300
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 14D642BD45;
+	Mon,  4 Oct 2010 15:01:03 +0300 (EEST)
+Content-Disposition: inline
+In-Reply-To: <20101004113043.GE4738@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158036>
 
-Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Mon, Oct 04, 2010 at 06:30:43AM -0500, Jonathan Nieder wrote:
+> Ilari Liusvaara wrote:
+> 
+> > This adds two new remote helpers.
+> 
+> Looks good to me.  I assume you've checked it still works. :)
 
-> How about something like the following instead?
+Yeah, it does:
 
-> diff --git a/cache.h b/cache.h
-> index 2ef2fa3..3d5ed51 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -277,9 +277,16 @@ static inline int ce_to_dtype(const struct cache=
-_entry *ce)
->  	else
->  		return DT_UNKNOWN;
->  }
-> -#define canon_mode(mode) \
-> -	(S_ISREG(mode) ? (S_IFREG | ce_permissions(mode)) : \
-> -	S_ISLNK(mode) ? S_IFLNK : S_ISDIR(mode) ? S_IFDIR : S_IFGITLINK)
-> +static inline unsigned int canon_mode(unsigned int mode)
-> +{
-> +	if (S_ISREG(mode))
-> +		return S_IFREG | ce_permissions(mode);
-> +	if (S_ISLNK(mode))
-> +		return S_IFLNK;
-> +	if (S_ISDIR(mode))
-> +		return S_IFDIR;
-> +	return S_IFGITLINK;
-> +}
+[Ilari@<...>:~/repositories/git(remote-fd)]$ git push -f hostmirror remote-fd 
+Counting objects: 27, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (20/20), done.
+Writing objects: 100% (20/20), 6.80 KiB, done.
+Total 20 (delta 14), reused 0 (delta 0)
+To ext::socat - ABSTRACT-CONNECT:/tmp/gits %G/Ilari/git-mirror
+ + 63ac78b...ae35921 remote-fd -> remote-fd (forced update)
 
-That sounds much better to me. I don't know whether it fixes the issue
-on NetBSD though.
+[Ilari@<...>:~/repositories/git(remote-fd)]$ git push fd::3,4 master 4>/tmp/fin 3</tmp/fout
+Counting objects: 101805, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (29579/29579), done.
+Writing objects: 100% (101805/101805), 24.74 MiB | 22.43 MiB/s, done.
+Total 101805 (delta 74164), reused 98023 (delta 70709)
+To fd::3,4
+ * [new branch]      master -> master
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+[Ilari@<...>:~/repositories/git(remote-fd)]$ git ls-remote 'ext::git-ssl localhost Ilari/git-mirror' refs/heads/*
+depth=1 <...>
+verify return:1
+depth=0 <...>
+verify return:1
+3b4609d029e2db42b5154f019facecee49196bf0        refs/heads/html
+2f76919517e98bb5e979d6c8c7bbc3478a066a21        refs/heads/maint
+b43f48fc1c841a29db0817c726e3d3beb17d4ba0        refs/heads/man
+9855b08d35edf8a8a441f24ff7b00e220a29f261        refs/heads/master
+92b87a9bab1a84261d2381e813e58577967bdc79        refs/heads/next
+cfe4082cb3c8db8eb0fe2fd67221a1076d0ace9b        refs/heads/pu
+ae35921b925cce12a57f237cb627b4673e7c1032        refs/heads/remote-fd
+9551e394549d4526054f8b8d3e05f9bf1cd818ce        refs/heads/todo
+
+
+-Ilari
