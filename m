@@ -1,147 +1,107 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Mon, 4 Oct 2010 09:50:15 +0200
-Message-ID: <20101004075015.GN28679@pengutronix.de>
-References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de> <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com> <1285967766.6750.2.camel@gandalf.stny.rr.com> <4CA9815D.3040801@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using
+ git ls-files
+Date: Mon, 4 Oct 2010 02:49:16 -0500
+Message-ID: <20101004074916.GK24884@burratino>
+References: <4CA847D5.4000903@workspacewhiz.com>
+ <1286099806-25774-7-git-send-email-avarab@gmail.com>
+ <AANLkTimH8Lj69qcOCmR3+5HYfgKnr5nyMvQU=9h0=FaB@mail.gmail.com>
+ <201010032019.09244.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Oct 04 09:50:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Adam <thomas@xteddy.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Mon Oct 04 09:52:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2foh-0000jt-Mt
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 09:50:36 +0200
+	id 1P2fqm-0001Ir-0y
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 09:52:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375Ab0JDHuW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 03:50:22 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:60449 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753136Ab0JDHuU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 03:50:20 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P2foO-0007Zc-Tz; Mon, 04 Oct 2010 09:50:16 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P2foN-0004nA-KB; Mon, 04 Oct 2010 09:50:15 +0200
+	id S1752768Ab0JDHwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 03:52:35 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:36844 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752185Ab0JDHwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 03:52:31 -0400
+Received: by iwn5 with SMTP id 5so6592606iwn.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 00:52:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=RPYvwzCTVq26LnvSkW9WSkcxXmUT1OOuVbk88V7v99A=;
+        b=Uvlu03tgVDVCAnZ2x0BZvlzVwI9MfVcobmf0Ek13dlVaeznSl599+Eu+9b7MC3cUQv
+         G3dQtpvHFZfOr7ZirbVatFay5IPw+1oF/TNifmbnRHyPNuELIGfh8ZSHTOGBlz8A0FsA
+         yTPrHMp7C8Fe1unaHRipULl0+njpm+7v32OdA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=cjOGwHwQCeohujAWLgNGIVNulfx3Y3y+EUKoC9THXSuUk2xhJgSgd59cozhotQ/xjR
+         2qBmT3Bn9Xpj84jaBKbyh+D4ecBoG/KXJscBoezonMOmJjTAtxFwbw7Vgn1XH3KnQ/ny
+         LE9C9qTPwDCKNM7I5FESw8g0gZ37zdbln3tpU=
+Received: by 10.231.35.66 with SMTP id o2mr1878869ibd.30.1286178751254;
+        Mon, 04 Oct 2010 00:52:31 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id u6sm3003805ibd.18.2010.10.04.00.52.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 00:52:29 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <4CA9815D.3040801@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <201010032019.09244.j6t@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158003>
 
-Hello Michael,
+Johannes Sixt wrote:
+> On Sonntag, 3. Oktober 2010, Thomas Adam wrote:
 
-On Mon, Oct 04, 2010 at 09:25:17AM +0200, Michael J Gruber wrote:
-> Steven Rostedt venit, vidit, dixit 01.10.2010 23:16:
-> > On Fri, 2010-10-01 at 13:18 -0700, Darren Hart wrote:
-> >> 2010/10/1 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
-> >>> Some people in #linux-rt claimed that you cannot define "--mirror=
-" with
-> >>> "mirror".
-> >>>
->=20
-> I'd say "mirror" is a commonly known term for an exact copy. Moreover=
-,
-> the text below doesn't explain what a mirror is either, only how
-> "update" behaves in it.
-hmm.  The --mirror option doesn't have any effect (apart from the
-changes in the config file) until you update.  So I think it's natural
-to talk about git update.  No?
-=20
-> >>> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de=
+>> It's a real shame about the code duplication here.  Can we not avoid
+>> it just by doing:
+>>
+>> unsigned char c1 = (ignore_case) ? tolower(*match) : *match;
+>> unisgned char c2 = (ignore_case) ? tolower(*name) : *name;
+>>
+>> I appreciate that to some it might look like perl golf, but...
 >
-> >>
-> >> Acked-by: Darren 'Some People' Hart <darren@dvhart.com>
-> >=20
-> >   Acked-by: Steven Rostedt <rostedt@goodmis.org>
-> >=20
-> > -- Steve
-> >=20
-> >>
-> >>> ---
-> >>>  Documentation/git-clone.txt |   11 ++++++++++-
-> >>>  1 files changed, 10 insertions(+), 1 deletions(-)
-> >>>
-> >>> diff --git a/Documentation/git-clone.txt b/Documentation/git-clon=
-e.txt
-> >>> index dc7d3d1..5eedfbd 100644
-> >>> --- a/Documentation/git-clone.txt
-> >>> +++ b/Documentation/git-clone.txt
-> >>> @@ -128,7 +128,16 @@ objects from the source repository into a pa=
-ck in the cloned repository.
-> >>>        configuration variables are created.
-> >>>
-> >>>  --mirror::
-> >>> -       Set up a mirror of the remote repository.  This implies `=
---bare`.
-> >>> +       Set up a mirror of the remote repository.
-> >>> +       Using
-> >>> +
-> >>> +               git remote update origin
-> >>> +
-> >>> +       (or `<name>` instead of `origin` if -o is given) in the r=
-esulting
->=20
-> "remote" has no "-o" option. You probably mean the "clone" option, bu=
-t
-> the way it's written it refers to the preceding command.
-So what do you think about:
+> It has been discussed, and IIRC, the concensus was to keep the code 
+> duplication because this is an inner loop.
 
-	... (or `<name>` instead of `origin` if -o is given to clone)
+Did anyone time it?  If it really is not dwarfed by other computation,
+then how about (warning: ugly!)
 
->=20
-> >>> +       repository overwrites the local branches without asking.
-> >>> +       This implies `--bare`.
->=20
-> Again, "this" refers to the preceding sentence. But the update behavi=
-or
-> does not imply "--bare". Specifying "--mirror" for "clone" implies "-=
--bare".
-OK.
-=20
-> >>> +       Without --mirror (but with --bare) git remote update does=
-n't touch any
-> >>> +       branches at all.
->=20
-> That's not true. It just doesn't touch any local branches; it updates
-> the remote branches, of course.
-Hmm, for me there are no remote branches when using --bare:
+static inline int step(unsigned char c1, unsigned char c2,
+                       const char **match, const char **name, int *namelen)
+{
+	if (c1 == '\0' || is_glob_special(c1))
+		return 1;	/* break */
+	if (c1 != c2)
+		return 0;	/* found mismatch! */
+	(*match)++;
+	(*name)++;
+	(*namelen)--;
+	return 2;	/* continue */
+}
+...
 
-	ukleinek@cassiopeia:~/tmp$ git clone --bare ~/gsrc/topgit
-	Cloning into bare repository topgit.git...
-	done.
-	ukleinek@cassiopeia:~/tmp$ cd topgit.git/
-	ukleinek@cassiopeia:~/tmp/topgit.git$ git remote update
-	Fetching origin
-	From /home/ukleinek/gsrc/topgit
-	 * branch            HEAD       -> FETCH_HEAD
-
-This is also documented for --bare:
-
-	When this option is used, neither remote-tracking branches nor
-	the related configuration variables are created.
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+int r = 1;
+if (!ignore_case) {
+	while ((r = step(*match, *name, &match, &name, &namelen)) == 2)
+		; /* matches so far */
+} else {
+	while ((r = step(tolower(*match), tolower(*name),
+	                 &match, &name, &namelen)) == 2)
+		; /* matches so far */
+}
+if (!r)	/* found mismatch! */
+	return 0;
