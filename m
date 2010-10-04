@@ -1,73 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git
- ls-files
-Date: Mon, 4 Oct 2010 12:08:22 -0500
-Message-ID: <20101004170822.GB5450@burratino>
-References: <4CA847D5.4000903@workspacewhiz.com>
- <1286099806-25774-7-git-send-email-avarab@gmail.com>
- <201010041802.57398.robin.rosenberg@dewire.com>
- <4CAA0598.9080409@workspacewhiz.com>
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH v3] Documentation/git-clone: describe --mirror more verbosely
+Date: Mon,  4 Oct 2010 19:28:27 +0200
+Message-ID: <1286213307-23600-1-git-send-email-u.kleine-koenig@pengutronix.de>
+References: <AANLkTikFzbWJ9CZ5skXe38+QF3QRWK5hfTWJhc5FOYK_@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j6t@kdbg.org>, Brandon Casey <drafnel@gmail.com>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 19:11:53 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Steven Rostedt <rostedt@goodmis.org>,
+	Darren 'Some People' Hart <darren@dvhart.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 04 19:28:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2oZn-0002vS-Eg
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:11:47 +0200
+	id 1P2oqI-0001NL-G2
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:28:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756041Ab0JDRLm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 13:11:42 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40727 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754265Ab0JDRLm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 13:11:42 -0400
-Received: by fxm4 with SMTP id 4so98645fxm.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 10:11:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=vq+NEXZt6ew6PW5nzuvC+Jd9MIqEdcw2XYh49YJQmFg=;
-        b=bazq2uxXI7qDBk29cXQmWYiIdUI6argGOY/8fIS89kCKcPQ1FrgkbQ8yfw1ph/jtcW
-         VBEZGH3tHMcQhZww/zrZaonvQp9lfyjnB8o0XohbCc3OFw47Ge1j09kMOp7gwW7Yw/KD
-         MprmX1A9vEANczHwp2J/mMNK8wlZSapzloZvM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Wc2i9w0ajEsB2tl4QHcH8ndDuW/nzxlGm8qggCZi+/wHveZmIWuxhRW5qV8CjinH/G
-         dKoltthG7AzJVqOpr8WW9q1eOQSR/zvWyLwj3UN1pnJXK+IsAxB3yQz8FU2NP7RfO6oX
-         YeP87gLYFnimwuS+K4AHfi4YkgNqyC9/bNKn8=
-Received: by 10.223.126.65 with SMTP id b1mr9389619fas.44.1286212300648;
-        Mon, 04 Oct 2010 10:11:40 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id r5sm2332226faq.8.2010.10.04.10.11.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 04 Oct 2010 10:11:39 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <4CAA0598.9080409@workspacewhiz.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755608Ab0JDR2j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 13:28:39 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:44895 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752757Ab0JDR2i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 13:28:38 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P2oq5-0006b2-IA; Mon, 04 Oct 2010 19:28:37 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P2oq3-00069B-U2; Mon, 04 Oct 2010 19:28:35 +0200
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <AANLkTikFzbWJ9CZ5skXe38+QF3QRWK5hfTWJhc5FOYK_@mail.gmail.com>
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158069>
 
-Joshua Jensen wrote:
+Some people in #linux-rt claimed that you cannot define "--mirror" with
+"mirror" only.
 
-> I do not know about other file systems and what Git actually
-> handles.  I was under the impression it didn't handle Unicode
-> filenames well in general... ?
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Darren 'Some People' Hart <darren@dvhart.com>
+Cc: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+ Documentation/git-clone.txt |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
 
-Except in cases like ignorecase handling, git treats path components
-as arbitrary streams of bytes ('\0' and path separators are forbidden,
-of course).  It works pretty well if that's what you need.
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index dc7d3d1..ab72933 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -128,7 +128,12 @@ objects from the source repository into a pack in =
+the cloned repository.
+ 	configuration variables are created.
+=20
+ --mirror::
+-	Set up a mirror of the remote repository.  This implies `--bare`.
++	Set up a mirror of the source repository.  This implies `--bare`.
++	Compared to `--bare`, `--mirror` not only maps local branches of the
++	source to local branches of the target, it maps all refs (including
++	remote branches, notes etc.) and sets up a refspec configuration such
++	that all these refs are overwritten by a `git remote update` in the
++	target repository.
+=20
+ --origin <name>::
+ -o <name>::
+--=20
+1.7.2.3
