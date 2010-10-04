@@ -1,97 +1,64 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git ls-files
-Date: Mon, 4 Oct 2010 18:02:56 +0200
-Message-ID: <201010041802.57398.robin.rosenberg@dewire.com>
-References: <4CA847D5.4000903@workspacewhiz.com> <1286099806-25774-7-git-send-email-avarab@gmail.com>
+Date: Mon, 4 Oct 2010 16:41:40 +0000
+Message-ID: <AANLkTin04o5GtYXWgo_Cpw+YNd23kwk7KjvrixjMk8KS@mail.gmail.com>
+References: <4CA847D5.4000903@workspacewhiz.com>
+	<1286099806-25774-7-git-send-email-avarab@gmail.com>
+	<201010041802.57398.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Joshua Jensen <jjensen@workspacewhiz.com>,
 	Johannes Sixt <j6t@kdbg.org>, Brandon Casey <drafnel@gmail.com>
-To: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 18:03:11 2010
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 18:41:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2nVM-0006pp-Eq
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 18:03:08 +0200
+	id 1P2o6m-00016i-00
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 18:41:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756441Ab0JDQDB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 12:03:01 -0400
-Received: from mail.dewire.com ([83.140.172.130]:10741 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751999Ab0JDQDA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 12:03:00 -0400
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 85EF3139BECA;
-	Mon,  4 Oct 2010 18:02:58 +0200 (CEST)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id l6L06ah1Walu; Mon,  4 Oct 2010 18:02:57 +0200 (CEST)
-Received: from sleipner.localnet (unknown [10.9.0.4])
-	by dewire.com (Postfix) with ESMTP id D7EAE1396DAC;
-	Mon,  4 Oct 2010 18:02:57 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-25-generic; KDE/4.4.2; i686; ; )
-In-Reply-To: <1286099806-25774-7-git-send-email-avarab@gmail.com>
+	id S1755993Ab0JDQlm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 12:41:42 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45451 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754622Ab0JDQll (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 12:41:41 -0400
+Received: by iwn5 with SMTP id 5so7115320iwn.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 09:41:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=OVS/BsNhLiFCmbqCLPW6dyLmwcCGCv3q7ho1/GpjYxU=;
+        b=AGGqYkM9dUeCB18/kATMZL3iJ8BbRIIUyIT/f/GT2lA9vkgwEG/wuKWFt8fnMkFZmb
+         WKF+mfbaEZIZvc/1bAavzNCNi0XBz25d+GhhrvkzmzF3t17QKlwallnSGBK1aBzKsKdT
+         oPTozQu9DyY7KA0D+Q3c/VPFou0FilnTB2fs8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=keI5pCKQV7c7GCRgThExuVs4I8a+zKKimns8gx9Hfy+v950skqGq7nxsNyEast5zaN
+         eUeG+8ErEZQbjyoqIEEIKpxHqyh/5+35F57JqvjFSBvGlKhv9aEtf6H2U9C4BzGAHHWq
+         8DliHp/qJaL8UP7GrHayDGbjsTz9ZOoc63AGQ=
+Received: by 10.231.39.205 with SMTP id h13mr10422544ibe.148.1286210500685;
+ Mon, 04 Oct 2010 09:41:40 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 4 Oct 2010 09:41:40 -0700 (PDT)
+In-Reply-To: <201010041802.57398.robin.rosenberg@dewire.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158063>
 
-s=F6ndagen den 3 oktober 2010 11.56.44 skrev  =C6var Arnfj=F6r=F0 Bjarm=
-ason:
-> From: Joshua Jensen <jjensen@workspacewhiz.com>
->=20
-> When mydir/filea.txt is added, mydir/ is renamed to MyDir/, and
-> MyDir/fileb.txt is added, running git ls-files mydir only shows
-> mydir/filea.txt. Running git ls-files MyDir shows MyDir/fileb.txt.
-> Running git ls-files mYdIR shows nothing.
->=20
-> With this patch running git ls-files for mydir, MyDir, and mYdIR show=
-s
-> mydir/filea.txt and MyDir/fileb.txt.
->=20
-> Wildcards are not handled case insensitively in this patch. Example:
-> MyDir/aBc/file.txt is added. git ls-files MyDir/a* works fine, but gi=
-t
-> ls-files mydir/a* does not.
->=20
-> Signed-off-by: Joshua Jensen <jjensen@workspacewhiz.com>
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  dir.c |   38 ++++++++++++++++++++++++++------------
->  1 files changed, 26 insertions(+), 12 deletions(-)
->=20
-> diff --git a/dir.c b/dir.c
-> index cf8f65c..53aa4f3 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -107,16 +107,30 @@ static int match_one(const char *match, const c=
-har
-> *name, int namelen) if (!*match)
->  		return MATCHED_RECURSIVELY;
->=20
-> -	for (;;) {
-> -		unsigned char c1 =3D *match;
-> -		unsigned char c2 =3D *name;
-> -		if (c1 =3D=3D '\0' || is_glob_special(c1))
-> -			break;
-> -		if (c1 !=3D c2)
-> -			return 0;
-> -		match++;
-> -		name++;
-> -		namelen--;
-> +	if (ignore_case) {
-> +		for (;;) {
-> +			unsigned char c1 =3D tolower(*match);
-> +			unsigned char c2 =3D tolower(*name);
+On Mon, Oct 4, 2010 at 16:02, Robin Rosenberg
+<robin.rosenberg@dewire.com> wrote:
 
-Is anyone thinking "unicode" around here?
+> Is anyone thinking "unicode" around here?
 
--- robin
+Thinking yeah, doing the massive work to implement it: no.
+
+It's much harder when you don't know what encoding the data is in,
+encoding is only by repository convention in Git.
