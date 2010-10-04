@@ -1,136 +1,85 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Mon, 04 Oct 2010 11:28:35 +0200
-Message-ID: <4CA99E43.1000204@drmicha.warpmail.net>
-References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de> <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com> <1285967766.6750.2.camel@gandalf.stny.rr.com> <4CA9815D.3040801@drmicha.warpmail.net> <20101004075015.GN28679@pengutronix.de> <4CA98EF1.1050102@drmicha.warpmail.net> <20101004085050.GQ28679@pengutronix.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv6 01/16] test-lib: make test_expect_code a test command
+Date: Mon, 4 Oct 2010 04:28:30 -0500
+Message-ID: <20101004092830.GM24884@burratino>
+References: <1286136014-7728-1-git-send-email-newren@gmail.com>
+ <1286136014-7728-2-git-send-email-newren@gmail.com>
+ <7vfwwmdbgl.fsf@alter.siamese.dyndns.org>
+ <AANLkTinVvmJMEDhPcxa_CiOL2_RsYBdo-JywXi2gKeYp@mail.gmail.com>
+ <20101004035007.GB24884@burratino>
+ <AANLkTi=7mrROAhFxNmF_cmU2OKKNuhsdTUVpHT+4Jg-Y@mail.gmail.com>
+ <20101004040623.GC24884@burratino>
+ <AANLkTink3gPGVGXnO2j1cvfHShPG1Lq23eeY6m+7b1bK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Steven Rostedt <rostedt@goodmis.org>,
-	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Mon Oct 04 11:28:37 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 11:31:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2hLT-0001e1-Rp
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 11:28:32 +0200
+	id 1P2hOh-0002Vn-5P
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 11:31:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754395Ab0JDJ2Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 05:28:25 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:53136 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754371Ab0JDJ2X (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 05:28:23 -0400
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 67EEC364;
-	Mon,  4 Oct 2010 05:28:23 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 04 Oct 2010 05:28:23 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=6IyC1XfD6+6OgmmjbibPTp05p98=; b=JdUPQqvpUszs/Q9uP6ZQFTVIJHAGNkasGLeigACcf18RZ1N04xcX/frmMinvNWDKY4ETK8K1fRMK3SFijqVbW1Dh3dTxeuooCw8Hku2Thr1F3XJhyr3VpT0zIYAt2M1SgXkGyqQtC4xkML4ag4Qo1DUklBRgdEaU0r80K9MObU4=
-X-Sasl-enc: lEd31JG/8cRyQSyVHBskOkNE4La4odtN5kfGhao1JN0O 1286184503
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8D16A5E755E;
-	Mon,  4 Oct 2010 05:28:22 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <20101004085050.GQ28679@pengutronix.de>
+	id S1754202Ab0JDJbq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 05:31:46 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42804 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753061Ab0JDJbq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 05:31:46 -0400
+Received: by iwn5 with SMTP id 5so6690702iwn.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 02:31:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=JWNchg+/JeBepy9jCjXEF7pmxSe/AcImo7Hhrhb0tI8=;
+        b=vDN4FIK0rKIEx15PgyVTkep7/7KJxCkaN3hJKPbiF9dAn7skj00QqnUI0WWSghlu3E
+         XSjpA3VKl7vPPpEn5yLtH/8LK1H6KroufDf7kjrUrEM7zTbzQbQ7WCtxddd/X7a6zBem
+         cRjOtZGaSUSXAbZNaEpnkvC3hj/WQQRKga6Y8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=A0z5vWPy8aCbJ4qJnCCgvXXpeSyl42y4u44KlrZ7lG+l9je6hjR23mAeE7cmAhRFx7
+         w+tHtUgMI4N21Eyq69XXfQFcF1qCf+lGbfbT6VSxzLj7F0Ez5EGp+zbMrXMz1Ll4GFIh
+         BkNI8Ol90xfZ6Pzs+PMe1NF9H+h+PDvaj5bFQ=
+Received: by 10.231.192.80 with SMTP id dp16mr9916690ibb.39.1286184705555;
+        Mon, 04 Oct 2010 02:31:45 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id r3sm4762521ibk.7.2010.10.04.02.31.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 02:31:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTink3gPGVGXnO2j1cvfHShPG1Lq23eeY6m+7b1bK@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158018>
 
-Uwe Kleine-K=F6nig venit, vidit, dixit 04.10.2010 10:50:
-> Hello Michael,
->=20
-> On Mon, Oct 04, 2010 at 10:23:13AM +0200, Michael J Gruber wrote:
->> Uwe Kleine-K=F6nig venit, vidit, dixit 04.10.2010 09:50:
->>> Hello Michael,
->>>
->>> On Mon, Oct 04, 2010 at 09:25:17AM +0200, Michael J Gruber wrote:
->>>> Steven Rostedt venit, vidit, dixit 01.10.2010 23:16:
->>>>> On Fri, 2010-10-01 at 13:18 -0700, Darren Hart wrote:
->>>>>> 2010/10/1 Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>:
->>>>>>> Some people in #linux-rt claimed that you cannot define "--mirr=
-or" with
->>>>>>> "mirror".
->>>>>>>
->>>>
->>>> I'd say "mirror" is a commonly known term for an exact copy. Moreo=
-ver,
->>>> the text below doesn't explain what a mirror is either, only how
->>>> "update" behaves in it.
->>> hmm.  The --mirror option doesn't have any effect (apart from the
->>> changes in the config file) until you update.  So I think it's natu=
-ral
->>> to talk about git update.  No?
->>
->> "git clone" (with or without --mirror) does a couple of things, and =
-it
->> does them differently when "--mirror" is used. It mirrors each branc=
-h
->> from the source repo in the target repo under the same name, includi=
-ng
->> for example any remote branches in the source repo. This is complete=
-ly
->> different without "--mirror", where clone does not look at the sourc=
-e's
->> remote branches at all. Also, it sets up a mirroring refspec, i.e.
->> +refs/*:refs/*
-> Ah, didn't notice that.
->=20
->> [...]
->> This makes me think that --mirror should be explained on top of --ba=
-re.
-> OK.
->=20
->> For example:
->>
->> In addition to the mapping of local branches to local branches which
->> --bare does, --mirror maps all refs which the source has under the s=
-ame
->> name in the target (including remote branches, notes etc.) and sets =
-up a
->> refspec configuration so that all these refs are updated by a `git
->> update` in the target repo.
-> Hmm, I didn't understand this when I read it the first few times.  Th=
-e
-> special thing is that --mirror maps *all* refs, not *same name*.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Yep, my sentence was bad, it could be misunderstood.
+> On the other hand I just tested git in a path called /tmp/\\"\\/git/t
 
->=20
-> So maybe:
->=20
-> 	Set up a mirror of the remote repository.  This implies `--bare`.
-> 	Compared to `--bare`, `--mirror` doesn't only map local branches of
+I tried /tmp/test"git and tests other than t0000.5 seem to work fine.
 
-"does not"
+> and found that every single one of our tests fail.
 
-> 	the remote to local branches of the target but all refs
-> 	(including remote branches, notes etc.) and sets up a refspec
+Every test script, not every test, right?
 
-Maybe "of the source" for "of the remote"? Because remote comes up righ=
-t
-after in a different meaning.
+That's a makefile bug, I think: the bin-wrappers/% rule does not
+sed-quote the working directory before passing it to sed.  After
+working around that with GIT_TEST_OPTS=3D--with-dashes, tests are
+running without trouble.
 
-> 	configuration such that all these refs are overwritten by a
-> 	`git remote update` in the target repository.
->=20
-
-I like that a lot!
-
-> I choosed to write "overwritten" instead of "updated" to make it clea=
-rer
-> that it makes no sence to push into these branches from a different
-> source.  Should this be noted more explicit?
-
-"update" may be more Git lingo but I think either is fine. "overwritten=
-"
-makes it clearer this is not a repo to do development in...
-
-Cheers,
-Michael
+I don't think these edge cases are particularly important, but I
+do think it's better to make sure code that takes care of the edge
+cases when it's easy.
