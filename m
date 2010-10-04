@@ -1,76 +1,89 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: branch versioning
-Date: Mon, 04 Oct 2010 15:44:24 +0200
-Message-ID: <4CA9DA38.3070103@drmicha.warpmail.net>
+Date: Mon, 4 Oct 2010 20:50:54 +0700
+Message-ID: <AANLkTinR31x9NrsHoDt3UQ8w=hioPGtkQDkQ-5bSNW69@mail.gmail.com>
 References: <AANLkTimWxPPi_hHuato+hHePaEja=66GzLEpDUVcZV0i@mail.gmail.com>
+	<AANLkTi=73Siu9O1WT8MdjfAEO5j5y=CkOAiof0z83L=c@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 15:44:22 2010
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 15:51:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2lL1-0001Az-QC
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 15:44:20 +0200
+	id 1P2lRi-0003Dg-R4
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 15:51:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755939Ab0JDNoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 09:44:14 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:53093 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755351Ab0JDNoN (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 09:44:13 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8FBC595;
-	Mon,  4 Oct 2010 09:44:12 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 04 Oct 2010 09:44:12 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=RgCGYUvivYRXuZm+knskZwMmJLw=; b=OnBV/qekm6rEmXRNKZkHBhYzz8o6DhTFt2ep1IVvoheXZWlcj4EFxyB1Zq8CGtpG2hR6++0O5/tVqlyvQOJ303KpjoF4tTG7LD2nM6rZI4MIf/mHyQTR4mVMlN1Tf49fv7a6N4NSfe6xs1ekBtYDzQbTyRXIFU+lenyxZQAnbnc=
-X-Sasl-enc: V+8Lr93DIlioOJ4iuSY4ha1NLcSCZ2JpkISyAmRbf5Qi 1286199852
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F13745E60AA;
-	Mon,  4 Oct 2010 09:44:11 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <AANLkTimWxPPi_hHuato+hHePaEja=66GzLEpDUVcZV0i@mail.gmail.com>
+	id S1755976Ab0JDNu4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 09:50:56 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:39751 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755914Ab0JDNuz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 09:50:55 -0400
+Received: by wyb28 with SMTP id 28so4907650wyb.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 06:50:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=4xj4sbjiGFypTSkjenpDhBEHqAN4p/GTtyGVo+4Sv2c=;
+        b=V2Cjs4mx4lRR8HbGYeNAVyRSgqOOMBbpRSwkqGKicOMGS2fx0ud7t1jspJa+mhb7Hu
+         /ceCmT926mxrKCcR/xVX1IE9xxJreltf6fX2QEaYa1XmXOnlo5leZibLzagKsL4svpH2
+         QpuCvEVGB+xZM8GlG8IA0X1V1jpj0tCPwOJU8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Wb7vE8o38qfFJxc8Q2I2U7KBFfPNy27mrL5AJjt0fyIAd+ORghluaW0DG+qkEMh1mn
+         AHqgWWAxpwKkUgSm9RuzSeNZ4LbSIh08FLe811nslO+A8HXf8XseHwSmnT5kxDgKme14
+         nLgiXnoSXNzh+q+hEFdXm1xq++P8ZNc0bF86w=
+Received: by 10.216.10.5 with SMTP id 5mr7678738weu.81.1286200254407; Mon, 04
+ Oct 2010 06:50:54 -0700 (PDT)
+Received: by 10.216.153.195 with HTTP; Mon, 4 Oct 2010 06:50:54 -0700 (PDT)
+In-Reply-To: <AANLkTi=73Siu9O1WT8MdjfAEO5j5y=CkOAiof0z83L=c@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158048>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158049>
 
-Nguyen Thai Ngoc Duy venit, vidit, dixit 04.10.2010 15:18:
-> Hi,
-> 
-> How do you guys manage versions of a topic branch? I usually end up
-> saving format-patch series somewhere or forget all old versions.
-> Although I really want to keep old versions around. reflog to me   is
-> polluted with every kind of branch updates. And it's local
-> information. It can't be transferred to another repo (or can it?)
-> 
-> On the same subject, I have quite a few old topic branches that I
-> rarely touch. I don't want to remove them. I just want to hide them
-> away from "git branch". I've been thinking of "attic/" namespace that
-> "git branch" by default will not show. Just wondering if other people
-> face the same problem..
+On 10/4/10, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> w=
+rote:
+> On Mon, Oct 4, 2010 at 13:18, Nguyen Thai Ngoc Duy <pclouds@gmail.com=
+> wrote:
+>  > How do you guys manage versions of a topic branch? I usually end u=
+p
+>  > saving format-patch series somewhere or forget all old versions.
+>  > Although I really want to keep old versions around. reflog to me  =
+ is
+>  > polluted with every kind of branch updates. And it's local
+>  > information. It can't be transferred to another repo (or can it?)
+>
+>
+> I usually have foo, foo-v2, foo-v3 which eventually gets reset back t=
+o
+>  foo once I'm sure nobody cares about the initial one or foo-v2. It's
+>  very chaotic.
 
-Same problem, without a perfect solution. I have a branch mjg/foo for a
-topic in flight. If I need to submit v2, I tag the old tip mjg/foo-v1
-and rebase -i, etc. Once a patch gets accepted, I do:
+You remind me of my ~100 patch rebase/refactor on busybox-w32. I had
+up to master.7 :)
 
-- Merge the git.git commit with the applied patch to mjg/foo (with a
-message like "Applied as commit deadbeef on next). The merge diff shows
-the differences between my patch and the actual commit on git.git.
-- Tag the tip as mjg/applied/foo.
-- Delete the branch.
-- Delete the branch on my repos if it has been pushed out already (this
-point sucks).
+>  So my git.git on GitHub is up to 123 branches, and I don't even want
+>  to know what my personal git.git is at. I also save my outgoing
+>  format-patch E-Mails, but would probably do less of that if there wa=
+s
+>  support for attaching the comments after the diffstat in a git-note =
+or
+>  something.
 
-That way my branch namespace is reasonably clean, and the graph view on
-github, e.g., is somewhat meaningful. My tag name space is a bit crowded...
-
-I also keep the commit notes (post ---) in a note ;)
-
-Michael
+OK. Thanks for the information. I'll try my best to stay away from
+your repo :-D. Seriously, how can you select a branch out of those 123
+branches? Does git-branch support regex matching or.. (looked up
+git-branch.txt, no it does not)
+--=20
+Duy
