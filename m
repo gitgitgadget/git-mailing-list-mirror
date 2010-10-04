@@ -1,74 +1,82 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv6 00/16] Add missing &&'s in the testsuite
-Date: Mon, 4 Oct 2010 03:50:30 +0000
-Message-ID: <AANLkTikcY=9pVq4upP0wt_YBtRKZsjyn7uHKyAonB+Nt@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv6 01/16] test-lib: make test_expect_code a test command
+Date: Sun, 3 Oct 2010 22:50:07 -0500
+Message-ID: <20101004035007.GB24884@burratino>
 References: <1286136014-7728-1-git-send-email-newren@gmail.com>
-	<AANLkTi=+N=jm1b3vpiwxR0tFwPGbsaJyEq39q3oAyAn_@mail.gmail.com>
-	<20101004034446.GA24884@burratino>
+ <1286136014-7728-2-git-send-email-newren@gmail.com>
+ <7vfwwmdbgl.fsf@alter.siamese.dyndns.org>
+ <AANLkTinVvmJMEDhPcxa_CiOL2_RsYBdo-JywXi2gKeYp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jeff King <peff@peff.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 05:50:36 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 05:53:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2c4S-0000P7-8w
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 05:50:36 +0200
+	id 1P2c7I-0000vJ-H5
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 05:53:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751559Ab0JDDuc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 23:50:32 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46111 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab0JDDub convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 23:50:31 -0400
-Received: by iwn5 with SMTP id 5so6387685iwn.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 20:50:30 -0700 (PDT)
+	id S1751975Ab0JDDx2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 23:53:28 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:42150 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630Ab0JDDx1 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 23:53:27 -0400
+Received: by qyk36 with SMTP id 36so2596745qyk.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 20:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AOFeb/btc9pby9x2UH8Qd+HhcMNLyI4uir01ipFQ5eE=;
-        b=hW6ASzaGixwcdrU1RA7jzOC8rQHY64gxeV/PkKAQPb8jyGbmizEwy4bj/ORdJzzTYg
-         5phLZwROfe042C/77kWRUwlUSAMFor5kgnCP5RIHgaBc1fHzBSlOCr7JZI4sy9r34izY
-         J7b1BmL3EavYdgVFex6KdIXn05BvbQghO6K0w=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=hznRw8SFEZBTKaxcBksLybJzt5SX1E4SabeQrhLrLxo=;
+        b=wBlYvvVom7vBJxxNlPCD3FhzfDMu3wlzCtZSGXMLGZWnVojleumLhqfVYVjslcfUt9
+         Ii2DHhRrgZhRhxsqPP5qmrKNGszCuDVQB/pXaTBGGQeEv0LeECwWAjakBHW22lU/iOEg
+         LX9ciz2YkC8iRApGLAcXWz9uaevPFSYXYv3T0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=au9eZoffQZBFswG3XAewYNqpVIE4mrhsWYOwNL4prWbAjHTUyA+raKLSUHIJ13Ahdy
-         dskebn6zL3fDxXH2gDHaG6Pedt52aNdVICIUonuz4OJVSybBz5Ms+2x6MNgF/Mw2FQTq
-         MiWEvm8eKtom7X/8xnfzLR1txM4qHUXE7GF9w=
-Received: by 10.231.166.72 with SMTP id l8mr9488599iby.95.1286164230812; Sun,
- 03 Oct 2010 20:50:30 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Sun, 3 Oct 2010 20:50:30 -0700 (PDT)
-In-Reply-To: <20101004034446.GA24884@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=x0SG3RI0BisBdWLDKw5lJ3u2yZmai8nxuEQeUV65Xs0MCPtpMA8teU4a5BBQzw/7bF
+         lE1doNrMsek77HVWPFH0XUfqiaNix7nTvF+ubkJz2GILfkkrX0Fy7gKle5aDUNqotJXJ
+         3XpfamBxKtqDu6g7a8B8a++WsyS4igDTOcP74=
+Received: by 10.229.2.32 with SMTP id 32mr6362022qch.270.1286164401521;
+        Sun, 03 Oct 2010 20:53:21 -0700 (PDT)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id r36sm4907646qcs.27.2010.10.03.20.53.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 03 Oct 2010 20:53:20 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinVvmJMEDhPcxa_CiOL2_RsYBdo-JywXi2gKeYp@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157970>
 
-On Mon, Oct 4, 2010 at 03:44, Jonathan Nieder <jrnieder@gmail.com> wrot=
-e:
-> Hi =C3=86var,
->
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> Since Jonathan says all but 7 & 15 are OK (and I looked at those) I
->> assume I don't need to hunt down some other discussion and comment o=
-n
->> that. I.e. unless someone replies here.
->
-> If you find time, it would be nice to take a look at
-> http://thread.gmane.org/gmane.comp.version-control.git/157827/focus=3D=
-157874
-> (concerning patch 1/16), to consider quoting issues.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Ah thanks. I just noticed that after having written that mail and
-replied to it.
+> With that the output of:
+>=20
+>     $ rm -rfv trash*; ./t0000-basic.sh --debug; cat trash\
+> directory.t0000-basic/{passing-todo,failing-cleanup}/*.sh
+>=20
+> Is now (cut):
+>=20
+>     # Point to the t/test-lib.sh, which isn't in ../ as usual
+>     TEST_DIRECTORY=3D"/home/avar/g/git/t"
+>     . "$TEST_DIRECTORY"/test-lib.sh
+
+Edge case: what if the path to the git directory contains a "
+character (for example because someone is trying to ensure
+that git commands can cope with such a cwd)?
+
+I suspect the best thing would be to export TEST_DIRECTORY
+instead of including it inline in the script.
