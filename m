@@ -1,97 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] diff: "S_IFREG | 0644" to "(S_IFREG | 0644)" to avoid
- warning
-Date: Mon, 04 Oct 2010 10:54:55 -0700
-Message-ID: <7v8w2d972o.fsf@alter.siamese.dyndns.org>
-References: <1286184071-28457-1-git-send-email-avarab@gmail.com>
- <20101004093519.GN24884@burratino>
- <AANLkTimBzC7f7teH8Rriykg7o5kwX6mD2g2q-0yOXSiF@mail.gmail.com>
+From: Gabriel Filion <lelutin@gmail.com>
+Subject: Re: remote-bzr status
+Date: Mon, 04 Oct 2010 14:03:36 -0400
+Message-ID: <4CAA16F8.4050705@gmail.com>
+References: <4CA8F2F1.5090407@gmail.com> <20101004061104.GH24884@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Dan McMahill <dmcmahill@netbsd.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 19:55:17 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>, Sverre Rabbelier <srabbelier@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 20:03:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2pFt-0001hR-Gn
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:55:17 +0200
+	id 1P2pOH-00054A-Ji
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 20:03:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756429Ab0JDRzJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 13:55:09 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63676 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756421Ab0JDRzH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 13:55:07 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8CF7FDBF34;
-	Mon,  4 Oct 2010 13:55:07 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=uOlgdq0Sfp4J
-	P4Pfd6YG6JM0uOU=; b=LibSbwHJUSShsI++00hz8Z55AE5Z1B9kj3BuaLTjgqM1
-	lWYSQzzBv0dy4Ab2KrgOs+HkxbxvIgXdelynS7Jo60VOFBcCkJROAHXOBND4QqWa
-	SBhic8ByUYQlbAqZmtAs+C+T8KCx0LWj5n0wXHDsmH1l8609GrDmBu1wd8PaIXQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=EQs9gG
-	IwBYg25UaSkMWzguPjj6RRux/MpGdXHU1IiYsYWMk2vNgjiXkBaUqH91PcFr8dVa
-	XsA2lWXyHKYyI7QQVrjQlNX0FS9xErey7ThhgaMAO3nQkEFmOUPFxqbxrPJPDfa9
-	CpMwqbLdlG5l0ATGkNZ6Dc9KPimBw1qh5fv+k=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 41DB0DBF31;
-	Mon,  4 Oct 2010 13:55:03 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 28F06DBF2B; Mon,  4 Oct
- 2010 13:54:56 -0400 (EDT)
-In-Reply-To: <AANLkTimBzC7f7teH8Rriykg7o5kwX6mD2g2q-0yOXSiF@mail.gmail.com>
- (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Mon\, 4 Oct
- 2010 09\:47\:43 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 839EF628-CFE0-11DF-841F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756721Ab0JDSDm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 14:03:42 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:39678 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756393Ab0JDSDm (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 14:03:42 -0400
+Received: by qyk10 with SMTP id 10so1495614qyk.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 11:03:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=csVb+4kx+4f79Z+sR2DzPhPArZMseKgzmDvySZOe6mg=;
+        b=Aj69Wu2s4avFLj6jfDNLW8J17xGvdKi+ovEfGlvK2EIDe5AnGy/9A5GEFEFISsxR+i
+         bdy5W5/nAK/D/Oyhr5HYfAcs+d8Ik2Y98PjKYtXXhMKooFNnk1aUznMv/6wgCo56HR+F
+         WjCBEvO3xp3cHart4fxtjU3V8oNVEmKMNnAhc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=VtEZh/1kH2P4/3PWP+Hfi0leL1EmPY7Fi0ck9hbc6VHziNB8hl6XP4k/kOiOmp7377
+         u3DP0kf7t8BsGBxjewXWiSxZRaHhCC3eGHebxuLNYEAZr3RyjpNHJbclR5wvJLGT7zSr
+         /8FZY5eU3s+Hzm3lztBHEiqEe4ZA/1HhLq6jI=
+Received: by 10.229.223.210 with SMTP id il18mr7255811qcb.133.1286215419766;
+        Mon, 04 Oct 2010 11:03:39 -0700 (PDT)
+Received: from [192.168.2.202] (dsl-150-76.aei.ca [66.36.150.76])
+        by mx.google.com with ESMTPS id t24sm5818402qcs.47.2010.10.04.11.03.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 11:03:38 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.11) Gecko/20100805 Iceowl/1.0b1 Icedove/3.0.6
+In-Reply-To: <20101004061104.GH24884@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158076>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
+On 2010-10-04 02:11, Jonathan Nieder wrote:
+> What is the license on your code (if any)?
 
-> Oh it's a bug in NetBSD, sorry for not being explicit about that:
->
->     $ grep S_ISREG /usr/include/sys/stat.h
->     #define S_ISREG(m)      ((m & _S_IFMT) =3D=3D _S_IFREG)     /* re=
-gular file */
->
->     $ grep S_ISREG /usr/include/linux/stat.h
->     #define S_ISREG(m)      (((m) & S_IFMT) =3D=3D S_IFREG)
->
-> I.e. GCC sees `S_IFREG | 0644 & _S_IFMT' on NetBSD but `(S_IFREG |
-> 0644) & _S_IFMT' on Linux.
->
-> Since bitwise AND (&) has precedence over bitwise OR it's probably a
-> logic error on NetBSD too, not just an annoying warning.
+hmm right, there's nothing about this in the repo yet..
+I guess I'd put a GPLv2 license on it to be similar to git's license.
 
-In that case, I'd prefer to work this around at the definition of
-canon_mode(), like
+> Would you be interested
+> in including it in contrib/ or core git?
 
-    /*
-     * extra ()-pair around S_ISREG() and friends to work around platfo=
-rm
-     * header with buggy definitions like
-     * #define S_ISREG(x) ((x & _S_IFMT) =3D=3D _S_IFREG)
-     */
-    #define canon_mode(mode) \
-    	(S_ISREG((mode)) ? (S_IFREG | ce_permissions(mode)) : \
-        ...
+yes I would (after review from the community, and when the code reaches
+better functionality and testing.) It would mean greater visibility for
+the code, added functionality to git and the possibility for more
+maintainers to help ;)
 
-instead of contaminating the calling sites.  Otherwise new calling site=
-s
-we will add in the future need to be aware of the same bug for no good
-reason.
+My original plan was to try and make the helper work both ways, and then
+to incorporate it into git.git to build patches on top of master (since
+it's a new feature that should be working on the current master).
+
+-- 
+Gabriel Filion
