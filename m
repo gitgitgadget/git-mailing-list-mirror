@@ -1,64 +1,66 @@
-From: Sven Eckelmann <sven.eckelmann@gmx.de>
-Subject: [PATCH] contrib/ciabot: git-describe commit instead of HEAD
-Date: Mon,  4 Oct 2010 10:02:42 +0200
-Message-ID: <1286179362-23597-1-git-send-email-sven.eckelmann@gmx.de>
-Cc: git@vger.kernel.org, Sven Eckelmann <sven.eckelmann@gmx.de>
-To: gitster@pobox.com, esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Mon Oct 04 10:01:16 2010
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git ls-files
+Date: Mon, 4 Oct 2010 08:02:38 +0000
+Message-ID: <AANLkTim=kCH_D23r77FbkSq-8UF38WBPE0CGxRxT8Szf@mail.gmail.com>
+References: <4CA847D5.4000903@workspacewhiz.com>
+	<1286099806-25774-7-git-send-email-avarab@gmail.com>
+	<AANLkTimH8Lj69qcOCmR3+5HYfgKnr5nyMvQU=9h0=FaB@mail.gmail.com>
+	<201010032019.09244.j6t@kdbg.org>
+	<20101004074916.GK24884@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j6t@kdbg.org>, Thomas Adam <thomas@xteddy.org>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 10:06:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
+	by lo.gmane.org with smtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2fz2-000332-2R
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 10:01:16 +0200
+	id 1P2g4U-0004R7-Tx
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 10:06:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753442Ab0JDIBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 04:01:04 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:34558 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752936Ab0JDIBC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 04:01:02 -0400
-Received: (qmail invoked by alias); 04 Oct 2010 08:01:00 -0000
-Received: from vpnclient-202-062.hrz.tu-chemnitz.de (EHLO sven-desktop.lazhur.ath.cx) [134.109.202.62]
-  by mail.gmx.net (mp006) with SMTP; 04 Oct 2010 10:01:00 +0200
-X-Authenticated: #15668376
-X-Provags-ID: V01U2FsdGVkX1/U4Px4y5nUnM7POZhTyZPAhmt9GQj8N5J8kWFdfy
-	QF+6M+1BuP6nL3
-X-Mailer: git-send-email 1.7.2.3
-X-Y-GMX-Trusted: 0
+	id S1753267Ab0JDICk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 04:02:40 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33111 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753113Ab0JDICj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 04:02:39 -0400
+Received: by iwn5 with SMTP id 5so6602695iwn.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 01:02:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=n6Xja026TLisKgLciyAB+TbkNWjiD60fMQ2GdCzbIOc=;
+        b=rtgY1QGVCFbaTANaTquCA1yMsepa13eRpbOY2pA9WSMBjrfzsz6Tlyj9hntOJvC6Yr
+         Y28eN7g0va84fFDvhvqaVO0SEwyhjM82+jCqqmAZDhVJuNQxzDEOO7uN1GUSJKyEH8a8
+         f0OeZNWr73fq52T9EvD4gvV0byX7iMS7XeOSI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=mjZAT30sPtl41k829WMJjQEnw6tRVDdcn1aM5MAL//Nh4B2+DjusCwwajULUKrX//u
+         uTtkgrkBSDuuzAkpzqbWh2qu10uaE2wS5SMqRsEHGC/8ji+t8MpQj5NSb6vn6lCS7nFx
+         QQcFEUVHS5yxq32SM+kbyXybuCDZkXEEcKcu8=
+Received: by 10.231.146.134 with SMTP id h6mr9732695ibv.170.1286179358824;
+ Mon, 04 Oct 2010 01:02:38 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 4 Oct 2010 01:02:38 -0700 (PDT)
+In-Reply-To: <20101004074916.GK24884@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158009>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158010>
 
-For each commit a shorter version of the name will be generated. This is
-either the truncated hash or the output of git-describe. The
-call to git-describe was only made with an empty shell variable instead
-of an actual commit hash. Thus it only described the current HEAD and
-not each commit we want to submit to cia.vc.
+On Mon, Oct 4, 2010 at 07:49, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Signed-off-by: Sven Eckelmann <sven.eckelmann@gmx.de>
----
-I send this patch already two and four weeks ago and got no reaction.
-This is a resent in case it was forgotton.
+> Did anyone time it?
 
- contrib/ciabot/ciabot.py |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> static inline int step(unsigned char c1, unsigned char c2,
 
-diff --git a/contrib/ciabot/ciabot.py b/contrib/ciabot/ciabot.py
-index d0627e0..9775dff 100755
---- a/contrib/ciabot/ciabot.py
-+++ b/contrib/ciabot/ciabot.py
-@@ -122,7 +122,7 @@ def report(refname, merged):
-     branch = os.path.basename(refname)
- 
-     # Compute a shortnane for the revision
--    rev = do("git describe ${merged} 2>/dev/null") or merged[:12]
-+    rev = do("git describe '"+ merged +"' 2>/dev/null") or merged[:12]
- 
-     # Extract the neta-information for the commit
-     rawcommit = do("git cat-file commit " + merged)
--- 
-1.7.2.3
+If it hasn't been timed isn't it better to leave it up to the compiler
+whether it wants to inline that or not?
