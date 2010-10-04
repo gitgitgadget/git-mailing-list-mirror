@@ -1,109 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] contrib/ciabot: git-describe commit instead of HEAD
-Date: Mon, 04 Oct 2010 10:47:24 -0700
-Message-ID: <7vd3rp97f7.fsf@alter.siamese.dyndns.org>
-References: <1286179362-23597-1-git-send-email-sven.eckelmann@gmx.de>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git ls-files
+Date: Mon, 4 Oct 2010 17:53:48 +0000
+Message-ID: <AANLkTimiF0UOpvzng95rJcv=+atQ9uh1aHh4YhVjR=gM@mail.gmail.com>
+References: <4CA847D5.4000903@workspacewhiz.com>
+	<1286099806-25774-7-git-send-email-avarab@gmail.com>
+	<201010041802.57398.robin.rosenberg@dewire.com>
+	<4CAA0598.9080409@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sven Eckelmann <sven.eckelmann@gmx.de>, git@vger.kernel.org
-To: esr@thyrsus.com
-X-From: git-owner@vger.kernel.org Mon Oct 04 19:47:42 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j6t@kdbg.org>, Brandon Casey <drafnel@gmail.com>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 19:53:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2p8X-0007KH-RG
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:47:42 +0200
+	id 1P2pEa-0001BQ-TV
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 19:53:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754921Ab0JDRrf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 13:47:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57489 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754189Ab0JDRre (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 13:47:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 19DCEDBE02;
-	Mon,  4 Oct 2010 13:47:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=fCl99Kt3mTgKv04x3jqGtRL0Pr8=; b=qaXck1
-	Yvui+/4hGxwJNXtQB4H5IjdIc78c9PyPiuFh3Q77SY5gBdhUvPTZpROpopNkFKgY
-	yr9Ly9Va+CFEZ5rl5PTUK0EjEgEc8EDKUrErOSORok6wfE38+S/yvWmdk5UU3AdK
-	7HRAi3/gTGWEIQCizh/oc2pa+WvD94pMe7aL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KuZjaF9XY66LZH8MptsgMmOaXwxEziSf
-	Zk88SKwoeMieVbNpbZNqeZ/w9iigm2t0sF3hMYL6nFaQWAmler5LUqFbrqWCd1BS
-	akXfcnnUOUaTjpwU+O/zs7FswAxoZOWdbSMEKT0+AwxAvYKsXrqNw0smXm+3ebC9
-	7dSvDFdthEE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DB3F0DBDFF;
-	Mon,  4 Oct 2010 13:47:29 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CDEB5DBDFC; Mon,  4 Oct
- 2010 13:47:25 -0400 (EDT)
-In-Reply-To: <1286179362-23597-1-git-send-email-sven.eckelmann@gmx.de> (Sven
- Eckelmann's message of "Mon\,  4 Oct 2010 10\:02\:42 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 75666BAA-CFDF-11DF-841F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756228Ab0JDRxu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 13:53:50 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52871 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755894Ab0JDRxt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 13:53:49 -0400
+Received: by iwn5 with SMTP id 5so7185362iwn.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 10:53:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TaQqmvw5XjZYIJx6rhn9fq7vf4oZErjWUG1S/Aq2PJ0=;
+        b=a9+AWX0u0tuaSsZKSm9t+rO9WCHpq2TXmTWNN3KWompO7hEGE/RgVZMdabY2KBh7Jc
+         arvJgXrvD3SfIXbuG/O2RCqJ54nF80J8m+pd1Q8O42phzXOWE/CvACisTHaoJER+tTLj
+         fTfBUsm/d26+c5Y48FVeo094DEQyX9Wmb12wQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ubIUxLWneVGjzbv+L457thrERH4ZK15Cc5Os/AMXVJ+0W0WSpFVP9LSfh5SGX3je4N
+         K+8FW2s0Yixlh3M3vLEypl4au2IK4m0XFCMMMuYJnBnxrlSr+eYDq8MYM065d5dN13AN
+         XLKEPyInbMMK90psbVAFwkST7NmX7wvpDQpXU=
+Received: by 10.231.11.9 with SMTP id r9mr10594409ibr.47.1286214828920; Mon,
+ 04 Oct 2010 10:53:48 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 4 Oct 2010 10:53:48 -0700 (PDT)
+In-Reply-To: <4CAA0598.9080409@workspacewhiz.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158074>
 
-Sven Eckelmann <sven.eckelmann@gmx.de> writes:
-
-> For each commit a shorter version of the name will be generated. This is
-> either the truncated hash or the output of git-describe. The
-> call to git-describe was only made with an empty shell variable instead
-> of an actual commit hash. Thus it only described the current HEAD and
-> not each commit we want to submit to cia.vc.
+On Mon, Oct 4, 2010 at 16:49, Joshua Jensen <jjensen@workspacewhiz.com>=
+ wrote:
+>> Is anyone thinking "unicode" around here?
 >
-> Signed-off-by: Sven Eckelmann <sven.eckelmann@gmx.de>
-> ---
-> I send this patch already two and four weeks ago and got no reaction.
-> This is a resent in case it was forgotton.
-
-Although the computation of "rev" indeed looks wrong, I do not see it used
-anywhere, so it might be a better patch to remove it ... wait, the code
-does something funny to slurp everything into xml via ... 
-
-	context = locals()
-        context.update(globals())
-        out = xml % context
-
-Yuck.
-
-Even though it has been my policy not to complain too loudly on stuff in
-contrib/ part of the tree, I have to say that this is a bit too _cute_ for
-my taste.
-
-Anyway, Ok, so it _is_ used.  And it needs to be fixed.
-
-I was hoping that Eric who took over the maintainership of contrib/ciabot/
-directory in April would give his blessing sooner, without me having to
-look at the script.
-
-Ack?
-
->  contrib/ciabot/ciabot.py |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
+> On Windows, Unicode filenames are 16-bit wide characters. =C2=A0The c=
+urrent code
+> doesn't handle them at all.
 >
-> diff --git a/contrib/ciabot/ciabot.py b/contrib/ciabot/ciabot.py
-> index d0627e0..9775dff 100755
-> --- a/contrib/ciabot/ciabot.py
-> +++ b/contrib/ciabot/ciabot.py
-> @@ -122,7 +122,7 @@ def report(refname, merged):
->      branch = os.path.basename(refname)
->  
->      # Compute a shortnane for the revision
-> -    rev = do("git describe ${merged} 2>/dev/null") or merged[:12]
-> +    rev = do("git describe '"+ merged +"' 2>/dev/null") or merged[:12]
->  
->      # Extract the neta-information for the commit
->      rawcommit = do("git cat-file commit " + merged)
-> -- 
-> 1.7.2.3
+> I do not know about other file systems and what Git actually handles.=
+ =C2=A0I was
+> under the impression it didn't handle Unicode filenames well in gener=
+al... ?
+
+The only sane way of doing this sort of thing is to have a defined
+*internal* encoding that gets converted to whatever the native
+encoding is at the input/output points.
+
+So Git could use Unicode represented by UTF-8, UTF-16 (whatever's
+convenient) internally, but when you check out files those checked out
+files can be in whatever encoding you choose.
+
+So you could have a UTF-8 repository but check out UTF-8 filenames on
+Windows. I.e. internally we'd have the file:
+
+    =C3=A6ab
+
+Represented by UTF-8:
+
+    c3 a6 61 62 \0
+
+But would check out UTF-16:
+
+    ff fe e6 00 61 00 62 00
+
+Then when you add a new file it'll know it's in UTF-16 and convert it
+to UTF-8 before writing to the repository. All invisible to the user.
+
+Perl handles encoding issues like this, and it's awesome. The only
+thing you have to do is make sure that the system knows the encoding
+of data going into it, and what encoding you want out of it.
+
+But any implementation of this is far off, and just storing raw byte
+streams is Good Enough now that almost everyone uses UTF-8 anyway, so
+nobody's seriously worked on this.
