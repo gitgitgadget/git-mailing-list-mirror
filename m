@@ -1,74 +1,103 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: branch versioning
-Date: Mon, 4 Oct 2010 14:16:58 +0000
-Message-ID: <AANLkTikSpWhrtyAv73b=SQmUM0oTpVKWLgr16oUfrjXH@mail.gmail.com>
-References: <AANLkTimWxPPi_hHuato+hHePaEja=66GzLEpDUVcZV0i@mail.gmail.com>
-	<AANLkTi=73Siu9O1WT8MdjfAEO5j5y=CkOAiof0z83L=c@mail.gmail.com>
-	<AANLkTinR31x9NrsHoDt3UQ8w=hioPGtkQDkQ-5bSNW69@mail.gmail.com>
+From: Justin Frankel <justin@cockos.com>
+Subject: Re: RFC: checkout/temporary branch switch restoring modification
+ times
+Date: Mon, 04 Oct 2010 10:20:52 -0400
+Organization: Cockos Incorporated
+Message-ID: <4CA9E2C4.2040500@cockos.com>
+References: <4CA95B18.5090008@cockos.com> <20101004051148.GG24884@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 16:17:06 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 16:21:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2lqi-0004DC-MC
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 16:17:05 +0200
+	id 1P2luZ-0005rR-1F
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 16:21:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753315Ab0JDOQ7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 10:16:59 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45337 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752842Ab0JDOQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 10:16:59 -0400
-Received: by iwn5 with SMTP id 5so6971131iwn.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 07:16:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=fjlwkBPzAOV/8Ib4HTwXQ1WW7QLFk8Nl9o4g88ifVk4=;
-        b=p3RxVhImVh/HgcTNIHIyq21It2Pt5Jd7SAO0reliSTzqdgc4jU01s6owK4kFLs26aY
-         a9rI75X2ft7P3zX0RstXyo8L2jRhLW337S3EtkiKplimcpOuiBIL+yROrpXIluVJQFvr
-         Eqia+jtH4J4E5BC3rVbZuAKRyYdQO7ABTUX2c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=c+2MtCVHdYWshm4nJyvTvSYaIvqwIUOVjN1hod5POZ0XyYZ8GWlvXg7+A2R9hgb/4T
-         e8SoIPr4IT7zGvkoIcE2teojQf1hdrewA7ZPbbv55BauFsupMsHSipBYa2qLs9+Qn25T
-         0RrPx3TLu2I3yg8ZfBvJc3nk+5G4r/fZNa6eo=
-Received: by 10.231.148.85 with SMTP id o21mr10305574ibv.26.1286201818310;
- Mon, 04 Oct 2010 07:16:58 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Mon, 4 Oct 2010 07:16:58 -0700 (PDT)
-In-Reply-To: <AANLkTinR31x9NrsHoDt3UQ8w=hioPGtkQDkQ-5bSNW69@mail.gmail.com>
+	id S1756175Ab0JDOU5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 10:20:57 -0400
+Received: from mail.cockos.com ([204.11.104.234]:60416 "EHLO mail.cockos.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756146Ab0JDOU4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 10:20:56 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail.cockos.com (Postfix) with ESMTP id BDA65EC48A;
+	Mon,  4 Oct 2010 07:22:05 -0700 (PDT)
+X-Virus-Scanned: amavisd-new at mail.cockos.com
+Received: from mail.cockos.com ([127.0.0.1])
+	by localhost (mail.cockos.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id dOPgDSNgAz9p; Mon,  4 Oct 2010 07:22:05 -0700 (PDT)
+Received: from [192.168.2.42] (cpe-74-66-229-188.nyc.res.rr.com [74.66.229.188])
+	by mail.cockos.com (Postfix) with ESMTPSA id E2327EC490;
+	Mon,  4 Oct 2010 07:22:04 -0700 (PDT)
+User-Agent: Thunderbird 2.0.0.24 (Windows/20100228)
+In-Reply-To: <20101004051148.GG24884@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158055>
 
-On Mon, Oct 4, 2010 at 13:50, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+Jonathan Nieder wrote:
+> Hi,
+> 
+> Justin Frankel wrote:
+> 
+>> git cop master
+>> ; build
+>> git cop some-branch-that-affects-lots-of-files
+>> ; edit some things, commit
+>> git cop master
+>> ; build (fast, nothing changed)
+> 
+> Interesting.  I guess the intended use is that you only ever build
+> on the master branch?
+> 
 
-> OK. Thanks for the information. I'll try my best to stay away from
-> your repo :-D. Seriously, how can you select a branch out of those 123
-> branches? Does git-branch support regex matching or.. (looked up
-> git-branch.txt, no it does not)
+The idea is that you're often building on a particular branch, but want 
+to switch to another branch temporarily to either do a quick edit or to 
+browse some code.
 
-I usually only have 1-4 branches active at any one point, so it
-doesn't get too bad.
+> Have you ever tried the contrib/workdir/git-new-workdir script?
+> I find it fits the use case well for me:
+> 
+>  git clone $repo
+>  cd repo
+>  make
+>  # oh, shoot! I need to try something out real quick.
+>  cd ..
+>  git new-workdir repo repo2 origin/master
+>  cd repo2
+>  git am patch-to-test
+>  make
+>  # okay, back to what I was doing...
+>  cd ../repo
+> 
+> Maybe it could be helpful for you, too?
+> 
+> Limitations:
+> 
+>  - requires a file system with support for symbolic links
+>    (I think Pierre Habouzit and Junio discussed changing
+>    that);
+> 
+>  - workdirs share refs.  If you update master in one
+>    workdir and another workdir also has master checked
+>    out, the new changes will appear as staged changes.
+> 
+>  - workdirs do not share HEAD.  "git gc" from one
+>    workdir can completely trash another if it has a
+>    detached HEAD pointing to a commit that is not part
+>    of any local or remote branch.
 
-I also have a special tag in my E-Mail folder for patches that Junio
-hasn't picked up yet or those that I need to work on. It's currently
-at around 200 patches :)
 
-I mostly select branches with Emacs's magit which has a fuzzy regex
-based selector. "git branch -a | grep ..." also works.
+Ahh, that would be great.  Unfortunately my filesystem often doesn't 
+support symlinks...
 
-It also helps to use long descriptive branch names, e.g.:
-
-  run-partial-expensive-git-notes-test-everywhere
-  run-partial-expensive-git-notes-test-everywhere-v2
+-Justin
