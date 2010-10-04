@@ -1,98 +1,158 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv6 00/16] Add missing &&'s in the testsuite
-Date: Sun, 3 Oct 2010 22:44:46 -0500
-Message-ID: <20101004034446.GA24884@burratino>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCHv6 01/16] test-lib: make test_expect_code a test command
+Date: Mon, 4 Oct 2010 03:48:43 +0000
+Message-ID: <AANLkTinVvmJMEDhPcxa_CiOL2_RsYBdo-JywXi2gKeYp@mail.gmail.com>
 References: <1286136014-7728-1-git-send-email-newren@gmail.com>
- <AANLkTi=+N=jm1b3vpiwxR0tFwPGbsaJyEq39q3oAyAn_@mail.gmail.com>
+	<1286136014-7728-2-git-send-email-newren@gmail.com>
+	<7vfwwmdbgl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jeff King <peff@peff.net>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 04 05:48:14 2010
+	jrnieder@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 05:48:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2c29-0008Tc-MX
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 05:48:14 +0200
+	id 1P2c2j-00006k-9V
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 05:48:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751808Ab0JDDsG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 23:48:06 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:40430 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751559Ab0JDDsE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 23:48:04 -0400
-Received: by qwh6 with SMTP id 6so2847849qwh.19
-        for <git@vger.kernel.org>; Sun, 03 Oct 2010 20:48:03 -0700 (PDT)
+	id S1751889Ab0JDDso convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 3 Oct 2010 23:48:44 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55517 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751630Ab0JDDsn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 3 Oct 2010 23:48:43 -0400
+Received: by iwn5 with SMTP id 5so6386274iwn.19
+        for <git@vger.kernel.org>; Sun, 03 Oct 2010 20:48:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=8qawQo/npEF7RawQI1gwtC5qpfLOWLheXc68fOp2/EA=;
-        b=qYs5pHlzPfLMv9m6Zn6ClzhADqKTDjgNXHksKlqzqU8bTCPsDT8xORKthS7M7pVKyU
-         avCZvgBEwzDrvdmNcKSdOhew/YA+a0qiXYjce0qieVUb9hWIpI54lkhPxu45qtmQ0EYb
-         sEOXUaFDyuvuITY0wMe9G+XVuRc63yI7WLEtE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QdZmTaU+gb3TPJamSwBEZU8jnJJdfASByW/CIx08psI=;
+        b=WLc+RVSVWqZ17W7kAND9hnRzwSM5GBNIggpNpwET7JnMvLRICN7j5E0GMITO33YWYr
+         i6SmrJBS3DZYAK8UGVSX5h/NbQ9o22F7Hzw8Uu0McewQQ7fvknTI+nqnpvULy34p13SI
+         kLWpZjuDYQ0u/Y+hD0N/5UpZThv1B5mR7wgdw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=sOGFsspt67MTJqm7U/PDz1tkZeXoH7sKZBlRwtLNJ849EJFDDdXvAbFArnqGZ6il9B
-         85p4wL3x1fL8amcUAarrhNDJ0TwXcUKjnPPXx0DBUUpJiIG8h25RDGMI6yahIrFxafMT
-         HNet2iAEDvc1CjAHeGA9bvyiyi8k2U8j4lGRQ=
-Received: by 10.224.71.151 with SMTP id h23mr6195900qaj.219.1286164083857;
-        Sun, 03 Oct 2010 20:48:03 -0700 (PDT)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id t24sm4906391qcs.11.2010.10.03.20.48.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 03 Oct 2010 20:48:03 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=+N=jm1b3vpiwxR0tFwPGbsaJyEq39q3oAyAn_@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kdvV4z6qmyghh0KOAclNHcyxpA6LYdmI3+Y5jqocUe85SxeesmLki6fARqRiGucza5
+         8rvFSOshGaAqj8ymGIKZIjcdVn09YjvfdUOSZFDGG3QCN2V4m0LaCcnb2plDpO0c5OQ6
+         pTs1VZHsXcwPBIBoTD57y9KlpOpgji6f1UDQ8=
+Received: by 10.231.166.72 with SMTP id l8mr9486626iby.95.1286164123160; Sun,
+ 03 Oct 2010 20:48:43 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Sun, 3 Oct 2010 20:48:43 -0700 (PDT)
+In-Reply-To: <7vfwwmdbgl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/157968>
 
-Hi =C3=86var,
+On Mon, Oct 4, 2010 at 00:54, Junio C Hamano <gitster@pobox.com> wrote:
+> Elijah Newren <newren@gmail.com> writes:
+>
+>> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+>> index f688bd3..c2f5f8d 100755
+>> --- a/t/t0000-basic.sh
+>> +++ b/t/t0000-basic.sh
+>> @@ -130,22 +130,57 @@ test_expect_success 'tests clean up after them=
+selves' '
+>> ...
+>> +#!$SHELL_PATH
+>> +
+>> +test_description=3D'Failing tests with cleanup commands'
+>> +
+>> +# Point to the t/test-lib.sh, which isn't in ../ as usual
+>> +TEST_DIRECTORY=3D\"$TEST_DIRECTORY\"
+>
+> Do we know at this point that the string in $TEST_DIRECTORY can safel=
+y be
+> quoted by just a simple dq pair? =C2=A0I don't think so--isn't the le=
+ading part
+> of that string whatever the user can choose (i.e. $(cwd))?
+>
+> This seems sloppy.
+>
+>> +. \"\$TEST_DIRECTORY\"/test-lib.sh
+>
+> Once you get the right value in TEST_DIRECTORY, this one is correct.
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Wouldn't the issue you and Jonathan are talking about disappear with:
 
-> Since Jonathan says all but 7 & 15 are OK (and I looked at those) I
-> assume I don't need to hunt down some other discussion and comment on
-> that. I.e. unless someone replies here.
+    diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+    index c2f5f8d..69e219b 100755
+    --- a/t/t0000-basic.sh
+    +++ b/t/t0000-basic.sh
+    @@ -58,7 +58,7 @@ test_expect_failure 'pretend we have a known brea=
+kage' '
+     test_expect_success 'pretend we have fixed a known breakage (run
+in sub test-lib)' "
+         mkdir passing-todo &&
+         (cd passing-todo &&
+    -    cat >passing-todo.sh <<EOF &&
+    +    cat >passing-todo.sh <<\EOF &&
+     #!$SHELL_PATH
 
-If you find time, it would be nice to take a look at
-http://thread.gmane.org/gmane.comp.version-control.git/157827/focus=3D1=
-57874
-(concerning patch 1/16), to consider quoting issues.
+     test_description=3D'A passing TODO test
+    @@ -139,7 +139,7 @@ fi
+     test_expect_success 'tests clean up even on failures' "
+         mkdir failing-cleanup &&
+         (cd failing-cleanup &&
+    -    cat >failing-cleanup.sh <<EOF &&
+    +    cat >failing-cleanup.sh <<\EOF &&
+     #!$SHELL_PATH
 
-Because of all the nested quoting (and funny indentation, too), I
-found the test hard to read.  Probably the best long-term solution
-would be to use something like the style[1] notmuch=E2=80=99s test suit=
-e uses.
+     test_description=3D'Failing tests with cleanup commands'
 
-I can only see problems coming from this if the path to the test
-directory has shell metacharacters (especially '$') in it, which would
-seem to me to be a pretty unusual setup.
+Note the change to passing-todo, that uses the same setup style.
 
-[1] or as Jeff suggested recently:
+With that the output of:
 
-test_start 'setup'
-cat >expect <<EOF
-=2E.. whatever ...
-EOF
-test_end success
+    $ rm -rfv trash*; ./t0000-basic.sh --debug; cat trash\
+directory.t0000-basic/{passing-todo,failing-cleanup}/*.sh
 
-test_start 'description'
-git frob >actual &&
-test_cmp expect actual
-test_end success
+Is now (cut):
 
-http://thread.gmane.org/gmane.comp.version-control.git/155596/focus=3D1=
-55681
+    # Point to the t/test-lib.sh, which isn't in ../ as usual
+    TEST_DIRECTORY=3D"/home/avar/g/git/t"
+    . "$TEST_DIRECTORY"/test-lib.sh
+
+    test_expect_failure 'pretend we have fixed a known breakage' '
+        :
+    '
+
+    test_done
+    #!/bin/sh
+
+    test_description=3D'Failing tests with cleanup commands'
+
+    # Point to the t/test-lib.sh, which isn't in ../ as usual
+    TEST_DIRECTORY=3D"/home/avar/g/git/t"
+    . "$TEST_DIRECTORY"/test-lib.sh
+
+Instead of previously being:
+
+    # Point to the t/test-lib.sh, which isn't in ../ as usual
+    TEST_DIRECTORY=3D"/home/avar/g/git/t"
+    . "/home/avar/g/git/t"/test-lib.sh
+
+    test_expect_failure 'pretend we have fixed a known breakage' '
+        :
+    '
+
+    test_done
+    #!/bin/sh
+
+    test_description=3D'Failing tests with cleanup commands'
+
+    # Point to the t/test-lib.sh, which isn't in ../ as usual
+    TEST_DIRECTORY=3D"/home/avar/g/git/t"
+    . "/home/avar/g/git/t"/test-lib.sh
+
+I.e. before the TEST_DIRECTORY was always expanded.
