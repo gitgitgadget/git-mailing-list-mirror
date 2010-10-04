@@ -1,88 +1,104 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PULL] Pull request from msysGit
-Date: Tue, 05 Oct 2010 00:52:20 +0100
-Message-ID: <87ocb9zfbf.fsf@fox.patthoyts.tk>
+From: Daniel Johnson <computerdruid@gmail.com>
+Subject: Re: Error when verifying tags signed using 1.7.3.1
+Date: Mon, 4 Oct 2010 19:59:27 -0400
+Message-ID: <201010041959.48336.ComputerDruid@gmail.com>
+References: <AANLkTikguMr4E+1m9QEX1x1beQPaHNBqSNPQUQWcFZgF@mail.gmail.com> <201010041851.46838.ComputerDruid@gmail.com> <AANLkTin1Ysn7Fp32Eoyjo3jjhHwVrc=hMuq+okgKNfmr@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 01:52:35 2010
+Content-Type: multipart/signed;
+  boundary="nextPart3546470.GgYf4bkDCr";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Stephan Hugel <urschrei@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 01:59:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2upf-0007rK-4j
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 01:52:35 +0200
+	id 1P2uwK-0000fj-1H
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 01:59:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757339Ab0JDXwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 19:52:30 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:56271 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1756643Ab0JDXw3 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 19:52:29 -0400
-Received: from [172.23.170.144] (helo=anti-virus03-07)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P2upV-0002jo-SS; Tue, 05 Oct 2010 00:52:25 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P2upR-0002Lz-Nv; Tue, 05 Oct 2010 00:52:21 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id F23D325205; Tue,  5 Oct 2010 00:52:20 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1757444Ab0JDX7W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 19:59:22 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:45186 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752283Ab0JDX7W (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 19:59:22 -0400
+Received: by qyk10 with SMTP id 10so1867968qyk.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 16:59:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        bh=h8YyQooG81TsuBChacaEC1EnafqCUefALbM8IngFQD0=;
+        b=q/BwyktWaK+KbYsAGbPELzWHOE7U6oXP4iDmHfbrKNhEAQtRIoyqkcj2SGesv1TAUj
+         WVA3Q0PxdiVIWxL1KBlFHfEB3xaTr7LZM6gWq7US7c9SP/bMmTjpBfRlKdFztyCUaeMH
+         oo3qinhX98ExXJ+k9fqMorGxXjQ00JWRWx3dA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        b=ELmsh2jV0wik7wJJAoU7d+3u5Ym8caEGtocGQopWwhInpD749IUOCqZ02AsS3M9L5w
+         yICFQPkNIU+Ce9EwR2VzsT+Qm4/4RXIU0IcjLSQD+gIvJVqGbcsXqwwr+qkGTp7NgJdH
+         dpWPaHgVyh7kVYEh2hubDANGDqoWj+9tKdZek=
+Received: by 10.224.45.142 with SMTP id e14mr7520912qaf.247.1286236761463;
+        Mon, 04 Oct 2010 16:59:21 -0700 (PDT)
+Received: from hyperion.localnet (hyperion.student.rit.edu [129.21.115.231])
+        by mx.google.com with ESMTPS id t4sm6193015qcs.40.2010.10.04.16.59.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 16:59:20 -0700 (PDT)
+User-Agent: KMail/1.13.5 (Linux/2.6.35.3; KDE/4.5.0; x86_64; ; )
+In-Reply-To: <AANLkTin1Ysn7Fp32Eoyjo3jjhHwVrc=hMuq+okgKNfmr@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158145>
 
-This follows up on the comments made for the previous pull request for
-patches from msysGit. This batch is restricted to those that passed
-review or have been modified as a result of the earlier review.
-I've added some Acked-by's resulting from comments made.
+--nextPart3546470.GgYf4bkDCr
+Content-Type: Text/Plain;
+  charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 
-The following changes since commit 1e633418479926bc85ed21a4f91c845a3dd3ad66:
+On Monday 04 October 2010 19:04:51 Stephan Hugel wrote:=20
+> Daniel,
+> Those are the exact steps I'm using.
+>=20
+> When I run tag -v on existing tags, I don't see the
+>=20
+> -----BEGIN PGP MESSAGE-----
+> Version: GnuPG v1.4.9 (Darwin)
+>=20
+> iD8DBQBMqlpo8Y2TgZsQ1pARAmBQAJ9NV0IX7jlzeB8ogddlutFKAjyWJwCfSI5A
+> yZeXw/EddYrfdad/VvOrL1o=3D
+> =3D/0PJ
+> -----END PGP MESSAGE=E2=80=94=E2=80=94
+>=20
+> block. It's only present on tags created using the current version.
+> I've also just upgraded to GnuPG 1.4.10, but the result is the same.
+> I'm not sure how else I can determine where the problem arises; I'm
+> using the git and GnuPG versions for OS X built by homebrew, and GnuPG
+> is happy to use the same key for en/decryption and signing. I've also
+> verified that none of the subkeys are expired, and that the trust db
+> is OK.
 
-  Merge branch 'maint' (2010-09-30 14:59:53 -0700)
+If you have the tests available, can you try running t7004 to see if it fai=
+ls=20
+there too?
 
-are available in the git repository at:
+--nextPart3546470.GgYf4bkDCr
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-  git://repo.or.cz/git/mingw/4msysgit.git work/pt/for-junio
-or alternatively
-  http://repo.or.cz/w/git/mingw/4msysgit.git/shortlog/refs/heads/work/pt/for-junio
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
 
-5debf9a Add MinGW-specific execv() override.
-77df1f1 Fix Windows-specific macro redefinition warning.
-b248e95 Fix 'clone' failure at DOS root directory.
-1a40420 mingw: do not crash on open(NULL, ...)
-5e9677c git-am: fix detection of absolute paths for windows
-36e035f Side-step MSYS-specific path "corruption" leading to t5560 failure.
-ca02ad3 Side-step sed line-ending "corruption" leading to t6038 failure.
-97f2c33 Skip 'git archive --remote' test on msysGit
-a94114a Do not strip CR when grepping HTTP headers.
-3ba9ba8 Skip t1300.70 and 71 on msysGit.
-4e57baf merge-octopus: Work around environment issue on Windows
-442dada MinGW: Report errors when failing to launch the html browser.
-9b9784c MinGW: fix stat() and lstat() implementations for handling symlinks
-4091bfc MinGW: Add missing file mode bit defines
-e7cf4e9 MinGW: Use pid_t more consequently, introduce uid_t for greater compatibility
+iEYEABECAAYFAkyqanQACgkQhP2Vm0oJTtx+gwCcCZMFqy2lo68hYZGG1eUHFyFh
+6B0AoJpkXm9mByJlpDoZObUARhSPj9JT
+=BqXe
+-----END PGP SIGNATURE-----
 
- abspath.c                        |    6 +++-
- compat/mingw.c                   |   56 ++++++++++++++++++++++++++++++++-----
- compat/mingw.h                   |   36 +++++++++++++++++++-----
- git-am.sh                        |   12 ++++----
- git-merge-octopus.sh             |    5 +++
- git-sh-setup.sh                  |   15 ++++++++++
- t/t1300-repo-config.sh           |    6 ++--
- t/t5000-tar-tree.sh              |    2 +-
- t/t5503-tagfollow.sh             |    9 +-----
- t/t5560-http-backend-noserver.sh |    5 ++-
- t/t6038-merge-text-auto.sh       |    4 ++-
- t/test-lib.sh                    |    2 +
- 12 files changed, 122 insertions(+), 36 deletions(-)
+--nextPart3546470.GgYf4bkDCr--
