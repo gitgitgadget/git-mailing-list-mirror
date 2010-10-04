@@ -1,93 +1,52 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: large files and low memory
-Date: Mon, 4 Oct 2010 13:58:54 -0500
-Message-ID: <20101004185854.GA6466@burratino>
-References: <20101004092046.GA4382@nibiru.local>
- <AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH/RFC v3 6/8] Add case insensitivity support when using git ls-files
+Date: Mon, 4 Oct 2010 21:02:31 +0200
+Message-ID: <201010042102.31336.j6t@kdbg.org>
+References: <4CA847D5.4000903@workspacewhiz.com> <1286099806-25774-7-git-send-email-avarab@gmail.com> <201010041802.57398.robin.rosenberg@dewire.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: weigelt@metux.de, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Mon Oct 04 21:02:26 2010
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-15?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Brandon Casey <drafnel@gmail.com>
+To: Robin Rosenberg <robin.rosenberg@dewire.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 21:02:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2qIp-0000jR-9U
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 21:02:23 +0200
+	id 1P2qJC-0000xo-W1
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 21:02:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932253Ab0JDTCR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 15:02:17 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:63950 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932229Ab0JDTCQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 15:02:16 -0400
-Received: by ewy23 with SMTP id 23so2122644ewy.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 12:02:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=bneRVXhCNwZ6i6JGjDDDEzXxf98/ezOiIwbBIeMPVjY=;
-        b=HyIJKHaYT8N4MxWPELY9GGNFu8FQq9WfpdmZzMnWvhInpO5Fq62sEcG0E1i3Uq5XSm
-         m9g6gFBM/G4Kds18hMCKRQCVACrHByHEupNQGCRDbapMifXu6szmJTx6UdTdtgvVoCxT
-         SA69jvo6y5XazPrAbJP6M7QA20CFCRI4RmLRs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=R7U15hBvaK9+kEQU492so864rvrhDc9SV/n1Appc8H4JOV9ikySb7nbUPRcvgolaS9
-         wsBjXVqhEO2E34gRYVOo9Y6R0fI+62uD11d8Ee9xhtUhQSgIVXFj3sq/1hoMBXAchmyx
-         wpd2Sm1UkmkvhURTjQaiUaMAPQhcqQaYQGAHo=
-Received: by 10.216.159.131 with SMTP id s3mr8038101wek.99.1286218934920;
-        Mon, 04 Oct 2010 12:02:14 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id n40sm3234553weq.5.2010.10.04.12.02.12
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 04 Oct 2010 12:02:14 -0700 (PDT)
+	id S932333Ab0JDTCg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 15:02:36 -0400
+Received: from bsmtp.bon.at ([213.33.87.14]:9566 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932229Ab0JDTCg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 15:02:36 -0400
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id ABF43A7EB5;
+	Mon,  4 Oct 2010 21:02:31 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by dx.sixt.local (Postfix) with ESMTP id 927C919F609;
+	Mon,  4 Oct 2010 21:02:31 +0200 (CEST)
+User-Agent: KMail/1.9.10
+In-Reply-To: <201010041802.57398.robin.rosenberg@dewire.com>
 Content-Disposition: inline
-In-Reply-To: <AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158095>
 
-Shawn Pearce wrote:
+On Montag, 4. Oktober 2010, Robin Rosenberg wrote:
+> Is anyone thinking "unicode" around here?
 
-> The mmap() isn't the problem.  Its the allocation of a buffer that is
-> larger than the file in order to hold the result of deflating the file
-> before it gets written to disk.
+My recommendation these days is that you should not use git if you care about 
+Unicode filenames: git is tied to POSIX in this regard, which defines 
+filenames as streams of *bytes*.
 
-Wasn't this already fixed, at least in some cases?
-
-commit 9892bebafe0865d8f4f3f18d60a1cfa2d1447cd7 (tags/v1.7.0.2~11^2~1)
-Author: Nicolas Pitre <nico@fluxnic.net>
-Date:   Sat Feb 20 23:27:31 2010 -0500
-
-    sha1_file: don't malloc the whole compressed result when writing out objects
-
-    There is no real advantage to malloc the whole output buffer and
-    deflate the data in a single pass when writing loose objects. That is
-    like only 1% faster while using more memory, especially with large
-    files where memory usage is far more. It is best to deflate and write
-    the data out in small chunks reusing the same memory instead.
-
-    For example, using 'git add' on a few large files averaging 40 MB ...
-
-    Before:
-    21.45user 1.10system 0:22.57elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-    0inputs+828040outputs (0major+142640minor)pagefaults 0swaps
-
-    After:
-    21.50user 1.25system 0:22.76elapsed 99%CPU (0avgtext+0avgdata 0maxresident)k
-    0inputs+828040outputs (0major+104408minor)pagefaults 0swaps
-
-    While the runtime stayed relatively the same, the number of minor page
-    faults went down significantly.
-
-    Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
+-- Hannes
