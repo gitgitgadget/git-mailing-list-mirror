@@ -1,71 +1,68 @@
-From: suvayu ali <fatkasuvayu+linux@gmail.com>
-Subject: Command specific pager settings
-Date: Mon, 4 Oct 2010 00:37:29 -0700
-Message-ID: <AANLkTimLt0ERrB5b9p+_7fZBWfK3PHJkydmouiGfnurz@mail.gmail.com>
+From: viresh kumar <viresh.kumar@st.com>
+Subject: Re: [PATCH] send-email: Clear To: field for every mail
+Date: Mon, 4 Oct 2010 13:19:56 +0530
+Message-ID: <4CA98724.2020203@st.com>
+References: <a9b17bd454e57abb75f6cd2a7da63ec7738f5e7b.1286170305.git.viresh.kumar@st.com> <7v7hhya0yc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 04 09:37:57 2010
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	"bebarino@gmail.com" <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 09:50:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2fcS-0006OX-L9
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 09:37:57 +0200
+	id 1P2foU-0000gA-77
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 09:50:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753212Ab0JDHhw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 03:37:52 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39708 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753072Ab0JDHhv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 03:37:51 -0400
-Received: by wyb28 with SMTP id 28so4635893wyb.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 00:37:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type;
-        bh=Aev8dk3mCTZKYC0b84Wktod50JAps6xginmITmltDLw=;
-        b=m8q9irUrsk1LpWrKLnBS7xuiplrrNI7g9y6IZxMMK6i3SJFIf1dqcuR6c2FWPVojqE
-         NMu4mEnqUJwx2UbztjrZBeD9IzF3heaJoi8xhRK2OKrU69GQ/KgW4D7oZAS3wnjV7DVM
-         0x+AtgMGj3hy8jonMjUkqTzV3xI2YIGeITV70=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type;
-        b=sz1m1CH8U0n5W3XFctZssNv/OAfMwjrbLFpsx1qZ8KBIRn85Rb4Wj3T5t5MNBiAfxY
-         3O5e/wFiKh90YAf+ydjocjV9V8C+SxlSrBAHKcT7PUadiIflMoMTg53VaGsMZNAQzW1w
-         HOd7tKCPutRi/dRJuLfkTg8sRa+SYpHXa9AkU=
-Received: by 10.227.99.79 with SMTP id t15mr6702565wbn.209.1286177870103; Mon,
- 04 Oct 2010 00:37:50 -0700 (PDT)
-Received: by 10.216.79.66 with HTTP; Mon, 4 Oct 2010 00:37:29 -0700 (PDT)
-X-Google-Sender-Auth: AZfE7l0KG62SnHWJsxLyd4LMGvE
+	id S1753225Ab0JDHuP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 03:50:15 -0400
+Received: from eu1sys200aog120.obsmtp.com ([207.126.144.149]:58349 "EHLO
+	eu1sys200aog120.obsmtp.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753136Ab0JDHuO (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 03:50:14 -0400
+Received: from source ([138.198.100.35]) (using TLSv1) by eu1sys200aob120.postini.com ([207.126.147.11]) with SMTP
+	ID DSNKTKmHKuD7JrzMOCobUtc07H0ShUznd0cg@postini.com; Mon, 04 Oct 2010 07:50:13 UTC
+Received: from zeta.dmz-ap.st.com (ns6.st.com [138.198.234.13])
+	by beta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 79D90105;
+	Mon,  4 Oct 2010 07:49:58 +0000 (GMT)
+Received: from Webmail-ap.st.com (eapex1hubcas4.st.com [10.80.176.69])
+	by zeta.dmz-ap.st.com (STMicroelectronics) with ESMTP id 63DE964D;
+	Mon,  4 Oct 2010 07:49:58 +0000 (GMT)
+Received: from [10.199.16.92] (10.199.16.92) by Webmail-ap.st.com
+ (10.80.176.7) with Microsoft SMTP Server (TLS) id 8.2.234.1; Mon, 4 Oct 2010
+ 15:49:58 +0800
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <7v7hhya0yc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158001>
 
-Hi everyone,
+On 10/04/2010 12:39 PM, Junio C Hamano wrote:
+> Heh, are people who send patches with only S-o-b by your definition not
+> testing their patches at all ;-)?  As far as I can tell, your patch
+> applied to 'next' will break t9001 rather badly.
+> 
+> I agree there is a bug that you are trying to address in the series by
+> Stephen that keeps adding To: address that is read from an earlier output
+> of format-patch created with its --to option, but I do not think this is a
+> right fix.  Have you tested sending a series with a plain format-patch
+> output without extraneous To:, Cc: and such headers?
+> 
+> A normal send-email session takes the recipient address from either --to
+> or interactively upfront, and then use those addresses kept in @to
+> variable in the loop, repeatedly.  I do not see anything in your patch to
+> avoid losing these addresses.
 
-I am a new user of git and I was trying to configure the pager for git
-and ran across something. Is it possible to have different command
-options to less for different git commands?
+Junio, Stephan,
 
-I wanted to set my pager to `less -iRS' when looking at patches (so
-that would mean commands like `git diff'), but would prefer `less
--iFRS' or even the git default `less -FRSX' for all other things e.g
-`git log'.
-
-I looked at core.pager and pager.<cmd> but I couldn't understand how I
-could set different pagers for say just one/ a subset of commands (git
-diff in my case).
-
-Is this possible? If not, would it be a worthwhile feature request?
-Thanks a lot for any pointers.
+Ya! my patch wasn't good enough. I just tried to solve it the way it was done
+for cc.
 
 -- 
-Suvayu
-
-Open source is the future. It sets us free.
+viresh
