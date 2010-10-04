@@ -1,33 +1,33 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v4 1/3] Add bidirectional_transfer_loop()
-Date: Mon,  4 Oct 2010 14:04:16 +0300
-Message-ID: <1286190258-12724-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [PATCH v4 3/3] git-remote-ext
+Date: Mon,  4 Oct 2010 14:04:18 +0300
+Message-ID: <1286190258-12724-4-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1286190258-12724-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 04 12:59:06 2010
+X-From: git-owner@vger.kernel.org Mon Oct 04 12:59:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2il7-0006jn-Ow
+	id 1P2il8-0006jn-Er
 	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 12:59:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755298Ab0JDK6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755308Ab0JDK6p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 06:58:45 -0400
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:40788 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755291Ab0JDK6o (ORCPT <rfc822;git@vger.kernel.org>);
 	Mon, 4 Oct 2010 06:58:44 -0400
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:46793 "EHLO
-	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755282Ab0JDK6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 06:58:41 -0400
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 14C86EF339
-	for <git@vger.kernel.org>; Mon,  4 Oct 2010 13:58:39 +0300 (EEST)
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id B575F13BBD2
+	for <git@vger.kernel.org>; Mon,  4 Oct 2010 13:58:41 +0300 (EEST)
 Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A039F010F77; Mon, 04 Oct 2010 13:58:39 +0300
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A008C0AFA7A; Mon, 04 Oct 2010 13:58:41 +0300
 Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id D45902BD45
-	for <git@vger.kernel.org>; Mon,  4 Oct 2010 13:58:37 +0300 (EEST)
+	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 71D162BD44
+	for <git@vger.kernel.org>; Mon,  4 Oct 2010 13:58:40 +0300 (EEST)
 X-Mailer: git-send-email 1.7.1.rc2.10.g714149
 In-Reply-To: <1286190258-12724-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -35,384 +35,447 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158030>
 
-This helper function copies bidirectional stream of data between
-stdin/stdout and specified file descriptors.
+This remote helper invokes external command and passes raw smart transport
+stream through it. This is useful for instance for invoking ssh with
+one-off odd options, connecting to git services in unix domain
+sockets, in abstract namespace, using TLS or other secure protocols,
+etc...
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- compat/mingw.h     |    5 +
- transport-helper.c |  324 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- transport.h        |    1 +
- 3 files changed, 330 insertions(+), 0 deletions(-)
+ .gitignore                       |    1 +
+ Documentation/git-remote-ext.txt |  119 +++++++++++++++++++
+ Makefile                         |    1 +
+ builtin.h                        |    1 +
+ builtin/remote-ext.c             |  243 ++++++++++++++++++++++++++++++++++++++
+ git.c                            |    1 +
+ 6 files changed, 366 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-remote-ext.txt
+ create mode 100644 builtin/remote-ext.c
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 3b2477b..f27a7b6 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -23,6 +23,9 @@ typedef int pid_t;
- #define WEXITSTATUS(x) ((x) & 0xff)
- #define WTERMSIG(x) SIGTERM
- 
-+#define EWOULDBLOCK EAGAIN
-+#define SHUT_WR SD_SEND
+diff --git a/.gitignore b/.gitignore
+index 89f37f4..87b833c 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -113,6 +113,7 @@
+ /git-remote-ftp
+ /git-remote-ftps
+ /git-remote-fd
++/git-remote-ext
+ /git-remote-testgit
+ /git-repack
+ /git-replace
+diff --git a/Documentation/git-remote-ext.txt b/Documentation/git-remote-ext.txt
+new file mode 100644
+index 0000000..748f106
+--- /dev/null
++++ b/Documentation/git-remote-ext.txt
+@@ -0,0 +1,119 @@
++git-remote-ext(1)
++=================
 +
- #define SIGHUP 1
- #define SIGQUIT 3
- #define SIGKILL 9
-@@ -50,6 +53,8 @@ struct pollfd {
- };
- #define POLLIN 1
- #define POLLHUP 2
-+#define POLLOUT 4
-+#define POLLNVAL 8
- #endif
- 
- typedef void (__cdecl *sig_handler_t)(int);
-diff --git a/transport-helper.c b/transport-helper.c
-index acfc88e..1f7bad6 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -862,3 +862,327 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->smart_options = &(data->transport_options);
- 	return 0;
- }
++NAME
++----
++git-remote-ext - Bridge smart transport to external command.
++
++SYNOPSIS
++--------
++git remote add nick "ext::<command>[ <arguments>...]"
++
++DESCRIPTION
++-----------
++This remote helper uses the specified 'program' to connect
++to a remote git server.
++
++Command and arguments are separated by unescaped space.
++
++The following sequences have a special meaning:
++
++'% '::
++	Literal space in command or argument.
++
++'%%'::
++	Literal percent sign.
++
++'%s'::
++	Replaced with name (receive-pack, upload-pack, or
++	upload-archive) of the service git wants to invoke.
++
++'%S'::
++	Replaced with long name (git-receive-pack,
++	git-upload-pack, or git-upload-archive) of the service
++	git wants to invoke.
++
++'%G<repository>' (as argument)::
++	This argument will not be passed to 'program'. Instead, it
++	will cause helper to start by sending git:// service request to
++	remote side with service field set to approiate value and
++	repository field set to <repository>. Default is not to send
++	such request.
+++
++This is useful if remote side is git:// server accessed over
++some tunnel.
++
++'%V<host>' (as argument)::
++	This argument will not be passed to 'program'. Instead it sets
++	the vhost field in git:// service request. Default is not to
++	send vhost in such request (if sent).
++
++ENVIRONMENT VARIABLES:
++----------------------
++
++GIT_TRANSLOOP_DEBUG::
++	If set, prints debugging information about various reads/writes.
++
++ENVIRONMENT VARIABLES PASSED TO COMMAND:
++----------------------------------------
++
++GIT_EXT_SERVICE::
++	Set to long name (git-upload-pack, etc...) of service helper needs
++	to invoke.
++
++GIT_EXT_SERVICE_NOPREFIX::
++	Set to long name (upload-pack, etc...) of service helper needs
++	to invoke.
++
++
++EXAMPLES:
++---------
++This remote helper is transparently used by git when
++you use commands such as "git fetch <URL>", "git clone <URL>",
++, "git push <URL>" or "git remote add nick <URL>", where <URL>
++begins with `ext::`.  Examples:
++
++"ext::ssh -i /home/foo/.ssh/somekey user&#64;host.example %S 'foo/repo'"::
++	Like host.example:foo/repo, but use /home/foo/.ssh/somekey as
++	keypair and user as user on remote side. This avoids needing to
++	edit .ssh/config.
++
++"ext::socat -t3600 - ABSTRACT-CONNECT:/git-server %G/somerepo"::
++	Represents repository with path /somerepo accessable over
++	git protocol at abstract namespace address /git-server.
++
++"ext::git-server-alias foo %G/repo"::
++	Represents a repository with path /repo accessed using the
++	helper program "git-server-alias foo".  The path to the
++	repository and type of request are not passed on the command
++	line but as part of the protocol stream, as usual with git://
++	protocol.
++
++"ext::git-server-alias foo %G/repo %Vfoo"::
++	Represents a repository with path /repo accessed using the
++	helper program "git-server-alias foo".  The hostname for the
++	remote server passed in the protocol stream will be "foo"
++	(this allows multiple virtual git servers to share a
++	link-level address).
++
++"ext::git-server-alias foo %G/repo% with% spaces %Vfoo"::
++	Represents a repository with path '/repo with spaces' accessed
++	using the helper program "git-server-alias foo".  The hostname for
++	the remote server passed in the protocol stream will be "foo"
++	(this allows multiple virtual git servers to share a
++	link-level address).
++
++"ext::git-ssl foo.example /bar"::
++	Represents a repository accessed using the helper program
++	"git-ssl foo.example /bar".  The type of request can be
++	determined by the helper using environment variables (see
++	above).
++
++Documentation
++--------------
++Documentation by Ilari Liusvaara, Jonathan Nieder and the git list
++<git@vger.kernel.org>
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 7da54d7..9909ca1 100644
+--- a/Makefile
++++ b/Makefile
+@@ -728,6 +728,7 @@ BUILTIN_OBJS += builtin/read-tree.o
+ BUILTIN_OBJS += builtin/receive-pack.o
+ BUILTIN_OBJS += builtin/reflog.o
+ BUILTIN_OBJS += builtin/remote.o
++BUILTIN_OBJS += builtin/remote-ext.o
+ BUILTIN_OBJS += builtin/remote-fd.o
+ BUILTIN_OBJS += builtin/replace.o
+ BUILTIN_OBJS += builtin/rerere.o
+diff --git a/builtin.h b/builtin.h
+index 1a816e1..a4bba61 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -108,6 +108,7 @@ extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_receive_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_reflog(int argc, const char **argv, const char *prefix);
+ extern int cmd_remote(int argc, const char **argv, const char *prefix);
++extern int cmd_remote_ext(int argc, const char **argv, const char *prefix);
+ extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+ extern int cmd_config(int argc, const char **argv, const char *prefix);
+ extern int cmd_rerere(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
+new file mode 100644
+index 0000000..b2041ff
+--- /dev/null
++++ b/builtin/remote-ext.c
+@@ -0,0 +1,243 @@
++#include "git-compat-util.h"
++#include "transport.h"
++#include "run-command.h"
 +
 +/*
-+ * Linux pipes can buffer 65536 bytes at once (and most platforms can
-+ * buffer less), so attempt reads and writes with up to that size.
++ * URL syntax:
++ *	'command [arg1 [arg2 [...]]]'	Invoke command with given arguments.
++ *	Special characters:
++ *	'% ': Literal space in argument.
++ *	'%%': Literal percent sign.
++ *	'%S': Name of service (git-upload-pack/git-upload-archive/
++ *		git-receive-pack.
++ *	'%s': Same as \s, but with possible git- prefix stripped.
++ *	'%G': Only allowed as first 'character' of argument. Do not pass this
++ *		Argument to command, instead send this as name of repository
++ *		in in-line git://-style request (also activates sending this
++ *		style of request).
++ *	'%V': Only allowed as first 'character' of argument. Used in
++ *		conjunction with '%G': Do not pass this argument to command,
++ *		instead send this as vhost in git://-style request (note: does
++ *		not activate sending git:// style request).
 + */
-+#define BUFFERSIZE 65536
-+/* This should be enough to hold debugging message. */
-+#define PBUFFERSIZE 8192
 +
-+/* Print bidirectional transfer loop debug message. */
-+static void transfer_debug(const char *fmt, ...)
++char* git_req = NULL;
++char* git_req_vhost = NULL;
++
++static char *strip_escapes(const char *str, const char *service,
++	const char **next)
 +{
-+	va_list args;
-+	char msgbuf[PBUFFERSIZE];
-+	static int debug_enabled = -1;
++	size_t rpos = 0;
++	int escape = 0;
++	char special = 0;
++	size_t pslen = 0;
++	size_t pSlen = 0;
++	size_t psoff = 0;
++	struct strbuf ret = STRBUF_INIT;
 +
-+	if (debug_enabled < 0)
-+		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
-+	if (!debug_enabled)
-+		return;
++	/* Calculate prefix length for \s and lengths for \s and \S */
++	if (!strncmp(service, "git-", 4))
++		psoff = 4;
++	pSlen = strlen(service);
++	pslen = pSlen - psoff;
 +
-+	va_start(args, fmt);
-+	vsnprintf(msgbuf, PBUFFERSIZE, fmt, args);
-+	va_end(args);
-+	fprintf(stderr, "Transfer loop debugging: %s\n", msgbuf);
-+}
++	/* Pass the service to command. */
++	setenv("GIT_EXT_SERVICE", service, 1);
++	setenv("GIT_EXT_SERVICE_NOPREFIX", service + psoff, 1);
 +
-+/* Stream state: More data may be coming in this direction. */
-+#define SSTATE_TRANSFERING 0
-+/*
-+ * Stream state: No more data coming in this direction, flushing rest of
-+ * data.
-+ */
-+#define SSTATE_FLUSHING 1
-+/* Stream state: Transfer in this direction finished. */
-+#define SSTATE_FINISHED 2
-+
-+#define STATE_NEEDS_READING(state) ((state) <= SSTATE_TRANSFERING)
-+#define STATE_NEEDS_WRITING(state) ((state) <= SSTATE_FLUSHING)
-+#define STATE_NEEDS_CLOSING(state) ((state) == SSTATE_FLUSHING)
-+
-+/* Unidirectional transfer. */
-+struct unidirectional_transfer
-+{
-+	/* Source */
-+	int src;
-+	/* Destination */
-+	int dest;
-+	/* Is destination socket? */
-+	int dest_is_sock;
-+	/* Transfer state (TRANSFERING/FLUSHING/FINISHED) */
-+	int state;
-+	/* Buffer. */
-+	char buf[BUFFERSIZE];
-+	/* Buffer used. */
-+	size_t bufuse;
-+	/* Name of source. */
-+	const char *src_name;
-+	/* Name of destination. */
-+	const char *dest_name;
-+};
-+
-+static int udt_can_read(struct unidirectional_transfer *t)
-+{
-+	return (STATE_NEEDS_READING(t->state) && t->bufuse < BUFFERSIZE);
-+}
-+
-+static int udt_can_write(struct unidirectional_transfer *t)
-+{
-+	return (STATE_NEEDS_WRITING(t->state) && t->bufuse > 0);
-+}
-+
-+static void udt_close_if_finished(struct unidirectional_transfer *t)
-+{
-+	if (STATE_NEEDS_CLOSING(t->state) && !t->bufuse) {
-+		t->state = SSTATE_FINISHED;
-+		if (t->dest_is_sock)
-+			shutdown(t->dest, SHUT_WR);
-+		else
-+			close(t->dest);
-+		transfer_debug("Closed %s.", t->dest_name);
++	/* Scan the length of argument. */
++	while (str[rpos] && (escape || str[rpos] != ' ')) {
++		if (escape) {
++			switch (str[rpos]) {
++			case ' ':
++			case '%':
++			case 's':
++			case 'S':
++				break;
++			case 'G':
++			case 'V':
++				special = str[rpos];
++				if (rpos == 1)
++					break;
++				/* Fall-through to error. */
++			default:
++				die("Bad remote-ext placeholder '\\%c'.",
++					str[rpos]);
++			}
++			escape = 0;
++		} else
++			escape = (str[rpos] == '%');
++		rpos++;
 +	}
-+}
++	if (escape && !str[rpos])
++		die("remote-ext command has incomplete placeholder");
++	*next = str + rpos;
++	if (**next == ' ')
++		++*next;	/* Skip over space */
 +
-+static int udt_do_read(struct unidirectional_transfer *t)
-+{
-+	int r;
-+	transfer_debug("%s is readable", t->src_name);
-+	r = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-+	if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+		errno != EINTR) {
-+		error("read(%s) failed: %s", t->src_name, strerror(errno));
-+		return -1;
-+	} else if (r == 0) {
-+		transfer_debug("%s EOF (with %i bytes in buffer)",
-+			t->src_name, t->bufuse);
-+		t->state = SSTATE_FLUSHING;
-+	} else if (r > 0) {
-+		t->bufuse += r;
-+		transfer_debug("Read %i bytes from %s (buffer now at %i)",
-+			r, t->src_name, (int)t->bufuse);
-+	}
-+	return 0;
-+}
-+
-+static int udt_do_write(struct unidirectional_transfer *t)
-+{
-+	int r;
-+	transfer_debug("%s is writable", t->dest_name);
-+	r = write(t->dest, t->buf, t->bufuse);
-+	if (r < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+		errno != EINTR) {
-+		error("write(%s) failed: %s", t->dest_name, strerror(errno));
-+		return -1;
-+	} else if (r > 0) {
-+		t->bufuse -= r;
-+		if(t->bufuse)
-+			memmove(t->buf, t->buf + r, t->bufuse);
-+		transfer_debug("Wrote %i bytes to %s (buffer now at %i)",
-+			r, t->dest_name, (int)t->bufuse);
-+	}
-+	return 0;
-+}
-+
-+/* State of bidirectional transfer loop. */
-+struct bidirectional_transfer_state
-+{
 +	/*
-+	 * Current polls. Up to 4 because both read and write for both
-+	 * directions possibly needs to poll, and all of these may occur
-+	 * at once.
++	 * Do the actual placeholder substitution. The string will be short
++	 * enough not to overflow integers.
 +	 */
-+	struct pollfd polls[4];
-+	/* Number of polls active. */
-+	int polls_active;
-+	/* Index for stdin in poll array, -1 if none. */
-+	int stdin_index;
-+	/* Index for stdout in poll array, -1 if none. */
-+	int stdout_index;
-+	/* Index for input descriptor in poll array, -1 if none. */
-+	int input_index;
-+	/* Index for output descrptor in poll array, -1 if none. */
-+	int output_index;
-+	/* Direction from program to git. */
-+	struct unidirectional_transfer ptg;
-+	/* Direction from git to program. */
-+	struct unidirectional_transfer gtp;
-+};
-+
-+/*
-+ * Allocate individual poll array entry.
-+ * polls -> The polls array. Must have at least *active + 1 entries.
-+ * active -> Place for number of active polls. Value in this location is
-+ * incremented.
-+ * index -> Place to store index for newly allocated entry.
-+ * fd -> The file descriptor to place there.
-+ * name -> Name for fd to print. If NULL, no message is printed.
-+ */
-+static void allocate_poll_array_entry(struct pollfd* polls, int* active,
-+	int* index, int fd, const char* name)
-+{
-+	*index = (*active)++;
-+	polls[*index].fd = fd;
-+	if (name)
-+		transfer_debug("Adding %s to fds to wait for...", name);
-+}
-+
-+
-+/* Allocate indexes for file descriptors in poll array. */
-+static void allocate_poll_indexes(struct bidirectional_transfer_state* s)
-+{
-+	/* Initialize fields like there was nothing waiting. */
-+	s->stdin_index = -1;
-+	s->stdout_index = -1;
-+	s->input_index = -1;
-+	s->output_index = -1;
-+	s->polls_active = 0;
-+
-+	if (udt_can_read(&s->ptg))
-+		allocate_poll_array_entry(s->polls, &s->polls_active,
-+			&s->input_index, s->ptg.src, s->ptg.src_name);
-+	if (udt_can_write(&s->ptg))
-+		allocate_poll_array_entry(s->polls, &s->polls_active,
-+			&s->stdout_index, s->ptg.dest, s->ptg.dest_name);
-+	if (udt_can_read(&s->gtp))
-+		allocate_poll_array_entry(s->polls, &s->polls_active,
-+			&s->stdin_index, s->gtp.src, s->gtp.src_name);
-+	if (udt_can_write(&s->gtp)) {
-+		if (s->gtp.dest == s->ptg.src && s->input_index >= 0)
-+			s->output_index = s->input_index;
-+		else
-+			allocate_poll_array_entry(s->polls, &s->polls_active,
-+				&s->output_index, s->gtp.dest,
-+				s->gtp.dest_name);
-+		transfer_debug("Adding %s to fds to wait for",
-+			s->gtp.dest_name);
++	rpos = special ? 2 : 0;		/* Skip first 2 bytes in specials. */
++	escape = 0;
++	while (str[rpos] && (escape || str[rpos] != ' ')) {
++		if (escape) {
++			switch(str[rpos]) {
++			case ' ':
++			case '%':
++				strbuf_addch(&ret, str[rpos]);
++				break;
++			case 's':
++				strbuf_addstr(&ret, service + psoff);
++				break;
++			case 'S':
++				strbuf_addstr(&ret, service);
++				break;
++			}
++			escape = 0;
++		} else
++			switch(str[rpos]) {
++			case '%':
++				escape = 1;
++				break;
++			default:
++				strbuf_addch(&ret, str[rpos]);
++				break;
++			}
++		rpos++;
++	}
++	switch(special) {
++	case 'G':
++		git_req = strbuf_detach(&ret, NULL);
++		return NULL;
++	case 'V':
++		git_req_vhost = strbuf_detach(&ret, NULL);
++		return NULL;
++	default:
++		return strbuf_detach(&ret, NULL);
 +	}
 +}
 +
-+/*
-+ * Set specified event flags for specified poll array entry if index is
-+ * valid. If msg is not null, it is printed as debug message.
-+ */
-+static void mark_for_wait(struct pollfd* polls, int index, int flags,
-+	const char* msg)
-+{
-+	if (index < 0)
-+		return;		/* Index not in use. */
-+	polls[index].events |= flags;
-+	transfer_debug("Setting fd wait flags: fd=%i, flags=%i, index=%i",
-+		polls[index].fd, flags, index);
-+	if (msg)
-+		transfer_debug("%s", msg);
-+}
++/* Should be enough... */
++#define MAXARGUMENTS 256
 +
-+/*
-+ * Load the parameters into poll array and related fields based on rest of
-+ * fields.
-+ */
-+static void load_poll_params(struct bidirectional_transfer_state* s)
++static const char **parse_argv(const char *arg, const char *service)
 +{
++	int arguments = 0;
 +	int i;
++	char** ret;
++	char *(temparray[MAXARGUMENTS + 1]);
 +
-+	allocate_poll_indexes(s);
-+	for (i = 0; i < s->polls_active; i++)
-+		s->polls[i].events = s->polls[i].revents = 0;
-+
-+	mark_for_wait(s->polls, s->stdin_index, POLLIN,
-+		"Waiting for stdin to become readable");
-+	mark_for_wait(s->polls, s->input_index, POLLIN,
-+		"Waiting for remote input to become readable");
-+	mark_for_wait(s->polls, s->stdout_index, POLLOUT,
-+		"Waiting for stdout to become writable");
-+	mark_for_wait(s->polls, s->output_index, POLLOUT,
-+		"Waiting for remote output to become writable");
-+}
-+
-+/* Call handler if ready. */
-+static int call_handler_if(int r, struct bidirectional_transfer_state* s,
-+	int index, int flagmask, const char* name,
-+	int (*on_ready)(struct unidirectional_transfer *t),
-+	struct unidirectional_transfer *transfer)
-+{
-+	if(r)
-+		return r;
-+	if(index < 0)
-+		return 0;		/* This is not being waited. */
-+	if(s->polls[index].revents & POLLNVAL) {
-+		error("%s got unexpectedly closed", name);
-+		return -1;
++	while (*arg) {
++		char* ret;
++		if (arguments == MAXARGUMENTS)
++			die("remote-ext command has too many arguments");
++		ret = strip_escapes(arg, service, &arg);
++		if (ret)
++			temparray[arguments++] = ret;
 +	}
-+	if(!(s->polls[index].revents & flagmask))
-+		return 0;		/* No events returned. */
-+	return on_ready(transfer);
++
++	ret = xcalloc(arguments + 1, sizeof(char*));
++	for (i = 0; i < arguments; i++)
++		ret[i] = temparray[i];
++
++	return (const char**)ret;
 +}
 +
-+/* Handle events occured during poll. Returns -1 on error, 0 on success. */
-+static int transfer_handle_events(struct bidirectional_transfer_state* s)
++static void send_git_request(int stdin_fd, const char *serv, const char *repo,
++	const char *vhost)
 +{
-+	int r = 0;
-+	r = call_handler_if(r, s, s->stdin_index, POLLIN | POLLHUP,
-+		s->gtp.src_name, udt_do_read, &s->gtp);
-+	r = call_handler_if(r, s, s->input_index, POLLIN | POLLHUP,
-+		s->ptg.src_name, udt_do_read, &s->ptg);
-+	r = call_handler_if(r, s, s->output_index, POLLOUT,
-+		s->gtp.dest_name, udt_do_write, &s->gtp);
-+	r = call_handler_if(r, s, s->stdout_index, POLLOUT,
-+		s->ptg.dest_name, udt_do_write, &s->ptg);
-+	udt_close_if_finished(&s->ptg);
-+	udt_close_if_finished(&s->gtp);
++	size_t bufferspace;
++	size_t wpos = 0;
++	char* buffer;
++
++	/*
++	 * Request needs 12 bytes extra if there is vhost (xxxx \0host=\0) and
++	 * 6 bytes extra (xxxx \0) if there is no vhost.
++	 */
++	if (vhost)
++		bufferspace = strlen(serv) + strlen(repo) + strlen(vhost) + 12;
++	else
++		bufferspace = strlen(serv) + strlen(repo) + 6;
++
++	if (bufferspace > 0xFFFF)
++		die("Request too large to send");
++	buffer = xmalloc(bufferspace);
++
++	/* Make the packet. */
++	wpos = sprintf(buffer, "%04x%s %s%c", (unsigned)bufferspace,
++		serv, repo, 0);
++
++	/* Add vhost if any. */
++	if (vhost)
++		sprintf(buffer + wpos, "host=%s%c", vhost, 0);
++
++	/* Send the request */
++	if (write_in_full(stdin_fd, buffer, bufferspace) < 0)
++		die_errno("Failed to send request");
++
++	free(buffer);
++}
++
++static int run_child(const char *arg, const char *service)
++{
++	int r;
++	struct child_process child;
++
++	memset(&child, 0, sizeof(child));
++	child.in = -1;
++	child.out = -1;
++	child.err = 0;
++	child.argv = parse_argv(arg, service);
++
++	if (start_command(&child) < 0)
++		die("Can't run specified command");
++
++	if (git_req)
++		send_git_request(child.in, service, git_req, git_req_vhost);
++
++	r = bidirectional_transfer_loop(child.out, child.in);
++	if (!r)
++		r = finish_command(&child);
++	else
++		finish_command(&child);
 +	return r;
 +}
 +
-+/*
-+ * Copies data from stdin to output and from input to stdout simultaneously.
-+ * Additionally filtering through given filter. If filter is NULL, uses
-+ * identity filter.
-+ */
-+int bidirectional_transfer_loop(int input, int output)
++#define MAXCOMMAND 4096
++
++static int command_loop(const char *child)
 +{
-+	struct bidirectional_transfer_state state;
-+
-+	/* Fill the state fields. */
-+	state.ptg.src = input;
-+	state.ptg.dest = 1;
-+	state.ptg.dest_is_sock = 0;
-+	state.ptg.state = SSTATE_TRANSFERING;
-+	state.ptg.bufuse = 0;
-+	state.ptg.src_name = "remote input";
-+	state.ptg.dest_name = "stdout";
-+
-+	state.gtp.src = 0;
-+	state.gtp.dest = output;
-+	state.gtp.dest_is_sock = (input == output);
-+	state.gtp.state = SSTATE_TRANSFERING;
-+	state.gtp.bufuse = 0;
-+	state.gtp.src_name = "stdin";
-+	state.gtp.dest_name = "remote output";
++	char buffer[MAXCOMMAND];
 +
 +	while (1) {
-+		int r;
-+		load_poll_params(&state);
-+		if (!state.polls_active) {
-+			transfer_debug("Transfer done");
-+			break;
-+		}
-+		transfer_debug("Waiting for %i file descriptors",
-+			state.polls_active);
-+		r = poll(state.polls, state.polls_active, -1);
-+		if (r < 0) {
-+			if (errno == EWOULDBLOCK || errno == EAGAIN ||
-+				errno == EINTR)
-+				continue;
-+			error("poll failed: %s", strerror(errno));
-+			return -1;
-+		} else if (r == 0)
-+			continue;
++		if (!fgets(buffer, MAXCOMMAND - 1, stdin))
++			exit(0);
++		/* Strip end of line characters. */
++		while (isspace((unsigned char)buffer[strlen(buffer) - 1]))
++			buffer[strlen(buffer) - 1] = 0;
 +
-+		r = transfer_handle_events(&state);
-+		if (r)
-+			return r;
++		if (!strcmp(buffer, "capabilities")) {
++			printf("*connect\n\n");
++			fflush(stdout);
++		} else if (!strncmp(buffer, "connect ", 8)) {
++			printf("\n");
++			fflush(stdout);
++			return run_child(child, buffer + 8);
++		} else {
++			fprintf(stderr, "Bad command");
++			return 1;
++		}
 +	}
-+	return 0;
 +}
-diff --git a/transport.h b/transport.h
-index c59d973..e803c0e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -154,6 +154,7 @@ int transport_connect(struct transport *transport, const char *name,
- 
- /* Transport methods defined outside transport.c */
- int transport_helper_init(struct transport *transport, const char *name);
-+int bidirectional_transfer_loop(int input, int output);
- 
- /* common methods used by transport.c and builtin-send-pack.c */
- void transport_verify_remote_names(int nr_heads, const char **heads);
++
++int cmd_remote_ext(int argc, const char **argv, const char *prefix)
++{
++	if (argc < 3) {
++		fprintf(stderr, "Error: URL missing");
++		exit(1);
++	}
++
++	return command_loop(argv[2]);
++}
+diff --git a/git.c b/git.c
+index b7b96b0..e95a1ba 100644
+--- a/git.c
++++ b/git.c
+@@ -374,6 +374,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "receive-pack", cmd_receive_pack },
+ 		{ "reflog", cmd_reflog, RUN_SETUP },
+ 		{ "remote", cmd_remote, RUN_SETUP },
++		{ "remote-ext", cmd_remote_ext },
+ 		{ "remote-fd", cmd_remote_fd },
+ 		{ "replace", cmd_replace, RUN_SETUP },
+ 		{ "repo-config", cmd_config, RUN_SETUP_GENTLY },
 -- 
 1.7.3.1.48.g63ac7.dirty
