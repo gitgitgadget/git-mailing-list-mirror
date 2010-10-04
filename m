@@ -1,67 +1,53 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH v4 3/3] git-remote-ext
-Date: Mon, 4 Oct 2010 20:09:03 +0200
-Message-ID: <AANLkTinW1cZzYACcHBqCTCJ6pybW3UnqQuY-6CcMgJCx@mail.gmail.com>
-References: <1286190258-12724-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <1286190258-12724-4-git-send-email-ilari.liusvaara@elisanet.fi>
- <AANLkTikenkhm0RJR0ovVyY9WLHtwWo+qQsyAhFDk=BO2@mail.gmail.com> <20101004181133.GA14661@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH v4 1/4] Introduce wholesame directory move detection in
+ diffcore.
+Date: Mon, 4 Oct 2010 20:19:29 +0200
+Message-ID: <20101004181929.GS4983@home.lan>
+References: <1286138529-6780-1-git-send-email-ydirson@altern.org>
+ <1286138529-6780-2-git-send-email-ydirson@altern.org>
+ <AANLkTinhfxXPqapzdBkSehq9Qxv20=bxq9HwR8kQfPdn@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Mon Oct 04 20:09:33 2010
+To: ?var Arnfj?r? Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 04 20:10:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2pTh-0007El-Er
-	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 20:09:33 +0200
+	id 1P2pUV-0007QN-4D
+	for gcvg-git-2@lo.gmane.org; Mon, 04 Oct 2010 20:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756701Ab0JDSJ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 4 Oct 2010 14:09:27 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60305 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755022Ab0JDSJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 14:09:26 -0400
-Received: by gwj17 with SMTP id 17so1720520gwj.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 11:09:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=YajTOrS47WiSmO7c74AVGR3lG9f7Nb0C1OP7mst9YoY=;
-        b=uOHiQRlA6dTJnypcvyoEXu5yHy5x5WDGgzQtAKc84tkdaqRuKLJRf6nxRYZ5hAzAFo
-         /6NnT18aoa7ZuLfuTJPvYWQ6MCPq75MrUhDH1lRYpdTGxqDw5eGh8pcxk5ZW7yo+XsEJ
-         sdvbFyU0FCZsEmaaKVuwqkNpD7GVpu7dPvxhE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=bslRA82c01CNalKSz3dJSJl9S/b1MoeyLqWSiO/aYcW+MZpn2xAm/hi313wreIX3q1
-         IdFk4SksVhLnXo0VWZcoYuhtwvJLgAtRWIj+s6VPg4u5JCO3EjKeSznsUDQRgYbOOWQG
-         2NSN8s56sq8sWAgtvF7bV81lwzWc8Q3myljlg=
-Received: by 10.90.80.19 with SMTP id d19mr4799383agb.54.1286215763773; Mon,
- 04 Oct 2010 11:09:23 -0700 (PDT)
-Received: by 10.151.15.8 with HTTP; Mon, 4 Oct 2010 11:09:03 -0700 (PDT)
-In-Reply-To: <20101004181133.GA14661@LK-Perkele-V2.elisa-laajakaista.fi>
+	id S1756745Ab0JDSJj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 14:09:39 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:60483 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755265Ab0JDSJi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 14:09:38 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 6E6F1D4815C;
+	Mon,  4 Oct 2010 20:09:31 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P2pdJ-0002jy-VK; Mon, 04 Oct 2010 20:19:29 +0200
+Content-Disposition: inline
+In-Reply-To: <AANLkTinhfxXPqapzdBkSehq9Qxv20=bxq9HwR8kQfPdn@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158080>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158081>
 
-Heya,
+On Mon, Oct 04, 2010 at 02:59:20AM +0000, ?var Arnfj?r? Bjarmason wrote:
+> On Sun, Oct 3, 2010 at 20:42, Yann Dirson <ydirson@altern.org> wrote:
+> > This feature tries to group together files moving from and to
+> > identical directories - the most common case being directory renames.
+> 
+> You should change the C++/C99 comments to C89 comments since we target
+> the latter.
 
-On Mon, Oct 4, 2010 at 20:11, Ilari Liusvaara
-<ilari.liusvaara@elisanet.fi> wrote:
-> Connect its stdin and stdout to git://-type server somewhere. It might
-> be that the actual address of server is variable depending on network
-> conditions, the connection is tunneled somehow, etc..
-
-SGTM, can you add that to the doc somewhere?
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Right.  Most of them are here as reminders to either fix something or
+be sure fixing it was considered before submission for inclusion -
+hopefully using unacceptable syntax helps here :)
