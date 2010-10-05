@@ -1,112 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 0/3] Teach fetch and pull to recursively fetch
- submodules too
-Date: Tue, 05 Oct 2010 14:06:25 -0700
-Message-ID: <7vhbh05oz2.fsf@alter.siamese.dyndns.org>
-References: <4C7A819B.3000403@web.de>
- <7vocckhcb6.fsf@alter.siamese.dyndns.org>
- <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org>
- <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org> <4C9221B6.7070807@web.de>
- <AF9B7F7E-0956-4814-A3A8-BAD7619A043D@sb.org> <4C9351A7.7050609@web.de>
- <4C9359D4.2030109@viscovery.net> <4C935D77.3080008@web.de>
- <329A2E43-ADE3-467C-A2A6-24ACB9DF641E@sb.org> <4C953DE5.6020900@web.de>
- <DD3654D9-46B9-4980-9138-38FDC33A383C@sb.org> <4C963D00.9050207@web.de>
- <28BC3A45-D3CF-4A8C-A818-B92A9827C8FB@sb.org> <4CAB8DDF.8080004@web.de>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: large files and low memory
+Date: Tue, 05 Oct 2010 17:11:45 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1010051657440.3107@xanadu.home>
+References: <20101004092046.GA4382@nibiru.local>
+ <AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
+ <20101004185854.GA6466@burratino>
+ <AANLkTin-mbzt93DWtp71vYBEUcDLHgo=G-6zynT5NC_r@mail.gmail.com>
+ <20101004191657.GC6466@burratino>
+ <alpine.LFD.2.00.1010051518570.3107@xanadu.home>
+ <20101005203450.GA2096@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Ballard <kevin@sb.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Oct 05 23:06:47 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Shawn Pearce <spearce@spearce.org>, weigelt@metux.de,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 23:11:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Eif-0004mM-7p
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 23:06:41 +0200
+	id 1P3Eng-0005xy-Ix
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 23:11:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631Ab0JEVGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 17:06:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55820 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755222Ab0JEVGe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 17:06:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 273C2DC8EA;
-	Tue,  5 Oct 2010 17:06:34 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5wyFnQIPPSz/enqpUIRXqx5kack=; b=I3hnBR
-	w4VDa3YlXQww2aG+PIc/8TQaFLl/PXS4Mu/piesKyKEIGw5KKj/eN+R4gW6UO/EY
-	l3/aFFN6KZsu8H+X43dW570yS1IWZpsEfcsG1F/RuCXYB+Zdxpdr24C8PQ1WXvkd
-	acAHSpQrXUJTd6NlORv7W5qkbfd5vCfmbR6/0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vppwn659OSygGhGejQcXpSJLHfGCKCZc
-	L3jbSapLCHaLJww95NzuvAYzxoX8dfh0iT7LjNf6NlFxOYAAhIHMqYzL5f2NZzsi
-	yyjzQc9ms+xbuyWY/VE2OtKKp9f+d9IPT4l+DXZQH0ZvwgsHGsNNB+BoUfl2hi9h
-	XGY1vVMbrLQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D5279DC8D5;
-	Tue,  5 Oct 2010 17:06:30 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id EE5EFDC8D3; Tue,  5 Oct
- 2010 17:06:26 -0400 (EDT)
-In-Reply-To: <4CAB8DDF.8080004@web.de> (Jens Lehmann's message of "Tue\, 05
- Oct 2010 22\:43\:11 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6D2FFBBE-D0C4-11DF-9F97-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1755910Ab0JEVLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 17:11:47 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:59290 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753226Ab0JEVLq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 17:11:46 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
+ with ESMTP id <0L9U00IAX5JLXD70@VL-MO-MR005.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 05 Oct 2010 17:11:45 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20101005203450.GA2096@burratino>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158249>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Tue, 5 Oct 2010, Jonathan Nieder wrote:
 
->    a) "git fetch --all"
->
->       The user wanted to fetch new commits from all remotes. I think
->       git should also fetch all submodules then, no matter if new
->       commits from them are fetched in the superproject, as the user
->       explicitly said he wants everything. Objections?
+> Nicolas Pitre wrote:
+> 
+> > You can't do a one-pass  calculation.  The first one is required to 
+> > compute the SHA1 of the file being added, and if that corresponds to an 
+> > object that we already have then the operation stops right there as 
+> > there is actually nothing to do.
+> 
+> Ah.  Thanks for a reminder.
+> 
+> > In the case of big files, what we need to do is to stream the file data 
+> > in, compute the SHA1 and deflate it, in order to stream it out into a 
+> > temporary file, then rename it according to the final SHA1.  This would 
+> > allow Git to work with big files, but of course it won't be possible to 
+> > know if the object corresponding to the file is already known until all 
+> > the work has been done, possibly just to throw it away.
+> 
+> To make sure I understand correctly: are you suggesting that for big
+> files we should skip the first pass?
 
-Why?  I do not see a "--submodules" option on that command line.  The only
-thing I asked is to grab all branches for the project I ran "git fetch"
-in.
+For big files we need a totally separate code path to process the file 
+data in small chunks at 'git add' time, using a loop containing 
+read()+SHA1sum()+deflate()+write().  Then, if the SHA1 matches an 
+existing object we delete the temporary output file, otherwise we rename 
+it as a valid object.  No CRLF, no smudge filters, no diff, no deltas, 
+just plain storage of huge objects, based on the value of 
+core.bigFileThreshold config option.
 
->    b) "git fetch [<repository>]"
->
->       The user wants to fetch from the default [or a single repo]. I
->       think all submodules should be fetched too, Kevin thinks this
->       should happen only when it is necessary (at least for his 'H'
->       repository). While I think fetching all submodules too is
->       consistent with the fact that you get all branches in the
->       superproject too, whether you need them or not, we can't seem
->       to agree on this one (also see my proposal below).
+Same thing on the checkout path: a simple loop to 
+read()+inflate()+write() in small chunks.
 
-The case with <repository> is a lot more questionable than the case of
-fetching implicitly from whereever you usually fetch from.  Imagine that
-you fork git.git, and create a separate project that has some nifty
-additions to support submodules better.  The additional part is naturally
-done as a submodule.  This jens.git repository becomes very popular and
-people clone from it.  Your users usually interact with your repository by
-saying "git fetch" or "git pull" without any explicit <repository>.  They,
-however, would want to fetch/pull from me from time to time to get updates
-that you haven't incorporated in jens.git repository. "git fetch junio" is
-run.  Why should such a "fetch" go to your repository and slurp the
-objects for the submodules?
+That's the only sane way to kinda support big files with Git.
 
-Perhaps you would want some knobs like these?
+> I suppose that makes sense: for small files, using a patch application
+> tool to reach a postimage that matches an existing object is something
+> git historically needed to expect, but for typical big files:
+> 
+>  - once you've computed the SHA1, you've already invested a noticeable
+>    amount of time.
+>  - emailing patches around is difficult, making "git am" etc less important
+>  - hopefully git or zlib can notice when files are uncompressible,
+>    making the deflate not cost so much in that case.
 
-        [remote "origin"]
-                fetch-submodules = all
-                fetch-submodules = changed
+Emailing is out of the question.  We're talking file sizes in the 
+hundreds of megabytes and above here.  So yes, simply computing the SHA1 
+is a significant cost, given that you are going to trash your page cache 
+in the process already, so better pay the price of deflating it at the 
+same time even if it turns out to be unnecessary.
 
-        [remote "junio"]
-                fetch-submodules = none
 
-I dunno.  I've never been a fan of automatically recursing into submodules
-(iow, treating the nested structure as if there is no nesting), so...
+Nicolas
