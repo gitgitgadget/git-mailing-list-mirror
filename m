@@ -1,92 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG] git-svn parses --pretty=medium log output, fails when
- log.decorate is true
-Date: Tue, 5 Oct 2010 12:58:31 -0400
-Message-ID: <20101005165830.GA13413@sigill.intra.peff.net>
-References: <1286273926.2364.6.camel@wpalmer.simply-domain>
+From: Brad King <brad.king@kitware.com>
+Subject: Re: Move tags to branch
+Date: Tue, 05 Oct 2010 13:29:22 -0400
+Message-ID: <4CAB6072.2060407@kitware.com>
+References: <AANLkTinzGy62ETZdry5y1qTi0djkt9d72_3soCP6K_Qn@mail.gmail.com> <m3mxqtfnrk.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Eric Wong <normalperson@yhbt.net>, git <git@vger.kernel.org>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 18:58:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 19:29:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3AqM-0003ge-GV
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 18:58:22 +0200
+	id 1P3BKZ-0003XX-3G
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 19:29:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753157Ab0JEQ6O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 12:58:14 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33438 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752627Ab0JEQ6N (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 12:58:13 -0400
-Received: (qmail 596 invoked by uid 111); 5 Oct 2010 16:58:12 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 05 Oct 2010 16:58:12 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 05 Oct 2010 12:58:31 -0400
-Content-Disposition: inline
-In-Reply-To: <1286273926.2364.6.camel@wpalmer.simply-domain>
+	id S1754368Ab0JER32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 13:29:28 -0400
+Received: from public.kitware.com ([66.194.253.19]:35025 "EHLO
+	public.kitware.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752730Ab0JER32 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 13:29:28 -0400
+Received: by public.kitware.com (Postfix, from userid 5001)
+	id C25821B37A; Tue,  5 Oct 2010 13:29:26 -0400 (EDT)
+Received: from hythloth (hythloth.kitwarein.com [192.168.30.5])
+	by public.kitware.com (Postfix) with ESMTP id 27B131B37A;
+	Tue,  5 Oct 2010 13:29:23 -0400 (EDT)
+Received: from [IPv6:::1] (localhost [127.0.0.1])
+	by hythloth (Postfix) with ESMTP id E2D03CE9;
+	Tue,  5 Oct 2010 13:29:22 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.11) Gecko/20100805 Icedove/3.0.6
+In-Reply-To: <m3mxqtfnrk.fsf@localhost.localdomain>
+X-Enigmail-Version: 1.0.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158216>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158217>
 
-On Tue, Oct 05, 2010 at 11:18:46AM +0100, Will Palmer wrote:
-
-> I started receiving this error during "git svn dcommit" today:
+On 10/04/2010 09:10 PM, Jakub Narebski wrote:
+> Mathieu Malaterre <mathieu.malaterre@gmail.com> writes:
 > 
-> Use of uninitialized value $hash in string eq
-> at /home/wpalmer/libexec/git-core/git-svn line 1534.
+>>   I have been using svn2git to start using git. However svn2git
+>> creates tags from HEAD instead of the branch. Is there a way to move
+>> tags back to the branch ?
 > 
-> Examining that section reveals that git-svn is running 
-> "git log --no-color --first-parent --pretty=medium"
-> 
-> and parsing the output in order to find commit hashes and git-svn-id:
-> lines. This breaks when log.decorate is true.
-> 
-> This could be patched-up by adding "--no-decorate" to the options
-> git-svn passes, but that seems to me like it would just be adding to the
-> pile, as "--pretty=medium" is a moving target. I assume the correct
-> solution is to specify the format exactly as it is expected.
+> Isn't it by a chance caused by the fact that Subversion does not
+> "enforce" tags to not change?
 
-The problem isn't necessarily --pretty=medium, but that we are using
-"git log" instead of "git rev-list" (though because "git log" does have
-some features that rev-list does not have, we do turn off most
-configurable features for "git log --pretty=raw").
+I've converted repositories with this problem before.  Subversion
+"tags" are basically branches.  I usually manufacture a merge commit
+to keep the tagged versions alive in history as close to inline as
+possible.  For example, if the conversion result is
 
-So I think the simplest thing is just the patch below (which has only
-been lightly tested by me):
+                      o----v2
+                     /
+  ...o----B----o----o----C----D  master
+      \
+       o----v1
 
--- >8 --
-Subject: [PATCH] git-svn: use rev-list instead of log
+because "tags" v1 and v2 have had a couple of commits, I manually
+convert it to
 
-We are parsing the output, so we don't want user
-configuration like color or decorations to appear in the
-output. The simplest way to accomplish this is to use the
-rev-list plumbing instead of the log porcelain.
+                        o----v2
+                       /      \
+  ...o----B--B'--o----o----C---C'---D  master
+      \      /
+       o----v1
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- git-svn.perl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+using git plumbing, grafts, and filter-branch.
 
-diff --git a/git-svn.perl b/git-svn.perl
-index d292224..03d93d8 100755
---- a/git-svn.perl
-+++ b/git-svn.perl
-@@ -1514,7 +1514,7 @@ sub cmt_sha2rev_batch {
- 
- sub working_head_info {
- 	my ($head, $refs) = @_;
--	my @args = ('log', '--no-color', '--first-parent', '--pretty=medium');
-+	my @args = ('rev-list', '--first-parent', '--pretty=medium');
- 	my ($fh, $ctx) = command_output_pipe(@args, $head);
- 	my $hash;
- 	my %max;
--- 
-1.7.3.1.158.g8f5ae
+B' has B as its first parent, v1 as its second parent, and the same
+tree object as B.  Similarly for C', C, and v2.  The commit messages
+for B' and C' explain that they were manufactured retroactively during
+conversion.
+
+Commits B and C were selected as the artificial "merge points" by
+finding the newest commits in a first-parent traversal of master that
+were not newer than v1 and v2, respectively.  The committer times for
+B' and C' are taken from v1 and v2 (or a time shortly thereafter).
+
+-Brad
