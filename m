@@ -1,109 +1,96 @@
-From: Todd Zullinger <tmz@pobox.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
 Subject: Re: [PATCH] tag,verify-tag: do not trip over rfc1991 signatures
-Date: Tue, 5 Oct 2010 16:42:02 -0400
-Message-ID: <20101005204201.GF7629@inocybe.localdomain>
-References: <4CAB46C0.9000807@drmicha.warpmail.net>
- <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net>
+Date: Tue, 05 Oct 2010 22:42:35 +0200
+Message-ID: <4CAB8DBB.3030706@drmicha.warpmail.net>
+References: <4CAB46C0.9000807@drmicha.warpmail.net> <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net> <7vr5g45qqx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
-Cc: git@vger.kernel.org, Stephan Hugel <urschrei@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Oct 05 22:42:27 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stephan Hugel <urschrei@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 22:42:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3EL6-0006k6-MF
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:42:21 +0200
+	id 1P3ELQ-0006pu-If
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:42:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752070Ab0JEUmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 16:42:13 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35917 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754639Ab0JEUmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 16:42:12 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A2A3DC62E;
-	Tue,  5 Oct 2010 16:42:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
-	:cc:subject:message-id:references:mime-version:content-type
-	:in-reply-to; s=sasl; bh=xOQHED2ycuzjarl+BdV+YsSh+8U=; b=npgySNu
-	w6FRqyVOqxm4zSAtUuUdjlqcvyonRcyzChA8VKqiJNS9hs3oifuojtVd8SD0tK92
-	yI+YJDp+batAl/cHf9Qb/Fu3QeNuA2r08qBtDYzEH7Khmjuw4s/1hr1r+9GA4kqD
-	bkiXSxp+swR2AKMiyNU6EzTy2BPVAMdTQM7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
-	:subject:message-id:references:mime-version:content-type
-	:in-reply-to; q=dns; s=sasl; b=RCAdvr2U5dHtmu0RsunP1ucT7nq/+Je4q
-	yJXNsW/yBqAF5eWxp1OEyq5J57oJOC5SAnQt+TJjNIGhsTXqTGg7pN3W4SJ/mYq8
-	SHxNvQiWTx6G8gNfsr7ebxm+A/0D3Wc540ccdIKqXAdFHxb3k7pp4BxUKulcWaIa
-	8VlB8l7jg0=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 452FEDC62D;
-	Tue,  5 Oct 2010 16:42:07 -0400 (EDT)
-Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
- with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D2D3DC629; Tue,  5 Oct
- 2010 16:42:03 -0400 (EDT)
-Content-Disposition: inline
-In-Reply-To: <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Pobox-Relay-ID: 04D24FDE-D0C1-11DF-9133-030CEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
+	id S1755063Ab0JEUm0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 16:42:26 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:45495 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752597Ab0JEUmZ (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 16:42:25 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 87D5C685B;
+	Tue,  5 Oct 2010 16:42:24 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Tue, 05 Oct 2010 16:42:24 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=nJ7qA9TjbYB054sqRgBACl88zUo=; b=UO7/f1zxNru/Kxt6fqw4LN67yIabE0D9jXxQ5Njqc/HZ5WxubYYkvIN9JcEuoAYWcROvjW2hzIvrOp2YzcZ1wSLWW75fh+GP4EOWFQq1AhkNJMQr2SmYlejXU7f8Sb5+KAq5+v85KiAz9EsDnfNwPc8cDbeJdxd4b92RnEbtokA=
+X-Sasl-enc: UOvkpOkVyB3EJuFbIywQHyBgu1O8596p+vQpMJYq2l4C 1286311344
+Received: from localhost.localdomain (p54858F63.dip0.t-ipconnect.de [84.133.143.99])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 75FA75E0C92;
+	Tue,  5 Oct 2010 16:42:23 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <7vr5g45qqx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158238>
 
+Junio C Hamano venit, vidit, dixit 05.10.2010 22:28:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Currently, git expects "-----BEGIN PGP SIGNATURE-----" at the beginning of a
+>> signature. But gpg uses "MESSAGE" instead of "SIGNATURE" when used with
+>> the "rfc1991" option. This leads to git's faling to verify it's own
+>> signed tags.
+>>
+>> Be more lenient and take "-----BEGIN PGP " as the indicator.
+> 
+> Thanks, but it bothers me that the patch is a bit inconsistently lenient.
+> 
+> How many variants of PGP implementations are there?  For example, I'd ask
+> these without doing my own research because I am lazy:
+> 
+>  1. Does everybody place five dashes at the beginning (IOW, is there an
+>     odd variant that puts four or six)?
+> 
+>  2. Does everybody follow the dashes immediately with "BEGIN" (IOW, is
+>     there an odd variant that puts a SP between them)?
+> 
+>  3. Does everybody spell "BEGIN PGP " the same way, in all uppercase?
+> 
+>  4. Does everybody place five dashes at the end (IOW, is there an odd
+>     variant that puts four or six)?
+> 
+>  5. Does everybody follow the "BEGIN PGP SOMETHING" immediately with
+>     dashes without SP?
+> 
+> Your patch seem to answer <yes, yes, yes, no, no> to the above question.
 
---24zk1gE8NUlDmwG9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 4,5, my patch only implies that I (suggest we) don't care.
 
-Michael J Gruber wrote:
-> Currently, git expects "-----BEGIN PGP SIGNATURE-----" at the beginning o=
-f a
-> signature. But gpg uses "MESSAGE" instead of "SIGNATURE" when used with
-> the "rfc1991" option. This leads to git's faling to verify it's own
-> signed tags.
->
-> Be more lenient and take "-----BEGIN PGP " as the indicator.
+> I'd find it saner if the patched code at least checked that the line ends
+> with 5 dashes.
 
-Another way to go might be to add --gnupg (or --openpgp) to the gpg
-options used for tagging.  That overrides an option like rfc1991 in
-the gnupg config file.
+Alternatively, we can just say we support gnupg/openpg but not pgp 2.0,
+and running gpg with pgp 2.0 options is discouraged even by gpg's man page.
 
-Whether that's preferable to accepting these older-style messages is
-debatable.  Using rfc1991 implies pgp-2.x compatibility, which means
-using md5 as the algorithm.  It could be seen as a weakness to accept
-such signatures.
+The main issue here is that we create a detached signature (rather than
+a clear text signature) but then lump it together with the content (the
+tag object sans sig). The boundary mark between the two is not
+controlled by us but by gpg (and its options).
 
-(Oh, and you probably saw this already, but s/faling/failing. ;)
+In order to verify the sig, *we* have to split the lump again but we
+don't really know the boundary mark. It's insane by design. We should
+have used a non-volatile boundary mark.
 
---=20
-Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-The best cure for insomnia is to get a lot of sleep.
-    -- W.C. Fields
+I'll check whether we can somehow feed the whole lump to gpg and make it
+recognize the attached-detached signature. That way we'd be as
+compatible as gpg.
 
-
---24zk1gE8NUlDmwG9
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iQFDBAEBCAAtBQJMq42VJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
-bXouYXNjAAoJEEMlk4u+rwzjqrwH/AsfSBigciC+SHJ/YDaH0za+IiUk4+iB8VG4
-qNv4WKoHuNoKV99p35duNiSS8Qmlb2msBPt0hUVNNV+hRYTMZKaNfPmx1I0U6iC/
-fmh2EjkKN4LlpJ3qxSu5KaNElizVBiGK6m1yl0KjPOApABsRnpi9S/qpOXmBv8Ui
-64LHoJvET6ih8mj5jgDmhn+WoOc1Lmkuh9ud6ayw2FzWZq2j4aqjd5ERUV+IbNZR
-/zOQtzFxcWXi9Sn2zD7cHFVaa2uaSu4Tf9VbDUZWXYV21yoEHIQL7URAYgE0UWo+
-uEv5+PNEQ131M912UnG1eHg5puNlxlyGzKJm3AcRAtSEZUuzVww=
-=IMpP
------END PGP SIGNATURE-----
-
---24zk1gE8NUlDmwG9--
+Michael
