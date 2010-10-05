@@ -1,84 +1,102 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Useful tracking branches and auto merging
-Date: Tue, 5 Oct 2010 20:49:25 +0300
-Message-ID: <AANLkTinXJ5E_U=5uP_zvWLQBssQsYC74JyVv1N3-eMXK@mail.gmail.com>
-References: <AANLkTimq0sKUavKiXepDOz+DvrymuRAVUyAyV+FzbCBD@mail.gmail.com>
-	<20101004204625.GH6466@burratino>
-	<7vk4lw7g2m.fsf@alter.siamese.dyndns.org>
+From: Mathias Lafeldt <misfire@debugon.org>
+Subject: Re: [BUG] git-svn parses --pretty=medium log output, fails when log.decorate
+ is true
+Date: Tue, 05 Oct 2010 19:53:36 +0200
+Message-ID: <4CAB6620.4000909@debugon.org>
+References: <1286273926.2364.6.camel@wpalmer.simply-domain> <20101005165830.GA13413@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 19:49:33 2010
+Content-Transfer-Encoding: 7bit
+Cc: Will Palmer <wmpalmer@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>, git <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Oct 05 19:53:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Bdt-0000Wg-6m
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 19:49:33 +0200
+	id 1P3Bi4-0001WA-Od
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 19:53:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753662Ab0JERt1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 13:49:27 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33375 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753408Ab0JERt0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 13:49:26 -0400
-Received: by bwz11 with SMTP id 11so4733259bwz.19
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 10:49:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ck5qWZJ+9MeBEQNNhOgd6BV8LIMHtUko3DNv6AYvwd8=;
-        b=M7vId+UHQBmRMXeZPaL+4LhFVvZRZvGKmk9jbqcA9LayYn9Gb3ss91X1XhGeVz5XCR
-         4Ch33nrhJ4Oo5n/jfUHozBmMT0KDjRgtNhiMU99GI1DkTPqKnEtN1SPgdgxhafZ7EBkp
-         8E+TbKqR6l7G4/h7pK5Zc+F78ZlLUEw3ayLiI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=CswDLj4jLr2SfZDNmRGaRVWNajUx1gkJ81rmMZDQaxvr790RtzkQWeTN+CQTY6Pxtp
-         88BJJlhGHMU1n+PwiM7PmYOnNdFqLoT8vlT7rHdYMhbmr9iPz8F/ZdkxT/udkHp3T4lK
-         HsZxblqOIMDGGT6h5MAiqdNmOcjLXE31+u4AQ=
-Received: by 10.204.65.145 with SMTP id j17mr8626865bki.209.1286300965351;
- Tue, 05 Oct 2010 10:49:25 -0700 (PDT)
-Received: by 10.204.152.142 with HTTP; Tue, 5 Oct 2010 10:49:25 -0700 (PDT)
-In-Reply-To: <7vk4lw7g2m.fsf@alter.siamese.dyndns.org>
+	id S1753663Ab0JERxr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 13:53:47 -0400
+Received: from moutng.kundenserver.de ([212.227.126.186]:51216 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750724Ab0JERxq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 13:53:46 -0400
+Received: from [192.168.2.2] (p54B945BF.dip.t-dialin.net [84.185.69.191])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MZhpC-1PJ4Qv1uIQ-00Kxej; Tue, 05 Oct 2010 19:53:40 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100915 Thunderbird/3.0.8
+In-Reply-To: <20101005165830.GA13413@sigill.intra.peff.net>
+X-Provags-ID: V02:K0:7KC475YfEKcxGQddXa/p3vLeTND6GjEqtfGZLb6DtFF
+ mcTzVmxdjvmjAsBvCGMXLwTmWN3TJ2m8DKrpjg8qLzo3H0FAVE
+ pfiSmTKfnan14jP1ETNSAsYRs9+ytf6GQ64UuMSVWzegBuy7UF
+ J6ecvibtg3/dbde5rJJlf4e4Z5Wms5/FBLAb0hKfFLw9VEDb8D
+ qUllQt9xq+MhpTlI4jXxmjqnCLgwfMG/470lwG+VhM=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158219>
 
-On Tue, Oct 5, 2010 at 7:35 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->> Maybe 'git pull --all' could be taught to eventually do this? =C2=A0=
-That
->> would be incompatible with its current behavior of fetching everythi=
-ng
->> and merging some random branch, but I don't think anyone is relying
->> on that.
->
-> I vaguely recall that we had discussions to disable "git pull --all",
-> which most likely is a mistake?
+On 10/05/2010 06:58 PM, Jeff King wrote:
+> On Tue, Oct 05, 2010 at 11:18:46AM +0100, Will Palmer wrote:
+> 
+>> I started receiving this error during "git svn dcommit" today:
+>>
+>> Use of uninitialized value $hash in string eq
+>> at /home/wpalmer/libexec/git-core/git-svn line 1534.
+>>
+>> Examining that section reveals that git-svn is running 
+>> "git log --no-color --first-parent --pretty=medium"
+>>
+>> and parsing the output in order to find commit hashes and git-svn-id:
+>> lines. This breaks when log.decorate is true.
+>>
+>> This could be patched-up by adding "--no-decorate" to the options
+>> git-svn passes, but that seems to me like it would just be adding to the
+>> pile, as "--pretty=medium" is a moving target. I assume the correct
+>> solution is to specify the format exactly as it is expected.
+> 
+> The problem isn't necessarily --pretty=medium, but that we are using
+> "git log" instead of "git rev-list" (though because "git log" does have
+> some features that rev-list does not have, we do turn off most
+> configurable features for "git log --pretty=raw").
+> 
+> So I think the simplest thing is just the patch below (which has only
+> been lightly tested by me):
+> 
+> -- >8 --
+> Subject: [PATCH] git-svn: use rev-list instead of log
+> 
+> We are parsing the output, so we don't want user
+> configuration like color or decorations to appear in the
+> output. The simplest way to accomplish this is to use the
+> rev-list plumbing instead of the log porcelain.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  git-svn.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
+> diff --git a/git-svn.perl b/git-svn.perl
+> index d292224..03d93d8 100755
+> --- a/git-svn.perl
+> +++ b/git-svn.perl
+> @@ -1514,7 +1514,7 @@ sub cmt_sha2rev_batch {
+>  
+>  sub working_head_info {
+>  	my ($head, $refs) = @_;
+> -	my @args = ('log', '--no-color', '--first-parent', '--pretty=medium');
+> +	my @args = ('rev-list', '--first-parent', '--pretty=medium');
+>  	my ($fh, $ctx) = command_output_pipe(@args, $head);
+>  	my $hash;
+>  	my %max;
 
-I believe this use-case is valid:
+You're right. Using rev-list looks like a much cleaner solution.
 
- * The user wants *all* his remote tracking branches to point to the
-latest branch head in all the repos in the case the can be
-fast-forwarded, and in the case they can't, print an error and
-continue with the rest.
+In addition, I think we can replace the call to git-log in git_svn_log_cmd() too.
 
-Right now I would have to do 'git fetch --all' go to every remote
-tracking branch, and do 'git merge @{upstream}'.
-
-Do you have a better idea how to achieve that instead of 'git pull --al=
-l'?
-
---=20
-=46elipe Contreras
+-Mathias
