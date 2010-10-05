@@ -1,92 +1,65 @@
-From: Daniel Johnson <computerdruid@gmail.com>
+From: Eric Raible <raible@gmail.com>
 Subject: Re: git push <branch-name>
-Date: Tue, 5 Oct 2010 18:11:44 -0400
-Message-ID: <201010051811.49211.ComputerDruid@gmail.com>
+Date: Tue, 5 Oct 2010 15:28:56 -0700
+Message-ID: <AANLkTi=sDDXRKuHf93cZ4fSVpZFvgyB+k934qg7gDL9T@mail.gmail.com>
+References: <201010051811.49211.ComputerDruid@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1478251.MIj7GZuW6q";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 00:11:32 2010
+To: Daniel Johnson <computerdruid@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 06 00:29:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3FjP-0007yh-MQ
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 00:11:32 +0200
+	id 1P3G0M-0004Je-RL
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 00:29:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754258Ab0JEWL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 18:11:26 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43294 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753971Ab0JEWLZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 18:11:25 -0400
-Received: by wwj40 with SMTP id 40so6271283wwj.1
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 15:11:24 -0700 (PDT)
+	id S1756930Ab0JEW25 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 18:28:57 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:40253 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754949Ab0JEW24 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 18:28:56 -0400
+Received: by ywh1 with SMTP id 1so205459ywh.19
+        for <git@vger.kernel.org>; Tue, 05 Oct 2010 15:28:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:to:subject:from:date:cc
-         :mime-version:content-type:content-transfer-encoding:message-id;
-        bh=VsfgdS5EBMzjBbeoK2wR5vicS0Wvd3wteaZiBPTXr3I=;
-        b=G9bvlfuWgJLOl1592TGu7/sbgtaNoRPjGvFadI45AB/+XjacW0hho2w28/X8fuglxg
-         s5H6fT/9cijHt5zu4dOOu1agZrdPvBiexWKt4JkimtcWBoK+2HLPi1aSbS/YK+INS6xi
-         gSKY8kCjYhOFJ2GLYynWF2wABrzDmP6C6mGA0=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=WNJL+7hkMioKxZsVvHUtLf5mdLVJpTsKiDHOaLg3B4k=;
+        b=Tw93Lu/UNi7fE9q+RTr7wMxYGLabCUwiSFKQnjiCamNGl9sxy0W+y9U7+GqRgX3RGM
+         MmTfphQ47zOJ2Pp6pSiPEP2CZz4y+ldl+1f6VPBM8PP+EN74q/8tMcHGxfOjkehr7Nw+
+         LIv7GBf9JziFNP1lKyddACvsQ1DW0esvNIZuQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=to:subject:from:date:cc:mime-version:content-type
-         :content-transfer-encoding:message-id;
-        b=jSQGDiRQ7CMAnJD0I2QfGc7hqRf7CrNdcYphURD/VH5AmN04dYrMxyx4w9LIqC8AQ8
-         abG7k42fRre6SpfTmEdse0BjennlqhH/cJ/gdL3EHnfBveMzsdR7KXmxOUfoh/0qucG1
-         YQoOt94MkZVg59pzp0lqEa1RXVL4vqLdK82lI=
-Received: by 10.216.182.202 with SMTP id o52mr9828218wem.29.1286316684264;
-        Tue, 05 Oct 2010 15:11:24 -0700 (PDT)
-Received: from hyperion.localnet (hyperion.student.rit.edu [129.21.115.231])
-        by mx.google.com with ESMTPS id w1sm61514weq.1.2010.10.05.15.11.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 05 Oct 2010 15:11:23 -0700 (PDT)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=AURLykbel4sr5hVPtd4Go9NAIKKKZZJAJA1GedC/6d5Uq/ytlmJAEbPXFECHWr4g5V
+         tAsmfVQA5iqnqfQUvCK3C/4DNPS1MvmU94YvtFOy6xluNdHGYanQmC8BuU4TxZZY7Sed
+         E36KdTmCjm59kRczMugeW/RBRIPYwjl39RYS8=
+Received: by 10.150.51.20 with SMTP id y20mr952758yby.244.1286317736121; Tue,
+ 05 Oct 2010 15:28:56 -0700 (PDT)
+Received: by 10.220.163.85 with HTTP; Tue, 5 Oct 2010 15:28:56 -0700 (PDT)
+In-Reply-To: <201010051811.49211.ComputerDruid@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158253>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158254>
 
---nextPart1478251.MIj7GZuW6q
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+On Tue, Oct 5, 2010 at 3:11 PM, Daniel Johnson <computerdruid@gmail.com> wrote:
+> Isn't that syntax reserved for remotes?
+> for example:
+>
+> git push origin
+>
+> I feel like it would be a bad idea to have these 2 types of invocations
+> overlap in syntax like that.
 
-On Tuesday 05 October 2010 16:29:50 you wrote:
-> A newbie colleague asked why: "git push <branch>" didn't work.
->=20
-> Although I know that "git push <repo> <branch>" is the correct
-> syntax, I think that he has a point.  If branch.<branch>.remote
-> is defined it seems unambiguous to me.
->=20
-> So I can't see any reason NOT to dwimify
->=20
->     git push <branch>
-Isn't that syntax reserved for remotes?
-for example:
+The idea is that given "git push <branch>" if <branch> is NOT a remote but
+IS a branch name then git could unambiguously provide the correct remote.
 
-git push origin
-
-I feel like it would be a bad idea to have these 2 types of invocations=20
-overlap in syntax like that.
-
---nextPart1478251.MIj7GZuW6q
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.16 (GNU/Linux)
-
-iEYEABECAAYFAkyroqUACgkQhP2Vm0oJTtzT9wCeMfm8Injhrr2bpm7kxOvPibPh
-fVoAn3aE2rryY8vdOFr0Vg0jbSy+J0Ig
-=dayE
------END PGP SIGNATURE-----
-
---nextPart1478251.MIj7GZuW6q--
+Naturally if there's a branch and a remote of the same name then for backwards
+compatibility the remote would be chosen.
