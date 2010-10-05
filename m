@@ -1,114 +1,86 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v3] do not depend on signed integer overflow
-Date: Tue, 05 Oct 2010 00:17:12 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010050012490.3107@xanadu.home>
-References: <1286232552-5244-1-git-send-email-kusmabite@gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
+Date: Tue, 5 Oct 2010 09:01:13 +0200
+Message-ID: <20101005070113.GE11737@pengutronix.de>
+References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de> <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com> <1285967766.6750.2.camel@gandalf.stny.rr.com> <4CA9815D.3040801@drmicha.warpmail.net> <20101004075015.GN28679@pengutronix.de> <4CA98EF1.1050102@drmicha.warpmail.net> <20101004085050.GQ28679@pengutronix.de> <4CA99E43.1000204@drmicha.warpmail.net> <7vlj6d988o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, jrnieder@gmail.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 06:17:29 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 09:01:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2yy0-0001uB-KF
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 06:17:28 +0200
+	id 1P31Wo-0006bD-1T
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 09:01:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750742Ab0JEERO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 00:17:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:55691 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826Ab0JEERN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 00:17:13 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0L9S000V0UKJ8R60@VL-MR-MRZ20.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 05 Oct 2010 00:17:08 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1286232552-5244-1-git-send-email-kusmabite@gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S932469Ab0JEHBX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 03:01:23 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:54700 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932272Ab0JEHBW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 03:01:22 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P31WW-0004k2-Hs; Tue, 05 Oct 2010 09:01:16 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P31WT-0007PJ-MI; Tue, 05 Oct 2010 09:01:13 +0200
+Content-Disposition: inline
+In-Reply-To: <7vlj6d988o.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158165>
 
-On Tue, 5 Oct 2010, Erik Faye-Lund wrote:
+Hi Junio,
 
-> Signed integer overflow is not defined in C, so do not depend on it.
-> 
-> This fixes a problem with GCC 4.4.0 and -O3 where the optimizer would
-> consider "consumed_bytes > consumed_bytes + bytes" as a constant
-> expression, and never execute the die()-call.
-> 
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+On Mon, Oct 04, 2010 at 10:29:43AM -0700, Junio C Hamano wrote:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>=20
+> >> I choosed to write "overwritten" instead of "updated" to make it c=
+learer
+> >> that it makes no sence to push into these branches from a differen=
+t
+> >> source.  Should this be noted more explicit?
+> >
+> > "update" may be more Git lingo but I think either is fine. "overwri=
+tten"
+> > makes it clearer this is not a repo to do development in...
+>=20
+> In a repository with remote.origin.mirror set to true, "git fetch ori=
+gin"
+> does not seem to prune a ref that has been removed from the origin.  =
+I
+> think that is a design bug, albeit a minor one ("git fetch -p origin"=
+ can
+> fix, but "-p" should not be necessary).  A "mirror"'s purpose is to, =
+ehh,
+> mirror a remote so that local people can share it as a nearby copy.
+>=20
+> A wording that also implies this automatic deletion of a stale ref wo=
+uld
+> be nice; "overwritten" does not exactly sound like that, though.
+So you intend to change git fetch origin to remove stale refs, right?
 
-I like this.  Please also fix the similar case in 
-builtin/pack-objects.c:write_one().
+Best regards
+Uwe
 
-> ---
->  builtin/index-pack.c     |    2 +-
->  builtin/unpack-objects.c |    2 +-
->  git-compat-util.h        |   12 ++++++++++++
->  3 files changed, 14 insertions(+), 2 deletions(-)
-> 
-> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-> index 2e680d7..e243d9d 100644
-> --- a/builtin/index-pack.c
-> +++ b/builtin/index-pack.c
-> @@ -161,7 +161,7 @@ static void use(int bytes)
->  	input_offset += bytes;
->  
->  	/* make sure off_t is sufficiently large not to wrap */
-> -	if (consumed_bytes > consumed_bytes + bytes)
-> +	if (signed_add_overflows(consumed_bytes, bytes))
->  		die("pack too large for current definition of off_t");
->  	consumed_bytes += bytes;
->  }
-> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-> index 685566e..f63973c 100644
-> --- a/builtin/unpack-objects.c
-> +++ b/builtin/unpack-objects.c
-> @@ -83,7 +83,7 @@ static void use(int bytes)
->  	offset += bytes;
->  
->  	/* make sure off_t is sufficiently large not to wrap */
-> -	if (consumed_bytes > consumed_bytes + bytes)
-> +	if (signed_add_overflows(consumed_bytes, bytes))
->  		die("pack too large for current definition of off_t");
->  	consumed_bytes += bytes;
->  }
-> diff --git a/git-compat-util.h b/git-compat-util.h
-> index 81883e7..2af8d3e 100644
-> --- a/git-compat-util.h
-> +++ b/git-compat-util.h
-> @@ -28,6 +28,18 @@
->  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
->  #define bitsizeof(x)  (CHAR_BIT * sizeof(x))
->  
-> +#define maximum_signed_value_of_type(a) \
-> +    (INTMAX_MAX >> (bitsizeof(intmax_t) - bitsizeof(a)))
-> +
-> +/*
-> + * Signed integer overflow is undefined in C, so here's a helper macro
-> + * to detect if the sum of two integers will overflow.
-> + *
-> + * Requires: a >= 0, typeof(a) equals typeof(b)
-> + */
-> +#define signed_add_overflows(a, b) \
-> +    ((b) > maximum_signed_value_of_type(a) - (a))
-> +
->  #ifdef __GNUC__
->  #define TYPEOF(x) (__typeof__(x))
->  #else
-> -- 
-> 1.7.3.1.51.g3f36d.dirty
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
-> 
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
