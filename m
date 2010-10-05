@@ -1,191 +1,115 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [TopGit PATCH v2] tg-patch: use pretty_tree
-Date: Tue, 5 Oct 2010 22:01:59 +0200
-Message-ID: <20101005200159.GZ11737@pengutronix.de>
-References: <AANLkTikXT=rzOJTTcNOsWkXctKOM3FzQ9ycVtOprLHGh@mail.gmail.com> <1286305486-28607-1-git-send-email-bert.wesarg@googlemail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Useful tracking branches and auto merging
+Date: Tue, 05 Oct 2010 13:10:49 -0700
+Message-ID: <7vvd5g5rjq.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimq0sKUavKiXepDOz+DvrymuRAVUyAyV+FzbCBD@mail.gmail.com>
+ <20101004204625.GH6466@burratino> <7vk4lw7g2m.fsf@alter.siamese.dyndns.org>
+ <AANLkTinXJ5E_U=5uP_zvWLQBssQsYC74JyVv1N3-eMXK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Peter Simons <simons@cryp.to>, pasky@suse.cz,
-	Per Cederqvist <ceder@lysator.liu.se>,
-	Olaf Dabrunz <odabrunz@gmx.net>,
-	Thomas Moschny <thomas.moschny@gmx.de>,
-	martin f krafft <madduck@madduck.net>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 22:02:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 22:11:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Die-0003gc-Dv
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:02:36 +0200
+	id 1P3Dqu-0005wx-78
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:11:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756698Ab0JEUCF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 16:02:05 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:35832 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755647Ab0JEUCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 16:02:04 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P3Di6-0003ze-Tr; Tue, 05 Oct 2010 22:02:02 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P3Di3-0007Jy-LI; Tue, 05 Oct 2010 22:01:59 +0200
-Content-Disposition: inline
-In-Reply-To: <1286305486-28607-1-git-send-email-bert.wesarg@googlemail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1756821Ab0JEULA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 16:11:00 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56858 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755767Ab0JEUK7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 16:10:59 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E99A5DC1B2;
+	Tue,  5 Oct 2010 16:10:57 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ZRjL6M6qxBFmjR5k9oo6EVLnFdI=; b=Z6M9LC
+	yNchoF/0q9CpdbpP90LsslYx0XDdGRbi2tOB9oeicz4CArSwEw4O07Kwgr01QQpH
+	G7iIB15R4y85A3Q3GdXja4xESPCpo5mwPmctM/jXwHiNX8ifYXJ0//0a53wPorRC
+	TwRZh/QuQ9U4QoOUUdnPnwZ2DGuO2hjydxB8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=FILr98ZRLHxTbEN1RCjSnqA8cS6NlAm9
+	fEd65JraV3762Sor6Vhcrfr5bWZ6WvNnFfbSF9/b94euS1GLm+tihLDD6YNYXDYB
+	H75ZXzY7fGdMN+ZCd/10PLglx0Wus9hWkzLUV0tuuUXLZqXDYCYisznus9aS4jne
+	rwRcYyFwbDI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B6107DC1AE;
+	Tue,  5 Oct 2010 16:10:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C19F7DC1A5; Tue,  5 Oct
+ 2010 16:10:50 -0400 (EDT)
+In-Reply-To: <AANLkTinXJ5E_U=5uP_zvWLQBssQsYC74JyVv1N3-eMXK@mail.gmail.com>
+ (Felipe Contreras's message of "Tue\, 5 Oct 2010 20\:49\:25 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A8B3A300-D0BC-11DF-ABF8-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158230>
 
-On Tue, Oct 05, 2010 at 09:04:46PM +0200, Bert Wesarg wrote:
-> This applies the same treatment to tg-patch like tg-files got in v2.
->=20
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->=20
-> ---
->=20
-> Basing the decision whether to use the ui diff or the porcelain diff-=
-tree
-> is probably very unorthodox, but also makes sense, doesn't it?
-Uuuuuh, I'd feel better with git diff-tree --color=3Dauto.  Why did you
-decide against that?
+Felipe Contreras <felipe.contreras@gmail.com> writes:
 
-> Changes:
->  v2:
->   * apply suggestions from Uwe made to tg-files here too
->   * the running pager decides whether we use the ui diff or the porce=
-lain
->     diff-tree
->=20
->  tg-patch.sh |   67 +++++++++++++++++++++++++++++++++----------------=
----------
->  1 files changed, 38 insertions(+), 29 deletions(-)
->=20
-> diff --git a/tg-patch.sh b/tg-patch.sh
-> index 7bafdfe..e88985a 100644 tg-patch.sh
-> --- a/tg-patch.sh
-> +++ b/tg-patch.sh
-> @@ -4,24 +4,18 @@
->  # GPLv2
-> =20
->  name=3D
-> -
->  topic=3D
-> -diff_opts=3D
-> -diff_committed_only=3Dyes	# will be unset for index/worktree
-> -
-> +topic_for_pretty_tree=3D
-> =20
->  ## Parse options
-> =20
->  while [ -n "$1" ]; do
->  	arg=3D"$1"; shift
->  	case "$arg" in
-> -	-i)
-> -		topic=3D'(i)'
-> -		diff_opts=3D"$diff_opts --cached";
-> -		diff_committed_only=3D;;
-> -	-w)
-> -		topic=3D'(w)'
-> -		diff_committed_only=3D;;
-> +	-i|-w)
-> +		[ -z "$topic" ] || die "-i and -w are mutually exclusive"
-> +		topic=3D"(${arg#-})"
-> +		topic_for_pretty_tree=3D"$arg";;
->  	-*)
->  		echo "Usage: tg [...] patch [-i | -w] [NAME]" >&2
->  		exit 1;;
-> @@ -32,8 +26,8 @@ while [ -n "$1" ]; do
->  done
-> =20
-> =20
-> -[ -n "$name"  -a  -z "$diff_committed_only" ]  &&
-> -	die "-i/-w are mutually exclusive with NAME"
-> +[ -n "$name" -a -n "$topic" ] &&
-> +	die "$topic are mutually exclusive with NAME"
-> =20
->  [ -n "$name" ] || name=3D"$(git symbolic-ref HEAD | sed 's#^refs/\(h=
-eads\|top-bases\)/##')"
->  base_rev=3D"$(git rev-parse --short --verify "refs/top-bases/$name" =
-2>/dev/null)" ||
-> @@ -46,22 +40,37 @@ base_rev=3D"$(git rev-parse --short --verify "ref=
-s/top-bases/$name" 2>/dev/null)"
-> =20
->  setup_pager
-> =20
-> -cat_file "$topic:.topmsg"
-> -echo
-> -[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"}=
- -- ".topmsg")" ] || echo '---'
-> -
-> -# Evil obnoxious hack to work around the lack of git diff --exclude
-> -git_is_stupid=3D"$(mktemp -t tg-patch-changes.XXXXXX)"
-> -git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"=
-$name"} -- |
-> -	fgrep -vx ".topdeps" |
-> -	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail ra=
-ndomly?
-> -if [ -s "$git_is_stupid" ]; then
-> -	cd "$root_dir"
-> -	cat "$git_is_stupid" | xargs git diff -a --patch-with-stat $diff_op=
-ts "$base_rev" ${diff_committed_only:+"$name"} --
-> -else
-> -	echo "No changes."
-> -fi
-> -rm "$git_is_stupid"
-> +# put out the commit message
-> +# and put an empty line out, if the last one in the message was not =
-an empty line
-> +# and put out "---" if the commit message does not have one yet
-> +cat_file "$topic:.topmsg" |
-> +	awk '
-> +/^---/ {
-> +    has_3dash=3D1;
-> +}
-> +       {
-> +    need_empty =3D 1;
-> +    if ($0 =3D=3D "")
-> +        need_empty =3D 0;
-> +    print;
-> +}
-> +END    {
-> +    if (need_empty)
-> +        print "";
-> +    if (!has_3dash)
-> +        print "---";
-> +}
-> +'
-> +
-> +b_tree=3D$(pretty_tree "$name" -b)
-> +t_tree=3D$(pretty_tree "$name" $topic_for_pretty_tree)
-> +
-> +# use the ui diff command when the pager is active
-> +diff_command=3Ddiff
-> +[ "x$GIT_PAGER_IN_USE" =3D "x1" ] ||
-> +	diff_command=3Ddiff-tree
-> +
-> +git $diff_command -p --stat $b_tree $t_tree
-> =20
->  echo '-- '
->  echo "tg: ($base_rev..) $name (depends on: $(cat_file "$topic:.topde=
-ps" | paste -s -d' '))"
-> --=20
-> tg: (aaf1181..) bw/tg-patch-pretty_tree (depends on: bw/files)
->=20
+> I believe this use-case is valid:
+>
+> * The user wants *all* his remote tracking branches to point to the
+> latest branch head in all the repos in the case the can be
+> fast-forwarded, and in the case they can't, print an error and
+> continue with the rest.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+I would not be so sure about the validity of that use case.
+
+If your tracking branches are always trailing, never having any real work
+of your own, there is no reason to have them locally, instead of checking
+them out on demand.  So let's forget about that case.
+
+When you are collaborating with somebody else, sharing a topic branch, and
+you are behind because you were not working on it while the other parties
+progressed the shared topic, it would be convenient if your local branch
+is fast-forwarded before you start to work on it.  One possible solution
+for that would be to teach "git pull" to fast-forward such backgrounded
+tracking branches that are not checked out.  Another obvious alternative
+is to teach "git checkout" tell you where you are, and even tell you that
+you could fast-forward [*1*].
+
+On the other hand, if you have forked a topic branch to build your new
+nifty feature at some known point (e.g. immediately after the upstream
+reached a new stable point), but you haven't done any real work on it, it
+is doubtful that it is even a good idea to fast-forward it automatically
+to begin with.  C.f.
+
+   Message-ID: <AANLkTim85sH_2o=xCiDuoQrHq_7ZL96Y91xQMGxUP5Fy@mail.gmail.com>
+
+   "The real problem is that maintainers often pick random - and not at
+    all stable - points for their development to begin with. They just
+    pick some random "this is where Linus -git tree is today", and do
+    their development on top of that. THAT is the problem - they are
+    unaware that there's some nasty bug in that version."
+
+IOW, once I decided one point is a good place to fork a topic, created a
+branch off of it, but didn't have a chance to do a real work on it yet, it
+would be very irritating if "git pull" updated that branch only because I
+do not have my own commit on it yet.
+
+I see little sanity in doing this with any option whose name has "all"; it
+largely depends on the workflow, and in a single repository, some branches
+may want to get fast-forwarded automatically while others don't [*2*].
+
+
+[Footnotes]
+
+*1* It is plausible that you could go one step further and define
+branch.frotz.autofastforward configuration variable to tell "git checkout"
+to fast-forward in such a case, perhaps only when the working tree and the
+index are clean.
+
+*2* It also is plausible that the same branch.frotz.autofastforward
+configuration variable can be noticed by "git pull".
