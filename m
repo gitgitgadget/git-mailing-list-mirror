@@ -1,133 +1,122 @@
-From: Stephan Hugel <urschrei@gmail.com>
-Subject: Re: Error when verifying tags signed using 1.7.3.1
-Date: Tue, 5 Oct 2010 14:28:51 +0100
-Message-ID: <AANLkTikVYSwGjJUgA8KUdNrkHL3+1mSjv8efLwO5+C9E@mail.gmail.com>
-References: <AANLkTikguMr4E+1m9QEX1x1beQPaHNBqSNPQUQWcFZgF@mail.gmail.com>
-	<201010041851.46838.ComputerDruid@gmail.com>
-	<AANLkTin1Ysn7Fp32Eoyjo3jjhHwVrc=hMuq+okgKNfmr@mail.gmail.com>
-	<201010041959.48336.ComputerDruid@gmail.com>
-	<AANLkTinA9K6BQ_gmNE8H02nGTSduhZWjujj6NiGDRALy@mail.gmail.com>
-	<4CAADB19.30707@drmicha.warpmail.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [PATCH v4] do not depend on signed integer overflow
+Date: Tue, 05 Oct 2010 09:28:55 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1010050928200.3107@xanadu.home>
+References: <1286263450-5372-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Daniel Johnson <computerdruid@gmail.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Oct 05 15:29:00 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, jrnieder@gmail.com, peff@peff.net
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 15:29:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P37Zk-0005SP-9y
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 15:29:00 +0200
+	id 1P37aD-0005dJ-RA
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 15:29:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842Ab0JEN2y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 09:28:54 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:44938 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751799Ab0JEN2x convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 09:28:53 -0400
-Received: by wwj40 with SMTP id 40so5586807wwj.1
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 06:28:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KtFeyxbdwKFHkgyAXdU8lb9hXLbwUJmvmsyvs74tZRc=;
-        b=E15aUERkQczgeijbbnjWUF96s9V3Z8xUbq9+nGH79XbR5citibWy4894s6CCqAt4vr
-         kScQs34asHQbJbIMlYrzNds6xHRAy+9Q1TIGmFDSsrTOaGMUI79uJSwaMwgDu0XWztY7
-         eInTbZLa7WHdVmkBotOLWBbWL7bfyNs05zi+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=g1AMBZh/u0g/03g1ptNUN4o/YJqopcADwQhGUL+xwijArxRpa0+kKkFL0zfCiDngsj
-         Tj0ZncZBkxOBXGzYWNT1HREyjt57kxDjM6IlNvZAOLexBRMNyYB0KJlkKuwLnnFLfcoo
-         Y2RkUTIO1HoAbhjKFj2QL72LSE85CgGRC/L9c=
-Received: by 10.227.128.134 with SMTP id k6mr9684077wbs.23.1286285332012; Tue,
- 05 Oct 2010 06:28:52 -0700 (PDT)
-Received: by 10.216.230.232 with HTTP; Tue, 5 Oct 2010 06:28:51 -0700 (PDT)
-In-Reply-To: <4CAADB19.30707@drmicha.warpmail.net>
+	id S1752893Ab0JEN3Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 09:29:24 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:9320 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751799Ab0JEN3X (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 09:29:23 -0400
+Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L9T006TTK47I870@VL-MO-MR004.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 05 Oct 2010 09:28:56 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <1286263450-5372-1-git-send-email-kusmabite@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158196>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158197>
 
-On 5 October 2010 09:00, Michael J Gruber <git@drmicha.warpmail.net> wr=
-ote:
-> Stephan Hugel venit, vidit, dixit 05.10.2010 02:17:
->> On 5 October 2010 00:59, Daniel Johnson <computerdruid@gmail.com> wr=
-ote:
->>> On Monday 04 October 2010 19:04:51 Stephan Hugel wrote:
->>>> Daniel,
->>>> Those are the exact steps I'm using.
->>>>
->>>> When I run tag -v on existing tags, I don't see the
->>>>
->>>> -----BEGIN PGP MESSAGE-----
->>>> Version: GnuPG v1.4.9 (Darwin)
->>>>
->>>> iD8DBQBMqlpo8Y2TgZsQ1pARAmBQAJ9NV0IX7jlzeB8ogddlutFKAjyWJwCfSI5A
->>>> yZeXw/EddYrfdad/VvOrL1o=3D
->>>> =3D/0PJ
->>>> -----END PGP MESSAGE=E2=80=94=E2=80=94
->>>>
->>>> block. It's only present on tags created using the current version=
-=2E
->>>> I've also just upgraded to GnuPG 1.4.10, but the result is the sam=
-e.
->>>> I'm not sure how else I can determine where the problem arises; I'=
-m
->>>> using the git and GnuPG versions for OS X built by homebrew, and G=
-nuPG
->>>> is happy to use the same key for en/decryption and signing. I've a=
-lso
->>>> verified that none of the subkeys are expired, and that the trust =
-db
->>>> is OK.
->>>
->>> If you have the tests available, can you try running t7004 to see i=
-f it fails
->>> there too?
->>>
->> I rebuilt and installed from source
->> Passed all 105 tests in t7004-tag.sh
->> Problem remains with tags I create
->>
->> This would seem to imply a problem with my key, even though nothing
->> else is complaining about it.
->
-> Here's a very basic way to check: If foo is your tag, do
->
-> git cat-file tag foo > a
-> git cat-file tag foo > a.sig
->
-> From the file "a", delete the signature (everything lines between and
-> including "-----BEGIN/END PGP SIGNATURE-----"), invoking an editor or
-> your favorite sed/awk/perl magic.
->
-> a is the data on which git invoked gpg for signing the tag. (I'm not
-> sure why gpg can't notice the inline sig directly but that doesn't
-> matter; maybe because it is none ;))
->
-> Now, gpg --verify a.sig should check the signature a.sig for a. Doing
-> that, maybe with --verbose, you may find out whether the tag object i=
-s
-> bogus or git misunderstands gpg's response. If your key is on a key
-> server you can also share the file a.sig with us so that we can check=
-=2E
->
-> Michael
->
-Michael,
-When I do this, gpg is able to verify the signature. So does this mean
-that gnupg is failing to ignore the PGP block (possibly because it
-expects "SIGNATURE", not "MESSAGE"?)
+On Tue, 5 Oct 2010, Erik Faye-Lund wrote:
 
+> Signed integer overflow is not defined in C, so do not depend on it.
+> 
+> This fixes a problem with GCC 4.4.0 and -O3 where the optimizer would
+> consider "consumed_bytes > consumed_bytes + bytes" as a constant
+> expression, and never execute the die()-call.
+> 
+> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 
---=20
+Acked-by: Nicolas Pitre <nico@fluxnic.net>
 
-steph
+> ---
+>  builtin/index-pack.c     |    2 +-
+>  builtin/pack-objects.c   |    2 +-
+>  builtin/unpack-objects.c |    2 +-
+>  git-compat-util.h        |   12 ++++++++++++
+>  4 files changed, 15 insertions(+), 3 deletions(-)
+> 
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 2e680d7..e243d9d 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -161,7 +161,7 @@ static void use(int bytes)
+>  	input_offset += bytes;
+>  
+>  	/* make sure off_t is sufficiently large not to wrap */
+> -	if (consumed_bytes > consumed_bytes + bytes)
+> +	if (signed_add_overflows(consumed_bytes, bytes))
+>  		die("pack too large for current definition of off_t");
+>  	consumed_bytes += bytes;
+>  }
+> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+> index 3756cf3..d5a8db1 100644
+> --- a/builtin/pack-objects.c
+> +++ b/builtin/pack-objects.c
+> @@ -431,7 +431,7 @@ static int write_one(struct sha1file *f,
+>  	written_list[nr_written++] = &e->idx;
+>  
+>  	/* make sure off_t is sufficiently large not to wrap */
+> -	if (*offset > *offset + size)
+> +	if (signed_add_overflows(*offset, size))
+>  		die("pack too large for current definition of off_t");
+>  	*offset += size;
+>  	return 1;
+> diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+> index 685566e..f63973c 100644
+> --- a/builtin/unpack-objects.c
+> +++ b/builtin/unpack-objects.c
+> @@ -83,7 +83,7 @@ static void use(int bytes)
+>  	offset += bytes;
+>  
+>  	/* make sure off_t is sufficiently large not to wrap */
+> -	if (consumed_bytes > consumed_bytes + bytes)
+> +	if (signed_add_overflows(consumed_bytes, bytes))
+>  		die("pack too large for current definition of off_t");
+>  	consumed_bytes += bytes;
+>  }
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 81883e7..2af8d3e 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -28,6 +28,18 @@
+>  #define ARRAY_SIZE(x) (sizeof(x)/sizeof(x[0]))
+>  #define bitsizeof(x)  (CHAR_BIT * sizeof(x))
+>  
+> +#define maximum_signed_value_of_type(a) \
+> +    (INTMAX_MAX >> (bitsizeof(intmax_t) - bitsizeof(a)))
+> +
+> +/*
+> + * Signed integer overflow is undefined in C, so here's a helper macro
+> + * to detect if the sum of two integers will overflow.
+> + *
+> + * Requires: a >= 0, typeof(a) equals typeof(b)
+> + */
+> +#define signed_add_overflows(a, b) \
+> +    ((b) > maximum_signed_value_of_type(a) - (a))
+> +
+>  #ifdef __GNUC__
+>  #define TYPEOF(x) (__typeof__(x))
+>  #else
+> -- 
+> 1.7.3.1.51.ge462f.dirty
+> 
