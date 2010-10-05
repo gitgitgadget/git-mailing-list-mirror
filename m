@@ -1,91 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: large files and low memory
-Date: Tue, 5 Oct 2010 15:34:50 -0500
-Message-ID: <20101005203450.GA2096@burratino>
-References: <20101004092046.GA4382@nibiru.local>
- <AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
- <20101004185854.GA6466@burratino>
- <AANLkTin-mbzt93DWtp71vYBEUcDLHgo=G-6zynT5NC_r@mail.gmail.com>
- <20101004191657.GC6466@burratino>
- <alpine.LFD.2.00.1010051518570.3107@xanadu.home>
+From: Todd Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH] tag,verify-tag: do not trip over rfc1991 signatures
+Date: Tue, 5 Oct 2010 16:42:02 -0400
+Message-ID: <20101005204201.GF7629@inocybe.localdomain>
+References: <4CAB46C0.9000807@drmicha.warpmail.net>
+ <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Shawn Pearce <spearce@spearce.org>, weigelt@metux.de,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Oct 05 22:38:24 2010
+Content-Type: multipart/signed; micalg=pgp-sha256; protocol="application/pgp-signature"; boundary="24zk1gE8NUlDmwG9"
+Cc: git@vger.kernel.org, Stephan Hugel <urschrei@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 05 22:42:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3EHG-0005PV-EY
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:38:22 +0200
+	id 1P3EL6-0006k6-MF
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:42:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753823Ab0JEUiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 16:38:16 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40426 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070Ab0JEUiP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 16:38:15 -0400
-Received: by fxm4 with SMTP id 4so746269fxm.19
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 13:38:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=kH+lwydqbqZTmv0Idsog85DVQEObaQMhsZSwGTFeshU=;
-        b=EE0D97RouBYaEWh2gY65ZAbH3kMXOJaObQY62II0MwcS60Zw4gNyqbkHNhCYJUWGCr
-         9kkkuSlEGutp9N45bNPUkVShHOiW7zqYryRLL00ozSRUTTH8r6T+ZQI0srts2MWjC+kQ
-         3vMY0dnJLk5yr31lpQBNV2kmNYhnAP93a0e3U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=uRlhphGIG116sF5ptoP0FA5zN1eUWJNrc7IgLy/Hrz+FXG1ZHLIOYLeDOQhbKBgAKK
-         IMlXk+r14X9lCJjOU02vu3Ke76eQLvEdWnZDmxzA+xxnPM29kJ2QIdfYMXXJRNBK5V7E
-         YuRsz5Ntf7cQlv2Y56Lkbk/QMtXmYFlVOSbZ4=
-Received: by 10.223.1.146 with SMTP id 18mr11362279faf.80.1286311094229;
-        Tue, 05 Oct 2010 13:38:14 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id k15sm3188300fai.40.2010.10.05.13.38.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 05 Oct 2010 13:38:12 -0700 (PDT)
+	id S1752070Ab0JEUmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 16:42:13 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35917 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754639Ab0JEUmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 16:42:12 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A2A3DC62E;
+	Tue,  5 Oct 2010 16:42:10 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=date:from:to
+	:cc:subject:message-id:references:mime-version:content-type
+	:in-reply-to; s=sasl; bh=xOQHED2ycuzjarl+BdV+YsSh+8U=; b=npgySNu
+	w6FRqyVOqxm4zSAtUuUdjlqcvyonRcyzChA8VKqiJNS9hs3oifuojtVd8SD0tK92
+	yI+YJDp+batAl/cHf9Qb/Fu3QeNuA2r08qBtDYzEH7Khmjuw4s/1hr1r+9GA4kqD
+	bkiXSxp+swR2AKMiyNU6EzTy2BPVAMdTQM7w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=date:from:to:cc
+	:subject:message-id:references:mime-version:content-type
+	:in-reply-to; q=dns; s=sasl; b=RCAdvr2U5dHtmu0RsunP1ucT7nq/+Je4q
+	yJXNsW/yBqAF5eWxp1OEyq5J57oJOC5SAnQt+TJjNIGhsTXqTGg7pN3W4SJ/mYq8
+	SHxNvQiWTx6G8gNfsr7ebxm+A/0D3Wc540ccdIKqXAdFHxb3k7pp4BxUKulcWaIa
+	8VlB8l7jg0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 452FEDC62D;
+	Tue,  5 Oct 2010 16:42:07 -0400 (EDT)
+Received: from inocybe.localdomain (unknown [98.117.251.177]) (using TLSv1
+ with cipher AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9D2D3DC629; Tue,  5 Oct
+ 2010 16:42:03 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1010051518570.3107@xanadu.home>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Pobox-Relay-ID: 04D24FDE-D0C1-11DF-9133-030CEE7EF46B-09356542!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158237>
 
-Nicolas Pitre wrote:
 
-> You can't do a one-pass  calculation.  The first one is required to 
-> compute the SHA1 of the file being added, and if that corresponds to an 
-> object that we already have then the operation stops right there as 
-> there is actually nothing to do.
+--24zk1gE8NUlDmwG9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Ah.  Thanks for a reminder.
+Michael J Gruber wrote:
+> Currently, git expects "-----BEGIN PGP SIGNATURE-----" at the beginning o=
+f a
+> signature. But gpg uses "MESSAGE" instead of "SIGNATURE" when used with
+> the "rfc1991" option. This leads to git's faling to verify it's own
+> signed tags.
+>
+> Be more lenient and take "-----BEGIN PGP " as the indicator.
 
-> In the case of big files, what we need to do is to stream the file data 
-> in, compute the SHA1 and deflate it, in order to stream it out into a 
-> temporary file, then rename it according to the final SHA1.  This would 
-> allow Git to work with big files, but of course it won't be possible to 
-> know if the object corresponding to the file is already known until all 
-> the work has been done, possibly just to throw it away.
+Another way to go might be to add --gnupg (or --openpgp) to the gpg
+options used for tagging.  That overrides an option like rfc1991 in
+the gnupg config file.
 
-To make sure I understand correctly: are you suggesting that for big
-files we should skip the first pass?
+Whether that's preferable to accepting these older-style messages is
+debatable.  Using rfc1991 implies pgp-2.x compatibility, which means
+using md5 as the algorithm.  It could be seen as a weakness to accept
+such signatures.
 
-I suppose that makes sense: for small files, using a patch application
-tool to reach a postimage that matches an existing object is something
-git historically needed to expect, but for typical big files:
+(Oh, and you probably saw this already, but s/faling/failing. ;)
 
- - once you've computed the SHA1, you've already invested a noticeable
-   amount of time.
- - emailing patches around is difficult, making "git am" etc less important
- - hopefully git or zlib can notice when files are uncompressible,
-   making the deflate not cost so much in that case.
+--=20
+Todd        OpenPGP -> KeyID: 0xBEAF0CE3 | URL: www.pobox.com/~tmz/pgp
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The best cure for insomnia is to get a lot of sleep.
+    -- W.C. Fields
+
+
+--24zk1gE8NUlDmwG9
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iQFDBAEBCAAtBQJMq42VJhhodHRwOi8vd3d3LnBvYm94LmNvbS9+dG16L3BncC90
+bXouYXNjAAoJEEMlk4u+rwzjqrwH/AsfSBigciC+SHJ/YDaH0za+IiUk4+iB8VG4
+qNv4WKoHuNoKV99p35duNiSS8Qmlb2msBPt0hUVNNV+hRYTMZKaNfPmx1I0U6iC/
+fmh2EjkKN4LlpJ3qxSu5KaNElizVBiGK6m1yl0KjPOApABsRnpi9S/qpOXmBv8Ui
+64LHoJvET6ih8mj5jgDmhn+WoOc1Lmkuh9ud6ayw2FzWZq2j4aqjd5ERUV+IbNZR
+/zOQtzFxcWXi9Sn2zD7cHFVaa2uaSu4Tf9VbDUZWXYV21yoEHIQL7URAYgE0UWo+
+uEv5+PNEQ131M912UnG1eHg5puNlxlyGzKJm3AcRAtSEZUuzVww=
+=IMpP
+-----END PGP SIGNATURE-----
+
+--24zk1gE8NUlDmwG9--
