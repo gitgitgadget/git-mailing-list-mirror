@@ -1,86 +1,96 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Tue, 5 Oct 2010 09:01:13 +0200
-Message-ID: <20101005070113.GE11737@pengutronix.de>
-References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de> <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com> <1285967766.6750.2.camel@gandalf.stny.rr.com> <4CA9815D.3040801@drmicha.warpmail.net> <20101004075015.GN28679@pengutronix.de> <4CA98EF1.1050102@drmicha.warpmail.net> <20101004085050.GQ28679@pengutronix.de> <4CA99E43.1000204@drmicha.warpmail.net> <7vlj6d988o.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Advertising the Git User's Survey 2011
+Date: Tue, 5 Oct 2010 09:01:53 +0200
+Message-ID: <201010050901.54624.jnareb@gmail.com>
+References: <AANLkTim1mLhQnJPT9KiinR4L3C=O9L=V9M3X9x7Cr+oC@mail.gmail.com> <201010040129.22302.jnareb@gmail.com> <20101005032641.GA9014@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 09:01:38 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: =?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 09:02:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P31Wo-0006bD-1T
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 09:01:34 +0200
+	id 1P31XH-0006hJ-DS
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 09:02:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932469Ab0JEHBX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 03:01:23 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:54700 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932272Ab0JEHBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 03:01:22 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P31WW-0004k2-Hs; Tue, 05 Oct 2010 09:01:16 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P31WT-0007PJ-MI; Tue, 05 Oct 2010 09:01:13 +0200
+	id S932367Ab0JEHBo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 03:01:44 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56927 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932272Ab0JEHBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 03:01:43 -0400
+Received: by fxm4 with SMTP id 4so201073fxm.19
+        for <git@vger.kernel.org>; Tue, 05 Oct 2010 00:01:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=AmU9USIzgkt90ESgbFijsIr00jPQhhjy22kp9voKE7I=;
+        b=JktEPtg4/p2SqbRpf/dXVSalgD/vKhRVnOxBFpXruNNlfz08m7PB3zp1sDGUMiEUgW
+         /5Uwk2/wKBfvdXSAGq6VAJUCQ/K5Itjrcs1/0phPOCkzqhiVkncdmNMcFOQ5Iu2LLQjq
+         4s2K6Vrf0hGkDAJ+Inv0fyVSwW5bSryYmY3m4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YjomMDN9dd07Ge6J5TZVK6QhVKMG1ugeTQlZwEmy+yS4aunvkP5mtKk38MEarcuvfd
+         vjk860IjAlfaLN5cRffLS0+rpJLNjB7KLZma/D5ZIYBm4F7mfMx4++qXNXqtdZpwt/72
+         Z7hmbVRv+9tHzI/MO2tPtG15iVFetc1wM3YKY=
+Received: by 10.223.118.73 with SMTP id u9mr10193306faq.36.1286262102328;
+        Tue, 05 Oct 2010 00:01:42 -0700 (PDT)
+Received: from [192.168.1.13] (aeho253.neoplus.adsl.tpnet.pl [79.186.196.253])
+        by mx.google.com with ESMTPS id a16sm2697372fai.25.2010.10.05.00.01.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 05 Oct 2010 00:01:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20101005032641.GA9014@kytes>
 Content-Disposition: inline
-In-Reply-To: <7vlj6d988o.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158166>
 
-Hi Junio,
+On Tue, 5 Oct 2010, Ramkumar Ramachandra wrote:
+> Jakub Narebski writes:
+>> Ramkumar Ramachandra wrote:
+>>> Jakub Narebski writes:
+>>>> On Sun, 3 Oct 2010, Ramkumar Ramachandra wrote:
+>>>>>
+>>>>> Perhaps we can email survs.com and ask them?
+>>>> 
+>>>> Should I do it, or would you do it?
+>>> 
+>>> Er, why will they know who I am and give me this information? You've
+>>> been in touch with them before, I hope?
+>> 
+>> Well, I sent a bit of feedback, bugreports and feature requests while
+>> Survs.com was still in beta...
+> 
+> Do contact them then, and let us know what the results are.
 
-On Mon, Oct 04, 2010 at 10:29:43AM -0700, Junio C Hamano wrote:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
->=20
-> >> I choosed to write "overwritten" instead of "updated" to make it c=
-learer
-> >> that it makes no sence to push into these branches from a differen=
-t
-> >> source.  Should this be noted more explicit?
-> >
-> > "update" may be more Git lingo but I think either is fine. "overwri=
-tten"
-> > makes it clearer this is not a repo to do development in...
->=20
-> In a repository with remote.origin.mirror set to true, "git fetch ori=
-gin"
-> does not seem to prune a ref that has been removed from the origin.  =
-I
-> think that is a design bug, albeit a minor one ("git fetch -p origin"=
- can
-> fix, but "-p" should not be necessary).  A "mirror"'s purpose is to, =
-ehh,
-> mirror a remote so that local people can share it as a nearby copy.
->=20
-> A wording that also implies this automatic deletion of a stale ref wo=
-uld
-> be nice; "overwritten" does not exactly sound like that, though.
-So you intend to change git fetch origin to remove stale refs, right?
+For the moment I've received information about the meaning of the
+numbers in the "Survey Completion Statistics" box on Analyze page:
 
-Best regards
-Uwe
+  Viewed - number of respondents that have opened survey page.
+  [not sure if it is somewhat tracked to count users, not clicks]
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+  Incomplete - number of respondents that have navigated the survey,
+  but have not finished it.  This means that these respondents have at
+  least navigated to another page; this means that it is 0 for 
+  single-page surveys.
+
+  Finished - number of respondents that pressed the finish button at
+  the end of the survey.
+
+-- 
+Jakub Narebski
+Poland
