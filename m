@@ -1,80 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
-Date: Tue, 05 Oct 2010 08:41:34 -0700
-Message-ID: <7vwrpw7ikx.fsf@alter.siamese.dyndns.org>
-References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
- <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com>
- <1285967766.6750.2.camel@gandalf.stny.rr.com>
- <4CA9815D.3040801@drmicha.warpmail.net>
- <20101004075015.GN28679@pengutronix.de>
- <4CA98EF1.1050102@drmicha.warpmail.net>
- <20101004085050.GQ28679@pengutronix.de>
- <4CA99E43.1000204@drmicha.warpmail.net>
- <7vlj6d988o.fsf@alter.siamese.dyndns.org>
- <20101005070113.GE11737@pengutronix.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/18] notes.h/c: Propagate combine_notes_fn return value
+ to add_note() and beyond
+Date: Tue, 5 Oct 2010 10:38:38 -0500
+Message-ID: <20101005153838.GG12797@burratino>
+References: <1285719811-10871-1-git-send-email-johan@herland.net>
+ <1285719811-10871-5-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Tue Oct 05 17:42:02 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Tue Oct 05 17:42:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P39eN-0005Of-QE
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 17:41:56 +0200
+	id 1P39ed-0005V8-U6
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 17:42:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751537Ab0JEPlu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 11:41:50 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33375 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751514Ab0JEPlt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 11:41:49 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0450BDB78A;
-	Tue,  5 Oct 2010 11:41:48 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=VeaETO6ET7rj
-	oZprjgdnc4C2LoE=; b=yY4edVJ5S6KvlMwjJda6ntoDL38XuUxfQDamGx0lsyRJ
-	bY0kggqxzNFggbvg8aZ039erXoj4Dff6F+m6EFXzskaxdvdQiyEn9Pok9tRC4ZTF
-	AJNEc0C5IqCYdOnKMUYtZbyVRwKV4e0gAPaUtBr9LSG26nKO5XbN8EEictLYxec=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=G34oOi
-	sZCkohjiYDSengO6fA5q3AfuuVSuIu0U6XYIhA3gH2d+PjzFFh+CPScv6Sr+y9lb
-	v9Zc/cs5srdwAr4L4H4g7jTDCf4Bxb2/Fp+WFJo4wmDadz6CdTkKKq0xSya5Z8bR
-	CP1gkHTSv2+Te/43NefaD/OxpgzA0BMYcNZ+o=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 99C63DB780;
-	Tue,  5 Oct 2010 11:41:42 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B2D5DB778; Tue,  5 Oct
- 2010 11:41:36 -0400 (EDT)
-In-Reply-To: <20101005070113.GE11737@pengutronix.de> ("Uwe =?utf-8?Q?Klein?=
- =?utf-8?Q?e-K=C3=B6nig=22's?= message of "Tue\, 5 Oct 2010 09\:01\:13 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0D4A1BDA-D097-11DF-B228-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754801Ab0JEPl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 11:41:58 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:48660 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754457Ab0JEPl5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 11:41:57 -0400
+Received: by pxi10 with SMTP id 10so1673838pxi.19
+        for <git@vger.kernel.org>; Tue, 05 Oct 2010 08:41:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=79qqHmT0InzO+PlU7x/Z1JrxAtRJSbIKTFGBVUDzhjE=;
+        b=OKxmAs9aU6uvBfnBByI/cgW5N3i41598gdAGSUcqZWYtfs13UwMaS6mqwRNQ3kdEty
+         xTGiBmewobSn2tOeZH9lQilb9nvM84Ty7tLmce9TwLi49epSklJ4H+hjF1ZJOjNM/qtd
+         14GuzO1WQiLlJzBuriWnKoi5GAsks0CNV4uwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=FTIsuE2ztblQ673KzEiTMigawP+ZVdCljD+YYDGEKtP2zlFgWLbatM0ZF9Eu1l3BpR
+         X0ZTgcKgdzCxr1sZMkrboqwTQmtI+dgt/HK3XPEZGr0qjVqmpbFNEg4AvdgwklFTnxTy
+         wMCk3TN838H+cBj/A3Bo12RXNsryXGEZrRbb4=
+Received: by 10.142.121.7 with SMTP id t7mr10466566wfc.88.1286293316985;
+        Tue, 05 Oct 2010 08:41:56 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id e31sm5049138vbe.9.2010.10.05.08.41.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 05 Oct 2010 08:41:56 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1285719811-10871-5-git-send-email-johan@herland.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158208>
 
-Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
+Johan Herland wrote:
 
-> So you intend to change git fetch origin to remove stale refs, right?
+> The combine_notes_fn functions uses a non-zero return value to indicate
+> failure. However, this return value was converted to a call to die()
+> in note_tree_insert().
 
-I personally?  Am too lazy for doing it myself ;-)
+For what it's worth, I still like it.
 
-I am just
+> Instead, propagate this return value out to add_note(), and return it
+> from there
 
- (1) pointing it out as a potential design bug; and
+It's always odd deciding what to do in the code paths that "can't
+happen".  Ideally one would want static analyzers to check that, while
+at the same time subjecting the user to some nice graceful fallback
+behavior when it happens anyway.
 
- (2) seeing if somebody who is depending on the current behaviour to
-     object.
+	fatal: confused: combine_notes_overwrite failed
+
+In this case I'm not sure what the message in die() should be, but
+it seems sane to die with some message.  Maybe this should be
+mentioned in the commit message, though?
