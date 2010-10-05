@@ -1,115 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Useful tracking branches and auto merging
-Date: Tue, 05 Oct 2010 13:10:49 -0700
-Message-ID: <7vvd5g5rjq.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimq0sKUavKiXepDOz+DvrymuRAVUyAyV+FzbCBD@mail.gmail.com>
- <20101004204625.GH6466@burratino> <7vk4lw7g2m.fsf@alter.siamese.dyndns.org>
- <AANLkTinXJ5E_U=5uP_zvWLQBssQsYC74JyVv1N3-eMXK@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCH v2] tg-patch: use pretty_tree
+Date: Tue, 5 Oct 2010 22:14:55 +0200
+Message-ID: <AANLkTimQ6CQonVJRuUzZkzbNFPsHkt4nSD70Fp_Ug1rp@mail.gmail.com>
+References: <AANLkTikXT=rzOJTTcNOsWkXctKOM3FzQ9ycVtOprLHGh@mail.gmail.com>
+	<1286305486-28607-1-git-send-email-bert.wesarg@googlemail.com>
+	<20101005200159.GZ11737@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 22:11:08 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Peter Simons <simons@cryp.to>, pasky@suse.cz,
+	Per Cederqvist <ceder@lysator.liu.se>,
+	Olaf Dabrunz <odabrunz@gmx.net>,
+	Thomas Moschny <thomas.moschny@gmx.de>,
+	martin f krafft <madduck@madduck.net>
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Tue Oct 05 22:15:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Dqu-0005wx-78
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:11:08 +0200
+	id 1P3Dui-00076q-0Q
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:15:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756821Ab0JEULA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 16:11:00 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755767Ab0JEUK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 16:10:59 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E99A5DC1B2;
-	Tue,  5 Oct 2010 16:10:57 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ZRjL6M6qxBFmjR5k9oo6EVLnFdI=; b=Z6M9LC
-	yNchoF/0q9CpdbpP90LsslYx0XDdGRbi2tOB9oeicz4CArSwEw4O07Kwgr01QQpH
-	G7iIB15R4y85A3Q3GdXja4xESPCpo5mwPmctM/jXwHiNX8ifYXJ0//0a53wPorRC
-	TwRZh/QuQ9U4QoOUUdnPnwZ2DGuO2hjydxB8c=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FILr98ZRLHxTbEN1RCjSnqA8cS6NlAm9
-	fEd65JraV3762Sor6Vhcrfr5bWZ6WvNnFfbSF9/b94euS1GLm+tihLDD6YNYXDYB
-	H75ZXzY7fGdMN+ZCd/10PLglx0Wus9hWkzLUV0tuuUXLZqXDYCYisznus9aS4jne
-	rwRcYyFwbDI=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B6107DC1AE;
-	Tue,  5 Oct 2010 16:10:54 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C19F7DC1A5; Tue,  5 Oct
- 2010 16:10:50 -0400 (EDT)
-In-Reply-To: <AANLkTinXJ5E_U=5uP_zvWLQBssQsYC74JyVv1N3-eMXK@mail.gmail.com>
- (Felipe Contreras's message of "Tue\, 5 Oct 2010 20\:49\:25 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A8B3A300-D0BC-11DF-ABF8-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756874Ab0JEUO6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 16:14:58 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:46677 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755647Ab0JEUO5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 16:14:57 -0400
+Received: by gxk9 with SMTP id 9so2153492gxk.19
+        for <git@vger.kernel.org>; Tue, 05 Oct 2010 13:14:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XMA4c96rHb+zc5h+1niAzjeyNR6lDOIzEZpXnZ31E5E=;
+        b=VUh3vOOwaZU9WeUTegV1m09QNW98TYNCaO6wATuF924ep33f/krhnNBbkbLtpiPx92
+         YVj90n5es3sEiqpjKUT2fgNF/wPqbQBU/vOFs4Kk/ejfLLtopOQHjKX0QIXx7J9ZwEZs
+         U0a6K/hunkuNXuBLtvg0Q5bMEMBXaUJl+Xaak=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wjp99oCK7hPjIlx60qlNavWZdFXIFU8wwj0kruO059l8BC2iv7skWzfM7HpWqzMB2I
+         fBYwAqXolBZFM5MGfyUP14H0/Aim2//Rnk93re0akzHqMDyydlZzseqpfhtaoKCXq/5w
+         GpxuCctlinjy74p5CLb6SYj/brAToD9vCW8cw=
+Received: by 10.231.30.76 with SMTP id t12mr12551035ibc.161.1286309695836;
+ Tue, 05 Oct 2010 13:14:55 -0700 (PDT)
+Received: by 10.231.147.80 with HTTP; Tue, 5 Oct 2010 13:14:55 -0700 (PDT)
+In-Reply-To: <20101005200159.GZ11737@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158231>
 
-Felipe Contreras <felipe.contreras@gmail.com> writes:
+2010/10/5 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
+> On Tue, Oct 05, 2010 at 09:04:46PM +0200, Bert Wesarg wrote:
+>> This applies the same treatment to tg-patch like tg-files got in v2.
+>>
+>> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>>
+>> ---
+>>
+>> Basing the decision whether to use the ui diff or the porcelain diff=
+-tree
+>> is probably very unorthodox, but also makes sense, doesn't it?
+> Uuuuuh, I'd feel better with git diff-tree --color=3Dauto. =C2=A0Why =
+did you
+> decide against that?
 
-> I believe this use-case is valid:
->
-> * The user wants *all* his remote tracking branches to point to the
-> latest branch head in all the repos in the case the can be
-> fast-forwarded, and in the case they can't, print an error and
-> continue with the rest.
+Because there are more config options which diff-tree ignores, for
+example diff.mnemonicprefix or diff.noprefix. While
+diff.mnemonicprefix unfortunately should not work in our case (git
+diff can't decide just from the two tree-ishs what is what) but we
+could provide our own prefixes with --{src,dst}-prefix. See
+diff.c:git_diff_ui_config() for the full list. I also have a small
+patch in my git tree which is only recognized by the ui diff.
 
-I would not be so sure about the validity of that use case.
+BTW. I accidentally removed the '(No changes)' case, which I'm working
+on right now.
 
-If your tracking branches are always trailing, never having any real work
-of your own, there is no reason to have them locally, instead of checking
-them out on demand.  So let's forget about that case.
-
-When you are collaborating with somebody else, sharing a topic branch, and
-you are behind because you were not working on it while the other parties
-progressed the shared topic, it would be convenient if your local branch
-is fast-forwarded before you start to work on it.  One possible solution
-for that would be to teach "git pull" to fast-forward such backgrounded
-tracking branches that are not checked out.  Another obvious alternative
-is to teach "git checkout" tell you where you are, and even tell you that
-you could fast-forward [*1*].
-
-On the other hand, if you have forked a topic branch to build your new
-nifty feature at some known point (e.g. immediately after the upstream
-reached a new stable point), but you haven't done any real work on it, it
-is doubtful that it is even a good idea to fast-forward it automatically
-to begin with.  C.f.
-
-   Message-ID: <AANLkTim85sH_2o=xCiDuoQrHq_7ZL96Y91xQMGxUP5Fy@mail.gmail.com>
-
-   "The real problem is that maintainers often pick random - and not at
-    all stable - points for their development to begin with. They just
-    pick some random "this is where Linus -git tree is today", and do
-    their development on top of that. THAT is the problem - they are
-    unaware that there's some nasty bug in that version."
-
-IOW, once I decided one point is a good place to fork a topic, created a
-branch off of it, but didn't have a chance to do a real work on it yet, it
-would be very irritating if "git pull" updated that branch only because I
-do not have my own commit on it yet.
-
-I see little sanity in doing this with any option whose name has "all"; it
-largely depends on the workflow, and in a single repository, some branches
-may want to get fast-forwarded automatically while others don't [*2*].
-
-
-[Footnotes]
-
-*1* It is plausible that you could go one step further and define
-branch.frotz.autofastforward configuration variable to tell "git checkout"
-to fast-forward in such a case, perhaps only when the working tree and the
-index are clean.
-
-*2* It also is plausible that the same branch.frotz.autofastforward
-configuration variable can be noticed by "git pull".
+Bert
