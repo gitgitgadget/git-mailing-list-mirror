@@ -1,93 +1,105 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: large files and low memory
-Date: Tue, 5 Oct 2010 01:07:04 +0000
-Message-ID: <AANLkTinF5-WoYKDOSwMQudnK9SP-EUx3wWhUMi4z1kv3@mail.gmail.com>
-References: <20101004092046.GA4382@nibiru.local>
-	<AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
-	<20101004185854.GA6466@burratino>
-	<20101005005715.GB2768@nibiru.local>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Trac+Git: rev-list with pathspec performance?
+Date: Mon, 04 Oct 2010 18:09:40 -0700 (PDT)
+Message-ID: <m3r5g5fnth.fsf@localhost.localdomain>
+References: <13399611.436896.1286218134223.JavaMail.root@mail.hq.genarts.com>
+	<27777603.436995.1286223710787.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: weigelt@metux.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 05 03:07:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 03:09:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P2vzv-0005ex-4R
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 03:07:15 +0200
+	id 1P2w2P-000689-Vl
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 03:09:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755925Ab0JEBHH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 4 Oct 2010 21:07:07 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52632 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755092Ab0JEBHG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 4 Oct 2010 21:07:06 -0400
-Received: by iwn5 with SMTP id 5so7604624iwn.19
-        for <git@vger.kernel.org>; Mon, 04 Oct 2010 18:07:05 -0700 (PDT)
+	id S1755990Ab0JEBJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 4 Oct 2010 21:09:44 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:37139 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752741Ab0JEBJn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 4 Oct 2010 21:09:43 -0400
+Received: by bwz11 with SMTP id 11so4215869bwz.19
+        for <git@vger.kernel.org>; Mon, 04 Oct 2010 18:09:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=mu7dWiEXaB2NIj+ptNtFDRP3gJ/XbUkDJhX2eOzyFSc=;
-        b=tKuyhooe0XCdi3e30bXGumOABBPlw1oZFNUTLiXHfTP0DErq3D25H3Bwk9nV1pAx9V
-         EH3UuZ0LDiDsn/fVGbdG2khBrQ88ydHz/ZowcwujMs15QJiLsVS8/XGK4SouLHsbqmua
-         wpY9+dAOA2MH9LbEEtPrr6LIvTvF5mK9THGEw=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=r4WW2EBlCMsxgAIq5jKG3oZUk2NppsDHfRBQVo3cu3w=;
+        b=BtHksQewlG9ym92THsQVWz/9+Y8STK7SQurXz220fIA6OEblS9U9T7xcdK/h29Z0t9
+         WUuwXa6ut1vWfYoKYqMUnL35o1Irf6lcj+07fXzfOjvOXgkMN7wRAJWNP+UOOnjUmMI8
+         0w9+w7K9SnekT9EW2Lr1YjOPSk1P7s0iEBj5A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=oEH1FPCWdUYg8YG2unOagXltbc5y+YyVFtRDnTLgjbDFsz/uzMvIu593YEsuNo2lCe
-         b/DYAhWlzSafsy4s2Ca2Hils1tiO0EokWDQsAbzDjOSAjyt7zJb7OzKNbvFCu1+JN+0Q
-         mWKotkmxu8lIldkKulg3vQMvgbl0XIQtx/Cmg=
-Received: by 10.231.35.11 with SMTP id n11mr3114465ibd.168.1286240824949; Mon,
- 04 Oct 2010 18:07:04 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Mon, 4 Oct 2010 18:07:04 -0700 (PDT)
-In-Reply-To: <20101005005715.GB2768@nibiru.local>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Y+kdTlf/GDWHZhtYcgl3D3e5dRp7KKl8ZXs6AKYTwdM79bpj9chKxB+PpazGG9D6lN
+         LDzksCZjT8yxNnUhwGWc1NLW2g2GERa3qkqvQc86mTP7tfE31VOop3l9eHA2XXnBYHaK
+         QUwSabp/QEmt54KcdXi3dQ7dhMXLVw50LFo4Y=
+Received: by 10.204.55.135 with SMTP id u7mr7848350bkg.122.1286240982019;
+        Mon, 04 Oct 2010 18:09:42 -0700 (PDT)
+Received: from localhost.localdomain (aeho253.neoplus.adsl.tpnet.pl [79.186.196.253])
+        by mx.google.com with ESMTPS id y19sm4364743bkw.6.2010.10.04.18.09.39
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 04 Oct 2010 18:09:40 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9519Ap0029458;
+	Tue, 5 Oct 2010 03:09:21 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9518xd9029452;
+	Tue, 5 Oct 2010 03:08:59 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <27777603.436995.1286223710787.JavaMail.root@mail.hq.genarts.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158152>
 
-On Tue, Oct 5, 2010 at 00:57, Enrico Weigelt <weigelt@metux.de> wrote:
-> * Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Shawn Pearce wrote:
->>
->> > The mmap() isn't the problem. =C2=A0Its the allocation of a buffer=
- that is
->> > larger than the file in order to hold the result of deflating the =
-file
->> > before it gets written to disk.
->>
->> Wasn't this already fixed, at least in some cases?
->>
->> commit 9892bebafe0865d8f4f3f18d60a1cfa2d1447cd7 (tags/v1.7.0.2~11^2~=
-1)
->> Author: Nicolas Pitre <nico@fluxnic.net>
->> Date: =C2=A0 Sat Feb 20 23:27:31 2010 -0500
->
-> I guess I'll have to do a update.
->
-> But: latest tag (1.7.3.1) doesnt build:
->
->
-> =C2=A0 =C2=A0CC read-cache.o
-> =C2=A0 =C2=A0read-cache.c: In function `fill_stat_cache_info':
-> =C2=A0 =C2=A0read-cache.c:73: structure has no member named `st_ctim'
-> =C2=A0 =C2=A0read-cache.c:74: structure has no member named `st_mtim'
-> =C2=A0 =C2=A0read-cache.c: In function `read_index_from':
-> =C2=A0 =C2=A0read-cache.c:1334: structure has no member named `st_mti=
-m'
-> =C2=A0 =C2=A0read-cache.c: In function `write_index':
-> =C2=A0 =C2=A0read-cache.c:1614: structure has no member named `st_mti=
-m'
-> =C2=A0 =C2=A0make: *** [read-cache.o] Fehler 1
->
-> Is my libc too old ?
+Stephen Bash <bash@genarts.com> writes:
 
-Those lines are accessing members called st_ctime, i.e. with an "e" at
-the end, but your errors just report "st_ctim". What gives?
+> I'm trying to improve the performance of Trac [1], the GitPlugin for
+> Trac[2], and Git.  Trac is being extremely sluggish while browsing
+> source, and profiling revealed the majority of the time was the
+> GitPlugin calling git rev-list.  When I directly entered the
+> rev-list calls from the shell, I found Git itself was performing
+> slower than I would expect...
+> 
+> The bottleneck is while Trac is populating the "last change to file"
+> column in the source browser (see the "rev" column of [3] for an
+> *cough* SVN *cough* example).  This concept of "find the last change
+> to a file" was discussed a few weeks ago [4], but unlike that
+> thread, the GitPlugin is simply calling git rev-list --max-count=1
+> branchName -- fileName for each file in the current directory.  For
+> files modified recently this is very fast (thousandths of a second),
+> but for older files rev-list takes a long time to come up with an
+> answer (~2-3 seconds on our server).
+[...]
+
+> References:
+> [1] http://trac.edgewall.org
+> [2] http://trac-hacks.org/wiki/GitPlugin
+> [3] http://trac.edgewall.org/browser/trunk
+> [4] http://article.gmane.org/gmane.comp.version-control.git/150183/
+
+Note that later[5] in mentioned thread[4] there is proof of concept
+"tree blame" (in Perl) which generates such 'last change to file'
+information, I think faster than running 'git rev-list -1 <file>' for
+each file.  Even better would be to encode used algorithm in C.
+
+[5] http://thread.gmane.org/gmane.comp.version-control.git/150063/focus=150183
+
+P.S. Alternate solution would be to simply get rid of SVN-inspired
+view.  Git tracks history of a *project* as a whole, not set of
+histories for individual files (like CVS).
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
