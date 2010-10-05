@@ -1,97 +1,71 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: large files and low memory
-Date: Tue, 05 Oct 2010 17:11:45 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010051657440.3107@xanadu.home>
-References: <20101004092046.GA4382@nibiru.local>
- <AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
- <20101004185854.GA6466@burratino>
- <AANLkTin-mbzt93DWtp71vYBEUcDLHgo=G-6zynT5NC_r@mail.gmail.com>
- <20101004191657.GC6466@burratino>
- <alpine.LFD.2.00.1010051518570.3107@xanadu.home>
- <20101005203450.GA2096@burratino>
+From: merlyn@stonehenge.com (Randal L. Schwartz)
+Subject: Re: 1e633418479926bc85ed21a4f91c845a3dd3ad66 breaks on OSX
+Date: Tue, 05 Oct 2010 14:13:53 -0700
+Message-ID: <86iq1g2vhq.fsf@red.stonehenge.com>
+References: <86r5g42wo8.fsf@red.stonehenge.com>
+	<AANLkTinq7haFRs6h8W+ycDy5MzFgjty6LaD8syL+KnHX@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>, weigelt@metux.de,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 23:11:58 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 05 23:14:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Eng-0005xy-Ix
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 23:11:52 +0200
+	id 1P3Epj-0006Xz-AL
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 23:13:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755910Ab0JEVLr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 17:11:47 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:59290 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753226Ab0JEVLq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 17:11:46 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L9U00IAX5JLXD70@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 05 Oct 2010 17:11:45 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20101005203450.GA2096@burratino>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756824Ab0JEVNy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 17:13:54 -0400
+Received: from red.stonehenge.com ([208.79.95.2]:11303 "EHLO
+	red.stonehenge.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756760Ab0JEVNx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 17:13:53 -0400
+Received: by red.stonehenge.com (Postfix, from userid 1001)
+	id 804072686; Tue,  5 Oct 2010 14:13:53 -0700 (PDT)
+x-mayan-date: Long count = 12.19.17.13.12; tzolkin = 2 Eb; haab = 5 Yax
+In-Reply-To: <AANLkTinq7haFRs6h8W+ycDy5MzFgjty6LaD8syL+KnHX@mail.gmail.com>
+	(=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue, 5 Oct
+ 2010 21:05:45
+	+0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (berkeley-unix)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158250>
 
-On Tue, 5 Oct 2010, Jonathan Nieder wrote:
+>>>>> "=C3=86var" =3D=3D =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab=
+@gmail.com> writes:
 
-> Nicolas Pitre wrote:
-> 
-> > You can't do a one-pass  calculation.  The first one is required to 
-> > compute the SHA1 of the file being added, and if that corresponds to an 
-> > object that we already have then the operation stops right there as 
-> > there is actually nothing to do.
-> 
-> Ah.  Thanks for a reminder.
-> 
-> > In the case of big files, what we need to do is to stream the file data 
-> > in, compute the SHA1 and deflate it, in order to stream it out into a 
-> > temporary file, then rename it according to the final SHA1.  This would 
-> > allow Git to work with big files, but of course it won't be possible to 
-> > know if the object corresponding to the file is already known until all 
-> > the work has been done, possibly just to throw it away.
-> 
-> To make sure I understand correctly: are you suggesting that for big
-> files we should skip the first pass?
+=C3=86var> 1e63341 is a merge commit, and none of the merged things (in=
+ the
+=C3=86var> commit message) seem to have anything to do with the Perl ma=
+kefile
+=C3=86var> process.
 
-For big files we need a totally separate code path to process the file 
-data in small chunks at 'git add' time, using a loop containing 
-read()+SHA1sum()+deflate()+write().  Then, if the SHA1 matches an 
-existing object we delete the temporary output file, otherwise we rename 
-it as a valid object.  No CRLF, no smudge filters, no diff, no deltas, 
-just plain storage of huge objects, based on the value of 
-core.bigFileThreshold config option.
+=C3=86var> Can you run:
 
-Same thing on the checkout path: a simple loop to 
-read()+inflate()+write() in small chunks.
+=C3=86var>     make -j 1 V=3D1
 
-That's the only sane way to kinda support big files with Git.
+=C3=86var> And report what output you get?
 
-> I suppose that makes sense: for small files, using a patch application
-> tool to reach a postimage that matches an existing object is something
-> git historically needed to expect, but for typical big files:
-> 
->  - once you've computed the SHA1, you've already invested a noticeable
->    amount of time.
->  - emailing patches around is difficult, making "git am" etc less important
->  - hopefully git or zlib can notice when files are uncompressible,
->    making the deflate not cost so much in that case.
+Oddly enough, just rerunning the make again *worked*.
 
-Emailing is out of the question.  We're talking file sizes in the 
-hundreds of megabytes and above here.  So yes, simply computing the SHA1 
-is a significant cost, given that you are going to trash your page cache 
-in the process already, so better pay the price of deflating it at the 
-same time even if it turns out to be unnecessary.
+That's scary.
 
+And therefore also not bisectable. :(
 
-Nicolas
+I imagine there's some heisenbug in there, that we'll probably trip ove=
+r
+later.
+
+--=20
+Randal L. Schwartz - Stonehenge Consulting Services, Inc. - +1 503 777 =
+0095
+<merlyn@stonehenge.com> <URL:http://www.stonehenge.com/merlyn/>
+Smalltalk/Perl/Unix consulting, Technical writing, Comedy, etc. etc.
+See http://methodsandmessages.posterous.com/ for Smalltalk discussion
