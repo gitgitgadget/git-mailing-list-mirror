@@ -1,101 +1,80 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] tag,verify-tag: do not trip over rfc1991 signatures
-Date: Tue,  5 Oct 2010 17:40:07 +0200
-Message-ID: <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net>
-References: <4CAB46C0.9000807@drmicha.warpmail.net>
-Cc: Stephan Hugel <urschrei@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 05 17:40:06 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-clone: describe --mirror more verbose
+Date: Tue, 05 Oct 2010 08:41:34 -0700
+Message-ID: <7vwrpw7ikx.fsf@alter.siamese.dyndns.org>
+References: <1285963983-5629-1-git-send-email-u.kleine-koenig@pengutronix.de>
+ <AANLkTimN53bcadyzshHNVULkt=kzdfTQrUmZxUd+FKpY@mail.gmail.com>
+ <1285967766.6750.2.camel@gandalf.stny.rr.com>
+ <4CA9815D.3040801@drmicha.warpmail.net>
+ <20101004075015.GN28679@pengutronix.de>
+ <4CA98EF1.1050102@drmicha.warpmail.net>
+ <20101004085050.GQ28679@pengutronix.de>
+ <4CA99E43.1000204@drmicha.warpmail.net>
+ <7vlj6d988o.fsf@alter.siamese.dyndns.org>
+ <20101005070113.GE11737@pengutronix.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Darren Hart <darren@dvhart.com>, git@vger.kernel.org
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Tue Oct 05 17:42:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P39cb-0004pl-Fz
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 17:40:05 +0200
+	id 1P39eN-0005Of-QE
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 17:41:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754658Ab0JEPj4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 11:39:56 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:49058 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754457Ab0JEPj4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 11:39:56 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D07511CCC;
-	Tue,  5 Oct 2010 11:39:55 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 05 Oct 2010 11:39:55 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=9AEyMo+iDDQ/g+7cGCaSfvC5bUY=; b=mrjgR/lu37JDS9mfxVKgWDSL3qk3HO6G4WL23DRTO1wlglqdbwiRPLEcEFOtJp4u1/PXJ41wlVTf5jEHqD73BMbG4eFtvF6uIqEviuC1DW4KETe1UnJCmh045Uy1Ish6w8pzQqMaoduO8JSpAN5MiTIfX5F0V/5iXUoA3Jf+rrI=
-X-Sasl-enc: mDJBNE+si3ivU7EHZ3GLuTO37txjVPGIgzqwjQnZj7KX 1286293195
-Received: from localhost (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 502505E80D7;
-	Tue,  5 Oct 2010 11:39:55 -0400 (EDT)
-X-Mailer: git-send-email 1.7.3.98.g5ad7d
-In-Reply-To: <4CAB46C0.9000807@drmicha.warpmail.net>
+	id S1751537Ab0JEPlu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 11:41:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33375 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751514Ab0JEPlt convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 11:41:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0450BDB78A;
+	Tue,  5 Oct 2010 11:41:48 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=VeaETO6ET7rj
+	oZprjgdnc4C2LoE=; b=yY4edVJ5S6KvlMwjJda6ntoDL38XuUxfQDamGx0lsyRJ
+	bY0kggqxzNFggbvg8aZ039erXoj4Dff6F+m6EFXzskaxdvdQiyEn9Pok9tRC4ZTF
+	AJNEc0C5IqCYdOnKMUYtZbyVRwKV4e0gAPaUtBr9LSG26nKO5XbN8EEictLYxec=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=G34oOi
+	sZCkohjiYDSengO6fA5q3AfuuVSuIu0U6XYIhA3gH2d+PjzFFh+CPScv6Sr+y9lb
+	v9Zc/cs5srdwAr4L4H4g7jTDCf4Bxb2/Fp+WFJo4wmDadz6CdTkKKq0xSya5Z8bR
+	CP1gkHTSv2+Te/43NefaD/OxpgzA0BMYcNZ+o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 99C63DB780;
+	Tue,  5 Oct 2010 11:41:42 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 9B2D5DB778; Tue,  5 Oct
+ 2010 11:41:36 -0400 (EDT)
+In-Reply-To: <20101005070113.GE11737@pengutronix.de> ("Uwe =?utf-8?Q?Klein?=
+ =?utf-8?Q?e-K=C3=B6nig=22's?= message of "Tue\, 5 Oct 2010 09\:01\:13 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0D4A1BDA-D097-11DF-B228-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158207>
 
-Currently, git expects "-----BEGIN PGP SIGNATURE-----" at the beginning of a
-signature. But gpg uses "MESSAGE" instead of "SIGNATURE" when used with
-the "rfc1991" option. This leads to git's faling to verify it's own
-signed tags.
+Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de> writes:
 
-Be more lenient and take "-----BEGIN PGP " as the indicator.
+> So you intend to change git fetch origin to remove stale refs, right?
 
-Reported-by: Stephan Hugel <urschrei@gmail.com>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- builtin/tag.c        |    6 +++---
- builtin/verify-tag.c |    2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+I personally?  Am too lazy for doing it myself ;-)
 
-diff --git a/builtin/tag.c b/builtin/tag.c
-index d311491..04bec17 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -29,7 +29,7 @@ struct tag_filter {
- 	struct commit_list *with_commit;
- };
- 
--#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+#define PGP_SIGNATURE "-----BEGIN PGP "
- 
- static int show_reference(const char *refname, const unsigned char *sha1,
- 			  int flag, void *cb_data)
-@@ -72,7 +72,7 @@ static int show_reference(const char *refname, const unsigned char *sha1,
- 		/* only take up to "lines" lines, and strip the signature */
- 		for (i = 0, sp += 2;
- 				i < filter->lines && sp < buf + size &&
--				prefixcmp(sp, PGP_SIGNATURE "\n");
-+				prefixcmp(sp, PGP_SIGNATURE);
- 				i++) {
- 			if (i)
- 				printf("\n    ");
-@@ -256,7 +256,7 @@ static void write_tag_body(int fd, const unsigned char *sha1)
- 		return;
- 	}
- 	sp += 2; /* skip the 2 LFs */
--	eob = strstr(sp, "\n" PGP_SIGNATURE "\n");
-+	eob = strstr(sp, "\n" PGP_SIGNATURE);
- 	if (eob)
- 		len = eob - sp;
- 	else
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 9f482c2..3c85d0a 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -17,7 +17,7 @@ static const char * const verify_tag_usage[] = {
- 		NULL
- };
- 
--#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+#define PGP_SIGNATURE "-----BEGIN PGP "
- 
- static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
- {
--- 
-1.7.3.98.g5ad7d
+I am just
+
+ (1) pointing it out as a potential design bug; and
+
+ (2) seeing if somebody who is depending on the current behaviour to
+     object.
