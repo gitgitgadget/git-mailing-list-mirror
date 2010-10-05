@@ -1,88 +1,92 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: Re: [TopGit PATCH v4] tg-files: list files changed by the topic branch
-Date: Wed, 06 Oct 2010 00:02:45 +0200
-Message-ID: <87k4lw1enu.fsf@gmail.com>
-References: <20101005071723.GG11737@pengutronix.de>
-	<1286305402-28284-1-git-send-email-bert.wesarg@googlemail.com>
+From: Daniel Johnson <computerdruid@gmail.com>
+Subject: Re: git push <branch-name>
+Date: Tue, 5 Oct 2010 18:11:44 -0400
+Message-ID: <201010051811.49211.ComputerDruid@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>,
-	git@vger.kernel.org, Peter Simons <simons@cryp.to>, pasky@suse.cz,
-	Per Cederqvist <ceder@lysator.liu.se>,
-	Olaf Dabrunz <odabrunz@gmx.net>,
-	Thomas Moschny <thomas.moschny@gmx.de>,
-	martin f krafft <madduck@madduck.net>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 00:03:59 2010
+Content-Type: multipart/signed;
+  boundary="nextPart1478251.MIj7GZuW6q";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Eric Raible <raible@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 06 00:11:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Fc7-0005aQ-8d
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 00:03:59 +0200
+	id 1P3FjP-0007yh-MQ
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 00:11:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757484Ab0JEWDr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 18:03:47 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:54791 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756042Ab0JEWDq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 18:03:46 -0400
-Received: by fxm4 with SMTP id 4so810136fxm.19
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 15:03:45 -0700 (PDT)
+	id S1754258Ab0JEWL0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 18:11:26 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43294 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753971Ab0JEWLZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 18:11:25 -0400
+Received: by wwj40 with SMTP id 40so6271283wwj.1
+        for <git@vger.kernel.org>; Tue, 05 Oct 2010 15:11:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=K+8ogZZ6mNsEyCdkEs6IjSqzPsDTNQgbqX6DiXoPV1s=;
-        b=Y1dy4yh1bskYOgOMd6MKe0GcDimzStwrQnB6Hb2p8rs3lqiQpbRqZGhvaz7TDYLIBO
-         3EpN5+yPPntGz5c30UJE1lPl1UwzG+NbOePjyMN/lIeHt7VYHz7J2Xur+YWD+pj3pH6o
-         yu4WUUux99LTd2u0Z5fBVkuAT0wtVxLLVXSiw=
+        h=domainkey-signature:received:received:to:subject:from:date:cc
+         :mime-version:content-type:content-transfer-encoding:message-id;
+        bh=VsfgdS5EBMzjBbeoK2wR5vicS0Wvd3wteaZiBPTXr3I=;
+        b=G9bvlfuWgJLOl1592TGu7/sbgtaNoRPjGvFadI45AB/+XjacW0hho2w28/X8fuglxg
+         s5H6fT/9cijHt5zu4dOOu1agZrdPvBiexWKt4JkimtcWBoK+2HLPi1aSbS/YK+INS6xi
+         gSKY8kCjYhOFJ2GLYynWF2wABrzDmP6C6mGA0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=NUYEZgoMRzfGL5dODXQbjQ8KoggrSoKGYRBpUIc18zB0bR7wu/cUdOxdDJsXnW0m2V
-         somKK3UKsS9YDxjNaxG6qxymvceIYKWGVyB+ECdp08Pbf/CXVhHC/w2Y0YtHn15tE8or
-         N0v5K753pKc2TAfSSn0q4rJMeyWxW4+hMFYFs=
-Received: by 10.223.59.217 with SMTP id m25mr11478533fah.33.1286316225406;
-        Tue, 05 Oct 2010 15:03:45 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
-        by mx.google.com with ESMTPS id f28sm26140faa.0.2010.10.05.15.03.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 05 Oct 2010 15:03:44 -0700 (PDT)
-In-Reply-To: <1286305402-28284-1-git-send-email-bert.wesarg@googlemail.com>
-	(Bert Wesarg's message of "Tue, 5 Oct 2010 21:03:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+        h=to:subject:from:date:cc:mime-version:content-type
+         :content-transfer-encoding:message-id;
+        b=jSQGDiRQ7CMAnJD0I2QfGc7hqRf7CrNdcYphURD/VH5AmN04dYrMxyx4w9LIqC8AQ8
+         abG7k42fRre6SpfTmEdse0BjennlqhH/cJ/gdL3EHnfBveMzsdR7KXmxOUfoh/0qucG1
+         YQoOt94MkZVg59pzp0lqEa1RXVL4vqLdK82lI=
+Received: by 10.216.182.202 with SMTP id o52mr9828218wem.29.1286316684264;
+        Tue, 05 Oct 2010 15:11:24 -0700 (PDT)
+Received: from hyperion.localnet (hyperion.student.rit.edu [129.21.115.231])
+        by mx.google.com with ESMTPS id w1sm61514weq.1.2010.10.05.15.11.23
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 05 Oct 2010 15:11:23 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158253>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
+--nextPart1478251.MIj7GZuW6q
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-> this could also be a --name-only option to tg-patch. But I Like the
-> similarity to 'quilt files'.
->
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->
-> ---
->
->  Changes:
->   v4:
->    * apply Uwe's suggestions
+On Tuesday 05 October 2010 16:29:50 you wrote:
+> A newbie colleague asked why: "git push <branch>" didn't work.
+>=20
+> Although I know that "git push <repo> <branch>" is the correct
+> syntax, I think that he has a point.  If branch.<branch>.remote
+> is defined it seems unambiguous to me.
+>=20
+> So I can't see any reason NOT to dwimify
+>=20
+>     git push <branch>
+Isn't that syntax reserved for remotes?
+for example:
 
-[...]
+git push origin
 
-> +
-> +
-> +[ -n "$name" -a -n "$topic" ] &&
-> +	die "$topic are mutually exclusive with NAME"
+I feel like it would be a bad idea to have these 2 types of invocations=20
+overlap in syntax like that.
 
-=2E..so, "are" should now be "is", as $topic will be _either_ `-i' or
-`-w', not both.
+--nextPart1478251.MIj7GZuW6q
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
-=C5=A0t=C4=9Bp=C3=A1n
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.16 (GNU/Linux)
+
+iEYEABECAAYFAkyroqUACgkQhP2Vm0oJTtzT9wCeMfm8Injhrr2bpm7kxOvPibPh
+fVoAn3aE2rryY8vdOFr0Vg0jbSy+J0Ig
+=dayE
+-----END PGP SIGNATURE-----
+
+--nextPart1478251.MIj7GZuW6q--
