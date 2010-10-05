@@ -1,76 +1,90 @@
-From: =?ISO-8859-1?Q?Gustav_H=E5llberg?= <gustav@gmail.com>
-Subject: Re: [stgit PATCH] commands.{new,rename}: verify patch names
-Date: Tue, 5 Oct 2010 14:44:43 +0200
-Message-ID: <AANLkTin9PyfY+-1=mJKMZa2FJ5YC2D27iPtiocCWY+eP@mail.gmail.com>
-References: <20101005114541.15037.53617.stgit@woodpecker.blarg.de>
+From: Max Kellermann <max@duempel.org>
+Subject: [stgit PATCH] commands.{new,rename}: verify patch names
+Date: Tue, 05 Oct 2010 14:56:31 +0200
+Message-ID: <20101005125631.17466.95192.stgit@woodpecker.blarg.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Max Kellermann <max@duempel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 05 14:44:51 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 05 14:56:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P36t1-0000xa-0W
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 14:44:51 +0200
+	id 1P374V-0004CR-2p
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 14:56:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751264Ab0JEMop convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 08:44:45 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:56401 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751024Ab0JEMoo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 08:44:44 -0400
-Received: by gye5 with SMTP id 5so1861307gye.19
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 05:44:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=EQJJFoo4o7J2GElusNCEGKe+IHh9KC5JgP5dM1bIyl8=;
-        b=k10mGljX6YRKuVico1Cn5Z2L2ewbPgrde4PjxwJWGJtFw81MXGkNdV0pJ5CKxvWBMA
-         uEKmrYVruXj+Ybd0gnlSrTgVLgQmmJ8o5mGm4R+GomPWwizD2lTM1qqepRfAkqoWf1/k
-         YEn0jgEzv6VHVcQ9+q/bh4UN1Z2CsMIOum1Qg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Pw2ymrWCeINGzA0SB/Ym5VmF9o90QHyFuSKdwrLO0h6oqrGaH8YJLxfiOlyEHcSNrg
-         97ko1gkXS4al3kKDuFIPzZXwX135yNw2ayUDGPnMFliV7UzUE+SxglneoDD4iI70yuGD
-         +uLOn0Itjy1ZlBUOWai3/UnA6leo4JDGzZTG8=
-Received: by 10.236.95.15 with SMTP id o15mr10764830yhf.48.1286282683890; Tue,
- 05 Oct 2010 05:44:43 -0700 (PDT)
-Received: by 10.220.171.8 with HTTP; Tue, 5 Oct 2010 05:44:43 -0700 (PDT)
-In-Reply-To: <20101005114541.15037.53617.stgit@woodpecker.blarg.de>
+	id S1751819Ab0JEM4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 08:56:37 -0400
+Received: from smtp6.netcologne.de ([194.8.194.26]:35261 "EHLO
+	smtp6.netcologne.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751716Ab0JEM4g (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 08:56:36 -0400
+Received: from squirrel.blarg.de (cable-78-35-111-134.netcologne.de [78.35.111.134])
+	by smtp6.netcologne.de (Postfix) with ESMTP id 295EE2A12C4
+	for <git@vger.kernel.org>; Tue,  5 Oct 2010 14:56:35 +0200 (CEST)
+Received: from woodpecker.blarg.de (woodpecker.blarg.de [IPv6:2001:4dd0:ff06::7])
+	by squirrel.blarg.de (Postfix) with ESMTP id 066CE20D3B
+	for <git@vger.kernel.org>; Tue,  5 Oct 2010 14:56:35 +0200 (CEST)
+User-Agent: StGit/0.15
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158193>
 
-On Tue, Oct 5, 2010 at 1:45 PM, Max Kellermann <max@duempel.org> wrote:
-> +def check_patch_name(name):
-> + =A0 =A0"""Checks if the specified name is a valid patch name. For
-> + =A0 =A0technical reasons, we cannot allow a slash and other charact=
-ers."""
-> + =A0 =A0return len(name) > 0 and name[0] !=3D '.' and re.search(r'[\=
-x00-\x20]', name) is None
+Don't allow patches with invalid names.  For example, a patch with a
+slash in the name will cause the underlying git command to fail, and
+stgit doesn't handle this error condition properly.
+---
+ stgit/commands/new.py    |    3 +++
+ stgit/commands/rename.py |    3 +++
+ stgit/utils.py           |    6 ++++++
+ 3 files changed, 12 insertions(+), 0 deletions(-)
 
-I don't quite understand how the above would filter out slashes.
-
-There are also other types of names that won't work correctly in git,
-such as names starting with (double?) hyphens.
-
-Does anyone know if it's explicitly documented anywhere which types of
-names are (meant to be) allowed for git refs?
-Note that you can create refs with names that don't actually work
-correctly; e.g.,
-
- sh$ git tag -- --foo
- sh$ git rev-parse --foo
- <failure>
-
-- Gustav
+diff --git a/stgit/commands/new.py b/stgit/commands/new.py
+index d5c5382..6bd7314 100644
+--- a/stgit/commands/new.py
++++ b/stgit/commands/new.py
+@@ -61,6 +61,9 @@ def func(parser, options, args):
+         name = args[0]
+         if stack.patches.exists(name):
+             raise common.CmdException('%s: patch already exists' % name)
++
++        if not utils.check_patch_name(name):
++            raise common.CmdException('%s: invalid patch name' % name)
+     else:
+         parser.error('incorrect number of arguments')
+ 
+diff --git a/stgit/commands/rename.py b/stgit/commands/rename.py
+index db898cb..7c229be 100644
+--- a/stgit/commands/rename.py
++++ b/stgit/commands/rename.py
+@@ -51,6 +51,9 @@ def func(parser, options, args):
+     else:
+         parser.error('incorrect number of arguments')
+ 
++    if not check_patch_name(new):
++        raise CmdException('%s: invalid patch name' % new)
++
+     out.start('Renaming patch "%s" to "%s"' % (old, new))
+     crt_series.rename_patch(old, new)
+ 
+diff --git a/stgit/utils.py b/stgit/utils.py
+index 2955adf..a41457b 100644
+--- a/stgit/utils.py
++++ b/stgit/utils.py
+@@ -241,6 +241,12 @@ def make_patch_name(msg, unacceptable, default_name = 'patch'):
+         patchname = default_name
+     return find_patch_name(patchname, unacceptable)
+ 
++def check_patch_name(name):
++    """Checks if the specified name is a valid patch name. For
++    technical reasons, we cannot allow a slash and other characters."""
++    return len(name) > 0 and name[0] not in '.-' and '/' not in name and \
++           '..' not in name and re.search(r'[\x00-\x20]', name) is None
++
+ # any and all functions are builtin in Python 2.5 and higher, but not
+ # in 2.4.
+ if not 'any' in dir(__builtins__):
