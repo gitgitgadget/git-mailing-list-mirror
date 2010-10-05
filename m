@@ -1,75 +1,87 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: large files and low memory
-Date: Tue, 05 Oct 2010 16:17:47 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010051518570.3107@xanadu.home>
-References: <20101004092046.GA4382@nibiru.local>
- <AANLkTimbdrAqoWMxiteT5zNYmwHp8M698BEv1FLuiAxx@mail.gmail.com>
- <20101004185854.GA6466@burratino>
- <AANLkTin-mbzt93DWtp71vYBEUcDLHgo=G-6zynT5NC_r@mail.gmail.com>
- <20101004191657.GC6466@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] tag,verify-tag: do not trip over rfc1991 signatures
+Date: Tue, 05 Oct 2010 13:28:06 -0700
+Message-ID: <7vr5g45qqx.fsf@alter.siamese.dyndns.org>
+References: <4CAB46C0.9000807@drmicha.warpmail.net>
+ <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Shawn Pearce <spearce@spearce.org>, weigelt@metux.de,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 05 22:17:53 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stephan Hugel <urschrei@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Oct 05 22:28:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3DxR-0007zY-Fe
-	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:17:53 +0200
+	id 1P3E7Z-0002hC-Pl
+	for gcvg-git-2@lo.gmane.org; Tue, 05 Oct 2010 22:28:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756974Ab0JEURs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 5 Oct 2010 16:17:48 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:51991 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751728Ab0JEURr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 5 Oct 2010 16:17:47 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR005.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L9U00BE831NRF70@VL-MO-MR005.ip.videotron.ca> for
- git@vger.kernel.org; Tue, 05 Oct 2010 16:17:47 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20101004191657.GC6466@burratino>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1757212Ab0JEU2R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 5 Oct 2010 16:28:17 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:58551 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757208Ab0JEU2Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 5 Oct 2010 16:28:16 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0D8C5DC44A;
+	Tue,  5 Oct 2010 16:28:15 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=FNtvJ7hSPik8j+/ZyojwV2radrI=; b=kEnOfY
+	4fu2SWGITiBlRI498LEYWHs9qyjgSfONe+vUJH+fSQv8poo5y+jQzqi9aWsZcL0O
+	aQypSy42eIyh3xjnkZjr5ypQ3OqUTKUC6t+g4a4iWXwH1Wavf+UgEvQ3WbN8NIo5
+	FxgXu5cWnPnOWNEyyRt9pP20CgkRLhWKC3T5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=C/w5eBxMpxaisbEP5yqLNwhsQjEEzHw3
+	XcAnBb5esT/oQ7coFyypOImpqcnrt0c0qTeFnm+Pp7xvuNOH/JSlOotmJH/QsmUn
+	jUqaKXeLUiqE+iIaOXPsHPWd5Pp29ARZepK0kJT+81hm2L7q3zd9oJlTRgnvJag+
+	pIsJfDwG8u4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CCA20DC446;
+	Tue,  5 Oct 2010 16:28:11 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E936FDC443; Tue,  5 Oct
+ 2010 16:28:07 -0400 (EDT)
+In-Reply-To: <5cea498f34522d603a1561bfe69e2f92caa39ced.1286293083.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue\,  5 Oct 2010 17\:40\:07 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 12DB003C-D0BF-11DF-80D9-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158232>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158233>
 
-On Mon, 4 Oct 2010, Jonathan Nieder wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> Shawn Pearce wrote:
-> 
-> > This change only removes the deflate copy.  But due to the SHA-1
-> > consistency issue I alluded to earlier, I think we're still making a
-> > full copy of the file in memory before we SHA-1 it or deflate it.
-> 
-> Hmm, I _think_ we still use mmap for that (which is why 748af44c needs
-> to compare the sha1 before and after).
-> 
-> But
-> 
->  1) a one-pass calculation would presumably be a little (5%?) faster
+> Currently, git expects "-----BEGIN PGP SIGNATURE-----" at the beginning of a
+> signature. But gpg uses "MESSAGE" instead of "SIGNATURE" when used with
+> the "rfc1991" option. This leads to git's faling to verify it's own
+> signed tags.
+>
+> Be more lenient and take "-----BEGIN PGP " as the indicator.
 
-You can't do a one-pass  calculation.  The first one is required to 
-compute the SHA1 of the file being added, and if that corresponds to an 
-object that we already have then the operation stops right there as 
-there is actually nothing to do.  The second pass is to deflate the 
-data, and recompute the SHA1 to make sure what we deflated and written 
-out is still the same data.
+Thanks, but it bothers me that the patch is a bit inconsistently lenient.
 
-In the case of big files, what we need to do is to stream the file data 
-in, compute the SHA1 and deflate it, in order to stream it out into a 
-temporary file, then rename it according to the final SHA1.  This would 
-allow Git to work with big files, but of course it won't be possible to 
-know if the object corresponding to the file is already known until all 
-the work has been done, possibly just to throw it away.  But normally 
-big files are the minority.
+How many variants of PGP implementations are there?  For example, I'd ask
+these without doing my own research because I am lazy:
 
+ 1. Does everybody place five dashes at the beginning (IOW, is there an
+    odd variant that puts four or six)?
 
-Nicolas
+ 2. Does everybody follow the dashes immediately with "BEGIN" (IOW, is
+    there an odd variant that puts a SP between them)?
+
+ 3. Does everybody spell "BEGIN PGP " the same way, in all uppercase?
+
+ 4. Does everybody place five dashes at the end (IOW, is there an odd
+    variant that puts four or six)?
+
+ 5. Does everybody follow the "BEGIN PGP SOMETHING" immediately with
+    dashes without SP?
+
+Your patch seem to answer <yes, yes, yes, no, no> to the above question.
+I'd find it saner if the patched code at least checked that the line ends
+with 5 dashes.
