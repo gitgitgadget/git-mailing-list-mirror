@@ -1,200 +1,320 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 03/17] gitweb/lib - Very simple file based cache
-Date: Thu, 7 Oct 2010 01:00:31 +0200
-Message-ID: <201010070100.33478.jnareb@gmail.com>
-References: <1286402526-13143-1-git-send-email-jnareb@gmail.com> <1286402526-13143-4-git-send-email-jnareb@gmail.com> <AANLkTinPCOfknoN4aO_EdPwKorRiM6NU6ep0z_nnNug8@mail.gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH v4 1/4] Introduce wholesame directory move detection in
+ diffcore.
+Date: Thu, 7 Oct 2010 01:13:08 +0200
+Message-ID: <20101006231308.GY4983@home.lan>
+References: <1286138529-6780-1-git-send-email-ydirson@altern.org>
+ <1286138529-6780-2-git-send-email-ydirson@altern.org>
+ <20101005010620.GC9994@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
-To: Thomas Adam <thomas@xteddy.org>
-X-From: git-owner@vger.kernel.org Thu Oct 07 01:01:00 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 01:03:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3cyp-0005jl-3w
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:00:59 +0200
+	id 1P3d0z-00075l-7x
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:03:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933240Ab0JFXAm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 19:00:42 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34967 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757966Ab0JFXAl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 19:00:41 -0400
-Received: by fxm4 with SMTP id 4so53877fxm.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 16:00:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=gIB1+/V68OhTN4qbJnIf67enyx0Xzk6uEAh/48/qiE4=;
-        b=M3ajYc+fPnOTuqnTznhA/ZQO2pA0A5XPXEB646gCp2VcMAPT3+pDwMYfUJwowf1Wse
-         xt3XGuk2Ryuzf91s6Em3b74iK82rcoGYC8463xFszuIZz/yh7fwajKYYH8JrSSrdvEzy
-         AHe1vJqWZuT/WRDt2w2ubDxbb7w1KKCneuCMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=HQcCpYVxWPB6h4lDJBSw2UZ34KhXy7Xggbp5g0JMESL/5Sd+CuynBlc8pxeuWqrPl5
-         9GCdj/8IlWTFZArNahmm+55aqd4wdP6l0iEBug4yT8E1IuHWDSevdaJbFoBVWQR3EQVI
-         IxGd82xMTVU1EDkePTNa0yqaXrfSAJ7kYkxhw=
-Received: by 10.223.117.204 with SMTP id s12mr5091645faq.22.1286406039226;
-        Wed, 06 Oct 2010 16:00:39 -0700 (PDT)
-Received: from [192.168.1.13] (abwe253.neoplus.adsl.tpnet.pl [83.8.228.253])
-        by mx.google.com with ESMTPS id s20sm720489faa.28.2010.10.06.16.00.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 Oct 2010 16:00:38 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTinPCOfknoN4aO_EdPwKorRiM6NU6ep0z_nnNug8@mail.gmail.com>
+	id S1754008Ab0JFXDG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 19:03:06 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:49150 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753183Ab0JFXDF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 19:03:05 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id EA848D4809D;
+	Thu,  7 Oct 2010 01:02:57 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P3dAa-0005KA-WF; Thu, 07 Oct 2010 01:13:09 +0200
 Content-Disposition: inline
+In-Reply-To: <20101005010620.GC9994@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158345>
 
-Thank you very much for those comments on code.
+On Mon, Oct 04, 2010 at 08:06:20PM -0500, Jonathan Nieder wrote:
+> > @@ -338,7 +339,8 @@ static int show_modified(struct rev_info *revs,
+> >  
+> >  	oldmode = old->ce_mode;
+> >  	if (mode == oldmode && !hashcmp(sha1, old->sha1) && !dirty_submodule &&
+> > -	    !DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER))
+> > +	    !DIFF_OPT_TST(&revs->diffopt, FIND_COPIES_HARDER) &&
+> > +	    !DIFF_OPT_TST(&revs->diffopt, DETECT_DIR_RENAMES))
+> >  		return 0;
+> 
+> The diff-index part.
+> 
+> Would we also need something like v1.6.4-rc0~45^2 (Avoid "diff-index
+> --cached" optimization under --find-copies-harder, 2009-05-22) in
+> order to grok unchanged subtrees, or is that taken care of some other
+> way?
 
-On Thu, 7 Oct 2010, Thomas Adam wrote:
-> On 6 October 2010 23:01, Jakub Narebski <jnareb@gmail.com> wrote:
+Note to self: look at that
 
-> > +# creates get_depth() and set_depth($depth) etc. methods
-> > +foreach my $i (qw(depth root namespace)) {
-> > + =C2=A0 =C2=A0 =C2=A0 my $field =3D $i;
-> > + =C2=A0 =C2=A0 =C2=A0 no strict 'refs';
->=20
-> For each item, you'll set "no strict refs"?  This might be better off
-> outside the loop.  It's still scoped appropriately inside the
-> subroutine.
+> [...]
+> > --- a/diffcore-rename.c
+> > +++ b/diffcore-rename.c
+> > @@ -11,6 +11,7 @@
+> >  static struct diff_rename_dst {
+> >  	struct diff_filespec *two;
+> >  	struct diff_filepair *pair;
+> > +	int i_am_not_single:1; // does not look for a match, only here to be looked at
+> >  } *rename_dst;
+> 
+> If we're looking for directory renames but not finding-copies-harder,
+> then unmodified files, while interesting and deserving of dst entries,
+> should not be considered candidates for tracing individual files.
+> 
+> Yes?  If so, maybe the less colorful
+> 
+> 	unsigned rename_target_candidate:1;
+> 
+> would make that clearer
 
-On the other hand this way scope where "no strict 'refs';" is active
-is limited... but I guess having "no strict 'refs';" outside loop would
-be better.
+Right - but maybe we can use a separate list for those non-candidates
+as I suggested elsewhere, to make things even more clear.
 
->=20
-> > + =C2=A0 =C2=A0 =C2=A0 my $file =3D $self->path_to_key($key);
-> > + =C2=A0 =C2=A0 =C2=A0 return undef unless (defined $file && -f $fi=
-le);
->=20
-> PBP (Perl Best Practises) will tell you that explicitly returning
-> undef is discouraged -- "undef" should be reserved for those errors
-> you cannot handle, not ones you don't want to.
+> (and more importantly, the new kind of dst entry should be mentioned
+> in the commit log message).
 
-Well, Perl Best Practices are practices; sometimes there is good reason
-to not take them into account (though probably not in this case).
+Hm, the commit message is a bit long already, isn't that too much detail ?
 
-Explicitly returning undef is discouraged because in list context the
-returned undef (or rather 1-element list with 'undef' as sole element)
-is true-ish.
 
-On the other hand
-
-> > +# $cache->set($key, $data);
-> > +#
-> > +# Associates $data with $key in the cache, overwriting any existin=
-g entry.
-> > +# Returns $data.
-> > +sub set {
-> > +       my ($self, $key, $data) =3D @_;
+> > +static struct diff_rename_dst *locate_rename_dst_dir(struct diff_filespec *dir)
+> > +{
+> > +	/* code mostly duplicated from locate_rename_dst - not sure we
+> > +	 * could merge them efficiently,though
+> > +	 */
+> > +	int first, last;
+> > +	int prefixlength = strlen(dir->path);
 > > +
-> > +       return unless (defined $key && defined $data);
->=20
-> return what?
-=20
-as you can see 'return' statement with no value looks rather cryptic
-with statement modifier (conditional).
+> > +	first = 0;
+> > +	last = rename_dst_nr;
+> > +	while (last > first) {
+> > +		int next = (last + first) >> 1;
+> > +		struct diff_rename_dst *dst = &(rename_dst[next]);
+> > +		int cmp = strncmp(dir->path, dst->two->path, prefixlength);
+> 
+> prefixcmp?
 
-I should really have run gitweb, caching modules and tests through=20
-perlcritic...
+Since prefixlength is constant accross the loop, strncmp spares
+comparing every char with \0 - we only do that once.  I guess it's
+worth keeping.
 
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 last if $read_cn=
-t =3D=3D 0;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $size_left -=3D =
-$read_cnt;
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 #last if $size_l=
-eft <=3D 0;
-> > + =C2=A0 =C2=A0 =C2=A0 }
-> > +
-> > + =C2=A0 =C2=A0 =C2=A0 close $read_fh
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 or die "Couldn't=
- close file '$file' opened for reading: $!";
-> > + =C2=A0 =C2=A0 =C2=A0 return $buf;
+> > +		if (!cmp)
+> > +			return dst;
+> > +		if (cmp < 0) {
+> > +			last = next;
+> > +			continue;
+> > +		}
+> > +		first = next+1;
+> > +	}
+> > +	/* not found */
+> > +	return NULL;
 > > +}
->=20
-> "use Carp;" would be more useful here, and hence croak() and confess(=
-).
+> 
+> Hmm, so this is like locate_rename_dst(..., 0), except it matches
+> prefixes.  Result is a rename_dst entry within that directory (why
+> not spend the time to find the first?).
 
-=46or a web application we usually do not want to have too detailed err=
-or
-message present to client (to web browser) to avoid leaking of sensitiv=
-e
-information.
-=20
-> > + =C2=A0 =C2=A0 =C2=A0 # ensure that directory leading to cache fil=
-e exists
-> > + =C2=A0 =C2=A0 =C2=A0 if (!-d $dir) {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 eval { mkpath($d=
-ir, 0, 0777); 1 }
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 or die "Couldn't create leading directory '$dir' (mkpath): $=
-!";
-> > + =C2=A0 =C2=A0 =C2=A0 }
->=20
-> Why is this eval()ed?  It will still return false and set $! appropri=
-ately.
+We just don't need the first.  In most cases, finding one entry just
+invalidates the possiblity of a bulk move.  Then when we want all of
+them, we have to scan the list in both directions - and yes, a clean
+way to avoid code duplication would be nice for those.
 
-IIRC mkpath *dies on error*, rather than returning false.  For better
-error handling we would need to use make_path, but File::Path 2.0+
-is in [stable] core only since Perl 5.10.
-=20
-[...]
-> > +# $data =3D $cache->compute($key, $code);
-> > +#
-> > +# Combines the get and set operations in a single call. =C2=A0Atte=
-mpts to
-> > +# get $key; if successful, returns the value. =C2=A0Otherwise, cal=
-ls $code
-> > +# and uses the return value as the new value for $key, which is th=
-en
-> > +# returned.
-> > +sub compute {
-> > + =C2=A0 =C2=A0 =C2=A0 my ($self, $key, $code) =3D @_;
+> >  
+> >  	/* Find the renames */
+> >  	i = for_each_hash(&file_table, find_same_files);
+> > @@ -414,6 +445,180 @@ static void record_if_better(struct diff_score m[], struct diff_score *o)
+> >  		m[worst] = *o;
+> >  }
+> >  
+> > +struct diff_dir_rename {
+> > +	struct diff_filespec *one;
+> > +	struct diff_filespec *two;
+> > +	int discarded;
+> > +	struct diff_dir_rename* next;
+> > +};
+> 
+> A linked list of renamed directories.  What functions maintain it?
+
+That is just the type decl.  For this patch it is only used from
+diffcore_factorize_renames() and diffcore_rename(), but the
+--hide-dir-rename-details part needs it for maybe_mark_uninteresting,
+which explains its position in the source file.
+
+> [...]
+> > +static struct diff_dir_rename* factorization_candidates = NULL;
+> > +static void diffcore_factorize_renames(void)
+> > +{
+> > +	char one_parent_path[PATH_MAX], two_parent_path[PATH_MAX];
+> > +	int i;
 > > +
-> > + =C2=A0 =C2=A0 =C2=A0 my $data =3D $self->get($key);
-> > + =C2=A0 =C2=A0 =C2=A0 if (!defined $data) {
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $data =3D $code-=
->($self, $key);
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $self->set($key,=
- $data);
-> > + =C2=A0 =C2=A0 =C2=A0 }
->=20
-> Can you guarantee $code here?
+> > +	for (i = 0; i < rename_dst_nr; i++) {
+> 
+> For each rename target candidate: ...
+> 
+> Would it make sense to give the body of this loop its own function?
 
-I don't want to code too defensively, but perhaps check for this is in
-order... though what we should do if $code is not code reference?
+Yes, that makes things more readable.
 
->=20
-> unless( defined $code and ref $code eq 'CODE' )
+> > +		struct diff_dir_rename* seen;
+> > +
+> > +		// FIXME: what are those ?
+> > +		if (!rename_dst[i].pair)
+> > +			continue;
+> 
+> Genuine new files are not interesting to us (since they do not
+> provide evidence about directory renames, postive or negative).
 
-"ref($code) eq 'CODE'" would be enough; 'undef' is not reference, and
-ref(undef) returns "".
-
-> {
->         ....
-> }
->=20
-> Wouldn't it be easier to eval{} this and check $@?
-
-So the answer is no.
+Well, maybe except for Junio's idea of using bulk-rename detection to
+bump rename scores (we may want to look at that afterwards, but I fear
+it will require heavy surgery).
 
 
-Thanks again for your comments.
---=20
-Jakub Narebski
-Poland
+> > +		// dummy renames used by copy detection
+> > +		if (!strcmp(rename_dst[i].pair->one->path, rename_dst[i].pair->two->path))
+> > +			continue;
+> 
+> Whether a file was copied is probably interesting to us, but the
+> corresponding filepair isn't.
+
+Good point: bulk-rename can already be made to direct move+copy
+detection to select the correct dst for the move.
+
+> > +
+> > +		struct diff_filespec* one_parent = alloc_filespec(one_parent_path);
+> > +		fill_filespec(one_parent, null_sha1 /*FIXME*/, S_IFDIR);
+> 
+> Initialize a filespec, for use in filepairs in case the containing
+> directories are a source/target pair. (?)
+
+We need a filespec for locate_rename_dst_dir, but it is silly, we can
+just pass it a path string, and initialize the filespec when really
+needed.  Good catch.
+ 
+> > +
+> > +		// After this commit, are there any files still under one_parent_path ?
+> > +		struct diff_rename_dst* one_leftover = locate_rename_dst_dir(one_parent);
+> > +		if (one_leftover) { // FIXME: should only be run if !seen
+> [...]
+> > +		}
+> 
+> A candidate for a separate function, no?
+
+Right.
+
+> The idea, if I understand it: too many unchanged files can
+> disqualify a rename source.
+
+Not exactly: any file left in a dir disqualifies this dir for bulk-rename.
+
+> > +
+> > +		// already considered ?
+> > +		for (seen=factorization_candidates; seen; seen = seen->next)
+> > +			if (!strcmp(seen->one->path, one_parent_path)) break;
+> 
+> Lookup.  A candidate for a separate function, I think.
+> 
+> > +		if (!seen) {
+> > +			// record potential dir rename
+> > +			seen = xmalloc(sizeof(*seen));
+> > +			seen->one = one_parent;
+> > +			seen->two = alloc_filespec(two_parent_path);
+> > +			fill_filespec(seen->two, null_sha1 /*FIXME*/, S_IFDIR);
+> > +			seen->discarded = 0;
+> > +			seen->next = factorization_candidates;
+> > +			factorization_candidates = seen;
+> > +			fprintf(stderr, "[DBG] %s -> %s suggests possible rename from %s to %s\n",
+> > +				rename_dst[i].pair->one->path,
+> > +				rename_dst[i].pair->two->path,
+> > +				one_parent_path, two_parent_path);
+> 
+> Insertion.  Likewise.
+
+Hm, it's only used once, and once the other splits are done the func
+fits on a screen (at least on my display ;)
+
+OTOH, if we decide for a sorted list, to allow for binary search to be
+more efficient, then yes.
+
+> > +
+> > +		/* all checks ok, we keep that entry */
+> > +	}
+> > +
+> > +	return;
+> > +}
+> > +
+> >  void diffcore_rename(struct diff_options *options)
+> >  {
+> >  	int detect_rename = options->detect_rename;
+> > @@ -451,13 +656,22 @@ void diffcore_rename(struct diff_options *options)
+> [...]
+> >  			if (detect_rename == DIFF_DETECT_COPY) {
+> >  				/*
+> >  				 * Increment the "rename_used" score by
+> >  				 * one, to indicate ourselves as a user.
+> >  				 */
+> >  				p->one->rename_used++;
+> >  				register_rename_src(p->one, p->score);
+> >  			}
+> > +			if (DIFF_OPT_TST(options, DETECT_DIR_RENAMES)) {
+> > +				/* similarly, rename factorization needs to
+> > +				 * see all files from second tree, but we don't
+> > +				 * want them to be matched against single sources.
+> > +				 */
+> > +				locate_rename_dst(p->two, 1)->i_am_not_single = 1;
+> 
+> ... except when --find-copies-harder is being used, right?
+
+I have not investigated interactions with copy detection yet.
+
+
+> > @@ -569,7 +785,28 @@ void diffcore_rename(struct diff_options *options)
+> >  	/* At this point, we have found some renames and copies and they
+> >  	 * are recorded in rename_dst.  The original list is still in *q.
+> >  	 */
+> > +
+> > +	/* Now possibly factorize those renames and copies. */
+> > +	if (DIFF_OPT_TST(options, DETECT_DIR_RENAMES))
+> > +		diffcore_factorize_renames();
+> > +
+> >  	DIFF_QUEUE_CLEAR(&outq);
+> > +
+> > +	// Now turn non-discarded factorization_candidates into real renames
+> > +	struct diff_dir_rename* candidate;
+> > +	for (candidate=factorization_candidates; candidate; candidate = candidate->next) {
+> > +		struct diff_filepair* pair;
+> > +		if (candidate->discarded) continue;
+> > +		// visualize toplevel dir if needed - FIXME: wrong place for this ?
+> > +		if (!*candidate->one->path)
+> > +			candidate->one->path = "./";
+> > +		if (!*candidate->two->path)
+> > +			candidate->two->path = "./";
+> > +		pair = diff_queue(&outq, candidate->one, candidate->two);
+> > +		pair->score = MAX_SCORE;
+> > +		pair->renamed_pair = 1;
+> 
+> Outputting the discovered directory renames.
+
+Not really outputting, just queueing for ouput here.
+
+
+> Conclusions:
+> 
+>  - the basic idea looks sane
+>  - the main function would benefit a lot from being split up a bit
+>  - would be nice to have an overview of the design (especially, a
+>    quick description of the heuristics used) for the commit message
+
+Thanks for this detailed review.  Pushing to
+http://repo.or.cz/w/git/ydirson.git a set of patches addressing those
+remarks and others from this thread.
