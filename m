@@ -1,74 +1,80 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Fetch by SHA missing
-Date: Wed, 06 Oct 2010 16:35:44 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010061631420.3107@xanadu.home>
-References: <alpine.LNX.2.01.1010052136280.21719@obet.zrqbmnf.qr>
- <4CAC110C.2000804@viscovery.net>
+From: Victor Engmark <victor.engmark@gmail.com>
+Subject: textconv not used for diff
+Date: Wed, 6 Oct 2010 22:36:16 +0200
+Message-ID: <AANLkTi=Y2U1DqnW4oA7_MD3gZMXYzFCFYHwKuuonsmA0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jan Engelhardt <jengelh@medozas.de>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 06 22:35:53 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 06 22:36:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3aiP-0000aG-3E
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 22:35:53 +0200
+	id 1P3aiv-0000p6-A4
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 22:36:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754245Ab0JFUfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 16:35:46 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:62435 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751075Ab0JFUfq (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 16:35:46 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MH-MR002.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-4.01 (built Aug  3 2007; 32bit))
- with ESMTP id <0L9V002C1YJK0L40@VL-MH-MR002.ip.videotron.ca> for
- git@vger.kernel.org; Wed, 06 Oct 2010 16:35:45 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4CAC110C.2000804@viscovery.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753436Ab0JFUgS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 16:36:18 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33698 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751901Ab0JFUgS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 16:36:18 -0400
+Received: by bwz11 with SMTP id 11so5643654bwz.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 13:36:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=oPLpBBGWeM0zRCpitZEAB8p2GxwrxsX20Bl+5yjOPlM=;
+        b=fq0j2wkbvN/STryLdwGt/U6TUp3YE+MaDW07lssxa1Q8LsK8VPb46wuGxQ/+W+1BJC
+         HZVtQ7AQXwh/+dlAHLWjiih0snJWMS9n9eyRea1yd0/Zx469A8iEbw0n0nF+FN5HotHs
+         lncYUoLCthBIUJYKXyQL2g6ATlTmSoYhIB7GY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=IDWB3Dz8zGAr5ifvuuW7T0SyG1Ew9zhB4HjXBljgQWRMtgDAf8X/SX04ADK/QVR8Vb
+         pLrbO5S+5AXRj3Oci4gJwth1KKA3wFgj8UqcE9taWVIWcQd6GVXbU3YWJyGc7ELvWAe2
+         vsQSza21p3JInhbHm3unhF5BoKP+IXZcL6ZZ4=
+Received: by 10.204.68.136 with SMTP id v8mr10118663bki.88.1286397376803; Wed,
+ 06 Oct 2010 13:36:16 -0700 (PDT)
+Received: by 10.204.46.211 with HTTP; Wed, 6 Oct 2010 13:36:16 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158306>
 
-On Wed, 6 Oct 2010, Johannes Sixt wrote:
+Hello,
 
-> Am 10/5/2010 21:37, schrieb Jan Engelhardt:
-> > Hi,
-> > 
-> > 
-> > it is possible to select single heads/tags for download, but this does 
-> > not work with SHA IDs as of 1.7.1.
-> > 
-> > $ git fetch linus 3c06806e690885ce978ef180c8f8b6f8c17fb4b4:x
-> > fatal: Couldn't find remote ref 3c06806e690885ce978ef180c8f8b6f8c17fb4b4
-> > $ git fetch linus refs/heads/master
-> > remote: Counting objects: 1254, done.
-> > remote: Compressing objects: 100% (234/234), done.
-> > remote: Total 709 (delta 562), reused 602 (delta 475)
-> > Receiving objects: 100% (709/709), 112.41 KiB, done.
-> > Resolving deltas: 100% (562/562), completed with 212 local objects.
-> > From git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6
-> >  * branch            master     -> FETCH_HEAD
-> 
-> That's by design:
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/73368/focus=73994
-> 
-> That is, when you accidentally push secret data, you can rewind your refs
-> on the server. Even though the objects still live on the server (until
-> they are garbage-collected) nobody will be able to fetch your secret stuff
-> even if they happen to know the SHA1.
+After trying for a couple hours to get textconv to work according to
+<https://git.wiki.kernel.org/index.php/Textconv> and other pages, I've
+given up. I've tried changing .odt, .ott and .ods files, but git-diff
+never outputs the text diff:
 
-One improvement could be for the server to accept serving commits 
-provided a raw SHA1 instead of a branch name if that SHA1 corresponds to 
-a commit that is reachable through the actually exported refs.
+$ git --version
+git version 1.7.0.4
+$ cat ~/.gitattributes
+*.odp diff=odf
+*.ods diff=odf
+*.odt diff=odf
+*.ott diff=odf
+$ cat ~/.gitconfig
+...
+[diff "odf"]
+	textconv = odt2txt
+$ odt2txt budget.ods
+[produces useful output]
+$ git diff
+diff --git a/budget.ods b/budget.ods
+index 64374b9..c4a1949 100644
+Binary files a/budget.ods and b/budget.ods differ
+$ git diff --textconv
+diff --git a/budget.ods b/budget.ods
+index 64374b9..e680dee 100644
+Binary files a/budget.ods and b/budget.ods differ
 
+Any ideas?
 
-Nicolas
+-- 
+Victor Engmark
