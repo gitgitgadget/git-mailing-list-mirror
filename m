@@ -1,61 +1,66 @@
-From: fREW Schmidt <frioux@gmail.com>
-Subject: Git over SMBFS
-Date: Tue, 5 Oct 2010 21:26:15 -0500
-Message-ID: <AANLkTik9U_jr6r6BuUcRrk8pjQTacKDY7YbqWnfrCLmD@mail.gmail.com>
+From: Hocapito Cheteamo <hocapitocheteamo@yahoo.com>
+Subject: Error on git clone
+Date: Tue, 5 Oct 2010 21:20:18 -0700 (PDT)
+Message-ID: <193301.7835.qm@web114608.mail.gq1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 06 04:39:15 2010
+X-From: git-owner@vger.kernel.org Wed Oct 06 06:20:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3JuT-00056F-Bs
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 04:39:13 +0200
+	id 1P3LUQ-0004Ii-LC
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 06:20:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758390Ab0JFCjE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 5 Oct 2010 22:39:04 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:47479 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758294Ab0JFCjC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 5 Oct 2010 22:39:02 -0400
-Received: by qyk10 with SMTP id 10so3480788qyk.19
-        for <git@vger.kernel.org>; Tue, 05 Oct 2010 19:39:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=WDI8tRS6zGm5NyWk+m0zBPjV0y63Fg525zzggCaIopU=;
-        b=P95jzf3fejmGBjydzDOkbIyu45p1ggS7LpZ3gwSCF59VMWzn+aov6v4hKcavzYZIME
-         gyMjyoLR7lgQ/Zbv41Dx3PpNIIwFq5QaOu+M4PBnlagTkjrX5FJXKsJOZIspsGXls/IJ
-         lptQg3BczvykOJ2fNfYRcXlORpD/nuqQUtQN4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=HQoqTQuV8JontXKKtmgtFptL2IRxCDQU0mLOQt456KA2XJ+Anq4sAyeeCKPn2X0Ctl
-         WVoctVUUL+kpmewlF3aqjHXhokVGClUiec16ae0VVqqF/KdM693Ra/JgQiPKzXZAV/Jk
-         /IopI7692g2LfqfVN8dY5X7/Y72XLS+KuV2zo=
-Received: by 10.224.95.204 with SMTP id e12mr8774660qan.360.1286332741612;
- Tue, 05 Oct 2010 19:39:01 -0700 (PDT)
-Received: by 10.224.67.80 with HTTP; Tue, 5 Oct 2010 19:26:15 -0700 (PDT)
+	id S1753180Ab0JFEUU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 00:20:20 -0400
+Received: from web114608.mail.gq1.yahoo.com ([98.136.183.45]:22945 "HELO
+	web114608.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1752847Ab0JFEUT (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 00:20:19 -0400
+Received: (qmail 9911 invoked by uid 60001); 6 Oct 2010 04:20:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1286338819; bh=NFO1OLLrZOrAR1IY2uFEoG3Hv+z1MjBgroYfvLYthIc=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=N2/mZS3TM3zJiHwWLQcL7z64DiaG9ukbaJCxP/Wah85jKwSX8JiHmPwdxs1eGur1IfJ04DGzAns84aCv9BF+Dvr8fu3zriMfu9mJo3U93KafxJSw9mIjuI3W9GmBbqXnnMOX73nDI/jeIcUp8f0969tRc3bGC1sgF1VVzC+VYlg=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
+  b=mXKuPFHT8vmUEc2jgB0+no13NnuE8CJr4lUHd9FUqL8MwJtdoZ7zq7e+FFphs+/eI9t+B+WffE/4r+i/8AEl/7Fddp2NkRtublXX8ulYYeuBftTzus6GDPvG67mv8Xc3JmxKhF64AMOrUlZM24gKZ5dxDGkFdii7hP/JmMfh7b8=;
+X-YMail-OSG: tj4ZShMVM1n11l4pN3NkPrNl1T.66xQIHqiFQf4A3cegUrN
+ aD.EanBG7tR0e7OXNzcZgEcOECYVMKmDGfMNEWT7J2TrQAs8r.o6Zb1i4L72
+ mDg8cZUiNTUa6E5E5JUK7UAERwagpKjDPScv1tR6LXtJjjLvF3iHeGhBDYTR
+ 2yLMRa7.3gNFJ9kOU2noR7bgGlPG8_g2Q.8EgyZFHN_IAcTlhLzwRyhV4nc_
+ ROW6Wg5ABZ_ONOs4J5VUr6ovy5DbOMv2ZCOb2pIo2VZxfkcxACT1Ro2dB5I8
+ H83cEMg--
+Received: from [76.83.7.252] by web114608.mail.gq1.yahoo.com via HTTP; Tue, 05 Oct 2010 21:20:18 PDT
+X-Mailer: YahooMailRC/497 YahooMailWebService/0.8.105.279950
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158264>
 
-A coworker of mine is working on a project that is running on a
-windows server.=A0 The project is in git, but we are having a lot of
-trouble getting it to work at all.=A0 For example, if he merely does
-(from his machine) "git checkout ." it seemingly times out after 680
-files being checked out.
+Hi,
 
-Are there any settings we might be able to tweak that might make git
-more tolerable of the latency involved in a network based checkout?
+I'm a newbie on using git. I installed Git 1.7.0.2 on my PC laptop running 
+Windows XP Prof. SP 2.  When I run the command,
+    "git clone git@github.com:......git sss", 
+I got these log messages:
 
---
-fREW Schmidt
-http://blog.afoolishmanifesto.com
+Initialized empty Git repository in c:/...../.git/
+Enter passphrase for key 'C:\.....\privateKey':
+remote: Counting objects: 478, done.
+remote: Compressing objects: 100% (303/303), done.
+remote: Total 478 (delta 21), reused 436 (delta 3)
+Receiving objects: 100% (478/478), 96.57 MiB | 148 KiB/s, done.
+Resolving deltas: 100% (21/21), done.
+tagging': Invalid argumenttory at 'public/images/tagging
+
+Does anyone have any clue on what this "Invalid argumenttory" error is all 
+about?  It did not finish unpacking all the files in folder sss.  It aborted 
+after this error.  Thanks so much for the help.
+
+Hoca.
+
+
+      
