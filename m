@@ -1,98 +1,106 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCHv5 08/17] gitweb: Add optional output caching
-Date: Wed, 6 Oct 2010 23:16:10 +0000
-Message-ID: <AANLkTi=Z6i-89mW8Gom3QQa8R1puV+wksNmh029GaUjS@mail.gmail.com>
-References: <1286402526-13143-1-git-send-email-jnareb@gmail.com>
-	<1286402526-13143-9-git-send-email-jnareb@gmail.com>
-	<AANLkTi=RFu5PzBfbF0qVjFnSHnf5GGedkgqKAA4v4nVG@mail.gmail.com>
-	<201010070106.30864.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 06/17] gitweb/lib - Simple select(FH) based output capture
+Date: Thu, 7 Oct 2010 01:22:24 +0200
+Message-ID: <201010070122.25355.jnareb@gmail.com>
+References: <1286402526-13143-1-git-send-email-jnareb@gmail.com> <1286402526-13143-7-git-send-email-jnareb@gmail.com> <AANLkTinO+wo8z_peiDragtZ1Y8rJZ1UziMXh2YqSJaLD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org,
 	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
 	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 01:16:34 2010
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Thu Oct 07 01:22:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3dDt-0006Rw-O9
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:16:34 +0200
+	id 1P3dJz-0000ep-0x
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:22:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759583Ab0JFXQM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 19:16:12 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:49883 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754292Ab0JFXQL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 19:16:11 -0400
-Received: by iwn9 with SMTP id 9so13480iwn.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 16:16:11 -0700 (PDT)
+	id S1758992Ab0JFXWd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 19:22:33 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49399 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751808Ab0JFXWc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 19:22:32 -0400
+Received: by bwz11 with SMTP id 11so88543bwz.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 16:22:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ScV/D9v1LdLOFdZUcA+8tpWmWGgpA2d3RtaZOPxNehY=;
-        b=CdEtLtT0AW0bZqRstiwYqkC37HfR4GJ+ChM12GDEYX8LSc+YIKWzi3Shfk675St2/N
-         gBqqWPIiTiSEfiEEm7ag3x0tFCLbRiv4KmbhBEmFVRTrSgm2qmbTzP4PV++aPL4MbBds
-         3/JE2LXohkK7EqIR2qBJfiip8LDEG6tyJ5Ps8=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=9MywYf/i9fE5fRPQhqNzkxYM2uHbYMyGuu0KvMRRDHw=;
+        b=MKy9ew07MvlsH0ylyFRO0GnRI0pFWMhgXVdQWoie0xOmN3gjwzzGxWn1MnBUH3F2jD
+         HEJqsP6E80RxePI8fGEuBqx8MsBxDeMj5/aur2DFu+9j/yiQ2lBCK93tsqZaVWnolIyQ
+         etp1wP1TJh/dgDxhLO24Z72MD4KkNh8gc3HHA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=FR5Mr3FbkYMl2rIy7pal/rlgdDgxzgeWWgHmne1M+GYERH1W12pBGa6pHeN567U9jv
-         3U8IBgJ5PSftN15hSPL4ARfXkIAr0f9w9x4EtYbu9ohZPjXg0pGfDX8CaJ3Y+MiqeCgn
-         oRuo9iRQU4NxRwU/zc31slhSXPCtHtnWZx44U=
-Received: by 10.231.33.12 with SMTP id f12mr14630248ibd.31.1286406970842; Wed,
- 06 Oct 2010 16:16:10 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 6 Oct 2010 16:16:10 -0700 (PDT)
-In-Reply-To: <201010070106.30864.jnareb@gmail.com>
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=YCw5NVZMKgXf6KvoLN/3iVURGALD34ZnnQmMo3q4XfXaJUFF3kuCTNKyZCSKIxixz5
+         kOY7lsFe41y/0cTHGzmpf7Il2076FbT1hpjLgmKFF7Z9gYmSnvIY1GPMyV5z9EdV//c7
+         TH7d42yXGvHF6GHbGN187mrRT2E+s/tzlHPK4=
+Received: by 10.204.117.205 with SMTP id s13mr10243779bkq.140.1286407349762;
+        Wed, 06 Oct 2010 16:22:29 -0700 (PDT)
+Received: from [192.168.1.13] (abwe253.neoplus.adsl.tpnet.pl [83.8.228.253])
+        by mx.google.com with ESMTPS id 11sm1094682bkj.11.2010.10.06.16.22.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 Oct 2010 16:22:28 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTinO+wo8z_peiDragtZ1Y8rJZ1UziMXh2YqSJaLD@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158351>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158352>
 
-On Wed, Oct 6, 2010 at 23:06, Jakub Narebski <jnareb@gmail.com> wrote:
-> On Thu, 7 Oct 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Wed, Oct 6, 2010 at 22:01, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
->>
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $cache ||=3D 'G=
-itwebCache::SimpleFileCache';
->> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 eval "require $=
-cache";
->>
->> Just:
->>
->> =C2=A0 =C2=A0 eval { require $cache };
->>
->> Instead?
->
-> Wouldn't work correctly. =C2=A0We want to use 'require BAREWORD' vers=
-ion,
-> where BAREWORD is name of module, e.g. GitwebCache::SimpleFileCache,
-> and which makes Perl to search for GitwebCache/SimpleFileCache.pm
-> in @INC.
+Thomas Adam wrote:
+> On 6 October 2010 23:01, Jakub Narebski <jnareb@gmail.com> wrote:
 
-Ah, I've been using perl5i too much :)
+> > +sub capture {
+> > + =C2=A0 =C2=A0 =C2=A0 my ($self, $code) =3D @_;
+> > +
+> > + =C2=A0 =C2=A0 =C2=A0 $self->start();
+> > + =C2=A0 =C2=A0 =C2=A0 $code->();
+>=20
+> unless( defined $code and ref($code) eq 'CODE' )
+> {
+>        # Error?
+>         ....
+> }
 
-> Well, we could insert hooks into @INC, but I don't think we want to u=
-se
-> such hack.
+But what to do if $code is *not* a code reference?  Well, except perhap=
+s
+providing better error message...
 
-There's also:
+> > + =C2=A0 =C2=A0 =C2=A0 return $self->stop();
+> > +}
+> > +
+> > +# Wrap caching data; capture only STDOUT
+> > +sub capture_block (&) {
+>=20
+> This is prototyped deliberately?
 
-    eval {
-         my $path =3D $cache;
-         $path =3D~ s[::][/]g;
-         $path .=3D ".pm";
-         require $path;
-    };
+Yes, it is prototyped deliberately to be able to use it like this
 
-But at that point it's probably easier just to use string eval. Unless =
-there's
-a performance issue (very unlikely).
+  my $data =3D capture_block {
+     ...
+  }
+
+similarly to the API used by Capture::Tiny (which is not in core, which
+captures also STDERR, and which do not provide capture_stop() equivalen=
+t
+for die_error to be not captured and cached).
+
+Only to explicitely discard prototype with '&capture_block($code)', whe=
+n
+using it in ->cache_output_* methods in GitwebCache::CacheOutput ;-)
+
+--=20
+Jakub Narebski
+Poland
