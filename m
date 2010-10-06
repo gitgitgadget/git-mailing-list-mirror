@@ -1,92 +1,95 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [PATCH] worktree: provide better prefix to go back to original
- cwd
-Date: Wed, 06 Oct 2010 08:47:45 -0700
-Message-ID: <4CAC9A21.7030401@gmail.com>
-References: <1286373578-2484-1-git-send-email-pclouds@gmail.com>
+From: Andreas Gruenbacher <agruen@suse.de>
+Subject: [PATCH] Improve the "diff --git" format documentation
+Date: Wed, 6 Oct 2010 18:23:47 +0200
+Organization: SUSE Labs
+Message-ID: <201010061823.47475.agruen@suse.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 17:48:03 2010
+Content-Type: text/plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 06 18:24:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3WDo-0004AH-Pp
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 17:48:01 +0200
+	id 1P3Wmh-0006jw-0g
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 18:24:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756966Ab0JFPrw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 11:47:52 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:51067 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751115Ab0JFPrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 11:47:51 -0400
-Received: by pvg2 with SMTP id 2so1959991pvg.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 08:47:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=gW1vP7TVM/HCFq6TCCh9paVHF1qlYRxthnVjJhmU5r0=;
-        b=Rg9UEAJVJyHErpN3pJXRv53z2lXDv22+C9TKFw8iFevskalJEcgOjMcanDkHRtZdFV
-         0/LC0abdxHqZ5IJWkTTOVpU/r6/GxlcqQ3cPe5SsmhghAOhaRScaD/MdRDmZnki1ZgM9
-         j2vdB/LACuiCwdmKC0Ga5KNFkDn+DEN3QCHLo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=dvOnZD3y5p9jFjkFZqEVTxul0qqPCbUfSW7w1RXFDk+dr1eX6KgguhiVzIfB4pjZcE
-         vM4P5v4LzJFaTbdmPAGqt6wWmfr8Y7MwwjDpbl9fj9jOvKnGKcj4Hpuxpc/2pJzkb7GQ
-         0VbdH1naQJQDH0/SL0zVWRgUPu+HOotP6NW+w=
-Received: by 10.114.93.19 with SMTP id q19mr15717320wab.15.1286380070891;
-        Wed, 06 Oct 2010 08:47:50 -0700 (PDT)
-Received: from laptop.site (209-234-175-66.static.twtelecom.net [209.234.175.66])
-        by mx.google.com with ESMTPS id d2sm1619878wam.2.2010.10.06.08.47.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 06 Oct 2010 08:47:24 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.11) Gecko/20100714 SUSE/3.0.6 Thunderbird/3.0.6
-In-Reply-To: <1286373578-2484-1-git-send-email-pclouds@gmail.com>
+	id S1759343Ab0JFQXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 12:23:50 -0400
+Received: from cantor2.suse.de ([195.135.220.15]:60402 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751387Ab0JFQXu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 12:23:50 -0400
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	by mx2.suse.de (Postfix) with ESMTP id 17C2D8891E
+	for <git@vger.kernel.org>; Wed,  6 Oct 2010 18:23:49 +0200 (CEST)
+User-Agent: KMail/1.12.4 (Linux/2.6.31.12-0.2-desktop; KDE/4.3.5; i686; ; )
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158293>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158294>
 
-On 06/10/10 06:59, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> When both GIT_DIR and GIT_WORK_TREE are set, if cwd is outside worktr=
-ee,
-> prefix (the one passed to every builtin commands) will be set to NULL=
-,
-> which means "user stays at worktree topdir".
->=20
-> As a consequence, command line arguments are supposed to be relative
-> to worktree topdir, not current working directory. Not very intuitive=
-=2E
-> Moreover, output from such situation is (again) relative to worktree
-> topdir. Users are expected to understand that.
->=20
-> This patch allows builtin commands access to original cwd even if it'=
-s
-> outside worktree, via cwd_to_worktree and worktree_to_cwd fields. As
-> the name implies, if you stay at original cwd, "cd $(cwd_to_worktree)=
-"
-> would take you to worktree topdir and vice versa.
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  startup_info->cwd_to_worktree would be as same as opt.submodule_pref=
-ix
->  in your 2/3 patch.
+Hello,
 
-Thanks. I must admit I was struggling a little with implementing this
-part. I'll be sending out a re-roll of my series shortly and I'll
-include your patch if Junio doesn't pick it up on its own. I was also
-planning on re-basing my patches on top of next or pu so more people ca=
-n
-actually compile it.
+here is a small improvement to the documentation of git's extended diff
+format.  Can this please be included?
+
+Thanks,
+Andreas
+
+Signed-off-by: Andreas Gruenbacher <agruen@suse.de>
+---
+ Documentation/diff-generate-patch.txt |   23 ++++++++++++++++++++++-
+ 1 files changed, 22 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-
+generate-patch.txt
+index 8f9a241..05f2164 100644
+--- a/Documentation/diff-generate-patch.txt
++++ b/Documentation/diff-generate-patch.txt
+@@ -18,7 +18,8 @@ diff format.
+ +
+ The `a/` and `b/` filenames are the same unless rename/copy is
+ involved.  Especially, even for a creation or a deletion,
+-`/dev/null` is _not_ used in place of `a/` or `b/` filenames.
++`/dev/null` is _not_ used in place of `a/` or `b/` filenames in the
++`diff --git` line.
+ +
+ When rename/copy is involved, `file1` and `file2` show the
+ name of the source file of the rename/copy and the name of
+@@ -38,11 +39,31 @@ the file that rename/copy produces, respectively.
+        dissimilarity index <number>
+        index <hash>..<hash> <mode>
+ 
++    Path names in extended header lines do not include the `a/` and `b/`
++    prefixes.  The index header includes the <mode> only if the file
++    mode does not change; otherwise, explicit mode headers are included.
++
+ 3.  TAB, LF, double quote and backslash characters in pathnames
+     are represented as `\t`, `\n`, `\"` and `\\`, respectively.
+     If there is need for such substitution then the whole
+     pathname is put in double quotes.
+ 
++    Space characters are not quoted and so when files are copied or
++    renamed, the file names in the "diff --git" line can be
++    ambiguous.
++
++4.  All the `a/` files refer to files before the commit, and all the `b/`
++    files refer to files after the commit; it is incorrect to apply the
++    changes to each file sequentially.  For example, this patch will
++    swap a and b:
++
++      diff --git a/a b/b
++      rename from a
++      rename to b
++      diff --git a/b b/a
++      rename from b
++      rename to a
++
+ The similarity index is the percentage of unchanged lines, and
+ the dissimilarity index is the percentage of changed lines.  It
+ is a rounded down integer, followed by a percent sign.  The
