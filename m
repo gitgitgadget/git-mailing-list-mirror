@@ -1,109 +1,61 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv5 08/17] gitweb: Add optional output caching
-Date: Thu, 7 Oct 2010 01:06:30 +0200
-Message-ID: <201010070106.30864.jnareb@gmail.com>
-References: <1286402526-13143-1-git-send-email-jnareb@gmail.com> <1286402526-13143-9-git-send-email-jnareb@gmail.com> <AANLkTi=RFu5PzBfbF0qVjFnSHnf5GGedkgqKAA4v4nVG@mail.gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [RFC PATCH v4 0/4] Detection of directory renames
+Date: Thu, 7 Oct 2010 01:17:34 +0200
+Message-ID: <20101006231734.GZ4983@home.lan>
+References: <1286138529-6780-1-git-send-email-ydirson@altern.org>
+ <20101005014208.GE9994@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
-To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 01:06:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 01:07:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3d4N-0000uW-W4
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:06:44 +0200
+	id 1P3d5G-0001Vy-IO
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:07:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757966Ab0JFXGh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 19:06:37 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33679 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753465Ab0JFXGg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 19:06:36 -0400
-Received: by bwz11 with SMTP id 11so81511bwz.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 16:06:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=GOGt5vt15fb7AyZNF901FAvTi617LqyRrRuSELa5x1U=;
-        b=jTvNYQfWSPgkM42RRgc9B9581KL4myqUX4ryoooC9NANJMC5gq7W2RqJ++P6zJvIRL
-         orUbNZKtRBQ25fZkbkpDmv1AakMZ+p8x/5g26o6vvFo8tCInacmdwiQMDhGbXZqp1iUN
-         /EEuGuA4fxb+Jt5nxMzSdrxqSJGX62tyDz61U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=aLsK+Vna5dEByN0h6FEUzpFZ4LQmKEeYVHr9Dd3z15xGOT1naZ4FhlAdyU0wim2XKD
-         EqYBpba55I2SFVqaU5rc7bZl5EiLWKytXnnFmSQHCceLrOH+XtlFD+1kGH/aBcpceTRw
-         TNNSQXm1Gt+rQCBjYVn9bj4davUYL2gi4d4os=
-Received: by 10.204.112.146 with SMTP id w18mr9932771bkp.16.1286406395121;
-        Wed, 06 Oct 2010 16:06:35 -0700 (PDT)
-Received: from [192.168.1.13] (abwe253.neoplus.adsl.tpnet.pl [83.8.228.253])
-        by mx.google.com with ESMTPS id d27sm1081874bku.22.2010.10.06.16.06.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 06 Oct 2010 16:06:34 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTi=RFu5PzBfbF0qVjFnSHnf5GGedkgqKAA4v4nVG@mail.gmail.com>
+	id S1759489Ab0JFXHa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 19:07:30 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:53830 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758212Ab0JFXH3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 19:07:29 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 21C5DD48024;
+	Thu,  7 Oct 2010 01:07:22 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P3dEs-0005KX-9R; Thu, 07 Oct 2010 01:17:34 +0200
 Content-Disposition: inline
+In-Reply-To: <20101005014208.GE9994@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158349>
 
-On Thu, 7 Oct 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Wed, Oct 6, 2010 at 22:01, Jakub Narebski <jnareb@gmail.com> wrote=
-:
->=20
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $cache ||=3D 'Gi=
-twebCache::SimpleFileCache';
-> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 eval "require $c=
-ache";
->=20
-> Just:
->=20
->     eval { require $cache };
->=20
-> Instead?
+On Mon, Oct 04, 2010 at 08:42:08PM -0500, Jonathan Nieder wrote:
+> >From my point of view, I think it would be best to start with
+> the smallest usable piece, which is the raw format.  It probably
+> makes the most sense to error out when -u and --detect-dir-renames are
+> used together.  Then unified diff could be reenabled in a separate
+> patch series on top of this one.
 
-Wouldn't work correctly.  We want to use 'require BAREWORD' version,
-where BAREWORD is name of module, e.g. GitwebCache::SimpleFileCache,
-and which makes Perl to search for GitwebCache/SimpleFileCache.pm
-in @INC.
+Well, there's probably not much to do - in the same order of work than
+adding the check to error out :)
 
-The 'require STRING' version loads file given by a *path*, and it
-doesn't do library lookup.
+> Another nice feature might be to let the directory-move
+> detection feed back into file-move detection to make it more
+> accurate.  Have you thought about this?  Would it be feasible,
+> and if so, would it be useful?
 
-=46rom `perldoc -f require`:
-
-   But if you try this:
-
-      $class =3D 'Foo::Bar';
-      require $class;      # $class is not a bareword
-      #or
-      require "Foo::Bar";  # not a bareword because of the ""
-
-   The require function will look for the "Foo::Bar" file in the @INC a=
-rray
-   and will complain about not finding "Foo::Bar" there.  In this case =
-you
-   can do:
-
-      eval "require $class";
-
-
-Well, we could insert hooks into @INC, but I don't think we want to use
-such hack.
-
---=20
-Jakub Narebski
-Poland
+That was suggested by Junio at that time.  It would surely be useful
+in some cases, but it's not clear to me how frequently it would.  And
+I'd suspect that quite some design changes would be necessary: that
+would be a 2-way influence, in that a nearly-complete bulkmove could
+bump the score of the latest rename that would make it a full
+bulkmove.  Probably not trivial to do right.
