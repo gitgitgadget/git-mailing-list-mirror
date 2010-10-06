@@ -1,63 +1,55 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: cdossantos <claudia.dossantos@ricoh-europe.com>
 Subject: Re: Someone using GIT and Maven?
-Date: Wed, 6 Oct 2010 12:46:50 +0000
-Message-ID: <AANLkTimgbxLiz5pNZTwvq-xjj_dEuf9L9PEf=zEe0bv0@mail.gmail.com>
+Date: Wed, 6 Oct 2010 06:23:32 -0700 (PDT)
+Message-ID: <1286371412868-5607053.post@n2.nabble.com>
 References: <1285913490619-5590307.post@n2.nabble.com>
-	<1286365670193-5606731.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: cdossantos <claudia.dossantos@ricoh-europe.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 14:46:59 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 06 15:23:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3TOc-0007RQ-HH
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 14:46:58 +0200
+	id 1P3Ty8-0001sL-Po
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 15:23:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756356Ab0JFMqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 08:46:52 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:43567 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755274Ab0JFMqw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 08:46:52 -0400
-Received: by yxp4 with SMTP id 4so2415868yxp.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 05:46:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=yQJad0SRcymUgJSbW0AvbqNhKZTclRzqzti+zpUXd28=;
-        b=cz2feJLv8x2nIBGp7fKd18KLUWODhZYQ9bDpsi+0CnVuWZfaATP4ET54Zbs6mkC8o6
-         acqyIE4tI5YISoRYt/YDYEcLNAmeydgrtHku8lxJWgntS6mFFhiwVI8PMROZefpyWAbQ
-         TMCdzsFd0P5uDOt3SdL/+g/nCX9pkdDuxu6Ps=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Ou+Z2987VK5z/YKm0XtXt6gP39yaMowJXOLXBkHbSah/HKl6mSI0+vcoGAbCCPu45c
-         8YO/i9W9MvP+El4hyLIg3YKgA+BCY7z1XtcFMOZD4la92H+cIXVQNw4oK596yUYgqT9j
-         cVx3y1sX51flTdLsCOhZt7yd9F8oXVy0GLWJ4=
-Received: by 10.42.1.9 with SMTP id 9mr14441366ice.52.1286369210926; Wed, 06
- Oct 2010 05:46:50 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Wed, 6 Oct 2010 05:46:50 -0700 (PDT)
-In-Reply-To: <1286365670193-5606731.post@n2.nabble.com>
+	id S1757316Ab0JFNXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 09:23:34 -0400
+Received: from kuber.nabble.com ([216.139.236.158]:58552 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754917Ab0JFNXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 09:23:33 -0400
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <claudia.dossantos@ricoh-europe.com>)
+	id 1P3Ty0-0001nq-SH
+	for git@vger.kernel.org; Wed, 06 Oct 2010 06:23:32 -0700
+In-Reply-To: <1285913490619-5590307.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158285>
 
-On Wed, Oct 6, 2010 at 11:47, cdossantos
-<claudia.dossantos@ricoh-europe.com> wrote:
 
-> Any ideas?
+Hello,
 
-Since you have problems when you invoke Git via Maven but not when you
-invoke Git directly it would probably be better to ask these questions
-on a forum for Maven.
+I found the problem, according with
+"http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt"
+i should use the .netrc file to authentication. My .netrc file is configured
+with localhost, and I configured localhost for the "remote" entry in the
+config file (.git) as well.
+Now I'm using localhost in the SCM connection too:
+<scm>
+    <connection>scm:git:http://admin:admin@localhost/project2</connection>
+</scm> 
 
-You proably aren't going to find people here that know enough maven
-internals offhand to know where it's screwing up its git invocations.
+regards,
+
+Santos
+-- 
+View this message in context: http://git.661346.n2.nabble.com/Someone-using-GIT-and-Maven-tp5590307p5607053.html
+Sent from the git mailing list archive at Nabble.com.
