@@ -1,81 +1,105 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 2/7] lockfile: introduce alloc_lock_file() to avoid
  valgrind noise
-Date: Wed, 06 Oct 2010 13:10:27 -0700
-Message-ID: <7vocb7yte4.fsf@alter.siamese.dyndns.org>
+Date: Wed, 6 Oct 2010 15:21:30 -0500
+Message-ID: <20101006202130.GB2118@burratino>
 References: <wes62zknmki.fsf@kanis.fr>
- <7v1va760ip.fsf@alter.siamese.dyndns.org> <20100810032647.GA2386@burratino>
- <20101002082752.GA29638@burratino> <20101002083216.GC29638@burratino>
+ <7v1va760ip.fsf@alter.siamese.dyndns.org>
+ <20100810032647.GA2386@burratino>
+ <20101002082752.GA29638@burratino>
+ <20101002083216.GC29638@burratino>
+ <7vocb7yte4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>,
 	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 22:10:49 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 06 22:24:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3aK8-0000E1-0T
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 22:10:48 +0200
+	id 1P3aXe-0005B7-Vk
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 22:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759587Ab0JFUKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 16:10:41 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56913 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756687Ab0JFUKk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 16:10:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 81157DC338;
-	Wed,  6 Oct 2010 16:10:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PhAFwMqaSnP0LtFaW8TYKbvKIVA=; b=QZPKZv
-	MbWS6Ry3+dx0n+rCtcEGdhgW43UKnXUjBrmIcEHKkKk7PyouoYEsnoCeQ0GQJUhE
-	r1mLKGZ53rRUV+Evnccg0M3JI3l1PqevwWw8GOAdX4ovbejpWEn+qendDuLk/2cG
-	Swr/jBtah3zEyBWDHO4gZhUhCYWsp4talrBfM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rpfHyKUaIaGhnF2jNjeAuIF5dPSJV4B9
-	7a+fhlYDilmkWcdsWMuBtyWPT2Dvp7mgyh6fUbASOVA3yHgtPrf6R8SoVGB93wWr
-	spkxXEP3yV5nuiHNRC/CfsMPVlWFmwHdwhkrFH3PeZBi2zXgVzzTls9FJKTVVyyz
-	jV/2jz93NxE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D810CDC335;
-	Wed,  6 Oct 2010 16:10:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E737FDC330; Wed,  6 Oct
- 2010 16:10:29 -0400 (EDT)
-In-Reply-To: <20101002083216.GC29638@burratino> (Jonathan Nieder's message of
- "Sat\, 2 Oct 2010 03\:32\:16 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C746D480-D185-11DF-B269-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932792Ab0JFUYi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 16:24:38 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:48869 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758083Ab0JFUYh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 16:24:37 -0400
+Received: by qyk8 with SMTP id 8so30289qyk.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 13:24:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=zWEjNpdsWf6O6J8/rf1RaTDtLELrPY9nFJIKOUPz6Mw=;
+        b=YmOyYGLcUI4K7UsZic4xK3TgSJRABtgeSGJ9Kv1ZJ06XZzH8UGtG6k1gsenZfZRf3h
+         Qzvcm5WSMVWMDiM1cjywM4QnOF7MbSJzkL/5d48nJ/iJ0vnqBN+GRhkErWKMML5EDcLT
+         BowAI/W5fwzuBGX/ZWiQL2tiIYOtfACxT9E64=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=nSEn9LKyCu9+lvTjp70zGb4TF95++lg3TzoxOZ2Uw/4ZwGhSaUt6NZBQkBHHb3BDUn
+         6xT9DjdejNDBLRktcvrHP2rE/hXhW/hBczG7rANOfesARy9r7ZhL/ECvU1YJeCNa1cef
+         BS09aenPXAvttNYMZ4g2gkn0/8whfeukahD04=
+Received: by 10.229.186.137 with SMTP id cs9mr9180852qcb.71.1286396676450;
+        Wed, 06 Oct 2010 13:24:36 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id w5sm603994vcr.6.2010.10.06.13.24.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 06 Oct 2010 13:24:35 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vocb7yte4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158304>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Junio C Hamano wrote:
 
-> ...The
-> ((optimize("-fno-optimize-sibling-calls"))) attribute is needed on
-> platforms with GCC to ensure that the stack frame for
-> alloc_lock_file() is not replaced by the stack frame for xcalloc().
+> Hmm, I am getting
+> 
+>     cc1: warnings being treated as errors
+>     lockfile.c:189: error: 'optimize' attribute directive ignored
+>     make: *** [lockfile.o] Error 1
+> 
+> from this patch with gcc (Debian 4.3.2-1.1) 4.3.2
 
-Hmm, I am getting
+Unfortunate.  With gcc 4.5 it works, but that isn't too useful.
 
-    cc1: warnings being treated as errors
-    lockfile.c:189: error: 'optimize' attribute directive ignored
-    make: *** [lockfile.o] Error 1
+> Aren't "struct lock_file" instances supposed to be reachable from the
+> linked list, i.e. lock_file_list?  Why does valgrind consider that
+> elements on that list are leaked in the first place?
 
-from this patch with gcc (Debian 4.3.2-1.1) 4.3.2
+At exit, we walk the lock file list and clear it in the process.
+Which suggests a cleaner workaround (thanks!):
 
-Aren't "struct lock_file" instances supposed to be reachable from the
-linked list, i.e. lock_file_list?  Why does valgrind consider that
-elements on that list are leaked in the first place?
+ static void remove_lock_file(void)
+ {
+	pid_t me = getpid();
++	struct lock_file *p = lock_file_list;
 
-We keep loaded objects in *obj_hash[] and they sure are "leaked" by the
-same definition of leakage, no?  How are we squelching valgrind on them?
+-	while (lock_file_list) {
+-		if (lock_file_list->owner == me &&
+-		    lock_file_list->filename[0]) {
+-			if (lock_file_list->fd >= 0)
+-				close(lock_file_list->fd);
+-			unlink_or_warn(lock_file_list->filename);
+-		}
+-		lock_file_list = lock_file_list->next;
++	while (p) {
++		if (p->owner == me &&
++		    p->filename[0]) {
++			if (p->fd >= 0)
++				close(p->fd);
++			unlink_or_warn(p->filename);
++		}
++		p = lock_file_list->next;
+	}
