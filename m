@@ -1,161 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] worktree: provide better prefix to go back to original
- cwd
-Date: Wed, 6 Oct 2010 13:07:28 -0500
-Message-ID: <20101006180727.GA2118@burratino>
-References: <1286373578-2484-1-git-send-email-pclouds@gmail.com>
+From: Hocapito Cheteamo <hocapitocheteamo@yahoo.com>
+Subject: Re: Error on git clone
+Date: Wed, 6 Oct 2010 11:22:32 -0700 (PDT)
+Message-ID: <395557.10034.qm@web114610.mail.gq1.yahoo.com>
+References: <571212.33119.qm@web114615.mail.gq1.yahoo.com> <4CAC54CB.5020208@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, judge.packham@gmail.com, Jens.Lehmann@web.de
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 20:11:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Wed Oct 06 20:22:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3YSB-0005HN-UD
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 20:11:00 +0200
+	id 1P3YdV-00006v-Pd
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 20:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759460Ab0JFSKk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 14:10:40 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36255 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754095Ab0JFSKj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 14:10:39 -0400
-Received: by vws3 with SMTP id 3so74550vws.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 11:10:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Ube6yKQrPccxbgabNjuN5k8zRFk62rtulwTC0ou3v2c=;
-        b=iIHKVpDFXbgtiBWNOBViEFLL0C3ZHY8ifbvDI92FAlIHZzv3OeaYeqAkABW9oox6R6
-         fLdePfeDxx692SaueeLfsdcVEUsh3GrpOEXKaMpAw/IAzBVV5xFpSTlPCsYBDVEfbm2m
-         7yumwHAk9eD/FKxkMdftpGTh0Jhyas0x8Vwxs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ULbdWeLPd4VL9XSZcS/TY4b7rndY0hCxc7VZMi5b1inJpYXHjw1uY6VMPJLkGYjmDz
-         eMLGb+KSGQ8LlODscr5AD4IC2YNy2xYpwESfv4emAL/saSb3y38kbHkUMKPXCTPUZ0tO
-         whVQm9b2sFy8O8xgovIqDNXhKCLjxzzfzjlhM=
-Received: by 10.220.186.2 with SMTP id cq2mr879148vcb.1.1286388638539;
-        Wed, 06 Oct 2010 11:10:38 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id l9sm1466246vbp.11.2010.10.06.11.10.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 06 Oct 2010 11:10:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1286373578-2484-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759645Ab0JFSWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 14:22:33 -0400
+Received: from web114610.mail.gq1.yahoo.com ([98.136.183.55]:22672 "HELO
+	web114610.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1759582Ab0JFSWd (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 14:22:33 -0400
+Received: (qmail 10350 invoked by uid 60001); 6 Oct 2010 18:22:32 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1286389352; bh=ptabNiR2reXJrMnb1FMPLt4x1T595TFZkCPVpsIrbQg=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=yGMnA0KqoXdtc+9fGArSaGhCPEuAPEOG8a5frK2IC4t48WpJ3oM7sfBmZjJp+1XHVfb1imKwHlP0BSvLh7Fmx2UheBLeaWii/NgF7bnER4HQLyKG7HOe60kNEltByEYha/7bIFse3JkwWSnE2ob5n6vGT5eo32bGWPjP8Ff0gbo=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
+  b=EqvA6EfRaPvNd460DYd8BLZZFjGLS8vM3U9bPM3TT7UzgMHasWLDWWx1Po4UootF/mnKyrwisnE04ckRPhMHixhNXmMk9IGq1PCHdKPl9ewC//pubRelux4Pu8TzH7ePoGZBH99m/jvLKEt8R2uUQ2qU38HB119z4DnGruiB0QE=;
+X-YMail-OSG: ECNp.YkVM1k2CcDIkGV_lakQaZmUWrxW53qMG3fW2SIT1U2
+ FoGZahcIfUucQ5qb1N2Lu_YZMjhIW379kbv_oRTgql8ABTJfk8lAxa3VMKGP
+ R5I8O.oBUyBN1.2fsW0nBU6iooon4owFM65kl6dlm3Es6Agn94CqJ.Zk6l.i
+ s73f9_ZjEjZ8gBclbsIoDgGjbVS.CEwTGMSPipw2ou2I_X0gFBIA7GmMTkgE
+ rJlMU5QwkhARCMbVyhxO8Lo9N54YGobxLaH2T0c.btHCHFTQv3jOH84BxS.I
+ mXK2oE7Zp0knbt0lS
+Received: from [76.83.7.252] by web114610.mail.gq1.yahoo.com via HTTP; Wed, 06 Oct 2010 11:22:32 PDT
+X-Mailer: YahooMailRC/497 YahooMailWebService/0.8.105.279950
+In-Reply-To: <4CAC54CB.5020208@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158299>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Hi Hannes,
 
-> This patch allows builtin commands access to original cwd even if it'=
-s
-> outside worktree, via cwd_to_worktree and worktree_to_cwd fields.
-> --- a/builtin/rev-parse.c
-> +++ b/builtin/rev-parse.c
-> @@ -623,6 +623,16 @@ int cmd_rev_parse(int argc, const char **argv, c=
-onst char *prefix)
->  					puts(prefix);
->  				continue;
->  			}
-> +			if (!strcmp(arg, "--cwd-to-worktree")) {
-> +				if (startup_info->cwd_to_worktree)
-> +					puts(startup_info->cwd_to_worktree);
-> +				continue;
-> +			}
-> +			if (!strcmp(arg, "--worktree-to-cwd")) {
-> +				if (startup_info->worktree_to_cwd)
-> +					puts(startup_info->worktree_to_cwd);
-> +				continue;
-> +			}
+As you have expected, when I run that command,
+    git -p ls-tree -r origin/master > lll.txt
+and redirect it to a log file, the log file does show some lines that have:
+    "public/images/tagging\rtagging/title_add_tags_to.png"
 
-Nice.
+THANK YOU SO VERY MUCH for helping me in resolving the problem that I have 
+encountered with the git clone command on my PC Windows XP system.  I'll 
+definitely ask my upstream to fix the
+repository on that 'CR'.  I'll also take a look at that "sparse checkout" that 
+you have mentioned.
 
-I wonder if this should use something like
+Again, a big thank you for solving this perplexing problem, especially with the 
+print over log messages.  You rock!!!
+Hoca
 
-	else
-		puts(".");
 
-or
 
-	else
-		putchar('\n');
 
-=2E  What would be most convenient for scripted callers?
+----- Original Message ----
+From: Johannes Sixt <j.sixt@viscovery.net>
+To: Hocapito Cheteamo <hocapitocheteamo@yahoo.com>
+Cc: git@vger.kernel.org; Sverre Rabbelier <srabbelier@gmail.com>
+Sent: Wed, October 6, 2010 2:51:55 AM
+Subject: Re: Error on git clone
 
-What do these commands do when run from a bare repository?  Is the
-worktree the .git dir in that case, do they fail, or does something
-else happen?
+Am 10/6/2010 12:34, schrieb Hocapito Cheteamo:
+> $ git fetch
+> Enter passphrase for key 'C:\.....\privateKey':
+> remote: Counting objects: 478, done.
+> remote: Compressing objects: 100% (303/303), done.
+> Receiving objects: 100% (478/478), 96.57 MiB | 166 KiB/s, done.
+> Resolving deltas: 100% (21/21), done.
+> From github.com:XXX/YYY
+>  * [new branch]      master     -> origin/master
 
-Are there any examples to illustrate whether teaching --show-prefix to
-do what your --worktree-to-cwd does would be a good or bad idea?
-(Just curious.)
+Ok, download works as expected. You don't have to repeat these steps
+anymore. Keep a copy of sss3\.git around so that you can go back to this
+state when necessary.
 
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1110,6 +1110,8 @@ const char *split_cmdline_strerror(int cmdline_=
-errno);
->  /* git.c */
->  struct startup_info {
->  	int have_repository;
-> +	char *cwd_to_worktree; /* chdir("this"); from cwd would return to w=
-orktree */
-> +	char *worktree_to_cwd; /* chdir("this"); from worktree would return=
- to cwd */
+> $ git checkout -b master origin/master
+> Checking out files: 43%
+> tagging': Invalid argumenttory at 'public/images/tagging
 
-Comment nit: would
+The error message is this one:
 
-				/* path from original cwd to worktree */
-				/* path from worktree to original cwd */
+cannot create directory at '%s'
 
-be clearer?  But presumably any confused people should be able to find
-your log message.
+Do you have a file/directory with a CR in it? When you run this:
 
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -313,10 +313,109 @@ const char *read_gitfile_gently(const char *pa=
-th)
->  	return path;
->  }
-> =20
-> +/*
-> + * Given "foo/bar" and "hey/hello/world", return "../../hey/hello/wo=
-rld/"
-> + * Either path1 or path2 can be NULL
-> + */
-> +static char *make_path_to_path(const char *path1, const char *path2)
+git -p ls-tree -r origin/master
 
-Nice.  Do we need to worry about:
+and look for public/images, do you see this:
 
- - alternate directory separators? (hey\hello\world)
- - DOS drive prefix? (c:\foo\bar, d:\hey\hello\world)
- - relative paths with DOS drive? (c:\foo\bar, d:hello)
- - doubled-up directory separators? (hey//hello/world, //foo/bar)
- - non-canonical paths? (hey/./hello/../hello/world)
+"public/images/tagging\rtagging"
 
-I'm guessing some of the answers are "no", depending on where these
-paths come from.  Compare make_relative_path().
-[...]
+(including the double-quotes)? If so, ask your upstream to fix the
+repository; you can't checkout the data as is on Windows.
 
->  static const char *setup_explicit_git_dir(const char *gitdirenv,
->  				const char *work_tree_env, int *nongit_ok)
->  {
-> -	static char buffer[1024 + 1];
-> +	static char buffer[PATH_MAX];
+Alternatively, you could use a sparse checkout that excludes the
+questionable file. Read "Sparse checkout" in
+http://www.kernel.org/pub/software/scm/git/docs/git-read-tree.html
 
-Why?
+-- Hannes
 
-It might make sense to error out a little before PATH_MAX (though
-later than 1024), to account for subdirs (e.g., objects/).  Not sure.
+
+
+      
