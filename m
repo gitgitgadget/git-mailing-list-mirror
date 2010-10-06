@@ -1,92 +1,90 @@
-From: Robert Buck <buck.robert.j@gmail.com>
-Subject: Re: [PATCH v2 0/6] Extensions of core.ignorecase=true support
-Date: Wed, 6 Oct 2010 18:04:41 -0400
-Message-ID: <AANLkTi=tHaCki5yWQW_iQ21Y8ee5G2rNBzX8Pf-nZYAp@mail.gmail.com>
-References: <20101003043221.1960.73178.stgit@SlamDunk>
-	<AANLkTinZzM=HeT_J-tF5F9DBdvts3i+nboPkPy-uc8V5@mail.gmail.com>
-	<201010032012.01678.j6t@kdbg.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/7] lockfile: introduce alloc_lock_file() to avoid
+ valgrind noise
+Date: Wed, 6 Oct 2010 17:17:48 -0500
+Message-ID: <20101006221748.GB31818@burratino>
+References: <wes62zknmki.fsf@kanis.fr>
+ <7v1va760ip.fsf@alter.siamese.dyndns.org>
+ <20100810032647.GA2386@burratino>
+ <20101002082752.GA29638@burratino>
+ <20101002083216.GC29638@burratino>
+ <7vocb7yte4.fsf@alter.siamese.dyndns.org>
+ <20101006202130.GB2118@burratino>
+ <7vhbgzyozx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Oct 07 00:05:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>,
+	David Barr <david.barr@cordelta.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 00:21:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3c6k-00031h-07
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 00:05:06 +0200
+	id 1P3cM9-0001T5-Dl
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 00:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933271Ab0JFWEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 18:04:44 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:36725 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932921Ab0JFWEm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 18:04:42 -0400
-Received: by ewy23 with SMTP id 23so25214ewy.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 15:04:41 -0700 (PDT)
+	id S1757041Ab0JFWUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 18:20:55 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:52901 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752612Ab0JFWUz (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 18:20:55 -0400
+Received: by qwf7 with SMTP id 7so34395qwf.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 15:20:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=xHF703Pkfmdc3f9dDfpcVogsP1mr40y1AEpjHUYto2o=;
-        b=xu/ueeefKJvNGHfNvAn8tt3Ug1S0rosBgs0awYF8+hwak8KW5Vb8cEeq/NYs2zvlxK
-         ZWFWIEtsOpbZx/pmZY5XZOU1Ocg3cg5PDh8+ha2tI4HN4EzLEQ6y5h/q75kC7egyad2h
-         eg92rrpg4ZDOxoN6bZdppiCE2ojLvFeSXdqmk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=9L1zaIbk58YmN0Cy4Pk8H08hc67Hcbn1O1dQwtSvEzk=;
+        b=HHtiXnG9Fa9rTTu0oOj29zu8RUER7CsBnILwx6QUr1izHfwiy0kIEpE7ntqPFkO+ZO
+         evc7TeYtDvPXjoxoZPOO2wwFf84QRpIy3gaWPeEIX3oXyrV2XLkVcTluXkr0N6y4LaAk
+         Ae38j+u7fnrGOz7iiMwBraJrkPZqlQUcMx4Mg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=OU5yGb2kx6ckA4Do/xSJsjTO/oL2FjM9D+Co0+LTJvy+4rOLT5zfYEEVXz2iFBrEyU
-         Zle9QA9MxKVqGVSZZUBjVuVGQArrlm/UqjP/NDne/U+EYGeXdWXHKmiywV9VccTpnIjA
-         zaJ/iLXHXAkkfEAWAwOiIhRHKDecpOa5uUjnw=
-Received: by 10.213.113.147 with SMTP id a19mr1077283ebq.24.1286402681229;
- Wed, 06 Oct 2010 15:04:41 -0700 (PDT)
-Received: by 10.14.47.74 with HTTP; Wed, 6 Oct 2010 15:04:41 -0700 (PDT)
-In-Reply-To: <201010032012.01678.j6t@kdbg.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Btx4tplCJOtr4RkqEAljDKKQgNOBVMl1NOyvadhMDhDnSYawPRa0nIvoibKymHMz8g
+         FeCRc2T0MNHcJ90XW9vf0DctFi+BPANVE1Quexk10/UUY2jNxYVTGY7Y+8RBp5yUyQLj
+         N9WSc/Y6amh8Fn94/t3P4QUYp/EWhoPM67Hnk=
+Received: by 10.224.6.145 with SMTP id 17mr9903940qaz.130.1286403654041;
+        Wed, 06 Oct 2010 15:20:54 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id e6sm448798qcr.41.2010.10.06.15.20.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 06 Oct 2010 15:20:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vhbgzyozx.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158333>
 
-Hello Johannes,
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Here is the use case I was thinking of.
-
-Let's say I want to have .gitignore be case insensitive with respect
-to matches so I can simplify the file by not having [D][d]ebug sorts
-of messes. But let's say I also want to support files whose names only
-differ by case (just like Unix supports). Can your current patch
-series support this? Does the current patch series break this?
-
-Could you share how this would or would not work, and if not, how you
-might accomplish this?
-
-Thanks,
-
-Bob
-
-On Sun, Oct 3, 2010 at 2:12 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Sonntag, 3. Oktober 2010, Robert Buck wrote:
->> So I could we please separate the behaviors that change intent
->> (folding) from the behaviors that merely alter how things are
->> displayed (listing) by splitting this into two separate properties?
->> For example,
->>
->> core.casepreserving=true|false
->> core.caseinsensitive=true|false
->>
->> The former property would control folding, the latter property would
->> apply to listing and pattern matching. Then people could opt out of
->> the folding behaviors (add, import), while continuing to adopt listing
->> and pattern matching (status, ls, ignore).
+>> -	while (lock_file_list) {
+>> -		if (lock_file_list->owner == me &&
+>> -		    lock_file_list->filename[0]) {
+>> -			if (lock_file_list->fd >= 0)
+>> -				close(lock_file_list->fd);
+>> -			unlink_or_warn(lock_file_list->filename);
+>> -		}
+>> -		lock_file_list = lock_file_list->next;
+>> +	while (p) {
+>> +		if (p->owner == me &&
+>> +		    p->filename[0]) {
+>> +			if (p->fd >= 0)
+>> +				close(p->fd);
+>> +			unlink_or_warn(p->filename);
+>> +		}
+>> +		p = lock_file_list->next;
+>> 	}
 >
-> core.ignorecase has a very well-defined meaning: It describes whether the
-> worktree lives on a filesystem that is case-insensitive. Perhaps you could
-> help me understand your case if you gave examples and a use-case? I have a
-> slight suspicion that your wish is orthogonal to core.ignorecase.
->
-> -- Hannes
->
+> Heh, shouldn't the last one assign from p->next?
+
+Yes.  And I also should have mentioned: this is untested.
