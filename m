@@ -1,94 +1,69 @@
-From: Hocapito Cheteamo <hocapitocheteamo@yahoo.com>
-Subject: Re: Error on git clone
-Date: Wed, 6 Oct 2010 01:50:13 -0700 (PDT)
-Message-ID: <972161.65826.qm@web114601.mail.gq1.yahoo.com>
-References: <193301.7835.qm@web114608.mail.gq1.yahoo.com> <4CAC18C7.8020302@viscovery.net> <960844.34400.qm@web114603.mail.gq1.yahoo.com> <4CAC31C4.5060809@viscovery.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [TOY PATCH] test-lib: &&-chaining tester
+Date: Wed, 6 Oct 2010 10:52:59 +0200
+Message-ID: <AANLkTimU_OT+r8MMYHQ901r09H=Co+8dfjDD+0M0pF8s@mail.gmail.com>
+References: <1286136014-7728-1-git-send-email-newren@gmail.com> <20101006053118.GA29289@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 06 10:50:26 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	gitster@pobox.com, avarab@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 06 10:53:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3Phf-00045n-0m
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 10:50:23 +0200
+	id 1P3Pkc-0004kq-NH
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 10:53:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758765Ab0JFIuQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 04:50:16 -0400
-Received: from web114601.mail.gq1.yahoo.com ([98.136.183.10]:22698 "HELO
-	web114601.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755179Ab0JFIuO (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 04:50:14 -0400
-Received: (qmail 66730 invoked by uid 60001); 6 Oct 2010 08:50:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1286355013; bh=RMyU0ZU2wB4VrIgTjw0cQPX3WUuo20ETNyzS6qsTeU8=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=dTKWFaYc7aJW8a1IW91KZvdSmK08gDeVTYhP18KUzcct76jDwAJLh8wEUYyWGecYlmZu2KdD62h0XtKR2vMTS2xG0OfjWoFLFrS9SbsDQF+bsF2nK41f2117RK5RfhJvpwwLdQqAYGhynNodD+lW3iUaE7V7A84LPUmbsdikoi0=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
-  b=vJF32WZQcVDhLGlnWhtu8ozB7cZO6QC0pArPL3b6OKAo7ejmgj+Y7X5TOjx2Xe6cbV9fkLLfWI1/eZy8pD7c8Up64pFF0Cb5rlNRcZqf4975XlYrY2nBpJLutPnEaEhCrpv+Hg3Xp/Y/hZegqbI+3NN75ClvwJVRMC8PUNimIZc=;
-X-YMail-OSG: X1lTstgVM1nTUsUxFULnDelGWFlwSPRvzuTwk3Z6.V_FC4a
- u65RTB_ri315Fo3imBLYBxuH_M2FNcKGc3ENQU0amJ.V3S51lAfBDfyEnHoL
- fIqg54ITb7gt7aD0qfpu1LbFMPLQtxDK1U7TBAdbaFl2_TfXeX81dgQxQNWT
- xzaa9Z2RVIDiuK6VFZguk3PjFFvV3VuxYnDtF0AyOcv17vSflARMMSY9Kbym
- eBMxJHIFOzwL4ZtYqIYGJUrKEYrXWApYiRuzsKXUYLwt7dcW3JDFF3dtY6Fg
- gL217s7w-
-Received: from [76.83.7.252] by web114601.mail.gq1.yahoo.com via HTTP; Wed, 06 Oct 2010 01:50:13 PDT
-X-Mailer: YahooMailRC/497 YahooMailWebService/0.8.105.279950
-In-Reply-To: <4CAC31C4.5060809@viscovery.net>
+	id S1758724Ab0JFIxU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 04:53:20 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:51408 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755179Ab0JFIxU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 04:53:20 -0400
+Received: by yxp4 with SMTP id 4so2334355yxp.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 01:53:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=eFjArhEHR0qkbtkTL7q+AaPTEyEzTou6J+LiYfzUAzs=;
+        b=UUi0tf/8DOstBuIM47EamSqLg44QOsyTMaRM4pezAb04bdtwBaSdRnSaibrpxJwjLA
+         HfAFiRncKe9PPxAZY2lINLX/WrHg7xgy8XZorORgI32DA8jzKOeQplEbKEeaWSWcjS6a
+         2XTRsoipK6eZpUx15Pqwb7BFF45WCPKlDe3Xk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=d5NtOWzS/gP6aWibC1sJin7tZzNnFu872zHQM72GATgMa3csAzv0j2u3kSRVoS/i9F
+         Z55ui1wD+/JeyTc3XfpbTRdFMwTFyhjK5EhsTAJfFjye1cbHsqL01I+/qLnfDgVW9QRK
+         hmHwWhuPReTqEYUId/oW80mBUyGhbw+hkK0qQ=
+Received: by 10.151.25.15 with SMTP id c15mr1492972ybj.386.1286355199302; Wed,
+ 06 Oct 2010 01:53:19 -0700 (PDT)
+Received: by 10.151.15.8 with HTTP; Wed, 6 Oct 2010 01:52:59 -0700 (PDT)
+In-Reply-To: <20101006053118.GA29289@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158276>
 
+Heya,
 
-Yes, this is with "Git for Windows" (a Git Bash Shell window).
+On Wed, Oct 6, 2010 at 07:31, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> Thanks again. =C2=A0Here's a little glimpse of a future without missi=
+ng &&s
+> to play with.
 
-So I did what you suggested:
+Interesting! Are there any false positives? Did you run it and find
+any missing &&'s?
 
-mkdir sss3
-cd sss3
-git remote add origin git@github.com:XXX/YYY.git
+--=20
+Cheers,
 
-Then an error occurs:
-fatal: Not a git repository (or any of the parent directories): .git
-
-Any thoughts?
-
-Thanks.
-Hoca
-
-
-
-
------ Original Message ----
-From: Johannes Sixt <j.sixt@viscovery.net>
-To: Hocapito Cheteamo <hocapitocheteamo@yahoo.com>
-Cc: git@vger.kernel.org
-Sent: Wed, October 6, 2010 12:22:28 AM
-Subject: Re: Error on git clone
-
-Am 10/6/2010 10:13, schrieb Hocapito Cheteamo:
-> I could consistently reproduce the problem.  The command that I used is:
->     git clone -v git@github.com:XXX/YYY.git sss
-> where XXX & YYY are replaced with the actual data.
-
-Just to make sure: This is with "Git for Windows", not Cygwin's git?
-
-Do the clone in separate the steps:
-
-mkdir sss
-cd sss
-git remote add origin git@github.com:XXX/YYY.git
-git fetch
-git checkout -b master origin/master
-
-Do you see any errors?
-
--- Hannes
-
-
-
-      
+Sverre Rabbelier
