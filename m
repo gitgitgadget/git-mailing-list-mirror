@@ -1,89 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] worktree: provide better prefix to go back to original
- cwd
-Date: Wed, 06 Oct 2010 11:32:20 -0700
-Message-ID: <7v4ocz18az.fsf@alter.siamese.dyndns.org>
-References: <1286373578-2484-1-git-send-email-pclouds@gmail.com>
- <20101006180727.GA2118@burratino>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH 04/18] notes.h/c: Propagate combine_notes_fn return value to add_note() and beyond
+Date: Wed, 6 Oct 2010 21:40:56 +0200
+Message-ID: <201010062140.56999.johan@herland.net>
+References: <1285719811-10871-1-git-send-email-johan@herland.net> <1285719811-10871-5-git-send-email-johan@herland.net> <20101005153838.GG12797@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, judge.packham@gmail.com, Jens.Lehmann@web.de
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 06 20:32:58 2010
+X-From: git-owner@vger.kernel.org Wed Oct 06 21:40:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3YnR-0004Fa-Fr
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 20:32:57 +0200
+	id 1P3ZrD-00062x-Me
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 21:40:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759680Ab0JFScf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 14:32:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33960 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759667Ab0JFScf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 14:32:35 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9DB8EDC524;
-	Wed,  6 Oct 2010 14:32:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=kFjlTDBxQYxgEM4Evtj9oIsCawo=; b=PmlPe5
-	jiWwTG5Mz+wKFWry39+oIjB+iUe5mHdwy4wkdmu561KcoTbFAYjUvi8oqTZDSWDQ
-	JTeGXnW9nSQDbMn/GzOUFPEpRYZRCQL9tkqGlmip1kg2zu/2R4iyoEkvKPFlR1HH
-	W56IcA41kSzC8E9mNDt2a2GIilKqQR2WU42bw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MR1Wwqza2YTLLowEItbW5MUiCerz32O/
-	vNWlzYjledCs42nn0mfQey1vbzg+2E8FUikwrF3EWmRZOSCLFCCV1/aPxLYXeHCc
-	rNbev6F6852CBGrPtAMsZJtxHiMQCySYFIm2SGcH/6wQaeUj0XNR4qIr4DkN2RkC
-	l+1Rc99nL04=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4AB3BDC520;
-	Wed,  6 Oct 2010 14:32:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 30056DC51C; Wed,  6 Oct
- 2010 14:32:22 -0400 (EDT)
-In-Reply-To: <20101006180727.GA2118@burratino> (Jonathan Nieder's message of
- "Wed\, 6 Oct 2010 13\:07\:28 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 129975A4-D178-11DF-BCCA-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1759169Ab0JFTkt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 15:40:49 -0400
+Received: from mail.mailgateway.no ([82.117.37.108]:56744 "EHLO
+	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755288Ab0JFTks (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 15:40:48 -0400
+Received: from dslb-088-073-123-190.pools.arcor-ip.net ([88.73.123.190] helo=epsilon.localnet)
+	by mail.mailgateway.no with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.60 (FreeBSD))
+	(envelope-from <johan@herland.net>)
+	id 1P3Zr3-000NHy-QC; Wed, 06 Oct 2010 21:40:45 +0200
+User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; i686; ; )
+In-Reply-To: <20101005153838.GG12797@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158301>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tuesday 5. October 2010 17.38.38 Jonathan Nieder wrote:
+> Johan Herland wrote:
+> > The combine_notes_fn functions uses a non-zero return value to indicate
+> > failure. However, this return value was converted to a call to die()
+> > in note_tree_insert().
+> 
+> For what it's worth, I still like it.
+> 
+> > Instead, propagate this return value out to add_note(), and return it
+> > from there
+> 
+> It's always odd deciding what to do in the code paths that "can't
+> happen".  Ideally one would want static analyzers to check that, while
+> at the same time subjecting the user to some nice graceful fallback
+> behavior when it happens anyway.
+> 
+> 	fatal: confused: combine_notes_overwrite failed
+> 
+> In this case I'm not sure what the message in die() should be, but
+> it seems sane to die with some message.  Maybe this should be
+> mentioned in the commit message, though?
 
-> Are there any examples to illustrate whether teaching --show-prefix to
-> do what your --worktree-to-cwd does would be a good or bad idea?
-> (Just curious.)
+Ok, I've added a paragraph to the commit message mentioning that most of 
+add_note()'s callers now implement the die() previously located in 
+notes_tree_insert(). Will be in the next iteration.
 
-Do these additions interact well with the notion of "we are in the working
-tree" vs "we are outside the working tree"?  Even when we happen to know
-via GIT_WORK_TREE that the root of the working tree is /var/tmp/junk, we
-should correctly diagnse that we are outside the working tree when we are
-in /var/tmp/, and require_work_tree should say "no you are not allowed to
-do this", no?
 
->> --- a/cache.h
->> +++ b/cache.h
->> @@ -1110,6 +1110,8 @@ const char *split_cmdline_strerror(int cmdline_errno);
->>  /* git.c */
->>  struct startup_info {
->>  	int have_repository;
->> +	char *cwd_to_worktree; /* chdir("this"); from cwd would return to worktree */
->> +	char *worktree_to_cwd; /* chdir("this"); from worktree would return to cwd */
->
-> Comment nit: would
->
-> 				/* path from original cwd to worktree */
-> 				/* path from worktree to original cwd */
->
-> be clearer?
+Thanks,
 
-Much better.
+...Johan
+
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
