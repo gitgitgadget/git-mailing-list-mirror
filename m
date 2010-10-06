@@ -1,89 +1,81 @@
-From: Hocapito Cheteamo <hocapitocheteamo@yahoo.com>
-Subject: Fw: Error on git clone
-Date: Wed, 6 Oct 2010 13:03:01 -0700 (PDT)
-Message-ID: <961094.44125.qm@web114619.mail.gq1.yahoo.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/7] lockfile: introduce alloc_lock_file() to avoid
+ valgrind noise
+Date: Wed, 06 Oct 2010 13:10:27 -0700
+Message-ID: <7vocb7yte4.fsf@alter.siamese.dyndns.org>
+References: <wes62zknmki.fsf@kanis.fr>
+ <7v1va760ip.fsf@alter.siamese.dyndns.org> <20100810032647.GA2386@burratino>
+ <20101002082752.GA29638@burratino> <20101002083216.GC29638@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 06 22:03:17 2010
+Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>,
+	David Barr <david.barr@cordelta.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 06 22:10:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3aCk-0005Fn-KZ
-	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 22:03:10 +0200
+	id 1P3aK8-0000E1-0T
+	for gcvg-git-2@lo.gmane.org; Wed, 06 Oct 2010 22:10:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759548Ab0JFUDE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 16:03:04 -0400
-Received: from web114619.mail.gq1.yahoo.com ([98.136.183.100]:22682 "HELO
-	web114619.mail.gq1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755902Ab0JFUDD (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 16:03:03 -0400
-Received: (qmail 44541 invoked by uid 60001); 6 Oct 2010 20:03:02 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1286395381; bh=4Hh4+YEvSqH4Jm8vF5+KKRLyuHM8KKY+SUOvxhxVUXw=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type; b=EEeBiwW4CguOEUjPt0bZvojv37DhtM7guEXJCzCUullyekubqMFatLB6RF79xU3AF1lKcUgaaSo+h1OddI/IaZ5DB37QKqEAQevNwydKVX3PGhT0PBbpd+a2b7S3jujd0rxdpiUHP9LhU5sr+IsppSQQx3lCvecjv/COB25pi7Q=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:MIME-Version:Content-Type;
-  b=E+KXY81Drq+VL0nJ+dD4zHwSrtZ4Lvvr3EvWPmoXnBj/quIjeBtIBIVjPxPpvVuHAtG2X9xUm9mSBwuj2tqkzVoCZhkBzHHIa0zuhkkynXFqbURhThKRc2kjg+HzLlvMMD4YpH0h4DHdsL+0zOrJqRmXOcNBJlwkDKZ7UYQibBA=;
-X-YMail-OSG: 57DPC14VM1n4JUvdzWT5z9ccJ5RIk36DiSSOFSifQ1QIO_Z
- cLTYRH_G1yjfMXafgGTSH1FlskFI._LZWOXZxloDMEkFuNEEk6hrxC8md6F4
- zw0oCuZjz2qO4ZB4FkG_Je5h4cowewInSvdZyEAxujFhJ8zraN.9131lNCu1
- GweLb.BwT._7YzFckaY9qnAuQC8mjBHpu1HvGcw0zmWf.PvAi5ZNQQaX75xy
- 0MG1lEbqbHKzKtC5Ed9dzBwJI84qQZI9fhbObEDoAV9cG3kZJ1kLNE5K8x3C
- Q88KA0NU-
-Received: from [76.83.7.252] by web114619.mail.gq1.yahoo.com via HTTP; Wed, 06 Oct 2010 13:03:01 PDT
-X-Mailer: YahooMailRC/497 YahooMailWebService/0.8.105.279950
+	id S1759587Ab0JFUKl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 6 Oct 2010 16:10:41 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56913 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756687Ab0JFUKk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 16:10:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 81157DC338;
+	Wed,  6 Oct 2010 16:10:39 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PhAFwMqaSnP0LtFaW8TYKbvKIVA=; b=QZPKZv
+	MbWS6Ry3+dx0n+rCtcEGdhgW43UKnXUjBrmIcEHKkKk7PyouoYEsnoCeQ0GQJUhE
+	r1mLKGZ53rRUV+Evnccg0M3JI3l1PqevwWw8GOAdX4ovbejpWEn+qendDuLk/2cG
+	Swr/jBtah3zEyBWDHO4gZhUhCYWsp4talrBfM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rpfHyKUaIaGhnF2jNjeAuIF5dPSJV4B9
+	7a+fhlYDilmkWcdsWMuBtyWPT2Dvp7mgyh6fUbASOVA3yHgtPrf6R8SoVGB93wWr
+	spkxXEP3yV5nuiHNRC/CfsMPVlWFmwHdwhkrFH3PeZBi2zXgVzzTls9FJKTVVyyz
+	jV/2jz93NxE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D810CDC335;
+	Wed,  6 Oct 2010 16:10:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id E737FDC330; Wed,  6 Oct
+ 2010 16:10:29 -0400 (EDT)
+In-Reply-To: <20101002083216.GC29638@burratino> (Jonathan Nieder's message of
+ "Sat\, 2 Oct 2010 03\:32\:16 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C746D480-D185-11DF-B269-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158303>
 
-Hi Hannes,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I'd like to follow up on your recommendation of using sparse checkout to resolve 
-that CR-in-directory-name problem.
+> ...The
+> ((optimize("-fno-optimize-sibling-calls"))) attribute is needed on
+> platforms with GCC to ensure that the stack frame for
+> alloc_lock_file() is not replaced by the stack frame for xcalloc().
 
-According to my upstream, they can't change that directory name.  It works fine 
-on all their Mac systems.  I'm the first one using the PC system.  So I have to 
-resort to the sparse checkout.
+Hmm, I am getting
 
-This is what I did:
-1. Created a file .git/info/sparse-checkout that contains these lines:
-*
-!title_add_tags_to.png
-!title_tagging.png
+    cc1: warnings being treated as errors
+    lockfile.c:189: error: 'optimize' attribute directive ignored
+    make: *** [lockfile.o] Error 1
 
-The above two files are the only ones that are listed in that problematic 
-directory name "public/images/tagging\rtagging/".
+from this patch with gcc (Debian 4.3.2-1.1) 4.3.2
 
-2. To enable sparsecheckout, modified file .git/config:
-[core]
-    repositoryformatversion = 0
-    filemode = false
-    bare = false
-    logallrefupdates = true
-    symlinks = false
-    ignorecase = true
-    hideDotFiles = dotGitOnly
-    sparsecheckout = true  <------- added this line
-[remote "origin"]
-    url = git@github.com:XXX/YYY.git
-    fetch = +refs/heads/*:refs/remotes/origin/*
+Aren't "struct lock_file" instances supposed to be reachable from the
+linked list, i.e. lock_file_list?  Why does valgrind consider that
+elements on that list are leaked in the first place?
 
-Then I issued the command
-$ git checkout -b master origin/master
-Checking out files: 100% (937/937), done.
-Branch master set up to track remote branch master from origin.
-Already on 'master'
-
-Voila, it works.  That "tagging\rtagging/" directory was not created in folder 
-"public/images/".
-
-Thanks.
-Hoca
-
-
-      
+We keep loaded objects in *obj_hash[] and they sure are "leaked" by the
+same definition of leakage, no?  How are we squelching valgrind on them?
