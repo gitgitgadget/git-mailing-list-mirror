@@ -1,88 +1,103 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2 0/3] Teach fetch and pull to recursively fetch
- submodules too
-Date: Wed, 6 Oct 2010 18:22:43 -0500
-Message-ID: <20101006232243.GA30302@burratino>
-References: <4C9351A7.7050609@web.de>
- <4C9359D4.2030109@viscovery.net>
- <4C935D77.3080008@web.de>
- <329A2E43-ADE3-467C-A2A6-24ACB9DF641E@sb.org>
- <4C953DE5.6020900@web.de>
- <DD3654D9-46B9-4980-9138-38FDC33A383C@sb.org>
- <4C963D00.9050207@web.de>
- <28BC3A45-D3CF-4A8C-A818-B92A9827C8FB@sb.org>
- <4CAB8DDF.8080004@web.de>
- <FB03A7DB-67D2-4EAE-A0F0-2F3E3CEA9878@sb.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv5 06/17] gitweb/lib - Simple select(FH) based output capture
+Date: Thu, 7 Oct 2010 01:26:25 +0200
+Message-ID: <201010070126.26242.jnareb@gmail.com>
+References: <1286402526-13143-1-git-send-email-jnareb@gmail.com> <1286402526-13143-7-git-send-email-jnareb@gmail.com> <AANLkTikVumyaJoM3=Nbf9igVheLvMB5tcc5+E+wSkb40@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <jens.lehmann@web.de>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Oct 07 01:25:59 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 01:26:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3dN0-0002PY-Mt
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:25:59 +0200
+	id 1P3dNe-0002oh-KK
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 01:26:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754183Ab0JFXZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 6 Oct 2010 19:25:53 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:51072 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751625Ab0JFXZw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 6 Oct 2010 19:25:52 -0400
-Received: by gxk9 with SMTP id 9so46708gxk.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 16:25:51 -0700 (PDT)
+	id S1754348Ab0JFX0c convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 19:26:32 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:52319 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751625Ab0JFX0b (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 6 Oct 2010 19:26:31 -0400
+Received: by bwz11 with SMTP id 11so90101bwz.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 16:26:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Aai6Sn4Vt0DqOIowduhvNdX4XoTZwCMCbJo/XwkyX0I=;
-        b=EA5xAmmRvW2C0M0+/TJNEMYjEbs7VEO9vLFptsNJokEuQFAIxjRkdCAUtuzCeTzZJI
-         G6PwZsR1HOxxrwDSXm7FC2F9cWvdhLv3glsin79pWMzmCtDKRmASYFUdzJ1WPNFimffR
-         j1RNP+4gLv0yVPaOADkI07JH8Pl7CDgqvzl8A=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=2mLere18yyUU8K4O/ogUcvF16EAGBBkp2fwTyCdfzbs=;
+        b=lE9YPynkg75dLW/EH4oSw/1D8sn27xiMlMwKCzh/U3lUBwksvEkfJNq8PF/1ifmO3R
+         BJNCLKfpHuJJb3wfLKjy8wKwtLbAi2kqlaEbhtfvnrup1l/N/6Pkig2Do8opaoPkcQ/d
+         /6S8t3jbJJwkY1UfszyvO2k4u2RNKrKKEsnik=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=bIli152iOoxXmO59QGJ8vnMvGG6Dw8vq8OfmESdfahR0ZwdGxWXyOvJuZ25u7FIGxV
-         LQmiPX9LwiXcQgfueXlTQnTSINUSYGOOQ7u4ojpEfy4Pj3OBjSOstop5u+K/waw+7hE8
-         twPI5Ansv0WXkZOtnS4SqyXPVLeX/WSLNdnL8=
-Received: by 10.151.21.18 with SMTP id y18mr20536ybi.379.1286407551384;
-        Wed, 06 Oct 2010 16:25:51 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id u3sm1691495yba.10.2010.10.06.16.25.50
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 06 Oct 2010 16:25:50 -0700 (PDT)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=uGcQc3nEOtXlqWMCJbHL52SdW/+9bdaOErHn2WX0tMaknk/PYEYFhpSAFhCSNVcWBt
+         Icxxn2gYHJHithhiwNRzvBgum0dW9zCBPpEcudj72zDyTCXBia6xRVQTxZqAgg5ppnxW
+         PrVe2ciYD1YNQf2chQH1R3PijtecXSqEOJxRY=
+Received: by 10.204.45.207 with SMTP id g15mr10462599bkf.14.1286407590529;
+        Wed, 06 Oct 2010 16:26:30 -0700 (PDT)
+Received: from [192.168.1.13] (abwe253.neoplus.adsl.tpnet.pl [83.8.228.253])
+        by mx.google.com with ESMTPS id f10sm1099200bkl.5.2010.10.06.16.26.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 06 Oct 2010 16:26:29 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTikVumyaJoM3=Nbf9igVheLvMB5tcc5+E+wSkb40@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <FB03A7DB-67D2-4EAE-A0F0-2F3E3CEA9878@sb.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158354>
 
-Kevin Ballard wrote:
+On Thu, 7 Oct 2010 01:03, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Wed, Oct 6, 2010 at 22:01, Jakub Narebski <jnareb@gmail.com> wrote=
+:
+>=20
+> > * The most important issue is that I/O "layers" (PerlIO), like ':ut=
+f8'
+> > =C2=A0or ':raw', are *already applied* to the output that is captur=
+ed.
+> > =C2=A0This means that captured output is *always* in binary (':raw'=
+) mode.
+> > =C2=A0In Perl 6 language it means that data returned by capturing e=
+ngine
+> > =C2=A0is an equivalent of Buf, a collection of bytes, whether Buf o=
+r Str
+> > =C2=A0(a colection of logical characters) is printed.
+>=20
+> > + =C2=A0 =C2=A0 =C2=A0 # note: this does not cover all cases
+> > + =C2=A0 =C2=A0 =C2=A0 binmode select(), ':utf8'
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if ((PerlIO::get=
+_layers($self->{'oldfh'}))[-1] eq 'utf8');
 
-> After thinking on it a bit, I think the best solution is to add a switch
-> --submodules to fetch which will also fetch all submodules, but otherwise
-> fetch will fetch no submodules.
+Sidenote: I just realized that we can simply try to replay all but
+special layers from 'oldfh'.
+=20
+> I'm not sure but maybe we want to use ":Encoding(UTF-8)" everywhere i=
+n
+> this series where you've used ":utf8". I.e. use the Encoding UTF-8
+> layer instead of the internal utf8 layer.
+>=20
+> It's more strict, see perldoc Encode's "UTF-8 vs. utf8 vs. UTF8". But
+> maybe we don't care.
 
-For what it's worth, for my (odd) use cases, what would be most practical
-is
+I think for the time being we don't care.=20
 
-	[remote "foo"]
-		fetch = ...
-		submodules = ...
+In the future we could perhaps update gitweb to use ':encoding(UTF-8)'
+PerlIO layer rather than ':utf8' layer, and update capturing engine(s)
+appropriately.
 
-I could care less about the defaults. :)
-
-Rationale: I shouldn't have to explicitly use --submodules to get
-everything I need to hack before dropping connectivity, but I also
-don't want to pay the penalty of fetching, say, git-gui when I don't
-need it.
+--=20
+Jakub Narebski
+Poland
