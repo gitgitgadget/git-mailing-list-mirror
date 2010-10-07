@@ -1,86 +1,75 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH] fast-import: Allow filemodify to set the root
-Date: Thu,  7 Oct 2010 21:55:06 +1100
-Message-ID: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 07 12:56:12 2010
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 7 Oct 2010 15:25:29 +0400
+Message-ID: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 07 13:25:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3o8w-0007fm-Tq
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 12:56:11 +0200
+	id 1P3obU-0005tq-7o
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 13:25:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760268Ab0JGK4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 06:56:04 -0400
-Received: from mail05.syd.optusnet.com.au ([211.29.132.186]:58836 "EHLO
-	mail05.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751690Ab0JGK4E (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 06:56:04 -0400
-Received: from localhost.localdomain (d110-33-95-167.mit3.act.optusnet.com.au [110.33.95.167])
-	by mail05.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id o97AtsgF018639;
-	Thu, 7 Oct 2010 21:55:55 +1100
-X-Mailer: git-send-email 1.7.3
+	id S1760321Ab0JGLZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 07:25:33 -0400
+Received: from mail.intellij.net ([213.182.181.98]:38204 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760313Ab0JGLZc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 07:25:32 -0400
+Received: (qmail 8620 invoked by uid 89); 7 Oct 2010 11:25:29 -0000
+Received: by simscan 1.1.0 ppid: 8586, pid: 8611, t: 0.0141s
+         scanners: regex: 1.1.0 clamav: 0.96
+/m: 52
+Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
+  by mail.intellij.net with ESMTPA; 7 Oct 2010 11:25:29 -0000
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158396>
 
-Most git commands do their writing to the object db via the index and
-loose objects.  When you just have a pile of trees you want to convert
-into commits, this is wasteful; for performance-critical operations
-like filter-branch --subdirectory-filter, one might want a sort of
-hash-object --batch-to-pack to write a pack directly.
 
-Fortunately we have fast-import (which is one of the only git commands
-that will write to a pack directly) but there is not an advertised way
-to tell fast-import to use a given tree for its commits.  So in
-current git, one has the unpleasant choice of writing loose objects
-without parsing the trees or writing straight to pack but having to
-parse trees to do it.
+Hello,
 
-This patch changes that, by allowing
+I've noticed that at least since Git 1.7.2.3 custom pretty format behaves strangely if there is a null-byte in the format:
 
-	M 040000 <tree id> ""
+Without null byte:
+> git log --pretty=format:%H-%ct
+Outputs something like:
 
-as a filemodify line in a commit to reset to a particular tree without
-any need to unpack it.  For example,
+ee5d714b95d133ff555bc8c7933dc752b5b277f5-1285954314
+cb1b9dd688d9cf155257c94e749172820b56d87a-1285954240
+b4c75be10b14d021003853e527e47ad88dc5a55b-1285833610
+1963187da6a45f898e62e4e922faac6b9382b4e4-1285807494
 
-	M 040000 4b825dc642cb6eb9a060e54bf8d69288fbee4904 ""
+With a null byte
+> git log --pretty=format:%H%x00%ct
+Ignores anything appearing after the null byte:
 
-is a synonym for the deleteall command.
+ee5d714b95d133ff555bc8c7933dc752b5b277f5
+cb1b9dd688d9cf155257c94e749172820b56d87a
+b4c75be10b14d021003853e527e47ad88dc5a55b
+1963187da6a45f898e62e4e922faac6b9382b4e4
 
-Commit-message-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: David Barr <david.barr@cordelta.com>
----
- fast-import.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
+Other bytes behave fine. 
 
-diff --git a/fast-import.c b/fast-import.c
-index 2317b0f..8f68a89 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1454,6 +1454,15 @@ static int tree_content_set(
- 		n = slash1 - p;
- 	else
- 		n = strlen(p);
-+	if (!slash1 && !n) {
-+		if (!S_ISDIR(mode))
-+			die("Root cannot be a non-directory");
-+		hashcpy(root->versions[1].sha1, sha1);
-+		if (root->tree)
-+			release_tree_content_recursive(root->tree);
-+		root->tree = subtree;
-+		return 1;
-+	}
- 	if (!n)
- 		die("Empty path component found in input");
- 	if (!slash1 && !S_ISDIR(mode) && subtree)
--- 
-1.7.3
+Using %x00 worked in Git 1.7.1 and stopped working in 1.7.2.3 (or even earlier).
+
+Is it a bug or a feature (not allowing null bytes in the custom format anymore)?
+
+If it is a feature, the documentation should have note about it. Now it's even proposing to use %x00:
+            %x00: print a byte from a hex code
+
+Thanks a lot.
+
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
