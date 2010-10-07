@@ -1,96 +1,67 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
-Date: Thu, 7 Oct 2010 15:58:02 +0200
-Message-ID: <AANLkTikjzQ09XBxYZXXQf6XCme3FiLKtusZ0MLTa--mM@mail.gmail.com>
-References: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 7 Oct 2010 10:10:15 -0400
+Message-ID: <20101007141015.GB8162@sigill.intra.peff.net>
+References: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 15:58:31 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 16:10:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3qzO-0006hr-4S
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 15:58:30 +0200
+	id 1P3rAm-0002HA-JH
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 16:10:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932599Ab0JGN6Z convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 09:58:25 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52829 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760653Ab0JGN6Y convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 09:58:24 -0400
-Received: by gxk9 with SMTP id 9so296831gxk.19
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 06:58:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Qm+YJEWXmEAY1Gxs6VnHK8COg0NjZq7yo29h4o8x8+Y=;
-        b=DDowje4iTNZeFwLwHuNl62mVwhyDgFm+OdVp2PwKFKH7SN3UNmgiefzk1lCeeUI5yB
-         RlW9bk49DSA2GeP6w/MUnpfcqavPQxluDxhjpLglSwrHCoOZ7DSugVb/HsNHc4GJU5bQ
-         5IXigO01rnrriqBIzq0YBbPPuDxqLoOXt0yug=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=LhA7f8vSSJPDxXQjohWgdfY6x01EPVabQViVOaMInaYShuQBHSn4/qeuEihXzG0/Kt
-         0s9Gk4rCYta/Hm4B2d0AnRMf8Q9Mqxv4JmdSyQHiwOoRoyCLlC4FrcdgUvbaTa4KFqWI
-         I5dNrMJeB6ZKKmYJpQmbvZnDqlBTROVXVcPNM=
-Received: by 10.151.85.14 with SMTP id n14mr1172050ybl.44.1286459902466; Thu,
- 07 Oct 2010 06:58:22 -0700 (PDT)
-Received: by 10.151.15.8 with HTTP; Thu, 7 Oct 2010 06:58:02 -0700 (PDT)
-In-Reply-To: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
+	id S932745Ab0JGOKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 10:10:06 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38229 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932079Ab0JGOKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 10:10:05 -0400
+Received: (qmail 17913 invoked by uid 111); 7 Oct 2010 14:10:04 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 07 Oct 2010 14:10:04 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Oct 2010 10:10:15 -0400
+Content-Disposition: inline
+In-Reply-To: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158402>
 
-Heya,
+On Thu, Oct 07, 2010 at 03:25:29PM +0400, Kirill Likhodedov wrote:
 
-On Thu, Oct 7, 2010 at 12:55, David Barr <david.barr@cordelta.com> wrot=
-e:
-> Most git commands do their writing to the object db via the index and
-> loose objects. =C2=A0When you just have a pile of trees you want to c=
-onvert
-> into commits, this is wasteful; for performance-critical operations
-> like filter-branch --subdirectory-filter, one might want a sort of
-> hash-object --batch-to-pack to write a pack directly.
+> With a null byte
+> > git log --pretty=format:%H%x00%ct
+> Ignores anything appearing after the null byte:
+> 
+> ee5d714b95d133ff555bc8c7933dc752b5b277f5
+> cb1b9dd688d9cf155257c94e749172820b56d87a
+> b4c75be10b14d021003853e527e47ad88dc5a55b
+> 1963187da6a45f898e62e4e922faac6b9382b4e4
+> 
+> Other bytes behave fine. 
+> 
+> Using %x00 worked in Git 1.7.1 and stopped working in 1.7.2.3 (or even earlier).
 
-This means nothing to me, but perhaps I'm not the target audience of
-this paragraph.
+I can't reproduce using v1.7.2.3. Are you sure your pager or terminal
+isn't hiding everything after the NUL? Have you tried piping it through
+"xxd" or "cat -A"? I get:
 
-> Fortunately we have fast-import (which is one of the only git command=
-s
-> that will write to a pack directly) but there is not an advertised wa=
-y
-> to tell fast-import to use a given tree for its commits.
+  $ git log -1 --pretty=foo%x00bar | xxd
+  0000000: 666f 6f00 6261 720a                      foo.bar.
 
-I'm with you up to "use a given tree for its commits".
+  $ git log -1 --pretty=foo%x00bar | cat -A
+  foo^@bar$
 
-> This patch changes that, by allowing
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 040000 <tree id> ""
->
-> as a filemodify line in a commit to reset to a particular tree withou=
-t
-> any need to unpack it. =C2=A0For example,
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 040000 4b825dc642cb6eb9a060e54bf8d69288f=
-bee4904 ""
->
-> is a synonym for the deleteall command.
+> Is it a bug or a feature (not allowing null bytes in the custom format anymore)?
 
-Ok, so maybe I do understand, is it basically 'git read-tree
-4b825dc642cb6eb9a060e54bf8d69288fbee4904' for fast-import?
+If it is not working, it is most definitely a bug.
 
---=20
-Cheers,
-
-Sverre Rabbelier
+-Peff
