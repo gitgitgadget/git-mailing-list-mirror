@@ -1,182 +1,184 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] git.txt: document limitations on non-typical repos (and hints)
-Date: Thu, 7 Oct 2010 09:25:02 +0700
-Message-ID: <AANLkTinuT9f8B3b=osCkdxtpZR2zJV9WmmTMAAHb8SZD@mail.gmail.com>
-References: <1286283653-22616-1-git-send-email-pclouds@gmail.com>
- <4cac8659.0541730a.0ef0.3ff9@mx.google.com> <7vsk0j46zk.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH] worktree: provide better prefix to go back to original cwd
+Date: Thu, 7 Oct 2010 10:08:55 +0700
+Message-ID: <AANLkTin8zFb9mP7A4=hWV-9SkFqqYLbMQxUw=diW6Vbf@mail.gmail.com>
+References: <1286373578-2484-1-git-send-email-pclouds@gmail.com> <20101006180727.GA2118@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, weigelt@metux.de, spearce@spearce.org,
-	jrnieder@gmail.com, Matthieu.Moy@grenoble-inp.fr,
-	raa.lkml@gmail.com, judge.packham@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 04:25:39 2010
+Cc: git@vger.kernel.org, judge.packham@gmail.com, Jens.Lehmann@web.de
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 05:09:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3gAq-0005k3-Sx
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 04:25:37 +0200
+	id 1P3grN-0004VU-2Z
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 05:09:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760029Ab0JGCZ0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 22:25:26 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46277 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759825Ab0JGCZY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 22:25:24 -0400
-Received: by wyb28 with SMTP id 28so217555wyb.19
-        for <git@vger.kernel.org>; Wed, 06 Oct 2010 19:25:23 -0700 (PDT)
+	id S932879Ab0JGDJ0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 6 Oct 2010 23:09:26 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:53678 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932426Ab0JGDJZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 6 Oct 2010 23:09:25 -0400
+Received: by wwj40 with SMTP id 40so342974wwj.1
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 20:09:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
          :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=65xRY9cM91GB0yDalOLOifSxKWBi33zcscSSYbOKib0=;
-        b=wZ/H0w2CpMf9Uhl1yZFrmtI+3B70gMcGNcg7/1fqqoCSBu09MS3YEwRWDDKell05Ig
-         sH9YBuSy2JQEZ2q1/1+moyubXJ45g9K1PcayXyqiAdDFZEU3CX+rd0Oa3gNzaQilF7hA
-         OJskSrXNG8fdT5WIRYVwNnicVqdhDqPNiykaw=
+        bh=XhiKGE19EY5+NiAcAnO20r+SMMpTLDU0569GVrilC1Q=;
+        b=TXO/PK+/kqj/OZ1al57nAgA+6xrg7DzZnjmB2FuIiAOAQpkWzRhDcelEa7vxQ8goMC
+         S4Joss464bgiYmV0yCybELvbIhIQk/MeuhMpp57wtXmdw5Vt+fz4YCc0dZDvaZHiwtS8
+         7KoM0ZxlPKh6s/oEOpMeReTosOU/uO+oEqy7w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=fSQXlDNaJHKRgIZ2rlXa5yHXIVxdUfHW6bq9rq+9DwEVwEYLihPe6XUEHloGdIEafV
-         VqivI4mmntW7pmRPX8jqbAivJveCaQv9yI+5NG11xY/8iT5n3mQoDCCeHpVl8V7wL7sO
-         G3rYubIbhA2DEkF9qGYHLmy8SMXApukWlVpx8=
-Received: by 10.227.23.213 with SMTP id s21mr103853wbb.84.1286418323017; Wed,
- 06 Oct 2010 19:25:23 -0700 (PDT)
-Received: by 10.216.153.195 with HTTP; Wed, 6 Oct 2010 19:25:02 -0700 (PDT)
-In-Reply-To: <7vsk0j46zk.fsf@alter.siamese.dyndns.org>
+        b=QVd/sLzQR+fjvhi9ZR2tfPSwIDbxcri2VV8KnVFsq/hYsnkPLmZV5RlAHAhOyRFKQl
+         JI7teA3+hjnBYby38C3n6jL1ZSv+CHW+D1GrNNZLbbgKRz6az1IaYzhHQkybTYRTzenV
+         ZX3q4haNmOMhXWDlBbHTNhhicSwAk8NfB5dUg=
+Received: by 10.216.164.199 with SMTP id c49mr91152wel.107.1286420955271; Wed,
+ 06 Oct 2010 20:09:15 -0700 (PDT)
+Received: by 10.216.153.195 with HTTP; Wed, 6 Oct 2010 20:08:55 -0700 (PDT)
+In-Reply-To: <20101006180727.GA2118@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158361>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158362>
 
-On Wed, Oct 6, 2010 at 11:32 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> +Performance concerns
->> +--------------------
->> +
->> +Git is written with performance in mind and it works extremely well
->> +with its typical repositories (i.e. source code repositories, with
->> +a moderate number of small text files, possibly with long history).
->> +Non-typical repositories (a lot of files, or very large files...)
->> +may experience mild performance degradation. This section describes
->> +how Git behaves in such repositories and how to reduce impact.
->> +
+2010/10/7 Jonathan Nieder <jrnieder@gmail.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 >
-> I have seen this "mild" suggested in the discussion, but do we want a=
-ny
-> adjective here? =C2=A0The runtime for, say, "git log" from the tip to=
- the root
-> obviously would grow proportionally to the length of the history, i.e=
-=2E the
-> number of records you would want to see, and it may not be "mild" if =
-your
-> history is very deep. =C2=A0Same for the runtime for "git diff" in a =
-wide
-> project with many changed paths.
-
-I don't want to give an impression that the sky will fall when someone
-puts a 200MB file in his repo.
-
-> More importantly, what is "degradation"? =C2=A0It is not a degradatio=
-n if "git
-> log" took 100x as long for a project with 100k commits compared to a
-> similar project with 1k commits.
-
-=46rom my perspective, git commands that are instant in typical repos
-should still be instant in non-typical ones. Yes "git add hugefile"
-will take longer than "git add git.c", but it should not take, say, 1
-hour for that command. It's hard to draw a clear line here.
-
-> If you do not have enough core to hold the part of the ancestry graph=
- that
-> is involved to compute "git log A..B" to show a gazillion commits, it=
- will
-> eat into the swap, take a lot more time than it takes "git log B" to =
-show
-> the same number of commits. =C2=A0That _is_ degradation, and I suspec=
-t it won't
-> be mild at all.
+>> This patch allows builtin commands access to original cwd even if it=
+'s
+>> outside worktree, via cwd_to_worktree and worktree_to_cwd fields.
+>> --- a/builtin/rev-parse.c
+>> +++ b/builtin/rev-parse.c
+>> @@ -623,6 +623,16 @@ int cmd_rev_parse(int argc, const char **argv, =
+const char *prefix)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 puts(pr=
+efix);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 }
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (!strcmp(arg, "--cwd-to-worktree")) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (startup_info->cwd_to_worktree)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 puts(startu=
+p_info->cwd_to_worktree);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 }
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (!strcmp(arg, "--worktree-to-cwd")) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (startup_info->worktree_to_cwd)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 puts(startu=
+p_info->worktree_to_cwd);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 }
 >
->> +For repositories with a large number of files (~50k files or more),
+> Nice.
 >
-> How did you come up with this 50k number?
-
-Quite unscientific, I started with gentoo-x86 (~130k files) which I
-know git performs less than satisfactory. I also looked how big other
-repos are, wine.git, linux-2.6.git... then choose a number in the
-middle.
-
->> +but you only need a few of them present in working tree, you can us=
-e
->> +sparse checkout (see linkgit:git-read-tree[1], section 'Sparse
->> +checkout').
+> I wonder if this should use something like
 >
-> Is "sparse checkout" a real feature that has been made usable by mere
-> mortals, battle tested, and shown to be reliable?
-
-Hopefully. In 2010 survey, there are 331 answers they use "partial
-(sparse) checkout". I hope that they used this feature, not something
-else.
-
-> It feels funny that we have to refer to the documentation of plumbing
-> read-tree when the key verb in this paragraph is "checkout". =C2=A0Wi=
-th the
-> current documentation set, you can follow read-tree page that mention=
-s
-> some magic called skip-worktree-bit, get tempted to jump to update-in=
-dex
-> page and get lost in the implementation details of the feature, which=
- is
-> irrelevant to the end user. =C2=A0If you resisted the temptation and =
-keep
-> reading read-tree page, you see the description of info/sparse-checko=
-ut to
-> learn how to control the feature, but it does not come with an
-> easy-to-follow example. =C2=A0A few concrete suggestions to "Sparse c=
-heckout"
-> section in read-tree:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0puts(".");
 >
-> ...
+> or
 >
-
-Hmm.. yeah. Will do something.
-
-> I think the suggestion to use Sparse checkout in git(1)---i.e. your p=
-atch
-> we are discussing here, is a bit premature before the above happens.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0putchar('\n');
 >
->> +... If you need all of them present in working tree, but you
->> +know in advance only a few of them may be modified, please consider
->> +using assume-unchanged bit (see linkgit:git-update-index[1]).
->> +... The following commands are
->> +however known to do full index refresh in some cases:
+> . =C2=A0What would be most convenient for scripted callers?
+
+I followed the convention in rev-parse.c, specifically --show-prefix
+code. Don't know if it's good or bad for scripts though.
+
+> What do these commands do when run from a bare repository? =C2=A0Is t=
+he
+> worktree the .git dir in that case, do they fail, or does something
+> else happen?
+
+These two new fields are only set when both GIT_DIR and GIT_WORK_TREE
+are set, which means non-bare repository. I'll need to handle other
+setup cases as well, but for subproject-aware grep, this should be
+enough.
+
+> Are there any examples to illustrate whether teaching --show-prefix t=
+o
+> do what your --worktree-to-cwd does would be a good or bad idea?
+> (Just curious.)
+
+I think it's a bad idea. --show-prefix traditionally never returns
+"../(something)" and scripts (even builtin commands) depend on that.
+It's better to slowly migrate over the new prefix(es) when it makes
+sense.
+
+>> --- a/setup.c
+>> +++ b/setup.c
+>> @@ -313,10 +313,109 @@ const char *read_gitfile_gently(const char *p=
+ath)
+>> =C2=A0 =C2=A0 =C2=A0 return path;
+>> =C2=A0}
+>>
+>> +/*
+>> + * Given "foo/bar" and "hey/hello/world", return "../../hey/hello/w=
+orld/"
+>> + * Either path1 or path2 can be NULL
+>> + */
+>> +static char *make_path_to_path(const char *path1, const char *path2=
+)
 >
-> It is "need to", not "are known to", isn't it?
-
-In case of "git commit", as you said in another mail, index refresh is
-needed because of post-commit hook. If there are no hooks, I think
-index refresh can be skipped. But yes, probably "need to".
-
->> +Some commands need entire file content in memory to process.
->> +Files that have size a significant portion of physical RAM may
->> +affect performance. You may want to avoid using the following
->> +commands if possible on such large files:
+> Nice. =C2=A0Do we need to worry about:
 >
-> "If possible" is not a good excuse. =C2=A0How would one _avoid_ check=
-out of a
-> file if one wants to use it? =C2=A0You can't. =C2=A0Similarly to "dif=
-f". =C2=A0This
-> advice is pretty much useless, isn't it? =C2=A0It's not much better t=
-han saying
-> "if your machine has too little RAM, things will get slow---deal with=
- it".
+> =C2=A0- alternate directory separators? (hey\hello\world)
+> =C2=A0- DOS drive prefix? (c:\foo\bar, d:\hey\hello\world)
+> =C2=A0- relative paths with DOS drive? (c:\foo\bar, d:hello)
+> =C2=A0- doubled-up directory separators? (hey//hello/world, //foo/bar=
+)
+> =C2=A0- non-canonical paths? (hey/./hello/../hello/world)
+>
+> I'm guessing some of the answers are "no", depending on where these
+> paths come from. =C2=A0Compare make_relative_path().
 
-That's more of bug acknowledgement, or to-be-improved TODOs. I didn't
-want to say that out loud. Should I?
+The two last ones are OK. Paths passed to this function come from
+either getcwd or make_absolute_path(). I'm sure they are
+canonicalized. But I'll add a comment to note that.
+
+I'll look into backslashes and DOS drives (hmm and UNC path too).
+
+> [...]
+>
+>> =C2=A0static const char *setup_explicit_git_dir(const char *gitdiren=
+v,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const char *work_tree_env, int *non=
+git_ok)
+>> =C2=A0{
+>> - =C2=A0 =C2=A0 static char buffer[1024 + 1];
+>> + =C2=A0 =C2=A0 static char buffer[PATH_MAX];
+>
+> Why?
+>
+> It might make sense to error out a little before PATH_MAX (though
+> later than 1024), to account for subdirs (e.g., objects/). =C2=A0Not =
+sure.
+
+I'm not really POSIX-fluent to tell. But I'm sure in this function
+there won't be any subdirs.
 --=20
 Duy
