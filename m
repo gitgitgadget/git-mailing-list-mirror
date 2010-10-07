@@ -1,68 +1,86 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: git push <branch-name>
-Date: Thu, 07 Oct 2010 12:50:11 +0200
-Message-ID: <4CADA5E3.5060405@drmicha.warpmail.net>
-References: <AANLkTineD3DYsBJBBt13-EWX0_1YUf1cf1wTGUL-jRkg@mail.gmail.com>	<AANLkTinjEoDWhq_EWPj+z++g-b7XMA9d2orXRGtuHyRB@mail.gmail.com> <AANLkTi=k9aEqpvoEvU5f-t-63==fouFmJ+OxO=6sQd89@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Eric Raible <raible@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 12:50:11 2010
+From: David Barr <david.barr@cordelta.com>
+Subject: [PATCH] fast-import: Allow filemodify to set the root
+Date: Thu,  7 Oct 2010 21:55:06 +1100
+Message-ID: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 07 12:56:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3o38-0005qU-S1
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 12:50:11 +0200
+	id 1P3o8w-0007fm-Tq
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 12:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754562Ab0JGKuB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 06:50:01 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:38751 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753958Ab0JGKuA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 06:50:00 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9D027227;
-	Thu,  7 Oct 2010 06:49:59 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Thu, 07 Oct 2010 06:49:59 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=M+MDq64ljBNdsbswh24B308CH9w=; b=AIwDp0PNLpJMGt+p4rrRMd/UoA8lmf12g0/h9ytcgKPUsDiEDhoqwgp5qoQTOSAU4Ml3FL9ffK+mFtokiZR04o4L5EyNlJBhHN7xcPjQ9XFy37/Xjp/7R4HMerORy8h8n3Gng70lzmNa7IUE16aU3tontWrPhloc0YET5bp4RqI=
-X-Sasl-enc: 3y40tNUyNubFKHYxd7rNvIj1pIvBydXbPZBGdc7dhZUp 1286448599
-Received: from localhost.localdomain (wlanstud033.rz.tu-clausthal.de [139.174.16.33])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id A42D140099A;
-	Thu,  7 Oct 2010 06:49:58 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <AANLkTi=k9aEqpvoEvU5f-t-63==fouFmJ+OxO=6sQd89@mail.gmail.com>
+	id S1760268Ab0JGK4E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 06:56:04 -0400
+Received: from mail05.syd.optusnet.com.au ([211.29.132.186]:58836 "EHLO
+	mail05.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751690Ab0JGK4E (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 06:56:04 -0400
+Received: from localhost.localdomain (d110-33-95-167.mit3.act.optusnet.com.au [110.33.95.167])
+	by mail05.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id o97AtsgF018639;
+	Thu, 7 Oct 2010 21:55:55 +1100
+X-Mailer: git-send-email 1.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158394>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158395>
 
-Eric Raible venit, vidit, dixit 06.10.2010 02:52:
-> On Tue, Oct 5, 2010 at 3:35 PM, Sverre Rabbelier <srabbelier@gmail.com> wrote:
->> Since it is such a simple command expansion, why not create an alias
->> that does just that?
-> 
-> Because I don't want an alias, I want to extend git-push.
-> 
-> According to the man page, "git push"
-> 
-> "Works like git push <remote>, where <remote> is the current branch's remote
->  (or origin, if no remote is configured for the current branch)."
-> 
-> What I'm advocating is that "git push <branch>" would be described with:
-> 
-> "Works like git push <remote> <branch>, where <remote> is the <branch>'s remote
->  (or origin, if no remote is configured for <branch>)."
+Most git commands do their writing to the object db via the index and
+loose objects.  When you just have a pile of trees you want to convert
+into commits, this is wasteful; for performance-critical operations
+like filter-branch --subdirectory-filter, one might want a sort of
+hash-object --batch-to-pack to write a pack directly.
 
-Now, if I have a remote foo and a branch foo, what is
+Fortunately we have fast-import (which is one of the only git commands
+that will write to a pack directly) but there is not an advertised way
+to tell fast-import to use a given tree for its commits.  So in
+current git, one has the unpleasant choice of writing loose objects
+without parsing the trees or writing straight to pack but having to
+parse trees to do it.
 
-git push foo
+This patch changes that, by allowing
 
-supposed to do?
+	M 040000 <tree id> ""
 
-Michael
+as a filemodify line in a commit to reset to a particular tree without
+any need to unpack it.  For example,
+
+	M 040000 4b825dc642cb6eb9a060e54bf8d69288fbee4904 ""
+
+is a synonym for the deleteall command.
+
+Commit-message-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: David Barr <david.barr@cordelta.com>
+---
+ fast-import.c |    9 +++++++++
+ 1 files changed, 9 insertions(+), 0 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index 2317b0f..8f68a89 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -1454,6 +1454,15 @@ static int tree_content_set(
+ 		n = slash1 - p;
+ 	else
+ 		n = strlen(p);
++	if (!slash1 && !n) {
++		if (!S_ISDIR(mode))
++			die("Root cannot be a non-directory");
++		hashcpy(root->versions[1].sha1, sha1);
++		if (root->tree)
++			release_tree_content_recursive(root->tree);
++		root->tree = subtree;
++		return 1;
++	}
+ 	if (!n)
+ 		die("Empty path component found in input");
+ 	if (!slash1 && !S_ISDIR(mode) && subtree)
+-- 
+1.7.3
