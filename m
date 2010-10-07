@@ -1,78 +1,99 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: format-patch on permission change gives empty patch
-Date: Thu, 07 Oct 2010 13:29:29 -0700
-Message-ID: <7vmxqpwxue.fsf@alter.siamese.dyndns.org>
-References: <20101006.173714.245380201.davem@davemloft.net>
- <20101006.174008.70175671.davem@davemloft.net>
- <7vtykyy70w.fsf@alter.siamese.dyndns.org>
- <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1010071503210.3107@xanadu.home>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
+Date: Thu, 7 Oct 2010 15:28:47 -0500
+Message-ID: <20101007202847.GA13234@burratino>
+References: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
+ <AANLkTikjzQ09XBxYZXXQf6XCme3FiLKtusZ0MLTa--mM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Miller <davem@davemloft.net>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Oct 07 22:29:49 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 22:33:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3x64-0005t6-VO
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:29:49 +0200
+	id 1P3x9W-0006p3-Nl
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:33:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755333Ab0JGU3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 16:29:40 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55240 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751822Ab0JGU3k (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 16:29:40 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A26DBE54;
-	Thu,  7 Oct 2010 16:29:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=VK2T849sWGho0lL0YwqN5sqMcZI=; b=Y10SBT
-	aSuuyeZzE0cSFC2xBPE6YtYIXQpdwU9AZZjpfO4HB12mNk9mNZQ3IvOipnUUBizf
-	YGN7XfNaQPqoHb5Rp4EUDCQCyY7FXXODGtvZHAZjN/YJABOkXaTbSTtnDL/TUdFq
-	44dOOOLvEowGNgi7pPane/5UpAgmBHMEYtyEA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BvyoIGUbGX+Jn1BBMsSgve2B7EDo3v1H
-	7cghSX+t7EF2e1I4TIOihnoILnrtJrEIJT+BpA+hj6+HHH2MV+Ot62oPRkqq+RAL
-	O0tF/xGhftv98CVxocGq20IFXtx2EpdEXQLGrF9Ry+kDN3EsfqUWxcDtu3hfpsOR
-	d13qVQFCApY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 84D77DBE52;
-	Thu,  7 Oct 2010 16:29:34 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C89A7DBE4E; Thu,  7 Oct
- 2010 16:29:30 -0400 (EDT)
-In-Reply-To: <alpine.LFD.2.00.1010071503210.3107@xanadu.home> (Nicolas
- Pitre's message of "Thu\, 07 Oct 2010 15\:06\:05 -0400 \(EDT\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 98F9C48A-D251-11DF-9B3E-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751686Ab0JGUdR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 16:33:17 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:35535 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751606Ab0JGUdR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 16:33:17 -0400
+Received: by ewy23 with SMTP id 23so201594ewy.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 13:33:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Bvnrz3/gSmCVeZCZV8rWiw3MtQxwQlljD6e1JccL3hw=;
+        b=WjM6Mu4dhRybm9fzGqr3yBHDAqpDWxksQLiGBza8s3y/D4CylVVq0+MmHJKauJgocd
+         bicSFLSpvqy1MRxcE0HYDiiGdgr9b9Kwr8JKkIWMwdSp3+5ee07wGNU4KmIvyxM3YmMo
+         dZPPY2GUyrTicdGcsfQlsxOSlyUc7V2r4ElSM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=IrI97tm9Mq8J+bTVAgENFWUNb43D8ImBLn1FGskwXi7+rMzEfB01byu+Vdn71T3ESA
+         JS1lNAxe0ZdzL9erLytaYuol74kprPeoQR0GEaH1c97BYgyuCCQ1ibLD+qNREdBKqWtA
+         2wScQOTXyWEgmXLIIBBGVK5dy99fK85lpuyLY=
+Received: by 10.213.4.15 with SMTP id 15mr866020ebp.49.1286483523897;
+        Thu, 07 Oct 2010 13:32:03 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id z55sm4078127eeh.21.2010.10.07.13.31.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 07 Oct 2010 13:32:00 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikjzQ09XBxYZXXQf6XCme3FiLKtusZ0MLTa--mM@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158454>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+Sverre Rabbelier wrote:
 
-> On Wed, 6 Oct 2010, Junio C Hamano wrote:
->
->> I have a mixed feeling about where to go next.
->> 
->>  (1) Treat "rebase" as a way to reproduce a reasonable history; the
->>      current behaviour to drop empty commits is consistent with this view,
->>      as a history with an empty commit is _not_ entirely reasonable.
->
-> But a file mode change isn't exactly an empty commit, no?
+> This means nothing to me
 
-The second message from DaveM:
+Sorry for the lack of clarity.  Probably I should have just said:
 
-    Message-ID: <20101006.174008.70175671.davem@davemloft.net>
+| For a command (like filter-branch --subdirectory-filter) that wants
+| to commit a lot of trees that already exist in the object db, writing
+| undeltified objects as loose files only to repack them later can
+| involve a significant amount[*] of overhead.
+|
+| Fortunately we have fast-import (which is one of the only git command=
+s
+| that will write to a pack directly) but there is not an advertised wa=
+y
+| to tell fast-import to commit a given tree without unpacking it.
+|
+| This patch changes that, by allowing
+|
+| =C2=A0 =C2=A0 =C2=A0 =C2=A0M 040000 <tree id> ""
+|
+| as a filemodify line in a commit to reset to a particular tree withou=
+t
+| any need to parse it. =C2=A0For example,
+|
+|	M 040000 4b825dc642cb6eb9a060e54bf8d69288fbee4904 ""
+|
+| is a synonym for the deleteall command.
 
-    Ok it turns out that the commit in question was a NOP since the file
-    permissions didn't change.
+[*] how significant?  Numbers are always nice. :)
+
+> Ok, so maybe I do understand, is it basically 'git read-tree
+> 4b825dc642cb6eb9a060e54bf8d69288fbee4904' for fast-import?
+
+Yep.
+
+Thanks.
