@@ -1,99 +1,59 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] worktree: provide better prefix to go back to
- original cwd
-Date: Thu, 07 Oct 2010 07:56:57 -0700
-Message-ID: <7vvd5evyo6.fsf@alter.siamese.dyndns.org>
-References: <4cad50da.0e958e0a.40e3.5efd@mx.google.com>
- <7veic2y2c5.fsf@alter.siamese.dyndns.org>
- <AANLkTim8R2ZxJ1_KnxxRwTjf2mz=NtgQ9MyV_7iAqEpG@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 07 Oct 2010 17:07:30 +0200
+Message-ID: <4CADE232.8030801@viscovery.net>
+References: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com> <20101007141015.GB8162@sigill.intra.peff.net> <5BA0D807-C5C0-4797-82CD-5D5087496D6F@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, judge.packham@gmail.co, Jens.Lehmann@web.de,
-	jrnieder@gmail.com
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 16:57:20 2010
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 17:07:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3ruK-0000P7-6i
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 16:57:20 +0200
+	id 1P3s4Z-00040w-Cy
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 17:07:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760385Ab0JGO5O convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 10:57:14 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47406 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751537Ab0JGO5N convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 10:57:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A0039DC9BF;
-	Thu,  7 Oct 2010 10:57:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=+/6npXwn16mg80Tr2M40rDImM
-	g8=; b=t1EpzEYUqVlMtRZCduE+e+7dKkWx3OHahxZILby+FSkqPgihqZfvfg6xG
-	OpV7R96aHgZLZRVZx99y78M+JqfdUs6Ti75ivjctOBeX3DPrc0dHZJUD0wo+kgNh
-	LngRXQElXLmiabbMiWYqOpcKIrsHpun+Ex39v7pgNZpWGpsB6o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=cl99wM+k64IsMr9GABT
-	e1CxwNJHXUFerLXELHJuqJcuXd/dYFl5RfihruTbmsXtbLAHRm72Prqwu7rcakyi
-	LSsd0S94wg0U8tFt2c63bJazBjHcIfj+98LBNz3az7Jyk2qfhTMIf/ifW3ONlu6m
-	AxDCeUv75SIfP9JADBwhvxio=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4224CDC9BD;
-	Thu,  7 Oct 2010 10:57:05 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 3E36BDC9BA; Thu,  7 Oct
- 2010 10:56:59 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2648D652-D223-11DF-84E7-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933094Ab0JGPHe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 11:07:34 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:46188 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S932873Ab0JGPHe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 11:07:34 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1P3s4A-0004Ab-RX; Thu, 07 Oct 2010 17:07:31 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 80FEC1660F;
+	Thu,  7 Oct 2010 17:07:30 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <5BA0D807-C5C0-4797-82CD-5D5087496D6F@jetbrains.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158406>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Am 10/7/2010 16:35, schrieb Kirill Likhodedov:
+> My bad, this happens only on Windows (at least not on Mac OS X).
 
-> On Thu, Oct 7, 2010 at 12:54 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> pclouds@gmail.com writes:
->> ...
->> If the original cwd is inside GIT_WORK_TREE, limiting ourselves insi=
-de
->> prefix naturally limits the operation to the subdirectory we started=
- from
->> (if the original cwd is at GIT_WORK_TREE, that would make it a whole=
--tree
->> operation). =C2=A0A natural extension of this idea to limit the oper=
-ation to
->> the part of the subtree of the working tree we started from is to re=
-fuse
->> to work in the case where the original cwd is outside GIT_WORK_TREE =
-(the
->> current implementation of GIT_WORK_TREE may or may not correctly imp=
-lement
->> it, though---I never use it myself).
->
-> I tend to think that as we go up to worktree's root, prefix is shorte=
-n
-> and the operation area is widen. When cwd is at worktree's, we operat=
-e
-> on full worktree. If it goes up one level higher, the operation area
-> remains full worktree (but not everything under cwd because cwd now
-> can have non-worktree directories).
+With git rev-list, it also happens on Linux:
 
-I have a feeling that you did not understand my /srv/git/git.git (no, i=
-t
-is not a bare repository) vs /var/tmp example.
+$ git log -1 --pretty=foo%x00bar HEAD | od -c
+0000000   f   o   o  \0   b   a   r  \n
+0000010
+$ git rev-list -1 --pretty=foo%x00bar HEAD | od -c
+0000000   c   o   m   m   i   t       8   7   f   a   f   1   0   9   0
+0000020   5   d   1   f   8   a   b   1   e   9   a   c   2   4   c   c
+0000040   3   e   f   e   d   8   1   f   a   7   e   2   9   6   7  \n
+0000060   f   o   o  \n
+0000064
+$ git version
+git version 1.7.3.67.gcc234
 
-I think it makes the new semantics much less yucky if the special case =
-is
-limited to "the working tree is a subdirectory somewhere under cwd".  B=
-ut
-does your patch check and notice that /var/tmp is not above the working
-tree and they are completely unrelated?
+-- Hannes
