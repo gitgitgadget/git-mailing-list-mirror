@@ -1,68 +1,89 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Trac+Git: rev-list with pathspec performance?
-Date: Thu, 7 Oct 2010 13:49:52 -0400 (EDT)
-Message-ID: <2595121.446745.1286473792827.JavaMail.root@mail.hq.genarts.com>
-References: <17750617.441668.1286378804923.JavaMail.root@mail.hq.genarts.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 7 Oct 2010 13:50:48 -0400
+Message-ID: <20101007175048.GA18518@sigill.intra.peff.net>
+References: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com>
+ <20101007141015.GB8162@sigill.intra.peff.net>
+ <5BA0D807-C5C0-4797-82CD-5D5087496D6F@jetbrains.com>
+ <4CADE232.8030801@viscovery.net>
+ <FF2FF369-0B1C-457E-A86E-8651BF0A82CB@jetbrains.com>
+ <20101007172939.GA12130@sigill.intra.peff.net>
+ <AANLkTimYVNNjhaqUHjoVOV-fQBhcENKn7cyj10qcZ+MW@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 19:50:27 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 19:51:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3ubn-0000lP-3L
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 19:50:23 +0200
+	id 1P3ucW-0000yV-W3
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 19:51:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753678Ab0JGRuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 13:50:03 -0400
-Received: from hq.genarts.com ([173.9.65.1]:23968 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753664Ab0JGRuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 13:50:01 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id A637F1E268D1;
-	Thu,  7 Oct 2010 13:49:59 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id bZyBq1lrmc9l; Thu,  7 Oct 2010 13:49:52 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id D75CA1E2637D;
-	Thu,  7 Oct 2010 13:49:52 -0400 (EDT)
-In-Reply-To: <17750617.441668.1286378804923.JavaMail.root@mail.hq.genarts.com>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1753898Ab0JGRuh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 13:50:37 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54534 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753872Ab0JGRug (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 13:50:36 -0400
+Received: (qmail 19456 invoked by uid 111); 7 Oct 2010 17:50:35 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (129.79.255.184)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 07 Oct 2010 17:50:35 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Oct 2010 13:50:48 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTimYVNNjhaqUHjoVOV-fQBhcENKn7cyj10qcZ+MW@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158417>
 
-> > Note that there is proof of concept
-> > "tree blame" (in Perl) which generates such 'last change to file'
-> > information, I think faster than running 'git rev-list -1 <file>'
-> > for
-> > each file. Even better would be to encode used algorithm in C.
-> >
-> > http://thread.gmane.org/gmane.comp.version-control.git/150063/focus=150183
-> 
-> My early experiments with your script are good for speed, but for some
-> reason I'm always getting the first commit for a file rather than the
-> most recent. I'll do some experimenting to see if I can uncover the
-> issue.
+On Thu, Oct 07, 2010 at 07:41:01PM +0200, Erik Faye-Lund wrote:
 
-Following up, I had to add -r to the diff-tree command line when requesting a subdirectory to work around the problem (script always returned the first commit).
+> > diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+> > index efe9360..3b2dca0 100644
+> > --- a/builtin/rev-list.c
+> > +++ b/builtin/rev-list.c
+> > @@ -147,8 +147,10 @@ static void show_commit(struct commit *commit,=
+ void *data)
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0}
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0if (revs->commit_format !=3D CMIT_FMT_USERFORMAT ||
+> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 buf.len)
+> > - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 printf("%s%c", buf.buf, info->hd=
+r_termination);
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 buf.len) {
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fwrite(buf.buf, 1, buf.len, stdo=
+ut);
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 putchar(info->hdr_termination);
+> > + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 }
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0strbuf_relea=
+se(&buf);
+> > =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {
+>=20
+> This gives me a bit of a deja-vu: 1fb5fdd
+>=20
+> Also, fwriting like that to stdout might be a bit troublesome on
+> Windows because the string won't end up going through our
+> ANSI-emulation.
 
-I'm curious if it's faster to get the SHA of the sub-tree and compare that before actually running diff-tree?  And for that matter, just run diff-tree on the sub-tree that we care about rather than a recursive sub-tree on the root?  These may be early optimizations, but they're ideas that occurred to me while debugging the code...
+I don't know enough about the Windows output code paths to comment on
+that. But this is almost identical to the fwrite in graph_show_commit
+that we use for the "rev-list --graph" show path. If there is a fix, it
+needs to be made to both places.
 
-> > P.S. Alternate solution would be to simply get rid of SVN-inspired
-> > view.  Git tracks history of a *project* as a whole, not set of
-> > histories for individual files (like CVS).
-
-After a lot of experimentation, this is basically what we did.  I modified the Trac templates to not list the last change SHA or log message in the directory view.  After all my testing, I just don't think there's a fast way to get this information from Git.  This blame-dir script is the fastest alternative I've tried (about 5x faster than rev-list'ing each file), but it's still ~30 seconds on my machine (which is faster than our web server), and IMHO that's too long to ask a user to wait for a page to load.
-
-Thanks,
-Stephen
+-Peff
