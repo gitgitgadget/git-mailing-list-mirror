@@ -1,136 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Trac+Git: rev-list with pathspec performance?
-Date: Thu, 7 Oct 2010 22:33:59 +0200
-Message-ID: <201010072234.00994.jnareb@gmail.com>
-References: <2595121.446745.1286473792827.JavaMail.root@mail.hq.genarts.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
+Date: Thu, 7 Oct 2010 22:35:20 +0200
+Message-ID: <AANLkTi=K0NsKB0uBpHs+mB=PubieX7jO7vFiqrs+dnqB@mail.gmail.com>
+References: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
+ <AANLkTikjzQ09XBxYZXXQf6XCme3FiLKtusZ0MLTa--mM@mail.gmail.com> <20101007202847.GA13234@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 22:34:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: David Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 22:35:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3xAb-00076f-Q3
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:34:30 +0200
+	id 1P3xBq-0007RT-OK
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:35:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755540Ab0JGUeN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 16:34:13 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33354 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755501Ab0JGUeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 16:34:11 -0400
-Received: by fxm14 with SMTP id 14so75439fxm.19
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 13:34:10 -0700 (PDT)
+	id S1755440Ab0JGUfl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 16:35:41 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:60258 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751721Ab0JGUfl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 16:35:41 -0400
+Received: by gwj17 with SMTP id 17so102215gwj.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 13:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=qZaFsZl3tH0XN+MsEj2bs6xFMBVHh5YYfK6U96oro2Y=;
-        b=p92EFptrOXFcf5iSsjolB18laIHgu7FJlG4CyN4GhSduYxdRwG8WVL2A81mNrfV4SA
-         1NSuq+bi1RGYsbsC/9i1Rfhn22PW90E2Hk/9LP5IdsOo2bmQNr5yvW9wB0d2DkHkq+jD
-         CvuXePnsw7DDab0cZA50gQi+ZC5FEPfuWH0Mo=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wtRDMyNQC+aQI2SjZtSWKHzsMlrEaglO+qTq8S/V2M8=;
+        b=fysGRbwrBjhGyGpaLqKwdFZYvm/NXHlaHmi4RRbJrYVr25yxD6oKJN9K0sJ6Z9Tsp0
+         F2bjOdH5mqI1ME/Z8rvjyqO1DQWB/n8Hgm2PR5a9peA0lB5CLfiu1kKHpcc/otAF/Aer
+         COhD9zykD7GmMb0RAiLhPY6ZaMjdu0BrZMu9I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=v+i5hmzQ+EhtzDtTZgZ9DDKzpicvx40eAuDfY7b+34FBLO1PD/UwEh0XX78/Jrr0yB
-         9jEXmQoc2FBlKaEtBNlxERknp7c/efrRvX43hm9kFgRXqqAnmOXxRa8LLGyAw3iz7Hw4
-         L46zN2xy1kYUngVt2rwHmcOeJ5kL5fuTIfG7k=
-Received: by 10.223.101.18 with SMTP id a18mr1903670fao.19.1286483649257;
-        Thu, 07 Oct 2010 13:34:09 -0700 (PDT)
-Received: from [192.168.1.13] (abvx243.neoplus.adsl.tpnet.pl [83.8.221.243])
-        by mx.google.com with ESMTPS id c20sm1276281fak.33.2010.10.07.13.34.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 Oct 2010 13:34:06 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <2595121.446745.1286473792827.JavaMail.root@mail.hq.genarts.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=MIkWz809kvsaw+IGAStJDYJJtawHnpNhNj7aMprFI28wUY/k5y7De2cwOGeuR+OKEF
+         Fq8ojVrVBzTuw6KXhX2TTUim4LFVO92Y/60etlZdkDQ+4selk9MnfqoUYyjANEVf9h+W
+         H0xpF6Fs7E3SGHl2x9hGujL8w9i7P57cNIwXg=
+Received: by 10.150.186.17 with SMTP id j17mr1774772ybf.272.1286483740326;
+ Thu, 07 Oct 2010 13:35:40 -0700 (PDT)
+Received: by 10.151.15.8 with HTTP; Thu, 7 Oct 2010 13:35:20 -0700 (PDT)
+In-Reply-To: <20101007202847.GA13234@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158455>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158456>
 
-On Thu, 7 Oct 2010, Stephen Bash wrote:
+Heya,
 
->>> Note that there is proof of concept
->>> "tree blame" (in Perl) which generates such 'last change to file'
->>> information, I think faster than running 'git rev-list -1 <file>'
->>> for
->>> each file. Even better would be to encode used algorithm in C.
->>>
->>> http://thread.gmane.org/gmane.comp.version-control.git/150063/focus=150183
->> 
->> My early experiments with your script are good for speed, but for some
->> reason I'm always getting the first commit for a file rather than the
->> most recent. I'll do some experimenting to see if I can uncover the
->> issue.
-> 
-> Following up, I had to add -r to the diff-tree command line when
-> requesting a subdirectory to work around the problem (script always
-> returned the first commit).  
+On Thu, Oct 7, 2010 at 22:28, Jonathan Nieder <jrnieder@gmail.com> wrot=
+e:
+> | is a synonym for the deleteall command.
 
-Hmmm... I thought that I have added '-r' if there is path provided,
-i.e. we don't run tree blame on root commit.
+Thanks, the updated doc is more understandable.
 
-> I'm curious if it's faster to get the SHA of the sub-tree and compare
-> that before actually running diff-tree?  And for that matter, just run
-> diff-tree on the sub-tree that we care about rather than a recursive
-> sub-tree on the root?  These may be early optimizations, but they're
-> ideas that occurred to me while debugging the code...    
+> [*] how significant? =C2=A0Numbers are always nice. :)
 
-There are many possible optimizations (see also below); for the time
-being I was concerned with getting the fast tree blame algorithm right
-(and as you can see didn't get it, not completely).
+Yes, numbers please! :)
 
->>> P.S. Alternate solution would be to simply get rid of SVN-inspired
->>> view.  Git tracks history of a *project* as a whole, not set of
->>> histories for individual files (like CVS).
-> 
-> After a lot of experimentation, this is basically what we did.
-> I modified the Trac templates to not list the last change SHA or log
-> message in the directory view.  After all my testing, I just don't
-> think there's a fast way to get this information from Git.  This
-> blame-dir script is the fastest alternative I've tried (about 5x
-> faster than rev-list'ing each file), but it's still ~30 seconds on my
-> machine (which is faster than our web server), and IMHO that's too
-> long to ask a user to wait for a page to load.       
+>> Ok, so maybe I do understand, is it basically 'git read-tree
+>> 4b825dc642cb6eb9a060e54bf8d69288fbee4904' for fast-import?
+>
+> Yep.
 
-First, there is lot of room for optimization of tree blame script, some
-of which I have noted as comments, some which you have found.  During
-developing this script I noticed that current plumbing doesn't completly
-fit the tree blame algorithm; for example we need '-r' for blaming 
-subtree (subdirectory), while we need paths only up to depth of blamed
-directory, no more.
+Perhaps mention that in the commit message as well then. Of course,
+the fast-import doc needs updating, and it needs test.
 
-Rewriting tree-blame in C, using in-core revision and tree traversal
-should be faster, though I'm not sure how much would that be.  
-Unfortunately I don't know enough git API; I thought that writing
-Perl script would be easier.
+--=20
+Cheers,
 
-But you are right in that such view would always be expensive in Git,
-because Git tracks history of porject *as a whole*.  If file was 
-created in root commit (first commit) and left unchanged, it would be
-easy to find in VCS that stored history on per-file basis at least to
-some extent; in git you have to go through comit up till the root 
-commit in this case.  If history is long, it might take some time.
-
-
-Second, you can use the trick that GitHub web interface uses to display
-similar view, namely in displaying first just a tree of files, and then
-incrmentally filling in 'last changed' info.  Gitweb does something 
-similar in 'blame_incremental' view; that is why the idea was to have
-tree blame ("git blame <directory>") to have support for incremental 
-format, similar to an ordinary blame.
-
-This might take some effort to develop, though...
--- 
-Jakub Narebski
-Poland
+Sverre Rabbelier
