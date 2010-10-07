@@ -1,113 +1,89 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 2/2] worktree: provide better prefix to go back to
- original cwd
-Date: Thu, 7 Oct 2010 22:11:58 +0700
-Message-ID: <AANLkTikoDMX17U77Y1+=Lq94AUAZ3mTEX7MG9aRjaEh6@mail.gmail.com>
-References: <4cad50da.0e958e0a.40e3.5efd@mx.google.com> <7veic2y2c5.fsf@alter.siamese.dyndns.org>
- <AANLkTim8R2ZxJ1_KnxxRwTjf2mz=NtgQ9MyV_7iAqEpG@mail.gmail.com> <7vvd5evyo6.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, judge.packham@gmail.co, Jens.Lehmann@web.de,
-	jrnieder@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 17:12:29 2010
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: Re: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 7 Oct 2010 19:18:18 +0400
+Message-ID: <FF2FF369-0B1C-457E-A86E-8651BF0A82CB@jetbrains.com>
+References: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com> <20101007141015.GB8162@sigill.intra.peff.net> <5BA0D807-C5C0-4797-82CD-5D5087496D6F@jetbrains.com> <4CADE232.8030801@viscovery.net>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Thu Oct 07 17:18:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3s8z-0005Yj-4C
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 17:12:29 +0200
+	id 1P3sEt-0007LS-0W
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 17:18:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760692Ab0JGPMV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 11:12:21 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44887 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758023Ab0JGPMU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 11:12:20 -0400
-Received: by wyb28 with SMTP id 28so163232wyb.19
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 08:12:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=3b9km9oOiPHI6A0BjVGaPR0xs0KY4Sblr31MOqJsg9U=;
-        b=QiYjOMkVR0Q70b66YTMVhuFIESQhgR4LD0tOnZ4sD3DRiYK2eCNKH5CT21IH/FO9cM
-         UDbgr8suGS4/CuR6UMfpOktDxusBDzKYgb/glfZjZPj040eT4XoDwUWXSJtrH6Q6gpsN
-         OFIaWtL3Nvzo8b4pkdmt3fyTEEoDxSc1sbGaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZjbOAD69PXc6cuQJMb6oCxixyeWQMk9b/yLWnSyQ9xaGeX89hCj4+TWxwY0jcUbzjW
-         MPI/3lmMiyGuLrDJwz51SpdkFNbo8/ANMCmDbb2z9ZGxA7TDD0FnhlrzEte7a4m9lGAm
-         OV2gsFlHnY7L3PlOfgrLAzPYt0VZfNIHoPq5M=
-Received: by 10.216.188.81 with SMTP id z59mr871671wem.106.1286464338582; Thu,
- 07 Oct 2010 08:12:18 -0700 (PDT)
-Received: by 10.216.153.195 with HTTP; Thu, 7 Oct 2010 08:11:58 -0700 (PDT)
-In-Reply-To: <7vvd5evyo6.fsf@alter.siamese.dyndns.org>
+	id S1760717Ab0JGPSX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 11:18:23 -0400
+Received: from mail.intellij.net ([213.182.181.98]:50071 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754902Ab0JGPSW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 11:18:22 -0400
+Received: (qmail 24636 invoked by uid 89); 7 Oct 2010 15:18:19 -0000
+Received: by simscan 1.1.0 ppid: 24581, pid: 24627, t: 0.2459s
+         scanners: regex: 1.1.0 clamav: 0.96
+/m: 52
+Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
+  by mail.intellij.net with ESMTPA; 7 Oct 2010 15:18:19 -0000
+In-Reply-To: <4CADE232.8030801@viscovery.net>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158408>
 
-On Thu, Oct 7, 2010 at 9:56 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> On Thu, Oct 7, 2010 at 12:54 PM, Junio C Hamano <gitster@pobox.com> =
-wrote:
->>> pclouds@gmail.com writes:
->>> ...
->>> If the original cwd is inside GIT_WORK_TREE, limiting ourselves ins=
-ide
->>> prefix naturally limits the operation to the subdirectory we starte=
-d from
->>> (if the original cwd is at GIT_WORK_TREE, that would make it a whol=
-e-tree
->>> operation). =C2=A0A natural extension of this idea to limit the ope=
-ration to
->>> the part of the subtree of the working tree we started from is to r=
-efuse
->>> to work in the case where the original cwd is outside GIT_WORK_TREE=
- (the
->>> current implementation of GIT_WORK_TREE may or may not correctly im=
-plement
->>> it, though---I never use it myself).
->>
->> I tend to think that as we go up to worktree's root, prefix is short=
-en
->> and the operation area is widen. When cwd is at worktree's, we opera=
-te
->> on full worktree. If it goes up one level higher, the operation area
->> remains full worktree (but not everything under cwd because cwd now
->> can have non-worktree directories).
->
-> I have a feeling that you did not understand my /srv/git/git.git (no,=
- it
-> is not a bare repository) vs /var/tmp example.
->
-> I think it makes the new semantics much less yucky if the special cas=
-e is
-> limited to "the working tree is a subdirectory somewhere under cwd". =
-=C2=A0But
-> does your patch check and notice that /var/tmp is not above the worki=
-ng
-> tree and they are completely unrelated?
->
 
-OK I see it now. I think my patch deals with completely unrelated
-worktree/cwd just fine (both cwd-to-worktree and worktree-to-cwd
-contain a few "../").
+> With git rev-list, it also happens on Linux:
+> 
+> $ git log -1 --pretty=foo%x00bar HEAD | od -c
+> 0000000   f   o   o  \0   b   a   r  \n
+> 0000010
+> $ git rev-list -1 --pretty=foo%x00bar HEAD | od -c
+> 0000000   c   o   m   m   i   t       8   7   f   a   f   1   0   9   0
+> 0000020   5   d   1   f   8   a   b   1   e   9   a   c   2   4   c   c
+> 0000040   3   e   f   e   d   8   1   f   a   7   e   2   9   6   7  \n
+> 0000060   f   o   o  \n
+> 0000064
+> $ git version
+> git version 1.7.3.67.gcc234
+> 
 
-There is however a case where "git status" on separate cwd/worktree
-might make sense. Suppose a master repo a/.git has two submodules
-a/b/.git and a/c/.git. If user stands in a/c and want to do git-status
-on all repos (let's skip how it finds out a/.git is the master repo),
-it would make sense to display paths, including ones from a/b/.git,
-relative to a/c (which is cwd and completely unrelated to a/b/.git).
---=20
-Duy
+
+Hannes, 
+
+Thanks for pointing that out.
+I confirm that on Mac OS X that happens for rev-list as well. 
+
+# git log --pretty=format:foo%x00bar HEAD -1 | od -c
+0000000   f   o   o  \0   b   a   r
+0000007
+
+# git rev-list --pretty=format:foo%x00bar HEAD -1 | od -c
+0000000   c   o   m   m   i   t       2   3   6   0   1   a   2   c   3
+0000020   e   4   6   4   a   4   4   7   9   f   1   7   7   4   e   3
+0000040   6   e   a   5   b   9   5   8   b   4   6   0   5   2   1  \n
+0000060   f   o   o  \n
+0000064
+
+And it's not a new issue:
+
+# git version
+git version 1.7.1
+
+So here's what we have now about this bug:
+1. It happens since 1.7.1 for rev-list on all platforms (at least since 1.7.1 on Mac OS X and 1.7.3 on Linux).
+2. It also happens at least since 1.7.2.3 for log on Windows.
+
+Sorry for giving some confusion in my previous messages.
+I probably tested 'rev-list' at the time when I've recovered the problem, but I reported it as a problem with 'log'.
+
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
