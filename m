@@ -1,146 +1,84 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PULL] Pull request from msysGit
-Date: Thu, 07 Oct 2010 18:17:57 +0100
-Message-ID: <4CAE00C5.1050509@ramsay1.demon.co.uk>
-References: <87ocb9zfbf.fsf@fox.patthoyts.tk>
+From: Jeff King <peff@peff.net>
+Subject: Re: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 7 Oct 2010 13:29:39 -0400
+Message-ID: <20101007172939.GA12130@sigill.intra.peff.net>
+References: <D9157D2F-31D5-44EF-8FB4-F0E62BBF8017@jetbrains.com>
+ <20101007141015.GB8162@sigill.intra.peff.net>
+ <5BA0D807-C5C0-4797-82CD-5D5087496D6F@jetbrains.com>
+ <4CADE232.8030801@viscovery.net>
+ <FF2FF369-0B1C-457E-A86E-8651BF0A82CB@jetbrains.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, pharris@opentext.com,
-	sschuberth@gmail.com
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Oct 07 19:19:33 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 19:29:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3u7l-0000aY-4J
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 19:19:21 +0200
+	id 1P3uHf-0003Fr-RS
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 19:29:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753330Ab0JGRTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 13:19:10 -0400
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:62817 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751542Ab0JGRTJ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 13:19:09 -0400
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1P3u7X-0004Lj-hl; Thu, 07 Oct 2010 17:19:08 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <87ocb9zfbf.fsf@fox.patthoyts.tk>
+	id S1750949Ab0JGR32 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 13:29:28 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40554 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750760Ab0JGR31 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 13:29:27 -0400
+Received: (qmail 19088 invoked by uid 111); 7 Oct 2010 17:29:26 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (129.79.255.184)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 07 Oct 2010 17:29:26 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Oct 2010 13:29:39 -0400
+Content-Disposition: inline
+In-Reply-To: <FF2FF369-0B1C-457E-A86E-8651BF0A82CB@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158409>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158410>
 
-Pat Thoyts wrote:
-> The following changes since commit 1e633418479926bc85ed21a4f91c845a3dd3ad66:
+On Thu, Oct 07, 2010 at 07:18:18PM +0400, Kirill Likhodedov wrote:
+
+> Thanks for pointing that out.
+> I confirm that on Mac OS X that happens for rev-list as well. 
 > 
->   Merge branch 'maint' (2010-09-30 14:59:53 -0700)
+> # git log --pretty=format:foo%x00bar HEAD -1 | od -c
+> 0000000   f   o   o  \0   b   a   r
+> 0000007
 > 
-> are available in the git repository at:
-> 
->   git://repo.or.cz/git/mingw/4msysgit.git work/pt/for-junio
-> or alternatively
->   http://repo.or.cz/w/git/mingw/4msysgit.git/shortlog/refs/heads/work/pt/for-junio
-> 
-> 5debf9a Add MinGW-specific execv() override.
-> 77df1f1 Fix Windows-specific macro redefinition warning.
-> b248e95 Fix 'clone' failure at DOS root directory.
-> 1a40420 mingw: do not crash on open(NULL, ...)
-> 5e9677c git-am: fix detection of absolute paths for windows
-> 36e035f Side-step MSYS-specific path "corruption" leading to t5560 failure.
-> ca02ad3 Side-step sed line-ending "corruption" leading to t6038 failure.
-> 97f2c33 Skip 'git archive --remote' test on msysGit
-> a94114a Do not strip CR when grepping HTTP headers.
-> 3ba9ba8 Skip t1300.70 and 71 on msysGit.
-> 4e57baf merge-octopus: Work around environment issue on Windows
-> 442dada MinGW: Report errors when failing to launch the html browser.
-> 9b9784c MinGW: fix stat() and lstat() implementations for handling symlinks
-> 4091bfc MinGW: Add missing file mode bit defines
+> # git rev-list --pretty=format:foo%x00bar HEAD -1 | od -c
+> 0000000   c   o   m   m   i   t       2   3   6   0   1   a   2   c   3
+> 0000020   e   4   6   4   a   4   4   7   9   f   1   7   7   4   e   3
+> 0000040   6   e   a   5   b   9   5   8   b   4   6   0   5   2   1  \n
+> 0000060   f   o   o  \n
+> 0000064
 
-This commit (4091bfc) may well introduce logic errors into the msvc
-build; I haven't checked (it depends on what the msvc compiler does
-when a macro is redefined - does the new definition replace the old?).
-However, no matter what else may be wrong, this commit introduces a
-shed load of new warnings, thus:
+Ugh. Even worse, it does print with --graph, which uses a slightly
+different code path.
 
-    $ make clean
-    $ make MSVC=1 >out 2>&1
-    $ grep warning out | grep S_I | wc -l
-    1000
-    $ 
+  $ git rev-list --graph -1 --format=foo%x00bar HEAD | cat -A
+  *   commit 81d866a6a213d5524ce389369377ba3529461e1b$
+  |\  foo^@bar$
 
-so 1000 additional warnings which, looking at the start of the out
-file, look like this:
+I am inclined to call the rev-list behavior a bug, and the fix is
+probably:
 
-GIT_VERSION = 1.7.3.dirty
-    * new build flags or prefix
-    CC fast-import.o
-fast-import.c
-c:\cygwin\home\ramsay\git\compat/mingw.h(16) : warning C4005: 'S_IRUSR' : macro redefinition
-        compat/vcbuild/include\unistd.h(85) : see previous definition of 'S_IRUSR'
-c:\cygwin\home\ramsay\git\compat/mingw.h(17) : warning C4005: 'S_IWUSR' : macro redefinition
-        compat/vcbuild/include\unistd.h(84) : see previous definition of 'S_IWUSR'
-c:\cygwin\home\ramsay\git\compat/mingw.h(18) : warning C4005: 'S_IXUSR' : macro redefinition
-        compat/vcbuild/include\unistd.h(83) : see previous definition of 'S_IXUSR'
-c:\cygwin\home\ramsay\git\compat/mingw.h(19) : warning C4005: 'S_IRWXU' : macro redefinition
-        compat/vcbuild/include\unistd.h(82) : see previous definition of 'S_IRWXU'
-
-Now, Peter Harris has already submitted a fix for this, which is
-currently on the work/msvc-fixes branch, which contains:
-
-    358f1be Modify MSVC wrapper script
-    38bd27d Fix MSVC build
-
-The suggested fix is given in commit 38bd27d. However, I prefer a
-different solution, which is given below:
-
---- >8 ---
-diff --git a/compat/mingw.h b/compat/mingw.h
-index afedf3a..445d1a1 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -12,12 +12,6 @@ typedef int pid_t;
- #define S_ISLNK(x) (((x) & S_IFMT) == S_IFLNK)
- #define S_ISSOCK(x) 0
- 
--#ifndef _STAT_H_
--#define S_IRUSR 0
--#define S_IWUSR 0
--#define S_IXUSR 0
--#define S_IRWXU (S_IRUSR | S_IWUSR | S_IXUSR)
--#endif
- #define S_IRGRP 0
- #define S_IWGRP 0
- #define S_IXGRP 0
---- 8< ---
-
-Note that, for *both* MinGW and MSVC, the deleted #defines
-are not wanted, pointless and just plain wrong! :-D
-
-If you squash the above into 4091bfc then we find:
-
-    $ make clean
-    $ make MSVC=1 >out1 2>&1
-    $ grep warning out1 | grep S_I | wc -l
-    0
-    $ 
-
-and there is also no chance of introducing a logic error.
-
-Although I'm not recommending you use one of the commits on
-the work/msvc-fixes branch, can I request, once again, that
-you include:
-
-    358f1be Modify MSVC wrapper script
-
-If it makes any difference, you can add:
-
-    Acked-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-
-ATB,
-Ramsay Jones
+diff --git a/builtin/rev-list.c b/builtin/rev-list.c
+index efe9360..3b2dca0 100644
+--- a/builtin/rev-list.c
++++ b/builtin/rev-list.c
+@@ -147,8 +147,10 @@ static void show_commit(struct commit *commit, void *data)
+ 			}
+ 		} else {
+ 			if (revs->commit_format != CMIT_FMT_USERFORMAT ||
+-			    buf.len)
+-				printf("%s%c", buf.buf, info->hdr_termination);
++			    buf.len) {
++				fwrite(buf.buf, 1, buf.len, stdout);
++				putchar(info->hdr_termination);
++			}
+ 		}
+ 		strbuf_release(&buf);
+ 	} else {
