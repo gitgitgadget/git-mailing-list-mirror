@@ -1,107 +1,78 @@
-From: Christian Dietrich <stettberger@dokucode.de>
-Subject: [ANNOUNCE] metagit 0.1.2
-Date: Thu, 07 Oct 2010 22:20:09 +0200
-Message-ID: <86k4lteow6.fsf@peer.zerties.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: format-patch on permission change gives empty patch
+Date: Thu, 07 Oct 2010 13:29:29 -0700
+Message-ID: <7vmxqpwxue.fsf@alter.siamese.dyndns.org>
+References: <20101006.173714.245380201.davem@davemloft.net>
+ <20101006.174008.70175671.davem@davemloft.net>
+ <7vtykyy70w.fsf@alter.siamese.dyndns.org>
+ <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1010071503210.3107@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-	micalg=pgp-sha1; protocol="application/pgp-signature"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 07 22:25:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, David Miller <davem@davemloft.net>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Oct 07 22:29:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3x1f-0004KZ-4f
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:25:15 +0200
+	id 1P3x64-0005t6-VO
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:29:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755102Ab0JGUZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 16:25:08 -0400
-Received: from lo.gmane.org ([80.91.229.12]:36606 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751098Ab0JGUZH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 16:25:07 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P3x1U-0004Gx-7m
-	for git@vger.kernel.org; Thu, 07 Oct 2010 22:25:04 +0200
-Received: from peer.zerties.org ([188.40.33.175])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 22:25:04 +0200
-Received: from stettberger by peer.zerties.org with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 22:25:04 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: peer.zerties.org
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-Cancel-Lock: sha1:tv7ouOwOrf+PcHVzbjiveEtaejI=
+	id S1755333Ab0JGU3k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 16:29:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:55240 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751822Ab0JGU3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 16:29:40 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 44A26DBE54;
+	Thu,  7 Oct 2010 16:29:38 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VK2T849sWGho0lL0YwqN5sqMcZI=; b=Y10SBT
+	aSuuyeZzE0cSFC2xBPE6YtYIXQpdwU9AZZjpfO4HB12mNk9mNZQ3IvOipnUUBizf
+	YGN7XfNaQPqoHb5Rp4EUDCQCyY7FXXODGtvZHAZjN/YJABOkXaTbSTtnDL/TUdFq
+	44dOOOLvEowGNgi7pPane/5UpAgmBHMEYtyEA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=BvyoIGUbGX+Jn1BBMsSgve2B7EDo3v1H
+	7cghSX+t7EF2e1I4TIOihnoILnrtJrEIJT+BpA+hj6+HHH2MV+Ot62oPRkqq+RAL
+	O0tF/xGhftv98CVxocGq20IFXtx2EpdEXQLGrF9Ry+kDN3EsfqUWxcDtu3hfpsOR
+	d13qVQFCApY=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 84D77DBE52;
+	Thu,  7 Oct 2010 16:29:34 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C89A7DBE4E; Thu,  7 Oct
+ 2010 16:29:30 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.1010071503210.3107@xanadu.home> (Nicolas
+ Pitre's message of "Thu\, 07 Oct 2010 15\:06\:05 -0400 \(EDT\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 98F9C48A-D251-11DF-9B3E-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158453>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Nicolas Pitre <nico@fluxnic.net> writes:
 
+> On Wed, 6 Oct 2010, Junio C Hamano wrote:
+>
+>> I have a mixed feeling about where to go next.
+>> 
+>>  (1) Treat "rebase" as a way to reproduce a reasonable history; the
+>>      current behaviour to drop empty commits is consistent with this view,
+>>      as a history with an empty commit is _not_ entirely reasonable.
+>
+> But a file mode change isn't exactly an empty commit, no?
 
-Hi,
-I wanted to announce my project metagit[1], which I started a few weeks
-ago. It is a python program, which allows you to manage many scm
-repositories at once, e.g. pull all repositories, that are matched by a
-given regex. Before you can use it you have to define a set of
-repositories. This can either be accomplished by defining them one by
-one, or you can use a repo lister.=20
+The second message from DaveM:
 
-One good example of a repo lister is the SSHDir lister. It performs a
-find on a remote server within a given directory and adds all the
-repositories there to your repo set. There is also a lister to get all
-your github repos (or gitorious).
+    Message-ID: <20101006.174008.70175671.davem@davemloft.net>
 
-But metagit isn't narrowed to git as scm. At this point it also gives
-you the possibility to use mercurial as scm backend and you can clone
-your damned fucked SVN repo with git-svn (with the externals, if you wish).
-
-The configuration is just a python script, where you can use the power
-of python to define your repositories, and no package is used that isn't
-shipped with python (at minimum python 2.5 (it workes perfectly with
-debian stable)).=20
-
-You can also define policies which of your defined repos (or listers)
-show up on a machine (this is done by a regex against the fqdn).
-
-If you have any wish what metagit should also be able to do, write me a
-mail, write a issue at github or fork it :-)
-
-greetz didi
-
-[1] http://github.com/stettberger/metagit
-=2D-=20
-(=CE=BB x . x x) (=CE=BB x . x x) -- See how beatiful the lambda is
-No documentation is better than bad documentation
-=2D- Das Ausdrucken dieser Mail wird urheberrechtlich verfolgt.
-
---=-=-=
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIcBAEBAgAGBQJMrit6AAoJEBQksfbRvb+ahVwP/AijeWDZ0TiAAMukz8pIOxSi
-bIUxEssO8M6uPmy7fJgqNer+nhx2m3vhBgppMBcWHnbGZvTf+hq+I2EPa5H0Gi5G
-bhwjoChPgyilXu7O6dCEuhztR0+UVoAhOZQbQ8PZ1rTNvAZTOgd3GFx/Pe1D9QOs
-nK+1Eviik5JHhV0A2XHHOw4zGEIbKA/YYMqRqnOQHfYHN9pAzkwdTVeEIg01iLs4
-UIkcedzzpDMxQimDMyZAq+mzUPJu7GjzZ5hyALCu7QhRB/5OQjkE4wbNgPdjLM1y
-5QyIHa+sdGCTCJYlPxP3VNUyHlyOpcmEgcAW2N0ZcUa6ksDATM5ziaQXIBwtUKhf
-kHoAIGWCaNBG5c7R2wHipK2lX/CItA8HWfntoqWmm261k7h66r75PwB0dv71YHDz
-V2qCPUJmklghinYdqYipGI4I6LMPAgTMHxL32nEI2jyl2Ef7jLdQhKgW3/96cFXZ
-Te0ZAKBSYgBiYa3Qzb8Kezge3X0TwA07v+/Fo4GgF+d1fVP7SmfoqrtRQckJPaHa
-wwW1wqkA+PEQNLikvliA6sSawm5/hAbYZ37/IW3nsP0r1TcJMc/z92y8LE9Nyed9
-Wiw/YDGCuGk8L+z938u+i4aGuoNNhwJumxPhGjSCvlgGXsB8txZ3uXSDX0ZZVelM
-vWY9jellYj505ysXrGZl
-=YpeT
------END PGP SIGNATURE-----
---=-=-=--
+    Ok it turns out that the commit in question was a NOP since the file
+    permissions didn't change.
