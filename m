@@ -1,68 +1,107 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [msysGit] Re: [PULL] Pull request from msysGit
-Date: Thu, 7 Oct 2010 22:22:48 +0200
-Message-ID: <AANLkTimYywBtG-tD-aV6uDK+HPerDHqaJyt1Sx4tOXJT@mail.gmail.com>
-References: <87ocb9zfbf.fsf@fox.patthoyts.tk> <4CAE00C5.1050509@ramsay1.demon.co.uk>
- <4CAE1FE6.9020306@opentext.com> <AANLkTinSjFDdwqTEU6XzOVHupph0G2ZKM+u3r7t_W3DD@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Christian Dietrich <stettberger@dokucode.de>
+Subject: [ANNOUNCE] metagit 0.1.2
+Date: Thu, 07 Oct 2010 22:20:09 +0200
+Message-ID: <86k4lteow6.fsf@peer.zerties.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Peter Harris <pharris@opentext.com>,
-	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, sschuberth@gmail.com
-To: Pat Thoyts <patthoyts@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 22:23:32 2010
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha1; protocol="application/pgp-signature"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 07 22:25:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3wzx-0003wE-Lg
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:23:30 +0200
+	id 1P3x1f-0004KZ-4f
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 22:25:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755421Ab0JGUXT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 16:23:19 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:43141 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755102Ab0JGUXR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 16:23:17 -0400
-Received: by qwf7 with SMTP id 7so236977qwf.19
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 13:23:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=im2URXvoLJEHbNtz2VitWsnDw14ELRopOn2OIMff+3k=;
-        b=cr5wHZZwZ7T/P5Suq/ZZe4/8xJ3839CVqX1RaVIVc6JaAX1Cbp3nJF3d2e0lv/hfBG
-         fkfKhfmrv0NMsjPebBpkOI4t6vfvmVxwOhTBZ5drmRTWKmWeQmMAHywnQ6Nk8LyRLT2H
-         kxJHN6vQXCma4OC3YQiToHaOcfmubtDc44+vo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=WXLJ1oSzutuJhfEcW49LDt5KawJ75OpUwCnxnSkJvvAVU/T52FKCVvnP37PoLlUCQD
-         W2MYyqm2YIoweYj2GbFiRk86sIIx7fLOt7UKVyf2Iy0MXP270XPvwPHNyHknpz4mRMhE
-         nmP6BxZtII1Yibp/dKvNhv8GxOeLfQjHHukj8=
-Received: by 10.220.194.73 with SMTP id dx9mr29898vcb.1.1286482996722; Thu, 07
- Oct 2010 13:23:16 -0700 (PDT)
-Received: by 10.220.45.196 with HTTP; Thu, 7 Oct 2010 13:22:48 -0700 (PDT)
-In-Reply-To: <AANLkTinSjFDdwqTEU6XzOVHupph0G2ZKM+u3r7t_W3DD@mail.gmail.com>
+	id S1755102Ab0JGUZI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 16:25:08 -0400
+Received: from lo.gmane.org ([80.91.229.12]:36606 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751098Ab0JGUZH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 16:25:07 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P3x1U-0004Gx-7m
+	for git@vger.kernel.org; Thu, 07 Oct 2010 22:25:04 +0200
+Received: from peer.zerties.org ([188.40.33.175])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 22:25:04 +0200
+Received: from stettberger by peer.zerties.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 22:25:04 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: peer.zerties.org
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:tv7ouOwOrf+PcHVzbjiveEtaejI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158452>
 
-On Thu, Oct 7, 2010 at 10:18 PM, Pat Thoyts <patthoyts@gmail.com> wrote:
->
-> I also wonder why changes to a compat/mingw.h file should affect the
-> msvc build. As it has it's own compat/vcbuild and headers in there,
-> surely it should be independent of mingw-gcc compatability headers?
->
+--=-=-=
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-compat/msvc.h includes compat/mingw.h. We really should move more
-stuff to compat/win32.h, and have cygwin include it's own header or
-something instead.
+
+Hi,
+I wanted to announce my project metagit[1], which I started a few weeks
+ago. It is a python program, which allows you to manage many scm
+repositories at once, e.g. pull all repositories, that are matched by a
+given regex. Before you can use it you have to define a set of
+repositories. This can either be accomplished by defining them one by
+one, or you can use a repo lister.=20
+
+One good example of a repo lister is the SSHDir lister. It performs a
+find on a remote server within a given directory and adds all the
+repositories there to your repo set. There is also a lister to get all
+your github repos (or gitorious).
+
+But metagit isn't narrowed to git as scm. At this point it also gives
+you the possibility to use mercurial as scm backend and you can clone
+your damned fucked SVN repo with git-svn (with the externals, if you wish).
+
+The configuration is just a python script, where you can use the power
+of python to define your repositories, and no package is used that isn't
+shipped with python (at minimum python 2.5 (it workes perfectly with
+debian stable)).=20
+
+You can also define policies which of your defined repos (or listers)
+show up on a machine (this is done by a regex against the fqdn).
+
+If you have any wish what metagit should also be able to do, write me a
+mail, write a issue at github or fork it :-)
+
+greetz didi
+
+[1] http://github.com/stettberger/metagit
+=2D-=20
+(=CE=BB x . x x) (=CE=BB x . x x) -- See how beatiful the lambda is
+No documentation is better than bad documentation
+=2D- Das Ausdrucken dieser Mail wird urheberrechtlich verfolgt.
+
+--=-=-=
+Content-Type: application/pgp-signature
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAEBAgAGBQJMrit6AAoJEBQksfbRvb+ahVwP/AijeWDZ0TiAAMukz8pIOxSi
+bIUxEssO8M6uPmy7fJgqNer+nhx2m3vhBgppMBcWHnbGZvTf+hq+I2EPa5H0Gi5G
+bhwjoChPgyilXu7O6dCEuhztR0+UVoAhOZQbQ8PZ1rTNvAZTOgd3GFx/Pe1D9QOs
+nK+1Eviik5JHhV0A2XHHOw4zGEIbKA/YYMqRqnOQHfYHN9pAzkwdTVeEIg01iLs4
+UIkcedzzpDMxQimDMyZAq+mzUPJu7GjzZ5hyALCu7QhRB/5OQjkE4wbNgPdjLM1y
+5QyIHa+sdGCTCJYlPxP3VNUyHlyOpcmEgcAW2N0ZcUa6ksDATM5ziaQXIBwtUKhf
+kHoAIGWCaNBG5c7R2wHipK2lX/CItA8HWfntoqWmm261k7h66r75PwB0dv71YHDz
+V2qCPUJmklghinYdqYipGI4I6LMPAgTMHxL32nEI2jyl2Ef7jLdQhKgW3/96cFXZ
+Te0ZAKBSYgBiYa3Qzb8Kezge3X0TwA07v+/Fo4GgF+d1fVP7SmfoqrtRQckJPaHa
+wwW1wqkA+PEQNLikvliA6sSawm5/hAbYZ37/IW3nsP0r1TcJMc/z92y8LE9Nyed9
+Wiw/YDGCuGk8L+z938u+i4aGuoNNhwJumxPhGjSCvlgGXsB8txZ3uXSDX0ZZVelM
+vWY9jellYj505ysXrGZl
+=YpeT
+-----END PGP SIGNATURE-----
+--=-=-=--
