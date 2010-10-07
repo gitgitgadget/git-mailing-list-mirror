@@ -1,207 +1,88 @@
-From: "Pat Notz" <patnotz@gmail.com>
-Subject: [PATCHv5 6/8] add tests of commit --fixup
-Date: Thu, 7 Oct 2010 13:10:55 -0600
-Message-ID: <1286478657-61581-7-git-send-email-patnotz@gmail.com>
-References: <1286478657-61581-1-git-send-email-patnotz@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Documentation: update-index: -z applies also to
+ --index-info
+Date: Thu, 7 Oct 2010 14:15:48 -0500
+Message-ID: <20101007191548.GA11955@burratino>
+References: <d3f7e6795adeccbf7746547842d6b65732d568eb.1286457739.git.bert.wesarg@googlemail.com>
+ <87wrptua21.fsf@gmail.com>
+ <AANLkTimsJ+uG7KhiBMii8szFYmbXo5OjAkYgs99_Hjzr@mail.gmail.com>
+ <AANLkTikiOmM0q=XoAJ0nOnr6SChj7PZZJfmXzaihGZMu@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 07 21:12:05 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 21:19:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3vsq-0005oH-Lo
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 21:12:05 +0200
+	id 1P3vzk-0008Ao-3h
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 21:19:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753605Ab0JGTLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 15:11:30 -0400
-Received: from sentry-three.sandia.gov ([132.175.109.17]:35379 "EHLO
-	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752901Ab0JGTLQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 15:11:16 -0400
-X-WSS-ID: 0L9XPAM-0C-C7C-02
-X-M-MSG: 
-Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.20])
-	by sentry-three.sandia.gov (Postfix) with ESMTP id 1B27D532776
-	for <git@vger.kernel.org>; Thu,  7 Oct 2010 13:11:10 -0600 (MDT)
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Thu, 07 Oct 2010 13:11:06 -0600
-X-Server-Uuid: 6BFC7783-7E22-49B4-B610-66D6BE496C0E
-Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
- mailgate.sandia.gov (8.14.4/8.14.4) with ESMTP id o97JAoRG014917 for
- <git@vger.kernel.org>; Thu, 7 Oct 2010 13:10:57 -0600
-Received: from sacv8030nk.sandia.gov (134.253.116.144) by
- cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.2.254.0; Thu, 7 Oct 2010 13:11:02 -0600
-X-Mailer: git-send-email 1.7.3.1
-In-Reply-To: <1286478657-61581-1-git-send-email-patnotz@gmail.com>
-X-PMX-Version: 5.6.0.2009776, Antispam-Engine: 2.7.2.376379,
- Antispam-Data: 2010.10.7.190315
-X-PMX-Spam: Gauge=IIIIIIII, Probability=8%, Report=' FORGED_FROM_GMAIL
- 0.1, BODY_SIZE_4000_4999 0, BODY_SIZE_5000_LESS 0, BODY_SIZE_7000_LESS
- 0, DATE_TZ_NA 0, __CT 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0,
- __FRAUD_WEBMAIL 0, __FRAUD_WEBMAIL_FROM 0, __FROM_GMAIL 0, __HAS_MSGID
- 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0,
- __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0, __STOCK_PHRASE_7 0,
- __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_PATH 0, __URI_NO_WWW 0,
- __URI_NS '
-X-TMWD-Spam-Summary: TS=20101007191108; ID=1; SEV=2.3.1;
- DFV=B2010090808; IFV=NA; AIF=B2010090808; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230362E34434145314234432E303031413A534346535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE; SIG=AAABAJsKIgAAAAAAAAAAAAAAAAAAAH0=
-X-MMS-Spam-Filter-ID: B2010090808_5.03.0010
-X-WSS-ID: 60B0C4C02JS4401107-01-01
+	id S1754189Ab0JGTTG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 15:19:06 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:49934 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754142Ab0JGTTF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 15:19:05 -0400
+Received: by wwj40 with SMTP id 40so262574wwj.1
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 12:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=GDprno3Vjz9oWPDU4uV7l0/w8sOPXh1df304US9DEpg=;
+        b=E3VEoTfgfI4XM4/+SJtCmfa280jYAtIOG0LktJaBIZPP3+J/OP8jCIq4N44XwPXXKM
+         Shcy8FjBqlvc4gBy8htSWv1Bp20fhHG0BISn6wDsBqwvx0cnzjgZOusyo2YtRd4fQzr5
+         oer/Qovbkyjtj9U2k923LGoHIGodid8whBYp4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=iCjqSj+BTP8WA9FWti1EAoaj4osfEErbK00/2Wi6h4tceDQPSse8Rv5rxFqmYhd2G2
+         YO+wlOZAOL/pMjjd3FYYnCkcGTWsz7ecOc6RIW2ghEQy8NTUU8vuO6hf6GfpumY2GOUB
+         0GBeGVhP1nzuXmQ+UrtqoEJZtmb4WoqQbEnNg=
+Received: by 10.216.71.206 with SMTP id r56mr2711307wed.29.1286479142516;
+        Thu, 07 Oct 2010 12:19:02 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id p42sm1683132weq.36.2010.10.07.12.18.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 07 Oct 2010 12:19:01 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikiOmM0q=XoAJ0nOnr6SChj7PZZJfmXzaihGZMu@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158444>
 
-t7500: test expected behavior of commit --fixup
-t3415: test interaction of commit --fixup with rebase --autosquash
-t3900: test commit --fixup with i18n encodings
+Bert Wesarg wrote:
+> On Thu, Oct 7, 2010 at 20:52, Bert Wesarg <bert.wesarg@googlemail.com=
+> wrote:
+>> On Thu, Oct 7, 2010 at 20:33, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <step=
+nem@gmail.com> wrote:
 
-Signed-off-by: Pat Notz <patnotz@gmail.com>
----
- t/t3415-rebase-autosquash.sh |   25 +++++++++++++++++++++++--
- t/t3900-i18n-commit.sh       |   26 ++++++++++++++++++++++++++
- t/t7500-commit.sh            |   33 +++++++++++++++++++++++++++++++++
- 3 files changed, 82 insertions(+), 2 deletions(-)
+>>> There is actually at least one more problem with the current SYNOPS=
+IS of
+>>> `update-index'. Obviously the `*' on the third line of the Asciidoc
+>>> source makes the whole `--cacheinfo' line disappear and the rest bo=
+ld
+>>> (cf. e.g. the result at
+>>> <http://www.kernel.org/pub/software/scm/git/docs/git-update-index.h=
+tml>).
+>
+> ls-files too:
+> http://www.kernel.org/pub/software/scm/git/docs/git-ls-files.html
 
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index fd2184c..b77a413 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -14,6 +14,7 @@ test_expect_success setup '
- 	git add . &&
- 	test_tick &&
- 	git commit -m "first commit" &&
-+	git tag first-commit &&
- 	echo 3 >file3 &&
- 	git add . &&
- 	test_tick &&
-@@ -21,7 +22,7 @@ test_expect_success setup '
- 	git tag base
- '
- 
--test_auto_fixup() {
-+test_auto_fixup () {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
- 	git add -u &&
-@@ -50,7 +51,7 @@ test_expect_success 'auto fixup (config)' '
- 	test_must_fail test_auto_fixup final-fixup-config-false
- '
- 
--test_auto_squash() {
-+test_auto_squash () {
- 	git reset --hard base &&
- 	echo 1 >file1 &&
- 	git add -u &&
-@@ -94,4 +95,24 @@ test_expect_success 'misspelled auto squash' '
- 	test 0 = $(git rev-list final-missquash...HEAD | wc -l)
- '
- 
-+test_auto_commit_flags () {
-+	git reset --hard base &&
-+	echo 1 >file1 &&
-+	git add -u &&
-+	test_tick &&
-+	git commit --$1 first-commit &&
-+	git tag final-commit-$1 &&
-+	test_tick &&
-+	git rebase --autosquash -i HEAD^^^ &&
-+	git log --oneline >actual &&
-+	test 3 = $(wc -l <actual) &&
-+	git diff --exit-code final-commit-$1 &&
-+	test 1 = "$(git cat-file blob HEAD^:file1)" &&
-+	test $2 = $(git cat-file commit HEAD^ | grep first | wc -l)
-+}
-+
-+test_expect_success 'use commit --fixup' '
-+	test_auto_commit_flags fixup 1
-+'
-+
- test_done
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index 256c4c9..ff6d8dd 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -133,4 +133,30 @@ do
- 	'
- done
- 
-+test_commit_autosquash_flags () {
-+	H=$1
-+	flag=$2
-+	test_expect_success "commit --$flag with $H encoding" '
-+		git config i18n.commitencoding $H &&
-+		git checkout -b $H-$flag C0 &&
-+		echo $H >>F &&
-+		git commit -a -F "$TEST_DIRECTORY"/t3900/$H.txt &&
-+		test_tick &&
-+		echo intermediate stuff >>G &&
-+		git add G &&
-+		git commit -a -m "intermediate commit" &&
-+		test_tick &&
-+		echo $H $flag >>F &&
-+		git commit -a --$flag HEAD~1 $3 &&
-+		E=$(git cat-file commit '$H-$flag' | sed -ne "s/^encoding //p") &&
-+		test "z$E" = "z'$H'" &&
-+		git config --unset-all i18n.commitencoding &&
-+		git rebase --autosquash -i HEAD^^^ &&
-+		git log --oneline >actual &&
-+		test 3 = $(wc -l <actual)
-+	'
-+}
-+
-+test_commit_autosquash_flags eucJP fixup
-+
- test_done
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index aa9c577..a41b819 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -215,4 +215,37 @@ test_expect_success 'Commit a message with --allow-empty-message' '
- 	commit_msg_is "hello there"
- '
- 
-+commit_for_rebase_autosquash_setup () {
-+	echo "first content line" >>foo &&
-+	git add foo &&
-+	cat >log <<EOF &&
-+target message subject line
-+
-+target message body line 1
-+target message body line 2
-+EOF
-+	git commit -F log &&
-+	echo "second content line" >>foo &&
-+	git add foo &&
-+	git commit -m "intermediate commit" &&
-+	echo "third content line" >>foo &&
-+	git add foo
-+}
-+
-+test_expect_success 'commit --fixup provides correct one-line commit message' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --fixup HEAD~1 &&
-+	commit_msg_is "fixup! target message subject line"
-+'
-+
-+test_expect_success 'invalid message options when using --fixup' '
-+	echo changes >>foo &&
-+	echo "message" >log &&
-+	git add foo &&
-+	test_must_fail git commit --fixup HEAD~1 -C HEAD~2 &&
-+	test_must_fail git commit --fixup HEAD~1 -c HEAD~2 &&
-+	test_must_fail git commit --fixup HEAD~1 -m "cmdline message" &&
-+	test_must_fail git commit --fixup HEAD~1 -F log
-+'
-+
- test_done
--- 
-1.7.3.1
+Hmph, this is from v1.7.3-rc0~15^2~9 (Documentation: remove backslashes
+in manpage synopses, 2010-08-20).  And it still works for me locally
+(for both manpage and HTML generation). :(
+
+Anyway, the "..." fix sounds good to me (or {asterisk} if the stars are
+still wanted).
