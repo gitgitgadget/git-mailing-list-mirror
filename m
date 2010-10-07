@@ -1,189 +1,249 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH] contrib/svn-fe: Fast script to remap svn history
-Date: Thu,  7 Oct 2010 17:06:01 +1100
-Message-ID: <1286431561-24126-1-git-send-email-david.barr@cordelta.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 07 08:07:20 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 08/18] git notes merge: Initial implementation handling
+ trivial merges only
+Date: Thu, 7 Oct 2010 01:24:33 -0500
+Message-ID: <20101007062433.GF2285@burratino>
+References: <1285719811-10871-1-git-send-email-johan@herland.net>
+ <1285719811-10871-9-git-send-email-johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 07 08:27:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3jdO-0007jh-4a
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 08:07:18 +0200
+	id 1P3jxE-0003qy-Ed
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 08:27:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753829Ab0JGGGw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 02:06:52 -0400
-Received: from static-198-196.grapevine.transact.net.au ([121.127.198.196]:63132
-	"EHLO mailhost.cordelta" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752560Ab0JGGGv (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 02:06:51 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id E20DBC067;
-	Thu,  7 Oct 2010 17:06:53 +1100 (EST)
-X-Virus-Scanned: amavisd-new at mailhost.cordelta
-Received: from mailhost.cordelta ([127.0.0.1])
-	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id RH3j0Hn+EqjS; Thu,  7 Oct 2010 17:06:51 +1100 (EST)
-Received: from dba.cordelta (unknown [192.168.123.127])
-	by mailhost.cordelta (Postfix) with ESMTP id 019C9C065;
-	Thu,  7 Oct 2010 17:06:50 +1100 (EST)
-X-Mailer: git-send-email 1.7.3.4.g45608.dirty
+	id S1754888Ab0JGG1m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 02:27:42 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:62404 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751574Ab0JGG1l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 02:27:41 -0400
+Received: by ywh1 with SMTP id 1so156336ywh.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 23:27:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=wNBD4QcMyulmuAAb0MbK+1PzpfZ+OII2SME4IiFSHUk=;
+        b=MPF3IPqVNBsHP5acN64SAHTyoFs426qUs+0f/NlBdazcMNhTNMfnZAcDeNCBOoYYPa
+         1LFqvcgM9/YGiVxm9W3lvmN+9p+IxXKmjdo7R9BYCdDqkYwDUvIW4F90GgeahaeIAERh
+         tPUod9Yraus5PkCaE1AjVqkOkbmdRP0EFfofQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xQ5U3Lt5hw+6mXMyX6u4twnBbjSoAwOgwk2OGCe63Uss+VMTNFDeNbELP81rJEItqC
+         qcnKn9LyP0hBwCAQtiBj801genaUP0uFD4DAgdUMGoozumC1PzvIk6I5y15NXNTtcg8e
+         c4tQ8J1bzi+uomWVdROFc/5Wtgewe3S/QzvZ0=
+Received: by 10.236.95.47 with SMTP id o35mr643092yhf.99.1286432860806;
+        Wed, 06 Oct 2010 23:27:40 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id z62sm962132yhc.41.2010.10.06.23.27.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 06 Oct 2010 23:27:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1285719811-10871-9-git-send-email-johan@herland.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158376>
 
-This python script walks the commit sequence imported by svn-fe.
-For each commit, it tries to identify the branch that was changed.
-Commits are rewritten to be rooted according to the standard layout.
-A basic heuristic of matching trees is used to find parents for the
-first commit in a branch and for tags.
+Johan Herland wrote:
 
-Signed-off-by: David Barr <david.barr@cordelta.com>
----
- contrib/svn-fe/svn-filter-root.py |  107 +++++++++++++++++++++++++++++++++++++
- fast-import.c                     |    9 +++
- 2 files changed, 116 insertions(+), 0 deletions(-)
- create mode 100755 contrib/svn-fe/svn-filter-root.py
+> This initial implementation of 'git notes merge' only handles the trivial
+> merge cases (i.e. where the merge is either a no-op, or a fast-forward).
 
-diff --git a/contrib/svn-fe/svn-filter-root.py b/contrib/svn-fe/svn-filter-root.py
-new file mode 100755
-index 0000000..72d248f
---- /dev/null
-+++ b/contrib/svn-fe/svn-filter-root.py
-@@ -0,0 +1,107 @@
-+#!/usr/bin/python
-+from subprocess import *
-+import re
-+import os
-+
-+subroot_re = re.compile("^trunk|^branches/[^/]*|^tags/[^/]*") 
-+
-+tree_re = re.compile("^tree ([0-9a-f]{40})", flags=re.MULTILINE)
-+parent_re = re.compile("^parent ([0-9a-f]{40})", flags=re.MULTILINE)
-+author_re = re.compile("^author (.*)$", flags=re.MULTILINE)
-+committer_re = re.compile("^committer (.*)$", flags=re.MULTILINE)
-+
-+git_svn_id_re = re.compile("^git-svn-id[^@]*", flags=re.MULTILINE)
-+
-+ref_commit = {}
-+tree_commit = {}
-+count = 1
-+
-+# Open a cat-file process for subtree lookups
-+subtree_process = Popen(["git","cat-file","--batch-check"], stdin=PIPE, stdout=PIPE)
-+
-+# Iterate over commits from subversion imported with svn-fe
-+revlist = Popen(["git","rev-list","--reverse","--topo-order","--default","HEAD"], stdout=PIPE)
-+cat_file = Popen(["git","cat-file","--batch"], stdin=revlist.stdout, stdout=PIPE)
-+object_header = cat_file.stdout.readline().strip().split(" ");
-+while len(object_header) == 3:
-+    object_body = cat_file.stdout.read(int(object_header[2]))
-+    cat_file.stdout.read(1)
-+    git_commit = object_header[0]
-+    (commit_header, blank_line, commit_message) = object_body.partition("\n\n")
-+    object_header = cat_file.stdout.readline().strip().split(" ");
-+
-+    author = author_re.search(commit_header).group()
-+    committer = committer_re.search(commit_header).group()
-+
-+    # Diff against the empty tree if no parent
-+    match = parent_re.search(commit_header)
-+    if match:
-+        parent = match.group(1)
-+    else:
-+        parent = "4b825dc642cb6eb9a060e54bf8d69288fbee4904"
-+
-+    # Find a common path prefix in the changes for the revision
-+    subroot = ""
-+    changes = Popen(["git","diff","--name-only",parent,git_commit], stdout=PIPE)
-+    for path in changes.stdout:
-+        match = subroot_re.match(path)
-+        if match:
-+            subroot = match.group()
-+            changes.terminate()
-+            break
-+
-+    # Attempt to rewrite the commit on top of the matching branch
-+    if subroot == "":
-+        print "progress Weird commit - no subroot."
-+    else:
-+        # Rewrite git-svn-id in the log to point to the subtree
-+        commit_message = git_svn_id_re.sub('\g<0>/'+subroot, commit_message)
-+        subtree_process.stdin.write(git_commit+":"+subroot+"\n")
-+        subtree_process.stdin.flush()
-+        subtree_line = subtree_process.stdout.readline()
-+        if re.match("^.*missing$", subtree_line):
-+            print "progress Weird commit - invalid subroot"
-+            continue
-+        subtree = subtree_line[0:40]
-+        # Map the svn tag/branch name to a git-friendly one
-+	ref = "refs/heads/" + re.sub(" ", "%20", subroot)
-+        # Choose a parent for the rewritten commit
-+        if ref in ref_commit:
-+            parent = ref_commit[ref]
-+        elif subtree in tree_commit:
-+            parent = tree_commit[subtree]
-+        else:
-+	    parent = ""
-+        # Update tags if necessary
-+        if re.match("^refs/heads/tags/", ref):
-+            if parent == "":
-+                print "progress Weird tag - no matching commit."
-+            else:
-+                tagname = ref[16:]
-+                print "tag "+tagname
-+                print "from "+parent
-+                print "tagger "+committer[10:]
-+                print "data "+str(len(commit_message))
-+                print commit_message
-+        else:
-+            # Default to trunk if the branch is new
-+            if parent == "" and "refs/heads/trunk" in ref_commit:
-+                parent = ref_commit["refs/heads/trunk"]
-+            print "commit "+ref
-+            print "mark :"+str(count)
-+            print author
-+            print committer
-+            print "data "+str(len(commit_message))
-+            print commit_message
-+            if parent != "":
-+                print "from "+parent
-+            print "M 040000 "+subtree+" \"\""
-+            commit = ":"+str(count)
-+            # Advance the matching branch
-+            ref_commit[ref] = commit
-+            # Update latest commit by tree to drive parent matching
-+            tree_commit[subtree] = commit
-+    print "progress " + str(count)
-+    count = count + 1
-+
-+subtree_process.terminate()
-diff --git a/fast-import.c b/fast-import.c
-index 2317b0f..8f68a89 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1454,6 +1454,15 @@ static int tree_content_set(
- 		n = slash1 - p;
- 	else
- 		n = strlen(p);
-+	if (!slash1 && !n) {
-+		if (!S_ISDIR(mode))
-+			die("Root cannot be a non-directory");
-+		hashcpy(root->versions[1].sha1, sha1);
-+		if (root->tree)
-+			release_tree_content_recursive(root->tree);
-+		root->tree = subtree;
-+		return 1;
-+	}
- 	if (!n)
- 		die("Empty path component found in input");
- 	if (!slash1 && !S_ISDIR(mode) && subtree)
--- 
-1.7.3.4.g45608.dirty
+This alone should already be a nice UI improvement: in the
+fast-forward case, with this patch applied, in place of
+
+	git fetch . refs/notes/x:refs/notes/commits
+
+one could write
+
+	git notes merge x
+
+This reminds me: it would be nice if non-builtin scripts could use
+
+	git notes --get-notes-ref $refarg
+
+to learn the configured notes ref.  In other words, shouldn't the
+default_notes_ref() exposed in patch 2 also be exposed to scripted
+callers?  If someone else doesn't get around to it, I can mock
+something up in the next few days.
+
+[...]
+> +++ b/notes-merge.h
+> @@ -0,0 +1,30 @@
+> +#ifndef NOTES_MERGE_H
+> +#define NOTES_MERGE_H
+> +
+> +struct notes_merge_options {
+> +	const char *local_ref;
+> +	const char *remote_ref;
+> +	int verbosity;
+> +};
+> +
+> +void init_notes_merge_options(struct notes_merge_options *o);
+[...]
+> +int notes_merge(struct notes_merge_options *o,
+> +		unsigned char *result_sha1);
+
+So the command is usable as-is from other builtins.  Nice.
+
+> +++ b/notes-merge.c
+> @@ -0,0 +1,103 @@
+[...]
+> +#include "cache.h"
+> +#include "commit.h"
+> +#include "notes-merge.h"
+> +
+> +void init_notes_merge_options(struct notes_merge_options *o)
+> +{
+> +	memset(o, 0, sizeof(struct notes_merge_options));
+> +	o->verbosity = 2;
+> +}
+> +
+> +static int show(struct notes_merge_options *o, int v)
+> +{
+> +	return (o->verbosity >= v) || o->verbosity >= 5;
+> +}
+
+Should the verbosities be of enum type?
+
+	enum notes_merge_verbosity {
+		DEFAULT_VERBOSITY = 2,
+		MAX_VERBOSITY = 5,
+		etc
+	};
+
+> +
+> +#define OUTPUT(o, v, ...) \
+> +	do { if (show((o), (v))) { printf(__VA_ARGS__); puts(""); } } while (0)
+
+I would find it easier to read
+
+	if (o->verbosity >= DEFAULT_VERBOSITY)
+		fprintf(stderr, ...)
+
+unless there are going to be a huge number of messages.
+
+> +
+> +int notes_merge(struct notes_merge_options *o,
+> +		unsigned char *result_sha1)
+> +{
+> +	unsigned char local_sha1[20], remote_sha1[20];
+> +	struct commit *local, *remote;
+> +	struct commit_list *bases = NULL;
+> +	const unsigned char *base_sha1;
+> +	int result = 0;
+> +
+> +	hashclr(result_sha1);
+> +
+> +	OUTPUT(o, 5, "notes_merge(o->local_ref = %s, o->remote_ref = %s)",
+> +	       o->local_ref, o->remote_ref);
+
+Would trace_printf be a good fit for messages like this one?  If not,
+any idea about how it could be made to fit some day?
+
+(It is especially nice to be able to direct the trace somewhere other
+than stdout and stderr when running tests.)
+
+> +
+> +	if (!o->local_ref || get_sha1(o->local_ref, local_sha1)) {
+> +		/* empty notes ref => assume empty notes tree */
+
+Can an empty ref be distinguished from a missing ref?  It would be
+nice to error out when breakage is detected.
+
+[...]
+> +	/* Find merge bases */
+> +	bases = get_merge_bases(local, remote, 1);
+> +	if (!bases) {
+> +		base_sha1 = null_sha1;
+> +		OUTPUT(o, 4, "No merge base found; doing history-less merge");
+> +	} else if (!bases->next) {
+> +		base_sha1 = bases->item->object.sha1;
+> +		OUTPUT(o, 4, "One merge base found (%.7s)",
+> +		       sha1_to_hex(base_sha1));
+> +	} else {
+> +		/* TODO: How to handle multiple merge-bases? */
+
+With a recursive merge of the ancestors, of course. :)
+
+The difficult part is what to do when a merge of ancestors results in
+conflicts.
+
+[...]
+> +++ b/builtin/notes.c
+> @@ -772,6 +779,50 @@ static int show(int argc, const char **argv, const char *prefix)
+>  	return retval;
+>  }
+>  
+> +static int merge(int argc, const char **argv, const char *prefix)
+> +{
+> +	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
+> +	unsigned char result_sha1[20];
+> +	struct notes_merge_options o;
+> +	int verbosity = 0, result;
+> +	struct option options[] = {
+> +		OPT__VERBOSITY(&verbosity),
+> +		OPT_END()
+> +	};
+> +
+> +	argc = parse_options(argc, argv, prefix, options,
+> +			     git_notes_merge_usage, 0);
+> +
+> +	if (argc != 1) {
+> +		error("Must specify a notes ref to merge");
+> +		usage_with_options(git_notes_merge_usage, options);
+> +	}
+> +
+> +	init_notes_merge_options(&o);
+> +	o.verbosity = verbosity + 2; // default verbosity level is 2
+
+Maybe
+
+	o.verbosity += verbosity;
+
+or
+
+	o.verbosity = DEFAULT_NOTES_MERGE_VERBOSITY + verbosity;
+
+to allow the default verbosity to be set in one place?
+
+> +	o.local_ref = default_notes_ref();
+> +	strbuf_addstr(&remote_ref, argv[0]);
+> +	expand_notes_ref(&remote_ref);
+> +	o.remote_ref = remote_ref.buf;
+> +
+> +	result = notes_merge(&o, result_sha1);
+> +
+> +	strbuf_addf(&msg, "notes: Merged notes from %s into %s",
+> +		    remote_ref.buf, default_notes_ref());
+> +	if (result == 0) { /* Merge resulted (trivially) in result_sha1 */
+> +		/* Update default notes ref with new commit */
+> +		update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
+> +			   0, DIE_ON_ERR);
+> +	} else {
+> +		/* TODO: */
+> +		die("'git notes merge' cannot yet handle non-trivial merges!");
+
+Mm.  In the long run, will (result != 0) mean "merge conflict"?
+
+> @@ -865,6 +916,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+>  		result = append_edit(argc, argv, prefix);
+>  	else if (!strcmp(argv[0], "show"))
+>  		result = show(argc, argv, prefix);
+> +	else if (!strcmp(argv[0], "merge"))
+> +		result = merge(argc, argv, prefix);
+
+Thanks for a pleasant read.
