@@ -1,109 +1,172 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: format-patch on permission change gives empty patch
-Date: Wed, 06 Oct 2010 21:40:05 -0700
-Message-ID: <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
-References: <20101006.173714.245380201.davem@davemloft.net>
- <20101006.174008.70175671.davem@davemloft.net>
- <7vtykyy70w.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Test script style (Re: [PATCH 08/18] git notes merge: Initial
+ implementation handling trivial merges only)
+Date: Wed, 6 Oct 2010 23:37:21 -0500
+Message-ID: <20101007043721.GD2285@burratino>
+References: <1285719811-10871-1-git-send-email-johan@herland.net>
+ <1285719811-10871-9-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Miller <davem@davemloft.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 07 06:40:39 2010
+Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com,
+	avarab@gmail.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 07 06:40:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3iHX-0006WB-6d
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 06:40:39 +0200
+	id 1P3iHX-0006WB-Np
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 06:40:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073Ab0JGEkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 00:40:15 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:62303 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750770Ab0JGEkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 00:40:13 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 39628DC947;
-	Thu,  7 Oct 2010 00:40:13 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AFCo6G0bB5sAigIw47GzSP7o/wU=; b=VkY/mi
-	UNcxzskjAf28CFJNGXKORJg+/ThFIQ+kgQr0rn+WzKZ+Vd1zchwdcqtwprNwXiHq
-	EODTGQgB15tAgu0cb/GzcbHGc4Fkrq/y59Hm18vMTxlg/GxuyUsOc189H/OK1H8W
-	ux/EHcS1qOplLbwaMeS01hJU40Di6V95YnUcg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PMG6VBUdwoODzJEaSmSxWdMPOPV1Gdnx
-	WtaXKZGxyJP0b3ZcyECAZso1csiu82jXRCO5hp+tiSuxb/VKO4xSdieOineL5Jqc
-	UNlAn9ZdQp8XGC6DR4ZWxmhieMhvePqSDVjmvUaZvwdYlvwXCaL7I04ZVWTMnfcj
-	ElvY3UxWrA8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0CDC8DC946;
-	Thu,  7 Oct 2010 00:40:11 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 127B8DC945; Thu,  7 Oct
- 2010 00:40:07 -0400 (EDT)
-In-Reply-To: <7vtykyy70w.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 06 Oct 2010 21\:13\:35 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F817CC1C-D1CC-11DF-A70C-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1752206Ab0JGEkb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 00:40:31 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:52889 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750770Ab0JGEka (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 00:40:30 -0400
+Received: by gxk9 with SMTP id 9so133412gxk.19
+        for <git@vger.kernel.org>; Wed, 06 Oct 2010 21:40:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=F/ZGIk9Lnw42BUBcQDWwbg5HjcTjLfWKsrHIhM/YVXU=;
+        b=hYvpdsQh2ADyj2fpiFaatTpNs3YjP9yCrNA3pxiUZox6q0nPPCWENK6IBtBF98DDQv
+         sW8QDdbPXlSMXH1u/t5MWagM32Q4iOPMlGrseib5fi9Xvv8nBkbhKVMsP2X6PG//SAGZ
+         7rtlDfMcukWVkrqjprcDcbkhUQI9c3TAPibVo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iilKdRAJWoJxXrOQOPMyrGEbSfSlq+M2VZ267mE/UiH1OuQte7BqqXbMoEh4OAsetV
+         xFtsuFRFhmPruXIAZoosWiQZIfqztF1hcgRVV+nYo6lpNChyvtiHTG8CD3beEDcyrsIj
+         kUbKd08Z5IcN1U5mikV2vCuj4GHrQ3ND6w4tw=
+Received: by 10.101.67.8 with SMTP id u8mr358648ank.40.1286426428051;
+        Wed, 06 Oct 2010 21:40:28 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id c32sm1014962anc.1.2010.10.06.21.40.26
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 06 Oct 2010 21:40:27 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1285719811-10871-9-git-send-email-johan@herland.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158367>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Johan Herland wrote:
 
-> David Miller <davem@davemloft.net> writes:
->
->> From: David Miller <davem@davemloft.net>
->> Date: Wed, 06 Oct 2010 17:37:14 -0700 (PDT)
->>
->>> 
->>> When I ask git to format-patch a commit that is just a file
->>> permission change, it ends up generating an empty file, not
->>> even the commit message is included.
->>
->> Ok it turns out that the commit in question was a NOP since the file
->> permissions didn't change.
->>
->> But even if the patch is truly empty, format-patch should still give
->> me the commit message shouldn't it?
->
-> Probably; we have strongly encouraged people not to commit no-op, so I
-> guess nobody stumbled upon this corner case.
->
-> Perhaps something like this?
+> This initial implementation of 'git notes merge' only handles the trivial
+> merge cases (i.e. where the merge is either a no-op, or a fast-forward).
 
-Actually, I have a feeling that this is not merely a corner case we didn't
-care about.
+Mm, sounds like a nice thing to have anyway.
 
-A half-good news is that format-patch already takes --always command line
-option to generate a message out of an empty commit, but because it cannot
-be applied with "am", it is rather pointless.
+Now to digress: some generalities about test scripts.  This will
+probably be very tedious.  I'm writing it as groundwork before
+reviewing your test (since I don't feel on solid ground about this
+topic at all).
 
-BUT.
+More focused thoughts on other aspects of the patch will follow in a
+separate message.
 
-The weatherbaloon patch is probably a bad idea.  "git rebase", especially
-when rebasing a side branch imported from some foreign SCM, would rather
-badly break with this patch, because its "format-patch | am" pipeline
-depends on format-patch to skip a no-op commit.  Otherwise, "am" will
-complain about a patchless message.  So in a sense, the current behaviour
-is internally consistent and deliberately so.
+First:
 
-I have a mixed feeling about where to go next.
+	See http://thread.gmane.org/gmane.comp.version-control.git/155596/focus=155673
+	If you don't like what you see, no need to read the rest
+	of this message. :)
 
- (1) Treat "rebase" as a way to reproduce a reasonable history; the
-     current behaviour to drop empty commits is consistent with this view,
-     as a history with an empty commit is _not_ entirely reasonable.
+Motivation:
 
- (2) Treat "rebase" as a way to reproduce history faithfully, even an
-     unreasonable one.  We could teach "--allow-empty" to "am", and
-     rewrite the pipeline as "format-patch --always | am --allow-empty" to
-     implement it.
+	Not being the best of shell script readers (or writers,
+	for that matter), I need all the help from stylistic cues
+	I can get.  Old test scripts have a consistent style
+	generally, but newer ones are starting to diverge from
+	one another.
 
-I think I would eventually end up doing the latter, but not tonight.
+A rough test format:
+
+	#!/bin/sh
+	#
+	# Copyright (c) 2010 ...
+	#
+
+	test_description='...
+	. ./test-lib.sh
+	. ...
+
+	constant data
+	function definitions
+
+	setup }
+	test  }
+	test  } repeat as necessary
+	test  }
+
+	test_done
+
+Test description:
+
+	test_description = 'One-line description
+
+	Some words or diagrams describing the invariants (e.g., history)
+	maintained between tests'
+
+Constant data:
+
+	Simple commands to produce test vectors, expected output, and
+	other variables and files that it might be convenient to have
+	unchanged available throughout the test script.
+
+	Because not guarded by a test assertion, this section would
+	not include any git commands, nor any commands that might fail
+	or write to the terminal.  So: this section might use
+	"cat <<\", "mkdir -p", "cp", "cp -R", "mv", "printf", "foo=",
+	"unset", and "export", but not much else.
+
+Function definitions:
+
+	Tests can define functions inside a test_expect_success block,
+	too, but the generally useful functions would go up front with
+	the constant data.
+
+Setup:
+
+	test_expect_success '(setup | set up) ...' '
+		Commands to set up for the next batch of tests.
+		Can rely on previous setup and can do just about
+		anything.
+	'
+
+Tests:
+	test_expect_success|failure '... some claim...' '
+		Commands to test that claim.
+		Could do all sorts of things, as long as they do not
+		disturb the invariants established by the
+		constant_data and setup sections.
+	'
+
+What is not present:
+
+	A test in this style would not include any commands except for
+	test_done outside a test assertion after the first
+	test_expect_success.
+
+This is meant to be a sort of compromise between what t/README says
+("Put all code inside test_expect_success and other assertions") and
+what people actually do.  I have no problem with people doing
+something else --- in fact, some tests would not make any sense in
+this style.  In general, if a person is writing maintainable tests
+that do not slow down "make test" by much, it does not make much sense
+to put new obstacles in her way.
+
+What I expect is that new tests would be easier to read and extend in
+this style, since to get started, all a person has to pay attention to
+are the setup commands.  So a potential collaborator could say "if you
+use this structure, it will make my life easier".
+
+Thoughts?  Would it make sense to eventually put something like this
+in t/CodingStyle or nearby?
