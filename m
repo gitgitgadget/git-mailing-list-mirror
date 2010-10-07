@@ -1,113 +1,79 @@
 From: Jeff King <peff@peff.net>
-Subject: [PATCH] rev-list: handle %x00 NUL in user format
-Date: Thu, 7 Oct 2010 14:25:43 -0400
-Message-ID: <20101007182542.GA20165@sigill.intra.peff.net>
+Subject: Re: git log doesn't allow %x00 in custom format anymore?
+Date: Thu, 7 Oct 2010 14:33:42 -0400
+Message-ID: <20101007183342.GA20289@sigill.intra.peff.net>
+References: <5BA0D807-C5C0-4797-82CD-5D5087496D6F@jetbrains.com>
+ <4CADE232.8030801@viscovery.net>
+ <FF2FF369-0B1C-457E-A86E-8651BF0A82CB@jetbrains.com>
+ <20101007172939.GA12130@sigill.intra.peff.net>
+ <AANLkTimYVNNjhaqUHjoVOV-fQBhcENKn7cyj10qcZ+MW@mail.gmail.com>
+ <vpqaamp3n6d.fsf@bauges.imag.fr>
+ <20101007175358.GD12130@sigill.intra.peff.net>
+ <AANLkTinu6fhd9DwfJpjiaxOUu_MrTym_RepR9f44=vrv@mail.gmail.com>
+ <20101007181349.GD18518@sigill.intra.peff.net>
+ <AANLkTikkZaCQKFTnQ=k2Ajp_6mVRd6mrP1P7bEASEGgd@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 07 20:25:38 2010
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 20:33:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3v9t-0001mW-Nx
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 20:25:38 +0200
+	id 1P3vHb-0003ll-Mu
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 20:33:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754379Ab0JGSZc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 14:25:32 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35426 "EHLO peff.net"
+	id S1752786Ab0JGSda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 14:33:30 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48553 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754027Ab0JGSZb (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 14:25:31 -0400
-Received: (qmail 20220 invoked by uid 111); 7 Oct 2010 18:25:30 -0000
+	id S1750812Ab0JGSd3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 14:33:29 -0400
+Received: (qmail 20355 invoked by uid 111); 7 Oct 2010 18:33:29 -0000
 Received: from Unknown (HELO sigill.intra.peff.net) (129.79.255.184)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 07 Oct 2010 18:25:30 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Oct 2010 14:25:43 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 07 Oct 2010 18:33:29 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 07 Oct 2010 14:33:42 -0400
 Content-Disposition: inline
+In-Reply-To: <AANLkTikkZaCQKFTnQ=k2Ajp_6mVRd6mrP1P7bEASEGgd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158426>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158427>
 
-The code paths for showing commits in "git log" and "git
-rev-list --graph" correctly handle embedded NULs by looking
-only at the resulting strbuf's length, and never treating it
-as a C string. The code path for regular rev-list, however,
-used printf("%s"), which resulted in truncated output. This
-patch uses fwrite instead, like the --graph code path.
+On Thu, Oct 07, 2010 at 08:19:01PM +0200, Erik Faye-Lund wrote:
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I built this on master, though it is perhaps maint-worthy. The buggy
-line seems to blame back to at least v1.5.3-era.
+> Yeah. When I read K&R a bit closer, I find this:
+> 
+> "A number specifying a minimum field width. The converted argument
+> will be printed in a field _at least this wide_, and wider if
+> necessary. If the converted argument has fewer characters than the
+> field width _it will be padded_ on the left (or right, if left
+> adjustment has been requested) to make up the field width."
 
-Erik mentioned a potential problem with fwrite() and the way we handle
-ANSI emulation for Windows. I think if there is a problem, then the same
-problem exists in the --graph code, and we should do this, and then fix
-both on top.
+You are confusing field width (%*s) with precision (%.*s) here.
 
- builtin/rev-list.c         |    6 ++++--
- t/t6006-rev-list-format.sh |    8 ++++++++
- t/test-lib.sh              |    4 ++++
- 3 files changed, 16 insertions(+), 2 deletions(-)
+C89 is pretty clear that the behavior I am seeing is mandated:
 
-diff --git a/builtin/rev-list.c b/builtin/rev-list.c
-index efe9360..3b2dca0 100644
---- a/builtin/rev-list.c
-+++ b/builtin/rev-list.c
-@@ -147,8 +147,10 @@ static void show_commit(struct commit *commit, void *data)
- 			}
- 		} else {
- 			if (revs->commit_format != CMIT_FMT_USERFORMAT ||
--			    buf.len)
--				printf("%s%c", buf.buf, info->hdr_termination);
-+			    buf.len) {
-+				fwrite(buf.buf, 1, buf.len, stdout);
-+				putchar(info->hdr_termination);
-+			}
- 		}
- 		strbuf_release(&buf);
- 	} else {
-diff --git a/t/t6006-rev-list-format.sh b/t/t6006-rev-list-format.sh
-index cccacd4..d918cc0 100755
---- a/t/t6006-rev-list-format.sh
-+++ b/t/t6006-rev-list-format.sh
-@@ -162,6 +162,14 @@ commit 131a310eb913d107dd3c09a65d1651175898735d
- commit 86c75cfd708a0e5868dc876ed5b8bb66c80b4873
- EOF
- 
-+test_expect_success '%x00 shows NUL' '
-+	echo  >expect commit f58db70b055c5718631e5c61528b28b12090cdea &&
-+	echo >>expect fooQbar &&
-+	git rev-list -1 --format=foo%x00bar HEAD >actual.nul &&
-+	nul_to_q <actual.nul >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success '%ad respects --date=' '
- 	echo 2005-04-07 >expect.ad-short &&
- 	git log -1 --date=short --pretty=tformat:%ad >output.ad-short master &&
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 2af8f10..bbe79e0 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -248,6 +248,10 @@ test_decode_color () {
- 		-e 's/.\[m/<RESET>/g'
- }
- 
-+nul_to_q () {
-+	perl -pe 'y/\000/Q/'
-+}
-+
- q_to_nul () {
- 	perl -pe 'y/Q/\000/'
- }
--- 
-1.7.3.1.203.g81d8.dirty
+  7.19.6.1, paragraph 4:
+
+     An optional precision that gives ... the maximum number of bytes to
+     be written for s conversions.
+
+  7.19.6.1, paragraph 8, item "s":
+
+    ... Characters from the array are written up to (but not including)
+    the terminating null character. If the precision is specified, no
+    more than that many bytes are written. If the precision is not
+    specified or is greater than the size of the array, the array shall
+    contain a null character.
+
+so it is always about giving a maximum to print an unterminated string,
+or to print a partial string. But printf always stops at a NUL.
+
+-Peff
