@@ -1,125 +1,96 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [PATCH 07/18] builtin/notes.c: Split notes ref DWIMmery into a separate function
-Date: Thu, 7 Oct 2010 15:56:13 +0200
-Message-ID: <201010071556.14555.johan@herland.net>
-References: <1285719811-10871-1-git-send-email-johan@herland.net> <1285719811-10871-8-git-send-email-johan@herland.net> <20101005155053.GH12797@burratino>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
+Date: Thu, 7 Oct 2010 15:58:02 +0200
+Message-ID: <AANLkTikjzQ09XBxYZXXQf6XCme3FiLKtusZ0MLTa--mM@mail.gmail.com>
+References: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 15:56:21 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 15:58:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3qxF-0005va-3F
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 15:56:17 +0200
+	id 1P3qzO-0006hr-4S
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 15:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760634Ab0JGN4I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 09:56:08 -0400
-Received: from mail.mailgateway.no ([82.117.37.108]:54822 "EHLO
-	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754548Ab0JGN4G (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 09:56:06 -0400
-Received: from dslb-088-073-123-190.pools.arcor-ip.net ([88.73.123.190] helo=epsilon.localnet)
-	by mail.mailgateway.no with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.60 (FreeBSD))
-	(envelope-from <johan@herland.net>)
-	id 1P3qx1-000CWa-Fa; Thu, 07 Oct 2010 15:56:03 +0200
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; i686; ; )
-In-Reply-To: <20101005155053.GH12797@burratino>
+	id S932599Ab0JGN6Z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 09:58:25 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:52829 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760653Ab0JGN6Y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 09:58:24 -0400
+Received: by gxk9 with SMTP id 9so296831gxk.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 06:58:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Qm+YJEWXmEAY1Gxs6VnHK8COg0NjZq7yo29h4o8x8+Y=;
+        b=DDowje4iTNZeFwLwHuNl62mVwhyDgFm+OdVp2PwKFKH7SN3UNmgiefzk1lCeeUI5yB
+         RlW9bk49DSA2GeP6w/MUnpfcqavPQxluDxhjpLglSwrHCoOZ7DSugVb/HsNHc4GJU5bQ
+         5IXigO01rnrriqBIzq0YBbPPuDxqLoOXt0yug=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=LhA7f8vSSJPDxXQjohWgdfY6x01EPVabQViVOaMInaYShuQBHSn4/qeuEihXzG0/Kt
+         0s9Gk4rCYta/Hm4B2d0AnRMf8Q9Mqxv4JmdSyQHiwOoRoyCLlC4FrcdgUvbaTa4KFqWI
+         I5dNrMJeB6ZKKmYJpQmbvZnDqlBTROVXVcPNM=
+Received: by 10.151.85.14 with SMTP id n14mr1172050ybl.44.1286459902466; Thu,
+ 07 Oct 2010 06:58:22 -0700 (PDT)
+Received: by 10.151.15.8 with HTTP; Thu, 7 Oct 2010 06:58:02 -0700 (PDT)
+In-Reply-To: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158400>
 
-On Tuesday 5. October 2010 17.50.53 Jonathan Nieder wrote:
-> Johan Herland wrote:
-> > +static void expand_notes_ref(struct strbuf *sb)
-> > +{
-> > +	if (!prefixcmp(sb->buf, "refs/notes/"))
-> > +		return; /* we're happy */
-> > +	else if (!prefixcmp(sb->buf, "notes/"))
-> > +		strbuf_insert(sb, 0, "refs/", 5);
-> > +	else
-> > +		strbuf_insert(sb, 0, "refs/notes/", 11);
-> > +}
-> 
-> Aside: I'm not sure this is the most convenient rule to use after all.
+Heya,
 
-FTR, that rule is not introduced by this patch, the patch merely moves it into 
-a separate function.
+On Thu, Oct 7, 2010 at 12:55, David Barr <david.barr@cordelta.com> wrot=
+e:
+> Most git commands do their writing to the object db via the index and
+> loose objects. =C2=A0When you just have a pile of trees you want to c=
+onvert
+> into commits, this is wasteful; for performance-critical operations
+> like filter-branch --subdirectory-filter, one might want a sort of
+> hash-object --batch-to-pack to write a pack directly.
 
-> Example:
-> 
->  $ git log --notes-ref=charon/notes/full
->  fatal: unrecognized argument: --notes-ref=charon/notes/full
->  $ git log --show-notes=charon/notes/full
->  warning: notes ref refs/notes/charon/notes/full is invalid
-> ...
->  $ git log --show-notes=remotes/charon/notes/full
->  warning: notes ref refs/notes/remotes/charon/notes/full is invalid
-> ...
->  $ git log --show-notes=refs/remotes/charon/notes/full -1
->  commit 16461e8e5fc5b2dbe9176b9a8313c395e1e07304
->  Merge: c3e5a06 79bd09f
->  Author: Junio C Hamano <gitster@pobox.com>
->  Date:   Thu Sep 30 16:02:27 2010 -0700
-> 
->      Merge branch 'il/remote-fd-ext' into pu
-> 
->      * il/remote-fd-ext:
->        fixup! git-remote-fd
-> 
->  Notes (remotes/charon/notes/full):
->      Pu-Overview:
->          What's cooking in git.git (Sep 2010, #07; Wed, 29)
->  $
+This means nothing to me, but perhaps I'm not the target audience of
+this paragraph.
 
-Indeed, if you keep notes refs outside refs/notes, the current behaviour is 
-not very user-friendly. So far, we've required all notes refs to be within 
-refs/notes. (See for example init_notes_check() in builtin/notes.c, which 
-refuses to work with notes refs outside 'refs/notes/', hence was probably the 
-reason for adding the above code in the first place.)
+> Fortunately we have fast-import (which is one of the only git command=
+s
+> that will write to a pack directly) but there is not an advertised wa=
+y
+> to tell fast-import to use a given tree for its commits.
 
-I guess this moves us towards the discussion of how to handle remote notes 
-refs and how to synchronize them on fetch/push. In short, if we want to keep 
-notes refs outside of refs/notes (e.g. in refs/remotes/foo/notes), we need to 
-change this part of the code.
+I'm with you up to "use a given tree for its commits".
 
-> And now that I think of it, the revision args parser uses its own code
-> for this...
+> This patch changes that, by allowing
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 040000 <tree id> ""
+>
+> as a filemodify line in a commit to reset to a particular tree withou=
+t
+> any need to unpack it. =C2=A0For example,
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 040000 4b825dc642cb6eb9a060e54bf8d69288f=
+bee4904 ""
+>
+> is a synonym for the deleteall command.
 
-I assuming you're talking about the revision args parser's DWIMing of "foo" 
-into the first existing ref in the following list:
+Ok, so maybe I do understand, is it basically 'git read-tree
+4b825dc642cb6eb9a060e54bf8d69288fbee4904' for fast-import?
 
-1. $GIT_DIR/foo
-2. refs/foo
-3. refs/tags/foo
-4. refs/heads/foo
-5. refs/remotes/foo
-6. refs/remotes/foo/HEAD
+--=20
+Cheers,
 
-If we want to reuse this DWIMery, we obviously want a different list of "auto-
-completions". Maybe something like:
-
-1. refs/notes/foo
-2. refs/remote-notes/foo (depends on how we organize remote notes refs)
-3. ?
-
-> Regardless, this patch is a step in the right direction imho.
-
-Thanks, I expect future patches to change this code in order to deal with 
-remote notes refs. For the purposes of the current patch series, I will assume 
-that all notes refs live under refs/notes.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Sverre Rabbelier
