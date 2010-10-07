@@ -1,96 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: format-patch on permission change gives empty patch
-Date: Thu, 07 Oct 2010 03:05:07 -0700 (PDT)
-Message-ID: <m3eic2fher.fsf@localhost.localdomain>
+Date: Thu, 7 Oct 2010 12:12:38 +0200
+Message-ID: <AANLkTik=3bT3h3tCsm3nAdi=VbwJsY0+33HPpF0_m36X@mail.gmail.com>
 References: <20101006.173714.245380201.davem@davemloft.net>
-	<20101006.174008.70175671.davem@davemloft.net>
-	<7vtykyy70w.fsf@alter.siamese.dyndns.org>
-	<7vocb6y5sq.fsf@alter.siamese.dyndns.org>
-	<AANLkTimA4jrDXmfJp2em34fj6b1sj9kdEyZ_xPTzqcEN@mail.gmail.com>
+ <20101006.174008.70175671.davem@davemloft.net> <7vtykyy70w.fsf@alter.siamese.dyndns.org>
+ <7vocb6y5sq.fsf@alter.siamese.dyndns.org> <AANLkTimA4jrDXmfJp2em34fj6b1sj9kdEyZ_xPTzqcEN@mail.gmail.com>
+ <m3eic2fher.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	David Miller <davem@davemloft.net>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 12:05:23 2010
+	David Miller <davem@davemloft.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 12:13:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3nLj-000464-9I
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 12:05:19 +0200
+	id 1P3nTg-0005tp-Gw
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 12:13:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760214Ab0JGKFL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 06:05:11 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47041 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754342Ab0JGKFK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 06:05:10 -0400
-Received: by wwj40 with SMTP id 40so695760wwj.1
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 03:05:09 -0700 (PDT)
+	id S1753892Ab0JGKND (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 06:13:03 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:47796 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751351Ab0JGKNB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 06:13:01 -0400
+Received: by gxk9 with SMTP id 9so208562gxk.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 03:13:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=uV77w1hOhsC7tj4P+y3nutNmagaBwsnEe9l9GKpAKTA=;
-        b=HJexwh+puSLKEaEYey0M0dPPP8udSdB0+6fATM/LLwqdsaj8wmcWP10McoRqHjuM8b
-         IVrliIFWwIQ1eHQG9prR8Q/MeOwFYEEozdtf9Z6EwVAtjv8Y8ZcXi/zGr930Ry1QpmEN
-         sD8sbJ/WUF/vu4FtIeufOvTHvtNT0jLBIkAhM=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=KFkYFisxVCrgdLYJyZYd8kJfsbCSOQHhs7fwnz+zEZo=;
+        b=K+89TLaxY79QWx6rjGwfkaqw1kaUwebpNR5wtzo/NkqcKxpMfCKeYgc+vt3jhN40ND
+         PR4jrDBoYMxpGeYYAquTB+z33SK4lWmLVSl3uGReAO9h5TP4tVWOIVGCit0fo93OhO2r
+         bSxfctDHO7NtEN2QxU7W4nnHLgtJm5wJW9Z8g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=mMNjkOSnmJsBxgOgVipH6FBH6n4CFhd40H53QXC2Yah5ePv1I4njXf0aTIBwnXq6r0
-         qHC951M12IBoHfo92DVld5iXNPz7pLayiWWiQDv7YFRRo+VZHGDOge38+J8FtVbV8CoB
-         450QW3tRqdNqg8gUvoHDnuPBibF8S8NuB7Mkw=
-Received: by 10.227.153.15 with SMTP id i15mr506890wbw.211.1286445908970;
-        Thu, 07 Oct 2010 03:05:08 -0700 (PDT)
-Received: from localhost.localdomain (abvx243.neoplus.adsl.tpnet.pl [83.8.221.243])
-        by mx.google.com with ESMTPS id h29sm1726017wbc.3.2010.10.07.03.05.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 07 Oct 2010 03:05:07 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o97A4T8Z020950;
-	Thu, 7 Oct 2010 12:04:40 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o97A4DwV020946;
-	Thu, 7 Oct 2010 12:04:13 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTimA4jrDXmfJp2em34fj6b1sj9kdEyZ_xPTzqcEN@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=uKqpyQVlMJ47hRTFqJtPpm/5rf+//4oxuWDu5Ml2jeAOnhi0BcJdnWHStgnv7+oiWy
+         g3OATV1dKvxsdTJG5wN3EObhOMiB53vqd0Gag5+idHPzggCWkcyBYirlqXY88WUSdjCP
+         mGsFgyDrXAX3LhoqtdQUd+yARpGPZ06vnYFSU=
+Received: by 10.151.41.17 with SMTP id t17mr750115ybj.443.1286446379866; Thu,
+ 07 Oct 2010 03:12:59 -0700 (PDT)
+Received: by 10.151.15.8 with HTTP; Thu, 7 Oct 2010 03:12:38 -0700 (PDT)
+In-Reply-To: <m3eic2fher.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158393>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
-> On Thu, Oct 7, 2010 at 06:40, Junio C Hamano <gitster@pobox.com> wrot=
-e:
+Heya,
 
-> > =A0(2) Treat "rebase" as a way to reproduce history faithfully, eve=
-n an
-> > =A0 =A0 unreasonable one. =A0We could teach "--allow-empty" to "am"=
-, and
-> > =A0 =A0 rewrite the pipeline as "format-patch --always | am --allow=
--empty" to
-> > =A0 =A0 implement it.
->=20
-> Wouldn't we then have to keep adding options for other corner cases?
-> Perhaps a '--plumbing' flag that makes format-patch behave sanely
-> (e.g., also do stuff like, turn off color and whatnot) and that makes
-> 'git am' accept everything it knows how to understand?
+On Thu, Oct 7, 2010 at 12:05, Jakub Narebski <jnareb@gmail.com> wrote:
+> Hmmm... doesn't rebase pipeline use "format-patch --rebasing" (where
+> '--rebasing' is internal option deliberately left undocumented)?
 
-Hmmm... doesn't rebase pipeline use "format-patch --rebasing" (where
-'--rebasing' is internal option deliberately left undocumented)?
+If so, that's exactly what I mean :)
 
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-- 
+Cheers,
+
+Sverre Rabbelier
