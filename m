@@ -1,53 +1,77 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: format-patch on permission change gives empty patch
-Date: Thu, 07 Oct 2010 15:06:05 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010071503210.3107@xanadu.home>
-References: <20101006.173714.245380201.davem@davemloft.net>
- <20101006.174008.70175671.davem@davemloft.net>
- <7vtykyy70w.fsf@alter.siamese.dyndns.org>
- <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] Documentation: update-index: -z applies also to --index-info
+Date: Thu, 7 Oct 2010 20:55:24 +0200
+Message-ID: <AANLkTikiOmM0q=XoAJ0nOnr6SChj7PZZJfmXzaihGZMu@mail.gmail.com>
+References: <d3f7e6795adeccbf7746547842d6b65732d568eb.1286457739.git.bert.wesarg@googlemail.com>
+	<87wrptua21.fsf@gmail.com>
+	<AANLkTimsJ+uG7KhiBMii8szFYmbXo5OjAkYgs99_Hjzr@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, David Miller <davem@davemloft.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 07 21:06:16 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 21:07:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3vnD-00043D-Rj
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 21:06:16 +0200
+	id 1P3vnv-0004Gi-Ay
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 21:06:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751809Ab0JGTGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 15:06:09 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:35973 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751352Ab0JGTGJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 15:06:09 -0400
-Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0L9X00KWIP1YMYE0@vl-mh-mrz21.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 07 Oct 2010 15:05:58 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1752541Ab0JGTGy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 15:06:54 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40597 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752464Ab0JGTGx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 15:06:53 -0400
+Received: by iwn9 with SMTP id 9so183695iwn.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 12:06:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=uTIL67ihKjboTVuacmqQ0hgn2NTHGr/rqlg4XVZIfP4=;
+        b=T1vUcBYzoaB181E6gB+qTXcffTuBzc1nTyEWI+46sfeXrghhM6U5CHg5lmjfLbNdZC
+         hppuVrN0aQS3aCO2JjgjNw0HevHuqsQvOkiy5XFOHyceYrP1WaZXStjI58o8p9egipSl
+         E/QpnioeIOdm7rXCFxsorz+/GDZiNpE8xcPUM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=S9g/VucNp8aTN2sMwrbma3D26XaB6r+zc097mUmb3V8x0VrfWHkME+9Xfq19IWhetP
+         3OLyYIQ4dFZtz1L+A1sN7STgw0Y8Fx4LaXZbx6xdDMrzlRVXoBScG7vK4bB+g5aE0zCu
+         j4Ah7crkSegy7pJvdPM1/VSyFK+jW75XmnIJY=
+Received: by 10.231.11.9 with SMTP id r9mr1193374ibr.47.1286477724832; Thu, 07
+ Oct 2010 11:55:24 -0700 (PDT)
+Received: by 10.231.147.80 with HTTP; Thu, 7 Oct 2010 11:55:24 -0700 (PDT)
+In-Reply-To: <AANLkTimsJ+uG7KhiBMii8szFYmbXo5OjAkYgs99_Hjzr@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158434>
 
-On Wed, 6 Oct 2010, Junio C Hamano wrote:
+On Thu, Oct 7, 2010 at 20:52, Bert Wesarg <bert.wesarg@googlemail.com> =
+wrote:
+> On Thu, Oct 7, 2010 at 20:33, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepn=
+em@gmail.com> wrote:
+>>
+>> Also the usage string in builtin/update-index.c should be updated to=
+ the
+>> same effect.
+>>
+>> There is actually at least one more problem with the current SYNOPSI=
+S of
+>> `update-index'. Obviously the `*' on the third line of the Asciidoc
+>> source makes the whole `--cacheinfo' line disappear and the rest bol=
+d
+>> (cf. e.g. the result at
+>> <http://www.kernel.org/pub/software/scm/git/docs/git-update-index.ht=
+ml>).
 
-> I have a mixed feeling about where to go next.
-> 
->  (1) Treat "rebase" as a way to reproduce a reasonable history; the
->      current behaviour to drop empty commits is consistent with this view,
->      as a history with an empty commit is _not_ entirely reasonable.
+ls-files too:
+http://www.kernel.org/pub/software/scm/git/docs/git-ls-files.html
 
-But a file mode change isn't exactly an empty commit, no?
-
-
-Nicolas
+So it deserve more attention and its own patch.
