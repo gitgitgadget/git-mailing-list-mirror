@@ -1,52 +1,53 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Differing results between gitk --follow and git log --follow
-Date: Thu, 07 Oct 2010 13:00:04 -0600
-Message-ID: <4CAE18B4.2050700@workspacewhiz.com>
-References: <4CAE0DB0.1090608@workspacewhiz.com> <20101007181854.GF18518@sigill.intra.peff.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: format-patch on permission change gives empty patch
+Date: Thu, 07 Oct 2010 15:06:05 -0400 (EDT)
+Message-ID: <alpine.LFD.2.00.1010071503210.3107@xanadu.home>
+References: <20101006.173714.245380201.davem@davemloft.net>
+ <20101006.174008.70175671.davem@davemloft.net>
+ <7vtykyy70w.fsf@alter.siamese.dyndns.org>
+ <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 07 21:00:58 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, David Miller <davem@davemloft.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 07 21:06:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P3vi5-0002QX-Kb
-	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 21:00:58 +0200
+	id 1P3vnD-00043D-Rj
+	for gcvg-git-2@lo.gmane.org; Thu, 07 Oct 2010 21:06:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753462Ab0JGTAe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 15:00:34 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:37057 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753052Ab0JGTAG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 15:00:06 -0400
-Received: (qmail 3711 invoked by uid 399); 7 Oct 2010 13:00:04 -0600
-Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@69.98.187.106)
-  by hsmail.qwknetllc.com with ESMTPAM; 7 Oct 2010 13:00:04 -0600
-X-Originating-IP: 69.98.187.106
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.9) Gecko/20100915 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <20101007181854.GF18518@sigill.intra.peff.net>
+	id S1751809Ab0JGTGJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 15:06:09 -0400
+Received: from relais.videotron.ca ([24.201.245.36]:35973 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352Ab0JGTGJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 15:06:09 -0400
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0L9X00KWIP1YMYE0@vl-mh-mrz21.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 07 Oct 2010 15:05:58 -0400 (EDT)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vocb6y5sq.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158433>
 
-  ----- Original Message -----
-From: Jeff King
-Date: 10/7/2010 12:18 PM
-> On Thu, Oct 07, 2010 at 12:13:04PM -0600, Joshua Jensen wrote:
->
->> Is there a way to convince gitk to show me the same bits as git log
->> --follow?
-> Sadly, no, not without major surgery to the follow code. See:
->
->    http://article.gmane.org/gmane.comp.version-control.git/147089
-Interesting... and way beyond my current capabilities... :(
+On Wed, 6 Oct 2010, Junio C Hamano wrote:
 
-Thanks for the response.
+> I have a mixed feeling about where to go next.
+> 
+>  (1) Treat "rebase" as a way to reproduce a reasonable history; the
+>      current behaviour to drop empty commits is consistent with this view,
+>      as a history with an empty commit is _not_ entirely reasonable.
 
-Josh
+But a file mode change isn't exactly an empty commit, no?
+
+
+Nicolas
