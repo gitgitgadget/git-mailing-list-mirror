@@ -1,94 +1,67 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH] fast-import: Allow filemodify to set the root
-Date: Fri,  8 Oct 2010 10:46:59 +1100
-Message-ID: <1286495219-14414-1-git-send-email-david.barr@cordelta.com>
-References: <201010081045.46642.david.barr@cordelta.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	David Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 08 01:47:26 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
+Date: Fri, 8 Oct 2010 01:55:18 +0200
+Message-ID: <AANLkTi=DYaB9+C6j9cH=eGRPsvm1Re-6+jfQmhCzvhKP@mail.gmail.com>
+References: <201010081045.46642.david.barr@cordelta.com> <1286495219-14414-1-git-send-email-david.barr@cordelta.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Fri Oct 08 01:55:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P40BJ-0004c2-Iv
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 01:47:25 +0200
+	id 1P40JM-0006tU-TV
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 01:55:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752098Ab0JGXrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 19:47:21 -0400
-Received: from static-198-196.grapevine.transact.net.au ([121.127.198.196]:63444
-	"EHLO mailhost.cordelta" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751601Ab0JGXrU (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 19:47:20 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id 95882C043;
-	Fri,  8 Oct 2010 10:47:25 +1100 (EST)
-X-Virus-Scanned: amavisd-new at mailhost.cordelta
-Received: from mailhost.cordelta ([127.0.0.1])
-	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 3aGLCqpRSky9; Fri,  8 Oct 2010 10:47:23 +1100 (EST)
-Received: from dba.cordelta (unknown [192.168.123.127])
-	by mailhost.cordelta (Postfix) with ESMTP id 49A99C03F;
-	Fri,  8 Oct 2010 10:47:23 +1100 (EST)
-X-Mailer: git-send-email 1.7.3.4.g45608.dirty
-In-Reply-To: <201010081045.46642.david.barr@cordelta.com>
+	id S1752619Ab0JGXzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 7 Oct 2010 19:55:39 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:48435 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750992Ab0JGXzj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 7 Oct 2010 19:55:39 -0400
+Received: by gwj17 with SMTP id 17so162009gwj.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 16:55:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=J9re5FMmmzypiZZg5J0FblJ+0XgDGIsp97HBbkwP+t0=;
+        b=ZsjNh2iU+Upp01YnfBnV1NbDNWHvaw3JM2SgNaoPn66Nb8TvsU/ZyWQ/5uc9sAWwiH
+         kiXIymbAhmVznkeAJFMPUka24md71lJQk7BnNFeFtDYtinUVGa1e3elPVxL/Fwv/8t01
+         WWyL/FzSuE0CV9ZzVrICpDOpeNW5En6mzsal8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=aSDSCoBcwlVMzqcH7SYR4Hb9EBmdMu/vMWa25/7fPBoq2fgCn+KvTIfFg00e2RiIeQ
+         5CE+iYYLEJLiktBTaLW8ehFeLS3WC4tI4KTEArIjmudjZX36veovO3iL2V9fIBqlrMX1
+         +yU/LlUj60uNCCNC7HL/xmdKDIFtrLP9WRsS0=
+Received: by 10.150.147.11 with SMTP id u11mr1979921ybd.386.1286495738226;
+ Thu, 07 Oct 2010 16:55:38 -0700 (PDT)
+Received: by 10.151.15.8 with HTTP; Thu, 7 Oct 2010 16:55:18 -0700 (PDT)
+In-Reply-To: <1286495219-14414-1-git-send-email-david.barr@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158464>
 
-For a command (like filter-branch --subdirectory-filter) that wants
-to commit a lot of trees that already exist in the object db, writing
-undeltified objects as loose files only to repack them later can
-involve a significant amount of overhead.
-(23% slow-down observed on Linux 2.6.35, worse on Mac OS X 10.6)
+Heya,
 
-Fortunately we have fast-import (which is one of the only git commands
-that will write to a pack directly) but there is not an advertised way
-to tell fast-import to commit a given tree without unpacking it.
+On Fri, Oct 8, 2010 at 01:46, David Barr <david.barr@cordelta.com> wrote:
+> Commit-message-by: Jonathan Nieder <jrnieder@gmail.com>
+> Signed-off-by: David Barr <david.barr@cordelta.com>
 
-This patch changes that, by allowing
+I like it, FWIW:
 
-	M 040000 <tree id> ""
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
 
-as a filemodify line in a commit to reset to a particular tree without
-any need to parse it.  For example,
-
-	M 040000 4b825dc642cb6eb9a060e54bf8d69288fbee4904 ""
-
-is a synonym for the deleteall command and the fast-import equivalent of
-
-	git read-tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904
-
-Commit-message-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: David Barr <david.barr@cordelta.com>
----
- fast-import.c |    9 +++++++++
- 1 files changed, 9 insertions(+), 0 deletions(-)
-
-diff --git a/fast-import.c b/fast-import.c
-index 2317b0f..8f68a89 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1454,6 +1454,15 @@ static int tree_content_set(
- 		n = slash1 - p;
- 	else
- 		n = strlen(p);
-+	if (!slash1 && !n) {
-+		if (!S_ISDIR(mode))
-+			die("Root cannot be a non-directory");
-+		hashcpy(root->versions[1].sha1, sha1);
-+		if (root->tree)
-+			release_tree_content_recursive(root->tree);
-+		root->tree = subtree;
-+		return 1;
-+	}
- 	if (!n)
- 		die("Empty path component found in input");
- 	if (!slash1 && !S_ISDIR(mode) && subtree)
 -- 
-1.7.3.4.g45608.dirty
+Cheers,
+
+Sverre Rabbelier
