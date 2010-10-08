@@ -1,105 +1,72 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/2] Allow side-effects in second argument to ALLOC_GROW
-Date: Fri, 8 Oct 2010 12:02:24 -0500
-Message-ID: <20101008170224.GF9212@burratino>
-References: <20101008005256.GA21738@headley>
- <20101008074320.GB4671@burratino>
- <20101008164536.GB9212@burratino>
+Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
+Date: Fri, 8 Oct 2010 12:09:39 -0500
+Message-ID: <20101008170939.GG9212@burratino>
+References: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
+ <20101008081509.GA2845@kytes>
+ <4CAED762.7040708@gmail.com>
+ <74AF320B-5D82-4622-A7BF-61C847D4059A@cordelta.com>
+ <AANLkTi=zS+oj1iHMh-gKVD=2dG5tLwA+bia9E6U3o=zW@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 08 19:05:48 2010
+Cc: David Michael Barr <david.barr@cordelta.com>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 08 19:13:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4GO6-00089t-DE
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 19:05:42 +0200
+	id 1P4GVE-000274-EG
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 19:13:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758737Ab0JHRFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Oct 2010 13:05:36 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:59406 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757143Ab0JHRFf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Oct 2010 13:05:35 -0400
-Received: by qyk10 with SMTP id 10so1536922qyk.19
-        for <git@vger.kernel.org>; Fri, 08 Oct 2010 10:05:34 -0700 (PDT)
+	id S932490Ab0JHRMz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Oct 2010 13:12:55 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:50854 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932345Ab0JHRMy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Oct 2010 13:12:54 -0400
+Received: by qwf7 with SMTP id 7so772285qwf.19
+        for <git@vger.kernel.org>; Fri, 08 Oct 2010 10:12:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=T4QlrzdTmeQPDGBuessZ7qpVNSnpD8s4PkWXWbJO7/0=;
-        b=ZjHuJRXwWCWpK4Uv1fFKGyfRc9Ft5d9yx/FKGEF+Vl7Brwcph8neFwK5vqtHHmlMa2
-         iAfy4M9+rG/SHozkg31odA2ePEf5hn3e+lpMJfDubxUxBEQ6qdLjsKR7izHxfYgJ7pZY
-         0kO1hxfa2OqCgGdOGlYj5GPxs9OMLqQ08tXnE=
+        bh=YphYjosaXNQJtRy+Pf8vioNve34l+2oMAeK0fgKFydU=;
+        b=j2u/rcP5Qiuop1VVJikHI5B9PDcWa2P1EOKJObIDP0KScN4BF8Z5IJlsNDhrBv+aes
+         w0DojnrCl1HYlpt/jG0PkBOaGzLm9SeMNizShTYX+RRDhz+2YVTC3+SlqU5l7ruezq8Q
+         eIsJatkJAu/2c4AQ5XQLqinP5zwpKNhSH2w8s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=k8IPCayMGvI8rheE21jxbIg3jXZVXGyy7nEl5AtRIdyIwrzzQTZjB7t1WodB4cS1hW
-         7z4nzOAJJ7XCyq1HMIrnPUu/YMDkdeVhx5j/gUi1cjnrdA5J/ik5HhNI8vcppOvBI4/n
-         +7Npybk6rCI+KEdYBibAH2wEh4uVd4Z6rlCI8=
-Received: by 10.224.187.78 with SMTP id cv14mr1754668qab.263.1286557534545;
-        Fri, 08 Oct 2010 10:05:34 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id p10sm2695849qcu.35.2010.10.08.10.05.33
+        b=KM6hQjqVSx+ShI5z736mBJs0ABj8iIe1IKd8Z70j1RlZpvE981diKlcYgGsiYj1Aoa
+         CYVKibBoDLN4UGGf32WSEPwQa5zQzkWGGZFopkYD17WUtMsticSey7L8VvjdL6n/jg9l
+         jxyEJgidlF2PeeR/TBKl4V75w1IQ9ds2xOY4g=
+Received: by 10.229.37.83 with SMTP id w19mr2241403qcd.185.1286557970438;
+        Fri, 08 Oct 2010 10:12:50 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id l14sm470135qck.29.2010.10.08.10.12.47
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 08 Oct 2010 10:05:33 -0700 (PDT)
+        Fri, 08 Oct 2010 10:12:48 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20101008164536.GB9212@burratino>
+In-Reply-To: <AANLkTi=zS+oj1iHMh-gKVD=2dG5tLwA+bia9E6U3o=zW@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158507>
 
-One might be tempted to try
+Sverre Rabbelier wrote:
 
-	ALLOC_GROW(ary, ++nr, alloc);
+> So, are other trees allowed too? Can I set the contents of directory
+> "foo/bar/baz/" to an existing tree?
 
-to increase the size of an array by one, and if one tries, the
-compiler will happily accept it.  Unfortunately ALLOC_GROW evaluates
-its argument at least twice, so the results are generally not what the
-caller wanted.
-
-Luckily, it is simple enough to do what the caller meant by storing
-the value of the second argument in a temporary.
-
-The first and third arguments still need to be side-effect-free.  The
-name of the temporary is nr_ to avoid conflicting with variables the
-caller might use in the expansion of ary, nr, or alloc.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- cache.h |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index 23d6d45..5c9e338 100644
---- a/cache.h
-+++ b/cache.h
-@@ -438,13 +438,14 @@ extern int init_db(const char *template_dir, unsigned int flags);
-  * at least 'nr' entries; the number of entries currently allocated
-  * is 'alloc', using the standard growing factor alloc_nr() macro.
-  *
-- * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
-+ * DO NOT USE any expression with side-effect for 'x' or 'alloc'.
-  */
- #define ALLOC_GROW(x, nr, alloc) \
- 	do { \
--		if ((nr) > alloc) { \
--			if (alloc_nr(alloc) < (nr)) \
--				alloc = (nr); \
-+		const size_t nr_ = (nr); \
-+		if (nr_ > (alloc)) { \
-+			if (alloc_nr(alloc) < nr_) \
-+				alloc = nr_; \
- 			else \
- 				alloc = alloc_nr(alloc); \
- 			x = xrealloc((x), alloc * sizeof(*(x))); \
--- 
-1.7.2.3
+Yep, ever since v1.7.3-rc0~75^2 (Teach fast-import to import
+subtrees named by tree id, 2010-06-30).
