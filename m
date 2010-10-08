@@ -1,72 +1,74 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Efficiently detecting paths that differ from each other only in case
-Date: Fri, 8 Oct 2010 14:44:05 -0500
-Message-ID: <AANLkTik6pSJFUkY9sooSH7iANaKLhxdN+ouKRXJn1B9G@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Efficiently detecting paths that differ from each other only
+ in case
+Date: Fri, 8 Oct 2010 15:51:20 -0400
+Message-ID: <20101008195120.GA10810@sigill.intra.peff.net>
 References: <AANLkTimGAbosbD0pprROu_g-UW38faotYA2dTxj9scsP@mail.gmail.com>
-	<20101008135034.GC5163@sigill.intra.peff.net>
+ <20101008135034.GC5163@sigill.intra.peff.net>
+ <AANLkTik6pSJFUkY9sooSH7iANaKLhxdN+ouKRXJn1B9G@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 08 21:48:12 2010
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 08 21:51:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4IvL-0000f0-Tu
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 21:48:12 +0200
+	id 1P4IyX-0001iu-0I
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 21:51:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754733Ab0JHToI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Oct 2010 15:44:08 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56395 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754530Ab0JHToG convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 8 Oct 2010 15:44:06 -0400
-Received: by vws3 with SMTP id 3so461103vws.19
-        for <git@vger.kernel.org>; Fri, 08 Oct 2010 12:44:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=j7TJdgfg2tvrdvAtBjJeRn1TE0bdZ90jTjVOcVKctbk=;
-        b=YJrzJjzjasx9brz1mr7CzpcUbdhhFOXhzoRsZz/cVwazzVm65WUBh3hJfcJbEz8qHE
-         4X9Bv+PTh+qskK2RY0dKCXqZ+ncaU8IhCCIexm56OPJldK3w2glIBXTtn2eR+3zhORld
-         Ht9WerQ7Tf+SL6yC+XR+3+TXZduyFamgkyZME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rC9RDq1gsnFGHXcVUPDa4wgkvd+r9FCTrVy749XjdwvZgtwsKeFhZ8y91r1BU+u7nl
-         Ub0ccwXCsH2knvb9A28aAlTipAvDZDIQ0EofAwOH20VD3tppr+7g1KoKgVqWiexOxOyy
-         dxXkJWtXv3TzrmL31GduY3aRyZOJt7CQBVtPQ=
-Received: by 10.220.71.20 with SMTP id f20mr837236vcj.20.1286567045364; Fri,
- 08 Oct 2010 12:44:05 -0700 (PDT)
-Received: by 10.220.187.9 with HTTP; Fri, 8 Oct 2010 12:44:05 -0700 (PDT)
-In-Reply-To: <20101008135034.GC5163@sigill.intra.peff.net>
+	id S932734Ab0JHTvS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 8 Oct 2010 15:51:18 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:46915 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932336Ab0JHTvR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Oct 2010 15:51:17 -0400
+Received: (qmail 30156 invoked by uid 111); 8 Oct 2010 19:51:15 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 08 Oct 2010 19:51:15 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Oct 2010 15:51:20 -0400
+Content-Disposition: inline
+In-Reply-To: <AANLkTik6pSJFUkY9sooSH7iANaKLhxdN+ouKRXJn1B9G@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158529>
 
-On Fri, Oct 8, 2010 at 8:50 AM, Jeff King <peff@peff.net> wrote:
-> You can do:
->
-> =A0git ls-files | tr A-Z a-z | sort | uniq -d
+On Fri, Oct 08, 2010 at 02:44:05PM -0500, Dun Peal wrote:
 
-Thanks, but the main issue is that this is a very large repository
-with tens of thousands of paths (files and directories).
+> On Fri, Oct 8, 2010 at 8:50 AM, Jeff King <peff@peff.net> wrote:
+> > You can do:
+> >
+> > =C2=A0git ls-files | tr A-Z a-z | sort | uniq -d
+>=20
+> Thanks, but the main issue is that this is a very large repository
+> with tens of thousands of paths (files and directories).
+>=20
+> git ls-files thus takes a long time, almost a second. Since this is a
+> commit-heavy repo, I'd rather avoid that overhead.
 
-git ls-files thus takes a long time, almost a second. Since this is a
-commit-heavy repo, I'd rather avoid that overhead.
+I don't think you will find a solution that is faster. ls-files is just
+reading the list of files from git's index file. I'm not seeing anythin=
+g
+near that long to do an ls-files on my machine:
 
-Incidentally, there's an SVN hook that does the exact same thing that
-I want to do:
+  $ cd linux-2.6
+  $ git ls-files | wc -l
+  34296
+  $ time git ls-files >/dev/null
+  real    0m0.034s
+  user    0m0.028s
+  sys     0m0.012s
 
-http://svn.apache.org/repos/asf/subversion/trunk/contrib/hook-scripts/c=
-ase-insensitive.py
+One thing to consider, though, is if this is a hook running on the
+server, you probably don't want to look at the index. You probably want
+to look for duplicates in one tree entry (fed to the hook). So you woul=
+d
+be using git ls-tree, which probably is a bit slower.
 
-D
+-Peff
