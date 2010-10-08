@@ -1,67 +1,63 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
-Date: Fri, 8 Oct 2010 01:55:18 +0200
-Message-ID: <AANLkTi=DYaB9+C6j9cH=eGRPsvm1Re-6+jfQmhCzvhKP@mail.gmail.com>
-References: <201010081045.46642.david.barr@cordelta.com> <1286495219-14414-1-git-send-email-david.barr@cordelta.com>
+From: Brian Zitzow <bzitzow@gmail.com>
+Subject: Re: fatal: BUG: dashless options don't support arguments
+Date: Thu, 7 Oct 2010 17:06:27 -0700
+Message-ID: <AANLkTikqB-EvE6uxgBmutssJoiH2RiPjSxtjbo++Jj-X@mail.gmail.com>
+References: <AANLkTi=xscHHPTBtTJ3uXPO9y9gpQTBF4AWTe47C9njU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Fri Oct 08 01:55:50 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 08 02:06:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P40JM-0006tU-TV
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 01:55:45 +0200
+	id 1P40Tw-0001FE-1J
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 02:06:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752619Ab0JGXzj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 7 Oct 2010 19:55:39 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:48435 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750992Ab0JGXzj (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 7 Oct 2010 19:55:39 -0400
-Received: by gwj17 with SMTP id 17so162009gwj.19
-        for <git@vger.kernel.org>; Thu, 07 Oct 2010 16:55:38 -0700 (PDT)
+	id S1755719Ab0JHAGa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 7 Oct 2010 20:06:30 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45352 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755469Ab0JHAG3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 7 Oct 2010 20:06:29 -0400
+Received: by wyb28 with SMTP id 28so631021wyb.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 17:06:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=J9re5FMmmzypiZZg5J0FblJ+0XgDGIsp97HBbkwP+t0=;
-        b=ZsjNh2iU+Upp01YnfBnV1NbDNWHvaw3JM2SgNaoPn66Nb8TvsU/ZyWQ/5uc9sAWwiH
-         kiXIymbAhmVznkeAJFMPUka24md71lJQk7BnNFeFtDYtinUVGa1e3elPVxL/Fwv/8t01
-         WWyL/FzSuE0CV9ZzVrICpDOpeNW5En6mzsal8=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=72o8dV7lKdhF0xxNKyhPOOc42FkViG1mOkA384PMMP0=;
+        b=xeQYEZU5fCNZHJ+SjTLBYdXKGi+Of+0BPRI5tfKuTiLjsKYA1r5CjtLvfiPENsbAo6
+         2AnilWLtHPCPgUi2j3yaZdTD/1Ktu6z0IynYqoTxvlaALhtUNBf8UzoEXMjKsWUBCGGr
+         tg4mBmbYmlrcxKDXEMQIM9/6o8CIXNwyDRvvs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=aSDSCoBcwlVMzqcH7SYR4Hb9EBmdMu/vMWa25/7fPBoq2fgCn+KvTIfFg00e2RiIeQ
-         5CE+iYYLEJLiktBTaLW8ehFeLS3WC4tI4KTEArIjmudjZX36veovO3iL2V9fIBqlrMX1
-         +yU/LlUj60uNCCNC7HL/xmdKDIFtrLP9WRsS0=
-Received: by 10.150.147.11 with SMTP id u11mr1979921ybd.386.1286495738226;
- Thu, 07 Oct 2010 16:55:38 -0700 (PDT)
-Received: by 10.151.15.8 with HTTP; Thu, 7 Oct 2010 16:55:18 -0700 (PDT)
-In-Reply-To: <1286495219-14414-1-git-send-email-david.barr@cordelta.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=oZNf1rsb1U4fcGWmzqIqJSZqbVbsckqcUFcYY+vF7VeNm9++WcWjJCMNsaBYYOnhTp
+         FSn8dOa+Tsae3/jHDKf+HlU5vT8hAdIlvg6JNSaMjJoufinhcpLZ6zSFqgZabChqgERi
+         IIxI8AA597OWCgk9JffCc9qmQ8tzlWNepBYWc=
+Received: by 10.227.138.76 with SMTP id z12mr1631559wbt.60.1286496387747; Thu,
+ 07 Oct 2010 17:06:27 -0700 (PDT)
+Received: by 10.227.146.137 with HTTP; Thu, 7 Oct 2010 17:06:27 -0700 (PDT)
+In-Reply-To: <AANLkTi=xscHHPTBtTJ3uXPO9y9gpQTBF4AWTe47C9njU@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158465>
 
-Heya,
+Hello,
+ I was asked to report this bug error... Environment: OS 10.4.11 PowerP=
+C:
 
-On Fri, Oct 8, 2010 at 01:46, David Barr <david.barr@cordelta.com> wrote:
-> Commit-message-by: Jonathan Nieder <jrnieder@gmail.com>
-> Signed-off-by: David Barr <david.barr@cordelta.com>
-
-I like it, FWIW:
-
-Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Ki:$ git branch
+* branch1
+=A0 master
+Ki:$ git checkout master
+fatal: BUG: dashless options don't support arguments
+Ki:$ git --version
+git version 1.7.3.GIT
