@@ -1,141 +1,67 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH v5 0/3] git-remote-fd & git-remote-ext
-Date: Fri, 08 Oct 2010 12:56:51 -0700
-Message-ID: <7vtykwv4os.fsf@alter.siamese.dyndns.org>
-References: <1286563200-7270-1-git-send-email-ilari.liusvaara@elisanet.fi>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Re: Efficiently detecting paths that differ from each other only in case
+Date: Fri, 8 Oct 2010 14:57:49 -0500
+Message-ID: <AANLkTimAhjHm5Z4ekTOBaxwzyw2YD6MrRnB1O8E6nAtw@mail.gmail.com>
+References: <AANLkTimGAbosbD0pprROu_g-UW38faotYA2dTxj9scsP@mail.gmail.com>
+	<20101008135034.GC5163@sigill.intra.peff.net>
+	<AANLkTik6pSJFUkY9sooSH7iANaKLhxdN+ouKRXJn1B9G@mail.gmail.com>
+	<20101008195120.GA10810@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Oct 08 21:57:12 2010
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 08 21:57:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4J3z-0003Uh-Rv
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 21:57:08 +0200
+	id 1P4J4m-0003kx-0P
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 21:57:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829Ab0JHT5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Oct 2010 15:57:01 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53751 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751741Ab0JHT5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Oct 2010 15:57:00 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D789DD8FE;
-	Fri,  8 Oct 2010 15:56:58 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/qLy9x8RaQeo0T/B8pG0fDphV0Y=; b=YhmHr+
-	MZvDtLqNMv933icCTRjIRYf32VKNFHfrGlWacQLKRgird644ndqpPsU/Opepm/CM
-	UWzlB7ajs77cRkWppdCqX7dJWtMOmHSOF0hjnM6HIXzG5VL3LtcSIeXLYdWo0FIX
-	yCZJ9OEzLt5UiBfHy/nqF4iD3iqL4T5tOZpYU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YZwML0zvI3qrKB0y03XIHb9ccW30Safz
-	QLpGs42ae2wV2CVHUt822LtLUjFBrgnFmwM0uRKWIosZt3jWBxs4s3PqD8/iCDlG
-	onStgwx5MxbqR+1A2A7ChCFWsk+n9iggcWqbLCkJF1Mm61NtbMlTuQXj4N7YUs19
-	qsfqyzmjBRg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0E862DD8FD;
-	Fri,  8 Oct 2010 15:56:56 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1CC2ADD8FC; Fri,  8 Oct
- 2010 15:56:52 -0400 (EDT)
-In-Reply-To: <1286563200-7270-1-git-send-email-ilari.liusvaara@elisanet.fi>
- (Ilari Liusvaara's message of "Fri\,  8 Oct 2010 21\:39\:57 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 340B8A98-D316-11DF-AC56-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1757323Ab0JHT5u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Oct 2010 15:57:50 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:36309 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754651Ab0JHT5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Oct 2010 15:57:50 -0400
+Received: by pzk34 with SMTP id 34so404329pzk.19
+        for <git@vger.kernel.org>; Fri, 08 Oct 2010 12:57:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=X+SQ49jmSPnrl5/JNNUkjJvuP2/aKi9K6xVLGlr37w8=;
+        b=F2iholnrbrgwuL7S58/S3hiCI0M4+TckTMF00A+W3Bzdpp5UGqKkyg/YYyeoMLEKQG
+         nhlSyiHnJ68F3RBuzBjAnyy6EkfX7tkX2vaEXQYpnXkJS6bjWXNHPqcwzhlLJe7WS4Yu
+         Ql+6PY6yW4AXr5T/LvEVjDhZqbr6qQszfq6BU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=srPWZOtTTzsNQmzAwYiDIzYj3znDAjsRdBTg0AW6+wLhFoUX7tVnZaBh2u7IHr/HZw
+         zcTP5zuzY4XlYpcUwMmq4qauEUW0ii4BMduPf2iYMdbEOFCGG9slNTGyF5WqahLhTJ5f
+         BoSs47OJNLrB0U3ii//qBp1Ra4XgiQRJXS7ME=
+Received: by 10.142.12.3 with SMTP id 3mr2474017wfl.187.1286567869329; Fri, 08
+ Oct 2010 12:57:49 -0700 (PDT)
+Received: by 10.220.187.9 with HTTP; Fri, 8 Oct 2010 12:57:49 -0700 (PDT)
+In-Reply-To: <20101008195120.GA10810@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158531>
 
-Every time I queued this series, I've been fixing up styles without
-complaining.  It is boring and in general not very fun to spend time
-fixing style violations, and the worst part of the story is that by the
-time I am done, I don't have time left for addressing issues in the
-substance of the patch or energy and concentration required for handling
-patches from other people.
+On Fri, Oct 8, 2010 at 2:51 PM, Jeff King <peff@peff.net> wrote:
+> One thing to consider, though, is if this is a hook running on the
+> server, you probably don't want to look at the index. You probably want
+> to look for duplicates in one tree entry (fed to the hook). So you would
+> be using git ls-tree, which probably is a bit slower.
 
-I think I probably should have complained earlier.  I am assuming that you
-are rewriting and rebasing, so once they are fixed at your end, I will
-hopefully have to re-fix everything over and over again in the future
-round.
+Thanks, but why is that?  Why can't I use ls-files, and must use use
+ls-tree, which you say would be slower?
 
-Could you fix these up at your end please?
+For extra details: is the central Git repository, running under
+Gitorious, on a fairly powerful server. It's a bare repo, naturally.
 
-ERROR: space required before the open parenthesis '('
-#216: FILE: transport-helper.c:990:
-+	while(t->state != SSTATE_FINISHED) {
-
-ERROR: "foo* bar" should be "foo *bar"
-#596: FILE: builtin/remote-fd.c:58:
-+	char* end;
-
-ERROR: spaces required around that '!=' (ctx:WxV)
-#603: FILE: builtin/remote-fd.c:65:
-+	if ((end == argv[2]) || (*end != ',' && *end !='/' && *end))
- 	                                             ^
-
-ERROR: "foo* bar" should be "foo *bar"
-#609: FILE: builtin/remote-fd.c:71:
-+		char* end2;
-
-ERROR: spaces required around that '!=' (ctx:WxV)
-#612: FILE: builtin/remote-fd.c:74:
-+		if ((end2 == end + 1) || (*end2 !='/' && *end2))
- 		                                ^
-
-ERROR: do not initialise globals to 0 or NULL
-#897: FILE: builtin/remote-ext.c:24:
-+char* git_req = NULL;
-
-ERROR: "foo* bar" should be "foo *bar"
-#897: FILE: builtin/remote-ext.c:24:
-+char* git_req = NULL;
-
-ERROR: do not initialise globals to 0 or NULL
-#898: FILE: builtin/remote-ext.c:25:
-+char* git_req_vhost = NULL;
-
-ERROR: "foo* bar" should be "foo *bar"
-#898: FILE: builtin/remote-ext.c:25:
-+char* git_req_vhost = NULL;
-
-ERROR: space required before the open parenthesis '('
-#959: FILE: builtin/remote-ext.c:86:
-+			switch(str[rpos]) {
-
-ERROR: space required before the open parenthesis '('
-#973: FILE: builtin/remote-ext.c:100:
-+			switch(str[rpos]) {
-
-ERROR: space required before the open parenthesis '('
-#983: FILE: builtin/remote-ext.c:110:
-+	switch(special) {
-
-ERROR: "foo** bar" should be "foo **bar"
-#1002: FILE: builtin/remote-ext.c:129:
-+	char** ret;
-
-ERROR: "foo* bar" should be "foo *bar"
-#1006: FILE: builtin/remote-ext.c:133:
-+		char* ret;
-
-ERROR: "(foo*)" should be "(foo *)"
-#1014: FILE: builtin/remote-ext.c:141:
-+	ret = xcalloc(arguments + 1, sizeof(char*));
-
-ERROR: "(foo**)" should be "(foo **)"
-#1018: FILE: builtin/remote-ext.c:145:
-+	return (const char**)ret;
-
-ERROR: "foo* bar" should be "foo *bar"
-#1026: FILE: builtin/remote-ext.c:153:
-+	char* buffer;
-
-total: 17 errors, 0 warnings, 851 lines checked
+D
