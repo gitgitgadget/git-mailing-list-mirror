@@ -1,73 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: fatal: BUG: dashless options don't support arguments
-Date: Fri, 8 Oct 2010 00:11:00 -0400
-Message-ID: <20101008041100.GA3272@sigill.intra.peff.net>
-References: <AANLkTi=xscHHPTBtTJ3uXPO9y9gpQTBF4AWTe47C9njU@mail.gmail.com>
- <AANLkTikqB-EvE6uxgBmutssJoiH2RiPjSxtjbo++Jj-X@mail.gmail.com>
- <20101008031818.GC992@burratino>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Efficiently detecting paths that differ from each other only in case
+Date: Fri, 8 Oct 2010 01:13:07 -0500
+Message-ID: <AANLkTimGAbosbD0pprROu_g-UW38faotYA2dTxj9scsP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Brian Zitzow <bzitzow@gmail.com>, git@vger.kernel.org,
-	Christopher Cameron <christopher.cameron@live.com>,
-	Henrik Tidefelt <tidefelt@isy.liu.se>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 08 06:11:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 08 08:13:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P44IO-0005JK-Kc
-	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 06:11:00 +0200
+	id 1P46Ch-00079B-Bv
+	for gcvg-git-2@lo.gmane.org; Fri, 08 Oct 2010 08:13:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751094Ab0JHEKz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 8 Oct 2010 00:10:55 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:42541 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750776Ab0JHEKy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Oct 2010 00:10:54 -0400
-Received: (qmail 23943 invoked by uid 111); 8 Oct 2010 04:10:53 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 08 Oct 2010 04:10:53 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 08 Oct 2010 00:11:00 -0400
-Content-Disposition: inline
-In-Reply-To: <20101008031818.GC992@burratino>
+	id S1752932Ab0JHGNJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 8 Oct 2010 02:13:09 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40897 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751628Ab0JHGNI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Oct 2010 02:13:08 -0400
+Received: by vws3 with SMTP id 3so227348vws.19
+        for <git@vger.kernel.org>; Thu, 07 Oct 2010 23:13:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=9usxPDB4cvPpgSZh2VvwuwG8uLpurK3dg0z+ThOv5iE=;
+        b=KK+0VG3W1nQHM4C4wxwc2YSdkwpNQit9C5X68dVzynmIkXYJNPBy4VH2Iugc/de9c+
+         FmZVdjaLtuVKn8tri6IWt+7BZ69tLuu5wIn7u54pE+aM8qucRJU0DD0hyNW1MUib/SRG
+         rUsGtYTBnrtRi2DrcyVrFoACsJkKsSr/KgwnU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=uHMAkKveseWqsQW0jrMfUsYjPWohfdJmgLM+/I/UCCTzyLEAHo9N3w/UPMS2TGqx3g
+         ln23E1D0zXtnFpS0AiYx2XgYU/i8z6qOcgabxpOdetf/nqJyHVYYYJQqskLZqbjeLa/S
+         Mr2Qe8HFiEahblbRr8YkUd/usEXg12WCvx2J4=
+Received: by 10.220.199.193 with SMTP id et1mr567920vcb.56.1286518387865; Thu,
+ 07 Oct 2010 23:13:07 -0700 (PDT)
+Received: by 10.220.187.9 with HTTP; Thu, 7 Oct 2010 23:13:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158472>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158473>
 
-On Thu, Oct 07, 2010 at 10:18:18PM -0500, Jonathan Nieder wrote:
+Hi,
 
-> > Ki:$ git checkout master
-> > fatal: BUG: dashless options don't support arguments
-> 
-> Strange indeed.  Here's what I would suggest:
-> 
-> 1. For debugging output:
-> 
->  $ echo 'prefix=/usr/local' >>config.mak; # or whatever prefix you use
->  $ git describe
->  $ gcc --version
->  $ wget 'http://download.gmane.org/gmane.comp.version-control.git/128067/128068'
->  $ git am -3 128068
->  $ make
->  $ bin-wrappers/git checkout m
+I'm writing a Git hook, for a bare central repo, to reject pushes of
+paths that differ from existing tracked paths only by letter case.
 
-Yeah, I would be curious to see the output of that. Interesting, too,
-that it seems to happen with multiple commands (it looked like it
-happened with "git push foo" in the pastebin from the irc log).
+So, for example, if the following path is tracked in the repo:
 
-> 2. To track down the issue, if you like to read assembler:
-> 
->  $ make builtin/checkout.s
->  $ vi checkout.s
+foo/bar.py
 
-Ugh. I think a better course of action is to find out which option is
-being munged (from step 1 above), and then try running it under gdb with
-a watch set on that option struct. Assuming it's easily reproducible of
-course.
+Commits adding any of the following paths would be rejected:
 
--Peff
+Foo/bar.py
+foo/Bar.py
+fOO/BAR.py
+
+Etc. I know how to do it by listing paths with ls-files, but my repo
+contains many thousands of files, so I was wondering if there was a
+more efficient way than for every commit:
+
+1. Get a list of all paths in the repo from ls-files.
+2. Lowercase all paths.
+3. Check for repeats.
+
+Thanks, D
