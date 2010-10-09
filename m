@@ -1,189 +1,284 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH v5 3/4] [RFC] Only show bulkmoves in output.
-Date: Sat,  9 Oct 2010 23:31:34 +0200
-Message-ID: <1286659895-1813-4-git-send-email-ydirson@altern.org>
-References: <1286659895-1813-1-git-send-email-ydirson@altern.org>
- <1286659895-1813-2-git-send-email-ydirson@altern.org>
- <1286659895-1813-3-git-send-email-ydirson@altern.org>
-Cc: Yann Dirson <ydirson@altern.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 09 23:21:35 2010
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [TopGit PATCHv2] provide global temporary directory
+Date: Sat,  9 Oct 2010 23:41:47 +0200
+Message-ID: <d351f9124a96f212fe66ee85b4241753be94ab2b.1286660467.git.bert.wesarg@googlemail.com>
+Cc: git@vger.kernel.org, pasky@suse.cz,
+	martin f krafft <madduck@madduck.net>,
+	Bert Wesarg <bert.wesarg@googlemail.com>
+To: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Sat Oct 09 23:42:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4grD-0007q4-Bz
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 23:21:31 +0200
+	id 1P4hBW-0006U5-Rr
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 23:42:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757136Ab0JIVV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Oct 2010 17:21:27 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:50699 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755841Ab0JIVVT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Oct 2010 17:21:19 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 78310D4802D;
-	Sat,  9 Oct 2010 23:21:13 +0200 (CEST)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1P4h0z-0000Tz-Rr; Sat, 09 Oct 2010 23:31:37 +0200
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1286659895-1813-3-git-send-email-ydirson@altern.org>
+	id S1757242Ab0JIVmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Oct 2010 17:42:12 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:37343 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753906Ab0JIVmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Oct 2010 17:42:11 -0400
+Received: by ewy20 with SMTP id 20so135645ewy.19
+        for <git@vger.kernel.org>; Sat, 09 Oct 2010 14:42:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=bJMOuzcoTeLMxS5zvAoeOv6qzsDPxETemOwwvqmSbmg=;
+        b=MqajXwW8Rg1tm/sVsVXXINlasUsjRqaaQsySGoZwlqsSumc07cp797v50HS957H0yy
+         3ztqrirrR2EsGl3lfHd97GguwlFe/Ad9EWeQWHjZuwMR1kKSY328EDnbBG74Xr1waUiG
+         zUcHXjHgNKkuGdJLXd9+gJtEveLJeYwk9symQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Cd+WPj7cwGOLLckbU4kD7pyThb1u0PgZiH/vjNuvHasHeKlgTE75jNTS30sPp26iXz
+         YWZUnnM+Wiq9zDGBK2HNXicRWuE0C7ooXu8GKJDFmB+3QZpEo1+GlY8JywPHRKRH99hl
+         Ht+Nv6FAUwhX8kmc1+CLEtEWzyfnhN7HKSysA=
+Received: by 10.213.14.71 with SMTP id f7mr164082eba.41.1286660529259;
+        Sat, 09 Oct 2010 14:42:09 -0700 (PDT)
+Received: from localhost ([46.115.89.70])
+        by mx.google.com with ESMTPS id v8sm7887874eeh.2.2010.10.09.14.41.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 09 Oct 2010 14:42:08 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1.1067.g5aeb7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158628>
 
-In theory we could just append those at display time (possibly diluting
-the code too much ?), or before queing the diff.  In practice we cannot
-do the latter easily in either case (strcat to a constant string ("./"),
-nor to the paths tighly-allocated from alloc_filespec).
+The standard procedure 'tmp=mktemp; trap "rm $tmp" 0' was broken with the
+introduction of the pager. Which overwrites the trap itself to close and
+remove the pager fifo.
 
-So I went the way of including the trailing "*" from the beginning.
-Since I'm still unsure whether keeping it that way, I leave it as a
-separated patch for now.
+Now tg provides a temp playground and all other temp files should be created
+inside this directory and only this directory will be removed with the exit
+trap. setup_pager still overwrites the trap, but keeps the rm command from
+the global temp directory. To simplify this the new function get_temp() is
+provided.
 
-After this patch only one of the expected failures can be considered
-innocuous.
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- diffcore-rename.c                |   22 +++++++++++++++-------
- t/t4046-diff-rename-factorize.sh |   22 +++++++++++-----------
- 2 files changed, 26 insertions(+), 18 deletions(-)
+ hooks/pre-commit.sh |    3 +--
+ tg-export.sh        |    3 +--
+ tg-info.sh          |    3 +--
+ tg-mail.sh          |    4 +---
+ tg-patch.sh         |    3 +--
+ tg-push.sh          |    3 +--
+ tg-summary.sh       |    3 +--
+ tg-update.sh        |    3 +--
+ tg.sh               |   27 +++++++++++++++++++--------
+ 9 files changed, 27 insertions(+), 25 deletions(-)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 18a0605..6d21792 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -588,6 +588,13 @@ static void check_one_bulk_move(struct diff_filepair *dstpair)
- 	copy_dirname(one_parent_path, dstpair->one->path);
- 	copy_dirname(two_parent_path, dstpair->two->path);
+diff --git a/hooks/pre-commit.sh b/hooks/pre-commit.sh
+index 4f2f16f..848a929 100644 hooks/pre-commit.sh
+--- a/hooks/pre-commit.sh
++++ b/hooks/pre-commit.sh
+@@ -95,9 +95,8 @@ BEGIN      { in_hunk = 0; }
+ 	done
  
-+	/* Visualize toplevel dir if needed.  Need it here because of
-+	 * "*" handling below. */
-+	if (!*one_parent_path)
-+		strcpy(one_parent_path, "./");
-+	if (!*two_parent_path)
-+		strcpy(two_parent_path, "./");
+ # check for repetitions of deps
+-depdir="$(mktemp -t -d tg-depdir.XXXXXX)" ||
++depdir="$(get_temp -d tg-depdir)" ||
+ 	die "Can't check for multiple occurrences of deps"
+-trap "rm -rf '$depdir'" 0
+ cat_file "(i):.topdeps" |
+ 	while read dep; do
+ 		[ ! -d "$depdir/$dep" ] ||
+diff --git a/tg-export.sh b/tg-export.sh
+index 6d82d55..921e933 100644 tg-export.sh
+--- a/tg-export.sh
++++ b/tg-export.sh
+@@ -57,8 +57,7 @@ if [ -z "$branches" ]; then
+ fi
+ 
+ 
+-playground="$(mktemp -d -t tg-export.XXXXXX)"
+-trap 'rm -rf "$playground"' EXIT
++playground="$(get_temp tg-export -d)"
+ 
+ 
+ ## Collapse driver
+diff --git a/tg-info.sh b/tg-info.sh
+index 7d6a34c..10e257e 100644 tg-info.sh
+--- a/tg-info.sh
++++ b/tg-info.sh
+@@ -51,7 +51,7 @@ fi
+ git cat-file blob "$name:.topdeps" |
+ 	sed '1{ s/^/Depends: /; n; }; s/^/         /;'
+ 
+-depcheck="$(mktemp -t tg-depcheck.XXXXXX)"
++depcheck="$(get_temp tg-depcheck)"
+ missing_deps=
+ needs_update "$name" >"$depcheck" || :
+ if [ -n "$missing_deps" ]; then
+@@ -72,6 +72,5 @@ if [ -s "$depcheck" ]; then
+ else
+ 	echo "Up-to-date."
+ fi
+-rm "$depcheck"
+ 
+ # vim:noet
+diff --git a/tg-mail.sh b/tg-mail.sh
+index 8167ade..dd4a95a 100644 tg-mail.sh
+--- a/tg-mail.sh
++++ b/tg-mail.sh
+@@ -34,7 +34,7 @@ if [ -n "$in_reply_to" ]; then
+ fi
+ 
+ 
+-patchfile="$(mktemp -t tg-mail.XXXXXX)"
++patchfile="$(get_temp tg-mail)"
+ 
+ $tg patch "$name" >"$patchfile"
+ 
+@@ -54,6 +54,4 @@ people=
+ # NOTE: git-send-email handles cc itself
+ eval git send-email $send_email_args "$people" "$patchfile"
+ 
+-rm "$patchfile"
+-
+ # vim:noet
+diff --git a/tg-patch.sh b/tg-patch.sh
+index 7bafdfe..68efcf0 100644 tg-patch.sh
+--- a/tg-patch.sh
++++ b/tg-patch.sh
+@@ -51,7 +51,7 @@ echo
+ [ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
+ 
+ # Evil obnoxious hack to work around the lack of git diff --exclude
+-git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
++git_is_stupid="$(get_temp tg-patch-changes)"
+ git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
+ 	fgrep -vx ".topdeps" |
+ 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
+@@ -61,7 +61,6 @@ if [ -s "$git_is_stupid" ]; then
+ else
+ 	echo "No changes."
+ fi
+-rm "$git_is_stupid"
+ 
+ echo '-- '
+ echo "tg: ($base_rev..) $name (depends on: $(cat_file "$topic:.topdeps" | paste -s -d' '))"
+diff --git a/tg-push.sh b/tg-push.sh
+index 199d738..a928fba 100644 tg-push.sh
+--- a/tg-push.sh
++++ b/tg-push.sh
+@@ -45,8 +45,7 @@ for name in $branches; do
+ 	ref_exists "$name" || die "detached HEAD? Can't push $name"
+ done
+ 
+-_listfile="$(mktemp -t tg-push-listfile.XXXXXX)"
+-trap "rm -f \"$_listfile\"" 0
++_listfile="$(get_temp tg-push-listfile)"
+ 
+ push_branch()
+ {
+diff --git a/tg-summary.sh b/tg-summary.sh
+index af16888..612bd27 100644 tg-summary.sh
+--- a/tg-summary.sh
++++ b/tg-summary.sh
+@@ -55,10 +55,9 @@ EOT
+ fi
+ 
+ if [ -n "$sort" ]; then
+-	tsort_input=`mktemp`
++	tsort_input="$(get_temp tg-summary-sort)"
+ 	exec 4>$tsort_input
+ 	exec 5<$tsort_input
+-	rm $tsort_input
+ fi
+ 
+ ## List branches
+diff --git a/tg-update.sh b/tg-update.sh
+index b256c7c..5162c52 100644 tg-update.sh
+--- a/tg-update.sh
++++ b/tg-update.sh
+@@ -27,7 +27,7 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
+ 
+ ## First, take care of our base
+ 
+-depcheck="$(mktemp -t tg-depcheck.XXXXXX)"
++depcheck="$(get_temp tg-depcheck)"
+ missing_deps=
+ needs_update "$name" >"$depcheck" || :
+ [ -z "$missing_deps" ] || die "some dependencies are missing: $missing_deps"
+@@ -96,7 +96,6 @@ if [ -s "$depcheck" ]; then
+ else
+ 	info "The base is up-to-date."
+ fi
+-rm "$depcheck"
+ 
+ # Home, sweet home...
+ # (We want to always switch back, in case we were on the base from failed
+diff --git a/tg.sh b/tg.sh
+index 8264a3b..3805eeb 100644 tg.sh
+--- a/tg.sh
++++ b/tg.sh
+@@ -150,7 +150,7 @@ recurse_deps()
+ 	_name="$1"; # no shift
+ 	_depchain="$*"
+ 
+-	_depsfile="$(mktemp -t tg-depsfile.XXXXXX)"
++	_depsfile="$(get_temp tg-depsfile)"
+ 	# If no_remotes is unset check also our base against remote base.
+ 	# Checking our head against remote head has to be done in the helper.
+ 	if test -z "$no_remotes" && has_remote "top-bases/$_name"; then
+@@ -183,7 +183,6 @@ recurse_deps()
+ 		eval "$_cmd"
+ 	done <"$_depsfile"
+ 	missing_deps="${missing_deps# }"
+-	rm "$_depsfile"
+ 	return $_ret
+ }
+ 
+@@ -334,19 +333,28 @@ setup_pager()
+ 	# now spawn pager
+ 	export LESS="${LESS:-FRSX}"	# as in pager.c:pager_preexec()
+ 
+-	_pager_fifo_dir="$(mktemp -t -d tg-pager-fifo.XXXXXX)"
+-	_pager_fifo="$_pager_fifo_dir/0"
+-	mkfifo -m 600 "$_pager_fifo"
++	# setup_pager should be called only once per command
++	pager_fifo="$tg_tmp_dir/pager"
++	mkfifo -m 600 "$pager_fifo"
+ 
+-	"$TG_PAGER" < "$_pager_fifo" &
+-	exec > "$_pager_fifo"		# dup2(pager_fifo.in, 1)
++	"$TG_PAGER" < "$pager_fifo" &
++	exec > "$pager_fifo"		# dup2(pager_fifo.in, 1)
+ 
+ 	# this is needed so e.g. `git diff` will still colorize it's output if
+ 	# requested in ~/.gitconfig with color.diff=auto
+ 	export GIT_PAGER_IN_USE=1
+ 
+ 	# atexit(close(1); wait pager)
+-	trap "exec >&-; rm \"$_pager_fifo\"; rmdir \"$_pager_fifo_dir\"; wait" EXIT
++	# deliberately overwrites the global EXIT trap
++	trap "exec >&-; rm -rf \"$tg_tmp_dir\"; wait" EXIT
++}
 +
- 	/* simple rename with no directory change */
- 	if (!strcmp(one_parent_path, two_parent_path))
- 		return;
-@@ -600,11 +607,16 @@ static void check_one_bulk_move(struct diff_filepair *dstpair)
- 	    maybe_disqualify_bulkmove(one_parent_path, one_leftover))
- 		return;
++# get_temp NAME [-d]
++# creates a new temporary file (or directory with -d) in the global
++# temporary directory $tg_tmp_dir with pattern prefix NAME
++get_temp()
++{
++	mktemp ${2-} "$tg_tmp_dir/$1.XXXXXX"
+ }
  
-+	/* For output format reason we want this "*" for the general
-+	 * case of bulk moves.  Most be here for alloc_filespec to
-+	 * reserve enough space, and to allow for proper comparison
-+	 * with those previously recorded in bulkmove_candidates. */
-+	strcat(one_parent_path, "*");
-+
- 	/* already considered ? */
- 	for (seen=bulkmove_candidates; seen; seen = seen->next)
- 		if (!strcmp(seen->one->path, one_parent_path)) break;
--	if (!seen) {
--		/* record potential dir rename */
-+	if (!seen) { /* record potential dir rename */
- 		seen = xmalloc(sizeof(*seen));
- 		seen->one = alloc_filespec(one_parent_path);
- 		fill_filespec(seen->one, null_sha1 /*FIXME*/, S_IFDIR);
-@@ -822,11 +834,7 @@ void diffcore_rename(struct diff_options *options)
- 	for (candidate=bulkmove_candidates; candidate; candidate = candidate->next) {
- 		struct diff_filepair* pair;
- 		if (candidate->discarded) continue;
--		/* visualize toplevel dir if needed */ //FIXME: wrong place for this ?
--		if (!*candidate->one->path)
--			candidate->one->path = "./";
--		if (!*candidate->two->path)
--			candidate->two->path = "./";
-+
- 		pair = diff_queue(&outq, candidate->one, candidate->two);
- 		pair->score = MAX_SCORE;
- 		pair->renamed_pair = 1;
-diff --git a/t/t4046-diff-rename-factorize.sh b/t/t4046-diff-rename-factorize.sh
-index d063e25..9353929 100755
---- a/t/t4046-diff-rename-factorize.sh
-+++ b/t/t4046-diff-rename-factorize.sh
-@@ -37,7 +37,7 @@ test_expect_success 'setup' '
+ ## Startup
+@@ -366,6 +374,9 @@ tg="tg"
+ # make sure merging the .top* files will always behave sanely
+ setup_ours
+ setup_hook "pre-commit"
++# create global temporary directories, inside GIT_DIR
++tg_tmp_dir="$(mktemp -d "$git_dir/tg-tmp.XXXXXX")"
++trap "rm -rf \"$tg_tmp_dir\"" EXIT
  
- test_expect_success 'diff-index --detect-bulk-moves after directory move.' '
- 	cat >expected <<-EOF &&
--	:040000 040000 X X R#	a/	b/
-+	:040000 040000 X X R#	a/*	b/
- 	:100644 100644 X X R#	a/path0	b/path0
- 	:100644 100644 X X R#	a/path1	b/path1
- 	:100644 100644 X X R#	a/path2	b/path2
-@@ -58,7 +58,7 @@ test_expect_success 'setup non-100% rename' '
+ ## Dispatch
  
- test_expect_success 'diff-index --detect-bulk-moves after content changes.' '
- 	cat >expected <<-EOF &&
--	:040000 040000 X X R#	a/	b/
-+	:040000 040000 X X R#	a/*	b/
- 	:100644 000000 X X D#	a/path3
- 	:100644 100644 X X R#	a/path2	b/2path
- 	:100644 100644 X X R#	a/path0	b/path0
-@@ -87,7 +87,7 @@ test_expect_success 'setup bulk move that is not directory move' '
- 	git update-index --add --remove a/* c/apath0 c/apath1 c/apath2
- '
- 
--test_expect_failure 'diff-index --detect-bulk-moves without full-dir rename.' '
-+test_expect_success 'diff-index --detect-bulk-moves without full-dir rename.' '
- 	cat >expected <<-EOF &&
- 	:040000 040000 X X R#	c/*	a/
- 	:100644 100644 X X R#	c/apath0	a/apath0
-@@ -105,7 +105,7 @@ test_expect_success 'setup bulk move to toplevel' '
- 	git update-index --add --remove apath* c/apath0 c/apath1 c/apath2
- '
- 
--test_expect_failure 'diff-index --detect-bulk-moves bulk move to toplevel.' '
-+test_expect_success 'diff-index --detect-bulk-moves bulk move to toplevel.' '
- 	cat >expected <<-EOF &&
- 	:040000 040000 X X R#	c/*	./
- 	:100644 100644 X X R#	c/apath0	apath0
-@@ -132,7 +132,7 @@ test_expect_success 'setup move including a subdir, with some content changes' '
- 
- test_expect_failure 'diff-index --detect-bulk-moves on a move including a subdir.' '
- 	cat >expected <<-EOF &&
--	:040000 040000 X X R#	a/	b/
-+	:040000 040000 X X R#	a/*	b/
- 	:100644 100644 X X R#	a/c/apath0	b/c/apath0
- 	:100644 100644 X X R#	a/c/apath1	b/c/apath1
- 	:100644 100644 X X R#	a/c/apath2	b/c/apath2
-@@ -176,7 +176,7 @@ test_expect_success 'setup move of files and subdirs to different places' '
- 
- test_expect_failure 'moving subdirs into one dir and files into another is not mistaken for dir move' '
- 	cat >expected <<-EOF &&
--	:040000 040000 X X R#	a/c/	b/
-+	:040000 040000 X X R#	a/c/*	b/
- 	:100644 100644 X X R#	a/c/apath0	b/apath0
- 	:100644 100644 X X R#	a/c/apath1	b/apath1
- 	:100644 100644 X X R#	a/c/apath2	b/apath2
-@@ -201,11 +201,11 @@ test_expect_success 'setup move of dir with only subdirs' '
- 	git mv a z
- '
- 
--test_expect_failure 'moving a dir with no files' '
-+test_expect_failure 'moving a dir with no direct children files' '
- 	cat >expected <<-EOF &&
--	:040000 040000 X X R#	a/	z/
--	:040000 040000 X X R#	a/b/	z/b/
--	:040000 040000 X X R#	a/c/	z/c/
-+	:040000 040000 X X R#	a/*	z/
-+	:040000 040000 X X R#	a/b/*	z/b/
-+	:040000 040000 X X R#	a/c/*	z/c/
- 	:100644 100644 X X R#	a/b/path0	z/b/path0
- 	:100644 100644 X X R#	a/b/path1	z/b/path1
- 	:100644 100644 X X R#	a/b/path2	z/b/path2
-@@ -235,7 +235,7 @@ test_expect_success 'setup move from toplevel to subdir' '
- 	git update-index --add --remove path0 path1 path2 path3 z/path*
- '
- 
--test_expect_failure '--detect-bulk-moves everything from toplevel.' '
-+test_expect_success '--detect-bulk-moves everything from toplevel.' '
- 	cat >expected <<-EOF &&
- 	:040000 040000 X X R#	./*	z/
- 	:100644 100644 X X R#	path0	z/path0
 -- 
-1.7.2.3
+1.7.1.1067.g5aeb7
