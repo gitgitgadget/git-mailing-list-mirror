@@ -1,69 +1,50 @@
-From: ebik <ebik@ucw.cz>
-Subject: git-svn.perl - bug in lookup_svn_merge()
-Date: Sat, 9 Oct 2010 11:20:16 +0200
-Message-ID: <20101009112016.3e3ed175@Chewbacca.cub>
-Reply-To: ebik@ucw.cz
+From: =?UTF-8?q?Tom=C3=A1=C5=A1=20Ebenlendr?= <ebik@ucw.cz>
+Subject: git-svn.perl: Fix glob matching on svn paths
+Date: Sat,  9 Oct 2010 11:07:15 +0200
+Message-ID: <1286615236-29732-1-git-send-email-ebik@ucw.cz>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=PGP-SHA256;
- boundary="Sig_/jXPrjtAb4SY.nVStFOgcsfV"; protocol="application/pgp-signature"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Cc: git@vger.kernel.org
 To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Sat Oct 09 11:20:33 2010
+X-From: git-owner@vger.kernel.org Sat Oct 09 11:21:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4VbV-0000sE-5S
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 11:20:33 +0200
+	id 1P4VcG-0001Hm-SD
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 11:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754102Ab0JIJUT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Oct 2010 05:20:19 -0400
-Received: from drak.ucw.cz ([212.71.128.78]:52069 "EHLO drak.ucw.cz"
+	id S1757221Ab0JIJVG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Oct 2010 05:21:06 -0400
+Received: from drak.ucw.cz ([212.71.128.78]:36064 "EHLO drak.ucw.cz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753753Ab0JIJUS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Oct 2010 05:20:18 -0400
-X-Greylist: delayed 764 seconds by postgrey-1.27 at vger.kernel.org; Sat, 09 Oct 2010 05:20:18 EDT
+	id S1753753Ab0JIJVF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Oct 2010 05:21:05 -0400
 Received: from Chewbacca.cub (localhost [127.0.0.1])
-	by drak.ucw.cz (Postfix) with ESMTP id 246EB6E;
-	Sat,  9 Oct 2010 11:20:17 +0200 (CEST)
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
+	by drak.ucw.cz (Postfix) with ESMTP id 02F922B;
+	Sat,  9 Oct 2010 11:07:33 +0200 (CEST)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158578>
 
---Sig_/jXPrjtAb4SY.nVStFOgcsfV
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Hello,
 
-I triggered a bug in lookup_svn_merge when I was trying to convert one
-of our repositories.
+I tried to convert our repositories to git. Our repositories have only
+branches (no tags, and no branch is so special to be called trunk).
+The directory of each individual branch live in the root of the
+repository (i.e., not in directory 'branches' as in standard layout).
 
-Namely the $bottom variable has sometimes value '1', i.e. the first
-commit ever. Then it pushes "$bottom_commit^..$top_commit" to some list
-for further processing. This processing fails, because there is no
-commit before the first one.
+I init the repository by: git svn init path_to_repo -b *
+This triggers first bogus match in match_globs(): the pattern matches an
+empty string - the place before first slash in any path.
 
-We should test existence of parent of $bottom_commit, but I don't know
-what is the correct behavior if it does not exist.
+We have created some branch names just by adding some suffix to another
+branch name. Imagine branch "devel" and "devel2". Then there is bogus
+match on path '/devel2' as it outputs 'devel'.
 
---=20
-                                 Tom=C3=A1=C5=A1 'eb=C3=ADk' Ebenlendr
-                                 PF 2010.77113540081
-
-
---Sig_/jXPrjtAb4SY.nVStFOgcsfV
-Content-Type: application/pgp-signature; name=signature.asc
-Content-Disposition: attachment; filename=signature.asc
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iF4EAREIAAYFAkywM9AACgkQUYN+FqT7KZvy9gEAl0uZFpYoQ/iHlkgNcrsJKyLP
-+m+OxldIruavqIIHwQYBANEu2fNMuXP70Um/qmPgineDxXZO8SdTirRyo13yqofg
-=0RK9
------END PGP SIGNATURE-----
-
---Sig_/jXPrjtAb4SY.nVStFOgcsfV--
+Patch in the next email fixes both these problems.
