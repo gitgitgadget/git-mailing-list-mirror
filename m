@@ -1,74 +1,82 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] fast-import: Allow filemodify to set the root
-Date: Sun, 10 Oct 2010 00:12:36 +0200
-Message-ID: <AANLkTinsnMRyoeGzCn1Rkk7tc+zwVa5j3AGqVZCdDGDv@mail.gmail.com>
-References: <1286448906-1424-1-git-send-email-david.barr@cordelta.com>
- <20101008081509.GA2845@kytes> <4CAED762.7040708@gmail.com>
- <74AF320B-5D82-4622-A7BF-61C847D4059A@cordelta.com> <AANLkTi=zS+oj1iHMh-gKVD=2dG5tLwA+bia9E6U3o=zW@mail.gmail.com>
- <20101008170939.GG9212@burratino> <5A2A5584-FB25-46C2-8891-B667C46011D3@cordelta.com>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Best single user practice
+Date: Sat, 9 Oct 2010 22:24:58 +0000 (UTC)
+Message-ID: <loom.20101009T233356-82@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: David Michael Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sun Oct 10 00:13:20 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 10 00:26:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4hfM-0000OB-Aj
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 00:13:20 +0200
+	id 1P4hs6-0004vg-Sa
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 00:26:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449Ab0JIWM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Oct 2010 18:12:57 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:48152 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753453Ab0JIWM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Oct 2010 18:12:57 -0400
-Received: by gwj17 with SMTP id 17so669460gwj.19
-        for <git@vger.kernel.org>; Sat, 09 Oct 2010 15:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=0xCwrRFWWTv2tNf4ofNxQujqyUkbThbZwyHDgmcZFVU=;
-        b=jLgK0U3zJintIGUNmd67X7zmb9mwjp5DaeaYIH70p4r+YwYwvVMtG/LHZ3a3J0LZGu
-         jjp9Cpp5dXLn132yS0r/okthcLpzfStNcoTf4lBSNhMi2zIYbBffIrKWIbQyNMRLFnsE
-         lASZcyz2apnDtyRz528MTzafdXPgyIBrMDHfs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=mZHjNU0VCveL1k197t88BaA7RsB/f+jP6Hbg0xlyW+hpuyAWsrPW8pRVbvCwrf436E
-         yfociIGWcEB/58JyoO2pBFpgAHYhTcYfjnYlYZu3zFjq6FKa09B3h+w7zNcKZqbcpY1i
-         n5ApkaM3pBupaKNRbhmYnpMaXP0gaWRaHQCZE=
-Received: by 10.150.147.11 with SMTP id u11mr5008331ybd.386.1286662376301;
- Sat, 09 Oct 2010 15:12:56 -0700 (PDT)
-Received: by 10.151.15.8 with HTTP; Sat, 9 Oct 2010 15:12:36 -0700 (PDT)
-In-Reply-To: <5A2A5584-FB25-46C2-8891-B667C46011D3@cordelta.com>
+	id S1754094Ab0JIWZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Oct 2010 18:25:15 -0400
+Received: from lo.gmane.org ([80.91.229.12]:37492 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753550Ab0JIWZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Oct 2010 18:25:14 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P4hqo-0004Ui-8n
+	for git@vger.kernel.org; Sun, 10 Oct 2010 00:25:10 +0200
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 00:25:10 +0200
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 00:25:10 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.62)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158632>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158633>
 
-Heya,
+I've started using git maybe one month ago, and I'd like to use it for many 
+things including some one-man projects, browser settings backups, and such 
+things. So I always do a local git init, ssh to my server and create a repo 
+there. I copy the .git/config from a working project, and change the remote 
+URL. It all works, but it's not perfect.
 
-On Sun, Oct 10, 2010 at 00:11, David Michael Barr
-<david.barr@cordelta.com> wrote:
-> v1.7.3-rc0~75^2 (Teach fast-import to import
-> subtrees named by tree id, 2010-06-30)
-> has a shortcoming, it doesn't allow the root to be set.
-> Extend this behaviour by allowing the root to be
-> referenced as the empty path, "".
+- Is it not possible to create a remote repository from my own computer without 
+ssh?
 
-Yes, that would be a good addition.
+- There's only version 1.5.4.3 on the server and I don't want to update it 
+unless strongly recommended so. Should I?
 
--- 
-Cheers,
+- Because of the low version, I can't use "git init --bare" on the server. So I 
+create an usual depository and change the configuration to bare=true. Is it OK 
+(I really don't mind the repo being placed in DIR/.git instead of DIR itself.)?
 
-Sverre Rabbelier
+- The very first time I need to do "git push origin master", later "git push" 
+suffices. I wonder why.
+
+- My local repository created by "git init" (version 1.7.2.3 under cygwin) 
+contains
+[core]
+ repositoryformatversion = 0
+ filemode = true
+ bare = false
+ logallrefupdates = true
+ ignorecase = true
+but I'd prefer to specify there as little as possible, since the settings for 
+all my repositories should be the same (at least for the moment). What can be 
+safely removed?
+
+- Sometimes, I use "git push --force", how do I clean up the resulting garbage 
+on the server?
+
+- How can I ensure that everything important gets pushed to the server? Maybe 
+by using "git push --mirror"? Obviously and logically, .git/config doesn't get 
+pushed, but maybe I miss something more important, too?
