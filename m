@@ -1,61 +1,59 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] CodingGuidelines: Fix a typo
-Date: Sat, 09 Oct 2010 19:35:09 +0200
-Message-ID: <87y6a7s20i.fsf@gmail.com>
+Date: Sat, 09 Oct 2010 10:51:32 -0700
+Message-ID: <7v39sfuue3.fsf@alter.siamese.dyndns.org>
 References: <1286623119-13766-1-git-send-email-stepnem@gmail.com>
-	<20101009152758.GA17799@burratino>
+ <20101009152758.GA17799@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: stepnem@gmail.com, git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 09 19:36:29 2010
+X-From: git-owner@vger.kernel.org Sat Oct 09 19:51:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4dLL-0002Ds-CJ
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 19:36:23 +0200
+	id 1P4daN-00081A-U9
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 19:51:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755972Ab0JIRgS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Oct 2010 13:36:18 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:63555 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754168Ab0JIRgR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 9 Oct 2010 13:36:17 -0400
-Received: by bwz15 with SMTP id 15so923821bwz.19
-        for <git@vger.kernel.org>; Sat, 09 Oct 2010 10:36:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=uD9cXkVPXkJBQK5XjaNUmg2cASES5l9/rTaW42bf4fA=;
-        b=ejEvKxUWSPx7ADUjDifEtNvQuD06xI3Gbayed7VMV+U3yM9Q9+RSyCCg+FPD1BUfbr
-         nV7s2sB860sdPrfMmw5E7kuS7Ev/aeyQEtva+ce1VwqULUXNwR7VFAaMpv3ojeBcm+/j
-         VF//OTEumM8h36xBJyF0J7XpiTgoaV827YU3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=kPpQnUswWELSGV0Sa6JRZJg/qslGPuYdJqvFvb5U9XL72o/d87kIZsxIfBnWE8s5DH
-         45sXLzbpONzgKJAsDRTFkrsV+iJRfDGBvxT5WFVwlDSU69BTYZRqP9tUFPdrcm53a4Eq
-         ZapykSyVDhiLcL8c/UFKq2qnJGu5QfAlZEyH4=
-Received: by 10.204.115.133 with SMTP id i5mr821580bkq.27.1286645774999;
-        Sat, 09 Oct 2010 10:36:14 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
-        by mx.google.com with ESMTPS id u4sm1268312bkz.5.2010.10.09.10.36.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 09 Oct 2010 10:36:12 -0700 (PDT)
+	id S1756263Ab0JIRvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Oct 2010 13:51:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:61272 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756094Ab0JIRvn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Oct 2010 13:51:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id ED255DB848;
+	Sat,  9 Oct 2010 13:51:41 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=JFOsExovDtX6M2PKNhAcFRYIUbQ=; b=weXVBc
+	6jqJsRMWGH2Knpj6HTm50LZsLKWQlX9faPs7NVbhs+DVNfVGLZOwujVu3s+ViZAu
+	xOEKmUdvPjLprNJAB5moGJWcTrfUHVUXYiYFRFMtpzKTzcvwUDdEoxTDG1S7FX/0
+	Q3CvQyft75bKr41wb79pAXdgtR1bSrZUVN+n0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iub3ixpcBkpzncvdNHOtRMkR3S9E8Uls
+	SfTLMkc3i1okNHKxM+Kl3ovusMD5umUWbAg+RFcwVWCFOGOdiXnhFqqtk4hPiVO6
+	Zd0exXtwNGhffk90iV1uJY0IwuICOpRPwQan7urKOXZoI77vfmYZAqnNn8OeJJNy
+	3eGile1bqp4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BC09FDB847;
+	Sat,  9 Oct 2010 13:51:38 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C90F4DB846; Sat,  9 Oct
+ 2010 13:51:34 -0400 (EDT)
 In-Reply-To: <20101009152758.GA17799@burratino> (Jonathan Nieder's message of
-	"Sat, 9 Oct 2010 10:27:58 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+ "Sat\, 9 Oct 2010 10\:27\:58 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DDCDF14E-D3CD-11DF-A010-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158595>
 
 Jonathan Nieder <jrnieder@gmail.com> writes:
 
@@ -72,46 +70,58 @@ Jonathan Nieder <jrnieder@gmail.com> writes:
 > A bit confusing, since ${parameter%word} and $parameter are
 > substitutions, too.
 
-Not really. They are all parameter expansions. The former a "pattern
-removal", the latter a plain expansion (yeah I know you can _call_ it a
-substitution anyway, but I assume you were trying to be precise/match
-the Bash manual wording here).
+I had the same reaction.  Perhaps moving other parameter substitions
+closer to these two would help?
 
-But I agree "pattern substitution" is even clearer, thanks.
+	Side note: this is totally unrelated, but the below is --patience;
+	our output without --patience is almost unreadable in this case.
 
-BTW, when we continue on this slightly bike-shedding note, it would mak=
-e
-sense to unify the capitalisation of those termini technici in there
-("Arithmetic Expansion", "Process Substitution"). Personally I would
-prefer having them all in lower-case; it feels a bit funny to read "We
-use Arithmetic Expansion". WDYT?
+ Documentation/CodingGuidelines |   27 +++++++++++++++------------
+ 1 files changed, 15 insertions(+), 12 deletions(-)
 
-I hope the whitespace goes through undisturbed this time:
-
---- 8< ---
-Subject: CodingGuidelines: Fix a typo
-
-    `${parameter/pattern/string}' shell expansion uses glob patterns, s=
-o
-    talking about `regexp' is confusing.
-
-Signed-off-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
----
- Documentation/CodingGuidelines |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuide=
-lines
-index 8346c19..e52474b 100644
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
+index 8346c19..09ffc46 100644
 --- a/Documentation/CodingGuidelines
 +++ b/Documentation/CodingGuidelines
-@@ -53,7 +53,7 @@ For shell scripts specifically (not exhaustive):
-
-  - No strlen ${#parameter}.
-
+@@ -35,11 +35,22 @@ For shell scripts specifically (not exhaustive):
+    properly nests.  It should have been the way Bourne spelled
+    it from day one, but unfortunately isn't.
+ 
+- - We use ${parameter-word} and its [-=?+] siblings, and their
+-   colon'ed "unset or null" form.
++ - We use POSIX compliant parameter substitutions and avoid bashisms;
++   namely:
+ 
+- - We use ${parameter#word} and its [#%] siblings, and their
+-   doubled "longest matching" form.
++   - We use ${parameter-word} and its [-=?+] siblings, and their
++     colon'ed "unset or null" form.
++
++   - We use ${parameter#word} and its [#%] siblings, and their
++     doubled "longest matching" form.
++
++   - No "Substring Expansion" ${parameter:offset:length}.
++
++   - No shell arrays.
++
++   - No strlen ${#parameter}.
++
++   - No pattern replacement ${parameter/pattern/string}.
+ 
+  - We use Arithmetic Expansion $(( ... )).
+ 
+@@ -47,14 +58,6 @@ For shell scripts specifically (not exhaustive):
+    of them, as some shells do not grok $((x)) while accepting $(($x))
+    just fine (e.g. dash older than 0.5.4).
+ 
+- - No "Substring Expansion" ${parameter:offset:length}.
+-
+- - No shell arrays.
+-
+- - No strlen ${#parameter}.
+-
 - - No regexp ${parameter/pattern/string}.
-+ - No pattern substitution ${parameter/pattern/string}.
-
+-
   - We do not use Process Substitution <(list) or >(list).
-
---
+ 
+  - We prefer "test" over "[ ... ]".
