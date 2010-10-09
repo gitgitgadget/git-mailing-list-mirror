@@ -1,95 +1,73 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [TopGit PATCH 01/10] cat_file: take -i/-w parameters
-Date: Sat, 9 Oct 2010 22:32:19 +0200
-Message-ID: <20101009203219.GN29673@pengutronix.de>
-References: <160b8b0eb6152da98f4fa633ac25c7a25ff32aa4.1286524446.git.bert.wesarg@googlemail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v2 0/3] Teach fetch and pull to recursively fetch submodules
+ too
+Date: Sat, 09 Oct 2010 22:37:30 +0200
+Message-ID: <4CB0D28A.10506@web.de>
+References: <4C935D77.3080008@web.de> <329A2E43-ADE3-467C-A2A6-24ACB9DF641E@sb.org> <4C953DE5.6020900@web.de> <DD3654D9-46B9-4980-9138-38FDC33A383C@sb.org> <4C963D00.9050207@web.de> <28BC3A45-D3CF-4A8C-A818-B92A9827C8FB@sb.org> <4CAB8DDF.8080004@web.de> <FB03A7DB-67D2-4EAE-A0F0-2F3E3CEA9878@sb.org> <20101006232243.GA30302@burratino> <4CB0C279.8050407@web.de> <20101009200232.GB19064@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, pasky@suse.cz,
-	martin f krafft <madduck@madduck.net>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 09 22:32:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 09 22:37:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4g5v-0007sX-Bu
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 22:32:39 +0200
+	id 1P4gAw-0001In-E0
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 22:37:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760540Ab0JIUcX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Oct 2010 16:32:23 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:51830 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756891Ab0JIUcW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Oct 2010 16:32:22 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P4g5d-000472-DC; Sat, 09 Oct 2010 22:32:21 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P4g5b-0000No-NY; Sat, 09 Oct 2010 22:32:19 +0200
-Content-Disposition: inline
-In-Reply-To: <160b8b0eb6152da98f4fa633ac25c7a25ff32aa4.1286524446.git.bert.wesarg@googlemail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1760560Ab0JIUhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 9 Oct 2010 16:37:36 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:50093 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757295Ab0JIUhc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Oct 2010 16:37:32 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate03.web.de (Postfix) with ESMTP id A538F1663ED65;
+	Sat,  9 Oct 2010 22:37:30 +0200 (CEST)
+Received: from [93.246.43.182] (helo=[192.168.178.29])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1P4gAc-0003Im-00; Sat, 09 Oct 2010 22:37:30 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <20101009200232.GB19064@burratino>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18BSzV5zAZrceAXuJu+84lBl+H/pVuokzsyZrNe
+	+dkqsbukHaJAiUmayAx2DRrrgfAEnOfqGcloKiCR70FWz1fDJL
+	GJytxbm3GzhvahAjRPsw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158606>
 
-Hi Bert,
+Am 09.10.2010 22:02, schrieb Jonathan Nieder:
+> Jens Lehmann wrote:
+>> Am 07.10.2010 01:22, schrieb Jonathan Nieder:
+> 
+>>>     I also
+>>> don't want to pay the penalty of fetching, say, git-gui when I don't
+>>> need it.
+>>
+>> I'm not sure I understand your setup, do you want to configure that for
+>> each remote or for each submodule?
+> 
+> Without thinking too hard about it, I imagine listing submodules in
+> the [remote "foo"] stanza, just like I list branches there now.
 
-On Fri, Oct 08, 2010 at 09:57:59AM +0200, Bert Wesarg wrote:
-> This changes the way how cat_file selects the source of the file. It
-> accepts an optional parameter which is either -i or -w and will react=
- on this
-> instead of the branch name. tg-patch is updated accordingly and can n=
-ow
-> accepts the current branch name as argument with -i or -w given.
->=20
-> cat_file was also broken for the worktree case when we are not in the=
- top level.
->=20
-> Also, tg-patch allowed to be on the top-base branch, but -i and -w do=
-esn't
-> make sense there too.
->=20
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-doesn't apply anymore.  Do you care to fix and resend?  I think it's
-your own change to cat_file BTW ... :-)
+Yup, that makes sense.
 
 
-> ---
->=20
-> I will probably never understand why TopGit accepts to be on a top-ba=
-se branch.
-/me shrugs.
+>> Because you can already do the latter
+>> with my patches. And configuring that via .gitmodules has the advantage
+>> that every clone inherits that setting
+> 
+> I certainly do _not_ want that property.  Upstream can tell what
+> submodules to check out by default, but aside from that, the choice of
+> what to fetch has nothing to do with them.
 
-> I will probably never understand why TopGit not changes the cwd to th=
-e top level.
-I can imagine that strange things can happen then, but I don't have an
-example.
-
-> I will probably never understand why TopGit does not use the git-sh-s=
-etup.sh.
-I'm not sure this works in all cases.  And I think it's not sensibe as
-we don't have control over this file.  And what if it starts providing =
-a
-function with the same name as one of our's?
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Ok, I take that as a vote to remove the parsing of .gitmodules in patch
+2/3. But I assume you are fine with being able to configure that for
+each submodule via .git/config?
