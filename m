@@ -1,82 +1,88 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Best single user practice
-Date: Sat, 9 Oct 2010 22:24:58 +0000 (UTC)
-Message-ID: <loom.20101009T233356-82@post.gmane.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Efficiently detecting paths that differ from each other only in case
+Date: Sun, 10 Oct 2010 00:31:10 +0200
+Message-ID: <201010100031.11791.jnareb@gmail.com>
+References: <AANLkTimGAbosbD0pprROu_g-UW38faotYA2dTxj9scsP@mail.gmail.com> <m3aamng3dt.fsf@localhost.localdomain> <AANLkTinzH3EWy=E2H9hQJzCdPB3Epu5WQkmuv2CWKFtc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 10 00:26:33 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 10 00:31:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4hs6-0004vg-Sa
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 00:26:31 +0200
+	id 1P4hwu-0006Uy-K3
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 00:31:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754094Ab0JIWZP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Oct 2010 18:25:15 -0400
-Received: from lo.gmane.org ([80.91.229.12]:37492 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753550Ab0JIWZO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Oct 2010 18:25:14 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P4hqo-0004Ui-8n
-	for git@vger.kernel.org; Sun, 10 Oct 2010 00:25:10 +0200
-Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 00:25:10 +0200
-Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 00:25:10 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.62)
+	id S1754689Ab0JIWbV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Oct 2010 18:31:21 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33504 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754131Ab0JIWbU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 9 Oct 2010 18:31:20 -0400
+Received: by fxm14 with SMTP id 14so1063889fxm.19
+        for <git@vger.kernel.org>; Sat, 09 Oct 2010 15:31:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=250pN9uK8QVLAqzGc9iM76Cv5RG68Q5xgmphrK+cd2E=;
+        b=sYLObOTL8d6HbPK2E8njZ5CRb412qEMvzZLbo9GeQNIAT1NFCvi819AlkghDT69VlL
+         kcD83taFoPHfi5HP893tukgajnutT6neD/rQoMmo+EMsInuzMvppOSJWmbu9EXyCjF8a
+         O620Xgxt9QwsB15RzSoDqivpaSTeqmywWkpig=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=K/xwGGrlMoNNiiFau4wynAn2zZNlB4Pbe/nm1EwwXDZ26/dEkMLHGsWR4xMeO22UtU
+         3zd03G0inVQPUr0OLhrKv3Z6tInQ2DtGCl0NNnpBEkh14IFQ4VdlcFpUjhOkJwEDb7z+
+         fjqofxqhLwhFjr8EUYxX6lkEWDUxEj9abANLc=
+Received: by 10.223.73.193 with SMTP id r1mr802055faj.128.1286663479645;
+        Sat, 09 Oct 2010 15:31:19 -0700 (PDT)
+Received: from [192.168.1.13] (abvg64.neoplus.adsl.tpnet.pl [83.8.204.64])
+        by mx.google.com with ESMTPS id m8sm2136882faj.11.2010.10.09.15.31.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 09 Oct 2010 15:31:18 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <AANLkTinzH3EWy=E2H9hQJzCdPB3Epu5WQkmuv2CWKFtc@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158634>
 
-I've started using git maybe one month ago, and I'd like to use it for many 
-things including some one-man projects, browser settings backups, and such 
-things. So I always do a local git init, ssh to my server and create a repo 
-there. I copy the .git/config from a working project, and change the remote 
-URL. It all works, but it's not perfect.
+On Sun, Oct 10, 2010, Dun Peal wrote:
+> On Sat, Oct 9, 2010 at 3:47 AM, Jakub Narebski <jnareb@gmail.com> wro=
+te:
 
-- Is it not possible to create a remote repository from my own computer without 
-ssh?
+> > Sidenote: why not detect violation earlier, by having pre-commit ho=
+ok
+> > in each developer repository check for such violation? =A0It is not=
+ as
+> > time sensitive on the local side (when creating a commit, you have =
+to
+> > take some time to write commit message anyway).
+>=20
+> That's a solution, but as you surely know hooks are not automatically
+> cloned with the repository. There's no way to ensure that all of our
+> many users install that hook, and we can't allow an incorrect state o=
+n
+> the central node.
+>=20
+> A pre-receive hook on that node seems like the only way to really ens=
+ure that.
 
-- There's only version 1.5.4.3 on the server and I don't want to update it 
-unless strongly recommended so. Should I?
+Well, if you can control git installation on client side, you can
+modify git templates (usually in /usr/share/git-core/templates) to
+have appropriate pre-commit hok enabled in all repositories created
+there... but I agree that it is not an universal solution.
 
-- Because of the low version, I can't use "git init --bare" on the server. So I 
-create an usual depository and change the configuration to bare=true. Is it OK 
-(I really don't mind the repo being placed in DIR/.git instead of DIR itself.)?
-
-- The very first time I need to do "git push origin master", later "git push" 
-suffices. I wonder why.
-
-- My local repository created by "git init" (version 1.7.2.3 under cygwin) 
-contains
-[core]
- repositoryformatversion = 0
- filemode = true
- bare = false
- logallrefupdates = true
- ignorecase = true
-but I'd prefer to specify there as little as possible, since the settings for 
-all my repositories should be the same (at least for the moment). What can be 
-safely removed?
-
-- Sometimes, I use "git push --force", how do I clean up the resulting garbage 
-on the server?
-
-- How can I ensure that everything important gets pushed to the server? Maybe 
-by using "git push --mirror"? Obviously and logically, .git/config doesn't get 
-pushed, but maybe I miss something more important, too?
+--=20
+Jakub Narebski
+Poland
