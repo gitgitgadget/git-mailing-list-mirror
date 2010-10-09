@@ -1,154 +1,117 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 08/18] git notes merge: Initial implementation handling
- trivial merges only
-Date: Sat, 9 Oct 2010 12:29:55 -0500
-Message-ID: <20101009172955.GB17799@burratino>
-References: <1285719811-10871-1-git-send-email-johan@herland.net>
- <1285719811-10871-9-git-send-email-johan@herland.net>
- <20101007062433.GF2285@burratino>
- <201010090155.20858.johan@herland.net>
+From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: Fix a typo
+Date: Sat, 09 Oct 2010 19:35:09 +0200
+Message-ID: <87y6a7s20i.fsf@gmail.com>
+References: <1286623119-13766-1-git-send-email-stepnem@gmail.com>
+	<20101009152758.GA17799@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Sat Oct 09 19:33:15 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 09 19:36:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4dII-0000ub-Vg
-	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 19:33:15 +0200
+	id 1P4dLL-0002Ds-CJ
+	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 19:36:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759948Ab0JIRdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 9 Oct 2010 13:33:08 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64219 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755972Ab0JIRdH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 9 Oct 2010 13:33:07 -0400
-Received: by gyg13 with SMTP id 13so402382gyg.19
-        for <git@vger.kernel.org>; Sat, 09 Oct 2010 10:33:06 -0700 (PDT)
+	id S1755972Ab0JIRgS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 9 Oct 2010 13:36:18 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63555 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754168Ab0JIRgR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 9 Oct 2010 13:36:17 -0400
+Received: by bwz15 with SMTP id 15so923821bwz.19
+        for <git@vger.kernel.org>; Sat, 09 Oct 2010 10:36:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=vc5VP94N7wuaALaDatrfrYxjrfRswcjCagJIRKfCS+E=;
-        b=CMgGxQceNsziaF3pmk0YAWDKW0t4PiyFZQ6kEvl3gp4Kt35Pn+vguYq+L1/0pkoPon
-         ahnxOCWz3RPNwNlhkMY2E7AM2IRHbfG7jYP22hzHSkOIw6Eqoal8zvAw88LXjFzFbfDt
-         1lpv5CXfO8NE0lFzdk2hRSYe6jecNguRMB7KY=
+        h=domainkey-signature:received:received:from:to:cc:subject
+         :in-reply-to:references:user-agent:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=uD9cXkVPXkJBQK5XjaNUmg2cASES5l9/rTaW42bf4fA=;
+        b=ejEvKxUWSPx7ADUjDifEtNvQuD06xI3Gbayed7VMV+U3yM9Q9+RSyCCg+FPD1BUfbr
+         nV7s2sB860sdPrfMmw5E7kuS7Ev/aeyQEtva+ce1VwqULUXNwR7VFAaMpv3ojeBcm+/j
+         VF//OTEumM8h36xBJyF0J7XpiTgoaV827YU3Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=XJgrelhL1cp/ad6sclfd4IoFQC/gnujGwqKc+O4VVmUUpu/R1tNMbKpP+/SaSZMnR5
-         xj3+CzUOcgOCAyrIWdj2qjismEByLd5pDo2aJKB0ETxTpbunJSvGL+XudJjN1yQSdPqB
-         CXVG6Y06aD2NUEUqQU7vmc35Cjc4HNdDjljHw=
-Received: by 10.150.69.24 with SMTP id r24mr4925415yba.168.1286645585936;
-        Sat, 09 Oct 2010 10:33:05 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id v37sm1111625yba.20.2010.10.09.10.33.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 09 Oct 2010 10:33:04 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201010090155.20858.johan@herland.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type:content-transfer-encoding;
+        b=kPpQnUswWELSGV0Sa6JRZJg/qslGPuYdJqvFvb5U9XL72o/d87kIZsxIfBnWE8s5DH
+         45sXLzbpONzgKJAsDRTFkrsV+iJRfDGBvxT5WFVwlDSU69BTYZRqP9tUFPdrcm53a4Eq
+         ZapykSyVDhiLcL8c/UFKq2qnJGu5QfAlZEyH4=
+Received: by 10.204.115.133 with SMTP id i5mr821580bkq.27.1286645774999;
+        Sat, 09 Oct 2010 10:36:14 -0700 (PDT)
+Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
+        by mx.google.com with ESMTPS id u4sm1268312bkz.5.2010.10.09.10.36.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 09 Oct 2010 10:36:12 -0700 (PDT)
+In-Reply-To: <20101009152758.GA17799@burratino> (Jonathan Nieder's message of
+	"Sat, 9 Oct 2010 10:27:58 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158594>
 
-Johan Herland wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> I agree, but I'd like to name it 'git notes get-ref' instead, to stay
-> consistent with the current subcommand (instead of option) design.
-
-Sounds good. :)
-
-> Jonathan Nieder wrote:
-
->> I would find it easier to read
->>
->> 	if (o->verbosity >= DEFAULT_VERBOSITY)
->> 		fprintf(stderr, ...)
->>
->> unless there are going to be a huge number of messages.
+> stepnem@gmail.com wrote:
 >
-> The current version is modeled on the show() and output() functions in
-> merge-recursive.c. I think that works better in this situation.
-> Or maybe you have a better solution for merge-recursive.c as well?
+>> `${parameter/pattern/string}' shell expansion uses glob patterns, so
+>> talking about `regexp' is confusing.
+>
+> Okay.
+>
+>> - - No regexp ${parameter/pattern/string}.
+>> + - No substitution ${parameter/pattern/string}.
+>
+> A bit confusing, since ${parameter%word} and $parameter are
+> substitutions, too.
 
-Hmm --- isn't the point of output() that it indents to the appropriate
-level to portray a recursive merge?
+Not really. They are all parameter expansions. The former a "pattern
+removal", the latter a plain expansion (yeah I know you can _call_ it a
+substitution anyway, but I assume you were trying to be precise/match
+the Bash manual wording here).
 
-Similarly, show() prevents those confusing messages from the internal
-merge between ancestors from being printed when the user is not
-interested.
+But I agree "pattern substitution" is even clearer, thanks.
 
-But if you think they are important abstractions to maintain, I won't
-stop you. :)
+BTW, when we continue on this slightly bike-shedding note, it would mak=
+e
+sense to unify the capitalisation of those termini technici in there
+("Arithmetic Expansion", "Process Substitution"). Personally I would
+prefer having them all in lower-case; it feels a bit funny to read "We
+use Arithmetic Expansion". WDYT?
 
->>> +
->>> +	if (!o->local_ref || get_sha1(o->local_ref, local_sha1)) {
->>> +		/* empty notes ref => assume empty notes tree */
-[...]
-> I'm not sure when you think we should (or shouldn't) error out.
+I hope the whitespace goes through undisturbed this time:
 
-get_sha1() can return -1 in the following cases:
+--- 8< ---
+Subject: CodingGuidelines: Fix a typo
 
- - starts with :/, regex does not match.
- - starts with :, entry not present in index
- - in form <rev>:<path>, <path> does not exist in <rev>
- - in form <rev>^, <rev> does not exist or that parent does not
-   exist
- - tag being used as commit points to a tree instead
- - et c.
+    `${parameter/pattern/string}' shell expansion uses glob patterns, s=
+o
+    talking about `regexp' is confusing.
 
-Especially if the caller tries
+Signed-off-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
+---
+ Documentation/CodingGuidelines |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-	git notes merge 'afjkdlsa^{gobbledeegook'
+diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuide=
+lines
+index 8346c19..e52474b 100644
+--- a/Documentation/CodingGuidelines
++++ b/Documentation/CodingGuidelines
+@@ -53,7 +53,7 @@ For shell scripts specifically (not exhaustive):
 
-I would not like the merge to succeed.
+  - No strlen ${#parameter}.
 
-So as I see it, there are four cases:
+- - No regexp ${parameter/pattern/string}.
++ - No pattern substitution ${parameter/pattern/string}.
 
- - get_sha1() succeeds and returns a commit ==> merge that rev
- - get_sha1() succeeds and returns a non-commit ==> fail
- - get_sha1() fails, but resolve_ref() indicates a ref valid
-   for writing ==> merge empty tree
- - get_sha1() fails, invalid refname ==> fail
+  - We do not use Process Substitution <(list) or >(list).
 
-The current code does not notice case 4, does it?
-
-> I guess this becomes a discussion of whether we should model notes
-> merges on the 'resolve' merge strategy or the 'recursive' merge
-> strategy. Without having studied each strategy in-depth, I don't know
-> how much "better" 'recursive' is than 'resolve', especially not from
-> the POV of notes merges.
-
-I think 'resolve' should be good enough for now.  We can always add
-'recursive' later.
-
-The cases where 'recursive' might help are those in which both sides
-made a lot of changes to the same notes.  It helps in two ways:
-signaling conflicts that might have been otherwise missed and merging
-cleanly in cases that might otherwise produce spurious conflicts.
-In theory, it makes the result less "arbitrary"; in practice, it seems
-to help avoid some conflicts in ugly cases like merging one week's pu
-with the next week's pu.
-
-[...]
-> Almost. If you look at the notes_merge() docs in notes-merge.h by the
-> end of this series, you'll see the following return values:
-> 
-> 0: Merge trivially succeeded in an existing commit (e.g. fast-forward).
-> 
-> 1: Merge successfully completes a merge commit (i.e. no conflicts).
-> 
-> -1: Merge results is conflicts.
-
-What kind of caller would care about the distinction between 1 and -1
-here (just curious)?
-
-Jonathan
+--
