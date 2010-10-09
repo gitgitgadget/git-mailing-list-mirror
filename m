@@ -1,407 +1,183 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv3 19/21] git notes merge: Add another auto-resolving strategy: "cat_sort_uniq"
-Date: Sat,  9 Oct 2010 03:15:54 +0200
-Message-ID: <1286586956-3714-20-git-send-email-johan@herland.net>
+Subject: [PATCHv3 18/21] git notes merge: --commit should fail if underlying notes ref has moved
+Date: Sat,  9 Oct 2010 03:15:53 +0200
+Message-ID: <1286586956-3714-19-git-send-email-johan@herland.net>
 References: <Message-Id: <1286586528-3473-1-git-send-email-johan@herland.net>
 Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
 	avarab@gmail.com, gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 09 03:17:02 2010
+X-From: git-owner@vger.kernel.org Sat Oct 09 03:17:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4O3X-0004Cm-Pz
+	id 1P4O3Y-0004Cm-AH
 	for gcvg-git-2@lo.gmane.org; Sat, 09 Oct 2010 03:17:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760137Ab0JIBQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1760135Ab0JIBQk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Fri, 8 Oct 2010 21:16:40 -0400
-Received: from mail.mailgateway.no ([82.117.37.108]:53207 "EHLO
+Received: from mail.mailgateway.no ([82.117.37.108]:53180 "EHLO
 	mail.mailgateway.no" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759990Ab0JIBQj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 8 Oct 2010 21:16:39 -0400
+	with ESMTP id S1752767Ab0JIBQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 8 Oct 2010 21:16:37 -0400
 Received: from pd9587e9f.dip.t-dialin.net ([217.88.126.159] helo=localhost.localdomain)
 	by mail.mailgateway.no with esmtpsa (TLSv1:AES256-SHA:256)
 	(Exim 4.60 (FreeBSD))
 	(envelope-from <johan@herland.net>)
-	id 1P4O3B-0001yv-C7; Sat, 09 Oct 2010 03:16:37 +0200
+	id 1P4O39-0001yv-TY; Sat, 09 Oct 2010 03:16:36 +0200
 X-Mailer: git-send-email 1.7.3.1.104.g92b87a
 In-Reply-To: <Message-Id: <1286586528-3473-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158569>
 
-This new strategy is similar to "concatenate", but in addition to
-concatenating the two note candidates, this strategy sorts the resulting
-lines, and removes duplicate lines from the result. This is equivalent to
-applying the "cat | sort | uniq" shell pipeline to the two note candidates.
+When manually resolving a notes merge, if the merging ref has moved since
+the merge started, we should fail to complete the merge, and alert the user
+to what's going on.
 
-This strategy is useful if the notes follow a line-based format where one
-wants to avoid duplicate lines in the merge result.
+This situation may arise if you start a 'git notes merge' which results in
+conflicts, and you then update the current notes ref (using for example
+'git notes add/copy/amend/edit/remove/prune', 'git update-ref', etc.),
+before you get around to resolving the notes conflicts and calling
+'git notes merge --commit'.
 
-Note that if either of the note candidates contain duplicate lines _prior_
-to the merge, these will also be removed by this merge strategy.
+We detect this situation by comparing the first parent of the partial merge
+commit (which was created when the merge started) to the current value of the
+merging notes ref (pointed to by the .git/NOTES_MERGE_REF symref).
 
-The patch also contains tests and documentation for the new strategy.
+If we don't fail in this situation, the notes merge commit would overwrite
+the updated notes ref, thus losing the changes that happened in the meantime.
+
+The patch includes a testcase verifying that we fail correctly in this
+situation.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-notes.txt         |   12 +++-
- builtin/notes.c                     |    8 ++-
- notes-merge.c                       |    6 ++
- notes-merge.h                       |    3 +-
- notes.c                             |   76 ++++++++++++++++++
- notes.h                             |    1 +
- t/t3309-notes-merge-auto-resolve.sh |  145 +++++++++++++++++++++++++++++++++++
- 7 files changed, 247 insertions(+), 4 deletions(-)
+ builtin/notes.c                       |   11 ++++-
+ t/t3310-notes-merge-manual-resolve.sh |   76 +++++++++++++++++++++++++++++++++
+ 2 files changed, 85 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 5bb9784..466885a 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -155,7 +155,7 @@ OPTIONS
- --strategy=<strategy>::
- 	When merging notes, resolve notes conflicts using the given
- 	strategy. The following strategies are recognized: "manual"
--	(default), "ours", "theirs" and "union".
-+	(default), "ours", "theirs", "union" and "cat_sort_uniq".
- 	See the "NOTES MERGE STRATEGIES" section below for more
- 	information on each notes merge strategy.
- 
-@@ -230,6 +230,16 @@ ref).
- "union" automatically resolves notes conflicts by concatenating the
- local and remote versions.
- 
-+"cat_sort_uniq" is similar to "union", but in addition to concatenating
-+the local and remote versions, this strategy also sorts the resulting
-+lines, and removes duplicate lines from the result. This is equivalent
-+to applying the "cat | sort | uniq" shell pipeline to the local and
-+remote versions. This strategy is useful if the notes follow a line-based
-+format where one wants to avoid duplicated lines in the merge result.
-+Note that if either the local or remote version contain duplicate lines
-+prior to the merge, these will also be removed by this notes merge
-+strategy.
-+
- 
- EXAMPLES
- --------
 diff --git a/builtin/notes.c b/builtin/notes.c
-index d3754ab..abf26e5 100644
+index 3c373ec..d3754ab 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -324,6 +324,8 @@ combine_notes_fn parse_combine_notes_fn(const char *v)
- 		return combine_notes_ignore;
- 	else if (!strcasecmp(v, "concatenate"))
- 		return combine_notes_concatenate;
-+	else if (!strcasecmp(v, "cat_sort_uniq"))
-+		return combine_notes_cat_sort_uniq;
- 	else
- 		return NULL;
- }
-@@ -846,8 +848,8 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		OPT__VERBOSITY(&verbosity),
- 		OPT_GROUP("Merge options"),
- 		OPT_STRING('s', "strategy", &strategy, "strategy",
--			   "resolve notes conflicts using the given "
--			   "strategy (manual/ours/theirs/union)"),
-+			   "resolve notes conflicts using the given strategy "
-+			   "(manual/ours/theirs/union/cat_sort_uniq)"),
- 		OPT_GROUP("Committing unmerged notes"),
- 		{ OPTION_BOOLEAN, 0, "commit", &do_commit, NULL,
- 			"finalize notes merge by committing unmerged notes",
-@@ -899,6 +901,8 @@ static int merge(int argc, const char **argv, const char *prefix)
- 			o.strategy = NOTES_MERGE_RESOLVE_THEIRS;
- 		else if (!strcmp(strategy, "union"))
- 			o.strategy = NOTES_MERGE_RESOLVE_UNION;
-+		else if (!strcmp(strategy, "cat_sort_uniq"))
-+			o.strategy = NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ;
- 		else {
- 			error("Unknown -s/--strategy: %s", strategy);
- 			usage_with_options(git_notes_merge_usage, options);
-diff --git a/notes-merge.c b/notes-merge.c
-index a66c60b..9b6b9d1 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -451,6 +451,12 @@ static int merge_one_change(struct notes_merge_options *o,
- 		if (add_note(t, p->obj, p->remote, combine_notes_concatenate))
- 			die("confused: combine_notes_concatenate failed");
- 		return 0;
-+	case NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ:
-+		OUTPUT(o, 2, "Concatenating unique lines in local and remote "
-+		       "notes for %s", sha1_to_hex(p->obj));
-+		if (add_note(t, p->obj, p->remote, combine_notes_cat_sort_uniq))
-+			die("confused: combine_notes_cat_sort_uniq failed");
-+		return 0;
- 	}
- 	die("Unknown strategy (%i).", o->strategy);
- }
-diff --git a/notes-merge.h b/notes-merge.h
-index 5669836..f7cccb0 100644
---- a/notes-merge.h
-+++ b/notes-merge.h
-@@ -17,7 +17,8 @@ struct notes_merge_options {
- 		NOTES_MERGE_RESOLVE_MANUAL = 0,
- 		NOTES_MERGE_RESOLVE_OURS,
- 		NOTES_MERGE_RESOLVE_THEIRS,
--		NOTES_MERGE_RESOLVE_UNION
-+		NOTES_MERGE_RESOLVE_UNION,
-+		NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ
- 	} strategy;
- 	unsigned has_worktree:1;
- };
-diff --git a/notes.c b/notes.c
-index a7a901a..521f5d0 100644
---- a/notes.c
-+++ b/notes.c
-@@ -847,6 +847,82 @@ int combine_notes_ignore(unsigned char *cur_sha1,
- 	return 0;
- }
- 
-+static int string_list_add_note_lines(struct string_list *sort_uniq_list,
-+				      const unsigned char *sha1)
-+{
-+	char *data;
-+	unsigned long len;
-+	enum object_type t;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf **lines = NULL;
-+	int i, list_index;
-+
-+	if (is_null_sha1(sha1))
-+		return 0;
-+
-+	/* read_sha1_file NUL-terminates */
-+	data = read_sha1_file(sha1, &t, &len);
-+	if (t != OBJ_BLOB || !data || !len) {
-+		free(data);
-+		return t != OBJ_BLOB || !data;
-+	}
-+
-+	strbuf_attach(&buf, data, len, len + 1);
-+	lines = strbuf_split(&buf, '\n');
-+
-+	for (i = 0; lines[i]; i++) {
-+		if (lines[i]->buf[lines[i]->len - 1] == '\n')
-+			strbuf_setlen(lines[i], lines[i]->len - 1);
-+		if (!lines[i]->len)
-+			continue; /* skip empty lines */
-+		list_index = string_list_find_insert_index(sort_uniq_list,
-+							   lines[i]->buf, 0);
-+		if (list_index < 0)
-+			continue; /* skip duplicate lines */
-+		string_list_insert_at_index(sort_uniq_list, list_index,
-+					    lines[i]->buf);
-+	}
-+
-+	strbuf_list_free(lines);
-+	strbuf_release(&buf);
-+	return 0;
-+}
-+
-+static int string_list_join_lines_helper(struct string_list_item *item,
-+					 void *cb_data)
-+{
-+	struct strbuf *buf = cb_data;
-+	strbuf_addstr(buf, item->string);
-+	strbuf_addch(buf, '\n');
-+	return 0;
-+}
-+
-+int combine_notes_cat_sort_uniq(unsigned char *cur_sha1,
-+		const unsigned char *new_sha1)
-+{
-+	struct string_list sort_uniq_list = { NULL, 0, 0, 1 };
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = 1;
-+
-+	/* read both note blob objects into unique_lines */
-+	if (string_list_add_note_lines(&sort_uniq_list, cur_sha1))
-+		goto out;
-+	if (string_list_add_note_lines(&sort_uniq_list, new_sha1))
-+		goto out;
-+
-+	/* create a new blob object from sort_uniq_list */
-+	if (for_each_string_list(&sort_uniq_list,
-+				 string_list_join_lines_helper, &buf))
-+		goto out;
-+
-+	ret = write_sha1_file(buf.buf, buf.len, blob_type, cur_sha1);
-+
-+out:
-+	strbuf_release(&buf);
-+	string_list_clear(&sort_uniq_list, 0);
-+	return ret;
-+}
-+
- static int string_list_add_one_ref(const char *path, const unsigned char *sha1,
- 				   int flag, void *cb)
+@@ -786,7 +786,7 @@ static int merge_reset(struct notes_merge_options *o)
+ static int merge_commit(struct notes_merge_options *o)
  {
-diff --git a/notes.h b/notes.h
-index b372575..93a7365 100644
---- a/notes.h
-+++ b/notes.h
-@@ -27,6 +27,7 @@ typedef int (*combine_notes_fn)(unsigned char *cur_sha1, const unsigned char *ne
- int combine_notes_concatenate(unsigned char *cur_sha1, const unsigned char *new_sha1);
- int combine_notes_overwrite(unsigned char *cur_sha1, const unsigned char *new_sha1);
- int combine_notes_ignore(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+int combine_notes_cat_sort_uniq(unsigned char *cur_sha1, const unsigned char *new_sha1);
+ 	struct strbuf msg = STRBUF_INIT;
+-	unsigned char sha1[20];
++	unsigned char sha1[20], parent_sha1[20];
+ 	struct notes_tree *t;
+ 	struct commit *partial;
+ 	struct pretty_print_context pretty_ctx;
+@@ -803,6 +803,11 @@ static int merge_commit(struct notes_merge_options *o)
+ 	else if (parse_commit(partial))
+ 		die("Could not parse commit from NOTES_MERGE_PARTIAL.");
  
- /*
-  * Notes tree object
-diff --git a/t/t3309-notes-merge-auto-resolve.sh b/t/t3309-notes-merge-auto-resolve.sh
-index 1a1fc7e..461fd84 100755
---- a/t/t3309-notes-merge-auto-resolve.sh
-+++ b/t/t3309-notes-merge-auto-resolve.sh
-@@ -499,4 +499,149 @@ test_expect_success 'merge z into y with "union" strategy => Non-conflicting 3-w
- 	verify_notes y union
++	if (partial->parents)
++		hashcpy(parent_sha1, partial->parents->item->object.sha1);
++	else
++		hashclr(parent_sha1);
++
+ 	t = xcalloc(1, sizeof(struct notes_tree));
+ 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+ 
+@@ -818,7 +823,9 @@ static int merge_commit(struct notes_merge_options *o)
+ 	format_commit_message(partial, "%s", &msg, &pretty_ctx);
+ 	strbuf_trim(&msg);
+ 	strbuf_insert(&msg, 0, "notes: ", 7);
+-	update_ref(msg.buf, o->local_ref, sha1, NULL, 0, DIE_ON_ERR);
++	update_ref(msg.buf, o->local_ref, sha1,
++		   is_null_sha1(parent_sha1) ? NULL : parent_sha1,
++		   0, DIE_ON_ERR);
+ 
+ 	free_notes(t);
+ 	strbuf_release(&msg);
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
+index 8568307..dfd4954 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -477,4 +477,80 @@ EOF
+ 	verify_notes z
  '
  
-+test_expect_success 'reset to pre-merge state (y)' '
-+	git update-ref refs/notes/y refs/notes/y^1 &&
-+	# Verify pre-merge state
-+	verify_notes y y
++cp expect_notes_y expect_notes_m
++cp expect_log_y expect_log_m
++
++test_expect_success 'redo merge of z into m (== y) with default ("manual") resolver => Conflicting 3-way merge' '
++	git update-ref refs/notes/m refs/notes/y &&
++	test_must_fail git notes merge z >output &&
++	# Output should point to where to resolve conflicts
++	grep -q "\\.git/NOTES_MERGE_WORKTREE" output &&
++	# Inspect merge conflicts
++	ls .git/NOTES_MERGE_WORKTREE >output_conflicts &&
++	test_cmp expect_conflicts output_conflicts &&
++	( for f in $(cat expect_conflicts); do
++		test_cmp "expect_conflict_$f" ".git/NOTES_MERGE_WORKTREE/$f" ||
++		exit 1
++	done ) &&
++	# Verify that current notes tree (pre-merge) has not changed (m == y)
++	verify_notes y &&
++	verify_notes m &&
++	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
 +'
 +
-+cat <<EOF | sort >expect_notes_union2
-+d682107b8bf7a7aea1e537a8d5cb6a12b60135f1 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+357b6ca14c7afd59b7f8b8aaaa6b8b723771135b $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
++cp expect_notes_w expect_notes_m
++cp expect_log_w expect_log_m
 +
-+cat >expect_log_union2 <<EOF
-+$commit_sha15 15th
-+z notes on 15th commit
-+
-+y notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+z notes on 5th commit
-+
-+y notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge y into z with "union" strategy => Non-conflicting 3-way merge' '
-+	git config core.notesRef refs/notes/z &&
-+	git notes merge --strategy=union y &&
-+	verify_notes z union2
++test_expect_success 'reset notes ref m to somewhere else (w)' '
++	git update-ref refs/notes/m refs/notes/w &&
++	verify_notes m &&
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
 +'
 +
-+test_expect_success 'reset to pre-merge state (z)' '
-+	git update-ref refs/notes/z refs/notes/z^1 &&
-+	# Verify pre-merge state
-+	verify_notes z z
++test_expect_success 'fail to finalize conflicting merge if underlying ref has moved in the meantime (m != NOTES_MERGE_PARTIAL^1)' '
++	# Resolve conflicts
++	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha1 <<EOF &&
++y and z notes on 1st commit
++EOF
++	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha4 <<EOF &&
++y and z notes on 4th commit
++EOF
++	# Fail to finalize merge
++	test_must_fail git notes merge --commit >output 2>&1 &&
++	# .git/NOTES_MERGE_* must remain
++	test -f .git/NOTES_MERGE_PARTIAL &&
++	test -f .git/NOTES_MERGE_REF &&
++	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha1 &&
++	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha2 &&
++	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
++	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
++	# Refs are unchanged
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
++	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)"
++	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)"
++	# Mention refs/notes/m, and its current and expected value in output
++	grep -q "refs/notes/m" output &&
++	grep -q "$(git rev-parse refs/notes/m)" output &&
++	grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
++	# Verify that other notes refs has not changed (w, x, y and z)
++	verify_notes w &&
++	verify_notes x &&
++	verify_notes y &&
++	verify_notes z
 +'
 +
-+cat <<EOF | sort >expect_notes_cat_sort_uniq
-+6be90240b5f54594203e25d9f2f64b7567175aee $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+660311d7f78dc53db12ac373a43fca7465381a7e $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_cat_sort_uniq <<EOF
-+$commit_sha15 15th
-+y notes on 15th commit
-+z notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+y notes on 5th commit
-+z notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge y into z with "cat_sort_uniq" strategy => Non-conflicting 3-way merge' '
-+	git notes merge --strategy=cat_sort_uniq y &&
-+	verify_notes z cat_sort_uniq
++test_expect_success 'resolve situation by aborting the notes merge' '
++	git notes merge --reset &&
++	# No .git/NOTES_MERGE_* files left
++	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
++	test_cmp /dev/null output &&
++	# m has not moved (still == w)
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
++	# Verify that other notes refs has not changed (w, x, y and z)
++	verify_notes w &&
++	verify_notes x &&
++	verify_notes y &&
++	verify_notes z
 +'
 +
  test_done
