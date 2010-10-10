@@ -1,93 +1,92 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v3 11/14] daemon: report connection from root-process
-Date: Sun, 10 Oct 2010 21:31:02 +0200
-Message-ID: <AANLkTinz69u-hh-URqBrpdcrm+84N2BC7Ov4O8xeuW73@mail.gmail.com>
+Subject: Re: [PATCH v3 12/14] mingw: import poll-emulation from gnulib
+Date: Sun, 10 Oct 2010 21:34:15 +0200
+Message-ID: <AANLkTimxFm+hgJBM2B+Eui6+fStM1JSfkyMsKRoqCXd-@mail.gmail.com>
 References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
- <1286716854-5744-12-git-send-email-kusmabite@gmail.com> <201010102058.16773.j6t@kdbg.org>
+ <1286716854-5744-13-git-send-email-kusmabite@gmail.com> <AANLkTim1BZR89M22tAkT0qtfk70QeN0QuyKi5Q2KQQKR@mail.gmail.com>
+ <AANLkTikR4FMK31oJP24B+9QxLypSbO7PL8G5vEtUp=my@mail.gmail.com>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: msysgit+bncCOPdven-DxCNqcjlBBoE5cv_TA@googlegroups.com Sun Oct 10 21:31:53 2010
-Return-path: <msysgit+bncCOPdven-DxCNqcjlBBoE5cv_TA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-qw0-f58.google.com ([209.85.216.58])
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 10 21:34:48 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxCNqcjlBBoE5cv_TA@googlegroups.com>)
-	id 1P51cb-0004jG-I6
-	for gcvm-msysgit@m.gmane.org; Sun, 10 Oct 2010 21:31:49 +0200
-Received: by qwb7 with SMTP id 7sf2692087qwb.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 10 Oct 2010 12:31:48 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1P51fR-0006CT-IX
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 21:34:45 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1750927Ab0JJTei convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 15:34:38 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62523 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750823Ab0JJTeh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Oct 2010 15:34:37 -0400
+Received: by vws2 with SMTP id 2so552279vws.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 12:34:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:received:mime-version:received
-         :reply-to:in-reply-to:references:from:date:message-id:subject:to:cc
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=LcixEkGGjHTtSEIlZjchP7JfYX7RWPoup1W6vNDvQBM=;
-        b=kvcehIFMjbgC+QTogudNe7T4mRj2frwNhKtp/iM8pkaWMnuX5BDQzLPkufP27Ljso5
-         KpVjXzZsuowyiSSpQwf1xpXga2UiVFykUgh6xD0/CocoEveLHCZYf70yCuG/hCkY4Mrz
-         4ufJHbUuM+VLLPfuNcsMIqdY8N7gv84Oxmh0E=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=F7d5eAiXPVIP4NNPEZ33eAERT4szuW4zWLTsl+1Cus4=;
+        b=vTOTe/GiPSlZDhLBQjMLcndqrawvuceiRhx6vP2XxlpiaX5FkkTah6ZD44NLmMvzZQ
+         gFTO5XEKQhV0qtRWa0PE67EpOih8zmEW7XI5rcPEPLNPbJ2/sFfcOj/BwreD1Anws0/7
+         MYAFysU8eualMhUu1YYrz4SH/ctB0r13QAzM8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
-         :references:from:date:message-id:subject:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        b=nrJ33kZ1KbANanpfLFoJ89FoCvA7bfwPY2NpalmBi6P/tuc2zIYrRXsRcxC8Scgbal
-         zIFvXdZayC4s+3nixI1NxbOCtVoyQ/27Sg4PL8nNfZmZE5w20sXnO8hNXNsG7Q5TUXn0
-         LfhdXH4SVfsS+9OGkkbcExnCohvUdo6G5q7+g=
-Received: by 10.229.44.3 with SMTP id y3mr273167qce.13.1286739085269;
-        Sun, 10 Oct 2010 12:31:25 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.229.207.84 with SMTP id fx20ls615149qcb.0.p; Sun, 10 Oct 2010
- 12:31:24 -0700 (PDT)
-Received: by 10.229.191.133 with SMTP id dm5mr812998qcb.27.1286739084321;
-        Sun, 10 Oct 2010 12:31:24 -0700 (PDT)
-Received: by 10.229.191.133 with SMTP id dm5mr812997qcb.27.1286739084288;
-        Sun, 10 Oct 2010 12:31:24 -0700 (PDT)
-Received: from mail-vw0-f41.google.com (mail-vw0-f41.google.com [209.85.212.41])
-        by gmr-mx.google.com with ESMTP id 3si2715033qci.6.2010.10.10.12.31.23;
-        Sun, 10 Oct 2010 12:31:23 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.212.41 as permitted sender) client-ip=209.85.212.41;
-Received: by mail-vw0-f41.google.com with SMTP id 19so1575999vws.14
-        for <msysgit@googlegroups.com>; Sun, 10 Oct 2010 12:31:23 -0700 (PDT)
-Received: by 10.220.201.77 with SMTP id ez13mr1634978vcb.78.1286739083076;
- Sun, 10 Oct 2010 12:31:23 -0700 (PDT)
-Received: by 10.220.45.196 with HTTP; Sun, 10 Oct 2010 12:31:02 -0700 (PDT)
-In-Reply-To: <201010102058.16773.j6t@kdbg.org>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.212.41 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158687>
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=uGwMgQUCE9nBms2PgJnsA1iYxhcTzXgYqbE7qoSjl+F3MYe9+oiaStm5O6ZvRbGwVT
+         NebQQT8p5DR24dBejbIM/buXumZ2jAI/jVmOYzOPgroobDiyQDMQTLPLGR2KLyr3rytR
+         zjtVj33ZTyBP8tJKZvdYQ9vQu0l/jM9Sasdc8=
+Received: by 10.220.181.133 with SMTP id by5mr1645108vcb.182.1286739275652;
+ Sun, 10 Oct 2010 12:34:35 -0700 (PDT)
+Received: by 10.220.45.196 with HTTP; Sun, 10 Oct 2010 12:34:15 -0700 (PDT)
+In-Reply-To: <AANLkTikR4FMK31oJP24B+9QxLypSbO7PL8G5vEtUp=my@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158688>
 
-On Sun, Oct 10, 2010 at 8:58 PM, Johannes Sixt <j6t@kdbg.org> wrote:
-> On Sonntag, 10. Oktober 2010, Erik Faye-Lund wrote:
->> Report incoming connections from the process that
->> accept() the connection instead of the handling
->> process.
+On Sun, Oct 10, 2010 at 4:28 PM, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+> On Sun, Oct 10, 2010 at 4:15 PM, =C6var Arnfj=F6r=F0 Bjarmason
+> <avarab@gmail.com> wrote:
+>> On Sun, Oct 10, 2010 at 13:20, Erik Faye-Lund <kusmabite@gmail.com> =
+wrote:
+>>> lib/poll.c and lib/poll.in.h imported from 0a05120 in
+>>> git://git.savannah.gnu.org/gnulib.git
 >>
->> This enables "Connection from"-reporting on
->> Windows, where getpeername(0, ...) consistently
->> fails.
+>> Having fought with importing things from gnulib myself using their
+>> tools it would be useful to note in the commit message *how* you
+>> imported this. Did you use the gnulib command with some archane
+>> options so it wouldn't touch the build system while it was at it, or
+>> did you just copy the relevant files manually?
+>>
 >
-> Is this from the process that you invoke with --serve? then this failure could
-> be due to Winsockets not being initilized. Did you check that?
+> Sorry if that was unclear - I just copied the files (verbatim).
+> Patching to make it compile for us comes in the next patch.
+>
+> I didn't even know that there was a gnulib tool to extract code, but =
+a
+> quick google-search shows that there is. I'll look into using the too=
+l
+> instead for the next round.
 >
 
-I've tried that, and unfortunately it lack of socket initialization
-does not seem to be the reason :(
+I've had a quick look at it, and it really doesn't seem like
+gnulib-tool is suited for us here. It seems to be intended on pure
+autoconf-projects, and starts including all kinds of things that we
+don't need. We only care about poll-emulation on Windows, and we don't
+need autoconf to tell us if it should be used or not.
+
+So I'm not in favor of using gnulib-tool, and going with the current
+method of verbatim copy with a separate fix-up commit. But perhaps I
+should clarify the commit message so other people can easily upgrade
+the emulation later...
