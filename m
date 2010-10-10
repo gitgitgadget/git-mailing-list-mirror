@@ -1,86 +1,113 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH 1/3] bisect: improve error message of 'bisect log' while not
-	bisecting
-Date: Sun, 10 Oct 2010 23:48:56 +0200
-Message-ID: <1286747338-8521-1-git-send-email-szeder@ira.uka.de>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH v3 05/14] mingw: use real pid
+Date: Sun, 10 Oct 2010 17:56:25 -0400
+Message-ID: <4CB23689.7020100@sunshineco.com>
+References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com> <1286716854-5744-6-git-send-email-kusmabite@gmail.com> <4CB219D3.8000801@sunshineco.com> <AANLkTinmpzo2-eyPrnx0u=tGBOcMBz03LuFUjZO87dG5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 10 23:49:38 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
+To: kusmabite@gmail.com
+X-From: msysgit+bncCPSUiZjBDBCP7cjlBBoEKt4I7Q@googlegroups.com Sun Oct 10 23:56:59 2010
+Return-path: <msysgit+bncCPSUiZjBDBCP7cjlBBoEKt4I7Q@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-px0-f186.google.com ([209.85.212.186])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P53lt-0006zp-26
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 23:49:33 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab0JJVtZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 17:49:25 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:59279 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751582Ab0JJVtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 17:49:24 -0400
-Received: from [127.0.1.1] (p5B130D54.dip0.t-ipconnect.de [91.19.13.84])
-	by mrelayeu.kundenserver.de (node=mreu0) with ESMTP (Nemesis)
-	id 0McAjL-1PNYDZ3ohj-00Jbe8; Sun, 10 Oct 2010 23:49:03 +0200
-X-Mailer: git-send-email 1.7.3.1.148.g2fffa
-X-Provags-ID: V02:K0:o5xTFrXQ5R5PZLLg53cY0V+djcTfcwGugL6/W41UA7a
- T7s9QRxJzNmL7KNvAGalDRXcqvfQfnq/Oiv3WmfLwXGzyDcCVM
- uEH/I96UzBvaTDNZK4WLUv5XaMpkej8tYyVFi6iB16cJH1G+DP
- GDCucyzcaXkrwdOrDFaJPG6J1vOS3YOA30LcaZLs8RhAru3s39
- zFwpguXziES95JWMfyncg==
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158720>
+	(envelope-from <msysgit+bncCPSUiZjBDBCP7cjlBBoEKt4I7Q@googlegroups.com>)
+	id 1P53t2-0001gA-R7
+	for gcvm-msysgit@m.gmane.org; Sun, 10 Oct 2010 23:56:57 +0200
+Received: by pxi18 with SMTP id 18sf2769469pxi.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 10 Oct 2010 14:56:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:received:received:sender:message-id
+         :date:from:user-agent:mime-version:to:cc:subject:references
+         :in-reply-to:x-original-sender:x-original-authentication-results
+         :precedence:mailing-list:list-id:list-post:list-help:list-archive
+         :list-subscribe:list-unsubscribe:content-type
+         :content-transfer-encoding;
+        bh=G9vQKc6391c9JByfXdcPRqt+RPzYTtjHAUxUfE3t/Js=;
+        b=ZDprrkCZHT5OcB6UlD9agHSuTC/ud3kYSFD88Ixlw9iF8PwFJuau/p5d98JS+ORBK4
+         nbCd7neAxWZ4x3uD/4sPmJfmrMLfyeRjht6zHRtL6Tu5tevAQr8gFxrkxRMUm0F+fIBf
+         OLoRiVDdnoOfGk7MRr7QKVreOrYoHfcjhPw5g=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:sender:message-id:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:list-subscribe:list-unsubscribe
+         :content-type:content-transfer-encoding;
+        b=K9VNqZiydoyXzzjLnYoDjiKvkgo1I0HJYY9bV7w6Uv74DPj2eiGubNukGs5X5ZmX1q
+         78ViGLwk2WzDaqCCSwdPDLYXQY07QKKeG0JNi6cG2D89Le4f5oy5SCvC/Z/gotAPVDEU
+         aupreE9N+mrEUf3YK+gTXEixplBt0ouUEI0ns=
+Received: by 10.142.2.25 with SMTP id 25mr170893wfb.25.1286747791892;
+        Sun, 10 Oct 2010 14:56:31 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.142.194.14 with SMTP id r14ls2598600wff.2.p; Sun, 10 Oct 2010
+ 14:56:31 -0700 (PDT)
+Received: by 10.142.147.7 with SMTP id u7mr445113wfd.59.1286747791151;
+        Sun, 10 Oct 2010 14:56:31 -0700 (PDT)
+Received: by 10.142.147.7 with SMTP id u7mr445112wfd.59.1286747791125;
+        Sun, 10 Oct 2010 14:56:31 -0700 (PDT)
+Received: from mail-pw0-f46.google.com (mail-pw0-f46.google.com [209.85.160.46])
+        by gmr-mx.google.com with ESMTP id w30si5919137wfd.7.2010.10.10.14.56.30;
+        Sun, 10 Oct 2010 14:56:30 -0700 (PDT)
+Received-SPF: pass (google.com: domain of ericsunshine@gmail.com designates 209.85.160.46 as permitted sender) client-ip=209.85.160.46;
+Received: by pwj4 with SMTP id 4so728634pwj.19
+        for <msysgit@googlegroups.com>; Sun, 10 Oct 2010 14:56:30 -0700 (PDT)
+Received: by 10.114.26.6 with SMTP id 6mr6171283waz.82.1286747789934;
+        Sun, 10 Oct 2010 14:56:29 -0700 (PDT)
+Received: from [192.168.1.1] (user-12l2cil.cable.mindspring.com [69.81.50.85])
+        by mx.google.com with ESMTPS id f20sm8763733waj.8.2010.10.10.14.56.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 10 Oct 2010 14:56:29 -0700 (PDT)
+Sender: msysgit@googlegroups.com
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <AANLkTinmpzo2-eyPrnx0u=tGBOcMBz03LuFUjZO87dG5@mail.gmail.com>
+X-Original-Sender: ericsunshine@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of ericsunshine@gmail.com designates 209.85.160.46 as permitted
+ sender) smtp.mail=ericsunshine@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158721>
 
-'git bisect log' is implemented by a direct invocation of 'cat
-"$GIT_DIR/BISECT_LOG"', without any sanity checks.  Consequently,
-running 'git bisect log' while not bisecting leads to an error,
-because the bisect logfile doesn't exists.  The accompanying error
-message
+On 10/10/2010 4:52 PM, Erik Faye-Lund wrote:
+> On Sun, Oct 10, 2010 at 9:53 PM, Eric Sunshine<sunshine@sunshineco.com>  wrote:
+>> On 10/10/2010 9:20 AM, Erik Faye-Lund wrote:
+>>>
+>>> The Windows port so far used process handles as PID. However,
+>>> this does not work consistently with getpid.
+>>
+>> Perhaps this could be elaborated a bit to explain the interaction with
+>> getpid() and how it is causing problems for daemon mode. For the casual
+>> reader, it is not immediately obvious what is failing or why this patch is
+>> needed.
+>>
+>
+> Good point. How about something like this?
 
-  cat: /path/to/repo/.git/BISECT_LOG: No such file or directory
+Thanks. This sort of explanation could indeed be helpful as part of the 
+commit message.
 
-is neither very helpful nor very friendly.
+> "The Windows port so far used process handles as PID. However, this is
+> not consistent with what getpid returns.
+>
+> PIDs are system-global identifiers, but process handles are local to a
+> process. Using PIDs instead of process handles allows for instance a
+> user to kill a hung process with the Task Manager, something that
+> would have been impossible with process handles."
 
-Instead of blindly trying to cat the log file, first check whether
-there is a bisection going on (i.e. the bisect logfile exists), and
-die with a more appropriate error message when not.
+Minor nit: Add commas around 'for instance': "...handles allows, for 
+instance, a user..."
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- git-bisect.sh |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+These also could be combined into a single paragraph.
 
-diff --git a/git-bisect.sh b/git-bisect.sh
-index 6e2acb8..3a4bf81 100755
---- a/git-bisect.sh
-+++ b/git-bisect.sh
-@@ -412,6 +412,10 @@ bisect_run () {
-     done
- }
-=20
-+bisect_log () {
-+	test -s "$GIT_DIR/BISECT_LOG" || die "We are not bisecting."
-+	cat "$GIT_DIR/BISECT_LOG"
-+}
-=20
- case "$#" in
- 0)
-@@ -438,7 +442,7 @@ case "$#" in
-     replay)
- 	bisect_replay "$@" ;;
-     log)
--	cat "$GIT_DIR/BISECT_LOG" ;;
-+	bisect_log ;;
-     run)
-         bisect_run "$@" ;;
-     *)
---=20
-1.7.3.1.148.g2fffa
+-- ES
