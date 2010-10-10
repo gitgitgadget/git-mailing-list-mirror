@@ -1,76 +1,88 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Useful tracking branches and auto merging
-Date: Sun, 10 Oct 2010 20:48:24 +0300
-Message-ID: <AANLkTikfwHZVSyffEb5b77OAxcdmYsvy7e72=JngZ4x+@mail.gmail.com>
-References: <AANLkTimq0sKUavKiXepDOz+DvrymuRAVUyAyV+FzbCBD@mail.gmail.com>
-	<20101004204625.GH6466@burratino>
-	<AANLkTikkXdDepdeOY4MZvgfCEgX69Tx6d0-QS-g3bWK-@mail.gmail.com>
-	<20101010171505.GA15495@localhost>
-	<AANLkTimFYExqr_OcYMJ0kTv5K-wtu3pzsAu=rhq+19W-@mail.gmail.com>
-	<20101010174521.GC15495@localhost>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] log which temporary file could not be created
+Date: Sun, 10 Oct 2010 13:09:09 -0500
+Message-ID: <20101010180909.GA12320@burratino>
+References: <20101009201751.GK9348@bzzt.net>
+ <20101010024124.GA20305@burratino>
+ <20101010103327.GO9348@bzzt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun Oct 10 19:48:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Arnout Engelen <arnouten@bzzt.net>
+X-From: git-owner@vger.kernel.org Sun Oct 10 20:12:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P500i-0001HL-U6
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 19:48:37 +0200
+	id 1P50O4-0004QW-9r
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 20:12:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755444Ab0JJRsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 13:48:33 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60360 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752824Ab0JJRsd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 13:48:33 -0400
-Received: by bwz15 with SMTP id 15so1274985bwz.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 10:48:31 -0700 (PDT)
+	id S1754982Ab0JJSM0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 14:12:26 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61813 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753090Ab0JJSMZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 14:12:25 -0400
+Received: by iwn6 with SMTP id 6so2446217iwn.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 11:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=bmIIFM2qNdQCah3UZ051qAE9YBSRFdJOVA6F0DCLLS0=;
-        b=On4SVKaDeHnYuAPqE7qinXM9VlPTzxAajoa316OvxU4Kw1RK7QhcW/FuRPSjbs31Id
-         eBEl5ebluxVI6ASkWoyc5gbKawOHHXDDR3jV5KS/gaMl2jbnuQ/oWr9uE70iH/esqbiu
-         Nksd8eTj8doHlpzg+Xw+9gnUsxrKDw9+4ScsM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=a79L9fhFaszojCF88XW4Pw0HBHEp4Cv4d05vJ6qBHew=;
+        b=YFrb0UJPPh+4pQzVEVgtUvilttuYP1B1G+sQhpEaMsVrea4o2AkihxrtSAiI2QNYFk
+         YRztUBfZqhvqyhmWxill/LUxDmvfRVLX3nPAzwemart8RGcUZm8wl5ZiF/qvspKNTZPc
+         r6Dmyu8Q60GQffrv/h18UwXNhJzZDdCyuIuy8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Nc1DufNF9IWM1cW1kzUMQfLeQfd3FPbZLBeE9uNk+4TYPYrNitbmPPn02QvHzxWDkk
-         ZhVfzckgNFGNP8kUMetLHddas3WZDSIvXnYiUSRM7LkctVe42tnIFe3zPr8Zy4Lqnb4N
-         G40qRXgzGus5ZXz0+nt9kojIekuQBPfuDAmgw=
-Received: by 10.204.133.91 with SMTP id e27mr4277120bkt.197.1286732904140;
- Sun, 10 Oct 2010 10:48:24 -0700 (PDT)
-Received: by 10.204.75.16 with HTTP; Sun, 10 Oct 2010 10:48:24 -0700 (PDT)
-In-Reply-To: <20101010174521.GC15495@localhost>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xMDeLXAMztat8RG62RlpwZiub4CsFSuN+aW3ruT3lGgU5MKnL0/DVhdY2c77OmRERJ
+         XBCODDHahhCEKEih5vngMaxlmMWsZ2LwZ56d+cFVfyNhPh+uVFdzqrEPpi4kcLf3zVTp
+         PbEbtFjanzVgmULdkNegJa26hxDNa06tdKYGQ=
+Received: by 10.42.149.2 with SMTP id t2mr207808icv.333.1286734344748;
+        Sun, 10 Oct 2010 11:12:24 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id u6sm6272738ibd.6.2010.10.10.11.12.23
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 10 Oct 2010 11:12:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101010103327.GO9348@bzzt.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158682>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158683>
 
-On Sun, Oct 10, 2010 at 8:45 PM, Clemens Buchacher <drizzd@aon.at> wrote:
-> On Sun, Oct 10, 2010 at 08:30:22PM +0300, Felipe Contreras wrote:
->>
->> There's no magic involved, it's just what you would expect, what else
->> should 'git merge' (without arguments) do?
+Arnout Engelen wrote:
+> On Sat, Oct 09, 2010 at 09:41:24PM -0500, Jonathan Nieder wrote:
+
+>> 	fatal: Unable to create temporary file '.merge_file_Sc7R5c': File exists
+>> 	fatal: Unable to create temporary file 'newrepo/.git/tOWHcxk': No space left on device
 >
-> I would expect it to do nothing, or just output a usage.
+> Perhaps we should also log the current working directory when the temporary 
+> filename is relative?
 
-So you are not going to type this command, how can such change in
-behavior affect you?
+Let's step back for a moment.  Was there an example that prompted
+this patch?  Were you aware of where git would be trying to create
+files in that example?  (I'm genuinely curious.)
 
-> The
-> proposed behavior is also unexpected because git-pull already does
-> (almost) the same thing.
+Converting the filename to an absolute path with make_absolute_path
+might be useful, but I am not entirely sure it is worth the
+complication.
 
-Not true. By your logic 'git fetch' should also do nothing because
-'git pull' does "the same thing".
+>> 	fatal: Unable to create temporary file '': Permission denied
+>>
+>> What should git do in this situation?
+>
+> Perhaps we should strdup() the template before mkstemp(), and log the 
+> strdup()'ed template when the original has been cleared?
 
--- 
-Felipe Contreras
+Is it be preferable for the filename to always have XXXXXX in it?  If
+so, then copying it into a temporary buffer (on-stack, preferably)
+could be a sane solution, yes.
+
+Jonathan
