@@ -1,111 +1,62 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [msysGit] [PATCH v3 08/14] daemon: use run-command api for async
- serving
-Date: Sun, 10 Oct 2010 15:56:13 -0400
-Message-ID: <4CB21A5D.4020408@sunshineco.com>
-References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com> <1286716854-5744-9-git-send-email-kusmabite@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v3 11/14] daemon: report connection from root-process
+Date: Sun, 10 Oct 2010 20:14:42 +0000
+Message-ID: <AANLkTikqJKKSOS-X+d_hx0hyEdFmX3zNZBvZMV4qRMAp@mail.gmail.com>
+References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
+	<1286716854-5744-12-git-send-email-kusmabite@gmail.com>
+	<201010102058.16773.j6t@kdbg.org>
+	<AANLkTinz69u-hh-URqBrpdcrm+84N2BC7Ov4O8xeuW73@mail.gmail.com>
+	<AANLkTinEmrHMfw0z=uwOs9FDRcta3gwcEvc1MBi+_7C-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 10 21:56:28 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
+	msysgit@googlegroups.com
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Sun Oct 10 22:14:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P520O-0007ZT-1h
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 21:56:24 +0200
+	id 1P52IJ-0007c1-Di
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 22:14:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364Ab0JJT4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 15:56:19 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:45435 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750808Ab0JJT4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 15:56:17 -0400
-Received: by pwj4 with SMTP id 4so714647pwj.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 12:56:17 -0700 (PDT)
+	id S1751078Ab0JJUOn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 16:14:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:48474 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761Ab0JJUOn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 16:14:43 -0400
+Received: by iwn6 with SMTP id 6so2529341iwn.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 13:14:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=hZizDQJqMTVgJFf03BX1MFY/o4lxkQAr+Q9eXYxyxR0=;
-        b=JFOy8qXKN2yor06A5xqFdkWRLPR16xxe7a0xrkckfHX6Mqn7ZEwjU205bXrjWXT9Nb
-         NzLz2ohUtYqmRkuFMWPiYtnmKoOo9Wp72nMfHRYTRwhNbFwjUQFSS5UMc01mInZ0BdlF
-         bhl4bg61b42fNoFj4OimrH+8iP0DkE1N3zahA=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=yg+sxpf2zSqCD6bUWLd7Dr4nqcirDspxn5gnIfsmmi4=;
+        b=VLpZ75ITKMJPxJcTpX6Nv0OvtqWhU028njW3s5JwaCvLP5XBawLA11wQk1+TgJ7FJV
+         fjQy3mHYCZdH+wLdxZ36c22zmNtD/lhA450LWsKF+9eqkW77Ag1dFjN/2ROTwsFsK72/
+         zjy9/0vTI22wRgkJ6T2GQN5qMaIImQzU6TxHQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=MYXihZZGRs9jah/hafydp4ngUZggjUKp4afmvtzRfvKtgktXt0+3tmX9Lw/W5MNW1E
-         HL8nvEXq0J7+GhDUZrSOhI74/mDuyxWTJsX0wJcjYHUZyB77ZjS5ze92R2Y3LCSqo1cW
-         1pRA9EWFhtAxhfG/eO+CDSfTV+dMqcLuV+OeU=
-Received: by 10.114.66.5 with SMTP id o5mr6031891waa.219.1286740577578;
-        Sun, 10 Oct 2010 12:56:17 -0700 (PDT)
-Received: from [192.168.1.1] (user-12l2cil.cable.mindspring.com [69.81.50.85])
-        by mx.google.com with ESMTPS id r37sm11508453wak.11.2010.10.10.12.56.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Oct 2010 12:56:16 -0700 (PDT)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-In-Reply-To: <1286716854-5744-9-git-send-email-kusmabite@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=WiiJyRqdPyODJSAqdQrOS7B738bbE6LKRkoTLXT6IYSwcp6niRbfk30hGXiOM0gMnN
+         ukFQsRvuF7MSFzMggw8GiFbvSm5NrRGlxO9nRiD00kZZTOIDXq7TXtX4tE3b7RvTHman
+         efkiR4UtJo+SCoZgMT908Ne3NiaY2T46vv/9s=
+Received: by 10.42.179.136 with SMTP id bq8mr142475icb.93.1286741682376; Sun,
+ 10 Oct 2010 13:14:42 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Sun, 10 Oct 2010 13:14:42 -0700 (PDT)
+In-Reply-To: <AANLkTinEmrHMfw0z=uwOs9FDRcta3gwcEvc1MBi+_7C-@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158696>
 
-On 10/10/2010 9:20 AM, Erik Faye-Lund wrote:
-> fork() is only available on POSIX, so to support git-daemon
-> on Windows we have to use something else.
->
-> Instead we invent the flag --serve, which is a stripped down
-> version of --inetd-mode. We use start_command() to call
-> git-daemon with this flag appended to serve clients.
->
-> Signed-off-by: Erik Faye-Lund<kusmabite@gmail.com>
-> ---
-> @@ -654,14 +641,14 @@ static void remove_child(pid_t pid)
->    */
->   static void kill_some_child(void)
->   {
-> -	const struct child *blanket, *next;
-> +	struct child *blanket, *next;
+On Sun, Oct 10, 2010 at 19:42, Erik Faye-Lund <kusmabite@gmail.com> wrote:
 
-It is not immediately obvious why 'const' was dropped.
+> -static int execute(struct sockaddr *addr)
+> +static int execute()
 
-> @@ -671,18 +658,26 @@ static void check_dead_children(void)
->   	int status;
->   	pid_t pid;
->
-> -	while ((pid = waitpid(-1,&status, WNOHANG))>  0) {
-> -		const char *dead = "";
-> -		remove_child(pid);
-> -		if (!WIFEXITED(status) || (WEXITSTATUS(status)>  0))
-> -			dead = " (with error)";
-> -		loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
-> -	}
-> +	struct child **cradle, *blanket;
-> +	for (cradle =&firstborn; (blanket = *cradle);)
-> +		if ((pid = waitpid(blanket->cld.pid,&status, WNOHANG))>  1) {
-> +			const char *dead = "";
-> +			if (status)
-> +				dead = " (with error)";
-> +			loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
-> +
-> +			/* remove the child */
-> +			*cradle = blanket->next;
-> +			live_children--;
-> +			free(blanket);
-> +		} else
-> +			cradle =&blanket->next;
->   }
->
-> +char **cld_argv;
->   static void handle(int incoming, struct sockaddr *addr, int addrlen)
->   {
-
-Should 'cld_argv' be declared static?
-
--- ES
+Isn't execute(void) more portable?
