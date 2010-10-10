@@ -1,129 +1,93 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Re: Commiting automatically
-Date: Sun, 10 Oct 2010 19:23:56 +0000 (UTC)
-Message-ID: <loom.20101010T212207-709@post.gmane.org>
-References: <loom.20100924T224155-693@post.gmane.org> <AANLkTimpyTVe+OhYRhsV3H8TGahgsASOPAZRqwR=V6od@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v3 11/14] daemon: report connection from root-process
+Date: Sun, 10 Oct 2010 21:31:02 +0200
+Message-ID: <AANLkTinz69u-hh-URqBrpdcrm+84N2BC7Ov4O8xeuW73@mail.gmail.com>
+References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
+ <1286716854-5744-12-git-send-email-kusmabite@gmail.com> <201010102058.16773.j6t@kdbg.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 10 21:24:40 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: msysgit+bncCOPdven-DxCNqcjlBBoE5cv_TA@googlegroups.com Sun Oct 10 21:31:53 2010
+Return-path: <msysgit+bncCOPdven-DxCNqcjlBBoE5cv_TA@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-qw0-f58.google.com ([209.85.216.58])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P51Vf-0001lg-R7
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 21:24:40 +0200
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753187Ab0JJTYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 15:24:11 -0400
-Received: from lo.gmane.org ([80.91.229.12]:48216 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751314Ab0JJTYI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 15:24:08 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P51V7-0001Vg-BE
-	for git@vger.kernel.org; Sun, 10 Oct 2010 21:24:05 +0200
-Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 21:24:05 +0200
-Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 21:24:05 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.62)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158686>
+	(envelope-from <msysgit+bncCOPdven-DxCNqcjlBBoE5cv_TA@googlegroups.com>)
+	id 1P51cb-0004jG-I6
+	for gcvm-msysgit@m.gmane.org; Sun, 10 Oct 2010 21:31:49 +0200
+Received: by qwb7 with SMTP id 7sf2692087qwb.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 10 Oct 2010 12:31:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:x-beenthere:received:received:received
+         :received:received-spf:received:received:mime-version:received
+         :reply-to:in-reply-to:references:from:date:message-id:subject:to:cc
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe:content-type;
+        bh=LcixEkGGjHTtSEIlZjchP7JfYX7RWPoup1W6vNDvQBM=;
+        b=kvcehIFMjbgC+QTogudNe7T4mRj2frwNhKtp/iM8pkaWMnuX5BDQzLPkufP27Ljso5
+         KpVjXzZsuowyiSSpQwf1xpXga2UiVFykUgh6xD0/CocoEveLHCZYf70yCuG/hCkY4Mrz
+         4ufJHbUuM+VLLPfuNcsMIqdY8N7gv84Oxmh0E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlegroups.com; s=beta;
+        h=x-beenthere:received-spf:mime-version:reply-to:in-reply-to
+         :references:from:date:message-id:subject:to:cc:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe:content-type;
+        b=nrJ33kZ1KbANanpfLFoJ89FoCvA7bfwPY2NpalmBi6P/tuc2zIYrRXsRcxC8Scgbal
+         zIFvXdZayC4s+3nixI1NxbOCtVoyQ/27Sg4PL8nNfZmZE5w20sXnO8hNXNsG7Q5TUXn0
+         LfhdXH4SVfsS+9OGkkbcExnCohvUdo6G5q7+g=
+Received: by 10.229.44.3 with SMTP id y3mr273167qce.13.1286739085269;
+        Sun, 10 Oct 2010 12:31:25 -0700 (PDT)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.229.207.84 with SMTP id fx20ls615149qcb.0.p; Sun, 10 Oct 2010
+ 12:31:24 -0700 (PDT)
+Received: by 10.229.191.133 with SMTP id dm5mr812998qcb.27.1286739084321;
+        Sun, 10 Oct 2010 12:31:24 -0700 (PDT)
+Received: by 10.229.191.133 with SMTP id dm5mr812997qcb.27.1286739084288;
+        Sun, 10 Oct 2010 12:31:24 -0700 (PDT)
+Received: from mail-vw0-f41.google.com (mail-vw0-f41.google.com [209.85.212.41])
+        by gmr-mx.google.com with ESMTP id 3si2715033qci.6.2010.10.10.12.31.23;
+        Sun, 10 Oct 2010 12:31:23 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.212.41 as permitted sender) client-ip=209.85.212.41;
+Received: by mail-vw0-f41.google.com with SMTP id 19so1575999vws.14
+        for <msysgit@googlegroups.com>; Sun, 10 Oct 2010 12:31:23 -0700 (PDT)
+Received: by 10.220.201.77 with SMTP id ez13mr1634978vcb.78.1286739083076;
+ Sun, 10 Oct 2010 12:31:23 -0700 (PDT)
+Received: by 10.220.45.196 with HTTP; Sun, 10 Oct 2010 12:31:02 -0700 (PDT)
+In-Reply-To: <201010102058.16773.j6t@kdbg.org>
+X-Original-Sender: kusmabite@gmail.com
+X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
+ domain of kusmabite@gmail.com designates 209.85.212.41 as permitted sender)
+ smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158687>
 
-On 10-09-25 12:05, Alex Riesen wrote:
-> On Fri, Sep 24, 2010 at 22:43, Maaartin <grajcar1@seznam.cz> wrote:
->> I'm going to run periodically a process which uses the current working tree 
-and
->> I'd like to protocol what happens. As a part of the protocol I need the exact
->> state of the working tree and that's what is git good for, right? But it must
->> neither disturb my normal workflow nor interfere with my ordinal commits. I
->> could probably use something like
+On Sun, Oct 10, 2010 at 8:58 PM, Johannes Sixt <j6t@kdbg.org> wrote:
+> On Sonntag, 10. Oktober 2010, Erik Faye-Lund wrote:
+>> Report incoming connections from the process that
+>> accept() the connection instead of the handling
+>> process.
+>>
+>> This enables "Connection from"-reporting on
+>> Windows, where getpeername(0, ...) consistently
+>> fails.
 >
-> Try using low-level git commands (the "plumbing").
-> Take a look at GIT_INDEX_FILE environment variable and
-> "git write-tree", "git commit-tree" and "git update-ref", in
-> addition to "git add".
-> 
-> I.e. (untested):
-> 
->   $ (
->   export GIT_INDEX_FILE=.git/myindex
->   git add . &&
->   tree=$(git write-tree) &&
->   commit=$(date |git commit-tree $tree -p protocol) &&
->   git update-ref -m autolog protocol $commit
->   )
+> Is this from the process that you invoke with --serve? then this failure could
+> be due to Winsockets not being initilized. Did you check that?
+>
 
-Based on this, I've created a simple script "git-autocom" which seems to work 
-somehow. In order to test it place both attachments in a new directory and run 
-"test-git-autocom". The test creates a new working tree with a repository and 
-some commits and then invokes "git-autocom".
-
-A branch autocom gets created, but I'm quite unsure if it's correct. I see a 
-problem in case the script runs with the branch autocom checked out. Maybe a 
-tag could be better or whatever.
-
-I see I can attach no files here in http://post.gmane.org
-
-So I placed them in
-http://dl.dropbox.com/u/4971686/101010/git-autocom
-and
-http://dl.dropbox.com/u/4971686/101010/test-git-autocom
-and copied them here as well (I hope there's a better way).
-
-====== git-autocom
-#!/bin/sh
-message="autocom $(date)"
-head=$(git show-ref -s --head HEAD)
-
-# the first parent should be autocom
-parent1="-p $(git show-ref -s refs/heads/autocom)"
-# needed for the very first use
-test -f .git/refs/heads/autocom || parent1=""
-# the second parent should be the current head
-parent2="-p $head"
-# make sure not giving the same parent twice
-test "$parent1" = "$parent2" && parent1=""
-
-#temporary index
-export GIT_INDEX_FILE=.git/autocom.tmp
-
-git add -A &&
-tree=$(git write-tree) &&
-commit=$(echo "$message" | git commit-tree $tree $parent1 $parent2) &&
-git update-ref -m "$message" refs/heads/autocom $commit
-====== test-git-autocom
-#!/bin/sh
-
-/bin/rm -fR testtree 2>/dev/null
-mkdir testtree &&
-cd testtree && 
-git init && 
-echo a > a &&
-git add -A && git commit -m "a" &&
-echo b > b &&
-git add -A && git commit -m "b" &&
-echo c > c &&
-/bin/rm b &&
-git add -A &&
-/bin/rm a &&
-echo "preparation OK" &&
-../git-autocom &&
-echo "autocom OK" &&
-git log &&
-git log autocom
-======
+I've tried that, and unfortunately it lack of socket initialization
+does not seem to be the reason :(
