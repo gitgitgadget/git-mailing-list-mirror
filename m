@@ -1,123 +1,78 @@
-From: =?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-Subject: [PATCH] bash: support more 'git notes' subcommands and their options
-Date: Sun, 10 Oct 2010 23:43:33 +0200
-Message-ID: <1286747013-8325-1-git-send-email-szeder@ira.uka.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] bash: support pretty format aliases
+Date: Sun, 10 Oct 2010 16:44:11 -0500
+Message-ID: <20101010214410.GA16253@burratino>
+References: <1286746461-7338-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sun Oct 10 23:43:45 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Oct 10 23:47:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P53gG-0004V6-5v
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 23:43:44 +0200
+	id 1P53jw-00067F-Es
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 23:47:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751837Ab0JJVnh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 17:43:37 -0400
-Received: from moutng.kundenserver.de ([212.227.126.186]:52470 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801Ab0JJVnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 17:43:37 -0400
-Received: from [127.0.1.1] (p5B130D54.dip0.t-ipconnect.de [91.19.13.84])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0MbtgI-1PNHJh1n6M-00IlLI; Sun, 10 Oct 2010 23:43:36 +0200
-X-Mailer: git-send-email 1.7.3.1.148.g2fffa
-X-Provags-ID: V02:K0:JnbPiZfkT8FrTQ/lQAC5/7Mb8J24MDQefq6KvRVsW/9
- UodlNgItNC0iPVC0zmTOWhhh3gX2KkPj/Rkw7fsXmJHtOV/bAi
- zDZ++O0k1RPRI81pd6UuzidMdhRdIVRNmB5RhMGVMb+Jja7kH3
- RkeWNuRsn8cXaxR0XAOgKQyNu4Dj4sYsn/2XwnzSeOPiC+MjxC
- X27vUd45qIHa5fOp8dEpA==
+	id S1751922Ab0JJVr1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 17:47:27 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:61144 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751582Ab0JJVr0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Oct 2010 17:47:26 -0400
+Received: by iwn6 with SMTP id 6so2586652iwn.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 14:47:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=nr2soHqX54Wa3sbqExTcXiF4ruVW8SGpzhX9C8nh26M=;
+        b=rklz/WTxsTrJrN/22EH7p/LKw58ts6UtJmMN0rFSL/B3KjcwjrBjFm6W0gwr2CjhcS
+         zhP3HoHMWSh8RigE1aOt6BYztj1N9m5QaTXB3N48gv7pa/94Z0WRfL7gffDWjS6lLvvs
+         xXYVktts0Gld+iy22q9w7DJAnNt8vWvnWdKD4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=xwLI5qomGFZ+EwBulAhhhzIKNce58oJRq+4Lgzlvp35ZAtHrziumZe4SueI/LzsaxY
+         lyOWoVDitLqwyzvprpACm36Dn9qL3I3HCvUEFoHKKWF2pbQ6YwTjQ7ieika6bKmOCO0J
+         /4DjzafWqOKcg4R412QXe3bTjbyRC1Li4oIxE=
+Received: by 10.42.137.4 with SMTP id w4mr1367406ict.298.1286747245235;
+        Sun, 10 Oct 2010 14:47:25 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id x10sm6438187iba.4.2010.10.10.14.47.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 10 Oct 2010 14:47:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1286746461-7338-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158717>
 
-The current completion function for 'git notes' only supported the
-'edit' and 'show' subcommands and none of their options.  This patch
-adds support for all missing subcommands, options, and their arguments
-(files or refs), if any.
+SZEDER G=C3=A1bor wrote:
 
-The code responsible for completing subcommand looks different
-compared to the completion functions of other git commands with
-subcommands.  This is because of the '--ref <notes-ref>' option which
-comes before the subcommand (i.e. git notes --ref <notes-ref> add).
+> Users can have their own pretty format aliases since 8028184 (pretty:
+> add aliases for pretty formats, 2010-05-02), so let's offer those
+> after '--pretty=3D', too.
+>=20
+> Similar to the completion of aliases, this will invoke 'git config'
+> each time pretty aliases needs to be completed, so changes in pretty.=
+*
+> configuration will be reflected immediately.
 
-Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
----
- contrib/completion/git-completion.bash |   50 ++++++++++++++++++++++++=
-++------
- 1 files changed, 41 insertions(+), 9 deletions(-)
+Does this apply to
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index 6756990..d57316c 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1468,18 +1468,50 @@ _git_name_rev ()
-=20
- _git_notes ()
- {
--	local subcommands=3D"edit show"
--	if [ -z "$(__git_find_on_cmdline "$subcommands")" ]; then
--		__gitcomp "$subcommands"
--		return
--	fi
-+	local subcommands=3D'add append copy edit list prune remove show'
-+	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
-+	local cur=3D"${COMP_WORDS[COMP_CWORD]}"
-=20
--	case "${COMP_WORDS[COMP_CWORD-1]}" in
--	-m|-F)
--		COMPREPLY=3D()
-+	case "$subcommand,$cur" in
-+	,--*)
-+		__gitcomp '--ref'
-+		;;
-+	,*)
-+		case "${COMP_WORDS[COMP_CWORD-1]}" in
-+		--ref)
-+			__gitcomp "$(__git_refs)"
-+			;;
-+		*)
-+			__gitcomp "$subcommands --ref"
-+			;;
-+		esac
-+		;;
-+	add,--reuse-message=3D*|append,--reuse-message=3D*)
-+		__gitcomp "$(__git_refs)" "" "${cur##--reuse-message=3D}"
-+		;;
-+	add,--reedit-message=3D*|append,--reedit-message=3D*)
-+		__gitcomp "$(__git_refs)" "" "${cur##--reedit-message=3D}"
-+		;;
-+	add,--*|append,--*)
-+		__gitcomp '--file=3D --message=3D --reedit-message=3D
-+				--reuse-message=3D'
-+		;;
-+	copy,--*)
-+		__gitcomp '--stdin'
-+		;;
-+	prune,--*)
-+		__gitcomp '--dry-run --verbose'
-+		;;
-+	prune,*)
- 		;;
- 	*)
--		__gitcomp "$(__git_refs)"
-+		case "${COMP_WORDS[COMP_CWORD-1]}" in
-+		-m|-F)
-+			;;
-+		*)
-+			__gitcomp "$(__git_refs)"
-+			;;
-+		esac
- 		;;
- 	esac
- }
---=20
-1.7.3.1.148.g2fffa
+	git log --format=3D
+	git show --pretty=3D
+	git show --format=3D
+
+too?
