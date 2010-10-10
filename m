@@ -1,75 +1,72 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v3 05/14] mingw: use real pid
-Date: Sun, 10 Oct 2010 22:52:10 +0200
-Message-ID: <AANLkTinmpzo2-eyPrnx0u=tGBOcMBz03LuFUjZO87dG5@mail.gmail.com>
-References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
- <1286716854-5744-6-git-send-email-kusmabite@gmail.com> <4CB219D3.8000801@sunshineco.com>
-Reply-To: kusmabite@gmail.com
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Commiting automatically
+Date: Sun, 10 Oct 2010 23:11:35 +0200
+Message-ID: <vpqzkulah2w.fsf@bauges.imag.fr>
+References: <loom.20100924T224155-693@post.gmane.org>
+	<AANLkTimpyTVe+OhYRhsV3H8TGahgsASOPAZRqwR=V6od@mail.gmail.com>
+	<loom.20101010T212207-709@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Sun Oct 10 22:52:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Maaartin <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Sun Oct 10 23:11:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P52sm-0007Ov-Jg
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 22:52:36 +0200
+	id 1P53BT-0007aH-Ax
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 23:11:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751641Ab0JJUwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 16:52:32 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:40890 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751498Ab0JJUwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 16:52:31 -0400
-Received: by vws2 with SMTP id 2so574176vws.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 13:52:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=eG2waWInjuTAPbR3D4Q7ENaDFjorA9jrwPyqUkz2tcE=;
-        b=RmP+otCqr0Owr938qY+4917k+998mwmsiqpn8tSuOkFHDQ5dMb5OS1jdx9dkqIYkqn
-         cTsQ6TafN15XjpIhT0N6eNzbkFANe3NNF+ugJwcwONRqbluFZGhQOs7K09cacyENsOru
-         SPNuRD7yRas6i1mdhbXeAmyvfLa3p+ltvOxdY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=rS6oGXy79HvAShOncoTA2u4s7a31MLcIuZU4dA/IDONMdN1xLzbMARZDEkRoef5gBa
-         vmGZBDnfOUNAk45PF2A2X+ezxKejCUb9vxHSrZ62ee76kAR0FLLWppgeOs99l60sjlTM
-         mCWVaVGJwYfuVEACWgesiWEf/6yjtRdmKiADU=
-Received: by 10.220.203.9 with SMTP id fg9mr1649642vcb.270.1286743950605; Sun,
- 10 Oct 2010 13:52:30 -0700 (PDT)
-Received: by 10.220.45.196 with HTTP; Sun, 10 Oct 2010 13:52:10 -0700 (PDT)
-In-Reply-To: <4CB219D3.8000801@sunshineco.com>
+	id S1751498Ab0JJVLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 17:11:45 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:38980 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751314Ab0JJVLp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 17:11:45 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9AKviNR014112
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 10 Oct 2010 22:57:44 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1P53BA-0000es-84; Sun, 10 Oct 2010 23:11:36 +0200
+In-Reply-To: <loom.20101010T212207-709@post.gmane.org> (Maaartin's message of "Sun\, 10 Oct 2010 19\:23\:56 +0000 \(UTC\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 10 Oct 2010 22:57:45 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9AKviNR014112
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1287349066.93581@xBYw+S7h5CVrXdWQhdlLWQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158706>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158707>
 
-On Sun, Oct 10, 2010 at 9:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
-> On 10/10/2010 9:20 AM, Erik Faye-Lund wrote:
->>
->> The Windows port so far used process handles as PID. However,
->> this does not work consistently with getpid.
->
-> Perhaps this could be elaborated a bit to explain the interaction with
-> getpid() and how it is causing problems for daemon mode. For the casual
-> reader, it is not immediately obvious what is failing or why this patch is
-> needed.
->
+Maaartin <grajcar1@seznam.cz> writes:
 
-Good point. How about something like this?
+> # the first parent should be autocom
+> parent1="-p $(git show-ref -s refs/heads/autocom)"
+> # needed for the very first use
+> test -f .git/refs/heads/autocom || parent1=""
 
-"The Windows port so far used process handles as PID. However, this is
-not consistent with what getpid returns.
+Don't use the content of .git/refs/ directly. Git can pack them, and
+you can have a branch autocom packed in .git/info/refs without having it in
+.git/refs/*
 
-PIDs are system-global identifiers, but process handles are local to a
-process. Using PIDs instead of process handles allows for instance a
-user to kill a hung process with the Task Manager, something that
-would have been impossible with process handles."
+perhaps
+
+parent1=$(git show-ref -s refs/heads/autocom)
+if [ "$parent1" != "" ]; then
+	parent1="-p $parent1"
+fi
+
+?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
