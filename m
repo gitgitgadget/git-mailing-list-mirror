@@ -1,7 +1,7 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v3 03/14] compat: add inet_pton and inet_ntop prototypes
-Date: Sun, 10 Oct 2010 15:20:43 +0200
-Message-ID: <1286716854-5744-4-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v3 02/14] mingw: implement syslog
+Date: Sun, 10 Oct 2010 15:20:42 +0200
+Message-ID: <1286716854-5744-3-git-send-email-kusmabite@gmail.com>
 References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
 Cc: msysgit@googlegroups.com, j6t@kdbg.org,
 	Mike Pape <dotzenlabs@gmail.com>
@@ -12,141 +12,187 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4vqb-0004eR-3c
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 15:21:53 +0200
+	id 1P4vqa-0004eR-Hx
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 15:21:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757618Ab0JJNVu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 09:21:50 -0400
+	id S1757576Ab0JJNVi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 09:21:38 -0400
 Received: from mail-ew0-f46.google.com ([209.85.215.46]:54307 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751784Ab0JJNVt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 09:21:49 -0400
+	with ESMTP id S1752455Ab0JJNVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 09:21:37 -0400
 Received: by mail-ew0-f46.google.com with SMTP id 20so255794ewy.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 06:21:48 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 06:21:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=icLT/kC9tsaVfOLiiYubws4CPz7EYzmp/GQUOto7DBs=;
-        b=HDWZ1kneCfMq5+i2OEA9BrA1TbBnG6HI6Rly20ZQdeiDRQwaPVfzMJz7oxuVokDcc1
-         fIwGe7eOeakmUnNYBvgttQpaxKXTOjRgkT0Qi94L66tMfPjqtFHZwQpgRH6daIK3FWTI
-         4XT6PJBW4qf14s6KP6Lpq2vToxrKrzljcu0r4=
+        bh=bVBSkwX2tCO4Qo+ycN7YZszr2NhQSuto+8Ez0BLsJ+4=;
+        b=h/YKg+nEXVqHukXcoiDG1ESLj5Ol5E6fXUVLQgw6VjIUANRncZACWtOE5OY+YGaW+y
+         fvDim+L4ZHpz02BuZj8Uv//MlFInLFp14YJMalApfKKjyt4mKjDdKTPeX9qecIIqDZfP
+         cNWZ1YuFLkuxf+TI06TOtwCD2K/XG/AJt72y4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=T9q6hTbAp65ZGec3KFzsgYMzw+RM1oejvXie0ShAbtRQBPFqks6AMooasWpYjQl3nh
-         IzmPu1rlsgHFTxkmn6BKrVKFX9/j3Tlh44TC2p+sLuvugDLNSho2x+OtKB44eAi8X497
-         +yCpLfItPm2+mQe1w2pgKvacxNlVSods6QxdY=
-Received: by 10.14.45.77 with SMTP id o53mr482109eeb.1.1286716908640;
-        Sun, 10 Oct 2010 06:21:48 -0700 (PDT)
+        b=Jin4P6JRYYv2vvIb3DbbrjKgfvvOCJo1W4BhVfQ2ahtCPcgSDccATH+gPStAZxd+O+
+         0DEzs76KdjSI46hhN56ZKWc2bsB4/tL1yvxoF7S82zi3BX87kO67VO5BDWCJVog6Rbrt
+         iDTlvF/qS5arNz52gxWb2LujrRosMjLqJdV6Q=
+Received: by 10.213.28.205 with SMTP id n13mr1246255ebc.5.1286716896974;
+        Sun, 10 Oct 2010 06:21:36 -0700 (PDT)
 Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id v59sm9036461eeh.4.2010.10.10.06.21.47
+        by mx.google.com with ESMTPS id v59sm9037775eeh.22.2010.10.10.06.21.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 10 Oct 2010 06:21:47 -0700 (PDT)
+        Sun, 10 Oct 2010 06:21:36 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
 In-Reply-To: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158662>
 
 From: Mike Pape <dotzenlabs@gmail.com>
 
-Windows doesn't have inet_pton and inet_ntop, so
-add prototypes in git-compat-util.h for them.
-
-At the same time include git-compat-util.h in
-the sources for these functions, so they use the
-network-wrappers from there on Windows.
+Syslog does not usually exist on Windows, so we implement our own
+using Window's ReportEvent mechanism.
 
 Signed-off-by: Mike Pape <dotzenlabs@gmail.com>
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- Makefile           |    2 ++
- compat/inet_ntop.c |    6 +++---
- compat/inet_pton.c |    8 +++++---
- git-compat-util.h  |    8 ++++++++
- 4 files changed, 18 insertions(+), 6 deletions(-)
+ compat/mingw.c    |   60 +++++++++++++++++++++++++++++++++++++++++++++++++++++
+ compat/mingw.h    |   15 +++++++++++++
+ daemon.c          |    2 -
+ git-compat-util.h |    1 +
+ 4 files changed, 76 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 1f1ce04..ebb51e3 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1397,9 +1397,11 @@ endif
- endif
- ifdef NO_INET_NTOP
- 	LIB_OBJS += compat/inet_ntop.o
-+	BASIC_CFLAGS += -DNO_INET_NTOP
- endif
- ifdef NO_INET_PTON
- 	LIB_OBJS += compat/inet_pton.o
-+	BASIC_CFLAGS += -DNO_INET_PTON
- endif
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 563ef1f..cc5eb2c 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -1431,6 +1431,66 @@ int sigaction(int sig, struct sigaction *in, struct sigaction *out)
+ 	return 0;
+ }
  
- ifdef NO_ICONV
-diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
-index f444982..e5b46a0 100644
---- a/compat/inet_ntop.c
-+++ b/compat/inet_ntop.c
-@@ -17,9 +17,9 @@
- 
- #include <errno.h>
- #include <sys/types.h>
--#include <sys/socket.h>
--#include <netinet/in.h>
--#include <arpa/inet.h>
++static HANDLE ms_eventlog;
 +
-+#include "../git-compat-util.h"
++void openlog(const char *ident, int logopt, int facility)
++{
++	if (ms_eventlog)
++		return;
 +
- #include <stdio.h>
- #include <string.h>
- 
-diff --git a/compat/inet_pton.c b/compat/inet_pton.c
-index 4078fc0..2ec995e 100644
---- a/compat/inet_pton.c
-+++ b/compat/inet_pton.c
-@@ -17,9 +17,9 @@
- 
- #include <errno.h>
- #include <sys/types.h>
--#include <sys/socket.h>
--#include <netinet/in.h>
--#include <arpa/inet.h>
++	ms_eventlog = RegisterEventSourceA(NULL, ident);
 +
-+#include "../git-compat-util.h"
++	if (!ms_eventlog)
++		warning("RegisterEventSource() failed: %lu", GetLastError());
++}
 +
- #include <stdio.h>
- #include <string.h>
++void syslog(int priority, const char *fmt, const char *arg)
++{
++	WORD logtype;
++
++	if (!ms_eventlog)
++		return;
++
++	if (strcmp(fmt, "%s")) {
++		warning("format string of syslog() not implemented");
++		return;
++	}
++
++	switch (priority) {
++	case LOG_EMERG:
++	case LOG_ALERT:
++	case LOG_CRIT:
++	case LOG_ERR:
++		logtype = EVENTLOG_ERROR_TYPE;
++		break;
++
++	case LOG_WARNING:
++		logtype = EVENTLOG_WARNING_TYPE;
++		break;
++
++	case LOG_NOTICE:
++	case LOG_INFO:
++	case LOG_DEBUG:
++	default:
++		logtype = EVENTLOG_INFORMATION_TYPE;
++		break;
++	}
++
++	/*
++	 * ReportEvent() doesn't handle strings containing %n, where n is
++	 * an integer. Such events must be reformatted by the caller.
++	 */
++	ReportEventA(ms_eventlog,
++	    logtype,
++	    0,
++	    0,
++	    NULL,
++	    1,
++	    0,
++	    (const char **)&arg,
++	    NULL);
++}
++
+ #undef signal
+ sig_handler_t mingw_signal(int sig, sig_handler_t handler)
+ {
+diff --git a/compat/mingw.h b/compat/mingw.h
+index a5bde82..bbfcc0c 100644
+--- a/compat/mingw.h
++++ b/compat/mingw.h
+@@ -51,6 +51,19 @@ typedef int socklen_t;
+ #define EAFNOSUPPORT WSAEAFNOSUPPORT
+ #define ECONNABORTED WSAECONNABORTED
  
-@@ -41,7 +41,9 @@
-  */
++#define LOG_PID     0x01
++
++#define LOG_EMERG   0
++#define LOG_ALERT   1
++#define LOG_CRIT    2
++#define LOG_ERR     3
++#define LOG_WARNING 4
++#define LOG_NOTICE  5
++#define LOG_INFO    6
++#define LOG_DEBUG   7
++
++#define LOG_DAEMON  (3<<3)
++
+ struct passwd {
+ 	char *pw_name;
+ 	char *pw_gecos;
+@@ -185,6 +198,8 @@ struct passwd *getpwuid(uid_t uid);
+ int setitimer(int type, struct itimerval *in, struct itimerval *out);
+ int sigaction(int sig, struct sigaction *in, struct sigaction *out);
+ int link(const char *oldpath, const char *newpath);
++void openlog(const char *ident, int logopt, int facility);
++void syslog(int priority, const char *fmt, const char *arg);
  
- static int inet_pton4(const char *src, unsigned char *dst);
-+#ifndef NO_IPV6
- static int inet_pton6(const char *src, unsigned char *dst);
-+#endif
+ /*
+  * replacements of existing functions
+diff --git a/daemon.c b/daemon.c
+index d6e20c6..d594375 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -5,8 +5,6 @@
+ #include "strbuf.h"
+ #include "string-list.h"
  
- /* int
-  * inet_pton4(src, dst)
+-#include <syslog.h>
+-
+ #ifndef HOST_NAME_MAX
+ #define HOST_NAME_MAX 256
+ #endif
 diff --git a/git-compat-util.h b/git-compat-util.h
-index 8770854..100197f 100644
+index 2af8d3e..8770854 100644
 --- a/git-compat-util.h
 +++ b/git-compat-util.h
-@@ -387,6 +387,14 @@ static inline void *gitmempcpy(void *dest, const void *src, size_t n)
- }
- #endif
- 
-+#ifdef NO_INET_PTON
-+int inet_pton(int af, const char *src, void *dst);
-+#endif
-+
-+#ifdef NO_INET_NTOP
-+const char *inet_ntop(int af, const void *src, char *dst, size_t size);
-+#endif
-+
- extern void release_pack_memory(size_t, int);
- 
- typedef void (*try_to_free_t)(size_t);
+@@ -119,6 +119,7 @@
+ #include <netdb.h>
+ #include <pwd.h>
+ #include <inttypes.h>
++#include <syslog.h>
+ #if defined(__CYGWIN__)
+ #undef _XOPEN_SOURCE
+ #include <grp.h>
 -- 
 1.7.3.1.51.ge462f.dirty
