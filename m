@@ -1,84 +1,75 @@
-From: Christoph Mallon <christoph.mallon@gmx.de>
-Subject: [PATCH] Show the correct line number, when git diff --check detects
- a blank line at EOF.
-Date: Sun, 10 Oct 2010 19:24:06 +0200
-Message-ID: <4CB1F6B6.2060000@gmx.de>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: Useful tracking branches and auto merging
+Date: Sun, 10 Oct 2010 20:30:22 +0300
+Message-ID: <AANLkTimFYExqr_OcYMJ0kTv5K-wtu3pzsAu=rhq+19W-@mail.gmail.com>
+References: <AANLkTimq0sKUavKiXepDOz+DvrymuRAVUyAyV+FzbCBD@mail.gmail.com>
+	<20101004204625.GH6466@burratino>
+	<AANLkTikkXdDepdeOY4MZvgfCEgX69Tx6d0-QS-g3bWK-@mail.gmail.com>
+	<20101010171505.GA15495@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 10 19:24:17 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Sun Oct 10 19:30:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4zdA-0007mI-IK
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 19:24:16 +0200
+	id 1P4zjK-0002B7-Uf
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 19:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754700Ab0JJRYL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 13:24:11 -0400
-Received: from mailout-de.gmx.net ([213.165.64.23]:52935 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751716Ab0JJRYK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 13:24:10 -0400
-Received: (qmail invoked by alias); 10 Oct 2010 17:24:07 -0000
-Received: from p5B14C6A8.dip.t-dialin.net (EHLO tron.homeunix.org) [91.20.198.168]
-  by mail.gmx.net (mp009) with SMTP; 10 Oct 2010 19:24:07 +0200
-X-Authenticated: #1673122
-X-Provags-ID: V01U2FsdGVkX19gSbQXQvtgiYRGoo7O/sfiBMyZKbQekaL9wb5m3X
-	yK77M65dMYOFsx
-User-Agent: Mozilla/5.0 (X11; U; FreeBSD i386; de-DE; rv:1.9.2.9) Gecko/20100919 Thunderbird/3.1.4
-X-Y-GMX-Trusted: 0
+	id S1757982Ab0JJRa1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 13:30:27 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:37816 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757871Ab0JJRaX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 13:30:23 -0400
+Received: by bwz15 with SMTP id 15so1269590bwz.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 10:30:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=54L0Hli8MuTrmx4QA7ii923RIW8ZCbtsmxbOJfMT0gg=;
+        b=OL1KMeFks0byQGMYx0bBflJ45tUsbbxxoduA3uD6Y2G3UtyDoBEImtVOUs+k/z6jV8
+         UJG8RngELzogU16FVcY8RBS/H/B+kwO4v405zg2r9hwxZ74tI58fZQZxt2iOTDSvVnQc
+         4WZxrQuWn5ODQkEdSjl9prYy0rvMCa68Jchac=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=dodSUYzPzZK6qkhnWIq6XhsozqfJVGiYT+ztAYoD56EMFQNik2JmHVdzPfYaHlp2eX
+         vPGvLR1kcpcT4KtC9pW4hxEXXtr2044RpvCB8nJWHKGhTScsyDLFo3BclLM3KWNEg4Qk
+         PW5L4AWpCPmTxkrN+ToLf3+7hDp7ORLa7s1dM=
+Received: by 10.204.39.203 with SMTP id h11mr4167121bke.8.1286731822339; Sun,
+ 10 Oct 2010 10:30:22 -0700 (PDT)
+Received: by 10.204.75.16 with HTTP; Sun, 10 Oct 2010 10:30:22 -0700 (PDT)
+In-Reply-To: <20101010171505.GA15495@localhost>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158680>
 
-The whitespace check printed the value of the wrong variable, i.e. the line number of the hunk in the old file.
+On Sun, Oct 10, 2010 at 8:15 PM, Clemens Buchacher <drizzd@aon.at> wrote:
+> On Mon, Oct 04, 2010 at 11:56:02PM +0300, Felipe Contreras wrote:
+>>
+>> Moreover, wouldn't it make sense to make 'git merge' = 'git merge
+>> @{u}'?
+>
+> Isn't that what 'git pull' does? Especially after using 'git
+> fetch'?
 
-Signed-off-by: Christoph Mallon <christoph.mallon@gmx.de>
----
-The bug was introduced in d68fe26f3e03b230ac9bbbcf002a9acdc4bebde9. The patch is on top of this commit and can be applied to master (c752e7f3e8d96a9673ad248addc9418164bd3ce6), too.
+No, it hits the network again: git pull = git fetch + git merge @{u}
 
- diff.c                  |    2 +-
- t/t4019-diff-wserror.sh |    9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
+If I already did 'git fetch' why should I do it again?
 
-diff --git a/diff.c b/diff.c
-index 63a3bfc..3a3b404 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1730,7 +1730,7 @@ static void builtin_checkdiff(const char *name_a, const char *name_b,
- 
- 			ecbdata.ws_rule = data.ws_rule;
- 			check_blank_at_eof(&mf1, &mf2, &ecbdata);
--			blank_at_eof = ecbdata.blank_at_eof_in_preimage;
-+			blank_at_eof = ecbdata.blank_at_eof_in_postimage;
- 
- 			if (blank_at_eof) {
- 				static char *err;
-diff --git a/t/t4019-diff-wserror.sh b/t/t4019-diff-wserror.sh
-index 3a3663f..61119e6 100755
---- a/t/t4019-diff-wserror.sh
-+++ b/t/t4019-diff-wserror.sh
-@@ -178,6 +178,15 @@ test_expect_success 'trailing empty lines (2)' '
- 
- '
- 
-+test_expect_success 'checkdiff shows correct line number for trailing blank lines' '
-+
-+	printf "a\nb\n" > G &&
-+	git add G &&
-+	printf "x\nx\nx\na\nb\nc\n\n" > G &&
-+	[ "$(git diff --check -- G)" = "G:7: new blank line at EOF." ]
-+
-+'
-+
- test_expect_success 'do not color trailing cr in context' '
- 	git config --unset core.whitespace
- 	rm -f .gitattributes &&
+> I prefer 'git merge' as one of the few git commands without magic
+> behavior and DWIMery.
+
+There's no magic involved, it's just what you would expect, what else
+should 'git merge' (without arguments) do?
+
 -- 
-1.7.3
+Felipe Contreras
