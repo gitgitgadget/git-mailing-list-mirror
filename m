@@ -1,72 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Commiting automatically
-Date: Sun, 10 Oct 2010 23:11:35 +0200
-Message-ID: <vpqzkulah2w.fsf@bauges.imag.fr>
-References: <loom.20100924T224155-693@post.gmane.org>
-	<AANLkTimpyTVe+OhYRhsV3H8TGahgsASOPAZRqwR=V6od@mail.gmail.com>
-	<loom.20101010T212207-709@post.gmane.org>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: Support the DWIM mode for git checkout
+Date: Sun, 10 Oct 2010 23:16:34 +0200
+Message-ID: <20101010211634.GA4730@neumann>
+References: <1286496492-65221-1-git-send-email-kevin@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Sun Oct 10 23:11:59 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Sun Oct 10 23:16:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P53BT-0007aH-Ax
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 23:11:55 +0200
+	id 1P53G8-0001C0-LF
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 23:16:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498Ab0JJVLp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 17:11:45 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:38980 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751314Ab0JJVLp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 17:11:45 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9AKviNR014112
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 10 Oct 2010 22:57:44 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1P53BA-0000es-84; Sun, 10 Oct 2010 23:11:36 +0200
-In-Reply-To: <loom.20101010T212207-709@post.gmane.org> (Maaartin's message of "Sun\, 10 Oct 2010 19\:23\:56 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 10 Oct 2010 22:57:45 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9AKviNR014112
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1287349066.93581@xBYw+S7h5CVrXdWQhdlLWQ
+	id S1751595Ab0JJVQi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 17:16:38 -0400
+Received: from moutng.kundenserver.de ([212.227.17.8]:55990 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751314Ab0JJVQh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 17:16:37 -0400
+Received: from [127.0.1.1] (p5B130D54.dip0.t-ipconnect.de [91.19.13.84])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0MAihL-1Oy8Qi38TT-00BNHV; Sun, 10 Oct 2010 23:16:36 +0200
+Content-Disposition: inline
+In-Reply-To: <1286496492-65221-1-git-send-email-kevin@sb.org>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Provags-ID: V02:K0:EPelXtWu328mZIGhnnbPUA8i7qdm4twKR1xxX57OnQS
+ pvo53hWurq77noJmtlx6Jn6jgwHcha9jWcmAZDBOYOM4LXGQLL
+ Akp3V65O8gOAVVJP6BxbISx8stfsjW+yxWbauNBD9brKdDDVhF
+ t03/4GNydwpo+f9dLDPBzKpLGiYDyXu6PxuVgO2uA4p7DYeBID
+ 8KrWhIRBa81rMG5esfqHQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158708>
 
-Maaartin <grajcar1@seznam.cz> writes:
+Hi,
 
-> # the first parent should be autocom
-> parent1="-p $(git show-ref -s refs/heads/autocom)"
-> # needed for the very first use
-> test -f .git/refs/heads/autocom || parent1=""
 
-Don't use the content of .git/refs/ directly. Git can pack them, and
-you can have a branch autocom packed in .git/info/refs without having it in
-.git/refs/*
+On Thu, Oct 07, 2010 at 05:08:12PM -0700, Kevin Ballard wrote:
+> Signed-off-by: Kevin Ballard <kevin@sb.org>
+> ---
 
-perhaps
+I think the commit message should add some details about how the patch
+changes the completion script's behavior.  At least I didn't know
+offhand what "DWIM mode for git checkout" is, and once I found it
+(70c9ac2 (DWIM "git checkout frotz" to "git checkout -b frotz
+origin/frotz", 2009-10-18), right?), I didn't know how the completion
+script is supposed to support that, and once I applied the patch and
+played around a bit, I was surprised that only 'git checkout h<tab>'
+includes the 'html' branch but 'git checkout <tab>' don't.
 
-parent1=$(git show-ref -s refs/heads/autocom)
-if [ "$parent1" != "" ]; then
-	parent1="-p $parent1"
-fi
 
-?
+>  contrib/completion/git-completion.bash |   35 ++++++++++++++++++++++=
++++++++--
+>  1 files changed, 32 insertions(+), 3 deletions(-)
+>=20
+> diff --git a/contrib/completion/git-completion.bash b/contrib/complet=
+ion/git-completion.bash
+> index f83f019..be0498c 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+> @@ -988,7 +1007,17 @@ _git_checkout ()
+>  			"
+>  		;;
+>  	*)
+> -		__gitcomp "$(__git_refs)"
+> +		# check if --track, --no-track, or --no-guess was specified
+> +		# if so, disable DWIM mode
+> +		local i c=3D1 track=3D1
+> +		while [ $c -lt $COMP_CWORD ]; do
+> +			i=3D"${COMP_WORDS[c]}"
+> +			case "$i" in
+> +			--track|--no-track|--no-guess) track=3D''; break ;;
+> +			esac
+> +			c=3D$((++c))
+> +		done
+> +		__gitcomp "$(__git_refs '' $track)"
+
+You could use the __git_find_on_cmdline() helper function instead.
+
+
+Best,
+G=E1bor
