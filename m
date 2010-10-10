@@ -1,196 +1,243 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v3 05/14] mingw: use real pid
-Date: Sun, 10 Oct 2010 15:20:45 +0200
-Message-ID: <1286716854-5744-6-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v3 08/14] daemon: use run-command api for async serving
+Date: Sun, 10 Oct 2010 15:20:48 +0200
+Message-ID: <1286716854-5744-9-git-send-email-kusmabite@gmail.com>
 References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
 Cc: msysgit@googlegroups.com, j6t@kdbg.org
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 10 15:22:25 2010
+X-From: git-owner@vger.kernel.org Sun Oct 10 15:22:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4vr3-0004u7-MD
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 15:22:22 +0200
+	id 1P4vrN-00053F-Hk
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 15:22:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757661Ab0JJNWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 09:22:09 -0400
+	id S1757710Ab0JJNWe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 09:22:34 -0400
 Received: from mail-ew0-f46.google.com ([209.85.215.46]:54307 "EHLO
 	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757619Ab0JJNWH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 09:22:07 -0400
+	with ESMTP id S1752058Ab0JJNWd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 09:22:33 -0400
 Received: by mail-ew0-f46.google.com with SMTP id 20so255794ewy.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 06:22:06 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 06:22:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=G9ys3JGXb1lPItCgd2coCTkuKgzvTmnBqKETmqQbZ+w=;
-        b=QYUTFhn9gXbgWfyc7jZK83Z8hH56oN5/QRJaMIAhQS4gd7hlxUai+3NFqkD6fJr2am
-         F8k+DfWDZDInKZ1h8ugw3guEJ3c4kTePW7UqIkLHp/n7RUsLRef27mb3EZDjSwwKq25K
-         jibTYOmJJiAKwdGVvRq4++jGMLvKlzJinJYPM=
+        bh=oBFUXYvQtqQUUUMfeO0N+6mwkZ8D+acxV4dpv8jgQC4=;
+        b=dgFfuddwvCk4YFBiMLsvfwhtsDDaqbTZBWhJmCxzeBEkQm3X44AtKrtuDgfgx4JGzT
+         u0VD2hCFgQu3D92L+88M+P+DkZytQ3gEw1omvaBQ0ZiogtQet9rgyqdYDHw8a6g7QF/m
+         S3PD+QaBXJFuDV41hTOvm2AVta+1NC92V5kgk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Oxrd5QiMJLiocLpTWY5SzCvRvpzLME4v3GslqqUOheFbbNwVtYngGhiiz2EE3PGfyx
-         b0V4BSAieJdGXI47Svu8zS5CbHLZH9lffASNI0pfJ8cMAHddJb5jRblvQmb6h6TAcumr
-         Xlvn+UJ2gFFLcGXugPPIr/4EcPyeuy7DXYyfo=
-Received: by 10.14.47.78 with SMTP id s54mr1155373eeb.19.1286716926575;
-        Sun, 10 Oct 2010 06:22:06 -0700 (PDT)
+        b=oKdy9QNYTauwIFtTMxGbhhvfYIWPWmYo7nekJOCBYthXJxBE/s+khmf0r1ag99GMOP
+         joo/va3khAaRRst7LoYxHqiuy571env+iTvc5AIIdYTZNVeM6mA7jrAVjpkrJLiSPdjk
+         fGCywRhUh8/YHRGmb55uN5CFrjVGRiJJBoGoo=
+Received: by 10.213.108.70 with SMTP id e6mr1213530ebp.38.1286716952834;
+        Sun, 10 Oct 2010 06:22:32 -0700 (PDT)
 Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id u9sm9033453eeh.11.2010.10.10.06.22.05
+        by mx.google.com with ESMTPS id q54sm5196567eeh.18.2010.10.10.06.22.31
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 10 Oct 2010 06:22:05 -0700 (PDT)
+        Sun, 10 Oct 2010 06:22:32 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
 In-Reply-To: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158666>
 
-The Windows port so far used process handles as PID. However,
-this does not work consistently with getpid.
+fork() is only available on POSIX, so to support git-daemon
+on Windows we have to use something else.
 
-Change the code to use the real PID, and use OpenProcess to
-get a process-handle. Store the PID and the process handle
-in a table protected by a critical section, so we can safely
-close the process handle later.
+Instead we invent the flag --serve, which is a stripped down
+version of --inetd-mode. We use start_command() to call
+git-daemon with this flag appended to serve clients.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.c |   70 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- compat/mingw.h |   10 ++-----
- 2 files changed, 72 insertions(+), 8 deletions(-)
+ daemon.c |   86 +++++++++++++++++++++++++++++++-------------------------------
+ 1 files changed, 43 insertions(+), 43 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index cc5eb2c..4582345 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -702,6 +702,13 @@ static int env_compare(const void *a, const void *b)
- 	return strcasecmp(*ea, *eb);
+diff --git a/daemon.c b/daemon.c
+index d594375..ee29c9f 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -614,17 +614,17 @@ static unsigned int live_children;
+ 
+ static struct child {
+ 	struct child *next;
+-	pid_t pid;
++	struct child_process cld;
+ 	struct sockaddr_storage address;
+ } *firstborn;
+ 
+-static void add_child(pid_t pid, struct sockaddr *addr, int addrlen)
++static void add_child(struct child_process *cld, struct sockaddr *addr, int addrlen)
+ {
+ 	struct child *newborn, **cradle;
+ 
+ 	newborn = xcalloc(1, sizeof(*newborn));
+ 	live_children++;
+-	newborn->pid = pid;
++	memcpy(&newborn->cld, cld, sizeof(*cld));
+ 	memcpy(&newborn->address, addr, addrlen);
+ 	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
+ 		if (!addrcmp(&(*cradle)->address, &newborn->address))
+@@ -633,19 +633,6 @@ static void add_child(pid_t pid, struct sockaddr *addr, int addrlen)
+ 	*cradle = newborn;
  }
  
-+struct {
-+	pid_t pid;
-+	HANDLE proc;
-+} *pinfo;
-+static int num_pinfo;
-+CRITICAL_SECTION pinfo_cs;
-+
- static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
- 			      const char *dir,
- 			      int prepend_cmd, int fhin, int fhout, int fherr)
-@@ -794,7 +801,23 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
- 		return -1;
- 	}
- 	CloseHandle(pi.hThread);
--	return (pid_t)pi.hProcess;
-+
-+	/*
-+	 * The process ID is the human-readable identifier of the process
-+	 * that we want to present in log and error messages. The handle
-+	 * is not useful for this purpose. But we cannot close it, either,
-+	 * because it is not possible to turn a process ID into a process
-+	 * handle after the process terminated.
-+	 * Keep the handle in a list for waitpid.
-+	 */
-+	EnterCriticalSection(&pinfo_cs);
-+	num_pinfo++;
-+	pinfo = xrealloc(pinfo, sizeof(*pinfo) * num_pinfo);
-+	pinfo[num_pinfo - 1].pid = pi.dwProcessId;
-+	pinfo[num_pinfo - 1].proc = pi.hProcess;
-+	LeaveCriticalSection(&pinfo_cs);
-+
-+	return (pid_t)pi.dwProcessId;
- }
- 
- static pid_t mingw_spawnve(const char *cmd, const char **argv, char **env,
-@@ -1577,6 +1600,51 @@ char *getpass(const char *prompt)
- 	return strbuf_detach(&buf, NULL);
- }
- 
-+pid_t waitpid(pid_t pid, int *status, unsigned options)
-+{
-+	HANDLE h = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION,
-+	    FALSE, pid);
-+	if (!h) {
-+		errno = ECHILD;
-+		return -1;
-+	}
-+
-+	if (options == 0) {
-+		int i;
-+		if (WaitForSingleObject(h, INFINITE) != WAIT_OBJECT_0) {
-+			CloseHandle(h);
-+			return 0;
-+		}
-+
-+		if (status)
-+			GetExitCodeProcess(h, (LPDWORD)status);
-+
-+		EnterCriticalSection(&pinfo_cs);
-+
-+		for (i = 0; i < num_pinfo; ++i)
-+			if (pinfo[i].pid == pid)
-+				break;
-+
-+		if (i < num_pinfo) {
-+			CloseHandle(pinfo[i].proc);
-+			memmove(pinfo + i, pinfo + i + 1,
-+			    sizeof(*pinfo) * (num_pinfo - i - 1));
-+			num_pinfo--;
-+			pinfo = xrealloc(pinfo,
-+			    sizeof(*pinfo) * num_pinfo);
-+		}
-+
-+		LeaveCriticalSection(&pinfo_cs);
-+
-+		CloseHandle(h);
-+		return pid;
-+	}
-+	CloseHandle(h);
-+
-+	errno = EINVAL;
-+	return -1;
-+}
-+
- #ifndef NO_MINGW_REPLACE_READDIR
- /* MinGW readdir implementation to avoid extra lstats for Git */
- struct mingw_DIR
-diff --git a/compat/mingw.h b/compat/mingw.h
-index bbfcc0c..96ed931 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -153,13 +153,7 @@ static inline int mingw_unlink(const char *pathname)
- }
- #define unlink mingw_unlink
- 
--static inline pid_t waitpid(pid_t pid, int *status, unsigned options)
+-static void remove_child(pid_t pid)
 -{
--	if (options == 0)
--		return _cwait(status, pid, 0);
--	errno = EINVAL;
--	return -1;
+-	struct child **cradle, *blanket;
+-
+-	for (cradle = &firstborn; (blanket = *cradle); cradle = &blanket->next)
+-		if (blanket->pid == pid) {
+-			*cradle = blanket->next;
+-			live_children--;
+-			free(blanket);
+-			break;
+-		}
 -}
-+pid_t waitpid(pid_t pid, int *status, unsigned options);
+-
+ /*
+  * This gets called if the number of connections grows
+  * past "max_connections".
+@@ -654,14 +641,14 @@ static void remove_child(pid_t pid)
+  */
+ static void kill_some_child(void)
+ {
+-	const struct child *blanket, *next;
++	struct child *blanket, *next;
  
- #ifndef NO_OPENSSL
- #include <openssl/ssl.h>
-@@ -336,11 +330,13 @@ void free_environ(char **env);
- static int mingw_main(); \
- int main(int argc, const char **argv) \
- { \
-+	extern CRITICAL_SECTION pinfo_cs; \
- 	_fmode = _O_BINARY; \
- 	_setmode(_fileno(stdin), _O_BINARY); \
- 	_setmode(_fileno(stdout), _O_BINARY); \
- 	_setmode(_fileno(stderr), _O_BINARY); \
- 	argv[0] = xstrdup(_pgmptr); \
-+	InitializeCriticalSection(&pinfo_cs); \
- 	return mingw_main(argc, argv); \
- } \
- static int mingw_main(c,v)
+ 	if (!(blanket = firstborn))
+ 		return;
+ 
+ 	for (; (next = blanket->next); blanket = next)
+ 		if (!addrcmp(&blanket->address, &next->address)) {
+-			kill(blanket->pid, SIGTERM);
++			kill(blanket->cld.pid, SIGTERM);
+ 			break;
+ 		}
+ }
+@@ -671,18 +658,26 @@ static void check_dead_children(void)
+ 	int status;
+ 	pid_t pid;
+ 
+-	while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+-		const char *dead = "";
+-		remove_child(pid);
+-		if (!WIFEXITED(status) || (WEXITSTATUS(status) > 0))
+-			dead = " (with error)";
+-		loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
+-	}
++	struct child **cradle, *blanket;
++	for (cradle = &firstborn; (blanket = *cradle);)
++		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 1) {
++			const char *dead = "";
++			if (status)
++				dead = " (with error)";
++			loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
++
++			/* remove the child */
++			*cradle = blanket->next;
++			live_children--;
++			free(blanket);
++		} else
++			cradle = &blanket->next;
+ }
+ 
++char **cld_argv;
+ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+ {
+-	pid_t pid;
++	struct child_process cld = { 0 };
+ 
+ 	if (max_connections && live_children >= max_connections) {
+ 		kill_some_child();
+@@ -695,22 +690,15 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+ 		}
+ 	}
+ 
+-	if ((pid = fork())) {
+-		close(incoming);
+-		if (pid < 0) {
+-			logerror("Couldn't fork %s", strerror(errno));
+-			return;
+-		}
+-
+-		add_child(pid, addr, addrlen);
+-		return;
+-	}
++	cld.argv = (const char **)cld_argv;
++	cld.in = incoming;
++	cld.out = dup(incoming);
+ 
+-	dup2(incoming, 0);
+-	dup2(incoming, 1);
++	if (start_command(&cld))
++		logerror("unable to fork");
++	else
++		add_child(&cld, addr, addrlen);
+ 	close(incoming);
+-
+-	exit(execute(addr));
+ }
+ 
+ static void child_handler(int signo)
+@@ -991,7 +979,7 @@ int main(int argc, char **argv)
+ {
+ 	int listen_port = 0;
+ 	struct string_list listen_addr = STRING_LIST_INIT_NODUP;
+-	int inetd_mode = 0;
++	int serve_mode = 0, inetd_mode = 0;
+ 	const char *pid_file = NULL, *user_name = NULL, *group_name = NULL;
+ 	int detach = 0;
+ 	struct passwd *pass = NULL;
+@@ -1017,7 +1005,12 @@ int main(int argc, char **argv)
+ 				continue;
+ 			}
+ 		}
++		if (!strcmp(arg, "--serve")) {
++			serve_mode = 1;
++			continue;
++		}
+ 		if (!strcmp(arg, "--inetd")) {
++			serve_mode = 1;
+ 			inetd_mode = 1;
+ 			log_syslog = 1;
+ 			continue;
+@@ -1161,12 +1154,12 @@ int main(int argc, char **argv)
+ 		die("base-path '%s' does not exist or is not a directory",
+ 		    base_path);
+ 
+-	if (inetd_mode) {
++	if (serve_mode) {
+ 		struct sockaddr_storage ss;
+ 		struct sockaddr *peer = (struct sockaddr *)&ss;
+ 		socklen_t slen = sizeof(ss);
+ 
+-		if (!freopen("/dev/null", "w", stderr))
++		if (inetd_mode && !freopen("/dev/null", "w", stderr))
+ 			die_errno("failed to redirect stderr to /dev/null");
+ 
+ 		if (getpeername(0, peer, &slen))
+@@ -1185,5 +1178,12 @@ int main(int argc, char **argv)
+ 	if (pid_file)
+ 		store_pid(pid_file);
+ 
++	/* prepare argv for serving-processes */
++	cld_argv = xmalloc(sizeof (char *) * (argc + 2));
++	for (i = 0; i < argc; ++i)
++		cld_argv[i] = argv[i];
++	cld_argv[argc] = "--serve";
++	cld_argv[argc+1] = NULL;
++
+ 	return serve(&listen_addr, listen_port, pass, gid);
+ }
 -- 
 1.7.3.1.51.ge462f.dirty
