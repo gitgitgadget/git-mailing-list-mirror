@@ -1,69 +1,75 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [msysGit] [PATCH v3 02/14] mingw: implement syslog
-Date: Sun, 10 Oct 2010 22:51:26 +0200
-Message-ID: <201010102251.27095.j6t@kdbg.org>
-References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com> <4CB2190F.6000908@gmail.com> <AANLkTinsqAOj7LtACpbcOrVZfeUApDjmQe2uYLH8npBF@mail.gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v3 05/14] mingw: use real pid
+Date: Sun, 10 Oct 2010 22:52:10 +0200
+Message-ID: <AANLkTinmpzo2-eyPrnx0u=tGBOcMBz03LuFUjZO87dG5@mail.gmail.com>
+References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
+ <1286716854-5744-6-git-send-email-kusmabite@gmail.com> <4CB219D3.8000801@sunshineco.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Eric Sunshine <ericsunshine@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, Mike Pape <dotzenlabs@gmail.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Sun Oct 10 22:51:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Sun Oct 10 22:52:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P52rn-0006yl-0g
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 22:51:35 +0200
+	id 1P52sm-0007Ov-Jg
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 22:52:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751537Ab0JJUv3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 16:51:29 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:27022 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750887Ab0JJUv3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 16:51:29 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 7FAB92C4009;
-	Sun, 10 Oct 2010 22:51:27 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 36F6619F5C0;
-	Sun, 10 Oct 2010 22:51:27 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <AANLkTinsqAOj7LtACpbcOrVZfeUApDjmQe2uYLH8npBF@mail.gmail.com>
-Content-Disposition: inline
+	id S1751641Ab0JJUwc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 16:52:32 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40890 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751498Ab0JJUwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 16:52:31 -0400
+Received: by vws2 with SMTP id 2so574176vws.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 13:52:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=eG2waWInjuTAPbR3D4Q7ENaDFjorA9jrwPyqUkz2tcE=;
+        b=RmP+otCqr0Owr938qY+4917k+998mwmsiqpn8tSuOkFHDQ5dMb5OS1jdx9dkqIYkqn
+         cTsQ6TafN15XjpIhT0N6eNzbkFANe3NNF+ugJwcwONRqbluFZGhQOs7K09cacyENsOru
+         SPNuRD7yRas6i1mdhbXeAmyvfLa3p+ltvOxdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=rS6oGXy79HvAShOncoTA2u4s7a31MLcIuZU4dA/IDONMdN1xLzbMARZDEkRoef5gBa
+         vmGZBDnfOUNAk45PF2A2X+ezxKejCUb9vxHSrZ62ee76kAR0FLLWppgeOs99l60sjlTM
+         mCWVaVGJwYfuVEACWgesiWEf/6yjtRdmKiADU=
+Received: by 10.220.203.9 with SMTP id fg9mr1649642vcb.270.1286743950605; Sun,
+ 10 Oct 2010 13:52:30 -0700 (PDT)
+Received: by 10.220.45.196 with HTTP; Sun, 10 Oct 2010 13:52:10 -0700 (PDT)
+In-Reply-To: <4CB219D3.8000801@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158706>
 
-On Sonntag, 10. Oktober 2010, Erik Faye-Lund wrote:
-> On Sun, Oct 10, 2010 at 9:50 PM, Eric Sunshine <ericsunshine@gmail.co=
-m>=20
-wrote:
-> > On 10/10/2010 9:20 AM, Erik Faye-Lund wrote:
-> >> + =A0 =A0 =A0 /*
-> >> + =A0 =A0 =A0 =A0* ReportEvent() doesn't handle strings containing=
- %n, where n
-> >> is + =A0 =A0 =A0 =A0* an integer. Such events must be reformatted =
-by the caller.
-> >> + =A0 =A0 =A0 =A0*/
-> >
-> > The comment about '%n' seems to be warning about a potential proble=
-m but
-> > does not actually protect against it. Should this issue be handled?
+On Sun, Oct 10, 2010 at 9:53 PM, Eric Sunshine <sunshine@sunshineco.com> wrote:
+> On 10/10/2010 9:20 AM, Erik Faye-Lund wrote:
+>>
+>> The Windows port so far used process handles as PID. However,
+>> this does not work consistently with getpid.
 >
-> This is again an issue that was discussed in the first round.
-> ReportEvent() CANNOT report a string containing "%n" (where n is an
-> integer). And while we could probably try to work around it by
-> inserting a space or something, and I don't think we ever were able t=
-o
-> find a case where we could report a string containing "%n" in the
-> first place...
+> Perhaps this could be elaborated a bit to explain the interaction with
+> getpid() and how it is causing problems for daemon mode. For the casual
+> reader, it is not immediately obvious what is failing or why this patch is
+> needed.
+>
 
-I recall that it was mentioned that this could happen for IPv6 addresse=
-s?
+Good point. How about something like this?
 
--- Hannes
+"The Windows port so far used process handles as PID. However, this is
+not consistent with what getpid returns.
+
+PIDs are system-global identifiers, but process handles are local to a
+process. Using PIDs instead of process handles allows for instance a
+user to kill a hung process with the Task Manager, something that
+would have been impossible with process handles."
