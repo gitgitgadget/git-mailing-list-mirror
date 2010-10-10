@@ -1,139 +1,71 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v3 00/14] daemon-win32
-Date: Sun, 10 Oct 2010 15:20:40 +0200
-Message-ID: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
+From: Knittl <knittl89@googlemail.com>
+Subject: Re: [PATCH] builtin/fetch: print hash of deleted tag when updating
+Date: Sun, 10 Oct 2010 15:17:01 +0200
+Message-ID: <AANLkTi=VX4gF1jOb_NbzFqwxX4vJaSrmJ29GjnQpUicO@mail.gmail.com>
+References: <AANLkTi=KVDRzE3-NW+GTO_CL-KtNZ+BjkErgNKMPPtGf@mail.gmail.com>
+ <7vsk0wmbcd.fsf@alter.siamese.dyndns.org> <A612847CFE53224C91B23E3A5B48BAC749BFD33D90@xmail3.se.axis.com>
+ <7vfwwv2lb4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: msysgit@googlegroups.com,
-	j6t@kdbg.org
-To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxDR-8blBBoEEnqLlQ@googlegroups.com Sun Oct 10 15:21:45 2010
-Return-path: <msysgit+bncCOPdven-DxDR-8blBBoEEnqLlQ@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ww0-f58.google.com ([74.125.82.58])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Peter Kjellerstedt <peter.kjellerstedt@axis.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 10 15:21:51 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxDR-8blBBoEEnqLlQ@googlegroups.com>)
-	id 1P4vqT-0004cH-EL
-	for gcvm-msysgit@m.gmane.org; Sun, 10 Oct 2010 15:21:45 +0200
-Received: by wwi17 with SMTP id 17sf372505wwi.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 10 Oct 2010 06:21:45 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1P4vqZ-0004eR-0B
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 15:21:51 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752052Ab0JJNRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 09:17:23 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:58487 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751763Ab0JJNRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 09:17:23 -0400
+Received: by qyk10 with SMTP id 10so3177486qyk.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 06:17:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        bh=yhgNrXSsgqcKKi1y2/gTJPNbPhyw/9B2UcSYEvxbdxs=;
-        b=Tzs9vS/LH6xx2lxvoO6hBiTtEGMe2yKHvzA3zgaYhYyK5BAfvnE4PBkL9fQDaiqMKc
-         G8rZP0VvKjvXfxwGkgR0Z7YQEcr6P5oSAtATc0kDddjRaVPdAmzX4gEyQKEEy9HpukPE
-         hidPmO0Fcx2nJkbddIjMSP2XqOI8V833I1Fg0=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=JUZF32+zXYd1pL2udBeF9ULcY4kLfLjPF1m7hHnxZa0=;
+        b=sJ0pFV4v4VIPFZgrS55hS1DliUglqpZWWQdOHwpNLvZOKZIBL2GCLyth66JWfA/v1t
+         DMD18/F2eCK6FWNm9DKUnqBnRahMbNt0p7ef/1D5htd2AQUZx2spvHdJ0PYYI7lkjWRv
+         qt4gbqWybKuCeSlu0NBWOTO67rm7U5ZgcuA6A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:from:to:cc:subject:date:message-id
-         :x-mailer:mime-version:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        b=R6eMjjmVkhdFWZ2c2ze9cUawbD+TIRsyDsKdlVUdBtyONP2awuYe3DGLOaIgJ+2jYA
-         jckeTot8/aSJbS3V0KhSe8M3au+gBSqbfNceEPgmRGj7alI+SY6hKtGeLbWxbrQNT/YP
-         PQeshwjOVcMvgCMjG+WT1170gerobl/77JjL0=
-Received: by 10.216.237.206 with SMTP id y56mr304901weq.12.1286716881708;
-        Sun, 10 Oct 2010 06:21:21 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.14.36.29 with SMTP id v29ls172227eea.3.p; Sun, 10 Oct 2010
- 06:21:20 -0700 (PDT)
-Received: by 10.14.29.75 with SMTP id h51mr575043eea.21.1286716880613;
-        Sun, 10 Oct 2010 06:21:20 -0700 (PDT)
-Received: by 10.14.29.75 with SMTP id h51mr575042eea.21.1286716880591;
-        Sun, 10 Oct 2010 06:21:20 -0700 (PDT)
-Received: from mail-ew0-f43.google.com (mail-ew0-f43.google.com [209.85.215.43])
-        by gmr-mx.google.com with ESMTP id w43si6044358eeh.7.2010.10.10.06.21.19;
-        Sun, 10 Oct 2010 06:21:19 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.43 as permitted sender) client-ip=209.85.215.43;
-Received: by ewy25 with SMTP id 25so1866578ewy.30
-        for <msysgit@googlegroups.com>; Sun, 10 Oct 2010 06:21:19 -0700 (PDT)
-Received: by 10.213.113.13 with SMTP id y13mr399367ebp.44.1286716879391;
-        Sun, 10 Oct 2010 06:21:19 -0700 (PDT)
-Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id v8sm9032427eeh.8.2010.10.10.06.21.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 10 Oct 2010 06:21:17 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.43 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158658>
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=q48bkqYXxSdeALga1ZPhGn+a8IJwwxZFcMMbNupmdcalK92ycRcSv7ZCkXPiS+nUBr
+         Q7sWUflNh1qg2s0J0Ik5Xh3i55y4X7EdYFlUNXnlKkT5l7TNFlP2rnyWB+mb84aBQdsC
+         VWuyTlbtO8za2jvVsI1weD93o8dVjCCxKOQmM=
+Received: by 10.224.79.9 with SMTP id n9mr3527559qak.229.1286716642009; Sun,
+ 10 Oct 2010 06:17:22 -0700 (PDT)
+Received: by 10.229.50.7 with HTTP; Sun, 10 Oct 2010 06:17:01 -0700 (PDT)
+In-Reply-To: <7vfwwv2lb4.fsf@alter.siamese.dyndns.org>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158659>
 
-Almost 9 months have passed since I sent v2, and here's finally v3.
+On Mon, Sep 27, 2010 at 6:38 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Peter Kjellerstedt <peter.kjellerstedt@axis.com> writes:
+>
+>> Shouldn't this behavior of --tags require --force to keep in line
+>> with what is described in git tag's manual page?
+>
+> Sounds sensible, if nobody is already relying on this behaviour.
 
-Not so much have happened since v2, the most significant change being
-that I've replaced our win32-poll implementation with the one from
-gnulib. This gives our the poll-features needed for git-daemon, and
-prevents a nasty timing-bug that occured (on Windows) in the previous
-series.
+any updates on this one?
 
-Some of the patches have been ejected;
-* "daemon: use select() instead of poll()" because our poll now is
-  sufficient.
-* "daemon: use explicit file descriptor" because it wasn't needed
-  anymore, not even in the previous version.
+even if we require the --force option it wouldn't hurt if we displayed
+the old hash, does it?
 
-One patch might be a little bit controversial; "daemon: only use posix
-features on posix systems". It replaces "mingw: compile git-daemon", and
-changes the logic from opt-out is WIN32 is defined to opt-in if
-_POSIX_VERSION defined.
-
-The current version is based on top of junio/next, because the
-ab/daemon-multi-select series touches some of the same code.
-
-v2 msgid is <1263591033-4992-1-git-send-email-kusmabite@gmail.com> if
-you're interrested in comparing.
-
-Erik Faye-Lund (10):
-  inet_ntop: fix a couple of old-style decls
-  mingw: use real pid
-  mingw: support waitpid with pid > 0 and WNOHANG
-  mingw: add kill emulation
-  daemon: use run-command api for async serving
-  daemon: use full buffered mode for stderr
-  daemon: report connection from root-process
-  mingw: import poll-emulation from gnulib
-  mingw: use poll-emulation from gnulib
-  daemon: only use posix features on posix systems
-
-Martin Storsjö (1):
-  Improve the mingw getaddrinfo stub to handle more use cases
-
-Mike Pape (3):
-  mingw: add network-wrappers for daemon
-  mingw: implement syslog
-  compat: add inet_pton and inet_ntop prototypes
-
- Makefile            |   12 +-
- compat/inet_ntop.c  |   22 +--
- compat/inet_pton.c  |    8 +-
- compat/mingw.c      |  291 +++++++++++++++++++-------
- compat/mingw.h      |   56 ++++--
- compat/win32/poll.c |  596 +++++++++++++++++++++++++++++++++++++++++++++++++++
- compat/win32/poll.h |   53 +++++
- daemon.c            |  199 ++++++++++--------
- git-compat-util.h   |   10 +
- 9 files changed, 1045 insertions(+), 202 deletions(-)
- create mode 100644 compat/win32/poll.c
- create mode 100644 compat/win32/poll.h
 
 -- 
-1.7.3.1.51.ge462f.dirty
+typed with http://neo-layout.org
+myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
