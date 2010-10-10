@@ -1,163 +1,109 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/5] t7607: use test_commit and test_must_fail
-Date: Sun, 10 Oct 2010 01:35:27 -0500
-Message-ID: <20101010063527.GC23100@burratino>
-References: <7v4oepaup7.fsf@alter.siamese.dyndns.org>
- <1286632380-7002-2-git-send-email-drizzd@aon.at>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [TopGit PATCHv2] provide global temporary directory
+Date: Sun, 10 Oct 2010 09:47:47 +0200
+Message-ID: <AANLkTikuEa6TQpEnv=0y3v18W9H8sC4SQ+5vdTvBW7LF@mail.gmail.com>
+References: <d351f9124a96f212fe66ee85b4241753be94ab2b.1286660467.git.bert.wesarg@googlemail.com>
+	<20101009215302.GR29673@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Sun Oct 10 08:40:06 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, pasky@suse.cz,
+	martin f krafft <madduck@madduck.net>
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Sun Oct 10 09:48:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4pZl-0008UC-Cc
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 08:40:05 +0200
+	id 1P4qdb-0000uy-0i
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 09:48:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751404Ab0JJGik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 02:38:40 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51146 "EHLO
+	id S1752341Ab0JJHrt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 03:47:49 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52977 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240Ab0JJGij (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 02:38:39 -0400
-Received: by iwn6 with SMTP id 6so2022390iwn.19
-        for <git@vger.kernel.org>; Sat, 09 Oct 2010 23:38:38 -0700 (PDT)
+	with ESMTP id S1751921Ab0JJHrs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 10 Oct 2010 03:47:48 -0400
+Received: by iwn6 with SMTP id 6so2054838iwn.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 00:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=TTuB+uFnHi1CGEbJ8WoAdB6PIlBAco9r94wfp0m+0Ts=;
-        b=uYNKX7wa0CPsWhnYo4vEj4ipZfuRoUsCYDdrjsfELlzATLQf6tQRwg6GxAu5XzjgXI
-         zTDiQOJGfJcv/4vBQnslxqL+vNAs98Kd8WOM4JOiQ4YhwDRhfu+1uLFcegYZ3hAHDdwR
-         3H+rIx1kQsrje2R9M3p1/d/TjbPAPSYQKHnbI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=031H3YgQgi7nr7odxyd5WtdqMd+WT+fr116UtDpBO7w=;
+        b=lUY0iYzoNt23j4KtvvrKJnZWT2MoykNYHEt+3WmyoeLfb5IPyB7I4bPqe8fAGxlLIr
+         yAgP+rlGD7kppeJNqEC8QPikHraiWgcfmw2gb0Bqz6faB/8wens2LQT8NQ1NRaCGB4Jv
+         tT9nflx162wkerGMrv4ToLToyLiHbIDTL3BQU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ls5HECRY/4bEYdmmBw5FLsLhs7rOADDjd02CnU6PFKu5G2+6+SvdaT7xDceoscf/Pe
-         hnx4sn3NG+fY9gVs5sYcLTd0BGQIT4rcg0s9i5mM6mKPzzw3cS6e9y90TUT6tGdpIbmC
-         ibJmwQa/XB5Z0FoQAevAOcQwYZmH57oTqlkPQ=
-Received: by 10.42.176.72 with SMTP id bd8mr607083icb.172.1286692718466;
-        Sat, 09 Oct 2010 23:38:38 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d40sm3471811ibc.1.2010.10.09.23.38.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 09 Oct 2010 23:38:37 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1286632380-7002-2-git-send-email-drizzd@aon.at>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cmZO5pBgiLB/xa8N+NOy9fEKThRL2mhze+x7dXObrdnz2/sKTp3WPKkjxjBNeu7Cez
+         iqJRzLRZcWaUoLcF9GlBAzDXcUcTRoqtU8RIG8w1mmnrHjr6rdyLc5V8BjC9tZX8LJZt
+         B4PYXhmcKBPQFS46KtVtLLOaahqk1d4X+h4yY=
+Received: by 10.42.163.70 with SMTP id b6mr990847icy.338.1286696867387; Sun,
+ 10 Oct 2010 00:47:47 -0700 (PDT)
+Received: by 10.231.147.80 with HTTP; Sun, 10 Oct 2010 00:47:47 -0700 (PDT)
+In-Reply-To: <20101009215302.GR29673@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158649>
 
-Clemens Buchacher wrote:
-
-> [Subject: t7607: use test_commit and test_must_fail]
+2010/10/9 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
+> On Sat, Oct 09, 2010 at 11:41:47PM +0200, Bert Wesarg wrote:
+>> +# get_temp NAME [-d]
+> I like your patch in general, but would prefer to have
 >
-> Also make sure that aborted merges do not leave
-> MERGE_HEAD except in the "will not overwrite
-> removed file" test, where we cannot do so.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0# get_temp [-d] NAME
 
-Motivation?
+But that would complicate the argument evaluation, wouldn't it:
 
-> See
-> also the discussion in the following thread.
+get_temp()
+{
+    if [ $# -eq 2 ]; then
+        mktemp $1 "$tg_tmp_dir/$2.XXXXXX"
+    else
+        mktemp "$tg_tmp_dir/$1.XXXXXX"
+    fi
+}
+
+This and the functions with [-i | -w] are internal and won't be called
+by the user, so we have full control over the calling convention and
+should make it easy for us. And putting the optional argument at the
+end is easy. I should probably remove the die call in cat_file,
+because that would be an programmer error not an user error.
+
 >
-> http://mid.gmane.org/7vskopwxej.fsf@gitster.siamese.dyndns.org
+>> +# creates a new temporary file (or directory with -d) in the global
+>> +# temporary directory $tg_tmp_dir with pattern prefix NAME
+>> +get_temp()
+>> +{
+>> + =C2=A0 =C2=A0 mktemp ${2-} "$tg_tmp_dir/$1.XXXXXX"
+> Does the - makes any difference? =C2=A0If yes, is it portable (enough=
+)?
 
-That subthread is about teaching merge-recursive to write its results
-to the index first without touching the worktree for robustness.  It
-is not immediately obvious what that has to do with not leaving
-MERGE_HEAD.  Could you summarize the relevant part for the commit
-message so the reader does not have to track it down?
+=46or me its an indicator, that it doesn't matter whether $2 was given
+or not. Also you could run under set -u without error. But I don't do
+this.
 
-> --- a/t/t7607-merge-overwrite.sh
-> +++ b/t/t7607-merge-overwrite.sh
-> @@ -7,81 +7,73 @@ Do not overwrite changes.'
->  . ./test-lib.sh
->  
->  test_expect_success 'setup' '
-> -	echo c0 > c0.c &&
-> -	git add c0.c &&
-> -	git commit -m c0 &&
-> -	git tag c0 &&
-> +	test_commit c0 &&
+It's in POSIX [1].
 
-Behavior changes:
+Bert
 
- . filename is c0.t instead of c0.c
- . uses test_tick for timestamp
+[1] Statement given without interpretation.
 
-Sounds good.
-
-> -	echo c1 > c1.c &&
-> -	git add c1.c &&
-> -	git commit -m c1 &&
-> -	git tag c1 &&
-> +	test_commit c1 &&
-
-Another almost-noop (good).
-
-> -	git reset --hard c0 &&
-> -	echo c2 > c2.c &&
-> -	git add c2.c &&
-> -	git commit -m c2 &&
-> -	git tag c2 &&
-> -	git reset --hard c1 &&
-> -	echo "c1 a" > c1.c &&
-> -	git add c1.c &&
-> -	git commit -m "c1 a" &&
-> -	git tag c1a &&
-> +	test_commit "c1a" "c1.t" "c1 a" &&
-> +	git reset --hard c0 &&
-> +	test_commit c2 &&
-
-The reader might not remember the c1.t filename.  Maybe
-it would be good to be explicit in the 'test_commit c1' line:
-
-	test_commit c1 c1.t
-
-?  Or maybe a comment could help?
-
-	# Commit rewriting the file from c1
-
->  	echo "VERY IMPORTANT CHANGES" > important
->  '
->  
->  test_expect_success 'will not overwrite untracked file' '
->  	git reset --hard c1 &&
-> -	cat important > c2.c &&
-> +	cp important c2.t &&
->  	test_must_fail git merge c2 &&
-> -	test_cmp important c2.c
-> +	! test -f .git/MERGE_HEAD &&
-> +	test_cmp important c2.t
->  '
-
-Nit: if backportability is not important, maybe
-
-	test_path_is_missing .git/MERGE_HEAD &&
-
-for better error messages when running tests with -v and
-the file is present?
-
-[...]
-> -	cat important > c2.c &&
-> -	git add c2.c &&
-> -	rm c2.c &&
-> +	cp important c2.t &&
-> +	git add c2.t &&
-> +	rm c2.t &&
-
-These changes make for a lot of noise.  Why not specify the
-filenames in the setup test to keep the .c extension?
-
-The main change (checking that MERGE_HEAD is not present
-for a merge that fails due to pre-merge checks) seems good.
-Thanks.
+> Best regards
+> Uwe
+>
+> --
+> Pengutronix e.K. =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | Uwe Kleine-K=C3=B6nig =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
+> Industrial Linux Solutions =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 | http://www.pengutronix.de/ =C2=A0|
+>
