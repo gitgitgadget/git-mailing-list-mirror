@@ -1,124 +1,222 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [TopGit PATCH 09/10] [RFC] tg-patch: use ui diff when pager is active
-Date: Sun, 10 Oct 2010 10:04:46 +0200
-Message-ID: <AANLkTikO0bVgwezMP0HT7z1WL68z4hURx3Gb2qVsqw2P@mail.gmail.com>
-References: <160b8b0eb6152da98f4fa633ac25c7a25ff32aa4.1286524446.git.bert.wesarg@googlemail.com>
-	<0fd777939e0ca49b6e0013ab667cadbfae55e879.1286524446.git.bert.wesarg@googlemail.com>
-	<20101009204348.GO29673@pengutronix.de>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH 1/5 v2] t7607: use test-lib functions and check MERGE_HEAD
+Date: Sun, 10 Oct 2010 10:35:43 +0200
+Message-ID: <20101010083543.GA12186@localhost>
+References: <7v4oepaup7.fsf@alter.siamese.dyndns.org>
+ <1286632380-7002-2-git-send-email-drizzd@aon.at>
+ <20101010063527.GC23100@burratino>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, pasky@suse.cz,
-	martin f krafft <madduck@madduck.net>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Sun Oct 10 10:05:03 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="ew6BAiZeqk4r7MaW"
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 10 10:36:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P4qtw-0003vs-4e
-	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 10:05:00 +0200
+	id 1P4rOW-0006Zo-EX
+	for gcvg-git-2@lo.gmane.org; Sun, 10 Oct 2010 10:36:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545Ab0JJIEt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 10 Oct 2010 04:04:49 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:43801 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751921Ab0JJIEq convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 10 Oct 2010 04:04:46 -0400
-Received: by iwn6 with SMTP id 6so2063092iwn.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 01:04:46 -0700 (PDT)
+	id S1753011Ab0JJIfj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 04:35:39 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47821 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751947Ab0JJIfi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 04:35:38 -0400
+Received: by bwz15 with SMTP id 15so1120826bwz.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 01:35:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=safHc1WT3hTL0EkVZlXOlQIBjIW5XVo/jm6nxnas8Rw=;
-        b=Fw56bDbiej3QX6cZFm7+szao529w8qL/5MacA8dyGWndt4FIuGlnLtv8+IzCc9EB1s
-         iCo4uDg8neFCLuwfc+JF6bcb3GnkePKzxaZUg6mGNW0aPcxlx8jn6buMF1cRqSduZ9mX
-         tkjp+yvMOdiGyMoSdBTF596Q+48J2qALb+2lQ=
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=tTnoWbfFj3Ded3sALTlvYadYDgvrr6YC8ej7k+urpjs=;
+        b=DQ0wsdN0CnxC3VqP/GUVPCk0kLaaJS0Ks439M9Ht4qOBqiAl1zW+Yz6snIMqdsuVoH
+         aDTylyoVg+/8nozVcM2WLHC9c9850o5NWQRv4J/2zd1AdVQLNIyIXayC7peKFyp9inrv
+         tPlHqeuD7dnLzr7HlWSV3XadYb2vRmWlduack=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VBBTYR0xK5VNtLhasYnu7J7T/HdNjbQSF++WsSHAZgNdLDJhlm4n5StKVAENxxVm6Z
-         ca4GahMxenIr/xKTi4uwl79O2QenmzYhkT1usbkE+Oufk8Zgu5lJDfrQEAZcs8WvV+TP
-         LmafCQOr5rEQ+B7X2FmCEhlEHX29bcAADvaI4=
-Received: by 10.231.11.197 with SMTP id u5mr2626371ibu.41.1286697886130; Sun,
- 10 Oct 2010 01:04:46 -0700 (PDT)
-Received: by 10.231.147.80 with HTTP; Sun, 10 Oct 2010 01:04:46 -0700 (PDT)
-In-Reply-To: <20101009204348.GO29673@pengutronix.de>
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=EhXlY0WFRzGYBnidKhlHar4d83BVZhHBKzn+Xm/qKzsZHDEeEaPVos2Za/vWmUo+F3
+         G6p1nP3b6z7bfbhTJMQ3luDok0TIKXM8m7up38HfZhf6Fhr1ozPQzuDBoJKebOf8nEAl
+         +xTqYoP0NkIKpIKLSwKDNzv6SW6qTIkSaS71E=
+Received: by 10.204.115.3 with SMTP id g3mr4009748bkq.141.1286699735032;
+        Sun, 10 Oct 2010 01:35:35 -0700 (PDT)
+Received: from darc.lan (p549A35A6.dip.t-dialin.net [84.154.53.166])
+        by mx.google.com with ESMTPS id q19sm1368658bkb.4.2010.10.10.01.35.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 10 Oct 2010 01:35:34 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1P4rNf-0003Tp-MB; Sun, 10 Oct 2010 10:35:43 +0200
+Content-Disposition: inline
+In-Reply-To: <20101010063527.GC23100@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158651>
 
-2010/10/9 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
-> Hi Bert,
->
->
-> On Fri, Oct 08, 2010 at 09:58:07AM +0200, Bert Wesarg wrote:
->> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->
-> can you tell me the motivation for this patch again? =C2=A0It should =
-go into
-> the commit log, too.
 
-My motivation is, that diff-tree should be used to generate patches
-meant for submission (or non-human consumption). But for pure human
-inspection some 'eye-candy' effects could take considerations. Like
-color, renames, mnemonicprefix, or noprefix. External diff driver or
-word-diff. All these are in effect by using the diff command, when
-configured in your git config file. diff-tree does not honor these
-configure options but its possible to give them as command line
-options too. Selecting the plumbing or ui diff driver is best done
-automatically, in my opinion, and the active pager is my best bet that
-a human will consume the output. I will probably add an overwrite
-command switch (to enable ui mode even without an active pager, I
-sometimes pipe the output for inspection into my editor) shortly.
+--ew6BAiZeqk4r7MaW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I don't know if this is suitable for the commit log. If so I will try
-to fit it in.
+Use the test_commit and test_path_is_missing
+functions from the test library.
 
-Bert
+Also make sure that a merge which fails due to
+pre-merge checks aborts properly and does not
+leave MERGE_HEAD behind.
 
->
-> Thanks
-> Uwe
->
->> ---
->> =C2=A0tg-patch.sh | =C2=A0 =C2=A07 ++++++-
->> =C2=A01 files changed, 6 insertions(+), 1 deletions(-)
->>
->> diff --git a/tg-patch.sh b/tg-patch.sh
->> index 9def6e5..dcce672 100644 tg-patch.sh
->> --- a/tg-patch.sh
->> +++ b/tg-patch.sh
->> @@ -70,7 +70,12 @@ t_tree=3D$(pretty_tree "$name" $head_from)
->> =C2=A0if [ $b_tree =3D $t_tree ]; then
->> =C2=A0 =C2=A0 =C2=A0 echo "No changes."
->> =C2=A0else
->> - =C2=A0 =C2=A0 git diff-tree -p --stat $b_tree $t_tree
->> + =C2=A0 =C2=A0 # use the ui diff command when the pager is active
->> + =C2=A0 =C2=A0 diff_command=3Ddiff
->> + =C2=A0 =C2=A0 [ "x$GIT_PAGER_IN_USE" =3D "x1" ] ||
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 diff_command=3Ddiff-tree
->> +
->> + =C2=A0 =C2=A0 git $diff_command -p --stat $b_tree $t_tree
->> =C2=A0fi
->>
->> =C2=A0echo '-- '
->> --
->> 1.7.1.1067.g5aeb7
->>
->>
->
-> --
-> Pengutronix e.K. =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | Uwe Kleine-K=C3=B6nig =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
-> Industrial Linux Solutions =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 | http://www.pengutronix.de/ =C2=A0|
->
+The "will not overwrite removed file" test is an
+exception to this. It notices the untracked file
+at a stage where the merge is already well under
+way. Therefore we cannot abort the merge without
+major restructuring. See the following thread for
+more details.
+
+http://mid.gmane.org/7vskopwxej.fsf@gitster.siamese.dyndns.org
+
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+
+On Sun, Oct 10, 2010 at 01:35:27AM -0500, Jonathan Nieder wrote:
+>=20
+> The main change (checking that MERGE_HEAD is not present
+> for a merge that fails due to pre-merge checks) seems good.
+
+Thanks. This new version incorporates all of your suggestions.
+
+Clemens
+
+ t/t7607-merge-overwrite.sh |   38 +++++++++++++++-----------------------
+ 1 files changed, 15 insertions(+), 23 deletions(-)
+
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index d82349a..b8fab54 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -7,48 +7,38 @@ Do not overwrite changes.'
+ . ./test-lib.sh
+=20
+ test_expect_success 'setup' '
+-	echo c0 > c0.c &&
+-	git add c0.c &&
+-	git commit -m c0 &&
+-	git tag c0 &&
+-	echo c1 > c1.c &&
+-	git add c1.c &&
+-	git commit -m c1 &&
+-	git tag c1 &&
++	test_commit c0 c0.c &&
++	test_commit c1 c1.c &&
++	test_commit c1a c1.c "c1 a" &&
+ 	git reset --hard c0 &&
+-	echo c2 > c2.c &&
+-	git add c2.c &&
+-	git commit -m c2 &&
+-	git tag c2 &&
+-	git reset --hard c1 &&
+-	echo "c1 a" > c1.c &&
+-	git add c1.c &&
+-	git commit -m "c1 a" &&
+-	git tag c1a &&
++	test_commit c2 c2.c &&
+ 	echo "VERY IMPORTANT CHANGES" > important
+ '
+=20
+ test_expect_success 'will not overwrite untracked file' '
+ 	git reset --hard c1 &&
+-	cat important > c2.c &&
++	cp important c2.c &&
+ 	test_must_fail git merge c2 &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test_cmp important c2.c
+ '
+=20
+ test_expect_success 'will not overwrite new file' '
+ 	git reset --hard c1 &&
+-	cat important > c2.c &&
++	cp important c2.c &&
+ 	git add c2.c &&
+ 	test_must_fail git merge c2 &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test_cmp important c2.c
+ '
+=20
+ test_expect_success 'will not overwrite staged changes' '
+ 	git reset --hard c1 &&
+-	cat important > c2.c &&
++	cp important c2.c &&
+ 	git add c2.c &&
+ 	rm c2.c &&
+ 	test_must_fail git merge c2 &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	git checkout c2.c &&
+ 	test_cmp important c2.c
+ '
+@@ -57,7 +47,7 @@ test_expect_success 'will not overwrite removed file' '
+ 	git reset --hard c1 &&
+ 	git rm c1.c &&
+ 	git commit -m "rm c1.c" &&
+-	cat important > c1.c &&
++	cp important c1.c &&
+ 	test_must_fail git merge c1a &&
+ 	test_cmp important c1.c
+ '
+@@ -66,9 +56,10 @@ test_expect_success 'will not overwrite re-added file' '
+ 	git reset --hard c1 &&
+ 	git rm c1.c &&
+ 	git commit -m "rm c1.c" &&
+-	cat important > c1.c &&
++	cp important c1.c &&
+ 	git add c1.c &&
+ 	test_must_fail git merge c1a &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	test_cmp important c1.c
+ '
+=20
+@@ -76,10 +67,11 @@ test_expect_success 'will not overwrite removed file wi=
+th staged changes' '
+ 	git reset --hard c1 &&
+ 	git rm c1.c &&
+ 	git commit -m "rm c1.c" &&
+-	cat important > c1.c &&
++	cp important c1.c &&
+ 	git add c1.c &&
+ 	rm c1.c &&
+ 	test_must_fail git merge c1a &&
++	test_path_is_missing .git/MERGE_HEAD &&
+ 	git checkout c1.c &&
+ 	test_cmp important c1.c
+ '
+--=20
+1.7.1.571.gba4d01
+
+
+--ew6BAiZeqk4r7MaW
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMsXrfAAoJELKdZexG8uqM/BwH/Ai2w+DFW4L9D1SivLoxDL8/
+Z3YDRrx5oJa35ZhbBwInGJx7xwXG3Pn/mx0avGwoRwQe9cRufp6AO5hHUq3U1LNv
+ZaP4RdlScMqeuKUu8mrbjJs4kumL/sjZ59MRnBZzX1Ovdq/GbKhJqidYTvmHQc6e
+0sngXx9Jf1WlS7m1sDztYPRJ3z2lF0js+BNHLIVOi6CgSbBJYdQzeLrvO/BVX9V0
+P2F0bGZLWTqqOSLMav5jcYFAgIv8mRqxjre+1IviFuGTuu5hX7yTx++qAiV8CK0f
+Fpe0HNQlYahbytd9qlOoqsbV5fuXkOoFqYHKmT6461u31QHaYPyBwsSWgjkF9IE=
+=3pEL
+-----END PGP SIGNATURE-----
+
+--ew6BAiZeqk4r7MaW--
