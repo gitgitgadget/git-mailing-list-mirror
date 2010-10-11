@@ -1,90 +1,60 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Automating svn<->git gateway
-Date: Mon, 11 Oct 2010 21:30:07 +0200
-Message-ID: <20101011193007.GA30870@efreet.light.src>
+From: Christian Dietrich <stettberger@dokucode.de>
+Subject: Re: [ANNOUNCE] metagit 0.1.2
+Date: Mon, 11 Oct 2010 22:08:17 +0200
+Message-ID: <86aamkcx1q.fsf@peer.zerties.org>
+References: <86k4lteow6.fsf@peer.zerties.org>
+	<m362xbg3b3.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 11 21:43:43 2010
+X-From: git-owner@vger.kernel.org Mon Oct 11 22:08:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5OHe-0006qh-Lv
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 21:43:43 +0200
+	id 1P5Ofi-0003bJ-Gh
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 22:08:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755975Ab0JKTng (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Oct 2010 15:43:36 -0400
-Received: from cuda1.bluetone.cz ([212.158.128.5]:47875 "EHLO
-	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755216Ab0JKTng (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Oct 2010 15:43:36 -0400
-X-Greylist: delayed 805 seconds by postgrey-1.27 at vger.kernel.org; Mon, 11 Oct 2010 15:43:35 EDT
-X-ASG-Debug-ID: 1286825408-1c3c7f040001-QuoKaX
-Received: from efreet.light.src (152-31-80-78.praha.adsl.tmcz.cz [78.80.31.152]) by cuda1.bluetone.cz with ESMTP id f1SEoRNiox3BmPJz for <git@vger.kernel.org>; Mon, 11 Oct 2010 21:30:08 +0200 (CEST)
-X-Barracuda-Envelope-From: bulb@ucw.cz
-X-Barracuda-Apparent-Source-IP: 78.80.31.152
-Received: from bulb by efreet.light.src with local (Exim 4.72)
-	(envelope-from <bulb@ucw.cz>)
-	id 1P5O4W-0008QM-1V
-	for git@vger.kernel.org; Mon, 11 Oct 2010 21:30:08 +0200
-X-ASG-Orig-Subj: Automating svn<->git gateway
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Barracuda-Connect: 152-31-80-78.praha.adsl.tmcz.cz[78.80.31.152]
-X-Barracuda-Start-Time: 1286825408
-X-Barracuda-URL: http://212.158.128.5:8000/cgi-mod/mark.cgi
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5563 1.0000 0.7500
-X-Barracuda-Spam-Score: 0.75
-X-Barracuda-Spam-Status: No, SCORE=0.75 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=4.5 KILL_LEVEL=4.8 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.43398
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
+	id S1756034Ab0JKUI1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 16:08:27 -0400
+Received: from lo.gmane.org ([80.91.229.12]:46026 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756015Ab0JKUI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Oct 2010 16:08:26 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P5Ofa-0003Vb-2C
+	for git@vger.kernel.org; Mon, 11 Oct 2010 22:08:26 +0200
+Received: from peer.zerties.org ([188.40.33.175])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Oct 2010 22:08:26 +0200
+Received: from stettberger by peer.zerties.org with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 11 Oct 2010 22:08:26 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: peer.zerties.org
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+Cancel-Lock: sha1:vRlSeUAiLKJqW9hCGe7/BKu4De8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158785>
 
-Hello Folks,
+Jakub Narebski <jnareb@gmail.com> writes:
+> Could you add short description about this project in appriopriate pl=
+ace
+> on https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
+> page?
 
-I want to set up a gateway between subversion and git, which would keep the
-master synchonized with subversion trunk, both ways, and allow working with
-any additional branches independent of subversion. For users it should behave
-as any other shared git repository accessed by push and pull. And it needs to
-be automatic.
+Added it. I hope it is in the right place now.
 
-Did anybody try to set up something like this?
-
-Background:
-
-At $work, we are considering switch from subversion to git. However to avoid
-big disruptions in the work, we need to do it gradually. So the idea is to
-switch to git one by one. The people who already switch need to be able to
-test the final workflow with git, while other people still commit to the
-subversion repository.
-
-This basically rules out everybody just using git-svn, because individual
-conversions are incompatible (or is there some way to make them compatible?),
-so the people couldn't easily share their working branches.
-
-That leaves me with creating one git-svn repository and having everybody
-clone from that. Keeping the repository up-to-date from subversion side seems
-trivial (just 'git svn fetch' to it from subversion's post-commit hook).
-
-The trickier part is exporting changes pushed from the git side to
-subversion. My plan is to write a post-receive hook, that will
-'git svn dcommit' to svn trunk.
-
-I suppose I will have to get the rewritten commit back from subversion and
-merge it back to the master. I have not yet tested whether when dcommiting
-a merge will properly keep the second parent in the rewritten commit or not.
-I can do extra merge if it does not at the cost of slightly uglier history.
-
-Thanks,
-Jan
-
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+greetz didi
+--=20
+(=CE=BB x . x x) (=CE=BB x . x x) -- See how beatiful the lambda is
+No documentation is better than bad documentation
+-- Das Ausdrucken dieser Mail wird urheberrechtlich verfolgt.
