@@ -1,105 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 15/16] t9010 (svn-fe): Eliminate dependency on svn perl
- bindings
-Date: Sun, 10 Oct 2010 22:00:40 -0500
-Message-ID: <20101011030040.GO1553@burratino>
-References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
- <20100716101352.GA14374@burratino>
- <20100809215719.GA4203@burratino>
- <20100810125317.GB3921@kytes>
- <20101011023435.GA706@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: Efficiently detecting paths that differ from each other only
+ in case
+Date: Sun, 10 Oct 2010 23:07:55 -0400
+Message-ID: <20101011030755.GB6523@sigill.intra.peff.net>
+References: <AANLkTimGAbosbD0pprROu_g-UW38faotYA2dTxj9scsP@mail.gmail.com>
+ <20101008135034.GC5163@sigill.intra.peff.net>
+ <AANLkTik6pSJFUkY9sooSH7iANaKLhxdN+ouKRXJn1B9G@mail.gmail.com>
+ <20101008195120.GA10810@sigill.intra.peff.net>
+ <AANLkTimAhjHm5Z4ekTOBaxwzyw2YD6MrRnB1O8E6nAtw@mail.gmail.com>
+ <20101008200657.GA10954@sigill.intra.peff.net>
+ <AANLkTi=YQOVYsK6Brq5pMiAdrH3Un7RgrWvYf_pymT=d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 11 05:04:04 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 11 05:07:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P58gC-0000ab-Vl
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 05:04:01 +0200
+	id 1P58jv-0002NH-4o
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 05:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753059Ab0JKDD4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 10 Oct 2010 23:03:56 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37668 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753050Ab0JKDDz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 10 Oct 2010 23:03:55 -0400
-Received: by ywi6 with SMTP id 6so476869ywi.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 20:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6pmGu7xKqZ/qzOuP+eIjA7P2Dwcrnce97gUm4aWN248=;
-        b=s38Z6bPNcEKfUiMihyRqDcvTdXOfzS41SQRZvjVM9Fjy5PSE5HlO0HxlupQquEOB5s
-         CyWwGW8jzOMWE21AE0poDkx0DiEm/iHBe5kI5VpaocKBXt6uV5nEFLpXQ4xYLhMMEBt3
-         h2C1s9liPTxghfqUQDB/gwsddOD7dflwb8JSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=sDrxHuekDkBQsGecnB0get6A2ZyKR4ij4B8ZVk7A92FKIQQUna+fLedL9SMQN2pi8g
-         wOHQ5uSug+OSFHRTWUU92YmB83o37bHNtzAxoylpd7OSS9pBfLg0vcRBOcvz1HxANIfg
-         qgmOqssuv7ExKyaJWPvpT8c5PSlVMWDIV5QYk=
-Received: by 10.101.126.19 with SMTP id d19mr2311505ann.249.1286766234782;
-        Sun, 10 Oct 2010 20:03:54 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id g18sm7864900anh.38.2010.10.10.20.03.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Oct 2010 20:03:54 -0700 (PDT)
+	id S1752994Ab0JKDHp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 10 Oct 2010 23:07:45 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58872 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752888Ab0JKDHp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 10 Oct 2010 23:07:45 -0400
+Received: (qmail 12070 invoked by uid 111); 11 Oct 2010 03:07:44 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 11 Oct 2010 03:07:44 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 10 Oct 2010 23:07:55 -0400
 Content-Disposition: inline
-In-Reply-To: <20101011023435.GA706@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <AANLkTi=YQOVYsK6Brq5pMiAdrH3Un7RgrWvYf_pymT=d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158746>
 
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+On Fri, Oct 08, 2010 at 05:57:16PM -0500, Dun Peal wrote:
 
-The svn-fe test script only requires git and the svn command-line
-tools.  Make these tests easier to read and run by not using the perl
-libsvn bindings and instead duplicating only the relevant code from
-lib-git-svn.sh.
+> On Fri, Oct 8, 2010 at 3:06 PM, Jeff King <peff@peff.net> wrote:
+> > Re-reading your original message, I have a few more thoughts.
+> >
+> > One is that you don't need to do this per-commit. You probably want to
+> > do it per-updated-ref, each of which may be pushing many commits. And
+> > then you either reject the new ref value or not.
+> 
+> I think I do, actually, because let's say the developer pushes two
+> commits, 1<-2. Suppose commit 1 violates the rule, but commit 2
+> reverts the violation. One might think that we don't care, since the
+> head will now be on 2, which is a correct state. But in fact we do,
+> because this is Git, and anyone may branch of from 1 in the future,
+> and voila we have a head in an incorrect state.
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t9010-svn-fe.sh |   14 ++++++++++++--
- 1 files changed, 12 insertions(+), 2 deletions(-)
+Yeah, though it is not an especially likely state to branch from, since
+you have to specify it manually. However, a much more likely scenario is
+checkout out a past commit for testing, especially in bisection. So yes,
+if you want to be thorough, you need to check every commit.
 
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index a713dfc..fd851a4 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -2,9 +2,19 @@
- 
- test_description='check svn dumpfile importer'
- 
--. ./lib-git-svn.sh
-+. ./test-lib.sh
- 
--test_dump() {
-+svnconf=$PWD/svnconf
-+export svnconf
-+
-+svn_cmd () {
-+	subcommand=$1 &&
-+	shift &&
-+	mkdir -p "$svnconf" &&
-+	svn "$subcommand" --config-dir "$svnconf" "$@"
-+}
-+
-+test_dump () {
- 	label=$1
- 	dump=$2
- 	test_expect_success "$dump" '
--- 
-1.7.2.3
+> Yeah, that's a pretty good idea, if not for the many ls-tree calls.
+> With their overhead, I strongly suspect it may be slower than the
+> solution you seem to propose, which is:
+> 
+> git ls-tree -r <commit>
+> 
+> which should give the full list of all paths in a commit, upon which I
+> can decide to accept or reject.
+
+Yeah, that is what I am proposing.
+
+One other thing you could try is to "ls-tree -r" the known-good state of
+the current HEAD at the beginning of the push, and then run "git log
+-diff-filter=AD --name-status $old..$new". For each commit in the log
+output, look for new entries that are in case-insensitive conflict with
+the existing tree, and then update your tree state appropriately with
+added and removed files. You only invoke two git commands, which saves
+on invocation overhead, and you only ls-tree once per push, not per
+commit. Git's internal diff shouldn't look at parts of the tree that
+aren't relevant.
+
+The downside is that the tree state you are keeping internally is not
+entirely accurate. For example, when receiving a merge between two
+parallel lines of development, you would process them linearly, when in
+fact there are two simultaneous different states. So there is a case
+where branch X removes "foo.txt" and branch Y adds "FOO.TXT", and then
+they merge. It looks OK because linearly, they did not both exist at the
+same time. But pre-merge, the commit in branch Y is broken.
+
+So really the straightforward approach of checking the tree state for
+each commit is probably simplest. If it's really too slow, you could try
+jgit or linking against git itself, which would eliminate the external
+process overhead.
+
+-Peff
