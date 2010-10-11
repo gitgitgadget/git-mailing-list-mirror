@@ -1,110 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [RFC/PATCH 5/4] Documentation: flesh out diff --no-index description
-Date: Mon, 11 Oct 2010 11:07:18 -0500
-Message-ID: <20101011160718.GF25842@burratino>
-References: <20101011150342.292ad725@chalon.bertin.fr>
- <AANLkTinqPiGf1nbo0oOvDD5edgLBdO8xZfjGeFC4q0MU@mail.gmail.com>
- <20101011161721.35940919@chalon.bertin.fr>
- <20101011160224.GA25842@burratino>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC PATCH] Makefile: Turn off the configure target by default
+Date: Mon, 11 Oct 2010 16:21:51 +0000
+Message-ID: <AANLkTimAj_sCquCixmTOEV5ZaQVbbv-yvm=Yw82har1t@mail.gmail.com>
+References: <36e21bdafd75e95f1e13437f81067c71c7390408.1286783121.git.git@drmicha.warpmail.net>
+	<AANLkTikb2vDMXLa48QsDfK6grczmqC1uk1jYi0ZFq9QC@mail.gmail.com>
+	<4CB2FEB8.3050705@drmicha.warpmail.net>
+	<201010111718.39996.jnareb@gmail.com>
+	<4CB32D15.4080204@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>, git@vger.kernel.org
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 11 18:10:43 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Oct 11 18:22:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5KxV-0005t5-Ac
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 18:10:41 +0200
+	id 1P5L8Q-0003mw-Nz
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 18:21:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755327Ab0JKQKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Oct 2010 12:10:36 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:53355 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754959Ab0JKQKf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Oct 2010 12:10:35 -0400
-Received: by ywi6 with SMTP id 6so685228ywi.19
-        for <git@vger.kernel.org>; Mon, 11 Oct 2010 09:10:34 -0700 (PDT)
+	id S1755007Ab0JKQVx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Oct 2010 12:21:53 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46055 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754393Ab0JKQVw (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Oct 2010 12:21:52 -0400
+Received: by iwn36 with SMTP id 36so7164iwn.19
+        for <git@vger.kernel.org>; Mon, 11 Oct 2010 09:21:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=KR4kAhdzHoSDZcI+UV9DPyrXpH/lJUzluF/WBFrTJ30=;
-        b=ql6Y3oW3aIdbbiBSjRlCEDgrHQ0f478g3vbxw0iXEAogAiiPqqCguK5/qx9SpxSCFn
-         MKPySUq6gRQM2rOsUalaAn/Ac3UtjL4sXF3FGXjqHK7cw8Y0YDgp73gHReV7jaOhPhQ6
-         7riwhGC3xViLgxtrLkbNNErEKkzyTCGntOh2k=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=hd/77jFjaIN+qv3+gLZxK7vKkB0fGo+Jn3npLjfQb04=;
+        b=I6rnrN4GumI+C18w/w3oU4j/ASMOEVLnNb9X1maKtiIrLIEc5GJzipy/rVAN9VRu0C
+         y9YiggmP6TpB5CUkVMXqkRQ71tmgd8WTdS5JuEYYkeN5PJBoRxwc48CbOE9kE1Adg3hw
+         y4m9TcwY6G3wb7Xd0jIP773dt2pyanzG3TPqo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Z6eo5jkLm/d2D4Gh0ij8wiXib7DZ8q4P92tASe/24WHklCMMv/XSlorhI21y12Re8v
-         Yxd3ngfak6AM4e7//1HabJ8LBKMgR8NcDhitR2n5Zm3+ZhOdY8xgVxTVtom+2IsTXZfd
-         nPs3mX5/KZgWKOCNNv/JhkMUDv1UBZLV64Fkc=
-Received: by 10.236.102.132 with SMTP id d4mr12102311yhg.45.1286813434290;
-        Mon, 11 Oct 2010 09:10:34 -0700 (PDT)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id g25sm4470514yhc.39.2010.10.11.09.10.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 11 Oct 2010 09:10:33 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20101011160224.GA25842@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Vs7KpU2HAKYF78QRs9HA0YYRtzBkeDAtCTawfFCRLK6VtVUg2GfvUR39JWxH3RdU1C
+         vFU6u7fzr20T9cpr/DcRwrvG4h3ZNqmx2Zq2vasNh1VDmNPhH60FPC9gT3Owt5hNNb2q
+         lqPlRS+uWkOWx0JUfL9SQ7w3iqGTuIwt1wxn0=
+Received: by 10.231.35.202 with SMTP id q10mr4799708ibd.138.1286814111560;
+ Mon, 11 Oct 2010 09:21:51 -0700 (PDT)
+Received: by 10.231.48.195 with HTTP; Mon, 11 Oct 2010 09:21:51 -0700 (PDT)
+In-Reply-To: <4CB32D15.4080204@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158776>
 
-Explain what diff --no-index is used for in more detail.
+On Mon, Oct 11, 2010 at 15:28, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Jakub Narebski venit, vidit, dixit 11.10.2010 17:18:
+>> Because ./configure script enhances Makefile rather than generate it,
+>> using configure script can only improve situation (at the cost of extra
+>> cycles spent detecting)... well, with exception of rare cases bugs in
+>> configure.ac making it misdetect.
+>
+> My observations on the list don't quite confirm that "configure" can
+> only improve the make situation, but I don't use it myself. So, I'll let
+> those give configure advice who use it.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Documentation/git-diff.txt |   21 +++++++++++++++++----
- 1 files changed, 17 insertions(+), 4 deletions(-)
-
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index dd1fb32..6700e8c 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -25,7 +25,7 @@ tree and the index file, or the index file and the working tree.
- +
- If exactly two paths are given and at least one points outside
- the current repository, 'git diff' will compare the two files /
--directories. This behavior can be forced by --no-index.
-+directories (see --no-index below).
- 
- 'git diff' [--options] --cached [<commit>] [--] [<path>...]::
- 
-@@ -62,11 +62,24 @@ directories. This behavior can be forced by --no-index.
- 	"git diff $(git-merge-base A B) B".  You can omit any one
- 	of <commit>, which has the same effect as using HEAD instead.
- 
-+'git diff' [--options] --no-index [--] <path> <path>::
-+
-+	In this form, 'git diff' will compare a pair of files or
-+	directories that are not necessarily being managed by git.
-+	The tracked content of files in the index and the object
-+	database are ignored.
-++
-+In other words, this form allows 'git diff' to be used as a
-+traditional 'diff' command (plus the familiar extras like --check,
-+color, pagination, automatic use of -r, --stat/--name-status,
-+--pickaxe, --binary, copy/rename detection, -Oorderfile, and
-+--patience).
-+
- Just in case if you are doing something exotic, it should be
- noted that all of the <commit> in the above description, except
--in the last two forms that use ".." notations, can be any
--<tree>.  The third form ('git diff <commit> <commit>') can also
--be used to compare two <blob> objects.
-+in the two forms that use ".." notations, can be any <tree>.
-+The third form ('git diff <commit> <commit>') can also be used
-+to compare two <blob> objects.
- 
- For a more complete list of ways to spell <commit>, see
- "SPECIFYING REVISIONS" section in linkgit:gitrevisions[7].
--- 
-1.7.2.3
+If it doesn't improve it that's a bug that we need to fix. I haven't
+seen/found any of the threads/issues in question. Would you mind
+pointing some of them out, maybe the problems you cite are easy to
+fix.
