@@ -1,83 +1,98 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [RFC PATCH] Makefile: Turn off the configure target by default
-Date: Mon, 11 Oct 2010 17:28:21 +0200
-Message-ID: <4CB32D15.4080204@drmicha.warpmail.net>
-References: <36e21bdafd75e95f1e13437f81067c71c7390408.1286783121.git.git@drmicha.warpmail.net> <AANLkTikb2vDMXLa48QsDfK6grczmqC1uk1jYi0ZFq9QC@mail.gmail.com> <4CB2FEB8.3050705@drmicha.warpmail.net> <201010111718.39996.jnareb@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [msysGit] [PATCH v3 02/14] mingw: implement syslog
+Date: Mon, 11 Oct 2010 17:28:16 +0200
+Message-ID: <AANLkTi==sd=jm9LZ6p6NLVBMc4wnU0PrYvJY6ezGWiWt@mail.gmail.com>
+References: <1286716854-5744-1-git-send-email-kusmabite@gmail.com>
+ <1286716854-5744-3-git-send-email-kusmabite@gmail.com> <4CB2190F.6000908@gmail.com>
+ <AANLkTinsqAOj7LtACpbcOrVZfeUApDjmQe2uYLH8npBF@mail.gmail.com>
+ <4CB22FF3.5070503@gmail.com> <AANLkTinBE14dWCecXvpH=8N1b0H=9j9tc=t07d_MHEFF@mail.gmail.com>
+ <4CB24A43.9090501@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 11 17:28:15 2010
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org,
+	Mike Pape <dotzenlabs@gmail.com>
+To: Eric Sunshine <ericsunshine@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 11 17:28:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5KIQ-0006qC-TW
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 17:28:15 +0200
+	id 1P5KIu-00075J-E3
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 17:28:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218Ab0JKP2I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 11:28:08 -0400
-Received: from out5.smtp.messagingengine.com ([66.111.4.29]:37740 "EHLO
-	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754843Ab0JKP2H (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 11:28:07 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8A2AF5A0;
-	Mon, 11 Oct 2010 11:28:06 -0400 (EDT)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 11 Oct 2010 11:28:06 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=w9dkQ+scpN/IeJ06eE81BmBKlQE=; b=XL28J+ccbXdeqsTwUju1sBykEo7lWjE0IyCNvuNW9Fpu/dC2TyXNrSIRD9P/xFP82ScuOBz6VBSGHQuoBvxi85rc/I7ZfmKRjx/zL8LbWhY1Nb+QNbTGhA4ckMm13DkyhnNqtDpDTSF9tgUNGHixb8llftRJYv2VzwLmsG5ndw8=
-X-Sasl-enc: EzvsIsuQpAKNrWLZqSJJLWq7CXRj2c32G7Qt/C8hZ7iy 1286810886
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BF8B65EBAE1;
-	Mon, 11 Oct 2010 11:28:05 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
-In-Reply-To: <201010111718.39996.jnareb@gmail.com>
+	id S1755181Ab0JKP2i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 11:28:38 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37832 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754281Ab0JKP2h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 11:28:37 -0400
+Received: by vws2 with SMTP id 2so958363vws.19
+        for <git@vger.kernel.org>; Mon, 11 Oct 2010 08:28:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=F4jTMdirFMiEsa9IgzvuPJiwVG2etdLFIppMU5vSfeM=;
+        b=Sq2lc5yeJiz5CvA9czNnZ9a0X52FMjXLf/NHrbwPiGI+yjvW90+BYbkcrZp0VEuhwD
+         7+4iClEYOb7AAmfNRsUJH8G8ORdoPIdp6f1Y9tWSCuNSeH1KfLBF5LHmF8+kfQ821Q+4
+         p+0l9BvEUGOF8AaSwVEOqJMClw46A0RPm4P6Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=gZeb1/TxGnJooeEwAtVMZ9IVivJtX4KSk6dICoAxUW+ldZnilyXbu8Xb2g2iDXwUhH
+         iT1hMQXflz5bIRyruYNKMWG5ZmbbQlk/EPjtMwPyWR9PaLBFOIRsInWhx1SwZX1TUovT
+         XrNJTd04Y+JqS99dYV/ttsSyXcXZjPO2v0Pvg=
+Received: by 10.220.195.133 with SMTP id ec5mr195909vcb.97.1286810916790; Mon,
+ 11 Oct 2010 08:28:36 -0700 (PDT)
+Received: by 10.220.45.196 with HTTP; Mon, 11 Oct 2010 08:28:16 -0700 (PDT)
+In-Reply-To: <4CB24A43.9090501@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158766>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158767>
 
-Jakub Narebski venit, vidit, dixit 11.10.2010 17:18:
-> Dnia poniedzia=C5=82ek 11. pa=C5=BAdziernika 2010 14:10, Michael J Gr=
-uber napisa=C5=82:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 11.10.201=
-0 11:40:
->>> On Mon, Oct 11, 2010 at 08:39, Jakub Narebski <jnareb@gmail.com> wr=
-ote:
->>>
-=2E..
->> configure is a second class citizen in git.git (we even explicitly
->> .gitignore it - if you allow that lame joke),
->=20
-> We .gitignore 'configure' script because it is *generated* file, and
-> generated files should be not, as rule, placed under version control.
+On Mon, Oct 11, 2010 at 1:20 AM, Eric Sunshine <ericsunshine@gmail.com>=
+ wrote:
+> On 10/10/2010 6:16 PM, Erik Faye-Lund wrote:
+>>
+>> On Sun, Oct 10, 2010 at 11:28 PM, Eric Sunshine<ericsunshine@gmail.c=
+om>
+>> =A0wrote:
+>>> (On the other hand, for the '%s' check above, the code does report =
+a
+>>> warning
+>>> and then exits, so it is not inconceivable that a '%n' could also e=
+mit a
+>>> warning.)
+>>
+>> I guess I could add something like this:
+>>
+>> if (strstr(arg, "%1"))
+>> =A0 =A0 =A0 =A0warning("arg contains %1, message might be corrupted"=
+);
+>>
+>> I don't want to return in that case, because I think some output is
+>> better than no output, and it seems to work on Vista.
+>
+> Rather than emitting a warning, it might be reasonable to perform a s=
+imple
+> transformation on the string if it contains a %1 (or %n generally) in=
+ order
+> to avoid ReportEvent()'s shortcoming. Even something as simple as ins=
+erting
+> a space between '%' and '1' might be sufficiently defensive.
+>
 
-I don't know which part of "joke" was unclear?
+Yes, but I'm tempted to defer fixing this until we see that it's a
+problem in reality. The logic to somehow escape such sequences looks a
+bit nasty in my head. But perhaps strbuf_expand() is the right hammer
+for this use...
 
->=20
->> But, really, the typical responses to build problems with configure
->> indicate that most long timers don't use configure either, and proba=
-bly
->> don't feel too comfortable with it. So, I think we should either mak=
-e
->> the status quo clearer (Makefile as primary method) or change the st=
-atus
->> quo. I can only do the former ;)
->=20
-> Because ./configure script enhances Makefile rather than generate it,
-> using configure script can only improve situation (at the cost of ext=
-ra
-> cycles spent detecting)... well, with exception of rare cases bugs in
-> configure.ac making it misdetect.
-
-My observations on the list don't quite confirm that "configure" can
-only improve the make situation, but I don't use it myself. So, I'll le=
-t
-those give configure advice who use it.
-
-Michael
+Then the logical next question becomes what we should expand it to.
+Does "%1" -> "% 1" make sense for IPv6 addresses?
