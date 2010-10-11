@@ -1,65 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: Fix a typo
-Date: Mon, 11 Oct 2010 01:44:04 -0500
-Message-ID: <20101011064404.GB32034@burratino>
-References: <1286623119-13766-1-git-send-email-stepnem@gmail.com>
- <20101009152758.GA17799@burratino>
- <7v39sfuue3.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: stepnem@gmail.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 11 08:49:25 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [RFC PATCH] Makefile: Turn off the configure target by default
+Date: Mon, 11 Oct 2010 09:47:03 +0200
+Message-ID: <36e21bdafd75e95f1e13437f81067c71c7390408.1286783121.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 11 09:47:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5CCK-00005r-Lo
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 08:49:25 +0200
+	id 1P5D62-000259-MX
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 09:46:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752497Ab0JKGrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Oct 2010 02:47:20 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40193 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752364Ab0JKGrT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Oct 2010 02:47:19 -0400
-Received: by iwn6 with SMTP id 6so2959975iwn.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 23:47:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=eMSSUJVN5SdxseD+GIDACAJLtiFXkYUTpdRppEB4reQ=;
-        b=ooVwcLFV0tPgvKM4XJ2sGzLe8fHSX2oWyJXCVzs7WteG9oKbVgli0wlKE2Xzlq5V04
-         rhOPVlGg26sYlQnRyOtHgHafxdhw8xhvKCbRh+ia6276o3GXVi7JHu0luHwKvCJ05gsU
-         Sy5r2pEUTsgSF2he3v16Nunb3vTW/EtwlvZ78=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=A6mqHwqJdwDLjAA/VL98dyO7Gc9GKM1p0KABymUuYMMXRSc97izzPYHyLske+hUA8O
-         6wpG2NHnT0PPZEp42mdGQ0a/Al5BSlGweZNUweKFrYqUkDi8LbIlo4PgL/vpw1eye8x8
-         me+cwFg1ZGIAoJvJLy9uX5wnJTVTePpprUThU=
-Received: by 10.42.16.67 with SMTP id o3mr1722492ica.184.1286779638722;
-        Sun, 10 Oct 2010 23:47:18 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d40sm4713745ibc.7.2010.10.10.23.47.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 10 Oct 2010 23:47:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7v39sfuue3.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753018Ab0JKHqv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Oct 2010 03:46:51 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:47624 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751193Ab0JKHqu (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 03:46:50 -0400
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id AA33E355;
+	Mon, 11 Oct 2010 03:46:49 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Mon, 11 Oct 2010 03:46:49 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=235uomIUMJvGHRqYalAFCzPsyl8=; b=k5pS+hwYuKoBXDZgeNAJmsyqjkncJ3E3zFTM3hCS64QonaFiPdNSC4xFx1Q1CiFZ4snYD1ebvDOhqI0I/LMv+9OKciSV/nVX60NWzuK5vCqkVpPo2CMgAt6Nawas7LV3w2LicQm3KB4M/Uthl0xEBAeDKI6o4gd4LQmtMdpsQRA=
+X-Sasl-enc: X7uJ4Tc0c3GStp0oxeSDgOMzhSsjrlXrFtTG5PR9knp/ 1286783209
+Received: from localhost (p54859006.dip0.t-ipconnect.de [84.133.144.6])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id F1F9840251A;
+	Mon, 11 Oct 2010 03:46:48 -0400 (EDT)
+X-Mailer: git-send-email 1.7.3.1.184.g5b1fd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158752>
 
-Junio C Hamano wrote:
+For most software packages, untar-autoconf/make configure-configure-make
+is the preferred way to build the package; not so for Git. But the
+presence of the make target makes people believe so.
 
-> I had the same reaction.  Perhaps moving other parameter substitions
-> closer to these two would help?
+Try and make people use "make configure" only when they are sure they
+need to.
 
-Yes, that looks like a definite improvement.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+    This does not help with people running autoconf themselves, of course.
+    But we keep answering questions about failed configure attempts.
+    
+    On an annecdotical note: When I decided to switch to a dvcs, I failed building
+    Git (with configure) and tried out hg instead. Imagine!
+
+ Makefile |    7 +++++++
+ 1 files changed, 7 insertions(+), 0 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 1f1ce04..430c096 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1744,11 +1744,18 @@ $(patsubst %.py,%,$(SCRIPT_PYTHON)): % : unimplemented.sh
+ endif # NO_PYTHON
+ 
+ configure: configure.ac
++ifdef USEAUTOCONF
+ 	$(QUIET_GEN)$(RM) $@ $<+ && \
+ 	sed -e 's/@@GIT_VERSION@@/$(GIT_VERSION)/g' \
+ 	    $< > $<+ && \
+ 	autoconf -o $@ $<+ && \
+ 	$(RM) $<+
++else
++	@echo "Using the Makefile and defining variables in config.mak is the"
++	@echo "preferred way of building Git. Please use"
++	@echo "USEAUTOCONF=1 make configure"
++	@echo "if you are really sure you need configure."
++endif
+ 
+ # These can record GIT_VERSION
+ git.o git.spec \
+-- 
+1.7.3.1.184.g5b1fd
