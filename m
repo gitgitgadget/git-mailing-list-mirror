@@ -1,80 +1,65 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/3] bisect: improve error message of 'bisect log' while
- not bisecting
-Date: Mon, 11 Oct 2010 06:44:42 +0000
-Message-ID: <AANLkTi=KZyhJrYw+L2U6gsu=jNcBe8eRJTG4jSuPTYsT@mail.gmail.com>
-References: <1286747338-8521-1-git-send-email-szeder@ira.uka.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: Fix a typo
+Date: Mon, 11 Oct 2010 01:44:04 -0500
+Message-ID: <20101011064404.GB32034@burratino>
+References: <1286623119-13766-1-git-send-email-stepnem@gmail.com>
+ <20101009152758.GA17799@burratino>
+ <7v39sfuue3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Oct 11 08:47:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: stepnem@gmail.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Oct 11 08:49:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5CAH-0007V2-It
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 08:47:17 +0200
+	id 1P5CCK-00005r-Lo
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 08:49:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752625Ab0JKGoo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 02:44:44 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:54792 "EHLO
+	id S1752497Ab0JKGrU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Oct 2010 02:47:20 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:40193 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752364Ab0JKGon convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 02:44:43 -0400
-Received: by iwn6 with SMTP id 6so2957991iwn.19
-        for <git@vger.kernel.org>; Sun, 10 Oct 2010 23:44:42 -0700 (PDT)
+	with ESMTP id S1752364Ab0JKGrT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Oct 2010 02:47:19 -0400
+Received: by iwn6 with SMTP id 6so2959975iwn.19
+        for <git@vger.kernel.org>; Sun, 10 Oct 2010 23:47:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rgWjUHvcEGd054m6nMUvtZdj4+lQYZl1x38oRGV3gGs=;
-        b=QNwIRE2cMarCoGFPwNL3s1O4I07/rYqGvNctpPKn6JQ/c+hx+UGvNfCLkSXGcgj1Yc
-         2VSZP59aZQk6CerOUxcuP8WGd/mLzVZP4gajeb8Qwibs6UASW2Kpp1lXajqRb6d9LMS6
-         Hws+S5M9WOeZVL1Ohm4cfucVuBPKj1dKqarQA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=eMSSUJVN5SdxseD+GIDACAJLtiFXkYUTpdRppEB4reQ=;
+        b=ooVwcLFV0tPgvKM4XJ2sGzLe8fHSX2oWyJXCVzs7WteG9oKbVgli0wlKE2Xzlq5V04
+         rhOPVlGg26sYlQnRyOtHgHafxdhw8xhvKCbRh+ia6276o3GXVi7JHu0luHwKvCJ05gsU
+         Sy5r2pEUTsgSF2he3v16Nunb3vTW/EtwlvZ78=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=NxDB3HBdTHh9cZlECxY4q93AWV1qWzcUr2nWj6GtcnyJcnGDXRUXj7qNN/8v+KyxN4
-         jkcRoiH45Me1yqcNH1Nunfs8VEC+SY7eKKmbe5oyXVVg65X2SeiXNqbJ92yqwk9w08b5
-         gSgkkkpyWczNQbGuSmIdYvSSq76Ti0Hgn7gfY=
-Received: by 10.42.89.3 with SMTP id e3mr1430470icm.361.1286779482258; Sun, 10
- Oct 2010 23:44:42 -0700 (PDT)
-Received: by 10.231.48.195 with HTTP; Sun, 10 Oct 2010 23:44:42 -0700 (PDT)
-In-Reply-To: <1286747338-8521-1-git-send-email-szeder@ira.uka.de>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=A6mqHwqJdwDLjAA/VL98dyO7Gc9GKM1p0KABymUuYMMXRSc97izzPYHyLske+hUA8O
+         6wpG2NHnT0PPZEp42mdGQ0a/Al5BSlGweZNUweKFrYqUkDi8LbIlo4PgL/vpw1eye8x8
+         me+cwFg1ZGIAoJvJLy9uX5wnJTVTePpprUThU=
+Received: by 10.42.16.67 with SMTP id o3mr1722492ica.184.1286779638722;
+        Sun, 10 Oct 2010 23:47:18 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d40sm4713745ibc.7.2010.10.10.23.47.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 10 Oct 2010 23:47:17 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v39sfuue3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158750>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158751>
 
-2010/10/10 SZEDER G=C3=A1bor <szeder@ira.uka.de>:
-> 'git bisect log' is implemented by a direct invocation of 'cat
-> "$GIT_DIR/BISECT_LOG"', without any sanity checks. =C2=A0Consequently=
-,
-> running 'git bisect log' while not bisecting leads to an error,
-> because the bisect logfile doesn't exists. =C2=A0The accompanying err=
-or
-> message
+Junio C Hamano wrote:
 
-Nice, in case you want to fix this for git-rebase too:
+> I had the same reaction.  Perhaps moving other parameter substitions
+> closer to these two would help?
 
-Applying: gettextize: git-add "no files added" message
-Applying: gettextize: git-add "Use -f if you really want" message
-Applying: gettextize: git-add "pathspec [...] did not match" message
-Applying: gettextize: git-add "remove '%s'" message
-^C
-v t ((5cab536...)|REBASE) $ git rebase --abort
-cat: /home/avar/g/git/.git/rebase-apply/head-name: No such file or dire=
-ctory
-cat: /home/avar/g/git/.git/rebase-apply/orig-head: No such file or dire=
-ctory
-HEAD is now at 5cab536 gettextize: git-add "remove '%s'" message
-v t ((5cab536...)) $
-v t ((5cab536...)) $ git rebase --abort
-No rebase in progress?
-v t ((5cab536...)) $
+Yes, that looks like a definite improvement.
