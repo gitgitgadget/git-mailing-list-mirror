@@ -1,118 +1,81 @@
-From: Sven Eckelmann <sven.eckelmann@gmx.de>
-Subject: Re: [PATCH] contrib/ciabot: git-describe commit instead of HEAD
-Date: Mon, 11 Oct 2010 12:43:24 +0200
-Message-ID: <201010111243.25375.sven.eckelmann@gmx.de>
-References: <1286179362-23597-1-git-send-email-sven.eckelmann@gmx.de> <7vd3rp97f7.fsf@alter.siamese.dyndns.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC PATCH] Makefile: Turn off the configure target by default
+Date: Mon, 11 Oct 2010 14:10:32 +0200
+Message-ID: <4CB2FEB8.3050705@drmicha.warpmail.net>
+References: <36e21bdafd75e95f1e13437f81067c71c7390408.1286783121.git.git@drmicha.warpmail.net>	<AANLkTikGSj-x4hk7NFysWETuR80=REZ81Qy8Zu3Pks-L@mail.gmail.com>	<201010111039.59779.jnareb@gmail.com> <AANLkTikb2vDMXLa48QsDfK6grczmqC1uk1jYi0ZFq9QC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart2704615.csqLo0a2q1";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha512
-Content-Transfer-Encoding: 7bit
-Cc: esr@thyrsus.com, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 11 12:43:19 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 11 14:10:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5Fqc-0001eP-Bv
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 12:43:14 +0200
+	id 1P5HCz-0007qC-TB
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 14:10:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753672Ab0JKKnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 11 Oct 2010 06:43:08 -0400
-Received: from mailout-de.gmx.net ([213.165.64.22]:45981 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1753504Ab0JKKnF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 11 Oct 2010 06:43:05 -0400
-Received: (qmail invoked by alias); 11 Oct 2010 10:43:03 -0000
-Received: from unknown (EHLO sven-desktop.lazhur.ath.cx) [89.246.215.5]
-  by mail.gmx.net (mp063) with SMTP; 11 Oct 2010 12:43:03 +0200
-X-Authenticated: #15668376
-X-Provags-ID: V01U2FsdGVkX19fxksRwiRfItKtDrz3w9tUYojTNovySeeBrlzEav
-	ZXcTrZ6T0qg0pw
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-amd64; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <7vd3rp97f7.fsf@alter.siamese.dyndns.org>
-X-Y-GMX-Trusted: 0
+	id S1754135Ab0JKMKT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 08:10:19 -0400
+Received: from out5.smtp.messagingengine.com ([66.111.4.29]:40396 "EHLO
+	out5.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754091Ab0JKMKS (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 08:10:18 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 80618271;
+	Mon, 11 Oct 2010 08:10:17 -0400 (EDT)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Mon, 11 Oct 2010 08:10:17 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=72iu3hLdeScbK0wskICaTTyE0Kc=; b=LI425ZzVTxSj44gZxSMAsGqRkKgnb30JRMyvh0c599MP/fHYyycznXjWSj41TDmQZVWdYbasaIrRJ0pKnebPNCq/Kcc0HOjTbIeAaoVtM2URTnu2J1nftIPWxq4dOhS1Gv7l9o/k4qbFfjkAfyntECLiA9SEj9H8pcDKBXfkb8c=
+X-Sasl-enc: 3SdffBog42QAIpLMNlDaZuZYk2OEyyjAC2Q5HecsTpsX 1286799017
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id BA1BC400199;
+	Mon, 11 Oct 2010 08:10:16 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <AANLkTikb2vDMXLa48QsDfK6grczmqC1uk1jYi0ZFq9QC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158757>
 
---nextPart2704615.csqLo0a2q1
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Junio C Hamano wrote:
-> Sven Eckelmann <sven.eckelmann@gmx.de> writes:
-> > For each commit a shorter version of the name will be generated. This is
-> > either the truncated hash or the output of git-describe. The
-> > call to git-describe was only made with an empty shell variable instead
-> > of an actual commit hash. Thus it only described the current HEAD and
-> > not each commit we want to submit to cia.vc.
-> >=20
-> > Signed-off-by: Sven Eckelmann <sven.eckelmann@gmx.de>
-> > ---
-> > I send this patch already two and four weeks ago and got no reaction.
-> > This is a resent in case it was forgotton.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 11.10.2010 1=
+1:40:
+> On Mon, Oct 11, 2010 at 08:39, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
 >=20
-> Although the computation of "rev" indeed looks wrong, I do not see it used
-> anywhere, so it might be a better patch to remove it ... wait, the code
-> does something funny to slurp everything into xml via ...
+>> But thanks to having ./configure optional step, we can build git als=
+o
+>> on platforms that doesn't have autoconf installed (though the same c=
+ould
+>> be achieved by bundling ./configure script with release tarballs).
 >=20
-> 	context =3D locals()
->         context.update(globals())
->         out =3D xml % context
->=20
-> Yuck.
->=20
-> Even though it has been my policy not to complain too loudly on stuff in
-> contrib/ part of the tree, I have to say that this is a bit too _cute_ for
-> my taste.
->=20
-> Anyway, Ok, so it _is_ used.  And it needs to be fixed.
+> It already is built as part of the tarballs, at least for
+> http://kernel.org/pub/software/scm/git/git-1.7.3.1.tar.bz2
 
-Yes, it is a little bit confusing when reading through it, but still it is=
-=20
-used. :)
-=20
-> I was hoping that Eric who took over the maintainership of contrib/ciabot/
-> directory in April would give his blessing sooner, without me having to
-> look at the script.
->=20
-> Ack?
+Well, the point of my semi-serious RFC is that every so often, we have =
+a
+variation on the following theme on the list:
 
-Hm, just be sure, because I saw no other replies since this message: You=20
-expected reaction after that "Ack?" from Eric Raymond and not from me, or?
+- "Newbee" uses make configure && ./configure && make and can't build.
+- Helpful "oldbees" respond like "Duh! Use the Makefile".
 
-Anyway, thanks for answering :)
+configure is a second class citizen in git.git (we even explicitly
+=2Egitignore it - if you allow that lame joke), and given my complete l=
+ack
+of auto-conf-foo, I can't change that. But there's no need to make
+someone feel stupid (I'm exaggerating a bit) for trying a standard buil=
+d
+tool that we do ship.
 
-Kind regards,
-	Sven
+But, really, the typical responses to build problems with configure
+indicate that most long timers don't use configure either, and probably
+don't feel too comfortable with it. So, I think we should either make
+the status quo clearer (Makefile as primary method) or change the statu=
+s
+quo. I can only do the former ;)
 
---nextPart2704615.csqLo0a2q1
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIcBAABCgAGBQJMsupMAAoJEF2HCgfBJntGIr0QANm9hV/N+3bNJFmhtd8fvLV+
-tHkqqV4zu2aIvnrUUFasYr6bKk6Jm9J8vhdcYRptllGabg0ACQnKkkD2IwTNKOMX
-zqW6LFynTSthtUJ9kesgYB9gMUzbxwNO6aUnK1BWng7CmdqEKo4AYwnGw3axuALM
-O+LEHeBCSaM9rRE2y9TqkBYU5DfB+0mJSXK6Q8ISPFXwxQazf/4+Jpd5Y8Ud0TdW
-vL47QQPP140i8Dff6wAaTdV26rg4NUv09LcJo01fdzVD9w5Oqi+43pxmweUS3aJZ
-cXftYHUN3EB2z+NaBLcT4zRKYihU3h5IQ3dvTmgPK44pveN9Vzalpn3uP2CbAmwZ
-+/f3CBUdqF8162SGVG44ViOgq/ftIy5i6u87Ace3u9KIGs/1GWJ/k2T10KM8MVOL
-rzuXMrnb4N4e6U4GRwqC/Taz8O9Ri8x0tKwSgg/c7bfxEm4pulAt+HTBZd5oSfjx
-1rAqO5F8F3i8M/D0pTbiiwYDGAvJoR9BkxDr3GP7jqGQ5VXRNTzLIzxbTaprTRAZ
-1SzxUY1GcCmCa/MXo6A4+iVCjRDPT7McG5vh1NDptAEo0WlmVExs0frckvoa/yJB
-KFwPKt+x3pZI2tL4BE2ckS+9Ph7aXEmalk+GJqnpPx7FrFHgpL+Cj/DLQ5xDrFey
-eB2xojEBTnyflLTkQbgv
-=R33h
------END PGP SIGNATURE-----
-
---nextPart2704615.csqLo0a2q1--
+Michael
