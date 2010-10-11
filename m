@@ -1,90 +1,88 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Undocumented git-diff syntax
-Date: Mon, 11 Oct 2010 16:52:46 +0200
-Message-ID: <AANLkTikBxBMm-Pv_8M7SxEugQ5pdksm_k=ihAa4toVap@mail.gmail.com>
-References: <20101011150342.292ad725@chalon.bertin.fr> <AANLkTinqPiGf1nbo0oOvDD5edgLBdO8xZfjGeFC4q0MU@mail.gmail.com>
- <20101011161721.35940919@chalon.bertin.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH] Makefile: point out "make" if "make configure" fails
+Date: Mon, 11 Oct 2010 17:06:53 +0200
+Message-ID: <201010111706.55119.jnareb@gmail.com>
+References: <4CB2FEB8.3050705@drmicha.warpmail.net> <1286800665-7437-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 11 16:53:19 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>
+To: =?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 11 17:07:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5Jkc-0003rE-WC
-	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 16:53:19 +0200
+	id 1P5Jy7-00039b-1G
+	for gcvg-git-2@lo.gmane.org; Mon, 11 Oct 2010 17:07:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754299Ab0JKOxN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 10:53:13 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:44092 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754014Ab0JKOxM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 10:53:12 -0400
-Received: by qwf7 with SMTP id 7so1861735qwf.19
-        for <git@vger.kernel.org>; Mon, 11 Oct 2010 07:53:12 -0700 (PDT)
-Received: by 10.224.47.66 with SMTP id m2mr163676qaf.83.1286808792080; Mon, 11
- Oct 2010 07:53:12 -0700 (PDT)
-Received: by 10.229.20.78 with HTTP; Mon, 11 Oct 2010 07:52:46 -0700 (PDT)
-In-Reply-To: <20101011161721.35940919@chalon.bertin.fr>
+	id S1754724Ab0JKPHI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 11:07:08 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56181 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754669Ab0JKPHH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Oct 2010 11:07:07 -0400
+Received: by fxm4 with SMTP id 4so470856fxm.19
+        for <git@vger.kernel.org>; Mon, 11 Oct 2010 08:07:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vmUDEwaB4wOcreis9H7p0sVcehTeaOqBoKX6c2TiTUM=;
+        b=n+0P2hTDVdh3Qm+AGMCfkH4SxvqH/kytagmI9VdlBj3nDQcxQaCal2HdTvNQIbWc1b
+         LbbYzKsi6VPuiFUCnAc8DO5CF4N7hIjsoPajw8PUp64C+OVcUN7mV06zqzfatK9L4r3Z
+         RkKnTtvpuj7PmZzEMKh6kDLARLhcOW7tJr+FY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=tEJahrogpdGOF7wxWghBKYKKDepHCm78vlXVAerAETgkizzUyvfk7bgKOpYIcZbbBb
+         R0l+KMXHOODuTgMH9Qw+Qatlr+0kO8Xy5xoeGe1481qP8zj+20DCtc6bywSWSNvYmtEL
+         YlZuHHzbEwkhyoRSod6aRglg7MhQxXGSQ8ASU=
+Received: by 10.223.113.78 with SMTP id z14mr1978333fap.92.1286809625583;
+        Mon, 11 Oct 2010 08:07:05 -0700 (PDT)
+Received: from [192.168.1.13] (abvy23.neoplus.adsl.tpnet.pl [83.8.222.23])
+        by mx.google.com with ESMTPS id m8sm3031134faj.11.2010.10.11.08.07.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 11 Oct 2010 08:07:02 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1286800665-7437-1-git-send-email-avarab@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158764>
 
-On Mon, Oct 11, 2010 at 4:17 PM, Yann Dirson <dirson@bertin.fr> wrote:
-> On Mon, 11 Oct 2010 15:59:18 +0200
-> Santi B=E9jar <santi@agolina.net> wrote:
->
->> On Mon, Oct 11, 2010 at 3:03 PM, Yann Dirson <dirson@bertin.fr> wrot=
-e:
->> [...]
->> >
->> > Another thought: if we can already compare arbitrary blobs, maybe
->> > it would not be so hard to extend it to take arbitrary contents
->> > that are not stored as blobs yet ? =A0(a quick hack would be to
->> > insert an object for them, but that does not look too clean...).
->> > =A0As a use-case, I'm often found generating diffs from within cus=
-tom
->> > scripts, from contents derived from a git repo, but can't use all
->> > the bells and whistles (--color, --color-words, etc), just because
->> > I have to use plain diff; that makes the output of those scripts
->> > very inconsistent with native git commands.
->>
->> Are you talking about "git diff --no-index"?
->
-> Oh, right. =A0That's what it takes to read only the 1st paragraph for
-> each synopsis:
->
-> |If exactly two paths are given, and at least one is untracked,
-> |compare the two files / directories. This behavior can be
-> |forced by --no-index.
->
-> OTOH, that appears not to be 100% accurate (my tests would have
-> shown me): although --no-index does give me the expected results when
-> one or two of the files are untracked, I have to explicitely add it,
-> which seem to contradict this part of the doc.
+On Mon, 11 Oct 2010, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-You are right.
+> Someone trying to build Git may think the need autoconf when "make
+> configure && ./configure && make" fails. But actually they can
+> probably just run "make" directly.
+>=20
+> Change the "make configure" output so that when it fails the user is
+> informed of this:
+>=20
+>     make configure && ./configure && make
+>         GEN configure
+>     ERROR: We couldn't run autoconf for you. But you're in luck!
+>     ERROR: Git doesn't actually need autoconf to build. Just try
+>     ERROR: running "make" directly at the top-level. The Makefile
+>     ERROR: will guess your configuration based on your OS. If that
+>     ERROR: doesn't work try installing autoconf and running
+>     ERROR: "make configure && ./configure && make" again.
+>     make: *** [configure] Error 1
+>=20
+> Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.c=
+om>
 
-Additionally these two are not equivalent:
+I like this.
 
-$ git diff Makefile ../Makefile
-fatal: '../Makefile' is outside repository
-
-$ git diff Makefile $HOME/Makefile
-diff --git ...
-
-(with --no-index both work)
-
->
-> That said, this two-path construct would surely deserve its own
-> synopsis.
-
-+1
-
-Santi
+--=20
+Jakub Narebski
+Poland
