@@ -1,53 +1,79 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: rebase converts merge commits
-Date: Tue, 12 Oct 2010 13:27:06 -0700
-Message-ID: <523A21BF-F6A1-4BF2-8385-941B61BA769F@sb.org>
-References: <AANLkTikz0yUv9+EcT-kVwniUf9xnRe=_y96euNb=stzP@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: Automating svn<->git gateway
+Date: Tue, 12 Oct 2010 22:31:59 +0200
+Message-ID: <20101012203159.GC30870@efreet.light.src>
+References: <20101011193007.GA30870@efreet.light.src>
+ <m3eibv6vah.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?S=E9bastien_Barth=E9lemy?= <barthelemy@crans.org>
-X-From: git-owner@vger.kernel.org Tue Oct 12 22:27:18 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 22:32:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5lRM-0003Aj-Dw
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 22:27:16 +0200
+	id 1P5lW5-0004r6-GA
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 22:32:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758008Ab0JLU1K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Oct 2010 16:27:10 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:42882 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755180Ab0JLU1J convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 16:27:09 -0400
-Received: by pvc7 with SMTP id 7so237536pvc.19
-        for <git@vger.kernel.org>; Tue, 12 Oct 2010 13:27:09 -0700 (PDT)
-Received: by 10.142.133.21 with SMTP id g21mr524184wfd.163.1286915229155;
-        Tue, 12 Oct 2010 13:27:09 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id e36sm6194163wfj.14.2010.10.12.13.27.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 12 Oct 2010 13:27:07 -0700 (PDT)
-In-Reply-To: <AANLkTikz0yUv9+EcT-kVwniUf9xnRe=_y96euNb=stzP@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1755265Ab0JLUcD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 16:32:03 -0400
+Received: from cuda1.bluetone.cz ([212.158.128.5]:48885 "EHLO
+	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754247Ab0JLUcC (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 16:32:02 -0400
+X-ASG-Debug-ID: 1286915518-5efa3bcc0001-QuoKaX
+Received: from efreet.light.src (152-31-80-78.praha.adsl.tmcz.cz [78.80.31.152]) by cuda1.bluetone.cz with ESMTP id D8TTjBjSBAjbxzCe; Tue, 12 Oct 2010 22:31:58 +0200 (CEST)
+X-Barracuda-Envelope-From: bulb@ucw.cz
+X-Barracuda-Apparent-Source-IP: 78.80.31.152
+Received: from bulb by efreet.light.src with local (Exim 4.72)
+	(envelope-from <bulb@ucw.cz>)
+	id 1P5lVv-0002cG-Oo; Tue, 12 Oct 2010 22:31:59 +0200
+X-ASG-Orig-Subj: Re: Automating svn<->git gateway
+Content-Disposition: inline
+In-Reply-To: <m3eibv6vah.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Barracuda-Connect: 152-31-80-78.praha.adsl.tmcz.cz[78.80.31.152]
+X-Barracuda-Start-Time: 1286915518
+X-Barracuda-URL: http://212.158.128.5:8000/cgi-mod/mark.cgi
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5020 1.0000 0.7500
+X-Barracuda-Spam-Score: 0.85
+X-Barracuda-Spam-Status: No, SCORE=0.85 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=4.5 KILL_LEVEL=4.8 tests=BSF_SC0_SA085
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.43498
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
+	0.10 BSF_SC0_SA085          Custom Rule SA085
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158876>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158877>
 
-On Oct 12, 2010, at 7:55 AM, S=E9bastien Barth=E9lemy wrote:
+On Tue, Oct 12, 2010 at 12:54:54 -0700, Jakub Narebski wrote:
+> Jan Hudec <bulb@ucw.cz> writes:
+> 
+> > I want to set up a gateway between subversion and git, which would keep the
+> > master synchonized with subversion trunk, both ways, and allow working with
+> > any additional branches independent of subversion. For users it should behave
+> > as any other shared git repository accessed by push and pull. And it needs to
+> > be automatic.
+> > 
+> > Did anybody try to set up something like this?
+> 
+> It is a pity that "Native SVN support in git" project at Google Summer of
+> Code 2010 (https://git.wiki.kernel.org/index.php/SoC2010Projects) turned
+> out to be too much for one summer; though people are working on it.  It
+> would be perfect for this situation.
 
-> By the way, if there is a way to do what I want, please tell me.
+I am not actually sure it would. What I want is that for people who already
+switch to git may immediately stop caring about subversion. From their point
+of view, it shouldn't be there.
 
-Your history is short enough that if you can't get rebase to do what yo=
-u want, you could always do it by hand. Create a temp branch to work on=
- based on the bad commit, cherry-pick the good commit with --no-commit,=
- then amend the bad commit. Then just cherry-pick each subsequent commi=
-t until you get to the merge. Re-perform the merge. Then just continue =
-to cherry-pick subsequent commits. It's not ideal, but it should work.
+So while I'm sure the native SVN support will solve the quirks and bugs of
+git-svn, it will not do away with need for the gateway repository that will
+somehow synchronize itself with subversion.
 
--Kevin Ballard
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
