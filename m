@@ -1,7 +1,7 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH v7 1/3] Add bidirectional_transfer_loop()
-Date: Tue, 12 Oct 2010 19:39:41 +0300
-Message-ID: <1286901583-30088-2-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [RFC PATCH v7 2/3] git-remote-fd
+Date: Tue, 12 Oct 2010 19:39:42 +0300
+Message-ID: <1286901583-30088-3-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1286901583-30088-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Tue Oct 12 18:33:16 2010
@@ -10,24 +10,24 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5hmr-0005qQ-MR
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 18:33:14 +0200
+	id 1P5hmr-0005qQ-3u
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 18:33:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932401Ab0JLQdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 12:33:10 -0400
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:46738 "EHLO
-	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752970Ab0JLQdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Oct 2010 12:33:04 -0400
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 026E5EBC3F
-	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:03 +0300 (EEST)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A071E8EC27B; Tue, 12 Oct 2010 19:33:02 +0300
+	id S1757829Ab0JLQdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 12:33:06 -0400
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:60785 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757716Ab0JLQdF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 12:33:05 -0400
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 2F4B48C25A
+	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:04 +0300 (EEST)
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A04F522ACB3; Tue, 12 Oct 2010 19:33:04 +0300
 Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id CA3BB158A69
-	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:01 +0300 (EEST)
+	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 112094033
+	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:03 +0300 (EEST)
 X-Mailer: git-send-email 1.7.1.rc2.10.g714149
 In-Reply-To: <1286901583-30088-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -35,371 +35,221 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158862>
 
-This helper function copies bidirectional stream of data between
-stdin/stdout and specified file descriptors.
+This remote helper reflects raw smart remote transport stream back to the
+calling program. This is useful for example if some UI wants to handle
+ssh itself and not use hacks via GIT_SSH.
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- compat/mingw.h     |    5 +
- transport-helper.c |  311 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- transport.h        |    1 +
- 3 files changed, 317 insertions(+), 0 deletions(-)
+ .gitignore                      |    1 +
+ Documentation/git-remote-fd.txt |   59 +++++++++++++++++++++++++++++
+ Makefile                        |    1 +
+ builtin.h                       |    1 +
+ builtin/remote-fd.c             |   79 +++++++++++++++++++++++++++++++++++++++
+ git.c                           |    1 +
+ 6 files changed, 142 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-remote-fd.txt
+ create mode 100644 builtin/remote-fd.c
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 3b2477b..f27a7b6 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -23,6 +23,9 @@ typedef int pid_t;
- #define WEXITSTATUS(x) ((x) & 0xff)
- #define WTERMSIG(x) SIGTERM
- 
-+#define EWOULDBLOCK EAGAIN
-+#define SHUT_WR SD_SEND
+diff --git a/.gitignore b/.gitignore
+index 20560b8..89f37f4 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -112,6 +112,7 @@
+ /git-remote-https
+ /git-remote-ftp
+ /git-remote-ftps
++/git-remote-fd
+ /git-remote-testgit
+ /git-repack
+ /git-replace
+diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
+new file mode 100644
+index 0000000..1c1a179
+--- /dev/null
++++ b/Documentation/git-remote-fd.txt
+@@ -0,0 +1,59 @@
++git-remote-fd(1)
++=================
 +
- #define SIGHUP 1
- #define SIGQUIT 3
- #define SIGKILL 9
-@@ -50,6 +53,8 @@ struct pollfd {
- };
- #define POLLIN 1
- #define POLLHUP 2
-+#define POLLOUT 4
-+#define POLLNVAL 8
- #endif
- 
- typedef void (__cdecl *sig_handler_t)(int);
-diff --git a/transport-helper.c b/transport-helper.c
-index acfc88e..0c094d6 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -862,3 +862,314 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->smart_options = &(data->transport_options);
- 	return 0;
- }
++NAME
++----
++git-remote-fd - Reflect smart transport stream back to caller
++
++SYNOPSIS
++--------
++"fd::<infd>[,<outfd>][/<anything>]" (as URL)
++
++DESCRIPTION
++-----------
++This helper uses specified file descriptors to connect to remote git server.
++This is not meant for end users but for programs and scripts calling git
++fetch, push or archive.
++
++If only <infd> is given, it is assumed to be bidirectional socket connected
++to remote git server (git-upload-pack, git-receive-pack or
++git-upload-achive). If both <infd> and <outfd> are given, they are assumed
++to be pipes connected to remote git server (<infd> being the inbound pipe
++and <outfd> being the outbound pipe.
++
++It is assumed that any handshaking procedures have already been completed
++(such as sending service request for git://) before this helper is started.
++
++<anything> can be any string. It is ignored. It is meant for provoding
++information to user in the URL in case that URL is displayed in some
++context.
++
++ENVIRONMENT VARIABLES:
++----------------------
++GIT_TRANSLOOP_DEBUG::
++	If set, prints debugging information about various reads/writes.
++
++EXAMPLES:
++---------
++git fetch fd::17 master::
++	Fetch master, using file descriptor #17 to communicate with
++	git-upload-pack.
++
++git fetch fd::17/foo master::
++	Same as above.
++
++git push fd::7,8 master (as URL)::
++	Push master, using file descriptor #7 to read data from
++	git-receive-pack and file descriptor #8 to write data to
++	same service.
++
++git push fd::7,8/bar master::
++	Same as above.
++
++Documentation
++--------------
++Documentation by Ilari Liusvaara and the git list <git@vger.kernel.org>
++
++GIT
++---
++Part of the linkgit:git[1] suite
+diff --git a/Makefile b/Makefile
+index 8a56b9a..7da54d7 100644
+--- a/Makefile
++++ b/Makefile
+@@ -728,6 +728,7 @@ BUILTIN_OBJS += builtin/read-tree.o
+ BUILTIN_OBJS += builtin/receive-pack.o
+ BUILTIN_OBJS += builtin/reflog.o
+ BUILTIN_OBJS += builtin/remote.o
++BUILTIN_OBJS += builtin/remote-fd.o
+ BUILTIN_OBJS += builtin/replace.o
+ BUILTIN_OBJS += builtin/rerere.o
+ BUILTIN_OBJS += builtin/reset.o
+diff --git a/builtin.h b/builtin.h
+index f2a25a0..1a816e1 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -108,6 +108,7 @@ extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
+ extern int cmd_receive_pack(int argc, const char **argv, const char *prefix);
+ extern int cmd_reflog(int argc, const char **argv, const char *prefix);
+ extern int cmd_remote(int argc, const char **argv, const char *prefix);
++extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
+ extern int cmd_config(int argc, const char **argv, const char *prefix);
+ extern int cmd_rerere(int argc, const char **argv, const char *prefix);
+ extern int cmd_reset(int argc, const char **argv, const char *prefix);
+diff --git a/builtin/remote-fd.c b/builtin/remote-fd.c
+new file mode 100644
+index 0000000..7517f24
+--- /dev/null
++++ b/builtin/remote-fd.c
+@@ -0,0 +1,79 @@
++#include "git-compat-util.h"
++#include "transport.h"
 +
 +/*
-+ * Linux pipes can buffer 65536 bytes at once (and most platforms can
-+ * buffer less), so attempt reads and writes with up to that size.
++ * URL syntax:
++ *	'fd::<inoutfd>[/<anything>]'		Read/write socket pair
++ *						<inoutfd>.
++ *	'fd::<infd>,<outfd>[/<anything>]'	Read pipe <infd> and write
++ *						pipe <outfd>.
++ *	[foo] indicates 'foo' is optional. <anything> is any string.
++ *
++ * The data output to <outfd>/<inoutfd> should be passed unmolested to
++ * git-receive-pack/git-upload-pack/git-upload-archive and output of
++ * git-receive-pack/git-upload-pack/git-upload-archive should be passed
++ * unmolested to <infd>/<inoutfd>.
++ *
 + */
-+#define BUFFERSIZE 65536
-+/* This should be enough to hold debugging message. */
-+#define PBUFFERSIZE 8192
 +
-+/* Print bidirectional transfer loop debug message. */
-+static void transfer_debug(const char *fmt, ...)
++#define MAXCOMMAND 4096
++
++static void command_loop(int input_fd, int output_fd)
 +{
-+	va_list args;
-+	char msgbuf[PBUFFERSIZE];
-+	static int debug_enabled = -1;
++	char buffer[MAXCOMMAND];
 +
-+	if (debug_enabled < 0)
-+		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
-+	if (!debug_enabled)
-+		return;
++	while (1) {
++		size_t i;
++		if (!fgets(buffer, MAXCOMMAND - 1, stdin)) {
++			if (ferror(stdin))
++				die("Input error");
++			return;
++		}
++		/* Strip end of line characters. */
++		i = strlen(buffer);
++		while (isspace(buffer[i - 1]))
++			buffer[--i] = 0;
 +
-+	va_start(args, fmt);
-+	vsnprintf(msgbuf, PBUFFERSIZE, fmt, args);
-+	va_end(args);
-+	fprintf(stderr, "Transfer loop debugging: %s\n", msgbuf);
-+}
-+
-+/* Stream state: More data may be coming in this direction. */
-+#define SSTATE_TRANSFERING 0
-+/*
-+ * Stream state: No more data coming in this direction, flushing rest of
-+ * data.
-+ */
-+#define SSTATE_FLUSHING 1
-+/* Stream state: Transfer in this direction finished. */
-+#define SSTATE_FINISHED 2
-+
-+#define STATE_NEEDS_READING(state) ((state) <= SSTATE_TRANSFERING)
-+#define STATE_NEEDS_WRITING(state) ((state) <= SSTATE_FLUSHING)
-+#define STATE_NEEDS_CLOSING(state) ((state) == SSTATE_FLUSHING)
-+
-+/* Unidirectional transfer. */
-+struct unidirectional_transfer {
-+	/* Source */
-+	int src;
-+	/* Destination */
-+	int dest;
-+	/* Is source socket? */
-+	int src_is_sock;
-+	/* Is destination socket? */
-+	int dest_is_sock;
-+	/* Transfer state (TRANSFERING/FLUSHING/FINISHED) */
-+	int state;
-+	/* Buffer. */
-+	char buf[BUFFERSIZE];
-+	/* Buffer used. */
-+	size_t bufuse;
-+	/* Name of source. */
-+	const char *src_name;
-+	/* Name of destination. */
-+	const char *dest_name;
-+};
-+
-+/* Closes the target (for writing) if transfer has finished. */
-+static void udt_close_if_finished(struct unidirectional_transfer *t)
-+{
-+	if (STATE_NEEDS_CLOSING(t->state) && !t->bufuse) {
-+		t->state = SSTATE_FINISHED;
-+		if (t->dest_is_sock)
-+			shutdown(t->dest, SHUT_WR);
-+		else
-+			close(t->dest);
-+		transfer_debug("Closed %s.", t->dest_name);
++		if (!strcmp(buffer, "capabilities")) {
++			printf("*connect\n\n");
++			fflush(stdout);
++		} else if (!strncmp(buffer, "connect ", 8)) {
++			printf("\n");
++			fflush(stdout);
++			if (bidirectional_transfer_loop(input_fd,
++				output_fd))
++				die("Copying data between file descriptors failed");
++			return;
++		} else {
++			die("Bad command: %s", buffer);
++		}
 +	}
 +}
 +
-+/*
-+ * Tries to read read data from source into buffer. If buffer is full,
-+ * no data is read. Returns 0 on success, -1 on error.
-+ */
-+static int udt_do_read(struct unidirectional_transfer *t)
++int cmd_remote_fd(int argc, const char **argv, const char *prefix)
 +{
-+	ssize_t bytes;
++	int input_fd = -1;
++	int output_fd = -1;
++	char *end;
 +
-+	if (t->bufuse == BUFFERSIZE)
-+		return 0;	/* No space for more. */
++	if (argc < 3)
++		die("URL missing");
 +
-+	transfer_debug("%s is readable", t->src_name);
-+	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-+	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+		errno != EINTR) {
-+		error("read(%s) failed: %s", t->src_name, strerror(errno));
-+		return -1;
-+	} else if (bytes == 0) {
-+		transfer_debug("%s EOF (with %i bytes in buffer)",
-+			t->src_name, t->bufuse);
-+		t->state = SSTATE_FLUSHING;
-+	} else if (bytes > 0) {
-+		t->bufuse += bytes;
-+		transfer_debug("Read %i bytes from %s (buffer now at %i)",
-+			(int)bytes, t->src_name, (int)t->bufuse);
++	input_fd = (int)strtoul(argv[2], &end, 10);
++
++	if ((end == argv[2]) || (*end != ',' && *end != '/' && *end))
++		die("Bad URL syntax");
++
++	if (*end == '/' || !*end) {
++		output_fd = input_fd;
++	} else {
++		char *end2;
++		output_fd = (int)strtoul(end + 1, &end2, 10);
++
++		if ((end2 == end + 1) || (*end2 != '/' && *end2))
++			die("Bad URL syntax");
 +	}
++
++	command_loop(input_fd, output_fd);
 +	return 0;
 +}
-+
-+/* Tries to write data from buffer into destination. If buffer is empty,
-+ * no data is written. Returns 0 on success, -1 on error.
-+ */
-+static int udt_do_write(struct unidirectional_transfer *t)
-+{
-+	size_t bytes;
-+
-+	if (t->bufuse == 0)
-+		return 0;	/* Nothing to write. */
-+
-+	transfer_debug("%s is writable", t->dest_name);
-+	bytes = write(t->dest, t->buf, t->bufuse);
-+	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+		errno != EINTR) {
-+		error("write(%s) failed: %s", t->dest_name, strerror(errno));
-+		return -1;
-+	} else if (bytes > 0) {
-+		t->bufuse -= bytes;
-+		if (t->bufuse)
-+			memmove(t->buf, t->buf + bytes, t->bufuse);
-+		transfer_debug("Wrote %i bytes to %s (buffer now at %i)",
-+			(int)bytes, t->dest_name, (int)t->bufuse);
-+	}
-+	return 0;
-+}
-+
-+
-+/* State of bidirectional transfer loop. */
-+struct bidirectional_transfer_state {
-+	/* Direction from program to git. */
-+	struct unidirectional_transfer ptg;
-+	/* Direction from git to program. */
-+	struct unidirectional_transfer gtp;
-+};
-+
-+static void *udt_copy_task_routine(void *udt)
-+{
-+	struct unidirectional_transfer *t = (struct unidirectional_transfer *)udt;
-+	while (t->state != SSTATE_FINISHED) {
-+		if (STATE_NEEDS_READING(t->state))
-+			if (udt_do_read(t))
-+				return NULL;
-+		if (STATE_NEEDS_WRITING(t->state))
-+			if (udt_do_write(t))
-+				return NULL;
-+		if (STATE_NEEDS_CLOSING(t->state))
-+			udt_close_if_finished(t);
-+	}
-+	return udt;	/* Just some non-NULL value. */
-+}
-+
-+#ifndef NO_PTHREADS
-+
-+/*
-+ * Join thread, with apporiate errors on failure. Name is name for the
-+ * thread (for error messages). Returns 0 on success, 1 on failure.
-+ */
-+static int tloop_join(pthread_t thread, const char *name)
-+{
-+	int err;
-+	void *tret;
-+	err = pthread_join(thread, &tret);
-+	if (!tret) {
-+		error("%s thread failed", name);
-+		return 1;
-+	}
-+	if (err) {
-+		error("%s thread failed to join: %s", name, strerror(err));
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Spawn the transfer tasks and then wait for them. Returns 0 on success,
-+ * -1 on failure.
-+ */
-+static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
-+{
-+	pthread_t gtp_thread;
-+	pthread_t ptg_thread;
-+	int err;
-+	int ret = 0;
-+	err = pthread_create(&gtp_thread, NULL, udt_copy_task_routine,
-+		&s->gtp);
-+	if (err)
-+		die("Can't start thread for copying data: %s", strerror(err));
-+	err = pthread_create(&ptg_thread, NULL, udt_copy_task_routine,
-+		&s->ptg);
-+	if (err)
-+		die("Can't start thread for copying data: %s", strerror(err));
-+
-+	ret |= tloop_join(gtp_thread, "Git to program copy");
-+	ret |= tloop_join(ptg_thread, "Program to git copy");
-+	return ret;
-+}
-+#else
-+
-+/* Close the source and target (for writing) for transfer. */
-+static void udt_kill_transfer(struct unidirectional_transfer *t)
-+{
-+	t->state = SSTATE_FINISHED;
-+	/*
-+	 * Socket read end left open isn't a disaster if nobody
-+	 * attempts to read from it (mingw compat headers do not
-+	 * have SHUT_RD)...
-+	 *
-+	 * We can't fully close the socket since otherwise gtp
-+	 * task would first close the socket it sends data to
-+	 * while closing the ptg file descriptors.
-+	 */
-+	if (!t->src_is_sock)
-+		close(t->src);
-+	if (t->dest_is_sock)
-+		shutdown(t->dest, SHUT_WR);
-+	else
-+		close(t->dest);
-+}
-+
-+/*
-+ * Join process, with apporiate errors on failure. Name is name for the
-+ * process (for error messages). Returns 0 on success, 1 on failure.
-+ */
-+static int tloop_join(pid_t pid, const char *name)
-+{
-+	int tret;
-+	if (waitpid(pid, &tret, 0) < 0) {
-+		error("%s process failed to wait: %s", name, strerror(errno));
-+		return 1;
-+	}
-+	if (!WIFEXITED(tret) || WEXITSTATUS(tret)) {
-+		error("%s process failed", name);
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Spawn the transfer tasks and then wait for them. Returns 0 on success,
-+ * -1 on failure.
-+ */
-+static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
-+{
-+	pid_t pid1, pid2;
-+	int ret = 0;
-+
-+	/* Fork thread #1: git to program. */
-+	pid1 = fork();
-+	if (pid1 < 0)
-+		die_errno("Can't start thread for copying data");
-+	else if (pid1 == 0) {
-+		udt_kill_transfer(&s->ptg);
-+		exit(udt_copy_task_routine(&s->gtp) ? 0 : 1);
-+	}
-+
-+	/* Fork thread #2: program to git. */
-+	pid2 = fork();
-+	if (pid2 < 0)
-+		die_errno("Can't start thread for copying data");
-+	else if (pid2 == 0) {
-+		udt_kill_transfer(&s->gtp);
-+		exit(udt_copy_task_routine(&s->ptg) ? 0 : 1);
-+	}
-+
-+	/*
-+	 * Close both streams in parent as to not interfere with
-+	 * end of file detection and wait for both tasks to finish.
-+	 */
-+	udt_kill_transfer(&s->gtp);
-+	udt_kill_transfer(&s->ptg);
-+	ret |= tloop_join(pid1, "Git to program copy");
-+	ret |= tloop_join(pid2, "Program to git copy");
-+	return ret;
-+}
-+#endif
-+
-+/*
-+ * Copies data from stdin to output and from input to stdout simultaneously.
-+ * Additionally filtering through given filter. If filter is NULL, uses
-+ * identity filter.
-+ */
-+int bidirectional_transfer_loop(int input, int output)
-+{
-+	struct bidirectional_transfer_state state;
-+
-+	/* Fill the state fields. */
-+	state.ptg.src = input;
-+	state.ptg.dest = 1;
-+	state.ptg.src_is_sock = (input == output);
-+	state.ptg.dest_is_sock = 0;
-+	state.ptg.state = SSTATE_TRANSFERING;
-+	state.ptg.bufuse = 0;
-+	state.ptg.src_name = "remote input";
-+	state.ptg.dest_name = "stdout";
-+
-+	state.gtp.src = 0;
-+	state.gtp.dest = output;
-+	state.gtp.src_is_sock = 0;
-+	state.gtp.dest_is_sock = (input == output);
-+	state.gtp.state = SSTATE_TRANSFERING;
-+	state.gtp.bufuse = 0;
-+	state.gtp.src_name = "stdin";
-+	state.gtp.dest_name = "remote output";
-+
-+	return tloop_spawnwait_tasks(&state);
-+}
-diff --git a/transport.h b/transport.h
-index c59d973..e803c0e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -154,6 +154,7 @@ int transport_connect(struct transport *transport, const char *name,
- 
- /* Transport methods defined outside transport.c */
- int transport_helper_init(struct transport *transport, const char *name);
-+int bidirectional_transfer_loop(int input, int output);
- 
- /* common methods used by transport.c and builtin-send-pack.c */
- void transport_verify_remote_names(int nr_heads, const char **heads);
+diff --git a/git.c b/git.c
+index 50a1401..b7b96b0 100644
+--- a/git.c
++++ b/git.c
+@@ -374,6 +374,7 @@ static void handle_internal_command(int argc, const char **argv)
+ 		{ "receive-pack", cmd_receive_pack },
+ 		{ "reflog", cmd_reflog, RUN_SETUP },
+ 		{ "remote", cmd_remote, RUN_SETUP },
++		{ "remote-fd", cmd_remote_fd },
+ 		{ "replace", cmd_replace, RUN_SETUP },
+ 		{ "repo-config", cmd_config, RUN_SETUP_GENTLY },
+ 		{ "rerere", cmd_rerere, RUN_SETUP },
 -- 
 1.7.3.1.53.g597b29.dirty
