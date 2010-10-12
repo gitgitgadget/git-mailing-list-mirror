@@ -1,83 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/7] Teach fast-import to print the id of each imported
- commit
-Date: Tue, 12 Oct 2010 13:48:56 -0500
-Message-ID: <20101012184856.GA16103@burratino>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 1/7] Teach fast-import to print the id of each imported commit
+Date: Tue, 12 Oct 2010 20:57:35 +0200
+Message-ID: <AANLkTikyc8qv6SCewrZLvZccOX5giqRPqQBtrf8o9Mtb@mail.gmail.com>
 References: <1286891424-2067-1-git-send-email-david.barr@cordelta.com>
  <1286891424-2067-2-git-send-email-david.barr@cordelta.com>
- <AANLkTinRDoSHhzYnnvckPYyiZrsOX1mJECBMb5bNbMJ=@mail.gmail.com>
+ <AANLkTinRDoSHhzYnnvckPYyiZrsOX1mJECBMb5bNbMJ=@mail.gmail.com> <20101012184856.GA16103@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: David Barr <david.barr@cordelta.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 12 20:52:31 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 20:58:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5jxe-0003OR-QV
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 20:52:31 +0200
+	id 1P5k30-0005Wz-M3
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 20:58:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758042Ab0JLSwZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Oct 2010 14:52:25 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:38338 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754630Ab0JLSwY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 14:52:24 -0400
-Received: by ewy20 with SMTP id 20so1504551ewy.19
-        for <git@vger.kernel.org>; Tue, 12 Oct 2010 11:52:22 -0700 (PDT)
+	id S1758102Ab0JLS55 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Oct 2010 14:57:57 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42917 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753251Ab0JLS54 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 14:57:56 -0400
+Received: by iwn7 with SMTP id 7so1086836iwn.19
+        for <git@vger.kernel.org>; Tue, 12 Oct 2010 11:57:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=K+w9VqsR9Wv9ZscjOJ7+GL4vRDzcLPpzeHp2XNRcabU=;
-        b=NePeGhwETrpsctBk6cuQdg68VMb+pb+C3XOiM2lHUTX/44Z7Xn/11OlUKYGF2UxU19
-         dSqTbXmzxKtxT81T+HUX4peegj6hMLt0W2CKxspP9XWDf3nbk5P5ruGLsFgPAI0yhrZg
-         kk2z5xFqDbdqYwU/K/l8ITXVQRnsvClYzoI6U=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ky23UuOhdbQ7t5RpZwnlqfdWs93EZ2IAYnzOMPoR8ew=;
+        b=a9sVf7y27dB4LrXj2sJLGnBh1hxdy7aDfV2ZiYrWeE0AazVupDaX+Hnxf45FDV4dmr
+         a4FsAjLJofCqp/f9zzdXWrSn4hB/eBgo5FeNftiDRQKLpDNd+oTv/5iqE6yHTha1OFHc
+         OucEfjh6GGLMGzlEoXQBQ8CpMnAKXIpgv9oHc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=D2GcHz/1xs56MAUjgFhLaOEeAc0BjBq/0CqxZbRc+dQ1VNfxZnADx+yqUolTMhZyL8
-         X+ZQqVgS4+l0G3mIV9P3RliPul0B0R+JsrDtK64vNyG8DAkAkS8VPyikxvi987LfY/Yn
-         sA9fIPQfOdwrDgJIDWg2Lg0Blx1Iak70GJLBA=
-Received: by 10.14.45.77 with SMTP id o53mr2224251eeb.1.1286909540109;
-        Tue, 12 Oct 2010 11:52:20 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id x54sm3338078eeh.5.2010.10.12.11.52.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 12 Oct 2010 11:52:18 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinRDoSHhzYnnvckPYyiZrsOX1mJECBMb5bNbMJ=@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=TkpALvalHv3nmjbGa/hJHNNomG4UTx0mzrNj52kPnOwJc7+LLxFwSoTHSACKSfvWeL
+         xtYazN7thrX1Hr32A3S14flwNtBiCUiVzufeMFlmk9q4FgIUL9/PdCSoQqJtLPYSPOLW
+         YJ0T7OZVlSuS8me1bWm20cXIQSQhfiM3sONFQ=
+Received: by 10.42.175.136 with SMTP id ba8mr34390icb.35.1286909875560; Tue,
+ 12 Oct 2010 11:57:55 -0700 (PDT)
+Received: by 10.231.32.74 with HTTP; Tue, 12 Oct 2010 11:57:35 -0700 (PDT)
+In-Reply-To: <20101012184856.GA16103@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158867>
 
-Sverre Rabbelier wrote:
-> On Tue, Oct 12, 2010 at 15:50, David Barr <david.barr@cordelta.com> w=
-rote:
+Heya,
 
->> + =C2=A0 =C2=A0 =C2=A0 } else if (!prefixcmp(feature, "report-fd=3D"=
-)) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 option_report_fd(=
-feature + strlen("report-fd=3D"));
->
-> Note that adding it here means that we _do_ support in-stream
-> 'report-fd' specification, which is fine by me since it's overridable
-> on the commandline, but there was some discussion earlier that we
-> _shouldn't_ support this.
+On Tue, Oct 12, 2010 at 20:48, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Thanks for the reminder. =C2=A0I still think Sam is right fwiw.
 
-Reference: http://thread.gmane.org/gmane.comp.version-control.git/15628=
-0
+Perhaps we can instead make '--report-fd' have a default value of
+'stdout'? I don't see why we would want to _disallow_ the value from
+being specified in stream (we allow import/export-marks in-stream
+too), as long as they can be overruled by the commandline.
 
-Thanks for the reminder.  I still think Sam is right fwiw.
+--=20
+Cheers,
+
+Sverre Rabbelier
