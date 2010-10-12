@@ -1,98 +1,95 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/7] Teach fast-import to print the id of each imported
- commit
-Date: Tue, 12 Oct 2010 14:07:02 -0500
-Message-ID: <20101012190702.GC16237@burratino>
-References: <1286891424-2067-1-git-send-email-david.barr@cordelta.com>
- <1286891424-2067-2-git-send-email-david.barr@cordelta.com>
- <AANLkTinRDoSHhzYnnvckPYyiZrsOX1mJECBMb5bNbMJ=@mail.gmail.com>
- <20101012184856.GA16103@burratino>
- <AANLkTikyc8qv6SCewrZLvZccOX5giqRPqQBtrf8o9Mtb@mail.gmail.com>
+Subject: Re: Push not writing to standard error
+Date: Tue, 12 Oct 2010 14:21:17 -0500
+Message-ID: <20101012192117.GD16237@burratino>
+References: <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <david.barr@cordelta.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sam Vilain <sam@vilain.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 12 21:10:33 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Tay Ray Chuan <rctay89@gmail.com>
+To: Chase Brammer <cbrammer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 21:24:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5kF6-0001MK-Pq
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 21:10:33 +0200
+	id 1P5kSs-0006I0-Vr
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 21:24:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758163Ab0JLTK1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 15:10:27 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:54878 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752735Ab0JLTK0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Oct 2010 15:10:26 -0400
-Received: by gwj17 with SMTP id 17so1548519gwj.19
-        for <git@vger.kernel.org>; Tue, 12 Oct 2010 12:10:25 -0700 (PDT)
+	id S1758130Ab0JLTYk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Oct 2010 15:24:40 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:35484 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753989Ab0JLTYk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 15:24:40 -0400
+Received: by qyk5 with SMTP id 5so819908qyk.19
+        for <git@vger.kernel.org>; Tue, 12 Oct 2010 12:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=vPd4SoGTrWonARkg0wmjO451IHX9K5Hdjn8+ZECNRV8=;
-        b=toVJx7rPefy3L21PkpUZ3+TCuiA6kVaQ6Vt6cviOHvAPSFtjDjkb7Tkp72F9teK4WH
-         sR5RxrVabdrugNJ6wpS9BzI3UM6e1MYX0HNeQ6OMScLFp457K/LniEBbMH/JR6Lm6a73
-         zn+n2Wsa8eaiNHUFgEqiCqOTHtifd5pLaS3L0=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=6FlthA6/rVl8q5fbCBmRadQJ9PiQuWQ273KfIqFH5Pk=;
+        b=ului4HYe7W7Ri4hJ0YlKdqHawe5CegYhW1GLJk6wrp5/juqWbBAvkzI7KWVkfH7M4N
+         CU3y6DeZeiSw8ekDkl4Ht4x6bmvtNYjsaOPc6SHQKQAqJWbHp+5nxsKS4dEDH4ml10b9
+         gLtuvDYuNymy8wonws5zj6tfvyodO/lDVKsOs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=P4aVo+zYYT+NJgmKY7k9SQhY6zAqHPHhYSr7GGVV2bLfUal6slH2ZwbS/ot3C9OJd5
-         wHIMv8HK1WmgvyE3cN5l3rzw31KiwbHbkTUrIvjVaRSgjUEwRLxx2sxb/Clyg/foNsZP
-         CxGJQSBZ7wltCQHQ84V+foOvkU4zkPRLCZ7XI=
-Received: by 10.151.50.14 with SMTP id c14mr4481965ybk.432.1286910624952;
-        Tue, 12 Oct 2010 12:10:24 -0700 (PDT)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id z16sm7113776ybm.16.2010.10.12.12.10.23
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Unvg+A9rce4LDJDBRSzemIWUiCJLGbFQr9JXhzUjZMEIFWyYBQY4YFNwRG7jkxANHm
+         E1yqzlz0Gw81s8Urw81tliKkj2cB2TTGhHLgSU3E06OvxnEzRkDnOwIQtj8rv2DcTSNN
+         r1Cijm0GwZx8iLFyXfq0lH6gocMP8spF4Y/t4=
+Received: by 10.224.66.29 with SMTP id l29mr5988779qai.239.1286911479130;
+        Tue, 12 Oct 2010 12:24:39 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id nb14sm6505990qcb.12.2010.10.12.12.24.35
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 12 Oct 2010 12:10:24 -0700 (PDT)
+        Tue, 12 Oct 2010 12:24:36 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTikyc8qv6SCewrZLvZccOX5giqRPqQBtrf8o9Mtb@mail.gmail.com>
+In-Reply-To: <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158870>
 
-Sverre Rabbelier wrote:
+Chase Brammer wrote:
 
-> Perhaps we can instead make '--report-fd' have a default value of
-> 'stdout'?
+>                                    saving the standard error from bas=
+h
+> to a file during a push doesn't seem to be working. =C2=A0I am only a=
+ble to
+> get standard output, which doesn't give the progress of the push
+> (counting, delta, compressing, and writing status).
+[...]
+> git push origin master --progress > ~/push_error_output.txt 2>&1
+[...]
+> Idea's on work arounds or upcoming patches to fix this?
 
-Sounds sane.
+None from me.  But some hints for a patch:
 
-> I don't see why we would want to _disallow_ the value from
-> being specified in stream (we allow import/export-marks in-stream
-> too), as long as they can be overruled by the commandline.
+ - As the man page says,
 
-I do.  If the stream is not being piped to a process the frontend
-started (maybe it's being sent over the wire to some fast-import
-service instead), what would
+   --progress
 
-	feature report-fd=7
+	Progress status is reported on the standard error stream
+	by default when it is attached to a terminal, unless -q is
+	specified. This flag forces progress status even if the
+	standard error stream is not directed to a terminal.
 
-even mean?  So we should discourage it, or better, forbid it now
-while we have the chance.
+   It looks like this facility is not working.
 
-By contrast, as you explained,
+ - Terminals are distinguished from nonterminals with isatty()
 
-	feature relative-marks
-	feature export-marks=MARKS1
+ - The "Counting objects..." output comes from pack-objects.
+   Running with GIT_TRACE=3D1 reveals that the --progress option is
+   not being passed to pack-objects as it should be.
 
-is meaningful because without knowing anything about the underlying
-filing system, a frontend can rely on a later
+ - Is this a regression?  If so, narrowing the regression window
+   with a few rounds of "git bisect" could be helpful.
 
-	feature relative-marks
-	feature import-marks=MARKS1
-
-picking up where it left off.
+Thanks for the report.
