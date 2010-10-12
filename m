@@ -1,52 +1,86 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Spurious line insertion/deletion stats for binary file
-Date: Tue, 12 Oct 2010 15:47:54 -0700
-Message-ID: <8CFCE61F-591A-4B56-B701-D1A391FBB088@sb.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Fix to push --progress. The --progress flag was not
+ being passed into tranport.c from send-pack.h, making the --progress flag
+ unusable
+Date: Tue, 12 Oct 2010 17:44:57 -0500
+Message-ID: <20101012224456.GC15587@burratino>
+References: <AANLkTin9_kofdy49WF4V_JoovVR+G8DN7vn-cz3p84fz@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 13 00:48:07 2010
+Cc: git@vger.kernel.org
+To: Chase Brammer <cbrammer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 13 00:48:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5ndd-0004Rd-Ek
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 00:48:05 +0200
+	id 1P5ndw-0004WZ-P6
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 00:48:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751950Ab0JLWr5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 18:47:57 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:55204 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751253Ab0JLWr5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 18:47:57 -0400
-Received: by pwi4 with SMTP id 4so55095pwi.19
-        for <git@vger.kernel.org>; Tue, 12 Oct 2010 15:47:56 -0700 (PDT)
-Received: by 10.142.234.1 with SMTP id g1mr3924175wfh.332.1286923676779;
-        Tue, 12 Oct 2010 15:47:56 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id t38sm10171802wfc.21.2010.10.12.15.47.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 12 Oct 2010 15:47:56 -0700 (PDT)
-X-Mailer: Apple Mail (2.1081)
+	id S1751993Ab0JLWsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 18:48:18 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:58409 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751952Ab0JLWsR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 18:48:17 -0400
+Received: by qwa26 with SMTP id 26so683654qwa.19
+        for <git@vger.kernel.org>; Tue, 12 Oct 2010 15:48:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=TPpo5BQBBT0sCJk24UsjajrHeVOfIiQXev129/1FNXs=;
+        b=quT5jVeBV6vL9nB/y/R3vTHc71HJgL8AvXYLTr0laK7mOzFsjCl837IidqesEmSwPg
+         qV9EWnfNPp7rN868rNQT/5VeTxzw3KVJLUpfOIQlGoUpd+5oJLZpmuiP+MQYezEUBAJ5
+         7DzrN01kJs4VIXNjxx22vzjAppMMWLKJzkR90=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=rP+t8WjqsU51oxlCTwIvsf6bdGU4pSTLdVqSR/BBdAdlpqezmlNOBGJnFQia2bJVV5
+         sXYk0kKTnkJ4DtVJVcwASV3lcWr0kId5ppWBEDWJfIzs1BLhUi0kOqg0aUgBMY78kRkc
+         cJdrC14YW8xPx1M10a4xuW1CFwqZCIhyH9h8Q=
+Received: by 10.229.230.4 with SMTP id jk4mr6834490qcb.174.1286923696682;
+        Tue, 12 Oct 2010 15:48:16 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id t35sm3937198qco.6.2010.10.12.15.48.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 12 Oct 2010 15:48:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTin9_kofdy49WF4V_JoovVR+G8DN7vn-cz3p84fz@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158888>
 
-I just noticed something fairly odd when making a commit that changed a single binary file:
+Chase Brammer wrote:
 
-kevin> (develop +=)> git ci -m 'Replace binary file'
-[develop c0c3b98] Replace binary file
- 1 files changed, 8 insertions(+), 14 deletions(-)
- rewrite Resources/some_image.png (99%)
+> The result of this is external tools and tools writing standard error
+> to a file from bash would not be able to receive progress information
+> during a push.  Similar functionality is seen in fetch, which still
+> works.
 
-The commit results seem to be treating the binary file as text in order to give me insertion/deletion stats. This is quite obviously wrong. For this situation, a fairly simple solution would be to change that line to something like
+A bit of protocol: since the patch is by Jeff, this should have
 
- 1 files changed, 2652 bytes removed
+	From: Jeff King <peff@peff.net>
 
-but the correct behavior is a bit less obvious when there are multiple files changed. Does anyone have a good suggestion for how to handle this case?
+at the beginning of the log message.  See Documentation/SubmittingPatches
+for details.
 
--Kevin Ballard
+> Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+
+I didn't help. :)
+
+>  builtin/send-pack.c |    3 +++
+>  send-pack.h         |    1 +
+>  transport.c         |    1 +
+>  3 files changed, 5 insertions(+), 0 deletions(-)
+
+It's not necessary by any means, but it would be nice to add a test
+for this to t/ so no one breaks the new functionality in the future.
+
+Thanks.
