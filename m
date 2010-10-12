@@ -1,71 +1,66 @@
-From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-Subject: git ls-files handles paths differently in Windows and Mac (probably Linux)
-Date: Tue, 12 Oct 2010 16:14:10 +0400
-Message-ID: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 12 14:14:22 2010
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: git ls-files handles paths differently in Windows and Mac
+ (probably Linux)
+Date: Tue, 12 Oct 2010 14:51:05 +0200
+Message-ID: <AANLkTimB6s_yt6L59xpqsWO_yBsZxuVCiExFoSm9FcN1@mail.gmail.com>
+References: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 14:51:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5dkK-0001GT-Mv
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 14:14:21 +0200
+	id 1P5eKL-0005JI-13
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 14:51:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932298Ab0JLMOP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 08:14:15 -0400
-Received: from mail.intellij.net ([213.182.181.98]:57036 "EHLO
-	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932238Ab0JLMOP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 08:14:15 -0400
-Received: (qmail 2997 invoked by uid 89); 12 Oct 2010 12:14:13 -0000
-Received: by simscan 1.1.0 ppid: 2964, pid: 2988, t: 0.0172s
-         scanners: regex: 1.1.0 clamav: 0.96
-/m: 52
-Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
-  by mail.intellij.net with ESMTPA; 12 Oct 2010 12:14:12 -0000
-X-Mailer: Apple Mail (2.1081)
+	id S932502Ab0JLMvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 08:51:07 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:34767 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932385Ab0JLMvF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 08:51:05 -0400
+Received: by qyk5 with SMTP id 5so722276qyk.19
+        for <git@vger.kernel.org>; Tue, 12 Oct 2010 05:51:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=iOJLKGqm/IepjPaS30sZ6M5byeKKVPo0kLyH4T21MYk=;
+        b=vCkgr+zv7NXoMkogl7hjLR54e8/HiEvomb0g/P6gcylJz0JDGV/EJopnfYSZhMS6H/
+         hYGIhmn3hJGzAN3dKsyFgIDUoCiquxXQO4ScJgCOuIumHXSL3AuUUss+DAbUUCJOad2q
+         1zOyih0doSrzd/c/TSSSuKjgJZEY/tWqjeiwY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=igqxfkmA1JYpFAnNPk40UCNud8leSvQOYusW/vFUoLg0RAuQnvz6ajmLyTzG+ui34W
+         K6gONXZQG3vpCRo43dTueAyi9dQdGLdAmbiGAGxPM8pyaXLketf513RS2Ya5MXy49urf
+         erab1LG5dva55BT7GRLcplfVoWBKc1v5tzjSA=
+Received: by 10.224.30.21 with SMTP id s21mr5613560qac.119.1286887865283; Tue,
+ 12 Oct 2010 05:51:05 -0700 (PDT)
+Received: by 10.229.87.212 with HTTP; Tue, 12 Oct 2010 05:51:05 -0700 (PDT)
+In-Reply-To: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158832>
 
+On Tue, Oct 12, 2010 at 14:14, Kirill Likhodedov
+<Kirill.Likhodedov@jetbrains.com> wrote:
+> The behavior of ls-files is inconsistent in Windows and Mac.
+>
+> I want to see which files were changed in the specific directory of my working tree, so I call ls-files:
+>> git ls-files -douvm --exclude-standard -- MYDIR
+>
 
-Hi all,
+Well, it is an... unconventional way to do that. May I suggest you consider
+using "git diff --name-status" or just "git status" next time?
 
-The behavior of ls-files is inconsistent in Windows and Mac.
+> Looks like a bug. Maybe a bug of porting Git to windows, but the behavior is the same on msys-git and cygwin-git.
 
-I want to see which files were changed in the specific directory of my working tree, so I call ls-files:
-> git ls-files -douvm --exclude-standard -- MYDIR
-
-On Mac (and probably on Linux) git inspects the content of MYDIR and gives me the status of not-indexed changes in this directory.
-On Windows git gives the same result (only changes in MYDIR), but it scans the whole repository!
-
-I noticed it because it took a long time to scan a small directory, and then I confirmed it by using monitoring tools:
-on Windows I used Process Monitor, on Mac I used FileMon - both give the list of accessed files in the real time.
-
-To narrow the search scope to MYDIR I have to add "/**" and thus call:
-> git ls-files -douvm --exclude-standard -- MYDIR/**
-This works as expected - scans only MYDIR.
-
-But I can't call it with several directories:
-> git ls-files -douvm --exclude-standard -- MYDIR/** ANOTHERDIR/**
-This doesn't work as expected and scans the whole repo.
-So to scan two directories I have to call ls-files twice.
-
-Looks like a bug. Maybe a bug of porting Git to windows, but the behavior is the same on msys-git and cygwin-git. 
-It was tested with Git 1.7.1 on Mac, 
-MsysGit 1.7.3.1 and 1.7.0.2,
-CygwinGit 1.7.0.4.
-
-Thanks.
-
-----------------------------------
-Kirill Likhodedov
-JetBrains, Inc
-http://www.jetbrains.com
-"Develop with pleasure!"
+Maybe. Both ports share a fair amount of Windows-related code.
