@@ -1,47 +1,52 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
+From: Stefan Naewe <stefan.naewe@atlas-elektronik.com>
 Subject: Re: Can I checkout a single file without altering index?
-Date: Tue, 12 Oct 2010 12:19:44 +0200
-Message-ID: <4CB43640.2010402@drmicha.warpmail.net>
+Date: Tue, 12 Oct 2010 13:14:32 +0200
+Organization: ATLAS Elektronik GmbH
+Message-ID: <4CB44318.7000305@atlas-elektronik.com>
 References: <loom.20101012T114900-532@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
 To: Christian Halstrick <christian.halstrick@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 12 12:19:35 2010
+X-From: git-owner@vger.kernel.org Tue Oct 12 13:14:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5bxG-0003De-Cx
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 12:19:34 +0200
+	id 1P5coO-0001ws-Tm
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 13:14:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932149Ab0JLKT3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 06:19:29 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54969 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757147Ab0JLKT2 (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 06:19:28 -0400
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 53E1357E;
-	Tue, 12 Oct 2010 06:19:28 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Tue, 12 Oct 2010 06:19:28 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=OU0DJ8qvQibWIPuX6kbY4qZCOm0=; b=ZJsGZyED8wQJEHbmYWWNzvIn1l8wREXak6/azc0IXJBJgbwRNO5XrO54N6kpovBqvZQ6+sTx2TU5lnVrrl8262MEw4pGPqc8q9hPbjw82ESP3lyyIwQ5eQ4fJbjUmnOmc1syctondfBdOGvB4cIDCCNqVQuEuEzU7wT5zdnIlM0=
-X-Sasl-enc: uc5nL0CuM886g3XV+WKDxrfZ7LTzrqp+MuQhXxGQWBQT 1286878767
-Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 82A5A404233;
-	Tue, 12 Oct 2010 06:19:27 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+	id S932183Ab0JLLOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 07:14:23 -0400
+Received: from lxsrv96.atlas.de ([194.156.172.86]:53662 "EHLO mail96.atlas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757184Ab0JLLOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 07:14:22 -0400
+Received: from localhost (localhost [127.0.0.1])
+	by mail96.atlas.de (Postfix) with ESMTP id A464A10051;
+	Tue, 12 Oct 2010 13:14:18 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at lxsrv96.atlas.de
+Received: from mail96.atlas.de ([127.0.0.1])
+	by localhost (lxsrv96.atlas.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 41HYnakjWfbC; Tue, 12 Oct 2010 13:14:18 +0200 (CEST)
+Received: from mgsrv01.atlas.de (unknown [10.200.101.16])
+	by mail96.atlas.de (Postfix) with ESMTP;
+	Tue, 12 Oct 2010 13:14:18 +0200 (CEST)
+Received: from [141.200.42.243] (as106913.atlas.de [141.200.42.243])
+	by mgsrv01.atlas.de (Postfix) with ESMTP id 1B4C42716A;
+	Tue, 12 Oct 2010 13:14:18 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.8.1.14) Gecko/20080421 Lightning/0.8 Thunderbird/2.0.0.14 Mnenhy/0.7.5.0
 In-Reply-To: <loom.20101012T114900-532@post.gmane.org>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158830>
 
-Christian Halstrick venit, vidit, dixit 12.10.2010 12:03:
+On 10/12/2010 12:03 PM, Christian Halstrick wrote:
 > Can I checkout a certain file to a specific revision without also adding this 
 > content to the index? I only want to alter the working-tree - no modification of 
 > index or HEAD needed.
@@ -52,22 +57,11 @@ Christian Halstrick venit, vidit, dixit 12.10.2010 12:03:
 > Now I want to see whether my test fails without my fix. I want to checkout HEAD
 > for the source file without destroying my index. In the end, after I saw that my
 > test fails without my fix, I just want to say "git commit" without having to.
-> 
 
-I would recommend to work on top of a trial commit, i.e.
+commit the unit test first, and the fix as a second commit ?
 
-git commit -m TheFix
-git checkout HEAD^ -- fixedfile.c
-git reset --hard
-
-and git commit --amend if needed. (Alternatively, use stash.)
-
-You can also use
-
-git show HEAD:fixedfile.c > fixedfile.c
-git checkout fixed.file.c
-git commit -m TheFix
-
-but I find this more cumbersome.
-
-Michael
+Regards,
+  Stefan
+-- 
+----------------------------------------------------------------
+/dev/random says: Help endangered species - adopt a KGB operative.
