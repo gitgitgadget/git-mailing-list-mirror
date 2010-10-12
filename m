@@ -1,96 +1,76 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] bisect: check for mandatory argument of 'bisect replay'
-Date: Tue, 12 Oct 2010 04:56:35 +0200
-Message-ID: <201010120456.35411.chriscool@tuxfamily.org>
-References: <1286747338-8521-1-git-send-email-szeder@ira.uka.de> <1286747338-8521-3-git-send-email-szeder@ira.uka.de> <201010120435.11903.chriscool@tuxfamily.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] log which temporary file could not be created
+Date: Mon, 11 Oct 2010 20:56:59 -0700
+Message-ID: <7v8w24oygk.fsf@alter.siamese.dyndns.org>
+References: <20101009201751.GK9348@bzzt.net>
+ <20101010024124.GA20305@burratino> <20101010103327.GO9348@bzzt.net>
+ <20101010180909.GA12320@burratino>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: SZEDER =?utf-8?q?G=C3=A1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Tue Oct 12 04:56:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Arnout Engelen <arnouten@bzzt.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 05:57:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5V2o-0004XE-2a
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 04:56:50 +0200
+	id 1P5VzI-0002ya-VK
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 05:57:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754677Ab0JLC4o convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 11 Oct 2010 22:56:44 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:57971 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752477Ab0JLC4n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 11 Oct 2010 22:56:43 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 281FEA61C9;
-	Tue, 12 Oct 2010 04:56:36 +0200 (CEST)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-24-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <201010120435.11903.chriscool@tuxfamily.org>
+	id S1756289Ab0JLD5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 11 Oct 2010 23:57:11 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:33403 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755739Ab0JLD5K (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 11 Oct 2010 23:57:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D60D9DDEB7;
+	Mon, 11 Oct 2010 23:57:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=sC4kIE/pRqCBiBDrgNDrGHUKz2E=; b=UGBb+GFTPqoAhe44vo5T+L3
+	ZNgodk3aZ1gUDhftRFo2w/hfldhmdwaB0gqWOGYZwn4vfLWUctddpmPB103zv3WK
+	2SJEM4EoKAVRvsOewZ7mSzvWzSXTstTFgwC3KukBdGq5VXxF8Ix13Q3SPnTNVQva
+	4YSg57VI4anjpATAsFlA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=DdvfIZTneApOPdoKKwpy3T4Nn+5HTtHBYUucaBE7UZmbyAEEV
+	6jqUqQbMlrZAIKs9YqNZph+Ekkn4czOB2ZoVA6ixIWD/BP9pO6jm0D0uR3jjNGqD
+	zpeIRmxxlyEyfhicm6dTNYNzaWJTLKdY+sNK7S+ivnujS3QMprGo9gGaGQ=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A26BADDEAF;
+	Mon, 11 Oct 2010 23:57:05 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CAC39DDEAA; Mon, 11 Oct
+ 2010 23:57:01 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C724F120-D5B4-11DF-BBAF-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158820>
 
-On Tuesday 12 October 2010 04:35:11 Christian Couder wrote:
-> On Sunday 10 October 2010 23:48:58 SZEDER G=C3=A1bor wrote:
-> > 'git bisect replay' has a mandatory logfile argument, but the curre=
-nt
-> > implementation doesn't check whether the user has specified one.  W=
-hen
-> > the user omits the logfile argument, this leads to the following
-> >=20
-> > unhelpful error message:
-> >   cannot read  for replaying
-> >=20
-> > So, check for the mandatory argument first, and provide a more
-> > meaningful error message when it is omitted.
-> >=20
-> > Signed-off-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
-> > ---
-> >=20
-> >  git-bisect.sh |    1 +
-> >  1 files changed, 1 insertions(+), 0 deletions(-)
-> >=20
-> > diff --git a/git-bisect.sh b/git-bisect.sh
-> > index 68fcff6..c21e33c 100755
-> > --- a/git-bisect.sh
-> > +++ b/git-bisect.sh
-> > @@ -343,6 +343,7 @@ bisect_clean_state() {
-> >=20
-> >  }
-> > =20
-> >  bisect_replay () {
-> >=20
-> > +	test "$#" -eq 1 || die "No logfile given"
-> >=20
-> >  	test -r "$1" || die "cannot read $1 for replaying"
-> >  	bisect_reset
-> >  	while read git bisect command rev
->=20
-> While at it perhaps you could do something like:
->=20
-> bisect_replay () {
-> +	test "$#" -lt 1 || die "No logfile given"
-> +	test "$#" -gt 1 || die "Too many argument. Please give only one log=
-file."
->  	test -r "$1" || die "cannot read $1 for replaying"
->  	bisect_reset
->  	while read git bisect command rev
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I mean:
+> Arnout Engelen wrote:
+>> On Sat, Oct 09, 2010 at 09:41:24PM -0500, Jonathan Nieder wrote:
+>
+>>> 	fatal: Unable to create temporary file '.merge_file_Sc7R5c': File exists
+>>> 	fatal: Unable to create temporary file 'newrepo/.git/tOWHcxk': No space left on device
+>>
+>> Perhaps we should also log the current working directory when the temporary 
+>> filename is relative?
+>
+> Let's step back for a moment.  Was there an example that prompted
+> this patch?  Were you aware of where git would be trying to create
+> files in that example?  (I'm genuinely curious.)
+>
+> Converting the filename to an absolute path with make_absolute_path
+> might be useful, but I am not entirely sure it is worth the
+> complication.
 
-bisect_replay () {
-+	test "$#" -lt 1 && die "No logfile given"
-+	test "$#" -gt 1 && die "Too many argument. Please give only one logfi=
-le."
- 	test -r "$1" || die "cannot read $1 for replaying"
- 	bisect_reset
- 	while read git bisect command rev
-
-Sorry!
-
-Best regards,
-Christian.
+For that matter, I am not sure if it is worth the strdup "just in case it
+fails" either.
