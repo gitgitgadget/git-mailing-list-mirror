@@ -1,33 +1,33 @@
 From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [RFC PATCH v7 2/3] git-remote-fd
-Date: Tue, 12 Oct 2010 19:39:42 +0300
-Message-ID: <1286901583-30088-3-git-send-email-ilari.liusvaara@elisanet.fi>
+Subject: [RFC PATCH v7 3/3] git-remote-ext
+Date: Tue, 12 Oct 2010 19:39:43 +0300
+Message-ID: <1286901583-30088-4-git-send-email-ilari.liusvaara@elisanet.fi>
 References: <1286901583-30088-1-git-send-email-ilari.liusvaara@elisanet.fi>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 12 18:33:16 2010
+X-From: git-owner@vger.kernel.org Tue Oct 12 18:33:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5hmr-0005qQ-3u
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 18:33:13 +0200
+	id 1P5hnG-00064B-AS
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 18:33:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757829Ab0JLQdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 12:33:06 -0400
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:60785 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757716Ab0JLQdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Oct 2010 12:33:05 -0400
+	id S932297Ab0JLQdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 12:33:09 -0400
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:32986 "EHLO
+	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752019Ab0JLQdH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 12:33:07 -0400
 Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 2F4B48C25A
-	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:04 +0300 (EEST)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
+	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 6F17BC7E3E
+	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:05 +0300 (EEST)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
 	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A04F522ACB3; Tue, 12 Oct 2010 19:33:04 +0300
+	with SMTP (gateway) id A04F616B629; Tue, 12 Oct 2010 19:33:05 +0300
 Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id 112094033
-	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:03 +0300 (EEST)
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 3F65841BE5
+	for <git@vger.kernel.org>; Tue, 12 Oct 2010 19:33:04 +0300 (EEST)
 X-Mailer: git-send-email 1.7.1.rc2.10.g714149
 In-Reply-To: <1286901583-30088-1-git-send-email-ilari.liusvaara@elisanet.fi>
 X-Antivirus: VAMS
@@ -35,166 +35,423 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158862>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158863>
 
-This remote helper reflects raw smart remote transport stream back to the
-calling program. This is useful for example if some UI wants to handle
-ssh itself and not use hacks via GIT_SSH.
+This remote helper invokes external command and passes raw smart transport
+stream through it. This is useful for instance for invoking ssh with
+one-off odd options, connecting to git services in unix domain
+sockets, in abstract namespace, using TLS or other secure protocols,
+etc...
 
 Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 ---
- .gitignore                      |    1 +
- Documentation/git-remote-fd.txt |   59 +++++++++++++++++++++++++++++
- Makefile                        |    1 +
- builtin.h                       |    1 +
- builtin/remote-fd.c             |   79 +++++++++++++++++++++++++++++++++++++++
- git.c                           |    1 +
- 6 files changed, 142 insertions(+), 0 deletions(-)
- create mode 100644 Documentation/git-remote-fd.txt
- create mode 100644 builtin/remote-fd.c
+ .gitignore                       |    1 +
+ Documentation/git-remote-ext.txt |  125 +++++++++++++++++++
+ Makefile                         |    1 +
+ builtin.h                        |    1 +
+ builtin/remote-ext.c             |  248 ++++++++++++++++++++++++++++++++++++++
+ git.c                            |    1 +
+ 6 files changed, 377 insertions(+), 0 deletions(-)
+ create mode 100644 Documentation/git-remote-ext.txt
+ create mode 100644 builtin/remote-ext.c
 
 diff --git a/.gitignore b/.gitignore
-index 20560b8..89f37f4 100644
+index 89f37f4..87b833c 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -112,6 +112,7 @@
- /git-remote-https
+@@ -113,6 +113,7 @@
  /git-remote-ftp
  /git-remote-ftps
-+/git-remote-fd
+ /git-remote-fd
++/git-remote-ext
  /git-remote-testgit
  /git-repack
  /git-replace
-diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
+diff --git a/Documentation/git-remote-ext.txt b/Documentation/git-remote-ext.txt
 new file mode 100644
-index 0000000..1c1a179
+index 0000000..8fb260b
 --- /dev/null
-+++ b/Documentation/git-remote-fd.txt
-@@ -0,0 +1,59 @@
-+git-remote-fd(1)
++++ b/Documentation/git-remote-ext.txt
+@@ -0,0 +1,125 @@
++git-remote-ext(1)
 +=================
 +
 +NAME
 +----
-+git-remote-fd - Reflect smart transport stream back to caller
++git-remote-ext - Bridge smart transport to external command.
 +
 +SYNOPSIS
 +--------
-+"fd::<infd>[,<outfd>][/<anything>]" (as URL)
++git remote add nick "ext::<command>[ <arguments>...]"
 +
 +DESCRIPTION
 +-----------
-+This helper uses specified file descriptors to connect to remote git server.
-+This is not meant for end users but for programs and scripts calling git
-+fetch, push or archive.
++This remote helper uses the specified 'program' to connect
++to a remote git server.
 +
-+If only <infd> is given, it is assumed to be bidirectional socket connected
-+to remote git server (git-upload-pack, git-receive-pack or
-+git-upload-achive). If both <infd> and <outfd> are given, they are assumed
-+to be pipes connected to remote git server (<infd> being the inbound pipe
-+and <outfd> being the outbound pipe.
++Data written to stdin of this specified 'program' is assumed
++to be sent to git:// server, git-upload-pack, git-receive-pack
++or git-upload-archive (depending on situation), and data read
++from stdout of this program is assumed to be received from
++the same service.
 +
-+It is assumed that any handshaking procedures have already been completed
-+(such as sending service request for git://) before this helper is started.
++Command and arguments are separated by unescaped space.
 +
-+<anything> can be any string. It is ignored. It is meant for provoding
-+information to user in the URL in case that URL is displayed in some
-+context.
++The following sequences have a special meaning:
++
++'% '::
++	Literal space in command or argument.
++
++'%%'::
++	Literal percent sign.
++
++'%s'::
++	Replaced with name (receive-pack, upload-pack, or
++	upload-archive) of the service git wants to invoke.
++
++'%S'::
++	Replaced with long name (git-receive-pack,
++	git-upload-pack, or git-upload-archive) of the service
++	git wants to invoke.
++
++'%G<repository>' (as argument)::
++	This argument will not be passed to 'program'. Instead, it
++	will cause helper to start by sending git:// service request to
++	remote side with service field set to approiate value and
++	repository field set to <repository>. Default is not to send
++	such request.
+++
++This is useful if remote side is git:// server accessed over
++some tunnel.
++
++'%V<host>' (as argument)::
++	This argument will not be passed to 'program'. Instead it sets
++	the vhost field in git:// service request. Default is not to
++	send vhost in such request (if sent).
 +
 +ENVIRONMENT VARIABLES:
 +----------------------
++
 +GIT_TRANSLOOP_DEBUG::
 +	If set, prints debugging information about various reads/writes.
 +
++ENVIRONMENT VARIABLES PASSED TO COMMAND:
++----------------------------------------
++
++GIT_EXT_SERVICE::
++	Set to long name (git-upload-pack, etc...) of service helper needs
++	to invoke.
++
++GIT_EXT_SERVICE_NOPREFIX::
++	Set to long name (upload-pack, etc...) of service helper needs
++	to invoke.
++
++
 +EXAMPLES:
 +---------
-+git fetch fd::17 master::
-+	Fetch master, using file descriptor #17 to communicate with
-+	git-upload-pack.
++This remote helper is transparently used by git when
++you use commands such as "git fetch <URL>", "git clone <URL>",
++, "git push <URL>" or "git remote add nick <URL>", where <URL>
++begins with `ext::`.  Examples:
 +
-+git fetch fd::17/foo master::
-+	Same as above.
++"ext::ssh -i /home/foo/.ssh/somekey user&#64;host.example %S 'foo/repo'"::
++	Like host.example:foo/repo, but use /home/foo/.ssh/somekey as
++	keypair and user as user on remote side. This avoids needing to
++	edit .ssh/config.
 +
-+git push fd::7,8 master (as URL)::
-+	Push master, using file descriptor #7 to read data from
-+	git-receive-pack and file descriptor #8 to write data to
-+	same service.
++"ext::socat -t3600 - ABSTRACT-CONNECT:/git-server %G/somerepo"::
++	Represents repository with path /somerepo accessable over
++	git protocol at abstract namespace address /git-server.
 +
-+git push fd::7,8/bar master::
-+	Same as above.
++"ext::git-server-alias foo %G/repo"::
++	Represents a repository with path /repo accessed using the
++	helper program "git-server-alias foo".  The path to the
++	repository and type of request are not passed on the command
++	line but as part of the protocol stream, as usual with git://
++	protocol.
++
++"ext::git-server-alias foo %G/repo %Vfoo"::
++	Represents a repository with path /repo accessed using the
++	helper program "git-server-alias foo".  The hostname for the
++	remote server passed in the protocol stream will be "foo"
++	(this allows multiple virtual git servers to share a
++	link-level address).
++
++"ext::git-server-alias foo %G/repo% with% spaces %Vfoo"::
++	Represents a repository with path '/repo with spaces' accessed
++	using the helper program "git-server-alias foo".  The hostname for
++	the remote server passed in the protocol stream will be "foo"
++	(this allows multiple virtual git servers to share a
++	link-level address).
++
++"ext::git-ssl foo.example /bar"::
++	Represents a repository accessed using the helper program
++	"git-ssl foo.example /bar".  The type of request can be
++	determined by the helper using environment variables (see
++	above).
 +
 +Documentation
 +--------------
-+Documentation by Ilari Liusvaara and the git list <git@vger.kernel.org>
++Documentation by Ilari Liusvaara, Jonathan Nieder and the git list
++<git@vger.kernel.org>
 +
 +GIT
 +---
 +Part of the linkgit:git[1] suite
 diff --git a/Makefile b/Makefile
-index 8a56b9a..7da54d7 100644
+index 7da54d7..9909ca1 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -728,6 +728,7 @@ BUILTIN_OBJS += builtin/read-tree.o
  BUILTIN_OBJS += builtin/receive-pack.o
  BUILTIN_OBJS += builtin/reflog.o
  BUILTIN_OBJS += builtin/remote.o
-+BUILTIN_OBJS += builtin/remote-fd.o
++BUILTIN_OBJS += builtin/remote-ext.o
+ BUILTIN_OBJS += builtin/remote-fd.o
  BUILTIN_OBJS += builtin/replace.o
  BUILTIN_OBJS += builtin/rerere.o
- BUILTIN_OBJS += builtin/reset.o
 diff --git a/builtin.h b/builtin.h
-index f2a25a0..1a816e1 100644
+index 1a816e1..a4bba61 100644
 --- a/builtin.h
 +++ b/builtin.h
 @@ -108,6 +108,7 @@ extern int cmd_read_tree(int argc, const char **argv, const char *prefix);
  extern int cmd_receive_pack(int argc, const char **argv, const char *prefix);
  extern int cmd_reflog(int argc, const char **argv, const char *prefix);
  extern int cmd_remote(int argc, const char **argv, const char *prefix);
-+extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
++extern int cmd_remote_ext(int argc, const char **argv, const char *prefix);
+ extern int cmd_remote_fd(int argc, const char **argv, const char *prefix);
  extern int cmd_config(int argc, const char **argv, const char *prefix);
  extern int cmd_rerere(int argc, const char **argv, const char *prefix);
- extern int cmd_reset(int argc, const char **argv, const char *prefix);
-diff --git a/builtin/remote-fd.c b/builtin/remote-fd.c
+diff --git a/builtin/remote-ext.c b/builtin/remote-ext.c
 new file mode 100644
-index 0000000..7517f24
+index 0000000..1d3f1cf
 --- /dev/null
-+++ b/builtin/remote-fd.c
-@@ -0,0 +1,79 @@
++++ b/builtin/remote-ext.c
+@@ -0,0 +1,248 @@
 +#include "git-compat-util.h"
 +#include "transport.h"
++#include "run-command.h"
 +
 +/*
 + * URL syntax:
-+ *	'fd::<inoutfd>[/<anything>]'		Read/write socket pair
-+ *						<inoutfd>.
-+ *	'fd::<infd>,<outfd>[/<anything>]'	Read pipe <infd> and write
-+ *						pipe <outfd>.
-+ *	[foo] indicates 'foo' is optional. <anything> is any string.
-+ *
-+ * The data output to <outfd>/<inoutfd> should be passed unmolested to
-+ * git-receive-pack/git-upload-pack/git-upload-archive and output of
-+ * git-receive-pack/git-upload-pack/git-upload-archive should be passed
-+ * unmolested to <infd>/<inoutfd>.
-+ *
++ *	'command [arg1 [arg2 [...]]]'	Invoke command with given arguments.
++ *	Special characters:
++ *	'% ': Literal space in argument.
++ *	'%%': Literal percent sign.
++ *	'%S': Name of service (git-upload-pack/git-upload-archive/
++ *		git-receive-pack.
++ *	'%s': Same as \s, but with possible git- prefix stripped.
++ *	'%G': Only allowed as first 'character' of argument. Do not pass this
++ *		Argument to command, instead send this as name of repository
++ *		in in-line git://-style request (also activates sending this
++ *		style of request).
++ *	'%V': Only allowed as first 'character' of argument. Used in
++ *		conjunction with '%G': Do not pass this argument to command,
++ *		instead send this as vhost in git://-style request (note: does
++ *		not activate sending git:// style request).
 + */
++
++static char *git_req;
++static char *git_req_vhost;
++
++static char *strip_escapes(const char *str, const char *service,
++	const char **next)
++{
++	size_t rpos = 0;
++	int escape = 0;
++	char special = 0;
++	size_t pslen = 0;
++	size_t pSlen = 0;
++	size_t psoff = 0;
++	struct strbuf ret = STRBUF_INIT;
++
++	/* Calculate prefix length for \s and lengths for \s and \S */
++	if (!strncmp(service, "git-", 4))
++		psoff = 4;
++	pSlen = strlen(service);
++	pslen = pSlen - psoff;
++
++	/* Pass the service to command. */
++	setenv("GIT_EXT_SERVICE", service, 1);
++	setenv("GIT_EXT_SERVICE_NOPREFIX", service + psoff, 1);
++
++	/* Scan the length of argument. */
++	while (str[rpos] && (escape || str[rpos] != ' ')) {
++		if (escape) {
++			switch (str[rpos]) {
++			case ' ':
++			case '%':
++			case 's':
++			case 'S':
++				break;
++			case 'G':
++			case 'V':
++				special = str[rpos];
++				if (rpos == 1)
++					break;
++				/* Fall-through to error. */
++			default:
++				die("Bad remote-ext placeholder '%%%c'.",
++					str[rpos]);
++			}
++			escape = 0;
++		} else
++			escape = (str[rpos] == '%');
++		rpos++;
++	}
++	if (escape && !str[rpos])
++		die("remote-ext command has incomplete placeholder");
++	*next = str + rpos;
++	if (**next == ' ')
++		++*next;	/* Skip over space */
++
++	/*
++	 * Do the actual placeholder substitution. The string will be short
++	 * enough not to overflow integers.
++	 */
++	rpos = special ? 2 : 0;		/* Skip first 2 bytes in specials. */
++	escape = 0;
++	while (str[rpos] && (escape || str[rpos] != ' ')) {
++		if (escape) {
++			switch (str[rpos]) {
++			case ' ':
++			case '%':
++				strbuf_addch(&ret, str[rpos]);
++				break;
++			case 's':
++				strbuf_addstr(&ret, service + psoff);
++				break;
++			case 'S':
++				strbuf_addstr(&ret, service);
++				break;
++			}
++			escape = 0;
++		} else
++			switch (str[rpos]) {
++			case '%':
++				escape = 1;
++				break;
++			default:
++				strbuf_addch(&ret, str[rpos]);
++				break;
++			}
++		rpos++;
++	}
++	switch (special) {
++	case 'G':
++		git_req = strbuf_detach(&ret, NULL);
++		return NULL;
++	case 'V':
++		git_req_vhost = strbuf_detach(&ret, NULL);
++		return NULL;
++	default:
++		return strbuf_detach(&ret, NULL);
++	}
++}
++
++/* Should be enough... */
++#define MAXARGUMENTS 256
++
++static const char **parse_argv(const char *arg, const char *service)
++{
++	int arguments = 0;
++	int i;
++	const char **ret;
++	char *temparray[MAXARGUMENTS + 1];
++
++	while (*arg) {
++		char *expanded;
++		if (arguments == MAXARGUMENTS)
++			die("remote-ext command has too many arguments");
++		expanded = strip_escapes(arg, service, &arg);
++		if (expanded)
++			temparray[arguments++] = expanded;
++	}
++
++	ret = xmalloc((arguments + 1) * sizeof(char *));
++	for (i = 0; i < arguments; i++)
++		ret[i] = temparray[i];
++	ret[arguments] = NULL;
++	return (const char **)ret;
++}
++
++static void send_git_request(int stdin_fd, const char *serv, const char *repo,
++	const char *vhost)
++{
++	size_t bufferspace;
++	size_t wpos = 0;
++	char *buffer;
++
++	/*
++	 * Request needs 12 bytes extra if there is vhost (xxxx \0host=\0) and
++	 * 6 bytes extra (xxxx \0) if there is no vhost.
++	 */
++	if (vhost)
++		bufferspace = strlen(serv) + strlen(repo) + strlen(vhost) + 12;
++	else
++		bufferspace = strlen(serv) + strlen(repo) + 6;
++
++	if (bufferspace > 0xFFFF)
++		die("Request too large to send");
++	buffer = xmalloc(bufferspace);
++
++	/* Make the packet. */
++	wpos = sprintf(buffer, "%04x%s %s%c", (unsigned)bufferspace,
++		serv, repo, 0);
++
++	/* Add vhost if any. */
++	if (vhost)
++		sprintf(buffer + wpos, "host=%s%c", vhost, 0);
++
++	/* Send the request */
++	if (write_in_full(stdin_fd, buffer, bufferspace) < 0)
++		die_errno("Failed to send request");
++
++	free(buffer);
++}
++
++static int run_child(const char *arg, const char *service)
++{
++	int r;
++	struct child_process child;
++
++	memset(&child, 0, sizeof(child));
++	child.in = -1;
++	child.out = -1;
++	child.err = 0;
++	child.argv = parse_argv(arg, service);
++
++	if (start_command(&child) < 0)
++		die("Can't run specified command");
++
++	if (git_req)
++		send_git_request(child.in, service, git_req, git_req_vhost);
++
++	r = bidirectional_transfer_loop(child.out, child.in);
++	if (!r)
++		r = finish_command(&child);
++	else
++		finish_command(&child);
++	return r;
++}
 +
 +#define MAXCOMMAND 4096
 +
-+static void command_loop(int input_fd, int output_fd)
++static int command_loop(const char *child)
 +{
 +	char buffer[MAXCOMMAND];
 +
 +	while (1) {
-+		size_t i;
++		size_t length;
 +		if (!fgets(buffer, MAXCOMMAND - 1, stdin)) {
 +			if (ferror(stdin))
-+				die("Input error");
-+			return;
++				die("Comammand input error");
++			exit(0);
 +		}
 +		/* Strip end of line characters. */
-+		i = strlen(buffer);
-+		while (isspace(buffer[i - 1]))
-+			buffer[--i] = 0;
++		length = strlen(buffer);
++		while (isspace((unsigned char)buffer[length - 1]))
++			buffer[--length] = 0;
 +
 +		if (!strcmp(buffer, "capabilities")) {
 +			printf("*connect\n\n");
@@ -202,54 +459,34 @@ index 0000000..7517f24
 +		} else if (!strncmp(buffer, "connect ", 8)) {
 +			printf("\n");
 +			fflush(stdout);
-+			if (bidirectional_transfer_loop(input_fd,
-+				output_fd))
-+				die("Copying data between file descriptors failed");
-+			return;
++			return run_child(child, buffer + 8);
 +		} else {
-+			die("Bad command: %s", buffer);
++			fprintf(stderr, "Bad command");
++			return 1;
 +		}
 +	}
 +}
 +
-+int cmd_remote_fd(int argc, const char **argv, const char *prefix)
++int cmd_remote_ext(int argc, const char **argv, const char *prefix)
 +{
-+	int input_fd = -1;
-+	int output_fd = -1;
-+	char *end;
-+
-+	if (argc < 3)
-+		die("URL missing");
-+
-+	input_fd = (int)strtoul(argv[2], &end, 10);
-+
-+	if ((end == argv[2]) || (*end != ',' && *end != '/' && *end))
-+		die("Bad URL syntax");
-+
-+	if (*end == '/' || !*end) {
-+		output_fd = input_fd;
-+	} else {
-+		char *end2;
-+		output_fd = (int)strtoul(end + 1, &end2, 10);
-+
-+		if ((end2 == end + 1) || (*end2 != '/' && *end2))
-+			die("Bad URL syntax");
++	if (argc < 3) {
++		fprintf(stderr, "Error: URL missing");
++		exit(1);
 +	}
 +
-+	command_loop(input_fd, output_fd);
-+	return 0;
++	return command_loop(argv[2]);
 +}
 diff --git a/git.c b/git.c
-index 50a1401..b7b96b0 100644
+index b7b96b0..e95a1ba 100644
 --- a/git.c
 +++ b/git.c
 @@ -374,6 +374,7 @@ static void handle_internal_command(int argc, const char **argv)
  		{ "receive-pack", cmd_receive_pack },
  		{ "reflog", cmd_reflog, RUN_SETUP },
  		{ "remote", cmd_remote, RUN_SETUP },
-+		{ "remote-fd", cmd_remote_fd },
++		{ "remote-ext", cmd_remote_ext },
+ 		{ "remote-fd", cmd_remote_fd },
  		{ "replace", cmd_replace, RUN_SETUP },
  		{ "repo-config", cmd_config, RUN_SETUP_GENTLY },
- 		{ "rerere", cmd_rerere, RUN_SETUP },
 -- 
 1.7.3.1.53.g597b29.dirty
