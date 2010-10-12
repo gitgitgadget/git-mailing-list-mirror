@@ -1,73 +1,77 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 1/7] Teach fast-import to print the id of each imported commit
-Date: Tue, 12 Oct 2010 20:57:35 +0200
-Message-ID: <AANLkTikyc8qv6SCewrZLvZccOX5giqRPqQBtrf8o9Mtb@mail.gmail.com>
-References: <1286891424-2067-1-git-send-email-david.barr@cordelta.com>
- <1286891424-2067-2-git-send-email-david.barr@cordelta.com>
- <AANLkTinRDoSHhzYnnvckPYyiZrsOX1mJECBMb5bNbMJ=@mail.gmail.com> <20101012184856.GA16103@burratino>
+From: Chase Brammer <cbrammer@gmail.com>
+Subject: Push not writing to standard error
+Date: Tue, 12 Oct 2010 13:04:02 -0600
+Message-ID: <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Barr <david.barr@cordelta.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 12 20:58:09 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 12 21:04:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5k30-0005Wz-M3
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 20:58:03 +0200
+	id 1P5k8y-0007ft-Th
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 21:04:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758102Ab0JLS55 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Oct 2010 14:57:57 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42917 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753251Ab0JLS54 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 14:57:56 -0400
-Received: by iwn7 with SMTP id 7so1086836iwn.19
-        for <git@vger.kernel.org>; Tue, 12 Oct 2010 11:57:56 -0700 (PDT)
+	id S1753028Ab0JLTEG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 12 Oct 2010 15:04:06 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:41630 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751979Ab0JLTEE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 15:04:04 -0400
+Received: by wwj40 with SMTP id 40so5459925wwj.1
+        for <git@vger.kernel.org>; Tue, 12 Oct 2010 12:04:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ky23UuOhdbQ7t5RpZwnlqfdWs93EZ2IAYnzOMPoR8ew=;
-        b=a9sVf7y27dB4LrXj2sJLGnBh1hxdy7aDfV2ZiYrWeE0AazVupDaX+Hnxf45FDV4dmr
-         a4FsAjLJofCqp/f9zzdXWrSn4hB/eBgo5FeNftiDRQKLpDNd+oTv/5iqE6yHTha1OFHc
-         OucEfjh6GGLMGzlEoXQBQ8CpMnAKXIpgv9oHc=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=eElvCWnbNNVwQd9sBPR7HPSW9BnrWEXPYyUXcy+4vG0=;
+        b=hoBAsEoVDCOG4XX37i/GmsMglUu6gw7sY6BnW2soOJlUaXpEkcf/QVx1ymRuasqXdj
+         Fs10wHQfH82P5tmb6STZtNCqd+wBcrTgilIOgD9ni+WeAxR1i8POchYBUddxuK0yGrrB
+         vlbKtll5Xi0QWJp8RfrltVisaoSAFpQGY7n+0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TkpALvalHv3nmjbGa/hJHNNomG4UTx0mzrNj52kPnOwJc7+LLxFwSoTHSACKSfvWeL
-         xtYazN7thrX1Hr32A3S14flwNtBiCUiVzufeMFlmk9q4FgIUL9/PdCSoQqJtLPYSPOLW
-         YJ0T7OZVlSuS8me1bWm20cXIQSQhfiM3sONFQ=
-Received: by 10.42.175.136 with SMTP id ba8mr34390icb.35.1286909875560; Tue,
- 12 Oct 2010 11:57:55 -0700 (PDT)
-Received: by 10.231.32.74 with HTTP; Tue, 12 Oct 2010 11:57:35 -0700 (PDT)
-In-Reply-To: <20101012184856.GA16103@burratino>
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=YtEn29UR6GZeAcBaYRJgERp0Z+DR++94+Hg+EkjmZIwM9Fqo4yER67RvBYRdRmo6s/
+         Hlim+yDTTNPoxF1q8rnqxykBNN3jrr7hMREEXL64oU6We2onnxUZLwoq+4fp7LZvNdrq
+         XLVypRS0XWvpNEUyzKaWWbHRFXwAp7WAaiduQ=
+Received: by 10.216.1.6 with SMTP id 6mr7213863wec.24.1286910242829; Tue, 12
+ Oct 2010 12:04:02 -0700 (PDT)
+Received: by 10.216.29.195 with HTTP; Tue, 12 Oct 2010 12:04:02 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158868>
 
-Heya,
+=46irst time on the mailing list, but I enjoy the IRC channel. =A0Excus=
+e
+me if this is a logged bug, or if there is a known workaround.
 
-On Tue, Oct 12, 2010 at 20:48, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Thanks for the reminder. =C2=A0I still think Sam is right fwiw.
+When using git outside of bash, or saving the standard error from bash
+to a file during a push doesn't seem to be working. =A0I am only able t=
+o
+get standard output, which doesn't give the progress of the push
+(counting, delta, compressing, and writing status). =A0This does howeve=
+r
+work just fine with git fetch. For example:
 
-Perhaps we can instead make '--report-fd' have a default value of
-'stdout'? I don't see why we would want to _disallow_ the value from
-being specified in stream (we allow import/export-marks in-stream
-too), as long as they can be overruled by the commandline.
+git fetch origin master --progress > /fetch_error_ouput.txt 2>&1
 
---=20
-Cheers,
+Works just fine and writes a long file with the progress data.
+However, the following push doesn't write any data (even when pushing
+large data sets to verify progress output happens)
 
-Sverre Rabbelier
+git push origin master --progress > ~/push_error_output.txt 2>&1
+
+As far as I can tell this is a bug with push. =A0I am a bit biased
+because I really need this feature, but it seems to me that this is a
+fairly large bug because pushing is such a pillar to all things git.
+
+Idea's on work arounds or upcoming patches to fix this?
+
+Thanks
+Chase Brammer
