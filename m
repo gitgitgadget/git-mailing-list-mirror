@@ -1,54 +1,73 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: git ls-files handles paths differently in Windows and Mac (probably
- Linux)
-Date: Tue, 12 Oct 2010 15:28:19 +0200
-Message-ID: <4CB46273.1010601@viscovery.net>
-References: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com> <4CB45E86.2030703@viscovery.net> <60B60680-78BD-4FFF-8472-8C853956CB1A@jetbrains.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=KOI8-R
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-X-From: git-owner@vger.kernel.org Tue Oct 12 15:28:28 2010
+From: David Barr <david.barr@cordelta.com>
+Subject: [PATCH/RFC] Add support for subversion dump format v3
+Date: Wed, 13 Oct 2010 00:40:38 +1100
+Message-ID: <1286890845-4911-1-git-send-email-david.barr@cordelta.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 12 15:41:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5eu2-00048N-2P
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 15:28:26 +0200
+	id 1P5f6Y-0000ba-PC
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 15:41:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932424Ab0JLN2W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 09:28:22 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:2307 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932313Ab0JLN2V (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 12 Oct 2010 09:28:21 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1P5etw-0005hE-98; Tue, 12 Oct 2010 15:28:20 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 0B90C1660F;
-	Tue, 12 Oct 2010 15:28:19 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-In-Reply-To: <60B60680-78BD-4FFF-8472-8C853956CB1A@jetbrains.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1757406Ab0JLNlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 09:41:07 -0400
+Received: from static-198-196.grapevine.transact.net.au ([121.127.198.196]:60090
+	"EHLO mailhost.cordelta" rhost-flags-OK-FAIL-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757286Ab0JLNlG (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 09:41:06 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mailhost.cordelta (Postfix) with ESMTP id E38F4C068;
+	Wed, 13 Oct 2010 00:41:02 +1100 (EST)
+X-Virus-Scanned: amavisd-new at mailhost.cordelta
+Received: from mailhost.cordelta ([127.0.0.1])
+	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id B+k4hlHkxeU7; Wed, 13 Oct 2010 00:41:00 +1100 (EST)
+Received: from dba.cordelta (unknown [192.168.123.127])
+	by mailhost.cordelta (Postfix) with ESMTP id BE346C066;
+	Wed, 13 Oct 2010 00:41:00 +1100 (EST)
+X-Mailer: git-send-email 1.7.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158837>
 
-Please don't top-post.
+This series follows Jonathan Nieder's svn diff applier series.
 
-Am 10/12/2010 15:24, schrieb Kirill Likhodedov:
-> how did you figure that? I mean - which tool did you use to see which
-> files are accessed in Linux?
+Patches 1 to 4 add the required infrastructure to fast-import.
+The primary feature is the addition of the cat-file command to
+fast-import. This allows access to objects written to the
+the current pack prior to a checkpoint and is critical to
+retrieving full-texts to drive the diff applier.
 
-strace -e stat,lstat -o /tmp/ls-files.strace git ls-files ...
+Patch 5 adds the basic parsing necessary to process the v3 format.
 
-Could work on MacOS as well.
+Patch 6 adds logic around decoding prop deltas.
 
--- Hannes
+Patch 7 integrates svn-fe with svn-da to decode text deltas.
+It was primarily authored by Jonathan but inspired by Ram and
+completed by myself.
+This is probably the most sprawling of the series and likely the
+heaviest target of review.
+
+
+ Documentation/git-fast-import.txt |   49 +++++++++
+ contrib/svn-fe/svn-fe.txt         |    6 +-
+ fast-import.c                     |  147 +++++++++++++++++++++++++-
+ t/t9010-svn-fe.sh                 |    6 +-
+ t/t9300-fast-import.sh            |  210 +++++++++++++++++++++++++++++++++++++
+ test-svn-fe.c                     |    3 +-
+ vcs-svn/fast_export.c             |  187 ++++++++++++++++++++++++++++++++-
+ vcs-svn/fast_export.h             |   13 ++-
+ vcs-svn/repo_tree.c               |   37 +++++++-
+ vcs-svn/repo_tree.h               |    3 +
+ vcs-svn/svndiff.c                 |   11 +--
+ vcs-svn/svndiff.h                 |    3 +-
+ vcs-svn/svndump.c                 |   99 ++++++++++++++++--
+ 13 files changed, 739 insertions(+), 35 deletions(-)
