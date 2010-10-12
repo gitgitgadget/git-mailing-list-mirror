@@ -1,78 +1,64 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 3/7] fast-import: Allow cat command with empty path
-Date: Wed, 13 Oct 2010 00:50:20 +1100
-Message-ID: <1286891424-2067-4-git-send-email-david.barr@cordelta.com>
-References: <1286891424-2067-1-git-send-email-david.barr@cordelta.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Oct 12 15:51:25 2010
+From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+Subject: Re: git ls-files handles paths differently in Windows and Mac (probably Linux)
+Date: Tue, 12 Oct 2010 17:52:30 +0400
+Message-ID: <38052CF8-66F3-40FD-8D2D-8FD58A622F7B@jetbrains.com>
+References: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com> <AANLkTimB6s_yt6L59xpqsWO_yBsZxuVCiExFoSm9FcN1@mail.gmail.com> <C29949EA-5717-4BA3-936E-354FCB107877@jetbrains.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Alex Riesen <raa.lkml@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 15:52:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5fGF-0004ii-1J
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 15:51:23 +0200
+	id 1P5fHW-0005KG-Nk
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 15:52:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932507Ab0JLNu5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 09:50:57 -0400
-Received: from static-198-196.grapevine.transact.net.au ([121.127.198.196]:58872
-	"EHLO mailhost.cordelta" rhost-flags-OK-FAIL-OK-FAIL)
-	by vger.kernel.org with ESMTP id S932319Ab0JLNud (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 09:50:33 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mailhost.cordelta (Postfix) with ESMTP id E8C48C068;
-	Wed, 13 Oct 2010 00:50:34 +1100 (EST)
-X-Virus-Scanned: amavisd-new at mailhost.cordelta
-Received: from mailhost.cordelta ([127.0.0.1])
-	by localhost (mailhost.cordelta [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id qb9yAjC1lNvY; Wed, 13 Oct 2010 00:50:29 +1100 (EST)
-Received: from dba.cordelta (unknown [192.168.123.127])
-	by mailhost.cordelta (Postfix) with ESMTP id AC2D0C06A;
-	Wed, 13 Oct 2010 00:50:29 +1100 (EST)
-X-Mailer: git-send-email 1.7.3.1
-In-Reply-To: <1286891424-2067-1-git-send-email-david.barr@cordelta.com>
+	id S932418Ab0JLNwg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 09:52:36 -0400
+Received: from mail.intellij.net ([213.182.181.98]:33741 "EHLO
+	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932319Ab0JLNwf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 09:52:35 -0400
+Received: (qmail 17132 invoked by uid 89); 12 Oct 2010 13:52:33 -0000
+Received: by simscan 1.1.0 ppid: 17088, pid: 17123, t: 0.0139s
+         scanners: regex: 1.1.0 clamav: 0.96
+/m: 52
+Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
+  by mail.intellij.net with ESMTPA; 12 Oct 2010 13:52:33 -0000
+In-Reply-To: <C29949EA-5717-4BA3-936E-354FCB107877@jetbrains.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158847>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158848>
 
-From: Jonathan Nieder <jrnieder@gmail.com>
 
-Rather than erroring out, treat an empty path as the path to
-the root of a tree so frontends can be simplified a little.
+>>> I want to see which files were changed in the specific directory of my working tree, so I call ls-files:
+>>>> git ls-files -douvm --exclude-standard -- MYDIR
+>>> 
+>> 
+>> Well, it is an... unconventional way to do that. May I suggest you consider
+>> using "git diff --name-status" or just "git status" next time?
+> 
+> My tests show that "git ls-files -douvm" is faster than "git diff --name-status".
+> 
+> "git status" doesn't fit, because it's porcelain (btw, git diff is also porcelain) and its output may change in time;
+> "git status --porcelain" appeared only in 1.7.0, so I can't use it to work with older Git.
+> 
 
-While at it, fix a typo in an error message: the cat command is used
-to examine paths within trees, not branches.
 
-Cc: David Barr <david.barr@cordelta.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- fast-import.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+And also "git diff --name-status" doesn't show unversioned files.
+As I've found, "git ls-files" is the only command which shows unversioned files (except git status), isn't it?
 
-diff --git a/fast-import.c b/fast-import.c
-index 099f63e..f3c4123 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2702,9 +2702,13 @@ static void quoted_path_sha1(unsigned char sha1[20], struct tree_entry *root,
- 		die("Invalid path: %s", line);
- 	if (*x)
- 		die("Garbage after path: %s", line);
-+	if (uq.len == 0) {
-+		hashcpy(sha1, root->versions[1].sha1);
-+		return;
-+	}
- 	tree_content_get(root, uq.buf, &leaf);
- 	if (!leaf.versions[1].mode)
--		die("Path %s not in branch", uq.buf);
-+		die("Path %s not in tree", uq.buf);
- 	hashcpy(sha1, leaf.versions[1].sha1);
- }
- 
--- 
-1.7.3.1
+
+
+----------------------------------
+Kirill Likhodedov
+JetBrains, Inc
+http://www.jetbrains.com
+"Develop with pleasure!"
