@@ -1,59 +1,56 @@
-From: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
-Subject: Re: git ls-files handles paths differently in Windows and Mac (probably Linux)
-Date: Tue, 12 Oct 2010 16:59:12 +0400
-Message-ID: <C29949EA-5717-4BA3-936E-354FCB107877@jetbrains.com>
-References: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com> <AANLkTimB6s_yt6L59xpqsWO_yBsZxuVCiExFoSm9FcN1@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: git ls-files handles paths differently in Windows and Mac (probably
+ Linux)
+Date: Tue, 12 Oct 2010 15:11:34 +0200
+Message-ID: <4CB45E86.2030703@viscovery.net>
+References: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Alex Riesen <raa.lkml@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 12 14:59:31 2010
+To: Kirill Likhodedov <Kirill.Likhodedov@jetbrains.com>
+X-From: git-owner@vger.kernel.org Tue Oct 12 15:11:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5eRw-0000M3-VD
-	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 14:59:25 +0200
+	id 1P5edt-0005Bu-Cs
+	for gcvg-git-2@lo.gmane.org; Tue, 12 Oct 2010 15:11:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932423Ab0JLM7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 12 Oct 2010 08:59:15 -0400
-Received: from mail.intellij.net ([213.182.181.98]:59349 "EHLO
-	mail.intellij.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932282Ab0JLM7P convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 12 Oct 2010 08:59:15 -0400
-Received: (qmail 16059 invoked by uid 89); 12 Oct 2010 12:59:13 -0000
-Received: by simscan 1.1.0 ppid: 16015, pid: 16050, t: 0.0140s
-         scanners: regex: 1.1.0 clamav: 0.96
-/m: 52
-Received: from unknown (HELO loki-mac-pro.labs.intellij.net) (Kirill.Likhodedov@jetbrains.com@172.26.240.110)
-  by mail.intellij.net with ESMTPA; 12 Oct 2010 12:59:13 -0000
-In-Reply-To: <AANLkTimB6s_yt6L59xpqsWO_yBsZxuVCiExFoSm9FcN1@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1757280Ab0JLNLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 12 Oct 2010 09:11:38 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:50333 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753860Ab0JLNLh (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 12 Oct 2010 09:11:37 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1P5edi-0004wn-KX; Tue, 12 Oct 2010 15:11:34 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 641381660F;
+	Tue, 12 Oct 2010 15:11:34 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <3C33A244-2449-4A3C-A8B5-2060CE61EE04@jetbrains.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158834>
 
->> The behavior of ls-files is inconsistent in Windows and Mac.
->> 
->> I want to see which files were changed in the specific directory of my working tree, so I call ls-files:
->>> git ls-files -douvm --exclude-standard -- MYDIR
->> 
+Am 10/12/2010 14:14, schrieb Kirill Likhodedov:
+> I want to see which files were changed in the specific directory of my
+> working tree, so I call ls-files:
+>> git ls-files -douvm --exclude-standard -- MYDIR
 > 
-> Well, it is an... unconventional way to do that. May I suggest you consider
-> using "git diff --name-status" or just "git status" next time?
+> On Mac (and probably on Linux) git inspects the content of MYDIR and
+> gives me the status of not-indexed changes in this directory. On
+> Windows git gives the same result (only changes in MYDIR), but it scans
+> the whole repository!
 
-My tests show that "git ls-files -douvm" is faster than "git diff --name-status".
+On Linux, this scans the whole repository, too. Therefore, at least the
+Windows version should not be *that* wrong. ;-)
 
-"git status" doesn't fit, because it's porcelain (btw, git diff is also porcelain) and its output may change in time;
-"git status --porcelain" appeared only in 1.7.0, so I can't use it to work with older Git.
-
-
-----------------------------------
-Kirill Likhodedov
-JetBrains, Inc
-http://www.jetbrains.com
-"Develop with pleasure!"
+-- Hannes
