@@ -1,104 +1,97 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] apply: Recognize epoch timestamps with : in the timezone
-Date: Wed, 13 Oct 2010 17:50:12 -0500
-Message-ID: <20101013225012.GB9509@burratino>
-References: <alpine.DEB.2.00.1009291644440.15192@dr-wily.mit.edu>
- <20100929214107.GA4485@capella.cs.uchicago.edu>
- <7v4ocpncli.fsf@alter.siamese.dyndns.org>
- <7vvd55lwjl.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v4 11/15] daemon: report connection from root-process
+Date: Wed, 13 Oct 2010 15:55:12 -0700
+Message-ID: <7vlj61hfe7.fsf@alter.siamese.dyndns.org>
+References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
+ <1286833829-5116-12-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Anders Kaseorg <andersk@ksplice.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 14 00:53:45 2010
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org,
+	avarab@gmail.com, sunshine@sunshineco.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 14 00:55:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6ACc-0006kw-CK
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 00:53:42 +0200
+	id 1P6AES-0007cm-AE
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 00:55:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753621Ab0JMWxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 18:53:37 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:48009 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753606Ab0JMWxg (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 18:53:36 -0400
-Received: by qyk2 with SMTP id 2so1421852qyk.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 15:53:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=SXlzEXYvXJC0eYHHLIjeA6NFOqieD1bMpWXxrVTVll4=;
-        b=M+YSXiUAImaAjv2JtagEMt/3osSfalwIF9oAo04q37bX4xPgkUOadWRbd2OMAGcjEa
-         JUzlEFBm3nUq56DlkXDNV61ij4UBEuVPtJ+ekWAzCmKvz41cmYvpO2UrFZqkldNWP2aw
-         opdHfETWgzypSHJwAiuuEULTFp0D+Jtm5JwFk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=tvKxWDYI8Ak2p6/YPmyfqq1ryzAo6vue/Jn40t+EC1I//Kg49FSfiR4oUxECYCLJ6y
-         Ija4C8Ww9TT3SpWWGccMqoZQ5j2xFe8LvmgV07GKOlqruhMjVu1H1X/gkgs1ZEwJoaw9
-         o7FnZWORnmHPy7Poo6Due+MJnkkABvooQO3r4=
-Received: by 10.224.182.194 with SMTP id cd2mr7401308qab.48.1287010415505;
-        Wed, 13 Oct 2010 15:53:35 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id t17sm7042892qcp.14.2010.10.13.15.53.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 15:53:34 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vvd55lwjl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753650Ab0JMWz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 18:55:29 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48510 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753506Ab0JMWz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 18:55:29 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F2025DE26C;
+	Wed, 13 Oct 2010 18:55:27 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=LxKLlX+DEPnok1P8+QSHUkgsywk=; b=Jmi9kC
+	Nj3qD0pKib076dr8Bk3YLnbjUavPFNW70U3yok4BgGV/Uss2X7kM4YvN6wWN+NLl
+	JAZ0CWUJzZSCJ+4QlSaHuoTwnrjonvbybkOS9d7h/8YKu4i8AavJyzUBgeg8BnUE
+	7k1tRXoV9MuTHiM/p25kwmMlFj2kHzrFZnsaQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Pj3+FIrkryjy2BmXpfcekl4uVrdh9Uyg
+	o1i5vm1kG6lGXuCbdbyhuW6yxDNZ4uqQCqJliWQqCwuKpT1UfkSJ8/l3kF0ifJ10
+	CxvMYCYDNxLdXYf106/o4PQwT6F3ZiVMbS+ZLVcu3TLxxZ1KKrqNsjR8kjYvk0Eu
+	7F6mTrln3Kw=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A4A2DE268;
+	Wed, 13 Oct 2010 18:55:21 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51EE1DE267; Wed, 13 Oct
+ 2010 18:55:14 -0400 (EDT)
+In-Reply-To: <1286833829-5116-12-git-send-email-kusmabite@gmail.com> (Erik
+ Faye-Lund's message of "Mon\, 11 Oct 2010 23\:50\:25 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F50BB01A-D71C-11DF-A3C6-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159000>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159001>
 
-Junio C Hamano wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
->> Neither the patch nor your suggestion makes much sense to me.  With the
->> patch, the regexp is now
->>
->>     ^(1969-12-31|1970-01-01) <time>(\.0+)? ([-+][0-2][0-9]):?([0-5][0-9])
-[...]
-> Well, I was missing that without ':' strtol() goes through to parse $3$4
-> as a single integer
+> Report incoming connections from the process that
+> accept() the connection instead of the handling
+> process.
+>
+> This enables "Connection from"-reporting on
+> Windows, where getpeername(0, ...) consistently
+> fails.
+>
+> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+> ---
+>  daemon.c |   72 ++++++++++++++++++++++++++++++-------------------------------
+>  1 files changed, 35 insertions(+), 37 deletions(-)
+>
+> diff --git a/daemon.c b/daemon.c
+> index 8a44fb9..1574f75 100644
+> --- a/daemon.c
+> +++ b/daemon.c
+> @@ -516,38 +516,11 @@ static void parse_host_arg(char *extra_args, int buflen)
+>  }
+>  
+>  
+> -static int execute(struct sockaddr *addr)
+> +static int execute(void)
+>  {
+> -...
+> -		}
+> -		loginfo("Connection from %s:%d", addrbuf, port);
+> -		setenv("REMOTE_ADDR", addrbuf, 1);
+> ...
+> +	else {
+> +		loginfo("[%"PRIuMAX"] Connection from %s:%d",
+> +		    (uintmax_t)cld.pid, addrstr, port);
+>  		add_child(&cld, addr, addrlen);
 
-So maybe something like the following would make this easier to follow.
-
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 0fa9a8d..000d3e5 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -733,8 +733,8 @@ static int has_epoch_timestamp(const char *nameline)
- 		" "
- 		"[0-2][0-9]:[0-5][0-9]:00(\\.0+)?"
- 		" "
--		"([-+][0-2][0-9]):?([0-5][0-9])\n";
-+		"([-+][0-2][0-9]:?[0-5][0-9])\n";
--	const char *timestamp = NULL, *cp;
-+	const char *timestamp = NULL, *cp, *colon;
- 	static regex_t *stamp;
- 	regmatch_t m[10];
- 	int zoneoffset;
-@@ -764,10 +764,11 @@ static int has_epoch_timestamp(const char *nameline)
- 		return 0;
- 	}
- 
--	zoneoffset = strtol(timestamp + m[3].rm_so + 1, NULL, 10);
-+	zoneoffset = strtol(timestamp + m[3].rm_so + 1, (char **) &colon, 10);
--	if (m[4].rm_so == m[3].rm_so + 3)
--		zoneoffset /= 100;
--	zoneoffset = zoneoffset * 60 + strtol(timestamp + m[4].rm_so, NULL, 10);
-+	if (*colon == ':')
-+		zoneoffset = zoneoffset * 60 + strtol(colon + 1, NULL, 10);
-+	else
-+		zoneoffset = (zoneoffset / 100) * 60 + (zoneoffset % 100);
- 	if (timestamp[m[3].rm_so] == '-')
- 		zoneoffset = -zoneoffset;
- 
+Hmm, loginfo() calls logreport() and adds the process information as
+necessary to the output.  Wouldn't this patch give the pid information
+twice?
