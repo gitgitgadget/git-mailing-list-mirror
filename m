@@ -1,87 +1,41 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/5 v2] t7607: use test-lib functions and check
- MERGE_HEAD
-Date: Wed, 13 Oct 2010 14:33:14 -0700
-Message-ID: <7vhbgpkcbp.fsf@alter.siamese.dyndns.org>
-References: <7v4oepaup7.fsf@alter.siamese.dyndns.org>
- <1286632380-7002-2-git-send-email-drizzd@aon.at>
- <20101010063527.GC23100@burratino> <20101010083543.GA12186@localhost>
-Mime-Version: 1.0
+From: Kevin Ballard <kevin@sb.org>
+Subject: Manual hunk edit mode + emacs + ^G == garbage
+Date: Wed, 13 Oct 2010 14:37:03 -0700
+Message-ID: <39CB17A9-2717-491B-8E01-F3E855F90649@sb.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Wed Oct 13 23:33:40 2010
+Content-Transfer-Encoding: 8BIT
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 13 23:37:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P68x6-0006w1-IF
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 23:33:36 +0200
+	id 1P690d-0008ND-Qv
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 23:37:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753158Ab0JMVd0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 17:33:26 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48455 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751675Ab0JMVd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 17:33:26 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FAF5DE7CD;
-	Wed, 13 Oct 2010 17:33:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=6Hxp6GyoD0CfxRc2C0gEfVzfFas=; b=pucuCh
-	BQ5MlrO8F78KdfRD6Cz1wyigoYKvLkIBhBV/cCuiBY8u8oCAYlWPbj/je2sw/i+e
-	mV9OhlMqnGBUQTnEujdks7JLL5W9zUQeee76fvfDKeamBR4VJ/DI1TMfJ7lnApC0
-	a9hp+P7fCHOLNwKlrOf74xqo6By9XMxQDKiDM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uNsDqN5vsPjJNOt0avISXGo9Mu7l6VXR
-	KCNEVaXCEcLOqsR/ZjPg+oGKy+UOFRXb2RMteYL2eFPeRWUJ13MEVG4hDSbMKjBt
-	f0XQMnaSo8FSJ1NE79es8AMkas8K8h2o0kRdPZUaxE/oblOjJhdbPQ+SFF5gWjtC
-	81NTU5VShX4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 511CBDE7CA;
-	Wed, 13 Oct 2010 17:33:20 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 7ABD9DE7C8; Wed, 13 Oct
- 2010 17:33:16 -0400 (EDT)
-In-Reply-To: <20101010083543.GA12186@localhost> (Clemens Buchacher's message
- of "Sun\, 10 Oct 2010 10\:35\:43 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7FCE27AC-D711-11DF-B6FD-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751039Ab0JMVhI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 17:37:08 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:55431 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750806Ab0JMVhH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Oct 2010 17:37:07 -0400
+Received: by pxi16 with SMTP id 16so853291pxi.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 14:37:07 -0700 (PDT)
+Received: by 10.142.215.11 with SMTP id n11mr4520559wfg.224.1287005827320;
+        Wed, 13 Oct 2010 14:37:07 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id w42sm3487457wfh.3.2010.10.13.14.37.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 Oct 2010 14:37:06 -0700 (PDT)
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158981>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+I've been having a rather strange problem using manual hunk edit mode (`git add -p`, e) and emacs together. It seems every time I hit ^G inside of emacs in this one circumstance, the entire process instantly shuts down, both emacs and `git add`, and it doesn't even give emacs a chance to clean up the terminal, so I'm left with garbage across my display (the remains of the emacs window) and the terminal settings are screwed up enough that I have to close and reopen it (even `reset` doesn't fix everything). Has anybody else seen this, and if so, do you know what's going on? I cannot reproduce this with emacs outside of `git add -p`, and I cannot reproduce this with vim even inside of `git add -p`.
 
-> --ew6BAiZeqk4r7MaW
-> Content-Type: text/plain; charset=us-ascii
-> Content-Disposition: inline
-> Content-Transfer-Encoding: quoted-printable
-
-Please don't do this...
-
->
-> --ew6BAiZeqk4r7MaW
-> Content-Type: application/pgp-signature; name="signature.asc"
-> Content-Description: Digital signature
-> Content-Disposition: inline
->
-> -----BEGIN PGP SIGNATURE-----
-> Version: GnuPG v1.4.10 (GNU/Linux)
->
-> iQEcBAEBAgAGBQJMsXrfAAoJELKdZexG8uqM/BwH/Ai2w+DFW4L9D1SivLoxDL8/
-> Z3YDRrx5oJa35ZhbBwInGJx7xwXG3Pn/mx0avGwoRwQe9cRufp6AO5hHUq3U1LNv
-> ZaP4RdlScMqeuKUu8mrbjJs4kumL/sjZ59MRnBZzX1Ovdq/GbKhJqidYTvmHQc6e
-> 0sngXx9Jf1WlS7m1sDztYPRJ3z2lF0js+BNHLIVOi6CgSbBJYdQzeLrvO/BVX9V0
-> P2F0bGZLWTqqOSLMav5jcYFAgIv8mRqxjre+1IviFuGTuu5hX7yTx++qAiV8CK0f
-> Fpe0HNQlYahbytd9qlOoqsbV5fuXkOoFqYHKmT6461u31QHaYPyBwsSWgjkF9IE=
-> =3pEL
-> -----END PGP SIGNATURE-----
-
-Nor this.
+-Kevin Ballard
