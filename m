@@ -1,90 +1,75 @@
-From: Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH v4 02/15] mingw: implement syslog
-Date: Wed, 13 Oct 2010 15:23:47 -0400
-Message-ID: <4CB60743.2030908@sunshineco.com>
-References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com> <1286833829-5116-3-git-send-email-kusmabite@gmail.com> <20101011221146.GB6277@burratino> <AANLkTinkpTavtw3Rmubfht56tzGnHckHXRc0L-C83daE@mail.gmail.com> <20101011223746.GA6637@burratino> <AANLkTinBvZ_L-fq1u4tPX6rNW6X3jeoOO23-yLpdxSu0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] contrib/ciabot: git-describe commit instead of HEAD
+Date: Wed, 13 Oct 2010 12:24:09 -0700
+Message-ID: <7vzkuhlwva.fsf@alter.siamese.dyndns.org>
+References: <1286179362-23597-1-git-send-email-sven.eckelmann@gmx.de>
+ <7vd3rp97f7.fsf@alter.siamese.dyndns.org>
+ <201010111243.25375.sven.eckelmann@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, j6t@kdbg.org, avarab@gmail.com,
-	Mike Pape <dotzenlabs@gmail.com>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Wed Oct 13 21:24:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sven Eckelmann <sven.eckelmann@gmx.de>, esr@thyrsus.com
+X-From: git-owner@vger.kernel.org Wed Oct 13 21:24:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P66vi-0000L6-1A
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 21:24:02 +0200
+	id 1P66wA-0000Ve-KD
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 21:24:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752131Ab0JMTXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 15:23:53 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:34217 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751768Ab0JMTXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 15:23:52 -0400
-Received: by qyk5 with SMTP id 5so852170qyk.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 12:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=ddBLIU05Fdgu8XG5hzUdf2rHuZIEilGPlaVbV/4gbm4=;
-        b=n1GOQxlQcBInWD02MSvsSZhvxNrecS9BGJ3iHCWhoRW7doS9QPvUX7gSolfCtwPb8k
-         6tvH5BczPG0kbTfRyHgIXKX0cYYtDvPd5m5E8hUcFNdbq0ae82vBKgi3uoSfOEF1hVnB
-         sjgSMyz/Po9ayH68f230t+bwWGQJkOJ7VbkME=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=gGau0N2AKCdaiZKt+RyiZGx9ACVSDEinswKQ1AdJwLpp5vgSx2ayJHoHyHnTxHjjNf
-         F7si+22IJ60UYSCJ6Dbt+NdnqX5MY3369lrPnAHZkEBT6zbdh05p1cp9doKlIuinBavo
-         H1FSu00v/zQUtGI5AhypDMN/XThyGnnYTGuK4=
-Received: by 10.224.187.70 with SMTP id cv6mr7046871qab.314.1286997831945;
-        Wed, 13 Oct 2010 12:23:51 -0700 (PDT)
-Received: from [192.168.1.1] (user-12l2cil.cable.mindspring.com [69.81.50.85])
-        by mx.google.com with ESMTPS id l14sm6346054qck.41.2010.10.13.12.23.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 12:23:50 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100922 Thunderbird/3.1.4
-In-Reply-To: <AANLkTinBvZ_L-fq1u4tPX6rNW6X3jeoOO23-yLpdxSu0@mail.gmail.com>
+	id S1752193Ab0JMTYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 15:24:22 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49151 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751768Ab0JMTYV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 15:24:21 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id D660DDE6E9;
+	Wed, 13 Oct 2010 15:24:18 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=IfcWblo0yK+7yi+j5qYXUgMmWSw=; b=PsXvaJ
+	Egtsu3QEKLa1WXkvr8/S5fzGmAsWw71wprmp/vwkp0bsd5mUXS4kwGdz9jh2Y1PM
+	bT+WjX1N6xNrOtDkAjpMDZ4fGTOIBgF0NcKHz2YN4tdGaGvjcOeQ3dxB9hosZBqX
+	UyTyMaC2wiu1xfI9dgBJlQv6i4si0ACufxfSA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=WxThG+h7Ou6vgQr1iqpklkFLciEV9xlE
+	F9R0RCXW4ZfVjFYELpNGht83up+HN308/CsHkzZkuxe6Dv+Ked24ZkGvexrW/CvR
+	6+KjBf/qmpuUZrTRM3nA/qrFztohmiWBvxNXZxV95herEosDzRKG5RIPiEtGH6fu
+	dbCXwSqTQPU=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A11E0DE6E4;
+	Wed, 13 Oct 2010 15:24:15 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 93378DE6DF; Wed, 13 Oct
+ 2010 15:24:11 -0400 (EDT)
+In-Reply-To: <201010111243.25375.sven.eckelmann@gmx.de> (Sven Eckelmann's
+ message of "Mon\, 11 Oct 2010 12\:43\:24 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 779F22C8-D6FF-11DF-B934-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158963>
 
-On 10/13/2010 08:36 AM, Erik Faye-Lund wrote:
-> On Tue, Oct 12, 2010 at 12:37 AM, Jonathan Nieder<jrnieder@gmail.com>  wrote:
->> Erik Faye-Lund wrote:
->>
->>> The string gets inlined into itself (with a limit of 100 expansions)
->>> leading to string like "foo %1 bar" becoming "foo foo foo ... foo %1
->>> bar bar bar ... bar". With our expansion, it becomes "foo % 1 bar"
->>> instead.
->>
->> Ah, ok.  Sounds like there is no need to worry about requests for "%%1"
->> etc.  Thanks for explaining.
->>
-> Actually, %%1 is a bit of a tricky one. It seems that %%1 is used to
-> escape %1 on Windows 7, but not on earlier Windows version. I did test
-> this on Vista an XP earlier, but I'll re-test again later and report
-> back, in case my earlier tests were flawed.
+Sven Eckelmann <sven.eckelmann@gmx.de> writes:
 
-If that worked universally, escaping '%1' to '%%1' certainly would be 
-nicer than '% 1'. (More generally, escape '%n' to '%%n', where n is a 
-number.) It also would simplify the log message.
+>> Anyway, Ok, so it _is_ used.  And it needs to be fixed.
+>
+> Yes, it is a little bit confusing when reading through it, but still it is 
+> used. :)
+>  
+>> I was hoping that Eric who took over the maintainership of contrib/ciabot/
+>> directory in April would give his blessing sooner, without me having to
+>> look at the script.
+>> 
+>> Ack?
+>
+> Hm, just be sure, because I saw no other replies since this message: You 
+> expected reaction after that "Ack?" from Eric Raymond and not from me, or?
 
-> Can %%1 occur in an IPv6 address at all? If not, I'm tempted to not
-> handle it (unless it turns out I was wrong about %%1-escaping on Vista
-> and XP).
-
-According to sources I have studied, %%1 would be unlikely (or perhaps 
-invalid) in IPv6 addresses.
-
-http://en.wikipedia.org/wiki/IPv6_address#Link-local_addresses_and_zone_indices
-
--- ES
+Yeah, Pinging ESR again now...
