@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: [PATCH 11/11] vcs-svn: Allow deltas to copy from preimage
-Date: Wed, 13 Oct 2010 04:58:30 -0500
-Message-ID: <20101013095829.GL32608@burratino>
+Date: Wed, 13 Oct 2010 05:00:02 -0500
+Message-ID: <20101013100002.GM32608@burratino>
 References: <1279210984-31604-1-git-send-email-artagnon@gmail.com>
  <20100716101352.GA14374@burratino>
  <20100809215719.GA4203@burratino>
@@ -13,47 +13,48 @@ Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Git Mailing List <git@vger.kernel.org>,
 	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>
 To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 13 12:02:04 2010
+X-From: git-owner@vger.kernel.org Wed Oct 13 12:03:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5y9l-0003iL-8j
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 12:01:57 +0200
+	id 1P5yBH-0004MM-1B
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 12:03:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750860Ab0JMKBw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 06:01:52 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49292 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750713Ab0JMKBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 06:01:51 -0400
-Received: by gwj17 with SMTP id 17so1774318gwj.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 03:01:51 -0700 (PDT)
+	id S1751466Ab0JMKD0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 06:03:26 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:41340 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750730Ab0JMKDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 06:03:25 -0400
+Received: by ywi6 with SMTP id 6so1404362ywi.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 03:03:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=FgiJ/k14equKFyU+GyuejHp4XUqNT0VkqJ/tsmG/Cr4=;
-        b=SmXYip7huvfigPxHcvKuE/sTP7cRovAFvHrd62i+qoKuVadzwFht6NH6N/1LwgCSLj
-         vN995vVCVT3ItqqlOICvrxq+Ud9u4ziTCKsZZCL3mSjFOVHDwxoYdGVUztg5Rb2eNaDF
-         tzXCR6MjfuSKh24sCNWAgs712y8EnNCIcqXBs=
+        bh=+FRJfhBbna2xBt83ghx9HSxfh0mBrfYeQK1TwQi7bX4=;
+        b=fduNOvNV3bcrUmQi8oEDCbmR4R/3P6p/eNAB8eoDfC4cmta8p07VevodIl+IirMDyN
+         pqUrOubs3Pk/HYNcqL5mNkOTXDuv1+71B4Z4jgJXm4yT7xAsHW7mAeHMoORul4sIyd26
+         BJeRNPZiktaKQ+TyT+I+iBvT27J4ui2XtIa90=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=BCRAoKj/aExcXxM/YB2q35fGgOMCxQZxmF3IJXfoa5HE4alICi7HDIMQzFtdN24WQu
-         4kSF36g/JUJr3oViKLB2sIqsA6dM9yHSRWfyNvKt+83JroPoWk3ArBRAgXkq49i3Mend
-         l0pklsh/XSTHRqknDAdof0SdR3svJseIQKuCM=
-Received: by 10.150.69.22 with SMTP id r22mr734820yba.167.1286964110763;
-        Wed, 13 Oct 2010 03:01:50 -0700 (PDT)
+        b=CnxKyCUq4xa0vwPi9N998n7DCUFKtvFocS1mpMJKy27GkmA/vVu9MT2mtSZCl6TgNP
+         1VDCsq9K2xVI8TdmdFFlPN4V1+bgpZNpBuSszcoTF4BStl474O8TEpcWvxrIH8+D8kP9
+         3xL9Zay2m/qrrlsvvaNkisOGuhSat2ra3uEWE=
+Received: by 10.236.110.43 with SMTP id t31mr1433596yhg.81.1286964203956;
+        Wed, 13 Oct 2010 03:03:23 -0700 (PDT)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id q34sm7873384yba.10.2010.10.13.03.01.49
+        by mx.google.com with ESMTPS id 13sm7279255yhl.11.2010.10.13.03.03.21
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 03:01:50 -0700 (PDT)
+        Wed, 13 Oct 2010 03:03:22 -0700 (PDT)
 Content-Disposition: inline
 In-Reply-To: <20101013091714.GA32608@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -61,7 +62,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158925>
 
 The copyfrom_source instruction appends data from the preimage
 buffer to the end of output.  Its arguments are a length and an
@@ -71,6 +72,8 @@ Helped-by: Ramkumar Ramachandra <artagnon@gmail.com>
 Helped-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
+[resending with cc: samv]
+
 That's the end of the series.  Thanks for reading.  Hopefully this
 round did not introduce too many bugs but if it did, I'd be glad to
 hear about them.
