@@ -1,60 +1,74 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH v2 0/3] Teach fetch and pull to recursively fetch submodules too
-Date: Wed, 13 Oct 2010 12:34:56 -0700
-Message-ID: <1691DBFD-6075-479E-8847-EB4595BB9E10@sb.org>
-References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org> <4C9221B6.7070807@web.de> <AF9B7F7E-0956-4814-A3A8-BAD7619A043D@sb.org> <4C9351A7.7050609@web.de> <4C9359D4.2030109@viscovery.net> <4C935D77.3080008@web.de> <329A2E43-ADE3-467C-A2A6-24ACB9DF641E@sb.org> <4C953DE5.6020900@web.de> <DD3654D9-46B9-4980-9138-38FDC33A383C@sb.org> <4C963D00.9050207@web.de> <28BC3A45-D3CF-4A8C-A818-B92A9827C8FB@sb.org> <4CAB8DDF.8080004@web.de> <FB03A7DB-67D2-4EAE-A0F0-2F3E3CEA9878@sb.org> <4CB0BFDB.7010503@web.de> <4CB5C6D8.1070108@xiplink.com> <4CB6093F.3040800@web.de>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Wed Oct 13 21:35:31 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 0/3] fix push --progress over file://, git://, etc.
+Date: Thu, 14 Oct 2010 03:35:40 +0800
+Message-ID: <AANLkTimo=Bd_XGvX=TPzVsds3xQGy9126+7Qg+zvk=d2@mail.gmail.com>
+References: <20101012192117.GD16237@burratino>
+	<20101012193204.GA8620@sigill.intra.peff.net>
+	<20101012193830.GB8620@sigill.intra.peff.net>
+	<7vzkuim1zx.fsf@alter.siamese.dyndns.org>
+	<20101013174543.GA13752@sigill.intra.peff.net>
+	<AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
+	<AANLkTin9_kofdy49WF4V_JoovVR+G8DN7vn-cz3p84fz@mail.gmail.com>
+	<1286998311-5112-1-git-send-email-rctay89@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
+	Chase Brammer <cbrammer@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Oct 13 21:36:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P676n-0007po-OD
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 21:35:30 +0200
+	id 1P677L-0008AI-HC
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 21:36:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752783Ab0JMTfA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 15:35:00 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:43772 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752277Ab0JMTe6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Oct 2010 15:34:58 -0400
-Received: by pvc7 with SMTP id 7so443932pvc.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 12:34:58 -0700 (PDT)
-Received: by 10.142.164.18 with SMTP id m18mr1031843wfe.375.1286998497931;
-        Wed, 13 Oct 2010 12:34:57 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id q13sm11986731wfc.17.2010.10.13.12.34.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 12:34:56 -0700 (PDT)
-In-Reply-To: <4CB6093F.3040800@web.de>
-X-Mailer: Apple Mail (2.1081)
+	id S1752840Ab0JMTfm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 15:35:42 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:58120 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752252Ab0JMTfl (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 15:35:41 -0400
+Received: by ewy20 with SMTP id 20so2565651ewy.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 12:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=0qEeSgsV2tyxDnM9CN+7dPxVPaXlwt4oXcH9Qd6nPTg=;
+        b=nMTvFVEBYwZKrOJr8wDljXCj9ejiCiFH155pTQk9B8DdczYlxwjllwXmnWl/rUSgWB
+         B1+420WsOdVLBvaWEhnZyUzcaSvSM9L4h4PbkAdzedOWQSFlzVXJhSg5tcdwDxsf5oHz
+         3AwSFDHpdRxzgSUKe7ciQ7pOO6amgVysMxzX4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=dFMUeKJEluhu2Tua9SxeL36vlY2Y1PiKSxu8K6Y+PzjdKALhFsJ3jtoBAfi2Hr5fg7
+         Q7kbFdSDsGEn5RplXES8jg5ksLfvUQtNNQvQH+/d3SSAAjpBnJaDWIaLa9ImhkhvmBzJ
+         etvUPI4KUh3OafXJUGUNbhMyIquWnK3sApu+I=
+Received: by 10.213.31.135 with SMTP id y7mr342460ebc.21.1286998540673; Wed,
+ 13 Oct 2010 12:35:40 -0700 (PDT)
+Received: by 10.213.33.197 with HTTP; Wed, 13 Oct 2010 12:35:40 -0700 (PDT)
+In-Reply-To: <1286998311-5112-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158971>
 
-On Oct 13, 2010, at 12:32 PM, Jens Lehmann wrote:
+On Thu, Oct 14, 2010 at 3:31 AM, Tay Ray Chuan <rctay89@gmail.com> wrote:
+> *** BLURB HERE ***
 
->>> There are use cases like mine where automatic recursion is just the right
->>> thing to do. But I would be fine with having to turn the recursion on
->>> explicitly in the configuration if most people think recursion is not a
->>> desirable default. It would be really nice to hear from other submodule
->>> users what they think about that ...
->> 
->> I tend to think that the right default for fetch is to employ the same level
->> of recursion that was used for the initial clone.  So if the clone was made
->> with --recursive then fetch should default to using --recursive.
-> 
-> That's a very interesting idea.
+Whoops. Let me try again:
 
-I'm not sure it's correct though. For example, with my scenario every single submodule is required for a correct build, but most submodules should definitely not be updated unless their parent submodule updates its gitlink. So --recursive is recommended for `git clone`, but a non-recursive fetch would be the correct behavior going forward.
+This patch series addresses the issue of git push not displaying
+progress messages to non-tty stderr, even if --progress is used. As
+suggested by the subject, this issue afflicts the "builtin smart
+transports" - file://, git://, ssh://. (All of them use
+git_transport_push() and thus git-pack-objects.)
 
--Kevin Ballard
+-- 
+Cheers,
+Ray Chuan
