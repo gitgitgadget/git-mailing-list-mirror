@@ -1,63 +1,104 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Manual hunk edit mode + emacs + ^G == garbage
-Date: Wed, 13 Oct 2010 15:49:25 -0700
-Message-ID: <54F2B62F-E768-49D8-96CB-780DA3ECBF0E@sb.org>
-References: <39CB17A9-2717-491B-8E01-F3E855F90649@sb.org> <1287006523.13553.4.camel@drew-northup.unet.maine.edu> <24AC771D-07A7-49D7-8824-28E6156C90B4@sb.org> <m27hhld8d9.fsf@igel.home>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] apply: Recognize epoch timestamps with : in the timezone
+Date: Wed, 13 Oct 2010 17:50:12 -0500
+Message-ID: <20101013225012.GB9509@burratino>
+References: <alpine.DEB.2.00.1009291644440.15192@dr-wily.mit.edu>
+ <20100929214107.GA4485@capella.cs.uchicago.edu>
+ <7v4ocpncli.fsf@alter.siamese.dyndns.org>
+ <7vvd55lwjl.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Git Mailing List <git@vger.kernel.org>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Thu Oct 14 00:49:41 2010
+Cc: Anders Kaseorg <andersk@ksplice.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 14 00:53:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6A8f-0005Dr-SZ
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 00:49:38 +0200
+	id 1P6ACc-0006kw-CK
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 00:53:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753646Ab0JMWta (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 18:49:30 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:43871 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753561Ab0JMWta convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 13 Oct 2010 18:49:30 -0400
-Received: by pxi16 with SMTP id 16so859279pxi.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 15:49:29 -0700 (PDT)
-Received: by 10.142.203.1 with SMTP id a1mr8117266wfg.203.1287010169693;
-        Wed, 13 Oct 2010 15:49:29 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id x35sm4698846wfd.1.2010.10.13.15.49.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 15:49:29 -0700 (PDT)
-In-Reply-To: <m27hhld8d9.fsf@igel.home>
-X-Mailer: Apple Mail (2.1081)
+	id S1753621Ab0JMWxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 18:53:37 -0400
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:48009 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753606Ab0JMWxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 18:53:36 -0400
+Received: by qyk2 with SMTP id 2so1421852qyk.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 15:53:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=SXlzEXYvXJC0eYHHLIjeA6NFOqieD1bMpWXxrVTVll4=;
+        b=M+YSXiUAImaAjv2JtagEMt/3osSfalwIF9oAo04q37bX4xPgkUOadWRbd2OMAGcjEa
+         JUzlEFBm3nUq56DlkXDNV61ij4UBEuVPtJ+ekWAzCmKvz41cmYvpO2UrFZqkldNWP2aw
+         opdHfETWgzypSHJwAiuuEULTFp0D+Jtm5JwFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tvKxWDYI8Ak2p6/YPmyfqq1ryzAo6vue/Jn40t+EC1I//Kg49FSfiR4oUxECYCLJ6y
+         Ija4C8Ww9TT3SpWWGccMqoZQ5j2xFe8LvmgV07GKOlqruhMjVu1H1X/gkgs1ZEwJoaw9
+         o7FnZWORnmHPy7Poo6Due+MJnkkABvooQO3r4=
+Received: by 10.224.182.194 with SMTP id cd2mr7401308qab.48.1287010415505;
+        Wed, 13 Oct 2010 15:53:35 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id t17sm7042892qcp.14.2010.10.13.15.53.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 13 Oct 2010 15:53:34 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vvd55lwjl.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159000>
 
-On Oct 13, 2010, at 3:40 PM, Andreas Schwab wrote:
+Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
 
-> Kevin Ballard <kevin@sb.org> writes:
-> 
->> I've been investigating this on the emacs side as well. At the moment, my suspicion is that ^G causes emacs to trigger (keyboard-quit), but at the same time the surrounding environment (e.g. git) is sending a SIGINT to emacs, which normally acts like ^G but in this case may be triggering the emergency exit mode of emacs. Is there some reason that the interactive add would be sending SIGINT to emacs when I type ^G?
-> 
-> If you are using text mode (-nw) then Emacs redefines the INTR character
-> of the terminal to ^G.  On the other hand it should also put itself into
-> its own process group, so the parent should not receive the terminal
-> signals.  And this is what happens here when I try it.
+>> Neither the patch nor your suggestion makes much sense to me.  With the
+>> patch, the regexp is now
+>>
+>>     ^(1969-12-31|1970-01-01) <time>(\.0+)? ([-+][0-2][0-9]):?([0-5][0-9])
+[...]
+> Well, I was missing that without ':' strtol() goes through to parse $3$4
+> as a single integer
 
-I am indeed using text mode. And when I test, invoking `emacs` directly gives it its on process group, but invoking emacs from `git add -p`+e doesn't.
+So maybe something like the following would make this easier to follow.
 
-kevin@Brandybuck:~> ps -jp 34581 34540
-USER    PID  PPID  PGID   SESS JOBC STAT   TT       TIME COMMAND
-kevin 34540 34539 34538 7d29d68    1 S+   s001    0:00.08 /usr/bin/perl /usr/local/libexec/git-core/git-add--interactive --
-kevin 34581 34540 34538 7d29d68    1 S+   s001    0:00.61 /usr/bin/emacs /Users/kevin/Dev/Work/Standard9/inkling-ipad/.git/
-
-Any idea why this would be?
-
--Kevin Ballard
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 0fa9a8d..000d3e5 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -733,8 +733,8 @@ static int has_epoch_timestamp(const char *nameline)
+ 		" "
+ 		"[0-2][0-9]:[0-5][0-9]:00(\\.0+)?"
+ 		" "
+-		"([-+][0-2][0-9]):?([0-5][0-9])\n";
++		"([-+][0-2][0-9]:?[0-5][0-9])\n";
+-	const char *timestamp = NULL, *cp;
++	const char *timestamp = NULL, *cp, *colon;
+ 	static regex_t *stamp;
+ 	regmatch_t m[10];
+ 	int zoneoffset;
+@@ -764,10 +764,11 @@ static int has_epoch_timestamp(const char *nameline)
+ 		return 0;
+ 	}
+ 
+-	zoneoffset = strtol(timestamp + m[3].rm_so + 1, NULL, 10);
++	zoneoffset = strtol(timestamp + m[3].rm_so + 1, (char **) &colon, 10);
+-	if (m[4].rm_so == m[3].rm_so + 3)
+-		zoneoffset /= 100;
+-	zoneoffset = zoneoffset * 60 + strtol(timestamp + m[4].rm_so, NULL, 10);
++	if (*colon == ':')
++		zoneoffset = zoneoffset * 60 + strtol(colon + 1, NULL, 10);
++	else
++		zoneoffset = (zoneoffset / 100) * 60 + (zoneoffset % 100);
+ 	if (timestamp[m[3].rm_so] == '-')
+ 		zoneoffset = -zoneoffset;
+ 
