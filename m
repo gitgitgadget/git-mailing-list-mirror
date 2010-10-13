@@ -1,122 +1,106 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 2/2] gitweb: Improve behavior for actionless path_info gitweb
-	URLs
-Date: Wed, 13 Oct 2010 13:35:20 +0200
-Message-ID: <20101013113411.9292.43309.stgit@localhost.localdomain>
-References: <20101013112738.9292.46672.stgit@localhost.localdomain>
+Subject: [PATCH] gitweb: Fix test of highlighting support in t9500
+Date: Wed, 13 Oct 2010 13:57:41 +0200
+Message-ID: <20101013115657.11392.76179.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: Eli Barzilay <eli@barzilay.org>
+Cc: Christopher Wilson <cwilson@cdwilson.us>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 13 13:36:03 2010
+X-From: git-owner@vger.kernel.org Wed Oct 13 13:58:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P5zco-0006n1-R3
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 13:36:03 +0200
+	id 1P5zyX-0006nO-N2
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 13:58:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753911Ab0JMLf5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 07:35:57 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:38452 "EHLO
+	id S1753345Ab0JML6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 07:58:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54556 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753777Ab0JMLf5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 07:35:57 -0400
-Received: by bwz15 with SMTP id 15so3094201bwz.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 04:35:55 -0700 (PDT)
+	with ESMTP id S1752286Ab0JML6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 07:58:21 -0400
+Received: by bwz15 with SMTP id 15so3106302bwz.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 04:58:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:subject:to:cc
-         :date:message-id:in-reply-to:references:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        bh=zz9bSnIdpU1l4eHcA3YE4OCwYhg/u5EONgQGu01yc8w=;
-        b=XKU/vgvdEPe3uXi9MoCKM+ORnhtYkvooZfmuECae2Jr1H6iJ8//RoBlL+Jg+sIgBg0
-         6y/tQoyHH691T/gyb9d30Wk8UL4+10ELB4a7qNi1JR3QA8kGR14G15ARdia1l8rBeVDL
-         MrRkrwsSrHscDDNR/ABlLJVC+1DfWkcbq1Hqg=
+         :date:message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=iGfRgiC2qoLtj87ybES9rhRx51Q5l34UayLxjU96yIo=;
+        b=NfHU1T5io00rfyCe29TNRA9uvCAbYCsaJpOZgLlYiHPf1VWuePTHxPb7rFzmIJESUd
+         whh91ECy8RWzUTPE2pq/zQTj/GhezoV5YjxWHd0QD9Ahy8U0Z1jB3q6hA0OPM++2FB1y
+         0M1rHRT0NiCktlXd2EKz/O7o0COdrNqESHInY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:in-reply-to:references
-         :user-agent:mime-version:content-type:content-transfer-encoding;
-        b=doMrzDRk905qaKRqyUcQGPuF6fTKTS9cH5BzLc7iH81Hs9Vp3RfWVEEtNTDmHkVHQI
-         AwSyTiKnDBx6zfuCU6M7jsS9YNknAx4xYQ2y1JCAOrszjb3rQ1ImVP2Ey2X4bZmbo8fO
-         ibkqy1/3p+mO6ndZn+ghi3OJIBr6JtXXWZePI=
-Received: by 10.204.52.77 with SMTP id h13mr7582406bkg.120.1286969754191;
-        Wed, 13 Oct 2010 04:35:54 -0700 (PDT)
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=b9+VK9xAmeFLiO75VxqBIsvIGaFVUUigpRUodVmrn4GUDjYonfZZOnr5pCSRgLNZuu
+         nHQ+n6B+QGLRA+DPzjHdi3Gr8IRHCPI2pDJIo6YKHruiu8QpXBoxjmBDZnVAxEPC568T
+         Dh7OJPhLJTr87Soqy/yWZsYY7NR38y6QExtKc=
+Received: by 10.204.50.211 with SMTP id a19mr285559bkg.130.1286971095470;
+        Wed, 13 Oct 2010 04:58:15 -0700 (PDT)
 Received: from localhost.localdomain (abve214.neoplus.adsl.tpnet.pl [83.8.202.214])
-        by mx.google.com with ESMTPS id g12sm8495153bkb.2.2010.10.13.04.35.52
+        by mx.google.com with ESMTPS id 4sm5728253bki.1.2010.10.13.04.58.13
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 04:35:53 -0700 (PDT)
+        Wed, 13 Oct 2010 04:58:14 -0700 (PDT)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9DBZK6O009449;
-	Wed, 13 Oct 2010 13:35:31 +0200
-In-Reply-To: <20101013112738.9292.46672.stgit@localhost.localdomain>
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9DBvfkY011429;
+	Wed, 13 Oct 2010 13:57:52 +0200
 User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158931>
 
-Eli Barzilay noticed that
+The commit 7ce896b (Enable highlight executable path as a
+configuration option, 2010-09-21) forgot to update t9500 test.
 
-  http://server/gitweb/project/<commit-sha1>
+While at it, describe highlight test better.
 
-link goes to 'shortlog' view, while 'commit' view would be more
-useful, but that 'shortlog' action is more apropriate for
-
-  http://server/gitweb/project/<commit-sha1>..<other-commit-sha1>
-
-links.
-
-
-Therefore for the case when we don't have either action, or filename,
-or parent hash [base] in path_info-based URL, i.e. for
-
-  http://server/gitweb/project/<object-id>
-
-link, instead of using 'shortlog' view we allow dispatch() subroutine
-to detect type of object and use appropriate action (in most case it
-would be either 'commit' action, or 'tag', or 'tree' for top
-directory).
-
-Requested-by: Eli Barzilay <eli@barzilay.org>
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-Tested-by: Eli Barzilay <eli@barzilay.org>
 ---
-This is one-line (discounting comments and braces) alternative
-solution to the one proposed by Eli in the
+Noticed while running t9500 with `--debug` option.
 
-  http://thread.gmane.org/gmane.comp.version-control.git/150527
+ t/t9500-gitweb-standalone-no-errors.sh |   11 ++++++-----
+ 1 files changed, 6 insertions(+), 5 deletions(-)
 
-thread from 8 July 2010.
-
-A side-effect of this patch was discovering (and fixing in previous
-commit) long standing bug in corner case of path_info URLs parsing.
-
- gitweb/gitweb.perl |   11 +++++++++--
- 1 files changed, 9 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 9116a0e..928b5c0 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -819,8 +819,15 @@ sub evaluate_path_info {
- 		# hash_base instead. It should also be noted that hand-crafted
- 		# links having 'history' as an action and no pathname or hash
- 		# set will fail, but that happens regardless of PATH_INFO.
--		$input_params{'action'} ||= "shortlog";
--		if (grep { $_ eq $input_params{'action'} } @wants_base) {
-+		if (defined $parentrefname) {
-+			# if there is parent let the default be 'shortlog' action
-+			# (for http://git.example.com/repo.git/A..B links); if there
-+			# is no parent, dispatch will detect type of object and set
-+			# action appropriately if required (if action is not set)
-+			$input_params{'action'} ||= "shortlog";
-+		}
-+		if ($input_params{'action'} &&
-+		    grep { $_ eq $input_params{'action'} } @wants_base) {
- 			$input_params{'hash_base'} ||= $refname;
- 		} else {
- 			$input_params{'hash'} ||= $refname;
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 4f2b9b0..21cd286 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -650,25 +650,26 @@ test_debug 'cat gitweb.log'
+ # ----------------------------------------------------------------------
+ # syntax highlighting
+ 
+-cat >>gitweb_config.perl <<\EOF
+-$feature{'highlight'}{'override'} = 1;
+-EOF
+ 
+ highlight --version >/dev/null 2>&1
+ if [ $? -eq 127 ]; then
+ 	say "Skipping syntax highlighting test, because 'highlight' was not found"
+ else
+ 	test_set_prereq HIGHLIGHT
++	cat >>gitweb_config.perl <<-\EOF
++	our $highlight_bin = "highlight";
++	$feature{'highlight'}{'override'} = 1;
++	EOF
+ fi
+ 
+ test_expect_success HIGHLIGHT \
+-	'syntax highlighting (no highlight)' \
++	'syntax highlighting (no highlight, unknown syntax)' \
+ 	'git config gitweb.highlight yes &&
+ 	 gitweb_run "p=.git;a=blob;f=file"'
+ test_debug 'cat gitweb.log'
+ 
+ test_expect_success HIGHLIGHT \
+-	'syntax highlighting (highlighted)' \
++	'syntax highlighting (highlighted, shell script)' \
+ 	'git config gitweb.highlight yes &&
+ 	 echo "#!/usr/bin/sh" > test.sh &&
+ 	 git add test.sh &&
