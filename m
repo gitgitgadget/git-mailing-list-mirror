@@ -1,111 +1,134 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 2/4] limit "contains" traversals based on commit
- timestamp
-Date: Wed, 13 Oct 2010 18:21:53 -0500
-Message-ID: <20101013232153.GC11793@burratino>
-References: <20100705122723.GB21146@sigill.intra.peff.net>
- <20100705123419.GB25699@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH v7 2/3] git-remote-fd
+Date: Wed, 13 Oct 2010 16:33:45 -0700
+Message-ID: <7vzkuhfz1i.fsf@alter.siamese.dyndns.org>
+References: <1286901583-30088-1-git-send-email-ilari.liusvaara@elisanet.fi>
+ <1286901583-30088-3-git-send-email-ilari.liusvaara@elisanet.fi>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: tytso@mit.edu, Avery Pennarun <apenwarr@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 14 01:25:29 2010
+Cc: git@vger.kernel.org
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Thu Oct 14 01:37:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6AhK-0001gK-0e
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 01:25:26 +0200
+	id 1P6AsW-0005e5-Il
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 01:37:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753565Ab0JMXZT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 19:25:19 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:45011 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753517Ab0JMXZT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 19:25:19 -0400
-Received: by qyk5 with SMTP id 5so1128361qyk.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 16:25:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=DyVDq7iJC3izAVfI8ELYdEgFybktcSNj9XYSwSSj5wc=;
-        b=TjOwBkFMj3fEFoZJ/+dgSlZsRJHRyCYVTvZtiB6n0JpcYT6Fl6zKybgGO5Y7SEJOvY
-         HFxXlJl9H8gibpNfyPSB46swXgjgsJs1dFVMWGRh9c7cyKmAIfh10U7mznCU/lv+9rrh
-         GVp1E6kAEpC60+F/FuZYOP948weoGfihmZkYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ji5MAtwlMx+n+G2UQ6wrhEwq18cwmY1TODFi9lwYeZtFWFp64jfwEzTbpBUBjM8qtR
-         XUwa1wGhItGz88VFHTKJ7BTFTov4yB4iBJkNBp+C6KiuuibFRsg0c/y3paLVfngcX/TV
-         tryHWhsOBFOyTd0O7mPEDKNWeJYqmzYs8LIis=
-Received: by 10.224.185.144 with SMTP id co16mr7438745qab.399.1287012318321;
-        Wed, 13 Oct 2010 16:25:18 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id l13sm8803081qck.43.2010.10.13.16.25.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 16:25:17 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20100705123419.GB25699@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753839Ab0JMXdx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 19:33:53 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63835 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753822Ab0JMXdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 19:33:52 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 0C186DE723;
+	Wed, 13 Oct 2010 19:33:52 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=AVUupHWIf3J1quVqPUpARy0x1jk=; b=NipyXetsmK9GpRiXCM8xBfg
+	mVFnMsbyBwG5Y3+1l+3zIv7NBC7aHY6IJqPqpBZE+aPQ56TQtQhoXuDK/fnMdfSX
+	XzVP74o4CwPGZzkCOv51WRszdGN+XJFcJ1ZEPF+iK2voCmB3a9hf3fM/JAiLjw34
+	XwmvEkRR1+ikRKUX0V9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=XhZ0kiRDoBLnSTxHTfSO0gxbLOT8VaSvo2PFxbZdVvgXfHJe2
+	NeG64JrFMoDyCprW6akFMFvToOFHEZ7tbiQB9lLzcgLpGGp2/LOJuTRlLbzsAlm7
+	JaUze+lp1h9R8Gbaa591I13pK+LVoRAa8jnEh/D62/tFDdt+Aq3FkfCoCA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id DA820DE722;
+	Wed, 13 Oct 2010 19:33:49 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0D74ADE721; Wed, 13 Oct
+ 2010 19:33:46 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 54F5887A-D722-11DF-B2C5-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159005>
 
-Jeff King wrote:
+Ilari Liusvaara <ilari.liusvaara@elisanet.fi> writes:
 
-> Name-rev already implements a similar optimization, using a
-> "slop" of one day to allow for a certain amount of clock
-> skew in commit timestamps. This patch introduces a
-> "core.clockskew" variable, which allows specifying the
-> allowable amount of clock skew in seconds.  For safety, it
-> defaults to "none", causing a full traversal (i.e., no
-> change in behavior from previous versions).
+> diff --git a/Documentation/git-remote-fd.txt b/Documentation/git-remote-fd.txt
+> new file mode 100644
+> index 0000000..1c1a179
+> --- /dev/null
+> +++ b/Documentation/git-remote-fd.txt
+> @@ -0,0 +1,59 @@
+> +git-remote-fd(1)
+> +=================
 
-Tests?
+It appears to me that it has one equal sign too many.  Does this format
+correctly?
 
-Actually just a short example script to try would be helpful,
-if anyone has one handy (yes, I am terribly lazy).  Such a script
-would be useful for figuring out which commands ought to be
-updated to respect core_clock_skew.  rev-list is one.
+> +ENVIRONMENT VARIABLES:
+> +----------------------
 
-> --- a/commit.c
-> +++ b/commit.c
-[...]
-> @@ -872,9 +874,13 @@ static int contains_recurse(struct commit *candidate,
->  	if (parse_commit(candidate) < 0)
->  		return 0;
->  
-> +	/* stop searching if we go too far back in time */
-> +	if (candidate->date < cutoff)
-> +		return 0;
+I didn't follow the discussion closely but I recall somebody saying that
+the final colon is out of place, and I think I agree.
+
+> +EXAMPLES:
+> +---------
+
+Likewise.
+
+> diff --git a/builtin/remote-fd.c b/builtin/remote-fd.c
+> new file mode 100644
+> index 0000000..7517f24
+> --- /dev/null
+> +++ b/builtin/remote-fd.c
+> @@ -0,0 +1,79 @@
+> +#include "git-compat-util.h"
+> +#include "transport.h"
 > +
-
-Nice idea.
-
-> @@ -885,5 +891,20 @@ static int contains_recurse(struct commit *candidate,
->  
->  int contains(struct commit *candidate, const struct commit_list *want)
->  {
-> -	return contains_recurse(candidate, want);
-> +	unsigned long cutoff = 0;
+> +/*
+> + * URL syntax:
+> + *	'fd::<inoutfd>[/<anything>]'		Read/write socket pair
+> + *						<inoutfd>.
+> + *	'fd::<infd>,<outfd>[/<anything>]'	Read pipe <infd> and write
+> + *						pipe <outfd>.
+> + *	[foo] indicates 'foo' is optional. <anything> is any string.
+> + *
+> + * The data output to <outfd>/<inoutfd> should be passed unmolested to
+> + * git-receive-pack/git-upload-pack/git-upload-archive and output of
+> + * git-receive-pack/git-upload-pack/git-upload-archive should be passed
+> + * unmolested to <infd>/<inoutfd>.
+> + *
+> + */
 > +
-> +	if (core_clock_skew >= 0) {
-> +		const struct commit_list *c;
-> +		unsigned long min_date = ULONG_MAX;
-> +		for (c = want; c; c = c->next) {
-> +			if (parse_commit(c->item) < 0)
-> +				continue;
+> +#define MAXCOMMAND 4096
+> +
+> +static void command_loop(int input_fd, int output_fd)
+> +{
+> +	char buffer[MAXCOMMAND];
+> +
+> +	while (1) {
+> +		size_t i;
+> +		if (!fgets(buffer, MAXCOMMAND - 1, stdin)) {
+> +			if (ferror(stdin))
+> +				die("Input error");
+> +			return;
+> +		}
+> +		/* Strip end of line characters. */
+> +		i = strlen(buffer);
+> +		while (isspace(buffer[i - 1]))
+> +			buffer[--i] = 0;
 
-Why ignore these errors?  Will they be noticed later?
+Hopefully you won't get a line with all space, going beyond the beginning
+of the buffer?
 
-The rest of the patch looks good to me.  I am not thrilled with
-making the user figure out an acceptable "[core] clockskew" value
-(and am not sure it makes much sense as a tunable setting), but
-it is better than the status quo, so...
+> +int cmd_remote_fd(int argc, const char **argv, const char *prefix)
+> +{
+> +	int input_fd = -1;
+> +	int output_fd = -1;
+> +	char *end;
+> +
+> +	if (argc < 3)
+> +		die("URL missing");
+
+Is it Ok to have excess arguments to be ignored?
