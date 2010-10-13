@@ -1,76 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PROPOSAL] .gitignore syntax modification
-Date: Wed, 13 Oct 2010 09:51:10 -0700
-Message-ID: <7vbp6yniip.fsf@alter.siamese.dyndns.org>
-References: <113B4C41-ECDA-479D-A281-DF6ACDFE8FBB@sb.org>
- <AANLkTimkBsTN-gJ5Wwe_Y=UxSpSpYhn8HcZyUDGngLPn@mail.gmail.com>
- <F06C63D1-26AE-4278-96CE-2F6B2D6DD300@sb.org>
- <20101013024034.GA26483@burratino>
- <91EEA44C-E519-4375-BD9E-68D5C3D7C4EE@sb.org>
+From: Jared Hance <jaredhance@gmail.com>
+Subject: Re: Can I checkout a single file without altering index?
+Date: Wed, 13 Oct 2010 17:09:07 +0000 (UTC)
+Message-ID: <loom.20101013T190544-893@post.gmane.org>
+References: <loom.20101012T114900-532@post.gmane.org> <4CB44318.7000305@atlas-elektronik.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Wed Oct 13 18:51:37 2010
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 13 19:09:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P64Y6-0007Zz-V3
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 18:51:31 +0200
+	id 1P64pv-0007Kn-C7
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 19:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751183Ab0JMQvY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 12:51:24 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43415 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751094Ab0JMQvY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 12:51:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9CFDCDEFDD;
-	Wed, 13 Oct 2010 12:51:21 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lMu+YBBABTaB1hAPH0rJi8Dxawc=; b=dWYgma
-	GAxL656AOGLJmLGvOeoOfmbiVPRMlLBEHCwtOh9iCmKnDcrMu8+TIvo0abRU7ZS9
-	ckOnJfNBWv4YAStYhFtOprIfs3vvZYky91cAGV7VBqkJPc8soT6M5MpbnrnPVYGf
-	IsEFw8ovov2WTZzzob99Uee6I/k7C8OCzk9r4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ac6iiUuySs1iLjFUk5EfaCRzw//ife1P
-	OUDv1MoU5K79qg9pWi82f+V1A1d/RBz0zqeD1+VTygj8ZHJJaer8Le6+3vsarA9i
-	jmW+PZKjN5EPghaqcC2k2oqepOONcJWxV2GXG/l/na3F8Lh05dyBKuqNO/R7DLcx
-	SjZwU5jbdF8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4197CDEFDC;
-	Wed, 13 Oct 2010 12:51:17 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 58E9FDEFDB; Wed, 13 Oct
- 2010 12:51:12 -0400 (EDT)
-In-Reply-To: <91EEA44C-E519-4375-BD9E-68D5C3D7C4EE@sb.org> (Kevin Ballard's
- message of "Tue\, 12 Oct 2010 20\:05\:19 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 18DD2DF8-D6EA-11DF-A1F3-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751503Ab0JMRJZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 13:09:25 -0400
+Received: from lo.gmane.org ([80.91.229.12]:47567 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751319Ab0JMRJY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 13:09:24 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P64pO-00078c-HN
+	for git@vger.kernel.org; Wed, 13 Oct 2010 19:09:23 +0200
+Received: from rrcs-24-123-205-34.central.biz.rr.com ([24.123.205.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 19:09:22 +0200
+Received: from jaredhance by rrcs-24-123-205-34.central.biz.rr.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 19:09:22 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 24.123.205.34 (Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; GTB0.0; InfoPath.2; .NET CLR 1.1.4322; .NET CLR 2.0.50727; .NET CLR 3.0.4506.2152; .NET CLR 3.5.30729; OfficeLiveConnector.1.4; OfficeLivePatch.1.3))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158944>
 
-Kevin Ballard <kevin@sb.org> writes:
+Stefan Naewe <stefan.naewe <at> atlas-elektronik.com> writes:
 
-> Another possibility is using this new behavior for core.excludesfile and
-> possibly .git/info/exclude, but not for patterns in .gitignore
-> files.
+> 
+> On 10/12/2010 12:03 PM, Christian Halstrick wrote:
+> > Can I checkout a certain file to a specific revision without also adding 
+this 
+> > content to the index? I only want to alter the working-tree - no 
+modification of 
+> > index or HEAD needed.
+> > 
+> > Here is why I need that: I see a bug in git controlled sources. I fix one 
+source
+> > file and also add one unit test in a separate file. I checked that the test
+> > succeeds with my fix. The index now contains what I want to commit.
+> > Now I want to see whether my test fails without my fix. I want to checkout 
+HEAD
+> > for the source file without destroying my index. In the end, after I saw 
+that my
+> > test fails without my fix, I just want to say "git commit" without having 
+to.
+> 
+> commit the unit test first, and the fix as a second commit ?
+> 
+> Regards,
+>   Stefan
 
-I suspect that that approach is totally unacceptable.  These out-of-tree
-exclude pattern files do not have any semantic difference from the in-tree
-exclude pattern files (.gitignore); it makes no sense to make them
-syntactically different.
+Just to add to this, since you might not want the test and the fix in separate 
+commmits: (as is implied in the message)
+  1. commit unit test.
+  2. commit fix.
+  3. go to detchatched head at HEAD^
+  4. run unit test to insure that it fails.
+  5. checkout the branch again to where you have the fix.
+  6. run unit test to insure that it doesn't fail.
+  7. run `git rebase HEAD^` and merge squash the two commits. (optional)
 
-More importantly it is much harder to diagnose if you break people's
-private configuration without introducing the same breakage to what's
-available to wider public guinea pigs.
+Alternatively, as others have pointed out, the stash should work as well.
