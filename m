@@ -1,72 +1,81 @@
-From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
-Subject: Re: OT: This forum
-Date: Wed, 13 Oct 2010 10:35:15 -0400
-Organization: MAD House Graphics
-Message-ID: <i94g34$4kt$1@dough.gmane.org>
-References: <loom.20101012T012512-764@post.gmane.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [PATCH v2 0/3] Teach fetch and pull to recursively fetch submodules
+ too
+Date: Wed, 13 Oct 2010 10:48:56 -0400
+Message-ID: <4CB5C6D8.1070108@xiplink.com>
+References: <4C7A819B.3000403@web.de> <7vocckhcb6.fsf@alter.siamese.dyndns.org> <778BC76C-FDFA-4EF0-AA94-6631272DEC02@sb.org> <89574F83-293C-4E3E-A99D-EB6CE6D47646@sb.org> <4C9221B6.7070807@web.de> <AF9B7F7E-0956-4814-A3A8-BAD7619A043D@sb.org> <4C9351A7.7050609@web.de> <4C9359D4.2030109@viscovery.net> <4C935D77.3080008@web.de> <329A2E43-ADE3-467C-A2A6-24ACB9DF641E@sb.org> <4C953DE5.6020900@web.de> <DD3654D9-46B9-4980-9138-38FDC33A383C@sb.org> <4C963D00.9050207@web.de> <28BC3A45-D3CF-4A8C-A818-B92A9827C8FB@sb.org> <4CAB8DDF.8080004@web.de> <FB03A7DB-67D2-4EAE-A0F0-2F3E3CEA9878@sb.org> <4CB0BFDB.7010503@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 13 16:36:50 2010
+Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Oct 13 16:56:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P62Rl-00007u-Ox
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 16:36:50 +0200
+	id 1P62lC-0008Br-PV
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 16:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752425Ab0JMOf2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 10:35:28 -0400
-Received: from lo.gmane.org ([80.91.229.12]:42958 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751316Ab0JMOf1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 10:35:27 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P62QP-00085t-1d
-	for git@vger.kernel.org; Wed, 13 Oct 2010 16:35:25 +0200
-Received: from c-71-58-29-3.hsd1.de.comcast.net ([71.58.29.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 16:35:25 +0200
-Received: from scottg.wp-hackers by c-71-58-29-3.hsd1.de.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 16:35:25 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-71-58-29-3.hsd1.de.comcast.net
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
-In-Reply-To: <loom.20101012T012512-764@post.gmane.org>
+	id S1753826Ab0JMO4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 10:56:41 -0400
+Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:57970 "EHLO
+	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753843Ab0JMO4j (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 10:56:39 -0400
+X-Greylist: delayed 505 seconds by postgrey-1.27 at vger.kernel.org; Wed, 13 Oct 2010 10:56:39 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp44.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 4DEA51283DE;
+	Wed, 13 Oct 2010 10:48:14 -0400 (EDT)
+X-Orig-To: gitster@pobox.com
+X-Orig-To: kevin@sb.org
+X-Orig-To: git@vger.kernel.org
+X-Orig-To: Jens.Lehmann@web.de
+X-Orig-To: mbranchaud@xiplink.com
+X-Virus-Scanned: OK
+Received: by smtp44.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 1BE6412826C;
+	Wed, 13 Oct 2010 10:48:14 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100915 Thunderbird/3.0.8
+In-Reply-To: <4CB0BFDB.7010503@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158936>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158937>
 
-On 10/11/2010 07:35 PM, Maaartin wrote:
-> I read this forum using
-> http://post.gmane.org/post.php?group=gmane.comp.version-control.git
-> and it sort of works. Except that finding own old posting is quite impossible,
-> even when I try searching for the subject, and/or author, and/or pieces of text
-> in any combination. It finds some posting, but it misses others, whatever I do.
-> Except that I don't know how to attach a file. Except that I'd expect to see a
-> thread containing a new reply somewhere on the first page instead of on the
-> 14th. Except that replies to emails I get (answers to my threads) goes to their
-> author instead of to the forum.
->
-> Is there a better way for using this forum/mailing list? However, I'd like to
-> avoid getting daily dozens of emails.
+On 10-10-09 03:17 PM, Jens Lehmann wrote:
+> Am 07.10.2010 00:52, schrieb Kevin Ballard:
+>> On Oct 5, 2010, at 2:06 PM, Junio C Hamano wrote:
+>>> I dunno.  I've never been a fan of automatically recursing into submodules
+>>> (iow, treating the nested structure as if there is no nesting), so...
+>>
+>> I agree with this as well.
+> 
+> There are use cases like mine where automatic recursion is just the right
+> thing to do. But I would be fine with having to turn the recursion on
+> explicitly in the configuration if most people think recursion is not a
+> desirable default. It would be really nice to hear from other submodule
+> users what they think about that ...
 
-I second the motion on using the nntp based interface. Works great in 
-Thunderbird; there's also knode or pan depending on your IDE-du-jour, 
-and if you prefer a console-based one there's always slrn (or even tin).
+I tend to think that the right default for fetch is to employ the same level
+of recursion that was used for the initial clone.  So if the clone was made
+with --recursive then fetch should default to using --recursive.
 
-Opera also has a built in newsreader.
+But I'd like to see finer-grained control than that.  For us the set of
+submodules to clone depends on what we're trying to build.  Ideally we'd have
+a lot of different submodules, and some would be required no matter what the
+build target.  It'd be great if clone could be smart enough to recursively
+clone those required submodules (i.e. the upstream repo specifies a set of
+default submodules -- I believe this is already on Jens's TODO list).  Then
+building a particular target could trigger the cloning of ancillary
+submodules specific to that target.
 
+In that scenario, the default for later fetches could be to either (a)
+retrieve upstream's default set of submodules, or (b) retrieve all populated
+submodules.  Either way, a config option is needed to override the default
+behaviour, with a third configurable-but-never-default setting to recursively
+fetch all submodules, populated or not.
 
--- 
-(please respond to the list as opposed to my email box directly,
-unless you are supplying private information you don't want public
-on the list)
+		M.
