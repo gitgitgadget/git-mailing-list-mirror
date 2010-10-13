@@ -1,122 +1,113 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: [PATCH v2] hash binary sha1 into patch id
-Date: Wed, 13 Oct 2010 23:10:11 +0200
-Message-ID: <20101013211011.GA2558@localhost>
-References: <20100813094027.GA20906@localhost>
- <20100813200031.GD2003@burratino>
- <20100813212331.GA24127@localhost>
- <20100813213726.GB2516@burratino>
- <20100813215801.GA24534@localhost>
- <20100815072043.GA368@localhost>
- <1284095850.1728.5.camel@n900.home.ru>
- <20100910081626.GA30507@localhost>
- <1286956002591-5629905.post@n2.nabble.com>
- <1286961452235-5630164.post@n2.nabble.com>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
+From: Pat Thoyts <patthoyts@gmail.com>
+Subject: Re: [msysGit] Re: [PATCH v4 02/15] mingw: implement syslog
+Date: Wed, 13 Oct 2010 22:17:19 +0100
+Message-ID: <AANLkTinj21hnpsHR49nS0u_FtpwA=2Q7ygNpowufRoDC@mail.gmail.com>
+References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
+	<1286833829-5116-3-git-send-email-kusmabite@gmail.com>
+	<20101011221146.GB6277@burratino>
+	<AANLkTinkpTavtw3Rmubfht56tzGnHckHXRc0L-C83daE@mail.gmail.com>
+	<20101011223746.GA6637@burratino>
+	<AANLkTinBvZ_L-fq1u4tPX6rNW6X3jeoOO23-yLpdxSu0@mail.gmail.com>
+	<4CB60743.2030908@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="k1lZvvs/B4yU6o8G"
-Cc: git@vger.kernel.org
-To: Marat Radchenko <marat@slonopotamus.org>
-X-From: git-owner@vger.kernel.org Wed Oct 13 23:10:09 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kusmabite@gmail.com, Jonathan Nieder <jrnieder@gmail.com>,
+	git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org,
+	avarab@gmail.com, Mike Pape <dotzenlabs@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Oct 13 23:17:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P68aK-0003x0-51
-	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 23:10:04 +0200
+	id 1P68hn-0007IP-82
+	for gcvg-git-2@lo.gmane.org; Wed, 13 Oct 2010 23:17:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752477Ab0JMVJ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 17:09:57 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:51680 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751763Ab0JMVJ4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 17:09:56 -0400
-Received: by ewy20 with SMTP id 20so2654924ewy.19
-        for <git@vger.kernel.org>; Wed, 13 Oct 2010 14:09:55 -0700 (PDT)
+	id S1751522Ab0JMVRV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 13 Oct 2010 17:17:21 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:52823 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779Ab0JMVRU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 13 Oct 2010 17:17:20 -0400
+Received: by qyk5 with SMTP id 5so982860qyk.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 14:17:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=Yzb8KmlcTrHVxLDYzbUM9rWKUu0NUOnOkaYsIhkd8VA=;
-        b=JQC4jtdwfDak3Shn0N12+M5h9HmUmMjoD5u83z7+9HUv0WRBgBEcw7/TgTk43gj6gj
-         sFslTLL5eoIYzo0Qdq37kvCquXqHLEEz1N45mc6iDfwBoXFmjiCNaxuwB5BCd7Tm6+3B
-         3/AKprco4BsihdFHVfHFE1IrmqvrFmkzQILdo=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=nz/Wv2DO1pA6L/cyHzKplS4uuGnnVQYevuBH3nEdjbg=;
+        b=HYnAsG8fV2LZeA/mBMxllRPSmVRTYKkpxLAjslwT8aY0JObdtK6ckVwzll/cSUHZMu
+         xBLUrFYsHdu1bwdVRJtUW/kfunoTXxYzpSxphqp/02/689gU6Zing2vNgc9hnij7ukB/
+         cGIuNGKZT6W2hE1MlN5E5k2gVFVTGTXJ9C8I0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=oozDux7GrmsmRf8oKre23VrqQmOOFmCzsM/ptJTJkPbXb9KJa8JCwbAafOK1Ds7M4V
-         5UlnbJHONy0lNk5zUzSqZbJ3Br6E0FRcxgSnHOBn4akNKAxXwbEe+lbYpBFVtOjLaP36
-         nVuKte6Xs7gclt33VSKlgufp4RqnsvsCsQ88k=
-Received: by 10.14.119.7 with SMTP id m7mr5777367eeh.43.1287004194822;
-        Wed, 13 Oct 2010 14:09:54 -0700 (PDT)
-Received: from darc.lan (p549A679C.dip.t-dialin.net [84.154.103.156])
-        by mx.google.com with ESMTPS id x54sm5573546eeh.17.2010.10.13.14.09.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 13 Oct 2010 14:09:53 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1P68aR-0000nA-EY; Wed, 13 Oct 2010 23:10:11 +0200
-Content-Disposition: inline
-In-Reply-To: <1286961452235-5630164.post@n2.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ru4HqOWSQyDzWiltJfMnO8N+gfDxga0FJL2ivlvMNv1qmM6UA5aGInV+LzvHpLW+1J
+         bwhMG3pHFWJqMdF9Hfy18hQ6gEMhJt6sSoVRx8YRNpjjwjtNgTBUzxsFKs6/lOF4dbu2
+         UfcBjb5/lq9vUM3GdOfsDbBkjGtlqqymCzZMs=
+Received: by 10.229.215.208 with SMTP id hf16mr8046801qcb.79.1287004639599;
+ Wed, 13 Oct 2010 14:17:19 -0700 (PDT)
+Received: by 10.229.45.203 with HTTP; Wed, 13 Oct 2010 14:17:19 -0700 (PDT)
+In-Reply-To: <4CB60743.2030908@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/158977>
 
+On 13 October 2010 20:23, Eric Sunshine <sunshine@sunshineco.com> wrote=
+:
+> On 10/13/2010 08:36 AM, Erik Faye-Lund wrote:
+>>
+>> On Tue, Oct 12, 2010 at 12:37 AM, Jonathan Nieder<jrnieder@gmail.com=
+>
+>> =C2=A0wrote:
+>>>
+>>> Erik Faye-Lund wrote:
+>>>
+>>>> The string gets inlined into itself (with a limit of 100 expansion=
+s)
+>>>> leading to string like "foo %1 bar" becoming "foo foo foo ... foo =
+%1
+>>>> bar bar bar ... bar". With our expansion, it becomes "foo % 1 bar"
+>>>> instead.
+>>>
+>>> Ah, ok. =C2=A0Sounds like there is no need to worry about requests =
+for "%%1"
+>>> etc. =C2=A0Thanks for explaining.
+>>>
+>> Actually, %%1 is a bit of a tricky one. It seems that %%1 is used to
+>> escape %1 on Windows 7, but not on earlier Windows version. I did te=
+st
+>> this on Vista an XP earlier, but I'll re-test again later and report
+>> back, in case my earlier tests were flawed.
+>
+> If that worked universally, escaping '%1' to '%%1' certainly would be=
+ nicer
+> than '% 1'. (More generally, escape '%n' to '%%n', where n is a numbe=
+r.) It
+> also would simplify the log message.
+>
+>> Can %%1 occur in an IPv6 address at all? If not, I'm tempted to not
+>> handle it (unless it turns out I was wrong about %%1-escaping on Vis=
+ta
+>> and XP).
+>
+> According to sources I have studied, %%1 would be unlikely (or perhap=
+s
+> invalid) in IPv6 addresses.
+>
+> http://en.wikipedia.org/wiki/IPv6_address#Link-local_addresses_and_zo=
+ne_indices
 
---k1lZvvs/B4yU6o8G
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Not on windows. Try ipconfig:
+   Link-local IPv6 Address . . . . . : fe80::c9fb:7840:66f5:b2e9%13
+   Default Gateway . . . . . . . . . : fe80::20c:76ff:fe1e:e00%11
+and so on. Its an interface fragment or something.
 
-Hi Marat,
-
-On Wed, Oct 13, 2010 at 02:17:32AM -0700, Marat Radchenko wrote:
->=20
-> Does diff_get_patch_id (in diff.c) really need to set xecfg.flags =3D
-> XDL_EMIT_FUNCNAMES? Removing that makes git-rev-list (called by rebase) 2x
-> faster here. Not sure about consequences though.
-
-Yes, this has already been fixed in ad14b450 (do not search
-functions for patch ID), which is currently in git.git's pu branch.
-Function name search performance has also been improved for some
-obscure cases in c099789b (diff: avoid repeated scanning while
-looking for funcname).
-
-Thanks anyways. If you notice anything else, please let us know.
-
-I had a look at your gprof results, but I cannot make much sense of
-it. I do not understand why git rev-list would even do any diffs.
-For me, rev-list spends more than 50% in libz.  Can you give more
-details on the kind of repository you have (binaries, memory size,
-history size, any special attributes or options?), which git
-version you are using, and which options you are passing to
-rev-list?
-
-Clemens
-
---k1lZvvs/B4yU6o8G
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJMtiAzAAoJELKdZexG8uqMxNgH/RmwFUqLX4ZHMfCTJM1WwQrn
-j3RuAu+2gp8j1W/dZhI752prOStoi/kPm15jymmuA49pGI7BOkZcAzkvStTv7sjW
-y7Ts+e6EaCRzSTNVYLqwgDxPnL2MQHBMV4gPt8XINGQ8b5eQs2J3eclot4X6bMEM
-g/lR+NjGkqAWlTwOOAqJ1+bQnWY8CuusBrMcjjABT+Jh0M9Jj4fT7//Ew3RGtLrR
-1FaBzQySOweCx1IfK0WkBwSfWQG1iJQSgJLnTFe3HgwjqRiMVGJafesWGKqVTi8U
-z6dOEpMoCe7E7R8/vb44ahVlX+gd56N2KXvQMiC0KzDAhrUvT6OBRFuqPNvtajM=
-=6gFK
------END PGP SIGNATURE-----
-
---k1lZvvs/B4yU6o8G--
+However - we really don't care. You can just substitute these to
+spaces and no-one will care. Keep it simple.
