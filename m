@@ -1,97 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 11/15] daemon: report connection from root-process
-Date: Wed, 13 Oct 2010 15:55:12 -0700
-Message-ID: <7vlj61hfe7.fsf@alter.siamese.dyndns.org>
-References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
- <1286833829-5116-12-git-send-email-kusmabite@gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [RFC/PATCH 1/4] tag: speed up --contains calculation
+Date: Thu, 14 Oct 2010 00:56:01 +0200
+Message-ID: <20101013225601.GC2558@localhost>
+References: <20100705122723.GB21146@sigill.intra.peff.net>
+ <20100705123335.GA25699@sigill.intra.peff.net>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org,
-	avarab@gmail.com, sunshine@sunshineco.com
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 14 00:55:40 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="yVhtmJPUSI46BTXb"
+Cc: tytso@mit.edu, Avery Pennarun <apenwarr@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 14 00:56:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6AES-0007cm-AE
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 00:55:36 +0200
+	id 1P6AEs-0007n1-Q0
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 00:56:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753650Ab0JMWz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 18:55:29 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48510 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753506Ab0JMWz3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 18:55:29 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F2025DE26C;
-	Wed, 13 Oct 2010 18:55:27 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LxKLlX+DEPnok1P8+QSHUkgsywk=; b=Jmi9kC
-	Nj3qD0pKib076dr8Bk3YLnbjUavPFNW70U3yok4BgGV/Uss2X7kM4YvN6wWN+NLl
-	JAZ0CWUJzZSCJ+4QlSaHuoTwnrjonvbybkOS9d7h/8YKu4i8AavJyzUBgeg8BnUE
-	7k1tRXoV9MuTHiM/p25kwmMlFj2kHzrFZnsaQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Pj3+FIrkryjy2BmXpfcekl4uVrdh9Uyg
-	o1i5vm1kG6lGXuCbdbyhuW6yxDNZ4uqQCqJliWQqCwuKpT1UfkSJ8/l3kF0ifJ10
-	CxvMYCYDNxLdXYf106/o4PQwT6F3ZiVMbS+ZLVcu3TLxxZ1KKrqNsjR8kjYvk0Eu
-	7F6mTrln3Kw=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7A4A2DE268;
-	Wed, 13 Oct 2010 18:55:21 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 51EE1DE267; Wed, 13 Oct
- 2010 18:55:14 -0400 (EDT)
-In-Reply-To: <1286833829-5116-12-git-send-email-kusmabite@gmail.com> (Erik
- Faye-Lund's message of "Mon\, 11 Oct 2010 23\:50\:25 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F50BB01A-D71C-11DF-A3C6-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1753676Ab0JMWzq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 18:55:46 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41641 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753664Ab0JMWzp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 18:55:45 -0400
+Received: by bwz15 with SMTP id 15so160402bwz.19
+        for <git@vger.kernel.org>; Wed, 13 Oct 2010 15:55:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=599nMO/MddYSlB6R8zemT96NGoo1sY4Es/enhuCtMV8=;
+        b=Qlelmgeu6A2P2wqgQUwk5j9d792PlhfC4g1azQ8BexqpNKshsQBkSZYRXSBRzG75pG
+         uFnP2VPzdhgOLPKWQaKjbqfg9HbSKvfSJjTctkD2CTsDa4BFfPKX6qrFrJTyiINvXtsx
+         2aqMBQjmJaAlmi3UaYDaSR8W/UL/ae5kPTDG8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=Xrlhlgs291l4H46499nL/BkoBMF7U6Lf0mR00yTBjNozRcf7jkfI4mZ5YRUymJQOwH
+         MSaqDiDDfL7gIOpUp9nvfxrX1dT6JzczZ8HJJiO10Lw3oHW7hlOlq2Ld5EsT32gsZi76
+         jcRCLY+78zodWLj6JfRuky0NdT44rGxWe1AhA=
+Received: by 10.204.46.33 with SMTP id h33mr3881920bkf.95.1287010543524;
+        Wed, 13 Oct 2010 15:55:43 -0700 (PDT)
+Received: from darc.lan (p549A5B77.dip.t-dialin.net [84.154.91.119])
+        by mx.google.com with ESMTPS id 4sm6659527bki.13.2010.10.13.15.55.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 13 Oct 2010 15:55:42 -0700 (PDT)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1P6AEr-0000yb-Ag; Thu, 14 Oct 2010 00:56:01 +0200
+Content-Disposition: inline
+In-Reply-To: <20100705123335.GA25699@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159002>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> Report incoming connections from the process that
-> accept() the connection instead of the handling
-> process.
->
-> This enables "Connection from"-reporting on
-> Windows, where getpeername(0, ...) consistently
-> fails.
->
-> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-> ---
->  daemon.c |   72 ++++++++++++++++++++++++++++++-------------------------------
->  1 files changed, 35 insertions(+), 37 deletions(-)
->
-> diff --git a/daemon.c b/daemon.c
-> index 8a44fb9..1574f75 100644
-> --- a/daemon.c
-> +++ b/daemon.c
-> @@ -516,38 +516,11 @@ static void parse_host_arg(char *extra_args, int buflen)
->  }
->  
->  
-> -static int execute(struct sockaddr *addr)
-> +static int execute(void)
->  {
-> -...
-> -		}
-> -		loginfo("Connection from %s:%d", addrbuf, port);
-> -		setenv("REMOTE_ADDR", addrbuf, 1);
-> ...
-> +	else {
-> +		loginfo("[%"PRIuMAX"] Connection from %s:%d",
-> +		    (uintmax_t)cld.pid, addrstr, port);
->  		add_child(&cld, addr, addrlen);
+--yVhtmJPUSI46BTXb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hmm, loginfo() calls logreport() and adds the process information as
-necessary to the output.  Wouldn't this patch give the pid information
-twice?
+On Mon, Jul 05, 2010 at 08:33:36AM -0400, Jeff King wrote:
+>=20
+> This sped up "git tag --contains HEAD~200" in the linux-2.6
+> repository from:
+>=20
+>   real    0m15.417s
+>   user    0m15.197s
+>   sys     0m0.220s
+
+FWIW, in the staging tree they have a new tag for almost every day.
+My linux repo currently has 677 tags. This same command would
+probably take hours. I have not had the patience yet to let it
+finish.
+
+With your patch I get this.
+
+$ time git tag --contains HEAD~200
+v2.6.36-rc3
+v2.6.36-rc4
+v2.6.36-rc5
+
+real	0m8.047s
+user	0m7.755s
+sys	0m0.268s
+
+Clemens
+
+--yVhtmJPUSI46BTXb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJMtjkBAAoJELKdZexG8uqMLB4H/3Qdxa69xE6Tu2WcTWbpFBQ4
+rpUnqYn1XlyhUadE5edVOObcNQpvF0JWUFweuD7/41qDlHyCBqmhKTD0mqvBQa9Q
+wKmGCWKbw6lDHYn//4Y0MFzwQ2NLfaV9/cfNg6slR00Z34EwCD26O0vMTMD5ICz4
+sK5kbGbQteO/lDUEIuyNJukFCWtJxE5D01XL6GdxY39hGQarYAQHSuFPEAVbqedy
+WcJAKEec4ktoF5xuEd2a+0Y63iIwIxqB49YP/3vjPXmHNCZlz8tiOXrfw3a3Ad0A
+hjjljeyD87IRWnEn8RXB15Bik4VxkFC6e7puOkCEgNYazUXtf+AFDAVbu8KXF4Q=
+=fpsc
+-----END PGP SIGNATURE-----
+
+--yVhtmJPUSI46BTXb--
