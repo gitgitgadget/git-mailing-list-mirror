@@ -1,156 +1,182 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests with TAP
-Date: Thu, 14 Oct 2010 09:33:11 +0000
-Message-ID: <AANLkTinDq4FOZd7v5C8HZ7S81xoO6nJZTEe4+-9AO8HQ@mail.gmail.com>
-References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>
-	<AANLkTimuoanpbFbyv9C8qUbut22me1gMhH02eLqg0Nyd@mail.gmail.com>
-	<4CB6CB97.7040009@drmicha.warpmail.net>
+From: ebik <ebik@ucw.cz>
+Subject: Re: [PATCH] git-svn.perl: Fix glob matching on svn paths
+Date: Thu, 14 Oct 2010 11:34:59 +0200
+Message-ID: <20101014113459.47bfa959@Chewbacca.cub>
+References: <1286615236-29732-1-git-send-email-ebik@ucw.cz>
+	<1286615236-29732-2-git-send-email-ebik@ucw.cz>
+	<20101010061534.GB23100@burratino>
+Reply-To: ebik@ucw.cz
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Oct 14 11:33:22 2010
+Content-Type: multipart/signed; micalg=PGP-SHA256;
+ boundary="Sig_/mK.MVlauCvRiipCgL2btTmu"; protocol="application/pgp-signature"
+Cc: Eric Wong <normalperson@yhbt.net>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 14 11:35:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6KBc-0005sO-3a
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 11:33:20 +0200
+	id 1P6KDW-0006j4-3P
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 11:35:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755037Ab0JNJdP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 05:33:15 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:49146 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754744Ab0JNJdO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 05:33:14 -0400
-Received: by fxm4 with SMTP id 4so2248255fxm.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 02:33:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nwl4nyksGrZK+YFywWo1w9d7aHVAsvfw67clDK8oX6k=;
-        b=svhIZf4RZtYD5FXf0dCD2XJcK2bGMubjgDzRy18dLIAfp58cneRpA9iiDJKrIHMEXw
-         VfyQaVFCDzDCSab8MEMPd3YV/6+dL3cjXThkOytKXBOub2dxvjo54850qachGvwTpIKw
-         xKI03/97Jfhmti/V7rofd7WvyjGaBE18e2kvY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Byf0+xD7AMD58NKXjYe99DrlXQPNUk2oUuiNHNEicdflD2I6efI8GqBcUczzg3VLOI
-         S3ZUH1pUUfGQNVL0HFPwHveVb+D1SKgmlLh1EySPg/nuuhtzVibUlQIQ3XRpuuzKVfVf
-         jJRFFm/AoXqxNOsO/dNnJbQrXJefc/ExQ03F8=
-Received: by 10.103.40.1 with SMTP id s1mr1791070muj.4.1287048791298; Thu, 14
- Oct 2010 02:33:11 -0700 (PDT)
-Received: by 10.223.119.17 with HTTP; Thu, 14 Oct 2010 02:33:11 -0700 (PDT)
-In-Reply-To: <4CB6CB97.7040009@drmicha.warpmail.net>
+	id S1755401Ab0JNJfD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Oct 2010 05:35:03 -0400
+Received: from drak.ucw.cz ([212.71.128.78]:58629 "EHLO drak.ucw.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755072Ab0JNJfB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Oct 2010 05:35:01 -0400
+Received: from Chewbacca.cub (localhost [127.0.0.1])
+	by drak.ucw.cz (Postfix) with ESMTP id 45B8B2B;
+	Thu, 14 Oct 2010 11:35:00 +0200 (CEST)
+In-Reply-To: <20101010061534.GB23100@burratino>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159036>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159037>
 
-On Thu, Oct 14, 2010 at 09:21, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 14.10.2010=
- 11:05:
->> On Thu, Oct 14, 2010 at 08:53, Michael J Gruber
->> <git@drmicha.warpmail.net> wrote:
->>> Introduce a new make target "prove" which runs the tests via "prove=
-" (or
->>> $(PROVE) if set) so that one does not have to cd around any more. O=
-ne
->>> can simply use "make prove" for "make test" or go wild as in:
->>>
->>> GIT_SKIP_TESTS=3D't[0-4]??? t91?? t9200.8' GIT_PROVE_OPTS=3D"-j9 -v=
-" GIT_TEST_OPTS=3D"--verbose --debug" make prove
->>>
->>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
->>> ---
->>> RFC also because of lack of doc, and:
->>>
->>> Currently, one can do
->>>
->>> make -C t t6010-merge-base.sh
->>>
->>> or even
->>>
->>> make -C t t601*
->>>
->>> which is cool but undocumented. If we want this with prove it requi=
-res more
->>> effort, or shoving prove into the $(T) target rule which is doable,=
- of course.
->>> I'm just wondering whether it's accepted to introduce a specific ru=
-le for prove
->>> at all.
->>
->> I like the rationale behind this, but fwiw. I already had a patch th=
-at
->> was ejected for this:
->>
->> =C2=A0 =C2=A0 http://article.gmane.org/gmane.comp.version-control.gi=
-t/146566
->>
->> Quoth Junio:
->>
->> =C2=A0 =C2=A0 "Besides, "make -j15 test" from the toplevel already r=
-uns the
->> =C2=A0 =C2=A0 tests in parallel. =C2=A0I don't see much point in thi=
-s change."
->>
->
-> Sorry for the kind of dupe then. Though I can understand that the fix=
-ed
-> options back then didn't find Junio's approval. Maybe it's different
-> now, when it's completely interchangeable with make test?
+--Sig_/mK.MVlauCvRiipCgL2btTmu
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Maybe. I try not to decipher him too much :)
+(once again and "reply-to-all" this time)
 
-But a patch for this that'd be acceptable would be great. Good that
-you're working on it.
+On Sun, 10 Oct 2010 01:15:35 -0500
+Jonathan Nieder <jrnieder@gmail.com> wrote:
 
->> But I'd like to have it so that I could `make && make test_harness`
->> and get readable test output.
->>
->> But we should probably be using t/harness to run them, not
->> prove(1). Then we would make the test_harness target respect the
->> HARNESS_OPTIONS variable, which I e.g. have set to HARNESS_OPTIONS=3D=
-j9
->> on my system.
->
-> Didn't know about that one either. What does t/harness
-> differently/better from/than prove? Does it take the same options? Is
-> t/harness respecting the SHELL_PATH for the tests? Running a test und=
-er
-> make test and make prove/harness needs to be completely equivalent.
+> Hi Tom=C3=A1=C5=A1,
+>=20
+> Tom=C3=A1=C5=A1 Ebenlendr wrote:
+>=20
+> > I tried to convert our repositories to git. Our repositories have
+> > only branches (no tags, and no branch is so special to be called
+> > trunk). The directory of each individual branch live in the root of
+> > the repository (i.e., not in directory 'branches' as in standard
+> > layout).
+>=20
+> Okay, so I am imagining:
+>=20
+> 	1.0.x/
+> 	1.1.x/
+> 	1.2.x/
+> 	2.0.x/
+> 	...
+>=20
+> > I init the repository by: git svn init path_to_repo -b *
+> > This triggers first bogus match in match_globs(): the pattern
+> > matches an empty string - the place before first slash in any path.
+>=20
+> A branches refspec of
+>=20
+> 	*:refs/remotes/*
+>=20
+> results in
+>=20
+> 	$self{left} =3D ''
+> 	$self{glob} =3D '*'
+> 	$self{left_regex} =3D qr'^/(/|$)'
+> 	$self{regex} =3D qr'([^/]*)'.
+>=20
+> Does get_dir_globbed cope correctly?  Will get_dir cope correctly with
+> the spurious / (from $left/$de) inserted at the beginning of paths?
+>=20
 
-t/harness is just using the library that prove(1) uses directly. We
-already use it for "make smoke". The advantage is that you can run
-custom setup code there, e.g. this is from perl.git's own t/harness:
+Hmm, I don't know. The code is undocummented, thus I don't know what is
+any function supposed to return. I just guess. With the patch my
+"git svn clone" works, taking 48 hours to convert the repository.
+The only problem is that many merges are probably mis-recognized
+as cherrypicking, but we can live with that.
 
-    my $jobs =3D $ENV{TEST_JOBS};
-    my ($rules, $state, $color);
-    if ($ENV{HARNESS_OPTIONS}) {
-        for my $opt ( split /:/, $ENV{HARNESS_OPTIONS} ) {
-            if ( $opt =3D~ /^j(\d*)$/ ) {
-                $jobs ||=3D $1 || 9;
-            }
-            elsif ( $opt eq 'c' ) {
-                $color =3D 1;
-            }
-            else {
-                die "Unknown HARNESS_OPTIONS item: $opt\n";
-            }
-        }
-    }
+Both parts of the patch individually fix the error triggered by
+'*:refs/remotes/*', but both parts are about what I think there should
+be. The second part also fixes the bug with not recognised branches.
 
-So if we expanded t/harness to use that and added a "test_harness"
-target we could make it grok the TEST_JOBS and HARNESS_OPTIONS
-environment variables.
+> The regex always matches, even for empty $p, but it is not immediately
+> obvious to me how that pans out.  Could you describe the symptoms?
+>=20
+The symptom of '*:refs/remotes/*' bug is following: 'clone' or 'fetch'
+fails with following message:
 
-The output would be the same (see "make smoke"), and we can make it
-respect SHELL_PATH.
+  ref: 'refs/remotes/' ends with a trailing slash, this is not
+  permitted by git nor Subversion
+
+This is die() in Git::SVN::refname(). Here is the backtrace for
+fetch. $VAR1 being the only argument passed to refname().
+Note that the line numbers my be off by small number, as I added
+two lines for the backtrace to happen.
+
+$VAR1 =3D bless( {
+                 'index' =3D> '.git/svn/refs/remotes//index',
+                 'map_root' =3D> '.git/svn/refs/remotes//.rev_map',
+                 'repo_id' =3D> 'svn',
+                 'config' =3D> '.git/svn/config',
+                 'path' =3D> '',
+                 'dir' =3D> '.git/svn/refs/remotes/',
+                 'ref_id' =3D> 'refs/remotes/'
+               }, 'Git::SVN' );
+ at ../git-svn.perl line 2075
+        Git::SVN::refname('Git::SVN=3DHASH(0x93df4b4)') called
+at ../git-svn.perl line 1954
+Git::SVN::init_remote_config('Git::SVN=3DHASH(0x93df4b4)',
+'file:///afs/ms/u/t/tebe7122/devel/pokussvn', 1) called
+at ../git-svn.perl line 2023 Git::SVN::init('Git::SVN',
+'file:///afs/ms/u/t/tebe7122/devel/pokussvn', '', 'undef',
+'refs/remotes/', 1) called at ../git-svn.perl line 5365
+Git::SVN::Ra::match_globs('Git::SVN::Ra=3DHASH(0x9673f54)',
+'HASH(0x910ec7c)', 'HASH(0x9674608)', 'ARRAY(0x8f845c4)', 1) called
+at ../git-svn.perl line 5257
+Git::SVN::Ra::gs_fetch_loop_common('Git::SVN::Ra=3DHASH(0x9673f54)', 0,
+2, 'ARRAY(0x8f845ac)', 'ARRAY(0x8f845c4)') called at ../git-svn.perl
+line 1809 Git::SVN::fetch_all('svn', 'HASH(0x92998f4)') called
+at ../git-svn.perl line 992 main::cmd_multi_fetch() called
+at ../git-svn.perl line 442 main::cmd_fetch() called at ../git-svn.perl
+line 314 eval {...} called at ../git-svn.perl line 312
+
+> > We have created some branch names just by adding some suffix to
+> > another branch name. Imagine branch "devel" and "devel2". Then
+> > there is bogus match on path '/devel2' as it outputs 'devel'.
+>=20
+> Is this problem reproducible without the other change?  If so, would
+> it makes sense to split off this fix as a separate patch?
+
+I cannot reproduce the second bug without '*:/refs/remotes/*',
+thus I'm not sure if I'm fixing the origin of the problem.
+
+>=20
+> Also, if Eric likes your patches, can he forge your sign-off?  See
+> Documentation/SubmittingPatches for what this means.
+>=20
+
+Yes I'm fine with it. Although I'm not yet sure that I fix the problems
+at their origin, and I have no time to read the whole source now.
+I'll resubmit the patch(es) in any suggested shape, after someone
+confirms, that it cannot break other things.
+
+> Thanks,
+> Jonathan
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>=20
+
+--=20
+                                 Tom=C3=A1=C5=A1 'eb=C3=ADk' Ebenlendr
+                                 PF 2010.78487731481
+
+
+--Sig_/mK.MVlauCvRiipCgL2btTmu
+Content-Type: application/pgp-signature; name=signature.asc
+Content-Disposition: attachment; filename=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iF4EAREIAAYFAky2zsMACgkQUYN+FqT7KZs+xQD6A9TFIouplg+HxA2WwDijaCXS
+rbSQy1u9vt1US0+DhJkA/jx/W+7V0Wm7Eum0bet+aZraZCQ8WOc1hWhYbn3/ppQz
+=U5B7
+-----END PGP SIGNATURE-----
+
+--Sig_/mK.MVlauCvRiipCgL2btTmu--
