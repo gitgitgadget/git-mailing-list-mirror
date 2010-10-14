@@ -1,82 +1,128 @@
-From: Jon Seymour <jon.seymour@gmail.com>
-Subject: Re: Stable ab/i18n branch
-Date: Fri, 15 Oct 2010 08:50:45 +1100
-Message-ID: <AANLkTin-s8EqssfuOeM6vAmBOFF=JrtgzS96hTSFKZ90@mail.gmail.com>
-References: <7v39s9fkk1.fsf@alter.siamese.dyndns.org>
-	<AANLkTimr73DUBBwdj9MXOQQ=O-vmyyEZpgwdHmRsGG_-@mail.gmail.com>
-	<20101014200027.GA18813@burratino>
-	<AANLkTim-2V_XtWVLFbWS_A-0rFNmuDvtR58aanxKL-O2@mail.gmail.com>
-	<20101014205413.GD28958@burratino>
-	<AANLkTi=LEzQu5_EyJ_ncRmsHfufG=AnEv9+eTQuqh5W7@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 14 23:51:05 2010
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v6 3/5] [RFC] Handle the simpler case of a subdir invalidating bulk move.
+Date: Fri, 15 Oct 2010 01:29:57 +0200
+Message-ID: <1287098999-9244-4-git-send-email-ydirson@altern.org>
+References: <1287098999-9244-1-git-send-email-ydirson@altern.org>
+ <1287098999-9244-2-git-send-email-ydirson@altern.org>
+ <1287098999-9244-3-git-send-email-ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>, Yann Dirson <ydirson@free.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 15 01:20:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6VhX-00052M-BQ
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 23:51:03 +0200
+	id 1P6X5k-00046c-QD
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 01:20:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932270Ab0JNVuz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 17:50:55 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:50465 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932266Ab0JNVuz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 17:50:55 -0400
-Received: by qyk9 with SMTP id 9so174314qyk.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 14:50:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=b5QQvWR9ew+7EeoX7nZsvx8jFIW1eBFISQ8RRa/jVys=;
-        b=Wkbt8cUGn6wI/c3At3OGkzUQ9MaJ1QkRQ3mB8QNDNHCTD8LmcaqscVARfHVnq5d39/
-         PNN1MZHyKEtAV4/OHSSgAmyPpnwflcLSpzdXwU/mnK9Gtnf2i09VTh1RpZwLnrTzMnpf
-         880WAEpV1wNeWgE/vw0t19v6nh8qJrRGt1FJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=EFUHGHX18WpNyVvmjzDnL6FwpRYGDiZ+wfx0aIQpNC2HCw+EDqrbblf210qvKQ5x0B
-         BNC1s7vtzhxmskSEez4EBdIcJvvZ/FrQRnXGFc2YHKjFIYHDnC2km9U9OAd5nQ6fcCfU
-         rCplFV2U1POp9jK/5kHBuQ3owemu3RRJLbmT8=
-Received: by 10.229.215.193 with SMTP id hf1mr9297902qcb.59.1287093045389;
- Thu, 14 Oct 2010 14:50:45 -0700 (PDT)
-Received: by 10.229.226.6 with HTTP; Thu, 14 Oct 2010 14:50:45 -0700 (PDT)
-In-Reply-To: <AANLkTi=LEzQu5_EyJ_ncRmsHfufG=AnEv9+eTQuqh5W7@mail.gmail.com>
+	id S1756020Ab0JNXTT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Oct 2010 19:19:19 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:40506 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755991Ab0JNXTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Oct 2010 19:19:17 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 7C260D48037;
+	Fri, 15 Oct 2010 01:19:11 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P6XFJ-0002Q2-Ul; Fri, 15 Oct 2010 01:30:01 +0200
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1287098999-9244-3-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159080>
 
-On Fri, Oct 15, 2010 at 8:18 AM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Oct 14, 2010 at 20:54, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> So what I've tried to do to make this acceptable for inclusion in cor=
-e
-> is to make this whole thing a no-op unless it's explicitly
-> requested.
->
+Doing it so simply depends on the subdir moves being noticed later,
+this fixes only one of the remaining failing testcases.  Doing better
+requires real handling of deep trees, which is addressed by next
+patch, but add much complexity.
 
-I agree with Jonathan that there might be some value to clearly
-delineating the i18n infrastructure from the application of it to the
-rest of the code base.The i18n infrastructure should be, relatively
-speaking, less invasive than the application of it throughout the code
-base.
+Signed-off-by: Yann Dirson <ydirson@free.fr>
+---
+ diffcore-rename.c |   59 ++++++++++++++++++++++++++++++++++++++++------------
+ 1 files changed, 45 insertions(+), 14 deletions(-)
 
-It would be good for Junio (I presume) to have the option to integrate
-the infrastructure in one hit, but allow the application of it to be
-deferred, perhaps on a subject-area by subject-area basis.
-
-jon.
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index f252da7..1be1af1 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -596,10 +596,52 @@ static void check_one_bulk_move(struct diff_filepair *dstpair)
+ 	    maybe_disqualify_bulkmove(one_parent_path, one_leftover))
+ 		return;
+ 
++	fprintf(stderr, "[] %s -> %s ?\n",dstpair->one->path, dstpair->two->path);
++
++	// FIXME: loop over successive prefixes
++	unsigned needs_adding = 1;
++
+ 	/* already considered ? */
+-	for (seen=bulkmove_candidates; seen; seen = seen->next)
+-		if (!strcmp(seen->one->path, one_parent_path)) break;
+-	if (!seen) { /* record potential dir rename */
++	for (seen=bulkmove_candidates; seen; seen = seen->next) {
++		if (seen->discarded) {
++			/* already seen a rename from seen->one to some than ->two */
++			needs_adding = 0;
++			continue;
++		}
++		/* check exact dir */
++		if (!strcmp(seen->one->path, one_parent_path)) {
++			/* already added */
++			needs_adding = 0;
++			/* check that seen entry matches this rename */
++			if (strcmp(two_parent_path, seen->two->path)) {
++				fprintf(stderr, "[DBG] discarding dir %s from bulk moves (split into %s and %s)\n",
++					seen->one->path, two_parent_path, seen->two->path);
++				// FIXME: may be worth to free it instead
++				seen->discarded = 1;
++			}
++			continue;
++		}
++		if (!prefixcmp(one_parent_path, seen->one->path)) {
++			if (prefixcmp(two_parent_path, seen->two->path)) {
++				fprintf(stderr, "[DBG] discarding dir %s from bulk moves (split into %s and %s)\n",
++					seen->one->path, two_parent_path, seen->two->path);
++				// FIXME: may be worth to free it instead
++				seen->discarded = 1;
++				continue;
++			}
++		} else {
++			fprintf(stderr, "[DBG]  %s considered irrelevant for %s -> %s\n",
++				dstpair->one->path, seen->one->path, seen->two->path);
++			continue;
++		}
++
++		/* dstpair confirms seen */
++		fprintf(stderr, "[DBG] %s -> %s DOES NOT cause discard of %s -> %s\n",
++			dstpair->one->path, dstpair->two->path,
++			seen->one->path, seen->two->path);
++	}
++	if (needs_adding) { /* record potential dir rename */
++		/* all checks ok, we keep that entry */
+ 		seen = xmalloc(sizeof(*seen));
+ 		seen->one = alloc_filespec(one_parent_path);
+ 		fill_filespec(seen->one, null_sha1, S_IFDIR);
+@@ -614,17 +656,6 @@ static void check_one_bulk_move(struct diff_filepair *dstpair)
+ 			one_parent_path, two_parent_path);
+ 		return;
+ 	}
+-	if (seen->discarded)
+-		/* already seen a rename from seen->one to some than ->two */
+-		return;
+-	/* check that seen entry matches this rename */
+-	if (strcmp(two_parent_path, seen->two->path)) {
+-		fprintf(stderr, "[DBG] discarding dir %s from bulk moves (split into %s and %s)\n",
+-			one_parent_path, two_parent_path, seen->two->path);
+-		seen->discarded = 1;
+-	}
+-
+-	/* all checks ok, we keep that entry */
+ }
+ 
+ /*
+-- 
+1.7.2.3
