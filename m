@@ -1,76 +1,73 @@
-From: Alexander Gladysh <agladysh@gmail.com>
-Subject: false positives from git diff-index when used with --git-dir
-Date: Thu, 14 Oct 2010 18:40:51 +0400
-Message-ID: <AANLkTimyeE=OLdC0Zzdnidr_dssFfkMzS+r_39dYUVxz@mail.gmail.com>
+From: Mathias Lafledt <misfire@debugon.org>
+Subject: [PATCH] GIT-VERSION-GEN: make use of git describe --dirty
+Date: Thu, 14 Oct 2010 18:17:46 +0200
+Message-ID: <4CB72D2A.7050601@debugon.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 14 16:41:28 2010
+X-From: git-owner@vger.kernel.org Thu Oct 14 18:17:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6Ozl-0003hy-Th
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 16:41:26 +0200
+	id 1P6QVB-00056N-5T
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 18:17:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755089Ab0JNOlR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Oct 2010 10:41:17 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:48378 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755068Ab0JNOlO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Oct 2010 10:41:14 -0400
-Received: by qyk5 with SMTP id 5so93076qyk.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 07:41:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=EcR+F7NXHGqUploYG9SKXl1w3C4CR8el82EhKELgXKY=;
-        b=braqPXFg/KqNQY/PaLD5zeWNNSS/Pus7UoR6xDPJKlkVlvrrBcbiosHpiIDVz04Zwj
-         vOSaF14dOjFWXR43c/R2jcangIzxciuuWrc0ovkoO6tPBvRYkpZGy6ohQHzHMSxx7VcI
-         4Zbpl3j0S0Quub1dpKxFHP4Z0DR+ZZYVcri5Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=dVunm3hwfIt0m3C6AnKeLsJZ9MJq1c14WrafDNP65BGY1z5qczifM59iIXcMl/LGzP
-         EYOIpKmhU46xFj46BquRLFoyglAn6chx5jU6at/HRKQ0PfyGgAxy//eHRYin3eWU+nC5
-         5JeeCpPX1ynvjwLHUy3ZFRQCZHHkbTvKACZpA=
-Received: by 10.229.223.193 with SMTP id il1mr8374580qcb.250.1287067273886;
- Thu, 14 Oct 2010 07:41:13 -0700 (PDT)
-Received: by 10.229.51.138 with HTTP; Thu, 14 Oct 2010 07:40:51 -0700 (PDT)
+	id S1755364Ab0JNQRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Oct 2010 12:17:51 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:53790 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341Ab0JNQRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Oct 2010 12:17:50 -0400
+Received: from [192.168.2.102] (dslb-088-070-157-236.pools.arcor-ip.net [88.70.157.236])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MLCD7-1P69Nq3zsH-0003UN; Thu, 14 Oct 2010 18:17:49 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.12) Gecko/20100915 Thunderbird/3.0.8
+X-Provags-ID: V02:K0:6JZL/IqJejuC9H4HfgSs6mtpRGEYm6QVdd1Dxl3Go2T
+ nLe7F4txTR3G4ShJyE25ch811jK+Iwx8+roXypA5rWnRR7hdQU
+ 3kAS2m7I4wal+8hpv8hfZCWHH+8KWF6vOzvFr1hsg8WFbWud/4
+ U9VM+JKOI2McQFR9u8TP5pCUENxAivdEi7/JLzUFpnT5IVg3Vq
+ 5rUcjYjfa4+xOObTm8Ttoh80LGG7iOmETV5dJuo2J4=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159052>
 
-Hi, list!
+Currently, GIT-VERSION-GEN invokes the plumbing commands "git update-index" and
+"git diff-index" to determine if the working tree is dirty. It then appends
+"-dirty" to the version string returned by "git describe".
 
-$ git --version
-git version 1.7.3.1
+However, as of Git v1.6.6, "git describe" can be told to do all that with the
+"--dirty" option, saving us the plumbing.
 
-$ lsb_release -a
-No LSB modules are available.
-Distributor ID:	Ubuntu
-Description:	Ubuntu 10.10
-Release:	10.10
-Codename:	maverick
+Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
+---
+ GIT-VERSION-GEN |    7 ++-----
+ 1 files changed, 2 insertions(+), 5 deletions(-)
 
-I'm *sometimes* (once in about ten times I use it -- repository
-changes between invocations of course) getting false positives from
-git diff-index when I invoke git from another directory:
-
-git --git-dir=path/to/.git --work-tree=path/to update-index -q --refresh
-git --git-dir=path/to/.git --work-tree=path/to diff-index --exit-code
---quiet HEAD
-
-This is *really* annoying and really kills the benifits from my
-workflow automation scripts.
-
-Unfortunately I can't find a reproducible use case for this bug.
-
-Is there anything I can do to help catch it?
-
-Thanks,
-Alexander.
+diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
+index d441d88..73d5cf9 100755
+--- a/GIT-VERSION-GEN
++++ b/GIT-VERSION-GEN
+@@ -12,13 +12,10 @@ if test -f version
+ then
+ 	VN=$(cat version) || VN="$DEF_VER"
+ elif test -d .git -o -f .git &&
+-	VN=$(git describe --match "v[0-9]*" --abbrev=4 HEAD 2>/dev/null) &&
++	VN=$(git describe --match "v[0-9]*" --abbrev=4 --dirty 2>/dev/null) &&
+ 	case "$VN" in
+ 	*$LF*) (exit 1) ;;
+-	v[0-9]*)
+-		git update-index -q --refresh
+-		test -z "$(git diff-index --name-only HEAD --)" ||
+-		VN="$VN-dirty" ;;
++	v[0-9]*) : ;;
+ 	esac
+ then
+ 	VN=$(echo "$VN" | sed -e 's/-/./g');
+-- 
+1.7.3.GIT
