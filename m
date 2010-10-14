@@ -1,103 +1,56 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: [PATCH 3/3] bisect: check for mandatory argument of 'bisect replay'
-Date: Thu, 14 Oct 2010 09:55:53 +0200
-Message-ID: <AANLkTi=HCHy0q4atzVYUGO0hQ3FBigZcFDsFLv9iZ=h-@mail.gmail.com>
-References: <1286747338-8521-1-git-send-email-szeder@ira.uka.de>
-	<1286747338-8521-3-git-send-email-szeder@ira.uka.de>
-	<201010120435.11903.chriscool@tuxfamily.org>
-	<201010120456.35411.chriscool@tuxfamily.org>
-	<7viq16m0tk.fsf@alter.siamese.dyndns.org>
+From: Christian Halstrick <christian.halstrick@gmail.com>
+Subject: Re: Can I checkout a single file without altering index?
+Date: Thu, 14 Oct 2010 08:03:23 +0000 (UTC)
+Message-ID: <loom.20101014T095743-275@post.gmane.org>
+References: <loom.20101012T114900-532@post.gmane.org> <AANLkTinnYEnCwpTh45N69n73JQm=ndXH-SUJ5b1piUYv@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <chriscool@tuxfamily.org>,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 14 09:56:02 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 14 10:03:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6IfS-0003tw-7d
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 09:56:02 +0200
+	id 1P6Imr-0006sJ-AS
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 10:03:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754817Ab0JNHz4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 03:55:56 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57001 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754448Ab0JNHzz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 03:55:55 -0400
-Received: by wyb28 with SMTP id 28so1848140wyb.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 00:55:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=d9yWDtwqe+jHccsq7TWlm94TeNWEbYfnYVA51TcUWkA=;
-        b=iruKXKAbWnRHSGhf5mt7LCxrRdKyACM3MipCLWbsD46OldhQShgHge8db8R+FfanS3
-         6IWlmA5JP16CqvBkToMddh3Mkl0zb/vWBYHQo5rYxQOyE6vZysz1amD5TQqlTLPbmhSu
-         50egiucS1Edoz4EIVB7OUH7a00WcWAgtqGiJU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=AXpSULEV0OKyGrv6masQ6Ci7iLNmnopJAQYYz0l4Q4u++T09s08egg3ldOPeuEEgSr
-         6duQAB0VWkoKQM9+9TtrT2WMYtXO++8Z/6GxTW2Wm+U+eRs/R9zKx+RXZfIE90oO/Rlf
-         zvxVcIZp186WyaYmSPwyA7duGhH0vrk+X8LdQ=
-Received: by 10.227.132.211 with SMTP id c19mr9496143wbt.226.1287042954001;
- Thu, 14 Oct 2010 00:55:54 -0700 (PDT)
-Received: by 10.216.35.199 with HTTP; Thu, 14 Oct 2010 00:55:53 -0700 (PDT)
-In-Reply-To: <7viq16m0tk.fsf@alter.siamese.dyndns.org>
+	id S1754889Ab0JNIDe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Oct 2010 04:03:34 -0400
+Received: from lo.gmane.org ([80.91.229.12]:35566 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754861Ab0JNIDc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Oct 2010 04:03:32 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P6Imh-0006oL-4X
+	for git@vger.kernel.org; Thu, 14 Oct 2010 10:03:31 +0200
+Received: from 155.56.68.217 ([155.56.68.217])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 10:03:31 +0200
+Received: from christian.halstrick by 155.56.68.217 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 10:03:31 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 155.56.68.217 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.63 Safari/534.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159028>
 
-On Wed, Oct 13, 2010 at 7:58 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Christian Couder <chriscool@tuxfamily.org> writes:
->
->>> > =A0bisect_replay () {
->>> >
->>> > + =A0test "$#" -eq 1 || die "No logfile given"
->>> >
->>> > =A0 =A0test -r "$1" || die "cannot read $1 for replaying"
->>> > =A0 =A0bisect_reset
->>> > =A0 =A0while read git bisect command rev
->>>
->>> While at it perhaps you could do something like:
->>>
->>> bisect_replay () {
->>> + =A0 =A0test "$#" -lt 1 || die "No logfile given"
->>> + =A0 =A0test "$#" -gt 1 || die "Too many argument. Please give onl=
-y one logfile."
->>> =A0 =A0 =A0test -r "$1" || die "cannot read $1 for replaying"
->>> =A0 =A0 =A0bisect_reset
->>> =A0 =A0 =A0while read git bisect command rev
->>
->> I mean:
->>
->> bisect_replay () {
->> + =A0 =A0 test "$#" -lt 1 && die "No logfile given"
->> + =A0 =A0 test "$#" -gt 1 && die "Too many argument. Please give onl=
-y one logfile."
->> =A0 =A0 =A0 test -r "$1" || die "cannot read $1 for replaying"
->> =A0 =A0 =A0 bisect_reset
->> =A0 =A0 =A0 while read git bisect command rev
->
-> That suggests that the original patch is buggy as well, in that it sa=
-ys
-> "No logfile given" when it gets two.
->
-> How about checking with 1 and saying "Give me only one logfile" and b=
-e
-> done with it?
+Thank's a lot for all your responses. I know now how to solve my problem. I'll
+definitely not going to commit my unit-test before my fix and publish that
+because then I would have commits in the history where tests fail. But other
+suggested solutions do work.
 
-Yeah or: "Give me exactly one logfile as argument"
+Still, all that sounds like workarounds for a lacking feature. Checkout content
+to the worktree without altering the index. What do you think, couldn't that be
+added as an option to checkout?
 
-Best regards,
-Christian.
+-- Chris
