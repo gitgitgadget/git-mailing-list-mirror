@@ -1,68 +1,127 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: false positives from git diff-index when used with --git-dir
-Date: Thu, 14 Oct 2010 13:02:28 -0400
-Message-ID: <20101014170227.GA14429@sigill.intra.peff.net>
-References: <AANLkTimyeE=OLdC0Zzdnidr_dssFfkMzS+r_39dYUVxz@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] bash: add helper function to get config variables
+ for completion
+Date: Thu, 14 Oct 2010 12:15:07 -0500
+Message-ID: <20101014171507.GA17550@burratino>
+References: <20101014085538.GB838@neumann>
+ <1287046727-22509-1-git-send-email-szeder@ira.uka.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 14 19:02:16 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Oct 14 19:18:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6RC0-0003IG-Q5
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 19:02:13 +0200
+	id 1P6RRx-0003Ug-Rv
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 19:18:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755615Ab0JNRCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Oct 2010 13:02:05 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:46123 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752342Ab0JNRCE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Oct 2010 13:02:04 -0400
-Received: (qmail 9532 invoked by uid 111); 14 Oct 2010 17:02:02 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 14 Oct 2010 17:02:02 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Oct 2010 13:02:28 -0400
+	id S1755566Ab0JNRSg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 13:18:36 -0400
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:38689 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755303Ab0JNRSf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 13:18:35 -0400
+Received: by qyk5 with SMTP id 5so261980qyk.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 10:18:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=Tm/dJLF2ygYLeEqZWhzsL+QTCmRxsDvNw5uby5eAy5k=;
+        b=tw85kP8kjpQACurqw/0R+Jh7ftKc/vOmK4IK0bDaQvoWcSvVtN4iyjCkCzsPhO7bBN
+         GpyewvbTpzCxEr0e0/UTnXxXYsSjyXFFRotYPBHwoZdBhQlQ7UBhkqh9ebC+QMHJmHpP
+         dAA1I6Zc4+IThNig62H1KcTwst7CBea2zoDcA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=oV6xHn51dMhHp1fGNu5l4YrhjyxdVSCVPoY1Vq/L+0nEQ++tIQFbRdiJSh7SolBYkM
+         FCXpTO7M9h0kPlE5f5wZwV4e6OySLZ4cQgLwbyLcuzN1JjNoIzL+LhujM2SdF2Bic7Cm
+         R2gb7IfYKXfrkhdr0twOuUCHuxjowu+PJDd8c=
+Received: by 10.229.98.209 with SMTP id r17mr6054720qcn.241.1287076714292;
+        Thu, 14 Oct 2010 10:18:34 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id s28sm4559896qcp.9.2010.10.14.10.18.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 14 Oct 2010 10:18:33 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTimyeE=OLdC0Zzdnidr_dssFfkMzS+r_39dYUVxz@mail.gmail.com>
+In-Reply-To: <1287046727-22509-1-git-send-email-szeder@ira.uka.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159058>
 
-On Thu, Oct 14, 2010 at 06:40:51PM +0400, Alexander Gladysh wrote:
+SZEDER G=C3=A1bor wrote:
 
-> I'm *sometimes* (once in about ten times I use it -- repository
-> changes between invocations of course) getting false positives from
-> git diff-index when I invoke git from another directory:
-> 
-> git --git-dir=path/to/.git --work-tree=path/to update-index -q --refresh
-> git --git-dir=path/to/.git --work-tree=path/to diff-index --exit-code
-> --quiet HEAD
-> 
-> This is *really* annoying and really kills the benifits from my
-> workflow automation scripts.
-> 
-> Unfortunately I can't find a reproducible use case for this bug.
-> 
-> Is there anything I can do to help catch it?
+> Currently there are three completion functions that perform similar
+> queries to 'git config' to get config variable names.
 
-Can it reproduce over a large number of trials? I.e., something like:
+Good point.
 
-  while true; do
-    git ... update-index ...
-    git ... diff-index ... || echo failed
-  done
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -451,10 +451,7 @@ __git_remotes ()
+>  		echo ${i#$d/remotes/}
+>  	done
+>  	[ "$ngoff" ] && shopt -u nullglob
+> -	for i in $(git --git-dir=3D"$d" config --get-regexp 'remote\..*\.ur=
+l' 2>/dev/null); do
+> -		i=3D"${i#remote.}"
+> -		echo "${i/.url*/}"
+> -	done
+> +	__git_get_config_variables "remote" "url"
+>  }
 
-If so, try adding a "sleep 1" between the two commands. If that fixes
-it, it implies a race condition in git.
+Ok, so __git_get_config_variables $category $var means something like
 
-You could also try running under valgrind to see if there are any bad
-memory accesses, which could also produce intermittent buggy behavior.
+	git config --get-regexp '$category[.].*[.]$var' |
+	cut -d. -f2
 
--Peff
+> @@ -750,14 +747,16 @@ __git_compute_porcelain_commands ()
+>  	: ${__git_porcelain_commands:=3D$(__git_list_porcelain_commands)}
+>  }
+> =20
+> -__git_aliases ()
+> +# returns all config variables within a given section with an option=
+al
+> +# suffix, with both the section name and the suffix removed
+> +__git_get_config_variables ()
+>  {
+> -	local i IFS=3D$'\n'
+> -	for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "alias=
+\..*" 2>/dev/null); do
+> +	local section=3D"$1" suffix=3D"${2-}" i IFS=3D$'\n'
+> +	for i in $(git --git-dir=3D"$(__gitdir)" config --get-regexp "$sect=
+ion\..*${suffix:+\.$suffix}" 2>/dev/null); do
+
+Would it be possible to shorten this line?  e.g.
+
+	for i in $(
+		git --git-dir=3D"$(__gitdir)" ...
+	); do
+
+or
+
+	while read -r setting
+	do
+		...
+	done < <(
+		git --git-dir=3D"$(__gitdir)" ...
+	)
+
+or
+
+	local ... IFS=3D$'\n'
+	set -- $(git ... )
+	for i do
+		...
+	done
