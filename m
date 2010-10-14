@@ -1,86 +1,170 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests
- with TAP
-Date: Thu, 14 Oct 2010 13:23:02 -0400
-Message-ID: <20101014172301.GA2770@sigill.intra.peff.net>
-References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>
+From: Jason Sewall <jasonsewall@gmail.com>
+Subject: Multi-target software repo, plus toolchain tracking
+Date: Thu, 14 Oct 2010 10:21:42 -0700
+Message-ID: <AANLkTineMhWPAMKondq9N26w3p6djaJ_xDyhj+yeawFv@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Oct 14 19:22:42 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 14 19:27:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6RVq-0005PY-9L
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 19:22:42 +0200
+	id 1P6Rak-00089O-9S
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 19:27:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753386Ab0JNRWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Oct 2010 13:22:37 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43387 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752052Ab0JNRWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Oct 2010 13:22:36 -0400
-Received: (qmail 9803 invoked by uid 111); 14 Oct 2010 17:22:36 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 14 Oct 2010 17:22:36 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Oct 2010 13:23:02 -0400
-Content-Disposition: inline
-In-Reply-To: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>
+	id S1755354Ab0JNR1k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Oct 2010 13:27:40 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:61883 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753515Ab0JNR1k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Oct 2010 13:27:40 -0400
+Received: by wwj40 with SMTP id 40so8238307wwj.1
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 10:27:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=GoVHctGr5TxKn25W3xuxb+gmBg+NPtr6+gqbFevR2+o=;
+        b=MoJloEGmJM6/xvGPQWvNLDJbXudToIh3+Q8VnPJDExXIBUwTypJxJli728EFS7BZZf
+         lkH9t2olJHkR0HnpNbvimtAE97EzUBkZ3d5UJU/AuZmDo0BIxgOVRXeO4ULSei6PWMiB
+         SBhGtYglXlkdeEgh6zSEx2c0F3U6TKG0qCufs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=yF/8cMZGemxnWYtTTkUb7cglB9PuU+j5fiKq2El2PIn/gqL+D+fQpTEJt7bGram8xI
+         i7wN4+4xbgHitK4Sh92yQVebKFAsAwvOiehKG6TeZgjvg57u+AtPuRsZweFlL3RCWR9G
+         BDjuC6x5BmeoMvdrv+wqz/b0W5XgM1N9+5N7k=
+Received: by 10.216.71.66 with SMTP id q44mr10230626wed.44.1287076923089; Thu,
+ 14 Oct 2010 10:22:03 -0700 (PDT)
+Received: by 10.216.230.90 with HTTP; Thu, 14 Oct 2010 10:21:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159060>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159061>
 
-On Thu, Oct 14, 2010 at 10:53:36AM +0200, Michael J Gruber wrote:
+At $WORK, we're trying to figure out how to handle a combinatorial
+explosion of research projects, backends, and big binary toolchains
+and I'm looking into leverage git for the problem. I'd appreciate the
+list's advice; here's the basics (I've tried to make it as succinct as
+possible):
 
-> +prove: pre-clean
-> +	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-> +	$(MAKE) clean
-> +
+We have a suite composed of multiple sub-projects; each of these
+projects supports some subset of a bunch of backend targets:
 
-I like the idea. I think the prove output is a little nicer for things
-like -j16, but it's a pain to construct the command line (especially as
-I use --root in GIT_TEST_OPTS to get a significant speedup).
+repo/
+      project1/
+		targetA/
+		targetB/
+		targetD/
+		...
+      project2/
+		targetC/
+		targetD/
+		...
+      project3/
+		targetB/
+		...
+      ...
 
-I wonder if anybody is really interested in switching between the
-"prove" and regular test targets, though. I would think you either like
-to use prove or not. So perhaps it makes more sense to put a
-configurable switch for the default target, like the patch below. Then
-you can just "make test" (or "make" in the test directory) as usual.
+The complication is that most of these targets depend on some
+(possibly experimental) toolchain for compilation, and even execution
+in some cases.  We get these tools from upstream as big binary blobs
+with timestamps.
 
-diff --git a/t/Makefile b/t/Makefile
-index c7baefb..2b4d4ac 100644
---- a/t/Makefile
-+++ b/t/Makefile
-@@ -11,6 +11,8 @@ SHELL_PATH ?= $(SHELL)
- PERL_PATH ?= /usr/bin/perl
- TAR ?= $(TAR)
- RM ?= rm -f
-+PROVE ?= prove
-+DEFAULT_TEST_TARGET ?= test
- 
- # Shell quote;
- SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
-@@ -18,9 +20,15 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
- T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
- TSVN = $(wildcard t91[0-9][0-9]-*.sh)
- 
--all: pre-clean
-+all: $(DEFAULT_TEST_TARGET)
-+
-+test: pre-clean
- 	$(MAKE) aggregate-results-and-cleanup
- 
-+prove: pre-clean
-+	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
-+	$(MAKE) clean
-+
- $(T):
- 	@echo "*** $@ ***"; GIT_CONFIG=.git/config '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
- 
+We are very interested in tracking how performance changes with
+updates in our code as well as changes in the toolchain, so it makes
+sense to collect some performance numbers with some code and package
+those numbers along with info about which version of a given tool was
+used to compile/execute.  Naively, we could just put the tool right in
+the repository like so:
+
+repo/
+      project1/
+		targetA/
+			targetA-toolchain/
+		targetB/
+			targetB-toolchain/
+		...
+      project3/
+		targetB/
+			targetB-toolchain/
+		...
+      ...
+
+The duplication of tools alone is pretty wasteful in disk space, but
+worse still, as we update tools and commit them, the size of the repo
+--- with all of these giant binary toolchains in it --- is likely to
+get pretty huge, and become a burden those who want to clone the repo
+and just work on the tip of some branch.
+
+So what we really want is to have git make sure to grab the right
+version of each toolchain whenever we move HEAD; I haven't got tons of
+experience with submodules, but I think that they are well-suited to
+handle this problem.
+
+This is where I'd like to leverage the list's knowledge; there are a
+few ways to handle this, and I'm not sure which is the best.  Again,
+what we want is:
+
+1. For a given checkout of repo/ to have each targetXXX-toolchain/
+directory populated, keeping in mind that different projects may not
+all be using the same version of a toolchain
+2. For end-users of the repo/ (cloners) to avoid having to lug around
+every version of every toolchain; we don't want to 'pollute' the repo
+with the large (>100mb) toolchain blobs we get from upstream.
+3. If possible, further minimize disk usage by using some sort of
+indirection (soft or hard linking, for example) when multiple projects
+*are* using the same version of a given toolchain.
+4. Minimize maintenance overhead
+
+Here are a few ideas I've had on the subject
+
+I. We could make a separate repo for each tool:
+
+targetA-toolchain-repo/
+targetB-toolchain-repo/
+
+and each targetXXX/ directory in the main repo's toolchain
+subdirectory treats this as a submodule. This satisfies #1, #2, and
+possibly #4, but not #3.
+
+II. Make a separate repo for each tool, but instead of having multiple
+submodule checkouts, just have a tools directory with checkouts of all
+currently-needed tools, with symlinks from the
+projectXXX/targetXXX/targetXXX-toolchain to these top-level
+submodules.
+
+i.e.
+
+repo/
+      tools/
+            targetA-toolchain-ver-c0ffee/      <- submodule checkout
+of targetA-toolchain
+            targetB-toolchain-ver-deadbeef/ <- submodule checkout of
+targetB-toolchain
+            targetB-toolchain-ver-b00b1e5/  <- submodule checkout of
+targetB-toolchain
+      project1/
+		targetA/
+			targetA-toolchain/  <- symlink to ../../tools/targetA-toolchain-ver-c0ffee/
+		targetB/
+			targetB-toolchain/  <- symlink to ../../tools/targetB-toolchain-ver-deadbeef/
+		...
+      project3/
+		targetB/
+			targetB-toolchain/  <- symlink to ../../tools/targetB-toolchain-ver-b00b1e5/
+		...
+      ...
+
+This is good on #1, #2, and #3, but has the complication that there's
+a bit of maintenance involved - setting up symlinks, deleting unused
+submodules in tools/ etc.
+
+I'd really appreciate any comments/advice the list might have on this.
+I know my way around most of git pretty well, but I haven't really
+used submodules before.
+
+Jason
