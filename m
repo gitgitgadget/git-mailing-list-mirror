@@ -1,102 +1,86 @@
-From: Alexander Gladysh <agladysh@gmail.com>
-Subject: Re: false positives from git diff-index when used with --git-dir
-Date: Thu, 14 Oct 2010 21:20:23 +0400
-Message-ID: <AANLkTimqvmecpt_j=HqHF1tircO5bPJHtRW-ePQ-wE+T@mail.gmail.com>
-References: <AANLkTimyeE=OLdC0Zzdnidr_dssFfkMzS+r_39dYUVxz@mail.gmail.com> <20101014170227.GA14429@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests
+ with TAP
+Date: Thu, 14 Oct 2010 13:23:02 -0400
+Message-ID: <20101014172301.GA2770@sigill.intra.peff.net>
+References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 14 19:20:51 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Thu Oct 14 19:22:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6RU1-0004Ov-ML
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 19:20:50 +0200
+	id 1P6RVq-0005PY-9L
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 19:22:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755606Ab0JNRUo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 13:20:44 -0400
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53601 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752162Ab0JNRUo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 13:20:44 -0400
-Received: by qwa26 with SMTP id 26so1737788qwa.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 10:20:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=pSjUpF8ndxJUV+wNtcZaETUTFA53SqxXpSQ4ko3xBRM=;
-        b=xRN4R9GRu9S2/WqgdlZKZqIDNo+i5W8M/0wL0Kk4mTOaaXpEozBScpu1rwkhBCJHml
-         5hfpx8lTs9JdjBkBi40gS5HnJ5IzY0iIiJGSjt5jn/wV+qWkIIfWa/Wgwt2o9zPun351
-         aCXEJJkHGlRGaaD4Voa6xbdq9WDEHPoPVAvpk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=NXD8Tl8lwg1Ej/ivXrAHTQp5aR8LK+kUR7i1DvsQ9qBps4fib69lGn/VI4oLsxMBAR
-         v+xpe9eQlbfopxtf/eQ3xzBZ9RiQ1LM2y3m3Dnb19E56JRzS0FUv+dC2INDneloCQGyP
-         jUvs9+lY4rdEpYCBRQeLXMQ2EcTwh58AO5W/o=
-Received: by 10.229.219.70 with SMTP id ht6mr9105712qcb.105.1287076843192;
- Thu, 14 Oct 2010 10:20:43 -0700 (PDT)
-Received: by 10.229.51.138 with HTTP; Thu, 14 Oct 2010 10:20:23 -0700 (PDT)
-In-Reply-To: <20101014170227.GA14429@sigill.intra.peff.net>
+	id S1753386Ab0JNRWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 14 Oct 2010 13:22:37 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43387 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752052Ab0JNRWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 14 Oct 2010 13:22:36 -0400
+Received: (qmail 9803 invoked by uid 111); 14 Oct 2010 17:22:36 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 14 Oct 2010 17:22:36 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 14 Oct 2010 13:23:02 -0400
+Content-Disposition: inline
+In-Reply-To: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159060>
 
-On Thu, Oct 14, 2010 at 21:02, Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 14, 2010 at 06:40:51PM +0400, Alexander Gladysh wrote:
+On Thu, Oct 14, 2010 at 10:53:36AM +0200, Michael J Gruber wrote:
 
->> I'm *sometimes* (once in about ten times I use it -- repository
->> changes between invocations of course) getting false positives from
->> git diff-index when I invoke git from another directory:
+> +prove: pre-clean
+> +	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
+> +	$(MAKE) clean
+> +
 
->> git --git-dir=3Dpath/to/.git --work-tree=3Dpath/to update-index -q -=
--refresh
->> git --git-dir=3Dpath/to/.git --work-tree=3Dpath/to diff-index --exit=
--code
->> --quiet HEAD
+I like the idea. I think the prove output is a little nicer for things
+like -j16, but it's a pain to construct the command line (especially as
+I use --root in GIT_TEST_OPTS to get a significant speedup).
 
->> This is *really* annoying and really kills the benifits from my
->> workflow automation scripts.
+I wonder if anybody is really interested in switching between the
+"prove" and regular test targets, though. I would think you either like
+to use prove or not. So perhaps it makes more sense to put a
+configurable switch for the default target, like the patch below. Then
+you can just "make test" (or "make" in the test directory) as usual.
 
->> Unfortunately I can't find a reproducible use case for this bug.
-
->> Is there anything I can do to help catch it?
-
-> Can it reproduce over a large number of trials? I.e., something like:
-
-> =C2=A0while true; do
-> =C2=A0 =C2=A0git ... update-index ...
-> =C2=A0 =C2=A0git ... diff-index ... || echo failed
-> =C2=A0done
-
-> If so, try adding a "sleep 1" between the two commands. If that fixes
-> it, it implies a race condition in git.
-
-No, I'm not able to reproduce it this way. (Perhaps some more complex
-operations on git tree are required -- looks like it happens only if
-tree was changed.)
-
-> You could also try running under valgrind to see if there are any bad
-> memory accesses, which could also produce intermittent buggy behavior=
-=2E
-
-Thanks, I'll try it.
-
-It feels like a race condition somewhere. (Quite possibly even in my
-automation tool -- since I'm not able to reproduce bug outside of it
--- if so, sorry for the noise.)
-
-I'll try some more debugging and will get back to you if I will have
-any new information.
-
-Thank you,
-Alexander.
+diff --git a/t/Makefile b/t/Makefile
+index c7baefb..2b4d4ac 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -11,6 +11,8 @@ SHELL_PATH ?= $(SHELL)
+ PERL_PATH ?= /usr/bin/perl
+ TAR ?= $(TAR)
+ RM ?= rm -f
++PROVE ?= prove
++DEFAULT_TEST_TARGET ?= test
+ 
+ # Shell quote;
+ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+@@ -18,9 +20,15 @@ SHELL_PATH_SQ = $(subst ','\'',$(SHELL_PATH))
+ T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
+ TSVN = $(wildcard t91[0-9][0-9]-*.sh)
+ 
+-all: pre-clean
++all: $(DEFAULT_TEST_TARGET)
++
++test: pre-clean
+ 	$(MAKE) aggregate-results-and-cleanup
+ 
++prove: pre-clean
++	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
++	$(MAKE) clean
++
+ $(T):
+ 	@echo "*** $@ ***"; GIT_CONFIG=.git/config '$(SHELL_PATH_SQ)' $@ $(GIT_TEST_OPTS)
+ 
