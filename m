@@ -1,145 +1,111 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/2] test_terminal: catch use without TTY prerequisite
-Date: Thu, 14 Oct 2010 15:41:41 -0500
-Message-ID: <20101014204141.GC28958@burratino>
-References: <20101014030220.GB20685@sigill.intra.peff.net>
- <20101014030505.GC5626@sigill.intra.peff.net>
- <20101014031642.GB14664@burratino>
- <20101014033448.GB28197@sigill.intra.peff.net>
- <20101014203721.GA28958@burratino>
+Subject: Re: Stable ab/i18n branch
+Date: Thu, 14 Oct 2010 15:54:13 -0500
+Message-ID: <20101014205413.GD28958@burratino>
+References: <7v39s9fkk1.fsf@alter.siamese.dyndns.org>
+ <AANLkTimr73DUBBwdj9MXOQQ=O-vmyyEZpgwdHmRsGG_-@mail.gmail.com>
+ <20101014200027.GA18813@burratino>
+ <AANLkTim-2V_XtWVLFbWS_A-0rFNmuDvtR58aanxKL-O2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Chase Brammer <cbrammer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <jrk@wrek.org>
-X-From: git-owner@vger.kernel.org Thu Oct 14 22:45:17 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 14 22:57:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6Ufq-0005cm-QN
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 22:45:15 +0200
+	id 1P6Urz-0003MQ-Ma
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 22:57:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756064Ab0JNUpI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Oct 2010 16:45:08 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33636 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755925Ab0JNUpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Oct 2010 16:45:07 -0400
-Received: by iwn35 with SMTP id 35so10903iwn.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 13:45:06 -0700 (PDT)
+	id S1756007Ab0JNU5k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 16:57:40 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:52640 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755241Ab0JNU5j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 16:57:39 -0400
+Received: by vws2 with SMTP id 2so43507vws.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 13:57:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=x2s3+juw0PUhtQ6fOYizsEb+ZOHeq420NacV/fM51ag=;
-        b=JYb/0tpoDUBc0BsvNbvPpO+gHbmZyvqGZRd/f5xJqFhD44o7ki3OMH+fWAjmgjyYaC
-         d19dtD/ihfcY6yuYzAL3Z2f2OLSklYShVYmyOOw1zRhloeYzB/4fxnanIlHOscXjmcso
-         5uddngtf0UJO3DLR7keS1KnXG6CtKYOjl77wk=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=T0wMz5ny2XqyolA2a0OC+GRVxwR4FEQphyMUgViUXZU=;
+        b=CLK+8/p92GAtZ5LQTv+6mvAK7ygQESTXIdahprDn3VxrJV5nA/Hv/N5FglS2EHLVZZ
+         5eSLsnC5tYKfGOPQqqYuDuu0qxmCxoLxBS2KUgG7r+eevS0tE/rPsl47yc041AOf0EMs
+         +qT0G1pKG3V0w+CHjL8VVfkD6Wm+iMKZ3Ad/8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=HXWjllTrYD5FU5b0Fqk5RoqCeJ/ATAebpH9t145Dioe0aWpr9U18xDNgJ4SuHTQVu7
-         BM5y85ToZMPunZOvPAi3n7tgTqHS6wgCABXwrWTh34vv7O7xOpY4hyVtdlgHylsP1aaV
-         STxOPNQvMUhBACDHyDDPJgYN3woy07wKWbMII=
-Received: by 10.231.14.1 with SMTP id e1mr17034iba.147.1287089105978;
-        Thu, 14 Oct 2010 13:45:05 -0700 (PDT)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=u4uE+rc+LMmyS6EuaFqg16o+xus9enBeIx/KMainWeOamlRzMS8QcdlyJ6NLd5RTpu
+         92wkrlCD2/iblkd0m67nVBOJgJsmHcLfnIP//X/rFJgMyrUSXNk02hdMNyiX8lYoSg81
+         PmgBK9DWg8tnUq7rigamcJ3vzlpPCJUYA9lTU=
+Received: by 10.220.188.132 with SMTP id da4mr3279916vcb.167.1287089858708;
+        Thu, 14 Oct 2010 13:57:38 -0700 (PDT)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id 34sm9416908ibi.8.2010.10.14.13.45.05
+        by mx.google.com with ESMTPS id i2sm3533182vcs.33.2010.10.14.13.57.37
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 14 Oct 2010 13:45:05 -0700 (PDT)
+        Thu, 14 Oct 2010 13:57:38 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20101014203721.GA28958@burratino>
+In-Reply-To: <AANLkTim-2V_XtWVLFbWS_A-0rFNmuDvtR58aanxKL-O2@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159075>
 
-It is easy to forget to declare the TTY prerequisite when
-writing tests on a system where it would always be satisfied
-(because IO::Pty is installed; see v1.7.3-rc0~33^2, 2010-08-16
-for example).  Automatically detect this problem so there is
-no need to remember.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-	test_terminal: need to declare TTY prerequisite
-	test_must_fail: command not found: test_terminal echo hi
+> I could do that, but I've been hoping that it just gets picked up for
+> the `next -> master` process of git.git itself and *that* becomes the
+> stable target.
+>=20
+> But I have no idea what's going on at the other end, i.e. there's no
+> comments about it in the "What's cooking in git.git" posts or
+> elsewhere. So it's hard to know whether something like this is needed=
+=2E
 
-test_terminal returns status 127 in this case to simulate
-not being available.
+Probably it is a difference in culture between e.g. the Linux kernel
+and other projects.  In the world I'll stereotype as the Linux kernel
+world, forks are considered good!  Developments everyone agrees is
+good in the long run (like the Linux realtime tree) are not
+necessarily merged, for years even, the justification being that
+until the _immediate_ benefits for Linus outweigh the risks for Linus,
+it just doesn't make sense to merge.
 
-Also replace the SIMPLEPAGERTTY prerequisite on one test with
-"SIMPLEPAGER,TTY", since (1) the latter is supported now and
-(2) the prerequisite detection relies on the TTY prereq being
-explicitly declared.
+This avoids bloat and bugs from code that is not being used by anyone,
+while allowing development to continue to happen.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Penance for introducing that bug a few times.
+Now git.git is not the Linux kernel.  In particular, Junio provides
+the extra service of a working "proposed updates" branch, including
+changes that are not necessarily to be part of the next release.  But
+the underlying principle is the same: until there is an _immediate_
+benefit to including a feature in releases that does not outweigh
+the downsides, it just does not happen.
 
- t/t7006-pager.sh |   20 ++++++++++++--------
- 1 files changed, 12 insertions(+), 8 deletions(-)
+What that means: interested parties need to start testing the l10n
+code.  There should be a reliable upstream for users of this
+feature and ideally that should not be Junio unless he wants to (and
+=C3=86var, I think you have been doing a good job of that, just saying =
+it's
+valuable).  The code's not going to get into shape otherwise.
 
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index fb744e3..53868f6 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -28,11 +28,11 @@ test_expect_success 'set up terminal for tests' '
- 
- if test -e stdout_is_tty
- then
--	test_terminal() { "$@"; }
-+	test_terminal_() { "$@"; }
- 	test_set_prereq TTY
- elif test -e test_terminal_works
- then
--	test_terminal() {
-+	test_terminal_() {
- 		"$PERL_PATH" "$TEST_DIRECTORY"/t7006/test-terminal.perl "$@"
- 	}
- 	test_set_prereq TTY
-@@ -40,6 +40,15 @@ else
- 	say "# no usable terminal, so skipping some tests"
- fi
- 
-+test_terminal () {
-+	if ! test_declared_prereq TTY
-+	then
-+		echo >&2 'test_terminal: need to declare TTY prerequisite'
-+		return 127
-+	fi
-+	test_terminal_ "$@"
-+}
-+
- test_expect_success 'setup' '
- 	unset GIT_PAGER GIT_PAGER_IN_USE;
- 	test_might_fail git config --unset core.pager &&
-@@ -213,11 +222,6 @@ test_expect_success 'color when writing to a file intended for a pager' '
- 	colorful colorful.log
- '
- 
--if test_have_prereq SIMPLEPAGER && test_have_prereq TTY
--then
--	test_set_prereq SIMPLEPAGERTTY
--fi
--
- # Use this helper to make it easy for the caller of your
- # terminal-using function to specify whether it should fail.
- # If you write
-@@ -253,7 +257,7 @@ parse_args() {
- test_default_pager() {
- 	parse_args "$@"
- 
--	$test_expectation SIMPLEPAGERTTY "$cmd - default pager is used by default" "
-+	$test_expectation SIMPLEPAGER,TTY "$cmd - default pager is used by default" "
- 		unset PAGER GIT_PAGER;
- 		test_might_fail git config --unset core.pager &&
- 		rm -f default_pager_used ||
--- 
-1.7.2.3
+> It's been about as ready as it's ever going to get for about a month
+> now.
+
+I hope not!  e.g. the LC_CTYPE problems have not been resolved (and yes=
+,
+that would be a regression for people using the it_IT.UTF-8 locale).
+
+> I'm starting to get the feeling that there isn't much interest in i18=
+n
+> support at all.
+
+I'm interested in it, at least.
