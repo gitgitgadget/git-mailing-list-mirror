@@ -1,77 +1,75 @@
-From: Mathias Lafeldt <misfire@debugon.org>
-Subject: [PATCH v2] GIT-VERSION-GEN: make use of git describe --dirty
-Date: Thu, 14 Oct 2010 21:45:54 +0200
-Message-ID: <4CB75DF2.3050609@debugon.org>
-References: <4CB72D2A.7050601@debugon.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Stable ab/i18n branch
+Date: Thu, 14 Oct 2010 15:00:27 -0500
+Message-ID: <20101014200027.GA18813@burratino>
+References: <7v39s9fkk1.fsf@alter.siamese.dyndns.org>
+ <AANLkTimr73DUBBwdj9MXOQQ=O-vmyyEZpgwdHmRsGG_-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 14 21:46:15 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 14 22:04:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6Tkk-0001Ne-E8
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 21:46:14 +0200
+	id 1P6U1y-0001rs-5J
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 22:04:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755847Ab0JNTp6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Oct 2010 15:45:58 -0400
-Received: from moutng.kundenserver.de ([212.227.126.171]:55673 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754491Ab0JNTp6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Oct 2010 15:45:58 -0400
-Received: from [192.168.2.102] (dslb-088-070-157-236.pools.arcor-ip.net [88.70.157.236])
-	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
-	id 0LzFLh-1ObUQ92mPp-014xXl; Thu, 14 Oct 2010 21:45:56 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.12) Gecko/20100915 Thunderbird/3.0.8
-In-Reply-To: <4CB72D2A.7050601@debugon.org>
-X-Provags-ID: V02:K0:bZ65QwPtHso8NabAo8z9tSmHt6enXnmCP1PoitPGcLU
- 9gLLaQLdeE5lvWSKbcpQV8J8tn5kGaGulMVbCdhjyPxtEdv5Ip
- dfmGMtPiK4Czfi5efWMM0cxv5p9ITuQEbu6MjiL32cn4dEeBYw
- z5xCfD1+p5GIxkfqQ75pUHLUVDsv51MvkpoY+gBxPC9ZFDS0Y4
- xJ43p5NY/UX03bSBcy3rPEx0fACgBk+6r0tsTJ6wE8=
+	id S1755369Ab0JNUD4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 16:03:56 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:38638 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755104Ab0JNUDz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 16:03:55 -0400
+Received: by vws2 with SMTP id 2so15833vws.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 13:03:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=X9pZwhc6UTZWlrjMoOKnLXyJENgF1zEV+IKxNAflUS0=;
+        b=Xz13X5qjcogLMPE80tZH71mRfZHKEWcmH7k7MMRHXCOyKcG1u+4llmb1FN4JfAynqt
+         KIvfkAktwBTX5nGPIqkCgdu96rfzIaS7fWgTN3PT4pNfqxu45tr9L5Okkhhe6cqvcH26
+         D9IX6qx/kq8kOHO4s9YCh1Qlv4sLvn0bN/xq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=hNioy3QKD77siSSWgM2nN+SIIWcOAmxZ/pEp9Alx951G9RSJ3ya//n3+O6w/yaLlIZ
+         iDTo8MU4NgIS0G2390/j48HiR9uKd8R1+8kuI76N2wfk2LENXi4l0qwEl5GZB1LaZ+gb
+         uLYRPwDVHoHehyEmJvgRNyUAzv6UShf5jGnRQ=
+Received: by 10.220.45.73 with SMTP id d9mr820439vcf.187.1287086634640;
+        Thu, 14 Oct 2010 13:03:54 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id l9sm6112504vbp.1.2010.10.14.13.03.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 14 Oct 2010 13:03:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimr73DUBBwdj9MXOQQ=O-vmyyEZpgwdHmRsGG_-@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159068>
 
-Currently, GIT-VERSION-GEN invokes the plumbing commands "git update-index" and
-"git diff-index" to determine if the working tree is dirty. It then appends
-"-dirty" to the version string returned by "git describe".
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-However, as of Git v1.6.6, "git describe" can be told to do all that with the
-"--dirty" option, saving us the plumbing.
+> Could you please pick up the 160 commit version of this at:
+>=20
+>     git://github.com/avar/git.git ab/i18n
 
-Signed-off-by: Mathias Lafeldt <misfire@debugon.org>
----
-Corrected a typo in the "From:" field. Apart from that, the patch hasn't changed.
+This is a "give an inch and they'll ask for a mile" sort of thing, but
+would it be possible to maintain a stable branch with the i18n
+infrastructure that only gets rebased when there is reorganization
+going on?
 
- GIT-VERSION-GEN |    7 ++-----
- 1 files changed, 2 insertions(+), 5 deletions(-)
-
-diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-index d441d88..73d5cf9 100755
---- a/GIT-VERSION-GEN
-+++ b/GIT-VERSION-GEN
-@@ -12,13 +12,10 @@ if test -f version
- then
- 	VN=$(cat version) || VN="$DEF_VER"
- elif test -d .git -o -f .git &&
--	VN=$(git describe --match "v[0-9]*" --abbrev=4 HEAD 2>/dev/null) &&
-+	VN=$(git describe --match "v[0-9]*" --abbrev=4 --dirty 2>/dev/null) &&
- 	case "$VN" in
- 	*$LF*) (exit 1) ;;
--	v[0-9]*)
--		git update-index -q --refresh
--		test -z "$(git diff-index --name-only HEAD --)" ||
--		VN="$VN-dirty" ;;
-+	v[0-9]*) : ;;
- 	esac
- then
- 	VN=$(echo "$VN" | sed -e 's/-/./g');
--- 
-1.7.3.GIT
+The gettextization and translations are rebased for other reasons (to
+avoid going crazy), I know.  But with the infrastructure it is starting
+to be hard to track what changes over time.
