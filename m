@@ -1,116 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improve the "diff --git" format documentation
-Date: Wed, 13 Oct 2010 18:55:48 -0700
-Message-ID: <7v8w21fsgr.fsf@alter.siamese.dyndns.org>
-References: <201010061823.47475.agruen@suse.de>
- <7vk4lv44os.fsf@alter.siamese.dyndns.org> <201010070103.17689.agruen@suse.de>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 0/3] more push progress tests
+Date: Wed, 13 Oct 2010 23:02:20 -0400
+Message-ID: <20101014030220.GB20685@sigill.intra.peff.net>
+References: <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
+ <20101012192117.GD16237@burratino>
+ <20101012193204.GA8620@sigill.intra.peff.net>
+ <20101012193830.GB8620@sigill.intra.peff.net>
+ <7vzkuim1zx.fsf@alter.siamese.dyndns.org>
+ <20101013174543.GA13752@sigill.intra.peff.net>
+ <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
+ <AANLkTin9_kofdy49WF4V_JoovVR+G8DN7vn-cz3p84fz@mail.gmail.com>
+ <1286998311-5112-1-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Andreas Gruenbacher <agruen@suse.de>
-X-From: git-owner@vger.kernel.org Thu Oct 14 03:56:12 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Chase Brammer <cbrammer@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 14 05:02:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6D3E-0007Cs-Do
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 03:56:12 +0200
+	id 1P6E50-0005F6-Ji
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 05:02:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753867Ab0JNBzz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 13 Oct 2010 21:55:55 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63156 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753325Ab0JNBzz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 13 Oct 2010 21:55:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 72CAADE6B7;
-	Wed, 13 Oct 2010 21:55:54 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=69yi9HjBmUtKBFidKgvIyZOrAD0=; b=ZU8c5cxsZEtvU/GFESSBjxP
-	0KNbXCkG7tT4FOL1PQCxYTQQ36qGMNti4s0MzkRRwlXTpSvZFWLTE9yiuvbVpInP
-	ClIY/YOi0hoiz8HhMYmhF2z6/EVxxp4kbi8vMIKHlYfLZ2217BTUbULJaIIX6Zu8
-	6Xam3Q5ACh9PGHF2dVR0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=Z22KygUgBVHrJdWC8c/g41j3F4MAp18QA/im2JYM9lIqYGRNo
-	jGJZdouQap3amonq3ApJA8oyw56URiPYrk3D5sHgXnkDCWzpM+6qi7M/QLufKVvu
-	JgANEjcgjZYP2Omx4lsgMr2r+Efy1umAfDjwdVrutMLnr+rCpntIQh8BFg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 43876DE6B5;
-	Wed, 13 Oct 2010 21:55:52 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 67D2FDE6B4; Wed, 13 Oct
- 2010 21:55:49 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2CB11848-D736-11DF-84A1-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754132Ab0JNDCA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 13 Oct 2010 23:02:00 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40228 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754015Ab0JNDB7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 13 Oct 2010 23:01:59 -0400
+Received: (qmail 4586 invoked by uid 111); 14 Oct 2010 03:01:57 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 14 Oct 2010 03:01:57 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 13 Oct 2010 23:02:20 -0400
+Content-Disposition: inline
+In-Reply-To: <1286998311-5112-1-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159015>
 
-Andreas Gruenbacher <agruen@suse.de> writes:
+On Thu, Oct 14, 2010 at 03:31:48AM +0800, Tay Ray Chuan wrote:
 
->  The `a/` and `b/` filenames are the same unless rename/copy is
->  involved.  Especially, even for a creation or a deletion,
-> -`/dev/null` is _not_ used in place of `a/` or `b/` filenames.
-> +`/dev/null` is _not_ used in place of the `a/` or `b/` filenames
-> +for nonexisting files (unlike in the unified diff headers).
+> [PATCH 1/3] t5523-push-upstream: add function to ensure fresh upstream repo
+> [PATCH 2/3] t5523-push-upstream: test progress messages
+> [PATCH 3/3] push: pass --progress down to git-pack-objects
 
-The description in the parentheses is wrong, unless you qualify whose
-"unified diff headers" you are talking about.  For example:
+I had hoped to have a fix for --no-progress, but munging the tests took
+so long that now I am sleepy. :) So here are some extra tests on top of
+your series. The first two are refactoring, and the third has the new
+tests. It checks regular stderr-is-tty progress and that "push -q"
+suppresses progress, as Junio asked elsewhere. And it reveals the bug in
+--no-progress.
 
- http://www.opengroup.org/onlinepubs/9699919799/utilities/diff.html#tag_20_34_10_07
+It might make more sense to actually re-roll your series with the
+refactoring at the front, and my 3/3 squashed into your 2/3.
 
-does not mention anything about file creation/deletion events.  Perhaps
-you are referring to cvs or svn output, but I think we can safely drop the
-parenthesized part without losing clarity.
+Also, these tests feel a bit out of place in t5523, but I don't see a
+better place for them to go. Perhaps they should go in their own test
+script. I don't feel strongly, though.
 
-> @@ -37,18 +37,42 @@ the file that rename/copy produces, respectively.
->         similarity index <number>
->         dissimilarity index <number>
->         index <hash>..<hash> <mode>
-> -
-> -3.  TAB, LF, double quote and backslash characters in pathnames
-> -    are represented as `\t`, `\n`, `\"` and `\\`, respectively.
-> -    If there is need for such substitution then the whole
-> -    pathname is put in double quotes.
-> -
-> ++
-> +File modes are printed as 6-digit octal numbers including the file type
-> +and file permission bits.
-> ++
-> +Path names in extended headers do not include the `a/` and `b/` prefixes.
-> ++
->  The similarity index is the percentage of unchanged lines, and
->  the dissimilarity index is the percentage of changed lines.  It
->  is a rounded down integer, followed by a percent sign.  The
->  similarity index value of 100% is thus reserved for two equal
->  files, while 100% dissimilarity means that no line from the old
->  file made it into the new one.
-> ++
-> +The index line includes the SHA-1 checksum before and after the change.
-> +The <mode> is included if the file mode does not change; otherwise,
-> +separate lines indicate the old and the new mode.
-> +
-> +3.  TAB, LF, double quote and backslash characters in pathnames
-> +    are represented as `\t`, `\n`, `\"` and `\\`, respectively.
-> +    If there is need for such substitution then the whole
-> +    pathname is put in double quotes.
-> ++
-> +Space characters in pathnames are _not_ quoted, neither in the "git
-> +diff" header nor in extended header lines.
+  [1/3]: tests: factor out terminal handling from t7006
+  [2/3]: tests: test terminal output to both stdout and stderr
+  [3/3]: t5523: test push progress output to tty
 
-I am not sure if there is a particular need to spend an extra paragraph to
-special case the SP [*1*].  On the other hand, we quote bytes with
-high-bit set in \octal [*2*], unless core.quotepath is set to false, too,
-which should probably be described here.
-
-
-[References]
-
-*1* 28fba29 (Do not quote SP., 2005-10-17)
-*2* http://marc.info/?l=git&m=112927316408690&w=2
+-Peff
