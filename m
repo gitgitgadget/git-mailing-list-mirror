@@ -1,136 +1,135 @@
-From: Andreas Gruenbacher <agruen@suse.de>
-Subject: Re: [PATCH] Improve the "diff --git" format documentation
-Date: Thu, 14 Oct 2010 12:53:11 +0200
-Organization: SUSE Labs, Novell Inc.
-Message-ID: <201010141253.11640.agruen@suse.de>
-References: <201010061823.47475.agruen@suse.de> <201010070103.17689.agruen@suse.de> <7v8w21fsgr.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v4 15/15] daemon: opt-out on features that require posix
+Date: Thu, 14 Oct 2010 13:02:10 +0200
+Message-ID: <AANLkTi=N+4QokkiGmN+S17=7=QsgKWUXrsF0vZ_6Zt2H@mail.gmail.com>
+References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
+ <1286833829-5116-16-git-send-email-kusmabite@gmail.com> <7vhbgphf25.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org,
+	avarab@gmail.com, sunshine@sunshineco.com
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 14 12:53:54 2010
+X-From: git-owner@vger.kernel.org Thu Oct 14 13:02:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6LRW-0007vE-5m
-	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 12:53:50 +0200
+	id 1P6La7-0004mB-KI
+	for gcvg-git-2@lo.gmane.org; Thu, 14 Oct 2010 13:02:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752545Ab0JNKxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 14 Oct 2010 06:53:45 -0400
-Received: from cantor2.suse.de ([195.135.220.15]:36800 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750976Ab0JNKxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 14 Oct 2010 06:53:44 -0400
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id 6CA3A8655F;
-	Thu, 14 Oct 2010 12:53:43 +0200 (CEST)
-User-Agent: KMail/1.13.5 (Linux/2.6.34-12-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <7v8w21fsgr.fsf@alter.siamese.dyndns.org>
+	id S1752625Ab0JNLCd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 14 Oct 2010 07:02:33 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:39347 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751070Ab0JNLCd convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 14 Oct 2010 07:02:33 -0400
+Received: by pvc7 with SMTP id 7so525538pvc.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 04:02:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=hacNBrF2OU2tWedEOgfX6y+zAW7QwmDLKcbhGyK3bGo=;
+        b=BvbgKcqCrEUEfE6Dxg/UsOMUhAP5vyyn+EJro/SyTc45QKkAKZkjANgpD8aM2E8+pf
+         wcw056RCa939ByxPCMRBwfGs6LlPrnZeSzLcKXXORGzABHPdV74nBzC3hFs24Usl9lpP
+         h9TWTOGN7WdZ5BI4xARgdGQuF1yu1LEzqROxM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=VWmZUAvTHGCnf1kM1nfBR5OhvIs12NgdEDvfE7nGWCZQbE5ySyGFoKVy/1VRyQhga6
+         96mjdDj7yPaYnQAoritb/B6KbIWzsxBF0di9RDnhwUqzatBUTNyZC6PiMgE26DJB462l
+         xhbIx6I2omNsFWLhf8Q4A52GDMXatdId+qTNQ=
+Received: by 10.143.41.2 with SMTP id t2mr8611180wfj.156.1287054152419; Thu,
+ 14 Oct 2010 04:02:32 -0700 (PDT)
+Received: by 10.220.45.196 with HTTP; Thu, 14 Oct 2010 04:02:10 -0700 (PDT)
+In-Reply-To: <7vhbgphf25.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159047>
 
-On Thursday 14 October 2010 03:55:48 Junio C Hamano wrote:
-> [some more objections]
+On Thu, Oct 14, 2010 at 1:02 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> Windows does not supply the POSIX-functions fork(), setuuid(), setgi=
+d(),
+>> setsid() and initgroups(). Disable support for --user, --group and
+>> --detach if the NO_POSIX_GOODIES flag is set.
+>>
+>> MinGW doesn't have prototypes and headers for inet_ntop and inet_pto=
+n,
+>> so include our implementation instead. MSVC does have, so avoid doin=
+g
+>> so there.
+>>
+>> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+>> ---
+>> diff --git a/daemon.c b/daemon.c
+>> index 9b97b58..aa580f6 100644
+>> --- a/daemon.c
+>> +++ b/daemon.c
+>> @@ -965,7 +969,12 @@ static void store_pid(const char *path)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die_errno("failed to write pid file '%s'=
+", path);
+>> =A0}
+>>
+>> -static int serve(struct string_list *listen_addr, int listen_port, =
+struct passwd *pass, gid_t gid)
+>> +#ifndef NO_POSIX_GOODIES
+>> +static struct passwd *pass;
+>> +static gid_t gid;
+>> +#endif
+>> +
+>> +static int serve(struct string_list *listen_addr, int listen_port)
+>> =A0{
+>> =A0 =A0 =A0 struct socketlist socklist =3D { NULL, 0, 0 };
+>>
+>
+> This is ugly. =A0Why did you need to make the arguments file-scope st=
+atic?
+>
 
-Okay, here are the changes we seem to be able to agree on.  Let's address the 
-rest separately.
+To avoid having different signatures for the serve-function dependent
+on NO_POSIX_GOODIES.
 
-Andreas
+Do you have any other suggestions on how to do this? Perhaps I should
+just move the logic in serve() to the end of main()? It's the only
+call-site for the function, and would remove the need for a function
+prototype all-together...
 
---
+>> @@ -974,10 +983,12 @@ static int serve(struct string_list *listen_ad=
+dr, int listen_port, struct passwd
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("unable to allocate any listen socke=
+ts on port %u",
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 listen_port);
+>>
+>> +#ifndef NO_POSIX_GOODIES
+>> =A0 =A0 =A0 if (pass && gid &&
+>> =A0 =A0 =A0 =A0 =A0 (initgroups(pass->pw_name, gid) || setgid (gid) =
+||
+>> =A0 =A0 =A0 =A0 =A0 =A0setuid(pass->pw_uid)))
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("cannot drop privileges");
+>> +#endif
+>
+> It would be cleaner to make a helper (e.g. "drop-privileges") that is=
+ a
+> no-op on NO_POSIX_GOODIES platform, and call that without #ifdef here=
+=2E
+>
 
-[PATCH] Clarify and extend the "git diff" format documentation
+Sure, makes sense.
 
-Move the similarity and dissimilarity index header description closer to
-where those extended headers are described.
+> The same aversion to too many #ifdef's apply to the rest of the patch=
+=2E
+>
 
-Describe and/or clarify the format used for file modes, pathnames, and
-the index header.
-
-Document that all "old" files refer to the state before applying the
-*entire* output, and all "new" files refer to the state thereafter.
-
-Signed-off-by: Andreas Gruenbacher <agruen@suse.de>
----
- Documentation/diff-generate-patch.txt |   40 ++++++++++++++++++++++++--------
- 1 files changed, 30 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/diff-generate-patch.txt b/Documentation/diff-
-generate-patch.txt
-index 8f9a241..3ac2bea 100644
---- a/Documentation/diff-generate-patch.txt
-+++ b/Documentation/diff-generate-patch.txt
-@@ -9,16 +9,15 @@ patch file.  You can customize the creation of such patches 
-via the
- GIT_EXTERNAL_DIFF and the GIT_DIFF_OPTS environment variables.
- 
- What the -p option produces is slightly different from the traditional
--diff format.
-+diff format:
- 
--1.   It is preceded with a "git diff" header, that looks like
--     this:
-+1.   It is preceded with a "git diff" header that looks like this:
- 
-        diff --git a/file1 b/file2
- +
- The `a/` and `b/` filenames are the same unless rename/copy is
- involved.  Especially, even for a creation or a deletion,
--`/dev/null` is _not_ used in place of `a/` or `b/` filenames.
-+`/dev/null` is _not_ used in place of the `a/` or `b/` filenames.
- +
- When rename/copy is involved, `file1` and `file2` show the
- name of the source file of the rename/copy and the name of
-@@ -37,18 +36,39 @@ the file that rename/copy produces, respectively.
-        similarity index <number>
-        dissimilarity index <number>
-        index <hash>..<hash> <mode>
--
--3.  TAB, LF, double quote and backslash characters in pathnames
--    are represented as `\t`, `\n`, `\"` and `\\`, respectively.
--    If there is need for such substitution then the whole
--    pathname is put in double quotes.
--
-++
-+File modes are printed as 6-digit octal numbers including the file type
-+and file permission bits.
-++
-+Path names in extended headers do not include the `a/` and `b/` prefixes.
-++
- The similarity index is the percentage of unchanged lines, and
- the dissimilarity index is the percentage of changed lines.  It
- is a rounded down integer, followed by a percent sign.  The
- similarity index value of 100% is thus reserved for two equal
- files, while 100% dissimilarity means that no line from the old
- file made it into the new one.
-++
-+The index line includes the SHA-1 checksum before and after the change.
-+The <mode> is included if the file mode does not change; otherwise,
-+separate lines indicate the old and the new mode.
-+
-+3.  TAB, LF, double quote and backslash characters in pathnames
-+    are represented as `\t`, `\n`, `\"` and `\\`, respectively.
-+    If there is need for such substitution then the whole
-+    pathname is put in double quotes.
-+
-+4.  All the `file1` files in the output refer to files before the
-+    commit, and all the `file2` files refer to files after the commit.
-+    It is incorrect to apply each change to each file sequentially.  For
-+    example, this patch will swap a and b:
-+
-+      diff --git a/a b/b
-+      rename from a
-+      rename to b
-+      diff --git a/b b/a
-+      rename from b
-+      rename to a
- 
- 
- combined diff format
+I can remove some of them, like keeping the variables in main()
+around, even though they'll be constant. That might cause some
+compile-time warnings, though.
