@@ -1,91 +1,95 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PROPOSAL] .gitignore syntax modification
-Date: Fri, 15 Oct 2010 04:01:37 -0700
-Message-ID: <3F6772ED-7BCA-4ED0-B089-0E3C4CBDF015@sb.org>
-References: <113B4C41-ECDA-479D-A281-DF6ACDFE8FBB@sb.org> <AANLkTimkBsTN-gJ5Wwe_Y=UxSpSpYhn8HcZyUDGngLPn@mail.gmail.com> <F06C63D1-26AE-4278-96CE-2F6B2D6DD300@sb.org> <20101013121552.GA29486@do>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 13:01:53 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH/RFC 0/2] test_terminal: check that TTY prerequisite is declared
+Date: Fri, 15 Oct 2010 19:27:34 +0800
+Message-ID: <AANLkTi=Cvgu-761fQdhwbHhHJ6AgWYUSAbsOt=Cstji-@mail.gmail.com>
+References: <20101014030220.GB20685@sigill.intra.peff.net>
+	<20101014030505.GC5626@sigill.intra.peff.net>
+	<20101014031642.GB14664@burratino>
+	<20101014033448.GB28197@sigill.intra.peff.net>
+	<20101014203721.GA28958@burratino>
+	<20101015044252.GA22438@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Chase Brammer <cbrammer@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 15 13:31:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6i2n-0008Tj-Qc
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 13:01:50 +0200
+	id 1P6iVJ-0004lM-Nu
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 13:31:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755421Ab0JOLBl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 07:01:41 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:49336 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755382Ab0JOLBk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 07:01:40 -0400
-Received: by iwn35 with SMTP id 35so791689iwn.19
-        for <git@vger.kernel.org>; Fri, 15 Oct 2010 04:01:40 -0700 (PDT)
-Received: by 10.231.33.4 with SMTP id f4mr397467ibd.197.1287140500195;
-        Fri, 15 Oct 2010 04:01:40 -0700 (PDT)
-Received: from [10.0.1.14] ([24.130.32.253])
-        by mx.google.com with ESMTPS id gy41sm12948676ibb.17.2010.10.15.04.01.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 15 Oct 2010 04:01:39 -0700 (PDT)
-In-Reply-To: <20101013121552.GA29486@do>
-X-Mailer: Apple Mail (2.1081)
+	id S1753135Ab0JOL1i convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 07:27:38 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:57596 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751608Ab0JOL1h convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 07:27:37 -0400
+Received: by ewy20 with SMTP id 20so665459ewy.19
+        for <git@vger.kernel.org>; Fri, 15 Oct 2010 04:27:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GTVdHLDKsyDlfB0AEKSo2u/uU41l7jppjFuw+WcilX4=;
+        b=gtfw7Nb/a99a957ztsvuqiCntQTt1Uq1zhjpxyJCmDu8WxNMFQ7VoeYkcqSZ5oqQaW
+         owrIrm9Xvu/9dsvMS15XD6efwlcX5xNNzk9sLCEkfUXb4esI52I2NsaScNqVY+/t5O1c
+         uUAsYJ6a53IYFsL1a0Zg14fREGv0JJ+21z5bA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=KhxaIvuG7MROfNaapAghSlm9trWF2Ut9sH5N+HRsDKWNfbikv6LCeGEthJ5UoSUWQU
+         nxBmcfGi0+dXe9AUO8fBgIA4H9uT/qOGinUXj8mhZrTnEoAy+jDoqcrbK8odRI10279P
+         h3qNUwVstikFxMZkF8DEvES4gwOS1BZX3/ZsY=
+Received: by 10.213.16.144 with SMTP id o16mr1217190eba.64.1287142054500; Fri,
+ 15 Oct 2010 04:27:34 -0700 (PDT)
+Received: by 10.213.7.77 with HTTP; Fri, 15 Oct 2010 04:27:34 -0700 (PDT)
+In-Reply-To: <20101015044252.GA22438@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159111>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159112>
 
-On Oct 13, 2010, at 5:15 AM, Nguyen Thai Ngoc Duy wrote:
+On Fri, Oct 15, 2010 at 12:42 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Oct 14, 2010 at 03:37:21PM -0500, Jonathan Nieder wrote:
+>
+>> > Oops, good catch. I think we should already catch it, as test_term=
+inal
+>> > will not be defined at all in the no-tty case. We could print a ni=
+cer
+>> > message, but
+>>
+>> I rather meant something like this.
+>>
+>> Patch 1 exposes the internal $prereq variable from
+>> test_expect_(success|failure). =A0Maybe it should be called
+>> GIT_TEST_something to avoid trampling other programs' namespaces? =A0=
+Not
+>> sure.
+>>
+>> Patch 2 introduces some magic autodetection so people that never run
+>> tests without -v can still notice the missing TTY prereqs.
+>
+> Yeah, that is better, as it will catch the lack of prerequisite even =
+on
+> systems where the prerequisite is met.
+>
+> It seems like a lot of code to catch something small, but on the othe=
+r
+> hand, it does seem to be a repeated mistake.
 
-> On Tue, Oct 12, 2010 at 07:32:54PM -0700, Kevin Ballard wrote:
->> As soon as I find the time, I'll be working on a patch for this. I
->> only wrote up the proposal because I want to make sure that what I
->> end up implementing is actually something that will be accepted. At
->> this point I'm actually in favor of simply assuming all paths that
->> don't start with / can be matched at any level but I recognize that
->> this is a change to existing functionality, though I personally
->> think that all patterns that are meant to match only at the current
->> level should be prefixed with / anyway. Would such a change to
->> existing behavior be rejected out-of-hand?
-> 
-> Yes, patterns that only match current level should be prefixed with a
-> slash. There are also other cases apart from "current level only" and
-> "any level": foo/a* will match only second level, not any level.
+I'll probably be re-rolling the push --progress fix series with this an=
+d Jeff's.
 
-Sure, "foo/a*" will match second level only, but that's identical to "/foo/a*". I would have preferred the semantics of .gitignore to behave as if all patterns are prefixed with "**/" unless the pattern starts with "/", but that ship sailed a long time ago and I agree that it would be a bad idea to introduce that behavior now.
-
-> I was thinking of doing like this. It's not complete (not even build)
-> but it shows the idea. I don't think this way it will change existing
-> behaviors. Performance is something I haven't thought through.
-> 
-> Anyway, what do you think? I'm afraid I don't have time to work on
-> this. The pathspec unification work still needs to be done.
-
-Got around to glancing at your patch. Looks pretty good, and it does build if you simply define EXC_FLAG_STARSTAR, though there are a few changes that are definitely necessary (a path of "*" will cause this to run off the end of the string while trying to detect "**/"). I'll have some more time next week to take a much closer look though. As for performance, I'm not particularly worried. The only performance change is if EXC_FLAG_STARSTAR is checked, in the worst-case it'll try to apply the pattern once per level of directory nesting. As this is just string twiddling, it's bound to be pretty fast, and I don't think there's any viable alternative to doing this kind of loop anyway. That said, I'd still like to support putting **/ anywhere in the pattern instead of just at the beginning, and 
- possibly even support ** (without the trailing /).
-
-If we do support ** by itself, I wonder if we should special-case having ** as the last path component of the pattern. The possible behavior change we could have is making this only match files and not directories. The use-case here is putting something like "foo/**" in the top-level .gitignore and then a few levels into foo we could put another .gitignore with an inverse pattern in order to un-ignore some deep file (or just "!foo/*/*/bar.c" inside that top-level .gitignore as well). The only way I can think of to achieve this behavior with the current gitignore is something along the lines of
-
-foo/*
-!foo/bar/
-foo/bar/*
-!foo/bar/baz/
-foo/bar/baz/*
-!foo/bar/baz/bar.c
-
-And even this will only work if you know all the intermediate directories. I cannot think of any way at all right now to ignore everything in a single directory except for one file at least 1 level of nesting deeper if you don't know the names of the intermediate directories. With the proposed special-case we can say
-
-foo/**
-!foo/*/*/bar.c
-
-and it will behave exactly as specified.
-
-It occurs to me that we could actually tweak this slightly, to say that if a ** is encountered and there are zero slashes in the pattern after it, then it will only match files (with zero or more leading directories). This way you can have a pattern "foo/**.d" which only ignores files with the extension ".d" but will still avoid ignoring directories that end in ".d".
-
-This turned out a bit longer than intended, and slightly more rambling as well, and I apologize for that. I will revisit this again next week.
-
--Kevin Ballard
+--=20
+Cheers,
+Ray Chuan
