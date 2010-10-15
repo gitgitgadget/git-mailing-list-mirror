@@ -1,77 +1,54 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH next] don't let mailmap provoke use of freed memory
-Date: Fri, 15 Oct 2010 01:18:21 -0500
-Message-ID: <20101015061821.GE21830@burratino>
-References: <87tyksd9er.fsf@meyering.net>
- <20101011162153.GG25842@burratino>
- <AANLkTimpN5CAC5UbhC2Kydhu_BMouriQn1d6OL5vt09m@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] compat: add memrchr()
+Date: Fri, 15 Oct 2010 08:57:23 +0200
+Message-ID: <4CB7FB53.8020802@viscovery.net>
+References: <1287098999-9244-1-git-send-email-ydirson@altern.org>	<20101015051750.GA21830@burratino> <AANLkTinBuAhLLUMLd6ZWtVFWCjnFAxYwVSo1Pkja7bT4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 08:21:55 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 15 08:57:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6dfv-0000XJ-2q
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 08:21:55 +0200
+	id 1P6eER-0006ET-Uo
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 08:57:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756117Ab0JOGVt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 02:21:49 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:43221 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232Ab0JOGVs (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 02:21:48 -0400
-Received: by yxm8 with SMTP id 8so182655yxm.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 23:21:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=UHfLwaHV+0RUm5aLfl4nW3WT+LE/L4iziU8/3KsbdfQ=;
-        b=bkjkjBGq5C3Do2WcGrzemgm+8kUCKmx432ZyoYohPtWC7KkHrDs6e3RkZ6gpAwpnIt
-         7Tx+jKsy+/s5KAFF6TLcFUPaA1wc7MgkfjiF91F6gnvXrFo0XF5lnqRT3qCMnbaP0gRI
-         lG0Iw+yHqQ6m7mH77uiLSHoGFqPHD99e8mg5A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=px85yPIj3TBMK5XH0OmqdS/G8yLHds7Mq8u0d3A/xpLAKzzxXlo0Z9D0DWUJrCKu8B
-         +coZzvc8l1MEaQKzftz1IyzSc/Alx+agDpk8P3cTwcNbZp0KmrV42Ys9V4Mc4trvvKdk
-         Y9rlODukFcw19Yxhlz8GXzMV/3349MCaRinN0=
-Received: by 10.151.101.6 with SMTP id d6mr1034882ybm.77.1287123708013;
-        Thu, 14 Oct 2010 23:21:48 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id n48sm9604452yha.7.2010.10.14.23.21.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 14 Oct 2010 23:21:47 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimpN5CAC5UbhC2Kydhu_BMouriQn1d6OL5vt09m@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756206Ab0JOG53 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 02:57:29 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:23861 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754832Ab0JOG52 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 02:57:28 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1P6eEH-0004Bo-Rk; Fri, 15 Oct 2010 08:57:26 +0200
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 82F551660F;
+	Fri, 15 Oct 2010 08:57:23 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <AANLkTinBuAhLLUMLd6ZWtVFWCjnFAxYwVSo1Pkja7bT4@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159101>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+Am 10/15/2010 7:31, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+> Maybe something like this for configure.ac:
+>=20
+>     AC_CHECK_LIB([c], [memchr],
 
-> ok 6 - mailmap.file non-existant
-> not ok - 7 name entry after email entry
-> not ok - 8 name entry after email entry, case-insensitive
-> ok 9 - No mailmap files, but configured
-> ok 10 - Shortlog output (complex mapping)
-> ok 11 - Log output (complex mapping)
-> not ok - 12 Blame output (complex mapping)
-> # failed 3 among 12 test(s)
+Don't forget to change this to [memrchr] before you submit a patch.
 
-Odd.  I can reproduce test 12 failing with commit ids changed
-(embarrassed I didn't notice before) but the others pass here.
-Trying a --valgrind run.
+>     [HAVE_MEMRCHR=3DYesPlease],
+>     [HAVE_MEMRCHR=3D])
+>     AC_SUBST(HAVE_MEMRCHR)
+
+-- Hannes
