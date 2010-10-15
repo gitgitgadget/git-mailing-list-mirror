@@ -1,185 +1,215 @@
 From: David Barr <david.barr@cordelta.com>
-Subject: [PATCH 2/5] vcs-svn: Extend svndump to parse version 3 format
-Date: Fri, 15 Oct 2010 23:54:13 +1100
-Message-ID: <1287147256-9457-3-git-send-email-david.barr@cordelta.com>
+Subject: [PATCH 3/5] vcs-svn: Implement prop-delta handling.
+Date: Fri, 15 Oct 2010 23:54:14 +1100
+Message-ID: <1287147256-9457-4-git-send-email-david.barr@cordelta.com>
 References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	David Barr <david.barr@cordelta.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 15 14:55:22 2010
+X-From: git-owner@vger.kernel.org Fri Oct 15 14:55:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6jof-0007tx-Nr
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 14:55:22 +0200
+	id 1P6jog-0007tx-OY
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 14:55:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755798Ab0JOMyj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 08:54:39 -0400
-Received: from mail08.syd.optusnet.com.au ([211.29.132.189]:37305 "EHLO
+	id S1755559Ab0JOMyr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 08:54:47 -0400
+Received: from mail08.syd.optusnet.com.au ([211.29.132.189]:37298 "EHLO
 	mail08.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755792Ab0JOMyi (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 08:54:38 -0400
+	by vger.kernel.org with ESMTP id S1755759Ab0JOMyg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 08:54:36 -0400
 Received: from localhost.localdomain (d110-33-95-167.mit3.act.optusnet.com.au [110.33.95.167])
-	by mail08.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id o9FCsPsm006314;
-	Fri, 15 Oct 2010 23:54:29 +1100
+	by mail08.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id o9FCsPsn006314;
+	Fri, 15 Oct 2010 23:54:30 +1100
 X-Mailer: git-send-email 1.7.3.32.g634ef
 In-Reply-To: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159115>
 
-Add 1 new dump header, SVN-fs-dump-format-version.
-Add 6 new node headers:
-* Text-delta: true|false
-* Prop-delta: true|false
-* Text-delta-base-md5: <32 hex digits>
-* Text-delta-base-sha1: <40 hex digits>
-* Text-copy-source-sha1: <40 hex digits>
-* Text-content-sha1: <40 hex digits>
+By testing against the Apache Software Foundation
+repository, some simple rules for decoding prop
+deltas were derived.
 
-This change simply populates the context.
-Further changes will be needed to handle text and prop deltas.
+'Node-action: replace' implies the empty prop set
+as the base for the delta.
+Otherwise, if a copyfrom source is given that node
+forms the basis for the delta.
+Lastly, if the destination path exists in the active
+revision it forms the basis.
+
+The same rules ought to apply to text deltas as well.
+
+Apply these rules to prop handling.
+Add a placeholder srcMark parameter to fast_export_blob().
 
 Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- vcs-svn/svndump.c |   58 ++++++++++++++++++++++++++++++++++++++++++++++++----
- 1 files changed, 53 insertions(+), 5 deletions(-)
+ vcs-svn/fast_export.c |    4 +++-
+ vcs-svn/fast_export.h |    3 ++-
+ vcs-svn/repo_tree.c   |   23 +++++++++++++++++++++++
+ vcs-svn/repo_tree.h   |    2 ++
+ vcs-svn/svndump.c     |   35 +++++++++++++++++++++++++++++++----
+ 5 files changed, 61 insertions(+), 6 deletions(-)
 
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index 260cf50..d984aaa 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -63,7 +63,9 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 	printf("progress Imported commit %"PRIu32".\n\n", revision);
+ }
+ 
+-void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len, struct line_buffer *input)
++void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len,
++			uint32_t delta, uint32_t srcMark, uint32_t srcMode,
++			struct line_buffer *input)
+ {
+ 	if (mode == REPO_MODE_LNK) {
+ 		/* svn symlink blobs start with "link " */
+diff --git a/vcs-svn/fast_export.h b/vcs-svn/fast_export.h
+index 054e7d5..634d9c6 100644
+--- a/vcs-svn/fast_export.h
++++ b/vcs-svn/fast_export.h
+@@ -9,6 +9,7 @@ void fast_export_modify(uint32_t depth, uint32_t *path, uint32_t mode,
+ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 			uint32_t uuid, uint32_t url, unsigned long timestamp);
+ void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len,
+-		      struct line_buffer *input);
++			uint32_t delta, uint32_t srcMark, uint32_t srcMode,
++			struct line_buffer *input);
+ 
+ #endif
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+index e94d91d..b616bda 100644
+--- a/vcs-svn/repo_tree.c
++++ b/vcs-svn/repo_tree.c
+@@ -157,6 +157,29 @@ static void repo_write_dirent(uint32_t *path, uint32_t mode,
+ 		dent_remove(&dir_pointer(parent_dir_o)->entries, dent);
+ }
+ 
++uint32_t repo_read_mark(uint32_t revision, uint32_t *path)
++{
++	uint32_t mode = 0, content_offset = 0;
++	struct repo_dirent *src_dent;
++	src_dent = repo_read_dirent(revision, path);
++	if (src_dent != NULL) {
++		mode = src_dent->mode;
++		content_offset = src_dent->content_offset;
++	}
++	return mode && mode != REPO_MODE_DIR ? content_offset : 0;
++}
++
++uint32_t repo_read_mode(uint32_t revision, uint32_t *path)
++{
++	uint32_t mode = 0;
++	struct repo_dirent *src_dent;
++	src_dent = repo_read_dirent(revision, path);
++	if (src_dent != NULL) {
++		mode = src_dent->mode;
++	}
++	return mode;
++}
++
+ uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst)
+ {
+ 	uint32_t mode = 0, content_offset = 0;
+diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
+index 5476175..bd6a3f7 100644
+--- a/vcs-svn/repo_tree.h
++++ b/vcs-svn/repo_tree.h
+@@ -12,6 +12,8 @@
+ #define REPO_MAX_PATH_DEPTH 1000
+ 
+ uint32_t next_blob_mark(void);
++uint32_t repo_read_mark(uint32_t revision, uint32_t *path);
++uint32_t repo_read_mode(uint32_t revision, uint32_t *path);
+ uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst);
+ void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
+ uint32_t repo_replace(uint32_t *path, uint32_t blob_mark);
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 3bba0fe..458053e 100644
+index 458053e..3431c22 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -27,6 +27,9 @@
- #define LENGTH_UNKNOWN (~0)
- #define DATE_RFC2822_LEN 31
+@@ -45,7 +45,7 @@ static char* log_copy(uint32_t length, char *log)
+ }
  
-+#define MD5_HEX_LENGTH 32
-+#define SHA1_HEX_LENGTH 40
-+
- /* Create memory pool for log messages */
- obj_pool_gen(log, char, 4096)
- 
-@@ -44,6 +47,11 @@ static char* log_copy(uint32_t length, char *log)
  static struct {
- 	uint32_t action, propLength, textLength, srcRev, srcMode, mark, type;
+-	uint32_t action, propLength, textLength, srcRev, srcMode, mark, type;
++	uint32_t action, propLength, textLength, srcRev, srcMode, srcMark, mark, type;
  	uint32_t src[REPO_MAX_PATH_DEPTH], dst[REPO_MAX_PATH_DEPTH];
-+	uint32_t text_delta, prop_delta;
-+	char text_delta_base_md5[MD5_HEX_LENGTH + 1];
-+	char text_content_sha1[SHA1_HEX_LENGTH + 1];
-+	char text_delta_base_sha1[SHA1_HEX_LENGTH + 1];
-+	char text_copy_source_sha1[SHA1_HEX_LENGTH + 1];
- } node_ctx;
- 
- static struct {
-@@ -53,14 +61,20 @@ static struct {
- } rev_ctx;
- 
- static struct {
--	uint32_t uuid, url;
-+	uint32_t version, uuid, url;
- } dump_ctx;
- 
- static struct {
--	uint32_t svn_log, svn_author, svn_date, svn_executable, svn_special, uuid,
-+	uint32_t svn_log, svn_author, svn_date, svn_executable, svn_special,
- 		revision_number, node_path, node_kind, node_action,
- 		node_copyfrom_path, node_copyfrom_rev, text_content_length,
--		prop_content_length, content_length;
-+		prop_content_length, content_length,
-+		/* SVN dump version 2 */
-+		uuid, svn_fs_dump_format_version,
-+		/* SVN dump version 3 */
-+		text_delta, prop_delta, text_content_sha1,
-+		text_delta_base_md5, text_delta_base_sha1,
-+		text_copy_source_sha1;
- } keys;
- 
- static void reset_node_ctx(char *fname)
-@@ -74,6 +88,12 @@ static void reset_node_ctx(char *fname)
+ 	uint32_t text_delta, prop_delta;
+ 	char text_delta_base_md5[MD5_HEX_LENGTH + 1];
+@@ -86,6 +86,7 @@ static void reset_node_ctx(char *fname)
+ 	node_ctx.src[0] = ~0;
+ 	node_ctx.srcRev = 0;
  	node_ctx.srcMode = 0;
++	node_ctx.srcMark = 0;
  	pool_tok_seq(REPO_MAX_PATH_DEPTH, node_ctx.dst, "/", fname);
  	node_ctx.mark = 0;
-+	node_ctx.text_delta = 0;
-+	node_ctx.prop_delta = 0;
-+	*node_ctx.text_delta_base_md5 = '\0';
-+	*node_ctx.text_content_sha1 = '\0';
-+	*node_ctx.text_delta_base_sha1 = '\0';
-+	*node_ctx.text_copy_source_sha1 = '\0';
- }
- 
- static void reset_rev_ctx(uint32_t revision)
-@@ -87,6 +107,7 @@ static void reset_rev_ctx(uint32_t revision)
- static void reset_dump_ctx(uint32_t url)
- {
- 	dump_ctx.url = url;
-+	dump_ctx.version = 1;
- 	dump_ctx.uuid = ~0;
- }
- 
-@@ -97,7 +118,6 @@ static void init_keys(void)
- 	keys.svn_date = pool_intern("svn:date");
- 	keys.svn_executable = pool_intern("svn:executable");
- 	keys.svn_special = pool_intern("svn:special");
--	keys.uuid = pool_intern("UUID");
- 	keys.revision_number = pool_intern("Revision-number");
- 	keys.node_path = pool_intern("Node-path");
- 	keys.node_kind = pool_intern("Node-kind");
-@@ -107,6 +127,16 @@ static void init_keys(void)
- 	keys.text_content_length = pool_intern("Text-content-length");
- 	keys.prop_content_length = pool_intern("Prop-content-length");
- 	keys.content_length = pool_intern("Content-length");
-+	/* SVN dump version 2 */
-+	keys.svn_fs_dump_format_version = pool_intern("SVN-fs-dump-format-version");
-+	keys.uuid = pool_intern("UUID");
-+	/* SVN dump version 3 */
-+	keys.text_delta = pool_intern("Text-delta");
-+	keys.prop_delta = pool_intern("Prop-delta");
-+	keys.text_delta_base_md5 = pool_intern("Text-delta-base-md5");
-+	keys.text_delta_base_sha1 = pool_intern("Text-delta-base-sha1");
-+	keys.text_copy_source_sha1 = pool_intern("Text-copy-source-sha1");
-+	keys.text_content_sha1 = pool_intern("Text-content-sha1");
- }
- 
- static void read_props(void)
-@@ -209,7 +239,9 @@ void svndump_read(const char *url)
- 		*val++ = '\0';
- 		key = pool_intern(t);
- 
--		if (key == keys.uuid) {
-+		if (key == keys.svn_fs_dump_format_version) {
-+			dump_ctx.version = atoi(val);
-+		} else if (key == keys.uuid) {
- 			dump_ctx.uuid = pool_intern(val);
- 		} else if (key == keys.revision_number) {
- 			if (active_ctx == NODE_CTX)
-@@ -251,6 +283,22 @@ void svndump_read(const char *url)
- 			node_ctx.textLength = atoi(val);
- 		} else if (key == keys.prop_content_length) {
- 			node_ctx.propLength = atoi(val);
-+		} else if (key == keys.text_delta) {
-+			node_ctx.text_delta = !strcmp(val, "true");
-+		} else if (key == keys.prop_delta) {
-+			node_ctx.prop_delta = !strcmp(val, "true");
-+		} else if (key == keys.text_delta_base_md5) {
-+			strncpy(node_ctx.text_delta_base_md5, val,
-+				MD5_HEX_LENGTH + 1);
-+		} else if (key == keys.text_delta_base_sha1) {
-+			strncpy(node_ctx.text_delta_base_sha1, val,
-+				SHA1_HEX_LENGTH + 1);
-+		} else if (key == keys.text_copy_source_sha1) {
-+			strncpy(node_ctx.text_copy_source_sha1, val,
-+				SHA1_HEX_LENGTH + 1);
-+		} else if (key == keys.text_content_sha1) {
-+			strncpy(node_ctx.text_content_sha1, val,
-+				SHA1_HEX_LENGTH + 1);
- 		} else if (key == keys.content_length) {
- 			len = atoi(val);
+ 	node_ctx.text_delta = 0;
+@@ -168,17 +169,42 @@ static void read_props(void)
+ 			}
+ 			key = ~0;
  			buffer_read_line(&input);
++		} else if (!strncmp(t, "D ", 2)) {
++			len = atoi(&t[2]);
++			key = pool_intern(buffer_read_string(&input, len));
++			buffer_read_line(&input);
++			if (key == keys.svn_executable) {
++				if (node_ctx.type == REPO_MODE_EXE)
++					node_ctx.type = REPO_MODE_BLB;
++			} else if (key == keys.svn_special) {
++				if (node_ctx.type == REPO_MODE_LNK)
++					node_ctx.type = REPO_MODE_BLB;
++			}
++			key = ~0;
+ 		}
+ 	}
+ }
+ 
+ static void handle_node(void)
+ {
++	if (node_ctx.prop_delta) {
++		if (node_ctx.srcRev)
++			node_ctx.srcMode = repo_read_mode(node_ctx.srcRev, node_ctx.src);
++		else
++			node_ctx.srcMode = repo_read_mode(rev_ctx.revision, node_ctx.dst);
++		if (node_ctx.srcMode && node_ctx.action != NODEACT_REPLACE)
++			node_ctx.type = node_ctx.srcMode;
++	}
++
+ 	if (node_ctx.propLength != LENGTH_UNKNOWN && node_ctx.propLength)
+ 		read_props();
+ 
+-	if (node_ctx.srcRev)
++	if (node_ctx.srcRev) {
++		node_ctx.srcMark = repo_read_mark(node_ctx.srcRev, node_ctx.src);
+ 		node_ctx.srcMode = repo_copy(node_ctx.srcRev, node_ctx.src, node_ctx.dst);
++	} else {
++		node_ctx.srcMark = repo_read_mark(rev_ctx.revision, node_ctx.dst);
++	}
+ 
+ 	if (node_ctx.textLength != LENGTH_UNKNOWN &&
+ 	    node_ctx.type != REPO_MODE_DIR)
+@@ -209,8 +235,9 @@ static void handle_node(void)
+ 		node_ctx.type = node_ctx.srcMode;
+ 
+ 	if (node_ctx.mark)
+-		fast_export_blob(node_ctx.type,
+-				 node_ctx.mark, node_ctx.textLength, &input);
++		fast_export_blob(node_ctx.type, node_ctx.mark, node_ctx.textLength,
++				node_ctx.text_delta, node_ctx.srcMark, node_ctx.srcMode,
++				&input);
+ 	else if (node_ctx.textLength != LENGTH_UNKNOWN)
+ 		buffer_skip_bytes(&input, node_ctx.textLength);
+ }
 -- 
 1.7.3.32.g634ef
