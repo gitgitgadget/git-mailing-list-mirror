@@ -1,95 +1,205 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH/RFC 0/2] test_terminal: check that TTY prerequisite is declared
-Date: Fri, 15 Oct 2010 19:27:34 +0800
-Message-ID: <AANLkTi=Cvgu-761fQdhwbHhHJ6AgWYUSAbsOt=Cstji-@mail.gmail.com>
-References: <20101014030220.GB20685@sigill.intra.peff.net>
-	<20101014030505.GC5626@sigill.intra.peff.net>
-	<20101014031642.GB14664@burratino>
-	<20101014033448.GB28197@sigill.intra.peff.net>
-	<20101014203721.GA28958@burratino>
-	<20101015044252.GA22438@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+From: David Barr <david.barr@cordelta.com>
+Subject: [PATCH 5/5] svn-fe: Use the cat-blob command to apply deltas
+Date: Fri, 15 Oct 2010 23:54:16 +1100
+Message-ID: <1287147256-9457-6-git-send-email-david.barr@cordelta.com>
+References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
 Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Chase Brammer <cbrammer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 15 13:31:18 2010
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 15 14:55:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6iVJ-0004lM-Nu
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 13:31:18 +0200
+	id 1P6jof-0007tx-2g
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 14:55:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135Ab0JOL1i convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 07:27:38 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:57596 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751608Ab0JOL1h convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 07:27:37 -0400
-Received: by ewy20 with SMTP id 20so665459ewy.19
-        for <git@vger.kernel.org>; Fri, 15 Oct 2010 04:27:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GTVdHLDKsyDlfB0AEKSo2u/uU41l7jppjFuw+WcilX4=;
-        b=gtfw7Nb/a99a957ztsvuqiCntQTt1Uq1zhjpxyJCmDu8WxNMFQ7VoeYkcqSZ5oqQaW
-         owrIrm9Xvu/9dsvMS15XD6efwlcX5xNNzk9sLCEkfUXb4esI52I2NsaScNqVY+/t5O1c
-         uUAsYJ6a53IYFsL1a0Zg14fREGv0JJ+21z5bA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KhxaIvuG7MROfNaapAghSlm9trWF2Ut9sH5N+HRsDKWNfbikv6LCeGEthJ5UoSUWQU
-         nxBmcfGi0+dXe9AUO8fBgIA4H9uT/qOGinUXj8mhZrTnEoAy+jDoqcrbK8odRI10279P
-         h3qNUwVstikFxMZkF8DEvES4gwOS1BZX3/ZsY=
-Received: by 10.213.16.144 with SMTP id o16mr1217190eba.64.1287142054500; Fri,
- 15 Oct 2010 04:27:34 -0700 (PDT)
-Received: by 10.213.7.77 with HTTP; Fri, 15 Oct 2010 04:27:34 -0700 (PDT)
-In-Reply-To: <20101015044252.GA22438@sigill.intra.peff.net>
+	id S1755820Ab0JOMyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 08:54:38 -0400
+Received: from mail08.syd.optusnet.com.au ([211.29.132.189]:37299 "EHLO
+	mail08.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755760Ab0JOMyg (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 08:54:36 -0400
+Received: from localhost.localdomain (d110-33-95-167.mit3.act.optusnet.com.au [110.33.95.167])
+	by mail08.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id o9FCsPsp006314;
+	Fri, 15 Oct 2010 23:54:31 +1100
+X-Mailer: git-send-email 1.7.3.32.g634ef
+In-Reply-To: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159113>
 
-On Fri, Oct 15, 2010 at 12:42 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Oct 14, 2010 at 03:37:21PM -0500, Jonathan Nieder wrote:
->
->> > Oops, good catch. I think we should already catch it, as test_term=
-inal
->> > will not be defined at all in the no-tty case. We could print a ni=
-cer
->> > message, but
->>
->> I rather meant something like this.
->>
->> Patch 1 exposes the internal $prereq variable from
->> test_expect_(success|failure). =A0Maybe it should be called
->> GIT_TEST_something to avoid trampling other programs' namespaces? =A0=
-Not
->> sure.
->>
->> Patch 2 introduces some magic autodetection so people that never run
->> tests without -v can still notice the missing TTY prereqs.
->
-> Yeah, that is better, as it will catch the lack of prerequisite even =
-on
-> systems where the prerequisite is met.
->
-> It seems like a lot of code to catch something small, but on the othe=
-r
-> hand, it does seem to be a repeated mistake.
+Use the new cat-blob command for fast-import to extract
+blobs so that text-deltas may be applied.
 
-I'll probably be re-rolling the push --progress fix series with this an=
-d Jeff's.
+The backchannel should only need to be configured when
+parsing v3 svn dump streams.
 
---=20
-Cheers,
-Ray Chuan
+Based-on-patch-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Based-on-patch-by: Jonathan Nieder <jrnieder@gmail.com>
+Tested-by: David Barr <david.barr@cordelta.com>
+Signed-off-by: David Barr <david.barr@cordelta.com>
+---
+ contrib/svn-fe/svn-fe.txt |    6 +++-
+ t/t9010-svn-fe.sh         |    6 ++--
+ vcs-svn/fast_export.c     |   86 +++++++++++++++++++++++++++++++++++++++++++-
+ 3 files changed, 92 insertions(+), 6 deletions(-)
+
+diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
+index 35f84bd..39ffa07 100644
+--- a/contrib/svn-fe/svn-fe.txt
++++ b/contrib/svn-fe/svn-fe.txt
+@@ -7,7 +7,11 @@ svn-fe - convert an SVN "dumpfile" to a fast-import stream
+ 
+ SYNOPSIS
+ --------
+-svnadmin dump --incremental REPO | svn-fe [url] | git fast-import
++[verse]
++mkfifo backchannel &&
++svnadmin dump --incremental REPO |
++	svn-fe [url] 3<backchannel |
++	git fast-import --cat-blob-fd=3 3>backchannel
+ 
+ DESCRIPTION
+ -----------
+diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
+index de976ed..d750c7a 100755
+--- a/t/t9010-svn-fe.sh
++++ b/t/t9010-svn-fe.sh
+@@ -34,10 +34,10 @@ test_dump () {
+ 		svnadmin load "$label-svn" < "$TEST_DIRECTORY/$dump" &&
+ 		svn_cmd export "file://$PWD/$label-svn" "$label-svnco" &&
+ 		git init "$label-git" &&
+-		test-svn-fe "$TEST_DIRECTORY/$dump" >"$label.fe" &&
+ 		(
+-			cd "$label-git" &&
+-			git fast-import < ../"$label.fe"
++			cd "$label-git" && mkfifo backchannel && \
++			test-svn-fe "$TEST_DIRECTORY/$dump" 3< backchannel | \
++			git fast-import --cat-blob-fd=3 3> backchannel
+ 		) &&
+ 		(
+ 			cd "$label-svnco" &&
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index b017dfb..812563d 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -8,10 +8,17 @@
+ #include "line_buffer.h"
+ #include "repo_tree.h"
+ #include "string_pool.h"
++#include "svndiff.h"
+ 
+ #define MAX_GITSVN_LINE_LEN 4096
++#define REPORT_FILENO 3
++
++#define SHA1_HEX_LENGTH 40
+ 
+ static uint32_t first_commit_done;
++static struct line_buffer preimage = LINE_BUFFER_INIT;
++static struct line_buffer postimage = LINE_BUFFER_INIT;
++static struct line_buffer backchannel = LINE_BUFFER_INIT;
+ 
+ void fast_export_delete(uint32_t depth, uint32_t *path)
+ {
+@@ -63,16 +70,91 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 	printf("progress Imported commit %"PRIu32".\n\n", revision);
+ }
+ 
++static int fast_export_save_blob(FILE *out)
++{
++	size_t len;
++	char *header;
++	char *end;
++	char *tail;
++
++	if (!backchannel.infile)
++		backchannel.infile = fdopen(REPORT_FILENO, "r");
++	if (!backchannel.infile)
++		return error("Could not open backchannel fd: %d", REPORT_FILENO);
++	header = buffer_read_line(&backchannel);
++	if (header == NULL)
++		return 1;
++	end = strchr(header, '\0');
++	if (end - header > 7 && !strcmp(end - 7, "missing"))
++		return error("cat-blob reports missing blob: %s", header);
++	if (end - header < SHA1_HEX_LENGTH)
++		return error("cat-blob header too short for SHA1: %s", header);
++	if (strncmp(header + SHA1_HEX_LENGTH, " blob ", 6))
++		return error("cat-blob header has wrong object type: %s", header);
++	len = strtoumax(header + SHA1_HEX_LENGTH + 6, &end, 10);
++	if (end == header + SHA1_HEX_LENGTH + 6)
++		return error("cat-blob header did not contain length: %s", header);
++	if (*end)
++		return error("cat-blob header contained garbage after length: %s", header);
++	buffer_copy_bytes(&backchannel, out, len);
++	tail = buffer_read_line(&backchannel);
++	if (!tail)
++		return 1;
++	if (*tail)
++		return error("cat-blob trailing line contained garbage: %s", tail);
++	return 0;
++}
++
+ void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len,
+ 			uint32_t delta, uint32_t srcMark, uint32_t srcMode,
+ 			struct line_buffer *input)
+ {
++	long preimage_len = 0;
++
++	if (delta) {
++		if (!preimage.infile)
++			preimage.infile = tmpfile();
++		if (!preimage.infile)
++			die("Unable to open temp file for blob retrieval");
++		if (srcMark) {
++			printf("cat-blob :%"PRIu32"\n", srcMark);
++			fflush(stdout);
++			if (srcMode == REPO_MODE_LNK)
++				fwrite("link ", 1, 5, preimage.infile);
++			if (fast_export_save_blob(preimage.infile))
++				die("Failed to retrieve blob for delta application");
++		}
++		preimage_len = ftell(preimage.infile);
++		fseek(preimage.infile, 0, SEEK_SET);
++		if (!postimage.infile)
++			postimage.infile = tmpfile();
++		if (!postimage.infile)
++			die("Unable to open temp file for blob application");
++		svndiff0_apply(input, len, &preimage, postimage.infile);
++		len = ftell(postimage.infile);
++		fseek(postimage.infile, 0, SEEK_SET);
++	}
++
+ 	if (mode == REPO_MODE_LNK) {
+ 		/* svn symlink blobs start with "link " */
+-		buffer_skip_bytes(input, 5);
++		if (delta)
++			buffer_skip_bytes(&postimage, 5);
++		else
++			buffer_skip_bytes(input, 5);
+ 		len -= 5;
+ 	}
+ 	printf("blob\nmark :%"PRIu32"\ndata %"PRIu32"\n", mark, len);
+-	buffer_copy_bytes(input, stdout, len);
++	if (!delta)
++		buffer_copy_bytes(input, stdout, len);
++	else
++		buffer_copy_bytes(&postimage, stdout, len);
+ 	fputc('\n', stdout);
++
++	if (preimage.infile) {
++		fseek(preimage.infile, 0, SEEK_SET);
++	}
++
++	if (postimage.infile) {
++		fseek(postimage.infile, 0, SEEK_SET);
++	}
+ }
+-- 
+1.7.3.32.g634ef
