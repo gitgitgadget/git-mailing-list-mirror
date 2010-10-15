@@ -1,102 +1,118 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] test-lib: allow test code to check the list of
- declared prerequisites
-Date: Fri, 15 Oct 2010 00:34:14 -0500
-Message-ID: <20101015053414.GC21830@burratino>
-References: <20101014030220.GB20685@sigill.intra.peff.net>
- <20101014030505.GC5626@sigill.intra.peff.net>
- <20101014031642.GB14664@burratino>
- <20101014033448.GB28197@sigill.intra.peff.net>
- <20101014203721.GA28958@burratino>
- <20101014204001.GB28958@burratino>
- <AANLkTikkWw4Ju4jJFtvKX+s2LMkveQX-uBQyS41A=Vh2@mail.gmail.com>
+Subject: Re: [PATCH] compat: add memrchr()
+Date: Fri, 15 Oct 2010 01:06:54 -0500
+Message-ID: <20101015060654.GD21830@burratino>
+References: <1287098999-9244-1-git-send-email-ydirson@altern.org>
+ <20101015051750.GA21830@burratino>
+ <AANLkTinBuAhLLUMLd6ZWtVFWCjnFAxYwVSo1Pkja7bT4@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <jrk@wrek.org>, Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Chase Brammer <cbrammer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 07:44:41 2010
+X-From: git-owner@vger.kernel.org Fri Oct 15 08:11:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6d5s-0003rh-CM
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 07:44:40 +0200
+	id 1P6dW0-0005H3-3N
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 08:11:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756129Ab0JOFoa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 01:44:30 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:57135 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756119Ab0JOFo3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 01:44:29 -0400
-Received: by ywi6 with SMTP id 6so179773ywi.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 22:44:29 -0700 (PDT)
+	id S1755997Ab0JOGKW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 02:10:22 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:49955 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755816Ab0JOGKV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 02:10:21 -0400
+Received: by yxm8 with SMTP id 8so179964yxm.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 23:10:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=sPoW1ZqIPyDzPn+t/Nm+btAW1kBtIhq7A4ak7xOa/t4=;
-        b=Dm9phAK8QAweo4/13WF3zNbUWEJo8FxTIZ4UrjpeMRbHvEQoWZuJmXZpbjk6EzCjNB
-         8wgY7tof3O0cwkSdcbtEL9U567jfXd2oCS5t5cPHPWZU4cpB175dOROxJ3/iNrc97s0a
-         nufqlPk0HFqPSdxFVa/o8a0wEn2DP7ShpFYxw=
+        bh=4w8hzAXDE2Zk/mr/xX0kgL9TTvddxFqZx5hiAasr638=;
+        b=B9eiTaCX6F7V/uqwM2SRsreokKkXO55m0RVUNZTAjWuKytQxHKTSnvt6nQw3UrrGe7
+         xFYMuEr5Unt/vVFWUKP6w0iN5+i9Xpy+UXllTQA8a0mwt+Eli4aqGwBUqXORh2iTR4tN
+         osAXWrMYTEXt8r5uFNdqtEkb+0nlv949/IIg8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=VbtybhdBfaEj3kzDrcDGmW6w/osE7CHXne8JiZWRfZYSZ40pCnGooGsoxGvE3EUAit
-         4ijPodOSNmh0MDcCG31WuLPc5W2piXaCiizV324IL0Qj/5m+G+crH+1z79/Flhs+LT47
-         YND96KwrzCAgo/xRmLJRIaICOpHgtPynrRaY4=
-Received: by 10.151.14.10 with SMTP id r10mr923657ybi.190.1287121061262;
-        Thu, 14 Oct 2010 22:37:41 -0700 (PDT)
+        b=u8nqtNSZMGFr8AFd8vHYD/spPTUL+5t73j8WCrUkQ1szt0BQKjKG1xhKN2WB5nQ+Kj
+         RF1/wnO8crEJHBIwd1b5lUWjUgQKXzwg+uFRebf5boOcLpGB1w0Ox4YsxpRfdPrvFeDh
+         Q58gC8a/JLZvXkl6xQ3WR9+nNaIXuLhbQXHBI=
+Received: by 10.150.91.10 with SMTP id o10mr888515ybb.394.1287123020506;
+        Thu, 14 Oct 2010 23:10:20 -0700 (PDT)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id u3sm808826yba.10.2010.10.14.22.37.39
+        by mx.google.com with ESMTPS id n48sm9595461yha.7.2010.10.14.23.10.19
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 14 Oct 2010 22:37:40 -0700 (PDT)
+        Thu, 14 Oct 2010 23:10:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTikkWw4Ju4jJFtvKX+s2LMkveQX-uBQyS41A=Vh2@mail.gmail.com>
+In-Reply-To: <AANLkTinBuAhLLUMLd6ZWtVFWCjnFAxYwVSo1Pkja7bT4@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159098>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159099>
 
 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-> On Thu, Oct 14, 2010 at 20:40, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
 
->> + =C2=A0 =C2=A0 =C2=A0 case ",$test_prereq," in
->> + =C2=A0 =C2=A0 =C2=A0 *,$1,*)
->
-> Won't this only work with:
+> Maybe something like this for configure.ac:
 >=20
->     test_expect_success FOO,THINGYOUWANT,BAR '...'
+>     AC_CHECK_LIB([c], [memchr],
+>     [HAVE_MEMRCHR=3DYesPlease],
+>     [HAVE_MEMRCHR=3D])
+>     AC_SUBST(HAVE_MEMRCHR)
 >=20
-> And not:
->=20
->     test_expect_success THINGYOUWANT,FOO,BAR '...'
->=20
-> ?
+> And documentation with the other HAVE_* variables at the top of the
+> Makefile?
 
-	$ case ,X,FOO,BAR, in
-	  *,X,*)
-		echo ok
-		;;
-	  *)
-		echo not ok
-		;;
-	  esac
-	ok
-	$
+Hmm, the BSDs and plan 9 have an memrchr() apparently.   Any idea for
+taking advantage of that (the makefile support part) that's less ugly
+than this?
 
-Looks safe to me.  A * can match any string, including the empty string=
-[1].
-
-[1] http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.=
-html#tag_18_13_02
+If we miss a platform, that's no big deal.  The 1-char-at-a-time
+loop is not so slow, and the "#define memrchr gitmemrchr" ensures
+that it would not conflict with the libc version.
+---
+diff --git a/Makefile b/Makefile
+index 1f1ce04..fa91530 100644
+--- a/Makefile
++++ b/Makefile
+@@ -211,6 +211,8 @@ all::
+ #
+ # Define NO_REGEX if you have no or inferior regex support in your C l=
+ibrary.
+ #
++# Define HAVE_MEMRCHR if you have memrchr() in your C library.
++#
+ # Define JSMIN to point to JavaScript minifier that functions as
+ # a filter to have gitweb.js minified.
+ #
+@@ -1388,6 +1390,9 @@ endif
+ ifdef NO_UINTMAX_T
+ 	BASIC_CFLAGS +=3D -Duintmax_t=3Duint32_t
+ endif
++ifdef HAVE_MEMRCHR
++	BASIC_CFLAGS +=3D -DHAVE_MEMRCHR
++endif
+ ifdef NO_SOCKADDR_STORAGE
+ ifdef NO_IPV6
+ 	BASIC_CFLAGS +=3D -Dsockaddr_storage=3Dsockaddr_in
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 6f1020e..45aaebc 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -366,7 +366,7 @@ extern int git_vsnprintf(char *str, size_t maxsize,
+ #define HAVE_STRCHRNUL
+ #define HAVE_MEMPCPY
+ #endif
+-#if __GLIBC_PREREQ(2, 2)
++#if __GLIBC_PREREQ(2, 2) && !defined(HAVE_MEMRCHR)
+ #define HAVE_MEMRCHR
+ #endif
+ #endif
