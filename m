@@ -1,77 +1,112 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 1/2] test-lib: allow test code to check the list of
- declared prerequisites
-Date: Fri, 15 Oct 2010 05:18:50 +0000
-Message-ID: <AANLkTikkWw4Ju4jJFtvKX+s2LMkveQX-uBQyS41A=Vh2@mail.gmail.com>
-References: <20101014030220.GB20685@sigill.intra.peff.net>
-	<20101014030505.GC5626@sigill.intra.peff.net>
-	<20101014031642.GB14664@burratino>
-	<20101014033448.GB28197@sigill.intra.peff.net>
-	<20101014203721.GA28958@burratino>
-	<20101014204001.GB28958@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] compat: add memrchr()
+Date: Fri, 15 Oct 2010 00:17:50 -0500
+Message-ID: <20101015051750.GA21830@burratino>
+References: <1287098999-9244-1-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <jrk@wrek.org>, Tay Ray Chuan <rctay89@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Chase Brammer <cbrammer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 07:18:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri Oct 15 07:21:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6ch0-0003nt-2M
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 07:18:58 +0200
+	id 1P6cjN-0004Yp-8m
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 07:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754638Ab0JOFSw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 01:18:52 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:42860 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753591Ab0JOFSv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 01:18:51 -0400
-Received: by fxm4 with SMTP id 4so217509fxm.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 22:18:50 -0700 (PDT)
+	id S1754697Ab0JOFVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 01:21:20 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:57628 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753591Ab0JOFVT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 01:21:19 -0400
+Received: by gxk6 with SMTP id 6so175868gxk.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 22:21:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dIpevophXrzE0pKTzoAoyKiaFtHjn6YLoKttP2pDPZ8=;
-        b=InQqG/br56rwjaBR8mWpTsrVs7YRDVz71JG4o/emniqHIhIBSWixyYPVDJhiUFPpXI
-         MlBZhrNtbptFNmnHoGn72SFG4j/Li/EqJh7a9XfRjar5v2IQ+vQNXPvf7/kj0nPo4i6p
-         /8xLc9u38xYaqWTS4ZSI7uFj7No9vVrEiaVFk=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=4+Kns+4uedpVfKGHEXz06sGatdZkBdx9Eir35DnqQBI=;
+        b=J4OzNnV6nEodVX4b6X5KwpzAIP9Y+e/g0waXWzeWYpy6V5KZiCMluLvWg2U7eXkyHH
+         1BXotILgfunoz2ligiISGpocwFfnLvI0kMc2MoZmt10P+In9TIjxNMfcUbJe9Xye4vhY
+         0DKI3w9TZsFDHC1Np06bjJBn8pe6qBqsiFFh4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BN5O9uWgoZihfNNTP/XmPkPqxTBO2O2ZLgXhmd3JpPt3VrUkn7nqtTVy19iphba2Vp
-         lNEPQriJvDXp+0ydqdcqfRjd9ZaCBr2mYiZozDtfcT8klNKeESrir2nPnhErAowv/uZq
-         qdmpcIQpXwWITZpacHT+7eqCmZpgOnCpJUKHw=
-Received: by 10.103.40.10 with SMTP id s10mr82656muj.11.1287119930299; Thu, 14
- Oct 2010 22:18:50 -0700 (PDT)
-Received: by 10.223.119.17 with HTTP; Thu, 14 Oct 2010 22:18:50 -0700 (PDT)
-In-Reply-To: <20101014204001.GB28958@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=gu6Z8FN747dV7rmdpglhFId2/hq3cnTKbfY3GyNMmnVAU0wo2Wk+yldiIPclPbSTmT
+         rz3ryE+aUwU3b0yd7Xq840hvP8XQ2NHNpMDz4yvcHUSf+NFE7I6C1GzedUFtH/M1jSqO
+         9I/aSMLLbUY1H9/jfmXsQt8AfYKizmSbPWnJ8=
+Received: by 10.150.202.12 with SMTP id z12mr862303ybf.279.1287120078719;
+        Thu, 14 Oct 2010 22:21:18 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id t9sm10134138ybe.21.2010.10.14.22.21.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 14 Oct 2010 22:21:18 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287098999-9244-1-git-send-email-ydirson@altern.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159093>
 
-On Thu, Oct 14, 2010 at 20:40, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
+Reimplement another handy convenience function from glibc.  memrchr()
+searches from the end of a memory area for a particular character.  It
+is similar to strrchr() but takes a length argument and is
+binary-safe.
 
-> + =C2=A0 =C2=A0 =C2=A0 case ",$test_prereq," in
-> + =C2=A0 =C2=A0 =C2=A0 *,$1,*)
+The whole-directory rename detection patch could use this to find the
+last directory separator in a (possibly truncated) pathname.
 
-Won't this only work with:
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Yann Dirson wrote:
 
-    test_expect_success FOO,THINGYOUWANT,BAR '...'
+> * memrchr() implementation for portability
 
-And not:
+Something like this?  Untested.
 
-    test_expect_success THINGYOUWANT,FOO,BAR '...'
+ git-compat-util.h |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-?
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 2af8d3e..6f1020e 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -366,6 +366,9 @@ extern int git_vsnprintf(char *str, size_t maxsize,
+ #define HAVE_STRCHRNUL
+ #define HAVE_MEMPCPY
+ #endif
++#if __GLIBC_PREREQ(2, 2)
++#define HAVE_MEMRCHR
++#endif
+ #endif
+ 
+ #ifndef HAVE_STRCHRNUL
+@@ -386,6 +389,19 @@ static inline void *gitmempcpy(void *dest, const void *src, size_t n)
+ }
+ #endif
+ 
++#ifndef HAVE_MEMRCHR
++#define memrchr gitmemrchr
++static inline void *gitmemrchr(const void *s, int c, size_t n)
++{
++	const char *p = s;
++	p += n;
++	while (p != s)
++		if (*--p == c)
++			return p;
++	return NULL;
++}
++#endif
++
+ extern void release_pack_memory(size_t, int);
+ 
+ typedef void (*try_to_free_t)(size_t);
+-- 
+1.7.2.3
