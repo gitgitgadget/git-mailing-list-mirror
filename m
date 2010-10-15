@@ -1,102 +1,102 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Stable ab/i18n branch
-Date: Fri, 15 Oct 2010 05:35:44 +0000
-Message-ID: <AANLkTinafhoohf4yfFpTMonwKcTAqW513vq4Cqd--ogr@mail.gmail.com>
-References: <7v39s9fkk1.fsf@alter.siamese.dyndns.org>
-	<AANLkTimr73DUBBwdj9MXOQQ=O-vmyyEZpgwdHmRsGG_-@mail.gmail.com>
-	<20101014200027.GA18813@burratino>
-	<AANLkTim-2V_XtWVLFbWS_A-0rFNmuDvtR58aanxKL-O2@mail.gmail.com>
-	<20101014205413.GD28958@burratino>
-	<AANLkTi=LEzQu5_EyJ_ncRmsHfufG=AnEv9+eTQuqh5W7@mail.gmail.com>
-	<20101015000749.GD29494@burratino>
-	<AANLkTim0a7J5L1dtZNYTG7strEhjitZein5CVQayZFRh@mail.gmail.com>
-	<20101015052810.GB21830@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] test-lib: allow test code to check the list of
+ declared prerequisites
+Date: Fri, 15 Oct 2010 00:34:14 -0500
+Message-ID: <20101015053414.GC21830@burratino>
+References: <20101014030220.GB20685@sigill.intra.peff.net>
+ <20101014030505.GC5626@sigill.intra.peff.net>
+ <20101014031642.GB14664@burratino>
+ <20101014033448.GB28197@sigill.intra.peff.net>
+ <20101014203721.GA28958@burratino>
+ <20101014204001.GB28958@burratino>
+ <AANLkTikkWw4Ju4jJFtvKX+s2LMkveQX-uBQyS41A=Vh2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 07:35:55 2010
+Cc: Jeff King <jrk@wrek.org>, Tay Ray Chuan <rctay89@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Chase Brammer <cbrammer@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 15 07:44:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6cxK-0000z0-OP
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 07:35:51 +0200
+	id 1P6d5s-0003rh-CM
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 07:44:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755371Ab0JOFfq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 01:35:46 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55062 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753232Ab0JOFfp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 15 Oct 2010 01:35:45 -0400
-Received: by fxm4 with SMTP id 4so220556fxm.19
-        for <git@vger.kernel.org>; Thu, 14 Oct 2010 22:35:44 -0700 (PDT)
+	id S1756129Ab0JOFoa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 01:44:30 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57135 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756119Ab0JOFo3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 01:44:29 -0400
+Received: by ywi6 with SMTP id 6so179773ywi.19
+        for <git@vger.kernel.org>; Thu, 14 Oct 2010 22:44:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=X5xQNj4/jaabVEdJ213ZXlA5ngTA9qP5dK5w/1j3tq8=;
-        b=P/2xR62UuyUFhYXAPToqUxYiSZKULMXgkJzXt0i45KqknOfTKzys3fgmMbBb9alv2k
-         A7xppk1kVhJuNi4utBxyJW1xaQYu5VNJnxDDinWboHFERNJxfSjWipxK7FqVL0IOOtza
-         mGTWQHJdxXRn4VvPfZxvPibkOLInJb6zqxd3Q=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=sPoW1ZqIPyDzPn+t/Nm+btAW1kBtIhq7A4ak7xOa/t4=;
+        b=Dm9phAK8QAweo4/13WF3zNbUWEJo8FxTIZ4UrjpeMRbHvEQoWZuJmXZpbjk6EzCjNB
+         8wgY7tof3O0cwkSdcbtEL9U567jfXd2oCS5t5cPHPWZU4cpB175dOROxJ3/iNrc97s0a
+         nufqlPk0HFqPSdxFVa/o8a0wEn2DP7ShpFYxw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BbHt8fL15BDRxn/QATKU1c+XrPFOZluPrf2hyIUaeinrCXAu9umniNN6YzFzLfMJkN
-         Qmsi+l9hsltQ5btae6trHsLqDRsPFu/C6ps9T2ZPgCrsahgtGDoWDsWyCQl1JJ3smJs1
-         8JDlk/zJEXpv6x0ZrgaJmnxlO4NsaaU0XhBSQ=
-Received: by 10.102.83.1 with SMTP id g1mr79332mub.47.1287120944187; Thu, 14
- Oct 2010 22:35:44 -0700 (PDT)
-Received: by 10.223.119.17 with HTTP; Thu, 14 Oct 2010 22:35:44 -0700 (PDT)
-In-Reply-To: <20101015052810.GB21830@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=VbtybhdBfaEj3kzDrcDGmW6w/osE7CHXne8JiZWRfZYSZ40pCnGooGsoxGvE3EUAit
+         4ijPodOSNmh0MDcCG31WuLPc5W2piXaCiizV324IL0Qj/5m+G+crH+1z79/Flhs+LT47
+         YND96KwrzCAgo/xRmLJRIaICOpHgtPynrRaY4=
+Received: by 10.151.14.10 with SMTP id r10mr923657ybi.190.1287121061262;
+        Thu, 14 Oct 2010 22:37:41 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id u3sm808826yba.10.2010.10.14.22.37.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 14 Oct 2010 22:37:40 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikkWw4Ju4jJFtvKX+s2LMkveQX-uBQyS41A=Vh2@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159097>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159098>
 
-On Fri, Oct 15, 2010 at 05:28, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Thu, Oct 14, 2010 at 20:40, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+
+>> + =C2=A0 =C2=A0 =C2=A0 case ",$test_prereq," in
+>> + =C2=A0 =C2=A0 =C2=A0 *,$1,*)
 >
->> No benefit? The benefit is that the program they previously either
->> didn't understand or understood poorly is now talking to them in the=
-ir
->> native language. That's a pretty big benefit.
->
-> And for the languages that are not translated yet?
+> Won't this only work with:
+>=20
+>     test_expect_success FOO,THINGYOUWANT,BAR '...'
+>=20
+> And not:
+>=20
+>     test_expect_success THINGYOUWANT,FOO,BAR '...'
+>=20
+> ?
 
-Yeah those would get odd regressions with no benefit, unfortunately.
+	$ case ,X,FOO,BAR, in
+	  *,X,*)
+		echo ok
+		;;
+	  *)
+		echo not ok
+		;;
+	  esac
+	ok
+	$
 
-> Don't get me wrong --- I'm only trying to give a sense of what it is
-> like for a user to experience a regression. =C2=A0It is generally lit=
-tle
-> solace that someone else's use case is supported better.
+Looks safe to me.  A * can match any string, including the empty string=
+[1].
 
-Understood. And it's certainly good that these things are pointed out.
-
->> =C2=A0 =C2=A0 =C2=A0 So unless someone else is interested in helping=
- audit all that
->> code, providing a printf() fallback on glibc etc. it'll block the i1=
-8n
->> series.
->
-> Oh, I never meant to say that this should be a blocker. =C2=A0Only th=
-at
-> there really are costs and benefits to weigh.
->
-> Much more important than the known bugs are the unknown bugs ---
-> you've heard this before, I think. =C2=A0The way to get rid of unknow=
-n bugs
-> (aside from inspecting code) is to get users.
->
-> For example, if Gerrit doesn't mind, I would like to apply your
-> patches to experimental once the version being staged for squeeze
-> clears from there.
-
-That would be great. Let me know if I can help with that in some way.
+[1] http://www.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.=
+html#tag_18_13_02
