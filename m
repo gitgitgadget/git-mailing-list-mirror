@@ -1,94 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Can I checkout a single file without altering index?
-Date: Fri, 15 Oct 2010 15:48:51 -0400
-Message-ID: <20101015194851.GA31131@sigill.intra.peff.net>
-References: <loom.20101012T114900-532@post.gmane.org>
- <AANLkTinnYEnCwpTh45N69n73JQm=ndXH-SUJ5b1piUYv@mail.gmail.com>
- <loom.20101014T095743-275@post.gmane.org>
- <i9a6kn$d7o$1@dough.gmane.org>
- <20101015184302.GA22990@burratino>
- <20101015185539.GA30380@sigill.intra.peff.net>
- <20101015193252.GA23082@burratino>
+From: Pretty Boy Floyd <boxerab@gmail.com>
+Subject: Git Stash stages files if there is a conflict
+Date: Fri, 15 Oct 2010 20:13:27 +0000 (UTC)
+Message-ID: <loom.20101015T220924-952@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 21:48:34 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 15 22:15:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6qGX-0005J5-Fh
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 21:48:33 +0200
+	id 1P6qgt-0000bB-Au
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 22:15:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932440Ab0JOTs1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 15:48:27 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:34700 "EHLO peff.net"
+	id S932552Ab0JOUP2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 16:15:28 -0400
+Received: from lo.gmane.org ([80.91.229.12]:53007 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932378Ab0JOTs1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 15:48:27 -0400
-Received: (qmail 19712 invoked by uid 111); 15 Oct 2010 19:48:23 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 15 Oct 2010 19:48:23 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 15 Oct 2010 15:48:51 -0400
-Content-Disposition: inline
-In-Reply-To: <20101015193252.GA23082@burratino>
+	id S932498Ab0JOUPJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 16:15:09 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1P6qgB-0000Az-H8
+	for git@vger.kernel.org; Fri, 15 Oct 2010 22:15:03 +0200
+Received: from 199.212.7.17 ([199.212.7.17])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Oct 2010 22:15:03 +0200
+Received: from boxerab by 199.212.7.17 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 15 Oct 2010 22:15:03 +0200
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 199.212.7.17 (Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.10) Gecko/20100914 AskTbFXTV5/3.8.0.12304 Firefox/3.6.10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159135>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159136>
 
-On Fri, Oct 15, 2010 at 02:32:52PM -0500, Jonathan Nieder wrote:
+Hello!
 
-> > git commit -o|--only, which is the same as "git commit <paths>". Of
-> > course it still uses an index, to create the tree, but it uses a
-> > temporary one based on HEAD instead of the current index contents.
-> 
-> Ah, it's stranger than that.
-> 
-> 	 * A partial commit.
-> 	 *
-> 	 * (0) find the set of affected paths;
-> 	 * (1) get lock on the real index file;
-> 	 * (2) update the_index with the given paths;
-> 	 * (3) write the_index out to the real index (still locked);
-> 	 * (4) get lock on the false index file;
-> 	 * (5) reset the_index from HEAD;
-> 	 * (6) update the_index the same way as (2);
-> 	 * (7) write the_index out to the false index file;
-> 	 * (8) return the name of the false index file (still locked);
-> 
-> The net effect being that the index will match the work tree for the
-> listed paths when the operation is over, while other files are
-> untouched.
+I am running msysgit 1.7.3.1.  If I run stash apply, and there is a conflict,
+all of my stash changes get staged. Is this the correct behaviour? I found it a
+little surprising.
 
-Well, yeah, it does have to update those files in the regular index. Any
-other semantics would be insane; the change would appear reverted
-looking at the difference between HEAD and the index.
+Another question: if I have stashed 10 files, and there is a conflict in one of
+them, will stash apply abort when it has a conflict, or will it apply all
+non-conflicted files.
 
-With respect to your proposed change:
 
-> diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-> index 42fb1f5..6bb3eff 100644
-> --- a/Documentation/git-commit.txt
-> +++ b/Documentation/git-commit.txt
-> @@ -191,9 +191,10 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
->  --only::
->  	Make a commit only from the paths specified on the
->  	command line, disregarding any contents that have been
-> -	staged so far. This is the default mode of operation of
-> -	'git commit' if any paths are given on the command line,
-> -	in which case this option can be omitted.
-> +	staged so far.  The state of other files in the index is
-> +	preserved and will not affect the commit.  This is the
-> +	default mode of operation of 'git commit' if any paths are given
-> +	on the command line, in which case this option can be omitted.
+Finally, if I do the following:
 
-I always assumed that "disregarding any contents that have been staged"
-meant "we will leave unmentioned paths alone". But I don't think it
-hurts to be explicit. So your change looks fine to me.
+git stash
+git pull
+git stash apply
 
--Peff
+and another developer has removed a file that I have stashed, then I am unable
+to apply the stash  on this file. How can I retrieve my changes from the stash?
+
+
+Thanks!
