@@ -1,143 +1,99 @@
-From: Antonio Ospite <ospite@studenti.unina.it>
-Subject: Re: [PATCH] git-send-email.perl: fix In-Reply-To for second and
- subsequent patches
-Date: Fri, 15 Oct 2010 09:56:51 +0200
-Message-ID: <20101015095651.b75c4b54.ospite@studenti.unina.it>
-References: <1287049138-13940-1-git-send-email-ospite@studenti.unina.it>
-	<20101014182250.GA18341@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH next] don't let mailmap provoke use of freed memory
+Date: Fri, 15 Oct 2010 02:59:54 -0500
+Message-ID: <20101015075954.GA8557@burratino>
+References: <87tyksd9er.fsf@meyering.net>
+ <20101011162153.GG25842@burratino>
+ <AANLkTimpN5CAC5UbhC2Kydhu_BMouriQn1d6OL5vt09m@mail.gmail.com>
+ <20101015061821.GE21830@burratino>
 Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Fri__15_Oct_2010_09_56_51_+0200_RDL8KPbCI9potgo9"
-Cc: git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 09:57:11 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jim Meyering <jim@meyering.net>, git list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 15 10:03:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6fA7-0006oU-1w
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 09:57:11 +0200
+	id 1P6fGJ-0001CD-1W
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 10:03:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752604Ab0JOH5E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 03:57:04 -0400
-Received: from smtp209.alice.it ([82.57.200.105]:35334 "EHLO smtp209.alice.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751058Ab0JOH5D (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 03:57:03 -0400
-Received: from jcn (87.3.144.99) by smtp209.alice.it (8.5.124.08) (authenticated as fospite@alice.it)
-        id 4C1A275907B8DF9E; Fri, 15 Oct 2010 09:56:58 +0200
-In-Reply-To: <20101014182250.GA18341@burratino>
-X-Mailer: Sylpheed 3.0.2 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+	id S1752213Ab0JOID1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 15 Oct 2010 04:03:27 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:40398 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751346Ab0JOIDZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 04:03:25 -0400
+Received: by gxk6 with SMTP id 6so210378gxk.19
+        for <git@vger.kernel.org>; Fri, 15 Oct 2010 01:03:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=s1Og8QZFkKlEsg5eQyeuiYmS/STboKSIO2VZ0+hTKik=;
+        b=qqpHnoiD8plnhjnJMwPhtl9hLvqJ63rRMb1Z5ORxnYf2MxmBMBcbKftN3Tm2r/jkR4
+         Y+HDXVzd6baCTiwBytQrSf+wy9Wyh+Mdw9R+y5t1dBKKdHbqwjSxps429yygYxNu4r4n
+         Ig8DIXhu/ea53uSVw0XmGBK1ceFRyQPFx0OZs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Zqo1pp/GoU5JTKojXOPpcOWaqRtN3GldCyCeuOFjJkTwMwZFDk8c4X9iqGiWWkzNpw
+         +KKxg4uwNfqCnpJ+BBrNC5BV6+fMEbmiDy+wtV0Dg6tFslLKiDDPk1XLrt7ITLVkA4Fr
+         nbRHxZJE7dh+sI1hlDgeKUQltNO2wN3URuWYs=
+Received: by 10.100.93.17 with SMTP id q17mr6950549anb.16.1287129803838;
+        Fri, 15 Oct 2010 01:03:23 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id u3sm15671065ani.39.2010.10.15.01.03.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 15 Oct 2010 01:03:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101015061821.GE21830@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159103>
 
---Signature=_Fri__15_Oct_2010_09_56_51_+0200_RDL8KPbCI9potgo9
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jonathan Nieder wrote:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-On Thu, 14 Oct 2010 13:22:50 -0500
-Jonathan Nieder <jrnieder@gmail.com> wrote:
-
-> (+cc: some send-email people)
+>> ok 6 - mailmap.file non-existant
+>> not ok - 7 name entry after email entry
+>> not ok - 8 name entry after email entry, case-insensitive
+>> ok 9 - No mailmap files, but configured
+>> ok 10 - Shortlog output (complex mapping)
+>> ok 11 - Log output (complex mapping)
+>> not ok - 12 Blame output (complex mapping)
+>> # failed 3 among 12 test(s)
 >
+> Odd.  I can reproduce test 12 failing with commit ids changed
+> (embarrassed I didn't notice before) but the others pass here.
+> Trying a --valgrind run.
 
-For the new recipients, the original mail is here btw:
-http://permalink.gmane.org/gmane.comp.version-control.git/159039
+Well, this is embarrasing.  Here's a minimal fix for the test #12
+failure (for squashing --- it just undoes a change that should never
+have escaped the lab in the first place).
 
-More comments below.
-
-> Hi,
->=20
-> Antonio Ospite wrote:
->=20
-> > Make second and subsequent patches appear as replies to the first patch,
-> > even when an initial In-Reply-To is supplied
-> [...]
-> > Signed-off-by: Antonio Ospite <ospite@studenti.unina.it>
->=20
-> Thanks.
->
-
-Thanks for commenting Jonathan.
-
-> >   - When $initial_reply_to is asked to the user, it is asked as the
-> >     "Message-ID to be used as In-Reply-To for the _first_ email", this
-> >     makes me think that the second and subsequent patches are not using
-> >     it
->=20
-> This kind of justification belongs in the commit message, no?
-> That way, we can save future readers the trouble of figuring out
-> the rationale all over again when considering future changes to this
-> code.
->
-
-Ok, I can add this in the commit message, I am waiting some days for
-v2, in case someone else has more to say.
-
-> > --- a/git-send-email.perl
-> > +++ b/git-send-email.perl
-> > @@ -1313,7 +1313,7 @@ foreach my $t (@files) {
-> > =20
-> >  	# set up for the next message
-> >  	if ($thread && $message_was_sent &&
-> > -		(chain_reply_to() || !defined $reply_to || length($reply_to) =3D=3D =
-0)) {
-> > +		($message_num =3D=3D 1 || chain_reply_to() || !defined $reply_to || =
-length($reply_to) =3D=3D 0)) {
-> >  		$reply_to =3D $message_id;
->=20
-> Would it be possible to break this long line?
->
-
-I like the OR chain on the same line, but I can split it anyways if
-that's the preference.
-
-> If you're feeling particularly adventurous, it would be nice to add a
-> test for the changed functionality to t/t9001-send-email.sh, so we
-> don't break it with other changes in the future.
->
-
-No promises, but I might give that a try.
-
-> I haven't looked too deeply or even tried running applying the patch,
-> but generally it looks good to me.
->=20
-> Ciao,
-> Jonathan
->=20
-
-Thanks,
-   Antonio
-
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+diff --git a/t/t4203-mailmap.sh b/t/t4203-mailmap.sh
+index f4f82c0..3c5188f 100755
+--- a/t/t4203-mailmap.sh
++++ b/t/t4203-mailmap.sh
+@@ -11,7 +11,6 @@ test_expect_success setup '
+ 	git commit -m initial &&
+ 	echo two >>one &&
+ 	git add one &&
+-	test_tick &&
+ 	git commit --author "nick1 <bugs@company.xx>" -m second
+ '
+=20
 --=20
-Antonio Ospite
-http://ao2.it
-
-PGP public key ID: 0x4553B001
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
-
---Signature=_Fri__15_Oct_2010_09_56_51_+0200_RDL8KPbCI9potgo9
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAky4CUMACgkQ5xr2akVTsAEDtACeK0myaNkykBJhcLMMQUb4KPLA
-jc8AoJKxH/zmhw+6jC3BsGLZhRrFI/2N
-=lOVj
------END PGP SIGNATURE-----
-
---Signature=_Fri__15_Oct_2010_09_56_51_+0200_RDL8KPbCI9potgo9--
