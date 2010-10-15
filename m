@@ -1,81 +1,70 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Can I checkout a single file without altering index?
-Date: Fri, 15 Oct 2010 13:30:06 -0500
-Message-ID: <i9a6kn$d7o$1@dough.gmane.org>
-References: <loom.20101012T114900-532@post.gmane.org> <AANLkTinnYEnCwpTh45N69n73JQm=ndXH-SUJ5b1piUYv@mail.gmail.com> <loom.20101014T095743-275@post.gmane.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 15 20:31:10 2010
+Date: Fri, 15 Oct 2010 13:43:02 -0500
+Message-ID: <20101015184302.GA22990@burratino>
+References: <loom.20101012T114900-532@post.gmane.org>
+ <AANLkTinnYEnCwpTh45N69n73JQm=ndXH-SUJ5b1piUYv@mail.gmail.com>
+ <loom.20101014T095743-275@post.gmane.org>
+ <i9a6kn$d7o$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <neal@rsss.com>
+X-From: git-owner@vger.kernel.org Fri Oct 15 20:46:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6p3d-0003aH-2o
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 20:31:09 +0200
+	id 1P6pIh-0002Ay-A3
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 20:46:43 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932332Ab0JOSbB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 14:31:01 -0400
-Received: from lo.gmane.org ([80.91.229.12]:51614 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932328Ab0JOSbA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 14:31:00 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P6p3R-0003VB-JI
-	for git@vger.kernel.org; Fri, 15 Oct 2010 20:30:57 +0200
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Oct 2010 20:30:57 +0200
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 15 Oct 2010 20:30:57 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-MSMail-Priority: Normal
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1756476Ab0JOSqj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 14:46:39 -0400
+Received: from mail-wy0-f180.google.com ([74.125.82.180]:59254 "EHLO
+	mail-wy0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755857Ab0JOSqi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 14:46:38 -0400
+X-Greylist: delayed 169947 seconds by postgrey-1.27 at vger.kernel.org; Fri, 15 Oct 2010 14:46:37 EDT
+Received: by wye20 with SMTP id 20so69472wye.11
+        for <git@vger.kernel.org>; Fri, 15 Oct 2010 11:46:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=rrtt7pGUp53b0ZlJKwmx7iCuZoYgc9ea/VambVdd/zI=;
+        b=UIDAr8hABuVzrg9dYvluVL2qKGf2Q2ux1GtHmpmrZaCbnOzyJ7dhkm99qcUsHmACPb
+         iattDkdMGU08HL+WShukDpZAtPVshdBWVSLbnO0CBxmqK32NQ7+qABNTFhaZUo3VqpBv
+         LCuUIo11qVxSS60mrZkFRHOdXGU31MJR9rDsw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=MoXm+yIc7MRsReAmcm+8FRkYy9GLfhQXlXraIXzuxjzaSvF63BYSS6dWspB4bo6tB7
+         KcBH0eNUsQiwSv4b2BfxZZR0NImmqDeGUyPMjAEMIL4QBJ8tGTqmMOReRDiTaLF9+J5E
+         dHY1nRzY3tYfxeGoG/bYpvpS8PBGuJmqJcVXs=
+Received: by 10.227.146.139 with SMTP id h11mr1298730wbv.197.1287168394232;
+        Fri, 15 Oct 2010 11:46:34 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id a17sm8718256wbe.0.2010.10.15.11.46.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 15 Oct 2010 11:46:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <i9a6kn$d7o$1@dough.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159128>
 
-"Christian Halstrick" <christian.halstrick@gmail.com> wrote in message 
-news:loom.20101014T095743-275@post.gmane.org...
-> Thank's a lot for all your responses. I know now how to solve my problem. 
-> I'll
-> definitely not going to commit my unit-test before my fix and publish that
-> because then I would have commits in the history where tests fail. But 
-> other
-> suggested solutions do work.
->
-> Still, all that sounds like workarounds for a lacking feature. Checkout 
-> content
-> to the worktree without altering the index. What do you think, couldn't 
-> that be
-> added as an option to checkout?
->
-> -- Chris
+Hi Neal,
 
-FWIW, my understanding of the index is that it is the middle-man for moving 
-things from your work-tree to the object-store AND for moving things from 
-the object-store to your work-tree.  Therefore, when you checkout the blob, 
-it first gets copied from the object-store to your index and then from the 
-index to your work-tree.
+Neal Kreitzinger wrote:
 
-However, there is an option in git-commit to copy files directly from the 
-working-tree to the object-store by totally bypassing the index, but no one 
-seems to do this or recommend doing this as normative practice.  None the 
-less, this "exception" in the git-commit manpage does seem to set the 
-precedent, so maybe it is also conceivable to copy objects directly from the 
-object-store to the work-tree by totally bypassing the index.
+> However, there is an option in git-commit to copy files directly from the 
+> working-tree to the object-store by totally bypassing the index
 
-Please note that I am responding because I am interested in the discussion 
-and not because I know the answer.  I am not a git programmer so my 
-observations only symptomatic and/or theoretical as a user.
-
-v/r,
-Neal 
+What option is this?  I thought "git commit --include" added content
+to the index.
