@@ -1,71 +1,127 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
- git-svn fetch)
-Date: Fri, 15 Oct 2010 10:50:46 -0400 (EDT)
-Message-ID: <2196050.492435.1287154246295.JavaMail.root@mail.hq.genarts.com>
-References: <AANLkTi=PwLmKSb_gF=k+xVSZfM1CDCFZFZdR7pLgh6t6@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v2] compat: add memrchr()
+Date: Fri, 15 Oct 2010 10:26:08 -0500
+Message-ID: <20101015152608.GA9450@burratino>
+References: <1287098999-9244-1-git-send-email-ydirson@altern.org>
+ <20101015051750.GA21830@burratino>
+ <loom.20101015T105350-205@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
-	David Barr <david.barr@cordelta.com>,
-	Tomas Carnecky <tom@dbservice.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 15 16:51:04 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	Yann Dirson <ydirson@altern.org>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Ludvig Strigeus <ludde@strigeus.com>
+X-From: git-owner@vger.kernel.org Fri Oct 15 17:29:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6lca-0004rJ-8Y
-	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 16:51:00 +0200
+	id 1P6mEF-0006SN-KN
+	for gcvg-git-2@lo.gmane.org; Fri, 15 Oct 2010 17:29:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755356Ab0JOOuy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 10:50:54 -0400
-Received: from hq.genarts.com ([173.9.65.1]:60882 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754659Ab0JOOux (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 10:50:53 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 8C1D71E2693D;
-	Fri, 15 Oct 2010 10:50:52 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id f51Uooly2JS6; Fri, 15 Oct 2010 10:50:46 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 6C4491E2693A;
-	Fri, 15 Oct 2010 10:50:46 -0400 (EDT)
-In-Reply-To: <AANLkTi=PwLmKSb_gF=k+xVSZfM1CDCFZFZdR7pLgh6t6@mail.gmail.com>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1756341Ab0JOP3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 11:29:43 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55284 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754334Ab0JOP3m (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 11:29:42 -0400
+Received: by iwn35 with SMTP id 35so1027053iwn.19
+        for <git@vger.kernel.org>; Fri, 15 Oct 2010 08:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=sOE0kIf7HjaKnPGfqCDC78pVdtrscdXMv1tCxr319+4=;
+        b=D10ZJjKK/RXAlvdQ2MbwcNTIkpFNeNceQE05/10pecEkUb9T1GMBFAnPwOgwvq3DwX
+         +fRHnJIVruv36GzYmGLiz2bUJidYbL0vQf8qwgSRnj3oDTRewp9PZvMZakiTEB6Cc0cV
+         3CAasZ7UehQGrSFg8pBulY9ky2URvh7LW1jb8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=bV5SjCuvsHjlGXxlLqp2SsSjUxNx5mcsVMC7VSvmbEyK9KyTvXevpMIvPnM9tkTBMX
+         ZK/5lZnhSFS4rCbvzIE+ePlfxZ8KOHaMKQKazT2rlsW2I+xKv20qmzBA+8kupFjCadh9
+         oObGSSWsUKS9XNrXai8/SGrNqahj4QqKXXbZo=
+Received: by 10.231.31.6 with SMTP id w6mr804234ibc.64.1287156579309;
+        Fri, 15 Oct 2010 08:29:39 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d40sm11028555ibc.13.2010.10.15.08.29.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 15 Oct 2010 08:29:38 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <loom.20101015T105350-205@post.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159121>
 
+Reimplement another handy convenience function from glibc.  memrchr()
+searches from the end of a memory area for a particular character.  It
+is similar to strrchr() but takes a length argument and is
+binary-safe.
 
-> Thanks for the very interesting read. It seems like a (very) long
-> pipeline though, I wonder how we can make this not only easier, but
-> also more streamlined for git-remote-svn.
+The whole-directory rename detection patch could use this to find the
+last '/' in a (possibly truncated) pathname.
 
-The process can certainly be streamlined.  As is often the case, this process was created via the "just make it work" mentality (and a barely passable knowledge of git).  Now that I'm a little more comfortable with git and it's basic objects, I think I could probably create a new process that does a single pass through the svn-fe created repository and creates a new repository with the correct history (and some other nice features that come with any 2.0).
+The system memrchr() is used on glibc systems to provide a sanity
+check that our code works with a non-custom implementation.  Yes, the
+various BSDs have their own highly optimized memrchr(), too.  The
+planned use of memrchr in git is for clarity, not speed, so it is not
+obvious that the makefile+autoconf magic to use libc's implementation
+on a wide variety of operating systems would be worth the time.
 
-But I'm also looking at this from a one-time conversion view.  I had a couple of conversations with Ram that showed me my point of view is very narrow compared to the larger git-remote-svn effort...
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Ludvig Strigeus wrote:
 
-> Do you have any suggestions
-> on how you would prefer this to be done in git-remote-svn? (Main
-> advantage for git-remote-svn might be that we can use git notes to
-> store commit conversion information, instead of having to mine commit
-> messages.)
+> System memrchr uses a byte comparison rather than an int comparison.
+> 
+> "The memchr() function scans the first n bytes of the memory area pointed to by
+> s for the character c. The first byte to match c (interpreted as an unsigned
+> character) stops the operation. "
 
-I think using notes is a better way to associate conversion information with commits, but I would probably still end up mining the notes to create some sort of svn to git mapping...  Correct me if I'm wrong, but I don't see how notes would help me get from an svn rev to a git sha (a common practice for tickets and wiki links in our organization).  The latter is more a job for tags, and while that would be possible, that more than doubles the number of objects in the repository (I have a good percentage of SVN revs that turned into multiple git commit objects).
+Oh, right.  (strchr() uses char, memchr() uses unsigned char.)
 
-But otherwise, my suggestions are (unfortunately) rather naive.  "Make it work like git-svn, but faster" :)  I can offer the warning to watch out for cross-branch (subdirectory/file) copies; we had a lot of those in our SVN repository, and I still don't know if there's anyway in Git to represent that operation...  And obviously even if I did have/use the svn merge information, svn merges don't map directly to git merges... but I'm guessing I'm not saying anything you haven't already thought about.
+ git-compat-util.h |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-I guess after that I should add that I'm happy to help, I'm just not sure where my experience maps to the on going effort.
-
-Thanks,
-Stephen
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 2af8d3e..6de9dee 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -366,6 +366,9 @@ extern int git_vsnprintf(char *str, size_t maxsize,
+ #define HAVE_STRCHRNUL
+ #define HAVE_MEMPCPY
+ #endif
++#if __GLIBC_PREREQ(2, 2)
++#define HAVE_MEMRCHR
++#endif
+ #endif
+ 
+ #ifndef HAVE_STRCHRNUL
+@@ -386,6 +389,19 @@ static inline void *gitmempcpy(void *dest, const void *src, size_t n)
+ }
+ #endif
+ 
++#ifndef HAVE_MEMRCHR
++#define memrchr gitmemrchr
++static inline void *gitmemrchr(const void *s, int c, size_t n)
++{
++	const unsigned char *p = s;
++	p += n;
++	while (p != s)
++		if (*--p == (unsigned char) c)
++			return p;
++	return NULL;
++}
++#endif
++
+ extern void release_pack_memory(size_t, int);
+ 
+ typedef void (*try_to_free_t)(size_t);
+-- 
+1.7.2.3
