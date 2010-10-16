@@ -1,99 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Can I checkout a single file without altering index?
-Date: Fri, 15 Oct 2010 18:40:08 -0500
-Message-ID: <20101015234008.GC25624@burratino>
-References: <loom.20101012T114900-532@post.gmane.org>
- <AANLkTinnYEnCwpTh45N69n73JQm=ndXH-SUJ5b1piUYv@mail.gmail.com>
- <loom.20101014T095743-275@post.gmane.org>
- <i9a6kn$d7o$1@dough.gmane.org>
- <7viq13avn0.fsf@alter.siamese.dyndns.org>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
+ git-svn fetch)
+Date: Fri, 15 Oct 2010 20:16:59 -0400 (EDT)
+Message-ID: <26761091.515858.1287188219315.JavaMail.root@mail.hq.genarts.com>
+References: <AANLkTim6w54CPhw0GzaDxT9e0t19XQ7-rMEe5aSBevS+@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 16 01:43:44 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
+	David Barr <david.barr@cordelta.com>,
+	Tomas Carnecky <tom@dbservice.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 16 02:17:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P6tw8-00072a-IT
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 01:43:44 +0200
+	id 1P6uSY-0001vL-Uh
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 02:17:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751763Ab0JOXnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 15 Oct 2010 19:43:39 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:44274 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751175Ab0JOXni (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 15 Oct 2010 19:43:38 -0400
-Received: by gyg13 with SMTP id 13so184127gyg.19
-        for <git@vger.kernel.org>; Fri, 15 Oct 2010 16:43:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=rQa7a1T7j+x+v6Qa+jQuwMxw8/xkY0x9uk+QQxqGYgc=;
-        b=dM9WUNXkM6boGL3sbjDX8+yhRjRGXGjOycMXN8cP79oDvOJEyolzB8YGRKGJa+5nD/
-         nqKxicfPU0HZyWUkwIl+SG9uWUlo76TSXM1cfCM8ZL+YZCGcZ2VbX5iQ/qHYlAxocfT4
-         gQn8SCSkv+nVnDqUR9XRfYAjSARfPEJezVmxI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=HyT81q4PhEDTtke/ZS0dbnZRlEWpRCQ1R2ykS1ZKS4F8v5C+euvAn9Nd0mCRXxqo4n
-         JZVpZ82t5TL3NVHF2rRI2kDxO9rOplEvX0/nAl9zMSyVdlaf8ndnt7MuFeek0ch3WiEi
-         l3zFZe2x0vlM1fST7gfKmuwkNlqfW6UxPzB7E=
-Received: by 10.236.110.178 with SMTP id u38mr597490yhg.19.1287186218358;
-        Fri, 15 Oct 2010 16:43:38 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id i9sm9478612yha.42.2010.10.15.16.43.35
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 15 Oct 2010 16:43:36 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7viq13avn0.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751466Ab0JPARI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 15 Oct 2010 20:17:08 -0400
+Received: from hq.genarts.com ([173.9.65.1]:44069 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751044Ab0JPARH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 15 Oct 2010 20:17:07 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id D1C161E26960;
+	Fri, 15 Oct 2010 20:17:05 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 8PXHkmeTchdA; Fri, 15 Oct 2010 20:16:59 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 8D9C61E2695F;
+	Fri, 15 Oct 2010 20:16:59 -0400 (EDT)
+In-Reply-To: <AANLkTim6w54CPhw0GzaDxT9e0t19XQ7-rMEe5aSBevS+@mail.gmail.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159150>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159151>
 
-Junio C Hamano wrote:
 
->                                                           If somebody
-> can write a convincing use case that shows why it is useful, such an
-> option shouldn't be very hard to add.  But I don't think of any.  For
-> example, this is not it:
+
+----- Original Message -----
+> From: "Sverre Rabbelier" <srabbelier@gmail.com>
+> To: "Stephen Bash" <bash@genarts.com>
+> Sent: Friday, October 15, 2010 7:39:09 PM
+> Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
 > 
->     I start from a clean slate and start working.
+> On Fri, Oct 15, 2010 at 09:50, Stephen Bash <bash@genarts.com> wrote:
+> > I think using notes is a better way to associate conversion
+> > information
+> > with commits, but I would probably still end up mining the notes to
+> > create
+> > some sort of svn to git mapping... Correct me if I'm wrong, but I
+> > don't see
+> > how notes would help me get from an svn rev to a git sha (a common
+> > practice for tickets and wiki links in our organization).
 > 
->     $ git checkout
->     $ edit; git diff; compile; test; git add path ;# repeat
+> Ah, hmm, that is a good point. Couldn't you just tag object
+> 0000000000000000143 for svn revision 143?
+
+Yeah, I actually thought about that as I was writing the comment...  And after a completely unrelated conversation about tags at $WORK this afternoon, I'm half tempted to make a refs/tags/svn directory with lightweight tags named for SVN revs that point to the appropriate git object.  That idea along with a bunch of others are now brewing a 2.0 in my head since I started revisiting this proces.  We'll see if I have a productive weekend or not...
+
+> > I guess after that I should add that I'm happy to help, I'm just not
+> > sure
+> > where my experience maps to the on going effort.
 > 
->     At this point I have some cooked contents added for the next commit
->     in the index for path.  But I realize that the contents of that path
->     in another branch might be even better.  But I do not want to lose
->     the state I arrived at, which might be better than that alternative.
->     I cannot decide, so I'll keep that in the index for now.
+> Just general feedback, sanity checking, and if you're interested,
+> "beta testing" I think would be very useful :).
 
-To be a devil's advocate (because I am not convinced yet), here is one:
+I will do my best.
 
-    I start from a clean slate and start working.
-
-    $ git checkout
-    $ edit; git diff; compile; test; git add path ;# repeat
-
-    At this point I have some cooked contents added for the next commit
-    in the index for path.  Illustrating the new change is a new test,
-    and I want to "test the test" by trying it out against the inferior
-    previous state.
-
-    $ git checkout --no-index HEAD path
-    $ test; edit test; git diff; compile; test; git add test ;# repeat
-
-    Now one last test run with the improved state
-
-    $ git checkout path
-    $ compile; test
-    $ git commit
+Thanks,
+Stephen
