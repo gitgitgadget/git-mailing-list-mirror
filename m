@@ -1,120 +1,69 @@
-From: Clemens Buchacher <drizzd@aon.at>
-Subject: Re: Why is "git tag --contains" so slow?
-Date: Sat, 16 Oct 2010 16:32:26 +0200
-Message-ID: <20101016143226.GA20515@localhost>
-References: <AANLkTikkLIKm3soF9agXnN34P7Xnq4AiVqGU_qFaaRmZ@mail.gmail.com>
- <20100701121711.GF1333@thunk.org>
- <20100701150331.GA12851@sigill.intra.peff.net>
- <20100701153842.GA15466@sigill.intra.peff.net>
- <20100702192612.GM1333@thunk.org>
- <20100703080618.GA10483@sigill.intra.peff.net>
- <20100704005543.GB6384@thunk.org>
- <20100705122723.GB21146@sigill.intra.peff.net>
- <20100705123923.GC21146@sigill.intra.peff.net>
- <20101014185945.GA14634@burratino>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RGC/PATCHv2] grep: submodule support
+Date: Sat, 16 Oct 2010 17:54:59 +0200
+Message-ID: <4CB9CAD3.7060109@web.de>
+References: <1287185204-843-1-git-send-email-judge.packham@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="UugvWAfsgieZRqgk"
-Cc: Jeff King <peff@peff.net>, tytso@mit.edu,
-	Avery Pennarun <apenwarr@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 16 16:38:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, pclouds@gmail.com, gitster@pobox.com
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 16 17:56:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P77uJ-0000SB-Ac
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 16:38:47 +0200
+	id 1P797D-0007U1-HR
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 17:56:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751302Ab0JPOik (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Oct 2010 10:38:40 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55551 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750987Ab0JPOij (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Oct 2010 10:38:39 -0400
-Received: by bwz15 with SMTP id 15so1749570bwz.19
-        for <git@vger.kernel.org>; Sat, 16 Oct 2010 07:38:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=8IkW+xjNK4W22vcpJT5y7kLE++cXORiOHKmuxX6keTg=;
-        b=XYVy2LsxR6wDWAyXt6qb57hztoiAQCDjdKTgD0/aRrdgc5uZZAAun6oQN8dYPxCc1l
-         N1yS+373DXZ/wIRl508YNzPgj30mHz1C2+cQaUEaGreg/xPicMWkbiIkRHSPnRwZXf2o
-         ImfuJRZKvl/WtQ/3Yg58cB+0B0wd3eQG9kHi4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=Bb3jHqmRYNN1Jl6WtrJUFALJjmYWI4EaQE/7PY1ZiLz1cvDHM2w8GVkM/bQ7bDYU78
-         If60CLe9b7WwLxS6mEJ+oDJLI3RZO/IVIF3P8zDWFymihyJlGRMaqG7FNndtDrN8nSp8
-         56QzEaVJ20/U8MvW9Jgs/CwEiDtyAiZ+JxzIw=
-Received: by 10.204.57.3 with SMTP id a3mr2038948bkh.164.1287239525233;
-        Sat, 16 Oct 2010 07:32:05 -0700 (PDT)
-Received: from darc.lan (p549A2EC8.dip.t-dialin.net [84.154.46.200])
-        by mx.google.com with ESMTPS id 4sm11589477bki.13.2010.10.16.07.32.03
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Oct 2010 07:32:04 -0700 (PDT)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1P77oA-00071o-Hz; Sat, 16 Oct 2010 16:32:26 +0200
-Content-Disposition: inline
-In-Reply-To: <20101014185945.GA14634@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752321Ab0JPP4A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Oct 2010 11:56:00 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:34497 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752107Ab0JPPz7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Oct 2010 11:55:59 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 769BE16F3D272;
+	Sat, 16 Oct 2010 17:55:04 +0200 (CEST)
+Received: from [93.246.57.44] (helo=[192.168.178.29])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1P7968-0007ey-00; Sat, 16 Oct 2010 17:55:04 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+In-Reply-To: <1287185204-843-1-git-send-email-judge.packham@gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+dYAez/1JZOYlIIkfg01cv56zoxy9wUHlFJMMK
+	b13zohNu9slaQHnl6XCnbNLGZT434b6wgHv9baV4AOlBZVhSC9
+	iFLongxANcLOFDfypj2Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159166>
 
+Am 16.10.2010 01:26, schrieb Chris Packham:
+> Here is my updated grep support for submodules series.
 
---UugvWAfsgieZRqgk
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks Chris and Duy, I added this series to my git-submod-enhancements
+repo on github and will give it some testing next week.
 
-On Thu, Oct 14, 2010 at 01:59:45PM -0500, Jonathan Nieder wrote:
->=20
-> project # skewed        maximum skew    notes
-> ------- --------        ------------    -----
-> gtk+    13              13 hrs          worst example seems to be tz rela=
-ted
+> Chris Packham (4):
+>       grep: output the path from cwd to worktree
+>       grep_cache: check pathspec first
+>       add test for git grep --recursive
 
-It really is kind of fun.
+Hmm, is it useful to add tests before adding the feature tested? I
+thought it makes more sense to add them in the same commit or after
+adding what is tested (e.g. to reduce the noise when bisecting
+later). Or am I missing something here?
 
-wine                    1       14 days
-mesa                    4930    150 days
+(And by the way: the test script should be executable)
 
-xf86-video-ati          13      ~2.5 hrs
-xf86-video-intel        26      8 hrs
-xf86-video-nouveau      12       10 hrs
+>       grep: add support for grepping in submodules
 
-fluxbox                 0       0
-metacity                0       0
-openbox                 8       4 hrs
+Nit: The commit message (5/5) talks about the old option name
+"--recurse-submodules" instead of the "--recursive" the patch
+is adding.
 
-giggle                  2       21 min
-glibc                   2       931 days
-
---UugvWAfsgieZRqgk
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJMubd6AAoJELKdZexG8uqMR7UH/RIJK6RLHwbgJV80TbmkGgel
-a5pXVhRDEFJKuPRqPUm7+WuhyR6W02VY8zwJWrbavE6lMDwcFY0XxYIcpcd6B4Yp
-gNJw/vD4pljX7xTGwpDRue6ucu1sWmo0xrLrkF+DfFvI1fvCB7F0Nd01JGnHW/nX
-nQJ+qfa/QmgHPl0c1DuJJQD2rEMc8WQgjCgPjry5RmwchESesgMHuCCJNGXZcVL3
-LFG/pRGhOotbPVn6q6Z019xe1kV2yuJ+NuvlQTSK3W649afNrSI1LBf16sL6JtDO
-DvAhFqCREvV57G/4fLFlMl9W44no1LihByLYy1s1X/alsmA57DDSTkBvSqg+ybA=
-=rOiB
------END PGP SIGNATURE-----
-
---UugvWAfsgieZRqgk--
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+>       worktree: provide better prefix to go back to original cwd
