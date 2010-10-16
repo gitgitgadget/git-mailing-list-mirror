@@ -1,157 +1,224 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 8/8] push: pass --progress down to git-pack-objects
-Date: Sun, 17 Oct 2010 02:37:03 +0800
-Message-ID: <1287254223-4496-9-git-send-email-rctay89@gmail.com>
-References: <1287254223-4496-1-git-send-email-rctay89@gmail.com>
- <1287254223-4496-2-git-send-email-rctay89@gmail.com>
- <1287254223-4496-3-git-send-email-rctay89@gmail.com>
- <1287254223-4496-4-git-send-email-rctay89@gmail.com>
- <1287254223-4496-5-git-send-email-rctay89@gmail.com>
- <1287254223-4496-6-git-send-email-rctay89@gmail.com>
- <1287254223-4496-7-git-send-email-rctay89@gmail.com>
- <1287254223-4496-8-git-send-email-rctay89@gmail.com>
-Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
-	Chase Brammer <cbrammer@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 16 20:38:15 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCHv2 1/5] worktree: provide better prefix to go back to
+ original cwd
+Date: Sat, 16 Oct 2010 13:42:59 -0500
+Message-ID: <20101016184259.GB30457@burratino>
+References: <1287185204-843-1-git-send-email-judge.packham@gmail.com>
+ <1287185204-843-2-git-send-email-judge.packham@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, pclouds@gmail.com,
+	gitster@pobox.com
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 16 20:46:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7Bdx-0002rt-26
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 20:38:09 +0200
+	id 1P7BmC-0006S8-72
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 20:46:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753771Ab0JPShx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Oct 2010 14:37:53 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:42381 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753751Ab0JPShw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Oct 2010 14:37:52 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 18so130001pva.19
-        for <git@vger.kernel.org>; Sat, 16 Oct 2010 11:37:52 -0700 (PDT)
+	id S1753577Ab0JPSqe convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 16 Oct 2010 14:46:34 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:44425 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753474Ab0JPSqd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Oct 2010 14:46:33 -0400
+Received: by ywi6 with SMTP id 6so836423ywi.19
+        for <git@vger.kernel.org>; Sat, 16 Oct 2010 11:46:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=6HV0daWPTycywRrY3knq3Qk3gOdrWdBagvI4v6Ajps0=;
-        b=s3CBqej2QO3RqTEeT84ulXrirExFDKSlbZKEIdOBHeke/oJeTXY675QIxtHLX0t2zu
-         174M1lfYca67YBwdVH9s+leKpvZP4wlTwjAw6cVFWpbTwVijKNqXo3P6wvvxD+OKDPK4
-         mC/OzRzQIrut6rfkjiyddNn+6VxhDoBhP1oF8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=zFYGVeykPEbUDEJ1PTvOzsBZSqSwwOYf87R+UI3IJNY=;
+        b=MYHeD8TIsisElcBqnTFMUcw5p6GgOjZjXviAk93aiAmsMzDPc5DCL6WrCJiSHLAcBr
+         hDU7N8MX8z2yCNYVsXozDk9sxDF85MS73rI+FOoby1tP2erA6orpPCG1CaML0d7Np2wZ
+         CanKS/f0HBjoKWaKksPmQIEoD1o6zHRAzzQR4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=OzFtiMHRbcdPZwWmYilsJUIPAHlKz1j2KL9kwFN7FVIQK8U1kBfy6pepC9S4C4JUTV
-         cgRHQZ7viFScSOTdMQ6l4cU3GpEBY4BicedyC03c3LV2lZAn45YejdEThShx6xRdUKlU
-         /TPtueS/3nFoEDtGeMSiRiS7KDWsrCokJiOec=
-Received: by 10.143.16.8 with SMTP id t8mr1843203wfi.207.1287254272196;
-        Sat, 16 Oct 2010 11:37:52 -0700 (PDT)
-Received: from localhost.localdomain (cm147.zeta152.maxonline.com.sg [116.87.152.147])
-        by mx.google.com with ESMTPS id x18sm8029156wfa.23.2010.10.16.11.37.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Oct 2010 11:37:51 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <1287254223-4496-8-git-send-email-rctay89@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=LEm55bKA6YOhun1CAOKRNbga9qRA5UcSv8o8L0w1CuPlCY/qPpHSzGWKwnVYjcHQW9
+         Qq7kB9v+skOHO23lTJEXlz/Bq9WsxUeZYDphWfWBJa7hlO3dpM2ztZYH4kCZAUFNy97/
+         RCPtRrunz6pWJRBvZgHWzn3NsoTLZEjkL3pS8=
+Received: by 10.150.49.5 with SMTP id w5mr3763040ybw.401.1287254791382;
+        Sat, 16 Oct 2010 11:46:31 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id v39sm1207128yba.7.2010.10.16.11.46.29
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 16 Oct 2010 11:46:30 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287185204-843-2-git-send-email-judge.packham@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159177>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159178>
 
-From: Jeff King <peff@peff.net>
+Hi,
 
-When pushing via builtin transports (like file://, git://), the
-underlying transport helper (in this case, git-pack-objects) did not get
-the --progress option, even if it was passed to git push.
+Chris Packham wrote:
 
-Fix this, and update the tests to reflect this.
+> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
+>=20
+> When both GIT_DIR and GIT_WORK_TREE are set, if cwd is outside worktr=
+ee,
+> prefix (the one passed to every builtin commands) will be set to NULL=
+,
+> which means "user stays at worktree topdir".
+>=20
+> As a consequence, command line arguments are supposed to be relative
+> to worktree topdir, not current working directory. Not very intuitive=
+=2E
 
-Note that according to the git-pack-objects documentation, we can safely
-apply the usual --progress semantics for the transport commands like
-clone and fetch (and for pushing over other smart transports).
+Thanks.  More detailed history for this patch:
 
-Reported-by: Chase Brammer <cbrammer@gmail.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
----
+ - v0: http://thread.gmane.org/gmane.comp.version-control.git/157599/fo=
+cus=3D157601
+ - v1: http://thread.gmane.org/gmane.comp.version-control.git/158287
+ - v2: http://thread.gmane.org/gmane.comp.version-control.git/158369
 
-  No significant changes other than those incurred while rebasing on
-  top of Jeff's patches.
+Any thoughts about the previous questions?
 
- builtin/send-pack.c      |    3 +++
- send-pack.h              |    1 +
- t/t5523-push-upstream.sh |    4 ++--
- transport.c              |    1 +
- 4 files changed, 7 insertions(+), 2 deletions(-)
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -1117,6 +1117,8 @@ const char *split_cmdline_strerror(int cmdline_=
+errno);
+>  /* git.c */
+>  struct startup_info {
+>  	int have_repository;
+> +	char *cwd_to_worktree; /* chdir("this"); from cwd would return to w=
+orktree */
+> +	char *worktree_to_cwd; /* chdir("this"); from worktree would return=
+ to cwd */
 
-diff --git a/builtin/send-pack.c b/builtin/send-pack.c
-index 481602d..efd9be6 100644
---- a/builtin/send-pack.c
-+++ b/builtin/send-pack.c
-@@ -48,6 +48,7 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 		NULL,
- 		NULL,
- 		NULL,
-+		NULL,
- 	};
- 	struct child_process po;
- 	int i;
-@@ -59,6 +60,8 @@ static int pack_objects(int fd, struct ref *refs, struct extra_have_objects *ext
- 		argv[i++] = "--delta-base-offset";
- 	if (args->quiet)
- 		argv[i++] = "-q";
-+	if (args->progress)
-+		argv[i++] = "--progress";
- 	memset(&po, 0, sizeof(po));
- 	po.argv = argv;
- 	po.in = -1;
-diff --git a/send-pack.h b/send-pack.h
-index 60b4ba6..05d7ab1 100644
---- a/send-pack.h
-+++ b/send-pack.h
-@@ -5,6 +5,7 @@ struct send_pack_args {
- 	unsigned verbose:1,
- 		quiet:1,
- 		porcelain:1,
-+		progress:1,
- 		send_mirror:1,
- 		force_update:1,
- 		use_thin_pack:1,
-diff --git a/t/t5523-push-upstream.sh b/t/t5523-push-upstream.sh
-index f43d760..c229fe6 100755
---- a/t/t5523-push-upstream.sh
-+++ b/t/t5523-push-upstream.sh
-@@ -78,7 +78,7 @@ test_expect_success TTY 'progress messages go to tty' '
- 	grep "Writing objects" err
- '
- 
--test_expect_failure 'progress messages do not go to non-tty' '
-+test_expect_success 'progress messages do not go to non-tty' '
- 	ensure_fresh_upstream &&
- 
- 	# skip progress messages, since stderr is non-tty
-@@ -86,7 +86,7 @@ test_expect_failure 'progress messages do not go to non-tty' '
- 	! grep "Writing objects" err
- '
- 
--test_expect_failure 'progress messages go to non-tty (forced)' '
-+test_expect_success 'progress messages go to non-tty (forced)' '
- 	ensure_fresh_upstream &&
- 
- 	# force progress messages to stderr, even though it is non-tty
-diff --git a/transport.c b/transport.c
-index 4dba6f8..0078660 100644
---- a/transport.c
-+++ b/transport.c
-@@ -789,6 +789,7 @@ static int git_transport_push(struct transport *transport, struct ref *remote_re
- 	args.use_thin_pack = data->options.thin;
- 	args.verbose = (transport->verbose > 0);
- 	args.quiet = (transport->verbose < 0);
-+	args.progress = transport->progress;
- 	args.dry_run = !!(flags & TRANSPORT_PUSH_DRY_RUN);
- 	args.porcelain = !!(flags & TRANSPORT_PUSH_PORCELAIN);
- 
--- 
-1.7.2.2.513.ge1ef3
+e.g. I still find these comments hard to understand.
+
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -313,10 +313,109 @@ const char *read_gitfile_gently(const char *pa=
+th)
+>  	return path;
+>  }
+> =20
+> +/*
+> + * Given "foo/bar" and "hey/hello/world", return "../../hey/hello/wo=
+rld/"
+> + * Either path1 or path2 can be NULL
+> + */
+> +static char *make_path_to_path(const char *path1, const char *path2)
+> +{
+> +	int nr_back =3D 0;
+> +	int i, pathlen =3D path2 ? strlen(path2) : 0;
+> +	char *buf, *p;
+> +
+> +	if (path1 && *path1) {
+> +		nr_back =3D 1;
+> +		while (*path1) {
+> +			if (*path1 =3D=3D '/')
+> +				nr_back++;
+
+This still assumes Unix-style path separators.  Is that okay?  (The
+answer could be yes; it just seems useful to document the assumptions..=
+=2E)
+
+> +/*
+> + * Return a prefix if cwd inside worktree, or NULL otherwise.
+> + * Also fill startup_info struct.
+> + */
+> +static const char *setup_prefix(const char *cwd)
+> +{
+> +	const char *worktree =3D get_git_work_tree();
+> +	int len =3D 0, cwd_len =3D strlen(cwd), worktree_len =3D strlen(wor=
+ktree);
+> +
+> +	while (worktree[len] && worktree[len] =3D=3D cwd[len])
+> +		len++;
+> +
+> +	if (!worktree[len] && !cwd[len]) {
+> +		if (startup_info) {
+> +			startup_info->cwd_to_worktree =3D NULL;
+> +			startup_info->worktree_to_cwd =3D NULL;
+> +		}
+> +		return NULL;
+> +	}
+> +	/* get /foo/, not /foo/baa if /foo/baa1 and /foo/baa2 are given */
+> +	else if (worktree[len] && cwd[len]) {
+
+Style: use cuddled braces.
+
+	} else if (worktree[len] && cwd[len]) {
+		/*
+		 * The result should be /foo/, not /foo/baa, when
+		 * worktree is /foo/baa1 and cwd is /foo/baa2.
+		 */
+
+> +		while (len && worktree[len] !=3D '/')
+> +			len--;
+> +		len++;
+> +	}
+> +	else {
+
+Likewise.
+
+> +		if (worktree[len]) {
+> +			if (worktree[len] !=3D '/') {
+> +				while (len && worktree[len] !=3D '/')
+> +					len--;
+> +			}
+> +		}
+> +		else {
+
+Likewise.
+
+> +			if (cwd[len] !=3D '/') {
+> +				while (len && cwd[len] !=3D '/')
+> +					len--;
+> +			}
+
+This is repetitive.  Why is the if necessary?
+
+[...]
+>  static const char *setup_explicit_git_dir(const char *gitdirenv,
+>  				const char *work_tree_env, int *nongit_ok)
+>  {
+> -	static char buffer[1024 + 1];
+> +	static char buffer[PATH_MAX];
+
+Unexplained.
+
+[...]
+> --- /dev/null
+> +++ b/t/t1510-worktree-prefix.sh
+> @@ -0,0 +1,52 @@
+[...]
+> +test_expect_success 'at root' '
+> +	(
+> +	cd foo &&
+> +	git rev-parse --cwd-to-worktree --worktree-to-cwd >result &&
+> +	: >expected &&
+> +	test_cmp expected result
+> +	)
+> +'
+
+It is clearer where a subshell begins and ends if it is indented.  The
+usual style in git shell scripts is to omit the ":" in
+
+	>empty
+
+commands.  So maybe:
+
+	(
+		cd foo &&
+		git rev-parse --cwd-to-worktree --worktree-to-cwd >result
+	) &&
+	>expected &&
+	test_cmp expected foo/result
+
+Sorry, a bit grumpy today.  Still, hope that helps,
+Jonathan
