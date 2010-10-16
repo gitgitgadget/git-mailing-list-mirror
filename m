@@ -1,90 +1,105 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: [PATCH v2] Update test script annotate-tests.sh to handle missing/extra authors
-Date: Sat, 16 Oct 2010 04:09:20 -0700
-Message-ID: <1287227360-2610-1-git-send-email-kevin@sb.org>
-References: <09193539-B5AD-4574-9FE4-983566A34355@sb.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, Kevin Ballard <kevin@sb.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 16 13:09:35 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] merge-file: correctly find files when called in subdir
+Date: Sat, 16 Oct 2010 13:33:29 +0200
+Message-ID: <33ab2f03ed522e1a9be202017b7bbfe35e6d7a99.1287228637.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sat Oct 16 13:33:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P74dq-0004Ir-M7
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 13:09:35 +0200
+	id 1P751K-0008Cq-KV
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 13:33:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753741Ab0JPLJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Oct 2010 07:09:28 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54118 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752473Ab0JPLJ1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Oct 2010 07:09:27 -0400
-Received: by pwj4 with SMTP id 4so292352pwj.19
-        for <git@vger.kernel.org>; Sat, 16 Oct 2010 04:09:27 -0700 (PDT)
-Received: by 10.142.141.12 with SMTP id o12mr1558726wfd.280.1287227367408;
-        Sat, 16 Oct 2010 04:09:27 -0700 (PDT)
-Received: from localhost.localdomain ([24.130.32.253])
-        by mx.google.com with ESMTPS id q13sm17783377wfc.17.2010.10.16.04.09.26
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Oct 2010 04:09:26 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.1.208.g53ea2
-In-Reply-To: <09193539-B5AD-4574-9FE4-983566A34355@sb.org>
+	id S1753931Ab0JPLde (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Oct 2010 07:33:34 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:41707 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753659Ab0JPLde (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Oct 2010 07:33:34 -0400
+Received: from CAS11.d.ethz.ch (172.31.38.211) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sat, 16 Oct
+ 2010 13:33:32 +0200
+Received: from localhost.localdomain (217.162.250.31) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sat, 16 Oct
+ 2010 13:33:32 +0200
+X-Mailer: git-send-email 1.7.3.1.266.g3c065
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159160>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159161>
 
-The current script used by annotate-tests.sh (used by t8001 and t8002) fails
-to emit a warning if any of the expected authors never show up in the output
-or if authors that show up in the output were never specified as expected.
-Update the script to fail in both of these scenarios.
+Since b541248 (merge.conflictstyle: choose between "merge" and "diff3
+-m" styles, 2008-08-29), git-merge-file uses setup_directory_gently(),
+thus cd'ing around to find any possible config files to use.
 
-Helped-by: Jakub Narebski <jnareb@gmail.com>
-Signed-off-by: Kevin Ballard <kevin@sb.org>
+This broke merge-file when it is called from within a subdirectory of
+a repository, and the arguments are all relative paths.
+
+Fix by prepending the prefix, as passed down from the main git
+executable, if there is any.
+
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- t/annotate-tests.sh |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ builtin/merge-file.c  |   11 ++++++++++-
+ t/t6023-merge-file.sh |    8 ++++++++
+ 2 files changed, 18 insertions(+), 1 deletions(-)
 
-diff --git a/t/annotate-tests.sh b/t/annotate-tests.sh
-index 396b965..141b60c 100644
---- a/t/annotate-tests.sh
-+++ b/t/annotate-tests.sh
-@@ -8,27 +8,27 @@ check_count () {
- 	$PROG file $head >.result || return 1
- 	cat .result | perl -e '
- 		my %expect = (@ARGV);
--		my %count = ();
-+		my %count = map { $_ => 0 } keys %expect;
- 		while (<STDIN>) {
- 			if (/^[0-9a-f]+\t\(([^\t]+)\t/) {
- 				my $author = $1;
- 				for ($author) { s/^\s*//; s/\s*$//; }
--				if (exists $expect{$author}) {
--					$count{$author}++;
--				}
-+				$count{$author}++;
- 			}
- 		}
- 		my $bad = 0;
- 		while (my ($author, $count) = each %count) {
- 			my $ok;
--			if ($expect{$author} != $count) {
-+			my $value = 0;
-+			$value = $expect{$author} if defined $expect{$author};
-+			if ($value != $count) {
- 				$bad = 1;
- 				$ok = "bad";
- 			}
- 			else {
- 				$ok = "good";
- 			}
--			print STDERR "Author $author (expected $expect{$author}, attributed $count) $ok\n";
-+			print STDERR "Author $author (expected $value, attributed $count) $ok\n";
- 		}
- 		exit($bad);
- 	' "$@"
+diff --git a/builtin/merge-file.c b/builtin/merge-file.c
+index b6664d4..b873fee 100644
+--- a/builtin/merge-file.c
++++ b/builtin/merge-file.c
+@@ -28,6 +28,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 	xmparam_t xmp = {{0}};
+ 	int ret = 0, i = 0, to_stdout = 0;
+ 	int quiet = 0;
++	int prefixlen;
+ 	struct option options[] = {
+ 		OPT_BOOLEAN('p', "stdout", &to_stdout, "send results to standard output"),
+ 		OPT_SET_INT(0, "diff3", &xmp.style, "use a diff3 based merge", XDL_MERGE_DIFF3),
+@@ -65,10 +66,18 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+ 				     "%s\n", strerror(errno));
+ 	}
+ 
++	if (prefix)
++		prefixlen = strlen(prefix);
++
+ 	for (i = 0; i < 3; i++) {
++		const char *name;
++		if (prefix)
++			name = prefix_filename(prefix, prefixlen, argv[i]);
++		else
++			name = argv[i];
+ 		if (!names[i])
+ 			names[i] = argv[i];
+-		if (read_mmfile(mmfs + i, argv[i]))
++		if (read_mmfile(mmfs + i, name))
+ 			return -1;
+ 		if (buffer_is_binary(mmfs[i].ptr, mmfs[i].size))
+ 			return error("Cannot merge binary files: %s\n",
+diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
+index d486d73..d9f3439 100755
+--- a/t/t6023-merge-file.sh
++++ b/t/t6023-merge-file.sh
+@@ -64,6 +64,14 @@ cp new1.txt test.txt
+ test_expect_success "merge without conflict" \
+ 	"git merge-file test.txt orig.txt new2.txt"
+ 
++test_expect_success 'works in subdirectory' '
++	mkdir dir &&
++	cp new1.txt dir/a.txt &&
++	cp orig.txt dir/o.txt &&
++	cp new2.txt dir/b.txt &&
++	( cd dir && git merge-file a.txt o.txt b.txt )
++'
++
+ cp new1.txt test.txt
+ test_expect_success "merge without conflict (--quiet)" \
+ 	"git merge-file --quiet test.txt orig.txt new2.txt"
 -- 
-1.7.3.1.208.g53ea2
+1.7.3.1.266.g3c065
