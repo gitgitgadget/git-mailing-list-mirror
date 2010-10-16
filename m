@@ -1,285 +1,143 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2 1/8] tests: factor out terminal handling from t7006
-Date: Sun, 17 Oct 2010 02:36:56 +0800
-Message-ID: <1287254223-4496-2-git-send-email-rctay89@gmail.com>
+Subject: [PATCH v2 4/8] test_terminal: catch use without TTY prerequisite
+Date: Sun, 17 Oct 2010 02:36:59 +0800
+Message-ID: <1287254223-4496-5-git-send-email-rctay89@gmail.com>
 References: <1287254223-4496-1-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-2-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-3-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-4-git-send-email-rctay89@gmail.com>
 Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>,
 	Chase Brammer <cbrammer@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
 To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Oct 16 20:37:33 2010
+X-From: git-owner@vger.kernel.org Sat Oct 16 20:38:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7BdM-0002cP-Iv
-	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 20:37:33 +0200
+	id 1P7Bdu-0002rt-4G
+	for gcvg-git-2@lo.gmane.org; Sat, 16 Oct 2010 20:38:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753500Ab0JPSh3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Oct 2010 14:37:29 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:38045 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753410Ab0JPSh2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Oct 2010 14:37:28 -0400
-Received: by pzk33 with SMTP id 33so271976pzk.19
-        for <git@vger.kernel.org>; Sat, 16 Oct 2010 11:37:27 -0700 (PDT)
+	id S1753628Ab0JPShj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Oct 2010 14:37:39 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:51141 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753593Ab0JPShi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Oct 2010 14:37:38 -0400
+Received: by mail-pw0-f46.google.com with SMTP id 4so321570pwj.19
+        for <git@vger.kernel.org>; Sat, 16 Oct 2010 11:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=2tDt60YBHeWFLogxu8O21wXtkz7f6y86GR8HmwkoUvE=;
-        b=kbfw6s8qq5Z0U6YmL2P+wxDz4msqDckVs5E2NRCZUZD4mDx/MuBPx3Z+ez4RN1ADmY
-         1ci8W5EJVGx+SStuVlFE5C0Pbe63xNVyjN0YtMTFX7eWLPiBLiO36w+2WwhGlquQPShy
-         82OO1cP6LMgfW5EEa08SkGd0tlz13eCN5C59E=
+        bh=6hjggYeGDlcVtkcNql5UoVDh+KbSFMJ02DqJBzME2g0=;
+        b=vx6rg2sxaScLyz4iN+HiWRbTBu5a5mFxFS9Ebaak5fNOy2f/Lbs1VWbh93V0RO4X+M
+         2dce0rPkfe65lqP5g+J4saA6z8qC5wAEz4hBE0yQynSOYW0PTbdMQaxInegC34XueScA
+         20Ql5SBeSS/UeqwXcfEPtqqROYRXP6045klW4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=W34H8Sh9wVU7xOwxGKF9a8/HXFiHBlG1Lq/IT2DQe8eNyC4HC4+3miDMkjsuxuMQcI
-         bUekuX9S1MjBbrW4T8xLJRTxl4peukJySX9p7iassy59QvCsZMFxa9e2TTMKJ82HMziE
-         kf/+7srv2NzRhqTeSyIhjG1TK2/NfjIXHluiY=
-Received: by 10.142.14.9 with SMTP id 9mr1848527wfn.136.1287254247701;
-        Sat, 16 Oct 2010 11:37:27 -0700 (PDT)
+        b=FdbBSfpJzokumkrmofL3qgvEY4iVXquSkT5P/k9xyWuuFMymL/c/y1O504usm14ThA
+         xnfo+nz91RgLgCtOQTyDSd8LE9AoLjbRrkFMzi3Db+JvhMdj+vt4zE3vVqtL0sk+/rdR
+         2GzdjychdCZm5RKTbfMsMb9h6jUlupWjqK7pU=
+Received: by 10.142.70.8 with SMTP id s8mr1843358wfa.155.1287254258186;
+        Sat, 16 Oct 2010 11:37:38 -0700 (PDT)
 Received: from localhost.localdomain (cm147.zeta152.maxonline.com.sg [116.87.152.147])
-        by mx.google.com with ESMTPS id x18sm8029156wfa.23.2010.10.16.11.37.24
+        by mx.google.com with ESMTPS id x18sm8029156wfa.23.2010.10.16.11.37.34
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 16 Oct 2010 11:37:26 -0700 (PDT)
+        Sat, 16 Oct 2010 11:37:37 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <1287254223-4496-1-git-send-email-rctay89@gmail.com>
+In-Reply-To: <1287254223-4496-4-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159171>
 
-From: Jeff King <peff@peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
 
-Other tests besides the pager ones may want to check how we handle
-output to a terminal. This patch makes the code reusable.
+It is easy to forget to declare the TTY prerequisite when
+writing tests on a system where it would always be satisfied
+(because IO::Pty is installed; see v1.7.3-rc0~33^2, 2010-08-16
+for example).  Automatically detect this problem so there is
+no need to remember.
 
-Signed-off-by: Jeff King <peff@peff.net>
+	test_terminal: need to declare TTY prerequisite
+	test_must_fail: command not found: test_terminal echo hi
+
+test_terminal returns status 127 in this case to simulate
+not being available.
+
+Also replace the SIMPLEPAGERTTY prerequisite on one test with
+"SIMPLEPAGER,TTY", since (1) the latter is supported now and
+(2) the prerequisite detection relies on the TTY prereq being
+explicitly declared.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
 
-  No change.
+  Rebased on top of Jeff's series, so that lib-terminal's test_terminal is
+  changed instead.
 
- t/lib-terminal.sh          |   28 +++++++++++++++++++++
- t/t7006-pager.sh           |   31 +----------------------
- t/t7006/test-terminal.perl |   58 --------------------------------------------
- t/test-terminal.perl       |   58 ++++++++++++++++++++++++++++++++++++++++++++
- 4 files changed, 87 insertions(+), 88 deletions(-)
- create mode 100644 t/lib-terminal.sh
- delete mode 100755 t/t7006/test-terminal.perl
- create mode 100755 t/test-terminal.perl
+ t/lib-terminal.sh |   13 +++++++++++--
+ t/t7006-pager.sh  |    7 +------
+ 2 files changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
-new file mode 100644
-index 0000000..6fc33db
---- /dev/null
+index 3258b8f..5e7ee9a 100644
+--- a/t/lib-terminal.sh
 +++ b/t/lib-terminal.sh
-@@ -0,0 +1,28 @@
-+#!/bin/sh
+@@ -15,14 +15,23 @@ test_expect_success 'set up terminal for tests' '
+ 
+ if test -e have_tty
+ then
+-	test_terminal() { "$@"; }
++	test_terminal_() { "$@"; }
+ 	test_set_prereq TTY
+ elif test -e test_terminal_works
+ then
+-	test_terminal() {
++	test_terminal_() {
+ 		"$PERL_PATH" "$TEST_DIRECTORY"/test-terminal.perl "$@"
+ 	}
+ 	test_set_prereq TTY
+ else
+ 	say "# no usable terminal, so skipping some tests"
+ fi
 +
-+test_expect_success 'set up terminal for tests' '
-+	if test -t 1
++test_terminal () {
++	if ! test_declared_prereq TTY
 +	then
-+		>stdout_is_tty
-+	elif
-+		test_have_prereq PERL &&
-+		"$PERL_PATH" "$TEST_DIRECTORY"/test-terminal.perl \
-+			sh -c "test -t 1"
-+	then
-+		>test_terminal_works
++		echo >&2 'test_terminal: need to declare TTY prerequisite'
++		return 127
 +	fi
-+'
-+
-+if test -e stdout_is_tty
-+then
-+	test_terminal() { "$@"; }
-+	test_set_prereq TTY
-+elif test -e test_terminal_works
-+then
-+	test_terminal() {
-+		"$PERL_PATH" "$TEST_DIRECTORY"/test-terminal.perl "$@"
-+	}
-+	test_set_prereq TTY
-+else
-+	say "# no usable terminal, so skipping some tests"
-+fi
++	test_terminal_ "$@"
++}
 diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index fb744e3..17e54d3 100755
+index 17e54d3..5641b59 100755
 --- a/t/t7006-pager.sh
 +++ b/t/t7006-pager.sh
-@@ -4,42 +4,13 @@ test_description='Test automatic use of a pager.'
+@@ -184,11 +184,6 @@ test_expect_success 'color when writing to a file intended for a pager' '
+ 	colorful colorful.log
+ '
  
- . ./test-lib.sh
- . "$TEST_DIRECTORY"/lib-pager.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- cleanup_fail() {
- 	echo >&2 cleanup failed
- 	(exit 1)
- }
- 
--test_expect_success 'set up terminal for tests' '
--	rm -f stdout_is_tty ||
--	cleanup_fail &&
--
--	if test -t 1
--	then
--		>stdout_is_tty
--	elif
--		test_have_prereq PERL &&
--		"$PERL_PATH" "$TEST_DIRECTORY"/t7006/test-terminal.perl \
--			sh -c "test -t 1"
--	then
--		>test_terminal_works
--	fi
--'
--
--if test -e stdout_is_tty
+-if test_have_prereq SIMPLEPAGER && test_have_prereq TTY
 -then
--	test_terminal() { "$@"; }
--	test_set_prereq TTY
--elif test -e test_terminal_works
--then
--	test_terminal() {
--		"$PERL_PATH" "$TEST_DIRECTORY"/t7006/test-terminal.perl "$@"
--	}
--	test_set_prereq TTY
--else
--	say "# no usable terminal, so skipping some tests"
+-	test_set_prereq SIMPLEPAGERTTY
 -fi
 -
- test_expect_success 'setup' '
- 	unset GIT_PAGER GIT_PAGER_IN_USE;
- 	test_might_fail git config --unset core.pager &&
-diff --git a/t/t7006/test-terminal.perl b/t/t7006/test-terminal.perl
-deleted file mode 100755
-index 73ff809..0000000
---- a/t/t7006/test-terminal.perl
-+++ /dev/null
-@@ -1,58 +0,0 @@
--#!/usr/bin/perl
--use strict;
--use warnings;
--use IO::Pty;
--use File::Copy;
--
--# Run @$argv in the background with stdout redirected to $out.
--sub start_child {
--	my ($argv, $out) = @_;
--	my $pid = fork;
--	if (not defined $pid) {
--		die "fork failed: $!"
--	} elsif ($pid == 0) {
--		open STDOUT, ">&", $out;
--		close $out;
--		exec(@$argv) or die "cannot exec '$argv->[0]': $!"
--	}
--	return $pid;
--}
--
--# Wait for $pid to finish.
--sub finish_child {
--	# Simplified from wait_or_whine() in run-command.c.
--	my ($pid) = @_;
--
--	my $waiting = waitpid($pid, 0);
--	if ($waiting < 0) {
--		die "waitpid failed: $!";
--	} elsif ($? & 127) {
--		my $code = $? & 127;
--		warn "died of signal $code";
--		return $code - 128;
--	} else {
--		return $? >> 8;
--	}
--}
--
--sub xsendfile {
--	my ($out, $in) = @_;
--
--	# Note: the real sendfile() cannot read from a terminal.
--
--	# It is unspecified by POSIX whether reads
--	# from a disconnected terminal will return
--	# EIO (as in AIX 4.x, IRIX, and Linux) or
--	# end-of-file.  Either is fine.
--	copy($in, $out, 4096) or $!{EIO} or die "cannot copy from child: $!";
--}
--
--if ($#ARGV < 1) {
--	die "usage: test-terminal program args";
--}
--my $master = new IO::Pty;
--my $slave = $master->slave;
--my $pid = start_child(\@ARGV, $slave);
--close $slave;
--xsendfile(\*STDOUT, $master);
--exit(finish_child($pid));
-diff --git a/t/test-terminal.perl b/t/test-terminal.perl
-new file mode 100755
-index 0000000..73ff809
---- /dev/null
-+++ b/t/test-terminal.perl
-@@ -0,0 +1,58 @@
-+#!/usr/bin/perl
-+use strict;
-+use warnings;
-+use IO::Pty;
-+use File::Copy;
-+
-+# Run @$argv in the background with stdout redirected to $out.
-+sub start_child {
-+	my ($argv, $out) = @_;
-+	my $pid = fork;
-+	if (not defined $pid) {
-+		die "fork failed: $!"
-+	} elsif ($pid == 0) {
-+		open STDOUT, ">&", $out;
-+		close $out;
-+		exec(@$argv) or die "cannot exec '$argv->[0]': $!"
-+	}
-+	return $pid;
-+}
-+
-+# Wait for $pid to finish.
-+sub finish_child {
-+	# Simplified from wait_or_whine() in run-command.c.
-+	my ($pid) = @_;
-+
-+	my $waiting = waitpid($pid, 0);
-+	if ($waiting < 0) {
-+		die "waitpid failed: $!";
-+	} elsif ($? & 127) {
-+		my $code = $? & 127;
-+		warn "died of signal $code";
-+		return $code - 128;
-+	} else {
-+		return $? >> 8;
-+	}
-+}
-+
-+sub xsendfile {
-+	my ($out, $in) = @_;
-+
-+	# Note: the real sendfile() cannot read from a terminal.
-+
-+	# It is unspecified by POSIX whether reads
-+	# from a disconnected terminal will return
-+	# EIO (as in AIX 4.x, IRIX, and Linux) or
-+	# end-of-file.  Either is fine.
-+	copy($in, $out, 4096) or $!{EIO} or die "cannot copy from child: $!";
-+}
-+
-+if ($#ARGV < 1) {
-+	die "usage: test-terminal program args";
-+}
-+my $master = new IO::Pty;
-+my $slave = $master->slave;
-+my $pid = start_child(\@ARGV, $slave);
-+close $slave;
-+xsendfile(\*STDOUT, $master);
-+exit(finish_child($pid));
+ # Use this helper to make it easy for the caller of your
+ # terminal-using function to specify whether it should fail.
+ # If you write
+@@ -224,7 +219,7 @@ parse_args() {
+ test_default_pager() {
+ 	parse_args "$@"
+ 
+-	$test_expectation SIMPLEPAGERTTY "$cmd - default pager is used by default" "
++	$test_expectation SIMPLEPAGER,TTY "$cmd - default pager is used by default" "
+ 		unset PAGER GIT_PAGER;
+ 		test_might_fail git config --unset core.pager &&
+ 		rm -f default_pager_used ||
 -- 
 1.7.2.2.513.ge1ef3
