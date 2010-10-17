@@ -1,220 +1,167 @@
-From: "Vasyl'" <vvavrychuk@gmail.com>
-Subject: Re: [PATCH] Trim ending whitespaces in exclude file if needed.
-Date: Sun, 17 Oct 2010 12:29:06 +0300
-Message-ID: <AANLkTimrgGYXDtN_ukWuCpjGTibrMNLQvfpq8fe=VxS_@mail.gmail.com>
-References: <AANLkTinUHQzuLJhZnVMKngEO75W=+5sES0WZFAFw5bDw@mail.gmail.com>
-	<20101017024133.GF26656@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC/PATCHv2 1/5] worktree: provide better prefix to go back to
+ original cwd
+Date: Sun, 17 Oct 2010 17:01:38 +0700
+Message-ID: <20101017094524.GA6034@do>
+References: <1287185204-843-1-git-send-email-judge.packham@gmail.com>
+ <1287185204-843-2-git-send-email-judge.packham@gmail.com>
+ <20101016184259.GB30457@burratino>
+ <4CBA63E2.8030502@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/alternative; boundary=001636c5b3f5f8c9ba0492ccb0d2
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, 
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: msysgit+bncCMyR8JCOHBCRiuvlBBoEZ-_YHw@googlegroups.com Sun Oct 17 11:43:07 2010
-Return-path: <msysgit+bncCMyR8JCOHBCRiuvlBBoEZ-_YHw@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ww0-f58.google.com ([74.125.82.58])
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jens.Lehmann@web.de, gitster@pobox.com
+To: Chris Packham <judge.packham@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 17 12:02:03 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCMyR8JCOHBCRiuvlBBoEZ-_YHw@googlegroups.com>)
-	id 1P7Pli-0006db-Jv
-	for gcvm-msysgit@m.gmane.org; Sun, 17 Oct 2010 11:43:06 +0200
-Received: by wwi17 with SMTP id 17sf1394061wwi.3
-        for <gcvm-msysgit@m.gmane.org>; Sun, 17 Oct 2010 02:43:05 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1P7Q42-0004oi-Qq
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 12:02:03 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932271Ab0JQKBy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Oct 2010 06:01:54 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:34801 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932212Ab0JQKBx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Oct 2010 06:01:53 -0400
+Received: by pxi16 with SMTP id 16so320472pxi.19
+        for <git@vger.kernel.org>; Sun, 17 Oct 2010 03:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received:received-spf:received:mime-version:received
-         :received:in-reply-to:references:date:message-id:subject:from:to:cc
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type;
-        bh=68T6MPGbWcQEjvLbDCFOtBBWEnybsL6DJwjsr5erza8=;
-        b=MYzUToJ9EwVa0vBfBsJFfRA91dL99ZtrtoneJrdM1lcncb3AYUXjxxEuvi7sPdV0LZ
-         mZOVqqZKVpZwLitlTouyyi2B3Yc4QYeQ7uo9dpB3gVHmdSmaOZ5DhZ99nI6qc3WrWLJ9
-         +CaUdBQu/5VSaftRdISzrEVMUW8QYeXhHgeL0=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:date:from:to:cc
+         :subject:message-id:references:mime-version:content-type
+         :content-disposition:content-transfer-encoding:in-reply-to
+         :user-agent;
+        bh=vnE9BQG7dtIYMgjc76n2OI3ZrS0knm9jL2DyRJX3eqQ=;
+        b=KK19cgdYNAl5C/34EsthevfS8uIuY4ds/V46TRJFwt/48qhRvxGoF4iQcRl/7NmnJK
+         /ir5e2/2abiKzkbDykFXfILZxiXuGUqz8rFQSudj16JlJtbv9FOekI098lnzrRhP2gHx
+         Ek21hh2zEnb2gIIgGFU4A5Ss3RJA3i8m9D2JM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type;
-        b=0gxse2EjHnJDEbA/7L4nqDEVQ3kVDQf9lV90GYC7lETqKfvcgwv5UnKOl2JJoW46ev
-         Qd2szx+4RjjCANc/H6SRpfs3UvVf4MHU88P+/hHY4CwJ5/lNiqaCTf4nsDAtcp0SQ+K6
-         lJ99Q+r26CwUJfraODV1Nz2Tt/QEdeK1XCtTo=
-Received: by 10.216.236.90 with SMTP id v68mr246748weq.7.1287308561974;
-        Sun, 17 Oct 2010 02:42:41 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.216.208.4 with SMTP id p4ls470018weo.2.p; Sun, 17 Oct 2010
- 02:42:40 -0700 (PDT)
-Received: by 10.216.140.23 with SMTP id d23mr199814wej.1.1287308560796;
-        Sun, 17 Oct 2010 02:42:40 -0700 (PDT)
-Received: by 10.204.160.75 with SMTP id m11mr222661bkx.22.1287307748128;
-        Sun, 17 Oct 2010 02:29:08 -0700 (PDT)
-Received: by 10.204.160.75 with SMTP id m11mr222660bkx.22.1287307748104;
-        Sun, 17 Oct 2010 02:29:08 -0700 (PDT)
-Received: from mail-bw0-f43.google.com (mail-bw0-f43.google.com [209.85.214.43])
-        by gmr-mx.google.com with ESMTP id w9si3751133bkz.4.2010.10.17.02.29.07;
-        Sun, 17 Oct 2010 02:29:07 -0700 (PDT)
-Received-SPF: pass (google.com: domain of vvavrychuk@gmail.com designates 209.85.214.43 as permitted sender) client-ip=209.85.214.43;
-Received: by bwz20 with SMTP id 20so2780848bwz.30
-        for <msysgit@googlegroups.com>; Sun, 17 Oct 2010 02:29:07 -0700 (PDT)
-Received: by 10.204.59.207 with SMTP id m15mr431383bkh.8.1287307746920; Sun,
- 17 Oct 2010 02:29:06 -0700 (PDT)
-Received: by 10.204.69.212 with HTTP; Sun, 17 Oct 2010 02:29:06 -0700 (PDT)
-In-Reply-To: <20101017024133.GF26656@burratino>
-X-Original-Sender: vvavrychuk@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of vvavrychuk@gmail.com designates 209.85.214.43 as permitted sender)
- smtp.mail=vvavrychuk@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159199>
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=MaVIw6++uyO5dQNhHeWv/17UB+9nf3ImPbScPN77OXTe5w0t648KaHpQ0DO6U7oLtB
+         MqWXu5hp7VXyjGN8MwWMHX69zd2Y9H96Qiio5nLP1IJSUIZ5c9g5ZM0AwsQjtTKqpjVu
+         Xg801YU+7FOQBjx2FzK7g8kDbPzHyQFktwbvw=
+Received: by 10.142.49.11 with SMTP id w11mr2368497wfw.218.1287309711158;
+        Sun, 17 Oct 2010 03:01:51 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.198.15])
+        by mx.google.com with ESMTPS id p8sm20230360wff.16.2010.10.17.03.01.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 17 Oct 2010 03:01:49 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 17 Oct 2010 17:01:38 +0700
+Content-Disposition: inline
+In-Reply-To: <4CBA63E2.8030502@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159200>
 
---001636c5b3f5f8c9ba0492ccb0d2
-Content-Type: text/plain; charset=ISO-8859-1
+On Sat, Oct 16, 2010 at 07:48:02PM -0700, Chris Packham wrote:
+> On 16/10/10 11:42, Jonathan Nieder wrote:
+> > Hi,
+> >=20
+> > Chris Packham wrote:
+> >=20
+> >> From: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>
+> >>
+> >> When both GIT_DIR and GIT_WORK_TREE are set, if cwd is outside wor=
+ktree,
+> >> prefix (the one passed to every builtin commands) will be set to N=
+ULL,
+> >> which means "user stays at worktree topdir".
+> >>
+> >> As a consequence, command line arguments are supposed to be relati=
+ve
+> >> to worktree topdir, not current working directory. Not very intuit=
+ive.
+> >=20
+> > Thanks.  More detailed history for this patch:
+> >=20
+> >  - v0: http://thread.gmane.org/gmane.comp.version-control.git/15759=
+9/focus=3D157601
+> >  - v1: http://thread.gmane.org/gmane.comp.version-control.git/15828=
+7
+> >  - v2: http://thread.gmane.org/gmane.comp.version-control.git/15836=
+9
+> >=20
+>=20
+> I think I must have missed v2. I was playing around with my gmail
+> filters around that time so I could have missed them. Actually now I'=
+ve
+> found the message it's missing the last 'm' in gmail.com. I'll grab t=
+he
+> latest patch and give it a test when I get a chance.
 
-Jonathan Nieder <jrnieder@gmail.com> wrote:
+I missed the last "m" in your email address. That's why v2 never reache=
+d you.
+I thought I sent you an email but probably forgot it.
 
-> (+cc: msysgit)
->
-> Vasyl' wrote:
->
-> > Hope this can save someone's time debugging git.
->
-> It sounds like there's a story behind this one.  Could you tell it?
-> That would help future readers of this code to easily determine
-> why they shouldn't break it.
->
-I modify either .git/info/exclude or .gitignore by copy-pasting `git
-status`. But unfortunetly this adds spacing to ends of lines and ignoring
-does not work...
+Anyway v2 does not work if worktree and cwd are on different Windows dr=
+ives.
+This on top should fix it:
 
->
-> > --- a/dir.c
-> > +++ b/dir.c
-> > @@ -171,7 +171,15 @@ void add_exclude(const char *string, const char
-> *base,
-> >               to_exclude = 0;
-> >               string++;
-> >       }
-> > +
->
-> Why?
->
-> >       len = strlen(string);
-> > +     if (len && isspace((unsigned char)string[len - 1])) {
->
-> This cast is not needed (see git-compat-util.h).
->
-> > +             struct strbuf trim_buf = STRBUF_INIT;
-> > +             strbuf_add(&trim_buf, string, len);
-> > +             strbuf_rtrim(&trim_buf);
->
-> Missing free(string)?
->
-I have misunderstood in the first iteration memory managment in the
-add_exclude's function code
- struct exclude *x;
-char *s;
-x = xmalloc(sizeof(*x) + len);
-s = (char *)(x+1);
-memcpy(s, string, len - 1);
-s[len - 1] = '\0';
-string = s;
-And fix of my patch needs more change and testing. I will do this later.
+---8<---
+diff --git a/setup.c b/setup.c
+index 2389a9e..35d2691 100644
+--- a/setup.c
++++ b/setup.c
+@@ -371,12 +371,8 @@ static const char *setup_prefix(const char *cwd)
+ 	}
+ 	/* get /foo/, not /foo/baa if /foo/baa1 and /foo/baa2 are given */
+ 	else if (worktree[len] && cwd[len]) {
+-		while (len && !is_dir_sep(worktree[len]))
+-			len--;
+-		len++;
+-
+ 		/* Worktree and cwd are on different drives? */
+-		if (len =3D=3D 3 && has_dos_drive_prefix(cwd)) {
++		if (!len && has_dos_drive_prefix(cwd)) {
+ 			if (startup_info) {
+ 				/* make_path_to_path will add the trailing slash */
+ 				startup_info->cwd_to_worktree =3D make_path_to_path(NULL, worktree=
+);
+@@ -384,6 +380,10 @@ static const char *setup_prefix(const char *cwd)
+ 			}
+ 			return NULL;
+ 		}
++
++		while (len && !is_dir_sep(worktree[len]))
++			len--;
++		len++;
+ 	}
+ 	else {
+ 		if (worktree[len]) {
+---8<---
 
->
-> > +             string = strbuf_detach(&trim_buf, &len);
-> > +     }
-> > +
-> >       if (len && string[len - 1] == '/') {
->
-> Thanks for a clear and pleasant read.
->
-Thanks for review.
+>=20
+> > Any thoughts about the previous questions?
+> >=20
+>=20
+> I haven't caught up on the newest thread so no great revelations. Exc=
+ept
+> that for the grep submodules use-case we can assume that the worktree
+> will be a subdirectory of the cwd. I don't think we want to limit
+> ourselves to that one use-case.
 
-> Jonathan
->
+While at it, have you thought of support --recursive and
+--full-tree [1]? There are issues with --full-tree and prefixes [2],
+which is why it is dropped but I think it's a good idea.
 
---001636c5b3f5f8c9ba0492ccb0d2
-Content-Type: text/html; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+--full-tree disregards where you stand and greps in whole repo. In a
+repo with submodules, that would mean grep the supermodule and all
+submodules regardless where you stand, even if you stand in a
+submodule.
 
-Jonathan Nieder <span dir=3D"ltr">&lt;<a href=3D"mailto:jrnieder@gmail.com"=
->jrnieder@gmail.com</a>&gt;</span> wrote:<br><div class=3D"gmail_quote"><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #=
-ccc solid;padding-left:1ex;">
-(+cc: msysgit)<br>
-<div class=3D"im"><br>
-Vasyl&#39; wrote:<br>
-<br>
-&gt; Hope this can save someone&#39;s time debugging git.<br>
-<br>
-</div>It sounds like there&#39;s a story behind this one. =A0Could you tell=
- it?<br>
-That would help future readers of this code to easily determine<br>
-why they shouldn&#39;t break it.<br></blockquote><div>I modify either .git/=
-info/exclude or .gitignore by copy-pasting `git status`. But unfortunetly t=
-his adds spacing to ends of lines and ignoring does not work...</div><block=
-quote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc=
- solid;padding-left:1ex;">
-
-<div class=3D"im"><br>
-&gt; --- a/dir.c<br>
-&gt; +++ b/dir.c<br>
-&gt; @@ -171,7 +171,15 @@ void add_exclude(const char *string, const char *=
-base,<br>
-&gt; =A0 =A0 =A0 =A0 =A0 =A0 =A0 to_exclude =3D 0;<br>
-&gt; =A0 =A0 =A0 =A0 =A0 =A0 =A0 string++;<br>
-&gt; =A0 =A0 =A0 }<br>
-&gt; +<br>
-<br>
-</div>Why?<br>
-<div class=3D"im"><br>
-&gt; =A0 =A0 =A0 len =3D strlen(string);<br>
-&gt; + =A0 =A0 if (len &amp;&amp; isspace((unsigned char)string[len - 1])) =
-{<br>
-<br>
-</div>This cast is not needed (see git-compat-util.h).<br>
-<div class=3D"im"><br>
-&gt; + =A0 =A0 =A0 =A0 =A0 =A0 struct strbuf trim_buf =3D STRBUF_INIT;<br>
-&gt; + =A0 =A0 =A0 =A0 =A0 =A0 strbuf_add(&amp;trim_buf, string, len);<br>
-&gt; + =A0 =A0 =A0 =A0 =A0 =A0 strbuf_rtrim(&amp;trim_buf);<br>
-<br>
-</div>Missing free(string)?<br></blockquote><div>I have misunderstood in th=
-e first iteration memory managment in the add_exclude&#39;s function code</=
-div>=A0<span class=3D"Apple-style-span" style=3D"white-space: pre;">struct =
-exclude *x;</span>=A0<div>
-<span class=3D"Apple-tab-span" style=3D"white-space:pre">		</span>char *s;<=
-/div><div><span class=3D"Apple-tab-span" style=3D"white-space:pre">		</span=
->x =3D xmalloc(sizeof(*x) + len);</div><div><span class=3D"Apple-tab-span" =
-style=3D"white-space:pre">		</span>s =3D (char *)(x+1);</div>
-<div><span class=3D"Apple-tab-span" style=3D"white-space:pre">		</span>memc=
-py(s, string, len - 1);</div><div><span class=3D"Apple-tab-span" style=3D"w=
-hite-space:pre">		</span>s[len - 1] =3D &#39;\0&#39;;</div><div><span class=
-=3D"Apple-tab-span" style=3D"white-space:pre">		</span>string =3D s;</div>
-<div>And fix of my patch needs more change and testing. I will do this late=
-r.</div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border=
--left:1px #ccc solid;padding-left:1ex;">
-<div class=3D"im"><br>
-&gt; + =A0 =A0 =A0 =A0 =A0 =A0 string =3D strbuf_detach(&amp;trim_buf, &amp=
-;len);<br>
-&gt; + =A0 =A0 }<br>
-&gt; +<br>
-&gt; =A0 =A0 =A0 if (len &amp;&amp; string[len - 1] =3D=3D &#39;/&#39;) {<b=
-r>
-<br>
-</div>Thanks for a clear and pleasant read.<br></blockquote><div>Thanks for=
- review.=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8=
-ex;border-left:1px #ccc solid;padding-left:1ex;">
-<font color=3D"#888888">Jonathan<br>
-</font></blockquote></div><br>
-
---001636c5b3f5f8c9ba0492ccb0d2--
+[1] http://mid.gmane.org/7vk4xggv27.fsf@alter.siamese.dyndns.org
+[2] http://mid.gmane.org/7vskaqptvj.fsf@alter.siamese.dyndns.org
+--=20
+Duy
