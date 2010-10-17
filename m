@@ -1,141 +1,93 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [RFC/PATCHv2 5/5] grep: add support for grepping in submodules
-Date: Sun, 17 Oct 2010 17:28:06 +0700
-Message-ID: <AANLkTikSukNCkcx4RYRuzzKU8T64mT0boMDqoNBrWW73@mail.gmail.com>
-References: <1287185204-843-1-git-send-email-judge.packham@gmail.com> <1287185204-843-6-git-send-email-judge.packham@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH] merge-file: correctly find files when called in subdir
+Date: Sun, 17 Oct 2010 12:39:13 +0200
+Message-ID: <201010171239.13990.trast@student.ethz.ch>
+References: <33ab2f03ed522e1a9be202017b7bbfe35e6d7a99.1287228637.git.trast@student.ethz.ch> <AANLkTimzuF3Ku_Jjnq0qKFtrDfAfz8YxChomZr8+Shm1@mail.gmail.com> <20101017011111.GA26656@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 17 12:28:37 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>, <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 17 12:39:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7QTi-0005td-Ho
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 12:28:35 +0200
+	id 1P7QeB-0001SF-5h
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 12:39:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932371Ab0JQK23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Oct 2010 06:28:29 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:33849 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932291Ab0JQK22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Oct 2010 06:28:28 -0400
-Received: by wyb28 with SMTP id 28so2101533wyb.19
-        for <git@vger.kernel.org>; Sun, 17 Oct 2010 03:28:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=d6xAHIa3ZCSHqDntxIRnHBj+FOeHEMptyk4OuiHIbSo=;
-        b=hMojqMceOPOeHnvPaRxlU/P5Mx5YZ4y+lWOwUzaTqA8X8pPmW4A1sCgoEgCr4+N+cm
-         iyFyLxP2WxMevyniRsZMZtyWCgJqjNxL27C15g5C3fWTsvMrMT0DregTjkxly6GwQrYN
-         9LRH0VIIdNF3nJh9VBuE1KhL+Vkbqva7aWW6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=w12y0ppXt1r8rNKSdfs9SXn/DVYhGJmG60S2FZ8K22PhNC4cBgRX1RNq0O4AXqbdfV
-         pq8cIRq98zoC4rzPT2+phnTB3Nb8YhL6L6+M96K7egw6i1/CuK5TqNCO0GY3g025FHP/
-         dNK0ywzjtRKe8Fzn9y9FbNS+ABwwL9Xj8hqh8=
-Received: by 10.227.23.213 with SMTP id s21mr3270743wbb.84.1287311306592; Sun,
- 17 Oct 2010 03:28:26 -0700 (PDT)
-Received: by 10.216.171.207 with HTTP; Sun, 17 Oct 2010 03:28:06 -0700 (PDT)
-In-Reply-To: <1287185204-843-6-git-send-email-judge.packham@gmail.com>
+	id S932374Ab0JQKjR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Oct 2010 06:39:17 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:24064 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932281Ab0JQKjQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Oct 2010 06:39:16 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 17 Oct
+ 2010 12:39:16 +0200
+Received: from pctrast.inf.ethz.ch (217.162.250.31) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 17 Oct
+ 2010 12:39:15 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.36-rc7-31-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <20101017011111.GA26656@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159203>
 
-T24gU2F0LCBPY3QgMTYsIDIwMTAgYXQgNjoyNiBBTSwgQ2hyaXMgUGFja2hhbSA8anVkZ2UucGFj
-a2hhbUBnbWFpbC5jb20+IHdyb3RlOgo+ICtzdGF0aWMgaW50IGdyZXBfc3VibW9kdWxlKHN0cnVj
-dCBncmVwX29wdCAqb3B0LCBjb25zdCBjaGFyICpwYXRoLAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgY29uc3QgY2hhciAqc2hhMSwgY29uc3QgY2hhciAqdHJlZV9uYW1l
-KQo+ICt7Cj4gKyDCoCDCoCDCoCBzdHJ1Y3Qgc3RyYnVmIGJ1ZiA9IFNUUkJVRl9JTklUOwo+ICsg
-wqAgwqAgwqAgc3RydWN0IHN0cmJ1ZiBwcmVfYnVmID0gU1RSQlVGX0lOSVQ7Cj4gKyDCoCDCoCDC
-oCBzdHJ1Y3QgY2hpbGRfcHJvY2VzcyBjcDsKPiArIMKgIMKgIMKgIGNvbnN0IGNoYXIgKiphcmd2
-ID0gY3JlYXRlX3N1Yl9ncmVwX2FyZ3Yob3B0LCBwYXRoLCBzaGExLCB0cmVlX25hbWUpOwoKQ2Fu
-IHdlIGp1c3Qgc2F2ZSBzaGExIGluIGEgZW52IHZhcmlhYmxlIGFuZCBkcm9wIHRoaXMgYXJndiBy
-ZXdyaXRlPwoKPiArIMKgIMKgIMKgIGNvbnN0IGNoYXIgKmdpdF9kaXI7Cj4gKyDCoCDCoCDCoCBp
-bnQgaGl0ID0gMDsKPiArIMKgIMKgIMKgIG1lbXNldCgmY3AsIDAsIHNpemVvZihjcCkpOwo+ICsK
-PiArIMKgIMKgIMKgIHN0cmJ1Zl9hZGRmKCZidWYsICIlcy8uZ2l0IiwgcGF0aCk7Cj4gKyDCoCDC
-oCDCoCBnaXRfZGlyID0gcmVhZF9naXRmaWxlX2dlbnRseShidWYuYnVmKTsKPiArIMKgIMKgIMKg
-IGlmICghZ2l0X2RpcikKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGdpdF9kaXIgPSBidWYuYnVm
-Owo+ICsgwqAgwqAgwqAgaWYgKCFpc19kaXJlY3RvcnkoZ2l0X2RpcikpCj4gKyDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCBnb3RvIG91dF9mcmVlOwo+ICsKPiArIMKgIMKgIMKgIHNldGVudigiR0lUX1NV
-UEVSX1JFRk5BTUUiLCB0cmVlX25hbWUsIDEpOwo+ICsgwqAgwqAgwqAgc2V0ZW52KEdJVF9ESVJf
-RU5WSVJPTk1FTlQsIGdpdF9kaXIsIDEpOwo+ICsgwqAgwqAgwqAgc2V0ZW52KEdJVF9XT1JLX1RS
-RUVfRU5WSVJPTk1FTlQsIHBhdGgsIDEpOwoKY3AuZW52IGNhbiBiZSB1c2VkIHRvIHNldCB0aGVz
-ZSB2YXJpYWJsZXMKCj4gKyDCoCDCoCDCoCBjcC5hcmd2ID0gYXJndjsKPiArIMKgIMKgIMKgIGNw
-LmdpdF9jbWQgPSAxOwo+ICsgwqAgwqAgwqAgY3Aubm9fc3RkaW4gPSAxOwoKSSB0aGluayB5b3Ug
-c3RsbCBuZWVkICJjcC5kaXIgPSBwYXRoOyIgaGVyZSBiZWNhdXNlIHRoZSBzZXR1cCByb3V0aW5l
-cwp3b24ndCBkbyB0aGF0IGZvciB5b3UuIEJ1dCBJIG5lZWQgdG8gY2hlY2svdGVzdCB0aGF0LgoK
-PiArIMKgIMKgIMKgIGlmIChydW5fY29tbWFuZCgmY3ApID09IDApCj4gKyDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCBoaXQgPSAxOwo+ICtvdXRfZnJlZToKPiArIMKgIMKgIMKgIHVuc2V0ZW52KCJHSVRf
-U1VQRVJfUkVGTkFNRSIpOwo+ICsgwqAgwqAgwqAgdW5zZXRlbnYoR0lUX0RJUl9FTlZJUk9OTUVO
-VCk7Cj4gKyDCoCDCoCDCoCB1bnNldGVudihHSVRfV09SS19UUkVFX0VOVklST05NRU5UKTsKPiAr
-IMKgIMKgIMKgIGZyZWUoYXJndik7Cj4gKyDCoCDCoCDCoCBzdHJidWZfcmVsZWFzZSgmYnVmKTsK
-PiArIMKgIMKgIMKgIHN0cmJ1Zl9yZWxlYXNlKCZwcmVfYnVmKTsKPiArIMKgIMKgIMKgIHJldHVy
-biBoaXQ7Cj4gK30KPiArCj4gwqBzdGF0aWMgaW50IGdyZXBfY2FjaGUoc3RydWN0IGdyZXBfb3B0
-ICpvcHQsIGNvbnN0IGNoYXIgKipwYXRocywgaW50IGNhY2hlZCkKPiDCoHsKPiDCoCDCoCDCoCDC
-oGludCBoaXQgPSAwOwo+IEBAIC01OTcsNiArNjgyLDEwIEBAIHN0YXRpYyBpbnQgZ3JlcF9jYWNo
-ZShzdHJ1Y3QgZ3JlcF9vcHQgKm9wdCwgY29uc3QgY2hhciAqKnBhdGhzLCBpbnQgY2FjaGVkKQo+
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgc3RydWN0IGNhY2hlX2VudHJ5ICpjZSA9IGFjdGl2ZV9j
-YWNoZVtucl07Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBpZiAoIXBhdGhzcGVjX21hdGNoZXMo
-cGF0aHMsIGNlLT5uYW1lLCBvcHQtPm1heF9kZXB0aCkpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqBjb250aW51ZTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChTX0lT
-R0lUTElOSyhjZS0+Y2VfbW9kZSkgJiYgb3B0LT5yZWN1cnNlX3N1Ym1vZHVsZXMpIHsKPiArIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGhpdCB8PSBncmVwX3N1Ym1vZHVsZShvcHQs
-IGNlLT5uYW1lLCBOVUxMLCBOVUxMKTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIGNvbnRpbnVlOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgaWYgKCFTX0lTUkVHKGNlLT5jZV9tb2RlKSkKPiDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoGNvbnRpbnVlOwo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgLyoKPiBA
-QCAtNjM0LDExICs3MjMsMTYgQEAgc3RhdGljIGludCBncmVwX3RyZWUoc3RydWN0IGdyZXBfb3B0
-ICpvcHQsIGNvbnN0IGNoYXIgKipwYXRocywKPiDCoCDCoCDCoCDCoGNoYXIgKmRvd247Cj4gwqAg
-wqAgwqAgwqBpbnQgdG5fbGVuID0gc3RybGVuKHRyZWVfbmFtZSk7Cj4gwqAgwqAgwqAgwqBzdHJ1
-Y3Qgc3RyYnVmIHBhdGhidWY7Cj4gKyDCoCDCoCDCoCBjb25zdCBjaGFyICpyZWZuYW1lID0gZ2V0
-ZW52KCJHSVRfU1VQRVJfUkVGTkFNRSIpOwo+ICsgwqAgwqAgwqAgaW50IHJuX2xlbiA9IHJlZm5h
-bWUgPyBzdHJsZW4ocmVmbmFtZSkgOiAwOwo+Cj4gLSDCoCDCoCDCoCBzdHJidWZfaW5pdCgmcGF0
-aGJ1ZiwgUEFUSF9NQVggKyB0bl9sZW4pOwo+ICsgwqAgwqAgwqAgc3RyYnVmX2luaXQoJnBhdGhi
-dWYsIFBBVEhfTUFYICsgTUFYKHRuX2xlbiwgcm5fbGVuKSk7Cj4KPiDCoCDCoCDCoCDCoGlmICh0
-bl9sZW4pIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cmJ1Zl9hZGQoJnBhdGhidWYsIHRy
-ZWVfbmFtZSwgdG5fbGVuKTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChyZWZuYW1lKQo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgc3RyYnVmX2FkZCgmcGF0aGJ1Ziwg
-cmVmbmFtZSwgcm5fbGVuKTsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGVsc2UKPiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHN0cmJ1Zl9hZGQoJnBhdGhidWYsIHRyZWVfbmFt
-ZSwgdG5fbGVuKTsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHN0cmJ1Zl9hZGRjaCgmcGF0aGJ1
-ZiwgJzonKTsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoHRuX2xlbiA9IHBhdGhidWYubGVuOwo+
-IMKgIMKgIMKgIMKgfQo+IEBAIC02NjQsNiArNzU4LDkgQEAgc3RhdGljIGludCBncmVwX3RyZWUo
-c3RydWN0IGdyZXBfb3B0ICpvcHQsIGNvbnN0IGNoYXIgKipwYXRocywKPiDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoDsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVsc2UgaWYg
-KFNfSVNSRUcoZW50cnkubW9kZSkpCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqBoaXQgfD0gZ3JlcF9zaGExKG9wdCwgZW50cnkuc2hhMSwgcGF0aGJ1Zi5idWYsIHRuX2xlbik7
-Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCBlbHNlIGlmIChTX0lTR0lUTElOSyhlbnRyeS5tb2Rl
-KSAmJiBvcHQtPnJlY3Vyc2Vfc3VibW9kdWxlcykKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIGhpdCB8PSBncmVwX3N1Ym1vZHVsZShvcHQsIGVudHJ5LnBhdGgsCj4gKyDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCBzaGExX3RvX2hleChlbnRy
-eS5zaGExKSwgdHJlZV9uYW1lKTsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoGVsc2UgaWYgKFNf
-SVNESVIoZW50cnkubW9kZSkpIHsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oGVudW0gb2JqZWN0X3R5cGUgdHlwZTsKPiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoHN0cnVjdCB0cmVlX2Rlc2Mgc3ViOwo+IEBAIC05MzEsNiArMTAyOCw4IEBAIGludCBjbWRf
-Z3JlcChpbnQgYXJnYywgY29uc3QgY2hhciAqKmFyZ3YsIGNvbnN0IGNoYXIgKnByZWZpeCkKPiDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCJhbGxvdyBjYWxsaW5nIG9m
-IGdyZXAoMSkgKGlnbm9yZWQgYnkgdGhpcyBidWlsZCkiKSwKPiDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoHsgT1BUSU9OX0NBTExCQUNLLCAwLCAiaGVscC1hbGwiLCAmb3B0aW9ucywgTlVMTCwgInNo
-b3cgdXNhZ2UiLAo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgUEFSU0VfT1BUX0hJRERFTiB8
-IFBBUlNFX09QVF9OT0FSRywgaGVscF9jYWxsYmFjayB9LAo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgT1BUX0JPT0xFQU4oMCwgInJlY3Vyc2l2ZSIsICZvcHQucmVjdXJzZV9zdWJtb2R1bGVzLAo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgInJlY3Vyc2UgaW50byBzdWJtb2R1
-bGVzIiksCj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBPUFRfRU5EKCkKPiDCoCDCoCDCoCDCoH07
-Cj4KPiBkaWZmIC0tZ2l0IGEvZ3JlcC5oIGIvZ3JlcC5oCj4gaW5kZXggMDY2MjFmZS4uZDVlMmUx
-MSAxMDA2NDQKPiAtLS0gYS9ncmVwLmgKPiArKysgYi9ncmVwLmgKPiBAQCAtMTAxLDYgKzEwMSw3
-IEBAIHN0cnVjdCBncmVwX29wdCB7Cj4gwqAgwqAgwqAgwqB1bnNpZ25lZCBwb3N0X2NvbnRleHQ7
-Cj4gwqAgwqAgwqAgwqB1bnNpZ25lZCBsYXN0X3Nob3duOwo+IMKgIMKgIMKgIMKgaW50IHNob3df
-aHVua19tYXJrOwo+ICsgwqAgwqAgwqAgaW50IHJlY3Vyc2Vfc3VibW9kdWxlczsKPiDCoCDCoCDC
-oCDCoHZvaWQgKnByaXY7Cj4KPiDCoCDCoCDCoCDCoHZvaWQgKCpvdXRwdXQpKHN0cnVjdCBncmVw
-X29wdCAqb3B0LCBjb25zdCB2b2lkICpkYXRhLCBzaXplX3Qgc2l6ZSk7Cj4gLS0KPiAxLjcuMy4x
-Cj4KPgoKCgotLSAKRHV5Cg==
+Jonathan Nieder wrote:
+> Bert Wesarg wrote:
+> > On Sat, Oct 16, 2010 at 13:33, Thomas Rast <trast@student.ethz.ch> wrote:
+> 
+> >> --- a/builtin/merge-file.c
+> >> +++ b/builtin/merge-file.c
+> >> @@ -65,10 +66,18 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
+> [...]
+> >> +               if (prefix)
+> >> +                       name = prefix_filename(prefix, prefixlen, argv[i]);
+> >> +               else
+> >> +                       name = argv[i];
+> >
+> > I think you can safe this condition, if you set prefixlen to 0.
+> 
+> I'm not so sure.  On Windows, prefix_filename() starts with
+> 
+> 	char *p;
+> 	/* don't add prefix to absolute paths, but still replace '\' by '/' */
+> 	if (is_absolute_path(arg))
+> 		pfx_len = 0;
+> 	else
+> 		memcpy(path, pfx, pfx_len);
+> 
+> and memcpy() has undefined behavior when pfx is NULL (even with
+> pfx_len of 0; see WG14/N1256: 7.21.1 "String function conventions").
+> Even if the win32api memcpy does the right thing with NULL pfx, I
+> cannot trust GCC when they are given that kind of license. :)
+
+Hmmh.
+
+I was ready to say "you're right" to Bert's suggestion.  So maybe, for
+the sake of foolproof-ness, we should do something like the patch
+below?
+
+diff --git i/setup.c w/setup.c
+index a3b76de..7c8906d 100644
+--- i/setup.c
++++ w/setup.c
+@@ -55,7 +55,7 @@
+ 	/* don't add prefix to absolute paths, but still replace '\' by '/' */
+ 	if (is_absolute_path(arg))
+ 		pfx_len = 0;
+-	else
++	else if (pfx && *pfx)
+ 		memcpy(path, pfx, pfx_len);
+ 	strcpy(path + pfx_len, arg);
+ 	for (p = path + pfx_len; *p; p++)
+
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
