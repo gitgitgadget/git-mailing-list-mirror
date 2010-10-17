@@ -1,113 +1,208 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v2 2/2] merge-file: correctly find files when called in subdir
-Date: Sun, 17 Oct 2010 21:23:22 +0200
-Message-ID: <d0e540fdced31557e983d7503da3dcb75c622dc9.1287342969.git.trast@student.ethz.ch>
-References: <64b470380b8f7bd8afe8f019553cb99f72091c7d.1287342969.git.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Oct 17 21:23:42 2010
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v6.1] [RFC] Consider all parents of a file as candidates for bulk rename.
+Date: Sun, 17 Oct 2010 21:24:03 +0200
+Message-ID: <1287343443-23098-1-git-send-email-ydirson@altern.org>
+References: <1287098999-9244-5-git-send-email-ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>, Yann Dirson <ydirson@free.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 17 21:24:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7YpZ-00045e-Jf
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 21:23:42 +0200
+	id 1P7YqM-0004Yr-T8
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 21:24:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932591Ab0JQTXi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Oct 2010 15:23:38 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:18520 "EHLO gwse.ethz.ch"
+	id S932650Ab0JQTYQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Oct 2010 15:24:16 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:50631 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932362Ab0JQTXh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Oct 2010 15:23:37 -0400
-Received: from CAS20.d.ethz.ch (172.31.51.110) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 17 Oct
- 2010 21:23:34 +0200
-Received: from localhost.localdomain (129.132.208.211) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 17 Oct
- 2010 21:23:35 +0200
-X-Mailer: git-send-email 1.7.3.1.266.g3c065
-In-Reply-To: <64b470380b8f7bd8afe8f019553cb99f72091c7d.1287342969.git.trast@student.ethz.ch>
+	id S932644Ab0JQTYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Oct 2010 15:24:14 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 80E5CD4817C;
+	Sun, 17 Oct 2010 21:24:07 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P7Ypy-00061D-8g; Sun, 17 Oct 2010 21:24:06 +0200
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1287098999-9244-5-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159213>
 
-Since b541248 (merge.conflictstyle: choose between "merge" and "diff3
--m" styles, 2008-08-29), git-merge-file uses setup_directory_gently(),
-thus cd'ing around to find any possible config files to use.
+We previously only looked at the immediate parents of a file involved
+in a move.  Now consider upper ones as candidates too.
 
-This broke merge-file when it is called from within a subdirectory of
-a repository, and the arguments are all relative paths.
+The way it is done here is somewhat inefficient, but at least it
+handles all previously-known cases of incorrectness.
 
-Fix by prepending the prefix, as passed down from the main git
-setup code, if there is any.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+Signed-off-by: Yann Dirson <ydirson@free.fr>
 ---
+ diffcore-rename.c |  120 ++++++++++++++++++++++++++++-------------------------
+ 1 files changed, 63 insertions(+), 57 deletions(-)
 
-With the last patch, we can safely pass a zero prefix length to say
-"there was no prefix".
+There was a major flaw in the first iteration of this patch (never
+looking again at discarded renames).  This iteration also adds more
+explicit comments about why this piece of code should work, despite
+having been written late at night and having already shown one problem
+which demonstrated that a testsuite is no replacement for a good night
+of sleep :)
 
-This is a slight semantic change on Windows, because it now
-substitutes / for \ in paths, but I suppose that's harmless?
+I'm still not happy with the thing, though - the loops can surely be
+made shorter by using the discarded flags previously set, and more
+importantly we need to consider moves to parents of the file's
+destination too, which will add a loop of its own which will have to
+be made as short as possible.  All of this seems to require to sort
+bulkmove_candidates so we can binary-search into it and rapidly access
+related paths.
 
+Other opinions on the spirit of this patch still gladly welcome :)
 
- builtin/merge-file.c  |    7 ++++++-
- t/t6023-merge-file.sh |    8 ++++++++
- 2 files changed, 14 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/merge-file.c b/builtin/merge-file.c
-index b6664d4..6c4afb5 100644
---- a/builtin/merge-file.c
-+++ b/builtin/merge-file.c
-@@ -28,6 +28,7 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 	xmparam_t xmp = {{0}};
- 	int ret = 0, i = 0, to_stdout = 0;
- 	int quiet = 0;
-+	int prefixlen = 0;
- 	struct option options[] = {
- 		OPT_BOOLEAN('p', "stdout", &to_stdout, "send results to standard output"),
- 		OPT_SET_INT(0, "diff3", &xmp.style, "use a diff3 based merge", XDL_MERGE_DIFF3),
-@@ -65,10 +66,14 @@ int cmd_merge_file(int argc, const char **argv, const char *prefix)
- 				     "%s\n", strerror(errno));
- 	}
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index 1be1af1..a8f3a8b 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -542,7 +542,7 @@ static int maybe_disqualify_bulkmove(const char* one_parent_path,
+ 		if (strncmp(rename_dst[j].two->path,
+ 			    one_parent_path, onep_len))
+ 			break; /* exhausted directory in this direction */
+-		fprintf(stderr, "[DBG] leftover file %s in %s\n",
++		fprintf(stderr, "[DBG] leftover file %s in '%s'\n",
+ 			rename_dst[j].two->path, one_parent_path);
+ 		if (rename_dst[j].i_am_not_single || /* those were already here */
+ 		    (rename_dst[j].pair &&
+@@ -596,66 +596,72 @@ static void check_one_bulk_move(struct diff_filepair *dstpair)
+ 	    maybe_disqualify_bulkmove(one_parent_path, one_leftover))
+ 		return;
  
-+	if (prefix)
-+		prefixlen = strlen(prefix);
-+
- 	for (i = 0; i < 3; i++) {
-+		const char *fname = prefix_filename(prefix, prefixlen, argv[i]);
- 		if (!names[i])
- 			names[i] = argv[i];
--		if (read_mmfile(mmfs + i, argv[i]))
-+		if (read_mmfile(mmfs + i, fname))
- 			return -1;
- 		if (buffer_is_binary(mmfs[i].ptr, mmfs[i].size))
- 			return error("Cannot merge binary files: %s\n",
-diff --git a/t/t6023-merge-file.sh b/t/t6023-merge-file.sh
-index d486d73..d9f3439 100755
---- a/t/t6023-merge-file.sh
-+++ b/t/t6023-merge-file.sh
-@@ -64,6 +64,14 @@ cp new1.txt test.txt
- test_expect_success "merge without conflict" \
- 	"git merge-file test.txt orig.txt new2.txt"
+-	fprintf(stderr, "[] %s -> %s ?\n",dstpair->one->path, dstpair->two->path);
+-
+-	// FIXME: loop over successive prefixes
+-	unsigned needs_adding = 1;
++	fprintf(stderr, "[] %s -> %s ?\n", dstpair->one->path, dstpair->two->path);
  
-+test_expect_success 'works in subdirectory' '
-+	mkdir dir &&
-+	cp new1.txt dir/a.txt &&
-+	cp orig.txt dir/o.txt &&
-+	cp new2.txt dir/b.txt &&
-+	( cd dir && git merge-file a.txt o.txt b.txt )
-+'
+-	/* already considered ? */
+-	for (seen=bulkmove_candidates; seen; seen = seen->next) {
+-		if (seen->discarded) {
+-			/* already seen a rename from seen->one to some than ->two */
+-			needs_adding = 0;
+-			continue;
+-		}
+-		/* check exact dir */
+-		if (!strcmp(seen->one->path, one_parent_path)) {
+-			/* already added */
+-			needs_adding = 0;
+-			/* check that seen entry matches this rename */
+-			if (strcmp(two_parent_path, seen->two->path)) {
+-				fprintf(stderr, "[DBG] discarding dir %s from bulk moves (split into %s and %s)\n",
+-					seen->one->path, two_parent_path, seen->two->path);
+-				// FIXME: may be worth to free it instead
+-				seen->discarded = 1;
++	/* loop up one_parent_path over successive parents */
++	// FIXME: also loop over two_parent_path prefixes ?
++	// FIXME: use a more informative prefixcmp to avoid strcmp calls
++	do {
++		unsigned needs_adding = 1;
 +
- cp new1.txt test.txt
- test_expect_success "merge without conflict (--quiet)" \
- 	"git merge-file --quiet test.txt orig.txt new2.txt"
++		fprintf(stderr, "[[]] %s ...\n", one_parent_path);
++
++		/* already considered ? */
++		for (seen=bulkmove_candidates; seen; seen = seen->next) {
++			fprintf(stderr, "[DBG]  ? %s -> %s\n", seen->one->path, seen->two->path);
++			/* subdir of "seen" source dir ? */
++			if (!prefixcmp(one_parent_path, seen->one->path)) {
++				/* subdir of "seen" dest dir ? */
++				if (!prefixcmp(two_parent_path, seen->two->path)) {
++					if (!strcmp(seen->one->path, one_parent_path) &&
++					    !strcmp(seen->two->path, two_parent_path)) {
++						/* already added */
++						fprintf(stderr, "[DBG]  already added\n");
++						needs_adding = 0;
++					} else /* is in a subdir: confirms but still
++						* may need adding */
++						fprintf(stderr, "[DBG]  'dstpair' conforts 'seen'\n");
++				} else {
++					fprintf(stderr, "[DBG] discarding %s -> %s from bulk moves (split into %s and %s)\n",
++						seen->one->path, seen->two->path,
++						two_parent_path, seen->two->path);
++					seen->discarded = 1;
++					/* Need to discard dstpair as well, unless moving
++					 * from a strict subdir of seen->one or to a
++					 * strict subdir of seen->two */
++					if (!strcmp(seen->one->path, one_parent_path) &&
++					    prefixcmp(seen->two->path, two_parent_path)) {
++						fprintf(stderr, "[DBG] ... and not adding self\n");
++						needs_adding = 0;
++					}
++					continue;
++				}
+ 			}
+-			continue;
++			else fprintf(stderr, "[DBG]  %s outside of %s\n",
++				     one_parent_path, seen->one->path);
++
++			/* dstpair confirms seen, or does not infirm */
++			fprintf(stderr, "[DBG] %s -> %s DOES NOT cause discard of %s -> %s\n",
++				dstpair->one->path, dstpair->two->path,
++				seen->one->path, seen->two->path);
+ 		}
+-		if (!prefixcmp(one_parent_path, seen->one->path)) {
+-			if (prefixcmp(two_parent_path, seen->two->path)) {
+-				fprintf(stderr, "[DBG] discarding dir %s from bulk moves (split into %s and %s)\n",
+-					seen->one->path, two_parent_path, seen->two->path);
+-				// FIXME: may be worth to free it instead
+-				seen->discarded = 1;
+-				continue;
+-			}
+-		} else {
+-			fprintf(stderr, "[DBG]  %s considered irrelevant for %s -> %s\n",
+-				dstpair->one->path, seen->one->path, seen->two->path);
+-			continue;
++		if (needs_adding) { /* record potential dir rename */
++			seen = xmalloc(sizeof(*seen));
++			seen->one = alloc_filespec(one_parent_path);
++			fill_filespec(seen->one, null_sha1, S_IFDIR);
++			seen->two = alloc_filespec(two_parent_path);
++			fill_filespec(seen->two, null_sha1, S_IFDIR);
++			seen->discarded = 0;
++			seen->next = bulkmove_candidates;
++			bulkmove_candidates = seen;
++			fprintf(stderr, "[DBG] %s -> %s suggests possible bulk move from %s to %s\n",
++				dstpair->one->path,
++				dstpair->two->path,
++				one_parent_path, two_parent_path);
+ 		}
+-
+-		/* dstpair confirms seen */
+-		fprintf(stderr, "[DBG] %s -> %s DOES NOT cause discard of %s -> %s\n",
+-			dstpair->one->path, dstpair->two->path,
+-			seen->one->path, seen->two->path);
+-	}
+-	if (needs_adding) { /* record potential dir rename */
+-		/* all checks ok, we keep that entry */
+-		seen = xmalloc(sizeof(*seen));
+-		seen->one = alloc_filespec(one_parent_path);
+-		fill_filespec(seen->one, null_sha1, S_IFDIR);
+-		seen->two = alloc_filespec(two_parent_path);
+-		fill_filespec(seen->two, null_sha1, S_IFDIR);
+-		seen->discarded = 0;
+-		seen->next = bulkmove_candidates;
+-		bulkmove_candidates = seen;
+-		fprintf(stderr, "[DBG] %s -> %s suggests possible bulk move from %s to %s\n",
+-			dstpair->one->path,
+-			dstpair->two->path,
+-			one_parent_path, two_parent_path);
+-		return;
+-	}
++		/* next parent if any */
++		copy_dirname(one_parent_path, one_parent_path);
++	} while (*one_parent_path);
+ }
+ 
+ /*
 -- 
-1.7.3.1.266.g3c065
+1.7.2.3
