@@ -1,142 +1,198 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Efficiently detecting paths that differ from each other only in case
-Date: Sat, 16 Oct 2010 17:37:53 -0500
-Message-ID: <AANLkTimSNTKFYnYgpha4MpyiC5CdZU5ay1B-848JQrzJ@mail.gmail.com>
-References: <AANLkTimGAbosbD0pprROu_g-UW38faotYA2dTxj9scsP@mail.gmail.com>
-	<20101008135034.GC5163@sigill.intra.peff.net>
-	<AANLkTik6pSJFUkY9sooSH7iANaKLhxdN+ouKRXJn1B9G@mail.gmail.com>
-	<20101008195120.GA10810@sigill.intra.peff.net>
-	<AANLkTimAhjHm5Z4ekTOBaxwzyw2YD6MrRnB1O8E6nAtw@mail.gmail.com>
-	<20101008200657.GA10954@sigill.intra.peff.net>
-	<AANLkTi=YQOVYsK6Brq5pMiAdrH3Un7RgrWvYf_pymT=d@mail.gmail.com>
-	<20101011030755.GB6523@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2 5/8] test_terminal: give priority to
+ test-terminal.perl usage
+Date: Sat, 16 Oct 2010 19:38:07 -0500
+Message-ID: <20101017003807.GF20883@burratino>
+References: <1287254223-4496-1-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-2-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-3-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-4-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-5-git-send-email-rctay89@gmail.com>
+ <1287254223-4496-6-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 17 00:38:08 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Chase Brammer <cbrammer@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 17 02:41:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7FO8-00038x-05
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 00:38:04 +0200
+	id 1P7HJv-0004QB-73
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 02:41:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756675Ab0JPWh5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 16 Oct 2010 18:37:57 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:47286 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756472Ab0JPWh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 16 Oct 2010 18:37:56 -0400
-Received: by vws2 with SMTP id 2so965363vws.19
-        for <git@vger.kernel.org>; Sat, 16 Oct 2010 15:37:53 -0700 (PDT)
+	id S1756711Ab0JQAlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 16 Oct 2010 20:41:44 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:32860 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751143Ab0JQAln (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 16 Oct 2010 20:41:43 -0400
+Received: by ywi6 with SMTP id 6so893148ywi.19
+        for <git@vger.kernel.org>; Sat, 16 Oct 2010 17:41:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=ARvp880V4PefkidxJrgv3YUQSkqMqRgsjt/zjNgnLhM=;
-        b=vQVHO9N1QXGZmJBinltMITICoxc8S6ZOQcD3AAP3MqLDLqzJazzM58rhWyPheALj52
-         vQgXB+GTxHA3E6q+cwqjzogQg5uNQ+PT6dTmL6w+/pa6GhkGmrXToX8bjyWds9ANd8IT
-         JTHCFAVA+iEXCfddEsvDGtDMBYTUJHkEenvss=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=jxL//jH9yBVld3D6GKBnV+25sKnWJSdQWAj+YrAcqk8=;
+        b=rb6EyP9NetBVNk9+QmxrVIZaN88Z8mpXW2xTY3vCN5aezO2dLzRt4kOvuqdL9rnm5d
+         FLjpEg/yrHraGiryyqk35EphVCElhYbMI6zDiKI+rJKd/YOOKBg4psL2pFdsUdikWCcc
+         vOe+/kwffq13ma1pqPFEQA5G49XDd1G23kYu8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Y+P1svxdjozMU5ddErPL+yIutpQYuzEi+sgVfTSL1m5FtzlpwXwsCb2NYGFVqePIQF
-         2AJvrpIwDw6rMe4qaJBN8agK+vltXTx/8JWLr4JTTV7FW2gRMnaYtO3iLfvW0qNKJZ2G
-         CFxTbB64um4G75rmJ6TxuqVd9gkB6dgFd8ffo=
-Received: by 10.220.186.130 with SMTP id cs2mr510100vcb.144.1287268673552;
- Sat, 16 Oct 2010 15:37:53 -0700 (PDT)
-Received: by 10.220.202.7 with HTTP; Sat, 16 Oct 2010 15:37:53 -0700 (PDT)
-In-Reply-To: <20101011030755.GB6523@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=nkKfj5gMiYwOV1p9ZrBGUKkiFuoP8dlxkYoR2xct3s73tjjN3cCki/HCQimRsbluUQ
+         uegIo9MXHhcLURacVKE6wz206OlwMohficfHdb72ZYgoCkokVnl8D9eSD3eohB7TLZ1n
+         HPwqV7hLQV0wKlsxKO2y4RHQ7cPxBNXlDUI30=
+Received: by 10.150.217.19 with SMTP id p19mr2473478ybg.229.1287276102897;
+        Sat, 16 Oct 2010 17:41:42 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id v37sm2897413yba.20.2010.10.16.17.41.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 16 Oct 2010 17:41:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287254223-4496-6-git-send-email-rctay89@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159180>
 
-Thanks a lot everyone, and especially Jeff.
+Tay Ray Chuan wrote:
 
-Running:
+>  - use the test_terminal script even when running with "-v"
+>    if IO::Pty is available, to allow commands like
+> 
+> 	test_terminal foo >out 2>err
+> 
+>  - add a separate TTYREDIR prerequisite which is only set
+>    when the test_terminal script is usable
+> 
+>  - write the "need to declare TTY prerequisite" message to fd 4,
+>    where it will be printed when running tests with -v, rather
+>    than being swallowed up by an unrelated redireciton.
 
-    git ls-tree -r HEAD
+The patches up to this one look good to me.  This one behaves
+as advertised, but I think the API is lousy --- it is just
+begging people to use the TTY prereq where TTYREDIR is needed.
 
-produces almost 100k lines of output, representing 100k total file +
-directory count, which is a pretty big tree. I hope and expect to be
-able to split out some branches in the future, but even with
-everything included, the operation still only takes ~0.5s real (user +
-sys).
+Better to change TTY to mean TTYREDIR and drop support for
+test_terminal on systems without IO::Pty:
 
-So I think even with our relatively high user count and repository
-traffic, that cost per commit should not completely break our
-workflow.
+-- 8< --
+Subject: test_terminal: ensure redirections work reliably
 
-Thus, I'm going to implement the hook to run the above command and
-analyze the output per commit. Assumption is that with the script
-overhead, we should be able to finish in less than a second, which is
-reasonable latency.
+For terminal tests that capture output/stderr, the TTY prerequisite
+warning does not quite work for commands like
 
-I'll report back if there are any unexpected issues, or this doesn't
-work as well as currently expected.
+	test_terminal foo >out 2>err
 
-Thanks, D
+because the warning gets "swallowed" up by the redirection that's
+supposed only to be done by the subcommand.
 
-On Sun, Oct 10, 2010 at 10:07 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Oct 08, 2010 at 05:57:16PM -0500, Dun Peal wrote:
->
->> On Fri, Oct 8, 2010 at 3:06 PM, Jeff King <peff@peff.net> wrote:
->> > Re-reading your original message, I have a few more thoughts.
->> >
->> > One is that you don't need to do this per-commit. You probably want to
->> > do it per-updated-ref, each of which may be pushing many commits. And
->> > then you either reject the new ref value or not.
->>
->> I think I do, actually, because let's say the developer pushes two
->> commits, 1<-2. Suppose commit 1 violates the rule, but commit 2
->> reverts the violation. One might think that we don't care, since the
->> head will now be on 2, which is a correct state. But in fact we do,
->> because this is Git, and anyone may branch of from 1 in the future,
->> and voila we have a head in an incorrect state.
->
-> Yeah, though it is not an especially likely state to branch from, since
-> you have to specify it manually. However, a much more likely scenario is
-> checkout out a past commit for testing, especially in bisection. So yes,
-> if you want to be thorough, you need to check every commit.
->
->> Yeah, that's a pretty good idea, if not for the many ls-tree calls.
->> With their overhead, I strongly suspect it may be slower than the
->> solution you seem to propose, which is:
->>
->> git ls-tree -r <commit>
->>
->> which should give the full list of all paths in a commit, upon which I
->> can decide to accept or reject.
->
-> Yeah, that is what I am proposing.
->
-> One other thing you could try is to "ls-tree -r" the known-good state of
-> the current HEAD at the beginning of the push, and then run "git log
-> -diff-filter=AD --name-status $old..$new". For each commit in the log
-> output, look for new entries that are in case-insensitive conflict with
-> the existing tree, and then update your tree state appropriately with
-> added and removed files. You only invoke two git commands, which saves
-> on invocation overhead, and you only ls-tree once per push, not per
-> commit. Git's internal diff shouldn't look at parts of the tree that
-> aren't relevant.
->
-> The downside is that the tree state you are keeping internally is not
-> entirely accurate. For example, when receiving a merge between two
-> parallel lines of development, you would process them linearly, when in
-> fact there are two simultaneous different states. So there is a case
-> where branch X removes "foo.txt" and branch Y adds "FOO.TXT", and then
-> they merge. It looks OK because linearly, they did not both exist at the
-> same time. But pre-merge, the commit in branch Y is broken.
->
-> So really the straightforward approach of checking the tree state for
-> each commit is probably simplest. If it's really too slow, you could try
-> jgit or linking against git itself, which would eliminate the external
-> process overhead.
->
-> -Peff
->
+Even worse, the outcome depends on whether stdout was already a
+terminal (in which case test_terminal is a noop) or not (in which case
+test_terminal introduces a pseudo-tty in the middle of the pipeline).
+
+	$ test_terminal.perl sh -c 'test -t 1 && echo >&2 YES' >out
+	YES
+	$ sh -c 'test -t 1 && echo >&2 YES' >out
+	$
+
+So:
+
+ - use the test_terminal script even when running with "-v".
+
+ - skip tests that require a terminal when the test_terminal
+   script is unusable because IO::Pty is not installed.
+
+ - write the "need to declare TTY prerequisite" message to fd 4,
+   where it will be printed when running tests with -v, rather
+   than being swallowed up by an unrelated redireciton.
+
+Noticed-by: Tay Ray Chuan <rctay89@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+The only other sane alternative I can think of is to introduce
+TTYNOREDIR, since at least people wouldn't be tempted to use
+that.  Distinguishing between
+
+	test_expect_success 'foo' '
+		test_terminal bar >out 2>err
+	'
+
+and
+
+	test_expect_success 'foo' '
+		test_terminal bar
+	'
+
+from a script run as
+
+	sh t1234-some-script.sh >log 2>err.log
+
+does not seem to be easy without OS-specific hacks like
+"readlink /dev/fd/1".
+
+ t/lib-terminal.sh |   38 ++++++++++----------------------------
+ 1 files changed, 10 insertions(+), 28 deletions(-)
+
+diff --git a/t/lib-terminal.sh b/t/lib-terminal.sh
+index 5e7ee9a..c383b57 100644
+--- a/t/lib-terminal.sh
++++ b/t/lib-terminal.sh
+@@ -1,37 +1,19 @@
+ #!/bin/sh
+ 
+ test_expect_success 'set up terminal for tests' '
+-	if test -t 1 && test -t 2
+-	then
+-		>have_tty
+-	elif
++	if
+ 		test_have_prereq PERL &&
+ 		"$PERL_PATH" "$TEST_DIRECTORY"/test-terminal.perl \
+ 			sh -c "test -t 1 && test -t 2"
+ 	then
+-		>test_terminal_works
++		test_set_prereq TTY &&
++		test_terminal () {
++			if ! test_declared_prereq TTY
++			then
++				echo >&4 "test_terminal: need to declare TTY prerequisite"
++				return 127
++			fi
++			"$PERL_PATH" "$TEST_DIRECTORY"/test-terminal.perl "$@"
++		}
+ 	fi
+ '
+-
+-if test -e have_tty
+-then
+-	test_terminal_() { "$@"; }
+-	test_set_prereq TTY
+-elif test -e test_terminal_works
+-then
+-	test_terminal_() {
+-		"$PERL_PATH" "$TEST_DIRECTORY"/test-terminal.perl "$@"
+-	}
+-	test_set_prereq TTY
+-else
+-	say "# no usable terminal, so skipping some tests"
+-fi
+-
+-test_terminal () {
+-	if ! test_declared_prereq TTY
+-	then
+-		echo >&2 'test_terminal: need to declare TTY prerequisite'
+-		return 127
+-	fi
+-	test_terminal_ "$@"
+-}
+-- 
+1.7.2.3
