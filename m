@@ -1,145 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Stable ab/i18n branch
-Date: Sat, 16 Oct 2010 21:44:12 -0700
-Message-ID: <7vwrph4eeb.fsf@alter.siamese.dyndns.org>
-References: <7v39s9fkk1.fsf@alter.siamese.dyndns.org>
- <AANLkTimr73DUBBwdj9MXOQQ=O-vmyyEZpgwdHmRsGG_-@mail.gmail.com>
- <20101014200027.GA18813@burratino>
+From: =?ISO-8859-1?Q?S=E9bastien_Barth=E9lemy?= <barthelemy@crans.org>
+Subject: Re: rebase converts merge commits
+Date: Sun, 17 Oct 2010 10:04:56 +0200
+Message-ID: <AANLkTinJPqnazW26KA3Heb1MSwaKYoBA2JRVZ0wFywkK@mail.gmail.com>
+References: <AANLkTikz0yUv9+EcT-kVwniUf9xnRe=_y96euNb=stzP@mail.gmail.com>
+	<523A21BF-F6A1-4BF2-8385-941B61BA769F@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 17 06:44:34 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Oct 17 10:05:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7L6n-0003ZF-Ly
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 06:44:34 +0200
+	id 1P7OF1-0006oI-Ea
+	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 10:05:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303Ab0JQEoZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Oct 2010 00:44:25 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:64294 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751154Ab0JQEoY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 17 Oct 2010 00:44:24 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 9D531DFC2F;
-	Sun, 17 Oct 2010 00:44:23 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=AI8IKcqiOZJ10S0gZw29zfzjY
-	8Y=; b=D80EtW0Uje7Cl+kDrA3omGtdtHUHM6Babw3RPWLVN4iCYT3j9zOk3rmEB
-	/Y+O0uzEnG8rTr7Qwf/bomnXCl0fEffgX/FxqwmLNWQOunr9MJ7zNG/GZbILtDaK
-	VtVxiz88x8Knn+FXAKZfCSHCdZRJ173vLYbM5+tY2iFFZw79yA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=qwWEkPTu0y+4JPCReGB
-	4TXB+ih3udx95+kZESDBLfUs4FG4FHHLWOfXn9sKH1JIh5hB/kSBRTfYx8tMme93
-	RGW6Gz1qvlsgh3UoseQUVGHCqKSYRLzXUcjjyx1L1IkEjhEACZW1NRar5eRXvBRO
-	niLYE+WidqPlH+wlD+JwcudM=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 587ABDFC2D;
-	Sun, 17 Oct 2010 00:44:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53EF0DFC2B; Sun, 17 Oct
- 2010 00:44:14 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 34351FE0-D9A9-11DF-B445-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754969Ab0JQIFD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Oct 2010 04:05:03 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34620 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754024Ab0JQIFA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 17 Oct 2010 04:05:00 -0400
+Received: by iwn35 with SMTP id 35so2710314iwn.19
+        for <git@vger.kernel.org>; Sun, 17 Oct 2010 01:04:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        bh=SUvE27dZ7QKQwIPchjv+LQ0whSa2GKGg2a8PfM5hthI=;
+        b=CgvEtq6wN4b+5Szdy5Foj+WRYbnG9qPzlVth5yFr8P5OJjk2dzsaIbkriwa4mZZ+/R
+         +cJhuMzWKVcDmXRxOZdb3M6191Y5Qm1ZSPQiSO2VeScvWFYTjoCT1H4gpuu0qiIXyOyk
+         YdRCeGfBfR9iCorfLro1Ksi7CMLngpGMeQUSI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=uLqzW5/sUQisynpMRqwVu4sCfPwNWoKmjhAsaFAzE6s94b4/TqRi2PIf/ZB0UIt5wd
+         MESQHiXcgBsWqi9w7yzqP0q6Lay7CBwL4aOHP0KMC8PIngkE472KhRd65XVHA+1GS+t8
+         jy/zq54IROV4och7zvAeXfBibx6W6Z5jgtLnc=
+Received: by 10.42.8.14 with SMTP id g14mr1999301icg.165.1287302696778; Sun,
+ 17 Oct 2010 01:04:56 -0700 (PDT)
+Received: by 10.231.19.138 with HTTP; Sun, 17 Oct 2010 01:04:56 -0700 (PDT)
+In-Reply-To: <523A21BF-F6A1-4BF2-8385-941B61BA769F@sb.org>
+X-Google-Sender-Auth: B2_ZO5-WCugf8Uvmn2OdmLInz0M
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159197>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159198>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+2010/10/12 Kevin Ballard <kevin@sb.org>:
+> On Oct 12, 2010, at 7:55 AM, S=E9bastien Barth=E9lemy wrote:
 >
->> Could you please pick up the 160 commit version of this at:
->>=20
->>     git://github.com/avar/git.git ab/i18n
+>> By the way, if there is a way to do what I want, please tell me.
 >
-> This is a "give an inch and they'll ask for a mile" sort of thing, bu=
-t
-> would it be possible to maintain a stable branch with the i18n
-> infrastructure that only gets rebased when there is reorganization
-> going on?
+> Your history is short enough that if you can't get rebase to do what =
+you want, you could always do it by hand.
 
-People might have noticed that I've refrained to take other topics that
-may add new messages to 'next'.  I would wanted to merge ab/i18n early =
-in
-the cycle soon after dust has settled after 1.7.3 release.  And I still
-do.
-
-Having said that, there are different classes of risks associated with
-i18n effort.
-
-(1) Regressions that even hit a NO_I18N build.
-(2) Regressions that hit LC_ALL=3DC execution in a !NO_I18N build.
-(3) Regressions that hit plumbing run in a non-C locale.
-
- . i18n needs not just marking strings with _("string") but also needs =
-to
-   fix code that manually formulates messages by series of strcat().  I=
-t
-   may need to start using allocations on the heap, with potential risk=
- of
-   usual bugs (leaks, use-after-free, etc.) and performance degradation=
-=2E
-
- . Messages left unmarked with _("string"), or messages that are marked
-   with _("string") that shouldn't have, won't be serious issues for th=
-e
-   first two classes.  The latter is a serious regression for the
-   plumbing.
-
-We are all human, and misconversion during this process is possible, ev=
-en
-though the above classes of regressions are unacceptable.  On the other
-hand, as long as the above three classes of regressions are minimum and
-quickly fixed/fixable, issues in non-C locale Porcelains are tolerable
-during the initial cut.
-
-I've looked at the patches in the series, and plan to take another look=
-=2E
-I'm sure others on the list have checked the series, some with fine com=
-bs,
-too, and hopefully =C3=86var has fixed any such regression that has bee=
-n
-reported and plans to do so for the ones discovered in the future.  As
-long as we are sure that we have done a reasonable effort to eyeball th=
-e
-patches, the logical next step would be to merge the series to 'next' f=
-or
-further testing.
-
-(4) Incomplete *.po file, and languages without *.po file.
-
-Once we are sure that the series does not have the first two classes of
-issues, we can ask everybody to mark new strings in their series, iow,
-merge the i18n part to 'master'.  If we can do that sooner, it would be
-better, and we do not need specific l10n part from the series during th=
-at
-stage. =20
-
-A language that already has *.po file may lack necessary translation;
-there may be languages that do not have *.po file.  They can be added w=
-ith
-a lot smaller risk later without unstabilizing the codebase.
-
-So where are we now?  I think a constantly rebased 160-patch series tha=
-t
-has infrastructure bits and l10n bits mixed together is not very friend=
-ly
-to review for the first three classes of regressions (which are all I c=
-are
-about at this point) to help the series hit 'master' sooner.
-
-In any case, the branch merged to 'pu' has been replaced with the tip o=
-f
-the said branch from =C3=86var's repository now.
+Sure. Thank you for making it clear.
