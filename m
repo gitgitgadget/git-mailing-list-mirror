@@ -1,96 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: empty structs
-Date: Mon, 18 Oct 2010 13:42:09 -0500
-Message-ID: <20101018184209.GD6877@burratino>
-References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
- <1286833829-5116-16-git-send-email-kusmabite@gmail.com>
- <7vhbgphf25.fsf@alter.siamese.dyndns.org>
- <AANLkTi=N+4QokkiGmN+S17=7=QsgKWUXrsF0vZ_6Zt2H@mail.gmail.com>
- <7vbp6vduly.fsf@alter.siamese.dyndns.org>
- <AANLkTim0KeW3eDHAsxrxMCvBUD_15R3VSrHSzOFq38A1@mail.gmail.com>
- <20101018163134.GA6343@burratino>
- <m2y69vl67b.fsf@igel.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t0003: properly quote $HOME
+Date: Mon, 18 Oct 2010 12:15:30 -0700
+Message-ID: <7veibn48j1.fsf@alter.siamese.dyndns.org>
+References: <decc39532e1706c50964bad14c51d0bcd9ab09a6.1287342744.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com, j6t@kdbg.org, avarab@gmail.com,
-	sunshine@sunshineco.com
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Mon Oct 18 20:47:34 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Petr Onderka <gsvick@gmail.com>, <git@vger.kernel.org>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Oct 18 21:15:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7ukA-00074h-Ht
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 20:47:34 +0200
+	id 1P7vBZ-0001B0-Mz
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 21:15:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755318Ab0JRSrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Oct 2010 14:47:14 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:44671 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755101Ab0JRSrN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Oct 2010 14:47:13 -0400
-Received: by gxk21 with SMTP id 21so229476gxk.19
-        for <git@vger.kernel.org>; Mon, 18 Oct 2010 11:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=LvdjkpOeYY6NAJr+VsAmrF4BLN4V5pZGMNUfdvXoqoc=;
-        b=BwTW7+an9gYQITz8wCv0qnXaJYO5ZOeJyIc0cA7iKhWN4i9IYmqBKcQ2+i7QbIZ7kD
-         ToA2A3hqghxQV+t9vx97jMrpEvBGVeNnf7eMPQgCppmTdinrYLOhQT2b3pLZD3Z0fEt9
-         OqizlYtQkWg+ukiwU3IbXqdJbradwPmCvXzCI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=xRFLKy6TcHFiFj54tH14xs6UOFctehMZ2yN77sKACmzr3Mo1TWIo1gns4o3qcrI0u8
-         u2Ik2+F276wJ68wNfIBpvaDvqgKdmesMJtt9Vqq4/EysIMYY/Kcb4BNHnPWJPjZ0sKz3
-         L4etcG80byz9Y7RdSTnyWAtp/rtm4YabFRbK0=
-Received: by 10.103.241.18 with SMTP id t18mr1844526mur.36.1287427547279;
-        Mon, 18 Oct 2010 11:45:47 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d17sm3097641fav.29.2010.10.18.11.45.44
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 18 Oct 2010 11:45:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <m2y69vl67b.fsf@igel.home>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932126Ab0JRTPo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Oct 2010 15:15:44 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47827 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756092Ab0JRTPn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Oct 2010 15:15:43 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BB13ADFC75;
+	Mon, 18 Oct 2010 15:15:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zrWXlWxSV82yOmO42TjX3ZfuFjA=; b=J1G9YG
+	NY3EqS0wDbOK9mzs07qfmTGvCzbFo8b+H2JQeZ1F14IYkgz2pIVLkBugVP2ZXYoM
+	N1VkCH8bvW8u4EPXuWyebbkAoN8vdJiNL/pcYBFzz+5Zxt9HEq4Hx3U5MYLscc1Y
+	lYjSso0VBVCqUnaLocn2BTguTJzs7Q5FHZeYc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=XlerZHuIMJiVLrEm/D/g1naMjfN9thlA
+	8Z8R+UKRQ8MuzNTaqH4L11UXHkbhggBJJSeuL0ieCFAQe0BLQoHUFp9ITan5ruoZ
+	sIvLf3C6Vtc/0zw9/cq9aLdtGnOq5GuZNnJLB0biA3uvKBOsEYtRBgNs5Lc5OGKS
+	TBwkgAyZZj0=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 89FB9DFC71;
+	Mon, 18 Oct 2010 15:15:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A41CCDFC6F; Mon, 18 Oct
+ 2010 15:15:32 -0400 (EDT)
+In-Reply-To: <decc39532e1706c50964bad14c51d0bcd9ab09a6.1287342744.git.trast@student.ethz.ch> (Thomas Rast's message of "Sun\, 17 Oct 2010 21\:13\:53 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 16E0DF62-DAEC-11DF-801D-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159282>
 
-Andreas Schwab wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Thomas Rast <trast@student.ethz.ch> writes:
 
->> Just to throw an idea out: you can also do something like
->>
->> #ifndef NO_POSIX_GOODIES
->> struct credentials {
->> };
->> #else
-[...]
-> Empty structures are not standard C.
+> 6df42ab (Add global and system-wide gitattributes, 2010-09-01) forgot
+> to quote one instance of $HOME in the tests.  This broke the test for
+> me with the shell complaining about an ambiguous redirect (but only
+> when run with --root for some reason).
 
-(For those following at home:
+Sounds like a similar breakage to what was fixed in 3fa7c3d (work around
+an obnoxious bash "safety feature" on OpenBSD, 2010-01-26) to me.
 
-	"A structure type describes a sequentially allocated
-	 nonempty set of member objects (and, in certain
-	 circumstances, an incomplete array), each of which
-	 has an optionally specified name and possibly
-	 distinct type.")
-
-So I guess future patches following the pattern of v1.7.3-rc0~33^2~13
-git wrapper: introduce startup_info struct, 2010-08-05) should be
-written like
-
-	struct startup_info {
-		char dummy;
-	};
-
-Yuck.  Thanks for the pointer.
+Thanks.
