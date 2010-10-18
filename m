@@ -1,61 +1,76 @@
-From: "Scott R. Godin" <scottg.wp-hackers@mhg2.com>
-Subject: Re: Push not writing to standard error
-Date: Mon, 18 Oct 2010 12:39:38 -0400
-Organization: MAD House Graphics
-Message-ID: <4CBC784A.1040805@mhg2.com>
-References: <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
+ git-svn fetch)
+Date: Mon, 18 Oct 2010 11:46:28 -0500
+Message-ID: <AANLkTik-OAZWBkKM1zNyeZpC6K4ZjvF8WfXOJrNkXayt@mail.gmail.com>
+References: <AANLkTimn99ErpLNfX-Jxn2t6cKCOoKFb91g1_m3TypOf@mail.gmail.com>
+ <12137268.486377.1287073355267.JavaMail.root@mail.hq.genarts.com>
+ <20101018051702.GD22376@kytes> <20101018073102.GA3979@burratino> <20101018163836.GI22376@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: cbrammer@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 18 18:40:23 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Stephen Bash <bash@genarts.com>,
+	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
+	David Michael Barr <david.barr@cordelta.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 18 18:47:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7sl4-0003gv-VG
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 18:40:23 +0200
+	id 1P7srS-0005wJ-6R
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 18:46:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932995Ab0JRQjw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Oct 2010 12:39:52 -0400
-Received: from lo.gmane.org ([80.91.229.12]:50154 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932990Ab0JRQjv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Oct 2010 12:39:51 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P7skV-0003UE-2b
-	for git@vger.kernel.org; Mon, 18 Oct 2010 18:39:47 +0200
-Received: from 74.102.83.28 ([74.102.83.28])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Oct 2010 18:39:47 +0200
-Received: from scottg.wp-hackers by 74.102.83.28 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 18 Oct 2010 18:39:47 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 74.102.83.28
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
-In-Reply-To: <AANLkTim6j7cXj2-1JnKdNLb8KFJK86F02tzeByDBskEa@mail.gmail.com>
+	id S1752082Ab0JRQqw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Oct 2010 12:46:52 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:45787 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925Ab0JRQqv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Oct 2010 12:46:51 -0400
+Received: by ywi6 with SMTP id 6so523010ywi.19
+        for <git@vger.kernel.org>; Mon, 18 Oct 2010 09:46:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=wBhuItnfMRIuH6uFfm4mrJa6fcyyMsp0YLF9CZOREgg=;
+        b=mIRqD6EK1fLCXGPGBSRiEstV1KbUVcBrcykVPSYzf4q9ZjMKOvhmAvjNnGEvN6XSSm
+         9qbNQyplnSLkjWu611M3u4Jh/mE6z2i0v60ciy2Wgk1njurVqeTmGnPwl38gTuleyOC+
+         3xMXvHFD6qglh5u/EzQ8JR9/GGNIK0VltCtoM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=StG7Xh9o6pGVg+6zpLhp4ZfXQnxuwnl46Afwui4aGQhzPPMnT/y0JbSkcit+8viNlp
+         na7nXKGcJ6mTRL2gfvDsj12noDM/NZd/E+45gmVUbCrNU2VPuI2LL7AIuildM6s8mCLt
+         1pA6X/VcOec/1DaeDf3N8vql3krKHB5jT1jgM=
+Received: by 10.42.103.3 with SMTP id k3mr3136269ico.213.1287420409860; Mon,
+ 18 Oct 2010 09:46:49 -0700 (PDT)
+Received: by 10.151.45.12 with HTTP; Mon, 18 Oct 2010 09:46:28 -0700 (PDT)
+In-Reply-To: <20101018163836.GI22376@kytes>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159264>
 
-On 10/12/2010 03:04 PM, Chase Brammer wrote:
-> git fetch origin master --progress>  /fetch_error_ouput.txt 2>&1
+Heya,
 
-Just as a small tip, you can shorthand this in bash using
-	git fech origin master --progress >& /fetch_error_output.txt
+On Mon, Oct 18, 2010 at 11:38, Ramkumar Ramachandra <artagnon@gmail.com> wrote:
+> Let me guess: you're targeting git-svn like functionality with all the
+> dcommit/ rebase ugliness? I'm looking for a slightly nicer way, not
+> too much more; (I) is just a sort of "ideal" target- it's just nice to
+> think about it that way. It's needn't be entirely realistic.
 
-HTH :)
-
+I'm thinking we can just refuse to let through a commit that is
+non-linear, as if there's a hook on the server side that rejects such
+a history. Since we're representing the svn remote as a regular
+remote, the user can just do 'git rebase @{u}" themselves if they end
+up with a non-linear history.
 
 -- 
-(please respond to the list as opposed to my email box directly,
-unless you are supplying private information you don't want public
-on the list)
+Cheers,
+
+Sverre Rabbelier
