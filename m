@@ -1,103 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] documentation: git-config minor cleanups
-Date: Sun, 17 Oct 2010 22:38:33 -0500
-Message-ID: <20101018033722.GA3340@burratino>
-References: <1287371445-26134-1-git-send-email-cliff@meraki.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: corrupted repo and "git push --mirror"
+Date: Mon, 18 Oct 2010 09:38:03 +0530
+Message-ID: <AANLkTikZEa4GeQHMXC2vBc8_+1208oEs7d-0KGXBw0p2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Cliff Frey <cliff@meraki.com>
-X-From: git-owner@vger.kernel.org Mon Oct 18 05:42:19 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Oct 18 06:08:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7gc5-0006MJ-63
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 05:42:17 +0200
+	id 1P7h1B-00045D-2s
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 06:08:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970Ab0JRDmL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Oct 2010 23:42:11 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:63122 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751526Ab0JRDmK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Oct 2010 23:42:10 -0400
-Received: by ywi6 with SMTP id 6so144062ywi.19
-        for <git@vger.kernel.org>; Sun, 17 Oct 2010 20:42:10 -0700 (PDT)
+	id S1750865Ab0JREIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Oct 2010 00:08:06 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52169 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750718Ab0JREIE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Oct 2010 00:08:04 -0400
+Received: by gyg13 with SMTP id 13so155966gyg.19
+        for <git@vger.kernel.org>; Sun, 17 Oct 2010 21:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=skpV1sMsgB9v/GnOI6h0+0aLytGcuIuQ/vGpMG80Kfo=;
-        b=p4Ppsh0mqV2AQI4vlx/Davzs4YbQ0oI9RkR2aavn0kbDQfYWnvOPFaavJAMzIlSXcl
-         P/s9kff1ckXiMLFC22OunebJl0GomcgpxrP/Pr7qlqMVh3KIzDPdF9rwD4gvNKJXPP4q
-         Rzpcj9GBcpxG9wElMetT6Dg5THEeFppuSOVDg=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=vGp2FUcy7SzrigGLH3KSBw8u5HIFP6kbBSuDGkZ7c8o=;
+        b=U4UXz3SJvALzCbysDh16FXr4+i5YA2ZjKboj7GaN+sXeZIaNBSLWY2Ydv0kjyexOFK
+         IFmh+iAJhBoQ6LmOp5L7U/XyXuLLSELiaQDiG1+F7c+TPd3ZOAji2TyJtE4YFmPQUJZI
+         LyxvHwRD1P3RAIe2eC3yATQi54n6mA1og2Rzk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=C+NzknSTGFEGQEn+h2urLhbjl7xilCfHJYvjI45MFf9Wbjlj+tKZLr67j4d8D8Fptb
-         oFoV2YXoUZv5ymcWLYU6PQ5pneU4ZacBIXmoND6BbOgHb015D3rP8kPrfzaxDpzkErAa
-         rjO6Pb8k3yuTbZ4/p3jhJ53sVp6pv9OJEDHRs=
-Received: by 10.236.103.137 with SMTP id f9mr6933677yhg.77.1287373329915;
-        Sun, 17 Oct 2010 20:42:09 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id f50sm6503249yhc.38.2010.10.17.20.42.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 17 Oct 2010 20:42:09 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1287371445-26134-1-git-send-email-cliff@meraki.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=ct6RrJdJLREXf2n218VdnRip8N/3HhOOSxDSxlgLDlIJM+79sIsPxo/1CbUQi2x67n
+         WkcV/yVI7eTLJqFgwisNkebpmi61d39nZaUUFi2UnqJiurslwvo22FAFXQMW2PBXkF7q
+         amGbbE4v1cp1Q40/SDUSYLbFZb+uRM61pYxi8=
+Received: by 10.90.88.20 with SMTP id l20mr1513236agb.136.1287374883865; Sun,
+ 17 Oct 2010 21:08:03 -0700 (PDT)
+Received: by 10.90.83.17 with HTTP; Sun, 17 Oct 2010 21:08:03 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159229>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159230>
 
-Cliff Frey wrote:
+This is probably a stupid question, but in the spirit of extreme
+paranoia *and* because it's kinda hard to "try it and see", I'm going
+to risk the ridicule :)
 
-> Change push.default's description to add hyphens between values and
-> descriptions to make the manpage easier to read.  The html version is
-> readable either way.
->=20
-> Change status.showUntrackedFiles to make item descriptions be
-> sentences and to use the same asciidoc format as push.default.
+Gitolite has mirroring support now, basically using "git push
+--mirror".  The question I was asked, and I couldn't *confidently*
+answer, was: what happens if the source repo suffers some corruption
+for some reason?  Does the corruption propagate?
 
-Yep, it is hard to read
+I suspect not, but I'd appreciate corraboration and if anyone can sat
+what actually will happen that'd be great.
 
-| =C2=B7    nothing do not push anything.
-|
-| =C2=B7    matching push all matching branches. All
-|     branches having the same name in both ends are
-[etc]
+Secondary question: what happens if the receiving repo is corrupt?
 
-without the font change to indicate where each term begins and ends.
+Thanks!
 
-So for what it's worth:
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
-
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -1765,9 +1765,9 @@ status.showUntrackedFiles::
->  	the untracked files. Possible values are:
->  +
->  --
-> -	- 'no'     - Show no untracked files
-> -	- 'normal' - Shows untracked files and directories
-> -	- 'all'    - Shows also individual files in untracked directories.
-> +* `no` - Show no untracked files.
-> +* `normal` - Shows untracked files and directories.
-> +* `all` - Shows also individual files in untracked directories.
-
-If you are making these into sentences, they should be
-
- - Show no untracked...
- - Show untracked...
- - Also show...
-
-, no?  [i.e., s/Shows/Show/c]
+-- 
+Sitaram
