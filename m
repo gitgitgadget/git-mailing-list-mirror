@@ -1,214 +1,170 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Mon, 18 Oct 2010 16:35:32 -0500
-Message-ID: <AANLkTimkovH9OysLSxA+=di89Xi+dTCYL5hRPmNaADDH@mail.gmail.com>
+Date: Mon, 18 Oct 2010 23:41:21 +0200
+Message-ID: <vpq8w1v5gce.fsf@bauges.imag.fr>
 References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Scott Chacon <schacon@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
 To: Thore Husfeldt <thore.husfeldt@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 18 23:36:04 2010
+X-From: git-owner@vger.kernel.org Mon Oct 18 23:44:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7xNA-0004M5-PG
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 23:36:01 +0200
+	id 1P7xVl-0006xx-JK
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 23:44:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933233Ab0JRVfz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Oct 2010 17:35:55 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60011 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750806Ab0JRVfy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 18 Oct 2010 17:35:54 -0400
-Received: by gwj19 with SMTP id 19so63993gwj.19
-        for <git@vger.kernel.org>; Mon, 18 Oct 2010 14:35:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=kAb9XNJS2nnOrutkmVoI3R1XksOQmaywUPq4WgQ7eoU=;
-        b=Ajd77ILbAH4Fq4VbmdLpf/WL9Jxn+GJ8xW3/yLKNaAlguQLLQTvrW9xJeNxwfpg58X
-         n4ORvkUAXkH5dQwj1hLv7ru9mh7Ia1vgW9InNj5bYkgIZujraiI0l56F4JKjqvDMQ3iR
-         IfjK0PMkfBjngOu1rOxi7lkRHkvgts6ZXwP4s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=QU0c82b5lJOEo2V8CzOVUHxHj2jheGyTzElY0YNHMBeCnm+WJkHOYyz+DVmu2DO6GJ
-         7M89VyFZYbf8t8C4/Mg8znGamfIZFhK0ms8mte+Dc7zpbCRusfwJhIuL61FcSOZITUK1
-         59gey/Mt44DKatsLG/WJEPYR2hueiZyVooY1c=
-Received: by 10.151.92.9 with SMTP id u9mr7372106ybl.319.1287437753246; Mon,
- 18 Oct 2010 14:35:53 -0700 (PDT)
-Received: by 10.151.45.12 with HTTP; Mon, 18 Oct 2010 14:35:32 -0700 (PDT)
-In-Reply-To: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	id S1757630Ab0JRVog convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Oct 2010 17:44:36 -0400
+Received: from imag.imag.fr ([129.88.30.1]:63130 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755116Ab0JRVof convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 18 Oct 2010 17:44:35 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9ILfLbp011565
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 18 Oct 2010 23:41:21 +0200 (CEST)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1P7xSL-0003ON-M8; Mon, 18 Oct 2010 23:41:21 +0200
+In-Reply-To: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com> (Thore Husfeldt's message of "Mon\, 18 Oct 2010 22\:45\:50 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 18 Oct 2010 23:41:22 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159290>
 
-Heya,
+Thore Husfeldt <thore.husfeldt@gmail.com> writes:
 
-[+Scott, who's done a lot of work on making git more newbie friendly]
-[+Jonathan, I saw his reply just before sending this]
-
-On Mon, Oct 18, 2010 at 15:45, Thore Husfeldt <thore.husfeldt@gmail.com=
-> wrote:
-> I=E2=80=99ve just learned Git. What a wonderful system, thanks for bu=
-ilding
-> it.
-
-Thanks.
-
-> And what an annoying learning experience.
-
-Thanks again :).
-
-> I promised myself to try to remember what made it all so hard, and to
-> write it down in a comprehensive and possibly even constructive
-> fashion. Here it is, for what it=E2=80=99s worth. Read it as the frie=
-ndly, but
-> somewhat exasperated suggestions of a newcomer. I=E2=80=99d love to h=
+> Read it as the friendly, but
+> somewhat exasparated suggestions of a newcomer. I=E2=80=99d love to h=
 elp (in
 > the form of submitting patches to the documentation or CLI responses)=
 ,
 > but I=E2=80=99d like to test the waters first.
 
-Awesome! Your experiences are very welcome indeed!
+(it's common practice here to test the water with RFC/PATCHes too)
 
-> So, remote tracking branches are neither remote (they are *local*
-> copies of how the remote once was) and they stand completely still
-> until you tell them to =E2=80=9Cfetch=E2=80=9D. So remote means local=
-, and tracking
-> means still, =E2=80=9Clocal still-standing=E2=80=9D would be a less c=
-onfusing term
-> that =E2=80=9Cremote tracking=E2=80=9D. Lovely.
+> There are at least two uses of the word *tracking* in Git's
+> terminology.
 
-*chortles*, nicely observed.
+Actually, there's a third, known to be rather unfortunate.
 
-> The hyphenated *remote-tracking* is a lot better terminology already
-> (and sometimes even used in the documentation), because at least it
-> doesn't pretend to be a remote branch (`git branch -r`, of course,
-> still does).
+=46or example, when you clone a repository, by default, you end up with
 
-What do you mean with the last part (about `git branch -r`)? The fact
-that 'refs/remotes' is not immutable?
+1) The master branch hosted remotely
+2) origin/master, locally, but "remote-tracking"
+3) master, your working branch.
 
-> So that single hyphen already does some good, and should
-> be edited for consistency.
+When you do a "git pull" when sitting on local branch master, Git
+knows it must :
 
-If we agree that "remote-tracking" is the way to go, a patch doing
-such editing would be very welcome.
+a) fetch (i.e. download) from branch 1) into branch 2)
+b) merge from branch 2) into branch 1)
 
-> And *even if* the word was meaningful and consistently spelt, the
-> documentation uses it to *refer* to different things. Assume that we
-> have the branches master, origin/master, and origin=E2=80=99s master
-> (understanding that they exist, and are different, is another Aha!
-> moment largely prevented by the documentation).
+Rule a) come from remote.<remotename>.fetch, and rule b) comes from
+branch.master.merge in your .git/config.
 
-How could the documentation make this more clear?
+Usually, we refer to tracking branch to mean rule a), but the "track"
+in "git branch --track" means "setup git for rule b) above".
 
-> Or rather, it is the confirmation one needs that nobody in the Git
-> community cares much
+We already came up with a better wording, namely "upstream", and used
+in in "git push --set-upstream". Probably a next step would be to
+deprecate any other occurence of --track meaning the same thing (git
+checkout --track seems to me to be a candidate, git branch has both
+--track and --set-upstream). One difficulty is to do that with
+backward compatibility in mind.
 
-On the contrary, we care a lot, but once you're not a new user
-yourself anymore, it's hard to know what to fix.
+> 3. Duplicate various occurences of `cached` flags as `staged` (and
+> change the documentation and man pages accordingly), so as to have,
+> e.g., `git diff --staged`.
 
-> There probably is a radical case to be made for abandoning the word
-> =E2=80=9Ctracking=E2=80=9D entirely. First, because tracking branches=
- don=E2=80=99t track, and
-> second because =E2=80=9Ctracking=E2=80=9D already means something els=
-e in Git (see
-> below). I realise that this terminology is now so ingrained in Git
-> users that conservatism will probably perpetuate it. But it would be
-> *very* helpful to think this through, and at least agree on who
-> =E2=80=9Ctracks=E2=80=9D what. In the ideal world, origin/master woul=
-d be something
-> like =E2=80=9Cthe fetching branch=E2=80=9D for the origin=E2=80=99s m=
-aster, or the =E2=80=9Csnapshot
-> branch=E2=80=9D or the =E2=80=9Cfetched branch=E2=80=9D.
-> [...]
-> More radically, I am sure some head scratching would be able to find
-> useful terminology for master, origin/master, and origin=E2=80=99s ma=
-ster. I=E2=80=99d
-> love to see suggestions. As I said, I admire how wonderfully simple
-> and clean this has been implemented, and the documentation, CLI, and
-> terminology should reflect that.
+I do like this, but to be complete, one should also deal with more
+complex cases. For example, "git apply" has _both_ --index and
+--cached, with different semantics.
 
-I don't have any objections to changing these terms, but I don't have
-any suggestions on what to change them _to_.
+And changing just _some_ of the occurences of --index and --cached may
+help, but do not fix the problem of inconsistancies. Up to now, there
+have been many efforts towards consistancy, but I guess no one had the
+courrage of doing a global-enough approach to eliminate all
+inconsistancies.
 
-> 2. Introduce the alias `git unstage` for `git reset HEAD` in the
-> standard distribution.
+In other words, I encourage you to continue the effort you've stated
+here, but that won't help much unless you push the idea far enough
+IMHO.
 
-(or 'git rm --cached' for newly added files)
+>     changed but not updated:
+>
+> I=E2=80=99m still not sure what =E2=80=9Cupdate=E2=80=9D was ever sup=
+posed to mean in this
+> sentence.
 
-> =C2=A0 =C2=A0nothing added to commit but untracked files present
+Historically, the staging area was seen as a cache (hence the name),
+which was purposedly out-of-date when doing a partial commit. Hence,
+Git inherited some of the terminology of usual caches (a cache is
+"dirty" when it's not in sync with what it caches, "clean" when it is,
+and you "update" it to make it in sync).
+
+But I do agree that the analogy with a cache is disturbing for the
+user, even if it's meaningful for the developper: as a user, a cache
+is meant to be a performance optimization, not supposed to interfer
+with the functionality.
+
+> 2.
+>     Untracked files:
+>     (use "git add <file>..." to include in what will be committed)
 >
 > should be
 >
-> =C2=A0 =C2=A0nothing staged to commit, but untracked files present
+>     Untracked files:
+>     (use "git track <file>" to track)
 
-I've always liked the whole 'stage(d)' concept, so I like this, but I
-remember Junio being fairly hesitant to use it more extensively.
-
-> (Comment: maybe =E2=80=9C... but working directory contains untracked=
- files.=E2=80=9D
-> I realise that =E2=80=9Cdirectory=E2=80=9D is not quite comprehensive=
- here, because
-> files can reside in subdirectories.
-
-We use "worktree" elsewhere, how about that?
-
-> =C2=A0 =C2=A0(use "git track <file>" to track)
-
-So basically you want to split out 'git add' into 'git track' and 'git =
-stage'?
-
-> =C2=A0 =C2=A0Changes to be committed:
-> =C2=A0 =C2=A0(use "git reset HEAD <file>..." to unstage)
->
-> should be
->
-> =C2=A0 =C2=A0Staged to be committed:
-> =C2=A0 =C2=A0(use "git unstage <file>" to unstage)
-
-This would be extra nice since 'git unstage' could also be used in a
-fresh repository.
-
-
-> But this is a good example of what=E2=80=99s wrong with the way the
-> documentation thinks: Git=E2=80=99s implementation perspective should=
- not
-> define how concepts are explained. In particular, *tracking* (in the
-> sense of making a file known to git) and *staging* are conceptually
-> different things. In fact, the two things remain conceptually
-> different later on: un-tracking (removing the file from Git=E2=80=99s
-> worldview) and un-staging are not the same thing at all, neither
-> conceptually nor implementationally.
-
-=46air point, I think.
+This hypothetical "git track" actually exists under the name "git add
+-N".
 
 > The opposite of staging is `git
 > reset HEAD <file>` and the opposite of tracking is -- well, I=E2=80=99=
 m not
 > sure, actually. Maybe `git update-index --force-remove <filename>`?
 
-'git rm --cached'
+git rm --cached ?
 
-> The entire quoted paragraph in the tutorial can be removed: there=E2=80=
-=99s
-> simply no reason to tell the reader that git behaves differently from
-> other version control systems
+As a bare mortal, you shouldn't need update-index, it's a plumbing
+command (i.e. meant for scripts or low-level manipulations).
 
-I disagree, many people come from another VCS, and pointing out where
-their assumptions are invalid is generally useful.
+> An even more radical suggestion (which would take all of 20 seconds t=
+o
+> implement) is to introduce `git track` as another alias for `git
+> add`. (See above under `git status`). This would be especially useful
+> if tracking *branches* no longer existed.
+
+I disagree that adding aliases would help users. See your confusion,
+and then the relief when you found out that index, cache, and staging
+area were synonymous. Now, what should a user think after learning
+stage, track and add, and asking for the difference.
+
+I agree that adding new files and adding new content to existing files
+are done for different reasons, but the conceptual simplicity of Git
+comes from the fact that Git is purely snapshot oriented, and I to
+some extent, it's nice to have this reflected in the user-interface.
+
+When you say "git add X", you don't talk about the difference between
+the previous commit and the next, or about the difference between
+working tree and next commit, or so. You're basically saying "file X
+will exist in the next commit, and it will have this content". Whether
+it existed or not in the previous commit doesn't matter. It's
+implemented this way, and it's really something fundamental in the Git
+model.
 
 > There=E2=80=99s another issue with this, namely that =E2=80=9Cadded f=
 iles are
@@ -216,24 +172,14 @@ iles are
 at, but
 > conceptually it=E2=80=99s pure evil: one of the conceptual conrnersto=
 nes of
-> Git -- that files can be tracked and changed yet not staged, i.e., th=
-e
-> staging areas is conceptually a first-class citizen -- is violated
-> every time a new file is =E2=80=9Cborn=E2=80=9D. Newborn files are *s=
-pecial* until
-> their first commit, and that=E2=80=99s a shame, because the first thi=
-ng the
-> new file (and, vicariously, the new user) experiences is an
-> aberration.
+> Git -- that files can be tracked and changed yet not staged,
 
-Eh, I think it's not an aberration, it's more of a convenience. I
-don't think the benefit of making the concept of tracking vs. staging
-clear to the user is worth the hassle of having to execute two things
-to do one thing (staging a new file). You can also see it the other
-way around, why are new files any different from other files? Why
-shouldn't you be able to stage new files?
+Rephrase that as "the working tree can have content different from the
+staged content". Both "working tree content" and "staged content" are
+snapshot (i.e. they exist regardless of each other). Then newly
+created files won't be different anymore. Files exist, with some
+(possibly empty) content, or they don't.
 
 --=20
-Cheers,
-
-Sverre Rabbelier
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
