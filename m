@@ -1,283 +1,129 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 5/5] svn-fe: Use the cat-blob command to apply deltas
-Date: Mon, 18 Oct 2010 12:27:01 +0530
-Message-ID: <20101018065657.GE22376@kytes>
-References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
- <1287147256-9457-6-git-send-email-david.barr@cordelta.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
+ git-svn fetch)
+Date: Mon, 18 Oct 2010 02:31:02 -0500
+Message-ID: <20101018073102.GA3979@burratino>
+References: <AANLkTimn99ErpLNfX-Jxn2t6cKCOoKFb91g1_m3TypOf@mail.gmail.com>
+ <12137268.486377.1287073355267.JavaMail.root@mail.hq.genarts.com>
+ <20101018051702.GD22376@kytes>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Mon Oct 18 08:58:03 2010
+Cc: Stephen Bash <bash@genarts.com>, Matt Stump <mstump@goatyak.com>,
+	git@vger.kernel.org, David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 18 09:35:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7jfV-0006K1-Kg
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 08:58:02 +0200
+	id 1P7kFN-0007z5-0p
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 09:35:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753335Ab0JRG5t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Oct 2010 02:57:49 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:57837 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752977Ab0JRG5s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Oct 2010 02:57:48 -0400
-Received: by gwaa18 with SMTP id a18so189750gwa.19
-        for <git@vger.kernel.org>; Sun, 17 Oct 2010 23:57:47 -0700 (PDT)
+	id S1753628Ab0JRHeo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Oct 2010 03:34:44 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:42815 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750811Ab0JRHen (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Oct 2010 03:34:43 -0400
+Received: by yxm8 with SMTP id 8so199611yxm.19
+        for <git@vger.kernel.org>; Mon, 18 Oct 2010 00:34:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=JFsgbpIDLTgr4exfhNN+y6zDCZFrw8g0ohEd2z4nHNA=;
-        b=JN+0m2Mnk7A0pEWkXrPneGjXgCU3EHn3LQdBmiDkWqo04QCo3VQ/onZxYa+NX9IDEg
-         vvGUXKGIQ6577oR3y2YkFCPegVQjHowTj+/XDdQAUFLAVvCTeFlM8DADND8dCNtGXuzt
-         KvWcSK0MyJmrkhnXavWWQB9RWBIVOdtRzGsd8=
+        bh=sGR/hKlYZ9g7bkJRyA31yQb0Orncz/9MzjY2+uhAQDo=;
+        b=tvVz8oEa6pu1jnnxQY/DxaDnVa3aNsaDeITwN99G8RlMF4+dw61f/oJR/7tLQHMc9K
+         EtLKeTcoRi/OBxH2M8ldSU2zcsYSwJjZ3ULLg04JUGbHLXGJql58vArwd59w6LZiS/At
+         +tTxefksSreH2HwKKG/xTxRcrh9aWfnohGpp8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=k9le0tm0m5h1eTyETDfXYcciBG+NfDINQUQVEmCa2GauwQuMP3z+p+YGVoq496b+xN
-         z6aNLBLFSOM4epWBVb/e59wVR487UjHkBLcWwesPgr5T/sqx0IwqTNlHJ4MvW9yrM6Jz
-         D8rPDVhLvB56UruENXtMX/aVaXj4s+d4KcgOY=
-Received: by 10.150.159.9 with SMTP id h9mr6164243ybe.297.1287385067556;
-        Sun, 17 Oct 2010 23:57:47 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id p38sm4302286ybk.4.2010.10.17.23.57.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 17 Oct 2010 23:57:46 -0700 (PDT)
+        b=K+byUOCmW730CKhlSiSsbP7s9SS+mryIRoPtLFQ3EPmjw8mGNBVE9jTg8MH17Kh7aJ
+         sWAHEv6UglIrWboiAaBfbiZmnjrTmWgMw0ksmO2ZuPeTKDbWZlaZr/52Tci7hy6eKvQs
+         VpMKk2BRlIwCyM1mYWKoefJjbhKt4nJB3XMgI=
+Received: by 10.151.92.9 with SMTP id u9mr6017310ybl.319.1287387283065;
+        Mon, 18 Oct 2010 00:34:43 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id m46sm8007542yha.44.2010.10.18.00.34.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 18 Oct 2010 00:34:41 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1287147256-9457-6-git-send-email-david.barr@cordelta.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <20101018051702.GD22376@kytes>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159234>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159235>
 
-Hi David,
+Ramkumar Ramachandra wrote:
 
-David Barr writes:
-> Use the new cat-blob command for fast-import to extract
-> blobs so that text-deltas may be applied.
+> Also, since we're aiming for a two-way mapping, it's going to be
+> significantly more challenging: we will need a mapping function that
+> can be inverted perfectly.
 
-I like this straightforward approach, and I like the name 'cat-blob'.
+Sounds interesting!  Let's see how much I can narrow scope/dash hopes.
+:)
 
-> The backchannel should only need to be configured when
-> parsing v3 svn dump streams.
+First of dreams is the possibility of using git as a replacement for
+svnsync, to get semantically identical SVN repositories like so:
 
-Maybe get the synopsis to say this as well?
+[...]
+> SVN repository 1 -> dumpfile -> Git repository
+> Git repository -> dumpfile' -> SVN repository 2
 
-> Based-on-patch-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> Based-on-patch-by: Jonathan Nieder <jrnieder@gmail.com>
-> Tested-by: David Barr <david.barr@cordelta.com>
-> Signed-off-by: David Barr <david.barr@cordelta.com>
-> ---
->  contrib/svn-fe/svn-fe.txt |    6 +++-
->  t/t9010-svn-fe.sh         |    6 ++--
->  vcs-svn/fast_export.c     |   86 +++++++++++++++++++++++++++++++++++++++++++-
->  3 files changed, 92 insertions(+), 6 deletions(-)
-> 
-> diff --git a/contrib/svn-fe/svn-fe.txt b/contrib/svn-fe/svn-fe.txt
-> index 35f84bd..39ffa07 100644
-> --- a/contrib/svn-fe/svn-fe.txt
-> +++ b/contrib/svn-fe/svn-fe.txt
-> @@ -7,7 +7,11 @@ svn-fe - convert an SVN "dumpfile" to a fast-import stream
->  
->  SYNOPSIS
->  --------
-> -svnadmin dump --incremental REPO | svn-fe [url] | git fast-import
-> +[verse]
-> +mkfifo backchannel &&
-> +svnadmin dump --incremental REPO |
-> +	svn-fe [url] 3<backchannel |
-> +	git fast-import --cat-blob-fd=3 3>backchannel
+in a way that svn tools can look at repo 2 as a basically perfect
+replacement for repo 1.  This means copying svnsync properties,
+rename tracking info, svn properties, etc.
 
-See above.
+I. Some people might want that, and I wouldn't want to stop them
+   trying (maybe using notes, perhaps even the mythical tree-based
+   form) but I'm not interested in it at all.  Is it a goal for you?
 
->  DESCRIPTION
->  -----------
-> diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-> index de976ed..d750c7a 100755
-> --- a/t/t9010-svn-fe.sh
-> +++ b/t/t9010-svn-fe.sh
-> @@ -34,10 +34,10 @@ test_dump () {
->  		svnadmin load "$label-svn" < "$TEST_DIRECTORY/$dump" &&
->  		svn_cmd export "file://$PWD/$label-svn" "$label-svnco" &&
->  		git init "$label-git" &&
-> -		test-svn-fe "$TEST_DIRECTORY/$dump" >"$label.fe" &&
->  		(
-> -			cd "$label-git" &&
-> -			git fast-import < ../"$label.fe"
-> +			cd "$label-git" && mkfifo backchannel && \
-> +			test-svn-fe "$TEST_DIRECTORY/$dump" 3< backchannel | \
-> +			git fast-import --cat-blob-fd=3 3> backchannel
->  		) &&
->  		(
->  			cd "$label-svnco" &&
+Second would be the possibility of using an SVN repository as a
+conduit for communication between git repositories:
 
-Ok.
+Git repository 1 -> fast-export stream -> SVN repository
+SVN repository -> dumpfile -> Git repository 2
 
-> diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-> index b017dfb..812563d 100644
-> --- a/vcs-svn/fast_export.c
-> +++ b/vcs-svn/fast_export.c
-> @@ -8,10 +8,17 @@
->  #include "line_buffer.h"
->  #include "repo_tree.h"
->  #include "string_pool.h"
-> +#include "svndiff.h"
->  
->  #define MAX_GITSVN_LINE_LEN 4096
-> +#define REPORT_FILENO 3
-> +
-> +#define SHA1_HEX_LENGTH 40
->  
->  static uint32_t first_commit_done;
-> +static struct line_buffer preimage = LINE_BUFFER_INIT;
-> +static struct line_buffer postimage = LINE_BUFFER_INIT;
-> +static struct line_buffer backchannel = LINE_BUFFER_INIT;
+II. It would be super cool to be able to transport arbitrary git
+    objects via svn (maybe using custom properties and fabricated
+    temporary branches named after the first commit after a fork
+    point).  Perhaps some people could host git projects on Google
+    Code this way.  Is that a goal?
 
-Elegant :)
+Git 1 -> SVN 1 -> Git 2 -> SVN 2 -> Git 3
 
->  void fast_export_delete(uint32_t depth, uint32_t *path)
->  {
-> @@ -63,16 +70,91 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
->  	printf("progress Imported commit %"PRIu32".\n\n", revision);
->  }
->  
-> +static int fast_export_save_blob(FILE *out)
-> +{
-> +	size_t len;
-> +	char *header;
-> +	char *end;
-> +	char *tail;
-> +
-> +	if (!backchannel.infile)
-> +		backchannel.infile = fdopen(REPORT_FILENO, "r");
-> +	if (!backchannel.infile)
-> +		return error("Could not open backchannel fd: %d", REPORT_FILENO);
+III. Perhaps only the subset of git objects with certain properties
+     should be considered safe to transport via an SVN repository
+     (e.g.:
 
-REPORT_FILENO = 3 is hard-coded. Is this intended? Maybe a
-command-line option to specify the fd?
+      - author matches committer
+      - timestamps are New York time
+      - author address is of the format username <username>
+      - filenames are valid UTF-8
 
-> +	header = buffer_read_line(&backchannel);
-> +	if (header == NULL)
-> +		return 1;
+     ).  And maybe any existing git repository can be painlessly
+     transformed to consist only of such commits.  Is that a model
+     to strive for?
 
-Note to self: This prints the error "Failed to retrieve blob for delta
-application" in the caller.
+SVN 1 -> Git 1 -> SVN 2 -> Git 2 -> SVN 3
 
-> +	end = strchr(header, '\0');
-> +	if (end - header > 7 && !strcmp(end - 7, "missing"))
-> +		return error("cat-blob reports missing blob: %s", header);
-> +	if (end - header < SHA1_HEX_LENGTH)
-> +		return error("cat-blob header too short for SHA1: %s", header);
-> +	if (strncmp(header + SHA1_HEX_LENGTH, " blob ", 6))
-> +		return error("cat-blob header has wrong object type: %s", header);
-> +	len = strtoumax(header + SHA1_HEX_LENGTH + 6, &end, 10);
-> +	if (end == header + SHA1_HEX_LENGTH + 6)
-> +		return error("cat-blob header did not contain length: %s", header);
-> +	if (*end)
-> +		return error("cat-blob header contained garbage after length: %s", header);
-> +	buffer_copy_bytes(&backchannel, out, len);
-> +	tail = buffer_read_line(&backchannel);
-> +	if (!tail)
-> +		return 1;
+IV. Maybe only some svn changes would be considered safe to
+    transport via git: no weird properties, no tracked renames
+    not involved in branches/merges, all branches named after the
+    git commit id of the first rev after the fork point, ...
+    And maybe any existing svn repository can be painlessly
+    transformed to consist only of such revisions.  Is that a goal?
 
-Could you clarify when exactly will this happen?
+(As you might have guessed, my answers are "no, no, no, and no, at
+least at first, but it is fun to imagine how a person would go about
+achieving these things anyway").
 
-> +	if (*tail)
-> +		return error("cat-blob trailing line contained garbage: %s", tail);
-> +	return 0;
-> +}
-> +
->  void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len,
->  			uint32_t delta, uint32_t srcMark, uint32_t srcMode,
->  			struct line_buffer *input)
->  {
-
-Note to reviewers: The function looks like this in `master`:
-void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len)
-
-New parameters intrduced in the svn-fe3 series: srcMark, srcMode,
-delta, input.
-
-> +	long preimage_len = 0;
-> +
-> +	if (delta) {
-> +		if (!preimage.infile)
-> +			preimage.infile = tmpfile();
-
-Didn't you later decide against this and use one tmpfile instead? In
-this case, the temporary file will be automatically deleted when
-`preimage.infile` goes out of scope.
-
-> +		if (!preimage.infile)
-> +			die("Unable to open temp file for blob retrieval");
-> +		if (srcMark) {
-> +			printf("cat-blob :%"PRIu32"\n", srcMark);
-> +			fflush(stdout);
-> +			if (srcMode == REPO_MODE_LNK)
-> +				fwrite("link ", 1, 5, preimage.infile);
-
-Special handling for symbolic links. Perhaps you should mention it in
-a comment here?
-
-> +			if (fast_export_save_blob(preimage.infile))
-> +				die("Failed to retrieve blob for delta application");
-> +		}
-> +		preimage_len = ftell(preimage.infile);
-> +		fseek(preimage.infile, 0, SEEK_SET);
-> +		if (!postimage.infile)
-> +			postimage.infile = tmpfile();
-
-One tmpfile?
-
-> +		if (!postimage.infile)
-> +			die("Unable to open temp file for blob application");
-> +		svndiff0_apply(input, len, &preimage, postimage.infile);
-> +		len = ftell(postimage.infile);
-
-Since you already have a preimage_len, perhaps name this postimage_len
-to avoid confusion?
-
-> +		fseek(postimage.infile, 0, SEEK_SET);
-> +	}
-> +
->  	if (mode == REPO_MODE_LNK) {
->  		/* svn symlink blobs start with "link " */
-> -		buffer_skip_bytes(input, 5);
-> +		if (delta)
-> +			buffer_skip_bytes(&postimage, 5);
-> +		else
-> +			buffer_skip_bytes(input, 5);
->  		len -= 5;
->  	}
->  	printf("blob\nmark :%"PRIu32"\ndata %"PRIu32"\n", mark, len);
-> -	buffer_copy_bytes(input, stdout, len);
-> +	if (!delta)
-> +		buffer_copy_bytes(input, stdout, len);
-> +	else
-> +		buffer_copy_bytes(&postimage, stdout, len);
->  	fputc('\n', stdout);
-
-I should have asked this a long time ago: why the extra newline?
-
-> +
-> +	if (preimage.infile) {
-> +		fseek(preimage.infile, 0, SEEK_SET);
-> +	}
-> +
-> +	if (postimage.infile) {
-> +		fseek(postimage.infile, 0, SEEK_SET);
-> +	}
-
-Style nits: The extra braces around the `if` statement are unnecessary.
-
-Overall, pleasant read. Thanks for taking this forward.
-
--- Ram
+Hope that clarifies something,
+Jonathan
