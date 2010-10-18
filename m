@@ -1,168 +1,191 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] fast-import: filemodify after M 040000 <tree> ""
- crashes
-Date: Sun, 17 Oct 2010 20:44:04 -0500
-Message-ID: <20101018014404.GD25524@burratino>
-References: <AANLkTinsnMRyoeGzCn1Rkk7tc+zwVa5j3AGqVZCdDGDv@mail.gmail.com>
- <1286681415-1831-1-git-send-email-david.barr@cordelta.com>
- <20101011063429.GA32034@burratino>
- <20101018010005.GA25524@burratino>
- <20101018010338.GB25524@burratino>
- <AANLkTik3iSSzKCxi9aeNw+ATPXvTN6yw-=NDGtqCidce@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [RFC/PATCHv2 5/5] grep: add support for grepping in submodules
+Date: Sun, 17 Oct 2010 19:01:51 -0700
+Message-ID: <4CBBAA8F.2040805@gmail.com>
+References: <1287185204-843-1-git-send-email-judge.packham@gmail.com> <1287185204-843-6-git-send-email-judge.packham@gmail.com> <AANLkTikSukNCkcx4RYRuzzKU8T64mT0boMDqoNBrWW73@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: David Barr <david.barr@cordelta.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Gabriel Filion <lelutin@gmail.com>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 18 03:47:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jens.Lehmann@web.de, gitster@pobox.com
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 18 04:01:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7epM-0002T6-9c
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 03:47:52 +0200
+	id 1P7f2i-0007zw-Gm
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 04:01:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751040Ab0JRBrq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 17 Oct 2010 21:47:46 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:35007 "EHLO
+	id S1751633Ab0JRCB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Oct 2010 22:01:28 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:53166 "EHLO
 	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750945Ab0JRBrp (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Oct 2010 21:47:45 -0400
-Received: by gyg13 with SMTP id 13so125229gyg.19
-        for <git@vger.kernel.org>; Sun, 17 Oct 2010 18:47:44 -0700 (PDT)
+	with ESMTP id S1750945Ab0JRCBZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Oct 2010 22:01:25 -0400
+Received: by gyg13 with SMTP id 13so128190gyg.19
+        for <git@vger.kernel.org>; Sun, 17 Oct 2010 19:01:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vhI7CSZ1JKKzHVJ+gEyjlkRMh6NacaAjTPIRCZY/PMk=;
-        b=xY6At3C4J0SP/MU0R6okKRJXQV/cInz8Cji4vopoRUz+ehMOOvKWO7wa1lhFuVJzM/
-         pBaXEXrBHclhEib/LGph4PFDRkfL4vwib3oR7JTqlbf2ITuVuWq3bbNQsmCMWYXTM72z
-         NsKnyO3rewOlwWDfY1HtQ7n3H4Bpepziy3lL0=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=gYeKE2XL3C82xtYPstk0SBEv7Cxss8S0I5V5+f+YKuk=;
+        b=DI3j4QJEakvnfXWugCy3IO1xlnzlYjN2DHnAkVhv3TbiUfjyD/px1W3lyvjroHZUw8
+         fkp4qo36ptucY+eE/1mGxqcXXgmb2m7c9fIYAPHgFCCM8Hf8CYaGVIQHp6N8oFhxQz0d
+         Z2UyP2XtNmBCY1NbC7uqakAIT92D/2tsaRvM0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=VDit9rBUt784L9SMi+tqhFf03n6ff2KSLZsyvQ5qAW1cj7Kyg6J/TMuT8OFtYtRkEs
-         ytW23gipX6v9qCLHzD1U/xDiC6BSEuBB9wn2BnakzWVrRDTReyvL5awFtpK/a55HUFzE
-         Dm8Kaq1CU8q++Gl+ywLGtjA8E+QB37216f6Bg=
-Received: by 10.236.108.131 with SMTP id q3mr6685335yhg.43.1287366461677;
-        Sun, 17 Oct 2010 18:47:41 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id g25sm12069618yhc.39.2010.10.17.18.47.38
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=ISUZiktFhlpVJOPH7h/VDtNKkcGS49OwIAqrse0nSOAKzMmUYRaF99H0voDNYO6cKD
+         F6Ug43K4q9/qZZBJxcy0gdMFPUJtsZbm8rWEVqfN2uIOKILq/rQE3qazqF3BqV3GVR41
+         C1cf+tRpSnIN8onyQvvwa/VfMQd9HAQUUW39c=
+Received: by 10.100.142.2 with SMTP id p2mr2266623and.67.1287367284709;
+        Sun, 17 Oct 2010 19:01:24 -0700 (PDT)
+Received: from laptop.site (m130436d0.tmodns.net [208.54.4.19])
+        by mx.google.com with ESMTPS id b22sm21051261anb.35.2010.10.17.19.01.22
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 17 Oct 2010 18:47:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTik3iSSzKCxi9aeNw+ATPXvTN6yw-=NDGtqCidce@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Sun, 17 Oct 2010 19:01:23 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.12) Gecko/20100914 SUSE/3.0.8 Thunderbird/3.0.8
+In-Reply-To: <AANLkTikSukNCkcx4RYRuzzKU8T64mT0boMDqoNBrWW73@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159224>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159225>
 
-Sverre Rabbelier wrote:
-> On Sun, Oct 17, 2010 at 20:03, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+On 17/10/10 03:28, Nguyen Thai Ngoc Duy wrote:
+> On Sat, Oct 16, 2010 at 6:26 AM, Chris Packham <judge.packham@gmail.com> wrote:
+>> +static int grep_submodule(struct grep_opt *opt, const char *path,
+>> +                         const char *sha1, const char *tree_name)
+>> +{
+>> +       struct strbuf buf = STRBUF_INIT;
+>> +       struct strbuf pre_buf = STRBUF_INIT;
+>> +       struct child_process cp;
+>> +       const char **argv = create_sub_grep_argv(opt, path, sha1, tree_name);
+> 
+> Can we just save sha1 in a env variable and drop this argv rewrite?
+> 
+The tree_name is a hangover from when I was passing it as a command line
+arg, I'll remove it. For now we still need to rewrite argv to modify the
+pathspec and max-depth, eventually I'd like to ditch that approach in
+favour of using fork() and modifying opts.
 
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 040000 <tree> ""
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 100644 :1 "foo"
+>> +       const char *git_dir;
+>> +       int hit = 0;
+>> +       memset(&cp, 0, sizeof(cp));
+>> +
+>> +       strbuf_addf(&buf, "%s/.git", path);
+>> +       git_dir = read_gitfile_gently(buf.buf);
+>> +       if (!git_dir)
+>> +               git_dir = buf.buf;
+>> +       if (!is_directory(git_dir))
+>> +               goto out_free;
+>> +
+>> +       setenv("GIT_SUPER_REFNAME", tree_name, 1);
+>> +       setenv(GIT_DIR_ENVIRONMENT, git_dir, 1);
+>> +       setenv(GIT_WORK_TREE_ENVIRONMENT, path, 1);
+> 
+> cp.env can be used to set these variables
+> 
+I was struggling a little with how to do this. The run_command
+invocation in submodules.c uses local_repo_env which is protected
+against modification. I also don't understand how the actual values are
+passed. If someone could point me in the right direction it'd be
+appreciated.
+
+>> +       cp.argv = argv;
+>> +       cp.git_cmd = 1;
+>> +       cp.no_stdin = 1;
+> 
+> I think you stll need "cp.dir = path;" here because the setup routines
+> won't do that for you. But I need to check/test that.
+> 
+Originally I did set cp.dir but that is used by run_command (via
+start_command) to chdir. Which foils the cwd to worktree detection (at
+least in V1 of that patch).
+
+>> +       if (run_command(&cp) == 0)
+>> +               hit = 1;
+>> +out_free:
+>> +       unsetenv("GIT_SUPER_REFNAME");
+>> +       unsetenv(GIT_DIR_ENVIRONMENT);
+>> +       unsetenv(GIT_WORK_TREE_ENVIRONMENT);
+>> +       free(argv);
+>> +       strbuf_release(&buf);
+>> +       strbuf_release(&pre_buf);
+>> +       return hit;
+>> +}
+>> +
+>>  static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
+>>  {
+>>        int hit = 0;
+>> @@ -597,6 +682,10 @@ static int grep_cache(struct grep_opt *opt, const char **paths, int cached)
+>>                struct cache_entry *ce = active_cache[nr];
+>>                if (!pathspec_matches(paths, ce->name, opt->max_depth))
+>>                        continue;
+>> +               if (S_ISGITLINK(ce->ce_mode) && opt->recurse_submodules) {
+>> +                       hit |= grep_submodule(opt, ce->name, NULL, NULL);
+>> +                       continue;
+>> +               }
+>>                if (!S_ISREG(ce->ce_mode))
+>>                        continue;
+>>                /*
+>> @@ -634,11 +723,16 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
+>>        char *down;
+>>        int tn_len = strlen(tree_name);
+>>        struct strbuf pathbuf;
+>> +       const char *refname = getenv("GIT_SUPER_REFNAME");
+>> +       int rn_len = refname ? strlen(refname) : 0;
 >>
->> and similar commands (using D, C, or R after resetting the root
->> tree) segfault.
->
-> I'm curious, how come this not found earlier? Would seem like a fairl=
-y
-> regular operation?
-
-Sure, though that isn't what the feature has been used for so far.
-
-Hooray for tests. :)
-
--- 8< --
-Subject: t9300 (fast-import): another test for the "replace root" featu=
-re
-
-Another test for the replace root feature.  One can imagine an
-implementation for which R "some/subdir" "" would free some state
-associated to the subdir and leave fast-import confused.
-
-Luckily, git's is not such an implementation.
-
-While at it, change the previous test to use C "some/subdir" ""
-instead of R (i.e., test both syntaxes).
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- t/t9300-fast-import.sh |   43 ++++++++++++++++++++++++++++++++++++++++=
-++-
- 1 files changed, 42 insertions(+), 1 deletions(-)
-
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index ce09457..dd90a09 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -990,11 +990,52 @@ test_expect_success \
- 	COMMIT
-=20
- 	M 040000 $branch ""
--	R "newdir" ""
-+	C "newdir" ""
- 	INPUT_END
- 	 git fast-import <input &&
- 	 git diff --exit-code branch:newdir N9'
-=20
-+test_expect_success \
-+	'N: modify subtree, extract it, and modify again' \
-+	'echo hello >expect.baz &&
-+	 echo hello, world >expect.qux &&
-+	 git fast-import <<-SETUP_END &&
-+	commit refs/heads/N10
-+	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_D=
-ATE
-+	data <<COMMIT
-+	hello, tree
-+	COMMIT
-+
-+	deleteall
-+	M 644 inline foo/bar/baz
-+	data <<EOF
-+	hello
-+	EOF
-+	SETUP_END
-+
-+	 tree=3D$(git rev-parse --verify N10:) &&
-+	 git fast-import <<-INPUT_END &&
-+	commit refs/heads/N11
-+	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_D=
-ATE
-+	data <<COMMIT
-+	copy to root by id and modify
-+	COMMIT
-+
-+	M 040000 $tree ""
-+	M 100644 inline foo/bar/qux
-+	data <<EOF
-+	hello, world
-+	EOF
-+	R "foo" ""
-+	C "bar/qux" "bar/quux"
-+	INPUT_END
-+	 git show N11:bar/baz >actual.baz &&
-+	 git show N11:bar/qux >actual.qux &&
-+	 git show N11:bar/quux >actual.quux &&
-+	 test_cmp expect.baz actual.baz &&
-+	 test_cmp expect.qux actual.qux &&
-+	 test_cmp expect.qux actual.quux'
-+
- ###
- ### series O
- ###
---=20
-1.7.2.3
+>> -       strbuf_init(&pathbuf, PATH_MAX + tn_len);
+>> +       strbuf_init(&pathbuf, PATH_MAX + MAX(tn_len, rn_len));
+>>
+>>        if (tn_len) {
+>> -               strbuf_add(&pathbuf, tree_name, tn_len);
+>> +               if (refname)
+>> +                       strbuf_add(&pathbuf, refname, rn_len);
+>> +               else
+>> +                       strbuf_add(&pathbuf, tree_name, tn_len);
+>>                strbuf_addch(&pathbuf, ':');
+>>                tn_len = pathbuf.len;
+>>        }
+>> @@ -664,6 +758,9 @@ static int grep_tree(struct grep_opt *opt, const char **paths,
+>>                        ;
+>>                else if (S_ISREG(entry.mode))
+>>                        hit |= grep_sha1(opt, entry.sha1, pathbuf.buf, tn_len);
+>> +               else if (S_ISGITLINK(entry.mode) && opt->recurse_submodules)
+>> +                       hit |= grep_submodule(opt, entry.path,
+>> +                               sha1_to_hex(entry.sha1), tree_name);
+>>                else if (S_ISDIR(entry.mode)) {
+>>                        enum object_type type;
+>>                        struct tree_desc sub;
+>> @@ -931,6 +1028,8 @@ int cmd_grep(int argc, const char **argv, const char *prefix)
+>>                            "allow calling of grep(1) (ignored by this build)"),
+>>                { OPTION_CALLBACK, 0, "help-all", &options, NULL, "show usage",
+>>                  PARSE_OPT_HIDDEN | PARSE_OPT_NOARG, help_callback },
+>> +               OPT_BOOLEAN(0, "recursive", &opt.recurse_submodules,
+>> +                       "recurse into submodules"),
+>>                OPT_END()
+>>        };
+>>
+>> diff --git a/grep.h b/grep.h
+>> index 06621fe..d5e2e11 100644
+>> --- a/grep.h
+>> +++ b/grep.h
+>> @@ -101,6 +101,7 @@ struct grep_opt {
+>>        unsigned post_context;
+>>        unsigned last_shown;
+>>        int show_hunk_mark;
+>> +       int recurse_submodules;
+>>        void *priv;
+>>
+>>        void (*output)(struct grep_opt *opt, const void *data, size_t size);
+>> --
+>> 1.7.3.1
+>>
+>>
+> 
+> 
+> 
