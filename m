@@ -1,73 +1,93 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] t0003: properly quote $HOME
-Date: Sun, 17 Oct 2010 23:03:58 +0200
-Message-ID: <201010172303.58780.j6t@kdbg.org>
-References: <decc39532e1706c50964bad14c51d0bcd9ab09a6.1287342744.git.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/2] Re: fast-import: Allow filemodify to set the root
+Date: Sun, 17 Oct 2010 20:00:05 -0500
+Message-ID: <20101018010005.GA25524@burratino>
+References: <AANLkTinsnMRyoeGzCn1Rkk7tc+zwVa5j3AGqVZCdDGDv@mail.gmail.com>
+ <1286681415-1831-1-git-send-email-david.barr@cordelta.com>
+ <20101011063429.GA32034@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Petr Onderka <gsvick@gmail.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Sun Oct 17 23:04:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Gabriel Filion <lelutin@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Mon Oct 18 03:04:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7aOq-0001SU-Q8
-	for gcvg-git-2@lo.gmane.org; Sun, 17 Oct 2010 23:04:13 +0200
+	id 1P7e8t-00024v-Dy
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 03:03:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932938Ab0JQVED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 17 Oct 2010 17:04:03 -0400
-Received: from bsmtp.bon.at ([213.33.87.14]:62977 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932862Ab0JQVEC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 17 Oct 2010 17:04:02 -0400
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id AF70D2C4003;
-	Sun, 17 Oct 2010 23:03:59 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by dx.sixt.local (Postfix) with ESMTP id 06F1E19F823;
-	Sun, 17 Oct 2010 23:03:59 +0200 (CEST)
-User-Agent: KMail/1.9.10
-In-Reply-To: <decc39532e1706c50964bad14c51d0bcd9ab09a6.1287342744.git.trast@student.ethz.ch>
+	id S1752778Ab0JRBDw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 17 Oct 2010 21:03:52 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:41408 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752213Ab0JRBDv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 17 Oct 2010 21:03:51 -0400
+Received: by gyg13 with SMTP id 13so116251gyg.19
+        for <git@vger.kernel.org>; Sun, 17 Oct 2010 18:03:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=6+Fe8dETCOV0TvctnRXdZpnJSZyNH2udN8irrFUiB/0=;
+        b=en9Kjd56QlzzP8/C+VjUOMTRkht/VoWp/KOGJcJjWcEsLSSoEaEl5llAqZL91v4uhV
+         FuOWfrfUSEzW1rxAVkEXDiRxop4aNwa1rJ0SfF5DPY5tfP4pHU7lgfIgr0QUfm6UIrck
+         ssLxY4A5u8bdM0O2dcB+5fi14yfOZGLo9AwvQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=CQ9rqnPvVrC3ifo+1gMkK9ziOdyHc1gOTLlXOzvVu3Y16fI+5PaP4nJEZZI1T2h4PQ
+         3hiXvwGEznlbUnkVTekcBzf4gokh7cG+rP2jupQC1Qbou5sqTGeUuUuzyGM8zwRuHdes
+         7KCWBGtdIfkwae/809flE11QmXIG2ubpESk/A=
+Received: by 10.101.162.10 with SMTP id p10mr2188653ano.241.1287363823678;
+        Sun, 17 Oct 2010 18:03:43 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d15sm20975435ana.20.2010.10.17.18.03.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 17 Oct 2010 18:03:42 -0700 (PDT)
 Content-Disposition: inline
+In-Reply-To: <20101011063429.GA32034@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159220>
 
-On Sonntag, 17. Oktober 2010, Thomas Rast wrote:
-> 6df42ab (Add global and system-wide gitattributes, 2010-09-01) forgot
-> to quote one instance of $HOME in the tests.  This broke the test for
-> me with the shell complaining about an ambiguous redirect (but only
-> when run with --root for some reason).
->
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->  t/t0003-attributes.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-> index 25205ac..e75153b 100755
-> --- a/t/t0003-attributes.sh
-> +++ b/t/t0003-attributes.sh
-> @@ -38,7 +38,7 @@ test_expect_success 'setup' '
->  	) >a/b/.gitattributes
->  	(
->  		echo "global test=global"
-> -	) >$HOME/global-gitattributes
-> +	) >"$HOME"/global-gitattributes
->
->  '
+Jonathan Nieder wrote:
 
-FWIW, the failure is due to bash trying to be helpful. Variable expansions 
-after redirections are not word-split, but bash incorrectly detects 
-an "ambiguous redirect" if the expanded text contains IFS characters. Your 
-fix is of course the right way to work it around. But you might update the 
-commit message.
+> In other words, with this patch, I worry that a
+> 
+> 	M 040000 ...sha1... "foo/bar/"
+> 
+> line would be sometimes ignored and sometimes not.  Confusing.
 
--- Hannes
+Hey, my worries were unfounded!  Nice when that happens.
+
+Patch 1 is an unrelated bugfix.
+
+> Would it make sense to just handle the empty-path case in the callers
+> (file_change_m(), file_change_cr()) to avoid this?
+
+Patch 2 introduces this change anyway, to propose that change, to
+avoid unnecessarily introducing a new "foo/bar/" syntax that does not
+work with git 1.7.3.
+
+I hope they are not too dull to read.
+Jonathan Nieder (2):
+  fast-import: filemodify after M 040000 <tree> "" crashes
+  fast-import: tighten M 040000 syntax
+
+ fast-import.c          |   54 +++++++++++++++++++++++++++++---------
+ t/t9300-fast-import.sh |   68 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 109 insertions(+), 13 deletions(-)
+
+-- 
+1.7.2.3
