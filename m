@@ -1,132 +1,96 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] apply: don't segfault on binary files with missing data
-Date: Mon, 18 Oct 2010 14:39:17 -0400
-Message-ID: <20101018183916.GA21988@sigill.intra.peff.net>
-References: <20101018174031.GA9511@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: empty structs
+Date: Mon, 18 Oct 2010 13:42:09 -0500
+Message-ID: <20101018184209.GD6877@burratino>
+References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
+ <1286833829-5116-16-git-send-email-kusmabite@gmail.com>
+ <7vhbgphf25.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=N+4QokkiGmN+S17=7=QsgKWUXrsF0vZ_6Zt2H@mail.gmail.com>
+ <7vbp6vduly.fsf@alter.siamese.dyndns.org>
+ <AANLkTim0KeW3eDHAsxrxMCvBUD_15R3VSrHSzOFq38A1@mail.gmail.com>
+ <20101018163134.GA6343@burratino>
+ <m2y69vl67b.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?UmFmYcOrbCBDYXJyw6k=?= <rafael.carre@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Oct 18 20:38:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Erik Faye-Lund <kusmabite@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	msysgit@googlegroups.com, j6t@kdbg.org, avarab@gmail.com,
+	sunshine@sunshineco.com
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Mon Oct 18 20:47:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7ubg-0003Ck-Vo
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 20:38:49 +0200
+	id 1P7ukA-00074h-Ht
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 20:47:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757534Ab0JRSio convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 18 Oct 2010 14:38:44 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49623 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754954Ab0JRSin (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Oct 2010 14:38:43 -0400
-Received: (qmail 5741 invoked by uid 111); 18 Oct 2010 18:38:42 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 18 Oct 2010 18:38:42 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 18 Oct 2010 14:39:17 -0400
+	id S1755318Ab0JRSrO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Oct 2010 14:47:14 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:44671 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755101Ab0JRSrN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Oct 2010 14:47:13 -0400
+Received: by gxk21 with SMTP id 21so229476gxk.19
+        for <git@vger.kernel.org>; Mon, 18 Oct 2010 11:47:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=LvdjkpOeYY6NAJr+VsAmrF4BLN4V5pZGMNUfdvXoqoc=;
+        b=BwTW7+an9gYQITz8wCv0qnXaJYO5ZOeJyIc0cA7iKhWN4i9IYmqBKcQ2+i7QbIZ7kD
+         ToA2A3hqghxQV+t9vx97jMrpEvBGVeNnf7eMPQgCppmTdinrYLOhQT2b3pLZD3Z0fEt9
+         OqizlYtQkWg+ukiwU3IbXqdJbradwPmCvXzCI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xRFLKy6TcHFiFj54tH14xs6UOFctehMZ2yN77sKACmzr3Mo1TWIo1gns4o3qcrI0u8
+         u2Ik2+F276wJ68wNfIBpvaDvqgKdmesMJtt9Vqq4/EysIMYY/Kcb4BNHnPWJPjZ0sKz3
+         L4etcG80byz9Y7RdSTnyWAtp/rtm4YabFRbK0=
+Received: by 10.103.241.18 with SMTP id t18mr1844526mur.36.1287427547279;
+        Mon, 18 Oct 2010 11:45:47 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d17sm3097641fav.29.2010.10.18.11.45.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 18 Oct 2010 11:45:46 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20101018174031.GA9511@sigill.intra.peff.net>
+In-Reply-To: <m2y69vl67b.fsf@igel.home>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159281>
 
-Usually when applying a binary diff generated without
---binary, it will be rejected early, as we don't even have
-the full sha1 of the pre- and post-images.
+Andreas Schwab wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-However, if the diff is generated with --full-index (but not
---binary), then we will actually try to apply it. If we have
-the postimage blob, then we can take a shortcut and never
-even look at the binary diff at all (e.g., this can happen
-when rebasing changes within a repository).
+>> Just to throw an idea out: you can also do something like
+>>
+>> #ifndef NO_POSIX_GOODIES
+>> struct credentials {
+>> };
+>> #else
+[...]
+> Empty structures are not standard C.
 
-If we don't have the postimage blob, though, we try to look
-at the actual fragments, of which there are none, and get a
-segfault. This patch checks explicitly for that case and
-complains to the user instead of segfaulting. We need to
-keep the check at a low level so that the "shortcut" case
-above continues to work.
+(For those following at home:
 
-We also add a test that demonstrates the segfault. While
-we're at it, let's also explicitly test the shortcut case.
+	"A structure type describes a sequentially allocated
+	 nonempty set of member objects (and, in certain
+	 circumstances, an incomplete array), each of which
+	 has an optionally specified name and possibly
+	 distinct type.")
 
-Reported-by: Rafa=C3=ABl Carr=C3=A9 <rafael.carre@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/apply.c         |    6 ++++++
- t/t4103-apply-binary.sh |   27 ++++++++++++++++++++++++++-
- 2 files changed, 32 insertions(+), 1 deletions(-)
+So I guess future patches following the pattern of v1.7.3-rc0~33^2~13
+git wrapper: introduce startup_info struct, 2010-08-05) should be
+written like
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 23c18c5..f051e66 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -2645,6 +2645,12 @@ static int apply_binary_fragment(struct image *i=
-mg, struct patch *patch)
- 	unsigned long len;
- 	void *dst;
-=20
-+	if (!fragment)
-+		return error("missing binary patch data for '%s'",
-+			     patch->new_name ?
-+			     patch->new_name :
-+			     patch->old_name);
-+
- 	/* Binary patch is irreversible without the optional second hunk */
- 	if (apply_in_reverse) {
- 		if (!fragment->next)
-diff --git a/t/t4103-apply-binary.sh b/t/t4103-apply-binary.sh
-index 9692f16..08ad6d8 100755
---- a/t/t4103-apply-binary.sh
-+++ b/t/t4103-apply-binary.sh
-@@ -37,7 +37,16 @@ test_expect_success 'setup' "
- 	git diff-tree -p -C master binary >C.diff &&
-=20
- 	git diff-tree -p --binary master binary >BF.diff &&
--	git diff-tree -p --binary -C master binary >CF.diff
-+	git diff-tree -p --binary -C master binary >CF.diff &&
-+
-+	git diff-tree -p --full-index master binary >B-index.diff &&
-+	git diff-tree -p -C --full-index master binary >C-index.diff &&
-+
-+	git init other-repo &&
-+	(cd other-repo &&
-+	 git fetch .. master &&
-+	 git reset --hard FETCH_HEAD
-+	)
- "
-=20
- test_expect_success 'stat binary diff -- should not fail.' \
-@@ -100,6 +109,22 @@ test_expect_success 'apply binary diff (copy) -- s=
-hould fail.' \
- 	'do_reset &&
- 	 test_must_fail git apply --index C.diff'
-=20
-+test_expect_success 'apply binary diff with full-index' '
-+	do_reset &&
-+	git apply B-index.diff
-+'
-+
-+test_expect_success 'apply binary diff with full-index (copy)' '
-+	do_reset &&
-+	git apply C-index.diff
-+'
-+
-+test_expect_success 'apply full-index binary diff in new repo' '
-+	(cd other-repo &&
-+	 do_reset &&
-+	 test_must_fail git apply ../B-index.diff)
-+'
-+
- test_expect_success 'apply binary diff without replacement.' \
- 	'do_reset &&
- 	 git apply BF.diff'
---=20
-1.7.3.1.227.ge6319.dirty
+	struct startup_info {
+		char dummy;
+	};
+
+Yuck.  Thanks for the pointer.
