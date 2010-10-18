@@ -1,91 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 15/15] daemon: opt-out on features that require posix
-Date: Mon, 18 Oct 2010 12:26:30 -0700
-Message-ID: <7vaamb480p.fsf@alter.siamese.dyndns.org>
-References: <1286833829-5116-1-git-send-email-kusmabite@gmail.com>
- <1286833829-5116-16-git-send-email-kusmabite@gmail.com>
- <7vhbgphf25.fsf@alter.siamese.dyndns.org>
- <AANLkTi=N+4QokkiGmN+S17=7=QsgKWUXrsF0vZ_6Zt2H@mail.gmail.com>
- <7vbp6vduly.fsf@alter.siamese.dyndns.org>
- <AANLkTim0KeW3eDHAsxrxMCvBUD_15R3VSrHSzOFq38A1@mail.gmail.com>
+From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+Subject: error: refs/tags/2.0.9 does not point to a valid object!
+Date: Mon, 18 Oct 2010 21:23:57 +0200
+Message-ID: <AANLkTi=JgVhkNVu70nW7_vbqWUsS=mnJGQDVBtm-dxJD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org,
-	avarab@gmail.com, sunshine@sunshineco.com
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Mon Oct 18 21:27:06 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Oct 18 21:32:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P7vMM-0005wz-T8
-	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 21:27:03 +0200
+	id 1P7vR8-0007cP-JC
+	for gcvg-git-2@lo.gmane.org; Mon, 18 Oct 2010 21:31:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932829Ab0JRT0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Oct 2010 15:26:49 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56912 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932471Ab0JRT0s (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Oct 2010 15:26:48 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2F4C9DFEC4;
-	Mon, 18 Oct 2010 15:26:45 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RAHiDKSdDBOa9uCs09NoJsXAv5U=; b=BRTftR
-	7oDtrhyclQkG+1Ye4cwxWofBgVjOqU6bpgOHFs8Leu3Pg3qQx25F9nVrHWszskBs
-	Fi3FtvsOLcrd/MSzV+KCvcpbDCsRHA7LLIVv6ZFKz9PkkztJkSeCsV+hwYQm1Hzx
-	hxRazUzNz4McTb0FZgzLFACb/bIJAtZUUoxw4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Bn20xAOKF0DouhHXVzzegE89xZMLVZGd
-	sMLCyFQrK1Eh0wDSrzZrHKGo/qLrHMgTaKuXrlf1YHNwvZWIgl6LKPMmFgjAdKFb
-	Y7Ij1Enm97Gn5bPsKyDQUx69QMatObAEOH7rNjFPyHwt113yqjTtnproR9Px4EWk
-	X3P4Czy3UJk=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BF14BDFEBF;
-	Mon, 18 Oct 2010 15:26:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A3F4CDFEA7; Mon, 18 Oct
- 2010 15:26:31 -0400 (EDT)
-In-Reply-To: <AANLkTim0KeW3eDHAsxrxMCvBUD_15R3VSrHSzOFq38A1@mail.gmail.com>
- (Erik Faye-Lund's message of "Mon\, 18 Oct 2010 14\:05\:09 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A0FE9882-DAED-11DF-91BB-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933131Ab0JRTbp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 18 Oct 2010 15:31:45 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38807 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932134Ab0JRTbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 18 Oct 2010 15:31:43 -0400
+Received: by iwn35 with SMTP id 35so429734iwn.19
+        for <git@vger.kernel.org>; Mon, 18 Oct 2010 12:31:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=ls743cT+HsgelLSKlxUEQYr8NxKhDmTVAmhWOi8uKBw=;
+        b=vOy5jA1/NjW/S7m21tMVle0ZQ5Ydc/Ot0nDdaM+umC0XK9NjncOARO3DTz7UkJI+G6
+         nm9sdoXKT3ZgsFpz98CWAIF0WxShNqmMucNncKfGm9HvVb1hTAM7QRPjl2no93nMWjGZ
+         v2M7r+fyK055iqowXl5h76JTA0AX6bf6OswFQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=Zyhc652JzcCo79vaJfy5a52/xPM8V5dUClB9FwEzwEaQPn6APVGYqRdE4nu1gAenQt
+         Cge2fuh1/3bZh9fne9LiENjhdsb1Wxzl7U26lN8bzWOVBQMlTwX1d0nmyMso5+QkqMhO
+         kVtpscgihnzrOLIzjrXQU4xLWeVGw1qbf5bO8=
+Received: by 10.231.32.140 with SMTP id c12mr3695680ibd.90.1287430298854; Mon,
+ 18 Oct 2010 12:31:38 -0700 (PDT)
+Received: by 10.231.17.141 with HTTP; Mon, 18 Oct 2010 12:23:57 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159283>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159284>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+Hi there,
 
-> (I'm going a little off-topic here, I hope that's OK)
-> I'm not too happy with some of the pretend-really-hard-to-be-posix-magic
-> around in the Windows-port. In fact, I have some patches to reduce
-> posixness in some areas, while getting rid of some code in
-> mingw.c. Would such patches be welcome, or is pretend-to-be-posix the
-> governing portability approach? In some cases, this comes at the expense
-> of some performance (and quite a bit of added cludge), which is a bit
-> contradictory to the Git design IMO.
+  I am trying to convert a SVN repository to GIT. After the conversion
+I tried to do some cleanups (git plumbing):
 
-If the part of the codepath you need to make conditional can be better
-helped by abstraction that is higher-level than POSIX, that would be a
-very acceptable approach.  The "struct credential" idea Jonathan gave you
-is an example of such.  The goal is not to force POSIX on Windows or make
-POSIX emulation on Windows more complete---that is not git's job.  Just
-that in most of the case the level of abstraction POSIX gives has been
-adequate for our codebase.
+$ git filter-branch --prune-empty -f --tree-filter 'find . -type f -a
+\( -name \*.txx -o -name \*.cxx -o -name \*.h -o -name \*.dtd -o -name
+\*.dtd -o -name \*.xsd -o -name \*.txt -o -name \*.rc -o -name
+\*.linux \)  -exec sudo dos2unix -p {} \;' --tag-name-filter cat --
+--all
 
->> This is especially
->> true if you are making the "drop-privileges" part a helper function, no?
->
-> I don't follow this part. What exactly becomes more true by having a
-> drop-privileges function?
+  The filter ran for a couple of hours. But after the conversion I get
+the following:
 
-By using a bit higher level abstraction than POSIX primitives give you
-(e.g. initgroups(), setgid(), etc.) that does not have to depend on
-particular POSIX implementation details (e.g. "struct passwd", gid_t,
-etc.), you can make the main codepath cleaner and free of ifdefs.
+Initialized empty Git repository in /tmp/bla/.git/
+remote: Counting objects: 59368, done.
+remote: Compressing objects: 100% (25408/25408), done.
+remote: Total 59368 (delta 43461), reused 44204 (delta 33809)
+Receiving objects: 100% (59368/59368), 14.40 MiB | 14.27 MiB/s, done.
+Resolving deltas: 100% (43461/43461), done.
+error: refs/tags/2.0.9 does not point to a valid object!
+error: refs/tags/2.0.8 does not point to a valid object!
+error: refs/tags/2.0.7 does not point to a valid object!
+error: refs/tags/2.0.6 does not point to a valid object!
+error: refs/tags/2.0.5 does not point to a valid object!
+error: refs/tags/2.0.4 does not point to a valid object!
+error: refs/tags/2.0.16 does not point to a valid object!
+error: refs/tags/2.0.15 does not point to a valid object!
+error: refs/tags/2.0.14 does not point to a valid object!
+error: refs/tags/2.0.13 does not point to a valid object!
+error: refs/tags/2.0.12 does not point to a valid object!
+error: refs/tags/2.0.11 does not point to a valid object!
+error: refs/tags/2.0.10 does not point to a valid object!
+
+  Could someone please let me know what I am doing wrong in my script
+in filter-branch.
+
+Thanks a bunch !
+-- 
+Mathieu
