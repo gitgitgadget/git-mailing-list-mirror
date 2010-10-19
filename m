@@ -1,68 +1,100 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Tue, 19 Oct 2010 13:34:56 -0500
-Message-ID: <AANLkTi=DXH1WwGJ-h6s3dFfWZZ3tpu_jQgV1Y9O7c6Xf@mail.gmail.com>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
- <AANLkTimkovH9OysLSxA+=di89Xi+dTCYL5hRPmNaADDH@mail.gmail.com>
- <20101019175103.GA28847@kytes> <20101019182845.GE25139@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: fetch and bundle don't work in (semi-)broken repo
+Date: Tue, 19 Oct 2010 13:39:25 -0500
+Message-ID: <20101019183925.GF25139@burratino>
+References: <20101019160957.GK11713@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org,
-	Scott Chacon <schacon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 20:35:29 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+X-From: git-owner@vger.kernel.org Tue Oct 19 20:43:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8H1y-0001bV-Bl
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 20:35:26 +0200
+	id 1P8H9Z-0003cS-FU
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 20:43:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754696Ab0JSSfS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 14:35:18 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:41724 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752370Ab0JSSfR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 14:35:17 -0400
-Received: by gwb10 with SMTP id 10so76079gwb.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 11:35:16 -0700 (PDT)
+	id S1755577Ab0JSSnG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 14:43:06 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:39526 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755276Ab0JSSnF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 14:43:05 -0400
+Received: by pxi16 with SMTP id 16so709372pxi.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 11:43:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=outS5sc/Q+N8qu7NpNLA4nY/8PwqvNNh53Hr7OG+2js=;
-        b=Ms7d3TGgV61O0CS1tq/kGpmnHxrf8rUpa/KAZYsUzhURaN9JPIudhSDixVxE3Js8hq
-         7vWuGLhqdyWsGoomNgkkIZjboUEwE6m7TatmWrqgFHzRMnwpOnKvINrupP3W4rQn7iTz
-         QpHWBgdgtyiemWDG1X2z1ChfOHtB+McWhBofQ=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=EsDF5CvJsbjRZlp+U9I3HEvHjF/iHRCnfTN3YMMYSCk=;
+        b=dAjJhu24YwvlynWkjWlbp6Hv2zDgNM0JXpAgFU8L8zFVBibxy4c7sndWQUz7mx8KdP
+         k52vf/5/zzHAujikIZIdvfNyGjGp4EgKbt48S7Oz8lxLbn2XcVCHc2Y7peahY/nFiUkJ
+         Mb4lyV9jslWLQEj7Nbia+bfammMNWcEnaEMT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=qseivNMopqJYN21/sTcH8oHSVhhA9UZllNkCDxCzsVN2An+CEBGCkTLIVMvWiAxWGM
-         8G3Ikr7+gfYGBzVyhHFXKC2ZeJf85bi/lczbN3F6RQ/0SySIAH1zsELMsVfsVGF4uMiR
-         5qdZDlemRQ2fP9rLAXWDgw5o6ZZ5f3ZT550bQ=
-Received: by 10.151.92.9 with SMTP id u9mr9324306ybl.319.1287513316594; Tue,
- 19 Oct 2010 11:35:16 -0700 (PDT)
-Received: by 10.151.45.12 with HTTP; Tue, 19 Oct 2010 11:34:56 -0700 (PDT)
-In-Reply-To: <20101019182845.GE25139@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=o6wBKiRWqn1NeQ3zFKEQYOQa04sfuY7Fr7IZNC966kLIEFq5GipwuzjYO8orvf/K9+
+         Q3twIOLfp12O0OOFTv/t84LR9TNIdsGMpZzZ7K5BPrw7uH3hxN2spqHoG2xnXfltSjek
+         okjA26QZqB4jHo291f/cnTwfdzgMHdGSgMJ94=
+Received: by 10.142.209.10 with SMTP id h10mr5059101wfg.256.1287513784793;
+        Tue, 19 Oct 2010 11:43:04 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id y21sm2538259vbx.6.2010.10.19.11.43.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 11:43:03 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101019160957.GK11713@pengutronix.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159350>
 
-Heya,
+Hi,
 
-On Tue, Oct 19, 2010 at 13:28, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Wouldn't it make sense to make "git reset" basically a synonym for
-> "git rm --cached" when in the 'branch yet to be born' case?
+Uwe Kleine-K=C3=B6nig wrote:
 
-Yes, definitely!
+> 	ukl@hostname:~/path1/linux-2.6$ git fetch ~/path2/linux-2.6 sectionm=
+ismatches
+> 	remote: Counting objects: 118, done.
+> 	remote: error: unable to find 40aaeb204dc04d3cf15c060133f65538b43b13=
+b0
+> 	remote: Compressing objects: 100% (83/83), done.
+> 	remote: fatal: unable to read 40aaeb204dc04d3cf15c060133f65538b43b13=
+b0
+> 	error: git upload-pack: git-pack-objects died with error.
+> 	fatal: git upload-pack: aborting due to possible repository corrupti=
+on on the remote side.
 
--- 
-Cheers,
+Sounds like alternates or workdir allowed gc to be overzealous, indeed.
 
-Sverre Rabbelier
+Could you:
+
+ 1. Make a copy of the corrupted repo, just in case.
+ 2. Explode all backs with "git unpack-objects"
+ 3. Identify the missing object, as explained in
+    Documentation/howto/recover-corrupted-blob-object.txt?
+
+With that information, it would be easier to examine whether and how
+pack-objects could be smarter about fetching the non-missing objects.
+
+> I don't know what 40aaeb204dc04d3cf15c060133f65538b43b13b0 is, but I
+> think it's not necessary for the sectionmismatches branch:
+>=20
+> 	ukl@hostname:~/path2/linux-2.6$ git format-patch linus/master..secti=
+onmismatches
+> 	0001-wip-enable-DEBUG_SECTION_MISMATCH.patch
+[...]
+> and linus/master is contained in ~/path1/linux-2.6, too.
+
+Cc-ing Nico, pack-objects wizard.
+
+Thanks for reporting.
+Jonathan
