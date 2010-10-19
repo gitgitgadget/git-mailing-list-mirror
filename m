@@ -1,108 +1,123 @@
-From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
-Subject: Re: error: refs/tags/2.0.9 does not point to a valid object!
-Date: Tue, 19 Oct 2010 13:15:12 +0200
-Message-ID: <AANLkTi=KvEPwmnJ_sexLz3j5n4a+ATPJTnXiAK2T8MPi@mail.gmail.com>
-References: <AANLkTi=JgVhkNVu70nW7_vbqWUsS=mnJGQDVBtm-dxJD@mail.gmail.com> <23120755.523391.1287433903205.JavaMail.root@mail.hq.genarts.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: RFC: [PATCH] ignore SIGINT&QUIT while waiting for external command
+Date: Tue, 19 Oct 2010 15:59:43 +0400
+Message-ID: <20101019115943.GA8065@dpotapov.dyndns.org>
+References: <20101019045300.GA18043@gnu.kitenet.net>
+ <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 13:15:45 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
+	Joey Hess <joey@kitenet.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 19 13:59:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8AAS-0007VV-K0
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 13:15:45 +0200
+	id 1P8ArC-0003Ko-Vh
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 13:59:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758304Ab0JSLPg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 07:15:36 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:33457 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758152Ab0JSLPg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Oct 2010 07:15:36 -0400
-Received: by iwn7 with SMTP id 7so784255iwn.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 04:15:35 -0700 (PDT)
+	id S1758340Ab0JSL7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 07:59:49 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:56408 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758037Ab0JSL7s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 07:59:48 -0400
+Received: by ewy20 with SMTP id 20so3270613ewy.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 04:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=OrJGL611s2PateYxKbRdeijCtTWMg+2zHI7iQQVDmoE=;
-        b=pNCKTB9XYt4JWZmD1WuM7lnGK8LzaBtdbYEZnZg3iD3qzyKukzPGLUxEFxvBuEpbAR
-         1vZhvHwnw1q8pcCL9sQMzBcwu8U+DlCVq7MAR7n9dIUJUxybhdPOPDST932eS70uyV6C
-         nUGTPbIssnRQS/bMHayXQ8k+L35EkauthT9Yg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=A7wnllpkz36nwk45+c+BWIwJifT+oBCnGh6vwhX6mWI=;
+        b=J+uGdIX7BTmMnc9TqfSEm54MerPmoZExWMbdHbYWoXLykbBBRR5PVIyI4MeilbaGaI
+         XsqfkZKW440elI7lvodxsvqi16xf3B2gBw2w9Xc6EcFwxxQCdezBfyit2WXMj2sRjCa7
+         yJPByynAO9PWKo38wdZYwFuH/Xv9VwrL87moI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=v49h9oTAppkw6U/Qwpa5QZizZoOogctUXGglF17gRwsGeijKZAFYr8pStjnWiQfO9W
-         6oywd5k3z84ioS14lq/DrfIVxj7bORCKkwWl2w/fGtUee5JhsDZmTdYFZR0z4NvWIBRO
-         oZqF11cmp7b849F3OV72cTgec1BIDNAuz0lSo=
-Received: by 10.231.12.136 with SMTP id x8mr4389143ibx.55.1287486932991; Tue,
- 19 Oct 2010 04:15:32 -0700 (PDT)
-Received: by 10.231.17.141 with HTTP; Tue, 19 Oct 2010 04:15:12 -0700 (PDT)
-In-Reply-To: <23120755.523391.1287433903205.JavaMail.root@mail.hq.genarts.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=orTsTtt1GZHBeaAjVmalXZSPVmy11WZ/pL32NdBp5Np2SZroM4WBMSCHLmloLkk77c
+         g2NxYP3gY/VOd6N6bTVkKPXQ5A7D/i0tU8sOZ4/axoIcQ5SsEpltVDuKiR5QUmb91irc
+         eqR3MpLCK2CxpqJ4jggKgbnxGCjA9G7upC5Zc=
+Received: by 10.213.4.142 with SMTP id 14mr4174423ebr.34.1287489587235;
+        Tue, 19 Oct 2010 04:59:47 -0700 (PDT)
+Received: from localhost (ppp91-76-16-175.pppoe.mtu-net.ru [91.76.16.175])
+        by mx.google.com with ESMTPS id v56sm8435361eeh.14.2010.10.19.04.59.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 04:59:46 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159321>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159323>
 
-On Mon, Oct 18, 2010 at 10:31 PM, Stephen Bash <bash@genarts.com> wrote=
-:
->
->
-> ----- Original Message -----
->> From: "Mathieu Malaterre" <mathieu.malaterre@gmail.com>
->> To: git@vger.kernel.org
->> Sent: Monday, October 18, 2010 3:23:57 PM
->> Subject: error: refs/tags/2.0.9 does not point to a valid object!
->>
->> I am trying to convert a SVN repository to GIT.
->>
->> The filter ran for a couple of hours. But after the conversion I get
->> the following:
->>
->> Initialized empty Git repository in /tmp/bla/.git/
->> remote: Counting objects: 59368, done.
->> remote: Compressing objects: 100% (25408/25408), done.
->> remote: Total 59368 (delta 43461), reused 44204 (delta 33809)
->> Receiving objects: 100% (59368/59368), 14.40 MiB | 14.27 MiB/s, done=
-=2E
->> Resolving deltas: 100% (43461/43461), done.
->> error: refs/tags/2.0.9 does not point to a valid object!
->> error: refs/tags/2.0.8 does not point to a valid object!
->> error: refs/tags/2.0.7 does not point to a valid object!
->> error: refs/tags/2.0.6 does not point to a valid object!
->> error: refs/tags/2.0.5 does not point to a valid object!
->> error: refs/tags/2.0.4 does not point to a valid object!
->> error: refs/tags/2.0.16 does not point to a valid object!
->> error: refs/tags/2.0.15 does not point to a valid object!
->> error: refs/tags/2.0.14 does not point to a valid object!
->> error: refs/tags/2.0.13 does not point to a valid object!
->> error: refs/tags/2.0.12 does not point to a valid object!
->> error: refs/tags/2.0.11 does not point to a valid object!
->> error: refs/tags/2.0.10 does not point to a valid object!
->>
->> Could someone please let me know what I am doing wrong in my script
->> in filter-branch.
->
-> Yep, I ran into the exact same problem. =A0Short answer, move/remove =
-the refs/original directory before cloning, and the issue should go awa=
-y.
->
-> http://kerneltrap.org/mailarchive/git/2010/8/20/37441
->
-> There was also a proposed test case:
->
-> http://kerneltrap.org/mailarchive/git/2010/9/7/39119
+Before git 1.6.4, we used execvp to run external git dashed commands,
+thus git did not return until this command is finished. With switching to
+run_command (which was necessary to fix a pager issue; see d8e96fd86d4),
+CTRL-C could cause that git returned before than the git dashed command is
+finished.
 
-This was indeed the problem. Just a simple rm -rf .git/refs/original/*
-and original issue is gone.
+The solution is to disable SIGINT and SIGQUIT as it is normally done by
+system(). Disabling these signals is done only when silent_exec_failure
+is set, which means that the current process is used as a proxy to run
+another command.
 
-Thank you so much !
---=20
-Mathieu
+Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
+---
+ run-command.c |   19 +++++++++++++++++++
+ 1 files changed, 19 insertions(+), 0 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index 2a1041e..14af035 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -93,6 +93,10 @@ static inline void set_cloexec(int fd)
+ 		fcntl(fd, F_SETFD, flags | FD_CLOEXEC);
+ }
+ 
++#ifndef WIN32
++static sighandler_t sigint, sigquit;
++#endif
++
+ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ {
+ 	int status, code = -1;
+@@ -102,6 +106,13 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
+ 	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
+ 		;	/* nothing */
+ 
++#ifndef WIN32
++	if (silent_exec_failure) {
++		/* Restore signal handlers */
++		signal(SIGINT, sigint);
++		signal(SIGQUIT, sigquit);
++	}
++#endif
+ 	if (waiting < 0) {
+ 		failed_errno = errno;
+ 		error("waitpid for %s failed: %s", argv0, strerror(errno));
+@@ -202,8 +213,16 @@ fail_pipe:
+ 		notify_pipe[0] = notify_pipe[1] = -1;
+ 
+ 	fflush(NULL);
++	if (cmd->silent_exec_failure) {
++		sigint = signal(SIGINT, SIG_IGN);
++		sigquit = signal(SIGQUIT, SIG_IGN);
++	}
+ 	cmd->pid = fork();
+ 	if (!cmd->pid) {
++		if (cmd->silent_exec_failure) {
++			signal(SIGINT, sigint);
++			signal(SIGQUIT, sigquit);
++		}
+ 		/*
+ 		 * Redirect the channel to write syscall error messages to
+ 		 * before redirecting the process's stderr so that all die()
+-- 
+1.7.3.1
