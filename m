@@ -1,120 +1,111 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC: [PATCH] ignore SIGINT&QUIT while waiting for external
- command
-Date: Tue, 19 Oct 2010 15:50:22 -0400
-Message-ID: <20101019195022.GA7287@sigill.intra.peff.net>
-References: <20101019045300.GA18043@gnu.kitenet.net>
- <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
- <20101019115943.GA8065@dpotapov.dyndns.org>
- <20101019133236.GA804@sigill.intra.peff.net>
- <20101019134040.GA3956@sigill.intra.peff.net>
- <20101019191638.GI25139@burratino>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: fetch and bundle don't work in (semi-)broken repo
+Date: Tue, 19 Oct 2010 22:11:39 +0200
+Message-ID: <20101019201139.GB28166@pengutronix.de>
+References: <20101019160957.GK11713@pengutronix.de> <20101019183925.GF25139@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>, Joey Hess <joey@kitenet.net>
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Nicolas Pitre <nico@fluxnic.net>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 21:49:53 2010
+X-From: git-owner@vger.kernel.org Tue Oct 19 22:12:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8IC1-0006yv-FD
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 21:49:53 +0200
+	id 1P8IXe-0005nj-DS
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 22:12:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756817Ab0JSTts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 15:49:48 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33171 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753117Ab0JSTtr (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 15:49:47 -0400
-Received: (qmail 16081 invoked by uid 111); 19 Oct 2010 19:49:43 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 19 Oct 2010 19:49:43 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Oct 2010 15:50:22 -0400
+	id S1757058Ab0JSUMD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 16:12:03 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:34236 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757023Ab0JSUMB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 16:12:01 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P8IXJ-0004M4-KH; Tue, 19 Oct 2010 22:11:53 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P8IX5-0001cY-Cq; Tue, 19 Oct 2010 22:11:39 +0200
 Content-Disposition: inline
-In-Reply-To: <20101019191638.GI25139@burratino>
+In-Reply-To: <20101019183925.GF25139@burratino>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159361>
 
-On Tue, Oct 19, 2010 at 02:16:38PM -0500, Jonathan Nieder wrote:
+Hi Jonathan,
 
-> I think sigchain_push ought to accept a context object.
+On Tue, Oct 19, 2010 at 01:39:25PM -0500, Jonathan Nieder wrote:
+> Uwe Kleine-K=F6nig wrote:
+>=20
+> > 	ukl@hostname:~/path1/linux-2.6$ git fetch ~/path2/linux-2.6 sectio=
+nmismatches
+> > 	remote: Counting objects: 118, done.
+> > 	remote: error: unable to find 40aaeb204dc04d3cf15c060133f65538b43b=
+13b0
+> > 	remote: Compressing objects: 100% (83/83), done.
+> > 	remote: fatal: unable to read 40aaeb204dc04d3cf15c060133f65538b43b=
+13b0
+> > 	error: git upload-pack: git-pack-objects died with error.
+> > 	fatal: git upload-pack: aborting due to possible repository corrup=
+tion on the remote side.
+>=20
+> Sounds like alternates or workdir allowed gc to be overzealous, indee=
+d.
+>=20
+> Could you:
+>=20
+>  1. Make a copy of the corrupted repo, just in case.
+>  2. Explode all backs with "git unpack-objects"
+I did:
 
-But signal() doesn't, so we would have to install a wrapper function
-that gets the signal and calls the sigchain_pushed callback with the
-context object. But we can't always install the wrapper. We need to
-check for SIG_IGN and SIG_DFL, and literally install those.
+	mv .git/objects/pack .git/objects/pack.bak
+	rm .git/objects/info/alternates
+	for p in .git/objects/pack.bak/*.pack ~/path1/linux-2.6/.git/objects/p=
+ack/*.pack; do
+		git unpack-objects < $p
+	done
 
-So I think it's do-able, but I tried to keep the original sigchain as
-simple as possible.
 
-> +static void interrupted_with_child(int sig)
-> +{
-> +	if (the_child && the_child->pid > 0) {
-> +		while ((waiting = waitpid(pid, NULL, 0)) < 0 && errno == EINTR)
-> +			;	/* nothing */
-> +		the_child = NULL;
-> +	}
-> +	sigchain_pop(sig);
-> +	raise(sig);
-> +}
-> +
->  int start_command(struct child_process *cmd)
->  {
->  	int need_in, need_out, need_err;
-> @@ -206,8 +220,11 @@ fail_pipe:
->  		notify_pipe[0] = notify_pipe[1] = -1;
->  
->  	fflush(NULL);
-> -	sigchain_push(SIGINT, SIG_IGN);
-> -	sigchain_push(SIGQUIT, SIG_IGN);
-> +	if (the_child)
-> +		die("What?  _Two_ children?");
-> +	the_child = cmd;
+>  3. Identify the missing object, as explained in
+>     Documentation/howto/recover-corrupted-blob-object.txt?
 
-Yuck. You can get around that by pushing onto a linked list of children,
-though.
+and I'm running git-fsck --full now over night as it's bedtime here.
+=20
+> With that information, it would be easier to examine whether and how
+> pack-objects could be smarter about fetching the non-missing objects.
+>=20
+> > I don't know what 40aaeb204dc04d3cf15c060133f65538b43b13b0 is, but =
+I
+> > think it's not necessary for the sectionmismatches branch:
+> >=20
+> > 	ukl@hostname:~/path2/linux-2.6$ git format-patch linus/master..sec=
+tionmismatches
+> > 	0001-wip-enable-DEBUG_SECTION_MISMATCH.patch
+> [...]
+> > and linus/master is contained in ~/path1/linux-2.6, too.
+>=20
+> Cc-ing Nico, pack-objects wizard.
+>=20
+> Thanks for reporting.
+Thanks for helping
 
-Thinking about it more, though, I don't think we do necessarily want to
-always wait for the child. There are really two main types of
-run_command's we do:
+Best regards
+Uwe
 
-  1. The run command is basically the new process. In an ideal world, we
-     would exec into it, but we need the parent to hang around to do
-     some kind of bookkeeping (like waiting for the pager to exit).
-
-     E.g., running external dashed commands.
-
-  2. We are running the command, and if we are killed, the command
-     should go away too (because its point in running is to give us some
-     information).
-
-     E.g., running textconv filters.
-
-And there are a few instances that don't fall into either category
-(e.g., running the pager).
-
-In case (1), we probably want to SIG_IGN, wait for the command to
-finish, and then die with its exit code. If we do it right, the fact
-that _it_ was killed by signal will be propagated, and the fact that we
-weren't will be irrelevant.
-
-In case (2), we probably want to keep a linked list of "expendable"
-processes, and on signal death and atexit, go through the list and make
-sure all are dead. This is how we handle tempfiles already in diff.c.
-
-Given that there is only really one instance of (1), we can just code it
-there. For (2), there are many such callers, but I don't know that the
-mechanism necessarily needs to be included as part of run_command. A
-separate module to manage the list and set up the signal handler would
-be fine (though there is a race between fork() and signal death, so it
-perhaps pays to get the newly created pid on the "expendable" list as
-soon as possible, which may mean cooperating from run_command).
-
--Peff
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
