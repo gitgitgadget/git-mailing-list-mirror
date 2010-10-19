@@ -1,104 +1,93 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Tue, 19 Oct 2010 10:05:05 +0200
-Message-ID: <6FCE62E3-A27E-43D6-9FDF-0133ABD851C2@wincent.com>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com> <vpq8w1v5gce.fsf@bauges.imag.fr> <buopqv6kcsd.fsf@dhlpc061.dev.necel.com> <8B950268-7F6E-40E5-9D6C-F150EBEA4F0C@wincent.com> <AANLkTinb0149C88Mzx6m4_2BdhpW12OwQ+uP6XzQ5yLx@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Tue Oct 19 11:06:25 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] repack: place temporary packs under .git/objects/pack/
+Date: Tue, 19 Oct 2010 11:50:43 +0200
+Message-ID: <cbdf4787ddaccd7105ab1661529a98257d61179b.1287481801.git.trast@student.ethz.ch>
+References: <1287474040065-5649864.post@n2.nabble.com>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Marat Radchenko <marat@slonopotamus.org>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Oct 19 11:50:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P889G-0001fC-Oy
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 11:06:23 +0200
+	id 1P88qN-0005t0-JR
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 11:50:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755116Ab0JSJGR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 05:06:17 -0400
-Received: from outmail148115.authsmtp.co.uk ([62.13.148.115]:49675 "EHLO
-	outmail148115.authsmtp.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753467Ab0JSJGQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 05:06:16 -0400
-X-Greylist: delayed 3659 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Oct 2010 05:06:15 EDT
-Received: from mail-c194.authsmtp.com (mail-c194.authsmtp.com [62.13.128.121])
-	by punt2.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id o9J85C1L016128;
-	Tue, 19 Oct 2010 08:05:12 GMT
-Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id o9J859P0066358
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Tue, 19 Oct 2010 09:05:10 +0100 (BST)
-Received: from [192.168.1.6] (81.Red-88-5-242.dynamicIP.rima-tde.net [88.5.242.81])
-	(authenticated bits=0)
-	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id o9J855iC030774
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Tue, 19 Oct 2010 04:05:07 -0400
-In-Reply-To: <AANLkTinb0149C88Mzx6m4_2BdhpW12OwQ+uP6XzQ5yLx@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
-X-Server-Quench: 9872e6aa-db57-11df-80b9-0022640b883e
-X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJCUVH axcdCVFPdwdEHAkR A28BW1FeUVw/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNHX9gBBVh Bh4YVBp3f0tHf312 YAhrVndZCUIrJFsp EEtTCGwHMTF9YGBN WV1YdwFWdgdKLBdN aQUxNiYHcRJeImok EhU2PjY2OTJQOXYd WAwIKk4fBQ4CEjJ4 DwwYFD4sWQUeWyw8 IlhuJ0IXWi4A
-X-Authentic-SMTP: 61633436303433.1015:706
-X-AuthFastPath: 0 (Was 255)
-X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1758139Ab0JSJuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 05:50:46 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:14323 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756596Ab0JSJup (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 05:50:45 -0400
+Received: from CAS22.d.ethz.ch (172.31.51.112) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Tue, 19 Oct
+ 2010 11:50:44 +0200
+Received: from localhost.localdomain (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 19 Oct
+ 2010 11:50:44 +0200
+X-Mailer: git-send-email 1.7.3.1.271.ged4d2
+In-Reply-To: <1287474040065-5649864.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159316>
 
-El 19/10/2010, a las 09:48, Miles Bader escribi=F3:
+git-pack-objects is already careful to start out its temporary packs
+under .git/objects/pack/ (cf. 8b4eb6b, Do not perform cross-directory
+renames when creating packs, 2008-09-22), but git-repack did not
+respond in kind so the effort was lost when the filesystem boundary is
+exactly at that directory.
 
-> On Tue, Oct 19, 2010 at 4:19 PM, Wincent Colaiuta <win@wincent.com> w=
-rote:
->> We should smooth out these road-bumps (in so far as we can, with res=
-pect to backward compatibility and such) rather than just hand-waving t=
-hem away saying that they are a natural consequence of demolishing the =
-CVS world view and replacing it with something better. That's not true =
-at all; mistakes _were_ made with the terminology, and unfortunately we=
- have to live with some of them because they can't be changed in a non-=
-breaking way, but the changes that we _can_ make to remove the confusio=
-n, we should make them.
->=20
-> Sure, I'm not claiming that git's perfect or can't be improved.  [As =
-I
-> noted, I have my own list of complaints about its terminology.]
->=20
-> However, just as it's wrong to ignore all complaints for such reasons=
-,
-> it's _equally_ wrong to assume the opposite and think that all such
-> complaints are justified.  Some differences in terminology _are_ due
-> to a very different model, and can't simply be papered over.  It isn'=
-t
-> "hand-waving" to point this out.  They might (and should) be better
-> documented/explained, but there are definitely terms and concepts
-> where the only reasonable solution is for newbies to have some
-> patience and take some time to learn them.
+Let git-repack pass a path under .git/objects/pack/ as the base for
+its temporary packs.
 
-Well, I'm not "assuming" that the complaints are justified; I'm talking=
- from 3.5 years of personal experience using Git:
+This means we might need the $PACKDIR sooner (before the pack-objects
+invocation), so move the mkdir up just to be safe.
 
-- the concept of the "index": learnt it in 30 seconds, and sick of hear=
-ing people complain about it
+Also note that the only use of *.pack is in the find invocation way
+before the pack-objects call, so the temporary packs will not suddenly
+show up in any wildcards because of the directory change.
 
-- terminology related to concepts of "tracking"/"remote(s)": discomfort=
- almost every time I've had to deal with it
+Reported-by: Marat Radchenko <marat@slonopotamus.org>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ git-repack.sh |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-gitglossary(7) helps, but no matter how good it is you'll still get con=
-fusion unless the terminology is used consistently across the board. So=
-me of this is not actually Git's fault, as a lot of the misuse/abuse of=
- terminology actually comes from people writing blog posts and presenta=
-tions and not being disciplined about their use of language -- before y=
-ou know it Google returns mostly garbage results and "the community" en=
-ds up speaking a corrupted version of the language --  but the stuff th=
-at is within the scope of the Git project itself (man pages, official d=
-ocs, interfaces) really needs to be top notch.
-
-Cheers,
-Wincent
+diff --git a/git-repack.sh b/git-repack.sh
+index 769baaf..624feec 100755
+--- a/git-repack.sh
++++ b/git-repack.sh
+@@ -52,7 +52,7 @@ true)
+ esac
+ 
+ PACKDIR="$GIT_OBJECT_DIRECTORY/pack"
+-PACKTMP="$GIT_OBJECT_DIRECTORY/.tmp-$$-pack"
++PACKTMP="$PACKDIR/.tmp-$$-pack"
+ rm -f "$PACKTMP"-*
+ trap 'rm -f "$PACKTMP"-*' 0 1 2 3 15
+ 
+@@ -82,6 +82,8 @@ case ",$all_into_one," in
+ 	;;
+ esac
+ 
++mkdir -p "$PACKDIR" || exit
++
+ args="$args $local ${GIT_QUIET:+-q} $no_reuse$extra"
+ names=$(git pack-objects --keep-true-parents --honor-pack-keep --non-empty --all --reflog $args </dev/null "$PACKTMP") ||
+ 	exit 1
+@@ -90,7 +92,6 @@ if [ -z "$names" ]; then
+ fi
+ 
+ # Ok we have prepared all new packfiles.
+-mkdir -p "$PACKDIR" || exit
+ 
+ # First see if there are packs of the same name and if so
+ # if we can move them out of the way (this can happen if we
+-- 
+1.7.3.1.271.ged4d2
