@@ -1,70 +1,89 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
- git-svn fetch)
-Date: Tue, 19 Oct 2010 10:57:25 -0400 (EDT)
-Message-ID: <28402633.527046.1287500245894.JavaMail.root@mail.hq.genarts.com>
-References: <126B270C-AEB2-4632-A2CD-E8F2AAE20A62@cordelta.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Tue, 19 Oct 2010 11:09:44 -0400
+Message-ID: <AANLkTinGuVm8gib9r7omVV9hHw8B-iBQGgsv+b6wb5=Q@mail.gmail.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	<vpq8w1v5gce.fsf@bauges.imag.fr>
+	<buopqv6kcsd.fsf@dhlpc061.dev.necel.com>
+	<8B950268-7F6E-40E5-9D6C-F150EBEA4F0C@wincent.com>
+	<AANLkTinb0149C88Mzx6m4_2BdhpW12OwQ+uP6XzQ5yLx@mail.gmail.com>
+	<6FCE62E3-A27E-43D6-9FDF-0133ABD851C2@wincent.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: David Michael Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 16:57:43 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Miles Bader <miles@gnu.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
+To: Wincent Colaiuta <win@wincent.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 17:09:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8DdD-00042B-FK
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 16:57:39 +0200
+	id 1P8Dp4-0000Hb-UD
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 17:09:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932Ab0JSO5e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 10:57:34 -0400
-Received: from hq.genarts.com ([173.9.65.1]:11297 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752809Ab0JSO5d (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 10:57:33 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 8E8AD1E26351;
-	Tue, 19 Oct 2010 10:57:32 -0400 (EDT)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id O7DXawQ6kJOT; Tue, 19 Oct 2010 10:57:26 -0400 (EDT)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id EED681E262EC;
-	Tue, 19 Oct 2010 10:57:25 -0400 (EDT)
-In-Reply-To: <126B270C-AEB2-4632-A2CD-E8F2AAE20A62@cordelta.com>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1752870Ab0JSPJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 11:09:47 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45051 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061Ab0JSPJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 11:09:46 -0400
+Received: by bwz10 with SMTP id 10so362318bwz.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 08:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=iuQLsN+7oOZomtkqBNrRQaGA1NdXv+QkiJbLX8DuGwg=;
+        b=JtDS4jcvoVKYmmbcnQWydDLkiuOwRJyM/BirURXZnwz37iteqsqhqOJBkoC9Atb4Jl
+         tui0ZwTR9ejyDjyA1di7Cl3Dwf143K3GnSST1kpiwTYhKyA9VUVA/t7g7s7ZzoGTyUvb
+         Vm5PfwPj7MOCpzkHR9dkURbzpxeeV7Eds1Itg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=KANJ6mkBOFIc2u4HzSpA1muqTJfNXHOEHYdhYg1PoUx0H1PEqFmJA5OO8ne8W3bNbM
+         2sy40F0RvS309IwIJETiM+WYRoap9k3DJLSQjAadwtGjQ6rC8VzQGGmtXHjitmlh4gM+
+         67qGbFEx20vxtFBRZjvdL264Nx+pHrijQJTaA=
+Received: by 10.204.68.10 with SMTP id t10mr5451693bki.77.1287500984772; Tue,
+ 19 Oct 2010 08:09:44 -0700 (PDT)
+Received: by 10.204.46.207 with HTTP; Tue, 19 Oct 2010 08:09:44 -0700 (PDT)
+In-Reply-To: <6FCE62E3-A27E-43D6-9FDF-0133ABD851C2@wincent.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159334>
 
------ Original Message -----
-> From: "David Michael Barr" <david.barr@cordelta.com>
-> To: "Stephen Bash" <bash@genarts.com>
-> Sent: Tuesday, October 19, 2010 10:28:03 AM
-> Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
-> 
-> So, I think there's two valuable nuggets per commit omitted at the
-> moment in svn-fe.
-> Firstly, the longest common root between all paths in the commit,
-> which can be computed efficiently.
-> Secondly, the copyfrom_rev and copyfrom_path for the copy operation
-> that targets the common root.
-> The second nugget can be noted while computing the first.
-> From my reading of buildSVNTree.pl, these two nuggets drive the
-> mapping logic.
+> Well, I'm not "assuming" that the complaints are justified; I'm talking from 3.5 years of personal experience using Git:
+>
+> - the concept of the "index": learnt it in 30 seconds, and sick of hearing people complain about it
+>
+> - terminology related to concepts of "tracking"/"remote(s)": discomfort almost every time I've had to deal with it
+>
 
-Yep, they're the triggers, then the heuristics just filter out the noise SVN encourages because of light copies (or cruft from cvs2svn).
+I concur. I 'm working with a couple of dozen of people and helping
+them to learn git and the most confusing part is the tracking/remote
+because of too many meanings of the same words in use.
 
-Just watch out for svn mv operations.  They produce a single commit with an Add (with copyfrom_* set) and a Delete.  So in the /project -> /trunk/project case, you're common path is /.  I didn't have that case, but I did have a /trunk cp-> /branches/tagName (oops!) mv-> /tags/tagName and a /trunk cp-> /branchName (oops!) mv-> /branches/branchName (honestly I much preferred the cases where the user deleted the wrong location and then created a new copy in the right place -- there are a ton of those which I didn't bother to capture the misstep in the middle).
+We are talking about the tracking branch which is "local remote", but
+we also can create a tracking branch that will track the remote but
+will be local like:
+$git branch -t dev origin/dev
+
+There should be some different consistent and not inter-crossing
+naming for the origin's master branch (on the remote side), for the
+local origin/master
+and for local master that is a tracking branch. The only way i found
+so far to explain this is actually via the naming syntax where having
+/ in the name of the branch means remote branch. I was a bit surprised
+that i can create a local branch with a slash in the name - probably
+it should be prohibited.
+
+In this light pull command not updating the remote ref, but FETCH_HEAD
+is only adding to the overall confusion (I remember: it is pending
+change)
 
 Thanks,
-Stephen
+Eugene
