@@ -1,131 +1,182 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/3] run_builtin(): save "-h" detection result for later
- use
-Date: Tue, 19 Oct 2010 11:48:26 -0500
-Message-ID: <20101019164826.GA25139@burratino>
-References: <1287495320-27278-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+From: Thore Husfeldt <thore.husfeldt@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Tue, 19 Oct 2010 19:30:24 +0200
+Message-ID: <202EB46D-10D0-4090-A9DA-5796769F61A2@gmail.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com> <m3ocar5fmo.fsf@localhost.localdomain> <20101019080523.GB22067@login.drsnuggles.stderr.nl> <201010191027.44859.jnareb@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 18:52:17 2010
+Cc: Thore Husfeldt <thore.husfeldt@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 19 19:30:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8FQ8-000395-8n
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 18:52:16 +0200
+	id 1P8G1F-0006WJ-2S
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 19:30:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756076Ab0JSQwK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 12:52:10 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:64042 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755836Ab0JSQwJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 12:52:09 -0400
-Received: by wyb28 with SMTP id 28so2699344wyb.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 09:52:08 -0700 (PDT)
+	id S1755890Ab0JSRaa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 13:30:30 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:33398 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755596Ab0JSRa3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 19 Oct 2010 13:30:29 -0400
+Received: by ewy20 with SMTP id 20so3740939ewy.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 10:30:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Hj4kpSTlQAO5QLyqR+qWVn4j3BEt6ieozremFgZPYmo=;
-        b=eUUdnks/kQDin8IsmtIESOOSQrXfXo3ZlSJMDo9gyFUZ2dkMRzba7t0cDkyyCggJRZ
-         xEsdyBK1FkOjoK1KtVyJU9L6FgADlvpCkVThaLA/pGWGU0BYJGERmmTHaw2US8yN4xIM
-         79tFHQt2HuNTPKfKyycJI8t2oXsWW59Qx12Kk=
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=obBbASz9uGb6/jlk4dbqOtTXU/uD/rgxvBVBo3QvwpE=;
+        b=UTHaf5G+tiaxkB8DF4ryzHq4MyEt9o05Uf2I7ZfY8DI85QLW6KK0hFTEbhnuwzDKbC
+         ZJJGsnvL+EhmetB+XdPXuDE0ilrnrHc7nsImVe3eF/TcJQuG+owRyYU1WSoI4CzSnEL/
+         UxvFEhOol96xbzkrxgphAIItTW9wEKpU7ELPw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kh+HjDEgov0zryqjW4xT9zL3Zw46V+pIXGa/fYwVwc8dkX4ThEGjVY8/NuSZFtnEce
-         46p2lis+lgp8/TBEbVxTqkjMKMDuFJBMN8Xjm6khMG7b/GnFYSXak1IRyzJJfqixP7kQ
-         3FXTioVBHCHK8lEUjY15NZhk3RezNraJHd1hw=
-Received: by 10.216.11.66 with SMTP id 44mr6393714wew.69.1287507126878;
-        Tue, 19 Oct 2010 09:52:06 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id w29sm6833271weq.19.2010.10.19.09.52.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 19 Oct 2010 09:52:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1287495320-27278-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=IrU5yZCZ68oUFPaRLdw9dNQjWnkuJpRce34xcBZVH+qFE9BtuMiwDQdj4iqFNG5RjT
+         1xFafHZFlJjQwHIy3AINWbiPNZE/1BdVAUsEaXCAbAEQVGm4BPyIds77tdGa+akNRDZ/
+         BuYS51mXiTt0rIwHOiNuwzQfxaph5IR1vC32c=
+Received: by 10.213.8.143 with SMTP id h15mr780195ebh.11.1287509428366;
+        Tue, 19 Oct 2010 10:30:28 -0700 (PDT)
+Received: from [10.0.1.4] (h51baf259.k2290.dyn.perspektivbredband.net [81.186.242.89])
+        by mx.google.com with ESMTPS id q58sm4197215eeh.9.2010.10.19.10.30.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 10:30:26 -0700 (PDT)
+In-Reply-To: <201010191027.44859.jnareb@gmail.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159339>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159340>
 
-Hi,
+Thank you all for your many and well-thought out replies. I learned a l=
+ot.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Jonathan Nieder:
 
-> When run_builtin() sees "-h" as the first argument, it assumes:
->=20
->  - this is the call for help usage
->  - the real git command will only print help usage then exit
->=20
-> So it skips all setup in this case.  Unfortunately, some commands do
-> other things before calling parse_options()
+> So what would be a better term [for tracking]?
 
-and even during parse_options() in some weird cases.
+Trailing is better than tracking, since it hints at some degree of slot=
+h, but I have not thought this through. (I also think that it may be a =
+strategic mistake to advocate looking for a new name; as long as tracki=
+ng is used consistently the problem with a misleading metaphor is not s=
+o big, and the name change alienates a large group of people whose cons=
+ent is important.)
 
-Taking this patch as a cover letter, I wonder about the impact
-(because I forgot).  Is this to avoid, e.g., erroring out from a
-repository with invalid HEAD when the user just wanted to get help?
-Example commands with improved behavior?  It would be nice to be able
-to add a test or two. [*]
+> How will a person used to e.g. cvs ever adjust if they don't even rea=
+lize git is different?
 
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -1117,6 +1117,7 @@ const char *split_cmdline_strerror(int cmdline_=
-errno);
->  /* git.c */
->  struct startup_info {
->  	int have_repository;
-> +	int help; /* print help and exit, except git_config(), repo must no=
-t be touched */
->  };
+This comment, and similar from others, makes it clear that I made a mis=
+take in taking up staging versus tracking. It sends a wrong signal abou=
+t my intentions, and is only a minor detail. This was *not* so difficul=
+t to understand, so I shouldn=92t have included it. My annoyance here i=
+s merely aesthetic and pedagogical.
 
-Since this is data, not code, I think it is clearer to just explain
-what the value represents.  The commit message and access sites can
-explain why it matters.  Maybe something like this?
+Matthiey Moy:
 
-	unsigned have_repository:1;
-	unsigned help:1;	/* git <command> -h? */
+> Git's huge sin, after all (judging from most complaints I see about i=
+t), is that It Doesn't Use Exactly The Same Model (and thus Terminology=
+) That CVS Did...
 
-A better technical writer could probably find a better way to say it.
 
-> --- a/git.c
-> +++ b/git.c
-> @@ -246,13 +246,13 @@ struct cmd_struct {
-> =20
->  static int run_builtin(struct cmd_struct *p, int argc, const char **=
-argv)
->  {
-> -	int status, help;
-> +	int status;
->  	struct stat st;
->  	const char *prefix;
-> =20
->  	prefix =3D NULL;
-> -	help =3D argc =3D=3D 2 && !strcmp(argv[1], "-h");
-> -	if (!help) {
-> +	startup_info->help =3D argc =3D=3D 2 && !strcmp(argv[1], "-h");
-> +	if (!startup_info->help) {
-[...]
+My analysis of Git=92s wickedness is interestingly different. Git has a=
+ clean and simple model that should be very easy to understand. Git=92s=
+ rhetorical traditions prevent that understanding. Git is really, reall=
+y hard to learn, no matter where you come from, but there is no inheren=
+t reason for that.
 
-=46or what it's worth,
-Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+The steepness of the learning curve (rather than the divergence from ot=
+her systems=92s terminology) is the single biggest complaint against gi=
+t, evidenced by my own anecdotal evidence from web surfing, and by the =
+Git user survey. It should be viewed as Git=92s biggest current problem=
+ by an order of magnitude. It makes me think twice and thrice before as=
+king my colleagues to collaborate with me using Git; I will probably le=
+arn Mercurial and advocate using that instead=97it=92s almost as nice, =
+and I don=92t feel embarrassed advocating it. Using git for myself is g=
+reat (now I understand it) but it is unclear if I should invest social =
+capital to convince others to use it as well.=20
 
-Thanks.
+The magnitude of how bad this is, and the urgency with which this shoul=
+d be fixed, is clear to everybody=97except, naturally, the denizens of =
+this mailing list. Not out of malice or incompetence, but *because of* =
+familiarity.
 
-[*] The reader might recall a long-term goal of clarifying .git dir
-access semantics:
-http://thread.gmane.org/gmane.comp.version-control.git/149771/focus=3D1=
-52745
-Given that, what need is there to ask about the patch's impact?  One
-answer: I am asking about side-effects rather than the goal of the
-patch.  Positive side-effects would be indicators of a good design.
+Sverre Rabbelier:
+
+
+> What do you mean with the last part (about `git branch -r`)? The fact
+> that 'refs/remotes' is not immutable?
+
+Well, consider for example the simple obfuscatory mastery of the follow=
+ing line in the user manual:
+
+> $ git branch -r			# list all remote branches
+
+
+Yes, I get it *now*. And I begin to feel the corruption spreading in my=
+ own brain already: I myself start to think of origin/master as a =93re=
+mote branch=94. Give me a few more weeks and I will be completely assim=
+ilated in the mindset.
+
+(Note to self: submit a patch about this before my assimilation is comp=
+lete. I already fixed it and committed to my local branch.)
+
+Mattiey again:
+
+> We already came up with a better wording, namely "upstream", and used=
+ in in "git push --set-upstream".=20
+
+Oh, I didn=92t know that. I was convinced that =93upstream=94 was cruft=
+ from when git was chiefly a tool to help Linus maintain the Linux kern=
+el. Let=91s see if I get this right:
+
+The remote-tracking branch =93origin/master=94 is *upstream* (the upstr=
+eam?) of the local branch =93master=94, and *tracks* the remote origin=92=
+s branch =93master=94? (local) =93master=94 is downstream of =93origin/=
+master=94?
+
+This would be useful. And @{u} is good. (Does it have an inverse?)
+
+I=92m not sure I like the particular word, but that=92s a minor complai=
+nt.=20
+
+( For completeness: A small terminological quibble is that upstream doe=
+sn=92t verb well. A bigger conceptual quibble is that this decision is =
+not workflow-neutral. It enforces git=92s hierarchical linux-kernel dev=
+elopment  tradition, rather than embracing a truly distributed model wh=
+ere everybody is the same. When I think of distributed version control =
+I like to think of Alice having a remote-tracking bob/master and Bob ha=
+ving a remote-tracking alice/master. Of course, it is still meaningful =
+for Alice to say =93the upstream of bobs_latest_crazy_ideas is bob/mast=
+er=94, and for Bob to say =93the upstream of alices_inane_ramblings is =
+alice/master=94. But it introduces a notion of hierarchy that is inimic=
+al to the concept of distribution, and not workflow-neutral. )
+
+Of course, upstream could be called supercalifragilistic and I would st=
+ill like it. Consistency is more important than having good metaphors. =
+(But good metaphors would be better, all other things being equal.)
+
+Jakup Narebski:
+
+> Note that it is not as easy as it seems at first glance.  There are *=
+two* such options, which (as you can read in gitcli(7) manpage) have sl=
+ightly different meaning:
+
+Wow. Thanks for pointing this out, I did not know that, and it explains=
+ a lot. I must say that to everybody else than a git developer, this st=
+ate of affairs is a proof that something is wrong, rather than an obstr=
+uction for improvement.
+
+>  I do not think debating on changing the terminology is a particularl=
+y productive use of our time. =20
+
+I agree in the sense that *how* the words are used is more important th=
+an *which* words are used, and I realise that I should not have put =93=
+terminology=94 in the headline, because that makes it about words, not =
+*explanations* or terminological *discipline*. 
