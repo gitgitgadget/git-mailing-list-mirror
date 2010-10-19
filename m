@@ -1,123 +1,82 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: RFC: [PATCH] ignore SIGINT&QUIT while waiting for external command
-Date: Tue, 19 Oct 2010 15:59:43 +0400
-Message-ID: <20101019115943.GA8065@dpotapov.dyndns.org>
-References: <20101019045300.GA18043@gnu.kitenet.net>
- <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] gitk: add the equivalent of diff --color-words
+Date: Tue, 19 Oct 2010 15:20:30 +0200
+Message-ID: <vpqbp6q9v4x.fsf@bauges.imag.fr>
+References: <3c06517d478b3725054f4ca08fb8c38e681549c4.1287223650.git.trast@student.ethz.ch>
+	<20101017015836.GC26656@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Johannes Sixt <j6t@kdbg.org>,
-	Joey Hess <joey@kitenet.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 19 13:59:55 2010
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 15:21:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8ArC-0003Ko-Vh
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 13:59:55 +0200
+	id 1P8C81-0004Lh-6d
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 15:21:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758340Ab0JSL7t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 07:59:49 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:56408 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758037Ab0JSL7s (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 07:59:48 -0400
-Received: by ewy20 with SMTP id 20so3270613ewy.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 04:59:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=A7wnllpkz36nwk45+c+BWIwJifT+oBCnGh6vwhX6mWI=;
-        b=J+uGdIX7BTmMnc9TqfSEm54MerPmoZExWMbdHbYWoXLykbBBRR5PVIyI4MeilbaGaI
-         XsqfkZKW440elI7lvodxsvqi16xf3B2gBw2w9Xc6EcFwxxQCdezBfyit2WXMj2sRjCa7
-         yJPByynAO9PWKo38wdZYwFuH/Xv9VwrL87moI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=orTsTtt1GZHBeaAjVmalXZSPVmy11WZ/pL32NdBp5Np2SZroM4WBMSCHLmloLkk77c
-         g2NxYP3gY/VOd6N6bTVkKPXQ5A7D/i0tU8sOZ4/axoIcQ5SsEpltVDuKiR5QUmb91irc
-         eqR3MpLCK2CxpqJ4jggKgbnxGCjA9G7upC5Zc=
-Received: by 10.213.4.142 with SMTP id 14mr4174423ebr.34.1287489587235;
-        Tue, 19 Oct 2010 04:59:47 -0700 (PDT)
-Received: from localhost (ppp91-76-16-175.pppoe.mtu-net.ru [91.76.16.175])
-        by mx.google.com with ESMTPS id v56sm8435361eeh.14.2010.10.19.04.59.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Oct 2010 04:59:46 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1758612Ab0JSNVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 09:21:14 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53441 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758578Ab0JSNVO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 09:21:14 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9JDESUU032581
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 19 Oct 2010 15:14:28 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1P8C7C-0006Dp-JI; Tue, 19 Oct 2010 15:20:30 +0200
+In-Reply-To: <20101017015836.GC26656@burratino> (Jonathan Nieder's message of "Sat\, 16 Oct 2010 20\:58\:36 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 19 Oct 2010 15:14:28 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9JDESUU032581
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1288098869.24557@DA6fAV3wcwMDPT3hLW6G8w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159324>
 
-Before git 1.6.4, we used execvp to run external git dashed commands,
-thus git did not return until this command is finished. With switching to
-run_command (which was necessary to fix a pager issue; see d8e96fd86d4),
-CTRL-C could cause that git returned before than the git dashed command is
-finished.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-The solution is to disable SIGINT and SIGQUIT as it is normally done by
-system(). Disabling these signals is done only when silent_exec_failure
-is set, which means that the current process is used as a proxy to run
-another command.
+> Thomas Rast wrote:
+>
+>> Use the newly added 'diff --word-diff=porcelain' to teach gitk a
+>> color-words mode, with two different modes analogous to the
+>> --word-diff=plain and --word-diff=color settings.  These are selected
+>> by a dropdown box.
+>>
+>> As an extra twist, automatically enable this word-diff support when
+>> the user mentions a word-diff related option on the command line.
+>
+> I like this a lot.
 
-Signed-off-by: Dmitry Potapov <dpotapov@gmail.com>
----
- run-command.c |   19 +++++++++++++++++++
- 1 files changed, 19 insertions(+), 0 deletions(-)
++1, it's really a feature I was looking forward.
 
-diff --git a/run-command.c b/run-command.c
-index 2a1041e..14af035 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -93,6 +93,10 @@ static inline void set_cloexec(int fd)
- 		fcntl(fd, F_SETFD, flags | FD_CLOEXEC);
- }
- 
-+#ifndef WIN32
-+static sighandler_t sigint, sigquit;
-+#endif
-+
- static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- {
- 	int status, code = -1;
-@@ -102,6 +106,13 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
- 		;	/* nothing */
- 
-+#ifndef WIN32
-+	if (silent_exec_failure) {
-+		/* Restore signal handlers */
-+		signal(SIGINT, sigint);
-+		signal(SIGQUIT, sigquit);
-+	}
-+#endif
- 	if (waiting < 0) {
- 		failed_errno = errno;
- 		error("waitpid for %s failed: %s", argv0, strerror(errno));
-@@ -202,8 +213,16 @@ fail_pipe:
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
- 	fflush(NULL);
-+	if (cmd->silent_exec_failure) {
-+		sigint = signal(SIGINT, SIG_IGN);
-+		sigquit = signal(SIGQUIT, SIG_IGN);
-+	}
- 	cmd->pid = fork();
- 	if (!cmd->pid) {
-+		if (cmd->silent_exec_failure) {
-+			signal(SIGINT, sigint);
-+			signal(SIGQUIT, sigquit);
-+		}
- 		/*
- 		 * Redirect the channel to write syscall error messages to
- 		 * before redirecting the process's stderr so that all die()
+> After this patch, the diff pane looks like this:
+>
+> ( ) Diff ( ) Old version ( ) New version   Lines of context: [3 +/-] \
+> 	[ ] Ignore space changes  [ Line diff      v]
+>
+> all on one line.  In particular, it is easy not to notice the
+> new dropdown.
+
+Worse than that: if the window is not large enough, the select box
+"line diff/markup words/color words" is totally hidden. Is there a way
+to have the display wrap to 2 lines when the window is not large
+enough?
+
 -- 
-1.7.3.1
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
