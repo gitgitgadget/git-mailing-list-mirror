@@ -1,88 +1,76 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
- git-svn fetch)
-Date: Tue, 19 Oct 2010 08:38:17 +0530
-Message-ID: <20101019030813.GA14246@kytes>
-References: <20101018073102.GA3979@burratino>
- <20101018163836.GI22376@kytes>
- <AANLkTik-OAZWBkKM1zNyeZpC6K4ZjvF8WfXOJrNkXayt@mail.gmail.com>
- <20101018165631.GA6718@burratino>
- <AANLkTimZU_q3KJYpq7zQU7o5H-M8=efDUDL9Zoy7LuZg@mail.gmail.com>
- <20101018172810.GA6877@burratino>
- <AANLkTinYpa61a=68ACSALtxuFnhGh5nGxmeD41J3e51i@mail.gmail.com>
- <20101018181336.GB6877@burratino>
- <AANLkTikHrCoZkJHN7Bnq4tgCTAHDfy7-92YOiV=s4VD8@mail.gmail.com>
- <20101018182530.GC6877@burratino>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Tue, 19 Oct 2010 13:49:06 +0900
+Message-ID: <buopqv6kcsd.fsf@dhlpc061.dev.necel.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	<vpq8w1v5gce.fsf@bauges.imag.fr>
+Reply-To: Miles Bader <miles@gnu.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Stephen Bash <bash@genarts.com>,
-	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
-	David Michael Barr <david.barr@cordelta.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 05:09:10 2010
+Content-Type: text/plain
+Cc: Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 19 06:49:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P82ZW-0008Dh-Dc
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 05:09:06 +0200
+	id 1P848x-00026k-7m
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 06:49:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932614Ab0JSDJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 18 Oct 2010 23:09:01 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:38019 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932297Ab0JSDJA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 18 Oct 2010 23:09:00 -0400
-Received: by ywi6 with SMTP id 6so883610ywi.19
-        for <git@vger.kernel.org>; Mon, 18 Oct 2010 20:08:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=1L3SHwkG30JIa692CMraV70VRpuMI0iZfEH3iSHa0Gs=;
-        b=FVnof7gKIQ/2Ag9Wwreae/TxY77ivQtvK330c5OMBKAy6N/KgpDcbF6uMQBpuCOqQc
-         XDcXMLRnV9FQ30iNLakxYE3f92pM0xlvH2QCWDt+foVwXOJm5gVB0+TCH1tNyxn3wi/D
-         BPvG5GV/MDR8LisnzzWwKl7WfyBo3sxHzFkAw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=n9TXTmBc5i+dRyoPVCLJ8G2TXP/EjY6YPyrgL7skAfxKRRgW3bzRnd0crqhfWkQ6Lm
-         p99UXj6uyYr1H7BAu/M9M0MBoKkwKsL5EPbW6T13YoKBQEEYDt1SwemBaJcEMOFrMyXg
-         g+fwcQyShZ6z3t9OXu3DArLhZFsd2aYJXJwjw=
-Received: by 10.100.232.20 with SMTP id e20mr3478020anh.266.1287457739486;
-        Mon, 18 Oct 2010 20:08:59 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id 6sm22449092anx.12.2010.10.18.20.08.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 18 Oct 2010 20:08:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20101018182530.GC6877@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932982Ab0JSEtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 00:49:22 -0400
+Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:39013 "EHLO
+	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932464Ab0JSEtU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 00:49:20 -0400
+Received: from mailgate3.nec.co.jp ([10.7.69.160])
+	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o9J4n8V5010157;
+	Tue, 19 Oct 2010 13:49:08 +0900 (JST)
+Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
+	id o9J4n8L04819; Tue, 19 Oct 2010 13:49:08 +0900 (JST)
+Received: from relay21.aps.necel.com ([10.29.19.50])
+	by vgate02.nec.co.jp (8.14.4/8.14.4) with ESMTP id o9J4ZIXD000842;
+	Tue, 19 Oct 2010 13:49:07 +0900 (JST)
+Received: from relay41.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Tue, 19 Oct 2010 13:49:07 +0900
+Received: from dhlpc061 ([10.114.97.89] [10.114.97.89]) by relay41.aps.necel.com with ESMTP; Tue, 19 Oct 2010 13:49:07 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id 39D6352E1B8; Tue, 19 Oct 2010 13:49:07 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <vpq8w1v5gce.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon,
+	18 Oct 2010 23:41:21 +0200")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159303>
 
-Jonathan Nieder writes:
-> Sverre Rabbelier wrote:
-> 
-> > Does the replay API somehow indicate that a revision changed since
-> > last time you looked?
-> 
-> Good question.  Ram, I think there was some discussion of this
-> recently in connection with svnrdump, right?  IIRC the suggested
-> method was to use hooks or mine a commits@ mailing list. :(
+Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+> We already came up with a better wording, namely "upstream", and used
+> in in "git push --set-upstream".  Probably a next step would be to
+> deprecate any other occurence of --track meaning the same thing
 
-Yep. There's really no way to determine if a revision changed. Atleast
-we can be happy that it's just the revprops that change- replace refs
-are a great solution when we can tell if something changed. Frankly, I
-haven't thought about how to solve this yet -- I'll comment after
-looking at the later emails in the thread.
+That doesn't make much sense to me; "upstream" and "track" are not
+alternatives; rather, they're complementary:  "upstream" is a _thing_,
+and "track" is an _action_ -- one _tracks_ _upstream_.  "--track", then,
+merely implies "upstream", which seems fine to me, as I'm not sure
+there's anything else it could refer to.
 
--- Ram
+I think the original post, while well-meaning is a bit overwrought, and
+reflects the difficulty in learning any new system as much as it does
+any inconsistency in git's terminology[*] -- Git's huge sin, after all
+(judging from most complaints I see about it), is that It Doesn't Use
+Exactly The Same Model (and thus Terminology) That CVS Did...
+
+[SVN's great sin, of course, is that It Does (interpret "CVS" liberally
+here).]
+
+[*] Git is certainly guilty of using inconsistent terminology --
+cached/staged/index/yada is my personal complaint -- but I don't think
+to anywhere near the degree implied by that post.
+
+-Miles
+
+-- 
+Do not taunt Happy Fun Ball.
