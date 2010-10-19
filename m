@@ -1,143 +1,82 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] git-send-email.perl: fix In-Reply-To for second and
- subsequent patches
-Date: Tue, 19 Oct 2010 11:45:24 -0700
-Message-ID: <7vzkuayqbf.fsf@alter.siamese.dyndns.org>
-References: <20101015095651.b75c4b54.ospite@studenti.unina.it>
- <1287481964-8883-1-git-send-email-ospite@studenti.unina.it>
- <7v4oci11k6.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/3] builtins: utilize startup_info->help where possible
+Date: Tue, 19 Oct 2010 13:50:15 -0500
+Message-ID: <20101019185014.GG25139@burratino>
+References: <1287495320-27278-1-git-send-email-pclouds@gmail.com>
+ <1287495320-27278-2-git-send-email-pclouds@gmail.com>
+ <20101019172953.GC25139@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Antonio Ospite <ospite@studenti.unina.it>
-X-From: git-owner@vger.kernel.org Tue Oct 19 20:45:52 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 20:56:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8HC0-0004LO-RZ
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 20:45:49 +0200
+	id 1P8HLs-0007cP-BL
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 20:56:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752622Ab0JSSpn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 14:45:43 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56003 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751651Ab0JSSpm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 14:45:42 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CD138E05BB;
-	Tue, 19 Oct 2010 14:45:39 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=OnrUSeShm8mLSg/jkakd5pgA8Bw=; b=lrpTNQ
-	Q2PAv9/fdgNo6ktSbxPRzoxw60UfT0/I9+xCSK9l7mG8MFgFzs0AAjO7p4FqTp18
-	2J/9j9RH2VQ0eW77kTt3khhBT1lX/QNP8r1LuzvRNrLvNq34uqviBEBdsp4hlpZN
-	ObWTSli9PaW2s9jOzDlEsDYvnjxn4rpR/J//k=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=uELSKbBEe18x41ZCeDtW+1LVo05wG59R
-	hmUd3z09CaJwVhFToWU04Xl0cdqK3UkvX+754oL23W81peKMap+Hx92VSZKSgMLf
-	sLYMHdqI01d639AFC9HGP7C1gCy6GaDDXiPsmBxtj7RFnmckO0gCtAjoVwfT6Yqn
-	mvved3BXEBQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6842CE05AE;
-	Tue, 19 Oct 2010 14:45:33 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id F3D41E05A7; Tue, 19 Oct
- 2010 14:45:25 -0400 (EDT)
-In-Reply-To: <7v4oci11k6.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Tue\, 19 Oct 2010 11\:26\:33 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0DEC845E-DBB1-11DF-8BC0-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756534Ab0JSSzz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 14:55:55 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:45243 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756529Ab0JSSzy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 14:55:54 -0400
+Received: by gxk21 with SMTP id 21so1057103gxk.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 11:55:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=dl/X6lFNOZRo/lsIdWawpecAUYFD2+suJarxCdi7KXs=;
+        b=vGRqiWojYGhJwVnqQXYC/GFMN0npGndB+qfAwE/D/ZyhBB55BpxCdh2QNNhMDWJI9q
+         nnDKylQCJKRJ/KmNIe7Sx8zmEqqDZfkKrEQfxDCHO36yF8HYKDWFAjsPIsPNsjknoO/d
+         +/UY3qb8JcoZZcnMZVbb821+mOyLCar8zzEc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=qVODHZZcWqB69cHLP1+GmSVMmZFAQWgvBZ+WUnU/3ZWnfgP4hqkdJAixzm79UiyRz+
+         3HBgTDf2iXrjrHspha/PfS09aPaJPRX2/sTCqA0ZKH9BRl6BvLnSthziRmlE728vtkAz
+         ojtlqKU2/BIApsDbv3Ha4bbBzn6hOOnF2Mhxw=
+Received: by 10.103.223.19 with SMTP id a19mr5350829mur.24.1287514434324;
+        Tue, 19 Oct 2010 11:53:54 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id 2sm5109763faz.14.2010.10.19.11.53.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 11:53:53 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101019172953.GC25139@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159353>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jonathan Nieder wrote:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
->> +		$patches $patches \
->> +		2>errors
+>> It helps reduce false alarms while I'm looking for "git foo -h" code
+>> path that accesses repository.
 >
-> You are breaking the && chain here.
->
->> +        # The second patch should be seen as reply to the first one
->> +        test $(sed -n -e "s/^In-Reply-To:\(.*\)/\1/p" msgtxt2) = $(sed -n -e "s/^Message-Id:\(.*\)/\1/p" msgtxt1)
->> +'
->
-> You would need to test the interaction with --chain-reply-to as well, so
-> there should be another test, and you would probably need three messages
-> fed to send-email not just two to see the effect of the interaction.
+> Not sure I understand.  Is the idea that use of startup_info->help
+> is a marker for "I've checked this code path"?
+>=20
+> If that were the only reason, I don't think I'd like the idea.
+>=20
+> As it is, I'm a bit conflicted: what if we decide to short-circuit
+> "git foo --help-all" in the future just like we short-circuit
+> "git foo -h" now?  Would that require a separate flag?
 
-IOW, the test part of the patch should look something like this.
+To be clear: I'm a bit conflicted but not extremely so.  The help
+flag has the benefit of simplicity and of allowing expansion to
 
-Note that the below uses the current semantics (3a. in the previous
-message), not your version of the definition.
+	git foo -h --gobbledegook
 
-I would suggest using this one as the first patch in your series, perhaps
-with a documentation update to clarify the semantics of 3b. in my previous
-message.  Then change git-send-email and update the test, as your change
-will break the expected behaviour of the first test added here, and
-document the change of semantics 3a. in the second patch in your series.
-
- t/t9001-send-email.sh |   41 +++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 41 insertions(+), 0 deletions(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 07c50c7..c7e5c93 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -295,6 +295,47 @@ test_expect_success $PREREQ 'Valid In-Reply-To when prompting' '
- 	! grep "^In-Reply-To: < *>" msgtxt1
- '
- 
-+test_expect_success $PREREQ 'In-Reply-To without --chain-reply-to' '
-+	clean_fake_sendmail &&
-+	echo "<unique-message-id@example.com>" >expect &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--no-chain-reply-to \
-+		--in-reply-to="$(cat expect)" \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches $patches $patches \
-+		2>errors &&
-+	# All the messages are replies to --in-reply-to
-+	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt1 >actual &&
-+	test_cmp expect actual &&
-+	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt2 >actual &&
-+	test_cmp expect actual &&
-+	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt3 >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success $PREREQ 'In-Reply-To with --chain-reply-to' '
-+	clean_fake_sendmail &&
-+	echo "<unique-message-id@example.com>" >expect &&
-+	git send-email \
-+		--from="Example <nobody@example.com>" \
-+		--to=nobody@example.com \
-+		--chain-reply-to \
-+		--in-reply-to="$(cat expect)" \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		$patches $patches $patches \
-+		2>errors &&
-+	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt1 >actual &&
-+	test_cmp expect actual &&
-+	sed -n -e "s/^Message-Id: *\(.*\)/\1/p" msgtxt1 >expect &&
-+	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt2 >actual &&
-+	test_cmp expect actual &&
-+	sed -n -e "s/^Message-Id: *\(.*\)/\1/p" msgtxt2 >expect &&
-+	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt3 >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success $PREREQ 'setup fake editor' '
- 	(echo "#!$SHELL_PATH" &&
- 	 echo "echo fake edit >>\"\$1\""
+if later someone cares and a code audit shows it to be safe.
