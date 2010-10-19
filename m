@@ -1,94 +1,65 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: RFC: [PATCH] ignore SIGINT&QUIT while waiting for external
- command
-Date: Tue, 19 Oct 2010 09:40:40 -0400
-Message-ID: <20101019134040.GA3956@sigill.intra.peff.net>
-References: <20101019045300.GA18043@gnu.kitenet.net>
- <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
- <20101019115943.GA8065@dpotapov.dyndns.org>
- <20101019133236.GA804@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Joey Hess <joey@kitenet.net>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 15:40:13 2010
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
+Date: Wed, 20 Oct 2010 01:28:03 +1100
+Message-ID: <126B270C-AEB2-4632-A2CD-E8F2AAE20A62@cordelta.com>
+References: <6831849.526935.1287495195964.JavaMail.root@mail.hq.genarts.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 16:28:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8CQD-0001vW-WB
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 15:40:10 +0200
+	id 1P8DAm-00025A-6H
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 16:28:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933989Ab0JSNkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 09:40:05 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59006 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933994Ab0JSNkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 09:40:03 -0400
-Received: (qmail 13344 invoked by uid 111); 19 Oct 2010 13:40:03 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 19 Oct 2010 13:40:03 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Oct 2010 09:40:40 -0400
-Content-Disposition: inline
-In-Reply-To: <20101019133236.GA804@sigill.intra.peff.net>
+	id S1752112Ab0JSO2J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 10:28:09 -0400
+Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:24396
+	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751845Ab0JSO2I convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 10:28:08 -0400
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EABVIvUzLWHsF/2dsb2JhbAChXwhxthSIT4VKBA
+X-IronPort-AV: E=Sophos;i="4.57,350,1283695200"; 
+   d="scan'208";a="262499287"
+Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
+  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 20 Oct 2010 01:28:04 +1100
+Received: (qmail 26610 invoked from network); 20 Oct 2010 01:28:04 +1100
+Received: from d110-33-95-167.mit3.act.optusnet.com.au (HELO ?192.168.1.1?) (110.33.95.167)
+  by 203.88.123.185 with SMTP; 20 Oct 2010 01:28:04 +1100
+In-Reply-To: <6831849.526935.1287495195964.JavaMail.root@mail.hq.genarts.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159331>
 
-On Tue, Oct 19, 2010 at 09:32:36AM -0400, Jeff King wrote:
+Hi,
 
-> How does this interact with the sigchain code? If I do:
-> 
->   start_command(...);
->   sigchain_push(...);
->   finish_command(...);
-> 
-> we will overwrite the function pushed in the sigchain_push with a stale
-> handler. I think you could just replace your signal() calls with:
-> 
->   sigchain_push(SIGINT, SIG_IGN);
->   ...
->   sigchain_pop(SIGINT);
+> Oh, from that point of view the svn mirror is a bystander.  I was developing these tools at the same time as svnrdump (or at least prior to a stable version of svnrdump).  So when I found that running "svnadmin dump | svn-fe | git fast-import" on the server was taxing the system, I decided it was better to create a dump file, copy it to my local machine, and run svn-fe and fast-import locally.  Once I had the dump file, the local mirror sped up the SVN::Ra calls in buildSVNTree, and made any "did that really happen in svn?!" questions a little easier to answer.
 
-Which, FWIW, would look like this:
+So, I think there's two valuable nuggets per commit omitted at the moment in svn-fe.
+Firstly, the longest common root between all paths in the commit, which can be computed efficiently.
+Secondly, the copyfrom_rev and copyfrom_path for the copy operation that targets the common root.
+The second nugget can be noted while computing the first.
+From my reading of buildSVNTree.pl, these two nuggets drive the mapping logic.
 
-diff --git a/run-command.c b/run-command.c
-index 2a1041e..24e0f46 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -1,6 +1,7 @@
- #include "cache.h"
- #include "run-command.h"
- #include "exec_cmd.h"
-+#include "sigchain.h"
- 
- static inline void close_pair(int fd[2])
- {
-@@ -102,6 +103,9 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
- 		;	/* nothing */
- 
-+	sigchain_pop(SIGINT);
-+	sigchain_pop(SIGQUIT);
-+
- 	if (waiting < 0) {
- 		failed_errno = errno;
- 		error("waitpid for %s failed: %s", argv0, strerror(errno));
-@@ -202,8 +206,12 @@ fail_pipe:
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
- 	fflush(NULL);
-+	sigchain_push(SIGINT, SIG_IGN);
-+	sigchain_push(SIGQUIT, SIG_IGN);
- 	cmd->pid = fork();
- 	if (!cmd->pid) {
-+		sigchain_pop(SIGINT);
-+		sigchain_pop(SIGQUIT);
- 		/*
- 		 * Redirect the channel to write syscall error messages to
- 		 * before redirecting the process's stderr so that all die()
+The first nugget can be computed in git-land fairly easily.
+The second requires information not embedded in the git commit graph.
+
+I suggest that svn-fe be extended to annotate the commits with this information.
+Implementation-wise, the revision context should be extended to include:
+* longest common path
+* source revision of copy operation targeting longest common path
+* source path of copy operation targeting longest common path
