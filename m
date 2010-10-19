@@ -1,103 +1,110 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] git-gui: highlight trailing whitespace in diff view
-Date: Tue, 19 Oct 2010 23:59:23 +0100
-Message-ID: <87hbgh7paf.fsf@fox.patthoyts.tk>
-References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 4/4] reset: accept "git reset HEAD <path>" from unborn
+ branch
+Date: Tue, 19 Oct 2010 18:26:47 -0500
+Message-ID: <20101019232647.GA6198@burratino>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+ <AANLkTimkovH9OysLSxA+=di89Xi+dTCYL5hRPmNaADDH@mail.gmail.com>
+ <20101019175103.GA28847@kytes>
+ <20101019182845.GE25139@burratino>
+ <7vhbgiyoo9.fsf@alter.siamese.dyndns.org>
+ <20101019221005.GC32029@burratino>
+ <20101019221415.GG32029@burratino>
+ <7vzku9ye5k.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 20 01:09:59 2010
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 20 01:31:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8LJe-0002Uu-Fw
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 01:09:58 +0200
+	id 1P8LeO-00072w-62
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 01:31:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756390Ab0JSXJx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 19:09:53 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:40720 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755559Ab0JSXJw (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Oct 2010 19:09:52 -0400
-Received: from [172.23.170.143] (helo=anti-virus02-10)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P8LJW-0004bd-NJ; Wed, 20 Oct 2010 00:09:50 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P8LJR-0001Nv-4u; Wed, 20 Oct 2010 00:09:45 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 876A626E7D; Wed, 20 Oct 2010 00:09:44 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
-	(Tor Arvid Lund's message of "Tue, 19 Oct 2010 01:00:34 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1756077Ab0JSXag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 19:30:36 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:39820 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751178Ab0JSXaf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 19:30:35 -0400
+Received: by qwa26 with SMTP id 26so1756601qwa.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 16:30:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=7HiA8fgPZoEYVLTUEgzxKUgUsmsKu+91G0HajLiXRMg=;
+        b=U+WJebJn/h1HEguyogPuCUmub/+szg+JcSB3QLFE8mz+opfQyVHV5Q7SGpFjYwmEOS
+         AKVqUhZ0ptYG/Fmn9VJw+SPvwSTraXezAeUJ7Tz8/cyECi2Bw/bzPA5kR5pbx5t78TML
+         XXhN+R3B/6MZfI2ekLj9/YLUB+94HX9a/ZrqA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ozEAi8meEOIKCHg4GV8zPiLAZoQLXZ+gzw0Kzy2y101i2ZfcIKGiLGH57bb1q+kRqs
+         21sci3/RrQfDEA+Dh9rtr4ebpkBOI78s20SETSnWpJcWjR7XGt5Y47Oqeiej84qrBEtb
+         jcreFWb3R7cq19vxNrQNJKKiNU/esdbqErSAk=
+Received: by 10.224.37.14 with SMTP id v14mr4593505qad.223.1287531034389;
+        Tue, 19 Oct 2010 16:30:34 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id t35sm12525752qco.42.2010.10.19.16.30.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 16:30:33 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vzku9ye5k.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159379>
 
-Highlight any trailing whitespace in the diff view using a red background
-as is done in the terminal when color is enabled.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
-
-Tor Arvid Lund <torarvid@gmail.com> writes:
->Hi, all! When doing "git diff", whitespaces before EOL, for instance,
->are marked with red background in my terminal.
+>> 	git add .
+>> 	rm <path1>; # bad file!
+>> 	git reset <path1>
+>>
+>> git will respond by informing me that this use of <path1> is
+>> ambiguous.
 >
->Is it possible to see this coloring in git gui too?
+> Which is fixed by 3/4.
+
+No, I didn't fix that.
+
+What 3/4 allows is
+
+	git reset -- <path1>
+
+The explicit "--" is required in the case where that file is not
+present on disk.
+
+>> ...  So I might try to disambiguate:
+>>
+>> 	git reset HEAD <path1>
 >
->-Tor Arvid-
+> I however do not think this is sane, as you are _explicitly_ referring to
+> HEAD, saying "I want to pull this out of the commit pointed by the HEAD",
+> while there is _no such commit_.  Sounds somewhat insane.
 
-This patch should do the job. It probably should get some configuration
-item to control this though.
+Yes, makes sense.  I started out thinking of HEAD as a sort of
+abstract symbol (like the occasionally-proposed INDEX) but it probably
+is better to get used to it just being a reference early on.
 
- git-gui.sh   |    1 +
- lib/diff.tcl |    9 ++++++++-
- 2 files changed, 9 insertions(+), 1 deletions(-)
+> But why is path1 ambiguous in the first place?  It is because it is not
+> considered to be a pathname, and it is not a valid refname either, right?
+>
+> Didn't we discuss a separate topic to teach verify_filename/non_filename
+> to optionally look into the index?  If we did that, perhaps we do not even
+> need 3/4, no?
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 25229a4..8d652f0 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3314,6 +3314,7 @@ pack .vpane.lower.diff.header -side top -fill x
- pack .vpane.lower.diff.body -side bottom -fill both -expand 1
- 
- $ui_diff tag conf d_cr -elide true
-+$ui_diff tag conf ws -background red
- $ui_diff tag conf d_@ -foreground blue -font font_diffbold
- $ui_diff tag conf d_+ -foreground {#00a000}
- $ui_diff tag conf d_- -foreground red
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index c628750..83e3f6d 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -434,7 +434,14 @@ proc read_diff {fd cont_info} {
- 			}
- 			}
- 		}
--		$ui_diff insert end $line $tags
-+		if {[regexp -indices {^.*\S(\s+)$} $line -> ndx]} {
-+		    set ndx [expr {[lindex $ndx 0] - 1}]
-+			set nonws [string range $line 0 $ndx]
-+			$ui_diff insert end $nonws $tags \
-+				[string range $line [incr ndx] end] [concat $tags ws]
-+		} else {
-+			$ui_diff insert end $line $tags
-+		}
- 		if {[string index $line end] eq "\r"} {
- 			$ui_diff tag add d_cr {end - 2c}
- 		}
--- 
-1.7.3.1.msysgit.0
+That would eliminate the need for 4/4, I think.  Thanks for the pointers.
