@@ -1,126 +1,120 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: RFC: [PATCH] ignore SIGINT&QUIT while waiting for external
  command
-Date: Tue, 19 Oct 2010 14:16:38 -0500
-Message-ID: <20101019191638.GI25139@burratino>
+Date: Tue, 19 Oct 2010 15:50:22 -0400
+Message-ID: <20101019195022.GA7287@sigill.intra.peff.net>
 References: <20101019045300.GA18043@gnu.kitenet.net>
  <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
  <20101019115943.GA8065@dpotapov.dyndns.org>
  <20101019133236.GA804@sigill.intra.peff.net>
  <20101019134040.GA3956@sigill.intra.peff.net>
+ <20101019191638.GI25139@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
 	Johannes Sixt <j6t@kdbg.org>, Joey Hess <joey@kitenet.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Oct 19 21:26:56 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 21:49:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8Hpo-0000fM-3u
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 21:26:56 +0200
+	id 1P8IC1-0006yv-FD
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 21:49:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105Ab0JST0u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 15:26:50 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:47914 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752031Ab0JST0t (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 15:26:49 -0400
-Received: by qyk12 with SMTP id 12so689488qyk.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 12:26:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=oicstXs2kHhMq+QlTy0uSja4U3mPUMZPxfp9E9hqgKo=;
-        b=iHkflMHK2w0fTUHCbF5ZAsxLgrMrRzrmHLR2JldNvXPCZMIlSwutN9LmT06mVRf+Nw
-         u5fiuAN3xnbfarO4vI8afZpfhfQfHcJ72oI25XgSgYmLCWq2Syxf7XrB/x2M4jnMb+gJ
-         PC6rxSyVNGLdGXOojG9bOAkctuOQcXMMhNeDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=X3kXozfDMLiwsw4+GoxeUDyzT3Tb1K/bVbc2aQaSnNlMCajcPqoRxADrbwhzUBu1JG
-         Iwv7YCVl5SnJF5eFXwDrBCiu9G1XcKwPmPkpFSbZzcBIfFNQMg1pQ97pbA3QfTlFZRSI
-         P96djb12Za0jAu5Dc7GEw8P5vYxAPq4FFqi/M=
-Received: by 10.103.219.16 with SMTP id w16mr4016798muq.81.1287516019571;
-        Tue, 19 Oct 2010 12:20:19 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d17sm3807926fav.29.2010.10.19.12.20.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 19 Oct 2010 12:20:18 -0700 (PDT)
+	id S1756817Ab0JSTts (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 15:49:48 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33171 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753117Ab0JSTtr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 15:49:47 -0400
+Received: (qmail 16081 invoked by uid 111); 19 Oct 2010 19:49:43 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 19 Oct 2010 19:49:43 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Oct 2010 15:50:22 -0400
 Content-Disposition: inline
-In-Reply-To: <20101019134040.GA3956@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101019191638.GI25139@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159360>
 
-Jeff King wrote:
-> On Tue, Oct 19, 2010 at 09:32:36AM -0400, Jeff King wrote:
+On Tue, Oct 19, 2010 at 02:16:38PM -0500, Jonathan Nieder wrote:
 
->> I think you could just replace your signal() calls with:
->> 
->>   sigchain_push(SIGINT, SIG_IGN);
->>   ...
->>   sigchain_pop(SIGINT);
->
-> Which, FWIW, would look like this:
+> I think sigchain_push ought to accept a context object.
 
-Something in this direction on top?
+But signal() doesn't, so we would have to install a wrapper function
+that gets the signal and calls the sigchain_pushed callback with the
+context object. But we can't always install the wrapper. We need to
+check for SIG_IGN and SIG_DFL, and literally install those.
 
-I think sigchain_push ought to accept a context object.
+So I think it's do-able, but I tried to keep the original sigchain as
+simple as possible.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/run-command.c b/run-command.c
-index 24e0f46..efdac84 100644
---- a/run-command.c
-+++ b/run-command.c
-@@ -103,6 +103,7 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 	while ((waiting = waitpid(pid, &status, 0)) < 0 && errno == EINTR)
- 		;	/* nothing */
- 
-+	the_child = NULL;
- 	sigchain_pop(SIGINT);
- 	sigchain_pop(SIGQUIT);
- 
-@@ -139,6 +140,19 @@ static int wait_or_whine(pid_t pid, const char *argv0, int silent_exec_failure)
- 	return code;
- }
- 
-+static struct child_process *the_child;
-+
-+static void interrupted_with_child(int sig)
-+{
-+	if (the_child && the_child->pid > 0) {
-+		while ((waiting = waitpid(pid, NULL, 0)) < 0 && errno == EINTR)
-+			;	/* nothing */
-+		the_child = NULL;
-+	}
-+	sigchain_pop(sig);
-+	raise(sig);
-+}
-+
- int start_command(struct child_process *cmd)
- {
- 	int need_in, need_out, need_err;
-@@ -206,8 +220,11 @@ fail_pipe:
- 		notify_pipe[0] = notify_pipe[1] = -1;
- 
- 	fflush(NULL);
--	sigchain_push(SIGINT, SIG_IGN);
--	sigchain_push(SIGQUIT, SIG_IGN);
-+	if (the_child)
-+		die("What?  _Two_ children?");
-+	the_child = cmd;
-+	sigchain_push(SIGINT, interrupted_with_child);
-+	sigchain_push(SIGQUIT, interrupted_with_child);
- 	cmd->pid = fork();
- 	if (!cmd->pid) {
- 		sigchain_pop(SIGINT);
+> +static void interrupted_with_child(int sig)
+> +{
+> +	if (the_child && the_child->pid > 0) {
+> +		while ((waiting = waitpid(pid, NULL, 0)) < 0 && errno == EINTR)
+> +			;	/* nothing */
+> +		the_child = NULL;
+> +	}
+> +	sigchain_pop(sig);
+> +	raise(sig);
+> +}
+> +
+>  int start_command(struct child_process *cmd)
+>  {
+>  	int need_in, need_out, need_err;
+> @@ -206,8 +220,11 @@ fail_pipe:
+>  		notify_pipe[0] = notify_pipe[1] = -1;
+>  
+>  	fflush(NULL);
+> -	sigchain_push(SIGINT, SIG_IGN);
+> -	sigchain_push(SIGQUIT, SIG_IGN);
+> +	if (the_child)
+> +		die("What?  _Two_ children?");
+> +	the_child = cmd;
+
+Yuck. You can get around that by pushing onto a linked list of children,
+though.
+
+Thinking about it more, though, I don't think we do necessarily want to
+always wait for the child. There are really two main types of
+run_command's we do:
+
+  1. The run command is basically the new process. In an ideal world, we
+     would exec into it, but we need the parent to hang around to do
+     some kind of bookkeeping (like waiting for the pager to exit).
+
+     E.g., running external dashed commands.
+
+  2. We are running the command, and if we are killed, the command
+     should go away too (because its point in running is to give us some
+     information).
+
+     E.g., running textconv filters.
+
+And there are a few instances that don't fall into either category
+(e.g., running the pager).
+
+In case (1), we probably want to SIG_IGN, wait for the command to
+finish, and then die with its exit code. If we do it right, the fact
+that _it_ was killed by signal will be propagated, and the fact that we
+weren't will be irrelevant.
+
+In case (2), we probably want to keep a linked list of "expendable"
+processes, and on signal death and atexit, go through the list and make
+sure all are dead. This is how we handle tempfiles already in diff.c.
+
+Given that there is only really one instance of (1), we can just code it
+there. For (2), there are many such callers, but I don't know that the
+mechanism necessarily needs to be included as part of run_command. A
+separate module to manage the list and set up the signal handler would
+be fine (though there is a race between fork() and signal death, so it
+perhaps pays to get the newly created pid on the "expendable" list as
+soon as possible, which may mean cooperating from run_command).
+
+-Peff
