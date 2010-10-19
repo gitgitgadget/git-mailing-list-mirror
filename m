@@ -1,76 +1,109 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Tue, 19 Oct 2010 13:49:06 +0900
-Message-ID: <buopqv6kcsd.fsf@dhlpc061.dev.necel.com>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
-	<vpq8w1v5gce.fsf@bauges.imag.fr>
-Reply-To: Miles Bader <miles@gnu.org>
+From: Joey Hess <joey@kitenet.net>
+Subject: git subcommand sigint gotcha
+Date: Tue, 19 Oct 2010 00:53:00 -0400
+Message-ID: <20101019045300.GA18043@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 19 06:49:47 2010
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 19 07:00:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P848x-00026k-7m
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 06:49:47 +0200
+	id 1P84JI-0004Dw-32
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 07:00:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932982Ab0JSEtW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 00:49:22 -0400
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:39013 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932464Ab0JSEtU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 00:49:20 -0400
-Received: from mailgate3.nec.co.jp ([10.7.69.160])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o9J4n8V5010157;
-	Tue, 19 Oct 2010 13:49:08 +0900 (JST)
-Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
-	id o9J4n8L04819; Tue, 19 Oct 2010 13:49:08 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by vgate02.nec.co.jp (8.14.4/8.14.4) with ESMTP id o9J4ZIXD000842;
-	Tue, 19 Oct 2010 13:49:07 +0900 (JST)
-Received: from relay41.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay21.aps.necel.com with ESMTP; Tue, 19 Oct 2010 13:49:07 +0900
-Received: from dhlpc061 ([10.114.97.89] [10.114.97.89]) by relay41.aps.necel.com with ESMTP; Tue, 19 Oct 2010 13:49:07 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id 39D6352E1B8; Tue, 19 Oct 2010 13:49:07 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <vpq8w1v5gce.fsf@bauges.imag.fr> (Matthieu Moy's message of "Mon,
-	18 Oct 2010 23:41:21 +0200")
+	id S1751446Ab0JSFAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 01:00:22 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:34615 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751214Ab0JSFAW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 01:00:22 -0400
+X-Greylist: delayed 435 seconds by postgrey-1.27 at vger.kernel.org; Tue, 19 Oct 2010 01:00:22 EDT
+Received: from gnu.kitenet.net (dialup-4.153.251.152.Dial1.Atlanta1.Level3.net [4.153.251.152])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 05882119049
+	for <git@vger.kernel.org>; Tue, 19 Oct 2010 00:53:05 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 4B2AE48F43; Tue, 19 Oct 2010 00:53:00 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159304>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
-> We already came up with a better wording, namely "upstream", and used
-> in in "git push --set-upstream".  Probably a next step would be to
-> deprecate any other occurence of --track meaning the same thing
 
-That doesn't make much sense to me; "upstream" and "track" are not
-alternatives; rather, they're complementary:  "upstream" is a _thing_,
-and "track" is an _action_ -- one _tracks_ _upstream_.  "--track", then,
-merely implies "upstream", which seems fine to me, as I'm not sure
-there's anything else it could refer to.
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the original post, while well-meaning is a bit overwrought, and
-reflects the difficulty in learning any new system as much as it does
-any inconsistency in git's terminology[*] -- Git's huge sin, after all
-(judging from most complaints I see about it), is that It Doesn't Use
-Exactly The Same Model (and thus Terminology) That CVS Did...
+I was trying to write a git subcommand, and I noticed that if I ctrl-c'd
+it, git would return, but leave the subcommand running in the
+background.
 
-[SVN's great sin, of course, is that It Does (interpret "CVS" liberally
-here).]
+You can see the problem with this test case.=20
 
-[*] Git is certainly guilty of using inconsistent terminology --
-cached/staged/index/yada is my personal complaint -- but I don't think
-to anywhere near the degree implied by that post.
+#!/usr/bin/perl
+print "first sleep...\n";
+$ret=3Dsystem("sleep", "1m");
+print "second sleep...\n";
+system("sleep", "1s");
+print "done with second sleep\n";
 
--Miles
+If you put it in path named git-sleep, then run "git sleep" and press ctrl-=
+c,
+it keeps running:
 
--- 
-Do not taunt Happy Fun Ball.
+joey@gnu:~>git sleep
+first sleep...
+^Csecond sleep...
+joey@gnu:~>done with second sleep
+
+So what's going on? Well, perl's system() blocks sigint while the child
+process is running. So if you run this as git-sleep, and press ctrl-c,
+it will continue on to the second sleep. If the code above checked the
+return status of system() it could detect that it was killed by SIGINT
+and itself exit.
+
+What I don't understand is, why does git not wait() on the subcommand it
+ran? Any subcommand that forgets to check exit codes is liable to exhibit
+this weird behavior sometimes.=20
+
+Ie, imagine the subcommand was running something like=20
+"git config --get core.bare" instead of sleep.=20
+It'd be easy to forget to check the exit status of that for a SIGINT; if
+the user ctrl-c'd at just the right instant, weird things would happen.
+
+--=20
+see shy jo
+
+--EeQfGwPcQSOJBaQU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIVAwUBTL0kKckQ2SIlEuPHAQgNYQ/+PouPqv5lsPVKA2qdFm9Lovy1tj4lA7rJ
+YUV2r6t0iv3pMcF/jug48/wK33C04ZE/REYhAtXryP98zvBDLVc6l/irnyX+GVXQ
+9L/JFB/645sAfiPUT7iosLxrup8gadonvvPcSTcEQtIdDba/NVT081Kq9+ipvisq
+W3MeQl0ZsYXr5TJlJY+msx4RMMoVjBlnnAN7mALTKBvAZadWvEXrAnY+8eX8QQAw
+RhPP5gIxzGR0eRK+31wUhJy/dMPae0DeFjW2ZcrNt8SOtnBX9hO952wJR34zYPLl
+Ft4yi9sj/QYhO2kQdfyFnO/IQToQwr2MBhJzxbtP+a1T8pvyW6YYgZj+QbhLpier
+gtk7+RZ1s3U7VYoTMavYUz4+fhO0FhBSDOxROvBZBhd+gqf9sQ67Flv0Vl4J/hLL
+j1olaXXomfXVJBONQgppuE9gSpZBvNE94pOITEBDAyJaC/YwbbIiK/Uw/IeWGRrx
+S6PsL3werS0zUPA96IJpIYF0242S/LadfeF66s1uLyLjxY95pVr0POR+y7FcwVfJ
+6PO6Bax4VZsCwNbBpy33GDl7l9Vr5yZFNOnZI9h3tsuJzQlOeDAisLeXJ7c3M1I6
+diQ1FryozX1NMer+kBlZBAUIetSIV6QKn8sZ5yDsbiCNiLVI2AHgoV1uDu6H0q47
+Kdbi3i7SAYI=
+=q2Yq
+-----END PGP SIGNATURE-----
+
+--EeQfGwPcQSOJBaQU--
