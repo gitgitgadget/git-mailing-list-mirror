@@ -1,89 +1,127 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Tue, 19 Oct 2010 11:09:44 -0400
-Message-ID: <AANLkTinGuVm8gib9r7omVV9hHw8B-iBQGgsv+b6wb5=Q@mail.gmail.com>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
-	<vpq8w1v5gce.fsf@bauges.imag.fr>
-	<buopqv6kcsd.fsf@dhlpc061.dev.necel.com>
-	<8B950268-7F6E-40E5-9D6C-F150EBEA4F0C@wincent.com>
-	<AANLkTinb0149C88Mzx6m4_2BdhpW12OwQ+uP6XzQ5yLx@mail.gmail.com>
-	<6FCE62E3-A27E-43D6-9FDF-0133ABD851C2@wincent.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: fetch and bundle don't work in (semi-)broken repo
+Date: Tue, 19 Oct 2010 18:09:57 +0200
+Message-ID: <20101019160957.GK11713@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Miles Bader <miles@gnu.org>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
-To: Wincent Colaiuta <win@wincent.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 17:09:55 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 19 18:10:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8Dp4-0000Hb-UD
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 17:09:55 +0200
+	id 1P8ElN-0005Gj-9C
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 18:10:09 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752870Ab0JSPJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 11:09:47 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:45051 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752061Ab0JSPJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 11:09:46 -0400
-Received: by bwz10 with SMTP id 10so362318bwz.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 08:09:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=iuQLsN+7oOZomtkqBNrRQaGA1NdXv+QkiJbLX8DuGwg=;
-        b=JtDS4jcvoVKYmmbcnQWydDLkiuOwRJyM/BirURXZnwz37iteqsqhqOJBkoC9Atb4Jl
-         tui0ZwTR9ejyDjyA1di7Cl3Dwf143K3GnSST1kpiwTYhKyA9VUVA/t7g7s7ZzoGTyUvb
-         Vm5PfwPj7MOCpzkHR9dkURbzpxeeV7Eds1Itg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=KANJ6mkBOFIc2u4HzSpA1muqTJfNXHOEHYdhYg1PoUx0H1PEqFmJA5OO8ne8W3bNbM
-         2sy40F0RvS309IwIJETiM+WYRoap9k3DJLSQjAadwtGjQ6rC8VzQGGmtXHjitmlh4gM+
-         67qGbFEx20vxtFBRZjvdL264Nx+pHrijQJTaA=
-Received: by 10.204.68.10 with SMTP id t10mr5451693bki.77.1287500984772; Tue,
- 19 Oct 2010 08:09:44 -0700 (PDT)
-Received: by 10.204.46.207 with HTTP; Tue, 19 Oct 2010 08:09:44 -0700 (PDT)
-In-Reply-To: <6FCE62E3-A27E-43D6-9FDF-0133ABD851C2@wincent.com>
+	id S1754078Ab0JSQJ7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 12:09:59 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:47700 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753837Ab0JSQJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 12:09:59 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P8ElB-00036i-9G
+	for git@vger.kernel.org; Tue, 19 Oct 2010 18:09:57 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P8ElB-0002Ei-7l
+	for git@vger.kernel.org; Tue, 19 Oct 2010 18:09:57 +0200
+Content-Disposition: inline
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159334>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159335>
 
-> Well, I'm not "assuming" that the complaints are justified; I'm talking from 3.5 years of personal experience using Git:
->
-> - the concept of the "index": learnt it in 30 seconds, and sick of hearing people complain about it
->
-> - terminology related to concepts of "tracking"/"remote(s)": discomfort almost every time I've had to deal with it
->
+Hi,
 
-I concur. I 'm working with a couple of dozen of people and helping
-them to learn git and the most confusing part is the tracking/remote
-because of too many meanings of the same words in use.
+I have a repo that got broken somehow (don't know the exact details,
+probably because it is shared with another repo and I rewrote history).
+Now I want to fetch one branch to a different repo (that happens to be
+the alternative to the first one, but I think this is unrelated.):
 
-We are talking about the tracking branch which is "local remote", but
-we also can create a tracking branch that will track the remote but
-will be local like:
-$git branch -t dev origin/dev
+	ukl@hostname:~/path1/linux-2.6$ git fetch ~/path2/linux-2.6 sectionmis=
+matches
+	remote: Counting objects: 118, done.
+	remote: error: unable to find 40aaeb204dc04d3cf15c060133f65538b43b13b0
+	remote: Compressing objects: 100% (83/83), done.
+	remote: fatal: unable to read 40aaeb204dc04d3cf15c060133f65538b43b13b0
+	error: git upload-pack: git-pack-objects died with error.
+	fatal: git upload-pack: aborting due to possible repository corruption=
+ on the remote side.
+	remote: aborting due to possible repository corruption on the remote s=
+ide.
+	fatal: protocol error: bad pack header
 
-There should be some different consistent and not inter-crossing
-naming for the origin's master branch (on the remote side), for the
-local origin/master
-and for local master that is a tracking branch. The only way i found
-so far to explain this is actually via the naming syntax where having
-/ in the name of the branch means remote branch. I was a bit surprised
-that i can create a local branch with a slash in the name - probably
-it should be prohibited.
+I don't know what 40aaeb204dc04d3cf15c060133f65538b43b13b0 is, but I
+think it's not necessary for the sectionmismatches branch:
 
-In this light pull command not updating the remote ref, but FETCH_HEAD
-is only adding to the overall confusion (I remember: it is pending
-change)
+	ukl@hostname:~/path2/linux-2.6$ git format-patch linus/master..section=
+mismatches
+	0001-wip-enable-DEBUG_SECTION_MISMATCH.patch
+	0002-ARM-sa1111-move-__sa1111_probe-to-.devinit.text.patch
+	0003-ARM-omap1-nokia770-mark-some-functions-__init.patch
+	0004-ARM-omap-fb-move-omap_init_fb-to-.init.text.patch
+	0005-ARM-omap-fb-move-omapfb_reserve_sram-to-.init.text.patch
+	0006-ARM-omap-fb-move-get_fbmem_region-to-.init.text.patch
+	0007-ARM-omap-move-omap_get_config-et-al.-to-.init.text.patch
+	0008-wip-ARM-omap-move-omap_board_config_kernel-to-.init..patch
+	0009-ARM-omap-ams-delta-move-config-to-.init.data.patch
+	0010-MTD-pxa2xx-move-pxa2xx_flash_probe-to-.devinit.text.patch
+	0011-VIDEO-sa1100fb-register-driver-using-platform_driver.patch
+	0012-ARM-s3c64xx-don-t-put-smartq_bl_init-in-.init.text.patch
+	0013-ARM-s3c64xx-don-t-put-smartq7_leds-in-.init.data.patch
+	0014-ARM-s3c64xx-don-t-put-smartq5_leds-in-.init.data.patch
+	0015-ARM-nomadik-move-nmk_gpio_probe-to-.devinit.text.patch
 
-Thanks,
-Eugene
+and linus/master is contained in ~/path1/linux-2.6, too.
+
+Bundling doesn't work either:
+
+	ukl@hostname:~/path2/linux-2.6$ git bundle create tralala linus/master=
+=2E.sectionmismatches
+	Counting objects: 118, done.
+	error: unable to find 40aaeb204dc04d3cf15c060133f65538b43b13b0
+	Delta compression using up to 8 threads.
+	Compressing objects: 100% (83/83), done.
+	fatal: unable to read 40aaeb204dc04d3cf15c060133f65538b43b13b0
+	error: pack-objects died
+
+git gc fails with a different object:
+
+	ukl@hostname:~/path2/linux-2.6$ git gc
+	error: Could not read f6b6cb2336198913371e66664f28c135df01aea5
+	fatal: Failed to traverse parents of commit 76d1acb95eef413a2501a63cb7=
+f7f4036b71ed37
+	error: failed to run repack
+
+(git gc is fine in ~/path1/linux-2.6)
+
+	ukl@hostname:~$ git version
+	git version 1.7.2.3
+
+As a side note I have the general feeling that git recently started to
+do more things than necessary (e.g. sometimes `git stash pop` takes >1s
+(not mesured) between the status stuff (up to "no changes added to
+commit (use ...)") and "Dropped refs/stash@{0} ($commitid)".  I wonder
+what git stash is doing during that time.) I don't know if this is the
+problem here, though.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
