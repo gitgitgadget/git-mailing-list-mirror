@@ -1,182 +1,88 @@
-From: Thore Husfeldt <thore.husfeldt@gmail.com>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Tue, 19 Oct 2010 19:30:24 +0200
-Message-ID: <202EB46D-10D0-4090-A9DA-5796769F61A2@gmail.com>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com> <m3ocar5fmo.fsf@localhost.localdomain> <20101019080523.GB22067@login.drsnuggles.stderr.nl> <201010191027.44859.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=windows-1252
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/3] builtins: utilize startup_info->help where possible
+Date: Tue, 19 Oct 2010 12:29:53 -0500
+Message-ID: <20101019172953.GC25139@burratino>
+References: <1287495320-27278-1-git-send-email-pclouds@gmail.com>
+ <1287495320-27278-2-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thore Husfeldt <thore.husfeldt@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 19 19:30:39 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 19:33:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8G1F-0006WJ-2S
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 19:30:37 +0200
+	id 1P8G4E-0007Pv-Aw
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 19:33:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755890Ab0JSRaa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 13:30:30 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:33398 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755596Ab0JSRa3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Oct 2010 13:30:29 -0400
-Received: by ewy20 with SMTP id 20so3740939ewy.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 10:30:28 -0700 (PDT)
+	id S1752563Ab0JSRdh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 13:33:37 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:62047 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751414Ab0JSRdg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 13:33:36 -0400
+Received: by pxi16 with SMTP id 16so654947pxi.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 10:33:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:subject:mime-version
-         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
-         :message-id:references:to:x-mailer;
-        bh=obBbASz9uGb6/jlk4dbqOtTXU/uD/rgxvBVBo3QvwpE=;
-        b=UTHaf5G+tiaxkB8DF4ryzHq4MyEt9o05Uf2I7ZfY8DI85QLW6KK0hFTEbhnuwzDKbC
-         ZJJGsnvL+EhmetB+XdPXuDE0ilrnrHc7nsImVe3eF/TcJQuG+owRyYU1WSoI4CzSnEL/
-         UxvFEhOol96xbzkrxgphAIItTW9wEKpU7ELPw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=wSa4LzftA1vShgmSe0r/BoR3QaUE2eb0nyVFifqdW3s=;
+        b=bdZaVh+oWOiZjCJj3zBSqkZo37otq6CtttAlYQXkbe70oQ6vXD3ZKK0Y5Ajkdhml4k
+         0YnOzeRaRRUfAM6Q4QQ/ZNFRATwzlRQrNgVN8AHHuQZO1VO1VsGl3gJ3hJ0+rU6PIFAk
+         xHInAj2kB1v/tDm5tco3WaK1WjU10R2J8B97Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=IrU5yZCZ68oUFPaRLdw9dNQjWnkuJpRce34xcBZVH+qFE9BtuMiwDQdj4iqFNG5RjT
-         1xFafHZFlJjQwHIy3AINWbiPNZE/1BdVAUsEaXCAbAEQVGm4BPyIds77tdGa+akNRDZ/
-         BuYS51mXiTt0rIwHOiNuwzQfxaph5IR1vC32c=
-Received: by 10.213.8.143 with SMTP id h15mr780195ebh.11.1287509428366;
-        Tue, 19 Oct 2010 10:30:28 -0700 (PDT)
-Received: from [10.0.1.4] (h51baf259.k2290.dyn.perspektivbredband.net [81.186.242.89])
-        by mx.google.com with ESMTPS id q58sm4197215eeh.9.2010.10.19.10.30.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Oct 2010 10:30:26 -0700 (PDT)
-In-Reply-To: <201010191027.44859.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1081)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=IauHlO13ahigHD9OZqtOGCI9iYKS1Gthc7oxZEpFiVacTUlEETZWCPTacU1ogxcNV8
+         gKLsMotZty1XFCgTvQ/leK6LlHydM6wa/gCmgzmI+E/++gdL29G2aiqXR9NXJQrwImPV
+         YfeWwcQ4KDpmnzkBJoqNg+6pjQjSnaTF/fJwQ=
+Received: by 10.229.70.132 with SMTP id d4mr940868qcj.8.1287509612587;
+        Tue, 19 Oct 2010 10:33:32 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id x9sm11245526qco.22.2010.10.19.10.33.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 10:33:31 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287495320-27278-2-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159341>
 
-Thank you all for your many and well-thought out replies. I learned a l=
-ot.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Jonathan Nieder:
+> It helps reduce false alarms while I'm looking for "git foo -h" code
+> path that accesses repository.
 
-> So what would be a better term [for tracking]?
+Not sure I understand.  Is the idea that use of startup_info->help
+is a marker for "I've checked this code path"?
 
-Trailing is better than tracking, since it hints at some degree of slot=
-h, but I have not thought this through. (I also think that it may be a =
-strategic mistake to advocate looking for a new name; as long as tracki=
-ng is used consistently the problem with a misleading metaphor is not s=
-o big, and the name change alienates a large group of people whose cons=
-ent is important.)
+If that were the only reason, I don't think I'd like the idea.
 
-> How will a person used to e.g. cvs ever adjust if they don't even rea=
-lize git is different?
+As it is, I'm a bit conflicted: what if we decide to short-circuit
+"git foo --help-all" in the future just like we short-circuit
+"git foo -h" now?  Would that require a separate flag?
 
-This comment, and similar from others, makes it clear that I made a mis=
-take in taking up staging versus tracking. It sends a wrong signal abou=
-t my intentions, and is only a minor detail. This was *not* so difficul=
-t to understand, so I shouldn=92t have included it. My annoyance here i=
-s merely aesthetic and pedagogical.
+In other words, I'm not sure startup_info->help is a good abstraction.
+Maybe (modulo names) it would be better to do
 
-Matthiey Moy:
+struct startup_info {
+	...
+	const char *short_circuit;	/* "-h", "--help-all", "--no-index", or NUL=
+L */
+};
 
-> Git's huge sin, after all (judging from most complaints I see about i=
-t), is that It Doesn't Use Exactly The Same Model (and thus Terminology=
-) That CVS Did...
+and use
 
+	if (!strcmp(startup_info->short_circuit, "-h"))
 
-My analysis of Git=92s wickedness is interestingly different. Git has a=
- clean and simple model that should be very easy to understand. Git=92s=
- rhetorical traditions prevent that understanding. Git is really, reall=
-y hard to learn, no matter where you come from, but there is no inheren=
-t reason for that.
-
-The steepness of the learning curve (rather than the divergence from ot=
-her systems=92s terminology) is the single biggest complaint against gi=
-t, evidenced by my own anecdotal evidence from web surfing, and by the =
-Git user survey. It should be viewed as Git=92s biggest current problem=
- by an order of magnitude. It makes me think twice and thrice before as=
-king my colleagues to collaborate with me using Git; I will probably le=
-arn Mercurial and advocate using that instead=97it=92s almost as nice, =
-and I don=92t feel embarrassed advocating it. Using git for myself is g=
-reat (now I understand it) but it is unclear if I should invest social =
-capital to convince others to use it as well.=20
-
-The magnitude of how bad this is, and the urgency with which this shoul=
-d be fixed, is clear to everybody=97except, naturally, the denizens of =
-this mailing list. Not out of malice or incompetence, but *because of* =
-familiarity.
-
-Sverre Rabbelier:
-
-
-> What do you mean with the last part (about `git branch -r`)? The fact
-> that 'refs/remotes' is not immutable?
-
-Well, consider for example the simple obfuscatory mastery of the follow=
-ing line in the user manual:
-
-> $ git branch -r			# list all remote branches
-
-
-Yes, I get it *now*. And I begin to feel the corruption spreading in my=
- own brain already: I myself start to think of origin/master as a =93re=
-mote branch=94. Give me a few more weeks and I will be completely assim=
-ilated in the mindset.
-
-(Note to self: submit a patch about this before my assimilation is comp=
-lete. I already fixed it and committed to my local branch.)
-
-Mattiey again:
-
-> We already came up with a better wording, namely "upstream", and used=
- in in "git push --set-upstream".=20
-
-Oh, I didn=92t know that. I was convinced that =93upstream=94 was cruft=
- from when git was chiefly a tool to help Linus maintain the Linux kern=
-el. Let=91s see if I get this right:
-
-The remote-tracking branch =93origin/master=94 is *upstream* (the upstr=
-eam?) of the local branch =93master=94, and *tracks* the remote origin=92=
-s branch =93master=94? (local) =93master=94 is downstream of =93origin/=
-master=94?
-
-This would be useful. And @{u} is good. (Does it have an inverse?)
-
-I=92m not sure I like the particular word, but that=92s a minor complai=
-nt.=20
-
-( For completeness: A small terminological quibble is that upstream doe=
-sn=92t verb well. A bigger conceptual quibble is that this decision is =
-not workflow-neutral. It enforces git=92s hierarchical linux-kernel dev=
-elopment  tradition, rather than embracing a truly distributed model wh=
-ere everybody is the same. When I think of distributed version control =
-I like to think of Alice having a remote-tracking bob/master and Bob ha=
-ving a remote-tracking alice/master. Of course, it is still meaningful =
-for Alice to say =93the upstream of bobs_latest_crazy_ideas is bob/mast=
-er=94, and for Bob to say =93the upstream of alices_inane_ramblings is =
-alice/master=94. But it introduces a notion of hierarchy that is inimic=
-al to the concept of distribution, and not workflow-neutral. )
-
-Of course, upstream could be called supercalifragilistic and I would st=
-ill like it. Consistency is more important than having good metaphors. =
-(But good metaphors would be better, all other things being equal.)
-
-Jakup Narebski:
-
-> Note that it is not as easy as it seems at first glance.  There are *=
-two* such options, which (as you can read in gitcli(7) manpage) have sl=
-ightly different meaning:
-
-Wow. Thanks for pointing this out, I did not know that, and it explains=
- a lot. I must say that to everybody else than a git developer, this st=
-ate of affairs is a proof that something is wrong, rather than an obstr=
-uction for improvement.
-
->  I do not think debating on changing the terminology is a particularl=
-y productive use of our time. =20
-
-I agree in the sense that *how* the words are used is more important th=
-an *which* words are used, and I realise that I should not have put =93=
-terminology=94 in the headline, because that makes it about words, not =
-*explanations* or terminological *discipline*. 
+to allow relaxing the argc =3D=3D 2 check later?
