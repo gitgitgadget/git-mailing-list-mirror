@@ -1,82 +1,96 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] gitk: add the equivalent of diff --color-words
-Date: Tue, 19 Oct 2010 15:20:30 +0200
-Message-ID: <vpqbp6q9v4x.fsf@bauges.imag.fr>
-References: <3c06517d478b3725054f4ca08fb8c38e681549c4.1287223650.git.trast@student.ethz.ch>
-	<20101017015836.GC26656@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: RFC: [PATCH] ignore SIGINT&QUIT while waiting for external
+ command
+Date: Tue, 19 Oct 2010 09:32:36 -0400
+Message-ID: <20101019133236.GA804@sigill.intra.peff.net>
+References: <20101019045300.GA18043@gnu.kitenet.net>
+ <AANLkTi=tvyzyz2xpezufHLFc44HDbtMibkhNEvYxPB2g@mail.gmail.com>
+ <20101019115943.GA8065@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	Paul Mackerras <paulus@samba.org>, git@vger.kernel.org,
-	Pat Thoyts <patthoyts@users.sourceforge.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 15:21:22 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
+	Joey Hess <joey@kitenet.net>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 15:32:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8C81-0004Lh-6d
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 15:21:21 +0200
+	id 1P8CIV-0007mc-WD
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 15:32:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758612Ab0JSNVO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 09:21:14 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53441 "EHLO rominette.imag.fr"
+	id S1758604Ab0JSNcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 09:32:04 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38355 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758578Ab0JSNVO (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 09:21:14 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9JDESUU032581
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 19 Oct 2010 15:14:28 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1P8C7C-0006Dp-JI; Tue, 19 Oct 2010 15:20:30 +0200
-In-Reply-To: <20101017015836.GC26656@burratino> (Jonathan Nieder's message of "Sat\, 16 Oct 2010 20\:58\:36 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 19 Oct 2010 15:14:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9JDESUU032581
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1288098869.24557@DA6fAV3wcwMDPT3hLW6G8w
+	id S1758488Ab0JSNcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 09:32:03 -0400
+Received: (qmail 13190 invoked by uid 111); 19 Oct 2010 13:32:00 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 19 Oct 2010 13:32:00 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 19 Oct 2010 09:32:36 -0400
+Content-Disposition: inline
+In-Reply-To: <20101019115943.GA8065@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159325>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, Oct 19, 2010 at 03:59:43PM +0400, Dmitry Potapov wrote:
 
-> Thomas Rast wrote:
->
->> Use the newly added 'diff --word-diff=porcelain' to teach gitk a
->> color-words mode, with two different modes analogous to the
->> --word-diff=plain and --word-diff=color settings.  These are selected
->> by a dropdown box.
->>
->> As an extra twist, automatically enable this word-diff support when
->> the user mentions a word-diff related option on the command line.
->
-> I like this a lot.
+> The solution is to disable SIGINT and SIGQUIT as it is normally done by
+> system(). Disabling these signals is done only when silent_exec_failure
+> is set, which means that the current process is used as a proxy to run
+> another command.
 
-+1, it's really a feature I was looking forward.
+I don't understand why we would only do it for silent_exec_failure. You
+claim that flag means that the current process is a proxy for another
+command, but:
 
-> After this patch, the diff pane looks like this:
->
-> ( ) Diff ( ) Old version ( ) New version   Lines of context: [3 +/-] \
-> 	[ ] Ignore space changes  [ Line diff      v]
->
-> all on one line.  In particular, it is easy not to notice the
-> new dropdown.
+  1. Is that really the case, or do the two things just happen to
+     coincide in the current codebase?
 
-Worse than that: if the window is not large enough, the select box
-"line diff/markup words/color words" is totally hidden. Is there a way
-to have the display wrap to 2 lines when the window is not large
-enough?
+  2. Why do we want to do it only for the proxy-command case? If I have
+     a long-running external diff or merge helper, for example, what
+     should happen on SIGINT? Should we exit with the child still
+     potentially running, or should we actually be reaping the child
+     properly?
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> +	if (cmd->silent_exec_failure) {
+> +		sigint = signal(SIGINT, SIG_IGN);
+> +		sigquit = signal(SIGQUIT, SIG_IGN);
+> +	}
+>  	cmd->pid = fork();
+>  	if (!cmd->pid) {
+> +		if (cmd->silent_exec_failure) {
+> +			signal(SIGINT, sigint);
+> +			signal(SIGQUIT, sigquit);
+> +		}
+
+How does this interact with the sigchain code? If I do:
+
+  start_command(...);
+  sigchain_push(...);
+  finish_command(...);
+
+we will overwrite the function pushed in the sigchain_push with a stale
+handler. I think you could just replace your signal() calls with:
+
+  sigchain_push(SIGINT, SIG_IGN);
+  ...
+  sigchain_pop(SIGINT);
+
+but I wonder if ignoring is necessarily the right thing. Shouldn't we
+just reap the child and then run the signal handler that was there
+before us? That means in general that we will continue to die via SIGINT
+when we see SIGINT. With your patch, we will ignore it and (presumably)
+end up dying with a return code indicated that the child had an error.
+
+I think both of these things are not problems for executing dashed
+externals. But as above, I am not sure that we should be limiting this
+signal handling to those cases.
+
+-Peff
