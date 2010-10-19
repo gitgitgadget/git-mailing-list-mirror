@@ -1,109 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: User manual: "You cannot check out these remote-tracking branches"
-Date: Tue, 19 Oct 2010 14:04:16 -0500
-Message-ID: <20101019190416.GH25139@burratino>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
- <AANLkTimkovH9OysLSxA+=di89Xi+dTCYL5hRPmNaADDH@mail.gmail.com>
- <20101019175103.GA28847@kytes>
- <20101019182845.GE25139@burratino>
- <AANLkTi=DXH1WwGJ-h6s3dFfWZZ3tpu_jQgV1Y9O7c6Xf@mail.gmail.com>
- <0B20EFC4-E613-4D4A-B4F8-8B1750AA8AFD@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] builtins: utilize startup_info->help where possible
+Date: Tue, 19 Oct 2010 12:10:54 -0700
+Message-ID: <7vlj5uyp4x.fsf@alter.siamese.dyndns.org>
+References: <1287495320-27278-1-git-send-email-pclouds@gmail.com>
+ <1287495320-27278-2-git-send-email-pclouds@gmail.com>
+ <20101019172953.GC25139@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Scott Chacon <schacon@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Thore Husfeldt <thore.husfeldt@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Oct 19 21:08:04 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 19 21:11:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8HXX-00035a-Nt
-	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 21:08:04 +0200
+	id 1P8Hae-0004By-Oe
+	for gcvg-git-2@lo.gmane.org; Tue, 19 Oct 2010 21:11:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756517Ab0JSTH6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 15:07:58 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50999 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755291Ab0JSTH5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 19 Oct 2010 15:07:57 -0400
-Received: by gyg13 with SMTP id 13so34558gyg.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 12:07:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=fDld4pMRyKkkoX2eAoRGXIOqG6cetldo8TdFGmyQnMg=;
-        b=HNkTJNNSJtVl1FDoHoKoWPExsoOg7nuVDPu+C3OJv+6SUI/0DueF32uU1tBtbE/Ekt
-         TT0DS7nzEH+pFWwGW+AWrKU2FhDP1wgQXgiuWH7Nr02Q08L6rq0j3mpOm0WLcZcWb1Pj
-         /h0JidEvzxvaWRz5J7OSEU+Y+WRUq72oM3Wt8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=qpzAMUHqsKLi65Wwz1BinTW9eqUw5AiodFwILHZsZ8BGMlCXPaQmCWH+J13sNVsQQs
-         3OMdT81g1OUnlx10UxuX5nhfnPJ3hWM0qJV8pymefFA2WSTQwNmqMsghQwodBWUEYXmp
-         1Ugn9i1ZEVMDXk67jJ1ShID7qFjSdSce9NQ4g=
-Received: by 10.103.229.19 with SMTP id g19mr629582mur.59.1287515276289;
-        Tue, 19 Oct 2010 12:07:56 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id c40sm967457fay.0.2010.10.19.12.07.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 19 Oct 2010 12:07:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <0B20EFC4-E613-4D4A-B4F8-8B1750AA8AFD@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756554Ab0JSTLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 15:11:09 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45053 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756538Ab0JSTLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 15:11:08 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 13675E0A16;
+	Tue, 19 Oct 2010 15:11:07 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=jfk6kRmbkP2LW/TkvHvK5wg8Q+w=; b=l6py15
+	NWie06Ih3bIti8m+xnCmBxckZIIQcSxtfT1jBfwRNaOduL3nYTXZx8+5wxgnSnxy
+	q/Q09J9l5JBACH8dOrpTQ8VFNZyNVKcQzWt76EFj2EJibPh5VdrWJbBLHsngsM+Y
+	iavunHnO97kkov1sNFZFGc6UU97nWgS4Sm4og=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MpLRbw4EgaqGcH9IDoQx3XUEQfmWc/iO
+	cHluCsG+StsnXahl9ux8wuy/eT3bSLuilNDikrduuEvAM91QhKfMH7h0pZM8h7YU
+	2b1RuGmcVwpVYKGGpVo2ydoXgDACtH5HTxu/IsTuG7epWDDieJWdgQQ8EXD2UgVF
+	ySz0sueiFBk=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8FE07E0A0C;
+	Tue, 19 Oct 2010 15:11:01 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 53184E0A0A; Tue, 19 Oct
+ 2010 15:10:56 -0400 (EDT)
+In-Reply-To: <20101019172953.GC25139@burratino> (Jonathan Nieder's message of
+ "Tue\, 19 Oct 2010 12\:29\:53 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9CCBE3A6-DBB4-11DF-9C1F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159356>
 
-Thore Husfeldt wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Also, in the user-manual.txt:
-[...]
->>   origin/todo
->> ------------------------------------------------
->>=20
->> You cannot check out these remote-tracking branches, but you can
->> examine them on a branch of your own, just as you would a tag:
+> In other words, I'm not sure startup_info->help is a good abstraction.
+> Maybe (modulo names) it would be better to do
 >
-> That=E2=80=99s just wrong, isn=E2=80=99t it?
+> struct startup_info {
+> 	...
+> 	const char *short_circuit;	/* "-h", "--help-all", "--no-index", or NULL */
+> };
 
-That's historical baggage, I'm afraid.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.=
-txt
-index 77eb483..9f82fa6 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -359,13 +359,16 @@ $ git branch -r
-   origin/todo
- ------------------------------------------------
-=20
--You cannot check out these remote-tracking branches, but you can
--examine them on a branch of your own, just as you would a tag:
-+You might want to build on one of these remote-tracking branches
-+on a branch of your own, just as you would a tag:
-=20
- ------------------------------------------------
- $ git checkout -b my-todo-copy origin/todo
- ------------------------------------------------
-=20
-+You can also check out "origin/todo" directly to examine it or
-+write a one-off patch.  See <<detached-head,detached head>>.
-+
- Note that the name "origin" is just the name that git uses by default
- to refer to the repository that you cloned from.
-=20
+I am not sure short-circuit is a good abstraction either; will we have
+only one aspect of whatever we can short-circuit forever?
