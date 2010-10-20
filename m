@@ -1,89 +1,257 @@
-From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: Re: [PATCH v2] t/gitweb-lib: Don't pass constant to decode_utf8
-Date: Wed, 20 Oct 2010 18:13:44 -0400
-Message-ID: <3E0E134D-276A-4CA1-965D-274A6AA188C1@gernhardtsoftware.com>
-References: <1287554231-84196-1-git-send-email-brian@gernhardtsoftware.com> <201010202105.59370.jnareb@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git List <git@vger.kernel.org>,
-	Sven Verdoolaege <skimo@kotnet.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 00:13:54 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCH v2 1/2] test-lib: extend test_decode_color to handle more color codes
+Date: Wed, 20 Oct 2010 15:17:25 -0700
+Message-ID: <1287613046-61804-1-git-send-email-kevin@sb.org>
+References: <7v4ocgx2we.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nazri Ramliy <ayiehere@gmail.com>, Kevin Ballard <kevin@sb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 21 00:18:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8guv-0008He-Sc
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 00:13:54 +0200
+	id 1P8gyt-0001F2-UJ
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 00:18:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755535Ab0JTWNt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 18:13:49 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:39245 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755088Ab0JTWNs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 18:13:48 -0400
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id 22AD21FFC05B; Wed, 20 Oct 2010 22:13:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id 253A41FFC057;
-	Wed, 20 Oct 2010 22:13:38 +0000 (UTC)
-In-Reply-To: <201010202105.59370.jnareb@gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1755587Ab0JTWRz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 18:17:55 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:53374 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752065Ab0JTWRy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 18:17:54 -0400
+Received: by pvh1 with SMTP id 1so114442pvh.19
+        for <git@vger.kernel.org>; Wed, 20 Oct 2010 15:17:54 -0700 (PDT)
+Received: by 10.143.9.11 with SMTP id m11mr40814wfi.349.1287613073918;
+        Wed, 20 Oct 2010 15:17:53 -0700 (PDT)
+Received: from localhost.localdomain ([69.170.160.74])
+        by mx.google.com with ESMTPS id w22sm1109430wfd.7.2010.10.20.15.17.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 20 Oct 2010 15:17:53 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.1.220.g19a98
+In-Reply-To: <7v4ocgx2we.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159442>
 
+Enhance the test_decode_color function to handle all common color codes,
+including background colors and escapes that contain multiple codes.
+This change necessitates changing <WHITE> to <BOLD>, so update t4034
+as well.
 
-On Oct 20, 2010, at 3:05 PM, Jakub Narebski wrote:
+This change is necessary for the next commit in order to test
+background colors properly.
 
-> On Wed, 20 Oct 2010, Brian Gernhardt wrote:
-> 
->> Encode.pm started updating the string to decode in-place when a second
->> argument is passed in version 2.40.  This causes 'decode_utf8("",
->> Encode::FB_CROAK)' to die with a message like:
-> 
-> Very minor complaint: line break here makes it less readable.
-> 
-> Perhaps this?
-> 
->  Encode.pm started updating the string to decode in-place when a second argument
->  is passed in version 2.40.  This causes 'decode_utf8("", Encode::FB_CROAK)' to
->  die with a message like:
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+I turned sed into awk. Looks like awk is already used elsehwere in git,
+so I'm assuming this is safe, but please let me know if it's not.
 
-The wrapping was automatically done by vim.  I'll try tweaking width/contents to make it flow better.
+ t/t4034-diff-words.sh |   72 ++++++++++++++++++++++++------------------------
+ t/test-lib.sh         |   49 ++++++++++++++++++++++++++++-----
+ 2 files changed, 77 insertions(+), 44 deletions(-)
 
->> Modification of a read-only value attempted at
->> /Library/Perl/Updates/5.10.0/darwin-thread-multi-2level/Encode.pm line
->> 216.
-> 
-> Very minor complaint: It might be better to not include path to installed
-> Encode.pm, which is different on different filesystems.
-> 
->  Modification of a read-only value attempted at .../Encode.pm line
->  216.
-
->> Changes since v1:
->> - Use an explicitly empty variable instead of $_
-> 
-> ...which was undefined, not empty, I think.
-
-It still served to test the two argument case, but I thought an explicit variable that exactly matched the previous call would be better.
-
->> - based against maint
-> 
-> Was there any difference versus being based against 'master'?
-
-Whitespace in context lines.  The skip_all and test_done lines were re-indented at some point.  Minor, but I thought I'd mention it.
-
-~~ Brian
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 6f7548c..3f3c757 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -35,10 +35,10 @@ aeff = aeff * ( aaa )
+ EOF
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,7 @@<RESET>
+ <RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
+ 
+@@ -122,10 +122,10 @@ test_expect_success '--word-diff=plain --no-color' '
+ '
+ 
+ cat > expect <<EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,7 @@<RESET>
+ <RED>[-h(4)-]<RESET><GREEN>{+h(4),hh[44]+}<RESET>
+ 
+@@ -143,10 +143,10 @@ test_expect_success '--word-diff=plain --color' '
+ '
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1 +1 @@<RESET>
+ <RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
+ <CYAN>@@ -3,0 +4,4 @@<RESET> <RESET><MAGENTA>a = b + c<RESET>
+@@ -163,10 +163,10 @@ test_expect_success 'word diff without context' '
+ '
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,7 @@<RESET>
+ h(4),<GREEN>hh<RESET>[44]
+ 
+@@ -199,10 +199,10 @@ test_expect_success 'option overrides .gitattributes' '
+ '
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,7 @@<RESET>
+ h(4)<GREEN>,hh[44]<RESET>
+ 
+@@ -231,10 +231,10 @@ test_expect_success 'command-line overrides config' '
+ '
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,7 @@<RESET>
+ h(4),<GREEN>{+hh+}<RESET>[44]
+ 
+@@ -260,10 +260,10 @@ test_expect_success 'remove diff driver regex' '
+ '
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 330b04f..5ed8eff 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 330b04f..5ed8eff 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1,3 +1,7 @@<RESET>
+ h(4),<GREEN>hh[44<RESET>]
+ 
+@@ -282,10 +282,10 @@ echo 'aaa (aaa)' > pre
+ echo 'aaa (aaa) aaa' > post
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index c29453b..be22f37 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index c29453b..be22f37 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1 +1 @@<RESET>
+ aaa (aaa) <GREEN>aaa<RESET>
+ EOF
+@@ -301,10 +301,10 @@ echo '(:' > pre
+ echo '(' > post
+ 
+ cat > expect <<\EOF
+-<WHITE>diff --git a/pre b/post<RESET>
+-<WHITE>index 289cb9d..2d06f37 100644<RESET>
+-<WHITE>--- a/pre<RESET>
+-<WHITE>+++ b/post<RESET>
++<BOLD>diff --git a/pre b/post<RESET>
++<BOLD>index 289cb9d..2d06f37 100644<RESET>
++<BOLD>--- a/pre<RESET>
++<BOLD>+++ b/post<RESET>
+ <CYAN>@@ -1 +1 @@<RESET>
+ (<RED>:<RESET>
+ EOF
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 2af8f10..6dd3ce9 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -238,14 +238,47 @@ test_set_editor () {
+ }
+ 
+ test_decode_color () {
+-	sed	-e 's/.\[1m/<WHITE>/g' \
+-		-e 's/.\[31m/<RED>/g' \
+-		-e 's/.\[32m/<GREEN>/g' \
+-		-e 's/.\[33m/<YELLOW>/g' \
+-		-e 's/.\[34m/<BLUE>/g' \
+-		-e 's/.\[35m/<MAGENTA>/g' \
+-		-e 's/.\[36m/<CYAN>/g' \
+-		-e 's/.\[m/<RESET>/g'
++	awk '
++		function name(n) {
++			if (n == 0) return "RESET";
++			if (n == 1) return "BOLD";
++			if (n == 30) return "BLACK";
++			if (n == 31) return "RED";
++			if (n == 32) return "GREEN";
++			if (n == 33) return "YELLOW";
++			if (n == 34) return "BLUE";
++			if (n == 35) return "MAGENTA";
++			if (n == 36) return "CYAN";
++			if (n == 37) return "WHITE";
++			if (n == 40) return "BLACK";
++			if (n == 41) return "BRED";
++			if (n == 42) return "BGREEN";
++			if (n == 43) return "BYELLOW";
++			if (n == 44) return "BBLUE";
++			if (n == 45) return "BMAGENTA";
++			if (n == 46) return "BCYAN";
++			if (n == 47) return "BWHITE";
++		}
++		{
++			while (match($0, /\x1b\[[0-9;]*m/) != 0) {
++				printf "%s<", substr($0, 1, RSTART-1);
++				codes = substr($0, RSTART+2, RLENGTH-3);
++				if (length(codes) == 0)
++					printf "%s", name(0)
++				else {
++					n = split(codes, ary, ";");
++					sep = "";
++					for (i = 1; i <= n; i++) {
++						printf "%s%s", sep, name(ary[i]);
++						sep = ";"
++					}
++				}
++				printf ">";
++				$0 = substr($0, RSTART + RLENGTH, length($0) - RSTART - RLENGTH + 1);
++			}
++			print
++		}
++	'
+ }
+ 
+ q_to_nul () {
+-- 
+1.7.3.1.220.g19a98
