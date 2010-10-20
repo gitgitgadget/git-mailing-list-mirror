@@ -1,103 +1,160 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Test failures in today's pu: 0025, 4046, 4203, 9300, 9301
-Date: Wed, 20 Oct 2010 11:48:51 +0200
-Message-ID: <201010201148.51551.trast@student.ethz.ch>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+From: Thore Husfeldt <thore.husfeldt@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Wed, 20 Oct 2010 11:53:52 +0200
+Message-ID: <BED961D6-5C2A-4535-B706-BFB9727CE398@gmail.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com> <vpq8w1v5gce.fsf@bauges.imag.fr>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Yann Dirson <ydirson@altern.org>
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 20 11:49:00 2010
+Cc: Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Wed Oct 20 11:54:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8VI3-0000Nj-Ry
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 11:49:00 +0200
+	id 1P8VMw-0002Ky-8G
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 11:54:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751410Ab0JTJsy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 05:48:54 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:19378 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751395Ab0JTJsx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 05:48:53 -0400
-Received: from CAS10.d.ethz.ch (172.31.38.210) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 20 Oct
- 2010 11:48:52 +0200
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
- (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 20 Oct
- 2010 11:48:51 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.36-rc8-32-desktop; KDE/4.4.4; x86_64; ; )
+	id S1752597Ab0JTJx7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 05:53:59 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:38581 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752580Ab0JTJx5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 05:53:57 -0400
+Received: by ewy20 with SMTP id 20so4411332ewy.19
+        for <git@vger.kernel.org>; Wed, 20 Oct 2010 02:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=cpK7Vlp/5qMCfaaUzAGdM1YH0y/D1l4fzVgdLHgGj7k=;
+        b=fyBeOM/LZ46hcPK5Q2lei7MoyjKsl6OnV3/60i0w5P0SPG6F/7ry7dLEC6nkHfFtf5
+         m4/kWJlDwOY6kyL7g/VVhXuIlMAUUIvngdvk1NmrMl8p25g5HtrKMYyTO+lCv+pbG0Wm
+         MrJMwjJPhRt39WfI4wafecvZ/rRxrMG1wXP3w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=wvkhJfGf5UVREnmOn0LsWQ67gAGixcPu7NU/u4MnbyHxBinA32Gke+2dIbpqzLaFnx
+         /E4L60IelPjZweDxv9N/roLV/tcM5Hl/XjYxOtfXgFRvJ5xAqzPLZZiLwwk80Jz4mKg/
+         Nv+uyQWWwK7fF0RetnG/L5bIwIQL8THrQ1a9c=
+Received: by 10.213.98.78 with SMTP id p14mr6435889ebn.54.1287568436368;
+        Wed, 20 Oct 2010 02:53:56 -0700 (PDT)
+Received: from thoremba.cs.lth.se (thoremba.cs.lth.se [130.235.16.114])
+        by mx.google.com with ESMTPS id x54sm15335943eeh.5.2010.10.20.02.53.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 20 Oct 2010 02:53:54 -0700 (PDT)
+In-Reply-To: <vpq8w1v5gce.fsf@bauges.imag.fr>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159404>
 
-Hi *
+On 18 Oct 2010, at 23:41, Matthieu Moy wrote:
 
-My automatic test bisecter had several failures in today's pu.
-Hopefully I picked the right Cc list:
+> We already came up with a better wording, namely "upstream", and used
+> in in "git push --set-upstream". Probably a next step would be to
+> deprecate any other occurence of --track meaning the same thing (git
+> checkout --track seems to me to be a candidate, git branch has both
+> --track and --set-upstream). One difficulty is to do that with
+> backward compatibility in mind.
 
-* t0025-crlf-auto still randomly fails, see
+I=92ve tried to play around with this concept now, *in casu* by trying =
+to edit the Pro Git source.
 
-    http://mid.gmane.org/201007292340.01836.trast@student.ethz.ch
+I=92m not sure we all agree on what is what, so let me try to clarify.
 
-  Input always welcome on this one.  (That's not why I'm writing, but
-  it was a convenient chance to point it out again...)
+In the following, Alice has bobsstuff, bob/master, and (Bob=92s) master=
+, which she got from
 
-* t4046-diff-rename-factorize failed and bisected to 22214a1b (Add
-  testcases for the --detect-bulk-moves diffcore flag.).
+> alice% git checkout --track -b bobsstuff bob/master
 
-* t4203-mailmap: bisected to d8d2eb7d (mailmap: fix use of freed
-  memory).  I saw some list traffic possibly related to this, is it
-  fixed already?
+(Or using `git branch`). Git tells her that
 
-* t9300-fast-import: bisected to a544a23c (t9300 (fast-import):
-  another test for the "replace root" feature).  The relevant snippet
-  is
+> Branch bobsstuff set up to track remote branch master from bob.
 
-    ./test-lib.sh: eval: line 413: syntax error near unexpected token `=
-)'
-    ./test-lib.sh: eval: line 413: `         tree=FFgit rev-parse --ver=
-ify N10:) &&'
-    not ok - 62 N: modify subtree, extract it, and modify again
+(By the way, I think =93remote branch=94 is useful and correct, here.)
 
-  I'm not sure whether the funny character after 'tree' made it
-  through the (automated) email alright, but if it did, it is the
-  glyph of the Latin1 rendition of 0xff.
+Let me see if I can use the proposed terminology:
 
-* t9301-fast-import-notes: bisected to 5edde51 (fast-import:
-  filemodify after M 040000 <tree> "" crashes).  The failure shows
+1. bob/master *tracks* master.
+2. bob/master is a remote-tracking branch
+3. master is a remote branch
+4. bob/master has been marked as "upstream" from bobsstuff=20
 
-    --- expect      2010-10-20 06:47:16.000000000 +0000
-    +++ actual      2010-10-20 06:47:28.000000000 +0000
-    @@ -1,800 +1,400 @@
-         commit #400
-    -    note for commit #400
-         commit #399
-    -    note for commit #399
-         commit #398
-    -    note for commit #398
-         commit #397
-    -    note for commit #397
-         commit #396
-    -    note for commit #396
-         commit #395
+Is master upstream from bobbstuff as well? The man page of `git branch`=
+ seems to think so:
 
-  etc.
+> Furthermore, it directs git pull without arguments to pull from the u=
+pstream when the new branch is checked out.
 
+So both bob/master and master are sometimes called "upstream", and both=
+ bobsstuff and bob/master are sometimes called "tracking".
 
-Recall that this is a RHEL5.5 box that runs a little helper script on
-a cronjob, which builds git and then runs the tests under valgrind.
-=46or each failing test, it then bisects the failure (again with
-valgrind).
+Let=91s try to look at the relevant Pro Git section, to get a feeling f=
+or how this terminology work when you actually try to explain something=
+ well:
+>=20
+> ### Tracking Branches ###
+>=20
+> Checking out a local branch from a remote branch automatically create=
+s what is called a _tracking branch_. Tracking branches are local branc=
+hes that have a direct relationship to a remote branch. If you=92re on =
+a tracking branch and type git push, Git automatically knows which serv=
+er and branch to push to. Also, running `git pull` while on one of thes=
+e branches fetches all the remote references and then automatically mer=
+ges in the corresponding remote branch.
+>=20
+> When you clone a repository, it generally automatically creates a `ma=
+ster` branch that tracks `origin/master`. That=92s why `git push` and `=
+git pull` work out of the box with no other arguments. However, you can=
+ set up other tracking branches if you wish =97 ones that don=92t track=
+ branches on `origin` and don=92t track the `master` branch. The simple=
+ case is the example you just saw, running `git checkout -b [branch] [r=
+emotename]/[branch]`. If you have Git version 1.6.2 or later, you can a=
+lso use the `--track` shorthand:
 
-=46eel free to ask if you need more information.
+This is a good section, and explains a lot. But, as with much of the Gi=
+t documentation, the terminology is undisciplined. Take =93tracking bra=
+nches=94. The section is about refs like bobbstuff, which is no longer =
+called tracking, but =93a branch that has been configured to set up an =
+upstream relation=94. Currently, if I understand the proposed terminolo=
+gy, there is no word for what the Pro Git book calls =93tracking branch=
+es.=94 (I=92d be happy to be wrong about this.)
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Let me try
+
+> ### Upstream branches ###
+>=20
+> A local branch can be set up in a direct relationship to a remote bra=
+nch; we say the that the remote branch is _upstream_. In this configura=
+tion, if you type `git push`, Git automatically knows which server and =
+branch to push to. Also, running `git pull` on one of these branches fe=
+tches all the remote references and then automatically merges in the co=
+rresponding remote branch.
+>=20
+> When you clone a repository, Git automatically creates a `master` bra=
+nch whose upstream branch is the remote-tracking branch `origin/master`=
+=2E
+
+This is not really good, because the immediately preceding section is a=
+bout =93remote-tracking branches=94 (currently called =93remote branche=
+s=94, by the way). And =93remote-tracking branches=94 and =93upstream b=
+ranches=94 are the same =96 they both refer to bob/master, but from dif=
+ferent perspectives. Now there are two sections about bob/master, yet t=
+he conceptually interesting branches are bobsstuff (sometimes called th=
+e =93tracking branch=94) and master (sometimes called the =93remote bra=
+nch=94). bob/master is just an elegant implementation that facilitates =
+the communication between these two branches. (This is not impossible t=
+o fix with a good rewrite.)
+
+I=92d be really happy to rewrite the documentation about this stuff (in=
+cluding submitting a patch to Pro Git and other useful references), but=
+ my enthusiasm is tempered by a nagging suspicion that the full termino=
+logical effect of no longer having a word for the kind of branch that b=
+obsstuff is has been fully realised. 
