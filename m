@@ -1,66 +1,84 @@
-From: Petr Baudis <pasky@suse.cz>
-Subject: Re: "Git - SVN Crash Course" page copied to the wiki
-Date: Wed, 20 Oct 2010 13:09:52 +0200
-Message-ID: <20101020110952.GE4023@machine.or.cz>
-References: <4C155AAB.2030209@pileofstuff.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Wed, 20 Oct 2010 13:34:44 +0200
+Message-ID: <vpqfww1ksh7.fsf@bauges.imag.fr>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	<vpq8w1v5gce.fsf@bauges.imag.fr>
+	<BED961D6-5C2A-4535-B706-BFB9727CE398@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Wed Oct 20 13:19:20 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Thore Husfeldt <thore.husfeldt@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 20 13:34:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8WhU-0004D0-DA
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 13:19:20 +0200
+	id 1P8WwX-0000Ln-5a
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 13:34:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751582Ab0JTLTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 07:19:14 -0400
-Received: from w241.dkm.cz ([62.24.88.241]:34199 "EHLO machine.or.cz"
+	id S1752053Ab0JTLes convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 07:34:48 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:48196 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751253Ab0JTLTN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 07:19:13 -0400
-X-Greylist: delayed 557 seconds by postgrey-1.27 at vger.kernel.org; Wed, 20 Oct 2010 07:19:13 EDT
-Received: by machine.or.cz (Postfix, from userid 2001)
-	id 37C99862086; Wed, 20 Oct 2010 13:09:52 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <4C155AAB.2030209@pileofstuff.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751800Ab0JTLer convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 07:34:47 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9KBSdwH007476
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 20 Oct 2010 13:28:40 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1P8WwP-0007WQ-6O; Wed, 20 Oct 2010 13:34:45 +0200
+In-Reply-To: <BED961D6-5C2A-4535-B706-BFB9727CE398@gmail.com> (Thore Husfeldt's message of "Wed\, 20 Oct 2010 11\:53\:52 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 20 Oct 2010 13:28:40 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9KBSdwH007476
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1288178920.47751@8Tl0G9qUBhPfjVFrRM1FMA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159405>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159406>
 
-  Hi!
+Thore Husfeldt <thore.husfeldt@gmail.com> writes:
 
-On Sun, Jun 13, 2010 at 11:24:43PM +0100, Andrew Sayers wrote:
-> Petr Baudis has said he can no longer maintain the "Git - SVN Crash
-> Course" page at http://git.or.cz/course/svn.html, and that he would
-> prefer it go on the wiki.  I think this is a really useful resource, so
-> I've done just that:
-> 
-> 	https://git.wiki.kernel.org/index.php/GitSvnCrashCourse
-> 
-> I've already made some fairly substantial changes, and plan to add more
-> as I have time over the next week.  In particular, I've tried to make it
-> talk more about git-svn than it did, but please rename it if you feel
-> the title still oversells the git-svn aspect.
+>> Branch bobsstuff set up to track remote branch master from bob.
+>
+> (By the way, I think =E2=80=9Cremote branch=E2=80=9D is useful and co=
+rrect, here.)
 
-  Personally, I think conflacting git and git svn like now fogs things
-up a bit and may be confusing; I think it would be clearer to describe
-the git svn usage separately, or at a separate section at the end. Do
-not take me overly seriously, though.
+But "track" should be "upstream" here to be consistant with
+"--set-upstream". Maybe:
 
+Remote branch master from bob set as upstream for bobsstuff.
 
-  Anyway, I just added a pointer to the wiki page at the top of my
-instance, where plenty of stuff still links. I think at points it's
-easier to read and should not be *grossly* outdated at any point yet,
-so I added a link to it to the wiki page too.
+?
 
--- 
-				Petr "Pasky" Baudis
-The true meaning of life is to plant a tree under whose shade
-you will never sit.
+> Let me see if I can use the proposed terminology:
+>
+> 1. bob/master *tracks* master.
+> 2. bob/master is a remote-tracking branch
+
+I do like the dash between remote and tracking.
+
+This is roughly the current terminology, but as you pointed out, it's
+not used consistantly in the doc.
+
+> 3. master is a remote branch
+> 4. bob/master has been marked as "upstream" from bobsstuff=20
+
+That's my understanding too.
+
+(no time for more detailed answer, sorry)
+
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
