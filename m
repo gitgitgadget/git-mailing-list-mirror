@@ -1,196 +1,97 @@
-From: Dominique Quatravaux <domq@google.com>
-Subject: git rebase and merge commits
-Date: Wed, 20 Oct 2010 18:45:45 +0200
-Message-ID: <AANLkTikroNPehcyBsueCnJ5hR0idd3cBP4m1KNccdRqL@mail.gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
+ git-svn fetch)
+Date: Wed, 20 Oct 2010 22:26:35 +0530
+Message-ID: <20101020165630.GB13716@kytes>
+References: <1287563970.2673.12.camel@wpalmer.simply-domain>
+ <30010681.536316.1287584507672.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 20 18:46:22 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Will Palmer <wmpalmer@gmail.com>, Matt Stump <mstump@goatyak.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Wed Oct 20 18:57:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8bny-0001WE-0e
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 18:46:22 +0200
+	id 1P8byd-0005Ye-DY
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 18:57:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754312Ab0JTQqK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 12:46:10 -0400
-Received: from smtp-out.google.com ([74.125.121.35]:19236 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754163Ab0JTQqI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 12:46:08 -0400
-Received: from wpaz33.hot.corp.google.com (wpaz33.hot.corp.google.com [172.24.198.97])
-	by smtp-out.google.com with ESMTP id o9KGk6vg013289
-	for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:46:07 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1287593167; bh=oHhgDAFWJGFkN/YC+QMnBTZ7nuw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type:
-	 Content-Transfer-Encoding;
-	b=l138WABxage1PNyTxT1EQX6T7kVFVADorX3X7e6OCHfcs6Ig+JKy7LPFIqqlTMnI/
-	 oSeyM3FG3mbMxPcx7ZI3g==
-Received: from gxk28 (gxk28.prod.google.com [10.202.11.28])
-	by wpaz33.hot.corp.google.com with ESMTP id o9KGk5xM013296
-	for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:46:05 -0700
-Received: by gxk28 with SMTP id 28so2681270gxk.15
-        for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:46:05 -0700 (PDT)
+	id S1754271Ab0JTQ5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 12:57:16 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:56328 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754179Ab0JTQ5P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 12:57:15 -0400
+Received: by yxm8 with SMTP id 8so1732688yxm.19
+        for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:57:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=ZwhyTOzBIXA5lJYonH899hj7qnCNbyMmYV/lVMy63Fs=;
-        b=R19jt6sMG7jJnk4JsB6145n7sJZa6nGIb0BiHX6cn1osvXyADkDQdpsMuY2kjO8Tm4
-         b9oFseh5UQuzWxOgt2hg==
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=o/NB0Ri39LDby3ClO9xX9pNS5cmApbefH0ohi4CYBvc=;
+        b=Xta4RW6IODeEa890Ke5sGMnEOnw6kIQz7vyHfqhfFrk/Pe7LObuPDoFZwuCqiTLhGe
+         u3W2bUJn5cYHfuR+VbNkahHm4GBTmIPEaNgZQ1iD7kWxuDF3H2P61qHaglEkSWGNBCib
+         m7wn20ykVnuVbA355cK+6TG8o/Tf/WVA7y8jE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=google.com; s=beta;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=J/f6vjJu4DjTjMGoG5QRNp1II1OmdrNtemI7Vh1ATDaVhplsq7yDiqlQKMnLL/EkgF
-         CkBtcBcBl2Q/V7n2uv0w==
-Received: by 10.101.40.1 with SMTP id s1mr5585973anj.248.1287593165310; Wed,
- 20 Oct 2010 09:46:05 -0700 (PDT)
-Received: by 10.100.249.8 with HTTP; Wed, 20 Oct 2010 09:45:45 -0700 (PDT)
-X-System-Of-Record: true
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=TrUUw7omVICl/FIQtz9VP7Ywl8fk27PcGuD9hATJsHNdU+43sSbShAJn2x3CRn+9W8
+         DkLohQfUHSkXJCuM+UD5pG6mH6JFvWhGrVJ8i+7APRLhXKfzHDDIx6845LH1WbRJIIUg
+         38La8Vh/QkxK9DtBXCQuDssxOnvQ+H+6v/N3g=
+Received: by 10.90.36.6 with SMTP id j6mr626354agj.28.1287593834973;
+        Wed, 20 Oct 2010 09:57:14 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id f50sm324428yhc.38.2010.10.20.09.57.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 20 Oct 2010 09:57:13 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <30010681.536316.1287584507672.JavaMail.root@mail.hq.genarts.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159416>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159417>
 
-Hi all, I'm trying to write "git shove", a wrapper around git rebase
---interactive that would turn this
+Hi Stephen,
 
+Stephen Bash writes:
+> > From: "Will Palmer" <wmpalmer@gmail.com>
+> > I was under the impression that there
+> > would be one "one-to-one" mapping branch (which would never be checked
+> > out), containing the history of /, and that the "real" git branches,
+> > tags, etc, would be based on the trees originally referenced by the root
+> > checkout, with git-notes (or similar) being used to track the weirdness
+> > in mappings.
+> 
+> Admittedly I'm not in the inner circle, but this is the first time
+> I've heard the idea.
 
-#        A---B---C---K targetbranch
-#       /         \
-#  D---E---F---G---H---I--J srcbranch
+Do hang out on the development channel - a lot of stuff cooks there :)
 
-into this:
+> It's certainly intriguing.  In this case would
+> the one-to-one branch include the full SVN repository history (all
+> projects), or would svn-fe/git-fast-import filter down to
+> subdirectories of interest?
 
-#   A---B---C---I'---K'  targetbranch
-#  /             \
-# D---E---F---G---H'---J' srcbranch
-#
+Full history. Atleast that's what I was thinking about sometime ago.
 
-(ie I has been shoved into targetbranch).
+> Along those lines I can contribute the following data point: my
+> initial fast-import repository weighs in at 1.3G, while after my
+> scripts run the final product is 659M (and no, they are not hard
+> linking to each other).  Unfortunately I don't have a good
+> accounting of the size difference (obviously some is filtering down
+> to a single SVN project).
 
-It seemed to me that the first step should be to simply rebase I, H, an=
-d J (in
-this order) onto C. Unfortunately git rebase --interactive -p C propose=
-s a
-git-rebase-todo that contains only "noop"; if I forcefully put this ins=
-tead,
+Yeah, David reported similar statistics after repacking the ASF
+repository.
 
-edit iiii I
-edit hhhh H
-edit jjjj J
-
-it seems to me that the HEAD jumps backward to the original H on the se=
-cond
-rebase step, instead of daisy-chaining H behind I.  This is with git 1.=
-7.3.1.
-
-Here are the outputs of git log --graph --pretty=3Doneline --abbrev-com=
-mit at each
-rebase step:
-
-1/3
-
-* a810395 I
-*   1cfccc7 H
-|\
-| * c477d4e C
-| * 7002290 B
-| * aa9f1d0 A
-* | b614d31 G
-* | 2ad4496 F
-|/
-* 0d512e9 E
-* b6cbc2b D
-
-2/3
-
-*   1cfccc7 H
-|\
-| * c477d4e C
-| * 7002290 B
-| * aa9f1d0 A
-* | b614d31 G
-* | 2ad4496 F
-|/
-* 0d512e9 E
-* b6cbc2b D
-
-3/3
-
-* 3a41a45 J
-* a810395 I
-*   1cfccc7 H
-|\
-| * c477d4e C
-| * 7002290 B
-| * aa9f1d0 A
-* | b614d31 G
-* | 2ad4496 F
-|/
-* 0d512e9 E
-* b6cbc2b D
-
-
-Is there a way to do a real rebase of a merge commit?
-
-=46WIW, here is the script I use to create my toy environment in the cu=
-rrent
-directory:
-
-function _make_commit() {
-  echo "$1" > "$1"
-  git add "$1"
-  git commit -a -m "$1"
-  git tag "$1" HEAD
-}
-
-function _prepare_merged_history() {
-  git init
-  _make_commit "D"
-  git checkout -b targetbranch
-  _make_commit "E"
-  _make_commit "A"
-  _make_commit "B"
-  _make_commit "C"
-  _make_commit "K"
-  git checkout E
-  git checkout -b srcbranch
-  _make_commit "F"
-  _make_commit "G"
-  git merge  -m "H" C
-  git tag H HEAD
-  _make_commit "I"
-  _make_commit "J"
-}
-
-function _git_rebase_todo_line() {
-  echo -n "pick "
-  git rev-list -n 1 --pretty=3Doneline --abbrev-commit --abbrev=3D7 "$1=
-"
-}
-
-function _make_git_rebase_todo() {
-  {
-    _git_rebase_todo_line refs/tags/I
-    _git_rebase_todo_line refs/tags/H
-    _git_rebase_todo_line refs/tags/J
-  } > git-rebase-todo
-}
-
-[ -d ".git" ] && exit
-_prepare_merged_history
-_make_git_rebase_todo
-
-
-Thanks in advance,
-
---=20
-=A0 Dominique Quatravaux
-=A0 +41 79 609 40 72
+-- Ram
