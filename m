@@ -1,238 +1,280 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
-Date: Wed, 20 Oct 2010 22:44:38 +0200
-Message-ID: <201010202244.39728.jnareb@gmail.com>
-References: <20101018051702.GD22376@kytes> <m3bp6pkrf0.fsf@localhost.localdomain> <1287582160.2673.25.camel@wpalmer.simply-domain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [long] worktree setup cases
+Date: Wed, 20 Oct 2010 14:00:45 -0700
+Message-ID: <7v8w1svate.fsf@alter.siamese.dyndns.org>
+References: <20101020085859.GA13135@do>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Stephen Bash <bash@genarts.com>,
-	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 20 22:44:58 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Niedier <jrnieder@gmail.com>, git@vger.kernel.org,
+	fbriere@fbriere.net, drizzd@aon.at, 575917@bugs.debian.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 20 23:01:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8fWp-0003lL-2U
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 22:44:55 +0200
+	id 1P8fmX-0008L3-OC
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 23:01:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754618Ab0JTUos (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 16:44:48 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59300 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754262Ab0JTUor (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 16:44:47 -0400
-Received: by fxm4 with SMTP id 4so3087380fxm.19
-        for <git@vger.kernel.org>; Wed, 20 Oct 2010 13:44:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=iUFC2r8JYrbJ69W18Aq9IRp6k1t7Gb/4rchHIFPqzq0=;
-        b=Qvk2rtHUcCUan5YAPP2cU90tBYB0S+2/638954zU/RTG1P7nm/6STDTmJgReC/Ld0r
-         CiRbVvhZjuvQox/Vx4cTLQt6kPkzhGCOURucxhAzB7zSdXSTUkJeLHn4ygEG83OUSHbJ
-         ntXDFdCR+zPlWguUXPlqpHc7bM2a0EcAdPrPI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=pGsID85PKwpT9FRJmE3/GLwJyaa/NMhikyWfnxyX7wCqQ5GPPcZX81RRgcTllEr+2s
-         NSLoyn9l2zE/6MmJKsUvk/2mCGJ0ER7JWpC4OB05t3nXx3Xz1Sxqm6wxoFMstlo1c0et
-         ddV9aEevkxHqpx79T1Ch/dxNrZWf6NC/pw3xU=
-Received: by 10.102.219.16 with SMTP id r16mr5989915mug.85.1287607486390;
-        Wed, 20 Oct 2010 13:44:46 -0700 (PDT)
-Received: from [192.168.1.13] (abvx10.neoplus.adsl.tpnet.pl [83.8.221.10])
-        by mx.google.com with ESMTPS id 10sm421586fax.42.2010.10.20.13.44.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 20 Oct 2010 13:44:44 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1287582160.2673.25.camel@wpalmer.simply-domain>
-Content-Disposition: inline
+	id S1754994Ab0JTVBD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 17:01:03 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:43275 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754562Ab0JTVBC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 17:01:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E5C5ADC685;
+	Wed, 20 Oct 2010 17:01:00 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=H6kTa5e4JydEJWv44yhnOfLSJY8=; b=PEnJl8
+	02ZvYPKlmQaODSg9Zk4xfzheVE757Qu+XogoL2XBTaZJKAxx6WcPb9NR3II/1Xjs
+	eLTdtphzGix/bZuT/upzZQrSF6sbjC7nvErCYBHN/ExaHaTsqgAXNT9ep7S5SHt0
+	vAmrgM+Lm4BG1PPtAzm4fRNlu/ujakpFvgzV8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=i1ileCCUQU3gBDIHiBl8nDMGfhS1arkm
+	gCuwgglNGNCbnxQ+hlDVfilnmj0K3oXwfd9zqv62Azh9tjCtIHnmCKuQxIDmeIDV
+	CTOXEAG4AibRN2CJo2VIAXvfL3b3j+thkInOYclz2uEXF3MG/K4apoTtvBIRv/5S
+	o3mHoWrv1XA=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7BAC5DC67C;
+	Wed, 20 Oct 2010 17:00:54 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id CE673DC675; Wed, 20 Oct
+ 2010 17:00:46 -0400 (EDT)
+In-Reply-To: <20101020085859.GA13135@do> (Nguyen Thai Ngoc Duy's message of
+ "Wed\, 20 Oct 2010 15\:59\:00 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 20E3AF74-DC8D-11DF-AB04-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159439>
 
-On Wed, 20 Oct 2010, Will Palmer wrote:
-> On Wed, 2010-10-20 at 04:59 -0700, Jakub Narebski wrote:
->> Will Palmer <wmpalmer@gmail.com> writes:
->>> On Tue, 2010-10-19 at 12:12 +0530, Ramkumar Ramachandra wrote:
->>>> Stephen Bash writes:
->>> ...
->>>>> 
->>>>> I have 32 SVN revs in my history that touch multiple Git commit
->>>>> objects.  The simplest example is
->>>>>   svn mv svn://svnrepo/branches/badBranchName svn://svnrepo/branches/goodBranchName
->>>>> which creates a single SVN commit that touches two branches
->>>>> (badBranchName will have all it's contents deleted, goodBranchName
->>>>> will have an "empty commit" as described above).  The more devious
->>>>> version is the SVN rev where a developer checked out / (yes, I'm not
->>>>> kidding) and proceeded to modify a single file on all branches in
->>>>> one commit.  In our case, that one SVN rev touches 23 git commit
->>>>> objects.  And while the latter is somewhat a corner case, the former
->>>>> is common and probably needs to be dealt with appropriately (it's
->>>>> kind of a stupid operation in Git-land, so maybe it can just be
->>>>> squashed).
->>>> 
->>>> Ouch! Thanks for the illustrative example- I understand now. We have
->>>> to bend backwards to perform a one-to-one mapping. It's finally struck
->>>> me- one-to-one mapping is nearly impossible to achieve, and I don't
->>>> know if it makes sense to strive for it anymore. Looks like Jonathan
->>>> got it earlier.
->>> 
->>> It's been a while since I was involved in this discussion, so maybe the
->>> design has changed by now, but I was under the impression that there
->>> would be one "one-to-one" mapping branch (which would never be checked
->>> out), containing the history of /, and that the "real" git branches,
->>> tags, etc, would be based on the trees originally referenced by the root
->>> checkout, with git-notes (or similar) being used to track the weirdness
->>> in mappings. How does the "multiple branches touched in a single commit"
->>> complicate anything other than the heuristics for automatic branch
->>> detection (which I assume nobody is at the stage of talking about yet).
->> 
->> I think there might be a problem in that in git commit is defined by
->> its parents and its final state, while revision in Subversion is IIRC
->> defined by change.  Isn't it?
-> 
-> A "change" is a delta between one state and another, so each revision is
-> dependent on those which came before it just as much as a a git commit
-> is. An svn "revision" is a snapshot, regardless of how it is stored, ie,
-> the "svn stores changes, git stores snapshots" is an implementation
-> detail. It's a detail which makes a lot of things easier/faster in git
-> than they would be in svn, but a mere detail none the less.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Thanks for the correction, and for explanation.
+> Assumptions:
+>
+> 1. When .git is a file and contains a relative path, I assume it is
+>    relative to .git file's parent directory.  read_gitfile_gently()
+>    function will make the path absolute, but it depends on (maybe
+>    wrong) cwd.
 
-The problem with one-to-one [SVN revision]<->[Git commit] mapping in the
-situation of Subversion mishandling described by Stephen Bash persist,
-though the problem is not because "svn stores changes, git stores
-snapshots", but because of widely different model of branches.
+Ok.  I agree that a regular file .git that has "gitdir: ../there" in it
+should be naming "there" directory next to the directory .git lives in.
+It is insane for it to take $(cwd) into account.
 
+> There are a few factors that affect gitdir/worktree/cwd/prefix setup.
+> Those are:
+>
+>  - GIT_DIR (or --git-dir)
+>  - GIT_WORK_TREE (or --work-tree)
+>  - core.worktree
+>  - .git is a file pointing to real .git directory
+>  - Bare repo
+>
+> So there are 2^5 = 32 cases in total.
 
-Subversion uses the inter-file branching model (Wikipedia says it was
-"borrowed" from Perforce) to handle branches and tags.  It uses "branches
-are copies (folders)" paradigm, and technically it doesn't have separate
-namespace for branches but have projects, branches, and projects' 
-filesystem hierarchy mixed together; what part of path is branch name
-is defined by convention only.  This model makes it easy to mess up
-repository (because there are no technological barriers for going 
-against conventions, like mentioned all-branches change, or changing
-tags, or reversed hierarchy or branches and projects).
+Hmm, why is core.worktree separate from the second item?  In any case, the
+three mechanisms to specify the working tree should only be in effect when
+GIT_DIR/--git-dir is used, so the above are not orthogonal, and the total
+count should be smaller than 32 cases.
 
-Because (from what I understand) revisions in Subversion are whole
-project all-branches snapshots, and because revision identifiers are
-monotonically incrementing numbers, there is no inherent notion of
-_parent_ of commit, like there is in Git.  (I think that was the reason
-why merge tracking was absent from Subversion until version 1.5, and
-why mergeinfo is per-file rather than per-commit/per-revision property).
+> The following questions must be answered for each case:
+>
+> 0. What setup function handles that case?
+> 1. Is worktree available?
+> 2. Where is new cwd? Is it at worktree root?
+> 3. Prefix?
+> 4. Is (relative) $GIT_DIR accessible from current cwd?
+> 5. What if original cwd is outside worktree, or new cwd if it's not at
+>    worktree root?
 
+All good questions to ask, except for the last one which I cannot quite
+parse.
 
-In Git commits store snapshot of top level of a project (contrary to
-revisions in Subversion being snapshot of top level of repository tree,
-all branches and tags in it).  Each commit in Git also stores its parent
-or parents.  Those commit-to-parent links make up DAG (Directed Acyclic
-Graph) of revisions.  Branches in Git reside in separate namespace,
-and are live pointers (like e.g. top pointer in stack implementations)
-to commits; commit that branch points to (the tip of branch) marks out
-subset of DAG of revisions: all descendants of given commits - this form
-a line of development i.e. branch.
+> Table of Contents
+> =================
+> 1 Cases
+>     1.1 Case 0, 8
+>     1.2 Case 1, 4, 5, 9, 12, 13
+>         1.2.1 cwd outside worktree
+>     1.3 Case 2, 10
+>     1.4 Case 3, 6, 7, 11, 14, 15
+>         1.4.1 cwd outside worktree
+>     1.5 Case 16, 24
+>     1.6 Case 17, 20, 21, 25, 28, 29
+>         1.6.1 cwd outside worktree
+>     1.7 Case 18, 26
+>     1.8 Case 19, 22, 23, 27, 30, 31
+>
+>
+> 1 Cases
+> ~~~~~~~~
+>
+> Case#  Bare  .git-file  core.worktree  GIT_DIR  GIT_WORK_TREE
+> 0      0     0          0              0        0
+> 8      0     1          0              0        0
 
-What is important here is that commit is defined by the snapshot of
-top tree, and by its parents.  Different top tree and/or different
-parent(s) means that commit must be different.
+Ok.
 
+> 1      0     0          0              0        1
+> 4      0     0          1              0        0
+> 5      0     0          1              0        1
+> 9      0     1          0              0        1
+> 12     0     1          1              0        0
+> 13     0     1          1              0        1
 
-Now take a look at the situation described by Stephen Bash.  Lets
-assume that we have branches in our Subversion repository branches
-'foo' and 'bar' that diverged at revision number 1, that revision
-2 was only on branch 'foo', revision 3 was only on branch 'bar',
-and that revision 4 is mishandled edit of file across all branches.
+How does it make sense to have GIT_WORK_TREE without GIT_DIR?  Without
+GIT_DIR, we will run repository discovery, which means we will always go
+up to find a .git dir, and the reason for doing that is because we want to
+also work in a subdirectory of a working tree (the very original git never
+worked from anywhere other than the root level of the working tree).  By
+definition, the root of the working tree is the same as in cases 0/8.
 
-Let's try to draw it on ASCII-art diagram (fixed-width font required).
+> 2      0     0          0              1        0
+> 10     0     1          0              1        0
 
-  --- [1]-----[2]---|||---[ ]----|||----|||---[7]       <=== foo
-        \                 [4]
-         \----|||---[3]---[ ]----[5]----[6]             <=== bar
+If you set GIT_DIR, we do no discovery, so git will work only from the
+root level of the working tree (or bare repository operation) if you do
+not tell us where the working tree is.
 
-I marked by '|||' here that given revision doesn't change anything
-on given branch (in given subdirectory of repository tree).
+> 3      0     0          0              1        1
+> 6      0     0          1              1        0
+> 7      0     0          1              1        1
+> 11     0     1          0              1        1
+> 14     0     1          1              1        0
+> 15     0     1          1              1        1
 
-Now, from what I understand of Subversion model, when one asks for
-history of branch 'foo' in Subversion, it would return all revisions
-that modify 'project/branch/foo' or 'branch/foo/project', and only
-those that modify it (similarly to how path limiting in 
-`git log <path>` works).  For branch 'foo' it would be revisions
-1, 2, 4, 7; for branch 'bar' it would be revisions 1, 3, 4, 5, 6.
+Without discovery, we know where the root level of the working tree is,
+and we know where the repository is, because you told us.  The answers to
+questions 1-5, i.e. semantics observable by the end user, should be the
+same as case 0/8 even though the internal codepath to achieve that,
+i.e. question 0, may be different.
 
-Am I understanding it correctly?
+> 16     1     0          0              0        0
+> ...
+> 31     1     1          1              1        1
 
+Shouldn't all of these 16 be the same, if the repository is bare?  What is
+your definition of bareness?  core.bare?  In any case we should say "you
+are using a bare repository, there is no working tree" and cwd shouldn't
+change in these cases.  They are all bare and there is no working tree.
 
-Now in Git we don't have 'project/branch/foo/xxx', we have only
-top tree of a project.  Therefore we cannot represent revision
-4 as single git commit.  To have similar situation, i.e. commits
-1, 2, 4', 7 on branch 'foo', and commits 1, 3, 4'', 5, 6 on branch
-'bar', we would have to have the following graph of revisions
+Alternatively, you could give precedence to core.worktree and friends, in
+which case these can go to the other categories in your description,
+ignoring core.bare settings.  For example, 31 explicitly specifies where
+the .git directory and the working tree are, which would fall into the
+same category as 3,6,7,11,14,15.
 
+Either way is fine.
 
-  --- 1--<--2--<--4'---<--7            <=== foo
-       \
-        -<--3--<--4''--<--5--<--6      <=== bar
+> 1.1 Case 0, 8
+> ==============
+>
+> The most used case, nothing special is set.
+>
+> 0. setup_discovered_git_dir()
+> 1. work tree is .git dir's parent directory
+> 2. cwd is at worktree root, i.e. .git dir's parent dir
+> 3. prefix is calculated from original cwd
+> 4. git_dir is set to ".git" (#0) or according to .git file, made
+>    absolute (#8)
+> 5. N/A
+>
+> TODO: turn git_dir to relative in #8
 
-I uses --<-- here to denote that it is actual directed link.
+Ok.
 
-Commits 4' and 4'' can have different trees, and have different 
-parents.
+> 1.2 Case 1, 4, 5, 9, 12, 13
 
+As I said already, isn't this a nonsense combination you should error out?
 
-So to have the same results for 'svn log' when on branchs 'foo' and
-'bar' (however you switch branches in subversion), or 
-'svn log <foo URL>' and 'svn log <bar URL>' like for 'git log foo'
-and 'git log bar' in the [mishandling] situation described above
-you have to map single all-branches revision 4 in Subversion into
-two commits 4' and 4'' in Git.
+> 1.3 Case 2, 10
+> ===============
+>
+> 0. setup_explicit_git_dir()
+> 1. worktree is set at cwd for legacy reason
+> 2. cwd is unchanged
+> 3. prefix is NULL
+> 4. git_dir is set according to GIT_DIR (#2) or according to .git file,
+>    made absolute (#10)
+>
+> TODO: turn git_dir to relative path
+>
+> Note on #10: setup_git_env() is used to read .git file
 
+Ok.
 
-Please correct me if I am wrong about Subversion model.
+> 1.4 Case 3, 6, 7, 11, 14, 15
+> =============================
+>
+> Another normal case where worktree is at an unsual case.
+>
+> 0. setup_explicit_git_dir()
+> 1. worktree is set according to GIT_WORK_TREE (#3, #7, #11, #15) or
+>    core.worktree (#6, #14)
+> 2. cwd is moved to worktree root dir if original cwd is inside
+>    worktree
+> 3. prefix is calculated if original cwd is inside worktree
+> 4. git_dir is set to GIT_DIR (#3, #6, #7) or according to .git file,
+>    made absolute (#11, #14, #15)
+>
+> TODO: if GIT_DIR is relative, it is assumed relative to original cwd,
+> so it breaks because cwd now is changed. Right now this does not
+> happen because git_dir is turned absolute. Although it's better to be
+> relative.
+>
+> TODO: turn git_dir to relative in #11, #14, #15
+>
+> FIXME on #11, #14, #15: setup_git_env() is used to read .git file. cwd
+> by that time is worktree root, not .git's parent dir anymore.
 
-> 
-> The difference of course is that the "name" of an svn revision stays the
-> same even if aspects of that revision (for example, the commit message)
-> are changed, while the "name" of a git commit is dependent on everything
-> that makes up a commit. In git terms, changing a commit message is
-> considered to be history rewriting, whereas in svn terms it is merely
-> something which happens occasionally as part of regularly maintained
-> repository.
-> 
-> the git Philosophy is ingrained in its object model: If you change
-> something which led to a state, you change the state itself. I don't
-> think there should be an attempt to work-around that philosophy when
-> talking to external repositories. That is to say: if a commit message
-> (or other revprop) in history changes, we want to treat it as if we were
-> recovering from an upstream rebase. Of course, a problem in that could
-> very well be "how would we know about it?", which is a good question,
-> but one not directly related to [revision+directory]<->[commit]
-> mappings, afaik ;)
+Ok.
 
-Better solution, actually proposed in separate subthread, is to make use
-of new 'git replace' / 'refs/replaces/*' feature in Git, creating 
-replacement for revision which changed some property retroactively...
+> 1.4.1 cwd outside worktree
+> ---------------------------
+>
+> cwd is left unchanged, prefix is NULL, which is sensible for full tree
+> operations. is_inside_work_tree() returns 0, operations that require
+> worktree should check and error out.
+>
+> TODO: File path output however may not be what user expected because
+> it will be relative to worktree root, not original cwd.
 
-...if Subversion actually offer any way to ask for changed properties.
-Thankfully from what I understand from comments in this thread this
-feature of being able to change revision properties like commit message
-or authorship is by default turned off in Subversion.
+This is operating out of bounds of the original design criteria; we
+probably do not error out now, which is an original bug, but I understand
+that you are trying to enhance this to reach into a submodule repository
+and its working tree from its superproject.  As long as we can make such
+an enhancement in a way that produces sensible and consistent output, that
+kind of change would be fine.
 
--- 
-Jakub Narebski
-Poland
+I suspect that you would need to pass in "make the path relative to this"
+using some means that do not exist in the current structure of the code.
+
+Also I suspect that for the purpose of your enhancement, the first three
+lines of this paragraph would not be true.  Think of a case where you are
+at the superproject level and running a recursive grep into its submodule
+at "nitfol", that has contents recorded at the path "xyzzy/frotz.txt".
+
+If you keep cwd unchanged, the path appears at nitfol/xyzzy/frotz.txt in
+the working tree from the end user's point of view, so you need to pass
+"nitfol/" as a different kind of "prefix" that needs to be used to modify
+the path recorded in the contents tracked by the submodule.  The grep
+running in the submodule will read xyzzy/frotz.txt from the index (which
+is how it notices which paths are of interest), use the "nitfol/" prefix
+to turn it into a path in the working tree, read from that file and report
+hits.  This is an example of an operation that clearly require a working
+tree, and does not have to error out.
+
+Alternatively, if you move cwd to the top of the working tree of the
+submodule, you would still need to pass "nitfol/" prefix, but it needs to
+be used only in the output phase.  The grep running in the submodule will
+read xyzzy/frotz.txt from the index (which is how it notices which paths
+are of interest), read from the file in the working tree (relative to cwd
+which now is at the root level of the submodule), and use "nitfol/" as
+output prefix when reporting.
