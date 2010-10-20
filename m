@@ -1,69 +1,75 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: bash completion broken on ubuntu 10.10?
-Date: Thu, 21 Oct 2010 01:04:09 +0200
-Message-ID: <20101020230409.GB1767@neumann>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 01:04:20 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: [PATCH v3 (maint)] t/gitweb-lib: Don't pass constant to decode_utf8
+Date: Wed, 20 Oct 2010 19:07:10 -0400
+Message-ID: <1287616030-88078-1-git-send-email-brian@gernhardtsoftware.com>
+References: <201010202105.59370.jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Sven Verdoolaege <skimo@kotnet.org>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Oct 21 01:07:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8hhi-0003Tz-6n
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 01:04:18 +0200
+	id 1P8hkh-0004UF-Kc
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 01:07:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754697Ab0JTXEM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 19:04:12 -0400
-Received: from moutng.kundenserver.de ([212.227.17.10]:64572 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750762Ab0JTXEM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 19:04:12 -0400
-Received: from localhost6.localdomain6 (p5B130998.dip0.t-ipconnect.de [91.19.9.152])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0MACkL-1OxP1P2byT-00B08D; Thu, 21 Oct 2010 01:04:10 +0200
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:HVZn0ByN4Fyel6DNi/UUHoxXbCKyMCCuaRkm2MCrkX5
- cCtBfoFcdcl6JdnOibfRkMPk5Iml94eCWk5XV9ULjKd8ELc+5+
- 2gB0P4f1zSML3VzjXXj3RSptSvaywZ82sg/Ymjp8Us9yuyH9js
- bLpFwed2H52TVdAHyUzdnYjMrAjJMZr2BxzkUNKQ8d/uvyWloZ
- uSP1Qhf2KD9wZHyjWuzeA==
+	id S1756154Ab0JTXHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 19:07:14 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:59788 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756089Ab0JTXHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 19:07:13 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id D8B4F1FFC05B; Wed, 20 Oct 2010 23:07:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from localhost.localdomain (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	by silverinsanity.com (Postfix) with ESMTPA id 960B91FFC057;
+	Wed, 20 Oct 2010 23:07:03 +0000 (UTC)
+X-Mailer: git-send-email 1.7.3.1.209.g52408
+In-Reply-To: <201010202105.59370.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159449>
 
-Hi,
+Encode.pm started updating the string to decode in-place when
+a second argument is passed in version 2.40.  This causes
+'decode_utf8("", Encode::FB_CROAK)' to die with a message like:
 
-Git's bash completion script offers possible arguments to some
-options, e.g. it lists pretty formats after 'git log --pretty=3D<TAB>',
-merge tools after 'git mergetool --tool=3D<TAB>', refs after 'git commi=
-t
---reuse-message=3D<TAB>', etc.
+Modification of a read-only value attempted at .../Encode.pm line 216.
 
-On a three day old ubuntu 10.10 install these don't work anymore; the
-completion script offers the list of files in all those cases.
+Work around this by passing an empty variable instead of a constant
+string.
 
-After a bit of investigation I found that when I press TAB after 'git
-log --pretty=3D', then ${COMP_WORDS[COMP_CWORD-1]} contains '--pretty'
-and ${COMP_WORDS[COMP_CWORD]} contains "=3D".  Weird.
+Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+Acked-by: Jakub Narebski <jnareb@gmail.com>
+---
+ Changes since v2:
+ - Re-wrapped first paragraph for easier reading
+ - Removed long OS X-specific Perl library path
+ - Added Ack
 
-Then I remembered that we had some COMP_WORDBREAKS issues in the past
-(db8a9ff, bash completion: Resolve git show ref:path<tab> losing ref:
-portion, 2008-07-15)).  So I looked at my $COMP_WORDBREAKS, but didn't
-see anything suspicious (it contains "'><=3D;|&(: ).  Removing the '=3D=
-'
-makes the listing after 'git log --pretty=3D' work, but breaks many
-other things badly.
+ t/gitweb-lib.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I don't have any ideas what could possibly be wrong here (but it's too
-late here for any bright ideas anyway...).  Could someone confirm or
-deny this behaviour on ubuntu 10.10?
-
-
-Thanks,
-G=E1bor
+diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+index 81ef2a0..1b9523d 100644
+--- a/t/gitweb-lib.sh
++++ b/t/gitweb-lib.sh
+@@ -80,7 +80,7 @@ if ! test_have_prereq PERL; then
+ 	test_done
+ fi
+ 
+-perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
++perl -MEncode -e '$e="";decode_utf8($e, Encode::FB_CROAK)' >/dev/null 2>&1 || {
+     skip_all='skipping gitweb tests, perl version is too old'
+     test_done
+ }
+-- 
+1.7.3.1.209.g52408
