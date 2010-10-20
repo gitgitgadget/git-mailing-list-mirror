@@ -1,11 +1,7 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [TopGit PATCH v3 05/12] tg-path: use pretty_tree and diff-tree to generate the patch
-Date: Wed, 20 Oct 2010 22:17:50 +0200
-Message-ID: <d1c407c33f446a6e5c7329ba521871732a136fa6.1287605587.git.bert.wesarg@googlemail.com>
-References: <52df5d1de969f474d93c4dce320edc657bb866dc.1287605587.git.bert.wesarg@googlemail.com>
- <38d2d7e3ba54cea256bc111f50bcb8d35e7d520d.1287605587.git.bert.wesarg@googlemail.com>
- <b00fdc4e3060b7cf9f1ed25caff16799df09e414.1287605587.git.bert.wesarg@googlemail.com>
- <d9fc8653e6e4c7eb7197a0fb92cd3b8c6e058187.1287605587.git.bert.wesarg@googlemail.com>
+Subject: [TopGit PATCH v3 01/12] provide a global temporary directory
+Date: Wed, 20 Oct 2010 22:17:46 +0200
+Message-ID: <52df5d1de969f474d93c4dce320edc657bb866dc.1287605587.git.bert.wesarg@googlemail.com>
 Cc: git@vger.kernel.org, pasky@suse.cz,
 	martin f krafft <madduck@madduck.net>,
 	Bert Wesarg <bert.wesarg@googlemail.com>
@@ -16,132 +12,273 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8f7n-0005GB-0h
+	id 1P8f7n-0005GB-HI
 	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 22:19:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755574Ab0JTUSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 16:18:24 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:40177 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755557Ab0JTUSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 16:18:22 -0400
-Received: by fxm4 with SMTP id 4so3063004fxm.19
-        for <git@vger.kernel.org>; Wed, 20 Oct 2010 13:18:20 -0700 (PDT)
+	id S1755591Ab0JTUS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 16:18:27 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:37128 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755576Ab0JTUSZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 16:18:25 -0400
+Received: by ywi6 with SMTP id 6so2278670ywi.19
+        for <git@vger.kernel.org>; Wed, 20 Oct 2010 13:18:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
-        bh=juqePA5U8XKi8PsTA10iOBKDc8+o/3StHk6y7Q+b2rc=;
-        b=Z60NZCFzzCDMuwyB62hsVGVMtXUQT1NlhvtQkfbOueg8Ws0VR0WHBMpCMXcVTXPLy0
-         Do1Kxe6szsv5CpGyCXwhUN512/U05S2utXPcFxmqImumaFO/eCKodMgfpXiP/pY9LDqF
-         XpAqJWdfML1nmrbqWcliS1F+LOFdyYY2vgeUI=
+         :message-id:x-mailer;
+        bh=FUoVIssI4yFPez0Li4DHN909ixjvgIXBLnHjb0JpB1s=;
+        b=GeyWs2LyBxfpeMXW4vj7hD53f87/BsKAVLQuOpBcalpTDox4BJirr4at9cgfQFnm9f
+         y11SkxGyW3fgRKj1F+xrSxIxVy5qF+BRX1BRIWv6R35/Lu9+/90tvYbVYamuxlgkTcsQ
+         t39ypspzlt+fqCRcbA+ag31Cai2GyEiAm3F8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=EzSe20W3ZGkTKLNbdB8rVL6275EeSPK6jJcNRG3uuZtU/9dXTQMvfQ9jlti9j3BKlq
-         3BvCms/GC7Pp8ab3J96/4I93/Ssr857I9vR4EyEbfCUJXk3IGnfssOipZO6ZrafXXD8X
-         dId109kb4eP1Phgz1MrZ/TIpmUiOvUnLtacMI=
-Received: by 10.103.121.20 with SMTP id y20mr6645498mum.5.1287605900829;
-        Wed, 20 Oct 2010 13:18:20 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Ur/wInZzkO6j4MYBvEe2SdF7KDJnstUC1ELV+ilV+IplN/3wbGMgSmgmYidu+OfScm
+         ZJZBKsGUcSsolpo14+qy+QGoWZ45xHbFupdnyDEsU1wpPgaufxU3WDJvPCVVj6r2HI9C
+         ez9hhqEtPlFznkVSUB39/p34cn9Ysvq8Ts/3I=
+Received: by 10.103.124.4 with SMTP id b4mr130mun.106.1287605888389;
+        Wed, 20 Oct 2010 13:18:08 -0700 (PDT)
 Received: from localhost (drsd-4db3cc42.pool.mediaWays.net [77.179.204.66])
-        by mx.google.com with ESMTPS id b15sm402687fah.28.2010.10.20.13.18.19
+        by mx.google.com with ESMTPS id b15sm406971fah.4.2010.10.20.13.17.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 20 Oct 2010 13:18:20 -0700 (PDT)
+        Wed, 20 Oct 2010 13:18:03 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.1.1069.g89486
-In-Reply-To: <d9fc8653e6e4c7eb7197a0fb92cd3b8c6e058187.1287605587.git.bert.wesarg@googlemail.com>
-In-Reply-To: <52df5d1de969f474d93c4dce320edc657bb866dc.1287605587.git.bert.wesarg@googlemail.com>
-References: <52df5d1de969f474d93c4dce320edc657bb866dc.1287605587.git.bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159433>
+
+The standard procedure 'tmp=mktemp; trap "rm $tmp" 0' was broken with the
+introduction of the pager. Which overwrites the trap itself to close and
+remove the pager fifo.
+
+Now tg provides a temp playground and all other temp files should be created
+inside this directory and only this directory will be removed with the exit
+trap. setup_pager still overwrites the trap, but keeps the rm command from
+the global temp directory. To simplify this the new function get_temp() is
+provided.
 
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 ---
- tg-patch.sh |   54 +++++++++++++++++++++++++++++++-----------------------
- 1 files changed, 31 insertions(+), 23 deletions(-)
+ hooks/pre-commit.sh |    3 +--
+ tg-export.sh        |    3 +--
+ tg-info.sh          |    3 +--
+ tg-mail.sh          |    4 +---
+ tg-patch.sh         |    3 +--
+ tg-push.sh          |    3 +--
+ tg-summary.sh       |    3 +--
+ tg-update.sh        |    3 +--
+ tg.sh               |   27 +++++++++++++++++++--------
+ 9 files changed, 27 insertions(+), 25 deletions(-)
 
-diff --git a/tg-patch.sh b/tg-patch.sh
-index 85346ec..9def6e5 100644
---- a/tg-patch.sh
-+++ b/tg-patch.sh
-@@ -6,8 +6,6 @@
- name=
+diff --git a/hooks/pre-commit.sh b/hooks/pre-commit.sh
+index 4f2f16f..c52a268 100644
+--- a/hooks/pre-commit.sh
++++ b/hooks/pre-commit.sh
+@@ -95,9 +95,8 @@ BEGIN      { in_hunk = 0; }
+ 	done
  
- head_from=
--diff_opts=
--diff_committed_only=yes	# will be unset for index/worktree
- 
- 
- ## Parse options
-@@ -15,15 +13,9 @@ diff_committed_only=yes	# will be unset for index/worktree
- while [ -n "$1" ]; do
- 	arg="$1"; shift
- 	case "$arg" in
--	-i)
-+	-i|-w)
- 		[ -z "$head_from" ] || die "-i and -w are mutually exclusive"
--		head_from=-i
--		diff_opts="$diff_opts --cached";
--		diff_committed_only=;;
--	-w)
--		[ -z "$head_from" ] || die "-i and -w are mutually exclusive"
--		head_from=-w
--		diff_committed_only=;;
-+		head_from="$arg";;
- 	-*)
- 		echo "Usage: tg [...] patch [-i | -w] [NAME]" >&2
- 		exit 1;;
-@@ -49,20 +41,36 @@ fi
- 
- setup_pager
- 
--cat_file "$name:.topmsg" $head_from
--echo
--[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
--
--# Evil obnoxious hack to work around the lack of git diff --exclude
--git_is_stupid="$(get_temp tg-patch-changes)"
--git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
--	fgrep -vx ".topdeps" |
--	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
--if [ -s "$git_is_stupid" ]; then
--	cd "$root_dir"
--	cat "$git_is_stupid" | xargs git diff -a --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
--else
-+
-+# put out the commit message
-+# and put an empty line out, if the last one in the message was not an empty line
-+# and put out "---" if the commit message does not have one yet
-+cat_file "$name:.topmsg" $head_from |
-+	awk '
-+/^---/ {
-+    has_3dash=1;
-+}
-+       {
-+    need_empty = 1;
-+    if ($0 == "")
-+        need_empty = 0;
-+    print;
-+}
-+END    {
-+    if (need_empty)
-+        print "";
-+    if (!has_3dash)
-+        print "---";
-+}
-+'
-+
-+b_tree=$(pretty_tree "$name" -b)
-+t_tree=$(pretty_tree "$name" $head_from)
-+
-+if [ $b_tree = $t_tree ]; then
- 	echo "No changes."
-+else
-+	git diff-tree -p --stat $b_tree $t_tree
+ # check for repetitions of deps
+-depdir="$(mktemp -t -d tg-depdir.XXXXXX)" ||
++depdir="$(get_temp tg-depdir -d)" ||
+ 	die "Can't check for multiple occurrences of deps"
+-trap "rm -rf '$depdir'" 0
+ cat_file "(i):.topdeps" |
+ 	while read dep; do
+ 		[ ! -d "$depdir/$dep" ] ||
+diff --git a/tg-export.sh b/tg-export.sh
+index 6d82d55..921e933 100644
+--- a/tg-export.sh
++++ b/tg-export.sh
+@@ -57,8 +57,7 @@ if [ -z "$branches" ]; then
  fi
  
+ 
+-playground="$(mktemp -d -t tg-export.XXXXXX)"
+-trap 'rm -rf "$playground"' EXIT
++playground="$(get_temp tg-export -d)"
+ 
+ 
+ ## Collapse driver
+diff --git a/tg-info.sh b/tg-info.sh
+index 7d6a34c..10e257e 100644
+--- a/tg-info.sh
++++ b/tg-info.sh
+@@ -51,7 +51,7 @@ fi
+ git cat-file blob "$name:.topdeps" |
+ 	sed '1{ s/^/Depends: /; n; }; s/^/         /;'
+ 
+-depcheck="$(mktemp -t tg-depcheck.XXXXXX)"
++depcheck="$(get_temp tg-depcheck)"
+ missing_deps=
+ needs_update "$name" >"$depcheck" || :
+ if [ -n "$missing_deps" ]; then
+@@ -72,6 +72,5 @@ if [ -s "$depcheck" ]; then
+ else
+ 	echo "Up-to-date."
+ fi
+-rm "$depcheck"
+ 
+ # vim:noet
+diff --git a/tg-mail.sh b/tg-mail.sh
+index 8167ade..dd4a95a 100644
+--- a/tg-mail.sh
++++ b/tg-mail.sh
+@@ -34,7 +34,7 @@ if [ -n "$in_reply_to" ]; then
+ fi
+ 
+ 
+-patchfile="$(mktemp -t tg-mail.XXXXXX)"
++patchfile="$(get_temp tg-mail)"
+ 
+ $tg patch "$name" >"$patchfile"
+ 
+@@ -54,6 +54,4 @@ people=
+ # NOTE: git-send-email handles cc itself
+ eval git send-email $send_email_args "$people" "$patchfile"
+ 
+-rm "$patchfile"
+-
+ # vim:noet
+diff --git a/tg-patch.sh b/tg-patch.sh
+index 7bafdfe..68efcf0 100644
+--- a/tg-patch.sh
++++ b/tg-patch.sh
+@@ -51,7 +51,7 @@ echo
+ [ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
+ 
+ # Evil obnoxious hack to work around the lack of git diff --exclude
+-git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
++git_is_stupid="$(get_temp tg-patch-changes)"
+ git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
+ 	fgrep -vx ".topdeps" |
+ 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
+@@ -61,7 +61,6 @@ if [ -s "$git_is_stupid" ]; then
+ else
+ 	echo "No changes."
+ fi
+-rm "$git_is_stupid"
+ 
  echo '-- '
+ echo "tg: ($base_rev..) $name (depends on: $(cat_file "$topic:.topdeps" | paste -s -d' '))"
+diff --git a/tg-push.sh b/tg-push.sh
+index 199d738..a928fba 100644
+--- a/tg-push.sh
++++ b/tg-push.sh
+@@ -45,8 +45,7 @@ for name in $branches; do
+ 	ref_exists "$name" || die "detached HEAD? Can't push $name"
+ done
+ 
+-_listfile="$(mktemp -t tg-push-listfile.XXXXXX)"
+-trap "rm -f \"$_listfile\"" 0
++_listfile="$(get_temp tg-push-listfile)"
+ 
+ push_branch()
+ {
+diff --git a/tg-summary.sh b/tg-summary.sh
+index af16888..612bd27 100644
+--- a/tg-summary.sh
++++ b/tg-summary.sh
+@@ -55,10 +55,9 @@ EOT
+ fi
+ 
+ if [ -n "$sort" ]; then
+-	tsort_input=`mktemp`
++	tsort_input="$(get_temp tg-summary-sort)"
+ 	exec 4>$tsort_input
+ 	exec 5<$tsort_input
+-	rm $tsort_input
+ fi
+ 
+ ## List branches
+diff --git a/tg-update.sh b/tg-update.sh
+index b256c7c..5162c52 100644
+--- a/tg-update.sh
++++ b/tg-update.sh
+@@ -27,7 +27,7 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
+ 
+ ## First, take care of our base
+ 
+-depcheck="$(mktemp -t tg-depcheck.XXXXXX)"
++depcheck="$(get_temp tg-depcheck)"
+ missing_deps=
+ needs_update "$name" >"$depcheck" || :
+ [ -z "$missing_deps" ] || die "some dependencies are missing: $missing_deps"
+@@ -96,7 +96,6 @@ if [ -s "$depcheck" ]; then
+ else
+ 	info "The base is up-to-date."
+ fi
+-rm "$depcheck"
+ 
+ # Home, sweet home...
+ # (We want to always switch back, in case we were on the base from failed
+diff --git a/tg.sh b/tg.sh
+index 8264a3b..3805eeb 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -150,7 +150,7 @@ recurse_deps()
+ 	_name="$1"; # no shift
+ 	_depchain="$*"
+ 
+-	_depsfile="$(mktemp -t tg-depsfile.XXXXXX)"
++	_depsfile="$(get_temp tg-depsfile)"
+ 	# If no_remotes is unset check also our base against remote base.
+ 	# Checking our head against remote head has to be done in the helper.
+ 	if test -z "$no_remotes" && has_remote "top-bases/$_name"; then
+@@ -183,7 +183,6 @@ recurse_deps()
+ 		eval "$_cmd"
+ 	done <"$_depsfile"
+ 	missing_deps="${missing_deps# }"
+-	rm "$_depsfile"
+ 	return $_ret
+ }
+ 
+@@ -334,19 +333,28 @@ setup_pager()
+ 	# now spawn pager
+ 	export LESS="${LESS:-FRSX}"	# as in pager.c:pager_preexec()
+ 
+-	_pager_fifo_dir="$(mktemp -t -d tg-pager-fifo.XXXXXX)"
+-	_pager_fifo="$_pager_fifo_dir/0"
+-	mkfifo -m 600 "$_pager_fifo"
++	# setup_pager should be called only once per command
++	pager_fifo="$tg_tmp_dir/pager"
++	mkfifo -m 600 "$pager_fifo"
+ 
+-	"$TG_PAGER" < "$_pager_fifo" &
+-	exec > "$_pager_fifo"		# dup2(pager_fifo.in, 1)
++	"$TG_PAGER" < "$pager_fifo" &
++	exec > "$pager_fifo"		# dup2(pager_fifo.in, 1)
+ 
+ 	# this is needed so e.g. `git diff` will still colorize it's output if
+ 	# requested in ~/.gitconfig with color.diff=auto
+ 	export GIT_PAGER_IN_USE=1
+ 
+ 	# atexit(close(1); wait pager)
+-	trap "exec >&-; rm \"$_pager_fifo\"; rmdir \"$_pager_fifo_dir\"; wait" EXIT
++	# deliberately overwrites the global EXIT trap
++	trap "exec >&-; rm -rf \"$tg_tmp_dir\"; wait" EXIT
++}
++
++# get_temp NAME [-d]
++# creates a new temporary file (or directory with -d) in the global
++# temporary directory $tg_tmp_dir with pattern prefix NAME
++get_temp()
++{
++	mktemp ${2-} "$tg_tmp_dir/$1.XXXXXX"
+ }
+ 
+ ## Startup
+@@ -366,6 +374,9 @@ tg="tg"
+ # make sure merging the .top* files will always behave sanely
+ setup_ours
+ setup_hook "pre-commit"
++# create global temporary directories, inside GIT_DIR
++tg_tmp_dir="$(mktemp -d "$git_dir/tg-tmp.XXXXXX")"
++trap "rm -rf \"$tg_tmp_dir\"" EXIT
+ 
+ ## Dispatch
+ 
 -- 
 1.7.3.1.1069.g89486
