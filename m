@@ -1,97 +1,67 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
- git-svn fetch)
-Date: Wed, 20 Oct 2010 22:26:35 +0530
-Message-ID: <20101020165630.GB13716@kytes>
-References: <1287563970.2673.12.camel@wpalmer.simply-domain>
- <30010681.536316.1287584507672.JavaMail.root@mail.hq.genarts.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Test failures in today's pu: 0025, 4046, 4203, 9300, 9301
+Date: Wed, 20 Oct 2010 18:56:54 +0200
+Message-ID: <201010201856.54756.trast@student.ethz.ch>
+References: <201010201148.51551.trast@student.ethz.ch> <7vvd4wvmv6.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Will Palmer <wmpalmer@gmail.com>, Matt Stump <mstump@goatyak.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	David Michael Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Stephen Bash <bash@genarts.com>
-X-From: git-owner@vger.kernel.org Wed Oct 20 18:57:24 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 20 18:57:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8byd-0005Ye-DY
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 18:57:23 +0200
+	id 1P8byd-0005Ye-UA
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 18:57:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754271Ab0JTQ5Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1754422Ab0JTQ5R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 12:57:17 -0400
+Received: from gwse.ethz.ch ([129.132.178.238]:17094 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754225Ab0JTQ5Q (ORCPT <rfc822;git@vger.kernel.org>);
 	Wed, 20 Oct 2010 12:57:16 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:56328 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754179Ab0JTQ5P (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 12:57:15 -0400
-Received: by yxm8 with SMTP id 8so1732688yxm.19
-        for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:57:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=o/NB0Ri39LDby3ClO9xX9pNS5cmApbefH0ohi4CYBvc=;
-        b=Xta4RW6IODeEa890Ke5sGMnEOnw6kIQz7vyHfqhfFrk/Pe7LObuPDoFZwuCqiTLhGe
-         u3W2bUJn5cYHfuR+VbNkahHm4GBTmIPEaNgZQ1iD7kWxuDF3H2P61qHaglEkSWGNBCib
-         m7wn20ykVnuVbA355cK+6TG8o/Tf/WVA7y8jE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=TrUUw7omVICl/FIQtz9VP7Ywl8fk27PcGuD9hATJsHNdU+43sSbShAJn2x3CRn+9W8
-         DkLohQfUHSkXJCuM+UD5pG6mH6JFvWhGrVJ8i+7APRLhXKfzHDDIx6845LH1WbRJIIUg
-         38La8Vh/QkxK9DtBXCQuDssxOnvQ+H+6v/N3g=
-Received: by 10.90.36.6 with SMTP id j6mr626354agj.28.1287593834973;
-        Wed, 20 Oct 2010 09:57:14 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id f50sm324428yhc.38.2010.10.20.09.57.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 20 Oct 2010 09:57:13 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <30010681.536316.1287584507672.JavaMail.root@mail.hq.genarts.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+Received: from CAS10.d.ethz.ch (172.31.38.210) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Wed, 20 Oct
+ 2010 18:57:14 +0200
+Received: from pctrast.inf.ethz.ch (129.132.149.150) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 20 Oct
+ 2010 18:56:53 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.36-rc8-32-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <7vvd4wvmv6.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159418>
 
-Hi Stephen,
-
-Stephen Bash writes:
-> > From: "Will Palmer" <wmpalmer@gmail.com>
-> > I was under the impression that there
-> > would be one "one-to-one" mapping branch (which would never be checked
-> > out), containing the history of /, and that the "real" git branches,
-> > tags, etc, would be based on the trees originally referenced by the root
-> > checkout, with git-notes (or similar) being used to track the weirdness
-> > in mappings.
+Junio C Hamano wrote:
+> Thomas Rast <trast@student.ethz.ch> writes:
 > 
-> Admittedly I'm not in the inner circle, but this is the first time
-> I've heard the idea.
+> > * t4203-mailmap: bisected to d8d2eb7d (mailmap: fix use of freed
+> >   memory).  I saw some list traffic possibly related to this, is it
+> >   fixed already?
+> 
+> I found one issue that will trigger if you do not run this test with its
+> standard input corrected to a terminal and pushed out a fix last night.
+> Did you have 3e3e1ef (t4203: do not let "git shortlog" DWIM based on tty,
+> 2010-10-19) when your automated test ran?
 
-Do hang out on the development channel - a lot of stuff cooks there :)
+No.  False alarm then?
 
-> It's certainly intriguing.  In this case would
-> the one-to-one branch include the full SVN repository history (all
-> projects), or would svn-fe/git-fast-import filter down to
-> subdirectories of interest?
+> > * t9300-fast-import: bisected to a544a23c (t9300 (fast-import):
+> >   another test for the "replace root" feature).
+> 
+> Jonathan noticed breakage caused while I was applying his patch; should be
+> corrected as of last night with 971728c (t9300 (fast-import): another test
+> for the "replace root" feature, 2010-10-17).
 
-Full history. Atleast that's what I was thinking about sometime ago.
+Same here.  I thought I saw a valgrind failure, but it was only caused
+by -O0 apparently.  In any case I cannot reproduce the test failur
+with current pu (b19f0de).
 
-> Along those lines I can contribute the following data point: my
-> initial fast-import repository weighs in at 1.3G, while after my
-> scripts run the final product is 659M (and no, they are not hard
-> linking to each other).  Unfortunately I don't have a good
-> accounting of the size difference (obviously some is filtering down
-> to a single SVN project).
-
-Yeah, David reported similar statistics after repacking the ASF
-repository.
-
--- Ram
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
