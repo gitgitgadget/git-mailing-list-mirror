@@ -1,73 +1,77 @@
 From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Highlighting whitespace on removal with git diff
-Date: Tue, 19 Oct 2010 20:15:33 -0700
-Message-ID: <D058D986-2A83-4979-A461-F7CB34EF9448@sb.org>
-References: <AANLkTik7a8OQz2+SVTm+HjZkCtbjm6O9d12biCJ8MyZz@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Stonky Fandango <stonkyfandango@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 20 05:15:58 2010
+Subject: [PATCH] diff: handle lines containing only whitespace better
+Date: Tue, 19 Oct 2010 21:46:18 -0700
+Message-ID: <1287549978-54280-1-git-send-email-kevin@sb.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Kevin Ballard <kevin@sb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 20 06:46:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8P9f-0007sE-4n
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 05:15:55 +0200
+	id 1P8QZJ-00057B-JA
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 06:46:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757773Ab0JTDPi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 19 Oct 2010 23:15:38 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:58005 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757500Ab0JTDPg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Oct 2010 23:15:36 -0400
-Received: by pzk3 with SMTP id 3so591806pzk.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 20:15:36 -0700 (PDT)
-Received: by 10.142.13.12 with SMTP id 12mr5402189wfm.77.1287544536381;
-        Tue, 19 Oct 2010 20:15:36 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id y42sm20228821wfd.10.2010.10.19.20.15.34
+	id S1751689Ab0JTEqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 00:46:24 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:45452 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751385Ab0JTEqX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 00:46:23 -0400
+Received: by pva18 with SMTP id 18so632951pva.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 21:46:23 -0700 (PDT)
+Received: by 10.142.166.16 with SMTP id o16mr3714840wfe.231.1287549983371;
+        Tue, 19 Oct 2010 21:46:23 -0700 (PDT)
+Received: from localhost.localdomain ([69.170.160.74])
+        by mx.google.com with ESMTPS id t38sm26462059wfc.9.2010.10.19.21.46.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 19 Oct 2010 20:15:35 -0700 (PDT)
-In-Reply-To: <AANLkTik7a8OQz2+SVTm+HjZkCtbjm6O9d12biCJ8MyZz@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+        Tue, 19 Oct 2010 21:46:22 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.1.211.g81fee.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159391>
 
-The highlight isn't telling you what changed on the line. It's telling you that this added line has trailing whitespace, and your core.whitespace config value is set such that this is considered an error.
+When a line contains nothing but whitespace and the core.whitespace config
+option contains blank-at-eol, the whitespace on the line is being printed
+twice, once unhighlighted (unless otherwise matched by one of the other
+core.whitespace values), and a second time highlighted for blank-at-eol.
 
--Kevin Ballard
+Update the leading indentation check to stop checking when it reaches
+the trailing whitespace.
 
-On Oct 19, 2010, at 5:46 PM, Stonky Fandango wrote:
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+ ws.c |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-> When I do say 'git diff', and I have added a line with a trailing
-> whitespace, i get a red square box highlighting the added whitespace.
-> (on the '+' diff line)
-> What I want, is the reverse - so when I delete an existing whitespace,
-> I get something similar, for example a blue box highlighting the
-> deleted whitespace (on the '-' diff line)
-> 
-> Currently the only notificate I get is identical
-> '-' and '+' diff lines, but no indication of the whitespace deleted
-> 
-> I know I can do this with graphical tools, but ideally would like some way
-> using the standard console git diff - if this is possible.
-> 
-> I have  the following in my .gitconfig
-> ---
-> [color "diff"]
-> whitespace = red reverse
-> [core]
->  whitespace=-indent-with-non-tab,trailing-space,cr-at-eol,tab-in-indent
-> ---
-> 
-> Thanks,
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+diff --git a/ws.c b/ws.c
+index d7b8c33..7302f8f 100644
+--- a/ws.c
++++ b/ws.c
+@@ -174,8 +174,11 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
+ 		}
+ 	}
+ 
++	if (trailing_whitespace == -1)
++		trailing_whitespace = len;
++
+ 	/* Check indentation */
+-	for (i = 0; i < len; i++) {
++	for (i = 0; i < trailing_whitespace; i++) {
+ 		if (line[i] == ' ')
+ 			continue;
+ 		if (line[i] != '\t')
+@@ -218,8 +221,6 @@ static unsigned ws_check_emit_1(const char *line, int len, unsigned ws_rule,
+ 		 * Now the rest of the line starts at "written".
+ 		 * The non-highlighted part ends at "trailing_whitespace".
+ 		 */
+-		if (trailing_whitespace == -1)
+-			trailing_whitespace = len;
+ 
+ 		/* Emit non-highlighted (middle) segment. */
+ 		if (trailing_whitespace - written > 0) {
+-- 
+1.7.3.1.211.g81fee.dirty
