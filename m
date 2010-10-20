@@ -1,133 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] builtins: check for startup_info->help, print and
- exit early
-Date: Wed, 20 Oct 2010 08:18:22 +0700
-Message-ID: <AANLkTik7=q3UyxxY+PGhokzCSDJyb9ZRjgjM9SoZ37vd@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/3] builtins: utilize startup_info->help where possible
+Date: Tue, 19 Oct 2010 20:18:20 -0500
+Message-ID: <20101020011820.GA6872@burratino>
 References: <1287495320-27278-1-git-send-email-pclouds@gmail.com>
- <1287495320-27278-3-git-send-email-pclouds@gmail.com> <7vvd4y16t8.fsf@alter.siamese.dyndns.org>
+ <1287495320-27278-2-git-send-email-pclouds@gmail.com>
+ <20101019172953.GC25139@burratino>
+ <AANLkTinvSKAyXkzjUgxvrDWvuHWpa+46XVxTu=tWck53@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 20 03:19:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 20 03:22:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8NLD-0003KE-5C
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 03:19:43 +0200
+	id 1P8NNf-0003oD-BO
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 03:22:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754003Ab0JTBSp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 19 Oct 2010 21:18:45 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55942 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752677Ab0JTBSn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 19 Oct 2010 21:18:43 -0400
-Received: by wyb28 with SMTP id 28so3156046wyb.19
-        for <git@vger.kernel.org>; Tue, 19 Oct 2010 18:18:42 -0700 (PDT)
+	id S1754679Ab0JTBWJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 19 Oct 2010 21:22:09 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:56346 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753227Ab0JTBWI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 19 Oct 2010 21:22:08 -0400
+Received: by qwa26 with SMTP id 26so1846212qwa.19
+        for <git@vger.kernel.org>; Tue, 19 Oct 2010 18:22:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=37hVTl/MBMK3NV5Shg37tkLOggD6Ayy8kBOGrS9Bwr8=;
-        b=gxKIAEznabpVX+FS4vWz/Nu5t2ZLEiqXFOwADXGW7TefXXVG+hCOY/dSo2rp7rtJvl
-         aeyLnz/rF/X0S3Klabeat7JAOaWYfPSs960WZegOshew3dKeOaYv/adcTsE9AfF8McwX
-         NraWKSPM+Qh/RQOQlceFdA8GwzCbAxdMFgSSM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=8pKaNs6/FVtAP5EzW7lm03oYpmE65tWa+6bLuaAY0nQ=;
+        b=F4L/IsQPiUSXI763icDQwEUI1LdKgCA6RgVBv5bWcDOlKEnQQ7WszEp52k3h+kpKH0
+         lqcjrvITs9hRdmPzIujU7kbU5LFafaIKJ1xB8kXXdbcsN/AFhpdtR3JODp9eqyNlw2Op
+         JArizsRCKEHL/CsP6eFEWF0NHIViLUI9uKH80=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=GlFZORHh9QrrklGunUJyjAFNSQZChiEE4LVpdpPVoVzLGJa6znP+bnJnBFYIcPRFmf
-         CZcshBpPzSBmcA8pM9CUavYAZufETxSsNGrAnmh8nEWk1rqRzYMIPfjkR8UeVFza5PHI
-         3y5cjDssbJvaDuKjZnZ/Z1la3zrNpfi8TeMcE=
-Received: by 10.216.1.18 with SMTP id 18mr7464311wec.24.1287537522274; Tue, 19
- Oct 2010 18:18:42 -0700 (PDT)
-Received: by 10.216.171.207 with HTTP; Tue, 19 Oct 2010 18:18:22 -0700 (PDT)
-In-Reply-To: <7vvd4y16t8.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Gf+9m/fRkS7l53BJbkvRGKthoLoL/LNK0syCshHu0kzmhMAduU40Q9sBjTf1NhiVgh
+         aGgkY0puQkOiTJi7rkcvH0a0Hx/JGoQiZr+MTFLwCi/+j1Xy2Bb4SqgbdlQQGsW9K4BU
+         X7U3j+XPR60JUeFVPrtKjdrw/ZwtgfoiWLPSk=
+Received: by 10.229.228.82 with SMTP id jd18mr2746784qcb.232.1287537726696;
+        Tue, 19 Oct 2010 18:22:06 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id u2sm4672026qcq.19.2010.10.19.18.22.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 19 Oct 2010 18:22:05 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinvSKAyXkzjUgxvrDWvuHWpa+46XVxTu=tWck53@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159384>
 
-2010/10/19 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
->
->> These commands need more than just git_config() before parsing
->> commmand line arguments. Some of these activities will unconditional=
-ly
->> look into a repository. When startup_info->help is TRUE, no reposito=
-ry
->> is set up and the caller expects callees to print help usage and exi=
-t,
->> no more.
->>
->> Do as expected.
->> ---
->
-> No sign-off given to any of the three patches...
+Nguyen Thai Ngoc Duy wrote:
 
-Oops, I removed old signoffs and accidentally mine too.
+> That. And simpler check. I mean "if (startup_info->help)" takes a tiny
+> bit less energy for me to understand than "if (argc == 2 && argv[1] ==
+> "-h")". It's also good for grepping.
 
->> diff --git a/builtin/branch.c b/builtin/branch.c
->> index 87976f0..9f152ed 100644
->> --- a/builtin/branch.c
->> +++ b/builtin/branch.c
->> @@ -667,6 +667,9 @@ int cmd_branch(int argc, const char **argv, cons=
-t char *prefix)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 OPT_END(),
->> =C2=A0 =C2=A0 =C2=A0 };
->>
->> + =C2=A0 =C2=A0 if (startup_info->help)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage_with_options(built=
-in_branch_usage, options);
->> +
->> =C2=A0 =C2=A0 =C2=A0 git_config(git_branch_config, NULL);
->
-> I can just say:
->
-> =C2=A0 =C2=A0$ cd / && git branch -h
-> =C2=A0 =C2=A0usage: git branch [options] ...
->
-> without your patch just fine (and no I am not insane to make / contro=
-lled
-> by git).
->
-> The same for checkout-index, commit, ls-files, etc.
->
->> diff --git a/builtin/gc.c b/builtin/gc.c
->> index c304638..f040171 100644
->> --- a/builtin/gc.c
->> +++ b/builtin/gc.c
->> @@ -191,6 +191,9 @@ int cmd_gc(int argc, const char **argv, const ch=
-ar *prefix)
->>
->> =C2=A0 =C2=A0 =C2=A0 git_config(gc_config, NULL);
->>
->> + =C2=A0 =C2=A0 if (startup_info->help)
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 usage_with_options(built=
-in_gc_usage, builtin_gc_options);
->> +
->> =C2=A0 =C2=A0 =C2=A0 if (pack_refs < 0)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 pack_refs =3D !is_b=
-are_repository();
->
-> This one is curious. =C2=A0Why do you need a call to git_config() in =
-"gc" only?
-> You don't do that for e.g. "branch".
+Mm, that still does not motivate the churn to me.  But "we can change
+the meaning to 'if (argc >= 2 && !strcmp(argv[1], "-h"))' some day"
+motivates it okay, I think.
 
-Hmm.. I don't think that git_config() is needed. It does no harm, but
-no gain either.
+> 2010/10/20 Jonathan Nieder <jrnieder@gmail.com>:
 
-> While I do not see anything glaringly wrong with this change, I am no=
-t
-> sure I am getting the point of these patches.
+>> Maybe (modulo names) it would be better to do
+[...]
+> Can it be relaxed later when someone comes up with "--help-all" or something?
 
-As Jonathan pointed out, the series makes "git foo -h" works even in
-special cases where setup code may terminate program early. Apparently
-my test in hurry does not work great.
---=20
-Duy
+Yes, I was just thinking out loud.  By "relaxed" I meant the above
+(changing == to >= in one place).  Now that I've thought it over,
+I don't mind startup_info->help so much.
+
+Hope that helps, and sorry for the noise.
+Jonathan
