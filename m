@@ -1,78 +1,196 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Test failures in today's pu: 0025, 4046, 4203, 9300, 9301
-Date: Wed, 20 Oct 2010 09:40:29 -0700
-Message-ID: <7vvd4wvmv6.fsf@alter.siamese.dyndns.org>
-References: <201010201148.51551.trast@student.ethz.ch>
+From: Dominique Quatravaux <domq@google.com>
+Subject: git rebase and merge commits
+Date: Wed, 20 Oct 2010 18:45:45 +0200
+Message-ID: <AANLkTikroNPehcyBsueCnJ5hR0idd3cBP4m1KNccdRqL@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Oct 20 18:40:50 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 20 18:46:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8bib-0008OX-Fb
-	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 18:40:49 +0200
+	id 1P8bny-0001WE-0e
+	for gcvg-git-2@lo.gmane.org; Wed, 20 Oct 2010 18:46:22 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754074Ab0JTQkm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 12:40:42 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:48990 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751169Ab0JTQkl (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 12:40:41 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 6E7A4E0A27;
-	Wed, 20 Oct 2010 12:40:40 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hFSlUSSHZr60biHKMfeYvGwkwyQ=; b=JE+73D
-	p+dUPLlIZ1FNtsxBpiYMbfIhXYJV68RpdYIF0bltl6r0xBVo333ABa/324Il5+aV
-	IGsizPENlWnONWJTmaLKS/7bnF3sILziqtJ/Oelfi4tsZGfh5yWKp7BinLS5Cnu5
-	8d1tUwbSWRSz8eLv8TK9J4kChUW5XudKHzQl0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PFvwhBDdnrDwjl2D512/0IfVPm0EOnzP
-	jUNMXAWVFRQcE9mtf1EyPvuC3gg41bAeRD/D/QnyNGKk06rT1/7xNy8CrZ96i00e
-	HoZCPByAbg/HYqQPvxRw90u/bUOc4NguarM4LxhEwcgvEMpQoAdTvwffkfsN0Qrn
-	iilGoyGjlq8=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4B0E4E0A24;
-	Wed, 20 Oct 2010 12:40:38 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 188DDE0A1B; Wed, 20 Oct
- 2010 12:40:30 -0400 (EDT)
-In-Reply-To: <201010201148.51551.trast@student.ethz.ch> (Thomas Rast's
- message of "Wed\, 20 Oct 2010 11\:48\:51 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C4EA3D1A-DC68-11DF-960C-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754312Ab0JTQqK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 12:46:10 -0400
+Received: from smtp-out.google.com ([74.125.121.35]:19236 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754163Ab0JTQqI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 12:46:08 -0400
+Received: from wpaz33.hot.corp.google.com (wpaz33.hot.corp.google.com [172.24.198.97])
+	by smtp-out.google.com with ESMTP id o9KGk6vg013289
+	for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:46:07 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1287593167; bh=oHhgDAFWJGFkN/YC+QMnBTZ7nuw=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type:
+	 Content-Transfer-Encoding;
+	b=l138WABxage1PNyTxT1EQX6T7kVFVADorX3X7e6OCHfcs6Ig+JKy7LPFIqqlTMnI/
+	 oSeyM3FG3mbMxPcx7ZI3g==
+Received: from gxk28 (gxk28.prod.google.com [10.202.11.28])
+	by wpaz33.hot.corp.google.com with ESMTP id o9KGk5xM013296
+	for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:46:05 -0700
+Received: by gxk28 with SMTP id 28so2681270gxk.15
+        for <git@vger.kernel.org>; Wed, 20 Oct 2010 09:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=beta;
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type:content-transfer-encoding;
+        bh=ZwhyTOzBIXA5lJYonH899hj7qnCNbyMmYV/lVMy63Fs=;
+        b=R19jt6sMG7jJnk4JsB6145n7sJZa6nGIb0BiHX6cn1osvXyADkDQdpsMuY2kjO8Tm4
+         b9oFseh5UQuzWxOgt2hg==
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=google.com; s=beta;
+        h=mime-version:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=J/f6vjJu4DjTjMGoG5QRNp1II1OmdrNtemI7Vh1ATDaVhplsq7yDiqlQKMnLL/EkgF
+         CkBtcBcBl2Q/V7n2uv0w==
+Received: by 10.101.40.1 with SMTP id s1mr5585973anj.248.1287593165310; Wed,
+ 20 Oct 2010 09:46:05 -0700 (PDT)
+Received: by 10.100.249.8 with HTTP; Wed, 20 Oct 2010 09:45:45 -0700 (PDT)
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159415>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159416>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Hi all, I'm trying to write "git shove", a wrapper around git rebase
+--interactive that would turn this
 
-> * t4203-mailmap: bisected to d8d2eb7d (mailmap: fix use of freed
->   memory).  I saw some list traffic possibly related to this, is it
->   fixed already?
 
-I found one issue that will trigger if you do not run this test with its
-standard input corrected to a terminal and pushed out a fix last night.
-Did you have 3e3e1ef (t4203: do not let "git shortlog" DWIM based on tty,
-2010-10-19) when your automated test ran?
+#        A---B---C---K targetbranch
+#       /         \
+#  D---E---F---G---H---I--J srcbranch
 
-> * t9300-fast-import: bisected to a544a23c (t9300 (fast-import):
->   another test for the "replace root" feature).
+into this:
 
-Jonathan noticed breakage caused while I was applying his patch; should be
-corrected as of last night with 971728c (t9300 (fast-import): another test
-for the "replace root" feature, 2010-10-17).
+#   A---B---C---I'---K'  targetbranch
+#  /             \
+# D---E---F---G---H'---J' srcbranch
+#
 
-> * t9301-fast-import-notes: bisected to 5edde51 (fast-import:
->   filemodify after M 040000 <tree> "" crashes).
+(ie I has been shoved into targetbranch).
 
-I saw this one too; it seems to happen with jn/fast-import-fix topic.
+It seemed to me that the first step should be to simply rebase I, H, an=
+d J (in
+this order) onto C. Unfortunately git rebase --interactive -p C propose=
+s a
+git-rebase-todo that contains only "noop"; if I forcefully put this ins=
+tead,
+
+edit iiii I
+edit hhhh H
+edit jjjj J
+
+it seems to me that the HEAD jumps backward to the original H on the se=
+cond
+rebase step, instead of daisy-chaining H behind I.  This is with git 1.=
+7.3.1.
+
+Here are the outputs of git log --graph --pretty=3Doneline --abbrev-com=
+mit at each
+rebase step:
+
+1/3
+
+* a810395 I
+*   1cfccc7 H
+|\
+| * c477d4e C
+| * 7002290 B
+| * aa9f1d0 A
+* | b614d31 G
+* | 2ad4496 F
+|/
+* 0d512e9 E
+* b6cbc2b D
+
+2/3
+
+*   1cfccc7 H
+|\
+| * c477d4e C
+| * 7002290 B
+| * aa9f1d0 A
+* | b614d31 G
+* | 2ad4496 F
+|/
+* 0d512e9 E
+* b6cbc2b D
+
+3/3
+
+* 3a41a45 J
+* a810395 I
+*   1cfccc7 H
+|\
+| * c477d4e C
+| * 7002290 B
+| * aa9f1d0 A
+* | b614d31 G
+* | 2ad4496 F
+|/
+* 0d512e9 E
+* b6cbc2b D
+
+
+Is there a way to do a real rebase of a merge commit?
+
+=46WIW, here is the script I use to create my toy environment in the cu=
+rrent
+directory:
+
+function _make_commit() {
+  echo "$1" > "$1"
+  git add "$1"
+  git commit -a -m "$1"
+  git tag "$1" HEAD
+}
+
+function _prepare_merged_history() {
+  git init
+  _make_commit "D"
+  git checkout -b targetbranch
+  _make_commit "E"
+  _make_commit "A"
+  _make_commit "B"
+  _make_commit "C"
+  _make_commit "K"
+  git checkout E
+  git checkout -b srcbranch
+  _make_commit "F"
+  _make_commit "G"
+  git merge  -m "H" C
+  git tag H HEAD
+  _make_commit "I"
+  _make_commit "J"
+}
+
+function _git_rebase_todo_line() {
+  echo -n "pick "
+  git rev-list -n 1 --pretty=3Doneline --abbrev-commit --abbrev=3D7 "$1=
+"
+}
+
+function _make_git_rebase_todo() {
+  {
+    _git_rebase_todo_line refs/tags/I
+    _git_rebase_todo_line refs/tags/H
+    _git_rebase_todo_line refs/tags/J
+  } > git-rebase-todo
+}
+
+[ -d ".git" ] && exit
+_prepare_merged_history
+_make_git_rebase_todo
+
+
+Thanks in advance,
+
+--=20
+=A0 Dominique Quatravaux
+=A0 +41 79 609 40 72
