@@ -1,75 +1,87 @@
 From: Brian Gernhardt <brian@gernhardtsoftware.com>
-Subject: [PATCH v3 (maint)] t/gitweb-lib: Don't pass constant to decode_utf8
-Date: Wed, 20 Oct 2010 19:07:10 -0400
-Message-ID: <1287616030-88078-1-git-send-email-brian@gernhardtsoftware.com>
-References: <201010202105.59370.jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Sven Verdoolaege <skimo@kotnet.org>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 21 01:07:23 2010
+Subject: Re: bash completion broken on ubuntu 10.10?
+Date: Wed, 20 Oct 2010 19:33:17 -0400
+Message-ID: <0BBE4478-48AB-460E-A2D5-2121FC589886@gernhardtsoftware.com>
+References: <20101020230409.GB1767@neumann>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Thu Oct 21 01:33:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8hkh-0004UF-Kc
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 01:07:23 +0200
+	id 1P8i9z-0003Ju-0Y
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 01:33:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756154Ab0JTXHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 19:07:14 -0400
-Received: from vs072.rosehosting.com ([216.114.78.72]:59788 "EHLO
+	id S1751267Ab0JTXdZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 20 Oct 2010 19:33:25 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:41461 "EHLO
 	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756089Ab0JTXHN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 19:07:13 -0400
+	with ESMTP id S1751090Ab0JTXdY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 20 Oct 2010 19:33:24 -0400
 Received: by silverinsanity.com (Postfix, from userid 5001)
-	id D8B4F1FFC05B; Wed, 20 Oct 2010 23:07:04 +0000 (UTC)
+	id AEDD51FFC05B; Wed, 20 Oct 2010 23:33:15 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
 X-Spam-Level: 
 X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
 	autolearn=ham version=3.2.5
-Received: from localhost.localdomain (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
-	by silverinsanity.com (Postfix) with ESMTPA id 960B91FFC057;
-	Wed, 20 Oct 2010 23:07:03 +0000 (UTC)
-X-Mailer: git-send-email 1.7.3.1.209.g52408
-In-Reply-To: <201010202105.59370.jnareb@gmail.com>
+Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 164AD1FFC057;
+	Wed, 20 Oct 2010 23:33:13 +0000 (UTC)
+In-Reply-To: <20101020230409.GB1767@neumann>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159449>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159450>
 
-Encode.pm started updating the string to decode in-place when
-a second argument is passed in version 2.40.  This causes
-'decode_utf8("", Encode::FB_CROAK)' to die with a message like:
 
-Modification of a read-only value attempted at .../Encode.pm line 216.
+On Oct 20, 2010, at 7:04 PM, SZEDER G=E1bor wrote:
 
-Work around this by passing an empty variable instead of a constant
-string.
+> Hi,
+>=20
+> Git's bash completion script offers possible arguments to some
+> options, e.g. it lists pretty formats after 'git log --pretty=3D<TAB>=
+',
+> merge tools after 'git mergetool --tool=3D<TAB>', refs after 'git com=
+mit
+> --reuse-message=3D<TAB>', etc.
+>=20
+> On a three day old ubuntu 10.10 install these don't work anymore; the
+> completion script offers the list of files in all those cases.
 
-Signed-off-by: Brian Gernhardt <brian@gernhardtsoftware.com>
-Acked-by: Jakub Narebski <jnareb@gmail.com>
----
- Changes since v2:
- - Re-wrapped first paragraph for easier reading
- - Removed long OS X-specific Perl library path
- - Added Ack
+> I don't have any ideas what could possibly be wrong here (but it's to=
+o
+> late here for any bright ideas anyway...).  Could someone confirm or
+> deny this behaviour on ubuntu 10.10?
 
- t/gitweb-lib.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Confirmed.  Completion works properly on OS X, but fails on Ubuntu 10.1=
+0
 
-diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
-index 81ef2a0..1b9523d 100644
---- a/t/gitweb-lib.sh
-+++ b/t/gitweb-lib.sh
-@@ -80,7 +80,7 @@ if ! test_have_prereq PERL; then
- 	test_done
- fi
- 
--perl -MEncode -e 'decode_utf8("", Encode::FB_CROAK)' >/dev/null 2>&1 || {
-+perl -MEncode -e '$e="";decode_utf8($e, Encode::FB_CROAK)' >/dev/null 2>&1 || {
-     skip_all='skipping gitweb tests, perl version is too old'
-     test_done
- }
--- 
-1.7.3.1.209.g52408
+OS X 10.6.4:
+  bash: 3.2.48
+  git:  1.7.3.1.209.g52408 (next + my t/gitweb-lib patch)
+  output:
+$ git log --pretty=3D<tab><tab>
+email     full      medium    raw      =20
+format:   fuller    oneline   short =20
+
+Ubuntu 10.10:
+  bash: 4.1.5
+  git:  1.7.1 (from apt)
+  output:
+$ git log --pretty=3D<tab><tab>
+=2Ebash/               .irbrc
+=2Ebash_history        .less
+=2Ebash_logout         .local/
+=2Ebash_profile        Music/
+--More--
+
+~~ Brian
