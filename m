@@ -1,184 +1,258 @@
 From: "Pat Notz" <patnotz@gmail.com>
-Subject: [PATCHv6 5/6] commit: --squash option for use with rebase
- --autosquash
-Date: Thu, 21 Oct 2010 13:33:56 -0600
-Message-ID: <1287689637-95301-6-git-send-email-patnotz@gmail.com>
+Subject: [PATCHv6 1/6] commit: helper methods to reduce redundant blocks
+ of code
+Date: Thu, 21 Oct 2010 13:33:52 -0600
+Message-ID: <1287689637-95301-2-git-send-email-patnotz@gmail.com>
 References: <1287689637-95301-1-git-send-email-patnotz@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 21:34:55 2010
+X-From: git-owner@vger.kernel.org Thu Oct 21 21:34:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90uc-0002eu-3x
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:34:54 +0200
+	id 1P90ud-0002eu-7b
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:34:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752921Ab0JUTeS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 15:34:18 -0400
-Received: from sentry-three.sandia.gov ([132.175.109.17]:58741 "EHLO
+	id S1753587Ab0JUTe3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 15:34:29 -0400
+Received: from sentry-three.sandia.gov ([132.175.109.17]:58711 "EHLO
 	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752178Ab0JUTeR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 15:34:17 -0400
-X-WSS-ID: 0LANNOZ-0C-20V-02
+	with ESMTP id S1751646Ab0JUTeM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 15:34:12 -0400
+X-WSS-ID: 0LANNOU-0C-20E-02
 X-M-MSG: 
-Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.20])
-	by sentry-three.sandia.gov (Postfix) with ESMTP id 1EB604DDD2F
-	for <git@vger.kernel.org>; Thu, 21 Oct 2010 13:34:11 -0600 (MDT)
+Received: from sentry.sandia.gov (mm04snlnto.sandia.gov [132.175.109.21])
+	by sentry-three.sandia.gov (Postfix) with ESMTP id 181A94DDD2C
+	for <git@vger.kernel.org>; Thu, 21 Oct 2010 13:34:06 -0600 (MDT)
 Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Thu, 21 Oct 2010 13:34:03 -0600
+ Relay 01 (Email Firewall v6.3.2)); Thu, 21 Oct 2010 13:33:57 -0600
 X-Server-Uuid: 6BFC7783-7E22-49B4-B610-66D6BE496C0E
 Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
- mailgate.sandia.gov (8.14.4/8.14.4) with ESMTP id o9LJXiZ0018943 for
- <git@vger.kernel.org>; Thu, 21 Oct 2010 13:33:54 -0600
+ mailgate.sandia.gov (8.14.4/8.14.4) with ESMTP id o9LJXiYt018943 for
+ <git@vger.kernel.org>; Thu, 21 Oct 2010 13:33:48 -0600
 Received: from sacv8030mq.sandia.gov (134.253.116.124) by
  cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.2.254.0; Thu, 21 Oct 2010 13:33:56 -0600
+ 8.2.254.0; Thu, 21 Oct 2010 13:33:54 -0600
 X-Mailer: git-send-email 1.7.3.1
 In-Reply-To: <1287689637-95301-1-git-send-email-patnotz@gmail.com>
 X-PMX-Version: 5.6.0.2009776, Antispam-Engine: 2.7.2.376379,
  Antispam-Data: 2010.10.21.192418
 X-PMX-Spam: Gauge=IIIIIIII, Probability=8%, Report=' FORGED_FROM_GMAIL
- 0.1, RCVD_FROM_IP_DATE 0.1, BODY_SIZE_5000_5999 0, BODY_SIZE_7000_LESS
- 0, DATE_TZ_NA 0, __CT 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0,
+ 0.1, BODY_SIZE_6000_6999 0, BODY_SIZE_7000_LESS 0, DATE_TZ_NA 0, __CT
+ 0, __CT_TEXT_PLAIN 0, __FRAUD_BODY_WEBMAIL 0, __FRAUD_REFNUM 0,
  __FRAUD_WEBMAIL 0, __FRAUD_WEBMAIL_FROM 0, __FROM_GMAIL 0, __HAS_MSGID
  0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0, __MIME_VERSION 0,
  __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0, __TO_MALFORMED_2 0,
  __TO_NO_NAME 0, __URI_NO_PATH 0, __URI_NO_WWW 0, __URI_NS '
-X-TMWD-Spam-Summary: TS=20101021193405; ID=1; SEV=2.3.1;
+X-TMWD-Spam-Summary: TS=20101021193400; ID=1; SEV=2.3.1;
  DFV=B2010102119; IFV=NA; AIF=B2010102119; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230382E34434330393541452E303034443A534346535441543838363133332C73733D312C6667733D30;
+ RPDID=7374723D303030312E30413031303230382E34434330393541392E303039393A534346535441543838363133332C73733D312C6667733D30;
  CAT=NONE; CON=NONE; SIG=AAAAAAAAAAAAAAAAAAAAAAAAfQ==
 X-MMS-Spam-Filter-ID: B2010102119_5.03.0010
-X-WSS-ID: 60DE4A213KK1094513-01-01
+X-WSS-ID: 60DE4A2F3KK1094504-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159552>
 
-This option makes it convenient to construct commit messages for use
-with 'rebase --autosquash'.  The resulting commit message will be
-"squash! ..." where "..." is the subject line of the specified commit
-message.  This option can be used with other commit message options
-such as -m, -c, -C and -F.
+* builtin/commit.c: Replace block of code with a one-liner call to
+  logmsg_reencode().
 
-If an editor is invoked (as with -c or -eF or no message options) the
-commit message is seeded with the correctly formatted subject line.
+* commit.c: new function for looking up a comit by name
 
-Example usage:
-  $ git commit --squash HEAD~2
-  $ git commit --squash HEAD~2 -m "clever comment"
-  $ git commit --squash HEAD~2 -F msgfile
-  $ git commit --squash HEAD~2 -C deadbeef
+* pretty.c: helper methods for getting output encodings
+
+  Add helpers get_log_output_encoding() and
+  get_commit_output_encoding() that eliminate some messy and duplicate
+  if-blocks.
 
 Signed-off-by: Pat Notz <patnotz@gmail.com>
 ---
- Documentation/git-commit.txt |    9 ++++++++-
- builtin/commit.c             |   33 +++++++++++++++++++++++++++++++--
- 2 files changed, 39 insertions(+), 3 deletions(-)
+ builtin/commit.c   |   26 ++++----------------------
+ builtin/log.c      |    3 +--
+ builtin/mailinfo.c |    2 +-
+ cache.h            |    3 +++
+ commit.c           |   13 +++++++++++++
+ commit.h           |    1 +
+ environment.c      |   11 +++++++++++
+ pretty.c           |    9 ++-------
+ 8 files changed, 36 insertions(+), 32 deletions(-)
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index f4a2b8c..6e4c220 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dry-run]
--	   [(-c | -C | --fixup) <commit>] [-F <file> | -m <msg>]
-+	   [(-c | -C | --fixup | --squash) <commit>] [-F <file> | -m <msg>]
- 	   [--reset-author] [--allow-empty] [--allow-empty-message] [--no-verify]
- 	   [-e] [--author=<author>] [--date=<date>] [--cleanup=<mode>]
- 	   [--status | --no-status] [--] [[-i | -o ]<file>...]
-@@ -76,6 +76,13 @@ OPTIONS
- 	commit with a prefix of "fixup! ".  See linkgit:git-rebase[1]
- 	for details.
- 
-+--squash=<commit>::
-+	Construct a commit message for use with `rebase --autosquash`.
-+	The commit message subject line is taken from the specified
-+	commit with a prefix of "squash! ".  Can be used with additional
-+	commit message options (`-m`/`-c`/`-C`/`-F`). See
-+	linkgit:git-rebase[1] for details.
-+
- --reset-author::
- 	When used with -C/-c/--amend options, declare that the
- 	authorship of the resulting commit now belongs of the committer.
 diff --git a/builtin/commit.c b/builtin/commit.c
-index c82108c..0608b76 100644
+index 66fdd22..54fcc6d 100644
 --- a/builtin/commit.c
 +++ b/builtin/commit.c
-@@ -69,7 +69,7 @@ static enum {
- static const char *logfile, *force_author;
- static const char *template_file;
- static char *edit_message, *use_message;
--static char *fixup_message;
-+static char *fixup_message, *squash_message;
- static char *author_name, *author_email, *author_date;
- static int all, edit_flag, also, interactive, only, amend, signoff;
- static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
-@@ -126,6 +126,7 @@ static struct option builtin_commit_options[] = {
- 	OPT_STRING('c', "reedit-message", &edit_message, "COMMIT", "reuse and edit message from specified commit"),
- 	OPT_STRING('C', "reuse-message", &use_message, "COMMIT", "reuse message from specified commit"),
- 	OPT_STRING(0, "fixup", &fixup_message, "COMMIT", "use autosquash formatted message to fixup specified commit"),
-+	OPT_STRING(0, "squash", &squash_message, "COMMIT", "use autosquash formatted message to squash specified commit"),
- 	OPT_BOOLEAN(0, "reset-author", &renew_authorship, "the commit is authored by me now (used with -C-c/--amend)"),
- 	OPT_BOOLEAN('s', "signoff", &signoff, "add Signed-off-by:"),
- 	OPT_FILENAME('t', "template", &template_file, "use specified template file"),
-@@ -567,6 +568,23 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	if (!no_verify && run_hook(index_file, "pre-commit", NULL))
- 		return 0;
+@@ -896,30 +896,14 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 	if (!use_message && renew_authorship)
+ 		die("--reset-author can be used only with -C, -c or --amend.");
+ 	if (use_message) {
+-		unsigned char sha1[20];
+-		static char utf8[] = "UTF-8";
+ 		const char *out_enc;
+-		char *enc, *end;
+ 		struct commit *commit;
  
-+	if (squash_message) {
-+		/*
-+		 * Insert the proper subject line before other commit
-+		 * message options add their content.
-+		 */
-+		struct pretty_print_context ctx = {0};
-+		struct commit *commit;
-+		const char *out_enc;
-+		commit = lookup_commit_reference_by_name(squash_message);
-+		out_enc = get_commit_output_encoding();
-+		if (use_message && !strcmp(use_message, squash_message))
-+			strbuf_addstr(&sb, "squash! ");
-+		else
-+			format_commit_message(commit, "squash! %s\n\n", &sb,
-+					      &ctx, out_enc);
-+	}
-+
- 	if (message.len) {
- 		strbuf_addbuf(&sb, &message);
- 		hook_arg1 = "message";
-@@ -618,6 +636,16 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
- 	else if (in_merge)
- 		hook_arg1 = "merge";
- 
-+	if (squash_message) {
-+		/*
-+		 * If squash_commit was used for the commit subject,
-+		 * then we're possibly hijacking other commit log options.
-+		 * Reset the hook args to tell the real story.
-+		 */
-+		hook_arg1 = "message";
-+		hook_arg2 = "";
-+	}
-+
- 	fp = fopen(git_path(commit_editmsg), "w");
- 	if (fp == NULL)
- 		die_errno("could not open '%s'", git_path(commit_editmsg));
-@@ -889,7 +917,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 		die("You have nothing to amend.");
- 	if (amend && in_merge)
- 		die("You are in the middle of a merge -- cannot amend.");
+-		if (get_sha1(use_message, sha1))
++		commit = lookup_commit_reference_by_name(use_message);
++		if (!commit)
+ 			die("could not lookup commit %s", use_message);
+-		commit = lookup_commit_reference(sha1);
+-		if (!commit || parse_commit(commit))
+-			die("could not parse commit %s", use_message);
 -
-+	if (fixup_message && squash_message)
-+		die("Options --squash and --fixup cannot be used together");
- 	if (use_message)
- 		f++;
- 	if (edit_message)
+-		enc = strstr(commit->buffer, "\nencoding");
+-		if (enc) {
+-			end = strchr(enc + 10, '\n');
+-			enc = xstrndup(enc + 10, end - (enc + 10));
+-		} else {
+-			enc = utf8;
+-		}
+-		out_enc = git_commit_encoding ? git_commit_encoding : utf8;
+-
+-		if (strcmp(out_enc, enc))
+-			use_message_buffer =
+-				reencode_string(commit->buffer, out_enc, enc);
++		out_enc = get_commit_output_encoding();
++		use_message_buffer = logmsg_reencode(commit, out_enc);
+ 
+ 		/*
+ 		 * If we failed to reencode the buffer, just copy it
+@@ -929,8 +913,6 @@ static int parse_and_validate_options(int argc, const char *argv[],
+ 		 */
+ 		if (use_message_buffer == NULL)
+ 			use_message_buffer = xstrdup(commit->buffer);
+-		if (enc != utf8)
+-			free(enc);
+ 	}
+ 
+ 	if (!!also + !!only + !!all + !!interactive > 1)
+diff --git a/builtin/log.c b/builtin/log.c
+index 22d1290..90e05ac 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -329,8 +329,7 @@ static void show_tagger(char *buf, int len, struct rev_info *rev)
+ 	struct strbuf out = STRBUF_INIT;
+ 
+ 	pp_user_info("Tagger", rev->commit_format, &out, buf, rev->date_mode,
+-		git_log_output_encoding ?
+-		git_log_output_encoding: git_commit_encoding);
++		get_log_output_encoding());
+ 	printf("%s", out.buf);
+ 	strbuf_release(&out);
+ }
+diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
+index 2320d98..71e6262 100644
+--- a/builtin/mailinfo.c
++++ b/builtin/mailinfo.c
+@@ -1032,7 +1032,7 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
+ 	 */
+ 	git_config(git_mailinfo_config, NULL);
+ 
+-	def_charset = (git_commit_encoding ? git_commit_encoding : "UTF-8");
++	def_charset = get_commit_output_encoding();
+ 	metainfo_charset = def_charset;
+ 
+ 	while (1 < argc && argv[1][0] == '-') {
+diff --git a/cache.h b/cache.h
+index 33decd9..5ed5374 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1003,6 +1003,9 @@ extern int git_env_bool(const char *, int);
+ extern int git_config_system(void);
+ extern int git_config_global(void);
+ extern int config_error_nonbool(const char *);
++extern const char *get_log_output_encoding(void);
++extern const char *get_commit_output_encoding(void);
++
+ extern const char *config_exclusive_filename;
+ 
+ #define MAX_GITNAME (1000)
+diff --git a/commit.c b/commit.c
+index 0094ec1..5ed9ccd 100644
+--- a/commit.c
++++ b/commit.c
+@@ -49,6 +49,19 @@ struct commit *lookup_commit(const unsigned char *sha1)
+ 	return check_commit(obj, sha1, 0);
+ }
+ 
++struct commit *lookup_commit_reference_by_name(const char *name)
++{
++	unsigned char sha1[20];
++	struct commit *commit;
++
++	if (get_sha1(name, sha1))
++		return NULL;
++	commit = lookup_commit_reference(sha1);
++	if (!commit || parse_commit(commit))
++		return NULL;
++	return commit;
++}
++
+ static unsigned long parse_commit_date(const char *buf, const char *tail)
+ {
+ 	const char *dateptr;
+diff --git a/commit.h b/commit.h
+index 9113bbe..a0b710f 100644
+--- a/commit.h
++++ b/commit.h
+@@ -36,6 +36,7 @@ struct commit *lookup_commit(const unsigned char *sha1);
+ struct commit *lookup_commit_reference(const unsigned char *sha1);
+ struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
+ 					      int quiet);
++struct commit *lookup_commit_reference_by_name(const char *name);
+ 
+ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size);
+ 
+diff --git a/environment.c b/environment.c
+index de5581f..a9d44a2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -192,3 +192,14 @@ int set_git_dir(const char *path)
+ 	setup_git_env();
+ 	return 0;
+ }
++
++const char *get_log_output_encoding(void)
++{
++	return git_log_output_encoding ? git_log_output_encoding
++		: get_commit_output_encoding();
++}
++
++const char *get_commit_output_encoding(void)
++{
++	return git_commit_encoding ? git_commit_encoding : "UTF-8";
++}
+diff --git a/pretty.c b/pretty.c
+index f85444b..c253172 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -886,8 +886,7 @@ static size_t format_commit_one(struct strbuf *sb, const char *placeholder,
+ 	case 'N':
+ 		if (c->pretty_ctx->show_notes) {
+ 			format_display_notes(commit->object.sha1, sb,
+-				    git_log_output_encoding ? git_log_output_encoding
+-							    : git_commit_encoding, 0);
++				    get_log_output_encoding(), 0);
+ 			return 1;
+ 		}
+ 		return 0;
+@@ -1159,11 +1158,7 @@ char *reencode_commit_message(const struct commit *commit, const char **encoding
+ {
+ 	const char *encoding;
+ 
+-	encoding = (git_log_output_encoding
+-		    ? git_log_output_encoding
+-		    : git_commit_encoding);
+-	if (!encoding)
+-		encoding = "UTF-8";
++	encoding = get_log_output_encoding();
+ 	if (encoding_p)
+ 		*encoding_p = encoding;
+ 	return logmsg_reencode(commit, encoding);
 -- 
 1.7.3.1
