@@ -1,103 +1,170 @@
-From: David Borowitz <dborowitz@google.com>
-Subject: Re: Make git-push silent
-Date: Thu, 21 Oct 2010 11:49:15 -0700
-Message-ID: <AANLkTik3GndR27OH-dtmQ7w4dbnACymxunvZ3=PNbQxT@mail.gmail.com>
-References: <20101021181906.GA28700@nibiru.local>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] git-gui: apply color information from git diff
+Date: Thu, 21 Oct 2010 16:22:40 +0100
+Message-ID: <87eibje5zs.fsf_-_@fox.patthoyts.tk>
+References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
+	<87hbgh7paf.fsf@fox.patthoyts.tk>
+	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
+	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
+	<7vy69stop2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 20:49:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Tor Arvid Lund <torarvid@gmail.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 20:50:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90Cu-0002XR-4x
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:49:44 +0200
+	id 1P90DQ-0002pX-VC
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:50:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757332Ab0JUStj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 14:49:39 -0400
-Received: from smtp-out.google.com ([216.239.44.51]:7577 "EHLO
-	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753335Ab0JUSti convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 14:49:38 -0400
-Received: from wpaz5.hot.corp.google.com (wpaz5.hot.corp.google.com [172.24.198.69])
-	by smtp-out.google.com with ESMTP id o9LIncXT025072
-	for <git@vger.kernel.org>; Thu, 21 Oct 2010 11:49:38 -0700
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
-	t=1287686978; bh=6YeBakxVODLwHHMBtsgfHfbGYXM=;
-	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
-	 To:Content-Type:Content-Transfer-Encoding;
-	b=FSuEKJeZ2tzfGoISkqVo9Z2AmVCbsvSVI5QvXSAy+wf86KugMq1K5gxce/BmFHFHC
-	 gR3G4Z9vq7Fpgs6xEl85g==
-Received: from pwi8 (pwi8.prod.google.com [10.241.219.8])
-	by wpaz5.hot.corp.google.com with ESMTP id o9LImedS028989
-	for <git@vger.kernel.org>; Thu, 21 Oct 2010 11:49:37 -0700
-Received: by pwi8 with SMTP id 8so180701pwi.18
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 11:49:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=beta;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=nHy2+HArcMfKXeRfGaDqzGRN6u3uh9x5CDwtYICwKbg=;
-        b=PIu3LSTFRIkLmw7Mn/aMclRmIQnICkmGs0wsTmmdO8ItQ7ZRI0trayKMkgDPBrz0y9
-         /+AoP5b7yJik4HAhRIiA==
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=google.com; s=beta;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=PRBT9EBuFxDvVm+pkXX2T5y/4xOWlQRVC+GMiJrtcGqDsyPc7UNrKw0AZbEjlsdQSo
-         2AA9YrLkgC5Q0S/DfGtw==
-Received: by 10.142.125.4 with SMTP id x4mr1146756wfc.234.1287686976368; Thu,
- 21 Oct 2010 11:49:36 -0700 (PDT)
-Received: by 10.229.223.140 with HTTP; Thu, 21 Oct 2010 11:49:15 -0700 (PDT)
-In-Reply-To: <20101021181906.GA28700@nibiru.local>
-X-System-Of-Record: true
+	id S1757068Ab0JUSuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 14:50:09 -0400
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:59867 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753188Ab0JUSuH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 14:50:07 -0400
+Received: from [172.23.170.142] (helo=anti-virus02-09)
+	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1P90DF-0003DC-DJ; Thu, 21 Oct 2010 19:50:05 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out2.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1P90CO-0001JC-8Y; Thu, 21 Oct 2010 19:49:12 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 88E03219BB; Thu, 21 Oct 2010 19:49:11 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+X-Url: http://www.patthoyts.tk/
+In-Reply-To: <7vy69stop2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 20 Oct 2010 16:43:53 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159536>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159537>
 
-On Thu, Oct 21, 2010 at 11:19, Enrico Weigelt <weigelt@metux.de> wrote:
->
-> Hi folks,
->
->
-> is there a way to make git-push silent in a way that it only
-> outputs something in case of error ?
->
-> I'm using it as a backup tool via cron scripts, and therefore I
-> dont want any output when everything went okay.
+This patch extracts the ansi color sequences from git diff output and
+applies these to the diff view window. This ensures that the gui view
+makes use of the current git configuration for whitespace display.
 
-Not a solution on the git front, but I use cronic[1] to do this with
-arbitrary cron scripts (including some that do git pull/fetch). It
-traps all script output and is silent unless it encounters a nonzero
-return code.
-[1]=A0http://habilis.net/cronic/
+Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
+Suggested-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
 
+Junio C Hamano <gitster@pobox.com> writes:
+>Pat Thoyts <patthoyts@users.sourceforge.net> writes:
 >
-> If there's no such a feature/switch yet, could anyone give me
-> a hint where/how to implement this ?
+>> This is a rather more complete implementation of whitespace highlighting
+>> according to the core.whitespace setting. The diff view whitespace
+>> highlights should match what you see with 'git diff' when color is
+>> enabled for all the whitespace rules except cr-at-eol where there is
+>> currently a rule to hide these.
+>>
+>> Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
+>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+>> ---
 >
->
-> thx
-> --
-> ---------------------------------------------------------------------=
--
-> =A0Enrico Weigelt, metux IT service -- http://www.metux.de/
->
-> =A0phone: =A0+49 36207 519931 =A0email: weigelt@metux.de
-> =A0mobile: +49 151 27565287 =A0icq: =A0 210169427 =A0 =A0 =A0 =A0 sky=
-pe: nekrad666
-> ---------------------------------------------------------------------=
--
-> =A0Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-> ---------------------------------------------------------------------=
--
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
+>This might be a very stupid question, but isn't it an easier-to-maintain
+>option to let underlying "git diff" color its output and convert the ANSI
+>coloring to whatever Tcl wants to use, especially in the long run, instead
+>of trying to replicate the logic to check whitespace breakages here?
+
+Seems like a fine plan. Here is an implementation to try out.
+
+ git-gui.sh   |    7 ++++++-
+ lib/diff.tcl |   27 ++++++++++++++++++++++++++-
+ 2 files changed, 32 insertions(+), 2 deletions(-)
+
+diff --git a/git-gui.sh b/git-gui.sh
+index 5e8378f..8fba57c 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3322,8 +3322,13 @@ pack $ui_diff -side left -fill both -expand 1
+ pack .vpane.lower.diff.header -side top -fill x
+ pack .vpane.lower.diff.body -side bottom -fill both -expand 1
+ 
++foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 grey60} {
++	$ui_diff tag configure clr4$n -background $c
++	$ui_diff tag configure clr3$n -foreground $c
++}
++
+ $ui_diff tag conf d_cr -elide true
+-$ui_diff tag conf d_@ -foreground blue -font font_diffbold
++$ui_diff tag conf d_@ -font font_diffbold
+ $ui_diff tag conf d_+ -foreground {#00a000}
+ $ui_diff tag conf d_- -foreground red
+ 
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index c628750..7625cb8 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -294,7 +294,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	}
+ 
+ 	lappend cmd -p
+-	lappend cmd --no-color
++	lappend cmd --color
+ 	if {$repo_config(gui.diffcontext) >= 1} {
+ 		lappend cmd "-U$repo_config(gui.diffcontext)"
+ 	}
+@@ -332,6 +332,21 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	fileevent $fd readable [list read_diff $fd $cont_info]
+ }
+ 
++proc parse_color_line {line} {
++	set start 0
++	set result ""
++	set markup [list]
++	while {[regexp -indices -start $start "\033\\\[(\\d+)?m" $line match code]} {
++		foreach {begin end} $match break
++		append result [string range $line $start [expr {$begin - 1}]]
++		lappend markup [string length $result] [eval [linsert $code 0 string range $line]]
++		set start [incr end]
++	}
++	append result [string range $line $start end]
++	if {[llength $markup] < 4} {set markup {}}
++	return [list $result $markup]
++}
++
+ proc read_diff {fd cont_info} {
+ 	global ui_diff diff_active is_submodule_diff
+ 	global is_3way_diff is_conflict_diff current_diff_header
+@@ -340,6 +355,9 @@ proc read_diff {fd cont_info} {
+ 
+ 	$ui_diff conf -state normal
+ 	while {[gets $fd line] >= 0} {
++		foreach {line markup} [parse_color_line $line] break
++		set line [string map {\033 ^} $line]
++
+ 		# -- Cleanup uninteresting diff header lines.
+ 		#
+ 		if {$::current_diff_inheader} {
+@@ -434,11 +452,18 @@ proc read_diff {fd cont_info} {
+ 			}
+ 			}
+ 		}
++		set mark [$ui_diff index "end - 1 line linestart"]
+ 		$ui_diff insert end $line $tags
+ 		if {[string index $line end] eq "\r"} {
+ 			$ui_diff tag add d_cr {end - 2c}
+ 		}
+ 		$ui_diff insert end "\n" $tags
++
++		foreach {posbegin colbegin posend colend} $markup {
++			set a "$mark linestart + $posbegin chars"
++			set b "$mark linestart + $posend chars"
++			catch {$ui_diff tag add clr$colbegin $a $b}
++		}
+ 	}
+ 	$ui_diff conf -state disabled
+ 
+-- 
+1.7.3.1.msysgit.0
