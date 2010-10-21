@@ -1,120 +1,63 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Thu, 21 Oct 2010 16:06:42 -0400
-Message-ID: <1287691602.24161.67.camel@drew-northup.unet.maine.edu>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
-	 <m3ocar5fmo.fsf@localhost.localdomain>  <4CBFFD79.1010808@alum.mit.edu>
-	 <1287660007.24161.10.camel@drew-northup.unet.maine.edu>
-	 <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
-	 <1287665760.24161.33.camel@drew-northup.unet.maine.edu>
-	 <EE0A3DAA-DFE8-4F70-B321-0B1CA63B1341@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Thore Husfeldt <thore.husfeldt@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 22:07:51 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH v2] blame: Add option to show author email instead of name
+Date: Thu, 21 Oct 2010 13:28:57 -0700
+Message-ID: <79AB0864-E151-468E-9C86-EBCAD929938B@sb.org>
+References: <7vsk02ypj5.fsf@alter.siamese.dyndns.org> <1287535323-20347-1-git-send-email-kevin@sb.org> <20101021180525.GA11501@burratino>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 22:29:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P91QV-0005L7-7I
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 22:07:51 +0200
+	id 1P91l5-0003FK-Im
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 22:29:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755396Ab0JUUHq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 16:07:46 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:41176 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755181Ab0JUUHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 16:07:46 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9LK6mCH019804
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 21 Oct 2010 16:06:53 -0400
-In-Reply-To: <EE0A3DAA-DFE8-4F70-B321-0B1CA63B1341@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
-	Fuz1=4 Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: o9LK6mCH019804
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1288296422.66926@Q7JZy8gYqcy4JJGj+qofyw
+	id S1756244Ab0JUU3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 16:29:01 -0400
+Received: from mail-px0-f174.google.com ([209.85.212.174]:50290 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755191Ab0JUU3A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 16:29:00 -0400
+Received: by pxi12 with SMTP id 12so5832pxi.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 13:29:00 -0700 (PDT)
+Received: by 10.142.212.20 with SMTP id k20mr1352908wfg.132.1287692940081;
+        Thu, 21 Oct 2010 13:29:00 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id w14sm3008598wfd.6.2010.10.21.13.28.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 Oct 2010 13:28:58 -0700 (PDT)
+In-Reply-To: <20101021180525.GA11501@burratino>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159558>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159559>
 
+On Oct 21, 2010, at 11:05 AM, Jonathan Nieder wrote:
 
-On Thu, 2010-10-21 at 16:06 +0200, Thore Husfeldt wrote:
-> On 21 Oct 2010, at 14:56, Drew Northup wrote:
->=20
-> > That's not what I asked.
-> > [... good, concrete example omitted...]
-> >=20
-> > $ vim A.txt
-> > $ git stage A.txt
-> > $ git commit
-> > $ vim C.txt
-> > $ vim A.txt
-> > $ git stage A.txt
-> > $ git stage C.txt
-> >=20
-> > Should the last two commands fail?
->=20
-> No, not for me. (Is this in reaction to Jakub=E2=80=99s suggestion th=
-at an
-> =E2=80=9Cuntracked file=E2=80=9D, like C.txt, cannot be staged before=
- explicitly
-> tracked?)
+> Kevin Ballard wrote:
+> 
+>> +++ b/t/t8002-blame.sh
+>> @@ -6,4 +6,9 @@ test_description='git blame'
+>> PROG='git blame -c'
+>> . "$TEST_DIRECTORY"/annotate-tests.sh
+>> 
+>> +PROG='git blame -c -e'
+>> +test_expect_success 'Blame --show-email works' '
+>> +    check_count "<A@test.git>" 1 "<B@test.git>" 1 "<B1@test.git>" 1 "<B2@test.git>" 1 "<author@example.com>" 1 "<C@test.git>" 1 "<D@test.git>" 1
+>> +'
+>> +
+> 
+> Bonus nit: does this belong in annotate-tests.sh or does it only apply
+> to "git blame" and not "git annotate"?  If the latter, a note in the
+> commit message would be helpful.
 
-I hadn't read any of his comments to mean that, but I could be missing
-something...
-More than anything else I was trying to feel out possible workflow
-issues. A lot of people are going to (continue? to) confuse "git add"
-and "svn add" if we don't make very explicit what we are up to. As you
-are not suggesting we outright replace "git add" I wanted to be very
-sure as to what you mean to do.
+--show-email originally only applied to git-blame. I tweaked the patch to make it apply to git-annotate simply because check_count can't handle the format of git-blame, but the intention of the change wasn't to make it apply to git-annotate in the first place. You'll note I also didn't document it in the manpage for git-annotate. If you think it's better to move it into annotate-tests.sh, I can do that, but that does mean officially declaring git-annotate as supporting --show-email.
 
-> Maybe this is what should happen:
->=20
-> $ git stage C.txt
-> git stage: Contents of previously untracked file C.txt staged for nex=
-t commit
-
-This is reasonable. I would probably say "...untracked file C.txt added
-to index and staged for next commit" to emphasize the existing "git add=
-"
-idiom, but that may be superfluous.
-
-> > Now, if "git stage" were an outright replacement for "git add"
-> > there might be more use (but I'd still not be happy about the corru=
-ption
-> > of the idiom).
->=20
-> I tend to agree. But look at, e.g., Figure 2.1 in the Pro Git book
-> http://progit.org/book/ch2-2.html . That view strongly enforces that
-> something special happens to the new =E2=80=9Cpink=E2=80=9D file, dif=
-ferent from what
-> happens to a =E2=80=9Cyellow=E2=80=9D file. After this helpful discus=
-sion, I don=E2=80=99t
-> like figure 2.1 so much anymore. A red arrow should go from =E2=80=9C=
-pink=E2=80=9D to
-> =E2=80=9Cblue=E2=80=9D with text =E2=80=9Cstage the file=E2=80=9D.
-
-I can see why this would get your attention. I have to admit I ignored
-it because it didn't match-up with the bulk of documentation in any way
-I had yet made sense of. Once I had made sense of the idiom and looked
-back at the graphic I shrugged and wondered why the author had chosen t=
-o
-illustrate it that way.
-
---=20
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+-Kevin Ballard
