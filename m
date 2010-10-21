@@ -1,715 +1,211 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 13/21] git notes merge: Add automatic conflict resolvers
- (ours, theirs, union)
-Date: Thu, 21 Oct 2010 04:08:48 +0200
-Message-ID: <1287626936-32232-14-git-send-email-johan@herland.net>
-References: <1287626936-32232-1-git-send-email-johan@herland.net>
+Subject: Re: [PATCH 08/18] git notes merge: Initial implementation handling
+ trivial merges only
+Date: Thu, 21 Oct 2010 04:12:54 +0200
+Message-ID: <201010210412.54383.johan@herland.net>
+References: <1285719811-10871-1-git-send-email-johan@herland.net>
+ <201010090155.20858.johan@herland.net> <20101009172955.GB17799@burratino>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: 7BIT
-Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
-	avarab@gmail.com, gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 04:10:50 2010
+Cc: git@vger.kernel.org, bebarino@gmail.com, gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 04:13:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8kc2-0007sY-2m
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:38 +0200
+	id 1P8keM-00007F-FB
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:13:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756985Ab0JUCJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 22:09:46 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:33116 "EHLO smtp.getmail.no"
+	id S1757052Ab0JUCM5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 22:12:57 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:33849 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756896Ab0JUCJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 22:09:13 -0400
+	id S1756756Ab0JUCM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 22:12:57 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAM00IS0BB8YX70@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:08 +0200 (MEST)
+ with ESMTP id <0LAM00IX2BHJYX70@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:12:55 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 429951EA5836_CBFA0C4B	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:08 +0000 (GMT)
+ with SMTP id 3F6D11EA5783_CBFA1A7B	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:12:55 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id F3B7E1EA28DA_CBFA0C3F	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:06 +0000 (GMT)
-Received: from alpha.herland ([84.215.68.234]) by get-mta-in01.get.basefarm.net
+ with ESMTP id E179C1EA281B_CBFA1A6F	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:12:54 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAM0096KBB03500@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:03 +0200 (MEST)
-X-Mailer: git-send-email 1.7.3.98.g5ad7d9
-In-reply-to: <1287626936-32232-1-git-send-email-johan@herland.net>
+ with ESMTP id <0LAM009C5BHI3500@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:12:54 +0200 (MEST)
+User-Agent: KMail/1.13.5 (Linux/2.6.35-ARCH; KDE/4.5.2; x86_64; ; )
+In-reply-to: <20101009172955.GB17799@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159477>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159478>
 
-The new -s/--strategy command-line option to 'git notes merge' allow the user
-to choose how notes merge conflicts should be resolved. There are four valid
-strategies to choose from:
+On Saturday 09 October 2010, Jonathan Nieder wrote:
+> Johan Herland wrote:
+> > Jonathan Nieder wrote:
+> >> I would find it easier to read
+> >> 
+> >> 	if (o->verbosity >= DEFAULT_VERBOSITY)
+> >> 	
+> >> 		fprintf(stderr, ...)
+> >> 
+> >> unless there are going to be a huge number of messages.
+> > 
+> > The current version is modeled on the show() and output() functions in
+> > merge-recursive.c. I think that works better in this situation.
+> > Or maybe you have a better solution for merge-recursive.c as well?
+> 
+> Hmm --- isn't the point of output() that it indents to the appropriate
+> level to portray a recursive merge?
+> 
+> Similarly, show() prevents those confusing messages from the internal
+> merge between ancestors from being printed when the user is not
+> interested.
+> 
+> But if you think they are important abstractions to maintain, I won't
+> stop you. :)
 
-1. "manual" (the default): This will let the user manually resolve conflicts.
-   This option currently fails with an error message. It will be implemented
-   properly in future patches.
+I see. I still find the OUTPUT() macro more readable, but I've amended
+the patch to eliminate the extraneous show() function. Hence, you'll
+find this in the next iteration:
 
-2. "ours": This automatically chooses the local version of a conflict, and
-   discards the remote version.
+#define OUTPUT(o, v, ...) \
+	do { \
+		if ((o)->verbosity >= (v)) { \
+			printf(__VA_ARGS__); \
+			puts(""); \
+		} \
+	} while (0)
 
-3. "theirs": This automatically chooses the remote version of a conflict, and
-   discards the local version.
+> >>> +
+> >>> +	if (!o->local_ref || get_sha1(o->local_ref, local_sha1)) {
+> >>> +		/* empty notes ref => assume empty notes tree */
+> 
+> [...]
+> 
+> > I'm not sure when you think we should (or shouldn't) error out.
+> 
+> get_sha1() can return -1 in the following cases:
+> 
+>  - starts with :/, regex does not match.
+>  - starts with :, entry not present in index
+>  - in form <rev>:<path>, <path> does not exist in <rev>
+>  - in form <rev>^, <rev> does not exist or that parent does not
+>    exist
+>  - tag being used as commit points to a tree instead
+>  - et c.
 
-4. "union": This automatically resolves the conflict by appending the remote
-   version to the local version.
+I see. I didn't take these into account when I wrote the code.
 
-The strategies are implemented using the combine_notes_* functions from the
-notes.h API.
+> Especially if the caller tries
+> 
+> 	git notes merge 'afjkdlsa^{gobbledeegook'
+> 
+> I would not like the merge to succeed.
 
-The patch also includes testcases verifying the correct implementation of
-these strategies.
+Agreed, but I believe that command currently returns:
 
-This patch has been improved by the following contributions:
-- Jonathan Nieder: Future-proof by always checking add_note() return value
-- Stephen Boyd: Use test_commit
-- Stephen Boyd: Use correct option name
+  fatal: Could not parse commit 'refs/notes/afjkdlsa^{gobbledeegook'.
 
-Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
-Thanks-to: Stephen Boyd <bebarino@gmail.com>
-Signed-off-by: Johan Herland <johan@herland.net>
----
- builtin/notes.c                     |   21 ++-
- notes-merge.c                       |   31 ++-
- notes-merge.h                       |    6 +
- t/t3309-notes-merge-auto-resolve.sh |  502 +++++++++++++++++++++++++++++++++++
- 4 files changed, 558 insertions(+), 2 deletions(-)
- create mode 100755 t/t3309-notes-merge-auto-resolve.sh
+(or using afjkdlsa^{gobbledeegook as "our" side of the merge):
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index c967b23..a249f19 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -26,7 +26,7 @@ static const char * const git_notes_usage[] = {
- 	"git notes [--ref <notes_ref>] append [-m <msg> | -F <file> | (-c | -C) <object>] [<object>]",
- 	"git notes [--ref <notes_ref>] edit [<object>]",
- 	"git notes [--ref <notes_ref>] show [<object>]",
--	"git notes [--ref <notes_ref>] merge [-v | -q] <notes_ref>",
-+	"git notes [--ref <notes_ref>] merge [-v | -q] [-s <strategy> ] <notes_ref>",
- 	"git notes [--ref <notes_ref>] remove [<object>]",
- 	"git notes [--ref <notes_ref>] prune [-n | -v]",
- 	NULL
-@@ -768,8 +768,12 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	struct notes_tree *t;
- 	struct notes_merge_options o;
- 	int verbosity = 0, result;
-+	const char *strategy = NULL;
- 	struct option options[] = {
- 		OPT__VERBOSITY(&verbosity),
-+		OPT_STRING('s', "strategy", &strategy, "strategy",
-+			   "resolve notes conflicts using the given "
-+			   "strategy (manual/ours/theirs/union)"),
- 		OPT_END()
- 	};
- 
-@@ -789,6 +793,21 @@ static int merge(int argc, const char **argv, const char *prefix)
- 	expand_notes_ref(&remote_ref);
- 	o.remote_ref = remote_ref.buf;
- 
-+	if (strategy) {
-+		if (!strcmp(strategy, "manual"))
-+			o.strategy = NOTES_MERGE_RESOLVE_MANUAL;
-+		else if (!strcmp(strategy, "ours"))
-+			o.strategy = NOTES_MERGE_RESOLVE_OURS;
-+		else if (!strcmp(strategy, "theirs"))
-+			o.strategy = NOTES_MERGE_RESOLVE_THEIRS;
-+		else if (!strcmp(strategy, "union"))
-+			o.strategy = NOTES_MERGE_RESOLVE_UNION;
-+		else {
-+			error("Unknown -s/--strategy: %s", strategy);
-+			usage_with_options(git_notes_merge_usage, options);
-+		}
-+	}
-+
- 	t = init_notes_check("merge");
- 
- 	strbuf_addf(&msg, "notes: Merged notes from %s into %s",
-diff --git a/notes-merge.c b/notes-merge.c
-index 20db0b6..f2fa12d 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -263,6 +263,35 @@ static void diff_tree_local(struct notes_merge_options *o,
- 	diff_tree_release_paths(&opt);
- }
- 
-+static int merge_one_change(struct notes_merge_options *o,
-+			    struct notes_merge_pair *p, struct notes_tree *t)
-+{
-+	/*
-+	 * Return 0 if change was resolved (and added to notes_tree),
-+	 * 1 if conflict
-+	 */
-+	switch (o->strategy) {
-+	case NOTES_MERGE_RESOLVE_MANUAL:
-+		return 1;
-+	case NOTES_MERGE_RESOLVE_OURS:
-+		OUTPUT(o, 2, "Using local notes for %s", sha1_to_hex(p->obj));
-+		/* nothing to do */
-+		return 0;
-+	case NOTES_MERGE_RESOLVE_THEIRS:
-+		OUTPUT(o, 2, "Using remote notes for %s", sha1_to_hex(p->obj));
-+		if (add_note(t, p->obj, p->remote, combine_notes_overwrite))
-+			die("confused: combine_notes_overwrite failed");
-+		return 0;
-+	case NOTES_MERGE_RESOLVE_UNION:
-+		OUTPUT(o, 2, "Concatenating local and remote notes for %s",
-+		       sha1_to_hex(p->obj));
-+		if (add_note(t, p->obj, p->remote, combine_notes_concatenate))
-+			die("confused: combine_notes_concatenate failed");
-+		return 0;
-+	}
-+	die("Unknown strategy (%i).", o->strategy);
-+}
-+
- static int merge_changes(struct notes_merge_options *o,
- 			 struct notes_merge_pair *changes, int *num_changes,
- 			 struct notes_tree *t)
-@@ -292,7 +321,7 @@ static int merge_changes(struct notes_merge_options *o,
- 		} else {
- 			/* need file-level merge between local and remote */
- 			trace_printf("\t\t\tneed content-level merge\n");
--			conflicts += 1; /* TODO */
-+			conflicts += merge_one_change(o, p, t);
- 		}
- 	}
- 
-diff --git a/notes-merge.h b/notes-merge.h
-index 577cfb3..ed356ae 100644
---- a/notes-merge.h
-+++ b/notes-merge.h
-@@ -11,6 +11,12 @@ struct notes_merge_options {
- 	const char *remote_ref;
- 	const char *commit_msg;
- 	int verbosity;
-+	enum {
-+		NOTES_MERGE_RESOLVE_MANUAL = 0,
-+		NOTES_MERGE_RESOLVE_OURS,
-+		NOTES_MERGE_RESOLVE_THEIRS,
-+		NOTES_MERGE_RESOLVE_UNION
-+	} strategy;
- };
- 
- void init_notes_merge_options(struct notes_merge_options *o);
-diff --git a/t/t3309-notes-merge-auto-resolve.sh b/t/t3309-notes-merge-auto-resolve.sh
-new file mode 100755
-index 0000000..1a1fc7e
---- /dev/null
-+++ b/t/t3309-notes-merge-auto-resolve.sh
-@@ -0,0 +1,502 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Johan Herland
-+#
-+
-+test_description='Test notes merging with auto-resolving strategies'
-+
-+. ./test-lib.sh
-+
-+# Set up a notes merge scenario with all kinds of potential conflicts
-+test_expect_success 'setup commits' '
-+	test_commit 1st &&
-+	test_commit 2nd &&
-+	test_commit 3rd &&
-+	test_commit 4th &&
-+	test_commit 5th &&
-+	test_commit 6th &&
-+	test_commit 7th &&
-+	test_commit 8th &&
-+	test_commit 9th &&
-+	test_commit 10th &&
-+	test_commit 11th &&
-+	test_commit 12th &&
-+	test_commit 13th &&
-+	test_commit 14th &&
-+	test_commit 15th
-+'
-+
-+commit_sha1=$(git rev-parse 1st^{commit})
-+commit_sha2=$(git rev-parse 2nd^{commit})
-+commit_sha3=$(git rev-parse 3rd^{commit})
-+commit_sha4=$(git rev-parse 4th^{commit})
-+commit_sha5=$(git rev-parse 5th^{commit})
-+commit_sha6=$(git rev-parse 6th^{commit})
-+commit_sha7=$(git rev-parse 7th^{commit})
-+commit_sha8=$(git rev-parse 8th^{commit})
-+commit_sha9=$(git rev-parse 9th^{commit})
-+commit_sha10=$(git rev-parse 10th^{commit})
-+commit_sha11=$(git rev-parse 11th^{commit})
-+commit_sha12=$(git rev-parse 12th^{commit})
-+commit_sha13=$(git rev-parse 13th^{commit})
-+commit_sha14=$(git rev-parse 14th^{commit})
-+commit_sha15=$(git rev-parse 15th^{commit})
-+
-+verify_notes () {
-+	notes_ref="$1"
-+	suffix="$2"
-+	git -c core.notesRef="refs/notes/$notes_ref" notes |
-+		sort >"output_notes_$suffix" &&
-+	test_cmp "expect_notes_$suffix" "output_notes_$suffix" &&
-+	git -c core.notesRef="refs/notes/$notes_ref" log --format="%H %s%n%N" \
-+		>"output_log_$suffix" &&
-+	test_cmp "expect_log_$suffix" "output_log_$suffix"
-+}
-+
-+test_expect_success 'setup merge base (x)' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes add -m "x notes on 6th commit" 6th &&
-+	git notes add -m "x notes on 7th commit" 7th &&
-+	git notes add -m "x notes on 8th commit" 8th &&
-+	git notes add -m "x notes on 9th commit" 9th &&
-+	git notes add -m "x notes on 10th commit" 10th &&
-+	git notes add -m "x notes on 11th commit" 11th &&
-+	git notes add -m "x notes on 12th commit" 12th &&
-+	git notes add -m "x notes on 13th commit" 13th &&
-+	git notes add -m "x notes on 14th commit" 14th &&
-+	git notes add -m "x notes on 15th commit" 15th
-+'
-+
-+cat <<EOF | sort >expect_notes_x
-+457a85d6c814ea208550f15fcc48f804ac8dc023 $commit_sha15
-+b0c95b954301d69da2bc3723f4cb1680d355937c $commit_sha14
-+5d30216a129eeffa97d9694ffe8c74317a560315 $commit_sha13
-+dd161bc149470fd890dd4ab52a4cbd79bbd18c36 $commit_sha12
-+7abbc45126d680336fb24294f013a7cdfa3ed545 $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+20c613c835011c48a5abe29170a2402ca6354910 $commit_sha9
-+a3daf8a1e4e5dc3409a303ad8481d57bfea7f5d6 $commit_sha8
-+897003322b53bc6ca098e9324ee508362347e734 $commit_sha7
-+11d97fdebfa5ceee540a3da07bce6fa0222bc082 $commit_sha6
-+EOF
-+
-+cat >expect_log_x <<EOF
-+$commit_sha15 15th
-+x notes on 15th commit
-+
-+$commit_sha14 14th
-+x notes on 14th commit
-+
-+$commit_sha13 13th
-+x notes on 13th commit
-+
-+$commit_sha12 12th
-+x notes on 12th commit
-+
-+$commit_sha11 11th
-+x notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+x notes on 9th commit
-+
-+$commit_sha8 8th
-+x notes on 8th commit
-+
-+$commit_sha7 7th
-+x notes on 7th commit
-+
-+$commit_sha6 6th
-+x notes on 6th commit
-+
-+$commit_sha5 5th
-+
-+$commit_sha4 4th
-+
-+$commit_sha3 3rd
-+
-+$commit_sha2 2nd
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'verify state of merge base (x)' 'verify_notes x x'
-+
-+test_expect_success 'setup local branch (y)' '
-+	git update-ref refs/notes/y refs/notes/x &&
-+	git config core.notesRef refs/notes/y &&
-+	git notes add -f -m "y notes on 3rd commit" 3rd &&
-+	git notes add -f -m "y notes on 4th commit" 4th &&
-+	git notes add -f -m "y notes on 5th commit" 5th &&
-+	git notes remove 6th &&
-+	git notes remove 7th &&
-+	git notes remove 8th &&
-+	git notes add -f -m "y notes on 12th commit" 12th &&
-+	git notes add -f -m "y notes on 13th commit" 13th &&
-+	git notes add -f -m "y notes on 14th commit" 14th &&
-+	git notes add -f -m "y notes on 15th commit" 15th
-+'
-+
-+cat <<EOF | sort >expect_notes_y
-+68b8630d25516028bed862719855b3d6768d7833 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7abbc45126d680336fb24294f013a7cdfa3ed545 $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+20c613c835011c48a5abe29170a2402ca6354910 $commit_sha9
-+154508c7a0bcad82b6fe4b472bc4c26b3bf0825b $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+EOF
-+
-+cat >expect_log_y <<EOF
-+$commit_sha15 15th
-+y notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+x notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+x notes on 9th commit
-+
-+$commit_sha8 8th
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+y notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'verify state of local branch (y)' 'verify_notes y y'
-+
-+test_expect_success 'setup remote branch (z)' '
-+	git update-ref refs/notes/z refs/notes/x &&
-+	git config core.notesRef refs/notes/z &&
-+	git notes add -f -m "z notes on 2nd commit" 2nd &&
-+	git notes add -f -m "y notes on 4th commit" 4th &&
-+	git notes add -f -m "z notes on 5th commit" 5th &&
-+	git notes remove 6th &&
-+	git notes add -f -m "z notes on 8th commit" 8th &&
-+	git notes remove 9th &&
-+	git notes add -f -m "z notes on 11th commit" 11th &&
-+	git notes remove 12th &&
-+	git notes add -f -m "y notes on 14th commit" 14th &&
-+	git notes add -f -m "z notes on 15th commit" 15th
-+'
-+
-+cat <<EOF | sort >expect_notes_z
-+9b4b2c61f0615412da3c10f98ff85b57c04ec765 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+5d30216a129eeffa97d9694ffe8c74317a560315 $commit_sha13
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+897003322b53bc6ca098e9324ee508362347e734 $commit_sha7
-+99fc34adfc400b95c67b013115e37e31aa9a6d23 $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_z <<EOF
-+$commit_sha15 15th
-+z notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+x notes on 13th commit
-+
-+$commit_sha12 12th
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+x notes on 7th commit
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+z notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'verify state of remote branch (z)' 'verify_notes z z'
-+
-+# At this point, before merging z into y, we have the following status:
-+#
-+# commit | base/x  | local/y | remote/z | diff from x to y/z         | result
-+# -------|---------|---------|----------|----------------------------|-------
-+# 1st    | [none]  | [none]  | [none]   | unchanged / unchanged      | [none]
-+# 2nd    | [none]  | [none]  | 283b482  | unchanged / added          | 283b482
-+# 3rd    | [none]  | 5772f42 | [none]   | added     / unchanged      | 5772f42
-+# 4th    | [none]  | e2bfd06 | e2bfd06  | added     / added (same)   | e2bfd06
-+# 5th    | [none]  | 154508c | 99fc34a  | added     / added (diff)   | ???
-+# 6th    | 11d97fd | [none]  | [none]   | removed   / removed        | [none]
-+# 7th    | 8970033 | [none]  | 8970033  | removed   / unchanged      | [none]
-+# 8th    | a3daf8a | [none]  | 851e163  | removed   / changed        | ???
-+# 9th    | 20c613c | 20c613c | [none]   | unchanged / removed        | [none]
-+# 10th   | b8d03e1 | b8d03e1 | b8d03e1  | unchanged / unchanged      | b8d03e1
-+# 11th   | 7abbc45 | 7abbc45 | 7e3c535  | unchanged / changed        | 7e3c535
-+# 12th   | dd161bc | a66055f | [none]   | changed   / removed        | ???
-+# 13th   | 5d30216 | 3a631fd | 5d30216  | changed   / unchanged      | 3a631fd
-+# 14th   | b0c95b9 | 5de7ea7 | 5de7ea7  | changed   / changed (same) | 5de7ea7
-+# 15th   | 457a85d | 68b8630 | 9b4b2c6  | changed   / changed (diff) | ???
-+
-+test_expect_success 'merge z into y with invalid strategy => Fail/No changes' '
-+	git config core.notesRef refs/notes/y &&
-+	test_must_fail git notes merge --strategy=foo z &&
-+	# Verify no changes (y)
-+	verify_notes y y
-+'
-+
-+cat <<EOF | sort >expect_notes_ours
-+68b8630d25516028bed862719855b3d6768d7833 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+154508c7a0bcad82b6fe4b472bc4c26b3bf0825b $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_ours <<EOF
-+$commit_sha15 15th
-+y notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+y notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge z into y with "ours" strategy => Non-conflicting 3-way merge' '
-+	git notes merge --strategy=ours z &&
-+	verify_notes y ours
-+'
-+
-+test_expect_success 'reset to pre-merge state (y)' '
-+	git update-ref refs/notes/y refs/notes/y^1 &&
-+	# Verify pre-merge state
-+	verify_notes y y
-+'
-+
-+cat <<EOF | sort >expect_notes_theirs
-+9b4b2c61f0615412da3c10f98ff85b57c04ec765 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+99fc34adfc400b95c67b013115e37e31aa9a6d23 $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_theirs <<EOF
-+$commit_sha15 15th
-+z notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+z notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge z into y with "theirs" strategy => Non-conflicting 3-way merge' '
-+	git notes merge --strategy=theirs z &&
-+	verify_notes y theirs
-+'
-+
-+test_expect_success 'reset to pre-merge state (y)' '
-+	git update-ref refs/notes/y refs/notes/y^1 &&
-+	# Verify pre-merge state
-+	verify_notes y y
-+'
-+
-+cat <<EOF | sort >expect_notes_union
-+7c4e546efd0fe939f876beb262ece02797880b54 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+6c841cc36ea496027290967ca96bd2bef54dbb47 $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_union <<EOF
-+$commit_sha15 15th
-+y notes on 15th commit
-+
-+z notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+y notes on 5th commit
-+
-+z notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge z into y with "union" strategy => Non-conflicting 3-way merge' '
-+	git notes merge --strategy=union z &&
-+	verify_notes y union
-+'
-+
-+test_done
+  fatal: Cannot lock the ref 'refs/notes/afjkdlsa^{gobbledeegook'.
+
+> So as I see it, there are four cases:
+> 
+>  - get_sha1() succeeds and returns a commit ==> merge that rev
+>  - get_sha1() succeeds and returns a non-commit ==> fail
+>  - get_sha1() fails, but resolve_ref() indicates a ref valid
+>    for writing ==> merge empty tree
+>  - get_sha1() fails, invalid refname ==> fail
+> 
+> The current code does not notice case 4, does it?
+
+My tests indicate that case 4 does fail (correctly). However I also
+agree that this is not at all clear from the current code, so I've
+rewritten this code to something that is hopefully more straightforward
+(this is the next iteration):
+
+	/* Dereference o->local_ref into local_sha1 */
+	if (!resolve_ref(o->local_ref, local_sha1, 0, NULL))
+		die("Failed to resolve local notes ref '%s'", o->local_ref);
+	else if (!check_ref_format(o->local_ref) && is_null_sha1(local_sha1))
+		local = NULL; /* local_sha1 == null_sha1 indicates unborn ref */
+	else if (!(local = lookup_commit_reference(local_sha1)))
+		die("Could not parse local commit %s (%s)",
+		    sha1_to_hex(local_sha1), o->local_ref);
+	trace_printf("\tlocal commit: %.7s\n", sha1_to_hex(local_sha1));
+
+	/* Dereference o->remote_ref into remote_sha1 */
+	if (get_sha1(o->remote_ref, remote_sha1)) {
+		/*
+		 * Failed to get remote_sha1. If o->remote_ref looks like an
+		 * unborn ref, perform the merge using an empty notes tree.
+		 */
+		if (!check_ref_format(o->remote_ref)) {
+			hashclr(remote_sha1);
+			remote = NULL;
+		}
+		else
+			die("Failed to resolve remote notes ref '%s'",
+			    o->remote_ref);
+	}
+	else if (!(remote = lookup_commit_reference(remote_sha1)))
+		die("Could not parse remote commit %s (%s)",
+		    sha1_to_hex(remote_sha1), o->remote_ref);
+	trace_printf("\tremote commit: %.7s\n", sha1_to_hex(remote_sha1));
+
+I've also added more testcases for expected failures.
+
+> > I guess this becomes a discussion of whether we should model notes
+> > merges on the 'resolve' merge strategy or the 'recursive' merge
+> > strategy. Without having studied each strategy in-depth, I don't know
+> > how much "better" 'recursive' is than 'resolve', especially not from
+> > the POV of notes merges.
+> 
+> I think 'resolve' should be good enough for now.  We can always add
+> 'recursive' later.
+
+My thoughts exactly.
+
+> > If you look at the notes_merge() docs in notes-merge.h by the
+> > end of this series, you'll see the following return values:
+> > 
+> > 0: Merge trivially succeeded in an existing commit (e.g. fast-forward).
+> > 
+> > 1: Merge successfully completes a merge commit (i.e. no conflicts).
+> > 
+> > -1: Merge results is conflicts.
+> 
+> What kind of caller would care about the distinction between 1 and -1
+> here (just curious)?
+
+Any caller who cares about the merge at all, I'd imagine
+
+If 1 (or 0) the merge is complete, and there's nothing more to be done
+(expect updating the notes ref, of course).
+
+If -1, there are conflicts checked out in .git/NOTES_MERGE_WORKTREE,
+and the user must be told to fix them and commit the conflict
+resolution.
+
+See the last part of builtin/notes.c:merge() at the end of this series
+for an example.
+
+
+...Johan
+
 -- 
-1.7.3.98.g5ad7d9
+Johan Herland, <johan@herland.net>
+www.herland.net
