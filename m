@@ -1,88 +1,68 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: [long] worktree setup cases
-Date: Thu, 21 Oct 2010 20:51:32 +0200
-Message-ID: <20101021185132.GB28700@nibiru.local>
-References: <20101020085859.GA13135@do> <20101020190709.GB10537@burratino> <AANLkTimzfxJFz2FRVCJ7b4+icXMxpQGNo0WGm_BXzXNy@mail.gmail.com> <20101021033042.GA1891@burratino> <AANLkTikwApJ2EtJNiOZPHVrz6seJNP-zEqzH_b62ksLf@mail.gmail.com>
-Reply-To: weigelt@metux.de
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] docs: give more hints about how "add -e" works
+Date: Thu, 21 Oct 2010 14:04:35 -0500
+Message-ID: <20101021190435.GB11759@burratino>
+References: <20101021143034.GA16083@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 21:00:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Oct 21 21:08:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90NM-00078O-VS
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:00:33 +0200
+	id 1P90V2-0002TF-1L
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:08:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757406Ab0JUTA2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 15:00:28 -0400
-Received: from caprica.metux.de ([82.165.128.25]:58976 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1755875Ab0JUTA1 convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 15:00:27 -0400
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o9LJ1t0I008965
-	for <git@vger.kernel.org>; Thu, 21 Oct 2010 21:01:56 +0200
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o9LJ1LvR008937
-	for git@vger.kernel.org; Thu, 21 Oct 2010 21:01:21 +0200
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id o9LIpWnW002794
-	for git@vger.kernel.org; Thu, 21 Oct 2010 20:51:32 +0200
-Mail-Followup-To: git@vger.kernel.org
+	id S1757426Ab0JUTIW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 15:08:22 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:38019 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757091Ab0JUTIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 15:08:21 -0400
+Received: by wyb33 with SMTP id 33so66458wyb.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 12:08:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=pyeNI1FfOVFrekcNZS5gbZkP8ZejgveBGuUjWVdVW2E=;
+        b=wnQbyG23YRMMZ2yNWJOXCJwEGyAcmvyMa4syd4VOg7jl3bO6lbJObgjHKWuWlpn36w
+         Rn11OES9nIHbximJpDCXrkTto7w6y1ZF2ltT1R9X4FACGEOpVm6WFsuzqXQuiUUglUbK
+         CFf7pvpe3OU7vGFScxLfLlWkcLpvEGt0SFRx4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=aubbBcch97yYqOtOqHEqPB0mWn15aVxlSVT95GTpjl1HEz/1iLIwd9MUlpM9HkmPu/
+         nGYw/TjkN9FBLWTykKDfxgW6lRu3EyASatUsRW0Qbo/oaMRUgGYg137PQ9qz80BKsWdS
+         DaHv9DNuuU4m3kxKkm59YLkLQsuyYLVN5EmLI=
+Received: by 10.227.143.75 with SMTP id t11mr1507181wbu.190.1287688100225;
+        Thu, 21 Oct 2010 12:08:20 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id l51sm936063wer.2.2010.10.21.12.08.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 21 Oct 2010 12:08:19 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTikwApJ2EtJNiOZPHVrz6seJNP-zEqzH_b62ksLf@mail.gmail.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+In-Reply-To: <20101021143034.GA16083@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159541>
 
-* Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+Jeff King wrote:
 
-> > Example:
-> >
-> > =A0repo =A0 =A0 =A0 =A0 =A0 /tmp/git/.git
-> > =A0starting cwd =A0 /tmp/git/.git/objects/pack
->=20
-> OK it's considered a bare repo, so no worktree.
+>                                                         This
+> patch attempts to cover explicitly what can be done at the
+> individual line level, and cautions the user that
+> conceptually larger changes (like modifying a line) require
+> some understanding of the patch format.
 
-Not necessarily: if config tells it's a non-bare repo, we could
-assume, the worktree is where core.worktree tells (which per
-default is "../" - relative to gitdir).
-
-But currently it seems to be implemented as you said: running
-git-status from within gitdir tells:
-
-    "fatal: This operation must be run in a work tree"
-
-That's not really bad, but sometimes a bit inconvenient.
-
-> Also the "relative to $GIT_DIR" may be confusing. If $GIT_DIR points
-> to a file that points to a true repo, then to which one it is
-> relative?
-
-Despite the fact that I doubt the usefulness of an .git file at
-all, it IMHO should be interpreted as an kind of userland symlink.
-
-
-cu
---=20
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+For what it's worth:
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
