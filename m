@@ -1,91 +1,87 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] fix color.pager = false with "git diff"
-Date: Thu, 21 Oct 2010 15:53:36 -0700
-Message-ID: <7vzku7rwcv.fsf@alter.siamese.dyndns.org>
-References: <20101021150244.GA18426@sigill.intra.peff.net>
+Subject: Re: [PATCH v2 2/4] run_builtin(): save "-h" detection result for
+ later use
+Date: Thu, 21 Oct 2010 15:57:30 -0700
+Message-ID: <7vsjzzrw6d.fsf@alter.siamese.dyndns.org>
+References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
+ <1287544320-8499-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 22 00:53:51 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 00:57:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9417-0003zu-Fu
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 00:53:49 +0200
+	id 1P944v-0004p8-33
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 00:57:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758659Ab0JUWxo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 18:53:44 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46220 "EHLO
+	id S1753807Ab0JUW5k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 18:57:40 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49868 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752044Ab0JUWxo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 18:53:44 -0400
+	with ESMTP id S1752454Ab0JUW5j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 18:57:39 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AF73AE0F80;
-	Thu, 21 Oct 2010 18:53:42 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B39AE001B;
+	Thu, 21 Oct 2010 18:57:39 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ytIOoHAYcRthIxnc1ok2niQaooM=; b=v1O04I
-	XcyNa2sULeHblN+Ap215/6XJ1nvK5hJkBfJTnESFebL376Fqz4fBBMKLgzUHfCCb
-	SoLqEeA1Pjun3Z9Nof73upAjhgmjKfpcDSfdM+ySdsnTh9zkClno/wfwdLNIETHi
-	eIFPfOUFRp+nF0NoHR5vUzlCHKrv0TYjxf6Q0=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=LHMxvPG1JbdKGCGSsTfB9dYN8
+	gc=; b=j9KQx387/T+dDspxT65gLbVnH8GT2kdIMdTc+KjeH0gHasjIZ8XQ13cP5
+	pG0W6jEp5L12lc741EBTlagz0A+0hkpzK4CJnnRB+incxR36mQG0Z8uVFrKXiZyk
+	Qp3XibhBxmcOs0h8t/f2R/XR2FtOfxMefaen2Dol6NceCs8P9U=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bqUcLPEMshfB5f2rKymYdW4HEglywCLA
-	E6l7SzJ6R3qU+nuZj+TAiFT07/m3FzC1QfcbQvFYS65kQE6D9T32y3F6VElqJxPe
-	mg9gpaZgTTjtQr2045kE650gu7/Bvr8sd0SMeWtGMeyonkHcvk2gaIlZvcEDtYU9
-	Q2xdFXcnZss=
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=EW7+vkw977ETaojqc0L
+	heCAasXT69IAEDEYxMTZZ8xg6MYRU6BJMBp1h6YFWdgvNG/s+A+tbKIsMxEz6X7t
+	CkTOSi2zhZ5JJRgYqkWQplvBK1zMw4s+rgmhH6eIASS4Eq1GlU4QBrKcvvxWWhs+
+	2v1GUIhUBVDpkuCSdM08RmwQ=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8D346E0F7F;
-	Thu, 21 Oct 2010 18:53:40 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 29E2CE001A;
+	Thu, 21 Oct 2010 18:57:36 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id D2711E0F7E; Thu, 21 Oct
- 2010 18:53:37 -0400 (EDT)
-In-Reply-To: <20101021150244.GA18426@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 21 Oct 2010 11\:02\:45 -0400")
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5271FE0017; Thu, 21 Oct
+ 2010 18:57:32 -0400 (EDT)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0C3396A0-DD66-11DF-9EDC-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 989FEDF0-DD66-11DF-856F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159584>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159585>
 
-Jeff King <peff@peff.net> writes:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
 
-> The color code makes a decision early on about whether to
-> use colors based on the config and whether we are using a
-> pager. For the most part, this works, because if we are
-> using a pager, we will start it more or less immediately.
+> When run_builtin() sees "-h" as the first argument, it assumes:
 >
-> In the case of diff, however, we delay starting the pager in
-> case --exit-code is being used. If this happens, then the
-> color code makes the wrong decision (because it doesn't
-> yet realize we are using a pager), and we need to correct
-> the decision after deciding whether to use a pager.
+>  - this is the call for help usage
+>  - the real git command will only print help usage then exit
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> Original discussion here:
->
->   http://thread.gmane.org/gmane.comp.version-control.git/89599
->
-> I have mixed feelings on this one. It's kind of a hack. A more elegant
-> solution would be totally rewriting the color code to check for the
-> pager at first output.
->
-> In favor of this patch:
->
->   1. It fixes a real bug.
->
->   2. Perfect is the enemy of the good, and I don't care enough about
->      this case to refactor the color code.
+> So it skips all setup in this case.  Unfortunately, some commands do
+> other things before calling parse_options(), which is often where the
+> help usage is printed.  Some of those things may try to access the
+> repository unnecessarily. If a repository is broken, the command may
+> die() before it prints help usage, not really helpful.
 
-Hmm, with "[color] pager = false", what should
+What does die() message say in that case?  If it says "your repository =
+is
+broken", that may be more useful than giving a help message.  I dunno.
 
-    $ git diff --color
+> Demonstrating "git foo -h" fails depends on individual commands and
+> is generally difficult to do. Instead GIT_TRACE is used to check
+> if a command does set repo. If it does, it is supposed to fail if
+> repo setup code chokes.
 
-do?
+Hmm, I am not sure I understand this one.  If you are interested in
+changing the behaviour of these commands when run with "-h" in a corrup=
+t
+repository, perhaps you can deliberately corrupt the test repository in
+the trash directory you start with, and run these commands there, no?
+=46or a good measure, you could use CEILING_DIRECTORIES to make sure th=
+e
+tests do not climb up to the project repository.
