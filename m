@@ -1,69 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv4 00/21] git notes merge
-Date: Thu, 21 Oct 2010 16:20:22 -0700
-Message-ID: <7vaam7rv49.fsf@alter.siamese.dyndns.org>
-References: <1287626936-32232-1-git-send-email-johan@herland.net>
- <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
+ git-svn fetch)
+Date: Thu, 21 Oct 2010 19:26:52 -0400 (EDT)
+Message-ID: <4258434.537707.1287703612372.JavaMail.root@mail.hq.genarts.com>
+References: <201010220049.33344.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	jrnieder@gmail.com, bebarino@gmail.com, avarab@gmail.com,
-	gitster@pobox.com
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 01:20:47 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: Will Palmer <wmpalmer@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 01:27:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P94RC-0001cQ-0A
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 01:20:46 +0200
+	id 1P94XJ-000301-SE
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 01:27:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752901Ab0JUXUj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 19:20:39 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:37221 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751098Ab0JUXUi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 19:20:38 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 2390DE0362;
-	Thu, 21 Oct 2010 19:20:38 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wM2WMl/LARowXchdJevAAsdwA1Q=; b=qsGNKe
-	TnS9Zu2giUKK/3y0tkEZg/tzwEqi8sP2u2HXfMJOZCJ27pdkqrcb7rpdFOH8giyd
-	IM26ygArjgElCMbHr+gYSGYUo+ZCzSNYfvh2Nvlb8Js5uk+9QCg3SVtBay67czfO
-	iGt6VVXII65vYxmQ9iGsOc46QXhSe9gfruPZ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LCHD2briiKIcmdC6NEJRKQwq6kxBWFxT
-	v8405pijGT8U3GNc5NaKYzvNnjCngvWiGS+HVkSd4EIvUlGA+T3uIHOkSDCUV+vH
-	bI6fXMKOoiWdfcu4Ijk7mGaJiEArldw+pUslj4sgtZtHhiTV5m8dTl2gu5bv1euc
-	iMsFaqSOIwY=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AFD78E0360;
-	Thu, 21 Oct 2010 19:20:31 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 942B2E035A; Thu, 21 Oct
- 2010 19:20:23 -0400 (EDT)
-In-Reply-To: <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com>
- (Sverre Rabbelier's message of "Thu\, 21 Oct 2010 16\:00\:44 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CC843AC4-DD69-11DF-BB32-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1756172Ab0JUX1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 19:27:00 -0400
+Received: from hq.genarts.com ([173.9.65.1]:19852 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751287Ab0JUX07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 19:26:59 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id C67DF1E26900;
+	Thu, 21 Oct 2010 19:26:58 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id vlgtzQtkJvUh; Thu, 21 Oct 2010 19:26:52 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 71F0F1E2690D;
+	Thu, 21 Oct 2010 19:26:52 -0400 (EDT)
+In-Reply-To: <201010220049.33344.jnareb@gmail.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159589>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+----- Original Message -----
+> From: "Jakub Narebski" <jnareb@gmail.com>
+> To: "Stephen Bash" <bash@genarts.com>
+> Sent: Thursday, October 21, 2010 6:49:32 PM
+> Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
+> 
+> Ah, I understand now that 'svn merge' (which is rather like 'cvs
+> update')
+> can be used for cherry picking.
+> 
+> Sidenote: in Git cherry picking picks up change and applies it on top
+> of current branch as one would apply a patch.
 
-> Can someone comment on whether "git reset --merge" is a good
-> implementation of "git merge --abort"? If we can get an Ack from
-> someone I'd love to see this implemented.
+Yes.
 
-I think it depends on in what state you started from and how the merge
-operation stopped.  If your index was clean, probably yes, but "git reset
---merge" may not be something you may want to do if the merge stopped
-because you had previously added something.
+> This is quite different
+> from merge, where you find comon ancestor and then perform 3-way merge
+> (ours, theirs, ancestor). 
+
+Yes.
+
+> Is merging in Subversion using 3-way merge
+> (like 'cvs update -j ... -j ...' is), or re-applying changes?
+
+Appears to the be 3-way merge if I'm reading the SVN archives correctly:
+  "It's a basic diff3 algorithm. 'man diff3' to learn about it and play 
+   with GNU's implementation of diff3."
+http://svn.haxx.se/users/archive-2005-03/1232.shtml
+
+So my *guess* is they derive a common ancestor from their copy information, but I'm sure someone else more knowledgable could say more about that.
+
+> > > I have read some documentation about svn:mergeinfo property:
+> > > http://svnbook.red-bean.com/en/1.5/svn.branchmerge.basicmerging.html
+> >
+> > I guess this the first time I've read the 1.5 version of the SVN
+> > Book.
+> > This has consequences below...
+> 
+> Errr... what consequences? a:b vs a-b being closed (inclusive) or open
+> (exclusive) from one or other end?
+
+No, just that post-1.5 merges do actually start to look more like Git merges.
+
+> > Back to the task at hand... having read the 1.5 SVN docs, I have no
+> > idea how this works now (big caveat!!!), but prior to 1.5 M1 would
+> > have been
+> >
+> >   svn switch svn://path/to/foo
+> >   svn merge -ra:b svn://path/to/bar destination-path
+> >
+> > which is "Take the changes introduced in revisions a through b, and
+> > apply them to the destination-path". This is why I think of SVN
+> > merges as cherry-picks -- I was allowed to specify exactly what
+> > changesets I wanted merge to work on.
+> 
+> On one hand side you "were allowed to specify exactly what changesets
+> you wanted to merge to work on", on the other hand side you *had* to
+> specify what changesets etc.
+
+My point is because the user was required to specify the revisions to merge, I don't think an automated tool (i.e. the mapper) can make assumptions about what was actually merged in any given revision.
+
+> > To truly illustrate this, consider a' is in between a and b:
+> >
+> > ---1---B---2---3-------M1--4---5---M2 <-- foo
+> >         \              /           /
+> >          \-a---a'---b-/-----c---d-/ <-- bar
+> >
+> > I could
+> >
+> >   svn switch svn://path/to/foo
+> >   svn merge -ra':b svn://path/to/bar destination-path
+> >
+> > and "a" would never be merged back to foo.
+> 
+> Such merge would be hard to represent in Git, I think.
+
+I agree.
+ 
+Thanks,
+Stephen
