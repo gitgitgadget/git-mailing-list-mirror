@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 05/21] notes.h/c: Clarify the handling of notes objects that
- are == null_sha1
-Date: Thu, 21 Oct 2010 04:08:40 +0200
-Message-ID: <1287626936-32232-6-git-send-email-johan@herland.net>
+Subject: [PATCHv4 08/21] notes.c: Use two newlines (instead of one) when
+ concatenating notes
+Date: Thu, 21 Oct 2010 04:08:43 +0200
+Message-ID: <1287626936-32232-9-git-send-email-johan@herland.net>
 References: <1287626936-32232-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -16,28 +16,28 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8kby-0007sY-7n
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:34 +0200
+	id 1P8kby-0007sY-PM
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756880Ab0JUCJJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 22:09:09 -0400
+	id S1756903Ab0JUCJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 22:09:15 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:33116 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756859Ab0JUCJG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 22:09:06 -0400
+	id S1756756Ab0JUCJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 22:09:09 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAM00IQGBB3YX70@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:03 +0200 (MEST)
+ with ESMTP id <0LAM00IREBB5YX70@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:09:05 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 9FE0B1EA57FC_CBFA0BFB	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:03 +0000 (GMT)
+ with SMTP id AF1101EA57D2_CBFA0C1B	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:09:05 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 6DDCB1EA2846_CBFA0BFF	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:03 +0000 (GMT)
+ with ESMTP id 729B61EA285A_CBFA0C1F	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:09:04 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAM0096KBB03500@get-mta-in01.get.basefarm.net> for
@@ -48,92 +48,125 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159465>
 
-Clearly specify how combine_notes functions are expected to handle null_sha1
-in input. Also specify (and implement) that returning null_sha1 from a
-combine_notes function will cause the note in question to be removed.
+When using combine_notes_concatenate() to concatenate notes, it currently
+ensures exactly one newline character between the given notes. However,
+when using builtin/notes.c:create_note() to concatenate notes (e.g. by
+'git notes append'), it adds a newline character to the trailing newline
+of the preceding notes object, thus resulting in _two_ newlines (aka. a
+blank line) separating contents of the two notes.
 
-Furthermore, document that passing note_sha1 == null_sha1 to add_note() is
-usually a no-op, except in cases where combining it with an existing note
-yields a new/changed result.
+This patch brings combine_notes_concatenate() into consistency with
+builtin/notes.c:create_note(), by ensuring exactly _two_ newline characters
+between concatenated notes.
+
+The patch also changes a few notes-related selftests accordingly.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |   12 +++++++++++-
- notes.h |   16 +++++++++++++++-
- 2 files changed, 26 insertions(+), 2 deletions(-)
+ notes.c                       |    7 ++++---
+ t/t3301-notes.sh              |    4 ++++
+ t/t3303-notes-subtrees.sh     |    1 +
+ t/t3404-rebase-interactive.sh |    1 +
+ t/t9301-fast-import-notes.sh  |    5 +++++
+ 5 files changed, 15 insertions(+), 3 deletions(-)
 
 diff --git a/notes.c b/notes.c
-index bfb3ea5..0c13a36 100644
+index c4203ce..a7a901a 100644
 --- a/notes.c
 +++ b/notes.c
-@@ -248,7 +248,10 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
- 	switch (GET_PTR_TYPE(*p)) {
- 	case PTR_TYPE_NULL:
- 		assert(!*p);
--		*p = SET_PTR_TYPE(entry, type);
-+		if (is_null_sha1(entry->val_sha1))
-+			free(entry);
-+		else
-+			*p = SET_PTR_TYPE(entry, type);
- 		return;
- 	case PTR_TYPE_NOTE:
- 		switch (type) {
-@@ -264,6 +267,9 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
- 					    sha1_to_hex(l->val_sha1),
- 					    sha1_to_hex(entry->val_sha1),
- 					    sha1_to_hex(l->key_sha1));
+@@ -814,16 +814,17 @@ int combine_notes_concatenate(unsigned char *cur_sha1,
+ 		return 0;
+ 	}
+ 
+-	/* we will separate the notes by a newline anyway */
++	/* we will separate the notes by two newlines anyway */
+ 	if (cur_msg[cur_len - 1] == '\n')
+ 		cur_len--;
+ 
+ 	/* concatenate cur_msg and new_msg into buf */
+-	buf_len = cur_len + 1 + new_len;
++	buf_len = cur_len + 2 + new_len;
+ 	buf = (char *) xmalloc(buf_len);
+ 	memcpy(buf, cur_msg, cur_len);
+ 	buf[cur_len] = '\n';
+-	memcpy(buf + cur_len + 1, new_msg, new_len);
++	buf[cur_len + 1] = '\n';
++	memcpy(buf + cur_len + 2, new_msg, new_len);
+ 	free(cur_msg);
+ 	free(new_msg);
+ 
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index 1d82f79..4bf4e52 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -955,6 +955,7 @@ Date:   Thu Apr 7 15:27:13 2005 -0700
+ 
+ Notes (other):
+     a fresh note
++$whitespace
+     another fresh note
+ EOF
+ 
+@@ -976,8 +977,11 @@ Date:   Thu Apr 7 15:27:13 2005 -0700
+ 
+ Notes (other):
+     a fresh note
++$whitespace
+     another fresh note
++$whitespace
+     append 1
++$whitespace
+     append 2
+ EOF
+ 
+diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
+index d571708..704aee8 100755
+--- a/t/t3303-notes-subtrees.sh
++++ b/t/t3303-notes-subtrees.sh
+@@ -173,6 +173,7 @@ verify_concatenated_notes () {
+ 	while [ $i -gt 0 ]; do
+ 		echo "    commit #$i" &&
+ 		echo "    first note for commit #$i" &&
++		echo "    " &&
+ 		echo "    second note for commit #$i" &&
+ 		i=$(($i-1));
+ 	done > expect &&
+diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+index 9f03ce6..9ed70dc 100755
+--- a/t/t3404-rebase-interactive.sh
++++ b/t/t3404-rebase-interactive.sh
+@@ -593,6 +593,7 @@ test_expect_success 'rebase -i can copy notes' '
+ 
+ cat >expect <<EOF
+ an earlier note
 +
-+				if (is_null_sha1(l->val_sha1))
-+					note_tree_remove(t, tree, n, entry);
- 				free(entry);
- 				return;
- 			}
-@@ -295,6 +301,10 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
- 	/* non-matching leaf_node */
- 	assert(GET_PTR_TYPE(*p) == PTR_TYPE_NOTE ||
- 	       GET_PTR_TYPE(*p) == PTR_TYPE_SUBTREE);
-+	if (is_null_sha1(entry->val_sha1)) { /* skip insertion of empty note */
-+		free(entry);
-+		return;
-+	}
- 	new_node = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
- 	note_tree_insert(t, new_node, n + 1, l, GET_PTR_TYPE(*p),
- 			 combine_notes);
-diff --git a/notes.h b/notes.h
-index 20db42f..79ea797 100644
---- a/notes.h
-+++ b/notes.h
-@@ -12,7 +12,10 @@
-  * resulting SHA1 into the first SHA1 argument (cur_sha1). A non-zero return
-  * value indicates failure.
-  *
-- * The two given SHA1s must both be non-NULL and different from each other.
-+ * The two given SHA1s shall both be non-NULL and different from each other.
-+ * Either of them (but not both) may be == null_sha1, which indicates an
-+ * empty/non-existent note. If the resulting SHA1 (cur_sha1) is == null_sha1,
-+ * the note will be removed from the notes tree.
-  *
-  * The default combine_notes function (you get this when passing NULL) is
-  * combine_notes_concatenate(), which appends the contents of the new note to
-@@ -90,6 +93,17 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
- /*
-  * Add the given note object to the given notes_tree structure
-  *
-+ * If there already exists a note for the given object_sha1, the given
-+ * combine_notes function is invoked to break the tie. If not given (i.e.
-+ * combine_notes == NULL), the default combine_notes function for the given
-+ * notes_tree is used.
-+ *
-+ * Passing note_sha1 == null_sha1 indicates the addition of an
-+ * empty/non-existent note. This is a (potentially expensive) no-op unless
-+ * there already exists a note for the given object_sha1, AND combining that
-+ * note with the empty note (using the given combine_notes function) results
-+ * in a new/changed note.
-+ *
-  * IMPORTANT: The changes made by add_note() to the given notes_tree structure
-  * are not persistent until a subsequent call to write_notes_tree() returns
-  * zero.
+ a note
+ EOF
+ 
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index a5c99d8..7cf8cd8 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -255,13 +255,18 @@ EOF
+ 
+ INPUT_END
+ 
++whitespace="    "
++
+ cat >expect <<EXPECT_END
+     fourth commit
+     pre-prefix of note for fourth commit
++$whitespace
+     prefix of note for fourth commit
++$whitespace
+     third note for fourth commit
+     third commit
+     prefix of note for third commit
++$whitespace
+     third note for third commit
+     second commit
+     third note for second commit
 -- 
 1.7.3.98.g5ad7d9
