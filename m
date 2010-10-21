@@ -1,170 +1,132 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] git-gui: apply color information from git diff
-Date: Thu, 21 Oct 2010 16:22:40 +0100
-Message-ID: <87eibje5zs.fsf_-_@fox.patthoyts.tk>
-References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
-	<87hbgh7paf.fsf@fox.patthoyts.tk>
-	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
-	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
-	<7vy69stop2.fsf@alter.siamese.dyndns.org>
+From: "Wilson, Kevin Lee (OpenView Engineer)" <kevin.l.wilson@hp.com>
+Subject: RE: GIT as binary repository
+Date: Thu, 21 Oct 2010 18:53:18 +0000
+Message-ID: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36F2A@GVW1098EXB.americas.hpqcorp.net>
+References: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36B4E@GVW1098EXB.americas.hpqcorp.net>
+ <AANLkTiniQNTBnqQz-p5E3rjoHq9FnpMkzO=B0yh+Sbxq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tor Arvid Lund <torarvid@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 20:50:19 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Thu Oct 21 20:54:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90DQ-0002pX-VC
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:50:17 +0200
+	id 1P90He-0004YY-8a
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:54:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068Ab0JUSuJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 14:50:09 -0400
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:59867 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753188Ab0JUSuH (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 14:50:07 -0400
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P90DF-0003DC-DJ; Thu, 21 Oct 2010 19:50:05 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out2.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P90CO-0001JC-8Y; Thu, 21 Oct 2010 19:49:12 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 88E03219BB; Thu, 21 Oct 2010 19:49:11 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-X-Url: http://www.patthoyts.tk/
-In-Reply-To: <7vy69stop2.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Wed, 20 Oct 2010 16:43:53 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1757412Ab0JUSyd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 14:54:33 -0400
+Received: from g5t0008.atlanta.hp.com ([15.192.0.45]:28339 "EHLO
+	g5t0008.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757392Ab0JUSyc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 14:54:32 -0400
+Received: from G6W0641.americas.hpqcorp.net (g6w0641.atlanta.hp.com [16.230.34.77])
+	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
+	(No client certificate requested)
+	by g5t0008.atlanta.hp.com (Postfix) with ESMTPS id B1593245A7;
+	Thu, 21 Oct 2010 18:54:31 +0000 (UTC)
+Received: from G4W0659.americas.hpqcorp.net (16.234.40.187) by
+ G6W0641.americas.hpqcorp.net (16.230.34.77) with Microsoft SMTP Server (TLS)
+ id 8.2.176.0; Thu, 21 Oct 2010 18:53:09 +0000
+Received: from GVW1098EXB.americas.hpqcorp.net ([16.234.97.244]) by
+ G4W0659.americas.hpqcorp.net ([16.234.40.187]) with mapi; Thu, 21 Oct 2010
+ 18:53:09 +0000
+Thread-Topic: GIT as binary repository
+Thread-Index: ActxRt8JnLgNw8C6Tum5u3edpykKxAACc0TA
+In-Reply-To: <AANLkTiniQNTBnqQz-p5E3rjoHq9FnpMkzO=B0yh+Sbxq@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159538>
 
-This patch extracts the ansi color sequences from git diff output and
-applies these to the diff view window. This ensures that the gui view
-makes use of the current git configuration for whitespace display.
+Thanks for the detailed input.=20
+Kevin
 
-Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
+-----Original Message-----
+=46rom: Shawn Pearce [mailto:spearce@spearce.org]=20
+Sent: Thursday, October 21, 2010 11:39 AM
+To: Wilson, Kevin Lee (OpenView Engineer)
+Cc: git@vger.kernel.org
+Subject: Re: GIT as binary repository
 
-Junio C Hamano <gitster@pobox.com> writes:
->Pat Thoyts <patthoyts@users.sourceforge.net> writes:
->
->> This is a rather more complete implementation of whitespace highlighting
->> according to the core.whitespace setting. The diff view whitespace
->> highlights should match what you see with 'git diff' when color is
->> enabled for all the whitespace rules except cr-at-eol where there is
->> currently a rule to hide these.
->>
->> Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
->> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
->> ---
->
->This might be a very stupid question, but isn't it an easier-to-maintain
->option to let underlying "git diff" color its output and convert the ANSI
->coloring to whatever Tcl wants to use, especially in the long run, instead
->of trying to replicate the logic to check whitespace breakages here?
+On Thu, Oct 21, 2010 at 5:52 AM, Wilson, Kevin Lee (OpenView Engineer)
+<kevin.l.wilson@hp.com> wrote:
+> We are investigating the use of GIT as a binary repository solution. =
+Our larger files are near 800MB and the total checked out repo size is =
+about 3 GB the repo size in SVN is more like 20-30GB, if we could prune=
+ the history prior to MR, we could get these sizes down considerably. T=
+his binary repo is really for our super project build. =A0From what I h=
+ave read and learned, this is not a good fit for the GIT tool. Have the=
+re been performance improvements lately? Some of the posts I have read =
+have been quite old?
 
-Seems like a fine plan. Here is an implementation to try out.
+Not really.
 
- git-gui.sh   |    7 ++++++-
- lib/diff.tcl |   27 ++++++++++++++++++++++++++-
- 2 files changed, 32 insertions(+), 2 deletions(-)
+Teams who need to store content like this are taking two approaches:
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 5e8378f..8fba57c 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3322,8 +3322,13 @@ pack $ui_diff -side left -fill both -expand 1
- pack .vpane.lower.diff.header -side top -fill x
- pack .vpane.lower.diff.body -side bottom -fill both -expand 1
- 
-+foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 grey60} {
-+	$ui_diff tag configure clr4$n -background $c
-+	$ui_diff tag configure clr3$n -foreground $c
-+}
-+
- $ui_diff tag conf d_cr -elide true
--$ui_diff tag conf d_@ -foreground blue -font font_diffbold
-+$ui_diff tag conf d_@ -font font_diffbold
- $ui_diff tag conf d_+ -foreground {#00a000}
- $ui_diff tag conf d_- -foreground red
- 
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index c628750..7625cb8 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -294,7 +294,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	}
- 
- 	lappend cmd -p
--	lappend cmd --no-color
-+	lappend cmd --color
- 	if {$repo_config(gui.diffcontext) >= 1} {
- 		lappend cmd "-U$repo_config(gui.diffcontext)"
- 	}
-@@ -332,6 +332,21 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	fileevent $fd readable [list read_diff $fd $cont_info]
- }
- 
-+proc parse_color_line {line} {
-+	set start 0
-+	set result ""
-+	set markup [list]
-+	while {[regexp -indices -start $start "\033\\\[(\\d+)?m" $line match code]} {
-+		foreach {begin end} $match break
-+		append result [string range $line $start [expr {$begin - 1}]]
-+		lappend markup [string length $result] [eval [linsert $code 0 string range $line]]
-+		set start [incr end]
-+	}
-+	append result [string range $line $start end]
-+	if {[llength $markup] < 4} {set markup {}}
-+	return [list $result $markup]
-+}
-+
- proc read_diff {fd cont_info} {
- 	global ui_diff diff_active is_submodule_diff
- 	global is_3way_diff is_conflict_diff current_diff_header
-@@ -340,6 +355,9 @@ proc read_diff {fd cont_info} {
- 
- 	$ui_diff conf -state normal
- 	while {[gets $fd line] >= 0} {
-+		foreach {line markup} [parse_color_line $line] break
-+		set line [string map {\033 ^} $line]
-+
- 		# -- Cleanup uninteresting diff header lines.
- 		#
- 		if {$::current_diff_inheader} {
-@@ -434,11 +452,18 @@ proc read_diff {fd cont_info} {
- 			}
- 			}
- 		}
-+		set mark [$ui_diff index "end - 1 line linestart"]
- 		$ui_diff insert end $line $tags
- 		if {[string index $line end] eq "\r"} {
- 			$ui_diff tag add d_cr {end - 2c}
- 		}
- 		$ui_diff insert end "\n" $tags
-+
-+		foreach {posbegin colbegin posend colend} $markup {
-+			set a "$mark linestart + $posbegin chars"
-+			set b "$mark linestart + $posend chars"
-+			catch {$ui_diff tag add clr$colbegin $a $b}
-+		}
- 	}
- 	$ui_diff conf -state disabled
- 
--- 
-1.7.3.1.msysgit.0
+Bite the bullet and use 64 bit systems with a lot of physical memory.
+Git allocates/memmaps two memory blocks equal in size to the file you
+are trying to work with.  If you have an 800MB file, you need ~1.6G of
+physical memory just for the Git executable to touch that file.  For
+most modern desktops and server systems, this is pretty easy to deal
+with, 4G or 8G of physical memory in a developer workstation is pretty
+inexpensive.  If the files aren't delta compressible, you can speed up
+delta compressing operations that occur during `git gc` by adding a
+gitattribute with the "-delta" flag for the relevant path files to
+your .git/info/attributes file.  Unfortunately this may mean that your
+Git repository is large (>20G?), and each developer needs to make a
+full copy of it when they start to work on the project.  That is a lot
+of data to move around, or to store locally.  But again when you look
+at the cost of disk on a developer workstation, this may not be an
+issue if your team can adopt a workflow where they don't clone the
+repository often.  (E.g. the Android repository is about 7G,
+developers clone it once and then don't need to again... so it is
+doable.)
+
+The other option is to use a different repository for the binary
+files.  Some teams are using a REST enabled HTTP server like Amazon S3
+(though you probably want something inside your corporate firewall) to
+store the large binary files.  Instead of putting the files into Git
+the put a small shell script and a pointer to the file into Git.  The
+shell script downloads the large binary file when executed, and the
+build process (or the developer "start-up" instructions) execute the
+script to get the latest versions bootstrapped on the local
+workstation.
+
+
+> I also have some questions, about how the workflow would be for getti=
+ng all of the changes merged from several different teams into the one =
+repository would operate. Do we setup a shared system for engineers to =
+perform the merges onto? Our teams are geographically disbursed.
+
+Yes, this is the common approach.  Actually what I have started to see
+with Android is, each distributed office has a shared repository that
+the engineers in that office interact with on a daily basis.  And
+someone in each office synchronizes that repository with a single
+central repository that exists somewhere else.  Because of the nature
+of Git, the central repository can be continuously pulled into the
+distributed office through a cron script.  Engineers in the office can
+therefore always have a "fairly latest" version available, but can
+also fork off onto a side-branch and defer merging with the other
+offices for a day or two.
+
+Android teams are successfully using this approach by running Gerrit
+Code Review[1] as their central server, and using Gerrit's built-in
+replication feature to push updates to the distributed office servers.
+ In effect there is one central server for writes, but a lot of read
+operations are offloaded into the distributed offices local copies.
+
+[1] http://code.google.com/p/gerrit/
+
+--=20
+Shawn.
