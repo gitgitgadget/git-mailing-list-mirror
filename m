@@ -1,98 +1,77 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] config: treat non-existent config files as empty
-Date: Thu, 21 Oct 2010 11:47:08 -0500
-Message-ID: <20101021164708.GD3732@burratino>
-References: <20101021144544.GA18901@sigill.intra.peff.net>
+Subject: Re: [PATCH] diff: report bogus input to -C/-M/-B
+Date: Thu, 21 Oct 2010 11:53:40 -0500
+Message-ID: <20101021165340.GE3732@burratino>
+References: <20101021144947.GA18210@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Oct 21 18:54:35 2010
+X-From: git-owner@vger.kernel.org Thu Oct 21 18:57:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8yPT-0003t1-G7
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 18:54:35 +0200
+	id 1P8ySJ-0004rH-OJ
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 18:57:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752753Ab0JUQyT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 12:54:19 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42780 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752617Ab0JUQyR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 12:54:17 -0400
-Received: by bwz18 with SMTP id 18so505448bwz.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 09:54:16 -0700 (PDT)
+	id S1753305Ab0JUQ50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 12:57:26 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48272 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752617Ab0JUQ5Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 12:57:25 -0400
+Received: by vws2 with SMTP id 2so2832487vws.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 09:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=ng2K6O0JIE2YlCg1EcoyxJIhfIuK1t5MXL5Wy/lE7sI=;
-        b=u0Zy4ZwTp4kPhjrhRaSmV2+n0y98X/3sf35pGs0SbQfX+4L5LL/Msj7HrGqt0176dE
-         eZJ5H/m5YG6WhuKZnTwUMrelQmF3QVbYUReRCVIxBnB7xK8Sq7zluDDAIaHjOT2FMh2c
-         SaZ4XAmucrId3VQzLiGxc1FC0kvxEPWGYMv3s=
+        bh=FTkZdTW4+VffxusQz0P4ZjvzVWrtuihNlUdLt54C0EA=;
+        b=gPgG0IEKOcB4vpdeBiphC7gbjDOQ7tsKpzF8hm7Mp3D4gKBi1zDap9O5jxWy6X7NB7
+         rPwgFnv3qTFRcInoDagj7CwAJ8v5wZfKh0ruoc2Orz15LC3+FhbJOwdl6sA/rRR/+lHk
+         R4GtE1uEGVFDrpmm60bVF9S7UA2+Hp8fBOsfc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=GWCvIkXGwT2bo6uOVKxbTzyfB3YvebprEdYrdudHLdE/XhkGuS11wZR6m7JyNMh/sr
-         ySEnr1Gx3rnz3T9sO+1h3gfkUhEFoaq/w6aV1NSG3t5NUkit3tmzaLGBUx2ztUfEKzT6
-         9OyVw6FBgbdyxEoVhFCs/dtQuv20UQZP68m4g=
-Received: by 10.204.114.205 with SMTP id f13mr32859bkq.86.1287679855430;
-        Thu, 21 Oct 2010 09:50:55 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id s18sm916069fax.10.2010.10.21.09.50.53
+        b=E0TlB5XruZzjARdH/kw/+IG1f6wJBpI/rTBK+/Uzj8K9tFVHeu4oILQLwCXkdY3/nG
+         3aBCuq4kgxyvynlXltlT09N/38r4lUlOQX2SrwNqfKh88cDvHSnrIC/nAaaR8aoFD9EO
+         drALSUuKpOpZUh2HrjXQE7Iwa+fW7/hJoUPQQ=
+Received: by 10.220.187.11 with SMTP id cu11mr245762vcb.269.1287680244592;
+        Thu, 21 Oct 2010 09:57:24 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id v20sm940591vbw.9.2010.10.21.09.57.22
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 09:50:54 -0700 (PDT)
+        Thu, 21 Oct 2010 09:57:23 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <20101021144544.GA18901@sigill.intra.peff.net>
+In-Reply-To: <20101021144947.GA18210@sigill.intra.peff.net>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159523>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159524>
 
 Jeff King wrote:
 
->   1. Does it still error on GIT_CONFIG=/nonexistent? I said then I
->      hadn't tested. I just did, and it does still produce an error.
+> Before:
+> 
+>   $ git diff -CM
+>   $ echo $?
+>   128
+> 
+> After:
+> 
+>   $ git diff -CM
+>   error: invalid argument to -C: M
+>   $ echo $?
+>   128
 
-Maybe it would make sense to squash in something like this, then.
+Yes, please.
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index c703257..d0e5546 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -844,6 +844,27 @@ test_expect_success SYMLINKS 'symlinked configuration' '
- 
- '
- 
-+test_expect_success 'nonexistent configuration' '
-+	(
-+		GIT_CONFIG=doesnotexist &&
-+		export GIT_CONFIG &&
-+		test_must_fail git config --list &&
-+		test_must_fail git config test.xyzzy
-+	)
-+'
-+
-+test_expect_success SYMLINKS 'symlink to nonexistent configuration' '
-+	ln -s doesnotexist linktonada &&
-+	ln -s linktonada linktolinktonada &&
-+	(
-+		GIT_CONFIG=linktonada &&
-+		export GIT_CONFIG &&
-+		test_must_fail git config --list &&
-+		GIT_CONFIG=linktolinktonada &&
-+		test_must_fail git config --list
-+	)
-+'
-+
- test_expect_success 'check split_cmdline return' "
- 	git config alias.split-cmdline-fix 'echo \"' &&
- 	test_must_fail git split-cmdline-fix &&
+Who is it that exits(128) in this code path?  Are there other
+functions it calls that might return an error without reporting it to
+stderr?
