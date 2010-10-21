@@ -1,132 +1,117 @@
-From: "Wilson, Kevin Lee (OpenView Engineer)" <kevin.l.wilson@hp.com>
-Subject: RE: GIT as binary repository
-Date: Thu, 21 Oct 2010 18:53:18 +0000
-Message-ID: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36F2A@GVW1098EXB.americas.hpqcorp.net>
-References: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36B4E@GVW1098EXB.americas.hpqcorp.net>
- <AANLkTiniQNTBnqQz-p5E3rjoHq9FnpMkzO=B0yh+Sbxq@mail.gmail.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: support core.whitespace rules in diff view
+Date: Thu, 21 Oct 2010 19:58:37 +0100
+Message-ID: <8762wve5k2.fsf@fox.patthoyts.tk>
+References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
+	<87hbgh7paf.fsf@fox.patthoyts.tk>
+	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
+	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
+	<7vy69stop2.fsf@alter.siamese.dyndns.org>
+	<AANLkTikG0_9+Gjnhehf8436Kw089Zd-XaSdSOP-J6_yD@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Thu Oct 21 20:54:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Tor Arvid Lund <torarvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 20:59:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90He-0004YY-8a
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:54:38 +0200
+	id 1P90M4-0006RV-M4
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:59:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757412Ab0JUSyd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 14:54:33 -0400
-Received: from g5t0008.atlanta.hp.com ([15.192.0.45]:28339 "EHLO
-	g5t0008.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757392Ab0JUSyc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 14:54:32 -0400
-Received: from G6W0641.americas.hpqcorp.net (g6w0641.atlanta.hp.com [16.230.34.77])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by g5t0008.atlanta.hp.com (Postfix) with ESMTPS id B1593245A7;
-	Thu, 21 Oct 2010 18:54:31 +0000 (UTC)
-Received: from G4W0659.americas.hpqcorp.net (16.234.40.187) by
- G6W0641.americas.hpqcorp.net (16.230.34.77) with Microsoft SMTP Server (TLS)
- id 8.2.176.0; Thu, 21 Oct 2010 18:53:09 +0000
-Received: from GVW1098EXB.americas.hpqcorp.net ([16.234.97.244]) by
- G4W0659.americas.hpqcorp.net ([16.234.40.187]) with mapi; Thu, 21 Oct 2010
- 18:53:09 +0000
-Thread-Topic: GIT as binary repository
-Thread-Index: ActxRt8JnLgNw8C6Tum5u3edpykKxAACc0TA
-In-Reply-To: <AANLkTiniQNTBnqQz-p5E3rjoHq9FnpMkzO=B0yh+Sbxq@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1757539Ab0JUS7E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 14:59:04 -0400
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:38722 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1757527Ab0JUS7B (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 14:59:01 -0400
+Received: from [172.23.170.144] (helo=anti-virus03-07)
+	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1P90Lr-0007qD-Oh; Thu, 21 Oct 2010 19:58:59 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1P90LX-0003ZV-Qs; Thu, 21 Oct 2010 19:58:39 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 43D5224CDB; Thu, 21 Oct 2010 19:58:37 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <AANLkTikG0_9+Gjnhehf8436Kw089Zd-XaSdSOP-J6_yD@mail.gmail.com>
+	(Tor Arvid Lund's message of "Thu, 21 Oct 2010 14:36:36 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159539>
 
-Thanks for the detailed input.=20
-Kevin
+Tor Arvid Lund <torarvid@gmail.com> writes:
 
------Original Message-----
-=46rom: Shawn Pearce [mailto:spearce@spearce.org]=20
-Sent: Thursday, October 21, 2010 11:39 AM
-To: Wilson, Kevin Lee (OpenView Engineer)
-Cc: git@vger.kernel.org
-Subject: Re: GIT as binary repository
+>On Thu, Oct 21, 2010 at 1:43 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> Pat Thoyts <patthoyts@users.sourceforge.net> writes:
+>>
+>>> This is a rather more complete implementation of whitespace highlighting
+>>> according to the core.whitespace setting. The diff view whitespace
+>>> highlights should match what you see with 'git diff' when color is
+>>> enabled for all the whitespace rules except cr-at-eol where there is
+>>> currently a rule to hide these.
+>>>
+>>> Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
+>>> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+>>> ---
+>>
+>> This might be a very stupid question, but isn't it an easier-to-maintain
+>> option to let underlying "git diff" color its output and convert the ANSI
+>> coloring to whatever Tcl wants to use, especially in the long run, instead
+>> of trying to replicate the logic to check whitespace breakages here?
+>
+>Hi Pat, and thanks again for doing the Tcl hacking :)
+>
+>I did a quick test (with core.whitespace unset, so the defaults should
+>be used). I wonder if there is a little bug somewhere else in git-gui.
+>If I have committed a line like this:
+>
+>............Hello world
+>
+>and change it to:
+>
+>........*Hello world
+>
+>I used '.' to indicate Space, and '*' to indicate Tab, so I changed 4
+>spaces to one tab character. As I understand space-before-tab, this
+>should render 8 red spaces, 1 white Tab, and then "Hello world". But
+>instead I get 9 white spaces... So the tab gets converted to a space
+>(I verified that it was not my editor that converted it - it really is
+>8 SP and 1 TAB).
 
-On Thu, Oct 21, 2010 at 5:52 AM, Wilson, Kevin Lee (OpenView Engineer)
-<kevin.l.wilson@hp.com> wrote:
-> We are investigating the use of GIT as a binary repository solution. =
-Our larger files are near 800MB and the total checked out repo size is =
-about 3 GB the repo size in SVN is more like 20-30GB, if we could prune=
- the history prior to MR, we could get these sizes down considerably. T=
-his binary repo is really for our super project build. =A0From what I h=
-ave read and learned, this is not a good fit for the GIT tool. Have the=
-re been performance improvements lately? Some of the posts I have read =
-have been quite old?
+This is caused by the tabstyle being defaulted to 'tabular'. This means
+the first tab on a line extends to the first tab position and if that
+lies to the left then the width of a single space is added. Looks like
+this widget should be using -tabstyle wordprocessor which would do what
+you expect and move to the next tab position.
 
-Not really.
+It is still a tab - just the display width looks wrong.
 
-Teams who need to store content like this are taking two approaches:
+>
+>If I change it to
+>***Hello world
+>so that there are no leading spaces, then the Tabs do not get converted.
+>Can you reproduce this? I have applied your patch on top of Junio's
+>master and build on msysgit on Vista 64 (if that matters).
+>
+>
+>Btw, I almost feel bad saying this after you implemented my
+>suggestion, but Junio's suggestion to parse the ANSI escapes seems
+>quite clever, doesn't it?
 
-Bite the bullet and use 64 bit systems with a lot of physical memory.
-Git allocates/memmaps two memory blocks equal in size to the file you
-are trying to work with.  If you have an 800MB file, you need ~1.6G of
-physical memory just for the Git executable to touch that file.  For
-most modern desktops and server systems, this is pretty easy to deal
-with, 4G or 8G of physical memory in a developer workstation is pretty
-inexpensive.  If the files aren't delta compressible, you can speed up
-delta compressing operations that occur during `git gc` by adding a
-gitattribute with the "-delta" flag for the relevant path files to
-your .git/info/attributes file.  Unfortunately this may mean that your
-Git repository is large (>20G?), and each developer needs to make a
-full copy of it when they start to work on the project.  That is a lot
-of data to move around, or to store locally.  But again when you look
-at the cost of disk on a developer workstation, this may not be an
-issue if your team can adopt a workflow where they don't clone the
-repository often.  (E.g. the Android repository is about 7G,
-developers clone it once and then don't need to again... so it is
-doable.)
+Indeed - see my other post for an implementation.
 
-The other option is to use a different repository for the binary
-files.  Some teams are using a REST enabled HTTP server like Amazon S3
-(though you probably want something inside your corporate firewall) to
-store the large binary files.  Instead of putting the files into Git
-the put a small shell script and a pointer to the file into Git.  The
-shell script downloads the large binary file when executed, and the
-build process (or the developer "start-up" instructions) execute the
-script to get the latest versions bootstrapped on the local
-workstation.
-
-
-> I also have some questions, about how the workflow would be for getti=
-ng all of the changes merged from several different teams into the one =
-repository would operate. Do we setup a shared system for engineers to =
-perform the merges onto? Our teams are geographically disbursed.
-
-Yes, this is the common approach.  Actually what I have started to see
-with Android is, each distributed office has a shared repository that
-the engineers in that office interact with on a daily basis.  And
-someone in each office synchronizes that repository with a single
-central repository that exists somewhere else.  Because of the nature
-of Git, the central repository can be continuously pulled into the
-distributed office through a cron script.  Engineers in the office can
-therefore always have a "fairly latest" version available, but can
-also fork off onto a side-branch and defer merging with the other
-offices for a day or two.
-
-Android teams are successfully using this approach by running Gerrit
-Code Review[1] as their central server, and using Gerrit's built-in
-replication feature to push updates to the distributed office servers.
- In effect there is one central server for writes, but a lot of read
-operations are offloaded into the distributed offices local copies.
-
-[1] http://code.google.com/p/gerrit/
-
---=20
-Shawn.
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
