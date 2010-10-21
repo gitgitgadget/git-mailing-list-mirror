@@ -1,87 +1,80 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/4] run_builtin(): save "-h" detection result for
- later use
-Date: Thu, 21 Oct 2010 15:57:30 -0700
-Message-ID: <7vsjzzrw6d.fsf@alter.siamese.dyndns.org>
-References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
- <1287544320-8499-2-git-send-email-pclouds@gmail.com>
+Subject: Re: [long] worktree setup cases
+Date: Thu, 21 Oct 2010 16:06:30 -0700
+Message-ID: <7vlj5rrvrd.fsf@alter.siamese.dyndns.org>
+References: <20101020085859.GA13135@do>
+ <7v8w1svate.fsf@alter.siamese.dyndns.org>
+ <20101021190146.GC28700@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 00:57:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: weigelt@metux.de
+X-From: git-owner@vger.kernel.org Fri Oct 22 01:06:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P944v-0004p8-33
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 00:57:45 +0200
+	id 1P94Dc-000793-Px
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 01:06:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753807Ab0JUW5k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 18:57:40 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49868 "EHLO
+	id S1753388Ab0JUXGj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 19:06:39 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:57127 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752454Ab0JUW5j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 18:57:39 -0400
+	with ESMTP id S1751377Ab0JUXGi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 19:06:38 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5B39AE001B;
-	Thu, 21 Oct 2010 18:57:39 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 3DBD8E01A1;
+	Thu, 21 Oct 2010 19:06:37 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=LHMxvPG1JbdKGCGSsTfB9dYN8
-	gc=; b=j9KQx387/T+dDspxT65gLbVnH8GT2kdIMdTc+KjeH0gHasjIZ8XQ13cP5
-	pG0W6jEp5L12lc741EBTlagz0A+0hkpzK4CJnnRB+incxR36mQG0Z8uVFrKXiZyk
-	Qp3XibhBxmcOs0h8t/f2R/XR2FtOfxMefaen2Dol6NceCs8P9U=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EUIE/bHv/RbDXanHfkvV9sN58e4=; b=q5Sd7w
+	pHi/8GhHyCvyIyXDMQF5ARiXR+Y8dJBS87rmEXnzSP0QwJRaHEk+euqa45w3IIva
+	Vw9wtlbWqSQw9aD5YKOepKLUJ6l+V37v1lhZVPPiyfxOQHJgLUc0SUgWSU6ypaI7
+	gtGFULwmwXJogXTdKtnHeZXT9KkrESH9g33Gs=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=EW7+vkw977ETaojqc0L
-	heCAasXT69IAEDEYxMTZZ8xg6MYRU6BJMBp1h6YFWdgvNG/s+A+tbKIsMxEz6X7t
-	CkTOSi2zhZ5JJRgYqkWQplvBK1zMw4s+rgmhH6eIASS4Eq1GlU4QBrKcvvxWWhs+
-	2v1GUIhUBVDpkuCSdM08RmwQ=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=OaXdxmU9h/q012bPjV0e+PNkQ01DDaPZ
+	PkhSC+CIb0N/YWshmjf6sryp0y+PyeS0xThwYqMz+nQ09JX0YY3JaZBMnHGPwbk0
+	UCEkz5TYUIc/nlTrAVaHsj0pNC/Boc0oqi99gZfhIwP16BUM+vLuu3gAZG+A4GIp
+	jWWg7oPkbUg=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 29E2CE001A;
-	Thu, 21 Oct 2010 18:57:36 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1492FE019E;
+	Thu, 21 Oct 2010 19:06:35 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5271FE0017; Thu, 21 Oct
- 2010 18:57:32 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 0917CE017F; Thu, 21 Oct
+ 2010 19:06:31 -0400 (EDT)
+In-Reply-To: <20101021190146.GC28700@nibiru.local> (Enrico Weigelt's message
+ of "Thu\, 21 Oct 2010 21\:01\:47 +0200")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 989FEDF0-DD66-11DF-856F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: D9D7A14A-DD67-11DF-8778-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159586>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes:
+Enrico Weigelt <weigelt@metux.de> writes:
 
-> When run_builtin() sees "-h" as the first argument, it assumes:
+> * Junio C Hamano <gitster@pobox.com> wrote:
 >
->  - this is the call for help usage
->  - the real git command will only print help usage then exit
+>> If you set GIT_DIR, we do no discovery, so git will work only from the
+>> root level of the working tree (or bare repository operation) if you do
+>> not tell us where the working tree is.
 >
-> So it skips all setup in this case.  Unfortunately, some commands do
-> other things before calling parse_options(), which is often where the
-> help usage is printed.  Some of those things may try to access the
-> repository unnecessarily. If a repository is broken, the command may
-> die() before it prints help usage, not really helpful.
+> Well, we could look at config whether it's an non-bare repo and then
+> lookup worktree via core.worktree (which would default to "../").
 
-What does die() message say in that case?  If it says "your repository =
-is
-broken", that may be more useful than giving a help message.  I dunno.
+core.worktree is "you tell us where the working tree is" in the above.
 
-> Demonstrating "git foo -h" fails depends on individual commands and
-> is generally difficult to do. Instead GIT_TRACE is used to check
-> if a command does set repo. If it does, it is supposed to fail if
-> repo setup code chokes.
+> BTW: the whole discovery process IMHO should start w/ looking for 
+> the gitdir. Could be done this way:
 
-Hmm, I am not sure I understand this one.  If you are interested in
-changing the behaviour of these commands when run with "-h" in a corrup=
-t
-repository, perhaps you can deliberately corrupt the test repository in
-the trash directory you start with, and run these commands there, no?
-=46or a good measure, you could use CEILING_DIRECTORIES to make sure th=
-e
-tests do not climb up to the project repository.
+That should be more or less what we have been doing since the first day we
+started supporting git operations from subdirectories around d288a70
+([PATCH] Make "git diff" work inside relative subdirectories, 2005-08-16).
+
+It is possible that we might have broken some over the course while adding
+core.worktree and GIT_WORK_TREE support, but I doubt it.
