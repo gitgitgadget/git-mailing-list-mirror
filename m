@@ -1,74 +1,120 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: Following history of a copied file from another indirect branch
-Date: Thu, 21 Oct 2010 14:06:24 -0600
-Message-ID: <4CC09D40.4050303@workspacewhiz.com>
-References: <4CC08AA5.8070502@workspacewhiz.com> <9089D1F5-A19B-4030-A6ED-463F250E450B@gernhardtsoftware.com>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Thu, 21 Oct 2010 16:06:42 -0400
+Message-ID: <1287691602.24161.67.camel@drew-northup.unet.maine.edu>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	 <m3ocar5fmo.fsf@localhost.localdomain>  <4CBFFD79.1010808@alum.mit.edu>
+	 <1287660007.24161.10.camel@drew-northup.unet.maine.edu>
+	 <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
+	 <1287665760.24161.33.camel@drew-northup.unet.maine.edu>
+	 <EE0A3DAA-DFE8-4F70-B321-0B1CA63B1341@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Brian Gernhardt <brian@gernhardtsoftware.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 22:06:38 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Thore Husfeldt <thore.husfeldt@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 22:07:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P91PI-000512-IU
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 22:06:36 +0200
+	id 1P91QV-0005L7-7I
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 22:07:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755313Ab0JUUG3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 16:06:29 -0400
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:37780 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755181Ab0JUUG1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 16:06:27 -0400
-Received: (qmail 14585 invoked by uid 399); 21 Oct 2010 14:06:22 -0600
-Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@69.98.137.222)
-  by hsmail.qwknetllc.com with ESMTPAM; 21 Oct 2010 14:06:22 -0600
-X-Originating-IP: 69.98.137.222
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.11) Gecko/20101013 Lightning/1.0b3pre Thunderbird/3.1.5
-In-Reply-To: <9089D1F5-A19B-4030-A6ED-463F250E450B@gernhardtsoftware.com>
+	id S1755396Ab0JUUHq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 16:07:46 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:41176 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755181Ab0JUUHq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 16:07:46 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9LK6mCH019804
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 21 Oct 2010 16:06:53 -0400
+In-Reply-To: <EE0A3DAA-DFE8-4F70-B321-0B1CA63B1341@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
+	Fuz1=4 Fuz2=4
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: o9LK6mCH019804
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1288296422.66926@Q7JZy8gYqcy4JJGj+qofyw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159558>
 
------ Original Message -----
-From: Brian Gernhardt
-Date: 10/21/2010 1:39 PM
-> On Oct 21, 2010, at 2:47 PM, Joshua Jensen wrote:
->> It has become a necessity to copy a file from one long-lived branch to another.  It is not possible to merge the branches at this time.
->>
->> I would like to have 'git gui blame' follow the copy back through its original history, but I don't believe Git has metadata for storing this.  Something along the lines of a 'followparent' in the commit object, for instance, would allow the revision walking code to wander the history down an alternate line.
-> Git stores no per-file metadata.  The closest we come is .gitattributes and .gitignore.
->
->> By comparison, integrates work at a file level in Perforce.  That means I can integrate a file from one branch to another, and parentage is stored such that I can follow the file back through its history.
->>
->> Are there any facilities to do this now?
-> Git simply does not have the idea of the history of a file.  Nothing in git will help merge "just a file" from one branch to another.  Either we have merged the two commits or not.
-I'm not super interested in per file merging (which is a great concept, 
-works well in Perforce, but is irrelevant here).  I merely want to 
-preserve the original parentage so facilities like blame (ultimately 
-rev-list?) can walk the extended history.  I'm fine even passing in a 
-flag.  I do not care in preserving the original parentage for purposes 
-of merging.
 
-> You can use git-filter-branch to create a new branch that contains only that single file and only the commits that affected it.  Something like the following (untested):
->
-> I would recommend using cherry-pick to pull any further changes to the file across branches (be careful of commits that touch more than that file!).  I think git-filter-branch could be used to keep the one file branch up to date, but that is likely more effort than it's worth.  I would specifically advise against merging the single file branch into both "src" and "dest", as I think any later merge of the two would find these commits as a merge-base.
-Thanks for the info.
+On Thu, 2010-10-21 at 16:06 +0200, Thore Husfeldt wrote:
+> On 21 Oct 2010, at 14:56, Drew Northup wrote:
+>=20
+> > That's not what I asked.
+> > [... good, concrete example omitted...]
+> >=20
+> > $ vim A.txt
+> > $ git stage A.txt
+> > $ git commit
+> > $ vim C.txt
+> > $ vim A.txt
+> > $ git stage A.txt
+> > $ git stage C.txt
+> >=20
+> > Should the last two commands fail?
+>=20
+> No, not for me. (Is this in reaction to Jakub=E2=80=99s suggestion th=
+at an
+> =E2=80=9Cuntracked file=E2=80=9D, like C.txt, cannot be staged before=
+ explicitly
+> tracked?)
 
-The problem with using cherry-pick is that the commits in question 
-contain more than one file.  Perhaps the individual file should have 
-been committed separately, but the damage was long ago done.
+I hadn't read any of his comments to mean that, but I could be missing
+something...
+More than anything else I was trying to feel out possible workflow
+issues. A lot of people are going to (continue? to) confuse "git add"
+and "svn add" if we don't make very explicit what we are up to. As you
+are not suggesting we outright replace "git add" I wanted to be very
+sure as to what you mean to do.
 
-git format-patch --stdout HEAD..otherbranch -- the/filename | git 
-am           or
-git diff HEAD..otherbranch -- the/filename | git apply
+> Maybe this is what should happen:
+>=20
+> $ git stage C.txt
+> git stage: Contents of previously untracked file C.txt staged for nex=
+t commit
 
-Seem to be the appropriate methods of copying the file over with fake 
-history or squashed together.
+This is reasonable. I would probably say "...untracked file C.txt added
+to index and staged for next commit" to emphasize the existing "git add=
+"
+idiom, but that may be superfluous.
 
-Josh
+> > Now, if "git stage" were an outright replacement for "git add"
+> > there might be more use (but I'd still not be happy about the corru=
+ption
+> > of the idiom).
+>=20
+> I tend to agree. But look at, e.g., Figure 2.1 in the Pro Git book
+> http://progit.org/book/ch2-2.html . That view strongly enforces that
+> something special happens to the new =E2=80=9Cpink=E2=80=9D file, dif=
+ferent from what
+> happens to a =E2=80=9Cyellow=E2=80=9D file. After this helpful discus=
+sion, I don=E2=80=99t
+> like figure 2.1 so much anymore. A red arrow should go from =E2=80=9C=
+pink=E2=80=9D to
+> =E2=80=9Cblue=E2=80=9D with text =E2=80=9Cstage the file=E2=80=9D.
+
+I can see why this would get your attention. I have to admit I ignored
+it because it didn't match-up with the bulk of documentation in any way
+I had yet made sense of. Once I had made sense of the idiom and looked
+back at the graphic I shrugged and wondered why the author had chosen t=
+o
+illustrate it that way.
+
+--=20
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
