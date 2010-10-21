@@ -1,77 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4 00/21] git notes merge
-Date: Thu, 21 Oct 2010 18:30:11 -0500
-Message-ID: <20101021233011.GA13779@burratino>
-References: <1287626936-32232-1-git-send-email-johan@herland.net>
- <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com>
- <7vaam7rv49.fsf@alter.siamese.dyndns.org>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: apply color information from git diff
+Date: Fri, 22 Oct 2010 00:42:52 +0100
+Message-ID: <8739rzf6yr.fsf@fox.patthoyts.tk>
+References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
+	<87hbgh7paf.fsf@fox.patthoyts.tk>
+	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
+	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
+	<7vy69stop2.fsf@alter.siamese.dyndns.org>
+	<87eibje5zs.fsf_-_@fox.patthoyts.tk>
+	<FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	bebarino@gmail.com, avarab@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 01:34:11 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Tor Arvid Lund <torarvid@gmail.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Fri Oct 22 01:43:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P94e4-0004EQ-R2
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 01:34:05 +0200
+	id 1P94nE-00066W-W3
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 01:43:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751287Ab0JUXeA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 19:34:00 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:44426 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751160Ab0JUXd7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 19:33:59 -0400
-Received: by ywk9 with SMTP id 9so184093ywk.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 16:33:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=MZfLEJKnevWNe8w2JhH03c55l0diJbjqANmCJ1lcLtE=;
-        b=C0GRMO/eAk5aUG9N0Dqv8efEIBIqFhOhzgLiTM1WszXZOx9vUwLl9omfiIGQkHg10/
-         Xld67EYvfXR4+BoCvnly/S3b51dT+BI8oUsIjh2rmcqOz8x+1eF5aFzojI2L9kpvFXOe
-         llxPQ7/qvxzNVbbtUPxVlPdYX1hpgV5vLRuRY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=sTEg9NbLCw7IceVf+g1/TVHHFyr/nZLmjjP+RmBMDNlGLt8nM/UzGzAisD8LXC8F2+
-         s+gAyUuYl89uhgHAyghSjGbsWO7B9SndwMqo+QRERgcOt4hnA+p/TGstZLLEdOT56uXa
-         pN5r370uLeHxv1xyBN5TAduildqXXwYka1vSw=
-Received: by 10.42.183.6 with SMTP id ce6mr1235626icb.313.1287704038642;
-        Thu, 21 Oct 2010 16:33:58 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id m7sm1960516qck.37.2010.10.21.16.33.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 16:33:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vaam7rv49.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752703Ab0JUXnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 19:43:25 -0400
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:57197 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751950Ab0JUXnY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 19:43:24 -0400
+Received: from [172.23.170.142] (helo=anti-virus02-09)
+	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1P94n2-00062M-H6; Fri, 22 Oct 2010 00:43:20 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1P94mb-0006Bi-A5; Fri, 22 Oct 2010 00:42:53 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id DE0C721F45; Fri, 22 Oct 2010 00:42:52 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org> (Kevin Ballard's
+	message of "Thu, 21 Oct 2010 13:59:44 -0700")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159591>
 
-Junio C Hamano wrote:
-> Sverre Rabbelier <srabbelier@gmail.com> writes:
+Kevin Ballard <kevin@sb.org> writes:
 
->> Can someone comment on whether "git reset --merge" is a good
->> implementation of "git merge --abort"?
-[...]
-> I think it depends on in what state you started from and how the merge
-> operation stopped.  If your index was clean, probably yes, but "git reset
-> --merge" may not be something you may want to do if the merge stopped
-> because you had previously added something.
+>On Oct 21, 2010, at 8:22 AM, Pat Thoyts wrote:
+>
+>> +	while {[regexp -indices -start $start "\033\\\[(\\d+)?m" $line match code]} {
+>
+>Git currently doesn't emit combined escapes (e.g. \e[0;31m to reset and then turn on red text), but I can imagine it being enhanced to do this in the future. I would recommend handling it here if you can.
 
-I suppose it would be safe if one checks that MERGE_HEAD is present
-first?
-
-It would apply to failed cherry-picks, too.  Not sure if that's a
-good or a bad thing.
+In fact that can be configured even now:
+ % git config color.diff.whitespace "bold white bold cyan"
+ % git diff --color | cat.exe --show-all
+ ^[[1;37;46m+^[[m$
+so thanks for the warning.
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
