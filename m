@@ -1,75 +1,121 @@
-From: "Wilson, Kevin Lee (OpenView Engineer)" <kevin.l.wilson@hp.com>
-Subject: GIT as binary repository
-Date: Thu, 21 Oct 2010 12:52:46 +0000
-Message-ID: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36B4E@GVW1098EXB.americas.hpqcorp.net>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Thu, 21 Oct 2010 08:56:00 -0400
+Message-ID: <1287665760.24161.33.camel@drew-northup.unet.maine.edu>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	 <m3ocar5fmo.fsf@localhost.localdomain>  <4CBFFD79.1010808@alum.mit.edu>
+	 <1287660007.24161.10.camel@drew-northup.unet.maine.edu>
+	 <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 21 14:54:27 2010
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Thore Husfeldt <thore.husfeldt@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 14:57:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8uf4-0000V2-Ou
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 14:54:27 +0200
+	id 1P8uhY-0001T6-13
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 14:57:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757887Ab0JUMyK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 08:54:10 -0400
-Received: from g5t0006.atlanta.hp.com ([15.192.0.43]:10925 "EHLO
-	g5t0006.atlanta.hp.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755742Ab0JUMyJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 08:54:09 -0400
-Received: from G1W0401.americas.hpqcorp.net (g1w0401.americas.hpqcorp.net [16.236.31.6])
-	(using TLSv1 with cipher RC4-MD5 (128/128 bits))
-	(No client certificate requested)
-	by g5t0006.atlanta.hp.com (Postfix) with ESMTPS id EA42EC638
-	for <git@vger.kernel.org>; Thu, 21 Oct 2010 12:54:08 +0000 (UTC)
-Received: from G3W0629.americas.hpqcorp.net (16.233.58.78) by
- G1W0401.americas.hpqcorp.net (16.236.31.6) with Microsoft SMTP Server (TLS)
- id 8.2.176.0; Thu, 21 Oct 2010 12:52:42 +0000
-Received: from GVW1098EXB.americas.hpqcorp.net ([16.234.97.244]) by
- G3W0629.americas.hpqcorp.net ([16.233.58.78]) with mapi; Thu, 21 Oct 2010
- 12:52:41 +0000
-Thread-Topic: GIT as binary repository
-Thread-Index: ActxHtxOu/4/4t+bSZC6D9GFIyhgMA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-cr-hashedpuzzle: BP0/ BhuZ CnGl DgEm D47K EeO3 FbTK F5wV Go26 HS+6 H2MR
- Icfo JnvV J/Q2 KAql
- KC7J;1;ZwBpAHQAQAB2AGcAZQByAC4AawBlAHIAbgBlAGwALgBvAHIAZwA=;Sosha1_v1;7;{5BE98CA0-077E-4588-B73F-726CD559AFB8};awBlAHYAaQBuAC4AbAAuAHcAaQBsAHMAbwBuAEAAaABwAC4AYwBvAG0A;Thu,
- 21 Oct 2010 12:52:46
- GMT;RwBJAFQAIABhAHMAIABiAGkAbgBhAHIAeQAgAHIAZQBwAG8AcwBpAHQAbwByAHkA
-x-cr-puzzleid: {5BE98CA0-077E-4588-B73F-726CD559AFB8}
-acceptlanguage: en-US
+	id S1757888Ab0JUM4y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 08:56:54 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:52259 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756043Ab0JUM4x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 08:56:53 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9LCu5eo023929
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 21 Oct 2010 08:56:10 -0400
+In-Reply-To: <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
+	Fuz1=4 Fuz2=4
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: o9LCu5eo023929
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1288270571.64743@t+ETJ64aQgdtLsNlFmExqg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159499>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159500>
 
-Hello,=20
 
-We are investigating the use of GIT as a binary repository solution. Ou=
-r larger files are near 800MB and the total checked out repo size is ab=
-out 3 GB the repo size in SVN is more like 20-30GB, if we could prune t=
-he history prior to MR, we could get these sizes down considerably. Thi=
-s binary repo is really for our super project build. =A0From what I hav=
-e read and learned, this is not a good fit for the GIT tool. Have there=
- been performance improvements lately? Some of the posts I have read ha=
-ve been quite old?
+On Thu, 2010-10-21 at 14:31 +0200, Thore Husfeldt wrote:
+> On 21 Oct 2010, at 13:20, Drew Northup wrote:
+>=20
+> > Ok, so what will "git stage" do when a change of a file is already
+> > staged and it is executed again (on new changes)?
+>=20
+> Presumably what it already does: nothing. But one could argue that th=
+e more public-relations minded command =E2=80=9Cgit stage=E2=80=9D shou=
+ld give better feedback. Like so:
+>=20
+> > $ git commit=20
+> > $ ... edit A.txt ...
+> > $ git stage B.txt
+> > git stage: Did nothing. No uncommitted changes to stage in B.txt.
+> > $ git stage A.txt
+> > $ git stage A.txt
+> > git stage: Did nothing. Changes in A.txt already staged. Use `git d=
+iff --staged A.txt` to see them.
 
-I also have some questions, about how the workflow would be for getting=
- all of the changes merged from several different teams into the one re=
-pository would operate. Do we setup a shared system for engineers to pe=
-rform the merges onto? Our teams are geographically disbursed.=20
+That's not what I asked.
 
-Thanks for any light you can shed on this. We are trying to digest a lo=
-t of information quickly, so sorry if there are things covered here tha=
-t are elsewhere.
+$ git commit
+$ vim A.txt
+$ vim B.txt
+$ git add B.txt
+$ git add A.txt
+$ vim B.txt
+$ git add B.txt
 
-Thanks,
-Kevin
+The above sequence stages two changes on B.txt into the index.
+Literally, it adds changes to git's knowledge about B.txt twice, but
+does not yet commit any of it permanently to the object store.
+
+Presumably, assuming that A.txt and B.txt did not yet exist, you are
+suggesting the following command sequence:
+
+$ git commit
+$ vim A.txt
+$ vim B.txt
+$ git add B.txt
+$ git add A.txt
+$ vim B.txt
+$ git stage B.txt
+$ vim B.txt
+$ git stage B.txt
+
+This assumes that git SHOULD act like subversion, and I argue that ther=
+e
+is no reason that it should. What happens if we continue as follows:
+
+$ vim A.txt
+$ git stage A.txt
+$ git commit
+$ vim C.txt
+$ vim A.txt
+$ git stage A.txt
+$ git stage C.txt
+
+Should the last two commands fail? The earlier discussion seems to
+suggest that they should. My point is that this does not seem to me to
+be a useful extension of the idiom. If anything, it seems to confuse th=
+e
+matter. Now, if "git stage" were an outright replacement for "git add"
+there might be more use (but I'd still not be happy about the corruptio=
+n
+of the idiom).
+
+--=20
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
