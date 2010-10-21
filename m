@@ -1,66 +1,77 @@
-From: Jonas <jonas@ibiz.se>
-Subject: git repository in production release
-Date: Thu, 21 Oct 2010 12:13:53 +0000 (UTC)
-Message-ID: <loom.20101021T140249-924@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 14:15:17 2010
+From: Thore Husfeldt <thore.husfeldt@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Thu, 21 Oct 2010 14:31:25 +0200
+Message-ID: <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com> <m3ocar5fmo.fsf@localhost.localdomain>  <4CBFFD79.1010808@alum.mit.edu> <1287660007.24161.10.camel@drew-northup.unet.maine.edu>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
+	Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Thu Oct 21 14:31:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8u39-0005Sx-Ow
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 14:15:16 +0200
+	id 1P8uIz-0002Ak-Us
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 14:31:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755712Ab0JUMPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 08:15:07 -0400
-Received: from lo.gmane.org ([80.91.229.12]:44872 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752340Ab0JUMPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 08:15:06 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1P8u2x-0005Op-II
-	for git@vger.kernel.org; Thu, 21 Oct 2010 14:15:03 +0200
-Received: from static-92-33-15-10.sme.bredbandsbolaget.se ([92.33.15.10])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 14:15:03 +0200
-Received: from jonas by static-92-33-15-10.sme.bredbandsbolaget.se with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 14:15:03 +0200
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 92.33.15.10 (Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_4; sv-se) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0.2 Safari/533.18.5)
+	id S1757838Ab0JUMbb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 08:31:31 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:43383 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757812Ab0JUMba convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 08:31:30 -0400
+Received: by eyx24 with SMTP id 24so1991795eyx.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 05:31:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:subject:mime-version
+         :content-type:from:in-reply-to:date:cc:content-transfer-encoding
+         :message-id:references:to:x-mailer;
+        bh=ZoI9PuMsgbqBWIE+MrFE7KwVxS9tIdVNqAIcbwDdxjM=;
+        b=a/DPs88eBhjrVwVWtmjQOf125xNwuMWOwbKxUthaU0DjCXW8Hw/xBMz4xfpuYb8ib3
+         aO3HQpkDvvX2J4elJYXts+hd0st8v9I/KS6M0PNHLimWQJW93Bnqx4g4XxfiUqt7CiiR
+         It0AfgVYPssipFuIjKLx2jlvXdNXIFjSDQiGg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=qL4R9pKoBXNB9Z5mPTS+7bssrjyDF8CL4G6I88cyvAScE3V870vswm/b0oVC2+Wvpd
+         Dqge/22oHlvKbLxpS6ikr2iF1iIWCwFCrOsVtkxG/lwpx/TOzEsUq6hDMuFUc5Br8iwY
+         ryCDMGRo0D61El1w1lCtesrSfmCcBhafjI0CI=
+Received: by 10.213.22.66 with SMTP id m2mr1582454ebb.56.1287664288948;
+        Thu, 21 Oct 2010 05:31:28 -0700 (PDT)
+Received: from thoremba.cs.lth.se (thoremba.cs.lth.se [130.235.16.114])
+        by mx.google.com with ESMTPS id w20sm1731916eeh.0.2010.10.21.05.31.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 Oct 2010 05:31:27 -0700 (PDT)
+In-Reply-To: <1287660007.24161.10.camel@drew-northup.unet.maine.edu>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159495>
 
-Hi,
 
-I am afraid this is a rather stupid question, but I have spent quite some time
-to figure it out without any success.
+On 21 Oct 2010, at 13:20, Drew Northup wrote:
 
-I use git in my Ruby on Rails applications. On my deployment server
-there is a git directory that I push to in the admin users directory. 
-When I run cap deploy Capistrano makes a new release and makes a new 
-directory under releases from the repository, I guess this is standard.
+> Ok, so what will "git stage" do when a change of a file is already
+> staged and it is executed again (on new changes)?
 
-My releases are getting bigger and bigger, it takes longer and 
-longer time for the cap deploy command to 
-finish and the backups contain a huge number of files.
+Presumably what it already does: nothing. But one could argue that the =
+more public-relations minded command =93git stage=94 should give better=
+ feedback. Like so:
 
-What puzzels me is that in every release  there is a .git directory.
-As far as I can see it makes no use there, 
-just takes up much space. Is it supposed to be like this or have I made a mess?
-
-How can I get rid of the .git directory in the deployment releases?
-
-:-) j
+> $ git commit=20
+> $ ... edit A.txt ...
+> $ git stage B.txt
+> git stage: Did nothing. No uncommitted changes to stage in B.txt.
+> $ git stage A.txt
+> $ git stage A.txt
+> git stage: Did nothing. Changes in A.txt already staged. Use `git dif=
+f --staged A.txt` to see them.
