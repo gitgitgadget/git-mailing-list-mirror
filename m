@@ -1,76 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [completion] Request: Include remote heads as push targets
-Date: Thu, 21 Oct 2010 14:10:45 -0500
-Message-ID: <20101021191045.GC11759@burratino>
-References: <4CC05E4B.1010106@xiplink.com>
- <4CC06439.8040003@xiplink.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: git repository in production release
+Date: Thu, 21 Oct 2010 21:07:58 +0200
+Message-ID: <20101021190755.GD28700@nibiru.local>
+References: <loom.20101021T140249-924@post.gmane.org> <1287664757.24161.17.camel@drew-northup.unet.maine.edu> <loom.20101021T160058-462@post.gmane.org>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>,
-	Git Mailing List <git@vger.kernel.org>,
-	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Peter van der Does <peter@avirtualhome.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Mathias Lafeldt <misfire@debugon.org>
-To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 21:14:45 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Oct 21 21:19:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90b1-0004fW-HY
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:14:39 +0200
+	id 1P90fh-0006Qw-3n
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:19:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757544Ab0JUTOe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 15:14:34 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:64515 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753384Ab0JUTOd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 15:14:33 -0400
-Received: by wyb33 with SMTP id 33so72656wyb.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 12:14:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=+F1QMZelPJehOlJd2P0iHkxuXTaqnV+/a6sK6lJfOEY=;
-        b=uejpooGf8iEdiYFkLblDiz1cTYjSXA3PovnBZpcuSaSl2+8Bv2KW+io0EH/9p1oXx7
-         xgJac4k4T1IRV+9jCNGShfpyg4/kfv8kjURqVk00qIDod8R1EPmE2GSFweWBfOYQGk2U
-         Yhl45gyqGgVpnKC2v14dH6/YvpXElZtLJ+YPc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=Hi7mGmsEEKcL+dpklqAJvco54Di3UJE2ZhEL9WdibrUUlNC/pfy3bMPBPNJc+8VghH
-         xZe604LHnzCmJdcDcbLEcW+xw/2VDgWWn4sEIwvL0Z/MBgYQks0w+1CiBtYpaE+tqa2S
-         dJME9ag+QGGit6AtR6sq54RPs6p6EOeERTw+4=
-Received: by 10.227.148.2 with SMTP id n2mr1467268wbv.216.1287688471886;
-        Thu, 21 Oct 2010 12:14:31 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id f14sm1636317wbe.8.2010.10.21.12.14.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 12:14:30 -0700 (PDT)
+	id S1757945Ab0JUTS5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 15:18:57 -0400
+Received: from caprica.metux.de ([82.165.128.25]:34155 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752416Ab0JUTSa (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 15:18:30 -0400
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id o9LJJuEq015151
+	for <git@vger.kernel.org>; Thu, 21 Oct 2010 21:19:58 +0200
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id o9LJJuOu015144
+	for git@vger.kernel.org; Thu, 21 Oct 2010 21:19:56 +0200
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id o9LJ7wKI021044
+	for git@vger.kernel.org; Thu, 21 Oct 2010 21:07:58 +0200
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <4CC06439.8040003@xiplink.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <loom.20101021T160058-462@post.gmane.org>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159545>
 
-Marc Branchaud wrote:
+* Jonas <jonas@ibiz.se> wrote:
+> Because I suspect that the local .git directory in my rails application 
+> folder should not be added to the 
+> remote repository at all. But I might be wrong.
 
-> Hmmm, perhaps this is really a bug.
+Your repository (aka: the committed trees inside it) contain a .git
+directory ? That's very strange, should not happen in normal git
+operations (would cause some infinite recursion ;-o).
 
-Compare:
-http://thread.gmane.org/gmane.comp.version-control.git/159448
+Seems that something's wrong w/ Capistrano - most likely not a
+problem of git itself.
 
-G=C3=A1bor, would it be possible to summarize the problem with a simple
-test case that could be used to get help on this from the (upstream
-or distro-specific) bash maintainers?
+
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
