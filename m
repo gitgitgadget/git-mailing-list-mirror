@@ -1,121 +1,80 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Git terminology: remote, add, track, stage, etc.
-Date: Thu, 21 Oct 2010 08:56:00 -0400
-Message-ID: <1287665760.24161.33.camel@drew-northup.unet.maine.edu>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
-	 <m3ocar5fmo.fsf@localhost.localdomain>  <4CBFFD79.1010808@alum.mit.edu>
-	 <1287660007.24161.10.camel@drew-northup.unet.maine.edu>
-	 <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 05/21] notes.h/c: Clarify the handling of notes objects that are == null_sha1
+Date: Thu, 21 Oct 2010 15:13:05 +0200
+Message-ID: <201010211513.06176.johan@herland.net>
+References: <1287626936-32232-1-git-send-email-johan@herland.net> <1287626936-32232-6-git-send-email-johan@herland.net> <20101021051232.GA2413@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael Haggerty <mhagger@alum.mit.edu>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Thore Husfeldt <thore.husfeldt@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 14:57:07 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, bebarino@gmail.com, avarab@gmail.com,
+	gitster@pobox.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 15:14:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8uhY-0001T6-13
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 14:57:00 +0200
+	id 1P8uy1-0006ee-Nt
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 15:14:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757888Ab0JUM4y convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 08:56:54 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:52259 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756043Ab0JUM4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 08:56:53 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9LCu5eo023929
+	id S1757158Ab0JUNN4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 09:13:56 -0400
+Received: from smtp.opera.com ([213.236.208.81]:51547 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755284Ab0JUNNz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 09:13:55 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o9LDD6SO008090
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 21 Oct 2010 08:56:10 -0400
-In-Reply-To: <968F09BD-2B2D-44C4-9C0F-BF7BD20041F0@gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
-	Fuz1=4 Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: o9LCu5eo023929
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1288270571.64743@t+ETJ64aQgdtLsNlFmExqg
+	Thu, 21 Oct 2010 13:13:06 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <20101021051232.GA2413@burratino>
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159501>
+
+On Thursday 21 October 2010, Jonathan Nieder wrote:
+> Johan Herland wrote:
+> > Clearly specify how combine_notes functions are expected to handle
+> > null_sha1 in input. Also specify (and implement) that returning
+> > null_sha1 from a combine_notes function will cause the note in
+> > question to be removed.
+>
+> Ack again on patches 1-4.  As for this one, I still think the log
+> message does not make the goal obvious.
+>
+> [...]
+
+Ok, I liked your alternative message much better. The next iteration 
+will have this commit message:
+
+  notes.h/c: Allow combine_notes functions to remove notes
+
+  Allow combine_notes functions to request that a note be removed,
+  by setting the resulting note SHA1 to null_sha1 (0000000...).
+
+  For consistency, also teach note_tree_insert() to skip insertion
+  of an empty note when there is no note to combine it with.
+
+  In general, an empty note is treated identically to no note at
+  all, but when adding an empty note where there already exists a
+  non-empty note, we allow the combine_notes function to potentially
+  record a new/changed note. Document this behaviour, and clearly
+  specify how combine_notes functions are expected to handle null_sha1
+  in input.
 
 
-On Thu, 2010-10-21 at 14:31 +0200, Thore Husfeldt wrote:
-> On 21 Oct 2010, at 13:20, Drew Northup wrote:
->=20
-> > Ok, so what will "git stage" do when a change of a file is already
-> > staged and it is executed again (on new changes)?
->=20
-> Presumably what it already does: nothing. But one could argue that th=
-e more public-relations minded command =E2=80=9Cgit stage=E2=80=9D shou=
-ld give better feedback. Like so:
->=20
-> > $ git commit=20
-> > $ ... edit A.txt ...
-> > $ git stage B.txt
-> > git stage: Did nothing. No uncommitted changes to stage in B.txt.
-> > $ git stage A.txt
-> > $ git stage A.txt
-> > git stage: Did nothing. Changes in A.txt already staged. Use `git d=
-iff --staged A.txt` to see them.
+Thanks again, for your superhuman patience in reviewing.
 
-That's not what I asked.
+...Johan
 
-$ git commit
-$ vim A.txt
-$ vim B.txt
-$ git add B.txt
-$ git add A.txt
-$ vim B.txt
-$ git add B.txt
-
-The above sequence stages two changes on B.txt into the index.
-Literally, it adds changes to git's knowledge about B.txt twice, but
-does not yet commit any of it permanently to the object store.
-
-Presumably, assuming that A.txt and B.txt did not yet exist, you are
-suggesting the following command sequence:
-
-$ git commit
-$ vim A.txt
-$ vim B.txt
-$ git add B.txt
-$ git add A.txt
-$ vim B.txt
-$ git stage B.txt
-$ vim B.txt
-$ git stage B.txt
-
-This assumes that git SHOULD act like subversion, and I argue that ther=
-e
-is no reason that it should. What happens if we continue as follows:
-
-$ vim A.txt
-$ git stage A.txt
-$ git commit
-$ vim C.txt
-$ vim A.txt
-$ git stage A.txt
-$ git stage C.txt
-
-Should the last two commands fail? The earlier discussion seems to
-suggest that they should. My point is that this does not seem to me to
-be a useful extension of the idiom. If anything, it seems to confuse th=
-e
-matter. Now, if "git stage" were an outright replacement for "git add"
-there might be more use (but I'd still not be happy about the corruptio=
-n
-of the idiom).
-
---=20
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
