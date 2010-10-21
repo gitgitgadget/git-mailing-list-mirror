@@ -1,108 +1,81 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: GIT as binary repository
-Date: Thu, 21 Oct 2010 10:38:50 -0700
-Message-ID: <AANLkTiniQNTBnqQz-p5E3rjoHq9FnpMkzO=B0yh+Sbxq@mail.gmail.com>
-References: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36B4E@GVW1098EXB.americas.hpqcorp.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv4 05/21] notes.h/c: Clarify the handling of notes objects
+ that are == null_sha1
+Date: Thu, 21 Oct 2010 12:54:05 -0500
+Message-ID: <20101021175404.GC11328@burratino>
+References: <1287626936-32232-1-git-send-email-johan@herland.net>
+ <1287626936-32232-6-git-send-email-johan@herland.net>
+ <20101021051232.GA2413@burratino>
+ <201010211513.06176.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: "Wilson, Kevin Lee (OpenView Engineer)" <kevin.l.wilson@hp.com>
-X-From: git-owner@vger.kernel.org Thu Oct 21 19:39:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, bebarino@gmail.com, avarab@gmail.com,
+	gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Oct 21 19:58:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8z6o-0000ON-De
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 19:39:22 +0200
+	id 1P8zOp-0007vE-6X
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 19:57:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754529Ab0JURjM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 13:39:12 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:60485 "EHLO
+	id S1755957Ab0JUR5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 13:57:54 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:49908 "EHLO
 	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751885Ab0JURjL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 13:39:11 -0400
-Received: by ywa8 with SMTP id 8so87049ywa.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 10:39:10 -0700 (PDT)
-Received: by 10.42.169.129 with SMTP id b1mr1068320icz.99.1287682750605; Thu,
- 21 Oct 2010 10:39:10 -0700 (PDT)
-Received: by 10.231.140.97 with HTTP; Thu, 21 Oct 2010 10:38:50 -0700 (PDT)
-In-Reply-To: <2EBB46ACFCD6CF48B45E2B1865BD02338037D36B4E@GVW1098EXB.americas.hpqcorp.net>
+	with ESMTP id S1755641Ab0JUR5x (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 13:57:53 -0400
+Received: by mail-yw0-f46.google.com with SMTP id 9so3221ywk.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 10:57:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=69o698A3p8u2VWmGBzvRpS4dcx5vgoDMnsowK8IRNmw=;
+        b=KuTZehoiOU0+jSSshuuciZ8g+m8klzG1YI1yUV/wqsSy+LK8kR5xwHwBcsVAMfZ2p+
+         UVeKonahXj81f/D6thra5IRKrrUIMLcJVEU5aeJhn3GUmfXkyusl8YGKF01qjfcrh12b
+         B5/c+fWmkejBHJfrmJ/CRcFenQln0UWCg8YfY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Z+AJEatGgAkyjRniLanERmMSDT0HuThRl1zuWWDd0zT35z5cH/1w8/1RxzFw+ZXWpf
+         fAf8sif5uagj2uYDP6XKHFkydDi/lrBSgrtS/d9bPSbudvt/NNJa/mCH+yzCweZJW4Jb
+         6HPj8MfTR2Y6XWZ23MPsPEQdGSPqBbtfn6f08=
+Received: by 10.103.161.6 with SMTP id n6mr2018609muo.18.1287683872021;
+        Thu, 21 Oct 2010 10:57:52 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id z19sm965973fam.16.2010.10.21.10.57.49
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 21 Oct 2010 10:57:51 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201010211513.06176.johan@herland.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159528>
 
-On Thu, Oct 21, 2010 at 5:52 AM, Wilson, Kevin Lee (OpenView Engineer)
-<kevin.l.wilson@hp.com> wrote:
-> We are investigating the use of GIT as a binary repository solution. =
-Our larger files are near 800MB and the total checked out repo size is =
-about 3 GB the repo size in SVN is more like 20-30GB, if we could prune=
- the history prior to MR, we could get these sizes down considerably. T=
-his binary repo is really for our super project build. =A0From what I h=
-ave read and learned, this is not a good fit for the GIT tool. Have the=
-re been performance improvements lately? Some of the posts I have read =
-have been quite old?
+Johan Herland wrote:
 
-Not really.
+>   Allow combine_notes functions to request that a note be removed,
+>   by setting the resulting note SHA1 to null_sha1 (0000000...).
+> 
+>   For consistency, also teach note_tree_insert() to skip insertion
+>   of an empty note when there is no note to combine it with.
 
-Teams who need to store content like this are taking two approaches:
+I guess it's probably also worth clarifying that the term "empty note"
+means null_sha1 rather than empty_blob_sha1.
 
-Bite the bullet and use 64 bit systems with a lot of physical memory.
-Git allocates/memmaps two memory blocks equal in size to the file you
-are trying to work with.  If you have an 800MB file, you need ~1.6G of
-physical memory just for the Git executable to touch that file.  For
-most modern desktops and server systems, this is pretty easy to deal
-with, 4G or 8G of physical memory in a developer workstation is pretty
-inexpensive.  If the files aren't delta compressible, you can speed up
-delta compressing operations that occur during `git gc` by adding a
-gitattribute with the "-delta" flag for the relevant path files to
-your .git/info/attributes file.  Unfortunately this may mean that your
-Git repository is large (>20G?), and each developer needs to make a
-full copy of it when they start to work on the project.  That is a lot
-of data to move around, or to store locally.  But again when you look
-at the cost of disk on a developer workstation, this may not be an
-issue if your team can adopt a workflow where they don't clone the
-repository often.  (E.g. the Android repository is about 7G,
-developers clone it once and then don't need to again... so it is
-doable.)
+i.e. something like:
 
-The other option is to use a different repository for the binary
-files.  Some teams are using a REST enabled HTTP server like Amazon S3
-(though you probably want something inside your corporate firewall) to
-store the large binary files.  Instead of putting the files into Git
-the put a small shell script and a pointer to the file into Git.  The
-shell script downloads the large binary file when executed, and the
-build process (or the developer "start-up" instructions) execute the
-script to get the latest versions bootstrapped on the local
-workstation.
+	For consistency, also teach note_tree_insert() to skip insertion
+	of an empty note (a note with val_sha1 equal to null_sha1)
+	when there is no note to combine it with.
 
-
-> I also have some questions, about how the workflow would be for getti=
-ng all of the changes merged from several different teams into the one =
-repository would operate. Do we setup a shared system for engineers to =
-perform the merges onto? Our teams are geographically disbursed.
-
-Yes, this is the common approach.  Actually what I have started to see
-with Android is, each distributed office has a shared repository that
-the engineers in that office interact with on a daily basis.  And
-someone in each office synchronizes that repository with a single
-central repository that exists somewhere else.  Because of the nature
-of Git, the central repository can be continuously pulled into the
-distributed office through a cron script.  Engineers in the office can
-therefore always have a "fairly latest" version available, but can
-also fork off onto a side-branch and defer merging with the other
-offices for a day or two.
-
-Android teams are successfully using this approach by running Gerrit
-Code Review[1] as their central server, and using Gerrit's built-in
-replication feature to push updates to the distributed office servers.
- In effect there is one central server for writes, but a lot of read
-operations are offloaded into the distributed offices local copies.
-
-[1] http://code.google.com/p/gerrit/
-
---=20
-Shawn.
+The previous behavior iiuc would have been for write_notes_tree() to
+write invalid trees after such an operation.
