@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 07/21] (trivial) t3303: Indent with tabs instead of spaces
- for consistency
-Date: Thu, 21 Oct 2010 04:08:42 +0200
-Message-ID: <1287626936-32232-8-git-send-email-johan@herland.net>
+Subject: [PATCHv4 09/21] builtin/notes.c: Split notes ref DWIMmery into a
+ separate function
+Date: Thu, 21 Oct 2010 04:08:44 +0200
+Message-ID: <1287626936-32232-10-git-send-email-johan@herland.net>
 References: <1287626936-32232-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -16,76 +16,86 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8kc3-0007sY-QP
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:40 +0200
+	id 1P8kc3-0007sY-8p
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757022Ab0JUCKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 22:10:00 -0400
+	id S1757008Ab0JUCJw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 22:09:52 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:33116 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756829Ab0JUCJI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 22:09:08 -0400
+	id S1756877Ab0JUCJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 22:09:10 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAM00IR3BB5YX70@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:05 +0200 (MEST)
+ with ESMTP id <0LAM00IRJBB6YX70@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:09:06 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 077551EA582D_CBFA0C1B	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:05 +0000 (GMT)
+ with SMTP id 9CAC11EA57C1_CBFA0C2B	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:09:06 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id ED2D11EA2990_CBFA0C0F	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:03 +0000 (GMT)
+ with ESMTP id EF9DB1EA2949_CBFA0C1F	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:09:04 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAM0096KBB03500@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:01 +0200 (MEST)
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:09:02 +0200 (MEST)
 X-Mailer: git-send-email 1.7.3.98.g5ad7d9
 In-reply-to: <1287626936-32232-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159474>
 
-The rest of the file uses tabs for indenting. Fix the one function
-that doesn't.
+expand_notes_ref() is a new function that performs the DWIM transformation
+of "foo" -> "refs/notes/foo" where notes refs are expected.
+
+This is done in preparation for future patches which will also need this
+DWIM functionality.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- t/t3303-notes-subtrees.sh |   18 +++++++++---------
- 1 files changed, 9 insertions(+), 9 deletions(-)
+ builtin/notes.c |   17 +++++++++++------
+ 1 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
-index 75ec187..d571708 100755
---- a/t/t3303-notes-subtrees.sh
-+++ b/t/t3303-notes-subtrees.sh
-@@ -168,15 +168,15 @@ INPUT_END
- }
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 35f6eb6..9c91c59 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -83,6 +83,16 @@ struct msg_arg {
+ 	struct strbuf buf;
+ };
  
- verify_concatenated_notes () {
--    git log | grep "^    " > output &&
--    i=$number_of_commits &&
--    while [ $i -gt 0 ]; do
--        echo "    commit #$i" &&
--        echo "    first note for commit #$i" &&
--        echo "    second note for commit #$i" &&
--        i=$(($i-1));
--    done > expect &&
--    test_cmp expect output
-+	git log | grep "^    " > output &&
-+	i=$number_of_commits &&
-+	while [ $i -gt 0 ]; do
-+		echo "    commit #$i" &&
-+		echo "    first note for commit #$i" &&
-+		echo "    second note for commit #$i" &&
-+		i=$(($i-1));
-+	done > expect &&
-+	test_cmp expect output
- }
++static void expand_notes_ref(struct strbuf *sb)
++{
++	if (!prefixcmp(sb->buf, "refs/notes/"))
++		return; /* we're happy */
++	else if (!prefixcmp(sb->buf, "notes/"))
++		strbuf_insert(sb, 0, "refs/", 5);
++	else
++		strbuf_insert(sb, 0, "refs/notes/", 11);
++}
++
+ static int list_each_note(const unsigned char *object_sha1,
+ 		const unsigned char *note_sha1, char *note_path,
+ 		void *cb_data)
+@@ -839,13 +849,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
  
- test_expect_success 'test notes in no fanout concatenated with 2/38-fanout' 'test_concatenated_notes "s|^..|&/|" ""'
+ 	if (override_notes_ref) {
+ 		struct strbuf sb = STRBUF_INIT;
+-		if (!prefixcmp(override_notes_ref, "refs/notes/"))
+-			/* we're happy */;
+-		else if (!prefixcmp(override_notes_ref, "notes/"))
+-			strbuf_addstr(&sb, "refs/");
+-		else
+-			strbuf_addstr(&sb, "refs/notes/");
+ 		strbuf_addstr(&sb, override_notes_ref);
++		expand_notes_ref(&sb);
+ 		setenv("GIT_NOTES_REF", sb.buf, 1);
+ 		strbuf_release(&sb);
+ 	}
 -- 
 1.7.3.98.g5ad7d9
