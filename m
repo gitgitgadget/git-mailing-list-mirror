@@ -1,8 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv4 03/21] notes.h: Make default_notes_ref() available in notes
- API
-Date: Thu, 21 Oct 2010 04:08:38 +0200
-Message-ID: <1287626936-32232-4-git-send-email-johan@herland.net>
+Subject: [PATCHv4 11/21] builtin/notes.c: Refactor creation of notes commits.
+Date: Thu, 21 Oct 2010 04:08:46 +0200
+Message-ID: <1287626936-32232-12-git-send-email-johan@herland.net>
 References: <1287626936-32232-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -16,83 +15,193 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8kbx-0007sY-7F
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:33 +0200
+	id 1P8kbz-0007sY-Af
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 04:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756864Ab0JUCJH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 20 Oct 2010 22:09:07 -0400
+	id S1756910Ab0JUCJQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 20 Oct 2010 22:09:16 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:33116 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756829Ab0JUCJF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 20 Oct 2010 22:09:05 -0400
+	id S1756888Ab0JUCJK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 20 Oct 2010 22:09:10 -0400
 Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAM00IQ6BB3YX70@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:03 +0200 (MEST)
+ with ESMTP id <0LAM00IROBB7YX70@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:09:07 +0200 (MEST)
 Received: from get-mta-scan02.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 100681EA580D_CBFA0BFB	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:03 +0000 (GMT)
+ with SMTP id 3BC351EA580D_CBFA0C3B	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:09:07 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id E94D51EA28CF_CBFA0BEF	for <git@vger.kernel.org>; Thu,
- 21 Oct 2010 02:09:01 +0000 (GMT)
+ with ESMTP id F18BC1EA2917_CBFA0C2F	for <git@vger.kernel.org>; Thu,
+ 21 Oct 2010 02:09:05 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAM0096KBB03500@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 21 Oct 2010 04:09:00 +0200 (MEST)
+ git@vger.kernel.org; Thu, 21 Oct 2010 04:09:02 +0200 (MEST)
 X-Mailer: git-send-email 1.7.3.98.g5ad7d9
 In-reply-to: <1287626936-32232-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159467>
+
+Create new function create_notes_commit() which is slightly more general than
+commit_notes() (accepts multiple commit parents and does not auto-update the
+notes ref). This function will be used by the notes-merge functionality in
+future patches.
+
+Also rewrite builtin/notes.c:commit_notes() to reuse this new function.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |    2 +-
- notes.h |   14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletions(-)
+ builtin.h       |    2 +-
+ builtin/notes.c |   28 +++++-----------------------
+ notes-merge.c   |   27 +++++++++++++++++++++++++++
+ notes-merge.h   |   14 ++++++++++++++
+ 4 files changed, 47 insertions(+), 24 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index bb03eb0..d71c0a3 100644
---- a/notes.c
-+++ b/notes.c
-@@ -898,7 +898,7 @@ static int notes_display_config(const char *k, const char *v, void *cb)
- 	return 0;
+diff --git a/builtin.h b/builtin.h
+index ed6ee26..908d850 100644
+--- a/builtin.h
++++ b/builtin.h
+@@ -17,7 +17,7 @@ extern void prune_packed_objects(int);
+ extern int fmt_merge_msg(int merge_summary, struct strbuf *in,
+ 	struct strbuf *out);
+ extern int fmt_merge_msg_shortlog(struct strbuf *in, struct strbuf *out);
+-extern int commit_notes(struct notes_tree *t, const char *msg);
++extern void commit_notes(struct notes_tree *t, const char *msg);
+ 
+ struct notes_rewrite_cfg {
+ 	struct notes_tree **trees;
+diff --git a/builtin/notes.c b/builtin/notes.c
+index fbabdc7..97d8baa 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -288,18 +288,17 @@ static int parse_reedit_arg(const struct option *opt, const char *arg, int unset
+ 	return parse_reuse_arg(opt, arg, unset);
  }
  
--static const char *default_notes_ref(void)
-+const char *default_notes_ref(void)
+-int commit_notes(struct notes_tree *t, const char *msg)
++void commit_notes(struct notes_tree *t, const char *msg)
  {
- 	const char *notes_ref = NULL;
- 	if (!notes_ref)
-diff --git a/notes.h b/notes.h
-index c0288b0..20db42f 100644
---- a/notes.h
-+++ b/notes.h
-@@ -44,6 +44,20 @@ extern struct notes_tree {
- } default_notes_tree;
+-	struct commit_list *parent;
+-	unsigned char tree_sha1[20], prev_commit[20], new_commit[20];
+ 	struct strbuf buf = STRBUF_INIT;
++	unsigned char commit_sha1[20];
+ 
+ 	if (!t)
+ 		t = &default_notes_tree;
+ 	if (!t->initialized || !t->ref || !*t->ref)
+ 		die("Cannot commit uninitialized/unreferenced notes tree");
+ 	if (!t->dirty)
+-		return 0; /* don't have to commit an unchanged tree */
++		return; /* don't have to commit an unchanged tree */
+ 
+ 	/* Prepare commit message and reflog message */
+ 	strbuf_addstr(&buf, "notes: "); /* commit message starts at index 7 */
+@@ -307,27 +306,10 @@ int commit_notes(struct notes_tree *t, const char *msg)
+ 	if (buf.buf[buf.len - 1] != '\n')
+ 		strbuf_addch(&buf, '\n'); /* Make sure msg ends with newline */
+ 
+-	/* Convert notes tree to tree object */
+-	if (write_notes_tree(t, tree_sha1))
+-		die("Failed to write current notes tree to database");
+-
+-	/* Create new commit for the tree object */
+-	if (!read_ref(t->ref, prev_commit)) { /* retrieve parent commit */
+-		parent = xmalloc(sizeof(*parent));
+-		parent->item = lookup_commit(prev_commit);
+-		parent->next = NULL;
+-	} else {
+-		hashclr(prev_commit);
+-		parent = NULL;
+-	}
+-	if (commit_tree(buf.buf + 7, tree_sha1, parent, new_commit, NULL))
+-		die("Failed to commit notes tree to database");
+-
+-	/* Update notes ref with new commit */
+-	update_ref(buf.buf, t->ref, new_commit, prev_commit, 0, DIE_ON_ERR);
++	create_notes_commit(t, NULL, buf.buf + 7, commit_sha1);
++	update_ref(buf.buf, t->ref, commit_sha1, NULL, 0, DIE_ON_ERR);
+ 
+ 	strbuf_release(&buf);
+-	return 0;
+ }
+ 
+ combine_notes_fn parse_combine_notes_fn(const char *v)
+diff --git a/notes-merge.c b/notes-merge.c
+index cd917f9..6ffa6e7 100644
+--- a/notes-merge.c
++++ b/notes-merge.c
+@@ -1,6 +1,7 @@
+ #include "cache.h"
+ #include "commit.h"
+ #include "refs.h"
++#include "notes.h"
+ #include "notes-merge.h"
+ 
+ void init_notes_merge_options(struct notes_merge_options *o)
+@@ -17,6 +18,32 @@ void init_notes_merge_options(struct notes_merge_options *o)
+ 		} \
+ 	} while (0)
+ 
++void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
++			 const char *msg, unsigned char *result_sha1)
++{
++	unsigned char tree_sha1[20];
++
++	assert(t->initialized);
++
++	if (write_notes_tree(t, tree_sha1))
++		die("Failed to write notes tree to database");
++
++	if (!parents) {
++		/* Deduce parent commit from t->ref */
++		unsigned char parent_sha1[20];
++		if (!read_ref(t->ref, parent_sha1)) {
++			struct commit *parent = lookup_commit(parent_sha1);
++			if (!parent || parse_commit(parent))
++				die("Failed to find/parse commit %s", t->ref);
++			commit_list_insert(parent, &parents);
++		}
++		/* else: t->ref points to nothing, assume root/orphan commit */
++	}
++
++	if (commit_tree(msg, tree_sha1, parents, result_sha1, NULL))
++		die("Failed to commit notes tree to database");
++}
++
+ int notes_merge(struct notes_merge_options *o,
+ 		unsigned char *result_sha1)
+ {
+diff --git a/notes-merge.h b/notes-merge.h
+index fd572ac..49e1b3a 100644
+--- a/notes-merge.h
++++ b/notes-merge.h
+@@ -15,6 +15,20 @@ struct notes_merge_options {
+ void init_notes_merge_options(struct notes_merge_options *o);
  
  /*
-+ * Return the default notes ref.
++ * Create new notes commit from the given notes tree
 + *
-+ * The default notes ref is the notes ref that is used when notes_ref == NULL
-+ * is passed to init_notes().
++ * Properties of the created commit:
++ * - tree: the result of converting t to a tree object with write_notes_tree().
++ * - parents: the given parents OR (if NULL) the commit referenced by t->ref.
++ * - author/committer: the default determined by commmit_tree().
++ * - commit message: msg
 + *
-+ * This the first of the following to be defined:
-+ * 1. The '--ref' option to 'git notes', if given
-+ * 2. The $GIT_NOTES_REF environment variable, if set
-+ * 3. The value of the core.notesRef config variable, if set
-+ * 4. GIT_NOTES_DEFAULT_REF (i.e. "refs/notes/commits")
++ * The resulting commit SHA1 is stored in result_sha1.
 + */
-+const char *default_notes_ref(void);
++void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
++			 const char *msg, unsigned char *result_sha1);
 +
 +/*
-  * Flags controlling behaviour of notes tree initialization
+  * Merge notes from o->remote_ref into o->local_ref
   *
-  * Default behaviour is to initialize the notes tree from the tree object
+  * The commits given by the two refs are merged, producing one of the following
 -- 
 1.7.3.98.g5ad7d9
