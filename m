@@ -1,183 +1,122 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Git User's Survey 2010 very short summary
-Date: Thu, 21 Oct 2010 23:24:56 +0200
-Message-ID: <201010212324.58048.jnareb@gmail.com>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial
+ git-svn fetch)
+Date: Thu, 21 Oct 2010 17:27:42 -0400 (EDT)
+Message-ID: <20420115.537598.1287696462845.JavaMail.root@mail.hq.genarts.com>
+References: <201010212037.09618.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 23:25:22 2010
+Cc: Will Palmer <wmpalmer@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 23:27:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P92dV-0002sh-AL
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 23:25:21 +0200
+	id 1P92g0-0003tV-5t
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 23:27:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758271Ab0JUVZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 17:25:07 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62996 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752931Ab0JUVZE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 17:25:04 -0400
-Received: by fxm16 with SMTP id 16so74839fxm.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 14:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=r6p+aNhnHFk8hHX0CMfKo/oEQS1he6d4SsCAc45/WNw=;
-        b=oiPHowEkIIKkbE84PItEI6PvAeICoHr8SWEpLOXvPegAy6DhVnD357T3P2JulqYQ7p
-         WA1ruCFBcUCoB10LsfDmHKJVbX1NWEl0vu3nnbx01QZhk6rA90P6oBPcARmZyGsGgfs/
-         Ba1JBQGrumGqX6A9DqJhnDyRqeHjdpH6CRWcA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        b=GEJskX69DSySb3Ali238+Q/5kdAwVN0ATuy1QsBQS9gRGe+StuOC9UPmVCqfYVnGmQ
-         CRka4mt4xOvHwCfa7/9V12WAJOYoxNFIG4Ql3A6lIvRUR6NCM3DxEc32UCDuC7wsCj7L
-         wB2e6Lf0HkZxi0KcxqYcS+9AcfnmCPY768YCA=
-Received: by 10.223.1.5 with SMTP id 5mr45268fad.39.1287696303200;
-        Thu, 21 Oct 2010 14:25:03 -0700 (PDT)
-Received: from [192.168.1.13] (abvl250.neoplus.adsl.tpnet.pl [83.8.209.250])
-        by mx.google.com with ESMTPS id d17sm1100587fav.29.2010.10.21.14.25.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 14:25:02 -0700 (PDT)
-User-Agent: KMail/1.9.3
-Content-Disposition: inline
+	id S1755872Ab0JUV1v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 17:27:51 -0400
+Received: from hq.genarts.com ([173.9.65.1]:9594 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1754016Ab0JUV1u (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 17:27:50 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id 9EF211E268FF;
+	Thu, 21 Oct 2010 17:27:49 -0400 (EDT)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 7x2YnMt81K1G; Thu, 21 Oct 2010 17:27:42 -0400 (EDT)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id E8CD41E268F0;
+	Thu, 21 Oct 2010 17:27:42 -0400 (EDT)
+In-Reply-To: <201010212037.09618.jnareb@gmail.com>
+X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159575>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159576>
 
-You can see the results of "Git User's Survey 2010" at Git Wiki:
+----- Original Message -----
+> From: "Jakub Narebski" <jnareb@gmail.com>
+> To: "Stephen Bash" <bash@genarts.com>
+> Sent: Thursday, October 21, 2010 2:37:07 PM
+> Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
+>
+> > > Of course, "ignoring merges" is temporary and a total cop-out
+> >
+> > This is still bugging me... Even with svn mergeinfo (which I think
+> > is a small percentage of the SVN revisions in the world),
+> 
+> From what I understand to have svn:mergeinfo you have to have version
+> >= 1.5 of Subversion installed on server, and to use it also >= 1.5
+> client.
 
-  https://git.wiki.kernel.org/index.php/GitSurvey2010
-
-
-You can also view them and analyse using provided filters at
-Survs.com:
-
-  https://www.survs.com/results/33Q0OZZE/MV653KSPI2
-  http://tinyurl.com/GitSurvey2010Analysis
+Correct.  I can't find a release date for 1.5, but my impression is a lot of history in SVN repositories pre-dates 1.5 (especially since it required *both* the client and the server to be updated).  That impression is mostly based on my own experience...  Using Subversion heavily from 2003 to late 2009 my memory is mostly of 1.3 and 1.4 -- I probably only upgraded if I was setting up a new machine or some fancy new tool I was using required the newest version.
  
+> But because Subversion doesn't impose strict separation between branch
+> namespace and in-repository paths, somebody somewhere would certainly
+> at some time screw this up. And only then we would have to rely on
+> subtree merge / git-subtree split similarity detection.
 
-..................................................................
-Below there is very short summary of some of the results of
-"Git User's Survey 2010"
+I don't have much experience with subtree merge...  It's possible that will improve the situation.
 
-Total responders: 8841 (compared to less that 4000 in 2009)
+> BTW. Subversion doesn't have "svn cherry-pick", nor equivalent to
+> "git reset" == "git cherry-pick -R"... well, at least I don't think it
+> has.
 
-About you
-^^^^^^^^^
-Most responders are from USA among other coutries (31%), followed by
-Germany, UK and France (10% to 6%).  Most responders are from Europe
-among other continents (50%), with North America second (36%).
+See below...
 
-Most responders are between 26 and 30 years old; most common age (mode)
-is 25 years old.  Youngest user who answered this question is 10 years 
-old (next oldest is 12 years old), oldest is 87 (next to oldest is 81).
+> I have read some documentation about svn:mergeinfo property:
+> http://svnbook.red-bean.com/en/1.5/svn.branchmerge.basicmerging.html
 
+I guess this the first time I've read the 1.5 version of the SVN Book.  This has consequences below...
+ 
+> ---1---B---2---3---M1--4---5---M2 <-- foo
+>         \         /           /
+>          \-a---b-/-----c---d-/ <-- bar
+> 
+> B is branching point, M1 and M2 are merge commits.
+> 
+> In Git, and I assume that also in Subversion, when doing merge M1, the
+> VCS notices that from revision B branches 'foo' and 'bar' have common
+> commits (in git we say that merge base of 'foo' and 'bar' at the point
+> of doing merge M1 is commit B). 
 
-Getting started with Git
-^^^^^^^^^^^^^^^^^^^^^^^^
-Responders say that Git is reasonably easy to learn, and easy to 
-reasonably easy to use; it is easier to use than to learn.
+I'm going to take a little liberty with SVN revisions because I've always thought of SVN revisions as before and after the change, so a:b in SVN is the change introduced in b, but since we're on the Git list, in the following examples I will use a:b to mean the changes introduced in both a and b.  (Since it was introduced, I've always read "svn diff -c rev" as "svn diff -r rev-1:rev")
 
-More than 80% use git version 1.7.x at least at one place.  There are 12 
-unfortunate stragglers who use pre 1.3.x version.
+Back to the task at hand... having read the 1.5 SVN docs, I have no idea how this works now (big caveat!!!), but prior to 1.5 M1 would have been
 
-Responders fall somewhere between 'everyday use' (39%) and 'can offer 
-advice' (32%) proficiency.
+svn switch svn://path/to/foo
+svn merge -ra:b svn://path/to/bar destination-path
 
+which is "Take the changes introduced in revisions a through b, and apply them to the destination-path".  This is why I think of SVN merges as cherry-picks -- I was allowed to specify exactly what changesets I wanted merge to work on.  To truly illustrate this, consider a' is in between a and b:
 
-How you use Git
-^^^^^^^^^^^^^^^
-Most people (74%) obtain/install Git at least at one place using ready 
-binary packages.
+---1---B---2---3-------M1--4---5---M2 <-- foo
+        \              /           /
+         \-a---a'---b-/-----c---d-/ <-- bar
 
-GNU/Linux dominates among operating systems used, then there is MacOS X,
-then MS Windows (where msysGit is preferred to Cygwin).
+I could
 
-Almost 9% of responders use JGit.
+svn switch svn://path/to/foo
+svn merge -ra':b svn://path/to/bar destination-path
 
-gitk dominates among graphical tools (58%), GitX is second (28%), 
-closely followed by git-gui (25%).
+and "a" would never be merged back to foo.  The concept of *not* specifying revision numbers to merge is new in 1.5. See
 
-The leader among git hosting sites is (like in previous years) GitHub 
-with 77% of responders (up from 62% in 2009); "self hosted" is second 
-with 44%, but it is quite lower than 57% in 2009.  The high position of 
-GitHub migh be at least partially caused by the fact that GitHub has 
-good announcement system for new features, which was used to announce 
-"Git User's Survey 2010" to GitHub users.
+http://svnbook.red-bean.com/en/1.4/svn.branchmerge.copychanges.html
 
-git:// protocol and SSH are almost the same often used to fetch changes: 
-git protocol with 78%, SSH with 71%.  Only 41% responders use HTTP for 
-fetching (somewhere).
+This is what scares me about mapping SVN merges to Git merges.  It seems post-1.5 merges have a lot more in common with Git than pre-1.5 (though mergeinfo is still brain damaged -- easy branching and merging is why I switched!), but I think we still need to support pre-1.5.
 
-
-Most popular feature, by quite a large margin, is *stash*, with two 
-thirds (66.4%) of responses. "git stash" first appeared in git version 
-1.5.3, from September 2007.
-
-Second most common used feature is "shell completion of commands", with 
-more than half of responses (52.0%).
-
-Then there are, with percentage of responses from 40% to 45%, comitting 
-with dirty tree and interactive / partial commit, interactive rebase, 
-and aliases (git aliases, shell aliases, one's own git scripts).
-
-More than third of responses have also git-aware shell prompt with 35%, 
-and submodules with 33%.
-
-Least used, with only 0.5% of responses, is "git cvsserver". 
-
-
-One of the most requested features is native support for tracking empty 
-directories, with 35.2%, followed closely by request for '-n' like 
-option for each command, which would print what would happen, but do 
-not actually execute command, with 33.5%.
-
-
-What do you think of Git
-^^^^^^^^^^^^^^^^^^^^^^^^
-Most responders are "very happy" with Git, and this answer seems to be a 
-center of responses.
-
-User interface, tools and documentation need improvement; performance 
-rather doesn't need to be improved; people mostly don't care about 
-improving communities or localization (but please remember that this 
-survey was in English, and announced on English-speaking sites / 
-lists).
-
-
-Documentation. Getting help.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-It looks like we have good community surrounding Git, if 62% of Git 
-questions are resolved quickly and accurately, and only 7% couldn't get 
-quick response and one to their liking. Those results are very similar 
-to those from 2009 survey.
-
-Most used way to request help about Git (help 'channel') is to simply 
-ask somebody better versed in Git personally, with almost 60%; it is 
-the same result as in previous surveys. This year StackOverflow 
-(a Q&A site) came as second with 37%, moving up from 17% last year when 
-it was a new thing (!!!).
-
-The #git IRC channel with usually fast real-time response is now third 
-at 18%, down from 31% in 2009 and 37% in 2008. Together with other IRC 
-channels (git/SCM related with 7%, other with 11%) it comes up to 34%, 
-close to StackOverflow 37%. One wonders how disruptive 
-http://chat.stackoverflow.com would be...
-
-Close fourth, with almost 18% of responses is instant messaging 
-(XMPP/Jabber, Google Talk, AIM, QQ, ICQ, etc.), also with real-time 
-response; 2009 survey had similarly 19% of IM users.
-
--- 
-Jakub Narebski
-Poland
+Thanks,
+Stephen
