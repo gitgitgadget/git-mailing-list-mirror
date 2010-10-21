@@ -1,173 +1,83 @@
-From: "Pat Notz" <patnotz@gmail.com>
-Subject: [PATCHv6 6/6] add tests of commit --squash
-Date: Thu, 21 Oct 2010 13:33:57 -0600
-Message-ID: <1287689637-95301-7-git-send-email-patnotz@gmail.com>
-References: <1287689637-95301-1-git-send-email-patnotz@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 21 21:34:57 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: Re: Following history of a copied file from another indirect branch
+Date: Thu, 21 Oct 2010 15:39:51 -0400
+Message-ID: <9089D1F5-A19B-4030-A6ED-463F250E450B@gernhardtsoftware.com>
+References: <4CC08AA5.8070502@workspacewhiz.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Thu Oct 21 21:40:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P90uc-0002eu-Lx
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:34:55 +0200
+	id 1P90za-00043B-RV
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 21:40:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753344Ab0JUTeX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 15:34:23 -0400
-Received: from sentry-three.sandia.gov ([132.175.109.17]:58779 "EHLO
-	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753084Ab0JUTeV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 15:34:21 -0400
-X-WSS-ID: 0LANNP5-0C-21O-02
-X-M-MSG: 
-Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.20])
-	by sentry-three.sandia.gov (Postfix) with ESMTP id 14A074DDD39
-	for <git@vger.kernel.org>; Thu, 21 Oct 2010 13:34:16 -0600 (MDT)
-Received: from [132.175.109.1] by sentry.sandia.gov with ESMTP (SMTP
- Relay 01 (Email Firewall v6.3.2)); Thu, 21 Oct 2010 13:34:04 -0600
-X-Server-Uuid: 6BFC7783-7E22-49B4-B610-66D6BE496C0E
-Received: from mail.sandia.gov (cas2.sandia.gov [134.253.165.160]) by
- mailgate.sandia.gov (8.14.4/8.14.4) with ESMTP id o9LJXiZ1018943 for
- <git@vger.kernel.org>; Thu, 21 Oct 2010 13:33:55 -0600
-Received: from sacv8030mq.sandia.gov (134.253.116.124) by
- cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
- 8.2.254.0; Thu, 21 Oct 2010 13:33:57 -0600
-X-Mailer: git-send-email 1.7.3.1
-In-Reply-To: <1287689637-95301-1-git-send-email-patnotz@gmail.com>
-X-PMX-Version: 5.6.0.2009776, Antispam-Engine: 2.7.2.376379,
- Antispam-Data: 2010.10.21.192418
-X-PMX-Spam: Gauge=IIIIIIII, Probability=8%, Report=' FORGED_FROM_GMAIL
- 0.1, RCVD_FROM_IP_DATE 0.1, BODY_SIZE_3000_3999 0, BODY_SIZE_5000_LESS
- 0, BODY_SIZE_7000_LESS 0, DATE_TZ_NA 0, __CT 0, __CT_TEXT_PLAIN 0,
- __FRAUD_BODY_WEBMAIL 0, __FRAUD_WEBMAIL 0, __FRAUD_WEBMAIL_FROM 0,
- __FROM_GMAIL 0, __HAS_MSGID 0, __HAS_X_MAILER 0, __MIME_TEXT_ONLY 0,
- __MIME_VERSION 0, __PHISH_SPEAR_STRUCTURE_1 0, __SANE_MSGID 0,
- __STOCK_PHRASE_7 0, __TO_MALFORMED_2 0, __TO_NO_NAME 0, __URI_NO_PATH
- 0, __URI_NO_WWW 0, __URI_NS '
-X-TMWD-Spam-Summary: TS=20101021193405; ID=1; SEV=2.3.1;
- DFV=B2010102119; IFV=NA; AIF=B2010102119; RPD=5.03.0010; ENG=NA;
- RPDID=7374723D303030312E30413031303230312E34434330393541452E303037433A534346535441543838363133332C73733D312C6667733D30;
- CAT=NONE; CON=NONE; SIG=AAABAJsKIgAAAAAAAAAAAAAAAAAAAH0=
-X-MMS-Spam-Filter-ID: B2010102119_5.03.0010
-X-WSS-ID: 60DE4A263KK1094520-01-01
+	id S1755480Ab0JUTj5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 15:39:57 -0400
+Received: from vs072.rosehosting.com ([216.114.78.72]:48750 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755431Ab0JUTj4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 15:39:56 -0400
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 9D3D91FFC057; Thu, 21 Oct 2010 19:39:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=4.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-67-185-155.rochester.res.rr.com [74.67.185.155])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 9C1391FFC057;
+	Thu, 21 Oct 2010 19:39:47 +0000 (UTC)
+In-Reply-To: <4CC08AA5.8070502@workspacewhiz.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159554>
 
-t7500: test expected behavior of commit --squash
-t3415: test interaction of commit --squash with rebase --autosquash
-t3900: test commit --squash with i18n encodings
 
-Signed-off-by: Pat Notz <patnotz@gmail.com>
----
- t/t3415-rebase-autosquash.sh |    4 +++
- t/t3900-i18n-commit.sh       |    2 +
- t/t7500-commit.sh            |   47 ++++++++++++++++++++++++++++++++++++++++++
- t/t7500/edit-content         |    4 +++
- 4 files changed, 57 insertions(+), 0 deletions(-)
- create mode 100755 t/t7500/edit-content
+On Oct 21, 2010, at 2:47 PM, Joshua Jensen wrote:
 
-diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
-index b77a413..0028533 100755
---- a/t/t3415-rebase-autosquash.sh
-+++ b/t/t3415-rebase-autosquash.sh
-@@ -115,4 +115,8 @@ test_expect_success 'use commit --fixup' '
- 	test_auto_commit_flags fixup 1
- '
- 
-+test_expect_success 'use commit --squash' '
-+	test_auto_commit_flags squash 2
-+'
-+
- test_done
-diff --git a/t/t3900-i18n-commit.sh b/t/t3900-i18n-commit.sh
-index f9a26c8..888758c 100755
---- a/t/t3900-i18n-commit.sh
-+++ b/t/t3900-i18n-commit.sh
-@@ -160,4 +160,6 @@ test_commit_autosquash_flags () {
- 
- test_commit_autosquash_flags eucJP fixup
- 
-+test_commit_autosquash_flags ISO-2022-JP squash '-m "squash message"'
-+
- test_done
-diff --git a/t/t7500-commit.sh b/t/t7500-commit.sh
-index a41b819..162527c 100755
---- a/t/t7500-commit.sh
-+++ b/t/t7500-commit.sh
-@@ -238,10 +238,57 @@ test_expect_success 'commit --fixup provides correct one-line commit message' '
- 	commit_msg_is "fixup! target message subject line"
- '
- 
-+test_expect_success 'commit --squash works with -F' '
-+	commit_for_rebase_autosquash_setup &&
-+	echo "log message from file" >msgfile &&
-+	git commit --squash HEAD~1 -F msgfile  &&
-+	commit_msg_is "squash! target message subject linelog message from file"
-+'
-+
-+test_expect_success 'commit --squash works with -m' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --squash HEAD~1 -m "foo bar\nbaz" &&
-+	commit_msg_is "squash! target message subject linefoo bar\nbaz"
-+'
-+
-+test_expect_success 'commit --squash works with -C' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --squash HEAD~1 -C HEAD &&
-+	commit_msg_is "squash! target message subject lineintermediate commit"
-+'
-+
-+test_expect_success 'commit --squash works with -c' '
-+	commit_for_rebase_autosquash_setup &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/edit-content &&
-+	git commit --squash HEAD~1 -c HEAD &&
-+	commit_msg_is "squash! target message subject lineedited commit"
-+'
-+
-+test_expect_success 'commit --squash works with -C for same commit' '
-+	commit_for_rebase_autosquash_setup &&
-+	git commit --squash HEAD -C HEAD &&
-+	commit_msg_is "squash! intermediate commit"
-+'
-+
-+test_expect_success 'commit --squash works with -c for same commit' '
-+	commit_for_rebase_autosquash_setup &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/edit-content &&
-+	git commit --squash HEAD -c HEAD &&
-+	commit_msg_is "squash! edited commit"
-+'
-+
-+test_expect_success 'commit --squash works with editor' '
-+	commit_for_rebase_autosquash_setup &&
-+	test_set_editor "$TEST_DIRECTORY"/t7500/add-content &&
-+	git commit --squash HEAD~1 &&
-+	commit_msg_is "squash! target message subject linecommit message"
-+'
-+
- test_expect_success 'invalid message options when using --fixup' '
- 	echo changes >>foo &&
- 	echo "message" >log &&
- 	git add foo &&
-+	test_must_fail git commit --fixup HEAD~1 --squash HEAD~2 &&
- 	test_must_fail git commit --fixup HEAD~1 -C HEAD~2 &&
- 	test_must_fail git commit --fixup HEAD~1 -c HEAD~2 &&
- 	test_must_fail git commit --fixup HEAD~1 -m "cmdline message" &&
-diff --git a/t/t7500/edit-content b/t/t7500/edit-content
-new file mode 100755
-index 0000000..08db9fd
---- /dev/null
-+++ b/t/t7500/edit-content
-@@ -0,0 +1,4 @@
-+#!/bin/sh
-+sed -e "s/intermediate/edited/g" <"$1" >"$1-"
-+mv "$1-" "$1"
-+exit 0
--- 
-1.7.3.1
+> It has become a necessity to copy a file from one long-lived branch to another.  It is not possible to merge the branches at this time.
+> 
+> I would like to have 'git gui blame' follow the copy back through its original history, but I don't believe Git has metadata for storing this.  Something along the lines of a 'followparent' in the commit object, for instance, would allow the revision walking code to wander the history down an alternate line.
+
+Git stores no per-file metadata.  The closest we come is .gitattributes and .gitignore.
+
+> By comparison, integrates work at a file level in Perforce.  That means I can integrate a file from one branch to another, and parentage is stored such that I can follow the file back through its history.
+> 
+> Are there any facilities to do this now?
+
+Git simply does not have the idea of the history of a file.  Nothing in git will help merge "just a file" from one branch to another.  Either we have merged the two commits or not.
+
+HOWEVER...
+
+You can use git-filter-branch to create a new branch that contains only that single file and only the commits that affected it.  Something like the following (untested):
+
+	# Merging "file" from branch "src" to branch "dest"
+	git checkout -b temp src
+	git filter-branch --prune-empty --index-filter="git read-tree --empty; git add file"
+	# Since you describe the branch as "long-running", I'd suspect you'll have to wait a while here.
+	git checkout dest
+	git merge temp
+	git branch -d temp
+	git branch -D refs/original/temp
+
+This will go faster if you have a ramdisk/tmpfs to perform the filtering in.  (git-filter-branch is very I/O intensive.)  Something like the following in place of the `git filter-branch` invocation above:
+
+	mkdir /tmp/filter-branch # Assuming /tmp is tmpfs or similar
+	git filter-branch -d /tmp/filter-branch --prune-empty --index-filter="git read-tree --empty; git add file"
+	rm -rf /tmp/filter-branch
+
+You could use --msg-filter to add the SHA-1 of the original commits to the "file history" branch.  Something like --msg-filter='cat;echo;echo From: $GIT_COMMIT'
+
+I would recommend using cherry-pick to pull any further changes to the file across branches (be careful of commits that touch more than that file!).  I think git-filter-branch could be used to keep the one file branch up to date, but that is likely more effort than it's worth.  I would specifically advise against merging the single file branch into both "src" and "dest", as I think any later merge of the two would find these commits as a merge-base.
+
+~~ Brian Gernhardt
