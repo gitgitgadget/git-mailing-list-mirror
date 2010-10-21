@@ -1,81 +1,76 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv4 05/21] notes.h/c: Clarify the handling of notes objects
- that are == null_sha1
-Date: Thu, 21 Oct 2010 12:54:05 -0500
-Message-ID: <20101021175404.GC11328@burratino>
-References: <1287626936-32232-1-git-send-email-johan@herland.net>
- <1287626936-32232-6-git-send-email-johan@herland.net>
- <20101021051232.GA2413@burratino>
- <201010211513.06176.johan@herland.net>
+Subject: Re: [PATCH v2] blame: Add option to show author email instead of name
+Date: Thu, 21 Oct 2010 13:05:25 -0500
+Message-ID: <20101021180525.GA11501@burratino>
+References: <7vsk02ypj5.fsf@alter.siamese.dyndns.org>
+ <1287535323-20347-1-git-send-email-kevin@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, bebarino@gmail.com, avarab@gmail.com,
-	gitster@pobox.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Oct 21 19:58:04 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Thu Oct 21 20:09:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P8zOp-0007vE-6X
-	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 19:57:59 +0200
+	id 1P8zZo-0003ql-1V
+	for gcvg-git-2@lo.gmane.org; Thu, 21 Oct 2010 20:09:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755957Ab0JUR5y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 13:57:54 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49908 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755641Ab0JUR5x (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 13:57:53 -0400
-Received: by mail-yw0-f46.google.com with SMTP id 9so3221ywk.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 10:57:52 -0700 (PDT)
+	id S1756567Ab0JUSJP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 14:09:15 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:49764 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753452Ab0JUSJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 14:09:14 -0400
+Received: by vws13 with SMTP id 13so1540vws.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 11:09:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=69o698A3p8u2VWmGBzvRpS4dcx5vgoDMnsowK8IRNmw=;
-        b=KuTZehoiOU0+jSSshuuciZ8g+m8klzG1YI1yUV/wqsSy+LK8kR5xwHwBcsVAMfZ2p+
-         UVeKonahXj81f/D6thra5IRKrrUIMLcJVEU5aeJhn3GUmfXkyusl8YGKF01qjfcrh12b
-         B5/c+fWmkejBHJfrmJ/CRcFenQln0UWCg8YfY=
+        bh=p/z8oYsFpP/8iMlBnLxUrDbzHk1/WGpCZhJnz/PQHEI=;
+        b=lEBnMs53u6tLtlswfs2NmHFkSLdNJBoaOMMUBFbygvZNyQ5BiChfwfn+qK6JddWe2i
+         i2noDK4blbs3wMyw0H1VNu1r19As7CcJ7xNRAhEzWM362oxtKwcar92/B4RycZ6fCTik
+         l3sYjA2D9BGiJe5B/03GGlNzDkEqKbCvH5uhQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=Z+AJEatGgAkyjRniLanERmMSDT0HuThRl1zuWWDd0zT35z5cH/1w8/1RxzFw+ZXWpf
-         fAf8sif5uagj2uYDP6XKHFkydDi/lrBSgrtS/d9bPSbudvt/NNJa/mCH+yzCweZJW4Jb
-         6HPj8MfTR2Y6XWZ23MPsPEQdGSPqBbtfn6f08=
-Received: by 10.103.161.6 with SMTP id n6mr2018609muo.18.1287683872021;
-        Thu, 21 Oct 2010 10:57:52 -0700 (PDT)
+        b=mkHt3IgdLg7oBe3s+qr8bkRZ/yr5hQlwM0LFDbrfXJZwBfp9i/p/FYj8unQKVMDuT1
+         5W24bmGbxR9WiLaJ613jWOW59yMIpTw8A2ykfW8NIvd22PWDH3I0wNjmuKQsXI6eF4S1
+         vFDDy5eogLC4I74CrH8u70WaIrCITrbZ2ERsA=
+Received: by 10.103.181.7 with SMTP id i7mr1920633mup.135.1287684552656;
+        Thu, 21 Oct 2010 11:09:12 -0700 (PDT)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id z19sm965973fam.16.2010.10.21.10.57.49
+        by mx.google.com with ESMTPS id k4sm973204faa.32.2010.10.21.11.09.10
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 10:57:51 -0700 (PDT)
+        Thu, 21 Oct 2010 11:09:11 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <201010211513.06176.johan@herland.net>
+In-Reply-To: <1287535323-20347-1-git-send-email-kevin@sb.org>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159529>
 
-Johan Herland wrote:
+Kevin Ballard wrote:
 
->   Allow combine_notes functions to request that a note be removed,
->   by setting the resulting note SHA1 to null_sha1 (0000000...).
-> 
->   For consistency, also teach note_tree_insert() to skip insertion
->   of an empty note when there is no note to combine it with.
+> +++ b/t/t8002-blame.sh
+> @@ -6,4 +6,9 @@ test_description='git blame'
+>  PROG='git blame -c'
+>  . "$TEST_DIRECTORY"/annotate-tests.sh
+>  
+> +PROG='git blame -c -e'
+> +test_expect_success 'Blame --show-email works' '
+> +    check_count "<A@test.git>" 1 "<B@test.git>" 1 "<B1@test.git>" 1 "<B2@test.git>" 1 "<author@example.com>" 1 "<C@test.git>" 1 "<D@test.git>" 1
+> +'
+> +
 
-I guess it's probably also worth clarifying that the term "empty note"
-means null_sha1 rather than empty_blob_sha1.
+Bonus nit: does this belong in annotate-tests.sh or does it only apply
+to "git blame" and not "git annotate"?  If the latter, a note in the
+commit message would be helpful.
 
-i.e. something like:
-
-	For consistency, also teach note_tree_insert() to skip insertion
-	of an empty note (a note with val_sha1 equal to null_sha1)
-	when there is no note to combine it with.
-
-The previous behavior iiuc would have been for write_notes_tree() to
-write invalid trees after such an operation.
+Thanks for your work.
