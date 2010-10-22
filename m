@@ -1,128 +1,109 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH 13/15] daemon: use socklen_t
-Date: Fri, 22 Oct 2010 02:05:42 +0200
-Message-ID: <1287705944-5668-13-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH 14/15] daemon: make --inetd and --detcach incompatible
+Date: Fri, 22 Oct 2010 02:05:43 +0200
+Message-ID: <1287705944-5668-14-git-send-email-kusmabite@gmail.com>
 References: <1287705944-5668-1-git-send-email-kusmabite@gmail.com>
-Mime-Version: 1.0
-Cc: msysgit@googlegroups.com,
-	j6t@kdbg.org,
-	avarab@gmail.com,
-	sunshine@sunshineco.com,
-	jrnieder@gmail.com,
-	schwab@linux-m68k.org,
+Cc: msysgit@googlegroups.com, j6t@kdbg.org, avarab@gmail.com,
+	sunshine@sunshineco.com, jrnieder@gmail.com, schwab@linux-m68k.org,
 	patthoyts@gmail.com
 To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxChq4PmBBoE5vnKeA@googlegroups.com Fri Oct 22 02:07:25 2010
-Return-path: <msysgit+bncCOPdven-DxChq4PmBBoE5vnKeA@googlegroups.com>
-Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ww0-f58.google.com ([74.125.82.58])
+X-From: git-owner@vger.kernel.org Fri Oct 22 02:07:26 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxChq4PmBBoE5vnKeA@googlegroups.com>)
-	id 1P95AH-0004SJ-OE
-	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:07:21 +0200
-Received: by mail-ww0-f58.google.com with SMTP id 28sf109548wwb.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:07:21 -0700 (PDT)
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1P95AL-0004aC-KJ
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 02:07:25 +0200
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S932935Ab0JVAHI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 20:07:08 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34643 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759302Ab0JVAHB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 20:07:01 -0400
+Received: by mail-ey0-f174.google.com with SMTP id 27so248736eye.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 17:07:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:mime-version:x-beenthere:received
-         :received:received:received:received-spf:received:received:received
-         :from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :x-original-sender:x-original-authentication-results:precedence
-         :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe;
-        bh=uOKK+PmlM/MPaRwjsdhb7ZKQix1jrcFhd+BuvdoeFME=;
-        b=0pa5NyZp2QGXXX8srpq6kt7sIwwOwkacn5WIJDqWcR1hivoOThwSRYqC3CzneoV31m
-         YVz5BDkbVDgoOha87joOVymj+/18DnPuNA8RgJ9kMRMQxmswu4g2uqllGr5GuQuGzZmm
-         v3jI9VDty0hQmNvc/weut5ofiwoTNvlx+ro3M=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=O1jdLuMZpSYRnjP1ogbFtNrUHrzSomzDoWSeXPUSaoE=;
+        b=DNfyuD7x9w5YDV0X99z34DpiG9UxtES1X7eYYAVH2WI1/iUtZz8q8L2WuMmEBhdCP4
+         jP6HO6+l1Seu7Fz2v4FtLkCK/rzxXpDLJOAllX6tlzC9Rmh65SVHyN2S63Uy5zz2JSP9
+         9QZKGQadKQqW6Uvfirr/eYMqa8DIoQiefV4Oo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlegroups.com; s=beta;
-        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:x-original-sender
-         :x-original-authentication-results:precedence:mailing-list:list-id
-         :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe;
-        b=m+lxz7n9UQpG9Y9v15j8k2g2bnFDGek4u1P7rmJC/IroO/+kixu5l6uek990hEJmZW
-         K/wj57lMlaD3ujllWEH2FYm5XCcU3ZiE7eQBxJYmo7+QXMYoY8oMSP7qIVlNC54n/68i
-         HTCWf5IHnGgrP1x8PBzPO6t2+wgm1Y208GQFo=
-Received: by 10.216.237.35 with SMTP id x35mr292212weq.5.1287706017901;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=HR3YmmjiZLlwy2ep8HyRJDjvBtFIVezRRs5iAXJvmdALSj/zttEFNhzIdPazsXdE82
+         RcKaDSErQved4vGZqd+kf3wXORFQ8U4oY10o9U1/K4mv0rVO0AWGhbW2qtNktvol19Oj
+         SS3IVZjnE7FgkvnlvubaB6OET91VF4xJTCjKA=
+Received: by 10.14.47.78 with SMTP id s54mr1478247eeb.21.1287706017788;
         Thu, 21 Oct 2010 17:06:57 -0700 (PDT)
-X-BeenThere: msysgit@googlegroups.com
-Received: by 10.14.24.73 with SMTP id w49ls268198eew.4.p; Thu, 21 Oct 2010
- 17:06:57 -0700 (PDT)
-Received: by 10.14.45.11 with SMTP id o11mr167433eeb.20.1287706016890;
-        Thu, 21 Oct 2010 17:06:56 -0700 (PDT)
-Received: by 10.14.45.11 with SMTP id o11mr167432eeb.20.1287706016873;
-        Thu, 21 Oct 2010 17:06:56 -0700 (PDT)
-Received: from mail-ew0-f48.google.com (mail-ew0-f48.google.com [209.85.215.48])
-        by gmr-mx.google.com with ESMTP id q11si1427785eeh.0.2010.10.21.17.06.55;
-        Thu, 21 Oct 2010 17:06:55 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.48 as permitted sender) client-ip=209.85.215.48;
-Received: by ewy3 with SMTP id 3so188948ewy.21
-        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:06:55 -0700 (PDT)
-Received: by 10.213.35.145 with SMTP id p17mr8736752ebd.84.1287706015729;
-        Thu, 21 Oct 2010 17:06:55 -0700 (PDT)
 Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id w20sm2464297eeh.6.2010.10.21.17.06.54
+        by mx.google.com with ESMTPS id q58sm2456823eeh.9.2010.10.21.17.06.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 17:06:55 -0700 (PDT)
+        Thu, 21 Oct 2010 17:06:57 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
 In-Reply-To: <1287705944-5668-1-git-send-email-kusmabite@gmail.com>
-X-Original-Sender: kusmabite@gmail.com
-X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.48 as permitted sender)
- smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
-Precedence: list
-Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
-List-ID: <msysgit.googlegroups.com>
-List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
-List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
-List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
-Sender: msysgit@googlegroups.com
-List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
-List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159604>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159605>
 
-Windows's accept()-function takes the last argument as an int, but glibc
-takes an unsigned int. Use socklen_t to get rid of a warning. This is
-basically a revert of 7fa0908, but we have already been depending on
-socklen_t existing since June 2006 (commit 5b276ee4). I guess this means
-that socklen_t IS defined on OSX after all - at least in recent headers.
+Since --inetd makes main return with the result of execute() before
+daemonize is gets called, these two options are already incompatible.
+
+Document it, and add an error if attempted.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- daemon.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+ Documentation/git-daemon.txt |    3 ++-
+ daemon.c                     |    8 ++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 685aa58..053ded5 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -78,7 +78,8 @@ OPTIONS
+ 
+ --inetd::
+ 	Have the server run as an inetd service. Implies --syslog.
+-	Incompatible with --port, --listen, --user and --group options.
++	Incompatible with --detach, --port, --listen, --user and --group
++	options.
+ 
+ --listen=host_or_ipaddr::
+ 	Listen on a specific IP address or hostname.  IP addresses can
 diff --git a/daemon.c b/daemon.c
-index 19b4eb3..af13f4a 100644
+index af13f4a..fc55367 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -597,7 +597,7 @@ static struct child {
- 	struct sockaddr_storage address;
- } *firstborn;
+@@ -23,10 +23,10 @@ static const char daemon_usage[] =
+ "           [--strict-paths] [--base-path=path] [--base-path-relaxed]\n"
+ "           [--user-path | --user-path=path]\n"
+ "           [--interpolated-path=path]\n"
+-"           [--reuseaddr] [--detach] [--pid-file=file]\n"
++"           [--reuseaddr] [--pid-file=file]\n"
+ "           [--[enable|disable|allow-override|forbid-override]=service]\n"
+ "           [--inetd | [--listen=host_or_ipaddr] [--port=n]\n"
+-"                      [--user=user [--group=group]]\n"
++"                      [--detach] [--user=user [--group=group]]\n"
+ "           [directory...]";
  
--static void add_child(struct child_process *cld, struct sockaddr *addr, int addrlen)
-+static void add_child(struct child_process *cld, struct sockaddr *addr, socklen_t addrlen)
- {
- 	struct child *newborn, **cradle;
+ /* List of acceptable pathname prefixes */
+@@ -1122,8 +1122,8 @@ int main(int argc, char **argv)
+ 		/* avoid splitting a message in the middle */
+ 		setvbuf(stderr, NULL, _IOFBF, 4096);
  
-@@ -654,7 +654,7 @@ static void check_dead_children(void)
- }
+-	if (inetd_mode && (group_name || user_name))
+-		die("--user and --group are incompatible with --inetd");
++	if (inetd_mode && (detach || group_name || user_name))
++		die("--detach, --user and --group are incompatible with --inetd");
  
- static char **cld_argv;
--static void handle(int incoming, struct sockaddr *addr, int addrlen)
-+static void handle(int incoming, struct sockaddr *addr, socklen_t addrlen)
- {
- 	struct child_process cld = { 0 };
- 	char addrbuf[300] = "REMOTE_ADDR=", portbuf[300];
-@@ -904,7 +904,7 @@ static int service_loop(struct socketlist *socklist)
- 		for (i = 0; i < socklist->nr; i++) {
- 			if (pfd[i].revents & POLLIN) {
- 				struct sockaddr_storage ss;
--				unsigned int sslen = sizeof(ss);
-+				socklen_t sslen = sizeof(ss);
- 				int incoming = accept(pfd[i].fd, (struct sockaddr *)&ss, &sslen);
- 				if (incoming < 0) {
- 					switch (errno) {
+ 	if (inetd_mode && (listen_port || (listen_addr.nr > 0)))
+ 		die("--listen= and --port= are incompatible with --inetd");
 -- 
 1.7.3.1.199.g72340
