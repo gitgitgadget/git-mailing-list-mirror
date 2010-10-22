@@ -1,411 +1,245 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH v2 2/3] Documentation: complete config list from other manpages
-Date: Fri, 22 Oct 2010 16:31:52 +0200
-Message-ID: <201010221631.55580.jnareb@gmail.com>
-References: <cover.1287690696.git.trast@student.ethz.ch> <8145782bddf60325909f328337cb76d25c4402cf.1287690696.git.trast@student.ethz.ch>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: [PATCH] git-gui: apply color information from git diff output
+Date: Fri, 22 Oct 2010 16:40:38 +0200
+Message-ID: <AANLkTikiRsrQtv65RBAe6HBfssYoDEuK5xp5t5eZQ2_E@mail.gmail.com>
+References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
+	<87hbgh7paf.fsf@fox.patthoyts.tk>
+	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
+	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
+	<7vy69stop2.fsf@alter.siamese.dyndns.org>
+	<87eibje5zs.fsf_-_@fox.patthoyts.tk>
+	<FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org>
+	<87pqv2ttjx.fsf_-_@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 22 16:32:24 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>,
+	Git mailing list <git@vger.kernel.org>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 16:40:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9IfP-0000AY-8I
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:32:23 +0200
+	id 1P9InW-0002nR-HJ
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:40:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757200Ab0JVOcR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 10:32:17 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38585 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755169Ab0JVOcQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 10:32:16 -0400
-Received: by fxm16 with SMTP id 16so691773fxm.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 07:32:14 -0700 (PDT)
+	id S1757361Ab0JVOkk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 10:40:40 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:46622 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755015Ab0JVOkj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 10:40:39 -0400
+Received: by ewy7 with SMTP id 7so1172605ewy.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 07:40:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=l85WuToOZOm8Ra3NFiKDCyxjNfY+4pDpYWv0ZNMdDqg=;
-        b=k6J4Rov/D/BUodhjCTw8cQ7YdOvwJs+aY3XunMHHXHRLjSuTFX/04BkK/fZfiTjauw
-         3CIEArj76NIXEHPS5MJdvSHAy5N3AznD/UyYrtK8jGrcrC6qsqiQthOEyHojkkpXGnQl
-         EPfdxlyGxOv1juLlQkjv3LfOrivqVxYX1fl6A=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zTuo3ckMA4aIKundPGEg9cjfz3wxFS6NL5mz+WYdXQw=;
+        b=Uc0RR9K+DPJZ2uvYPmRI/qBRjRMN3sBXonHMK2napk2y0kduYhQYadqyp0u4AA1F8N
+         EdqYmkF74IxGDWwikqVyGPrvr4q3/BllzSqY2+kn/SeOB/ZbhAC2nCKbE+z9pmPyx51N
+         B4WaBw0DtYLiuF5SMOhNlCoXr8xlMh+RaOYsY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=jYkZJhlG5EPU3OXdA4AouhRBEI3CB/1qULKMd20WjAFAIq0JAOLIkhaPf1pvR43+M/
-         NY9RREubM56Rgf6oX5zL5dxKLOhtJ/6DfohXJmH9YrohTsa7F/9ZrRYBnnLte9nnW9DC
-         1QfXzbW4Fqnll1hyOJTpjkR7bLyUznJ29aWX4=
-Received: by 10.204.120.194 with SMTP id e2mr1997482bkr.200.1287757934658;
-        Fri, 22 Oct 2010 07:32:14 -0700 (PDT)
-Received: from [192.168.1.13] (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
-        by mx.google.com with ESMTPS id r21sm2182699bkj.22.2010.10.22.07.32.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 07:32:12 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <8145782bddf60325909f328337cb76d25c4402cf.1287690696.git.trast@student.ethz.ch>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bdCHzM/F6z58CYojZEfCix2Po5Rx51j2PuPuVmVF9bC+ax+HX+/eB6XPcD1BtOq5PW
+         cOBlZ/AtGjDkwmyLd6Bi1OvXNuFk5e2est9IaNkLe1vPS8adusCfUP2X/Pp+scAMuhyP
+         bL/YlsKa3/T4zk1mswkr3gHtFVNoMW+haQvS8=
+Received: by 10.14.126.69 with SMTP id a45mr2233997eei.15.1287758438134; Fri,
+ 22 Oct 2010 07:40:38 -0700 (PDT)
+Received: by 10.220.76.74 with HTTP; Fri, 22 Oct 2010 07:40:38 -0700 (PDT)
+In-Reply-To: <87pqv2ttjx.fsf_-_@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159691>
 
-On Fri, 22 Oct 2010 07:02, Thomas Rast wrote:
-
-> Add an autogeneration script that inserts links to other manpages
-> describing config variables, as follows:
+On Fri, Oct 22, 2010 at 12:10 PM, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> This patch extracts the ANSI color sequences from git diff output and
+> applies these to the diff view window. This ensures that the gui view
+> makes use of the current git configuration for whitespace display.
 >
-> * parse config-vars-src.txt (as it now needs to be renamed) to find
->   out its current contents
-> 
-> * parse each manpage source (following includes) for config variable
->   headers (the blocks are ignored)
-> 
-> * assemble a new config-vars.txt that completes the original list with
->   "See linkgit:git-foo[1]" entries for all variables that were not in
->   it.
-
-So is this script about automatically managing links from git-config
-manpage to manpages of individual commands?  Does it mean that for 
-something like the following in Documentation/config-vars-src.txt
-
-  foo.bar::
-  	Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-  	sed do eiusmod tempor incididunt ut labore et dolore magna
-  	aliqua.
-
-and if `foo.bar` is referenced in Documentation/git-foo.txt in some way
-(from reading source of mentioned autogeneration script it considers
-only 'foo.bar::', like in Documentation/git-send-email.txt), then it
-adds
-
-  See linkgit:git-foo[1]
-
-at the end of description of variable in Documentation/config-vars-src.txt
-(taking into account continuation blocks)?  What about config variables
-mentioned in different ways, e.g. '`foo.bar`', like in git-update-index
-documentation?  Does it checks that 'See linkgit:git-foo[1]' already
-exists, e.g. in extended form 'See linkgit:git-foo[1].  True by default.'?
- 
-Or is it about automatically creating and updating blocks like this:
-
-  sendemail.aliasesfile::
-  sendemail.aliasfiletype::
-  sendemail.bcc::
-  sendemail.cc::
-  [...]
-  sendemail.thread::
-  sendemail.validate::
-  	See linkgit:git-send-email[1] for description.
-
-
-See also comments below, where I realized what this scipt does...
-This really should be in commit message.
-
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ANSI codes may include attributes, foreground and background in a sin=
+gle
+> sequence. Handle this and support bold and reverse attributes. Ignore
+> all other attributes.
+>
+> Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
+> Suggested-by: Junio C Hamano <gitster@pobox.com>
+> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
 > ---
->  Documentation/Makefile              |    9 +-
->  Documentation/config-vars-src.txt   | 1747 +++++++++++++++++++++++++++++++++++
->  Documentation/config-vars.txt       | 1747 -----------------------------------
->  Documentation/make-config-list.perl |  131 +++
->  4 files changed, 1886 insertions(+), 1748 deletions(-)
->  create mode 100644 Documentation/config-vars-src.txt
->  delete mode 100644 Documentation/config-vars.txt
->  create mode 100755 Documentation/make-config-list.perl
 
-[...]
+Tested-by: Tor Arvid Lund <torarvid@gmail.com>
 
-> diff --git a/Documentation/make-config-list.perl b/Documentation/make-config-list.perl
-> new file mode 100755
-> index 0000000..f086867
-> --- /dev/null
-> +++ b/Documentation/make-config-list.perl
-> @@ -0,0 +1,131 @@
-> +#!/usr/bin/perl
+It seems to work well for me. I'm just using the default (unset)
+core.whitespace settings, so space-before-tab and blank-at-eol both
+show up with red background, just like in the console.
 
-While other helper scripts do not include comments describing them, it
-would be nice to have here description what script does and for what it
-is used.
+-Tor Arvid-
 
-Comments in code would also be nice.
-
-
-The code lacks consistency:
-
-> +	open my $fh, "<", $file or die "cannot open $file: $!";
-vs
-> +	my $fp;
-> +	open $fp, '<', $name or die "open $name failed: $!";
-
-> +	close $fh or die "eh? close failed: $!";
-vs
-> +	close $fp or die "close $name failed: $!";
-
-
-> +
-> +use strict;
-> +use warnings;
-> +use Getopt::Long;
-> +
-> +my %ignore;
-> +
-> +my $rc = GetOptions(
-> +	"mainlist=s" => \my $mainlistfile,
-> +	"ignore=s" => sub { $ignore{$_[1]} = 1 },
-> +	"no-sort" => \my $no_sort,
-> +	);
-> +
-> +if (!$rc or (!-r $mainlistfile)) {
-> +	print "$0 --mainlist=<mainlist> [--ignore=<ignore>...] <asciidoc_manpage>...\n";
-> +	exit 1;
+> Kevin Ballard <kevin@sb.org> writes:
+>
+>>On Oct 21, 2010, at 8:22 AM, Pat Thoyts wrote:
+>>
+>>> + =C2=A0 =C2=A0while {[regexp -indices -start $start "\033\\\[(\\d+=
+)?m" $line match code]} {
+>>
+>>Git currently doesn't emit combined escapes (e.g. \e[0;31m to reset a=
+nd then turn on red text), but I can imagine it being enhanced to do th=
+is in the future. I would recommend handling it here if you can.
+>>
+>>-Kevin Ballard
+>
+> It turns out that such sequences will be generated by git if the user
+> configures the color.diff.whitespace (eg: bold cyan magenta). This pa=
+tch
+> handles these cases. I don't see any point trying to handle blink. I
+> could add underline but I don't see that being so appropriate for a
+> GUI. It seems more like something that is configured for a monochrome
+> terminal.
+>
+> =C2=A0git-gui.sh =C2=A0 | =C2=A0 10 +++++++++-
+> =C2=A0lib/diff.tcl | =C2=A0 34 +++++++++++++++++++++++++++++++++-
+> =C2=A02 files changed, 42 insertions(+), 2 deletions(-)
+>
+> diff --git a/git-gui.sh b/git-gui.sh
+> index 1ccaba1..1fb0254 100755
+> --- a/git-gui.sh
+> +++ b/git-gui.sh
+> @@ -3322,8 +3322,16 @@ pack $ui_diff -side left -fill both -expand 1
+> =C2=A0pack .vpane.lower.diff.header -side top -fill x
+> =C2=A0pack .vpane.lower.diff.body -side bottom -fill both -expand 1
+>
+> +foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 =
+6 cyan4 7 grey60} {
+> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clr4$n -background $c
+> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clri4$n -foreground $c
+> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clr3$n -foreground $c
+> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clri3$n -background $c
 > +}
-
-The names <mainlist> (which is file with list of configuration variables
-to modify), <ignore> (which is about ignoring some asciidoc_manpage files,
-but only when recursing / following linkgit links) doesn't tell us much
-by themselves.  It really needs either better names, or comment describing
-what they mean, or both.
-
+> +$ui_diff tag configure clr1 -font font_diffbold
 > +
-
-It would be good to have comment what this subroutine does.  It reads
-and parses file with list of config variables and their description,
-and returns reference to list of variables, in the order they were in
-file, and reference to hash with contents:
-  variable => [ lines of description of variable ]
-
-> +sub read_varlist {
-> +	my ($file) = @_;
-> +
-> +	open my $fh, "<", $file or die "cannot open $file: $!";
-> +	my (%mainlist, @mainvars);
-> +
-> +	my ($v, $last_v);
-> +	my $in_block = 0;
-> +	while (<$fh>) {
-> +		if (/^(\S+)::/) {
-> +			$v = lc $1;
-> +			$in_block = 0;
-> +			push @{$mainlist{$v}}, $_;
-> +			push @mainvars, $v;
-
-O.K., that is easy to understand (if one remembers about autovivification
-in Perl).  But shouldn't we check if we are not in literal block, just
-in case?
-
-> +		} elsif (/^$/ && !$in_block) {
-> +			if (defined $last_v && !$#{$mainlist{$last_v}}) {
-> +				$mainlist{$last_v} = $mainlist{$v};
-> +			}
-> +			$last_v = $v;
-
-What is this branch / this code about?
-
-> +		} elsif (defined $v) {
-> +			push @{$mainlist{$v}}, $_;
-> +			$in_block = !$in_block if /^--$/;
-
-O.K., easy to understand.
-
-> +		}
-> +	}
-> +
-> +	close $fh or die "eh? close failed: $!";
-> +
-> +	return \%mainlist, \@mainvars;
+> =C2=A0$ui_diff tag conf d_cr -elide true
+> -$ui_diff tag conf d_@ -foreground blue -font font_diffbold
+> +$ui_diff tag conf d_@ -font font_diffbold
+> =C2=A0$ui_diff tag conf d_+ -foreground {#00a000}
+> =C2=A0$ui_diff tag conf d_- -foreground red
+>
+> diff --git a/lib/diff.tcl b/lib/diff.tcl
+> index c628750..dcf0711 100644
+> --- a/lib/diff.tcl
+> +++ b/lib/diff.tcl
+> @@ -294,7 +294,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0lappend cmd -p
+> - =C2=A0 =C2=A0 =C2=A0 lappend cmd --no-color
+> + =C2=A0 =C2=A0 =C2=A0 lappend cmd --color
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0if {$repo_config(gui.diffcontext) >=3D 1} =
+{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0lappend cmd "-=
+U$repo_config(gui.diffcontext)"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> @@ -332,6 +332,23 @@ proc start_show_diff {cont_info {add_opts {}}} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0fileevent $fd readable [list read_diff $fd=
+ $cont_info]
+> =C2=A0}
+>
+> +proc parse_color_line {line} {
+> + =C2=A0 =C2=A0 =C2=A0 set start 0
+> + =C2=A0 =C2=A0 =C2=A0 set result ""
+> + =C2=A0 =C2=A0 =C2=A0 set markup [list]
+> + =C2=A0 =C2=A0 =C2=A0 set regexp {\033\[((?:\d+;)*\d+)?m}
+> + =C2=A0 =C2=A0 =C2=A0 while {[regexp -indices -start $start $regexp =
+$line match code]} {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 foreach {begin end=
+} $match break
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 append result [str=
+ing range $line $start [expr {$begin - 1}]]
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 lappend markup [st=
+ring length $result] \
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 [eval [linsert $code 0 string range $line]]
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set start [incr en=
+d]
+> + =C2=A0 =C2=A0 =C2=A0 }
+> + =C2=A0 =C2=A0 =C2=A0 append result [string range $line $start end]
+> + =C2=A0 =C2=A0 =C2=A0 if {[llength $markup] < 4} {set markup {}}
+> + =C2=A0 =C2=A0 =C2=A0 return [list $result $markup]
 > +}
 > +
-
-It would be nice to have description what those variables should contain
-(what structure would they have).
-
-> +my %vars;
-> +my %sections;
+> =C2=A0proc read_diff {fd cont_info} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0global ui_diff diff_active is_submodule_di=
+ff
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0global is_3way_diff is_conflict_diff curre=
+nt_diff_header
+> @@ -340,6 +357,9 @@ proc read_diff {fd cont_info} {
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff conf -state normal
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0while {[gets $fd line] >=3D 0} {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 foreach {line mark=
+up} [parse_color_line $line] break
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set line [string m=
+ap {\033 ^} $line]
 > +
-
-It would be good to have comment what this subroutine does; better name
-than 'read_file' would also be good.
-
-This subroutine does *two* things: finds _manual_ section that manpage
-belongs to, to create correct link (e.g. 1 for git-send-email(1), 5 for
-gitattributes(5), 7 for gitcli(7)), and finds all manpages that refer
-to config variable using '^foo.bar::': $vars{'foo.bar'} = [ 'git-foo', ... ]
-
-It would also automatically follow includes, excluding ignored files
-from following 'include::<filename>[]' links.
-
-> +sub read_file {
-> +	my ($name, $main_name) = @_;
-
-$name is name of current file, $main_name is name of file that included
-it, isn't it?
-
-> +	if (!defined $main_name) {
-> +		$main_name = $name;
-> +	}
-> +	my $manpage_name = $main_name;
-> +	$manpage_name =~ s/\.txt//;
-> +	my $fp;
-> +	open $fp, '<', $name or die "open $name failed: $!";
-> +	while (<$fp>) {
-> +		if ($. < 5 && /^$manpage_name\((\d+)\)/) {
-> +			$sections{$manpage_name} = $1;
-> +		}
-
-Shouldn't it be always first line of manpage?
-
-> +		if (/^([a-z0-9]+\.[a-z<>0-9.]+)::/) {
-> +			push @{$vars{$1}}, $manpage_name;
-> +		}
-> +		if (/^include::\s*(\S+)\s*\[\]/
-> +		    && !exists $ignore{$1}) {
-> +			read_file($1, $main_name);
-> +		}
-> +	}
-> +	close $fp or die "close $name failed: $!";
-> +}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# -- Cleanup u=
+ninteresting diff header lines.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0#
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if {$::current=
+_diff_inheader} {
+> @@ -434,11 +454,23 @@ proc read_diff {fd cont_info} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set mark [$ui_diff=
+ index "end - 1 line linestart"]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff inser=
+t end $line $tags
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if {[string in=
+dex $line end] eq "\r"} {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0$ui_diff tag add d_cr {end - 2c}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff inser=
+t end "\n" $tags
 > +
-> +foreach my $name (@ARGV) {
-> +	read_file($name);
-> +}
-> +
-> +my ($mainlist, $mainvars) = read_varlist($mainlistfile);
-> +
-> +my @all_keys = @$mainvars;
-> +foreach my $k (keys %vars) {
-> +	if (!exists $mainlist->{$k}) {
-> +		push @all_keys, $k;
-> +	}
-
-Nice, so it would detect config variables which are missing from
-config-vars-src.txt
-
-> +}
-> +
-> +@all_keys = sort @all_keys unless $no_sort;
-> +
-> +my %out;
-> +foreach my $k (@all_keys) {
-> +	if (exists $mainlist->{$k}) {
-> +		push @{$out{$k}}, @{$mainlist->{$k}}, "\n";
-
-Ah, so it doesn't add 'See linkgit:git-foo[1]' if 'foo.bar' is present
-in config-vars-src.txt, but only generate notice about config variable
-in git-config manpage, refering to the page where it is defined and
-described.
-
-This should be make more clear in commit message.
-
-
-> +	} elsif (exists $vars{$k}) {
-> +		push @{$out{$k}}, $k . "::\n";
-> +		push @{$out{$k}}, "\tSee ";
-
-Wouldn't this result in something like
-
-  sendemail.aliasesfile::
-  	See linkgit:git-send-email[1]
-
-  sendemail.aliasfiletype::
-  	See linkgit:git-send-email[1]
-
-instead of
-
-  sendemail.aliasesfile::
-  sendemail.aliasfiletype::
-  	See linkgit:git-send-email[1]
-
-in the case where config-vars-src.txt is missing some variable?
-Ah, I see that it is collapsed later.
-
-> +		my $sep = " ";
-
-Not $sep = "", or "\tSee"?  Otherwise you would get "\tSee  linkgit:git-foo[1]"
-with double space.
-
-> +		foreach my $p (sort @{$vars{$k}}) {
-> +			next if ($p =~ /$mainlistfile/);
-
-> +			if (!exists $sections{$p}) {
-> +				warn "section for $p unknown";
-> +				$sections{$p} = 1;
-> +			}
-> +			push @{$out{$k}}, $sep . "linkgit:" . $p . "[" . $sections{$p} . "]";
-
-A bit of possible (but perhaps not necessary) refactoring:
-
-  +			push @{$out{$k}}, $sep . gen_linkgit($p);
-
-(or something like that).
-
-
-Besides wouldn't it be better to do collapsing based on data, not on 
-formatted string?
-
-> +			$sep = ", ";
-> +		}
-> +		push @{$out{$k}}, ".\n\n";
-> +	} else {
-> +		die "can't happen: $k not in any source";
-> +	}
-> +}
-> +
-
-
-A comment what this loop does would be nice.
-
-Note that we don't really have to do this collapsing for existing 
-contents; only for contents that was generated by this script.
-
-> +for (my $i = 0; $i < $#all_keys; $i++) {
-
-> +	next if $#{$out{$all_keys[$i]}} != $#{$out{$all_keys[$i+1]}};
-> +	my $same = 1;
-> +	for (my $j = 1; $j <= $#{$out{$all_keys[$i]}}; $j++) {
-> +		if ($out{$all_keys[$i]}[$j] ne $out{$all_keys[$i+1]}[$j]) {
-> +			$same = 0;
-> +			last;
-> +		}
-> +	}
-
-A bit of possible (but perhaps not necessary) refactoring:
-
-  +	next unless eq_deeply($out{$all_keys[$i]}, $out{$all_keys[$i+1]});
-
-(or eq_deeply_arr).
-
-> +	if ($same) {
-> +		$out{$all_keys[$i]} = [$out{$all_keys[$i]}[0]];
-> +	}
-> +}
-
-I really think that we can do this in an easier, more elegant, and not
-that convoluted way.
-
-First, we don't really need to store 'foo.bar::' as first element in
-$out{'foo.bar'}.  Second, then compacting is just grouping hash by value.
-
-> +
-> +foreach my $k (@all_keys) {
-> +	print @{$out{$k}};
-> +}
-> -- 
-> 1.7.3.1.281.g5da0b
-> 
-> 
-
--- 
-Jakub Narebski
-Poland
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 foreach {posbegin =
+colbegin posend colend} $markup {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 set prefix clr
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 foreach style [split $colbegin ";"] {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if {$style eq "7"} {append prefix i=
+; continue}
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if {$style < 30 || $style > 47} {co=
+ntinue}
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set a "$mark linestart + $posbegin =
+chars"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set b "$mark linestart + $posend ch=
+ars"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 catch {$ui_diff tag add $prefix$sty=
+le $a $b}
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 }
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff conf -state disabled
+>
+> --
+> 1.7.3.1.msysgit.0
+>
+>
+>
