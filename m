@@ -1,71 +1,102 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: apply color information from git diff
-Date: Fri, 22 Oct 2010 00:42:52 +0100
-Message-ID: <8739rzf6yr.fsf@fox.patthoyts.tk>
-References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
-	<87hbgh7paf.fsf@fox.patthoyts.tk>
-	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
-	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
-	<7vy69stop2.fsf@alter.siamese.dyndns.org>
-	<87eibje5zs.fsf_-_@fox.patthoyts.tk>
-	<FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tor Arvid Lund <torarvid@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Oct 22 01:43:34 2010
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH 03/15] inet_ntop: fix a couple of old-style decls
+Date: Fri, 22 Oct 2010 02:05:32 +0200
+Message-ID: <1287705944-5668-3-git-send-email-kusmabite@gmail.com>
+References: <1287705944-5668-1-git-send-email-kusmabite@gmail.com>
+Cc: msysgit@googlegroups.com, j6t@kdbg.org, avarab@gmail.com,
+	sunshine@sunshineco.com, jrnieder@gmail.com, schwab@linux-m68k.org,
+	patthoyts@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 22 02:06:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P94nE-00066W-W3
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 01:43:33 +0200
+	id 1P959a-0004NN-HB
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 02:06:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752703Ab0JUXnZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 19:43:25 -0400
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:57197 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751950Ab0JUXnY (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 19:43:24 -0400
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P94n2-00062M-H6; Fri, 22 Oct 2010 00:43:20 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P94mb-0006Bi-A5; Fri, 22 Oct 2010 00:42:53 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id DE0C721F45; Fri, 22 Oct 2010 00:42:52 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org> (Kevin Ballard's
-	message of "Thu, 21 Oct 2010 13:59:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1759132Ab0JVAGf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 21 Oct 2010 20:06:35 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34643 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757314Ab0JVAGe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 21 Oct 2010 20:06:34 -0400
+Received: by eye27 with SMTP id 27so248736eye.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 17:06:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=ODl6t8qe0fhd+U1AH6XekeL8xCIqSsaavsoSlPIcWlU=;
+        b=bFV5t57oSo7dUCLFQQw+58xNBrDmhZnD3PS9aboIjfp+9yRAOXqeBWZSqOLG5MgpOs
+         X6UWOhnqUkcbiYHeOOvrL7rExvYc9hcSjZtkrv2LhFlpBx6esY+HYiq7tBhPZhWnVIdU
+         aKKME4ocVJBIkGf/ZIiv9QRamByXwJI46D0Yo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=XTda6zwCYhP1s+1HdzsbZ07Y9330a9wOXz1n7LiVjrCxHBjaY1DWDiXm0+3sEwoKHS
+         0IZfASriihetMF9y+VGe7912qwLBMJZDBzP10dcNYePAYPGt3vhZSNW2Pbmv8oP8XW5r
+         Y0OqBcqHS2ehj7+mdTJw/H2bCrFKCbMeYILDI=
+Received: by 10.213.13.3 with SMTP id z3mr2505271ebz.28.1287705992958;
+        Thu, 21 Oct 2010 17:06:32 -0700 (PDT)
+Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
+        by mx.google.com with ESMTPS id x54sm2463225eeh.23.2010.10.21.17.06.31
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 21 Oct 2010 17:06:32 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
+In-Reply-To: <1287705944-5668-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159592>
 
-Kevin Ballard <kevin@sb.org> writes:
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
+ compat/inet_ntop.c |   16 +++-------------
+ 1 files changed, 3 insertions(+), 13 deletions(-)
 
->On Oct 21, 2010, at 8:22 AM, Pat Thoyts wrote:
->
->> +	while {[regexp -indices -start $start "\033\\\[(\\d+)?m" $line match code]} {
->
->Git currently doesn't emit combined escapes (e.g. \e[0;31m to reset and then turn on red text), but I can imagine it being enhanced to do this in the future. I would recommend handling it here if you can.
-
-In fact that can be configured even now:
- % git config color.diff.whitespace "bold white bold cyan"
- % git diff --color | cat.exe --show-all
- ^[[1;37;46m+^[[m$
-so thanks for the warning.
+diff --git a/compat/inet_ntop.c b/compat/inet_ntop.c
+index e5b46a0..ea249c6 100644
+--- a/compat/inet_ntop.c
++++ b/compat/inet_ntop.c
+@@ -50,10 +50,7 @@
+  *	Paul Vixie, 1996.
+  */
+ static const char *
+-inet_ntop4(src, dst, size)
+-	const u_char *src;
+-	char *dst;
+-	size_t size;
++inet_ntop4(const u_char *src, char *dst, size_t size)
+ {
+ 	static const char fmt[] = "%u.%u.%u.%u";
+ 	char tmp[sizeof "255.255.255.255"];
+@@ -78,10 +75,7 @@ inet_ntop4(src, dst, size)
+  *	Paul Vixie, 1996.
+  */
+ static const char *
+-inet_ntop6(src, dst, size)
+-	const u_char *src;
+-	char *dst;
+-	size_t size;
++inet_ntop6(const u_char *src, char *dst, size_t size)
+ {
+ 	/*
+ 	 * Note that int32_t and int16_t need only be "at least" large enough
+@@ -178,11 +172,7 @@ inet_ntop6(src, dst, size)
+  *	Paul Vixie, 1996.
+  */
+ const char *
+-inet_ntop(af, src, dst, size)
+-	int af;
+-	const void *src;
+-	char *dst;
+-	size_t size;
++inet_ntop(int af, const void *src, char *dst, size_t size)
+ {
+ 	switch (af) {
+ 	case AF_INET:
 -- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+1.7.3.1.199.g72340
