@@ -1,74 +1,91 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [completion] Request: Include remote heads as push targets
-Date: Fri, 22 Oct 2010 10:50:17 -0400
-Message-ID: <4CC1A4A9.3040703@xiplink.com>
-References: <4CC05E4B.1010106@xiplink.com>	<4CC06439.8040003@xiplink.com>	<20101021191045.GC11759@burratino> <20101021210842.6545a661@montecarlo.grandprix.int>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git merge --abort? [was: Re: [PATCHv4 00/21] git notes merge]
+Date: Fri, 22 Oct 2010 09:55:53 -0500
+Message-ID: <20101022145553.GA9224@burratino>
+References: <1287626936-32232-1-git-send-email-johan@herland.net>
+ <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com>
+ <7vaam7rv49.fsf@alter.siamese.dyndns.org>
+ <201010221611.15425.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Mathias Lafeldt <misfire@debugon.org>
-To: Peter van der Does <peter@avirtualhome.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 16:50:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, bebarino@gmail.com,
+	avarab@gmail.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 16:59:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9IxH-0005ZL-FW
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:50:51 +0200
+	id 1P9J5y-0008Cc-Mi
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:59:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755089Ab0JVOuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 10:50:46 -0400
-Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:58478 "EHLO
-	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754248Ab0JVOup (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 10:50:45 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp44.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 9E4191284EF;
-	Fri, 22 Oct 2010 10:50:44 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp44.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 444691284A3;
-	Fri, 22 Oct 2010 10:50:44 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100922 Thunderbird/3.1.4
-In-Reply-To: <20101021210842.6545a661@montecarlo.grandprix.int>
+	id S1755547Ab0JVO7p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 10:59:45 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34059 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755265Ab0JVO7o (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 10:59:44 -0400
+Received: by eye27 with SMTP id 27so1099818eye.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 07:59:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=AemyqvmSdCkTxUpg576eyLeujeEIdIhvzXHVcMHd/Go=;
+        b=rjqPx79vlcOmCpA7Ia+AV2y/BR59RJqDL016eVXlqq731EO4RDMSfVX7ddrE8GkZBl
+         VSdv5YGog4ZR05nBm4biWkQ1zGLjsn1L3dpwJSKCIBGdrJApUZVjtWPnws87FbUbssuq
+         j22Z6veJBSKu+TH7dQaMsgxuvGnDgGuluECbU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=b22F+Swg5paVwDv5lLEymLkciAhVY0+XI8cA11qUSzK3+cauDO8z3Eah8rlG1Iohhp
+         EwEfCJMhnbqy1TP8ENTUMZe/++32SuW6tMwCsbNhN8nf2Wdwa/bqnP7ObppWCR5493op
+         8hI+fZVfTXgpXVhdB8+0QASNCs5vyDRZbkLag=
+Received: by 10.14.119.7 with SMTP id m7mr2237672eeh.39.1287759583088;
+        Fri, 22 Oct 2010 07:59:43 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id e16sm986919vcm.8.2010.10.22.07.59.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 22 Oct 2010 07:59:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <201010221611.15425.johan@herland.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159694>
 
-On 10-10-21 09:08 PM, Peter van der Does wrote:
+Johan Herland wrote:
+
+> Does this mean that there are situations where you simply _cannot_ get 
+> back to the pre-merge state (using 'git reset --merge' or otherwise)?
+
+Technically yes, there is such an edge case, but I don't think that
+was what he was talking about.
+
+> Is this something we should detect and warn about when starting the 
+> merge? Something like:
 > 
-> In the case of Marc's problem, it would be helpful to see what the
-> result is in Bash 3.
+>   $ git merge bar
+>   I'm sorry, Dave. I'm afraid I can't merge with and unclean index.
+>   Use -f to force the merge anyway, but then 'git merge --abort' will
+>   lose your staged changes.
 
-Bash v3 seems to work fine:
+"Use -f to force the merge anyway" does not make sense to me.
+git merge does not work with an index that does not match HEAD (except
+in the aforementioned edge case where the content in the edge already
+matches the merged content).  So 'git merge' bails out in this case,
+leaving the index as-is; if a person doesn't notice that and tries
+'git reset --merge', her staged changes may be clobbered.
 
-$ echo $BASH_VERSION
-3.2.0(1)-release
+> Or could we solve it simply by making a backup of the pre-merge index 
+> that can later be restored by 'git merge --abort'?
 
-$ git branch -a
-  bar
-  baz
-* master
-  remotes/origin/HEAD -> origin/master
-  remotes/origin/battle
-  remotes/origin/battle.hardened
-  remotes/origin/master
-
-$ git tag
-bassinet
-
-$ git push origin HEAD:<tab><tab>
-battle            battle.hardened   HEAD              master
-
-$ git push origin HEAD:ba<tab>
-  git push origin HEAD:battle<tab><tab>
-battle            battle.hardened
-
-		M.
+Yes, that's one way.  I think it might be better for 'git reset
+--merge' to check for MERGE_HEAD and do nothing if it is absent if we
+want it to be closer to an inverse to failed 'git merge'.
