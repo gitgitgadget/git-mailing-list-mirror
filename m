@@ -1,73 +1,58 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as
- UTF-8...?
-Date: Fri, 22 Oct 2010 11:18:51 -0500
-Message-ID: <20101022161851.GH9224@burratino>
-References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: git rebase --abort of an --onto run does not checkout the originating
+ branch
+Date: Fri, 22 Oct 2010 11:01:02 -0600
+Message-ID: <4CC1C34E.8090203@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 22 18:22:44 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 22 19:01:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9KOB-0004Qa-3V
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 18:22:43 +0200
+	id 1P9KzU-0007u7-MK
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 19:01:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757730Ab0JVQWl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 12:22:41 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:34331 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757544Ab0JVQWk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 12:22:40 -0400
-Received: by pwj3 with SMTP id 3so317019pwj.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 09:22:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=R36Nc+gk3EnYoKcu250B1pShrASQPF/Z3/Ziz0Kg9v4=;
-        b=DL/5y21Ov7BohM4Zh5hP8JYvrU0WSgD8AOtvFvUPcZFF9HfuFfoGRi8pQ72b8/ljEk
-         1nuYDlXPhFVC0Tq6C5OV6JV/0F9Kif/bSG52K0wiDnoiH0er7HeNlcg1WgtT3qwTq3J9
-         51N6R+NdThbSYC9J4126AFDG6RhGYWC/Y2OT0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=fGOp1jRRFqU4dGSaN6UekNCpyWKOwwIrhM7aDHl+oHiFQNNhnE51xCmvKGoq5Ezt2K
-         5AADpz3cIlDFFYcfyzVbiKN3bqmJhzZofFbjzObHETQyaYt0KIdq+za4eSUNgle7R2Is
-         jS2EHJapnk0XkuX69UyCfZUzSrUE8ru3ppQCU=
-Received: by 10.229.241.207 with SMTP id lf15mr558076qcb.42.1287764559160;
-        Fri, 22 Oct 2010 09:22:39 -0700 (PDT)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id n7sm2748387qcu.4.2010.10.22.09.22.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 09:22:38 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758174Ab0JVRBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 13:01:08 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:58102 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758170Ab0JVRBF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 13:01:05 -0400
+Received: (qmail 20332 invoked by uid 399); 22 Oct 2010 11:01:02 -0600
+Received: from unknown (HELO ?192.168.1.2?) (jjensen@workspacewhiz.com@75.196.217.129)
+  by hsmail.qwknetllc.com with ESMTPAM; 22 Oct 2010 11:01:02 -0600
+X-Originating-IP: 75.196.217.129
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.11) Gecko/20101013 Lightning/1.0b3pre Thunderbird/3.1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159710>
 
-Hi,
+'git rebase --abort' has documentation stating it will restore the 
+original <branch>.  This works great for my basic usage of 'git rebase 
+--interactive', for instance.
 
-Drew Northup wrote:
+When running 'git rebase --onto', it does exactly what the documentation 
+states, but the restored branch is not desirable.
 
->         This is part of my ongoing work to treat UTF-16 as text (in
-> other words, the crlf options will work and .gitattributes hacks won't
-> be required to display diffs, etc).
+To cherry pick a range of commits, I run:
 
-What's wrong with .gitattributes for this use case?  I would think a
-clean/smudge filter would produce very good behavior from most git
-commands.
+git rebase --onto mybranch START_SHA END_SHA
 
-If speed is the issue, maybe a built-in clean/smudge filter would
-address that?
+In the middle, I decide to run 'git rebase --abort'.
+
+Just as the documentation states, it performs a checkout of END_SHA as 
+the restored branch.  END_SHA has nothing to do with the originating 
+branch, and confusion ensues.
+
+Is there a reason why 'git rebase' should not store off the originating 
+branch and use that for an --abort, instead of <branch> which is END_SHA?
+
+Thanks.
+
+Josh
