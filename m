@@ -1,74 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: should Documentation/howto/setup-git-server-over-http.txt be
- marked obsolete?
-Date: Fri, 22 Oct 2010 10:06:27 -0500
-Message-ID: <20101022150627.GB9224@burratino>
-References: <AANLkTimJe9vEUwWM482NLmfHGYjnsKD5RAryQO=Zyqjj@mail.gmail.com>
- <7vsjzyrh2w.fsf@alter.siamese.dyndns.org>
- <AANLkTinv3kzvtC_Pq4F0cM_JqU7-Q2a=sWs8YSxbMiPs@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: git merge --abort? [was: Re: [PATCHv4 00/21] git notes merge]
+Date: Fri, 22 Oct 2010 17:12:05 +0200
+Message-ID: <201010221712.06059.johan@herland.net>
+References: <1287626936-32232-1-git-send-email-johan@herland.net> <201010221611.15425.johan@herland.net> <20101022145553.GA9224@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 17:10:24 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>, bebarino@gmail.com,
+	avarab@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 17:12:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9JGC-0003MU-88
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:10:24 +0200
+	id 1P9JIb-0004Cu-1k
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:12:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757068Ab0JVPKR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 11:10:17 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45069 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756914Ab0JVPKQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 11:10:16 -0400
-Received: by eye27 with SMTP id 27so1118189eye.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 08:10:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=s68FT5evsRqHwboSfTy7kJTE2x6ayCVmuikEot2Bsrk=;
-        b=I1DCm1Lsl2atpYLvM1n0DJhgTw8jzVkNUdGLtbMQzPHusY9DPm0FUxNNqNBtcn2EUt
-         /rp0cp2G+w+MqClfNJebkQRqYu+FP1sp0w9oCpTEe4sw7Nq2NNEyOYpEL3pbK7UG1wRW
-         ZyGfVnJN/jPleOXZh7ozcXPdcOyppE+2xMab4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=rNcYbr6OPHTdioUXag52Lfq9XyI1hmJaQhr0HK7vLJUx10RuOyyqdeMfYCZBwJRjB2
-         uzetbrg0yJD2+sBHSF4L57Um+YMDIhOBNhcMuaadigvNP1cgjefNkYazfffxAsySU14n
-         amIYLu5e89vtUM1lD5gkrZONiTbRF651vPv/U=
-Received: by 10.14.37.10 with SMTP id x10mr2248325eea.32.1287760215082;
-        Fri, 22 Oct 2010 08:10:15 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id w20sm3393139eeh.0.2010.10.22.08.10.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 08:10:14 -0700 (PDT)
+	id S1755941Ab0JVPMs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 11:12:48 -0400
+Received: from smtp.opera.com ([213.236.208.81]:35855 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753376Ab0JVPMr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 11:12:47 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o9MFC6mX010013
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 22 Oct 2010 15:12:06 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <20101022145553.GA9224@burratino>
 Content-Disposition: inline
-In-Reply-To: <AANLkTinv3kzvtC_Pq4F0cM_JqU7-Q2a=sWs8YSxbMiPs@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159696>
 
-Sitaram Chamarty wrote:
+On Friday 22 October 2010, Jonathan Nieder wrote:
+> Johan Herland wrote:
+> > Does this mean that there are situations where you simply _cannot_
+> > get back to the pre-merge state (using 'git reset --merge' or
+> > otherwise)?
+>
+> Technically yes, there is such an edge case, but I don't think that
+> was what he was talking about.
 
-> I assumed that the new -- much more efficient (correct?) transport
-> would make the older (dumber) transport obsolete, and I didn't realise
-> it had any advantages over the new one.
+Ah, sorry for the misunderstanding.
 
-FWIW the old transport still has its place.  If your web host (e.g.,
-an ISP) allows only static content (no CGI), then there is no choice.
+> > Is this something we should detect and warn about when starting the
+> > merge? Something like:
+> >
+> >   $ git merge bar
+> >   I'm sorry, Dave. I'm afraid I can't merge with and unclean index.
+> >   Use -f to force the merge anyway, but then 'git merge --abort'
+> > will lose your staged changes.
+>
+> "Use -f to force the merge anyway" does not make sense to me.
+> git merge does not work with an index that does not match HEAD
+> (except in the aforementioned edge case where the content in the edge
+> already matches the merged content).  So 'git merge' bails out in
+> this case, leaving the index as-is; if a person doesn't notice that
+> and tries 'git reset --merge', her staged changes may be clobbered.
+>
+> > Or could we solve it simply by making a backup of the pre-merge
+> > index that can later be restored by 'git merge --abort'?
+>
+> Yes, that's one way.  I think it might be better for 'git reset
+> --merge' to check for MERGE_HEAD and do nothing if it is absent if we
+> want it to be closer to an inverse to failed 'git merge'.
 
-Not so relevant for gitolite but still relevant in the world.
+Yes, that makes sense to me, especially if we make a 'git merge --abort' 
+synonym. Alternatively, we can make 'git merge --abort' check for 
+MERGE_HEAD, and then defer to 'git reset --merge', while leaving 'git 
+reset --merge' as-is.
 
-Hope that helps,
-Jonathan
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
