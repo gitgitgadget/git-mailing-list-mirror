@@ -1,78 +1,133 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Following history of a copied file from another indirect branch
-Date: Fri, 22 Oct 2010 08:35:17 +0200
-Message-ID: <4CC130A5.6050802@viscovery.net>
-References: <4CC08AA5.8070502@workspacewhiz.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH en/and-cascade-tests 0/7]
+Date: Fri, 22 Oct 2010 01:38:37 -0500
+Message-ID: <20101022063837.GA6081@burratino>
+References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
+ <1287544320-8499-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 08:35:32 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 08:42:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9BDr-000194-O0
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 08:35:28 +0200
+	id 1P9BKm-0002NJ-EE
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 08:42:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753266Ab0JVGfW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 02:35:22 -0400
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:53745 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752886Ab0JVGfV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 02:35:21 -0400
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1P9BDi-0000lk-5K; Fri, 22 Oct 2010 08:35:18 +0200
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id C7BA91660F;
-	Fri, 22 Oct 2010 08:35:17 +0200 (CEST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
-In-Reply-To: <4CC08AA5.8070502@workspacewhiz.com>
-X-Spam-Score: -1.4 (-)
+	id S1752642Ab0JVGm1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 02:42:27 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:52614 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950Ab0JVGm0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 02:42:26 -0400
+Received: by yxn35 with SMTP id 35so355874yxn.19
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 23:42:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=8TDBR+VXXC98qbjakyoFDo6N7sNd2CSllfxCsW/7/uU=;
+        b=K6L5ilNKQKn3P08P0G71+gD07SVWToY82uhiFHz3FZhi4sO7V7fSgOZ5CkyIth7/Ey
+         xk+p409Ll5G72VPlpsp6WeEiUASVHp70dQ9NsCcnq6BGvbtzUFXGKMvD8UJ2DqEkigAh
+         3TKo1MslkoXqIEEiIMGanlCRyOg4ZVmVoRp/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=oEr7iVGfrEbsLnpZhoMSAbzzkrImfJlJg1mucVmktdJHSRRBhxh/GNuVvN7KT8vNT0
+         v5LJzj8yNSazzI6VD/UeRLx6VzhEBmeU1FjTV35oFmc3KrvvpQSLPyfrXovFT9SVneBx
+         2K6THr1zXLKfnB7aMlFF47pWfo+m30cYysHc0=
+Received: by 10.100.208.12 with SMTP id f12mr1782847ang.94.1287729745668;
+        Thu, 21 Oct 2010 23:42:25 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id g18sm3051418anh.38.2010.10.21.23.42.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 21 Oct 2010 23:42:24 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287544320-8499-4-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159650>
 
-Am 10/21/2010 20:47, schrieb Joshua Jensen:
-> It has become a necessity to copy a file from one long-lived branch to
-> another.  It is not possible to merge the branches at this time.
-> 
-> I would like to have 'git gui blame' follow the copy back through its
-> original history, but I don't believe Git has metadata for storing this. 
-> Something along the lines of a 'followparent' in the commit object, for
-> instance, would allow the revision walking code to wander the history down
-> an alternate line.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-You can branch off one commit form that long-lived branch that undoes
-everything except the file F you are interested in since the last
-merge-base. Then you merge that single commit into the other branch.
+>  builtin/branch.c         |    3 +++
+>  builtin/checkout-index.c |    3 +++
+>  builtin/commit.c         |    6 ++++++
+>  builtin/gc.c             |    3 +++
+>  builtin/ls-files.c       |    3 +++
+>  builtin/merge.c          |    3 +++
+>  builtin/update-index.c   |    3 +++
+>  builtin/upload-archive.c |    7 ++++---
 
-   ---o--o--B     <- long-lived
-     /  /    \
-    /  /      U   <- the-file
-   /  /        \
- -o--A----------M <- master (the other branch)
+Okay, all of them survive a reroll except upload-archive.  As for
+upload-archive:
 
-i.e. 'git diff A..B' shows a lot of changes, but 'git diff A..U' shows
-only changes to the file you are interested in. 'git diff -R B..U' differs
-from 'git diff A..B' only in the changes to the file you are intersted in.
+ - it already doesn't support "-h"
+ - it is such low-level plumbing, I don't really mind that.  Maybe
+   someone is using a repository named "-h" (though I hope not, of
+   course).
 
-When you later find that you need new changes to F that were made on
-long-lived, but you still cannot merge long-lived, then you can merge
-long-lived into the-file (resolve conflicts by removing the conflicted
-files and also remove newly added files), and then you merge the-file into
-master again.
+Maybe these patches should be squashed.  I separated them because they
+were easier to write and it would be easier to cc the right people
+this way.
 
-WARNING: When you later merge long-lived into master, the merge will lose
-all changes made on long-lived. You work it around by temporarily grafting
-away the merge parents that point to commits listed by
-long-lived..the-file. After you complete the merge, you can remove the
-grafts again.
+The primary motivation for the series is that the repository checker
+from the nd/setup series will not be happy without some change like
+this.  In the git <foo> -h codepath, repository setup is not run so
+repository access is forbidden.
 
--- Hannes
+The secondary motivation is to create better behavior in situations of
+repository corruption.  When I type "git checkout -h", I am asking for
+a usage message, not a repository self-check.  Especially when trying
+to repair a repository, commands that do not do what they are asked to
+are generally frustrating to use.
+
+Patches apply on top of "test-lib: make test_expect_code a test
+command" from the en/and-cascade-tests topic.
+
+Enjoy,
+Jonathan
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (7):
+  branch -h: show usage even in an invalid repository
+  checkout-index -h: show usage even in an invalid repository
+  commit/status -h: show usage even with broken configuration
+  gc -h: show usage even with broken configuration
+  ls-files -h: show usage even with corrupt index
+  merge -h: show usage even with corrupt index
+  update-index -h: show usage even with corrupt index
+
+ builtin/branch.c                |    3 +++
+ builtin/checkout-index.c        |    3 +++
+ builtin/commit.c                |    6 ++++++
+ builtin/gc.c                    |    3 +++
+ builtin/ls-files.c              |    3 +++
+ builtin/merge.c                 |    2 ++
+ builtin/update-index.c          |    3 +++
+ t/t2006-checkout-index-basic.sh |   24 ++++++++++++++++++++++++
+ t/t2107-update-index-basic.sh   |   32 +++++++++++++++++++++++++++++++=
++
+ t/t3004-ls-files-basic.sh       |   39 +++++++++++++++++++++++++++++++=
+++++++++
+ t/t3200-branch.sh               |   11 +++++++++++
+ t/t6500-gc.sh                   |   28 ++++++++++++++++++++++++++++
+ t/t7508-status.sh               |   24 ++++++++++++++++++++++++
+ t/t7600-merge.sh                |   11 +++++++++++
+ 14 files changed, 192 insertions(+), 0 deletions(-)
+ create mode 100755 t/t2006-checkout-index-basic.sh
+ create mode 100755 t/t2107-update-index-basic.sh
+ create mode 100755 t/t3004-ls-files-basic.sh
+ create mode 100755 t/t6500-gc.sh
+
+--=20
+1.7.2.3
