@@ -1,184 +1,188 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: [PATCH] git-gui: apply color information from git diff output
-Date: Fri, 22 Oct 2010 11:10:48 +0100
-Message-ID: <87pqv2ttjx.fsf_-_@fox.patthoyts.tk>
-References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
-	<87hbgh7paf.fsf@fox.patthoyts.tk>
-	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
-	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
-	<7vy69stop2.fsf@alter.siamese.dyndns.org>
-	<87eibje5zs.fsf_-_@fox.patthoyts.tk>
-	<FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Converting to Git using svn-fe (Was: Speeding up the initial git-svn fetch)
+Date: Fri, 22 Oct 2010 12:38:04 +0200
+Message-ID: <201010221238.07964.jnareb@gmail.com>
+References: <4258434.537707.1287703612372.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Tor Arvid Lund <torarvid@gmail.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Oct 22 12:23:53 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Will Palmer <wmpalmer@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Matt Stump <mstump@goatyak.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Michael Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 12:38:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Emq-0002jF-Je
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 12:23:49 +0200
+	id 1P9F15-0000Me-HD
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 12:38:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754695Ab0JVKXl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 06:23:41 -0400
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:35491 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753905Ab0JVKXk (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 06:23:40 -0400
-Received: from [172.23.170.138] (helo=anti-virus01-09)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P9Emd-0007w0-9G; Fri, 22 Oct 2010 11:23:35 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P9EmZ-0004ns-Hd; Fri, 22 Oct 2010 11:23:31 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id BEE94218FF; Fri, 22 Oct 2010 11:23:30 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org> (Kevin Ballard's
-	message of "Thu, 21 Oct 2010 13:59:44 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1755514Ab0JVKiU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 06:38:20 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36866 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751988Ab0JVKiT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 06:38:19 -0400
+Received: by bwz11 with SMTP id 11so380348bwz.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 03:38:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=vgh3NfmGob+I4TFf/8em+uUb5Kg6QmZL+/vHi5d3Xis=;
+        b=Yd7OVPAT3w1py1t5M3LV2HwSlU6pkzuBK+UsMo1HGep9ywNbIvldciVK75/v0Vq9BR
+         adp9wBBwFNLijS7rj0bQNERWXP/nIrURXyJ67cnnJwkLqEz4RUMMNmbZ0Jd/E60ZUJgv
+         6378t1fhhuPkw7pbhzYuPigiJgcoQEMRxdUlQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=JOQvfcNOlUeXSeg9Stw8f6Fyex7RB2xzGR2W2ACVH/QcPi3r9kp0WZSsumT5/e8Qmt
+         f+mciY1/nf05i2Thv2JvWMDwCeA5A128Ftcvh8SqdApWBspHALTRrX7RsnTkS+zAmMAs
+         LwXMfv6W19QV1NeC+FIruTQ/0tPKKJYidNGxc=
+Received: by 10.204.68.136 with SMTP id v8mr1755770bki.188.1287743897804;
+        Fri, 22 Oct 2010 03:38:17 -0700 (PDT)
+Received: from [192.168.1.13] (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
+        by mx.google.com with ESMTPS id a25sm2017581bks.20.2010.10.22.03.38.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 Oct 2010 03:38:15 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4258434.537707.1287703612372.JavaMail.root@mail.hq.genarts.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159676>
 
-This patch extracts the ANSI color sequences from git diff output and
-applies these to the diff view window. This ensures that the gui view
-makes use of the current git configuration for whitespace display.
+On Fri, 22 Oct 2010, Stephen Bash wrote:
+> ----- Original Message -----
+> > From: "Jakub Narebski" <jnareb@gmail.com>
 
-ANSI codes may include attributes, foreground and background in a single
-sequence. Handle this and support bold and reverse attributes. Ignore
-all other attributes.
-
-Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
-Suggested-by: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
----
-
-Kevin Ballard <kevin@sb.org> writes:
-
->On Oct 21, 2010, at 8:22 AM, Pat Thoyts wrote:
+> > Ah, I understand now that 'svn merge' (which is rather like 'cvs
+> > update') can be used for cherry picking.
+> > 
+> > Sidenote: in Git cherry picking picks up change and applies it on top
+> > of current branch as one would apply a patch.
+> 
+> Yes.
 >
->> +	while {[regexp -indices -start $start "\033\\\[(\\d+)?m" $line match code]} {
->
->Git currently doesn't emit combined escapes (e.g. \e[0;31m to reset and then turn on red text), but I can imagine it being enhanced to do this in the future. I would recommend handling it here if you can.
->
->-Kevin Ballard
+> > This is quite different
+> > from merge, where you find comon ancestor and then perform 3-way merge
+> > (ours, theirs, ancestor). 
+> 
+> Yes.
 
-It turns out that such sequences will be generated by git if the user
-configures the color.diff.whitespace (eg: bold cyan magenta). This patch
-handles these cases. I don't see any point trying to handle blink. I
-could add underline but I don't see that being so appropriate for a
-GUI. It seems more like something that is configured for a monochrome
-terminal.
+Well, I guess that 'svn merge -rN' (merging in a single revision) works
+similarly to how git-cherry-pick works.
+ 
+> > Is merging in Subversion using 3-way merge
+> > (like 'cvs update -j ... -j ...' is), or re-applying changes?
+> 
+> Appears to the be 3-way merge if I'm reading the SVN archives correctly:
+>   "It's a basic diff3 algorithm. 'man diff3' to learn about it and play 
+>    with GNU's implementation of diff3."
+> http://svn.haxx.se/users/archive-2005-03/1232.shtml
+> 
+> So my *guess* is they derive a common ancestor from their copy
+> information, but I'm sure someone else more knowledgable could say
+> more about that.  
 
- git-gui.sh   |   10 +++++++++-
- lib/diff.tcl |   34 +++++++++++++++++++++++++++++++++-
- 2 files changed, 42 insertions(+), 2 deletions(-)
+I guess that in Subversion <= 1.4 it takes N in 'svn merge -rN:M' as an
+ancestor version for 3-way merge, and that in Subversion >= 1.5 it takes
+last merged in state (from 'svn:mergeinfo' property[1]) if branch is 
+merged subsequent time, or first common revision for both branches[2]
+if it is first merge.
 
-diff --git a/git-gui.sh b/git-gui.sh
-index 1ccaba1..1fb0254 100755
---- a/git-gui.sh
-+++ b/git-gui.sh
-@@ -3322,8 +3322,16 @@ pack $ui_diff -side left -fill both -expand 1
- pack .vpane.lower.diff.header -side top -fill x
- pack .vpane.lower.diff.body -side bottom -fill both -expand 1
+[1] The 'svn:mergeinfo' is about "merged-in tracking" rather than about
+    "merge tracking".  Though change in 'svn:mergeinfo' indicates a 
+    merge commit.
+
+[2] I guess this is to be able to find such common ancestor (common
+    revision) on first merge is the reason why merging branch into trunk
+
+         .---B---.---.---.---M---.
+              \             /
+               \---.---.---/
+
+    and merging trunk into branch
+
+         .---B---.---.---.---.---.
+              \           \  
+               \---.---.---M---.
+
+    needs a manual (by the way of '--reintegrate' option) distinguishing.
  
-+foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 grey60} {
-+	$ui_diff tag configure clr4$n -background $c
-+	$ui_diff tag configure clri4$n -foreground $c
-+	$ui_diff tag configure clr3$n -foreground $c
-+	$ui_diff tag configure clri3$n -background $c
-+}
-+$ui_diff tag configure clr1 -font font_diffbold
-+
- $ui_diff tag conf d_cr -elide true
--$ui_diff tag conf d_@ -foreground blue -font font_diffbold
-+$ui_diff tag conf d_@ -font font_diffbold
- $ui_diff tag conf d_+ -foreground {#00a000}
- $ui_diff tag conf d_- -foreground red
+> > > > I have read some documentation about svn:mergeinfo property:
+> > > > http://svnbook.red-bean.com/en/1.5/svn.branchmerge.basicmerging.html
+> > >
+> > > I guess this the first time I've read the 1.5 version of the SVN
+> > > Book.
+> > > This has consequences below...
+> > 
+> > Errr... what consequences? a:b vs a-b being closed (inclusive) or open
+> > (exclusive) from one or other end?
+> 
+> No, just that post-1.5 merges do actually start to look more like Git
+> merges. 
+
+Well, at least they can be unambigously detected, instead of relying on
+parsing commit message of merge commit.
  
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index c628750..dcf0711 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -294,7 +294,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	}
+> > > Back to the task at hand... having read the 1.5 SVN docs, I have no
+> > > idea how this works now (big caveat!!!), but prior to 1.5 M1 would
+> > > have been
+> > >
+> > >   svn switch svn://path/to/foo
+> > >   svn merge -ra:b svn://path/to/bar destination-path
+> > >
+> > > which is "Take the changes introduced in revisions a through b, and
+> > > apply them to the destination-path". This is why I think of SVN
+> > > merges as cherry-picks -- I was allowed to specify exactly what
+> > > changesets I wanted merge to work on.
+> > 
+> > On one hand side you "were allowed to specify exactly what changesets
+> > you wanted to merge to work on", on the other hand side you *had* to
+> > specify what changesets etc.
+> 
+> My point is because the user was required to specify the revisions
+> to merge, I don't think an automated tool (i.e. the mapper) can make
+> assumptions about what was actually merged in any given revision.  
+
+The problem is with even detecting that it was a merge and not ordinary
+commit (well, unless some commit convention was used for merge commits,
+but how likely that is that it was applied thoroughly, consistently, and
+without mistakes that would trip a parser of a merge detector).
  
- 	lappend cmd -p
--	lappend cmd --no-color
-+	lappend cmd --color
- 	if {$repo_config(gui.diffcontext) >= 1} {
- 		lappend cmd "-U$repo_config(gui.diffcontext)"
- 	}
-@@ -332,6 +332,23 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	fileevent $fd readable [list read_diff $fd $cont_info]
- }
- 
-+proc parse_color_line {line} {
-+	set start 0
-+	set result ""
-+	set markup [list]
-+	set regexp {\033\[((?:\d+;)*\d+)?m}
-+	while {[regexp -indices -start $start $regexp $line match code]} {
-+		foreach {begin end} $match break
-+		append result [string range $line $start [expr {$begin - 1}]]
-+		lappend markup [string length $result] \
-+			[eval [linsert $code 0 string range $line]]
-+		set start [incr end]
-+	}
-+	append result [string range $line $start end]
-+	if {[llength $markup] < 4} {set markup {}}
-+	return [list $result $markup]
-+}
-+
- proc read_diff {fd cont_info} {
- 	global ui_diff diff_active is_submodule_diff
- 	global is_3way_diff is_conflict_diff current_diff_header
-@@ -340,6 +357,9 @@ proc read_diff {fd cont_info} {
- 
- 	$ui_diff conf -state normal
- 	while {[gets $fd line] >= 0} {
-+		foreach {line markup} [parse_color_line $line] break
-+		set line [string map {\033 ^} $line]
-+
- 		# -- Cleanup uninteresting diff header lines.
- 		#
- 		if {$::current_diff_inheader} {
-@@ -434,11 +454,23 @@ proc read_diff {fd cont_info} {
- 			}
- 			}
- 		}
-+		set mark [$ui_diff index "end - 1 line linestart"]
- 		$ui_diff insert end $line $tags
- 		if {[string index $line end] eq "\r"} {
- 			$ui_diff tag add d_cr {end - 2c}
- 		}
- 		$ui_diff insert end "\n" $tags
-+
-+		foreach {posbegin colbegin posend colend} $markup {
-+			set prefix clr
-+			foreach style [split $colbegin ";"] {
-+				if {$style eq "7"} {append prefix i; continue}
-+				if {$style < 30 || $style > 47} {continue}
-+				set a "$mark linestart + $posbegin chars"
-+				set b "$mark linestart + $posend chars"
-+				catch {$ui_diff tag add $prefix$style $a $b}
-+			}
-+		}
- 	}
- 	$ui_diff conf -state disabled
- 
+> > > To truly illustrate this, consider a' is in between a and b:
+> > >
+> > > ---1---B---2---3-------M1--4---5---M2 <-- foo
+> > >         \              /           /
+> > >          \-a---a'---b-/-----c---d-/ <-- bar
+> > >
+> > > I could
+> > >
+> > >   svn switch svn://path/to/foo
+> > >   svn merge -ra':b svn://path/to/bar destination-path
+> > >
+> > > and "a" would never be merged back to foo.
+> > 
+> > Such merge would be hard to represent in Git, I think.
+> 
+> I agree.
+
+Well, at least in a way that merge in git would consider the same 
+revisions as already applied as Subversion would when merging.
+
 -- 
-1.7.3.1.msysgit.0
+Jakub Narebski
+Poland
