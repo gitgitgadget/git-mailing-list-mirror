@@ -1,76 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix git-apply with -p greater than 1
-Date: Fri, 22 Oct 2010 00:31:40 -0500
-Message-ID: <20101022053140.GB786@burratino>
-References: <1287699122-26702-1-git-send-email-fedux@lugmen.org.ar>
- <7viq0urfbz.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [long] worktree setup cases
+Date: Fri, 22 Oct 2010 12:36:17 +0700
+Message-ID: <AANLkTi=7R6nfdXQ10hme87xPPVnomZu+m9A_SZ8j8dpk@mail.gmail.com>
+References: <20101020085859.GA13135@do> <20101020190709.GB10537@burratino>
+ <AANLkTimzfxJFz2FRVCJ7b4+icXMxpQGNo0WGm_BXzXNy@mail.gmail.com>
+ <20101021033042.GA1891@burratino> <AANLkTikwApJ2EtJNiOZPHVrz6seJNP-zEqzH_b62ksLf@mail.gmail.com>
+ <20101021185132.GB28700@nibiru.local> <AANLkTinS0co8TMmyRCQ4Xe9+pDR-uUn20WNQwYJEAQea@mail.gmail.com>
+ <20101022050011.GA27179@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Federico Cuello <fedux@lugmen.org.ar>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 07:35:35 2010
+Content-Type: text/plain; charset=UTF-8
+To: weigelt@metux.de, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 22 07:36:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9AHt-0004z4-5h
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 07:35:33 +0200
+	id 1P9AJ2-0005C2-3d
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 07:36:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752886Ab0JVFf1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 01:35:27 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64293 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752738Ab0JVFf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 01:35:26 -0400
-Received: by yxn35 with SMTP id 35so323858yxn.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 22:35:26 -0700 (PDT)
+	id S1753105Ab0JVFgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 01:36:39 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:47307 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752738Ab0JVFgi (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 01:36:38 -0400
+Received: by wwe15 with SMTP id 15so413196wwe.1
+        for <git@vger.kernel.org>; Thu, 21 Oct 2010 22:36:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6oeSr3VyvJjuW7QDLXgeLoLocmvY5FvuXbFw6PSCKrM=;
-        b=E1g4BTkCmiwH/7OpBfDshttOy90pbj9rhEzsfnT6ZwnUk9S952qVQJUPTkqVVdv2uU
-         xfRgmUNoSfeDFMgYW/x+NhZwKUqGQAZYQSKrnimWF8G0cVmPX53eRvZTlhrC3EDWV1Be
-         mTaEetRIuPMfmbg4hpRrSfoEFLH22mlKiGufs=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=15Cdn2P/TM9qMpCAJRlBjg7ZmIs/AMAVS+75Ruf/TsM=;
+        b=F/XYHF6oDP0cktpBFEhdrjTn+m5iFSPgcBt1GP7CDBiEZVsM+Z9WT+ppcCWFx3Sr42
+         AQq0yAuBe2r8OHCfR9cjKpPlzdAlwS6MroQOzhdl0DIAdzgMObWalNrg6FoBu9VxwzYs
+         SqQnkXLE5EMcfZxiPM9/Kzp7cj8qap+KtxXp4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=q0Hz8uZQ1wchdKONzZI/PnV7PoK6FXqcNIcANAqjpnsUxy3xPMDa/fCJQXrLt/yDuB
-         Z1SRTVPodHM1ywVg83Uvm5VhpWwfS6+EjWTKBfiVPBCZ7A4yzULhlI2jku2QX9fAV9MS
-         nWdpXOwf2kMQyjsLEX5ccIz3uTD4cpWpI+zws=
-Received: by 10.151.38.21 with SMTP id q21mr1437353ybj.403.1287725726153;
-        Thu, 21 Oct 2010 22:35:26 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id v9sm8734173ybe.9.2010.10.21.22.35.24
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 22:35:25 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7viq0urfbz.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=UZMOGT8tQ2VF899t8Rv5mKwO7Jf6i9X0zxlkohLce6Ok0lbFb4RrOqE9BP1eN5Etew
+         nXk97b4p3QoiqoUauLfM7MA/h3ucksU5bWWVjlSxsUf6m2XSZ67Gf5odn9CkawxcR/1w
+         h+EKwxg3UuN3i954HndaKJOlKHGIzFgr420dI=
+Received: by 10.216.143.163 with SMTP id l35mr1478885wej.68.1287725797543;
+ Thu, 21 Oct 2010 22:36:37 -0700 (PDT)
+Received: by 10.216.171.207 with HTTP; Thu, 21 Oct 2010 22:36:17 -0700 (PDT)
+In-Reply-To: <20101022050011.GA27179@nibiru.local>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159647>
 
-Junio C Hamano wrote:
+On Fri, Oct 22, 2010 at 12:00 PM, Enrico Weigelt <weigelt@metux.de> wrote:
+> * Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>> On Fri, Oct 22, 2010 at 1:51 AM, Enrico Weigelt <weigelt@metux.de> wrote:
+>> >> Also the "relative to $GIT_DIR" may be confusing. If $GIT_DIR points
+>> >> to a file that points to a true repo, then to which one it is
+>> >> relative?
+>> >
+>> > Despite the fact that I doubt the usefulness of an .git file at
+>> > all, it IMHO should be interpreted as an kind of userland symlink.
+>>
+>> I do find .git file useful. I put my worktree in a server where it can
+>> be wiped out completely. So I don't want to put my .git there. .git
+>> file can be used this case so I don't have to set
+>> GIT_DIR/GIT_WORK_TREE every time and my .git is safe elsewhere.
+>
+> Why not using a symlink here ?
 
-> +test_expect_success 'apply (-p2) diff, mode change only' '
-> +	cat >patch.chmod <<-\EOF &&
-> +	diff --git a/sub/file1 b/sub/file1
-> +	old mode 100644
-> +	new mode 100755
-> +	EOF
-> +	chmod 644 file1 &&
-> +	git apply -p2 patch.chmod &&
-> +	test -x file1
-
-I had thought -p was only supposed to apply to traditional patches.
-Maybe a documentation update would avoid confusion?
-
-	-p<n>
-	   Remove <n> leading slashes from traditional diff paths.
-	   The default is 1.
+Paranoia. A fault in Makefile's clean rule may make deletion follow
+symlinks. Also symlinks are not available everywhere.
+-- 
+Duy
