@@ -1,82 +1,78 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [TopGit PATCH] Clarify tg-log note
-Date: Fri, 22 Oct 2010 10:03:36 +0200
-Message-ID: <0ecc03501a8282e7c19011ca1cbc138dec502390.1287734568.git.bert.wesarg@googlemail.com>
-Cc: Per Cederqvist <ceder@lysator.liu.se>, git@vger.kernel.org,
-	pasky@suse.cz, martin f krafft <madduck@madduck.net>,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: Uwe Kleine-Koenig <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Fri Oct 22 10:03:52 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v2 1/3] Documentation: Move variables from config.txt to separate file
+Date: Fri, 22 Oct 2010 10:18:11 +0200
+Message-ID: <201010221018.12558.jnareb@gmail.com>
+References: <cover.1287690696.git.trast@student.ethz.ch> <c3f621cd062b2c4f80aa2e8dadcfddbc042aefaa.1287690696.git.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Oct 22 10:18:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9CbO-0005Rc-Rg
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 10:03:51 +0200
+	id 1P9Cpd-0000z3-KZ
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 10:18:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753873Ab0JVIDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 04:03:43 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43715 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753732Ab0JVIDl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 04:03:41 -0400
-Received: by fxm16 with SMTP id 16so421351fxm.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 01:03:40 -0700 (PDT)
+	id S1755551Ab0JVISZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 04:18:25 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:61530 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753793Ab0JVISY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 04:18:24 -0400
+Received: by wyf28 with SMTP id 28so522366wyf.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 01:18:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=tgZvvFLwvrZqSNet7Pd4VM0XhO4vOoSabC3lxIO9MLM=;
-        b=pRH3JaVtOOAZ+G4sAeHMLiMD9uGzqQ+DaQpVTF2X/X6KvGPRvQUaSXbWQQCn0s0PID
-         Oo6A81U1iN//exrEhJnMrAdbKl5Ldy9tT7CIZbqCK/eT7b/F6dHDHQcZ2URqCJI65Rc2
-         XFJzjPgPB0d0POHfKWlz9lAwE8JdyECUFrTXQ=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=t3gsVt2RbY/8i99TLyF47rjFL+56nclCeIeWYyheRb0=;
+        b=bwuxzOl3PUhJp3tgjUb/TVVNThITcpRmbviJmDX9bZQ5ifC/oqxdCOG556aUtOV4rl
+         TYG4QnS2kW9Yru0oIVSVPZx6EsYwvx7xVRMzWoiKOtbcPlpT7pWZ5vLgibrGaWtUqGOc
+         qhfGAHmH63UiYz5mIA/eGTW0NoqwOhhiHXuUY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qjjMLO3vpv0lZLEZZeBVKUkCn3xMZF/I+6hipSgA21QJsIMopr88cRPYJoEjbZq/Nf
-         FQ5RiBbmsrO4n+2AYmk0IHc8IHGix9a67O6EL3eF04tDN0WJBd9zePDTtwOE0H+LJPQA
-         l7XpMg9+jqToxGlC9oCaty5Dl8UxDzX4MHQ8k=
-Received: by 10.103.192.13 with SMTP id u13mr2231855mup.97.1287734620236;
-        Fri, 22 Oct 2010 01:03:40 -0700 (PDT)
-Received: from localhost (p3E9916F4.dip.t-dialin.net [62.153.22.244])
-        by mx.google.com with ESMTPS id n8sm1290119faa.31.2010.10.22.01.03.37
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=NvSAWkk7P0e1sZfub0qRsaiOUWkT0RVmHmrpmfihZ7ZeQm+KiLP9XYDSAmhNJNkppo
+         WXXQnpt4l+eclbNdtP61gbKs9tTJINwm34LbJn4kLshpBYQG06OHT+fOR5WvJpUoyGRW
+         /zLHT5irFLCpz3/y93Zl7YpSFy999pawm0lZE=
+Received: by 10.227.148.2 with SMTP id n2mr2202040wbv.216.1287735502994;
+        Fri, 22 Oct 2010 01:18:22 -0700 (PDT)
+Received: from [192.168.1.13] (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
+        by mx.google.com with ESMTPS id a17sm2228905wbe.12.2010.10.22.01.18.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 01:03:39 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.1.1075.g263d8
+        Fri, 22 Oct 2010 01:18:21 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <c3f621cd062b2c4f80aa2e8dadcfddbc042aefaa.1287690696.git.trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159662>
 
----
- README |   13 +++++++++----
- 1 files changed, 9 insertions(+), 4 deletions(-)
+On Fri, 22 Oct 2010, Thomas Rast wrote:
 
-diff --git a/README b/README
-index 5ca0424..348f515 100644
---- a/README
-+++ b/README
-@@ -520,10 +520,15 @@ tg log
- ~~~~~~
- 	Prints the git log of the named topgit branch.
- 
--	Note: if you have shared the TopGit branch, this command
--	only lists the commits that were made in the current
--	repository, so you will not see work done by your
--	collaborators.
-+	Note: that you don't see changes made by the remote
-+	when the topic diverged at both sides. Any 'fast-forward'
-+	updates from remote topics will shown up. This could also
-+	mean, that you 'lose' all your history, because the remote
-+	made the merge and you do only a 'fast-forward'. Than you
-+	will see only his history from now on. So its best to prevent
-+	diverging development if you like to 'preserve' the full
-+	history. Please note, that 'lose' and 'preserve' only relates
-+	to when showing the log.
- 
- TODO: tg rename
- 
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>  Documentation/config-vars.txt | 1747 ++++++++++++++++++++++++++++++++++++++++
+>  Documentation/config.txt      | 1748 +----------------------------------------
+>  2 files changed, 1748 insertions(+), 1747 deletions(-)
+>  create mode 100644 Documentation/config-vars.txt
+
+I like it, even if the rest of this series would not get accepted.
+
 -- 
-1.7.3.1.1075.g263d8
+Jakub Narebski
+Poland
