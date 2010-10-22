@@ -1,136 +1,144 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: possible bug when pushing with multiple remote repos.
-Date: Fri, 22 Oct 2010 11:36:52 +0200
-Message-ID: <AANLkTimeiBOHdgbVvN2Bi3SAP5_fXR8QTz3pHpad-cfU@mail.gmail.com>
-References: <1287738771.13348.34.camel@amolinux> <AANLkTikkBoJ-dHSZ7H3_LGdzEmpQw5A2Q723tmY_kiPZ@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Arnaud Mouiche <arnaud.mouiche@invoxia.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 11:37:21 2010
+From: mduft@s01en22.salomon.at
+Subject: [PATCH] add support for the SUA layer (interix; windows)
+Date: Fri, 22 Oct 2010 11:56:41 +0200
+Message-ID: <1287741401-17941-1-git-send-email-mduft@gentoo.org>
+Cc: Markus Duft <mduft@gentoo.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 22 12:09:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9E3s-00077R-J9
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 11:37:20 +0200
+	id 1P9EZ7-0007Da-Ve
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 12:09:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405Ab0JVJhO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 05:37:14 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:46378 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754099Ab0JVJhN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 05:37:13 -0400
-Received: by gxk23 with SMTP id 23so226106gxk.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 02:37:12 -0700 (PDT)
-Received: by 10.229.249.3 with SMTP id mi3mr1989393qcb.287.1287740232614; Fri,
- 22 Oct 2010 02:37:12 -0700 (PDT)
-Received: by 10.229.232.4 with HTTP; Fri, 22 Oct 2010 02:36:52 -0700 (PDT)
-In-Reply-To: <AANLkTikkBoJ-dHSZ7H3_LGdzEmpQw5A2Q723tmY_kiPZ@mail.gmail.com>
+	id S1753834Ab0JVKJY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 06:09:24 -0400
+Received: from smtp.salomon.at ([193.186.16.13]:52075 "EHLO sauxb.salomon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1752606Ab0JVKJX (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 06:09:23 -0400
+X-Greylist: delayed 596 seconds by postgrey-1.27 at vger.kernel.org; Fri, 22 Oct 2010 06:09:23 EDT
+Received: from servex01.wamas.com (servex01.salomon.at [172.28.2.2])
+	by sauxb.salomon.at (8.12.10/8.12.10) with ESMTP id o9M9wJRL019095;
+	Fri, 22 Oct 2010 11:59:17 +0200 (METDST)
+Received: from s01en22 ([172.28.8.166]) by servex01.wamas.com with Microsoft SMTPSVC(6.0.3790.4675);
+	 Fri, 22 Oct 2010 11:59:02 +0200
+Received: by s01en22 (sSMTP sendmail emulation); Fri, 22 Oct 2010 11:57:29 +0200
+X-Mailer: git-send-email 1.7.2.2
+X-OriginalArrivalTime: 22 Oct 2010 09:59:02.0751 (UTC) FILETIME=[C16D0EF0:01CB71CF]
+X-Scanned-By: MIMEDefang 2.54 on 172.28.2.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159672>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159673>
 
-On Fri, Oct 22, 2010 at 11:32 AM, Santi B=E9jar <santi@agolina.net> wro=
-te:
-> On Fri, Oct 22, 2010 at 11:12 AM, Arnaud Mouiche
-> <arnaud.mouiche@invoxia.com> wrote:
->> Hi,
->>
->> I found a behavior which is, at least, different from what "git help
->> push" seems to declare.
->> basically:
->> - if I have 2 remotes : 'origin' and 'remote_B'
->> - if I checkout with tracking a branch of 'remote_B'
->> - if I do "git push remote" or "git push" or "git push -repo=3Dremot=
-e_B"
->> then git try to push all my branches of "origin" to remote_B.
->>
->> I check with latest git 1.7.3.2, and the issue is still here.
->>
->> strangely:
->> - git checkout master
->> - git push =A0=3D> =A0this is OK, and doesn't try to push any remote=
-_B
->> references to origin.
->>
->> I found this is particularity error prone as origin/master can be a =
-fast
->> forward of remote_B/master, and in this case nobody will complains..
->> (that's what happened to me ;-) )
->
-> This is because "git push" pushes matching branches by default if you
-> don't specify the refspec. From the git push manpage:
->
-> =A0 =A0 =A0 <refspec>...
-> ...
-> =A0 =A0 =A0 =A0 =A0 The special refspec : (or +: to allow non-fast-fo=
-rward updates)
-> =A0 =A0 =A0 =A0 =A0 directs git to push "matching" branches: for ever=
-y branch that
-> =A0 =A0 =A0 =A0 =A0 exists on the local side, the remote side is upda=
-ted if a branch of
-> =A0 =A0 =A0 =A0 =A0 the same name already exists on the remote side. =
-This is the
-> =A0 =A0 =A0 =A0 =A0 default operation mode if no explicit refspec is =
-found (that is
-> =A0 =A0 =A0 =A0 =A0 neither on the command line nor in any Push line =
-of the
-> =A0 =A0 =A0 =A0 =A0 corresponding remotes file---see below).
->
+* add required build options to Makefile.
+* introduce new NO_INTTYPES_H for systems lacking inttypes; code
+  includes stdint.h instead, if this is set.
+* introduce new NO_SYS_POLL_H for systems lacking sys/poll.h; code
+  includes poll.h instead, if this is set.
+* introduce NO_INITGROUPS. initgroups() call is simply omitted.
 
-Ups, I forgot to tell you that you can change the default behavior
-with push.default config.
+Signed-off-by: Markus Duft <mduft@gentoo.org>
+---
+ Makefile          |   28 ++++++++++++++++++++++++++++
+ daemon.c          |    6 +++++-
+ git-compat-util.h |    8 ++++++++
+ 3 files changed, 41 insertions(+), 1 deletions(-)
 
-push.default::
-        Defines the action git push should take if no refspec is given
-        on the command line, no refspec is configured in the remote, an=
-d
-        no refspec is implied by any of the options given on the comman=
-d
-        line. Possible values are:
-+
-* `nothing` - do not push anything.
-* `matching` - push all matching branches.
-  All branches having the same name in both ends are considered to be
-  matching. This is the default.
-* `tracking` - push the current branch to its upstream branch.
-* `current` - push the current branch to a branch of the same name.
-
-HTH,
-Santi
-
-
-> It may be worth pointing this out in the description.
->
-> (I hope the scissor patch is well formated, and the mua doesn't mangl=
-e it)
-> -----8<-----
-> Doc: git-push: Specify the default mode in the description
->
-> Signed-off-by: Santi B=E9jar <santi@agolina.net>
-> ---
-> =A0Documentation/git-push.txt | =A0 =A02 ++
-> =A01 files changed, 2 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-> index e11660a..9a2a93e 100644
-> --- a/Documentation/git-push.txt
-> +++ b/Documentation/git-push.txt
-> @@ -23,6 +23,8 @@ You can make interesting things happen to a reposit=
-ory
-> =A0every time you push into it, by setting up 'hooks' there. =A0See
-> =A0documentation for linkgit:git-receive-pack[1].
->
-> +The default operation mode if no explicit refspec is found is
-> +to push "matching" branches, see below.
->
-> =A0OPTIONS[[OPTIONS]]
-> =A0------------------
-> --
-> 1.7.3.rc1.227.gee5c7b
->
+diff --git a/Makefile b/Makefile
+index 1f1ce04..c9d8c9e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1096,6 +1096,25 @@ else
+ endif
+ 	X = .exe
+ endif
++ifeq ($(uname_S),Interix)
++	NO_SYS_POLL_H = YesPlease
++	NO_INTTYPES_H = YesPlease
++	NO_INITGROUPS = YesPlease
++	NO_IPV6 = YesPlease
++	NO_MEMMEM = YesPlease
++	NO_MKDTEMP = YesPlease
++	NO_STRTOUMAX = YesPlease
++	NO_NSEC = YesPlease
++	NO_MKSTEMPS = YesPlease
++	ifeq ($(uname_R),3.5)
++		NO_INET_NTOP = YesPlease
++		NO_INET_PTON = YesPlease
++	endif
++	ifeq ($(uname_R),5.2)
++		NO_INET_NTOP = YesPlease
++		NO_INET_PTON = YesPlease
++	endif
++endif
+ ifneq (,$(findstring MINGW,$(uname_S)))
+ 	pathsep = ;
+ 	NO_PREAD = YesPlease
+@@ -1360,6 +1379,15 @@ endif
+ ifdef NO_SYS_SELECT_H
+ 	BASIC_CFLAGS += -DNO_SYS_SELECT_H
+ endif
++ifdef NO_SYS_POLL_H
++	BASIC_CFLAGS += -DNO_SYS_POLL_H
++endif
++ifdef NO_INTTYPES_H
++	BASIC_CFLAGS += -DNO_INTTYPES_H
++endif
++ifdef NO_INITGROUPS
++	BASIC_CFLAGS += -DNO_INITGROUPS
++endif
+ ifdef NO_MMAP
+ 	COMPAT_CFLAGS += -DNO_MMAP
+ 	COMPAT_OBJS += compat/mmap.o
+diff --git a/daemon.c b/daemon.c
+index 9326d3a..d68a31f 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -956,7 +956,11 @@ static int serve(char *listen_addr, int listen_port, struct passwd *pass, gid_t
+ 		    listen_addr, listen_port);
+ 
+ 	if (pass && gid &&
+-	    (initgroups(pass->pw_name, gid) || setgid (gid) ||
++	    (
++#ifndef NO_INITGROUPS
++		    initgroups(pass->pw_name, gid) || 
++#endif
++	     setgid (gid) ||
+ 	     setuid(pass->pw_uid)))
+ 		die("cannot drop privileges");
+ 
+diff --git a/git-compat-util.h b/git-compat-util.h
+index 2af8d3e..625b2e4 100644
+--- a/git-compat-util.h
++++ b/git-compat-util.h
+@@ -106,7 +106,11 @@
+ #include <utime.h>
+ #ifndef __MINGW32__
+ #include <sys/wait.h>
++#ifndef NO_SYS_POLL_H
+ #include <sys/poll.h>
++#else
++#include <poll.h>
++#endif
+ #include <sys/socket.h>
+ #include <sys/ioctl.h>
+ #include <termios.h>
+@@ -118,7 +122,11 @@
+ #include <arpa/inet.h>
+ #include <netdb.h>
+ #include <pwd.h>
++#ifndef NO_INTTYPES_H
+ #include <inttypes.h>
++#else
++#include <stdint.h>
++#endif
+ #if defined(__CYGWIN__)
+ #undef _XOPEN_SOURCE
+ #include <grp.h>
+-- 
+1.7.2.2
