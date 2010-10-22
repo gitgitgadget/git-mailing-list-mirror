@@ -1,108 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Buglet in i18n?
-Date: Fri, 22 Oct 2010 03:34:50 -0500
-Message-ID: <20101022083450.GA8289@burratino>
-References: <4CC13AC1.7080402@viscovery.net>
- <AANLkTimqzmPLCj=JeSGWFcY829gxct9ANGt+CCjB2jy=@mail.gmail.com>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: [TopGit PATCH] Clarify tg-log note
+Date: Fri, 22 Oct 2010 10:43:58 +0200
+Message-ID: <20101022084358.GE19834@pengutronix.de>
+References: <0ecc03501a8282e7c19011ca1cbc138dec502390.1287734568.git.bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 10:38:48 2010
+Cc: Per Cederqvist <ceder@lysator.liu.se>, git@vger.kernel.org,
+	pasky@suse.cz, martin f krafft <madduck@madduck.net>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 10:44:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9D9D-0005vW-TI
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 10:38:48 +0200
+	id 1P9DER-0007Mi-9y
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 10:44:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751442Ab0JVIil convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 04:38:41 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61585 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750801Ab0JVIik (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 04:38:40 -0400
-Received: by gyg4 with SMTP id 4so395255gyg.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 01:38:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=Q42Q1+g82k9rZ3b3tK1iwfyg/x3HzJxsLIOCcNND9ZI=;
-        b=gN73gQDWffrdOt6pDIXLN/8+C41NO+IJvE0c11DSdNulh+fC2G6AyDEv079YG9Npot
-         VzOoU5zjrOyhHkcXLwcveaTcv3YOSQPDFDsp7raer5FAMY40C62ANQRYJg5DtUPBpA2T
-         owlT/ZeCCdZq/0WUF0G9dOOUPK+ECEOXVeamA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=sXqm/yPKnk/xbrXPKr7Yuf0fk3wMq+nvqa1llDneKg50iIVYqi7myORfX2emoYBozZ
-         AaLfaPDENbzNqB+ZT80vJGFEf7+LpLIDnoMUBbnNAOqjRoaTc+6OKnZXJjanfuD163eq
-         /GHAe1QfbjuDZYJbZPXQ3itROCTl4wQ83X8qo=
-Received: by 10.151.156.19 with SMTP id i19mr5723643ybo.82.1287736718404;
-        Fri, 22 Oct 2010 01:38:38 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id h70sm2178837yha.46.2010.10.22.01.38.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 01:38:37 -0700 (PDT)
+	id S1751352Ab0JVIoD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 04:44:03 -0400
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:52621 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750889Ab0JVIoB (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 04:44:01 -0400
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P9DEF-0004YO-Um; Fri, 22 Oct 2010 10:43:59 +0200
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1P9DEE-0002OK-L8; Fri, 22 Oct 2010 10:43:58 +0200
 Content-Disposition: inline
-In-Reply-To: <AANLkTimqzmPLCj=JeSGWFcY829gxct9ANGt+CCjB2jy=@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <0ecc03501a8282e7c19011ca1cbc138dec502390.1287734568.git.bert.wesarg@googlemail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159664>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159665>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
-
->         gettext () {
->             printf "%s" "$1"
->         }
+On Fri, Oct 22, 2010 at 10:03:36AM +0200, Bert Wesarg wrote:
+> ---
+>  README |   13 +++++++++----
+>  1 files changed, 9 insertions(+), 4 deletions(-)
 >=20
->         eval_gettext () {
->             gettext_eval=3D"printf '%s' \"$1\""
->             printf "%s" "`eval \"$gettext_eval\"`"
->         }
+> diff --git a/README b/README
+> index 5ca0424..348f515 100644
+> --- a/README
+> +++ b/README
+> @@ -520,10 +520,15 @@ tg log
+>  ~~~~~~
+>  	Prints the git log of the named topgit branch.
+> =20
+> -	Note: if you have shared the TopGit branch, this command
+> -	only lists the commits that were made in the current
+> -	repository, so you will not see work done by your
+> -	collaborators.
+> +	Note: that you don't see changes made by the remote
+> +	when the topic diverged at both sides. Any 'fast-forward'
+> +	updates from remote topics will shown up. This could also
+> +	mean, that you 'lose' all your history, because the remote
+> +	made the merge and you do only a 'fast-forward'. Than you
+> +	will see only his history from now on. So its best to prevent
+> +	diverging development if you like to 'preserve' the full
+> +	history. Please note, that 'lose' and 'preserve' only relates
+> +	to when showing the log.
+Hmm, I see your intention, but I wonder if it wouldn't be enough to say=
+:
 
-This looks wrong.  Consider a simplified example:
+Note: if you have merged changes from a different repository, this
+command might not list all interesting commits.
 
-	eval_gettext 'foo "bar baz"'
+Best regards
+Uwe
 
-Now eval_gettext is supposed to just interpolate $variable
-substitutions, right?  In particular, the quotation marks
-ought to be preserved.
-
-But instead, what gets evaluated is:
-
-	printf '%s' "foo "bar baz""
-
-which splits as
-
-	printf '%s' 'foo bar' 'baz'
-
-which is equivalent to
-
-	printf '%s' 'foo bar'
-	printf '%s' 'baz'
-
-with output
-
-	foo barbaz
-
-Maybe something like this would do it?
-
-	gettext_eval=3D$(
-		printf '%s\n' "$1" |
-		sed '
-			s/[`\\"]/\\&/g
-			1 s/^/printf "%s" "/
-			$ s/$/"/
-		'
-	) &&
-	eval "$gettext_eval"
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
