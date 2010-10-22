@@ -1,7 +1,7 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v5 07/16] mingw: add kill emulation
-Date: Fri, 22 Oct 2010 02:35:18 +0200
-Message-ID: <1287707727-5780-8-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v5 08/16] daemon: use run-command api for async serving
+Date: Fri, 22 Oct 2010 02:35:19 +0200
+Message-ID: <1287707727-5780-9-git-send-email-kusmabite@gmail.com>
 References: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Cc: msysgit@googlegroups.com,
@@ -12,16 +12,16 @@ Cc: msysgit@googlegroups.com,
 	schwab@linux-m68k.org,
 	patthoyts@gmail.com
 To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxCPuYPmBBoEJcNaSA@googlegroups.com Fri Oct 22 02:36:56 2010
-Return-path: <msysgit+bncCOPdven-DxCPuYPmBBoEJcNaSA@googlegroups.com>
+X-From: msysgit+bncCOPdven-DxCSuYPmBBoERap_LQ@googlegroups.com Fri Oct 22 02:36:58 2010
+Return-path: <msysgit+bncCOPdven-DxCSuYPmBBoERap_LQ@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-wy0-f186.google.com ([74.125.82.186])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxCPuYPmBBoEJcNaSA@googlegroups.com>)
-	id 1P95ct-0002V4-EL
-	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:36:55 +0200
+	(envelope-from <msysgit+bncCOPdven-DxCSuYPmBBoERap_LQ@googlegroups.com>)
+	id 1P95cw-0002V4-LZ
+	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:36:58 +0200
 Received: by mail-wy0-f186.google.com with SMTP id 11sf139996wyi.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:36:55 -0700 (PDT)
+        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:36:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:mime-version:x-beenthere:received
@@ -30,10 +30,10 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-sender:x-original-authentication-results:precedence
          :mailing-list:list-id:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=ib0hoq9tABZJUxdSP6XAazRk45lkbqD5mchhGyi5F3E=;
-        b=KWf9LsyArdU8sOLAUzUPYkDL/RmdAtQQPXYe7ZpJVWTPyKPgg9wCh4c0+01N4D2+5r
-         48+pQtFzLFZJ37L5gwjlxpxr52ZFnjc82tM47A4uLiXhKc1tvKVP5t53jizeNnYMj8ME
-         9MNCWcJ1pQJEw+aytW2plrDyY9aAISuqyBIkI=
+        bh=g/GGWpqbHMT3N3FHskOJ+Z5nw+U02Tqovcac8gAlL/o=;
+        b=TYmdUh2CekZ3mzFujKWJqt/Jhs0MZY69u7YC5SUmES9LW9ds3/31iQa0M6RFx+Ybr0
+         o/teQbBAGOeTkz4vIZkq7JNv5bw6HlLAGkDpZ0ExJnUsFtKO8wlebgeQ4+kSw6mpkGE8
+         Z2n75PW7iXSGKXtKBob9BMU6hNAeqzSHLNJ/o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
         h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
@@ -41,35 +41,35 @@ DomainKey-Signature: a=rsa-sha1; c=nofws;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe;
-        b=dc9LZvdoCeZdg/6Mb+m8ZWLzG86I+1u/pKTm4qeVPohP4adaDklPGc4Y5cUdmnzwpt
-         USgpmE4RH5sUvPmyRobhLpk+m3qlqOjFWu7GiS/zFX5UPxpXDt/aKbb9fYwCvlYJHhPp
-         eyTSzQLPWQlNTHr0FJGgLquZZ99GxQgj/SNes=
-Received: by 10.216.59.135 with SMTP id s7mr237936wec.19.1287707791562;
-        Thu, 21 Oct 2010 17:36:31 -0700 (PDT)
+        b=2y1FE1JzY9z5tH/Qv+k+Mmn2uBKT81FTPfyM4ExdFBENp5BYtTZtluWnVmsckYaqZn
+         s/hxucvgNTCtFo9DVvz9MHRaTQv8wnxxZQETmcidPnslru2sp3rhY1Zc80stwYkDRcxV
+         o7LH2LY+BIlP3FJQcef9oe/CJ5XXeP1nPJ6zM=
+Received: by 10.216.72.142 with SMTP id t14mr235691wed.18.1287707794377;
+        Thu, 21 Oct 2010 17:36:34 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.14.10.153 with SMTP id 25ls270802eev.3.p; Thu, 21 Oct 2010
- 17:36:30 -0700 (PDT)
-Received: by 10.14.119.141 with SMTP id n13mr151129eeh.1.1287707790704;
-        Thu, 21 Oct 2010 17:36:30 -0700 (PDT)
-Received: by 10.14.119.141 with SMTP id n13mr151128eeh.1.1287707790681;
-        Thu, 21 Oct 2010 17:36:30 -0700 (PDT)
-Received: from mail-ew0-f43.google.com (mail-ew0-f43.google.com [209.85.215.43])
-        by gmr-mx.google.com with ESMTP id z6si1453609eeh.2.2010.10.21.17.36.29;
-        Thu, 21 Oct 2010 17:36:29 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.43 as permitted sender) client-ip=209.85.215.43;
-Received: by ewy20 with SMTP id 20so261660ewy.30
-        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:36:29 -0700 (PDT)
-Received: by 10.213.11.18 with SMTP id r18mr8779366ebr.44.1287707789534;
-        Thu, 21 Oct 2010 17:36:29 -0700 (PDT)
+Received: by 10.14.123.10 with SMTP id u10ls269732eeh.2.p; Thu, 21 Oct 2010
+ 17:36:33 -0700 (PDT)
+Received: by 10.14.2.211 with SMTP id 59mr174381eef.28.1287707793449;
+        Thu, 21 Oct 2010 17:36:33 -0700 (PDT)
+Received: by 10.14.2.211 with SMTP id 59mr174379eef.28.1287707793413;
+        Thu, 21 Oct 2010 17:36:33 -0700 (PDT)
+Received: from mail-ew0-f54.google.com (mail-ew0-f54.google.com [209.85.215.54])
+        by gmr-mx.google.com with ESMTP id q11si1454863eeh.0.2010.10.21.17.36.32;
+        Thu, 21 Oct 2010 17:36:32 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.54 as permitted sender) client-ip=209.85.215.54;
+Received: by ewy28 with SMTP id 28so218036ewy.27
+        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:36:32 -0700 (PDT)
+Received: by 10.213.28.205 with SMTP id n13mr8859888ebc.5.1287707792278;
+        Thu, 21 Oct 2010 17:36:32 -0700 (PDT)
 Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id q51sm2487661eeh.4.2010.10.21.17.36.28
+        by mx.google.com with ESMTPS id v56sm2483302eeh.20.2010.10.21.17.36.30
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 17:36:29 -0700 (PDT)
+        Thu, 21 Oct 2010 17:36:31 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
 In-Reply-To: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
 X-Original-Sender: kusmabite@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.43 as permitted sender)
+ domain of kusmabite@gmail.com designates 209.85.215.54 as permitted sender)
  smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -80,60 +80,190 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159618>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159619>
 
-This is a quite limited kill-emulation; it can only handle
-SIGTERM on positive pids. However, it's enough for git-daemon.
+fork() is only available on POSIX, so to support git-daemon
+on Windows we have to use something else.
+
+Instead we invent the flag --serve, which is a stripped down
+version of --inetd-mode. We use start_command() to call
+git-daemon with this flag appended to serve clients.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.c |   19 +++++++++++++++++++
- compat/mingw.h |    3 +++
- 2 files changed, 22 insertions(+), 0 deletions(-)
+ daemon.c |   87 +++++++++++++++++++++++++++++++------------------------------
+ 1 files changed, 44 insertions(+), 43 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 2e7c644..21d1c2c 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -932,6 +932,25 @@ void mingw_execv(const char *cmd, char *const *argv)
- 	mingw_execve(cmd, argv, environ);
+diff --git a/daemon.c b/daemon.c
+index d594375..c7b7976 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -614,17 +614,17 @@ static unsigned int live_children;
+ 
+ static struct child {
+ 	struct child *next;
+-	pid_t pid;
++	struct child_process cld;
+ 	struct sockaddr_storage address;
+ } *firstborn;
+ 
+-static void add_child(pid_t pid, struct sockaddr *addr, int addrlen)
++static void add_child(struct child_process *cld, struct sockaddr *addr, int addrlen)
+ {
+ 	struct child *newborn, **cradle;
+ 
+ 	newborn = xcalloc(1, sizeof(*newborn));
+ 	live_children++;
+-	newborn->pid = pid;
++	memcpy(&newborn->cld, cld, sizeof(*cld));
+ 	memcpy(&newborn->address, addr, addrlen);
+ 	for (cradle = &firstborn; *cradle; cradle = &(*cradle)->next)
+ 		if (!addrcmp(&(*cradle)->address, &newborn->address))
+@@ -633,19 +633,6 @@ static void add_child(pid_t pid, struct sockaddr *addr, int addrlen)
+ 	*cradle = newborn;
  }
  
-+int mingw_kill(pid_t pid, int sig)
-+{
-+	if (pid > 0 && sig == SIGTERM) {
-+		HANDLE h = OpenProcess(PROCESS_TERMINATE, FALSE, pid);
+-static void remove_child(pid_t pid)
+-{
+-	struct child **cradle, *blanket;
+-
+-	for (cradle = &firstborn; (blanket = *cradle); cradle = &blanket->next)
+-		if (blanket->pid == pid) {
+-			*cradle = blanket->next;
+-			live_children--;
+-			free(blanket);
+-			break;
+-		}
+-}
+-
+ /*
+  * This gets called if the number of connections grows
+  * past "max_connections".
+@@ -661,7 +648,7 @@ static void kill_some_child(void)
+ 
+ 	for (; (next = blanket->next); blanket = next)
+ 		if (!addrcmp(&blanket->address, &next->address)) {
+-			kill(blanket->pid, SIGTERM);
++			kill(blanket->cld.pid, SIGTERM);
+ 			break;
+ 		}
+ }
+@@ -671,18 +658,26 @@ static void check_dead_children(void)
+ 	int status;
+ 	pid_t pid;
+ 
+-	while ((pid = waitpid(-1, &status, WNOHANG)) > 0) {
+-		const char *dead = "";
+-		remove_child(pid);
+-		if (!WIFEXITED(status) || (WEXITSTATUS(status) > 0))
+-			dead = " (with error)";
+-		loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
+-	}
++	struct child **cradle, *blanket;
++	for (cradle = &firstborn; (blanket = *cradle);)
++		if ((pid = waitpid(blanket->cld.pid, &status, WNOHANG)) > 0) {
++			const char *dead = "";
++			if (status)
++				dead = " (with error)";
++			loginfo("[%"PRIuMAX"] Disconnected%s", (uintmax_t)pid, dead);
 +
-+		if (TerminateProcess(h, -1)) {
-+			CloseHandle(h);
-+			return 0;
++			/* remove the child */
++			*cradle = blanket->next;
++			live_children--;
++			free(blanket);
++		} else
++			cradle = &blanket->next;
+ }
+ 
++static char **cld_argv;
+ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+ {
+-	pid_t pid;
++	struct child_process cld = { 0 };
+ 
+ 	if (max_connections && live_children >= max_connections) {
+ 		kill_some_child();
+@@ -695,22 +690,15 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+ 		}
+ 	}
+ 
+-	if ((pid = fork())) {
+-		close(incoming);
+-		if (pid < 0) {
+-			logerror("Couldn't fork %s", strerror(errno));
+-			return;
+-		}
+-
+-		add_child(pid, addr, addrlen);
+-		return;
+-	}
++	cld.argv = (const char **)cld_argv;
++	cld.in = incoming;
++	cld.out = dup(incoming);
+ 
+-	dup2(incoming, 0);
+-	dup2(incoming, 1);
++	if (start_command(&cld))
++		logerror("unable to fork");
++	else
++		add_child(&cld, addr, addrlen);
+ 	close(incoming);
+-
+-	exit(execute(addr));
+ }
+ 
+ static void child_handler(int signo)
+@@ -991,7 +979,7 @@ int main(int argc, char **argv)
+ {
+ 	int listen_port = 0;
+ 	struct string_list listen_addr = STRING_LIST_INIT_NODUP;
+-	int inetd_mode = 0;
++	int serve_mode = 0, inetd_mode = 0;
+ 	const char *pid_file = NULL, *user_name = NULL, *group_name = NULL;
+ 	int detach = 0;
+ 	struct passwd *pass = NULL;
+@@ -1017,6 +1005,10 @@ int main(int argc, char **argv)
+ 				continue;
+ 			}
+ 		}
++		if (!strcmp(arg, "--serve")) {
++			serve_mode = 1;
++			continue;
 +		}
-+
-+		errno = err_win_to_posix(GetLastError());
-+		CloseHandle(h);
-+		return -1;
+ 		if (!strcmp(arg, "--inetd")) {
+ 			inetd_mode = 1;
+ 			log_syslog = 1;
+@@ -1162,13 +1154,15 @@ int main(int argc, char **argv)
+ 		    base_path);
+ 
+ 	if (inetd_mode) {
++		if (!freopen("/dev/null", "w", stderr))
++			die_errno("failed to redirect stderr to /dev/null");
 +	}
 +
-+	errno = EINVAL;
-+	return -1;
-+}
-+
- static char **copy_environ(void)
- {
- 	char **env;
-diff --git a/compat/mingw.h b/compat/mingw.h
-index 379d7bf..51fca2f 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -143,6 +143,9 @@ static inline int mingw_unlink(const char *pathname)
- #define WNOHANG 1
- pid_t waitpid(pid_t pid, int *status, unsigned options);
++	if (inetd_mode || serve_mode) {
+ 		struct sockaddr_storage ss;
+ 		struct sockaddr *peer = (struct sockaddr *)&ss;
+ 		socklen_t slen = sizeof(ss);
  
-+#define kill mingw_kill
-+int mingw_kill(pid_t pid, int sig);
+-		if (!freopen("/dev/null", "w", stderr))
+-			die_errno("failed to redirect stderr to /dev/null");
+-
+ 		if (getpeername(0, peer, &slen))
+ 			peer = NULL;
+ 
+@@ -1185,5 +1179,12 @@ int main(int argc, char **argv)
+ 	if (pid_file)
+ 		store_pid(pid_file);
+ 
++	/* prepare argv for serving-processes */
++	cld_argv = xmalloc(sizeof (char *) * (argc + 2));
++	for (i = 0; i < argc; ++i)
++		cld_argv[i] = argv[i];
++	cld_argv[argc] = "--serve";
++	cld_argv[argc+1] = NULL;
 +
- #ifndef NO_OPENSSL
- #include <openssl/ssl.h>
- static inline int mingw_SSL_set_fd(SSL *ssl, int fd)
+ 	return serve(&listen_addr, listen_port, pass, gid);
+ }
 -- 
 1.7.3.1.199.g72340
