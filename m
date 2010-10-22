@@ -1,81 +1,121 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: git as an sfc member project
-Date: Fri, 22 Oct 2010 13:59:37 -0700
-Message-ID: <AANLkTim7gC6ckrN-yFGyT4KgPz2v9B+UqLBZj7GzaMpK@mail.gmail.com>
-References: <20101022183027.GA12124@sigill.intra.peff.net> <AANLkTi=6tvmTAfdyL-sKBsq+4OpFaQpZWT66ANESNapj@mail.gmail.com>
- <20101022193512.GB13059@sigill.intra.peff.net> <AANLkTim0EH0Qvwe6NHMBt831jHZV85=TSAx8k2ABnTdd@mail.gmail.com>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Fri, 22 Oct 2010 17:00:43 -0400
+Message-ID: <AANLkTinUc2BW+BOTNMOC1t=3=rYzYgedyS5LFu37J+Yo@mail.gmail.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	<vpq8w1v5gce.fsf@bauges.imag.fr>
+	<buopqv6kcsd.fsf@dhlpc061.dev.necel.com>
+	<8B950268-7F6E-40E5-9D6C-F150EBEA4F0C@wincent.com>
+	<AANLkTinb0149C88Mzx6m4_2BdhpW12OwQ+uP6XzQ5yLx@mail.gmail.com>
+	<6FCE62E3-A27E-43D6-9FDF-0133ABD851C2@wincent.com>
+	<AANLkTinGuVm8gib9r7omVV9hHw8B-iBQGgsv+b6wb5=Q@mail.gmail.com>
+	<1287778585.2025.14.camel@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Fri Oct 22 23:00:08 2010
+Cc: Wincent Colaiuta <win@wincent.com>, Miles Bader <miles@gnu.org>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
+To: Paul Bolle <pebolle@tiscali.nl>
+X-From: git-owner@vger.kernel.org Fri Oct 22 23:00:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Oid-0001le-Ec
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 23:00:07 +0200
+	id 1P9OjM-0001z8-5O
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 23:00:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032Ab0JVU77 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 16:59:59 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:43210 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754969Ab0JVU76 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 16:59:58 -0400
-Received: by yxn35 with SMTP id 35so1023564yxn.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 13:59:58 -0700 (PDT)
+	id S1756211Ab0JVVAq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 17:00:46 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56971 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755698Ab0JVVAp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 17:00:45 -0400
+Received: by bwz11 with SMTP id 11so949797bwz.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 14:00:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=g1F6EfDsgQ+OyqwsglFG7jNtfk1JOISbfUPvv/cTnjE=;
-        b=axEuav0uCa8B+r73BQq7RMZ5eKKXY5WanpSK3udy/zHhEpfqdCZA+RrpQDGyJiAep4
-         bPlHArTxxT77qCAQQRa4vRfDPhGirHCaMDoVSx9jQJsLtf6eVWnwyYLlsr+404po6uCr
-         XQ5cyeoV/Mb8s1Kw/lc4UX3KvzWfFDYAsFBnQ=
+        bh=6Ylh3LNvQvTXb27NyB/f6QHu2j0WG+g2nBQtfZiiGhA=;
+        b=LrJWD0GBaVKwNj2X06SgXLcEpwjh9DmF7ded0nobeajRWYL4MYEP1DZY0EfsnsqchR
+         yp2Xyq28rxhXonWLznd0X0NretUwCiJk2l6mWiKV6lCIxWsOtBMC9KVVdQ6g7Otg6nd3
+         u56E839nIOxpaQ89ZUrt+0cTq3SwthjhZ87pg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=I0v5JmGYSvJwajhaS/VU8AUAIDAsg6M2EGcDNfNRUkRyyNFe1YeuGOXFc4AQp3pXby
-         ONvRmEe5WeMBPaBUTTy4HTzb3BCYssz+eBcneq71XzHkTNXJenLAf8/gkxEteTsNnSSK
-         0W92cQQti9P0vR6vpuRhC19CdMwqgDxkq8t04=
-Received: by 10.150.177.7 with SMTP id z7mr6798638ybe.433.1287781197800; Fri,
- 22 Oct 2010 13:59:57 -0700 (PDT)
-Received: by 10.151.45.12 with HTTP; Fri, 22 Oct 2010 13:59:37 -0700 (PDT)
-In-Reply-To: <AANLkTim0EH0Qvwe6NHMBt831jHZV85=TSAx8k2ABnTdd@mail.gmail.com>
+        b=sy21aFWXx2EaCC35hAnd8onlBRcN0Ft1cs3p7HQ59zpRvHamGdqQCoTFmf3oXV6kDM
+         bZdQCKM9gRpY+CptKPFzqhG6fWvhv5n35aqrJZ8qRrNCfHyKYxJjRcMxJ6j1lbDfZSKA
+         +xClQebTbS7+SmFaC+5Nf7iV0gk4lQvwhnG7E=
+Received: by 10.204.99.131 with SMTP id u3mr2651095bkn.41.1287781243684; Fri,
+ 22 Oct 2010 14:00:43 -0700 (PDT)
+Received: by 10.204.46.207 with HTTP; Fri, 22 Oct 2010 14:00:43 -0700 (PDT)
+In-Reply-To: <1287778585.2025.14.camel@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159749>
 
-Heya,
+On Fri, Oct 22, 2010 at 4:16 PM, Paul Bolle <pebolle@tiscali.nl> wrote:
+> On Tue, 2010-10-19 at 11:09 -0400, Eugene Sajine wrote:
+>> There should be some different consistent and not inter-crossing
+>> naming for the origin's master branch (on the remote side), for the
+>> local origin/master and for local master that is a tracking branch.
+>> The only way i found so far to explain this is actually via the nami=
+ng
+>> syntax where having / in the name of the branch means remote branch.=
+ I
+>> was a bit surprised that i can create a local branch with a slash in
+>> the name - probably it should be prohibited.
+>
+> Allowing local branches with a slash in their name is a feature I use
+> heavily. Ie, in general my local repositories use this scheme:
+>
+> $ git branch
+> * master
+> =C2=A0$BRANCH_F00
+> =C2=A0$USER/$TOPIC_FOO
+> =C2=A0$USER/$TOPIC_BAR
+> =C2=A0[...]
+> =C2=A0$USER/$TOPIC_BAZ
+>
+> This makes it trivial to quickly distinguish my (local) work from oth=
+er
+> people's (remote) work. Does the benefit of naming clarity justify
+> prohibiting that scheme?
+>
+>
+> Paul Bolle
+>
+>
 
-On Fri, Oct 22, 2010 at 12:19, Shawn Pearce <spearce@spearce.org> wrote=
-:
-> I think a committee of at least 3 people and at most 5, any of whom
-> can be a benevolent SFC liasion, is fine. =C2=A0As far as selection g=
-oes,
-> the committee can elect or remove a member through a majority vote,
-> and should base its decisions based on surviving contributions to the
-> code base, but shouldn't be tied to that (just in case someone
-> contributes a lot of good code and then becomes a jerk).
+Well, my approach is to use:
+master - local
+mybranch - local
 
-Sounds good. Something like Junio (Duh), Shawn (based on commit
-count), Peff (Handled GSoC money last year), and Jonathan Nieder
-(based on list activity)?
+remote from user
+$ git remote add jdoe ~jdoe/project/.git
 
-On Fri, Oct 22, 2010 at 13:06, Shawn Pearce <spearce@spearce.org> wrote=
-:
-> OK, 10% does seem reasonable given they are saving us the taxes... or=
- more. =C2=A0:-)
+Then remote-tracking branches will be
+jdoe/master
+jdoe/featurex
 
-LGTM.
+my local branches tracking remote-tracking branches (automatic push, pu=
+ll)
+jd_master
+jd_featurex
 
---=20
-Cheers,
+in this case there is no confusion between jdoe/master that is a
+remote-tracking branch checkout to which will lead to detached HEAD
+state and jd_master that is a local branch.
 
-Sverre Rabbelier
+As in this syntax the slash is that meaningful, i think that reserving
+this syntax "remote/branch" to the remote-tracking branches only makes
+sense.
+
+Thanks,
+Eugene
