@@ -1,115 +1,138 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as UTF-8...?
-Date: Fri, 22 Oct 2010 21:18:06 +0200
-Message-ID: <201010222118.09212.jnareb@gmail.com>
-References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu> <m31v7iktkn.fsf@localhost.localdomain> <1287770805.819.7.camel@drew-northup.unet.maine.edu>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git as an sfc member project
+Date: Fri, 22 Oct 2010 12:19:00 -0700
+Message-ID: <AANLkTi=6tvmTAfdyL-sKBsq+4OpFaQpZWT66ANESNapj@mail.gmail.com>
+References: <20101022183027.GA12124@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 22 21:18:36 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 21:19:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9N8K-0006N8-4W
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:18:32 +0200
+	id 1P9N9J-0006hY-QW
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:19:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932186Ab0JVTSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 15:18:24 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:39645 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759306Ab0JVTSW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 15:18:22 -0400
-Received: by bwz11 with SMTP id 11so863250bwz.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 12:18:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=dr4h9Amf8YbX6mbd0agYcrvvvxQtNrJlksZedoMpz0g=;
-        b=tYEjq4V+TJcr7upxY4ZGJGQINe/n25idXWk/XjyT8lkJvKlXOW3uP7+h0VEbZVeHYi
-         To1pXGicklJjNIpcOwZJwDFTyAcdEwzB29fc8i1DaPoMKbjwswU53JDohcQ26cCBnEY+
-         8PwHcreCGcl1/Q8Gs4Ie3H0DjYQzk+sAER64k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=oGdH+P+XHDTtCmdzdWTHXD1irHTbOYKuHw30OMciplAk8LddLvwcuEPib8wVPAP3eq
-         AjcHsdPj8lxlMI78YYlhkAghCNGIry35Qw+3cFNYDiscLWjhUnPwTnU3Z5UNTY0Xq194
-         JzkOf81aOkTW9DN1z4rCkmJZqkDQzPA9XQny0=
-Received: by 10.204.104.5 with SMTP id m5mr2561741bko.73.1287775101229;
-        Fri, 22 Oct 2010 12:18:21 -0700 (PDT)
-Received: from [192.168.1.13] (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
-        by mx.google.com with ESMTPS id t10sm2381589bkj.16.2010.10.22.12.18.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 12:18:18 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1287770805.819.7.camel@drew-northup.unet.maine.edu>
-Content-Disposition: inline
+	id S1759306Ab0JVTTY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 15:19:24 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:65272 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759068Ab0JVTTW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 15:19:22 -0400
+Received: by mail-iw0-f174.google.com with SMTP id 34so1268021iwn.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 12:19:22 -0700 (PDT)
+Received: by 10.231.11.72 with SMTP id s8mr933533ibs.172.1287775162420; Fri,
+ 22 Oct 2010 12:19:22 -0700 (PDT)
+Received: by 10.231.140.97 with HTTP; Fri, 22 Oct 2010 12:19:00 -0700 (PDT)
+In-Reply-To: <20101022183027.GA12124@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159736>
 
-On Fri, 22 Oct 2010, Drew Northup wrote:
-> On Fri, 2010-10-22 at 10:48 -0700, Jakub Narebski wrote:
-> > Drew Northup <drew.northup@maine.edu> writes:
-> 
-> > > Well I shall plumb the documentation again.... just in case. I'm not
-> > > holding my breath that it will do what I (and frankly a fair number of
-> > > other people) want. We just want version control that treats text like
-> > > text. FULL STOP. Why isn't UTF-16 text???????
-> > 
-> > If you are asking why Git detects files with text in UTF-16 / USC-2 as
-> > binary, it is because Git (re)uses the same heuristic that e.g. GNU
-> > diff (and probably also -T file test in Perl), and one of heuristics
-> > is that if file contains NUL ("\0") character, then it is most
-> > porbably binary (because legacy C programs for text would have
-> > troubles with NUL characters).
-> > 
-> > That probably doesn't help you any...
-> 
-> I did find that already. I still have not decided that correct place to
-> shoehorn in Unicode detection, but I'll be sure to do that before I
-> bother anybody else with it. I already wrote code to detect (reasonably)
-> valid UTF-16 (if it isn't obviously valid then I'll just as soon deal
-> with it as binary data, so as to avoid a foot-shooting exercise).
-> My main motivation here has been to get some feedback as I write stuff
-> so as to not waste a lot of time during writing something that could be
-> done better. 
+On Fri, Oct 22, 2010 at 11:30 AM, Jeff King <peff@peff.net> wrote:
+> There is one slight caveat, which is that JGit was not accepted, due =
+to
+> the complexity of their ties with the Eclipse Foundation.
+
+Yup.  Anytime you say "Eclipse Foundation", make sure you put
+"complexity" into the same sentence.  Its required to make the
+sentence accurate.  :-)
+
+> In practice, I
+> don't think this will matter much at all. The only way that Git opera=
+tes
+> in any legal capacity as a group is when we do Summer of Code. This
+> could impact us, e.g., if were to have a JGit-specific SoC project.
+
+We had a GSoC project, but through the Eclipse Foundation
+participation in GSoC, not Git.  So the Eclipse Foundation received
+our mentor stipend for us, and will spend it in some way that is
+unknown to me.  Yay?
+
+The decision to do JGit GSoC through Eclipse and not through Git this
+year wasn't really mine.  I just didn't disagree loud enough to change
+things.
+
+> Probably the money that goes to the organization for such a project
+> should _not_ go through the SFC, and would have to be handled
+> separately. Which is no worse than JGit has it today; they just can't
+> receive the SFC services as regular git can.
+
+This is fine with the JGit folks, for now anyway.  We may revisit this
+and have JGit join SFC at some point in the future.  We might not.
+
+> Basically what we need to decide on before signing is:
 >
-> (As opposed to not done at all, which is the feeling I'm getting from a
-> few people around here...)
+> =A01. Who should sign? These people are basically speaking for git as=
+ a
+> =A0 =A0 community. Related to (2) below.
 
-Git supports well different encoding used in commit message (which is
-always text, as opposed to file contents which might be binary or text).
+The people listed in 2 as the leadership structure of git.
 
-You specify what encoding you use to format commit messages with
-i18n.commitEncoding (defaults to 'utf-8'); if it is different than utf-8
-it gets saved in 'encoding' header.  You can even specify that encoding
-that your terminal uses is different from i18n.commitEncoding with
-i18n.logOutputEncoding
+> =A02. What is the leadership structure of git as a legal entity? In o=
+ther
+> =A0 =A0 words, if we get some money that goes to the SFC (from SoC or=
+ from
+> =A0 =A0 donations), who should have authority to tell the SFC to do
+> =A0 =A0 something with it?
+>
+> =A0 =A0 The obvious choices (to me) are:
+>
+> =A0 =A0 =A0 a. Junio as benevolent dictator^W maintainer.
+>
+> =A0 =A0 =A0 b. Somebody else as benevolent SFC liaison.
+>
+> =A0 =A0 =A0 c. Some committee of core people (I'd say no more than 3-=
+5) who
+> =A0 =A0 =A0 =A0 =A0would all need to agree (or perhaps some majority)=
+=2E
+=2E..
+> =A0 =A0 Personally, I favor a small group which can approve new peopl=
+e to
+> =A0 =A0 join, and which can leave at will. Having more than one perso=
+n
+> =A0 =A0 avoids hit-by-bus problems (or even just dropped-off-net prob=
+lems).
+> =A0 =A0 There is little enough power in such a position that I'm not =
+too
+> =A0 =A0 worried about some crazed egomaniac becoming the Git-SFC liai=
+son.
 
-The only support for different encoding of file contents is used by
-git-gui.  You provide encoding that a file uses via .gitattributes
-(the `encoding` attribute).  You specify what output encoding git-gui
-(Tcl/Tk) uses with `gui.encoding` config variable.
+I agree.
 
-I guess that what you need to support for diffs and 'git show <file>'
-etc. is respecting `encoding` .gitattribute, and providing encoding
-that console uses with e.g. i18n.blobOutputEncoding (or something like
-that).
+I think a committee of at least 3 people and at most 5, any of whom
+can be a benevolent SFC liasion, is fine.  As far as selection goes,
+the committee can elect or remove a member through a majority vote,
+and should base its decisions based on surviving contributions to the
+code base, but shouldn't be tied to that (just in case someone
+contributes a lot of good code and then becomes a jerk).
 
-HTH
--- 
-Jakub Narebski
-Poland
+But as you point out, there isn't much power involved here, so there
+isn't a lot of concern of it being abused.  The important thing (the
+copyright on the code) is still held by individual contributors, so
+there is very little value involved (just the handful of GSoC dollars
+each year).
+
+> =A03. How much money should we give to the SFC?
+>
+> =A0 =A0 A big chunk of their budget comes from taking a percentage of
+> =A0 =A0 member project money. As a project, we set the percentage we =
+give
+> =A0 =A0 them. So we can give them nothing if we want. But they do pro=
+vide
+> =A0 =A0 useful services, and even without direct benefit to git, the =
+SFC is
+> =A0 =A0 promoting free software. So probably it makes sense to choose=
+ some
+> =A0 =A0 non-zero number.
+
+I agree, a non-zero number.  2-5%?  Any idea what is typical?
+
+--=20
+Shawn.
