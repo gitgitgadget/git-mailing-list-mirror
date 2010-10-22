@@ -1,69 +1,74 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] make pack-objects a bit more resilient to repo
- corruption
-Date: Fri, 22 Oct 2010 10:46:01 -0400
-Message-ID: <20101022144600.GA5554@sigill.intra.peff.net>
-References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [completion] Request: Include remote heads as push targets
+Date: Fri, 22 Oct 2010 10:50:17 -0400
+Message-ID: <4CC1A4A9.3040703@xiplink.com>
+References: <4CC05E4B.1010106@xiplink.com>	<4CC06439.8040003@xiplink.com>	<20101021191045.GC11759@burratino> <20101021210842.6545a661@montecarlo.grandprix.int>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Oct 22 16:45:26 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Mathias Lafeldt <misfire@debugon.org>
+To: Peter van der Does <peter@avirtualhome.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 16:50:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Is2-0004CF-0P
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:45:26 +0200
+	id 1P9IxH-0005ZL-FW
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:50:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756842Ab0JVOpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 10:45:19 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53855 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754850Ab0JVOpS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 10:45:18 -0400
-Received: (qmail 18561 invoked by uid 111); 22 Oct 2010 14:45:17 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 22 Oct 2010 14:45:17 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Oct 2010 10:46:01 -0400
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
+	id S1755089Ab0JVOuq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 10:50:46 -0400
+Received: from smtp142.iad.emailsrvr.com ([207.97.245.142]:58478 "EHLO
+	smtp142.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754248Ab0JVOup (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 10:50:45 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp44.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 9E4191284EF;
+	Fri, 22 Oct 2010 10:50:44 -0400 (EDT)
+X-Virus-Scanned: OK
+Received: by smtp44.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 444691284A3;
+	Fri, 22 Oct 2010 10:50:44 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100922 Thunderbird/3.1.4
+In-Reply-To: <20101021210842.6545a661@montecarlo.grandprix.int>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159693>
 
-On Fri, Oct 22, 2010 at 12:53:32AM -0400, Nicolas Pitre wrote:
+On 10-10-21 09:08 PM, Peter van der Does wrote:
+> 
+> In the case of Marc's problem, it would be helpful to see what the
+> result is in Bash 3.
 
-> -		if (!src->data)
-> +		if (!src->data) {
-> +			if (src_entry->preferred_base) {
-> +				/* 
-> +				 * Those objects are not included in the
-> +				 * resulting pack.  Be resilient and ignore
-> +				 * them if they can't be read, in case the
-> +				 * pack could be created nevertheless.
-> +				 */
-> +				return 0;
-> +			}
->  			die("object %s cannot be read",
->  			    sha1_to_hex(src_entry->idx.sha1));
-> +		}
+Bash v3 seems to work fine:
 
-By converting this die() into a silent return, are we losing a place
-where git might previously have alerted a user to corruption? In this
-case, we can continue the operation without the object, but if we have
-detected corruption, letting the user know as soon as possible is
-probably a good idea.
+$ echo $BASH_VERSION
+3.2.0(1)-release
 
-In other words, should this instead be:
+$ git branch -a
+  bar
+  baz
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/battle
+  remotes/origin/battle.hardened
+  remotes/origin/master
 
-  warning("unable to read preferred base object: %s", ...);
-  return 0;
+$ git tag
+bassinet
 
-Or will some other part of the code already complained to stderr?
+$ git push origin HEAD:<tab><tab>
+battle            battle.hardened   HEAD              master
 
--Peff
+$ git push origin HEAD:ba<tab>
+  git push origin HEAD:battle<tab><tab>
+battle            battle.hardened
+
+		M.
