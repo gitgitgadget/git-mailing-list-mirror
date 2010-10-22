@@ -1,116 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Git Attribute: File Text Encoding {WAS: Re: [RFC] Print diffs of UTF-16 to console / patches to email as UTF-8...?}
-Date: Fri, 22 Oct 2010 14:49:20 -0700 (PDT)
-Message-ID: <m3sjzxkifz.fsf@localhost.localdomain>
-References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
-	<20101022161851.GH9224@burratino>
-	<E7645863-A3AD-4EE1-AF6B-71C50A859619@gmail.com>
-	<20101022195331.GA12014@burratino>
-	<1287778695.819.17.camel@drew-northup.unet.maine.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] docs: give more hints about how "add -e" works
+Date: Fri, 22 Oct 2010 14:54:31 -0700
+Message-ID: <7v8w1plwq0.fsf@alter.siamese.dyndns.org>
+References: <20101021143034.GA16083@sigill.intra.peff.net>
+ <7v4ocftbww.fsf@alter.siamese.dyndns.org>
+ <20101022192529.GA13059@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Joshua Juran <jjuran@gmail.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 22 23:49:33 2010
+Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 23:54:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9PUO-00067j-Cd
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 23:49:28 +0200
+	id 1P9PZY-0007Q8-2w
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 23:54:48 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752122Ab0JVVtX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 17:49:23 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:58129 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751530Ab0JVVtW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 17:49:22 -0400
-Received: by bwz11 with SMTP id 11so980419bwz.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 14:49:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=ZkVy9psiS9oeZPyPq7CC+sH7tUI7ssYdV0mQ+mlNY70=;
-        b=rQbPdvmiU7Zyzembv/TigpFnFgkA9COvKwy+VeSTOfcaTrq2G9mVmFTr2Hs/TUx2hR
-         P8Zerv3w8RGJU8pGJEg9SXEpDj86ipUS/t2DjrPmvrw03Y+7roi6k33sisKGXmLieRlW
-         wxhdtUD1De3lwH71AML0X1UJMlSfEqEFXrweU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=iLREfPSMbuia9uOWMIccX80FSix1sJXBqAOxpq2Hvjl0YqVok8nz/9z3wgM6cbP9q5
-         ecyCo0vSre7bavI6BO78buuuCQqjDEvy2vxwStHkNfkg8Ew4NOQmBZOFWGwRJvmRbmMc
-         KLmDvtgT1++AF/svFlifijYEQSwBgoxj+Aais=
-Received: by 10.204.123.132 with SMTP id p4mr2645400bkr.67.1287784161385;
-        Fri, 22 Oct 2010 14:49:21 -0700 (PDT)
-Received: from localhost.localdomain (abvu212.neoplus.adsl.tpnet.pl [83.8.218.212])
-        by mx.google.com with ESMTPS id r21sm2473726bkj.10.2010.10.22.14.49.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 14:49:20 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9MLmdH6007857;
-	Fri, 22 Oct 2010 23:48:44 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9MLmHGc007852;
-	Fri, 22 Oct 2010 23:48:17 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1287778695.819.17.camel@drew-northup.unet.maine.edu>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752736Ab0JVVym (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 17:54:42 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63348 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752310Ab0JVVyl (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 17:54:41 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4436BDFFD2;
+	Fri, 22 Oct 2010 17:54:40 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PY4HXbAkyw6LNmTpAULntd9yc+w=; b=GNPCvr
+	BZTHUEk9jDriTn7eunsVS6NYHUNXJ3j4QN2y+87RARandf8O8LRoYFh2gLGPn5R9
+	A1Q+s1DY51nRQ6EeFWJhhtWX2aEqltKyeXRvMrDt6IA6fPTHI1yt+iJJd5SQNkM/
+	b/0PFw3IE3ptSw91hGdOhThBAldsSUF/UZ028=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=f4PzZ7JY3e5JlqhHFhRdg2z3xk7xsP53
+	3IphBET0A8wpWBphqSSISlZplLr1jkRAqBnTe6wSNH4JV9ud1o+792tCPgBWXXJy
+	G6MY2gc/3YNgjQve2wbikOqWmgdecLte/C+3DwSrvktdfMg4zrGRTI5L5REm/v5T
+	jwVF1Fz9MbM=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 108E5DFFCD;
+	Fri, 22 Oct 2010 17:54:37 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 351D1DFFCC; Fri, 22 Oct
+ 2010 17:54:33 -0400 (EDT)
+In-Reply-To: <20101022192529.GA13059@sigill.intra.peff.net> (Jeff King's
+ message of "Fri\, 22 Oct 2010 15\:25\:29 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F6844CFC-DE26-11DF-9F2F-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159757>
 
-Drew Northup <drew.northup@maine.edu> writes:
-> On Fri, 2010-10-22 at 14:53 -0500, Jonathan Nieder wrote:
-> > Joshua Juran wrote:
-> 
-> > >                                                      But a more
-> > > complete and robust solution would be to store the encoding
-> > > somewhere, possibly in the blob itself, or in the tree storing the
-> > > filename.
-> > 
-> > How about Jakub's idea of keeping it in .gitattributes (or some
-> > similarly visible key/value store)?  Two reasons:
-> > 
-> >  1. When asked to declare encoding, half the time people will be
-> >     wrong.  So it seems worthwhile to make the declared encoding
-> >     visible enough to fix.
-> > 
-> >  2. Two ASCII files identical except that one is declared as
-> >     latin1 and the other utf8 should be considered identical.
-> > 
-> > Thanks for some food for thought.
-> 
-> I think that's a fine place to start. Shall I start a branch for it when
-> I get home (where the code I'm working on is located)? It would be good
-> practice if nothing else...
+Jeff King <peff@peff.net> writes:
 
-Just for clarification: Git supports and uses `encoding` gitattribute,
-but it is used currently _only_ bu git-gui (by converting from `encoding`
-gitattribute to `git.encoding` given by config).
+> Perhaps the list should be structured not as "what you can do to each
+> line" but rather "here are some _concepts_ you might see, here's how
+> they are represented, and how you might want to edit them". So
+> basically:
+>
+>   - added lines; represented by "+" lines. You can prevent staging any
+>     addition lines by deleting them.
+>
+>   - removed lines; represented by "-" lines. You can prevent staging any
+>     removal lines by converting "-" to " ".
+>
+>   - modified lines; represented by "-" followed by "+". You can prevent
+>     staging the modification by converting the "-" to a " ", and
+>     removing the "+" lines. And this would be a good place to warn that
+>     just deleting half of the pair is going to cause problems.
+>
+>   - existing lines; represented by " " lines. You can:
+>
+>       - remove them, by converting " " to "-".
+>
+>       - modify them, by converting " " to "-", and adding a new "+" line
+>         with the new content.
+>
+>   - adding new lines; do not yet exist in the patch. You can add new
+>     lines by inserting "+" lines with the new content.
+>
+> which is perhaps better, as it directs the user according to what they
+> actually want to accomplish.
 
-The places that are missing:
+Yes, the above reads much better than starting from "when you see a '+'
+you can do..." (which I think is a wrong approach that is backwards).
 
-1. A way to check attribute of a file in given tree.  Currently 
-   git-check-attr checks for .gitattributes _only_ from working
-   area (in addition to unversioned .git/info/attributes, and perhaps
-   in the future core.attributesFile a la core.excludesFile).
+>> Is there a way to move this note way upwards?  Once the reader understands
+>> what this paragraph teaches, it becomes much easier to understand the
+>> implication of "remove addition".
+>
+> I agree it would be better at the top, but I think formatting it as I
+> just wrote above would mean we can actually explain the issue in a more
+> appropriate place. And then this bottom warning can just go away.
 
-2. A consensus where conversion should take place: at which level
-   in stack, for what output destination, etc.
-
-3. Support for i18n.blobOutputEncoding, which would convert (unless
-   overriden) e.g. in 'git show <blob>', and perhaps also in diff.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Agreed, again.
