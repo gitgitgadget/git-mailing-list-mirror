@@ -1,136 +1,126 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix git-apply with -p greater than 1
-Date: Fri, 22 Oct 2010 10:38:03 -0500
-Message-ID: <20101022153803.GD9224@burratino>
-References: <1287699122-26702-1-git-send-email-fedux@lugmen.org.ar>
- <7viq0urfbz.fsf@alter.siamese.dyndns.org>
- <20101022053140.GB786@burratino>
- <4CC194DF.9040803@lugmen.org.ar>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCHv4 00/21] git notes merge
+Date: Fri, 22 Oct 2010 17:41:25 +0200
+Message-ID: <201010221741.25390.johan@herland.net>
+References: <1287626936-32232-1-git-send-email-johan@herland.net> <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Fede <fedux@lugmen.org.ar>
-X-From: git-owner@vger.kernel.org Fri Oct 22 17:41:59 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
+	avarab@gmail.com, gitster@pobox.com
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 17:47:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Jkk-00047n-KC
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:41:58 +0200
+	id 1P9JqI-0006C6-7g
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:47:42 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757423Ab0JVPlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 11:41:52 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:44431 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755362Ab0JVPlv (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 11:41:51 -0400
-Received: by iwn34 with SMTP id 34so1082683iwn.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 08:41:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=jBGOjidzeCpYAipaUh8Wt/iY+PZY5Uq3Vdu9afJ0x/I=;
-        b=uNTTaGS76KCdmpBHUZoW/9pj1qLLhUprDNmbKv8TsDwKsudkS1nObm1u+NkQQfwtgA
-         S4SrA8t7i8hJPzY71oHsfIuBs5E0H0xO/yHp29QrhqNuSYmyG6Aks6Iqf8565230ya5l
-         Wawp9rqrYxH8TmdV9LZeRcFr25+AeYvCV2SJQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=b6bSaFxjrcAOdLVopqelLib9ppQXNm6D/A4zjiOdM2xG/r7hcP4L+ZXjGDxz4q7Tr7
-         9VGPV2s+bx1VBXOBgWOQFjXDsvoeJQt2ViZjJEjblMw3OQwgD0RNH26m0yh6qtFbpvUO
-         UrWKYHK1nMfHguW0TbzbEpxcTa/qveOava56Q=
-Received: by 10.231.166.139 with SMTP id m11mr2689757iby.136.1287762110949;
-        Fri, 22 Oct 2010 08:41:50 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id t35sm2708082qco.6.2010.10.22.08.41.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 08:41:50 -0700 (PDT)
+	id S1757467Ab0JVPrh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 11:47:37 -0400
+Received: from smtp.opera.com ([213.236.208.81]:46845 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756231Ab0JVPrg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 11:47:36 -0400
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o9MFfPsx012212
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 22 Oct 2010 15:41:25 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <4CC194DF.9040803@lugmen.org.ar>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159703>
 
-Fede wrote:
-> Jonathan Nieder wrote:
-
->> I had thought -p was only supposed to apply to traditional patches.
->> Maybe a documentation update would avoid confusion?
->>
->> 	-p<n>
->> 	   Remove <n> leading slashes from traditional diff paths.
->> 	   The default is 1.
+On Thursday 21 October 2010, Sverre Rabbelier wrote:
+> On Wed, Oct 20, 2010 at 21:08, Johan Herland wrote:
+> > - Fetching and pushing note refs:
+> > =C2=A0- Add refs/notes/* to default fetch refspec?
+> > =C2=A0- A way to specify (at clone time) which refspec(s) to set up=
+?
+> > =C2=A0- A way for the remote repo to hint at which refspecs you mig=
+ht
+> > want to set up (by default?)
 >
-> Currently, if the patch is mode-change only then the filename is taken
-> from the line "diff --git ...".
+> Didn't we already discuss this earlier? Can you summarize (or at
+> least link to) that discussion?
 
-Ah, found it:
+Yes, sorry for not answering you earlier. Here's what you wrote in the=20
+previous thread:
 
-commit 79ee194e52a140412da475e102145bad80d5d00a
-Author: Shawn O. Pearce <spearce@spearce.org>
-Date:   Wed Apr 4 11:19:14 2007 -0400
+On Saturday 09 October 2010, Sverre Rabbelier wrote:
+> Heya,
+>
+> On Sat, Oct 9, 2010 at 03:08, Johan Herland <johan@herland.net> wrote=
+:
+> > - Fetching and pushing note refs:
+> >  - Add refs/notes/* to default fetch refspec?
+>
+> Or at least add a '--notes[=3D<notes namespace>]' to fetch, pull, and
+> push.
 
-    Honor -p<n> when applying git diffs
-    
-    If the user is trying to apply a Git generated diff file and they
-    have specified a -p<n> option, where <n> is not 1, the user probably
-    has a good reason for doing this.  Such as they are me, trying to
-    apply a patch generated in git.git for the git-gui subdirectory to
-    the git-gui.git repository, where there is no git-gui subdirectory
-    present.
-    
-    Users shouldn't supply -p2 unless they mean it.  But if they are
-    supplying it, they probably have thought about how to make this
-    patch apply to their working directory, and want to risk whatever
-    results may come from that.
-    
-    Signed-off-by: Shawn O. Pearce <spearce@spearce.org>
-    Signed-off-by: Junio C Hamano <junkio@cox.net>
+Agreed, at least that.
 
--- 8< --
-Subject: Documentation: update description of "git apply -p"
+In order to promote sharing of notes, though, I'd like for it to be=20
+possible to configure the repo so that a vanilla 'git fetch' also=20
+updates your notes. In fact, I wonder if this should even be made the=20
+default.
 
-The "git apply -p" (strip path components) option has gone through some
-changes since it was last documented:
+> >  - A way to specify (at clone time) which refspec(s) to set up?
+>
+> How would that look like?
 
- ec7fc0b (builtin-apply.c: pay attention to -p<n> when..., 2009-11-25)
- 79ee194 (Honor -p<n> when applying git diffs, 2007-04-04)
- 3e8a5db (git-apply: guess correct -p<n> value for non-git..., 2007-02-21)
- 56185f4 (git-apply: require -p<n> when working in a subdirectory, 2007-02-19)
+Maybe add an option to 'git clone' (and 'git remote add') that specifie=
+s=20
+the refspec you want to use in your config for that remote. Something=20
+like:
 
-Document some of the new rules:
+  git clone --fetch=3D"+refs/heads/*:refs/remotes/origin/*" \
+            --fetch=3D"+refs/notes/*:refs/remotes/origin/notes/*" \
+            <source_url> ...
 
- - the -p option applies to both traditional and --git format diffs
- - in traditional diffs, since there is no customary standard -p value,
-   'git apply' will try to guess
- - in all cases, the default is 1
+=2E..will set up the following config:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Thoughts?  Improvements?
+  [remote "origin"]
+        url =3D <source_url>
+        fetch =3D +refs/heads/*:refs/remotes/origin/*
+        fetch =3D +refs/notes/*:refs/remotes/origin/notes/*
 
-diff --git a/Documentation/git-apply.txt b/Documentation/git-apply.txt
-index 4a74b23..8bb7422 100644
---- a/Documentation/git-apply.txt
-+++ b/Documentation/git-apply.txt
-@@ -103,8 +103,11 @@ respectively, and the pathname will be enclosed in double quotes if
- any of those replacements occurred.
- 
- -p<n>::
--	Remove <n> leading slashes from traditional diff paths. The
--	default is 1.
-+	Remove <n> leading path components from paths found in the
-+	diff. The default is 1 for --git format diffs.  For
-+	traditional diffs, if this option is not supplied, 'git apply'
-+	will try to detect an appropriate -p value, defaulting to 1
-+	if there is not enough information to guess.
- 
- -C<n>::
- 	Ensure at least <n> lines of surrounding context match before
+Obviously, we would probably want to provide shorthands for the most=20
+common refspecs, like:
+
+  git clone --fetch=3Ddefault,notes <source_url> ...
+
+or
+
+  git clone --fetch-heads --fetch-notes <source_url> ...
+
+> >  - A way for the remote repo to hint at which refspecs you might
+> > want to set up (by default?)
+>
+> I assume this would be a generic mechanism of sorts? Are there any
+> other use cases for this other than notes?
+
+Yes, I believe so (although I haven't thought much about this, yet).=20
+There's been earlier discussions on hiding certain branches from view.=20
+This could maybe be solved by the server suggesting a refspec that=20
+excludes the stuff you don't want to share (by default). Similary, the=20
+refspec could _include_ notes namespaces that you do want to share.
+
+Of course (as today) the client should be free to demand a different=20
+refspec, e.g. if it wants access to everything, or if it's only=20
+interested in a subset of the "default" refs.
+
+
+=2E..Johan
+
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
