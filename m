@@ -1,245 +1,69 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: [PATCH] git-gui: apply color information from git diff output
-Date: Fri, 22 Oct 2010 16:40:38 +0200
-Message-ID: <AANLkTikiRsrQtv65RBAe6HBfssYoDEuK5xp5t5eZQ2_E@mail.gmail.com>
-References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
-	<87hbgh7paf.fsf@fox.patthoyts.tk>
-	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
-	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
-	<7vy69stop2.fsf@alter.siamese.dyndns.org>
-	<87eibje5zs.fsf_-_@fox.patthoyts.tk>
-	<FB63A238-C5FD-4A00-9EAD-E99512C9D38B@sb.org>
-	<87pqv2ttjx.fsf_-_@fox.patthoyts.tk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] make pack-objects a bit more resilient to repo
+ corruption
+Date: Fri, 22 Oct 2010 10:46:01 -0400
+Message-ID: <20101022144600.GA5554@sigill.intra.peff.net>
+References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Oct 22 16:40:48 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 16:45:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9InW-0002nR-HJ
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:40:47 +0200
+	id 1P9Is2-0004CF-0P
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 16:45:26 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757361Ab0JVOkk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 10:40:40 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:46622 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755015Ab0JVOkj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 10:40:39 -0400
-Received: by ewy7 with SMTP id 7so1172605ewy.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 07:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zTuo3ckMA4aIKundPGEg9cjfz3wxFS6NL5mz+WYdXQw=;
-        b=Uc0RR9K+DPJZ2uvYPmRI/qBRjRMN3sBXonHMK2napk2y0kduYhQYadqyp0u4AA1F8N
-         EdqYmkF74IxGDWwikqVyGPrvr4q3/BllzSqY2+kn/SeOB/ZbhAC2nCKbE+z9pmPyx51N
-         B4WaBw0DtYLiuF5SMOhNlCoXr8xlMh+RaOYsY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=bdCHzM/F6z58CYojZEfCix2Po5Rx51j2PuPuVmVF9bC+ax+HX+/eB6XPcD1BtOq5PW
-         cOBlZ/AtGjDkwmyLd6Bi1OvXNuFk5e2est9IaNkLe1vPS8adusCfUP2X/Pp+scAMuhyP
-         bL/YlsKa3/T4zk1mswkr3gHtFVNoMW+haQvS8=
-Received: by 10.14.126.69 with SMTP id a45mr2233997eei.15.1287758438134; Fri,
- 22 Oct 2010 07:40:38 -0700 (PDT)
-Received: by 10.220.76.74 with HTTP; Fri, 22 Oct 2010 07:40:38 -0700 (PDT)
-In-Reply-To: <87pqv2ttjx.fsf_-_@fox.patthoyts.tk>
+	id S1756842Ab0JVOpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 10:45:19 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53855 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754850Ab0JVOpS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 10:45:18 -0400
+Received: (qmail 18561 invoked by uid 111); 22 Oct 2010 14:45:17 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 22 Oct 2010 14:45:17 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Oct 2010 10:46:01 -0400
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159692>
 
-On Fri, Oct 22, 2010 at 12:10 PM, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
-> This patch extracts the ANSI color sequences from git diff output and
-> applies these to the diff view window. This ensures that the gui view
-> makes use of the current git configuration for whitespace display.
->
-> ANSI codes may include attributes, foreground and background in a sin=
-gle
-> sequence. Handle this and support bold and reverse attributes. Ignore
-> all other attributes.
->
-> Suggested-by: Tor Arvid Lund <torarvid@gmail.com>
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
-> ---
+On Fri, Oct 22, 2010 at 12:53:32AM -0400, Nicolas Pitre wrote:
 
-Tested-by: Tor Arvid Lund <torarvid@gmail.com>
+> -		if (!src->data)
+> +		if (!src->data) {
+> +			if (src_entry->preferred_base) {
+> +				/* 
+> +				 * Those objects are not included in the
+> +				 * resulting pack.  Be resilient and ignore
+> +				 * them if they can't be read, in case the
+> +				 * pack could be created nevertheless.
+> +				 */
+> +				return 0;
+> +			}
+>  			die("object %s cannot be read",
+>  			    sha1_to_hex(src_entry->idx.sha1));
+> +		}
 
-It seems to work well for me. I'm just using the default (unset)
-core.whitespace settings, so space-before-tab and blank-at-eol both
-show up with red background, just like in the console.
+By converting this die() into a silent return, are we losing a place
+where git might previously have alerted a user to corruption? In this
+case, we can continue the operation without the object, but if we have
+detected corruption, letting the user know as soon as possible is
+probably a good idea.
 
--Tor Arvid-
+In other words, should this instead be:
 
-> Kevin Ballard <kevin@sb.org> writes:
->
->>On Oct 21, 2010, at 8:22 AM, Pat Thoyts wrote:
->>
->>> + =C2=A0 =C2=A0while {[regexp -indices -start $start "\033\\\[(\\d+=
-)?m" $line match code]} {
->>
->>Git currently doesn't emit combined escapes (e.g. \e[0;31m to reset a=
-nd then turn on red text), but I can imagine it being enhanced to do th=
-is in the future. I would recommend handling it here if you can.
->>
->>-Kevin Ballard
->
-> It turns out that such sequences will be generated by git if the user
-> configures the color.diff.whitespace (eg: bold cyan magenta). This pa=
-tch
-> handles these cases. I don't see any point trying to handle blink. I
-> could add underline but I don't see that being so appropriate for a
-> GUI. It seems more like something that is configured for a monochrome
-> terminal.
->
-> =C2=A0git-gui.sh =C2=A0 | =C2=A0 10 +++++++++-
-> =C2=A0lib/diff.tcl | =C2=A0 34 +++++++++++++++++++++++++++++++++-
-> =C2=A02 files changed, 42 insertions(+), 2 deletions(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 1ccaba1..1fb0254 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -3322,8 +3322,16 @@ pack $ui_diff -side left -fill both -expand 1
-> =C2=A0pack .vpane.lower.diff.header -side top -fill x
-> =C2=A0pack .vpane.lower.diff.body -side bottom -fill both -expand 1
->
-> +foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 =
-6 cyan4 7 grey60} {
-> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clr4$n -background $c
-> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clri4$n -foreground $c
-> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clr3$n -foreground $c
-> + =C2=A0 =C2=A0 =C2=A0 $ui_diff tag configure clri3$n -background $c
-> +}
-> +$ui_diff tag configure clr1 -font font_diffbold
-> +
-> =C2=A0$ui_diff tag conf d_cr -elide true
-> -$ui_diff tag conf d_@ -foreground blue -font font_diffbold
-> +$ui_diff tag conf d_@ -font font_diffbold
-> =C2=A0$ui_diff tag conf d_+ -foreground {#00a000}
-> =C2=A0$ui_diff tag conf d_- -foreground red
->
-> diff --git a/lib/diff.tcl b/lib/diff.tcl
-> index c628750..dcf0711 100644
-> --- a/lib/diff.tcl
-> +++ b/lib/diff.tcl
-> @@ -294,7 +294,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0lappend cmd -p
-> - =C2=A0 =C2=A0 =C2=A0 lappend cmd --no-color
-> + =C2=A0 =C2=A0 =C2=A0 lappend cmd --color
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if {$repo_config(gui.diffcontext) >=3D 1} =
-{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0lappend cmd "-=
-U$repo_config(gui.diffcontext)"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> @@ -332,6 +332,23 @@ proc start_show_diff {cont_info {add_opts {}}} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0fileevent $fd readable [list read_diff $fd=
- $cont_info]
-> =C2=A0}
->
-> +proc parse_color_line {line} {
-> + =C2=A0 =C2=A0 =C2=A0 set start 0
-> + =C2=A0 =C2=A0 =C2=A0 set result ""
-> + =C2=A0 =C2=A0 =C2=A0 set markup [list]
-> + =C2=A0 =C2=A0 =C2=A0 set regexp {\033\[((?:\d+;)*\d+)?m}
-> + =C2=A0 =C2=A0 =C2=A0 while {[regexp -indices -start $start $regexp =
-$line match code]} {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 foreach {begin end=
-} $match break
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 append result [str=
-ing range $line $start [expr {$begin - 1}]]
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 lappend markup [st=
-ring length $result] \
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 [eval [linsert $code 0 string range $line]]
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set start [incr en=
-d]
-> + =C2=A0 =C2=A0 =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 append result [string range $line $start end]
-> + =C2=A0 =C2=A0 =C2=A0 if {[llength $markup] < 4} {set markup {}}
-> + =C2=A0 =C2=A0 =C2=A0 return [list $result $markup]
-> +}
-> +
-> =C2=A0proc read_diff {fd cont_info} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0global ui_diff diff_active is_submodule_di=
-ff
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0global is_3way_diff is_conflict_diff curre=
-nt_diff_header
-> @@ -340,6 +357,9 @@ proc read_diff {fd cont_info} {
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff conf -state normal
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0while {[gets $fd line] >=3D 0} {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 foreach {line mark=
-up} [parse_color_line $line] break
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set line [string m=
-ap {\033 ^} $line]
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0# -- Cleanup u=
-ninteresting diff header lines.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0#
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if {$::current=
-_diff_inheader} {
-> @@ -434,11 +454,23 @@ proc read_diff {fd cont_info} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set mark [$ui_diff=
- index "end - 1 line linestart"]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff inser=
-t end $line $tags
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if {[string in=
-dex $line end] eq "\r"} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0$ui_diff tag add d_cr {end - 2c}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff inser=
-t end "\n" $tags
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 foreach {posbegin =
-colbegin posend colend} $markup {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 set prefix clr
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 foreach style [split $colbegin ";"] {
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if {$style eq "7"} {append prefix i=
-; continue}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if {$style < 30 || $style > 47} {co=
-ntinue}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set a "$mark linestart + $posbegin =
-chars"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 set b "$mark linestart + $posend ch=
-ars"
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 catch {$ui_diff tag add $prefix$sty=
-le $a $b}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ui_diff conf -state disabled
->
-> --
-> 1.7.3.1.msysgit.0
->
->
->
+  warning("unable to read preferred base object: %s", ...);
+  return 0;
+
+Or will some other part of the code already complained to stderr?
+
+-Peff
