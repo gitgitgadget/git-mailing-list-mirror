@@ -1,70 +1,92 @@
-From: lists@haller-berlin.de (Stefan Haller)
-Subject: git-update-index loses executable bit for unmerged files when core.filemode is false
-Date: Fri, 22 Oct 2010 19:28:47 +0200
-Message-ID: <1jqpu2f.1qxnixxtdqhreM%lists@haller-berlin.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 22 19:29:17 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as
+ UTF-8...?
+Date: Fri, 22 Oct 2010 12:30:55 -0500
+Message-ID: <20101022173055.GA11923@burratino>
+References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
+ <20101022161851.GH9224@burratino>
+ <1287766916.31218.71.camel@drew-northup.unet.maine.edu>
+ <20101022171248.GA11794@burratino>
+ <1287768426.31218.75.camel@drew-northup.unet.maine.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 22 19:34:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9LQa-0000ts-5i
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 19:29:16 +0200
+	id 1P9LW0-0002xC-Fu
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 19:34:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758072Ab0JVR2x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 13:28:53 -0400
-Received: from mail.ableton.net ([62.96.12.115]:40319 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755694Ab0JVR2x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 13:28:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-ID:Date:From:Subject:To; bh=Q2hlCWMT2N2FrstVkCdH/dLtdsGYO0MB4NKNL+sohyg=;
-	b=e5s3lfW+UwQWKOKe1zMzD/2NQ6Qq5dlUvpkVg++x31I5zyCZwbIgFPIZk8rKdwnt3UnwSpsMjkAI8CAcQnIE5N2qj6DG+m9vlzKcOa9B3ITpGpMacOzLc/r274RZY1cGUd2o4co3OlG7gcsMvZ4XOipTTBG44SIfRu6SNyOqDVE=;
-Received: from macbook-stk.office.ableton.com ([10.1.12.43])
-	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
-	(Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1P9LQ8-0005KV-I6
-	for git@vger.kernel.org; Fri, 22 Oct 2010 19:28:48 +0200
-User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
+	id S1758075Ab0JVRer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 13:34:47 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:59166 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755463Ab0JVReq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 13:34:46 -0400
+Received: by pvb32 with SMTP id 32so211961pvb.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 10:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=s34Hmog9hrRNJlkhGY5KI2dw29uwYQb+NK8iPex7sl8=;
+        b=T/Twg1u7WOOOyT6boaYvtr6vk44VDIa9HODqnCf3WGVqIrWemB1fgBiMwKxF5crf3D
+         8OK4Vna51VZPjUQ6RGnh0ozqCijfl6JDNS+zFLJLmGn6CR2pRYRyE9eJH3Tp0Pp/o+/R
+         B+2EsVoeQ0tQeZFVNe2Ad9Fx6EVS7XczpFKTE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hpxtOv36W4Z7mxFH66sM5Al3RObbRMpwd5g3nCfNKcovfSsy/RjX3Gk17TosRRcrd8
+         mehk9hKch/eY/O5wmNpgcc0EQy0ShF2i+DdDJ9xp5Tu6Td/YXDkHEje1TXsTwISMxVg4
+         gN2nfG48LOLRKWIKCfPDp8EeAGIlxL7Sbpk8E=
+Received: by 10.229.234.4 with SMTP id ka4mr2530752qcb.12.1287768885272;
+        Fri, 22 Oct 2010 10:34:45 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id nb14sm2817085qcb.36.2010.10.22.10.34.42
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 22 Oct 2010 10:34:43 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287768426.31218.75.camel@drew-northup.unet.maine.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159717>
 
-There's a bug with the handling of the executable bit when core.filemode
-is false: when you have an executable file that has unmerged changes,
-and you stage it with "git update-index", the executable bit is lost.
-If you stage it with "git add" instead, it works fine.
+Drew Northup wrote:
 
-    git init test
-    cd test
-    git config core.filemode false
-    touch foo
-    git add foo
-    git update-index --chmod=+x foo
-    git commit -m "Initial revision"
-    git branch br
-    echo bla >foo
-    git commit -a -m "Changed foo"
-    git checkout br
-    echo blubb >foo
-    git commit -a -m "Changed foo"
-    git merge master
-    git update-index foo
-    git diff --staged
+> Please forgive me for being offended that UTF-16 text is not "generic"
+> enough.
 
-See how the diff shows that the mode goes from 100755 to 100644.  If you
-replace the second-to-last line with "git add foo", it doesn't.
+First some words of explanation.
 
-I started to trace this down, but I didn't get very far, as I'm not
-familiar enough with the git codebase yet; so any help would be
-appreciated.
+By "generic" I did not mean ubiquitous, unbranded, popular, or some
+other almost-synonym.  What I actually meant is that it is not obvious
+what to do with UTF-16.  Should it be converted to UTF-8 for output?
+Should it always be normalized when added to the index, so that
+switching between canonically equivalent sequences does not result
+in spurious diffs?  Should the byte-for-byte representation be
+faithfully preserved, even when it is not valid UTF-16?
 
+When in such a situation, often a good approach is the following:
+take care of mechanism first, then policy.  So the first thing to do
+is to make sure that the code is _capable_ of what people are trying
+to do; then one can try various configurations and see what is most
+convenient; and finally, one can make sure the program behaves in an
+intuitive way by setting a reasonable default.
 
--- 
-Stefan Haller
-Berlin, Germany
-http://www.haller-berlin.de/
+So by "generic" I meant those mechanisms that can be used in the
+context of multiple policies.
+
+Apologies; I never meant to offend; please carry on and I will leave
+you in peace.
+
+Jonathan
