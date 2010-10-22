@@ -1,78 +1,85 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH v2 1/3] Documentation: Move variables from config.txt to separate file
-Date: Fri, 22 Oct 2010 10:18:11 +0200
-Message-ID: <201010221018.12558.jnareb@gmail.com>
-References: <cover.1287690696.git.trast@student.ethz.ch> <c3f621cd062b2c4f80aa2e8dadcfddbc042aefaa.1287690696.git.trast@student.ethz.ch>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: Buglet in i18n?
+Date: Fri, 22 Oct 2010 10:20:52 +0200
+Message-ID: <AANLkTimqzmPLCj=JeSGWFcY829gxct9ANGt+CCjB2jy=@mail.gmail.com>
+References: <4CC13AC1.7080402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 22 10:18:34 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 10:21:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Cpd-0000z3-KZ
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 10:18:33 +0200
+	id 1P9Cs1-0001Sq-13
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 10:21:01 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755551Ab0JVISZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 04:18:25 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61530 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753793Ab0JVISY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 04:18:24 -0400
-Received: by wyf28 with SMTP id 28so522366wyf.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 01:18:23 -0700 (PDT)
+	id S1755565Ab0JVIUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 04:20:55 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50068 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753987Ab0JVIUy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 04:20:54 -0400
+Received: by bwz11 with SMTP id 11so299136bwz.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 01:20:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=t3gsVt2RbY/8i99TLyF47rjFL+56nclCeIeWYyheRb0=;
-        b=bwuxzOl3PUhJp3tgjUb/TVVNThITcpRmbviJmDX9bZQ5ifC/oqxdCOG556aUtOV4rl
-         TYG4QnS2kW9Yru0oIVSVPZx6EsYwvx7xVRMzWoiKOtbcPlpT7pWZ5vLgibrGaWtUqGOc
-         qhfGAHmH63UiYz5mIA/eGTW0NoqwOhhiHXuUY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=mKFG34EGUlTSIMTtaj0+N7CGjWSIRmhEEXI5g8KiW+4=;
+        b=LG87R9epMjAdWRwgku4p+imKHU2sDpusg9Lq2xOu7WCopOU5of742Lrvw/H72eEnL9
+         nTYCIkbQDAxycBUFBVY4ZgNnmYkjkNrBj0AAHmzv+Jwd5RH/j6CNRYSB+AqHLzpvTOq0
+         FocTYGCJy/S9/uzE/EoXQ2028nxJGtpEivXoc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=NvSAWkk7P0e1sZfub0qRsaiOUWkT0RVmHmrpmfihZ7ZeQm+KiLP9XYDSAmhNJNkppo
-         WXXQnpt4l+eclbNdtP61gbKs9tTJINwm34LbJn4kLshpBYQG06OHT+fOR5WvJpUoyGRW
-         /zLHT5irFLCpz3/y93Zl7YpSFy999pawm0lZE=
-Received: by 10.227.148.2 with SMTP id n2mr2202040wbv.216.1287735502994;
-        Fri, 22 Oct 2010 01:18:22 -0700 (PDT)
-Received: from [192.168.1.13] (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
-        by mx.google.com with ESMTPS id a17sm2228905wbe.12.2010.10.22.01.18.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 01:18:21 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <c3f621cd062b2c4f80aa2e8dadcfddbc042aefaa.1287690696.git.trast@student.ethz.ch>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=C4NNLknsJW3kcnmTUGyJ3PB6pmaIk3Bl4Cj6kbhEzl/AL4zkknynJ0WY5opIPRaz+u
+         K3MZ389BimWMzYhkAFr+TcIMqSZH8ZTsiylAcsxqUol04yXo+H5IqGkdEjRDw5DgfWun
+         jru6xvXMM+B8mEWF3k7tm3DmMcONxYQh7gwsk=
+Received: by 10.204.180.75 with SMTP id bt11mr1696785bkb.115.1287735652933;
+ Fri, 22 Oct 2010 01:20:52 -0700 (PDT)
+Received: by 10.223.115.5 with HTTP; Fri, 22 Oct 2010 01:20:52 -0700 (PDT)
+In-Reply-To: <4CC13AC1.7080402@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159663>
 
-On Fri, 22 Oct 2010, Thomas Rast wrote:
+On Fri, Oct 22, 2010 at 09:18, Johannes Sixt <j.sixt@viscovery.net> wrote:
+> I just noticed these message after a 'git am' invocation:
+>
+> When you have resolved this problem run gitam--resolved.
+> If you would prefer to skip this patch, instead run gitam--skip.
+> To restore the original branch and stop patching run gitam--abort.
+>
+> Notice the missing blanks in the suggested commands.
+>
+> This is on Windows. I have ab/i18n (a102b434c) merged, but compiled with
+> NO_GETTEXT.
 
-> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-> ---
->  Documentation/config-vars.txt | 1747 ++++++++++++++++++++++++++++++++++++++++
->  Documentation/config.txt      | 1748 +----------------------------------------
->  2 files changed, 1748 insertions(+), 1747 deletions(-)
->  create mode 100644 Documentation/config-vars.txt
+This is the message in the code:
 
-I like it, even if the rest of this series would not get accepted.
+    eval_gettext "When you have resolved this problem run \"\$cmdline
+--resolved\".
+If you would prefer to skip this patch, instead run \"\$cmdline
+--skip\".
+To restore the original branch and stop patching run \"\$cmdline
+--abort\"."; echo
 
--- 
-Jakub Narebski
-Poland
+And presumably you're using these functions from git-sh-i18n.sh:
+
+        gettext () {
+            printf "%s" "$1"
+        }
+
+        eval_gettext () {
+            gettext_eval="printf '%s' \"$1\""
+            printf "%s" "`eval \"$gettext_eval\"`"
+        }
+
+So maybe the shell on Windows doesn't behave the same way wih regards
+to eval_gettext()?
