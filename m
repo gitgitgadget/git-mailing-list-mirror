@@ -1,7 +1,7 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v5 09/16] daemon: use full buffered mode for stderr
-Date: Fri, 22 Oct 2010 02:35:20 +0200
-Message-ID: <1287707727-5780-10-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v5 11/16] daemon: get remote host address from root-process
+Date: Fri, 22 Oct 2010 02:35:22 +0200
+Message-ID: <1287707727-5780-12-git-send-email-kusmabite@gmail.com>
 References: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Cc: msysgit@googlegroups.com,
@@ -12,16 +12,16 @@ Cc: msysgit@googlegroups.com,
 	schwab@linux-m68k.org,
 	patthoyts@gmail.com
 To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxCUuYPmBBoEdVYZ6A@googlegroups.com Fri Oct 22 02:37:01 2010
-Return-path: <msysgit+bncCOPdven-DxCUuYPmBBoEdVYZ6A@googlegroups.com>
+X-From: msysgit+bncCOPdven-DxCauYPmBBoEPr7DLg@googlegroups.com Fri Oct 22 02:37:06 2010
+Return-path: <msysgit+bncCOPdven-DxCauYPmBBoEPr7DLg@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
 Received: from mail-wy0-f186.google.com ([74.125.82.186])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxCUuYPmBBoEdVYZ6A@googlegroups.com>)
-	id 1P95cy-0002V4-Vz
-	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:37:01 +0200
+	(envelope-from <msysgit+bncCOPdven-DxCauYPmBBoEPr7DLg@googlegroups.com>)
+	id 1P95d3-0002V4-Qa
+	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:37:05 +0200
 Received: by mail-wy0-f186.google.com with SMTP id 11sf139996wyi.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:37:00 -0700 (PDT)
+        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:37:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
         h=domainkey-signature:received:mime-version:x-beenthere:received
@@ -30,10 +30,10 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
          :x-original-sender:x-original-authentication-results:precedence
          :mailing-list:list-id:list-post:list-help:list-archive:sender
          :list-subscribe:list-unsubscribe;
-        bh=ak+oYKK7qqVNAb9KzKlE+yU/49w+bvJ0N2EECavpstE=;
-        b=OgH22SvlwV015E/ZUX0vNiCfPA0t9ruAZJdQ/L6wgKPTOn/BKc7T9Z27tHDyVQ2Ed6
-         Gn10I6rDsLPoHBCl6Vp4VDcmIbAfefNL+jf/0OAU4K9cMc53aXnXRV/c12t4epjC5dN+
-         1rOWSzsvOiMKv/XrEOYRvgcxjrpJRUkDpjBMU=
+        bh=qmi/sz9lXyGHk9ztLqY7COGuRVAZtm/IfqYejJXHtbI=;
+        b=Z0nK0ZI0ZjRrhMGlnshNISTjBJWno4kV/RT6FuZYK2fYfxEKaQ1xA9GqsOO9N1KHQq
+         w1gcHrVLSGHoZns1cpepwhzoQwJ3wWABKjtq2ZQ1HXqkpRrlHq0C+KUOUiu9ozLE9KkR
+         M1Jq2+m1ZcNMkAio5vxwuKcVNh8qkakGmvxiQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
         h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
@@ -41,35 +41,35 @@ DomainKey-Signature: a=rsa-sha1; c=nofws;
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
          :list-unsubscribe;
-        b=oZ2zPv5HLQm6kJkBgpGj9mOZC9crRfWSZaQ1DqVOnpkukuLMrc8nA6OIaXi3NzFOAp
-         dz5lRVda8w9nmjHgRbsYyOpZcWR9rzCFpwLHSBGd7Tv4faV9YrAIuYWtMtaxDbackEHD
-         Za5eKX4PZreUKBXy4LDLVMNgIMFVBvzf0Ci+4=
-Received: by 10.216.173.84 with SMTP id u62mr237461wel.14.1287707796823;
-        Thu, 21 Oct 2010 17:36:36 -0700 (PDT)
+        b=cRvoOXr0WJ6dPTriFESYYh2MA2l4fSF3FH3qrxbYDDTik9vA5TH7lCrxJQw/yp/Xzy
+         Qo3qZ4/ZProINF3NPYHzHTrU2XWnYT8Dl2FaEFC8zE0TE3cfSgXSVDPsGYfUjb8YU0mn
+         v5KrZEx8Cz1SuTNEp1A7Oky3R7LpNBdWNYCn0=
+Received: by 10.216.231.71 with SMTP id k49mr290840weq.29.1287707802301;
+        Thu, 21 Oct 2010 17:36:42 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.14.24.73 with SMTP id w49ls269150eew.4.p; Thu, 21 Oct 2010
- 17:36:36 -0700 (PDT)
-Received: by 10.14.2.211 with SMTP id 59mr174383eef.28.1287707795873;
-        Thu, 21 Oct 2010 17:36:35 -0700 (PDT)
-Received: by 10.14.2.211 with SMTP id 59mr174382eef.28.1287707795843;
-        Thu, 21 Oct 2010 17:36:35 -0700 (PDT)
-Received: from mail-ew0-f46.google.com (mail-ew0-f46.google.com [209.85.215.46])
-        by gmr-mx.google.com with ESMTP id z6si1451009eeh.6.2010.10.21.17.36.34;
-        Thu, 21 Oct 2010 17:36:34 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.46 as permitted sender) client-ip=209.85.215.46;
-Received: by ewy7 with SMTP id 7so377851ewy.19
-        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:36:34 -0700 (PDT)
-Received: by 10.14.119.72 with SMTP id m48mr1480126eeh.44.1287707794738;
-        Thu, 21 Oct 2010 17:36:34 -0700 (PDT)
+Received: by 10.14.46.205 with SMTP id r53ls268591eeb.7.p; Thu, 21 Oct 2010
+ 17:36:41 -0700 (PDT)
+Received: by 10.14.127.201 with SMTP id d49mr186012eei.19.1287707800887;
+        Thu, 21 Oct 2010 17:36:40 -0700 (PDT)
+Received: by 10.14.127.201 with SMTP id d49mr186011eei.19.1287707800849;
+        Thu, 21 Oct 2010 17:36:40 -0700 (PDT)
+Received: from mail-ew0-f43.google.com (mail-ew0-f43.google.com [209.85.215.43])
+        by gmr-mx.google.com with ESMTP id t3si533020eeh.3.2010.10.21.17.36.39;
+        Thu, 21 Oct 2010 17:36:39 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.43 as permitted sender) client-ip=209.85.215.43;
+Received: by ewy20 with SMTP id 20so236814ewy.2
+        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:36:39 -0700 (PDT)
+Received: by 10.14.119.129 with SMTP id n1mr1490819eeh.34.1287707799722;
+        Thu, 21 Oct 2010 17:36:39 -0700 (PDT)
 Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id q58sm2479534eeh.9.2010.10.21.17.36.33
+        by mx.google.com with ESMTPS id b52sm2486167eei.13.2010.10.21.17.36.38
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 17:36:34 -0700 (PDT)
+        Thu, 21 Oct 2010 17:36:39 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
 In-Reply-To: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
 X-Original-Sender: kusmabite@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.46 as permitted sender)
+ domain of kusmabite@gmail.com designates 209.85.215.43 as permitted sender)
  smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -80,46 +80,122 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159620>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159621>
 
-Windows doesn't support line buffered mode for file
-streams, so let's just use full buffered mode with
-a big buffer ("4096 should be enough for everyone")
-and add explicit flushing.
+Get remote host in the process that accept() and pass it through
+the REMOTE_ADDR environment variable to the handler-process.
+Introduce the REMOTE_PORT environmen variable for the port.
+
+Use these variables for reporting instead of doing
+getpeername(0, ...), which doesn't work on Windows.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- daemon.c |    6 ++++--
- 1 files changed, 4 insertions(+), 2 deletions(-)
+ daemon.c |   67 +++++++++++++++++++++++++++----------------------------------
+ 1 files changed, 30 insertions(+), 37 deletions(-)
 
 diff --git a/daemon.c b/daemon.c
-index c7b7976..ca85e25 100644
+index ca85e25..b3aae8a 100644
 --- a/daemon.c
 +++ b/daemon.c
-@@ -67,12 +67,14 @@ static void logreport(int priority, const char *err, va_list params)
- 		syslog(priority, "%s", buf);
- 	} else {
- 		/*
--		 * Since stderr is set to linebuffered mode, the
-+		 * Since stderr is set to buffered mode, the
- 		 * logging of different processes will not overlap
-+		 * unless they overflow the (rather big) buffers.
- 		 */
- 		fprintf(stderr, "[%"PRIuMAX"] ", (uintmax_t)getpid());
- 		vfprintf(stderr, err, params);
- 		fputc('\n', stderr);
-+		fflush(stderr);
- 	}
+@@ -516,37 +516,14 @@ static void parse_host_arg(char *extra_args, int buflen)
  }
  
-@@ -1117,7 +1119,7 @@ int main(int argc, char **argv)
- 		set_die_routine(daemon_die);
- 	} else
- 		/* avoid splitting a message in the middle */
--		setvbuf(stderr, NULL, _IOLBF, 0);
-+		setvbuf(stderr, NULL, _IOFBF, 4096);
  
- 	if (inetd_mode && (group_name || user_name))
- 		die("--user and --group are incompatible with --inetd");
+-static int execute(struct sockaddr *addr)
++static int execute(void)
+ {
+ 	static char line[1000];
+ 	int pktlen, len, i;
++	char *addr = getenv("REMOTE_ADDR"), *port = getenv("REMOTE_PORT");
+ 
+-	if (addr) {
+-		char addrbuf[256] = "";
+-		int port = -1;
+-
+-		if (addr->sa_family == AF_INET) {
+-			struct sockaddr_in *sin_addr = (void *) addr;
+-			inet_ntop(addr->sa_family, &sin_addr->sin_addr, addrbuf, sizeof(addrbuf));
+-			port = ntohs(sin_addr->sin_port);
+-#ifndef NO_IPV6
+-		} else if (addr && addr->sa_family == AF_INET6) {
+-			struct sockaddr_in6 *sin6_addr = (void *) addr;
+-
+-			char *buf = addrbuf;
+-			*buf++ = '['; *buf = '\0'; /* stpcpy() is cool */
+-			inet_ntop(AF_INET6, &sin6_addr->sin6_addr, buf, sizeof(addrbuf) - 1);
+-			strcat(buf, "]");
+-
+-			port = ntohs(sin6_addr->sin6_port);
+-#endif
+-		}
+-		loginfo("Connection from %s:%d", addrbuf, port);
+-		setenv("REMOTE_ADDR", addrbuf, 1);
+-	}
+-	else {
+-		unsetenv("REMOTE_ADDR");
+-	}
++	if (addr)
++		loginfo("Connection from %s:%s", addr, port);
+ 
+ 	alarm(init_timeout ? init_timeout : timeout);
+ 	pktlen = packet_read_line(0, line, sizeof(line));
+@@ -680,6 +657,8 @@ static char **cld_argv;
+ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+ {
+ 	struct child_process cld = { 0 };
++	char addrbuf[300] = "REMOTE_ADDR=", portbuf[300];
++	char *env[] = { addrbuf, portbuf, NULL };
+ 
+ 	if (max_connections && live_children >= max_connections) {
+ 		kill_some_child();
+@@ -692,6 +671,28 @@ static void handle(int incoming, struct sockaddr *addr, int addrlen)
+ 		}
+ 	}
+ 
++	if (addr->sa_family == AF_INET) {
++		struct sockaddr_in *sin_addr = (void *) addr;
++		inet_ntop(addr->sa_family, &sin_addr->sin_addr, addrbuf + 12,
++		    sizeof(addrbuf) - 12);
++		snprintf(portbuf, sizeof(portbuf), "REMOTE_PORT=%d",
++		    ntohs(sin_addr->sin_port));
++#ifndef NO_IPV6
++	} else if (addr && addr->sa_family == AF_INET6) {
++		struct sockaddr_in6 *sin6_addr = (void *) addr;
++
++		char *buf = addrbuf + 12;
++		*buf++ = '['; *buf = '\0'; /* stpcpy() is cool */
++		inet_ntop(AF_INET6, &sin6_addr->sin6_addr, buf,
++		    sizeof(addrbuf) - 13);
++		strcat(buf, "]");
++
++		snprintf(portbuf, sizeof(portbuf), "REMOTE_PORT=%d",
++		    ntohs(sin6_addr->sin6_port));
++#endif
++	}
++
++	cld.env = (const char **)env;
+ 	cld.argv = (const char **)cld_argv;
+ 	cld.in = incoming;
+ 	cld.out = dup(incoming);
+@@ -1160,16 +1161,8 @@ int main(int argc, char **argv)
+ 			die_errno("failed to redirect stderr to /dev/null");
+ 	}
+ 
+-	if (inetd_mode || serve_mode) {
+-		struct sockaddr_storage ss;
+-		struct sockaddr *peer = (struct sockaddr *)&ss;
+-		socklen_t slen = sizeof(ss);
+-
+-		if (getpeername(0, peer, &slen))
+-			peer = NULL;
+-
+-		return execute(peer);
+-	}
++	if (inetd_mode || serve_mode)
++		return execute();
+ 
+ 	if (detach) {
+ 		daemonize();
 -- 
 1.7.3.1.199.g72340
