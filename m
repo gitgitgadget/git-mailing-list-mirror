@@ -1,71 +1,52 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] diff: don't presume empty file when corresponding
-	object is missing
-Date: Fri, 22 Oct 2010 09:04:46 +0200
-Message-ID: <20101022070446.GA19834@pengutronix.de>
-References: <alpine.LFD.2.00.1010212353550.2764@xanadu.home>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Buglet in i18n?
+Date: Fri, 22 Oct 2010 09:18:25 +0200
+Message-ID: <4CC13AC1.7080402@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Oct 22 09:05:03 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: =?ISO-8859-15?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 09:18:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9BgP-0006mP-KE
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 09:04:57 +0200
+	id 1P9Btb-0002Zb-Gq
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 09:18:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752890Ab0JVHEu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 03:04:50 -0400
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:58995 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752019Ab0JVHEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 03:04:50 -0400
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P9BgG-0004DC-6S; Fri, 22 Oct 2010 09:04:48 +0200
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1P9BgE-00008b-7k; Fri, 22 Oct 2010 09:04:46 +0200
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1010212353550.2764@xanadu.home>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1754126Ab0JVHS1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 03:18:27 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:28531 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752671Ab0JVHS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 03:18:27 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1P9BtR-0002W9-Rl; Fri, 22 Oct 2010 09:18:26 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 976C01660F;
+	Fri, 22 Oct 2010 09:18:25 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.9) Gecko/20100915 Thunderbird/3.1.4
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159659>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159660>
 
-Hi Nicolas,
+I just noticed these message after a 'git am' invocation:
 
-On Fri, Oct 22, 2010 at 12:02:27AM -0400, Nicolas Pitre wrote:
-> The low-level diff code will happily produce totally bogus diff outpu=
-t=20
-> with a broken repository via format-patch and friends by treating mis=
-sing
-> objects as empty files.  Let's prevent that from happening any longer=
-=2E
->=20
-> Reported-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-Great, this fixes format-patch to fail in my tree as advertised.
-Tested-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
+When you have resolved this problem run gitam--resolved.
+If you would prefer to skip this patch, instead run gitam--skip.
+To restore the original branch and stop patching run gitam--abort.
 
-> Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
+Notice the missing blanks in the suggested commands.
 
-Thanks
-Uwe
+This is on Windows. I have ab/i18n (a102b434c) merged, but compiled with
+NO_GETTEXT.
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+-- Hannes
