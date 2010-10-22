@@ -1,81 +1,84 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 6/7] merge -h: show usage even with corrupt index
-Date: Fri, 22 Oct 2010 11:31:26 -0700
-Message-ID: <7vtykem64h.fsf@alter.siamese.dyndns.org>
-References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
- <1287544320-8499-4-git-send-email-pclouds@gmail.com>
- <20101022063837.GA6081@burratino> <20101022064945.GG6081@burratino>
+Subject: Re: should Documentation/howto/setup-git-server-over-http.txt be
+ marked obsolete?
+Date: Fri, 22 Oct 2010 11:36:38 -0700
+Message-ID: <7viq0um5vt.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimJe9vEUwWM482NLmfHGYjnsKD5RAryQO=Zyqjj@mail.gmail.com>
+ <7vsjzyrh2w.fsf@alter.siamese.dyndns.org>
+ <AANLkTinv3kzvtC_Pq4F0cM_JqU7-Q2a=sWs8YSxbMiPs@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 20:32:40 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 20:37:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9MPu-0006ta-4T
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:32:38 +0200
+	id 1P9MUV-0008T7-DE
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:37:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753473Ab0JVSbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 14:31:38 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:60746 "EHLO
+	id S1754959Ab0JVSg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 14:36:58 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:36284 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753394Ab0JVSbh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 14:31:37 -0400
+	with ESMTP id S1753083Ab0JVSgr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 14:36:47 -0400
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 96FAFE11EB;
-	Fri, 22 Oct 2010 14:31:36 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 70F4CE12AF;
+	Fri, 22 Oct 2010 14:36:45 -0400 (EDT)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=7iRngrR7CE032Z4sQcGEpfoRcbo=; b=CoFMurWTbhBnzQJMcHRjXCc
-	g46T08ufwrmVK5buU9bKZIiCDTVfeJl3alwCDjg4iYMFOMs35Jh0rpO7qOnLLbiS
-	R10Gm7tWlTTJnWVdISVrXkW9xBzIn8Kc7V1YRxBudjQ261PILnXHlqYj77Kd5ZQf
-	D3sTzkIi8/O5J6EsM0U4=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=fxVXVKvoy1+uH5jf+qbiG4gojng=; b=fJnljD
+	NTj9JTXtdEn6KCnFAIu9GpOYL8a75p3rKsi72iZxbY5L6F030MUqYsPV1YgLcmmM
+	+9WHJsl8eCugQiusbkMZ6YqfdkEIjFA/P9k6gd61nok46m6MQapOy7mUJWhLJ6xb
+	ZJzGGzIPvNheS6xmcMkkGEohSG3tCRaCf5zDw=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=u7rOYX5nCXdNDEiuAhOAB5b5DSm1st1UxW4PDa6wqL352WhTC
-	9YtPvCNWkWP4Yy+cpNcI9TQnOuYkIOLoX82G8kAqfZSK3AZe15D4Hmc+Ta5gbnSB
-	mxzujIkvYgtQbBohMeTCrl0VZOMEWBCOJtL/jf4ubNiE1t4sDRzuscCbTY=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=ZDVaSI8xJmCJo6AReLIKOX+ZC7x7r3N4
+	pX/suG6TvsoUb3sGs9T7gzUUlAXYfB8zqfH4RirXNnh+Pm8N9Zso5yzv9CbGHJoo
+	PAyXpe6sib5uG18M1RVdlsvr9KciF1zOs2TA5Gr/iFsqPR04O71cHH7wP+kzJH06
+	FWmN4mW5MPg=
 Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 52B37E11CE;
-	Fri, 22 Oct 2010 14:31:32 -0400 (EDT)
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4799CE12AE;
+	Fri, 22 Oct 2010 14:36:43 -0400 (EDT)
 Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 765FBE11C9; Fri, 22 Oct
- 2010 14:31:27 -0400 (EDT)
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 848D9E12AB; Fri, 22 Oct
+ 2010 14:36:39 -0400 (EDT)
+In-Reply-To: <AANLkTinv3kzvtC_Pq4F0cM_JqU7-Q2a=sWs8YSxbMiPs@mail.gmail.com>
+ (Sitaram Chamarty's message of "Fri\, 22 Oct 2010 19\:25\:31 +0530")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 97D9E08E-DE0A-11DF-8AAD-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+X-Pobox-Relay-ID: 513219A2-DE0B-11DF-8404-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159726>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
 
-> +test_expect_success 'merge -h with invalid index' '
+>> Not everybody uses gitolite, and I do not think we have broken the dumb
+>> HTTP support (however broken the original was ;-) to render the document
+>> obsolete.
+>
+> My apologies; I didn't realise my mail would come across like that.
 
-You say "in broken repository" in 1-3, "with invalid configuration" in 4,
-"in corrupt repository" in 5, "with invalid index" here, and "with corrupt
-index" in 7.
+Oh no need for that; I didn't realise -my- response would, either ;-)
 
-> +	mkdir broken &&
-> +	(
-> +		cd broken &&
-> +		git init &&
-> +		>.git/index &&
+> I just followed "man git-http-backend" and it all worked.  Should there be more?
 
-I think describing which aspect of brokenness the test is interested in on
-the title line is better; let's restate "in broken/corrupt repository"
-(1-3, 5) to be more specific, and match others in terminology.  E.g.
+No; that would mean the next step would be (as you suggested)...
 
- 1. corrupt ref
- 2. corrupt index
- 3. corrupt status.showuntrackedfiles config
- 4. corrupt gc.pruneexpire config
- 5. corrupt index
- 6. corrupt index
- 7. corrupt index
+>>  - When the above two is done, insert one line "This describes an older
+>>   way; see <<insert the name of the other document here>> for insn to set
+>>   up an experimental smart HTTP server" at the beginning of the original
+>>   document.
+
+... this one.
+
+I trust you can take care of the gitolite documentation side ;-)
+
+Thanks.
