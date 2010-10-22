@@ -1,113 +1,72 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: support core.whitespace rules in diff view
-Date: Fri, 22 Oct 2010 16:18:06 +0100
-Message-ID: <87lj5qtfwx.fsf@fox.patthoyts.tk>
-References: <AANLkTikttRVeE+PVUJGiLERC=qdoxSH1oyXa5HLXoW0N@mail.gmail.com>
-	<87hbgh7paf.fsf@fox.patthoyts.tk>
-	<AANLkTimrrxbKSYib7g0O5TXXwt5yDTdkt_bycs69mKT7@mail.gmail.com>
-	<87pqv4fqqz.fsf_-_@fox.patthoyts.tk>
-	<7vy69stop2.fsf@alter.siamese.dyndns.org>
-	<AANLkTikG0_9+Gjnhehf8436Kw089Zd-XaSdSOP-J6_yD@mail.gmail.com>
-	<8762wve5k2.fsf@fox.patthoyts.tk>
-	<AANLkTimSrQ07pPKJ=4H+JL=TpGd7vJD63eea=waATiru@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: git merge --abort? [was: Re: [PATCHv4 00/21] git notes merge]
+Date: Fri, 22 Oct 2010 10:20:59 -0500
+Message-ID: <AANLkTimzryq2Qa5sZNmXVY5Z1epg5Zxe3TMk9CX_+VX8@mail.gmail.com>
+References: <1287626936-32232-1-git-send-email-johan@herland.net>
+ <201010221611.15425.johan@herland.net> <20101022145553.GA9224@burratino> <201010221712.06059.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 17:18:32 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>, bebarino@gmail.com,
+	avarab@gmail.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 17:21:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9JO3-0005oV-4N
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:18:31 +0200
+	id 1P9JQq-0006gQ-R0
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:21:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757361Ab0JVPSZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 11:18:25 -0400
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:59507 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757141Ab0JVPSY (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 11:18:24 -0400
-Received: from [172.23.170.144] (helo=anti-virus03-07)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1P9JNr-0005zp-O6; Fri, 22 Oct 2010 16:18:19 +0100
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1P9JNe-0001aq-U2; Fri, 22 Oct 2010 16:18:06 +0100
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 34AC221F28; Fri, 22 Oct 2010 16:18:06 +0100 (BST)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <AANLkTimSrQ07pPKJ=4H+JL=TpGd7vJD63eea=waATiru@mail.gmail.com>
-	(Tor Arvid Lund's message of "Fri, 22 Oct 2010 14:00:22 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1755878Ab0JVPVW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 11:21:22 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:62923 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753947Ab0JVPVV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 11:21:21 -0400
+Received: by gyg4 with SMTP id 4so702552gyg.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 08:21:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=U1dpg6tO9huOKiUcIRPk5uAnyfZrKRlaEgqdOjnP8Vc=;
+        b=ofJNbuDiBl1jxZ1HG8fGjD3aUzUJ4wRuA3yv8H+j8Wf7raqZFEeciVdRr5AhFq5LKo
+         p91MKG+7iABGOSyb+3ouY7ddNIEdNJpkxHfXjO22H5lVE66L9IsJ2jnj8dBLLsQnV7hD
+         1Wus4mvx5ooikcnH36ycBHEVIWyHqhylbFO4U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=A6esDAn7loqs6joyVWsfCUc2XehxysH+6cJSXTMMJ+4kMsBepAMmCcEbd+pOJFO67F
+         /XCbW8Kdlfdx8Q/AvGbkS+EN86x723as1SQ631gEbuWKXst3ESdtezTKPwpCQu/tyuny
+         eVDKsyWecRMQ9L8b/IPCVlIO4es+yX87Vo+W0=
+Received: by 10.150.177.7 with SMTP id z7mr6224755ybe.433.1287760879797; Fri,
+ 22 Oct 2010 08:21:19 -0700 (PDT)
+Received: by 10.151.45.12 with HTTP; Fri, 22 Oct 2010 08:20:59 -0700 (PDT)
+In-Reply-To: <201010221712.06059.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159700>
 
-Tor Arvid Lund <torarvid@gmail.com> writes:
+Heya,
 
->On Thu, Oct 21, 2010 at 8:58 PM, Pat Thoyts
-><patthoyts@users.sourceforge.net> wrote:
->> Tor Arvid Lund <torarvid@gmail.com> writes:
-><snip>
->>>I did a quick test (with core.whitespace unset, so the defaults should
->>>be used). I wonder if there is a little bug somewhere else in git-gui.
->>>If I have committed a line like this:
->>>
->>>............Hello world
->>>
->>>and change it to:
->>>
->>>........*Hello world
->>>
->>>I used '.' to indicate Space, and '*' to indicate Tab, so I changed 4
->>>spaces to one tab character. As I understand space-before-tab, this
->>>should render 8 red spaces, 1 white Tab, and then "Hello world". But
->>>instead I get 9 white spaces... So the tab gets converted to a space
->>>(I verified that it was not my editor that converted it - it really is
->>>8 SP and 1 TAB).
->>
->> This is caused by the tabstyle being defaulted to 'tabular'. This means
->> the first tab on a line extends to the first tab position and if that
->> lies to the left then the width of a single space is added. Looks like
->> this widget should be using -tabstyle wordprocessor which would do what
->> you expect and move to the next tab position.
->>
->> It is still a tab - just the display width looks wrong.
-><snap>
->
->Ok. I tried this, which seems to make it better:
->
->diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
->index 31ca47d..65d5f2a 100755
->--- a/git-gui/git-gui.sh
->+++ b/git-gui/git-gui.sh
->@@ -3283,6 +3283,7 @@ text $ui_diff -background white -foreground black \
->        -borderwidth 0 \
->        -width 80 -height 5 -wrap none \
->        -font font_diff \
->+       -tabstyle wordprocessor \
->        -xscrollcommand {.vpane.lower.diff.body.sbx set} \
->        -yscrollcommand {.vpane.lower.diff.body.sby set} \
->        -state disabled
->
->(this goes on top of your most recent patch from an hour ago)
+On Fri, Oct 22, 2010 at 10:12, Johan Herland <johan@herland.net> wrote:
+> Yes, that makes sense to me, especially if we make a 'git merge --abort'
+> synonym. Alternatively, we can make 'git merge --abort' check for
+> MERGE_HEAD, and then defer to 'git reset --merge', while leaving 'git
+> reset --merge' as-is.
 
-I guess I should have mentioned - I already pushed such a patch
-to git-gui.git's master.
+ACK to that. I think people using 'git reset --merge' know what
+they're doing, and should be able to clobber their changes (viz. `git
+reset --hard`), while 'git merge --abort' should do more handholding
+and make sure you don't lose any data. (If I had more time I'd
+implement that 'core.nodataloss' flag...)
 
-cdd321a git-gui: use wordprocessor tab style to ensure tabs work as expected
-
-Thanks anyway :)
 -- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Cheers,
+
+Sverre Rabbelier
