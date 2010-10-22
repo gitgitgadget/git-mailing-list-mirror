@@ -1,286 +1,123 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v5 16/16] daemon: opt-out on features that require posix
-Date: Fri, 22 Oct 2010 02:35:27 +0200
-Message-ID: <1287707727-5780-17-git-send-email-kusmabite@gmail.com>
-References: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
-Cc: msysgit@googlegroups.com, j6t@kdbg.org, avarab@gmail.com,
-	sunshine@sunshineco.com, jrnieder@gmail.com, schwab@linux-m68k.org,
-	patthoyts@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 22 02:37:18 2010
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: Re: [completion] Request: Include remote heads as push targets
+Date: Thu, 21 Oct 2010 21:08:42 -0400
+Message-ID: <20101021210842.6545a661@montecarlo.grandprix.int>
+References: <4CC05E4B.1010106@xiplink.com>
+	<4CC06439.8040003@xiplink.com>
+	<20101021191045.GC11759@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Marc Branchaud <marcnarc@xiplink.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	SZEDER =?ISO-8859-1?B?R+Fib3I=?= <szeder@ira.uka.de>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Mathias Lafeldt <misfire@debugon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 03:09:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P95d9-0002bm-FZ
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 02:37:11 +0200
+	id 1P967v-00006e-5Z
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 03:08:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757264Ab0JVAg6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 21 Oct 2010 20:36:58 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:61433 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757196Ab0JVAg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 21 Oct 2010 20:36:56 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 7so377912ewy.19
-        for <git@vger.kernel.org>; Thu, 21 Oct 2010 17:36:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=mxmBUrczI/DNtMLkt0aXHCi6b7f6IRYKnr+6xHYouGI=;
-        b=b2k2MORNsMTPMZzNOFsSChn6PG3MLZpYTt8jvEBAL+v8HotXSaY4E42wfp5BLzCZew
-         W7DzexOEmfjmzmr98fEGu6bzkzV6ukdGJL2bj771nQqYEWVDRREQ+cUWNQm/3bBTyJzc
-         oDF38ZEJ5QuBLGz39M22syMBDRI918vwOL0L4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=AqNqji8nYFM/LgSg6IAQPqueKZ+Ys3KYbsMCb4f51ffEloKjWxr8espc+nTPFIRLN5
-         uJjk7R11ZJkIwc/C9+mIlCxOKt10yNWFJGg2no7Wk97t5J1fF1LEKSmxjrqzCGRYmJCC
-         S8hKMfANe9iL2MP9uNMHD++3X38f/kPqWnGX0=
-Received: by 10.213.108.143 with SMTP id f15mr1312317ebp.59.1287707815360;
-        Thu, 21 Oct 2010 17:36:55 -0700 (PDT)
-Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id q51sm2487437eeh.10.2010.10.21.17.36.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 17:36:54 -0700 (PDT)
-X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
-In-Reply-To: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
+	id S1751454Ab0JVBIx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 21 Oct 2010 21:08:53 -0400
+Received: from morn.lunarbreeze.com ([216.227.218.220]:49595 "EHLO
+	morn.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750915Ab0JVBIw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 21 Oct 2010 21:08:52 -0400
+Received: from c-69-248-103-68.hsd1.nj.comcast.net ([69.248.103.68] helo=monza.grandprix.int)
+	by morn.lunarbreeze.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <peter@avirtualhome.com>)
+	id 1P967g-0003jY-1t; Thu, 21 Oct 2010 18:08:44 -0700
+Received: from montecarlo.grandprix.int (montecarlo.grandprix.int [192.168.1.102])
+	by monza.grandprix.int (Postfix) with ESMTPA id BBB48101F82;
+	Thu, 21 Oct 2010 21:08:42 -0400 (EDT)
+In-Reply-To: <20101021191045.GC11759@burratino>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - morn.lunarbreeze.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - avirtualhome.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159628>
 
-Windows does not supply the POSIX-functions fork(), setuuid(), setgid(),
-setsid() and initgroups(). Error out if --user or --detach is specified
-when if so.
+On Thu, 21 Oct 2010 14:10:45 -0500
+Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-MinGW doesn't have prototypes and headers for inet_ntop and inet_pton,
-so include our implementation instead. MSVC does, so avoid doing so
-there.
+> Marc Branchaud wrote:
+>=20
+> > Hmmm, perhaps this is really a bug.
+>=20
+> Compare:
+> http://thread.gmane.org/gmane.comp.version-control.git/159448
+>=20
+> G=E1bor, would it be possible to summarize the problem with a simple
+> test case that could be used to get help on this from the (upstream
+> or distro-specific) bash maintainers?
+> --
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- Makefile |   14 ++++++---
- daemon.c |   90 +++++++++++++++++++++++++++++++++++++++++++++----------------
- 2 files changed, 75 insertions(+), 29 deletions(-)
+In the case of Marc's problem, it would be helpful to see what the
+result is in Bash 3.
 
-diff --git a/Makefile b/Makefile
-index 46034bf..53986b1 100644
---- a/Makefile
-+++ b/Makefile
-@@ -401,6 +401,7 @@ EXTRA_PROGRAMS =
- # ... and all the rest that could be moved out of bindir to gitexecdir
- PROGRAMS += $(EXTRA_PROGRAMS)
- 
-+PROGRAM_OBJS += daemon.o
- PROGRAM_OBJS += fast-import.o
- PROGRAM_OBJS += imap-send.o
- PROGRAM_OBJS += shell.o
-@@ -1066,7 +1067,6 @@ ifeq ($(uname_S),Windows)
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
- 	RUNTIME_PREFIX = YesPlease
--	NO_POSIX_ONLY_PROGRAMS = YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	NO_NSEC = YesPlease
- 	USE_WIN32_MMAP = YesPlease
-@@ -1077,6 +1077,7 @@ ifeq ($(uname_S),Windows)
- 	NO_CURL = YesPlease
- 	NO_PYTHON = YesPlease
- 	BLK_SHA1 = YesPlease
-+	NO_POSIX_GOODIES = UnfortunatelyYes
- 	NATIVE_CRLF = YesPlease
- 
- 	CC = compat/vcbuild/scripts/clink.pl
-@@ -1119,7 +1120,6 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_SVN_TESTS = YesPlease
- 	NO_PERL_MAKEMAKER = YesPlease
- 	RUNTIME_PREFIX = YesPlease
--	NO_POSIX_ONLY_PROGRAMS = YesPlease
- 	NO_ST_BLOCKS_IN_STRUCT_STAT = YesPlease
- 	NO_NSEC = YesPlease
- 	USE_WIN32_MMAP = YesPlease
-@@ -1130,6 +1130,9 @@ ifneq (,$(findstring MINGW,$(uname_S)))
- 	NO_PYTHON = YesPlease
- 	BLK_SHA1 = YesPlease
- 	ETAGS_TARGET = ETAGS
-+	NO_INET_PTON = YesPlease
-+	NO_INET_NTOP = YesPlease
-+	NO_POSIX_GOODIES = UnfortunatelyYes
- 	COMPAT_CFLAGS += -D__USE_MINGW_ACCESS -DNOGDI -Icompat -Icompat/fnmatch -Icompat/win32
- 	COMPAT_CFLAGS += -DSTRIP_EXTENSION=\".exe\"
- 	COMPAT_OBJS += compat/mingw.o compat/fnmatch/fnmatch.o compat/winansi.o \
-@@ -1249,9 +1252,6 @@ ifdef ZLIB_PATH
- endif
- EXTLIBS += -lz
- 
--ifndef NO_POSIX_ONLY_PROGRAMS
--	PROGRAM_OBJS += daemon.o
--endif
- ifndef NO_OPENSSL
- 	OPENSSL_LIBSSL = -lssl
- 	ifdef OPENSSLDIR
-@@ -1419,6 +1419,10 @@ ifdef NO_DEFLATE_BOUND
- 	BASIC_CFLAGS += -DNO_DEFLATE_BOUND
- endif
- 
-+ifdef NO_POSIX_GOODIES
-+	BASIC_CFLAGS += -DNO_POSIX_GOODIES
-+endif
-+
- ifdef BLK_SHA1
- 	SHA1_HEADER = "block-sha1/sha1.h"
- 	LIB_OBJS += block-sha1/sha1.o
-diff --git a/daemon.c b/daemon.c
-index 8886455..22fc3fb 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -26,7 +26,9 @@ static const char daemon_usage[] =
- "           [--reuseaddr] [--pid-file=file]\n"
- "           [--[enable|disable|allow-override|forbid-override]=service]\n"
- "           [--inetd | [--listen=host_or_ipaddr] [--port=n]\n"
-+#ifndef NO_POSIX_GOODIES
- "                      [--detach] [--user=user [--group=group]]\n"
-+#endif
- "           [directory...]";
- 
- /* List of acceptable pathname prefixes */
-@@ -934,6 +936,62 @@ static void sanitize_stdfds(void)
- 		close(fd);
- }
- 
-+#ifdef NO_POSIX_GOODIES
-+
-+struct credentials;
-+
-+static void drop_privileges(struct credentials *cred)
-+{
-+	/* nothing */
-+}
-+
-+static void daemonize(void)
-+{
-+	die("--detach not supported on this platform");
-+}
-+
-+static struct credentials *prepare_credentials(const char *user_name,
-+    const char *group_name)
-+{
-+	die("--user not supported on this platform");
-+}
-+
-+#else
-+
-+struct credentials {
-+	struct passwd *pass;
-+	gid_t gid;
-+};
-+
-+static void drop_privileges(struct credentials *cred)
-+{
-+	if (cred && (initgroups(cred->pass->pw_name, cred->gid) ||
-+	    setgid (cred->gid) || setuid(cred->pass->pw_uid)))
-+		die("cannot drop privileges");
-+}
-+
-+static struct credentials *prepare_credentials(const char *user_name,
-+    const char *group_name)
-+{
-+	static struct credentials c;
-+
-+	c.pass = getpwnam(user_name);
-+	if (!c.pass)
-+		die("user not found - %s", user_name);
-+
-+	if (!group_name)
-+		c.gid = c.pass->pw_gid;
-+	else {
-+		struct group *group = getgrnam(group_name);
-+		if (!group)
-+			die("group not found - %s", group_name);
-+
-+		c.gid = group->gr_gid;
-+	}
-+
-+	return &c;
-+}
-+
- static void daemonize(void)
- {
- 	switch (fork()) {
-@@ -951,6 +1009,7 @@ static void daemonize(void)
- 	close(2);
- 	sanitize_stdfds();
- }
-+#endif
- 
- static void store_pid(const char *path)
- {
-@@ -961,7 +1020,8 @@ static void store_pid(const char *path)
- 		die_errno("failed to write pid file '%s'", path);
- }
- 
--static int serve(struct string_list *listen_addr, int listen_port, struct passwd *pass, gid_t gid)
-+static int serve(struct string_list *listen_addr, int listen_port,
-+    struct credentials *cred)
- {
- 	struct socketlist socklist = { NULL, 0, 0 };
- 
-@@ -970,10 +1030,7 @@ static int serve(struct string_list *listen_addr, int listen_port, struct passwd
- 		die("unable to allocate any listen sockets on port %u",
- 		    listen_port);
- 
--	if (pass && gid &&
--	    (initgroups(pass->pw_name, gid) || setgid (gid) ||
--	     setuid(pass->pw_uid)))
--		die("cannot drop privileges");
-+	drop_privileges(cred);
- 
- 	return service_loop(&socklist);
- }
-@@ -985,9 +1042,7 @@ int main(int argc, char **argv)
- 	int serve_mode = 0, inetd_mode = 0;
- 	const char *pid_file = NULL, *user_name = NULL, *group_name = NULL;
- 	int detach = 0;
--	struct passwd *pass = NULL;
--	struct group *group;
--	gid_t gid = 0;
-+	struct credentials *cred = NULL;
- 	int i;
- 
- 	git_extract_argv0_path(argv[0]);
-@@ -1133,21 +1188,8 @@ int main(int argc, char **argv)
- 	if (group_name && !user_name)
- 		die("--group supplied without --user");
- 
--	if (user_name) {
--		pass = getpwnam(user_name);
--		if (!pass)
--			die("user not found - %s", user_name);
--
--		if (!group_name)
--			gid = pass->pw_gid;
--		else {
--			group = getgrnam(group_name);
--			if (!group)
--				die("group not found - %s", group_name);
--
--			gid = group->gr_gid;
--		}
--	}
-+	if (user_name)
-+		cred = prepare_credentials(user_name, group_name);
- 
- 	if (strict_paths && (!ok_paths || !*ok_paths))
- 		die("option --strict-paths requires a whitelist");
-@@ -1181,5 +1223,5 @@ int main(int argc, char **argv)
- 	cld_argv[argc] = "--serve";
- 	cld_argv[argc+1] = NULL;
- 
--	return serve(&listen_addr, listen_port, pass, gid);
-+	return serve(&listen_addr, listen_port, cred);
- }
--- 
-1.7.3.1.199.g72340
+As for G=E1bor find:
+The problem resides in Bash 4. Bash 4 has a new set of characters that
+are defined as break up characters
+Thanks to Brain Gernhard:=20
+=46rom the Bash 4.0 changelog:
+i.  The programmable completion code now uses the same set of
+characters as readline when breaking the command line into a list of
+words.
+
+As far as I can tell, from the Bash 4.0 source, these are the
+characters: " \t\n\"'@><=3D;|&(:"=20
+In the completion script checks are performed if an option is given.
+The test includes the equal sign but the array with words does not the
+equal sign. Example to clarify:
+
+local cur=3D"${COMP_WORDS[COMP_CWORD]}" dir=3D"$(__gitdir)"
+case "$cur" in
+  --whitespace=3D*)
+      __gitcomp "$__git_whitespacelist" "" "${cur##--whitespace=3D}"
+      return
+      ;;
+
+If you execute:
+$ git am --whitespace=3D<tab><tab>
+
+The variable cur holds the equal sign and so the __gitcomp function is
+never executed.
+
+I have patched the entire completion script which fixes this, and some
+other issues related to the Bash 4 change, but it will only work in Bas=
+h
+4.0 and I am sure it will dramatically fail in Bash 3.0.
+I don't have the knowledge to determine which Bash version is running
+in the git.spec.in file. If you could that would be a way to either
+install the new version or the old one.
+
+
+--=20
+Peter van der Does
+
+GPG key: E77E8E98
+
+IRC: Ganseki on irc.freenode.net
+Twitter: @petervanderdoes
+
+WordPress Plugin Developer
+Blog: http://blog.avirtualhome.com
+=46orums: http://forums.avirtualhome.com
+Twitter: @avhsoftware
