@@ -1,86 +1,122 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as
-	UTF-8...?
-Date: Fri, 22 Oct 2010 14:06:45 -0400
-Message-ID: <1287770805.819.7.camel@drew-northup.unet.maine.edu>
-References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
-	 <20101022161851.GH9224@burratino>
-	 <1287766916.31218.71.camel@drew-northup.unet.maine.edu>
-	 <20101022171248.GA11794@burratino>
-	 <1287768426.31218.75.camel@drew-northup.unet.maine.edu>
-	 <m31v7iktkn.fsf@localhost.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: Joshua Juran <jjuran@gmail.com>
+Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as UTF-8...?
+Date: Fri, 22 Oct 2010 11:28:44 -0700
+Message-ID: <E7645863-A3AD-4EE1-AF6B-71C50A859619@gmail.com>
+References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu> <20101022161851.GH9224@burratino>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+Cc: Drew Northup <drew.northup@maine.edu>,
 	Git mailing list <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 20:08:21 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 20:29:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9M2P-0006t1-9x
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:08:21 +0200
+	id 1P9MMz-0005ZU-VQ
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:29:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758255Ab0JVSIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 14:08:15 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:59620 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756119Ab0JVSIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 14:08:14 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9MI6oQP031765
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 22 Oct 2010 14:06:55 -0400
-In-Reply-To: <m31v7iktkn.fsf@localhost.localdomain>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
-	Fuz1=4 Fuz2=4
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: o9MI6oQP031765
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1288375616.19125@Y1RoEqbk2EMJmw7blEYtyw
+	id S1752401Ab0JVS2u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 14:28:50 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:44854 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752065Ab0JVS2s (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 14:28:48 -0400
+Received: by gxk23 with SMTP id 23so669488gxk.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 11:28:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:cc:message-id:from:to
+         :in-reply-to:content-type:content-transfer-encoding:mime-version
+         :subject:date:references:x-mailer;
+        bh=CIh6U2tdsovAsVYPP/kOaJMc/zOfUvpszdrkTgF99Yk=;
+        b=b+3MhboP+x7cMTsIsEfFPd/J7Xb0e28WUFCdrZx4pO/ozUbSl4BhYj/hnVgsIS+29v
+         /KTcjV0R1ULg8U85exLXRx5wqkMM1gXYFHZtAreQtaeNbHc2BUERIQVjRg7HQrtU2f1m
+         NolUGRRoDhdj4TlrwirSqx939nfI+PoXpHlYk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=dHQmAqVAn8O37J6O6IvctH7fULfzHFoVabGdKhIMBT/WlfJropuhm8xG5Pb0KRBeVx
+         ls3q+V3oPskaxghLXNth1a2TfulJmGSszF2watvyZGq+MP2NSKfHKZ31Jq/P3YlCyn6N
+         DMX8E8MKKR7WLfHMubWhgt98YKV5MLakkEOiQ=
+Received: by 10.150.230.14 with SMTP id c14mr6642524ybh.312.1287772127186;
+        Fri, 22 Oct 2010 11:28:47 -0700 (PDT)
+Received: from [192.168.1.118] (c-69-139-149-8.hsd1.md.comcast.net [69.139.149.8])
+        by mx.google.com with ESMTPS id l66sm2617567yhd.20.2010.10.22.11.28.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 Oct 2010 11:28:46 -0700 (PDT)
+In-Reply-To: <20101022161851.GH9224@burratino>
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159720>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159721>
 
+On Oct 22, 2010, at 9:18 AM, Jonathan Nieder wrote:
 
-On Fri, 2010-10-22 at 10:48 -0700, Jakub Narebski wrote:
-> Drew Northup <drew.northup@maine.edu> writes:
+> Drew Northup wrote:
+>
+>>        This is part of my ongoing work to treat UTF-16 as text (in
+>> other words, the crlf options will work and .gitattributes hacks  
+>> won't
+>> be required to display diffs, etc).
 
-> > Well I shall plumb the documentation again.... just in case. I'm not
-> > holding my breath that it will do what I (and frankly a fair number of
-> > other people) want. We just want version control that treats text like
-> > text. FULL STOP. Why isn't UTF-16 text???????
-> 
-> If you are asking why Git detects files with text in UTF-16 / USC-2 as
-> binary, it is because Git (re)uses the same heuristic that e.g. GNU
-> diff (and probably also -T file test in Perl), and one of heuristics
-> is that if file contains NUL ("\0") character, then it is most
-> porbably binary (because legacy C programs for text would have
-> troubles with NUL characters).
-> 
-> That probably doesn't help you any...
+I would like to see the same thing for MacRoman-encoded text.[1]  This  
+is the encoding used by classic Mac development tools such as  
+Metrowerks C/C++ (packaged as CodeWarrior) and Apple's Rez resource  
+compiler (even the version in OS X).  Clearly, UTF-8 checkouts are not  
+an option here.
 
-I did find that already. I still have not decided that correct place to
-shoehorn in Unicode detection, but I'll be sure to do that before I
-bother anybody else with it. I already wrote code to detect (reasonably)
-valid UTF-16 (if it isn't obviously valid then I'll just as soon deal
-with it as binary data, so as to avoid a foot-shooting exercise).
-My main motivation here has been to get some feedback as I write stuff
-so as to not waste a lot of time during writing something that could be
-done better. 
-(As opposed to not done at all, which is the feeling I'm getting from a
-few people around here...)
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+> What's wrong with .gitattributes for this use case?  I would think a
+> clean/smudge filter would produce very good behavior from most git
+> commands.
+
+I wrote a Mac<->UTF-8 converter in C++ and set it as the clean/smudge  
+filter for .r (Rez) files.  Checkouts were noticeably slower (on a  
+real machine, not one of my antiques).  This would be much worse if I  
+also applied it to C and C++ source files (most, but not all, of which  
+are ASCII anyway).
+
+> If speed is the issue, maybe a built-in clean/smudge filter would
+> address that?
+
+While the performance cost could be overlooked, a worse problem  
+occurred when I checked out a branch into which the conversion of  
+files from MacRoman to UTF-8 hadn't occurred.  It automatically  
+dirtied my working tree, requiring me to temporarily disable the  
+filter attribute and reset --hard.  I also resorted to checkout -f a  
+number of times -- a bad habit, I'm sure.
+
+In the end I concluded that (a) these files are definitely text, and  
+(b) they are natively MacRoman and should be stored that way.  There  
+is no advantage to using UTF-8 since the tools can't handle it, and  
+even were one to write a UTF-8-capable Rez compiler, the resources it  
+outputs are still MacRoman-encoded, so no Unicode support is possible.
+
+Finally, (c) the end-to-end principle applies.  Don't convert data en  
+route, but wait until it's necessary.  Premature conversion was the  
+curse of FTP; let's not repeat it.  But Git should definitely convert  
+data to match the encoding of the display device; writing anything but  
+valid UTF-8 to a UTF-8 terminal is in error.  The same applies in gitk.
+
+Another issue (on which my thoughts are less clear) is the use of CR  
+newlines.  CR is also native to classic Mac OS, but in contrast to  
+UTF-8, Mac developer tools are generally newline-agnostic, whereas  
+typical Unix programs are less forgiving in expecting LF -- so I've  
+been using linefeeds in my source code.  However, it might be useful  
+to retain platform-customary newlines for the purpose of guessing non- 
+UTF character encodings:  Carriage returns would almost certainly  
+indicate MacRoman rather than ISO-8859-1.  But a more complete and  
+robust solution would be to store the encoding somewhere, possibly in  
+the blob itself, or in the tree storing the filename.
+
+Josh
+
+[1] MacRoman is an extended ASCII character set native to classic Mac  
+OS.  <http://en.wikipedia.org/wiki/Mac_OS_Roman>
