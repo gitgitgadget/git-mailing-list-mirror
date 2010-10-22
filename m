@@ -1,108 +1,86 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as UTF-8...?
-Date: Fri, 22 Oct 2010 10:58:35 -0700 (PDT)
-Message-ID: <m3wrpajek6.fsf@localhost.localdomain>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as
+	UTF-8...?
+Date: Fri, 22 Oct 2010 14:06:45 -0400
+Message-ID: <1287770805.819.7.camel@drew-northup.unet.maine.edu>
 References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
-	<20101022161851.GH9224@burratino>
-	<1287766916.31218.71.camel@drew-northup.unet.maine.edu>
-	<20101022171248.GA11794@burratino>
-	<1287768426.31218.75.camel@drew-northup.unet.maine.edu>
-	<20101022173055.GA11923@burratino>
+	 <20101022161851.GH9224@burratino>
+	 <1287766916.31218.71.camel@drew-northup.unet.maine.edu>
+	 <20101022171248.GA11794@burratino>
+	 <1287768426.31218.75.camel@drew-northup.unet.maine.edu>
+	 <m31v7iktkn.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>,
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
 	Git mailing list <git@vger.kernel.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 19:58:56 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 20:08:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9LtF-0002ee-Gk
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 19:58:53 +0200
+	id 1P9M2P-0006t1-9x
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:08:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932342Ab0JVR6o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 13:58:44 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:41965 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932333Ab0JVR6i (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 13:58:38 -0400
-Received: by wyf28 with SMTP id 28so1120470wyf.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 10:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=fi4WtbyaraqzbztrJTWPcZTWfefpsuj++SK5z4obeak=;
-        b=sDrKBpk9OYA4e2XQ/P+7KJlTiBR1NGqPi1ApNkFhwONo+Mtc+a7XiWPEsvYZjnrqsT
-         9qpk89ISP4Vq1qmevQUz5iIqBmeYAqk+yR31G5W1sVKg2kBULSz/qLw5evzSeJ+RRlLV
-         /eVk69magTHG4ac/UsXk3n4wfda9v19vK0b3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=owKLvt4BM5g1BVhtfqgv+0TmU4Dr2N3nNx6wIiUww05upg3fJStZOvRFgOlOsddjD1
-         B7Ep4Zsry8pneMn2+k5OmkVBbXJhORfmPcEMlQWZ52i2o83903ZXZh6eXVigEXGN6oFW
-         tlxTTes0mZdE3+cg1uAf6vyHFUhb5toxhW/Yw=
-Received: by 10.216.231.215 with SMTP id l65mr11581906weq.75.1287770316740;
-        Fri, 22 Oct 2010 10:58:36 -0700 (PDT)
-Received: from localhost.localdomain (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
-        by mx.google.com with ESMTPS id k4sm2118311weq.33.2010.10.22.10.58.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 10:58:35 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9MHvj9T004669;
-	Fri, 22 Oct 2010 19:57:56 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9MHvTFp004665;
-	Fri, 22 Oct 2010 19:57:29 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20101022173055.GA11923@burratino>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1758255Ab0JVSIP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 14:08:15 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:59620 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756119Ab0JVSIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 14:08:14 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9MI6oQP031765
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 22 Oct 2010 14:06:55 -0400
+In-Reply-To: <m31v7iktkn.fsf@localhost.localdomain>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=4
+	Fuz1=4 Fuz2=4
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: o9MI6oQP031765
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1288375616.19125@Y1RoEqbk2EMJmw7blEYtyw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159720>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Drew Northup wrote:
-> 
-> > Please forgive me for being offended that UTF-16 text is not "generic"
-> > enough.
-> 
-> First some words of explanation.
-> 
-> By "generic" I did not mean ubiquitous, unbranded, popular, or some
-> other almost-synonym.  What I actually meant is that it is not obvious
-> what to do with UTF-16.  Should it be converted to UTF-8 for output?
-> Should it always be normalized when added to the index, so that
-> switching between canonically equivalent sequences does not result
-> in spurious diffs?  Should the byte-for-byte representation be
-> faithfully preserved, even when it is not valid UTF-16?
-> 
-> When in such a situation, often a good approach is the following:
-> take care of mechanism first, then policy.  So the first thing to do
-> is to make sure that the code is _capable_ of what people are trying
-> to do; then one can try various configurations and see what is most
-> convenient; and finally, one can make sure the program behaves in an
-> intuitive way by setting a reasonable default.
-> 
-> So by "generic" I meant those mechanisms that can be used in the
-> context of multiple policies.
+On Fri, 2010-10-22 at 10:48 -0700, Jakub Narebski wrote:
+> Drew Northup <drew.northup@maine.edu> writes:
 
-It would be nice if there was a way (perhaps stearable via
-gitattributes) to change whether Git is to treat file as sequence of
-bytes (as it is now), or as sequence of characters (probably like 
-Perl 6, i.e. as sequence of graphemes), though this would require
-to specify encoding (and normalization) used.
+> > Well I shall plumb the documentation again.... just in case. I'm not
+> > holding my breath that it will do what I (and frankly a fair number of
+> > other people) want. We just want version control that treats text like
+> > text. FULL STOP. Why isn't UTF-16 text???????
+> 
+> If you are asking why Git detects files with text in UTF-16 / USC-2 as
+> binary, it is because Git (re)uses the same heuristic that e.g. GNU
+> diff (and probably also -T file test in Perl), and one of heuristics
+> is that if file contains NUL ("\0") character, then it is most
+> porbably binary (because legacy C programs for text would have
+> troubles with NUL characters).
+> 
+> That probably doesn't help you any...
 
-Wishful thinking
+I did find that already. I still have not decided that correct place to
+shoehorn in Unicode detection, but I'll be sure to do that before I
+bother anybody else with it. I already wrote code to detect (reasonably)
+valid UTF-16 (if it isn't obviously valid then I'll just as soon deal
+with it as binary data, so as to avoid a foot-shooting exercise).
+My main motivation here has been to get some feedback as I write stuff
+so as to not waste a lot of time during writing something that could be
+done better. 
+(As opposed to not done at all, which is the feeling I'm getting from a
+few people around here...)
 -- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
