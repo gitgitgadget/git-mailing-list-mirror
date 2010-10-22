@@ -1,76 +1,63 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: [PATCH] diff: don't presume empty file when corresponding object is
- missing
-Date: Fri, 22 Oct 2010 00:02:27 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010212353550.2764@xanadu.home>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Fri, 22 Oct 2010 13:07:56 +0900
+Message-ID: <buoeibi6fab.fsf@dhlpc061.dev.necel.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	<m3ocar5fmo.fsf@localhost.localdomain> <4CBFFD79.1010808@alum.mit.edu>
+	<1287660007.24161.10.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_ysQpRj6I4Dh0KGWrezBtpg)"
-Cc: git@vger.kernel.org,
-	=?ISO-8859-15?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 06:02:42 2010
+Content-Type: text/plain
+Cc: Michael Haggerty <mhagger@alum.mit.edu>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 22 06:08:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P98pz-0004uY-Vf
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 06:02:40 +0200
+	id 1P98vx-00060N-40
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 06:08:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120Ab0JVECf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 00:02:35 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:41469 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1749667Ab0JVECe (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 00:02:34 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LAO006PCB7WN0C1@VL-MR-MRZ20.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 22 Oct 2010 00:02:21 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1751281Ab0JVEIm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 00:08:42 -0400
+Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:40337 "EHLO
+	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751126Ab0JVEIm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 00:08:42 -0400
+Received: from mailgate3.nec.co.jp ([10.7.69.192])
+	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o9M481pn004540;
+	Fri, 22 Oct 2010 13:08:01 +0900 (JST)
+Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
+	id o9M481D29802; Fri, 22 Oct 2010 13:08:01 +0900 (JST)
+Received: from relay31.aps.necel.com ([10.29.19.54])
+	by vgate01.nec.co.jp (8.14.4/8.14.4) with ESMTP id o9M43W9S003662;
+	Fri, 22 Oct 2010 13:08:00 +0900 (JST)
+Received: from relay41.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay31.aps.necel.com with ESMTP; Fri, 22 Oct 2010 13:08:00 +0900
+Received: from dhlpc061 ([10.114.96.148] [10.114.96.148]) by relay41.aps.necel.com with ESMTP; Fri, 22 Oct 2010 13:08:00 +0900
+Received: by dhlpc061 (Postfix, from userid 31295)
+	id E3415124042; Fri, 22 Oct 2010 13:07:56 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+Blat: Foop
+In-Reply-To: <1287660007.24161.10.camel@drew-northup.unet.maine.edu> (Drew
+	Northup's message of "Thu, 21 Oct 2010 07:20:07 -0400")
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159635>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159636>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Drew Northup <drew.northup@maine.edu> writes:
+> Ok, so what will "git stage" do when a change of a file is already
+> staged and it is executed again (on new changes)?
 
---Boundary_(ID_ysQpRj6I4Dh0KGWrezBtpg)
-Content-type: TEXT/PLAIN; charset=ISO-8859-15
-Content-transfer-encoding: 8BIT
+It stages the newly updated file?
 
-The low-level diff code will happily produce totally bogus diff output 
-with a broken repository via format-patch and friends by treating missing
-objects as empty files.  Let's prevent that from happening any longer.
+This seems entirely obvious and intuitive, far more so than "git add"...
 
-Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Nicolas Pitre <nico@fluxnic.net>
----
+-Miles
 
-diff --git a/diff.c b/diff.c
-index 4732b32..b2839f9 100644
---- a/diff.c
-+++ b/diff.c
-@@ -2386,10 +2386,14 @@ int diff_populate_filespec(struct diff_filespec *s, int size_only)
- 	}
- 	else {
- 		enum object_type type;
--		if (size_only)
-+		if (size_only) {
- 			type = sha1_object_info(s->sha1, &s->size);
--		else {
-+			if (type < 0)
-+				die("unable to read %s", sha1_to_hex(s->sha1));
-+		} else {
- 			s->data = read_sha1_file(s->sha1, &type, &s->size);
-+			if (!s->data)
-+				die("unable to read %s", sha1_to_hex(s->sha1));
- 			s->should_free = 1;
- 		}
- 	}
-
---Boundary_(ID_ysQpRj6I4Dh0KGWrezBtpg)--
+-- 
+Happiness, n. An agreeable sensation arising from contemplating the misery of
+another.
