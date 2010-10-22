@@ -1,7 +1,8 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [RFC PATCH v2 0/3] Documentation: refactor config variable descriptions
-Date: Fri, 22 Oct 2010 07:02:28 +0200
-Message-ID: <cover.1287690696.git.trast@student.ethz.ch>
+Subject: [RFC PATCH v2 3/3] Documentation: move format.* documentation to format-patch
+Date: Fri, 22 Oct 2010 07:02:31 +0200
+Message-ID: <48770d33c558c07b5457c3011512b15486602b31.1287690696.git.trast@student.ethz.ch>
+References: <cover.1287690696.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
@@ -10,82 +11,197 @@ Cc: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?=
 	Jakub Narebski <jnareb@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Oct 22 07:03:13 2010
+X-From: git-owner@vger.kernel.org Fri Oct 22 07:03:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P99mX-0006us-R1
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 07:03:10 +0200
+	id 1P99mp-0006x2-PH
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 07:03:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752002Ab0JVFDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 01:03:03 -0400
+	id S1752698Ab0JVFDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 01:03:09 -0400
 Received: from gwse.ethz.ch ([129.132.178.237]:11329 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750967Ab0JVFDC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 01:03:02 -0400
+	id S1752288Ab0JVFDI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 01:03:08 -0400
 Received: from CAS11.d.ethz.ch (172.31.38.211) by gws00.d.ethz.ch
  (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Fri, 22 Oct
  2010 07:02:59 +0200
 Received: from localhost.localdomain (129.132.209.169) by CAS11.d.ethz.ch
  (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 22 Oct
- 2010 07:02:38 +0200
+ 2010 07:02:50 +0200
 X-Mailer: git-send-email 1.7.3.1.281.g5da0b
+In-Reply-To: <cover.1287690696.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159641>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159642>
 
-This resurrects (finally) the earlier attempt at
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ Documentation/config-vars-src.txt  |   56 -------------------------------
+ Documentation/git-format-patch.txt |   65 +++++++++++++++++++++++++++++++++--
+ 2 files changed, 61 insertions(+), 60 deletions(-)
 
-  http://mid.gmane.org/cover.1280169048.git.trast@student.ethz.ch
-
-It tries the inverse approach: teaching the script how to find config
-variable blocks in each manpage, and then linking them from the main
-list.  (Obviously just inserting them into the main list could also
-work.)
-
-In other words, it attempts to push out the "original" documentation
-of each variable from the main list to the individual manpage, which
-is exactly opposite from v1.
-
-This has the advantage that it does not make the source .txt for each
-manpage "unreadable by themselves", as the earlier approach did (and
-Jonathan noticed).
-
-It also has the advantage that it will shrink config-vars.txt over
-time.
-
-Instead of going through all manpages again, I just tacked on a sample
-patch as 3/3 that shows what the use/effect could be.  Once we settle
-on the direction (v1 or v2) of the refactoring, I'll make more patches
-or resurrect the old ones.
-
-I'm afraid 1/3 (semantically unchanged from the equivalent patch in
-v1) will again not make it through, so I again pushed this out:
-
-  git://repo.or.cz/git/trast.git t/doc-config-extraction-v2
-
-(incidentally v1 is still there as t/doc-config-extraction).  I based
-it on master; 1/3 is prone to conflicts but can easily be recreated
-from scratch.
-
-
-Thomas Rast (3):
-  Documentation: Move variables from config.txt to separate file
-  Documentation: complete config list from other manpages
-  Documentation: move format.* documentation to format-patch
-
- Documentation/Makefile              |    9 +-
- Documentation/config-vars-src.txt   | 1691 +++++++++++++++++++++++++++++++++
- Documentation/config.txt            | 1748 +----------------------------------
- Documentation/git-format-patch.txt  |   65 ++-
- Documentation/make-config-list.perl |  131 +++
- 5 files changed, 1892 insertions(+), 1752 deletions(-)
- create mode 100644 Documentation/config-vars-src.txt
- create mode 100755 Documentation/make-config-list.perl
-
+diff --git a/Documentation/config-vars-src.txt b/Documentation/config-vars-src.txt
+index 949259c..e12ff6e 100644
+--- a/Documentation/config-vars-src.txt
++++ b/Documentation/config-vars-src.txt
+@@ -775,67 +775,11 @@ fetch.unpackLimit::
+ 	especially on slow filesystems.  If not set, the value of
+ 	`transfer.unpackLimit` is used instead.
+ 
+-format.attach::
+-	Enable multipart/mixed attachments as the default for
+-	'format-patch'.  The value can also be a double quoted string
+-	which will enable attachments as the default and set the
+-	value as the boundary.  See the --attach option in
+-	linkgit:git-format-patch[1].
+-
+-format.numbered::
+-	A boolean which can enable or disable sequence numbers in patch
+-	subjects.  It defaults to "auto" which enables it only if there
+-	is more than one patch.  It can be enabled or disabled for all
+-	messages by setting it to "true" or "false".  See --numbered
+-	option in linkgit:git-format-patch[1].
+-
+-format.headers::
+-	Additional email headers to include in a patch to be submitted
+-	by mail.  See linkgit:git-format-patch[1].
+-
+-format.to::
+-format.cc::
+-	Additional recipients to include in a patch to be submitted
+-	by mail.  See the --to and --cc options in
+-	linkgit:git-format-patch[1].
+-
+-format.subjectprefix::
+-	The default for format-patch is to output files with the '[PATCH]'
+-	subject prefix. Use this variable to change that prefix.
+-
+-format.signature::
+-	The default for format-patch is to output a signature containing
+-	the git version number. Use this variable to change that default.
+-	Set this variable to the empty string ("") to suppress
+-	signature generation.
+-
+-format.suffix::
+-	The default for format-patch is to output files with the suffix
+-	`.patch`. Use this variable to change that suffix (make sure to
+-	include the dot if you want it).
+-
+ format.pretty::
+ 	The default pretty format for log/show/whatchanged command,
+ 	See linkgit:git-log[1], linkgit:git-show[1],
+ 	linkgit:git-whatchanged[1].
+ 
+-format.thread::
+-	The default threading style for 'git format-patch'.  Can be
+-	a boolean value, or `shallow` or `deep`.  `shallow` threading
+-	makes every mail a reply to the head of the series,
+-	where the head is chosen from the cover letter, the
+-	`\--in-reply-to`, and the first patch mail, in this order.
+-	`deep` threading makes every mail a reply to the previous one.
+-	A true boolean value is the same as `shallow`, and a false
+-	value disables threading.
+-
+-format.signoff::
+-    A boolean value which lets you enable the `-s/--signoff` option of
+-    format-patch by default. *Note:* Adding the Signed-off-by: line to a
+-    patch should be a conscious act and means that you certify you have
+-    the rights to submit this work under the same open source license.
+-    Please see the 'SubmittingPatches' document for further discussion.
+-
+ gc.aggressiveWindow::
+ 	The window size parameter used in the delta compression
+ 	algorithm used by 'git gc --aggressive'.  This defaults
+diff --git a/Documentation/git-format-patch.txt b/Documentation/git-format-patch.txt
+index 9dcafc6..6154e98 100644
+--- a/Documentation/git-format-patch.txt
++++ b/Documentation/git-format-patch.txt
+@@ -211,10 +211,9 @@ you can use `--suffix=-patch` to get `0001-description-of-my-change-patch`.
+ 
+ CONFIGURATION
+ -------------
+-You can specify extra mail header lines to be added to each message,
+-defaults for the subject prefix and file suffix, number patches when
+-outputting more than one patch, add "To" or "Cc:" headers, configure
+-attachments, and sign off patches with configuration variables.
++
++'git format-patch' has a lot of configuration variables.  A short
++example:
+ 
+ ------------
+ [format]
+@@ -226,8 +225,66 @@ attachments, and sign off patches with configuration variables.
+ 	cc = <email>
+ 	attach [ = mime-boundary-string ]
+ 	signoff = true
++	signature = "Hello, world!\n"
++	thread = shallow
+ ------------
+ 
++The individual variables are as follows:
++
++format.attach::
++	Enable multipart/mixed attachments as the default for
++	'format-patch'.  The value can also be a double quoted string
++	which will enable attachments as the default and set the
++	value as the boundary.  See the --attach option.
++
++format.numbered::
++	A boolean which can enable or disable sequence numbers in patch
++	subjects.  It defaults to "auto" which enables it only if there
++	is more than one patch.  It can be enabled or disabled for all
++	messages by setting it to "true" or "false".  See the --numbered
++	option.
++
++format.headers::
++	Additional email headers to include in a patch to be submitted
++	by mail.
++
++format.to::
++format.cc::
++	Additional recipients to include in a patch to be submitted
++	by mail.  See the --to and --cc options above.
++
++format.subjectprefix::
++	The default for format-patch is to output files with the '[PATCH]'
++	subject prefix. Use this variable to change that prefix.
++
++format.signature::
++	The default for format-patch is to output a signature containing
++	the git version number. Use this variable to change that default.
++	Set this variable to the empty string ("") to suppress
++	signature generation.
++
++format.suffix::
++	The default for format-patch is to output files with the suffix
++	`.patch`. Use this variable to change that suffix (make sure to
++	include the dot if you want it).
++
++format.thread::
++	The default threading style for 'git format-patch'.  Can be
++	a boolean value, or `shallow` or `deep`.  `shallow` threading
++	makes every mail a reply to the head of the series,
++	where the head is chosen from the cover letter, the
++	`\--in-reply-to`, and the first patch mail, in this order.
++	`deep` threading makes every mail a reply to the previous one.
++	A true boolean value is the same as `shallow`, and a false
++	value disables threading.
++
++format.signoff::
++    A boolean value which lets you enable the `-s/--signoff` option of
++    format-patch by default. *Note:* Adding the Signed-off-by: line to a
++    patch should be a conscious act and means that you certify you have
++    the rights to submit this work under the same open source license.
++    Please see the 'SubmittingPatches' document for further discussion.
++
+ 
+ EXAMPLES
+ --------
 -- 
 1.7.3.1.281.g5da0b
