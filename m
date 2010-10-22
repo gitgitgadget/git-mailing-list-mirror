@@ -1,124 +1,143 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable
- descriptions
-Date: Fri, 22 Oct 2010 11:53:07 -0400
-Message-ID: <20101022155307.GB5554@sigill.intra.peff.net>
-References: <cover.1287690696.git.trast@student.ethz.ch>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCHv4 00/21] git notes merge
+Date: Fri, 22 Oct 2010 10:54:59 -0500
+Message-ID: <AANLkTinY2q-nM8tSWgNG2TtuNXPPzwhY0M-QknODqAoK@mail.gmail.com>
+References: <1287626936-32232-1-git-send-email-johan@herland.net>
+ <AANLkTi=YJd023C3rX_G+NEM_0N-nZqd0uP7yyTSt1tHj@mail.gmail.com> <201010221741.25390.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Oct 22 17:52:31 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
+	avarab@gmail.com, gitster@pobox.com
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Oct 22 17:55:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Juw-0007J1-95
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:52:30 +0200
+	id 1P9Jxn-00085O-IA
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 17:55:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756295Ab0JVPwY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 11:52:24 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45673 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755380Ab0JVPwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 11:52:24 -0400
-Received: (qmail 19465 invoked by uid 111); 22 Oct 2010 15:52:23 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 22 Oct 2010 15:52:23 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Oct 2010 11:53:07 -0400
-Content-Disposition: inline
-In-Reply-To: <cover.1287690696.git.trast@student.ethz.ch>
+	id S1756962Ab0JVPzV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 11:55:21 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:46101 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756878Ab0JVPzU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 22 Oct 2010 11:55:20 -0400
+Received: by gxk23 with SMTP id 23so527530gxk.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 08:55:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=URtKs1bOGOZlN3X3+sJbeXvq9dyp/t9f0PCDOPmK1jw=;
+        b=rXtBELYOACCNLt4+HYwiwsGeJ4FyknmvJyJ3NCM9D0cGTttbqgho8jL1mL0V5xY+KJ
+         yCQSZA2WdBGaUFD8mCndvp/2c9Qc/LgfiI12+JlDkpU/ms0cPyaMoHeHbsuZnNw/2hcB
+         CCPlK41fJwMOET7Ne2bD4XgTsz8HIWJxAJfLo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Yb4TPE2TOK2TVpz0RGBDMlem9MTFD/g8BHgmD92CIXB8FFbloaQbwT65WXDcsAa+KC
+         ok80ydzA45/tJiroBAP9nAVzK83AtjJ6iIE/gjmCRXD2shleOvDTqY1XdpWLHcl2awS5
+         inGES50tsNwQZ3MQLzwM2tqpFwx0zzzTj8lEU=
+Received: by 10.150.131.8 with SMTP id e8mr1490217ybd.91.1287762919795; Fri,
+ 22 Oct 2010 08:55:19 -0700 (PDT)
+Received: by 10.151.45.12 with HTTP; Fri, 22 Oct 2010 08:54:59 -0700 (PDT)
+In-Reply-To: <201010221741.25390.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159706>
 
-On Fri, Oct 22, 2010 at 07:02:28AM +0200, Thomas Rast wrote:
+Heya,
 
-> This resurrects (finally) the earlier attempt at
-> 
->   http://mid.gmane.org/cover.1280169048.git.trast@student.ethz.ch
-> 
-> It tries the inverse approach: teaching the script how to find config
-> variable blocks in each manpage, and then linking them from the main
-> list.  (Obviously just inserting them into the main list could also
-> work.)
-> 
-> In other words, it attempts to push out the "original" documentation
-> of each variable from the main list to the individual manpage, which
-> is exactly opposite from v1.
+On Fri, Oct 22, 2010 at 10:41, Johan Herland <johan@herland.net> wrote:
+> Yes, sorry for not answering you earlier. Here's what you wrote in th=
+e
+> previous thread:
 
-Thanks for working on this.
+No problem :).
 
-I think this approach is much saner for writers and readers of the
-source files, and I think the output is much better (in particular, the
-giant list having "see X" pointers instead of the actual description
-blocks).
+> On Saturday 09 October 2010, Sverre Rabbelier wrote:
+>> On Sat, Oct 9, 2010 at 03:08, Johan Herland <johan@herland.net> wrot=
+e:
+>> > - Fetching and pushing note refs:
+>> > =C2=A0- Add refs/notes/* to default fetch refspec?
+>>
+>> Or at least add a '--notes[=3D<notes namespace>]' to fetch, pull, an=
+d
+>> push.
+>
+> Agreed, at least that.
+>
+> In order to promote sharing of notes, though, I'd like for it to be
+> possible to configure the repo so that a vanilla 'git fetch' also
+> updates your notes. In fact, I wonder if this should even be made the
+> default.
 
-Your 2/3 doesn't seem to have made it through to the list, but I pulled
-from your repository and looked at it. I have two comments on the
-approach:
+I think notes directly under /refs/notes/ should be shared by default,
+but those in sub-refs (such as the /refs/notes/am/ that's been
+mentioned before) should not.
 
-  1. It looks like you're more or less just parsing "::" list keys from
-     all of the manpages. This seems somewhat fragile, as there could be
-     other non-config lists. Can we at least restrict it to
-     CONFIGURATION sections? It would be nice if we could put in some
-     kind of semantic markup, but I'm not sure how painful that would be
-     with asciidoc (we could always resort to comments in the source,
-     but that would probably get unreadable quickly).
+>> > =C2=A0- A way to specify (at clone time) which refspec(s) to set u=
+p?
+>>
+>> How would that look like?
+>
+> Maybe add an option to 'git clone' (and 'git remote add') that specif=
+ies
+> the refspec you want to use in your config for that remote. Something
+> like:
+>
+> =C2=A0git clone --fetch=3D"+refs/heads/*:refs/remotes/origin/*" \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0--fetch=3D"+refs/notes/*:ref=
+s/remotes/origin/notes/*" \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<source_url> ...
 
-  2. You recursively follow includes via include::. This means that the
-     make rule is not accurate. E.g., try:
+Who's going to type that out though? The only use case I can think of
+is if you want to be able to give someone a line they can paste and be
+set right away, but I don't see why in that case pasting multiple
+commands (i.e., calling 'git config' a few times) wouldn't suffice.
 
-       rm cmds-mainporcelain.txt config-vars.txt
-       make config-vars.txt
+> Obviously, we would probably want to provide shorthands for the most
+> common refspecs, like:
+>
+> =C2=A0git clone --fetch=3Ddefault,notes <source_url> ...
+> =C2=A0git clone --fetch-heads --fetch-notes <source_url> ...
 
-     which should fail, as we actually depend on cmds-mainporcelain.txt.
-     Doing it accurately and automatically would mean making .depend
-     files for make.
+Adding refspec shorthands _does_ make sense. However, it might make
+more sense to put those under 'git remote' instead?
 
-     But I wonder if the recursive lookup is really required. Some of
-     the includes with config files can just go away (e.g.,
-     merge-config.txt is included only by config-vars-src.txt and
-     git-merge.txt; it can just be merged straight into git-merge.txt
-     once this system exists). Others, like pretty-formats.txt, should,
-     IMHO, get their own user-visible page. Right now with your script
-     you get[1]:
+>> > =C2=A0- A way for the remote repo to hint at which refspecs you mi=
+ght
+>> > want to set up (by default?)
+>>
+>> I assume this would be a generic mechanism of sorts? Are there any
+>> other use cases for this other than notes?
+>
+> Yes, I believe so (although I haven't thought much about this, yet).
+> There's been earlier discussions on hiding certain branches from view=
+=2E
+> This could maybe be solved by the server suggesting a refspec that
+> excludes the stuff you don't want to share (by default). Similary, th=
+e
+> refspec could _include_ notes namespaces that you do want to share.
 
-       format.pretty::
-               The default pretty format for log/show/whatchanged command,
-               See linkgit:git-log[1], linkgit:git-show[1],
-               linkgit:git-whatchanged[1].
+That sounds like a good use case.
 
-     but I would rather see[2]:
+> Of course (as today) the client should be free to demand a different
+> refspec, e.g. if it wants access to everything, or if it's only
+> interested in a subset of the "default" refs.
 
-       format.pretty::
-               See linkgit:gitpretty[7].
+Of course, I reckon it would just set up their refspecs, and the user
+would be free to change it. Especially if we inform the user that the
+refspec was set to something other than the default refspec.
 
-     [1]: I assume the single line of block description is an error in
-          your script.
+--=20
+Cheers,
 
-     [2]: Actually, as I mentioned a long time ago, I think it would be
-          nicer to have a table like:
-
-             format.attach         linkgit:git-format-patch[1]
-             format.cc             linkgit:git-format-patch[1]
-             format.headers        linkgit:git-format-patch[1]
-             format.pretty         linkgit:gitpretty[7]
-
-> I'm afraid 1/3 (semantically unchanged from the equivalent patch in
-> v1) will again not make it through, so I again pushed this out:
-> 
->   git://repo.or.cz/git/trast.git t/doc-config-extraction-v2
-
-Yeah, I saw neither 1/3 nor 2/3 on the list.
-
--Peff
+Sverre Rabbelier
