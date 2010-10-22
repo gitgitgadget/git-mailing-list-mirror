@@ -1,128 +1,102 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] docs: give more hints about how "add -e" works
-Date: Fri, 22 Oct 2010 15:25:29 -0400
-Message-ID: <20101022192529.GA13059@sigill.intra.peff.net>
-References: <20101021143034.GA16083@sigill.intra.peff.net>
- <7v4ocftbww.fsf@alter.siamese.dyndns.org>
+Subject: Re: git as an sfc member project
+Date: Fri, 22 Oct 2010 15:35:12 -0400
+Message-ID: <20101022193512.GB13059@sigill.intra.peff.net>
+References: <20101022183027.GA12124@sigill.intra.peff.net>
+ <AANLkTi=6tvmTAfdyL-sKBsq+4OpFaQpZWT66ANESNapj@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 21:25:12 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Oct 22 21:34:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9NEm-00006y-69
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:25:12 +0200
+	id 1P9NNt-00037d-Cu
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:34:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758984Ab0JVTYt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 15:24:49 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47619 "EHLO peff.net"
+	id S1758071Ab0JVTe3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 15:34:29 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49539 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759039Ab0JVTYp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 15:24:45 -0400
-Received: (qmail 22538 invoked by uid 111); 22 Oct 2010 19:24:44 -0000
+	id S1753160Ab0JVTe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 15:34:28 -0400
+Received: (qmail 22578 invoked by uid 111); 22 Oct 2010 19:34:27 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 22 Oct 2010 19:24:44 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Oct 2010 15:25:29 -0400
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 22 Oct 2010 19:34:27 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Oct 2010 15:35:12 -0400
 Content-Disposition: inline
-In-Reply-To: <7v4ocftbww.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <AANLkTi=6tvmTAfdyL-sKBsq+4OpFaQpZWT66ANESNapj@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159739>
 
-On Thu, Oct 21, 2010 at 03:32:15PM -0700, Junio C Hamano wrote:
+On Fri, Oct 22, 2010 at 12:19:00PM -0700, Shawn O. Pearce wrote:
 
-> > +The intent of this option is to pick and choose lines of the patch to
-> > +apply, or even to modify the contents of lines to be staged. There are
-> > +three line types in a patch: addition lines (beginning with a plus),
-> > +removal lines (beginning with a minus), and context lines (beginning
-> > +with a space). In general, it should be safe to:
-> > ++
-> > +--
-> > +* remove addition lines (don't stage the line)
-> 
-> I am not sure if the use of the word "stage" here is correct, even when
-> read from the "git stage" lovers' viewpoint.
-> 
-> If the "+" line is a pure addition without any corresponding line in the
-> preimage (which is removed by "-"), then this is "Don't add that line".
-> If it has a corresponding "-" line somewhere, that is rather "Remove
-> the corresponding line in the preimage".
-> 
-> "Don't add the updated line" might be a good compromise.
+> > Probably the money that goes to the organization for such a project
+> > should _not_ go through the SFC, and would have to be handled
+> > separately. Which is no worse than JGit has it today; they just can=
+'t
+> > receive the SFC services as regular git can.
+>=20
+> This is fine with the JGit folks, for now anyway.  We may revisit thi=
+s
+> and have JGit join SFC at some point in the future.  We might not.
 
-I'm not sure that using the word "add" here is really any different than
-"stage". Because we are really talking about adding _to_ the index,
-which to me is the same as staging. IOW, I could say "Don't stage the
-updated line" and it would mean the exact same thing.
+Yeah, what I should have said to be more clear in my original email is:
+JGit can do what they like with SFC, but there is no reason for this
+caveat to prevent _Git_ from joining the SFC.  The JGit folks are no
+worse off, and things are much better for Git.
 
-It is a separate issue that adding/staging that line may not be a true
-addition, but rather "don't add the updated line". That was what I was
-trying to address in the final paragraph.
+I think it would be great if JGit could join SFC in the long run.
 
-Perhaps the list should be structured not as "what you can do to each
-line" but rather "here are some _concepts_ you might see, here's how
-they are represented, and how you might want to edit them". So
-basically:
+> > Basically what we need to decide on before signing is:
+> >
+> > =C2=A01. Who should sign? These people are basically speaking for g=
+it as a
+> > =C2=A0 =C2=A0 community. Related to (2) below.
+>=20
+> The people listed in 2 as the leadership structure of git.
 
-  - added lines; represented by "+" lines. You can prevent staging any
-    addition lines by deleting them.
+Agreed (I should have written point (2) first. ;) ).
 
-  - removed lines; represented by "-" lines. You can prevent staging any
-    removal lines by converting "-" to " ".
+> I think a committee of at least 3 people and at most 5, any of whom
+> can be a benevolent SFC liasion, is fine.  As far as selection goes,
+> the committee can elect or remove a member through a majority vote,
+> and should base its decisions based on surviving contributions to the
+> code base, but shouldn't be tied to that (just in case someone
+> contributes a lot of good code and then becomes a jerk).
 
-  - modified lines; represented by "-" followed by "+". You can prevent
-    staging the modification by converting the "-" to a " ", and
-    removing the "+" lines. And this would be a good place to warn that
-    just deleting half of the pair is going to cause problems.
+That sounds reasonable to me. I'm not sure what documentation, if any,
+we need for such a structure. I guess we have to outline it in the
+agreement with the SFC, so that may be sufficient. We can ask Bradley
+about it, too.
 
-  - existing lines; represented by " " lines. You can:
+> But as you point out, there isn't much power involved here, so there
+> isn't a lot of concern of it being abused.  The important thing (the
+> copyright on the code) is still held by individual contributors, so
+> there is very little value involved (just the handful of GSoC dollars
+> each year).
 
-      - remove them, by converting " " to "-".
+Yeah. I don't see any need to tie any decision on SFC interaction into
+any other part of how git is run. It should have nothing to do with how
+actual coding or release management works. I'm sure there will be some
+overlap in who is prominent in both areas, but it doesn't need to be so=
+=2E
 
-      - modify them, by converting " " to "-", and adding a new "+" line
-        with the new content.
+> > =C2=A03. How much money should we give to the SFC?
+> [...]
+> I agree, a non-zero number.  2-5%?  Any idea what is typical?
 
-  - adding new lines; do not yet exist in the patch. You can add new
-    lines by inserting "+" lines with the new content.
-
-which is perhaps better, as it directs the user according to what they
-actually want to accomplish.
-
-I shied away from that intially because there are some more complex
-cases (e.g., added lines next to modified lines in the same hunk). But I
-expect anybody with half a clue can probably figure out how to handle
-that using the primitives outlined above.
-
-> > +Similarly, your patch will likely not apply if you:
-> > ++
-> > +--
-> > +* add context or removal lines
-> > +* delete removal or context lines
-> > +* modify the contents of context or removal lines
-> > +--
-> > ++
-> > +NOTE: In the first list above, the results given for each action are
-> > +with respect to that patch line only. Conceptual changes like
-> > +modification of a line in the original file are actually represented by
-> > +removal of the old line followed by addition of the new line. Deleting
-> > +only the addition line of this pair but leaving the removal line would
-> > +therefore convert the modification into a deletion. In other words, use
-> > +this feature with caution, as it is easy to stage unintended changes.
-> 
-> Is there a way to move this note way upwards?  Once the reader understands
-> what this paragraph teaches, it becomes much easier to understand the
-> implication of "remove addition".
-
-I agree it would be better at the top, but I think formatting it as I
-just wrote above would mean we can actually explain the issue in a more
-appropriate place. And then this bottom warning can just go away. I
-think I may still put a few words of caution at the top.
+Either in the draft agreement or in the notes the number 10% is thrown
+out as a common value for umbrella organizations to charge. That sounds
+reasonable to me, as they are probably saving us at least that much in
+taxes by being a proper non-profit.
 
 -Peff
