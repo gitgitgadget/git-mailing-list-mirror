@@ -1,88 +1,73 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] make pack-objects a bit more resilient to repo corruption
-Date: Fri, 22 Oct 2010 14:54:40 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010221451340.2764@xanadu.home>
-References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
- <20101022144600.GA5554@sigill.intra.peff.net>
- <1287761064.31218.37.camel@drew-northup.unet.maine.edu>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as
+ UTF-8...?
+Date: Fri, 22 Oct 2010 15:13:39 -0400
+Message-ID: <20101022191339.GA13581@sigill.intra.peff.net>
+References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu>
+ <20101022161851.GH9224@burratino>
+ <E7645863-A3AD-4EE1-AF6B-71C50A859619@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 22 20:55:16 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Drew Northup <drew.northup@maine.edu>,
+	Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Joshua Juran <jjuran@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 21:13:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Mlo-0005yt-HL
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:55:16 +0200
+	id 1P9N3P-0004qn-IQ
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:13:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758940Ab0JVSyn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 14:54:43 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:41329 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755872Ab0JVSyl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 14:54:41 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MO-MR004.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LAP006V8GJ41LE0@VL-MO-MR004.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 22 Oct 2010 14:54:41 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <1287761064.31218.37.camel@drew-northup.unet.maine.edu>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1759347Ab0JVTM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 15:12:59 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43592 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752672Ab0JVTM5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 15:12:57 -0400
+Received: (qmail 22391 invoked by uid 111); 22 Oct 2010 19:12:54 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 22 Oct 2010 19:12:54 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 22 Oct 2010 15:13:39 -0400
+Content-Disposition: inline
+In-Reply-To: <E7645863-A3AD-4EE1-AF6B-71C50A859619@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159733>
 
-On Fri, 22 Oct 2010, Drew Northup wrote:
+On Fri, Oct 22, 2010 at 11:28:44AM -0700, Joshua Juran wrote:
 
+> >What's wrong with .gitattributes for this use case?  I would think a
+> >clean/smudge filter would produce very good behavior from most git
+> >commands.
 > 
-> On Fri, 2010-10-22 at 10:46 -0400, Jeff King wrote:
-> > On Fri, Oct 22, 2010 at 12:53:32AM -0400, Nicolas Pitre wrote:
-> > 
-> > > -		if (!src->data)
-> > > +		if (!src->data) {
-> > > +			if (src_entry->preferred_base) {
-> > > +				/* 
-> > > +				 * Those objects are not included in the
-> > > +				 * resulting pack.  Be resilient and ignore
-> > > +				 * them if they can't be read, in case the
-> > > +				 * pack could be created nevertheless.
-> > > +				 */
-> > > +				return 0;
-> > > +			}
-> > >  			die("object %s cannot be read",
-> > >  			    sha1_to_hex(src_entry->idx.sha1));
-> > > +		}
-> > 
-> > By converting this die() into a silent return, are we losing a place
-> > where git might previously have alerted a user to corruption? In this
-> > case, we can continue the operation without the object, but if we have
-> > detected corruption, letting the user know as soon as possible is
-> > probably a good idea.
-> > 
-> > In other words, should this instead be:
-> > 
-> >   warning("unable to read preferred base object: %s", ...);
-> >   return 0;
-> > 
-> > Or will some other part of the code already complained to stderr?
-> > 
-> > -Peff
-> 
-> Agreed. If it broke we should probably tell the user--even if we can't
-> do much useful about it other than attempt to recover by continuing.
+> I wrote a Mac<->UTF-8 converter in C++ and set it as the clean/smudge
+> filter for .r (Rez) files.  Checkouts were noticeably slower (on a
+> real machine, not one of my antiques).  This would be much worse if I
+> also applied it to C and C++ source files (most, but not all, of
+> which are ASCII anyway).
 
-Please don't misinterpret this case.  As far as this change is 
-concerned, nothing is actually "broken".  The operation _will_ still 
-succeed.  The repository may be broken, but in this case we can do 
-without the broken object.  In those cases where the object is really 
-needed the original die() is still in place.
+Not surprising, as you were probably running your filter a lot. Clean
+and smudge could perhaps benefit from the same notes-caching layer that
+textconv uses (caching the "smudged" version of each clean file).
 
+But that would only impact checkout. Most other operations use the
+"clean" representation already, so they should be full-speed.
 
-Nicolas
+You could also cache the other way (mapping smudged sha1's into clean
+sha1's). But I doubt that would do you any good. We generally see those
+when updating the index with "git add", which means either the stat
+information is clean (and we don't have the clean the file) or it isn't
+(in which case you probably have new content that has not been seen
+before, which means a cache miss).
+
+And of course it doesn't help the other clean/smudge inconveniences you
+ran into.
+
+-Peff
