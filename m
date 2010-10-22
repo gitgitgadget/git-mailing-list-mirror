@@ -1,83 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git rebase --abort of an --onto run does not checkout the
- originating branch
-Date: Fri, 22 Oct 2010 12:15:03 -0700
-Message-ID: <7vlj5qkpjc.fsf@alter.siamese.dyndns.org>
-References: <4CC1C34E.8090203@workspacewhiz.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC] Print diffs of UTF-16 to console / patches to email as UTF-8...?
+Date: Fri, 22 Oct 2010 21:18:06 +0200
+Message-ID: <201010222118.09212.jnareb@gmail.com>
+References: <1287763608.31218.63.camel@drew-northup.unet.maine.edu> <m31v7iktkn.fsf@localhost.localdomain> <1287770805.819.7.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "git\@vger.kernel.org" <git@vger.kernel.org>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 21:15:29 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git mailing list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Fri Oct 22 21:18:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9N5M-0005TK-JH
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:15:28 +0200
+	id 1P9N8K-0006N8-4W
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 21:18:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759360Ab0JVTPQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 15:15:16 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:52744 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759718Ab0JVTPO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 15:15:14 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 71ECDE17C5;
-	Fri, 22 Oct 2010 15:15:10 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=IlovukVP+G+NTK1ZGAotkgvwztI=; b=G4JKSn
-	qh1ta6xFlz463FCjJwf2U5fmNgXdeES0i5hH8TlmAFVdkLErN9LYFGlGgQ5RCDEh
-	UtLPatV5XYV9VHfmCOxkrxcfGWZ71ZJY3ff9mXqtQ6ZKNhBX6DNCgjd+6DXK9jbU
-	lMoG/k6JkS8PlDK5ZpfRO1hWfkvVNAVmxB+SM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=DxMpX25k3QYkrJRrAg3k+pZMhV774Uut
-	eURG8bQOT4dGxcJrARyIwlw9PnwqVlfPshIoimNzrh5uhEzkaArHUehWh4KMdwZF
-	adj1dzBDbSXx3JfIJv8hiZ2+vtC7I77qNMyBs0b8HzGc1juIHsWsTw9plxl0kx4v
-	f+0qSH9a5IQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 4D53AE17C4;
-	Fri, 22 Oct 2010 15:15:08 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 884EEE17C3; Fri, 22 Oct
- 2010 15:15:05 -0400 (EDT)
-In-Reply-To: <4CC1C34E.8090203@workspacewhiz.com> (Joshua Jensen's message of
- "Fri\, 22 Oct 2010 11\:01\:02 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AF18EF32-DE10-11DF-9264-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S932186Ab0JVTSY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 15:18:24 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:39645 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759306Ab0JVTSW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 15:18:22 -0400
+Received: by bwz11 with SMTP id 11so863250bwz.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 12:18:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=dr4h9Amf8YbX6mbd0agYcrvvvxQtNrJlksZedoMpz0g=;
+        b=tYEjq4V+TJcr7upxY4ZGJGQINe/n25idXWk/XjyT8lkJvKlXOW3uP7+h0VEbZVeHYi
+         To1pXGicklJjNIpcOwZJwDFTyAcdEwzB29fc8i1DaPoMKbjwswU53JDohcQ26cCBnEY+
+         8PwHcreCGcl1/Q8Gs4Ie3H0DjYQzk+sAER64k=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=oGdH+P+XHDTtCmdzdWTHXD1irHTbOYKuHw30OMciplAk8LddLvwcuEPib8wVPAP3eq
+         AjcHsdPj8lxlMI78YYlhkAghCNGIry35Qw+3cFNYDiscLWjhUnPwTnU3Z5UNTY0Xq194
+         JzkOf81aOkTW9DN1z4rCkmJZqkDQzPA9XQny0=
+Received: by 10.204.104.5 with SMTP id m5mr2561741bko.73.1287775101229;
+        Fri, 22 Oct 2010 12:18:21 -0700 (PDT)
+Received: from [192.168.1.13] (abwn200.neoplus.adsl.tpnet.pl [83.8.237.200])
+        by mx.google.com with ESMTPS id t10sm2381589bkj.16.2010.10.22.12.18.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 22 Oct 2010 12:18:18 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1287770805.819.7.camel@drew-northup.unet.maine.edu>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159734>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159735>
 
-Joshua Jensen <jjensen@workspacewhiz.com> writes:
-
-> git rebase --onto mybranch START_SHA END_SHA
+On Fri, 22 Oct 2010, Drew Northup wrote:
+> On Fri, 2010-10-22 at 10:48 -0700, Jakub Narebski wrote:
+> > Drew Northup <drew.northup@maine.edu> writes:
+> 
+> > > Well I shall plumb the documentation again.... just in case. I'm not
+> > > holding my breath that it will do what I (and frankly a fair number of
+> > > other people) want. We just want version control that treats text like
+> > > text. FULL STOP. Why isn't UTF-16 text???????
+> > 
+> > If you are asking why Git detects files with text in UTF-16 / USC-2 as
+> > binary, it is because Git (re)uses the same heuristic that e.g. GNU
+> > diff (and probably also -T file test in Perl), and one of heuristics
+> > is that if file contains NUL ("\0") character, then it is most
+> > porbably binary (because legacy C programs for text would have
+> > troubles with NUL characters).
+> > 
+> > That probably doesn't help you any...
+> 
+> I did find that already. I still have not decided that correct place to
+> shoehorn in Unicode detection, but I'll be sure to do that before I
+> bother anybody else with it. I already wrote code to detect (reasonably)
+> valid UTF-16 (if it isn't obviously valid then I'll just as soon deal
+> with it as binary data, so as to avoid a foot-shooting exercise).
+> My main motivation here has been to get some feedback as I write stuff
+> so as to not waste a lot of time during writing something that could be
+> done better. 
 >
-> In the middle, I decide to run 'git rebase --abort'.
->
-> Just as the documentation states, it performs a checkout of END_SHA as
-> the restored branch.  END_SHA has nothing to do with the originating
-> branch, and confusion ensues.
->
-> Is there a reason why 'git rebase' should not store off the
-> originating branch and use that for an --abort, instead of <branch>
-> which is END_SHA?
+> (As opposed to not done at all, which is the feeling I'm getting from a
+> few people around here...)
 
-When END_SHA is an actual branch name (which by the way is almost always
-how I use --onto in my attempts to transplant my topics), and when I found
-out that the conflicts I see while rebasing the topic to a different
-starting point (i.e. --onto) is too much to handle for too little gain, I
-would not appreciate if --abort took me to the --onto branch, which is
-totally uninteresting for the purpose of what I was attempting to do,
-namely, to deal with the topic.
+Git supports well different encoding used in commit message (which is
+always text, as opposed to file contents which might be binary or text).
 
-If the command took me back to the tip of the topic that I failed to
-rebase, I can continue attempting to whip it in shape using different
-strategies from there (e.g. merging an older part of upstream into the
-topic before merging the topic back to the upstream).
+You specify what encoding you use to format commit messages with
+i18n.commitEncoding (defaults to 'utf-8'); if it is different than utf-8
+it gets saved in 'encoding' header.  You can even specify that encoding
+that your terminal uses is different from i18n.commitEncoding with
+i18n.logOutputEncoding
+
+The only support for different encoding of file contents is used by
+git-gui.  You provide encoding that a file uses via .gitattributes
+(the `encoding` attribute).  You specify what output encoding git-gui
+(Tcl/Tk) uses with `gui.encoding` config variable.
+
+I guess that what you need to support for diffs and 'git show <file>'
+etc. is respecting `encoding` .gitattribute, and providing encoding
+that console uses with e.g. i18n.blobOutputEncoding (or something like
+that).
+
+HTH
+-- 
+Jakub Narebski
+Poland
