@@ -1,83 +1,99 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH] make pack-objects a bit more resilient to repo corruption
-Date: Fri, 22 Oct 2010 14:42:09 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010221427390.2764@xanadu.home>
-References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
- <20101022144600.GA5554@sigill.intra.peff.net>
+From: Federico Cuello <fedux@lugmen.org.ar>
+Subject: Re: [PATCH] Fix git-apply with -p greater than 1
+Date: Fri, 22 Oct 2010 15:51:12 -0300
+Message-ID: <4CC1DD20.1080500@lugmen.org.ar>
+References: <1287699122-26702-1-git-send-email-fedux@lugmen.org.ar> <7viq0urfbz.fsf@alter.siamese.dyndns.org> <20101022053140.GB786@burratino> <4CC194DF.9040803@lugmen.org.ar> <7v8w1qm5n2.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Oct 22 20:44:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 22 20:51:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9MbI-0002bK-55
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:44:24 +0200
+	id 1P9MiG-00050C-0O
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 20:51:36 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758711Ab0JVSmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 14:42:14 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:34428 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932359Ab0JVSmL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 14:42:11 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LAP0031HFY3L0B0@VL-MR-MRZ20.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 22 Oct 2010 14:42:04 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <20101022144600.GA5554@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756924Ab0JVSvV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 22 Oct 2010 14:51:21 -0400
+Received: from 64-76-18-116.static.impsat.net.ar ([64.76.18.116]:40328 "EHLO
+	mother.lugmen.org.ar" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
+	with ESMTP id S1756886Ab0JVSvS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 14:51:18 -0400
+Received: from mail.fedux.com.ar (unknown [186.18.64.224])
+	by mother.lugmen.org.ar (Postfix) with ESMTPSA id 86B7C19E69F;
+	Fri, 22 Oct 2010 15:51:15 -0300 (ART)
+Received: from [192.168.8.5] (unknown [192.168.8.5])
+	by mail.fedux.com.ar (Postfix) with ESMTPS id CC88910058;
+	Fri, 22 Oct 2010 15:51:13 -0300 (ART)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.11) Gecko/20101020 Lightning/1.0b3pre Thunderbird/3.1.5
+In-Reply-To: <7v8w1qm5n2.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159730>
 
-On Fri, 22 Oct 2010, Jeff King wrote:
+El 22/10/10 15:41, Junio C Hamano escribi=F3:
+> Fede <fedux@lugmen.org.ar> writes:
+>
+>> There is a similar issue with renames and I'm working on that.
+> I think I queued a fix-up in 'pu' on top of your patch last night.  D=
+oes
+> it work for you?
 
-> On Fri, Oct 22, 2010 at 12:53:32AM -0400, Nicolas Pitre wrote:
-> 
-> > -		if (!src->data)
-> > +		if (!src->data) {
-> > +			if (src_entry->preferred_base) {
-> > +				/* 
-> > +				 * Those objects are not included in the
-> > +				 * resulting pack.  Be resilient and ignore
-> > +				 * them if they can't be read, in case the
-> > +				 * pack could be created nevertheless.
-> > +				 */
-> > +				return 0;
-> > +			}
-> >  			die("object %s cannot be read",
-> >  			    sha1_to_hex(src_entry->idx.sha1));
-> > +		}
-> 
-> By converting this die() into a silent return, are we losing a place
-> where git might previously have alerted a user to corruption? In this
-> case, we can continue the operation without the object, but if we have
-> detected corruption, letting the user know as soon as possible is
-> probably a good idea.
-> 
-> In other words, should this instead be:
-> 
->   warning("unable to read preferred base object: %s", ...);
->   return 0;
+Yes, is almost what I got. I also checked p_value not to be 0.
 
-Well, this get called repeatedly, being within the inner part of the 
-delta search loop.  So you might get that warning as many times as the 
-delta window which is not that nice.  If anything a static flag to 
-display the warning only once would be needed.  But you're pretty likely 
-to have met that warning/error already from other operations, which is 
-why I didn't bother.
+Anyway, the whole thing is broken when -p 0 , and it requires a little
+bit more work. Specially in apply.c:stop_at_slash().
 
-> Or will some other part of the code already complained to stderr?
+I have this:
 
-Some other part is likely to already have complained, through 
-check_object() -> sha1_object_info().  But not necessarily in all cases.
-
-
-Nicolas
+diff --git a/builtin/apply.c b/builtin/apply.c
+index 14996f8..3197e38 100644
+--- a/builtin/apply.c
++++ b/builtin/apply.c
+@@ -919,28 +919,28 @@ static int gitdiff_newfile(const char *line,
+struct patch *patch)
+ static int gitdiff_copysrc(const char *line, struct patch *patch)
+ {
+        patch->is_copy =3D 1;
+-       patch->old_name =3D find_name(line, NULL, 0, 0);
++       patch->old_name =3D find_name(line, NULL, p_value ? p_value - 1=
+ :
+0, 0);
+        return 0;
+ }
+=20
+ static int gitdiff_copydst(const char *line, struct patch *patch)
+ {
+        patch->is_copy =3D 1;
+-       patch->new_name =3D find_name(line, NULL, 0, 0);
++       patch->new_name =3D find_name(line, NULL, p_value ? p_value - 1=
+ :
+0, 0);
+        return 0;
+ }
+=20
+ static int gitdiff_renamesrc(const char *line, struct patch *patch)
+ {
+        patch->is_rename =3D 1;
+-       patch->old_name =3D find_name(line, NULL, 0, 0);
++       patch->old_name =3D find_name(line, NULL, p_value ? p_value - 1=
+ :
+0, 0);
+        return 0;
+ }
+=20
+ static int gitdiff_renamedst(const char *line, struct patch *patch)
+ {
+        patch->is_rename =3D 1;
+-       patch->new_name =3D find_name(line, NULL, 0, 0);
++       patch->new_name =3D find_name(line, NULL, p_value ? p_value - 1=
+ :
+0, 0);
+        return 0;
+ }
