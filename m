@@ -1,74 +1,83 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v2] make pack-objects a bit more resilient to repo
- corruption
-Date: Fri, 22 Oct 2010 17:19:29 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010221714450.2764@xanadu.home>
-References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
- <20101022144600.GA5554@sigill.intra.peff.net>
- <alpine.LFD.2.00.1010221427390.2764@xanadu.home>
- <alpine.LFD.2.00.1010221606550.2764@xanadu.home>
- <AANLkTimy-ihrF1syWYe3T4W6-UHzCaj5Jud5rdFmv3D5@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Git pull doesn't get the tags
+Date: Fri, 22 Oct 2010 14:33:52 -0700
+Message-ID: <7vhbgdlxof.fsf@alter.siamese.dyndns.org>
+References: <20101022053747.a5427cad.coolzone@it.dk>
+ <4CC153A0.7080605@debugon.org>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_eyzmE/gVUuV8jAxJ73175w)"
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 22 23:19:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Rico Secada <coolzone@it.dk>, Mathias Lafeldt <misfire@debugon.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 22 23:34:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9P1U-0006ym-Q4
-	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 23:19:37 +0200
+	id 1P9PFc-0002aY-N4
+	for gcvg-git-2@lo.gmane.org; Fri, 22 Oct 2010 23:34:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756032Ab0JVVTb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 17:19:31 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:12170 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753454Ab0JVVTa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 17:19:30 -0400
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LAP006FCN8IS110@VL-MR-MRZ22.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 22 Oct 2010 17:19:30 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <AANLkTimy-ihrF1syWYe3T4W6-UHzCaj5Jud5rdFmv3D5@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1754440Ab0JVVeG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 22 Oct 2010 17:34:06 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:47561 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751929Ab0JVVeF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 22 Oct 2010 17:34:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 36F0ADFD13;
+	Fri, 22 Oct 2010 17:34:02 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Ym5/S9+PyJtcqw+7Vms0o7K+52E=; b=yIiGzb
+	A8hEqEMRnxp9hRgxta+eIMxhbv1syf3/DcvCbcYe3AGYhnugiQhenr1jDeHlvQYF
+	T868kV/AkM6GCLEseT3JJXJ3+wtWEmXLOJiyEgF3lIv/BhQqqZBbtXVPblOtSnz2
+	Jpgxz1zfACDWW0T/hhLTcY58nfknQzQMNxX8I=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UAXVpVsgGH5j3WiSy5PIoZZfuMZma9F/
+	1soJMyyK7teIUoN+BychK4Ft8k9oGJR0b04JxUM6XUvGymoYLHACXB8Y+wawjIV+
+	LeciqjRyRo5F8D0ec71JM0WgE8dP+/xyVVeg5N9OILxgy7Ms/gZ5FQtYOph1k44l
+	xzRIp56r3Cg=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 02A7EDFD12;
+	Fri, 22 Oct 2010 17:33:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.252.155]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 35C73DFD06; Fri, 22 Oct
+ 2010 17:33:55 -0400 (EDT)
+In-Reply-To: <4CC153A0.7080605@debugon.org> (Mathias Lafeldt's message of
+ "Fri\, 22 Oct 2010 11\:04\:32 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1493DEFE-DE24-11DF-A448-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159753>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Mathias Lafeldt <misfire@debugon.org> writes:
 
---Boundary_(ID_eyzmE/gVUuV8jAxJ73175w)
-Content-type: TEXT/PLAIN; charset=UTF-8
-Content-transfer-encoding: 8BIT
+> Try git pull --tags.
+>
+> From git-pull's manpage:
+>
+> -t
+> --tags
+>         Most of the tags are fetched automatically as branch
+>         heads are downloaded, but tags that do not point at
+>         objects reachable from the branch heads that are being
+>         tracked will not be fetched by this mechanism.  This
+>         flag lets all tags and their associated objects be
+>         downloaded. [...]
 
-On Fri, 22 Oct 2010, Sverre Rabbelier wrote:
+Can somebody submit a patch to stop this part of "fetch-options.txt" from
+getting included in "git pull" manpage please, by the way?
 
-> Heya,
-> 
-> On Fri, Oct 22, 2010 at 13:26, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > +                               static int warned = 0;
-> > +                               if (!warned++)
-> > +                                       warning("object %s cannot be read",
-> > +                                               sha1_to_hex(src_entry->idx.sha1));
-> 
-> How does this handle multiple missing objects? Will it only warn for
-> the first one?
+This is one of the options that are passed to the underlying "git fetch"
+without sanitizing by "git pull".  "Fetch all tags and merge them" does
+not make any sense as a request at the logical level, even though it might
+be more convenient to type.
 
-Yes, only the first one, so you have a bone to chase if that ever 
-happens to you.  And that's good enough IMHO.  Trying to warn for every 
-missing object would require extra storage per object to remember if any 
-particular object was warned for already, which is I think overkill for 
-an extremely unlikely event.  Comprehensive reporting is the job of 
-fsck.
-
-
-Nicolas
-
---Boundary_(ID_eyzmE/gVUuV8jAxJ73175w)--
+I do not recall offhand if we made sure the stuff fetched with --tags
+request are marked as not-for-merge, and if we didn't that is certainly a
+bug.
