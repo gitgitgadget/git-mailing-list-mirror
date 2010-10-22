@@ -1,80 +1,75 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v5 10/16] Improve the mingw getaddrinfo stub to
- handle more use cases
-Date: Fri, 22 Oct 2010 02:35:21 +0200
-Message-ID: <1287707727-5780-11-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v5 12/16] mingw: import poll-emulation from gnulib
+Date: Fri, 22 Oct 2010 02:35:23 +0200
+Message-ID: <1287707727-5780-13-git-send-email-kusmabite@gmail.com>
 References: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 Cc: msysgit@googlegroups.com,
 	j6t@kdbg.org,
 	avarab@gmail.com,
 	sunshine@sunshineco.com,
 	jrnieder@gmail.com,
 	schwab@linux-m68k.org,
-	patthoyts@gmail.com,
-	=?UTF-8?q?Martin=20Storsj=C3=B6?= <martin@martin.st>
+	patthoyts@gmail.com
 To: git@vger.kernel.org
-X-From: msysgit+bncCOPdven-DxCXuYPmBBoELxm-jw@googlegroups.com Fri Oct 22 02:37:07 2010
-Return-path: <msysgit+bncCOPdven-DxCXuYPmBBoELxm-jw@googlegroups.com>
+X-From: msysgit+bncCOPdven-DxCduYPmBBoE8wvxLA@googlegroups.com Fri Oct 22 02:37:09 2010
+Return-path: <msysgit+bncCOPdven-DxCduYPmBBoE8wvxLA@googlegroups.com>
 Envelope-to: gcvm-msysgit@m.gmane.org
-Received: from mail-ww0-f58.google.com ([74.125.82.58])
+Received: from mail-wy0-f186.google.com ([74.125.82.186])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <msysgit+bncCOPdven-DxCXuYPmBBoELxm-jw@googlegroups.com>)
-	id 1P95d1-0002Um-8K
-	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:37:03 +0200
-Received: by mail-ww0-f58.google.com with SMTP id 28sf120656wwb.3
-        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:37:03 -0700 (PDT)
+	(envelope-from <msysgit+bncCOPdven-DxCduYPmBBoE8wvxLA@googlegroups.com>)
+	id 1P95d7-0002V4-AP
+	for gcvm-msysgit@m.gmane.org; Fri, 22 Oct 2010 02:37:09 +0200
+Received: by mail-wy0-f186.google.com with SMTP id 11sf139996wyi.3
+        for <gcvm-msysgit@m.gmane.org>; Thu, 21 Oct 2010 17:37:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlegroups.com; s=beta;
-        h=domainkey-signature:received:x-beenthere:received:received:received
-         :received:received-spf:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
+        h=domainkey-signature:received:mime-version:x-beenthere:received
+         :received:received:received:received-spf:received:received:received
+         :from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :x-original-sender:x-original-authentication-results:precedence
          :mailing-list:list-id:list-post:list-help:list-archive:sender
-         :list-subscribe:list-unsubscribe:content-type
-         :content-transfer-encoding;
-        bh=AGa45tl2UrB+iH3YIC9cF+TxylosH2/BdjLAuH0g00A=;
-        b=2rzCSuu1ydcr9XwgjEoqv9tp/wMsdMD6EQiktn4VUEkIGBVbgQLxg65KoDzVmlyBIO
-         LdTjJTiZGhClPIN8Uun1pRkx/gdxOG2Fe1X/scEQY9DvIaVnitROmvR2m7eUD1r1Br8D
-         rvcNJ/lgiS71sK0zd/oTm8D+g8gZ/DnjOdAQA=
+         :list-subscribe:list-unsubscribe;
+        bh=/UIhnkDtSKcbdjUAks76k6KKi9c8hzWK3om2AD/qBtw=;
+        b=TB02y9ezfU/M4JgezpK6XyWq83H8AAgeXmwuYhiP45ut/KP0EGCcf38tmQaWhD1tVf
+         tzoModvJKkbnxLljbL0DhakAZL8q9++hCra/Fx7UmoZBxwO4GotSxFcE1M8uqB2RSURu
+         W4ZUAhhzq9eASXYpuCQo2S+vq2Jg3JkhDctZ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlegroups.com; s=beta;
-        h=x-beenthere:received-spf:from:to:cc:subject:date:message-id
-         :x-mailer:in-reply-to:references:mime-version:x-original-sender
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:x-original-sender
          :x-original-authentication-results:precedence:mailing-list:list-id
          :list-post:list-help:list-archive:sender:list-subscribe
-         :list-unsubscribe:content-type:content-transfer-encoding;
-        b=Ai14WxVIVGpslcnBjEK2NAgVkK3P5fSFe0PocQyoRCfe/JiEGaq+MQ1lKGSuF8EwX1
-         hR37cK8Whw1E94IxA0gtbUHd0eYqJP23fhcpQFEHoVhEI/btjqR8/qdOMT3j8WSa/Zov
-         vpfR+nTcwHvhV+YHQVrnYPcYUBtUMP2fL2/8U=
-Received: by 10.216.240.140 with SMTP id e12mr288140wer.0.1287707799299;
-        Thu, 21 Oct 2010 17:36:39 -0700 (PDT)
+         :list-unsubscribe;
+        b=lh+IBYeC61H9cq+244N40UnLmONS5XrNQfaXCfRZ0nP0n29ywAlCdYptZQYTHj/aYm
+         zo/hRhTZvlKLKBOcloqCft3k0frJyPnKZ+wMZxaokfI1uSnxr/9EpZ3hProSyTfQYgbO
+         J9VDSyUhj1iiMb8+OfyRS/8TvIqF2y69qE/zg=
+Received: by 10.216.158.145 with SMTP id q17mr227556wek.29.1287707805734;
+        Thu, 21 Oct 2010 17:36:45 -0700 (PDT)
 X-BeenThere: msysgit@googlegroups.com
-Received: by 10.14.24.73 with SMTP id w49ls269152eew.4.p; Thu, 21 Oct 2010
- 17:36:38 -0700 (PDT)
-Received: by 10.14.119.72 with SMTP id m48mr153806eeh.22.1287707798453;
-        Thu, 21 Oct 2010 17:36:38 -0700 (PDT)
-Received: by 10.14.119.72 with SMTP id m48mr153805eeh.22.1287707798420;
-        Thu, 21 Oct 2010 17:36:38 -0700 (PDT)
-Received: from mail-ey0-f179.google.com (mail-ey0-f179.google.com [209.85.215.179])
-        by gmr-mx.google.com with ESMTP id r57si1452114eeh.5.2010.10.21.17.36.37;
-        Thu, 21 Oct 2010 17:36:37 -0700 (PDT)
-Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.179 as permitted sender) client-ip=209.85.215.179;
-Received: by eyg24 with SMTP id 24so213335eyg.10
-        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:36:37 -0700 (PDT)
-Received: by 10.14.48.73 with SMTP id u49mr1487176eeb.36.1287707797277;
-        Thu, 21 Oct 2010 17:36:37 -0700 (PDT)
+Received: by 10.14.24.73 with SMTP id w49ls269153eew.4.p; Thu, 21 Oct 2010
+ 17:36:43 -0700 (PDT)
+Received: by 10.14.37.1 with SMTP id x1mr187394eea.5.1287707803746;
+        Thu, 21 Oct 2010 17:36:43 -0700 (PDT)
+Received: by 10.14.37.1 with SMTP id x1mr187393eea.5.1287707803708;
+        Thu, 21 Oct 2010 17:36:43 -0700 (PDT)
+Received: from mail-ew0-f48.google.com (mail-ew0-f48.google.com [209.85.215.48])
+        by gmr-mx.google.com with ESMTP id t3si533073eeh.3.2010.10.21.17.36.42;
+        Thu, 21 Oct 2010 17:36:42 -0700 (PDT)
+Received-SPF: pass (google.com: domain of kusmabite@gmail.com designates 209.85.215.48 as permitted sender) client-ip=209.85.215.48;
+Received: by ewy3 with SMTP id 3so242888ewy.7
+        for <msysgit@googlegroups.com>; Thu, 21 Oct 2010 17:36:42 -0700 (PDT)
+Received: by 10.213.114.4 with SMTP id c4mr2528357ebq.38.1287707802530;
+        Thu, 21 Oct 2010 17:36:42 -0700 (PDT)
 Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id w20sm2480100eeh.12.2010.10.21.17.36.35
+        by mx.google.com with ESMTPS id b52sm2489577eei.1.2010.10.21.17.36.40
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 21 Oct 2010 17:36:36 -0700 (PDT)
+        Thu, 21 Oct 2010 17:36:41 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.165.gdfe39.dirty
 In-Reply-To: <1287707727-5780-1-git-send-email-kusmabite@gmail.com>
 X-Original-Sender: kusmabite@gmail.com
 X-Original-Authentication-Results: gmr-mx.google.com; spf=pass (google.com:
- domain of kusmabite@gmail.com designates 209.85.215.179 as permitted sender)
+ domain of kusmabite@gmail.com designates 209.85.215.48 as permitted sender)
  smtp.mail=kusmabite@gmail.com; dkim=pass (test mode) header.i=@gmail.com
 Precedence: list
 Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
@@ -85,80 +80,683 @@ List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
 Sender: msysgit@googlegroups.com
 List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
 List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159623>
 
-From: Martin Storsjö <martin@martin.st>
+copy lib/poll.c and lib/poll.in.h verbatim from commit 0a05120 in
+git://git.savannah.gnu.org/gnulib.git to compat/win32/sys/poll.[ch]
 
-Allow the node parameter to be null, which is used for getting
-the default bind address.
+To upgrade this code in the future, branch out from this commit, copy
+new versions of the files above on top, and merge back the result.
 
-Also allow the hints parameter to be null, to improve standard
-conformance of the stub implementation a little.
-
-Signed-off-by: Martin Storsjo <martin@martin.st>
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.c |   28 +++++++++++++++++++++-------
- 1 files changed, 21 insertions(+), 7 deletions(-)
+ compat/win32/sys/poll.c |  597 +++++++++++++++++++++++++++++++++++++++++++++++
+ compat/win32/sys/poll.h |   53 +++++
+ 2 files changed, 650 insertions(+), 0 deletions(-)
+ create mode 100644 compat/win32/sys/poll.c
+ create mode 100644 compat/win32/sys/poll.h
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 21d1c2c..d88c0d0 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1035,19 +1035,22 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
- 				   const struct addrinfo *hints,
- 				   struct addrinfo **res)
- {
--	struct hostent *h = gethostbyname(node);
-+	struct hostent *h = NULL;
- 	struct addrinfo *ai;
- 	struct sockaddr_in *sin;
- 
--	if (!h)
--		return WSAGetLastError();
-+	if (node) {
-+		h = gethostbyname(node);
-+		if (!h)
-+			return WSAGetLastError();
-+	}
- 
- 	ai = xmalloc(sizeof(struct addrinfo));
- 	*res = ai;
- 	ai->ai_flags = 0;
- 	ai->ai_family = AF_INET;
--	ai->ai_socktype = hints->ai_socktype;
--	switch (hints->ai_socktype) {
-+	ai->ai_socktype = hints ? hints->ai_socktype : 0;
-+	switch (ai->ai_socktype) {
- 	case SOCK_STREAM:
- 		ai->ai_protocol = IPPROTO_TCP;
- 		break;
-@@ -1059,14 +1062,25 @@ static int WSAAPI getaddrinfo_stub(const char *node, const char *service,
- 		break;
- 	}
- 	ai->ai_addrlen = sizeof(struct sockaddr_in);
--	ai->ai_canonname = strdup(h->h_name);
-+	if (hints && (hints->ai_flags & AI_CANONNAME))
-+		ai->ai_canonname = h ? strdup(h->h_name) : NULL;
-+	else
-+		ai->ai_canonname = NULL;
- 
- 	sin = xmalloc(ai->ai_addrlen);
- 	memset(sin, 0, ai->ai_addrlen);
- 	sin->sin_family = AF_INET;
-+	/* Note: getaddrinfo is supposed to allow service to be a string,
-+	 * which should be looked up using getservbyname. This is
-+	 * currently not implemented */
- 	if (service)
- 		sin->sin_port = htons(atoi(service));
--	sin->sin_addr = *(struct in_addr *)h->h_addr;
-+	if (h)
-+		sin->sin_addr = *(struct in_addr *)h->h_addr;
-+	else if (hints && (hints->ai_flags & AI_PASSIVE))
-+		sin->sin_addr.s_addr = INADDR_ANY;
-+	else
-+		sin->sin_addr.s_addr = INADDR_LOOPBACK;
- 	ai->ai_addr = (struct sockaddr *)sin;
- 	ai->ai_next = 0;
- 	return 0;
+diff --git a/compat/win32/sys/poll.c b/compat/win32/sys/poll.c
+new file mode 100644
+index 0000000..7c52cb6
+--- /dev/null
++++ b/compat/win32/sys/poll.c
+@@ -0,0 +1,597 @@
++/* Emulation for poll(2)
++   Contributed by Paolo Bonzini.
++
++   Copyright 2001-2003, 2006-2010 Free Software Foundation, Inc.
++
++   This file is part of gnulib.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2, or (at your option)
++   any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License along
++   with this program; if not, write to the Free Software Foundation,
++   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
++
++/* Tell gcc not to warn about the (nfd < 0) tests, below.  */
++#if (__GNUC__ == 4 && 3 <= __GNUC_MINOR__) || 4 < __GNUC__
++# pragma GCC diagnostic ignored "-Wtype-limits"
++#endif
++
++#include <config.h>
++#include <alloca.h>
++
++#include <sys/types.h>
++#include "poll.h"
++#include <errno.h>
++#include <limits.h>
++#include <assert.h>
++
++#if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
++# define WIN32_NATIVE
++# include <winsock2.h>
++# include <windows.h>
++# include <io.h>
++# include <stdio.h>
++# include <conio.h>
++#else
++# include <sys/time.h>
++# include <sys/socket.h>
++# include <sys/select.h>
++# include <unistd.h>
++#endif
++
++#ifdef HAVE_SYS_IOCTL_H
++# include <sys/ioctl.h>
++#endif
++#ifdef HAVE_SYS_FILIO_H
++# include <sys/filio.h>
++#endif
++
++#include <time.h>
++
++#ifndef INFTIM
++# define INFTIM (-1)
++#endif
++
++/* BeOS does not have MSG_PEEK.  */
++#ifndef MSG_PEEK
++# define MSG_PEEK 0
++#endif
++
++#ifdef WIN32_NATIVE
++
++#define IsConsoleHandle(h) (((long) (h) & 3) == 3)
++
++static BOOL
++IsSocketHandle (HANDLE h)
++{
++  WSANETWORKEVENTS ev;
++
++  if (IsConsoleHandle (h))
++    return FALSE;
++
++  /* Under Wine, it seems that getsockopt returns 0 for pipes too.
++     WSAEnumNetworkEvents instead distinguishes the two correctly.  */
++  ev.lNetworkEvents = 0xDEADBEEF;
++  WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
++  return ev.lNetworkEvents != 0xDEADBEEF;
++}
++
++/* Declare data structures for ntdll functions.  */
++typedef struct _FILE_PIPE_LOCAL_INFORMATION {
++  ULONG NamedPipeType;
++  ULONG NamedPipeConfiguration;
++  ULONG MaximumInstances;
++  ULONG CurrentInstances;
++  ULONG InboundQuota;
++  ULONG ReadDataAvailable;
++  ULONG OutboundQuota;
++  ULONG WriteQuotaAvailable;
++  ULONG NamedPipeState;
++  ULONG NamedPipeEnd;
++} FILE_PIPE_LOCAL_INFORMATION, *PFILE_PIPE_LOCAL_INFORMATION;
++
++typedef struct _IO_STATUS_BLOCK
++{
++  union {
++    DWORD Status;
++    PVOID Pointer;
++  } u;
++  ULONG_PTR Information;
++} IO_STATUS_BLOCK, *PIO_STATUS_BLOCK;
++
++typedef enum _FILE_INFORMATION_CLASS {
++  FilePipeLocalInformation = 24
++} FILE_INFORMATION_CLASS, *PFILE_INFORMATION_CLASS;
++
++typedef DWORD (WINAPI *PNtQueryInformationFile)
++         (HANDLE, IO_STATUS_BLOCK *, VOID *, ULONG, FILE_INFORMATION_CLASS);
++
++# ifndef PIPE_BUF
++#  define PIPE_BUF      512
++# endif
++
++/* Compute revents values for file handle H.  If some events cannot happen
++   for the handle, eliminate them from *P_SOUGHT.  */
++
++static int
++win32_compute_revents (HANDLE h, int *p_sought)
++{
++  int i, ret, happened;
++  INPUT_RECORD *irbuffer;
++  DWORD avail, nbuffer;
++  BOOL bRet;
++  IO_STATUS_BLOCK iosb;
++  FILE_PIPE_LOCAL_INFORMATION fpli;
++  static PNtQueryInformationFile NtQueryInformationFile;
++  static BOOL once_only;
++
++  switch (GetFileType (h))
++    {
++    case FILE_TYPE_PIPE:
++      if (!once_only)
++        {
++          NtQueryInformationFile = (PNtQueryInformationFile)
++            GetProcAddress (GetModuleHandle ("ntdll.dll"),
++                            "NtQueryInformationFile");
++          once_only = TRUE;
++        }
++
++      happened = 0;
++      if (PeekNamedPipe (h, NULL, 0, NULL, &avail, NULL) != 0)
++        {
++          if (avail)
++            happened |= *p_sought & (POLLIN | POLLRDNORM);
++        }
++      else if (GetLastError () == ERROR_BROKEN_PIPE)
++        happened |= POLLHUP;
++
++      else
++        {
++          /* It was the write-end of the pipe.  Check if it is writable.
++             If NtQueryInformationFile fails, optimistically assume the pipe is
++             writable.  This could happen on Win9x, where NtQueryInformationFile
++             is not available, or if we inherit a pipe that doesn't permit
++             FILE_READ_ATTRIBUTES access on the write end (I think this should
++             not happen since WinXP SP2; WINE seems fine too).  Otherwise,
++             ensure that enough space is available for atomic writes.  */
++          memset (&iosb, 0, sizeof (iosb));
++          memset (&fpli, 0, sizeof (fpli));
++
++          if (!NtQueryInformationFile
++              || NtQueryInformationFile (h, &iosb, &fpli, sizeof (fpli),
++                                         FilePipeLocalInformation)
++              || fpli.WriteQuotaAvailable >= PIPE_BUF
++              || (fpli.OutboundQuota < PIPE_BUF &&
++                  fpli.WriteQuotaAvailable == fpli.OutboundQuota))
++            happened |= *p_sought & (POLLOUT | POLLWRNORM | POLLWRBAND);
++        }
++      return happened;
++
++    case FILE_TYPE_CHAR:
++      ret = WaitForSingleObject (h, 0);
++      if (!IsConsoleHandle (h))
++        return ret == WAIT_OBJECT_0 ? *p_sought & ~(POLLPRI | POLLRDBAND) : 0;
++
++      nbuffer = avail = 0;
++      bRet = GetNumberOfConsoleInputEvents (h, &nbuffer);
++      if (bRet)
++        {
++          /* Input buffer.  */
++          *p_sought &= POLLIN | POLLRDNORM;
++          if (nbuffer == 0)
++            return POLLHUP;
++          if (!*p_sought)
++            return 0;
++
++          irbuffer = (INPUT_RECORD *) alloca (nbuffer * sizeof (INPUT_RECORD));
++          bRet = PeekConsoleInput (h, irbuffer, nbuffer, &avail);
++          if (!bRet || avail == 0)
++            return POLLHUP;
++
++          for (i = 0; i < avail; i++)
++            if (irbuffer[i].EventType == KEY_EVENT)
++              return *p_sought;
++          return 0;
++        }
++      else
++        {
++          /* Screen buffer.  */
++          *p_sought &= POLLOUT | POLLWRNORM | POLLWRBAND;
++          return *p_sought;
++        }
++
++    default:
++      ret = WaitForSingleObject (h, 0);
++      if (ret == WAIT_OBJECT_0)
++        return *p_sought & ~(POLLPRI | POLLRDBAND);
++
++      return *p_sought & (POLLOUT | POLLWRNORM | POLLWRBAND);
++    }
++}
++
++/* Convert fd_sets returned by select into revents values.  */
++
++static int
++win32_compute_revents_socket (SOCKET h, int sought, long lNetworkEvents)
++{
++  int happened = 0;
++
++  if ((lNetworkEvents & (FD_READ | FD_ACCEPT | FD_CLOSE)) == FD_ACCEPT)
++    happened |= (POLLIN | POLLRDNORM) & sought;
++
++  else if (lNetworkEvents & (FD_READ | FD_ACCEPT | FD_CLOSE))
++    {
++      int r, error;
++
++      char data[64];
++      WSASetLastError (0);
++      r = recv (h, data, sizeof (data), MSG_PEEK);
++      error = WSAGetLastError ();
++      WSASetLastError (0);
++
++      if (r > 0 || error == WSAENOTCONN)
++        happened |= (POLLIN | POLLRDNORM) & sought;
++
++      /* Distinguish hung-up sockets from other errors.  */
++      else if (r == 0 || error == WSAESHUTDOWN || error == WSAECONNRESET
++               || error == WSAECONNABORTED || error == WSAENETRESET)
++        happened |= POLLHUP;
++
++      else
++        happened |= POLLERR;
++    }
++
++  if (lNetworkEvents & (FD_WRITE | FD_CONNECT))
++    happened |= (POLLOUT | POLLWRNORM | POLLWRBAND) & sought;
++
++  if (lNetworkEvents & FD_OOB)
++    happened |= (POLLPRI | POLLRDBAND) & sought;
++
++  return happened;
++}
++
++#else /* !MinGW */
++
++/* Convert select(2) returned fd_sets into poll(2) revents values.  */
++static int
++compute_revents (int fd, int sought, fd_set *rfds, fd_set *wfds, fd_set *efds)
++{
++  int happened = 0;
++  if (FD_ISSET (fd, rfds))
++    {
++      int r;
++      int socket_errno;
++
++# if defined __MACH__ && defined __APPLE__
++      /* There is a bug in Mac OS X that causes it to ignore MSG_PEEK
++         for some kinds of descriptors.  Detect if this descriptor is a
++         connected socket, a server socket, or something else using a
++         0-byte recv, and use ioctl(2) to detect POLLHUP.  */
++      r = recv (fd, NULL, 0, MSG_PEEK);
++      socket_errno = (r < 0) ? errno : 0;
++      if (r == 0 || socket_errno == ENOTSOCK)
++        ioctl (fd, FIONREAD, &r);
++# else
++      char data[64];
++      r = recv (fd, data, sizeof (data), MSG_PEEK);
++      socket_errno = (r < 0) ? errno : 0;
++# endif
++      if (r == 0)
++        happened |= POLLHUP;
++
++      /* If the event happened on an unconnected server socket,
++         that's fine. */
++      else if (r > 0 || ( /* (r == -1) && */ socket_errno == ENOTCONN))
++        happened |= (POLLIN | POLLRDNORM) & sought;
++
++      /* Distinguish hung-up sockets from other errors.  */
++      else if (socket_errno == ESHUTDOWN || socket_errno == ECONNRESET
++               || socket_errno == ECONNABORTED || socket_errno == ENETRESET)
++        happened |= POLLHUP;
++
++      else
++        happened |= POLLERR;
++    }
++
++  if (FD_ISSET (fd, wfds))
++    happened |= (POLLOUT | POLLWRNORM | POLLWRBAND) & sought;
++
++  if (FD_ISSET (fd, efds))
++    happened |= (POLLPRI | POLLRDBAND) & sought;
++
++  return happened;
++}
++#endif /* !MinGW */
++
++int
++poll (pfd, nfd, timeout)
++     struct pollfd *pfd;
++     nfds_t nfd;
++     int timeout;
++{
++#ifndef WIN32_NATIVE
++  fd_set rfds, wfds, efds;
++  struct timeval tv;
++  struct timeval *ptv;
++  int maxfd, rc;
++  nfds_t i;
++
++# ifdef _SC_OPEN_MAX
++  static int sc_open_max = -1;
++
++  if (nfd < 0
++      || (nfd > sc_open_max
++          && (sc_open_max != -1
++              || nfd > (sc_open_max = sysconf (_SC_OPEN_MAX)))))
++    {
++      errno = EINVAL;
++      return -1;
++    }
++# else /* !_SC_OPEN_MAX */
++#  ifdef OPEN_MAX
++  if (nfd < 0 || nfd > OPEN_MAX)
++    {
++      errno = EINVAL;
++      return -1;
++    }
++#  endif /* OPEN_MAX -- else, no check is needed */
++# endif /* !_SC_OPEN_MAX */
++
++  /* EFAULT is not necessary to implement, but let's do it in the
++     simplest case. */
++  if (!pfd)
++    {
++      errno = EFAULT;
++      return -1;
++    }
++
++  /* convert timeout number into a timeval structure */
++  if (timeout == 0)
++    {
++      ptv = &tv;
++      ptv->tv_sec = 0;
++      ptv->tv_usec = 0;
++    }
++  else if (timeout > 0)
++    {
++      ptv = &tv;
++      ptv->tv_sec = timeout / 1000;
++      ptv->tv_usec = (timeout % 1000) * 1000;
++    }
++  else if (timeout == INFTIM)
++    /* wait forever */
++    ptv = NULL;
++  else
++    {
++      errno = EINVAL;
++      return -1;
++    }
++
++  /* create fd sets and determine max fd */
++  maxfd = -1;
++  FD_ZERO (&rfds);
++  FD_ZERO (&wfds);
++  FD_ZERO (&efds);
++  for (i = 0; i < nfd; i++)
++    {
++      if (pfd[i].fd < 0)
++        continue;
++
++      if (pfd[i].events & (POLLIN | POLLRDNORM))
++        FD_SET (pfd[i].fd, &rfds);
++
++      /* see select(2): "the only exceptional condition detectable
++         is out-of-band data received on a socket", hence we push
++         POLLWRBAND events onto wfds instead of efds. */
++      if (pfd[i].events & (POLLOUT | POLLWRNORM | POLLWRBAND))
++        FD_SET (pfd[i].fd, &wfds);
++      if (pfd[i].events & (POLLPRI | POLLRDBAND))
++        FD_SET (pfd[i].fd, &efds);
++      if (pfd[i].fd >= maxfd
++          && (pfd[i].events & (POLLIN | POLLOUT | POLLPRI
++                               | POLLRDNORM | POLLRDBAND
++                               | POLLWRNORM | POLLWRBAND)))
++        {
++          maxfd = pfd[i].fd;
++          if (maxfd > FD_SETSIZE)
++            {
++              errno = EOVERFLOW;
++              return -1;
++            }
++        }
++    }
++
++  /* examine fd sets */
++  rc = select (maxfd + 1, &rfds, &wfds, &efds, ptv);
++  if (rc < 0)
++    return rc;
++
++  /* establish results */
++  rc = 0;
++  for (i = 0; i < nfd; i++)
++    if (pfd[i].fd < 0)
++      pfd[i].revents = 0;
++    else
++      {
++        int happened = compute_revents (pfd[i].fd, pfd[i].events,
++                                        &rfds, &wfds, &efds);
++        if (happened)
++          {
++            pfd[i].revents = happened;
++            rc++;
++          }
++      }
++
++  return rc;
++#else
++  static struct timeval tv0;
++  static HANDLE hEvent;
++  WSANETWORKEVENTS ev;
++  HANDLE h, handle_array[FD_SETSIZE + 2];
++  DWORD ret, wait_timeout, nhandles;
++  fd_set rfds, wfds, xfds;
++  BOOL poll_again;
++  MSG msg;
++  int rc = 0;
++  nfds_t i;
++
++  if (nfd < 0 || timeout < -1)
++    {
++      errno = EINVAL;
++      return -1;
++    }
++
++  if (!hEvent)
++    hEvent = CreateEvent (NULL, FALSE, FALSE, NULL);
++
++  handle_array[0] = hEvent;
++  nhandles = 1;
++  FD_ZERO (&rfds);
++  FD_ZERO (&wfds);
++  FD_ZERO (&xfds);
++
++  /* Classify socket handles and create fd sets. */
++  for (i = 0; i < nfd; i++)
++    {
++      int sought = pfd[i].events;
++      pfd[i].revents = 0;
++      if (pfd[i].fd < 0)
++        continue;
++      if (!(sought & (POLLIN | POLLRDNORM | POLLOUT | POLLWRNORM | POLLWRBAND
++                      | POLLPRI | POLLRDBAND)))
++        continue;
++
++      h = (HANDLE) _get_osfhandle (pfd[i].fd);
++      assert (h != NULL);
++      if (IsSocketHandle (h))
++        {
++          int requested = FD_CLOSE;
++
++          /* see above; socket handles are mapped onto select.  */
++          if (sought & (POLLIN | POLLRDNORM))
++            {
++              requested |= FD_READ | FD_ACCEPT;
++              FD_SET ((SOCKET) h, &rfds);
++            }
++          if (sought & (POLLOUT | POLLWRNORM | POLLWRBAND))
++            {
++              requested |= FD_WRITE | FD_CONNECT;
++              FD_SET ((SOCKET) h, &wfds);
++            }
++          if (sought & (POLLPRI | POLLRDBAND))
++            {
++              requested |= FD_OOB;
++              FD_SET ((SOCKET) h, &xfds);
++            }
++
++          if (requested)
++            WSAEventSelect ((SOCKET) h, hEvent, requested);
++        }
++      else
++        {
++          /* Poll now.  If we get an event, do not poll again.  Also,
++             screen buffer handles are waitable, and they'll block until
++             a character is available.  win32_compute_revents eliminates
++             bits for the "wrong" direction. */
++          pfd[i].revents = win32_compute_revents (h, &sought);
++          if (sought)
++            handle_array[nhandles++] = h;
++          if (pfd[i].revents)
++            timeout = 0;
++        }
++    }
++
++  if (select (0, &rfds, &wfds, &xfds, &tv0) > 0)
++    {
++      /* Do MsgWaitForMultipleObjects anyway to dispatch messages, but
++         no need to call select again.  */
++      poll_again = FALSE;
++      wait_timeout = 0;
++    }
++  else
++    {
++      poll_again = TRUE;
++      if (timeout == INFTIM)
++        wait_timeout = INFINITE;
++      else
++        wait_timeout = timeout;
++    }
++
++  for (;;)
++    {
++      ret = MsgWaitForMultipleObjects (nhandles, handle_array, FALSE,
++                                       wait_timeout, QS_ALLINPUT);
++
++      if (ret == WAIT_OBJECT_0 + nhandles)
++        {
++          /* new input of some other kind */
++          BOOL bRet;
++          while ((bRet = PeekMessage (&msg, NULL, 0, 0, PM_REMOVE)) != 0)
++            {
++              TranslateMessage (&msg);
++              DispatchMessage (&msg);
++            }
++        }
++      else
++        break;
++    }
++
++  if (poll_again)
++    select (0, &rfds, &wfds, &xfds, &tv0);
++
++  /* Place a sentinel at the end of the array.  */
++  handle_array[nhandles] = NULL;
++  nhandles = 1;
++  for (i = 0; i < nfd; i++)
++    {
++      int happened;
++
++      if (pfd[i].fd < 0)
++        continue;
++      if (!(pfd[i].events & (POLLIN | POLLRDNORM |
++                             POLLOUT | POLLWRNORM | POLLWRBAND)))
++        continue;
++
++      h = (HANDLE) _get_osfhandle (pfd[i].fd);
++      if (h != handle_array[nhandles])
++        {
++          /* It's a socket.  */
++          WSAEnumNetworkEvents ((SOCKET) h, NULL, &ev);
++          WSAEventSelect ((SOCKET) h, 0, 0);
++
++          /* If we're lucky, WSAEnumNetworkEvents already provided a way
++             to distinguish FD_READ and FD_ACCEPT; this saves a recv later.  */
++          if (FD_ISSET ((SOCKET) h, &rfds)
++              && !(ev.lNetworkEvents & (FD_READ | FD_ACCEPT)))
++            ev.lNetworkEvents |= FD_READ | FD_ACCEPT;
++          if (FD_ISSET ((SOCKET) h, &wfds))
++            ev.lNetworkEvents |= FD_WRITE | FD_CONNECT;
++          if (FD_ISSET ((SOCKET) h, &xfds))
++            ev.lNetworkEvents |= FD_OOB;
++
++          happened = win32_compute_revents_socket ((SOCKET) h, pfd[i].events,
++                                                   ev.lNetworkEvents);
++        }
++      else
++        {
++          /* Not a socket.  */
++          int sought = pfd[i].events;
++          happened = win32_compute_revents (h, &sought);
++          nhandles++;
++        }
++
++       if ((pfd[i].revents |= happened) != 0)
++        rc++;
++    }
++
++  return rc;
++#endif
++}
+diff --git a/compat/win32/sys/poll.h b/compat/win32/sys/poll.h
+new file mode 100644
+index 0000000..b7aa59d
+--- /dev/null
++++ b/compat/win32/sys/poll.h
+@@ -0,0 +1,53 @@
++/* Header for poll(2) emulation
++   Contributed by Paolo Bonzini.
++
++   Copyright 2001, 2002, 2003, 2007, 2009, 2010 Free Software Foundation, Inc.
++
++   This file is part of gnulib.
++
++   This program is free software; you can redistribute it and/or modify
++   it under the terms of the GNU General Public License as published by
++   the Free Software Foundation; either version 2, or (at your option)
++   any later version.
++
++   This program is distributed in the hope that it will be useful,
++   but WITHOUT ANY WARRANTY; without even the implied warranty of
++   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++   GNU General Public License for more details.
++
++   You should have received a copy of the GNU General Public License along
++   with this program; if not, write to the Free Software Foundation,
++   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.  */
++
++#ifndef _GL_POLL_H
++#define _GL_POLL_H
++
++/* fake a poll(2) environment */
++#define POLLIN      0x0001      /* any readable data available   */
++#define POLLPRI     0x0002      /* OOB/Urgent readable data      */
++#define POLLOUT     0x0004      /* file descriptor is writeable  */
++#define POLLERR     0x0008      /* some poll error occurred      */
++#define POLLHUP     0x0010      /* file descriptor was "hung up" */
++#define POLLNVAL    0x0020      /* requested events "invalid"    */
++#define POLLRDNORM  0x0040
++#define POLLRDBAND  0x0080
++#define POLLWRNORM  0x0100
++#define POLLWRBAND  0x0200
++
++struct pollfd
++{
++  int fd;                       /* which file descriptor to poll */
++  short events;                 /* events we are interested in   */
++  short revents;                /* events found on return        */
++};
++
++typedef unsigned long nfds_t;
++
++extern int poll (struct pollfd *pfd, nfds_t nfd, int timeout);
++
++/* Define INFTIM only if doing so conforms to POSIX.  */
++#if !defined (_POSIX_C_SOURCE) && !defined (_XOPEN_SOURCE)
++#define INFTIM (-1)
++#endif
++
++#endif /* _GL_POLL_H */
 -- 
 1.7.3.1.199.g72340
