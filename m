@@ -1,78 +1,103 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: should Documentation/howto/setup-git-server-over-http.txt be
- marked obsolete?
-Date: Sat, 23 Oct 2010 11:59:00 +0530
-Message-ID: <AANLkTi=mP6r=QSLs-rVv3H1PKpwA3NQZW90Nwn1Zu3V6@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: should Documentation/howto/setup-git-server-over-http.txt be marked obsolete?
+Date: Sat, 23 Oct 2010 00:24:50 -0700 (PDT)
+Message-ID: <m3ocaljrs2.fsf@localhost.localdomain>
 References: <AANLkTimJe9vEUwWM482NLmfHGYjnsKD5RAryQO=Zyqjj@mail.gmail.com>
 	<7vsjzyrh2w.fsf@alter.siamese.dyndns.org>
 	<AANLkTinv3kzvtC_Pq4F0cM_JqU7-Q2a=sWs8YSxbMiPs@mail.gmail.com>
-	<7viq0um5vt.fsf@alter.siamese.dyndns.org>
+	<20101022150627.GB9224@burratino>
+	<AANLkTimTVviTBfY1Zeebyhufr36U+0w7VYf4f=25FMFi@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-15
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 23 08:29:26 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 23 09:25:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9Xba-0007rL-77
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 08:29:26 +0200
+	id 1P9YTa-0000XA-Gp
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 09:25:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752263Ab0JWG3E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 02:29:04 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:60328 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752041Ab0JWG3C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Oct 2010 02:29:02 -0400
-Received: by ewy7 with SMTP id 7so2219157ewy.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 23:29:01 -0700 (PDT)
+	id S1753548Ab0JWHYx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 03:24:53 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46343 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753002Ab0JWHYx convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Oct 2010 03:24:53 -0400
+Received: by bwz11 with SMTP id 11so1164290bwz.19
+        for <git@vger.kernel.org>; Sat, 23 Oct 2010 00:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
          :content-transfer-encoding;
-        bh=yiJCn07UrVqOZKCAM29+5CGmmwtsnWve1bwGZ36azeE=;
-        b=u713BkR2bVtciRcHrn90nzR0+R8sXNX+sEXtK+SeUvyImcaY3ssK4JAJXyPwKZlzb6
-         X0s0JWzH3OsIx0zjamneSjQFn5vCpP4sGh6NQ/S7kwKJDiL8ZZn/f0wn91onqPEaCusJ
-         EvXuIO+m9+asBjqt3xOKnAIa2q25R9KaGWW6I=
+        bh=5AKWlOHUdXD5GH0vuV/oPMmt1Q1Rf0xkpduBu34vrtg=;
+        b=I1SdwW/mGSXbQxuKF8zDZIgDGCejet70y3wzidY1+3Vh4+8Svikhn7oMNWNqvSmCHk
+         OS+LpNvnc1lbt1gvXtQKfmo5DWGofCrPkM/VeQ7a7WrKI2OplTZJqiMO7ESkP3c9n8Mj
+         p4LWBpANIShMImRCVqUTaiBmz8h7fY86EL1GY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GjeNq93G+xuWpfV8cxDWmwiOHDMrYYlDqvQ7RAsBjCwT/uG9Ld6mbd7CNznCU6ZKoY
-         6ZW9fuGA9eTHAhYK3GkNNmaXN9UiDK12Kn+CynLBMtum9i63vs5K6dbZRR7v5DxhjAUj
-         S63odw37vhiIWqLDH2uVb+/seIGtXIPdybGcY=
-Received: by 10.213.102.4 with SMTP id e4mr158009ebo.3.1287815340936; Fri, 22
- Oct 2010 23:29:00 -0700 (PDT)
-Received: by 10.213.14.6 with HTTP; Fri, 22 Oct 2010 23:29:00 -0700 (PDT)
-In-Reply-To: <7viq0um5vt.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=nEQQIOZD19sbQCMHFr6hHUcApIQzBZfwqSTiKk+HWS9+NBGhVWwV8krjBR8YhfJePM
+         EEI0PRE7QMGqozvXRrxFXoWDdTrXaxf6B5G6mbNQfce7Dct0WUiKjxz6QhWwfOzZI7Zr
+         07DUXeiX88yK6Flsc2t0KNBycncJ7UamcerCs=
+Received: by 10.204.113.197 with SMTP id b5mr2090745bkq.151.1287818691444;
+        Sat, 23 Oct 2010 00:24:51 -0700 (PDT)
+Received: from localhost.localdomain (abvu212.neoplus.adsl.tpnet.pl [83.8.218.212])
+        by mx.google.com with ESMTPS id c40sm433986fay.0.2010.10.23.00.24.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 23 Oct 2010 00:24:50 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9N7OUUQ014093;
+	Sat, 23 Oct 2010 09:24:35 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9N7OE6I014082;
+	Sat, 23 Oct 2010 09:24:14 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTimTVviTBfY1Zeebyhufr36U+0w7VYf4f=25FMFi@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159774>
 
-On Sat, Oct 23, 2010 at 12:06 AM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
+Sitaram Chamarty <sitaramc@gmail.com> writes:
+> On Fri, Oct 22, 2010 at 8:36 PM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
+>> Sitaram Chamarty wrote:
+>>
+>>> I assumed that the new -- much more efficient (correct?) transport
+>>> would make the older (dumber) transport obsolete, and I didn't real=
+ise
+>>> it had any advantages over the new one.
+>>
+>> FWIW the old transport still has its place. =A0If your web host (e.g=
+=2E,
+>> an ISP) allows only static content (no CGI), then there is no choice=
+=2E
+>>
+>> Not so relevant for gitolite but still relevant in the world.
+>=20
+> Also I now realise the new transport requires Apache, so people with
+> other web servers probably need it too.
 
-> No; that would mean the next step would be (as you suggested)...
->
->>> =C2=A0- When the above two is done, insert one line "This describes=
- an older
->>> =C2=A0 way; see <<insert the name of the other document here>> for =
-insn to set
->>> =C2=A0 up an experimental smart HTTP server" at the beginning of th=
-e original
->>> =C2=A0 document.
+Why do people think that "smart" HTTP transport requires Apache web
+server?  If I understand it correctly provided git-http-backend is a
+simple CGI script, and requires CGI-capable web server and git
+installed on server.  Examples use Apache because probably that is
+what author was familiar with.  I don't see the reason why it
+shouldn't work e.g. with nginx or IIS...
 
-I meant to ask earlier but forgot.  Is this considered experimental sti=
-ll?
-
-> ... this one.
->
-> I trust you can take care of the gitolite documentation side ;-)
-
-;-)
+--=20
+Jakub Narebski
+Poland
+ShadeHawk on #git
