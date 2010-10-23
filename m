@@ -1,99 +1,104 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [long] worktree setup cases
-Date: Sat, 23 Oct 2010 17:12:35 +0700
-Message-ID: <AANLkTin-W_GF97APs8fHJim0pFbNDGKv6KAnWPDVbiKP@mail.gmail.com>
-References: <20101020085859.GA13135@do> <20101020190709.GB10537@burratino>
- <AANLkTimzfxJFz2FRVCJ7b4+icXMxpQGNo0WGm_BXzXNy@mail.gmail.com>
- <20101021033042.GA1891@burratino> <AANLkTikwApJ2EtJNiOZPHVrz6seJNP-zEqzH_b62ksLf@mail.gmail.com>
- <20101021160134.GA3732@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, fbriere@fbriere.net, drizzd@aon.at
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Enrico Weigelt <weigelt@metux.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 23 12:13:05 2010
+From: =?UTF-8?q?Martin=20Kr=C3=BCger?= <martin.krueger@gmx.com>
+Subject: [PATCH] correct folding of email-headers in conjunction with RFC2047
+Date: Sat, 23 Oct 2010 12:35:54 +0200
+Message-ID: <1287830154-12205-1-git-send-email-martin.krueger@gmx.com>
+Cc: =?UTF-8?q?Martin=20Kr=C3=BCger?= <martin.krueger@gmx.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 23 12:54:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9b60-0000JB-Kt
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 12:13:04 +0200
+	id 1P9bkG-0001wc-CL
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 12:54:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753986Ab0JWKM7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 06:12:59 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:64107 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753489Ab0JWKM5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 23 Oct 2010 06:12:57 -0400
-Received: by wyf28 with SMTP id 28so1737699wyf.19
-        for <git@vger.kernel.org>; Sat, 23 Oct 2010 03:12:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=raBqUHjN7UpRFTkWUrBaOweCcUOCLfqbnQQo0exaRto=;
-        b=Ci5DSp0WKHFEp9RxhhuOWZIDPEOUntiQ55VAXE6qXk7nSOAad5CAk9/f0YqzX4mGqk
-         D/f3yEQl3z3wnE9XIqYHvbCXq3crp5CBgqIETT6Rmtu0AXU0ze64qLTCkWCCxx7+DuKC
-         Lz+PAbGtZz8agnMM6fIHeAQVXZHIpJx2jwlYM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=otZZHXGIc253GulHZ/5SWC38tuXWxoqX7JPhciuaegEEXPdaBsmRV61yBBNip/GOrg
-         GHYTP9ggwCmNFcbbrWiMPG+keCb2VowSra8XlWUyV2XdmrYU9NfFeKSrBruvr4xcFAua
-         080gsvDJusjfIFvAri8isMN1Pek3JXbMUnvkY=
-Received: by 10.227.68.206 with SMTP id w14mr4028891wbi.144.1287828776053;
- Sat, 23 Oct 2010 03:12:56 -0700 (PDT)
-Received: by 10.216.241.138 with HTTP; Sat, 23 Oct 2010 03:12:35 -0700 (PDT)
-In-Reply-To: <20101021160134.GA3732@burratino>
+	id S1753620Ab0JWKxz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 06:53:55 -0400
+Received: from mailout01.t-online.de ([194.25.134.80]:50438 "EHLO
+	mailout01.t-online.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752562Ab0JWKxy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 06:53:54 -0400
+X-Greylist: delayed 1048 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Oct 2010 06:53:54 EDT
+Received: from fwd10.aul.t-online.de (fwd10.aul.t-online.de )
+	by mailout01.t-online.de with smtp 
+	id 1P9bSZ-0007oI-86; Sat, 23 Oct 2010 12:36:23 +0200
+Received: from twiggy.upnx.de (ZeMCN6Z6ZhL4VeZTn8Zdgy3jSKpdcBylq0--IbVX1thuFWYvzcxAWyy8DuzMGAVw9k@[91.60.48.172]) by fwd10.aul.t-online.de
+	with esmtp id 1P9bSX-1RofQG0; Sat, 23 Oct 2010 12:36:21 +0200
+Received: from doppelhertz.upnx.de (unknown [192.168.221.100])
+	by twiggy.upnx.de (Postfix) with ESMTP id 0379D1C125;
+	Sat, 23 Oct 2010 12:44:15 +0200 (CEST)
+Received: from martin by doppelhertz.upnx.de with local (Exim 4.72)
+	(envelope-from <martin@doppelhertz.upnx.de>)
+	id 1P9bSW-0003BN-0S; Sat, 23 Oct 2010 12:36:20 +0200
+X-Mailer: git-send-email 1.7.1
+X-ID: ZeMCN6Z6ZhL4VeZTn8Zdgy3jSKpdcBylq0--IbVX1thuFWYvzcxAWyy8DuzMGAVw9k@t-dialin.net
+X-TOI-MSGID: 70ac7978-197d-4f56-a689-5b94decc0d30
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159776>
 
-On Thu, Oct 21, 2010 at 11:01 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> Nguyen Thai Ngoc Duy wrote:
->> On Thu, Oct 21, 2010 at 10:30 AM, Jonathan Nieder <jrnieder@gmail.co=
-m> wrote:
->
->>> Speaking of which, it is not clear to me that core.worktree should
->>> fall under the forbidden case discussed above. =C2=A0If it does, wh=
-at is
->>> the point of making it configurable?
->>
->> I was not the one who introduced core.worktree, so I can't really
->> tell. Maybe less keystrokes?
->
-> Yeah, it seems you're totally right. :(
+according to RFC5322 a header must be passed unfolded to further processings.
+If the WSP after CRLF is replaced with =20 by RFC2047 encoding the folding is no longer recognized.
+So WSP indicating a folding must not be processed by the RFC2047 encoding.
+Because a WSP is not valid in an RFC2047 encoded header-chunk every folded line has to be encoded seperately.
+---
+ pretty.c |   25 ++++++++++++++++++++-----
+ 1 files changed, 20 insertions(+), 5 deletions(-)
 
-Actually I have my part in this mess too: f5e025a (Documentation:
-always respect core.worktree if set - 2009-12-29). I probably just
-updated the document according to the code. It matches what Enrico
-expects (i.e after .git discovery, worktree defaults is "../", if
-core.worktree exists, follow it instead). Going back to the first
-commit that introduced separate worktree, 892c41b (introduce
-GIT_WORK_TREE to specify the work tree - 2007-06-06), core.worktree is
-no different than --work-tree.
-
-So what should it behave? Either revert f5e025a and update the code to
-disregard/warn core.worktree if GIT_DIR/--work-tree is unset, or keep
-the current behavior, i.e. core.worktree is different from
---work-tree/GIT_WORK_TREE.
-
-The cleanup commit, e90fdc3 (Clean up work-tree handling -
-2007-08-01), also gives something interesting regarding bare repo:
-"--work-tree=3Dbla overrides GIT_WORK_TREE, _which overrides core.bare =
-=3D
-true_, which overrides core.worktree, which overrides GIT_DIR/.. when
-GIT_DIR ends in /.git, which overrides the directory in which .git/
-was found.". I don't like this overriding chain, which is why I
-proposed to die() if core.bare is set and worktree is explicitly
-specified.
---=20
-Duy
+diff --git a/pretty.c b/pretty.c
+index f85444b..8a78a4e 100644
+--- a/pretty.c
++++ b/pretty.c
+@@ -216,7 +216,7 @@ static int is_rfc2047_special(char ch)
+ static void add_rfc2047(struct strbuf *sb, const char *line, int len,
+ 		       const char *encoding)
+ {
+-	int i, last;
++	int i, last, num_foldings;
+ 
+ 	for (i = 0; i < len; i++) {
+ 		int ch = line[i];
+@@ -229,8 +229,14 @@ static void add_rfc2047(struct strbuf *sb, const char *line, int len,
+ 	return;
+ 
+ needquote:
+-	strbuf_grow(sb, len * 3 + strlen(encoding) + 100);
++        num_foldings=0;
++        for (i = 1; i < len; i++)
++          if(line[i]==' '&&line[i]=='\n')
++           num_foldings++;  
++ 
++	strbuf_grow(sb, len * 3 + num_foldings*(7+strlen(encoding)) + 100);
+ 	strbuf_addf(sb, "=?%s?q?", encoding);
++        unsigned last_ch=0;
+ 	for (i = last = 0; i < len; i++) {
+ 		unsigned ch = line[i] & 0xFF;
+ 		/*
+@@ -240,10 +246,19 @@ needquote:
+ 		 * leave the underscore in place.
+ 		 */
+ 		if (is_rfc2047_special(ch) || ch == ' ') {
+-			strbuf_add(sb, line + last, i - last);
+-			strbuf_addf(sb, "=%02X", ch);
+-			last = i + 1;
++                    if(!(ch == ' '&& last_ch=='\n')){
++                        strbuf_add(sb, line + last, i - last);
++			strbuf_addf(sb, "=%02X", ch);   
++                    }
++                    else{
++                     if(i>last+1)
++                      strbuf_add(sb, line + last, i - last-1);
++                     strbuf_addstr(sb, "?=\n ");
++                     strbuf_addf(sb, "=?%s?q?", encoding);
++                    }
++                  last = i + 1;
+ 		}
++           last_ch=ch;
+ 	}
+ 	strbuf_add(sb, line + last, len - last);
+ 	strbuf_addstr(sb, "?=");
+-- 
+1.7.1
