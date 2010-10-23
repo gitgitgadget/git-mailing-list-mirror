@@ -1,62 +1,77 @@
-From: Yann Dirson <ydirson@free.fr>
-Subject: Re: [PATCH] CodingGuidelines: add a note to help contributors
- catch some errors earlier.
-Date: Sat, 23 Oct 2010 20:48:30 +0200
-Message-ID: <20101023184830.GQ4983@home.lan>
-References: <1287843434-10890-1-git-send-email-ydirson@altern.org>
- <AANLkTikCr5yRHzetY9-T=_rg+PZM-e8ZnQvL79ucws+6@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 04/10] Change "tracking branch" to "remote-tracking
+ branch"
+Date: Sat, 23 Oct 2010 13:48:53 -0500
+Message-ID: <20101023184853.GH21040@burratino>
+References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1287851481-27952-5-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 23 20:48:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Thore Husfeldt <thore.husfeldt@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Oct 23 20:52:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9j93-0007Ze-Ly
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:48:46 +0200
+	id 1P9jCz-00019Q-Un
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:52:50 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758198Ab0JWSsj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 14:48:39 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:60342 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756619Ab0JWSsi (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 14:48:38 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 81543D480D9;
-	Sat, 23 Oct 2010 20:48:31 +0200 (CEST)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1P9j8o-0003xO-Bu; Sat, 23 Oct 2010 20:48:30 +0200
+	id S1758204Ab0JWSwp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 14:52:45 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:34272 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756619Ab0JWSwo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 14:52:44 -0400
+Received: by ywk9 with SMTP id 9so1416815ywk.19
+        for <git@vger.kernel.org>; Sat, 23 Oct 2010 11:52:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=R00IdsFoCE/PJaRN1p0khHfDUFxPdnLX510unKCHmfc=;
+        b=WN9+VrakQGjWWJIsRxfNQJ8n2GbF587hnlr5biEzJeBuqOzLMkh6E5Ew6QFRQAJFx5
+         dUFWTVRPja863JY025vDS4+EJQWi6YjbDN11/fqjQpODvFVcR1q/V2e7AMQPd4H0ARxn
+         6xQcePns6GQrh+cols69s5gOzRUaWVRW713gU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Txpx9ksObOleiKxdcU9UL+V0pGLqolPdZ8P1koq3eBLFvMeBCWVG1BcRAkIofyuQUu
+         y/qn/4PBSyl+huM96aXrzOpt9BXTjBn5akoangZsSmJ9+k+2q+SU6rt8IaNKuV/lzp5g
+         N3TXwhFXN7K/cPiVO5bQtHG4nIGpJ2F4S2FEA=
+Received: by 10.151.99.12 with SMTP id b12mr4716852ybm.193.1287859963909;
+        Sat, 23 Oct 2010 11:52:43 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id m45sm3679270yha.11.2010.10.23.11.52.42
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 23 Oct 2010 11:52:43 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <AANLkTikCr5yRHzetY9-T=_rg+PZM-e8ZnQvL79ucws+6@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <1287851481-27952-5-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159811>
 
-On Sat, Oct 23, 2010 at 03:11:19PM -0200, Thiago Farina wrote:
-> On Sat, Oct 23, 2010 at 12:17 PM, Yann Dirson <ydirson@altern.org> wr=
-ote:
-> > + - C code is expected to compile when the build is launched with t=
-he
-> > + =A0 following command:
-> > +
-> > + =A0 make CFLAGS=3D"-Wall -Wdeclaration-after-statement -Werror"
->=20
-> Why this is not in the Makefile by default? Also -Wall is already in
-> the Makefile.
+Matthieu Moy wrote:
 
-CFLAGS seems to be used for more than gcc, and -Wall seems to be
-portable enough to be overriden only in a couple of cases.  It would
-not be the same for those flags.
+> --- a/Documentation/glossary-content.txt
+> +++ b/Documentation/glossary-content.txt
+> @@ -131,7 +131,7 @@ to point at the new commit.
+>  	you have. In such these cases, you do not make a new <<def_merge,merge>>
+>  	<<def_commit,commit>> but instead just update to his
+>  	revision. This will happen frequently on a
+> -	<<def_tracking_branch,tracking branch>> of a remote
+> +	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
+>  	<<def_repository,repository>>.
 
-Also note that -Wdeclaration-after-statement is also mentionned in
-SubmittingPatches, but I still think it is a better place in
-CodingGuidelines, which contributers are most likely to use as a
-checklist before publishing.
+Why not keep the anchor name, like so:
+
+	<<def_tracking_branch,remote-tracking branch>>
+
+(for brevity and to keep old links valid)?
