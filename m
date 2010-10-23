@@ -1,65 +1,74 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 08/10] Use 'remote-tracking branch' in generated merge messages
-Date: Sat, 23 Oct 2010 21:53:46 +0200
-Message-ID: <vpqiq0sk7n9.fsf@bauges.imag.fr>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1287851481-27952-9-git-send-email-Matthieu.Moy@imag.fr>
-	<20101023190441.GK21040@burratino>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v7 0/3] Detection of directory renames
+Date: Sat, 23 Oct 2010 23:06:59 +0200
+Message-ID: <1287868022-24872-1-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 23 21:58:41 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: Yann Dirson <ydirson@altern.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Oct 23 23:07:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9kEi-0000Li-SP
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 21:58:41 +0200
+	id 1P9lJH-0007Au-Fr
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 23:07:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758459Ab0JWT4k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 15:56:40 -0400
-Received: from imag.imag.fr ([129.88.30.1]:36743 "EHLO imag.imag.fr"
+	id S1753974Ab0JWVHU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 17:07:20 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:38755 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758358Ab0JWT4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 15:56:40 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9NJrkeZ019606
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 23 Oct 2010 21:53:47 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1P9k9y-0008CC-N2; Sat, 23 Oct 2010 21:53:46 +0200
-In-Reply-To: <20101023190441.GK21040@burratino> (Jonathan Nieder's message of "Sat\, 23 Oct 2010 14\:04\:41 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 23 Oct 2010 21:53:47 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1752934Ab0JWVHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 17:07:19 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id CEFE3D480DA;
+	Sat, 23 Oct 2010 23:07:12 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P9lIx-00010G-S7; Sat, 23 Oct 2010 23:07:08 +0200
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159825>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Changes since v6.1:
+* now using a sorted list for bulkmove_candidates, improved lookup code
+* added a bit of doc
+* fixed decl-after-stmt and code style issues (Junio)
+* fixed signedness of i_am_not_single bitfield (sparse)
+* removed useless filtering of debug messages in tests
+* avoid using "git update-index" where "git mv" and friends are more readable
+* added a testcase for move of a subdir, fixed the code
+* more naming normalisation
+* added short note in commit message about implementation
+* added Thanks-to's to commit messages (hope I did not forget anyone)
+* added more possible future uses to commit message
+* moved list of optimisation opportunities from FIXME's to commit message,
+  leaving only a handful of things as real FIXME tags (purposely kept as C99
+  comments)
 
-> Matthieu Moy wrote:
->
->> [Subject: [PATCH 08/10] Use 'remote-tracking branch' in generated merge messages]
->
-> Maybe this should be squashed with the corresponding "git fetch" hunk
-> in 7/10 for bisectability.
 
-Actually, the "git fetch" hunk is not directly used by fmt-merge-msg,
-it is parsed, and re-pretty-printed. I'm not sure I understood all the
-details of the code, but the tests do pass between patch 7 and patch
-8.
+Yann Dirson (3):
+  Introduce bulk-move detection in diffcore.
+  Add testcases for the --detect-bulk-moves diffcore flag.
+  [WIP] Allow hiding renames of individual files involved in a
+    directory rename.
+
+ Documentation/diff-options.txt   |    4 +
+ Documentation/gitdiffcore.txt    |   12 +
+ diff-lib.c                       |    6 +-
+ diff.c                           |   21 ++-
+ diff.h                           |    6 +
+ diffcore-rename.c                |  418 ++++++++++++++++++++++++++++++++++++-
+ diffcore.h                       |    2 +
+ t/t4046-diff-rename-factorize.sh |  296 +++++++++++++++++++++++++++
+ tree-diff.c                      |    4 +-
+ 9 files changed, 753 insertions(+), 16 deletions(-)
+ create mode 100755 t/t4046-diff-rename-factorize.sh
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.2.3
