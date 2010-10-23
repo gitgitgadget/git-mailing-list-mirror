@@ -1,70 +1,63 @@
-From: Rico Secada <coolzone@it.dk>
-Subject: Re: Git pull doesn't get the tags
-Date: Sat, 23 Oct 2010 18:34:12 +0200
-Message-ID: <20101023183412.709c1790.coolzone@it.dk>
-References: <20101022053747.a5427cad.coolzone@it.dk>
-	<4CC153A0.7080605@debugon.org>
-	<20101022142308.f275aefe.coolzone@it.dk>
-	<7vy69pkgpb.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: add a note to help contributors catch
+ some errors earlier.
+Date: Sat, 23 Oct 2010 15:11:19 -0200
+Message-ID: <AANLkTikCr5yRHzetY9-T=_rg+PZM-e8ZnQvL79ucws+6@mail.gmail.com>
+References: <1287843434-10890-1-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 23 18:36:35 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sat Oct 23 19:11:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9h59-0006es-0f
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 18:36:35 +0200
+	id 1P9hcs-00019A-PI
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 19:11:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758034Ab0JWQga (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 12:36:30 -0400
-Received: from smtp.fullrate.dk ([90.185.1.42]:63721 "EHLO smtp.fullrate.dk"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757366Ab0JWQg3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 12:36:29 -0400
-Received: from workp4 (4304ds5-ynoe.0.fullrate.dk [90.185.142.211])
-	by smtp.fullrate.dk (Postfix) with SMTP id 4297E9D03E
-	for <git@vger.kernel.org>; Sat, 23 Oct 2010 18:36:28 +0200 (CEST)
-In-Reply-To: <7vy69pkgpb.fsf@alter.siamese.dyndns.org>
-X-Mailer: Sylpheed 2.5.0 (GTK+ 2.12.12; i486-pc-linux-gnu)
+	id S1758091Ab0JWRLV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 13:11:21 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:50464 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758002Ab0JWRLU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Oct 2010 13:11:20 -0400
+Received: by bwz11 with SMTP id 11so1354163bwz.19
+        for <git@vger.kernel.org>; Sat, 23 Oct 2010 10:11:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MSleFzTe3Sg+I/ROmC+9tMCXB2eucAjjVF8fogGzOFs=;
+        b=tCk3H5rnGulol6TLXHVz04YQylE9bGraPh9T6UnWiaG2riIggqJO+LW8FsgLjkd0Cx
+         qqgo34RryvOfWNk/h6nV+RpiuNjkGi0xcPPRiH1CDu8JOmsl1v5A+8A7zqZWe1zJztpN
+         3NxjwNiWCU+L5IW1q37EPyeRldQYrHJxP8flY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lNEkqcgZfgPv7Uz4+tYl1xaF5ib9MoH0LWb2y/AHXFCpMurqcStdJ3q5Hol24/zUkW
+         Nvu7iPDiRSCo9jXFiEI9mgnaK0Fn4SDqERWO5zkxy7vGR+qErAhilttoVRz2hemPox86
+         RGvvWiARcYV8y2pneR3ZXX/jJ/5J4AClO5Wh8=
+Received: by 10.204.71.12 with SMTP id f12mr636341bkj.34.1287853879181; Sat,
+ 23 Oct 2010 10:11:19 -0700 (PDT)
+Received: by 10.204.72.82 with HTTP; Sat, 23 Oct 2010 10:11:19 -0700 (PDT)
+In-Reply-To: <1287843434-10890-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159801>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159802>
 
-On Fri, 22 Oct 2010 15:25:52 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+On Sat, Oct 23, 2010 at 12:17 PM, Yann Dirson <ydirson@altern.org> wrot=
+e:
+> + - C code is expected to compile when the build is launched with the
+> + =C2=A0 following command:
+> +
+> + =C2=A0 make CFLAGS=3D"-Wall -Wdeclaration-after-statement -Werror"
 
-> The above passage in the manual page may be stated rather poorly.
-> 
-> When "git fetch" is run, unless told otherwise by an explicit
-> --no-tags, it automatically fetches tags that point at new commits on
-> branches you fetch.  For example, I just tagged v1.7.3.2 last night,
-> so if you fetch from me to get 'maint', 'master' or other integration
-> branches of mine that includes 8a90438 (Git 1.7.3.2, 2010-10-21),
-> "git fetch" would also copy v1.7.3.2 tag from me to your repository.
-> 
-> In the above example, 'maint', 'master', etc. are the branch heads
-> that are being tracked (i.e. you will copy them to the
-> refs/remotes/origin hierarchy in your repository) and v1.7.3.2 is a
-> tag that does point at an object 8a90438 reachable from these branch
-> heads.  So you will get the tag without giving the --tags option from
-> the command line.
-> 
-> If you were fetching only 'html' or 'man' branches from me, on the
-> other hand, you would not have gotten v1.7.3.2 tag, as they are
-> separate histories and that particular tag does not live in their
-> ancestry.
-> 
-> Also tags that point at non-commits (e.g. in git.git, junio-gpg-pub
-> and spearce-gpg-pub are pointing at blob objects, and v2.6.11 and
-> v2.6.11-tree tags in the kernel repository are pointing at tree
-> objects) will not be fetched automatically either.  You would need to
-> explicitly ask for them if you want them by either (1) find them via
-> ls-remote and name them on the command line, or (2) use --tags option
-
-A nice and meaningful explanation. Thanks for the details!
+Why this is not in the Makefile by default? Also -Wall is already in
+the Makefile.
