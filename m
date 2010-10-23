@@ -1,91 +1,83 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: [PATCH] t9157-git-svn-fetch-merge.sh: remove dependency on subversion 1.5
-Date: Fri, 22 Oct 2010 21:55:58 -0400
-Message-ID: <1287798958-22549-1-git-send-email-stevenrwalter@gmail.com>
-References: <1287737937.3785.15.camel@balanced-tree>
-Cc: Steven Walter <stevenrwalter@gmail.com>
-To: gitster@pobox.com, normalperson@yhbt.net, git@vger.kernel.org,
-	andersk@mit.edu
-X-From: git-owner@vger.kernel.org Sat Oct 23 03:56:36 2010
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: should Documentation/howto/setup-git-server-over-http.txt be
+ marked obsolete?
+Date: Sat, 23 Oct 2010 11:57:31 +0530
+Message-ID: <AANLkTimTVviTBfY1Zeebyhufr36U+0w7VYf4f=25FMFi@mail.gmail.com>
+References: <AANLkTimJe9vEUwWM482NLmfHGYjnsKD5RAryQO=Zyqjj@mail.gmail.com>
+	<7vsjzyrh2w.fsf@alter.siamese.dyndns.org>
+	<AANLkTinv3kzvtC_Pq4F0cM_JqU7-Q2a=sWs8YSxbMiPs@mail.gmail.com>
+	<20101022150627.GB9224@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 23 08:28:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9TLX-0004O4-IQ
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 03:56:35 +0200
+	id 1P9XaA-0007dj-IV
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 08:27:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889Ab0JWB4V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 22 Oct 2010 21:56:21 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:65268 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752840Ab0JWB4U (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 22 Oct 2010 21:56:20 -0400
-Received: by yxn35 with SMTP id 35so1150847yxn.19
-        for <git@vger.kernel.org>; Fri, 22 Oct 2010 18:56:20 -0700 (PDT)
+	id S1752032Ab0JWG1d convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 02:27:33 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:38428 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751489Ab0JWG1d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Oct 2010 02:27:33 -0400
+Received: by ewy7 with SMTP id 7so2218140ewy.19
+        for <git@vger.kernel.org>; Fri, 22 Oct 2010 23:27:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=iOaUSkjftewzOn2d/VhBIEmcC5EhVaZLf3Ruz97h+GA=;
-        b=LCkb2b5e2Pk+IGfwiZh8TiqjVfDQoWaVoc+/4xjeLvLITD2+yezY+RPzHMNmIxIQz+
-         x9/LuYLtry9WKVEByX7+6fdcI+7uxcUKcwbURmU1XqdBJ9ha8vBk5zugrs6Y97FuMYLm
-         IhyzVhRUeJ8fG3LxVybtmw85itl6V7S8kPdac=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=bunBoXb7VNLT0SawN4FthITapQsRBhklJXtzQsCZG8g=;
+        b=wDoE36QgJZYo6Uwx1En24PjtWBqrr5mkHTMT5WrVC0PJldmlxU8iv9PHyDEI16bJ0l
+         c4ojQfMRttYYu9q0jz82XTzCiOmtfCevhX5rGLwKekZLKLh70du+JjxaKj2VAgO9LTJ/
+         q/qbqxuPkWnW5oSAOAom4xeM2wLk4iSRfr05o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=OlHmTY93SsVwb8ZYlKGXJ5sM8YNRMGsqynhUjXMmHp+CzQdOrnf40iY0u1HIGPGtzx
-         mQUjh2B3DXqsR1zCtVUvg10zatfn6iUDhJxNHxfXPtEPyIkaV0EqA96UQrcR8DkShm0Z
-         vGl6648Xz4FRCS5U2yGx0OgusIyuDeZmKtUjY=
-Received: by 10.151.40.14 with SMTP id s14mr7294701ybj.57.1287798980253;
-        Fri, 22 Oct 2010 18:56:20 -0700 (PDT)
-Received: from brock (adsl-234-144-207.bgk.bellsouth.net [74.234.144.207])
-        by mx.google.com with ESMTPS id c4sm2980453yha.40.2010.10.22.18.56.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 22 Oct 2010 18:56:19 -0700 (PDT)
-Received: from srwalter by brock with local (Exim 4.72)
-	(envelope-from <srwalter@dervierte>)
-	id 1P9TLE-0005sK-Dz; Fri, 22 Oct 2010 21:56:16 -0400
-X-Mailer: git-send-email 1.6.3.3
-In-Reply-To: <1287737937.3785.15.camel@balanced-tree>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LErr3tPqSSdRRkIm3fEG9qqcdPlj16aD3TZPvU8s6Jccn6dcV3TcQvaW1dQT22H2Ks
+         W/8F5rI+B9vTUIBN0DRqNvMCCaWGpu6XlE1IMcraYv+HwzXzYzMkzV9ySY5LlXocECEv
+         UkUH+Futtqs//6KVQ57Oycaz/p/GXgANv/jMk=
+Received: by 10.213.4.206 with SMTP id 14mr4042691ebs.99.1287815251634; Fri,
+ 22 Oct 2010 23:27:31 -0700 (PDT)
+Received: by 10.213.14.6 with HTTP; Fri, 22 Oct 2010 23:27:31 -0700 (PDT)
+In-Reply-To: <20101022150627.GB9224@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159772>
 
-Specify a revision range to "merge" and manually set the svn:mergeinfo
-property.
----
- t/t9157-git-svn-fetch-merge.sh |   10 +++++++---
- 1 files changed, 7 insertions(+), 3 deletions(-)
+On Fri, Oct 22, 2010 at 8:36 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Sitaram Chamarty wrote:
+>
+>> I assumed that the new -- much more efficient (correct?) transport
+>> would make the older (dumber) transport obsolete, and I didn't reali=
+se
+>> it had any advantages over the new one.
+>
+> FWIW the old transport still has its place. =C2=A0If your web host (e=
+=2Eg.,
+> an ISP) allows only static content (no CGI), then there is no choice.
+>
+> Not so relevant for gitolite but still relevant in the world.
 
-diff --git a/t/t9157-git-svn-fetch-merge.sh b/t/t9157-git-svn-fetch-merge.sh
-index da582c5..424e1fa 100755
---- a/t/t9157-git-svn-fetch-merge.sh
-+++ b/t/t9157-git-svn-fetch-merge.sh
-@@ -25,15 +25,19 @@ test_expect_success 'initialize source svn repo' '
- 		svn add baz &&
- 		svn commit -m x &&
- 		svn switch "$svnrepo"/trunk &&
--		svn merge "$svnrepo"/branches/branch1 &&
-+		svn merge -r3:7 "$svnrepo"/branches/branch1 &&
-+		svn propset svn:mergeinfo "/branches/branch1:4-7" . &&
- 		svn commit -m "merge" &&
- 		svn switch "$svnrepo"/branches/branch1 &&
- 		svn commit -m x &&
- 		svn switch "$svnrepo"/branches/branch2 &&
--		svn merge "$svnrepo"/branches/branch1 &&
-+		svn merge -r3:8 "$svnrepo"/branches/branch1 &&
-+		svn propset svn:mergeinfo "/branches/branch1:4-8" . &&
- 		svn commit -m "merge branch1" &&
- 		svn switch "$svnrepo"/trunk &&
--		svn merge "$svnrepo"/branches/branch2 &&
-+		svn merge -r5:9 "$svnrepo"/branches/branch2 &&
-+		svn propset svn:mergeinfo "/branches/branch1:4-8
-+/branches/branch2:6-9" . &&
- 		svn resolved baz &&
- 		svn commit -m "merge branch2"
- 	) &&
--- 
-1.6.3.3
+Also I now realise the new transport requires Apache, so people with
+other web servers probably need it too.
+
+I guess what remains is that the protocol is not efficient enough,
+especially for normal push/fetch working-day interactions.  I'll find
+suitable wording that reflects all this...
+
+thanks
+
+sitaram
