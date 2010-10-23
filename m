@@ -1,212 +1,357 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH v7 3/3] [WIP] Allow hiding renames of individual files involved in a directory rename.
-Date: Sat, 23 Oct 2010 23:07:02 +0200
-Message-ID: <1287868022-24872-4-git-send-email-ydirson@altern.org>
+Subject: [PATCH v7 2/3] Add testcases for the --detect-bulk-moves diffcore flag.
+Date: Sat, 23 Oct 2010 23:07:01 +0200
+Message-ID: <1287868022-24872-3-git-send-email-ydirson@altern.org>
 References: <1287868022-24872-1-git-send-email-ydirson@altern.org>
 Cc: Yann Dirson <ydirson@altern.org>, Yann Dirson <ydirson@free.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Oct 23 23:07:33 2010
+X-From: git-owner@vger.kernel.org Sat Oct 23 23:07:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9lJJ-0007Au-6z
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 23:07:29 +0200
+	id 1P9lJf-0007Ei-UU
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 23:07:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756942Ab0JWVHZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 17:07:25 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:38805 "EHLO smtp5-g21.free.fr"
+	id S1757369Ab0JWVH2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 17:07:28 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:38817 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752934Ab0JWVHX (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 17:07:23 -0400
+	id S1755053Ab0JWVHY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 17:07:24 -0400
 Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 064DCD480A9;
-	Sat, 23 Oct 2010 23:07:16 +0200 (CEST)
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 1C868D48062;
+	Sat, 23 Oct 2010 23:07:17 +0200 (CEST)
 Received: from yann by home.lan with local (Exim 4.72)
 	(envelope-from <ydirson@free.fr>)
-	id 1P9lJ4-0001Al-7t; Sat, 23 Oct 2010 23:07:14 +0200
+	id 1P9lJ2-00018d-0Z; Sat, 23 Oct 2010 23:07:14 +0200
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1287868022-24872-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159828>
 
-Once has identified groups of bulk-moved files, and then
-the --hide-bulk-move-details flag hides those of the individual renames
-which carry no other information (further name change, or content changes).
+This notably includes a couple of tests for cases known not to be
+working correctly yet.
 
-This makes it much easier to a human reader to spot content changes
-in a commit that also moves a whole subtree.
+This patch has been improved by the following contributions:
+- Jonathan Nieder: reworked style of test script
+- Jonathan Nieder: use "git commit" in test instead of only plumbing,
+  and use test_tick
+- Sverre Rabbelier: anonymize hashes
 
-Important note: unified diff output is not currently useful, since the "bulk move"
-headers are not yet added by --detect-bulk-moves, but the redundant renames are
-really removed.
-
+Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
+Thanks-to: Sverre Rabbelier <srabbelier@gmail.com>
 Signed-off-by: Yann Dirson <ydirson@free.fr>
 ---
- diff.c            |    7 +++++
- diff.h            |    3 ++
- diffcore-rename.c |   68 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- diffcore.h        |    1 +
- 4 files changed, 76 insertions(+), 3 deletions(-)
+ t/t4046-diff-rename-factorize.sh |  296 ++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 296 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4046-diff-rename-factorize.sh
 
-diff --git a/diff.c b/diff.c
-index 1d88281..3cc7a55 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3193,6 +3193,13 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		if (!options->detect_rename)
- 			options->detect_rename = DIFF_DETECT_RENAME;
- 	}
-+	else if (!strcmp(arg, "--hide-bulk-move-details")) {
-+		DIFF_OPT_SET(options, HIDE_DIR_RENAME_DETAILS);
-+		if (!DIFF_OPT_TST(options, DETECT_BULK_MOVES))
-+			DIFF_OPT_SET(options, DETECT_BULK_MOVES);
-+		if (!options->detect_rename)
-+			options->detect_rename = DIFF_DETECT_RENAME;
-+	}
- 	else if (!strcmp(arg, "--follow"))
- 		DIFF_OPT_SET(options, FOLLOW_RENAMES);
- 	else if (!strcmp(arg, "--color"))
-diff --git a/diff.h b/diff.h
-index b0d6fa6..7f132d0 100644
---- a/diff.h
-+++ b/diff.h
-@@ -79,6 +79,7 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct diff_options *opt, void *data)
- #define DIFF_OPT_IGNORE_DIRTY_SUBMODULES (1 << 26)
- #define DIFF_OPT_OVERRIDE_SUBMODULE_CONFIG (1 << 27)
- #define DIFF_OPT_DETECT_BULK_MOVES  (1 << 28)
-+#define DIFF_OPT_HIDE_DIR_RENAME_DETAILS (1 << 29)
- 
- #define DIFF_OPT_TST(opts, flag)    ((opts)->flags & DIFF_OPT_##flag)
- #define DIFF_OPT_SET(opts, flag)    ((opts)->flags |= DIFF_OPT_##flag)
-@@ -268,6 +269,8 @@ extern void diffcore_fix_diff_index(struct diff_options *);
- "                try unchanged files as candidate for copy detection.\n" \
- "  --detect-bulk-moves\n" \
- "                detect wholesale directory renames.\n" \
-+"  --hide-bulk-move-details\n" \
-+"                hide renames of individual files in a directory rename.\n" \
- "  -l<n>         limit rename attempts up to <n> paths.\n" \
- "  -O<file>      reorder diffs according to the <file>.\n" \
- "  -S<string>    find filepair whose only one side contains the string.\n" \
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index fa2ba7c..3a68807 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -503,6 +503,34 @@ static struct diff_bulk_rename *locate_bulkmove_candidate(const char *one_path,
- }
- 
- /*
-+ * Marks as such file_rename if it is made uninteresting by dir_rename.
-+ * Returns -1 if the file_rename is outside of the range in which given
-+ * renames concerned by dir_rename are to be found (ie. end of loop),
-+ * 0 otherwise.
-+ */
-+static int maybe_mark_uninteresting(struct diff_rename_dst *file_rename,
-+				    struct diff_bulk_rename *dir_rename,
-+				    int one_len, int two_len)
-+{
-+	if (!file_rename->pair) /* file add */
-+		return 0;
-+	if (strncmp(file_rename->two->path,
-+		    dir_rename->two->path, two_len))
-+		return -1;
-+	if (strncmp(file_rename->pair->one->path,
-+		    dir_rename->one->path, one_len) ||
-+	    !basename_same(file_rename->pair->one, file_rename->two) ||
-+	    file_rename->pair->score != MAX_SCORE)
-+		return 0;
+diff --git a/t/t4046-diff-rename-factorize.sh b/t/t4046-diff-rename-factorize.sh
+new file mode 100755
+index 0000000..88e5b5b
+--- /dev/null
++++ b/t/t4046-diff-rename-factorize.sh
+@@ -0,0 +1,296 @@
++#!/bin/sh
++#
++# Copyright (c) 2008,2010 Yann Dirson
++# Copyright (c) 2005 Junio C Hamano
++#
 +
-+	file_rename->pair->uninteresting_rename = 1;
-+	fprintf(stderr, "[DBG] %s* -> %s* makes %s -> %s uninteresting\n",
-+		dir_rename->one->path, dir_rename->two->path,
-+		file_rename->pair->one->path, file_rename->two->path);
-+	return 0;
-+}
++# TODO for dir renames:
++# * two dirs or more moving all their files to a single dir
++# * simultaneous bulkmove and rename
 +
-+/*
-  * Copy dirname of src into dst, suitable to append a filename without
-  * an additional "/".
-  * Only handles relative paths since there is no absolute path in a git repo.
-@@ -705,11 +733,44 @@ static void check_one_bulk_move(struct diff_filepair *dstpair)
-  * Take all file renames recorded so far and check if they could cause
-  * a bulk move to be detected.
-  */
--static void diffcore_bulk_moves(void)
-+static void diffcore_bulk_moves(int opt_hide_renames)
- {
- 	int i;
- 	for (i = 0; i < rename_dst_nr; i++)
- 		check_one_bulk_move(rename_dst[i].pair);
++test_description='Test rename factorization in diff engine.
 +
-+	if (opt_hide_renames) {
-+		/* flag as "uninteresting" those candidates hidden by dir move */
-+		struct diff_bulk_rename *candidate;
-+		for (candidate = bulkmove_candidates;
-+		     candidate < bulkmove_candidates + bulkmove_candidates_nr;
-+		     candidate++) {
-+			int two_idx, i, one_len, two_len;
-+			struct diff_rename_dst *two_sample;
-+			if (candidate->discarded)
-+				continue;
++'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/diff-lib.sh
 +
-+			/* bisect to any entry within candidate dst dir */
-+			two_sample = locate_rename_dst_dir(candidate->two->path);
-+			if (!two_sample) {
-+				die("PANIC: %s candidate of rename not in target tree (from %s)\n",
-+				    candidate->two->path, candidate->one->path);
-+			}
-+			two_idx = two_sample - rename_dst;
++test_expect_success 'setup' '
++	git commit --allow-empty -m "original empty commit"
 +
-+			/* now remove extraneous 100% files inside. */
-+			one_len = strlen(candidate->one->path);
-+			two_len = strlen(candidate->two->path);
-+			for (i = two_idx; i < rename_dst_nr; i++)
-+				if (maybe_mark_uninteresting(rename_dst+i, candidate,
-+							     one_len, two_len) < 0)
-+					break;
-+			for (i = two_idx-1; i >= 0; i--)
-+				if (maybe_mark_uninteresting(rename_dst+i, candidate,
-+							     one_len, two_len) < 0)
-+					break;
-+		}
-+	}
- }
- 
- void diffcore_rename(struct diff_options *options)
-@@ -881,7 +942,7 @@ void diffcore_rename(struct diff_options *options)
- 
- 	/* Now possibly factorize those renames and copies. */
- 	if (DIFF_OPT_TST(options, DETECT_BULK_MOVES))
--		diffcore_bulk_moves();
-+		diffcore_bulk_moves(DIFF_OPT_TST(options, HIDE_DIR_RENAME_DETAILS));
- 
- 	DIFF_QUEUE_CLEAR(&outq);
- 
-@@ -916,7 +977,8 @@ void diffcore_rename(struct diff_options *options)
- 			struct diff_rename_dst *dst =
- 				locate_rename_dst(p->two, 0);
- 			if (dst && dst->pair) {
--				diff_q(&outq, dst->pair);
-+				if (!dst->pair->uninteresting_rename)
-+					diff_q(&outq, dst->pair);
- 				pair_to_free = p;
- 			}
- 			else
-diff --git a/diffcore.h b/diffcore.h
-index 6dab95b..a4eb8e1 100644
---- a/diffcore.h
-+++ b/diffcore.h
-@@ -69,6 +69,7 @@ struct diff_filepair {
- 	unsigned broken_pair : 1;
- 	unsigned renamed_pair : 1;
- 	unsigned is_unmerged : 1;
-+	unsigned uninteresting_rename : 1;
- 	unsigned is_bulkmove : 1;
- };
- #define DIFF_PAIR_UNMERGED(p) ((p)->is_unmerged)
++	mkdir a &&
++	printf "Line %s\n" 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 >a/path0 &&
++	sed <a/path0 >a/path1 s/Line/Record/ &&
++	sed <a/path0 >a/path2 s/Line/Stuff/ &&
++	sed <a/path0 >a/path3 s/Line/Blurb/ &&
++
++	git update-index --add a/path* &&
++	test_tick &&
++	git commit -m "original set of files"
++
++	: rename the directory &&
++	git mv a b
++'
++test_expect_success 'diff-index --detect-bulk-moves after directory move.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	b/
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:100644 100644 X X R#	a/path2	b/path2
++	:100644 100644 X X R#	a/path3	b/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup non-100% rename' '
++	echo "Line 16" >>b/path0 &&
++	git mv b/path2 b/2path &&
++	git rm -f b/path3 &&
++	echo anything >b/path100 &&
++	git add b/path100
++'
++test_expect_success 'diff-index --detect-bulk-moves after content changes.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	b/
++	:100644 000000 X X D#	a/path3
++	:100644 100644 X X R#	a/path2	b/2path
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:000000 100644 X X A#	b/path100
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move that is not directory move' '
++	git reset -q --hard &&
++
++	mkdir c &&
++	(
++		for i in 0 1 2; do
++			cp a/path$i c/apath$i || exit
++		done
++	) &&
++	git update-index --add c/apath* &&
++	test_tick &&
++	git commit -m "first set of changes" &&
++
++	git mv c/* a/
++'
++test_expect_success 'diff-index --detect-bulk-moves without full-dir rename.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	a/
++	:100644 100644 X X R#	c/apath0	a/apath0
++	:100644 100644 X X R#	c/apath1	a/apath1
++	:100644 100644 X X R#	c/apath2	a/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move with new file in source dir' '
++	echo > c/anotherpath "How much wood?" &&
++	git update-index --add c/another*
++'
++test_expect_success 'diff-index --detect-bulk-moves with new file in source dir.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	a/
++	:100644 100644 X X R#	c/apath0	a/apath0
++	:100644 100644 X X R#	c/apath1	a/apath1
++	:100644 100644 X X R#	c/apath2	a/apath2
++	:000000 100644 X X A#	c/anotherpath
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move with interfering copy' '
++	rm c/anotherpath &&
++	git update-index --remove c/anotherpath &&
++	mkdir b &&
++	cp a/apath0 b/apath9 &&
++	echo >> a/apath0 "more" &&
++	git update-index --add a/apath0 b/apath9
++'
++# scores select the "wrong" one as "moved" (only a suboptimal detection)
++test_expect_failure 'diff-index --detect-bulk-moves with interfering copy.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	a/
++	:100644 100644 X X R#	c/apath0	a/apath0
++	:100644 100644 X X R#	c/apath1	a/apath1
++	:100644 100644 X X R#	c/apath2	a/apath2
++	:100644 100644 X X C#	c/apath0	b/apath9
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move to toplevel' '
++	git reset -q --hard &&
++	git mv c/* .
++'
++test_expect_success 'diff-index --detect-bulk-moves bulk move to toplevel.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	./
++	:100644 100644 X X R#	c/apath0	apath0
++	:100644 100644 X X R#	c/apath1	apath1
++	:100644 100644 X X R#	c/apath2	apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move including a subdir, with some content changes' '
++	git reset -q --hard &&
++	mv c a/ &&
++	git update-index --add --remove a/c/* c/apath0 c/apath1 c/apath2 &&
++	test_tick &&
++	git commit -m "move as subdir" &&
++
++	git mv a b &&
++	echo foo >>b/c/apath0 &&
++	git update-index --add b/c/apath*
++'
++test_expect_success 'diff-index --detect-bulk-moves on a move including a subdir.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	b/
++	:040000 040000 X X R#	a/c/*	b/c/
++	:100644 100644 X X R#	a/c/apath0	b/c/apath0
++	:100644 100644 X X R#	a/c/apath1	b/c/apath1
++	:100644 100644 X X R#	a/c/apath2	b/c/apath2
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:100644 100644 X X R#	a/path2	b/path2
++	:100644 100644 X X R#	a/path3	b/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move of only a subdir' '
++	git reset -q --hard &&
++	git mv a/c a/d &&
++	: rename a subdirectory of a/.
++'
++test_expect_success 'moving a subdir only' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/c/*	a/d/
++	:100644 100644 X X R#	a/c/apath0	a/d/apath0
++	:100644 100644 X X R#	a/c/apath1	a/d/apath1
++	:100644 100644 X X R#	a/c/apath2	a/d/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move without a subdir' '
++	git reset -q --hard &&
++	mkdir b &&
++	: rename files in the directory but not subdir. &&
++	git mv a/path* b/
++'
++test_expect_success 'moving files but not subdirs is not mistaken for dir move' '
++	cat >expected <<-EOF &&
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:100644 100644 X X R#	a/path2	b/path2
++	:100644 100644 X X R#	a/path3	b/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move of files and subdirs to different places' '
++	git reset -q --hard &&
++	git mv a/c b &&
++	git mv a d
++'
++test_expect_success 'moving subdirs into one dir and files into another is not mistaken for dir move' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/c/*	b/
++	:100644 100644 X X R#	a/c/apath0	b/apath0
++	:100644 100644 X X R#	a/c/apath1	b/apath1
++	:100644 100644 X X R#	a/c/apath2	b/apath2
++	:100644 100644 X X R#	a/path0	d/path0
++	:100644 100644 X X R#	a/path1	d/path1
++	:100644 100644 X X R#	a/path2	d/path2
++	:100644 100644 X X R#	a/path3	d/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++# the same with different ordering
++test_expect_success 'setup move of files and subdirs to different places' '
++	git mv d 0
++'
++test_expect_success 'moving subdirs into one dir and files into another is not mistaken for dir move' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/c/*	b/
++	:100644 100644 X X R#	a/path0	0/path0
++	:100644 100644 X X R#	a/path1	0/path1
++	:100644 100644 X X R#	a/path2	0/path2
++	:100644 100644 X X R#	a/path3	0/path3
++	:100644 100644 X X R#	a/c/apath0	b/apath0
++	:100644 100644 X X R#	a/c/apath1	b/apath1
++	:100644 100644 X X R#	a/c/apath2	b/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move of dir with only subdirs' '
++	git reset -q --hard &&
++	mkdir a/b &&
++	mv a/path* a/b/ &&
++	git update-index --add --remove a/path0 a/path1 a/path2 a/path3 a/b/path* &&
++	test_tick &&
++	git commit -m "move all toplevel files down one level" &&
++
++	git mv a z
++'
++# TODO: only a suboptimal non-detection
++test_expect_failure 'moving a dir with no direct children files' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	z/
++	:040000 040000 X X R#	a/b/*	z/b/
++	:040000 040000 X X R#	a/c/*	z/c/
++	:100644 100644 X X R#	a/b/path0	z/b/path0
++	:100644 100644 X X R#	a/b/path1	z/b/path1
++	:100644 100644 X X R#	a/b/path2	z/b/path2
++	:100644 100644 X X R#	a/b/path3	z/b/path3
++	:100644 100644 X X R#	a/c/apath0	z/c/apath0
++	:100644 100644 X X R#	a/c/apath1	z/c/apath1
++	:100644 100644 X X R#	a/c/apath2	z/c/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++# now test moving all files from toplevel into subdir (does not hides file moves) (needs consensus on syntax)
++# Note: this is a special case of move of a dir into one of its own subdirs, which in
++# turn is a variant of new files/dirs being added into a dir after all its contents
++# are moved away
++
++test_expect_success 'setup move from toplevel to subdir' '
++	git reset -q --hard HEAD~3 &&
++	mv a/* . &&
++	git update-index --add --remove a/path0 a/path1 a/path2 a/path3 path* &&
++	test_tick &&
++	git commit -m "move all files to toplevel" &&
++
++	mkdir z &&
++	git mv path* z/
++'
++test_expect_success '--detect-bulk-moves everything from toplevel.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	./*	z/
++	:100644 100644 X X R#	path0	z/path0
++	:100644 100644 X X R#	path1	z/path1
++	:100644 100644 X X R#	path2	z/path2
++	:100644 100644 X X R#	path3	z/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_done
 -- 
 1.7.2.3
