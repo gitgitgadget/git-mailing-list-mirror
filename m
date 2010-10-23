@@ -1,96 +1,62 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/10] Change remote tracking to remote-tracking in
- non-trivial places
-Date: Sat, 23 Oct 2010 13:44:29 -0500
-Message-ID: <20101023184429.GG21040@burratino>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
- <1287851481-27952-4-git-send-email-Matthieu.Moy@imag.fr>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH] CodingGuidelines: add a note to help contributors
+ catch some errors earlier.
+Date: Sat, 23 Oct 2010 20:48:30 +0200
+Message-ID: <20101023184830.GQ4983@home.lan>
+References: <1287843434-10890-1-git-send-email-ydirson@altern.org>
+ <AANLkTikCr5yRHzetY9-T=_rg+PZM-e8ZnQvL79ucws+6@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Sat Oct 23 20:48:26 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 23 20:48:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9j8k-0007Vs-6W
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:48:26 +0200
+	id 1P9j93-0007Ze-Ly
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:48:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758175Ab0JWSsV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 14:48:21 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:52372 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756619Ab0JWSsU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 14:48:20 -0400
-Received: by gyg4 with SMTP id 4so1344464gyg.19
-        for <git@vger.kernel.org>; Sat, 23 Oct 2010 11:48:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=PsDXlA0a4/FUBgSfRM2GYronDTCus92rHg+fdbYEKyI=;
-        b=qbfYjKqERA0fZKvWyacoCzjNBzV/rQcLqOrgNPEOJ7entuk1tnJ78BcHHSzQMV574A
-         2FT1kqlBAuKXa675gaPZfx9TOMCaojvPwWvl4dbXN1Z5dT095SZqrg9i5nVKCnicbBxb
-         8QOPgLuEwmyTJ6BlYzcqYegfUBIq11FhDVMBM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=WokiNJ3MVRN/Dp4fH1z3nkm7Ev5SZ7mTKhLC+s2M3I0txcwNvH7BzrCq6tFEdBN0B0
-         xtw3kjAYhv0I7CZ11uNyF3Zp97dFhoF5Qh3+1nGdF2U38bVKEE/Zij52Wik0k8IJW0ni
-         psidm3KYGvuYFHGAbl6CYZUOIaa8JXcGOxEOM=
-Received: by 10.150.213.7 with SMTP id l7mr9074048ybg.235.1287859699596;
-        Sat, 23 Oct 2010 11:48:19 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id q4sm994291yba.14.2010.10.23.11.48.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 23 Oct 2010 11:48:18 -0700 (PDT)
+	id S1758198Ab0JWSsj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 14:48:39 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:60342 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756619Ab0JWSsi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 14:48:38 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 81543D480D9;
+	Sat, 23 Oct 2010 20:48:31 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1P9j8o-0003xO-Bu; Sat, 23 Oct 2010 20:48:30 +0200
 Content-Disposition: inline
-In-Reply-To: <1287851481-27952-4-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <AANLkTikCr5yRHzetY9-T=_rg+PZM-e8ZnQvL79ucws+6@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159809>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159810>
 
-Matthieu Moy wrote:
+On Sat, Oct 23, 2010 at 03:11:19PM -0200, Thiago Farina wrote:
+> On Sat, Oct 23, 2010 at 12:17 PM, Yann Dirson <ydirson@altern.org> wr=
+ote:
+> > + - C code is expected to compile when the build is launched with t=
+he
+> > + =A0 following command:
+> > +
+> > + =A0 make CFLAGS=3D"-Wall -Wdeclaration-after-statement -Werror"
+>=20
+> Why this is not in the Makefile by default? Also -Wall is already in
+> the Makefile.
 
-> --- a/Documentation/everyday.txt
-> +++ b/Documentation/everyday.txt
-> @@ -180,12 +180,12 @@ directory; clone from it to start a repository on the satellite
->  machine.
->  <2> clone sets these configuration variables by default.
->  It arranges `git pull` to fetch and store the branches of mothership
-> -machine to local `remotes/origin/*` tracking branches.
-> +machine to local `remotes/origin/*` remote-tracking branches.
+CFLAGS seems to be used for more than gcc, and -Wall seems to be
+portable enough to be overriden only in a couple of cases.  It would
+not be the same for those flags.
 
-I find this scans better as "tracking branches", but consistent use of
-jargon might trump that.  Maybe it could be reworded somehow?
-
-	<2> clone sets these configuration variables by default.
-	They arrange for `git pull` to fetch and store the branches
-	of the mothership machine to local `remotes/origin/*` tracking
-	refs.
-
-Not sure.  remotes/origin/* are not branches for local development, so
-calling them "branches" without a "remote-tracking" caveat can be
-confusing.
-
-> --- a/Documentation/git-gc.txt
-> +++ b/Documentation/git-gc.txt
-> @@ -89,7 +89,7 @@ are not part of the current project most users will want to expire
->  them sooner.  This option defaults to '30 days'.
->  
->  The above two configuration variables can be given to a pattern.  For
-> -example, this sets non-default expiry values only to remote tracking
-> +example, this sets non-default expiry values only to remote-tracking
->  branches:
-
-The rest of the changes in this patch would have been caught by the
-"perl -pi ..." command, except line wrapping got in the way.  They are
-obviously good.
+Also note that -Wdeclaration-after-statement is also mentionned in
+SubmittingPatches, but I still think it is a better place in
+CodingGuidelines, which contributers are most likely to use as a
+checklist before publishing.
