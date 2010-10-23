@@ -1,110 +1,69 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 01/10] Better "Changed but not updated" message in git-status
-Date: Sat, 23 Oct 2010 20:33:33 +0200
-Message-ID: <vpqeibgn4hu.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 02/10] Remplace "remote tracking" with "remote-tracking"
+Date: Sat, 23 Oct 2010 13:31:20 -0500
+Message-ID: <20101023183120.GF21040@burratino>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1287851481-27952-2-git-send-email-Matthieu.Moy@imag.fr>
-	<20101023181350.GA21040@burratino>
+ <1287851481-27952-3-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, gitster@pobox.com,
 	Thore Husfeldt <thore.husfeldt@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 23 20:34:37 2010
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Oct 23 20:35:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9ivH-0004Ey-Jq
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:34:31 +0200
+	id 1P9iw5-0004au-5M
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:35:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757209Ab0JWSeV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 14:34:21 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:48522 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754671Ab0JWSeU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 14:34:20 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9NIRIoE013627
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 23 Oct 2010 20:27:18 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1P9iuL-0007YL-Um; Sat, 23 Oct 2010 20:33:34 +0200
-In-Reply-To: <20101023181350.GA21040@burratino> (Jonathan Nieder's message of "Sat\, 23 Oct 2010 13\:13\:50 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 23 Oct 2010 20:27:18 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9NIRIoE013627
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1288463239.67147@vLMPxMIqFQTkxaPmWYiFEw
+	id S1758123Ab0JWSfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 14:35:12 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:59475 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757563Ab0JWSfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 14:35:11 -0400
+Received: by gyg4 with SMTP id 4so1341500gyg.19
+        for <git@vger.kernel.org>; Sat, 23 Oct 2010 11:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=K6wWO9JxO8+hSBZMM4ZWG3OiTaa3oO6pShi+6qLWkFU=;
+        b=AqYSURRNgEaDwanuECNKz/ykFQPcWPzxBwnUu0Rie7eEEBDMkjXICWayl+PcHKTw4S
+         o7XWHpe4enUSCNud1MUG6nEylDbV7yKGESkFllqI5EIp3/HdZEvgHscFsuikh1Et6upm
+         3DmgEnK218f4794jeKhj57BeaiqLRTwNXALVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=U4xVs74ch511YeDYskO2T4shHdYi8PkIIX+dPKZqXUuyHMPXIwRkSQaqdCpm2Mz4DO
+         XrMtjOSCgm2U38oMeiYylPkmihru5GIwOkyANHG9K1jE7E+qnevdU4qGU9BnImLissVw
+         xgALKAfdxApVxvxbCeQYM12Augr0Wznq9dPV0=
+Received: by 10.150.195.8 with SMTP id s8mr6313621ybf.408.1287858910502;
+        Sat, 23 Oct 2010 11:35:10 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id w15sm5600175anw.33.2010.10.23.11.35.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 23 Oct 2010 11:35:09 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287851481-27952-3-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159806>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159807>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Matthieu Moy wrote:
 
-> Matthieu Moy wrote:
->
->> --- a/Documentation/gittutorial-2.txt
->> +++ b/Documentation/gittutorial-2.txt
->> @@ -373,7 +373,7 @@ $ git status
->>  #
->>  #       new file: closing.txt
->>  #
->> -# Changed but not updated:
->> +# Changed but not staged for commit:
->>  #   (use "git add <file>..." to update what will be committed)
->
-> I find this even more confusing, though I admit that may be due to
-> habit more than anything else.
->
-> My reading, before:
->
-> 	These files were changed, but the version to be committed has
-> 	not been updated to include the latest changes (use "git add
-> 	<file>..." to add these changes to the index).
->
-> Afterwards:
->
-> 	These files were changed, but they are not staged for the
-> 	next commit.
+> [Subject: [PATCH 02/10] Remplace "remote tracking" with "remote-tracking"]
 
-I don't see what "git status" lists as "files", but more as "changes".
-Actually, the header for staged commit agrees with me:
+I think this should say "Replace".
 
-  # Changes to be committed:
+> "remote-tracking" branch makes it explicit that the branch is "tracking a
+> remote", as opposed to "remote, and tracking something".
 
-So, while these _files_ may have staged changes, the modifications
-themselves are not commited.
-
-> I would prefer to say something to the effect of
->
-> 	# Has unstaged changes:
-
-I'm fine with that if people prefer it. Otherwise, I propose:
-
-  # Changes not staged for commit:
-
-which would give some symetry in the complete output:
-
-  # Changes to be committed:
-  #
-  #       modified:   foo.txt
-  #
-  # Changes not staged for commit:
-  #
-  #       modified:   foo.txt
-  #
-
-Which one do you like best?
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+All changes in this patch look good to me, for what it's worth.
