@@ -1,62 +1,101 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Sync "git diff -h" with the manual, show options summary.
-Date: Sat, 23 Oct 2010 20:04:26 +0200
-Message-ID: <vpqvd4sn5ud.fsf@bauges.imag.fr>
-References: <1287840825-6491-1-git-send-email-ydirson@altern.org>
-	<AANLkTi=kETrjKccdVo188mKjX59mWeCRLVwGpiVP-oQ1@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 01/10] Better "Changed but not updated" message in
+ git-status
+Date: Sat, 23 Oct 2010 13:13:50 -0500
+Message-ID: <20101023181350.GA21040@burratino>
+References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+ <1287851481-27952-2-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 23 20:08:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Thore Husfeldt <thore.husfeldt@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Sat Oct 23 20:17:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9iWC-0006GY-TH
-	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:08:37 +0200
+	id 1P9ifA-00009E-4w
+	for gcvg-git-2@lo.gmane.org; Sat, 23 Oct 2010 20:17:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757828Ab0JWSIb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 23 Oct 2010 14:08:31 -0400
-Received: from imag.imag.fr ([129.88.30.1]:55568 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756842Ab0JWSIa (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 14:08:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9NI4RKs007806
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 23 Oct 2010 20:04:27 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1P9iSA-0007Fv-Nw; Sat, 23 Oct 2010 20:04:26 +0200
-In-Reply-To: <AANLkTi=kETrjKccdVo188mKjX59mWeCRLVwGpiVP-oQ1@mail.gmail.com> (Thiago Farina's message of "Sat\, 23 Oct 2010 16\:02\:49 -0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 23 Oct 2010 20:04:27 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1758124Ab0JWSRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 14:17:44 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:45997 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757531Ab0JWSRn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 14:17:43 -0400
+Received: by gyg4 with SMTP id 4so1337339gyg.19
+        for <git@vger.kernel.org>; Sat, 23 Oct 2010 11:17:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=8hzI0WmjDs3RMRdUK7yYLYYG+H0iigCb2hJuZQUpFCo=;
+        b=dpnIsw1zopPma/TSEyqjDf9nGJs/qVHPHSnW/RVYwfK3LOjmV8IwQI3kUBceMk1ZQh
+         CipKsttIbsxij8g7C1KG+zRmOwl3DJ41Kdc4LDqFjI1KVSXQKh6RVsh1GrTWR2FVZP51
+         KodbojDdQNma/fknnzmvGSpgybjT1iKshCRUU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=OJPuJ89gEgNj6S096d9aTl2yzRwACjTeEhIJdKLzKFP1IQcejO5c3aiahUjL2DQEAq
+         AwPiX3POVu1V70vHaEraJZQyqLxLFeKFKC2rtSHMCkQsSpcBk3OJDnhyNG6M5pf/fYb9
+         fckKi3qna6/PuvLr5hk7ojJS6zTFW7HjD5rnA=
+Received: by 10.150.57.5 with SMTP id f5mr4439716yba.411.1287857862341;
+        Sat, 23 Oct 2010 11:17:42 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id v12sm4720263ybk.23.2010.10.23.11.17.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 23 Oct 2010 11:17:41 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1287851481-27952-2-git-send-email-Matthieu.Moy@imag.fr>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159805>
 
-Thiago Farina <tfransosi@gmail.com> writes:
+Matthieu Moy wrote:
 
-> On Sat, Oct 23, 2010 at 11:33 AM, Yann Dirson <ydirson@altern.org> wr=
-ote:
->> =A0static const char builtin_diff_usage[] =3D
->> -"git diff <options> <rev>{0,2} -- <path>*";
->> +"git diff [<common diff options>] <commit>{0,2} -- <path>*"
->
-> Why change from <options> to <common diff options> ?
+> --- a/Documentation/gittutorial-2.txt
+> +++ b/Documentation/gittutorial-2.txt
+> @@ -373,7 +373,7 @@ $ git status
+>  #
+>  #       new file: closing.txt
+>  #
+> -# Changed but not updated:
+> +# Changed but not staged for commit:
+>  #   (use "git add <file>..." to update what will be committed)
 
-Because this is what the man page says I guess.
+I find this even more confusing, though I admit that may be due to
+habit more than anything else.
 
---=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+My reading, before:
+
+	These files were changed, but the version to be committed has
+	not been updated to include the latest changes (use "git add
+	<file>..." to add these changes to the index).
+
+Afterwards:
+
+	These files were changed, but they are not staged for the
+	next commit.
+
+If I do
+
+	echo hello >hi.c
+	git add hi.c
+	echo world >>hi.c
+	git status
+
+then what does it mean to say "hi.c" is not staged for commit?
+It actually does have changes ready for committing.
+
+I would prefer to say something to the effect of
+
+	# Has unstaged changes:
+
+Anyone wordsmiths out there with ideas to make this clearer?
