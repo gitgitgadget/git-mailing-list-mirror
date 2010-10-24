@@ -1,83 +1,69 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable descriptions
-Date: Sun, 24 Oct 2010 03:24:42 +0200
-Message-ID: <201010240324.42721.trast@student.ethz.ch>
-References: <cover.1287690696.git.trast@student.ethz.ch> <20101022155307.GB5554@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>,
-	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 24 03:25:12 2010
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: [PATCH v2] make pack-objects a bit more resilient to repo corruption
+Date: Sat, 23 Oct 2010 22:26:46 -0400
+Message-ID: <30FC97D9-D9F2-4A08-8E69-4556DE204AA6@adacore.com>
+References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home> <20101022144600.GA5554@sigill.intra.peff.net> <alpine.LFD.2.00.1010221427390.2764@xanadu.home> <alpine.LFD.2.00.1010221606550.2764@xanadu.home> <AANLkTimy-ihrF1syWYe3T4W6-UHzCaj5Jud5rdFmv3D5@mail.gmail.com> <alpine.LFD.2.00.1010221714450.2764@xanadu.home>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Oct 24 04:33:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9pKi-00014q-7o
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 03:25:12 +0200
+	id 1P9qP4-00034O-SZ
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 04:33:47 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540Ab0JXBYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 21:24:52 -0400
-Received: from gwse.ethz.ch ([129.132.178.237]:6482 "EHLO gwse.ethz.ch"
+	id S1754455Ab0JXCdh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 22:33:37 -0400
+Received: from rock.gnat.com ([205.232.38.15]:32982 "EHLO rock.gnat.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751815Ab0JXBYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 21:24:51 -0400
-Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 24 Oct
- 2010 03:24:51 +0200
-Received: from pctrast.inf.ethz.ch (129.132.211.15) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 24 Oct
- 2010 03:24:49 +0200
-User-Agent: KMail/1.13.5 (Linux/2.6.36-rc8-32-desktop; KDE/4.4.4; x86_64; ; )
-In-Reply-To: <20101022155307.GB5554@sigill.intra.peff.net>
-X-Originating-IP: [129.132.211.15]
+	id S1753443Ab0JXCdh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 23 Oct 2010 22:33:37 -0400
+X-Greylist: delayed 408 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Oct 2010 22:33:36 EDT
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id B39BD2BAC0D;
+	Sat, 23 Oct 2010 22:26:47 -0400 (EDT)
+X-Virus-Scanned: Debian amavisd-new at gnat.com
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id K90PfX06ZkTj; Sat, 23 Oct 2010 22:26:47 -0400 (EDT)
+Received: from [172.16.1.2] (sdsl-216-220-103-157.dsl.bway.net [216.220.103.157])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTPSA id 64E6A2BAC0C;
+	Sat, 23 Oct 2010 22:26:47 -0400 (EDT)
+In-Reply-To: <alpine.LFD.2.00.1010221714450.2764@xanadu.home>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159835>
 
-Jeff King wrote:
->   1. It looks like you're more or less just parsing "::" list keys from
->      all of the manpages. This seems somewhat fragile, as there could be
->      other non-config lists. Can we at least restrict it to
->      CONFIGURATION sections? It would be nice if we could put in some
->      kind of semantic markup, but I'm not sure how painful that would be
->      with asciidoc (we could always resort to comments in the source,
->      but that would probably get unreadable quickly).
 
-I figured for consistency and ease of lookup *all* configuration docs
-should name the variables in the same format.  It can still be helpful
-to mention them elsewhere, e.g. in the option documentations, but the
-main docs should be a CONFIGURATION section formatted like this.
+On Oct 22, 2010, at 17:19, Nicolas Pitre wrote:
 
-Or do you think that would be a bad thing?
-
-As for false positives, we could do the CONFIGURATION but in any case
-I was hoping to avoid a special markup by using an asciidoc markup to
-mark false positives if they arise (there currently aren't any).
-E.g., it should be possible to make a {noconfig} attribute that
-expands to nothing or so.  [Then again the same trick could be used
-for all configs...]
-
->      [2]: Actually, as I mentioned a long time ago, I think it would be
->           nicer to have a table like:
+>> On Fri, Oct 22, 2010 at 13:26, Nicolas Pitre <nico@fluxnic.net> wrote:
+>>> +                               static int warned = 0;
+>>> +                               if (!warned++)
+>>> +                                       warning("object %s cannot be read",
+>>> +                                               sha1_to_hex(src_entry->idx.sha1));
+>> 
+>> How does this handle multiple missing objects? Will it only warn for
+>> the first one?
 > 
->              format.attach         linkgit:git-format-patch[1]
->              format.cc             linkgit:git-format-patch[1]
->              format.headers        linkgit:git-format-patch[1]
->              format.pretty         linkgit:gitpretty[7]
+> Yes, only the first one, so you have a bone to chase if that ever 
+> happens to you.  And that's good enough IMHO.  Trying to warn for every 
+> missing object would require extra storage per object to remember if any 
+> particular object was warned for already, which is I think overkill for 
+> an extremely unlikely event.  Comprehensive reporting is the job of 
+> fsck.
 
-True, you said that.  I'll hack it into this format, since it's easy
-to do once the parsers are stable and can then just say something like
-"herein" for all the ones actually in git-config(1).
+Maybe add a ", run git fsck" to the message. Will still comfortably fit a line.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+  -Geert
