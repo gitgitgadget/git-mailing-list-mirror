@@ -1,323 +1,200 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [WIP PATCH 14/18] t1510: setup case #11
-Date: Sun, 24 Oct 2010 19:11:46 +0700
-Message-ID: <1287922310-14678-15-git-send-email-pclouds@gmail.com>
+Subject: [WIP PATCH 15/18] t1510: setup case #12
+Date: Sun, 24 Oct 2010 19:11:47 +0700
+Message-ID: <1287922310-14678-16-git-send-email-pclouds@gmail.com>
 References: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 24 14:13:35 2010
+X-From: git-owner@vger.kernel.org Sun Oct 24 14:13:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9zSA-0000I7-Fb
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 14:13:34 +0200
+	id 1P9zSM-0000LF-8R
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 14:13:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932646Ab0JXMNa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 08:13:30 -0400
+	id S932649Ab0JXMNg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 08:13:36 -0400
 Received: from mail-pv0-f174.google.com ([74.125.83.174]:55620 "EHLO
 	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932454Ab0JXMN3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 08:13:29 -0400
+	with ESMTP id S932454Ab0JXMNg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 08:13:36 -0400
 Received: by mail-pv0-f174.google.com with SMTP id 32so423774pvb.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 05:13:29 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 05:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=9S3ro+gFp4yzt+4OKW88f2C2ND8DcRIBx3iisPudhLM=;
-        b=Tk+jqRCxYQW44VvP4WsnxfWii0i0mXjiYqp83cf6RMFL3D18JbKB56EZFKgvF9jDAO
-         ZtVUhy2RXAhN8R6HuiInXtYXG/au1MLt5sIlrn8ZSbsqAK+eAPg9jvy1l5Ex4XPkhNtT
-         Zbo8KAxQlYzf6m6Up05Vm1aNANuGjJMRWN0kc=
+        bh=ASRqBBCGCoAbWWFINnOuGiV1s88DixlGIT22z+tL3jY=;
+        b=vKNKnLkZL3I4ITwa8988hCl44An/7xrTJ1AFIPgxT9vLnOzEHhU4iW4cgOIFkANeT2
+         LRNuFG7RkV48Impc2S3bEtkUqW66mAUU6Nq+CQIJZREfeRmzMGGcy7Y0w3wjBtDbmm55
+         hBljwH87g2RKdeqp/rs+jIR0S6E1NVJ47vY24=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=R33DX8O0yvzSccD4DBhtojcziu+kaVBYBXkGlnrYQwYxh/0rA/qegJi+w3wFvqrDud
-         WVsoJcYAbIqVk1te+OaVGEciqxgQ4u0md3qVT9OMKq9FPo+etjJrOcq0jPfsWWRgzTOO
-         Xn6IOFb1f4Ev5Z+6/bTTAepOQ8OS+VwF2CTcc=
-Received: by 10.142.216.7 with SMTP id o7mr4613113wfg.55.1287922409326;
-        Sun, 24 Oct 2010 05:13:29 -0700 (PDT)
+        b=O0gyDTiTiuBmE2pvE/L6j4EJPrAFnjgd4nSumULLWDu11+BR3W+5ZRJTmRCSxoU434
+         KuFQKxiHonLHW3tRqT0t02QFLvPGuea5gw4eJeNtwmk9F8SQ7kzQqGDSUagyHU4VsJCw
+         gvh2eFsqa5VGVXd0We41eslRMsxvrZ5Nku7Xo=
+Received: by 10.142.49.12 with SMTP id w12mr4252901wfw.160.1287922415853;
+        Sun, 24 Oct 2010 05:13:35 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id x18sm9130487wfa.23.2010.10.24.05.13.25
+        by mx.google.com with ESMTPS id e14sm9127105wfg.20.2010.10.24.05.13.32
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Oct 2010 05:13:28 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 24 Oct 2010 19:13:24 +0700
+        Sun, 24 Oct 2010 05:13:34 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 24 Oct 2010 19:13:31 +0700
 X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
 In-Reply-To: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159871>
 
 ---
- t/t1510-repo-setup.sh |  255 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 255 insertions(+), 0 deletions(-)
+ t/t1510-repo-setup.sh |  132 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 132 insertions(+), 0 deletions(-)
 
 diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 31bacd7..f8ab969 100755
+index f8ab969..1516ff6 100755
 --- a/t/t1510-repo-setup.sh
 +++ b/t/t1510-repo-setup.sh
-@@ -1426,4 +1426,259 @@ EOF
- 	GIT_DIR=../.git test_repo 10/sub
+@@ -1681,4 +1681,136 @@ EOF
+ 	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 11/sub/sub
  '
  
 +#
-+# case #11
++# case #12
 +#
 +############################################################
 +#
 +# Input:
 +#
-+#  - GIT_WORK_TREE is set
-+#  - GIT_DIR is set
-+#  - core.worktree is not set
++#  - GIT_WORK_TREE is not set
++#  - GIT_DIR is not set
++#  - core.worktree is set
 +#  - .git is a file
 +#  - core.bare is not set, cwd is outside .git
 +#
 +# Output:
 +#
-+# same as case #3 except that git_dir is set by .git file
++# same as case #4 except that git_dir is set by .git file
 +
-+test_expect_success '#11: setup' '
++
++test_expect_success '#12: setup' '
 +	unset GIT_DIR GIT_WORK_TREE &&
-+	mkdir 11 11/sub 11/sub/sub 11.wt 11.wt/sub 11/wt 11/wt/sub &&
-+	cd 11 &&
++	mkdir 12 12/sub 12/sub/sub 12.wt 12.wt/sub 12/wt 12/wt/sub &&
++	cd 12 &&
 +	git init &&
-+	mv .git ../11.git &&
-+	echo gitdir: ../11.git >.git &&
++	mv .git ../12.git &&
++	echo gitdir: ../12.git >.git &&
 +	cd ..
 +'
 +
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
++test_expect_failure '#12: core.worktree(rel), at root' '
++	cat >12/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12
++$TRASH_DIRECTORY/12
 +EOF
-+	GIT_DIR=.git GIT_WORK_TREE="$TRASH_DIRECTORY/11" test_repo 11
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree .. &&
++	test_repo 12
 +'
 +
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE(rel) at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
++test_expect_success '#12: core.worktree, at root' '
++	cat >12/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12
++$TRASH_DIRECTORY/12
 +EOF
-+	GIT_DIR=.git GIT_WORK_TREE=. test_repo 11
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree "$TRASH_DIRECTORY/12" &&
++	test_repo 12
 +'
 +
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/11" test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE(rel) at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE=. test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORKTREE in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
++test_expect_failure '#12: core.worktree(rel), in subdir' '
++	cat >12/sub/sub/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12
++$TRASH_DIRECTORY/12
 +sub/sub/
 +EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE="$TRASH_DIRECTORY/11" test_repo 11/sub/sub
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree .. &&
++	test_repo 12/sub/sub
 +'
 +
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORKTREE(rel) in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
++test_expect_success '#12: core.worktree, in subdir' '
++	cat >12/sub/sub/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12
++$TRASH_DIRECTORY/12
 +sub/sub/
 +EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE=../.. test_repo 11/sub/sub
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree "$TRASH_DIRECTORY/12" &&
++	test_repo 12/sub/sub
 +'
 +
-+test_expect_failure '#11: GIT_DIR, GIT_WORKTREE in subdir' '
-+	cat >11/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
-+sub/
++test_expect_failure '#12: core.worktree=wt(rel), at root' '
++	cat >12/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12/wt
++$TRASH_DIRECTORY/12
 +EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/11" test_repo 11/sub
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree ../wt &&
++	test_repo 12
 +'
 +
-+test_expect_failure '#11: GIT_DIR, GIT_WORKTREE(rel) in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11
-+$TRASH_DIRECTORY/11
-+sub/sub/
++test_expect_success '#12: core.worktree=wt, at root' '
++	cat >12/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12/wt
++$TRASH_DIRECTORY/12
 +EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE=../.. test_repo 11/sub/sub
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree "$TRASH_DIRECTORY/12/wt" &&
++	test_repo 12
 +'
 +
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=wt at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11
++test_expect_failure '#12: core.worktree=wt(rel), in subdir' '
++	cat >12/sub/sub/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12/wt
++$TRASH_DIRECTORY/12/sub/sub
 +EOF
-+	GIT_DIR=.git GIT_WORK_TREE="$TRASH_DIRECTORY/11/wt" test_repo 11
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree ../wt &&
++	test_repo 12/sub/sub
 +'
 +
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=wt(rel) at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11
++test_expect_success '#12: core.worktree=wt, in subdir' '
++	cat >12/sub/sub/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
++$TRASH_DIRECTORY/12/wt
++$TRASH_DIRECTORY/12/sub/sub
 +EOF
-+	GIT_DIR=.git GIT_WORK_TREE=wt test_repo 11
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree "$TRASH_DIRECTORY/12/wt" &&
++	test_repo 12/sub/sub
 +'
 +
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=wt(rel) at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE=wt test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=wt at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/11/wt" test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=wt in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11/sub/sub
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE="$TRASH_DIRECTORY/11/wt" test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=wt(rel) in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11/sub/sub
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE=../../wt test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=wt(rel) in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11/sub/sub
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE=../../wt test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=wt in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY/11/wt
-+$TRASH_DIRECTORY/11/sub/sub
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/11/wt" test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=.. at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
++test_expect_failure '#12: core.worktree=..(rel), at root' '
++	cat >12/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
 +$TRASH_DIRECTORY
 +$TRASH_DIRECTORY
-+11/
++12/
 +EOF
-+	GIT_DIR=.git GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 11
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree ../.. &&
++	test_repo 12
 +'
 +
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=..(rel) at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
++test_expect_failure '#12: core.worktree=.., at root' '
++	cat >12/expected <<EOF &&
++$TRASH_DIRECTORY/12.git
 +$TRASH_DIRECTORY
 +$TRASH_DIRECTORY
-+11/
++12/
 +EOF
-+	GIT_DIR=.git GIT_WORK_TREE=.. test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=..(rel) at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11/.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+11/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE=.. test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=.. at root' '
-+	cat >11/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+11/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 11
-+'
-+
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=.. in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+11/sub/sub/
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR(rel), GIT_WORK_TREE=..(rel) in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+11/sub/sub/
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE=../../.. test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=..(rel) in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+11/sub/sub/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE=../../../ test_repo 11/sub/sub
-+'
-+
-+test_expect_failure '#11: GIT_DIR, GIT_WORK_TREE=.. in subdir' '
-+	cat >11/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/11.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+11/sub/sub/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/11/.git" GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 11/sub/sub
++	git config --file="$TRASH_DIRECTORY/12.git/config" core.worktree "$TRASH_DIRECTORY/12" &&
++	test_repo 12
 +'
 +
  test_done
