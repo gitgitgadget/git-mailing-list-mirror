@@ -1,11 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [WIP PATCH 00/18] setup tests
-Date: Sun, 24 Oct 2010 19:11:32 +0700
-Message-ID: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Subject: [WIP PATCH 02/18] Add t1510 for setup tests
+Date: Sun, 24 Oct 2010 19:11:34 +0700
+Message-ID: <1287922310-14678-3-git-send-email-pclouds@gmail.com>
+References: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
@@ -15,95 +13,112 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9zR5-0008WA-NE
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 14:12:28 +0200
+	id 1P9zR6-0008WA-Oz
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 14:12:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932506Ab0JXML7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 08:11:59 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:48679 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932454Ab0JXML6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 08:11:58 -0400
-Received: by pzk3 with SMTP id 3so478419pzk.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 05:11:58 -0700 (PDT)
+	id S932560Ab0JXMML (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 08:12:11 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:53526 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932454Ab0JXMMK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 08:12:10 -0400
+Received: by pwj8 with SMTP id 8so245656pwj.19
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 05:12:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=pOXDgOqAIBs8dIpHLrp8/RFVC/1cIHyj7TwBnbjGCxQ=;
-        b=tEdacWezQ1/g5VR8CM4yJbvs124EM3TGpjecy35O5m3ZecP8DCUWmY6JJsfV9mxK7z
-         98zlsiUnd+7o7BeyN+Uffnpo6JJP57LJqkkbdUqrmeKIUuSeNoSx18OqgMKZPCBIac/s
-         wDCpknnjlseJ8Bw1AeSIG+Aat9We7WzpK0SKA=
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=C5uwNjs/kTHRLkXHzkLuSeOfcri7HEMcdrIok4YL/LI=;
+        b=IrudEjz8PjCWSJMsaxtgqVa56RAKLBNpREUMyowKfFpNrumwqfZMwYWTOUAtuO7oav
+         1sWZLiu5z/tqdX2Ndx5fhDn3fMHF3buo5zBDnCrV4WGazYXxdHoK/0A70R3Z8p/w+752
+         KJm0VkES35W2Jn0EeZzc19n6Q/P5qVtehTwbk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=NcYPjjr+sH3zLWLk1/0ixXdO9vKL5qJFEgRALi651fSe/nPz9xxYCPZAorf2qT46f2
-         utmj8Jf61x3WkvixZ4llLpcBawTYXgOSqyGim2GahGGSC3lSu9KNMnXgF7/v9gbEL7Kw
-         Qx+22Eae1bMsiTArMtHFGP2nycADfSDIiqrEk=
-Received: by 10.142.192.17 with SMTP id p17mr3772858wff.386.1287922316333;
-        Sun, 24 Oct 2010 05:11:56 -0700 (PDT)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=HyMv4Olx3lPdxQiJ9ckbOIyTh3SLeWrmc8EJFw0s88i3HDfgVjd5ca5AglpVOEPZ6c
+         lz8LZRQ0P3slCsqHGHD+c1LtFMTU9wGqR8ev2P7SUCoHU7iR4vOHzLT8A8SQ0s6pj+wH
+         hbPTuPLDAunVO5JwnH0x8PaN/XJUEESRj+I3I=
+Received: by 10.142.242.16 with SMTP id p16mr542397wfh.19.1287922329627;
+        Sun, 24 Oct 2010 05:12:09 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id p8sm9123587wff.4.2010.10.24.05.11.52
+        by mx.google.com with ESMTPS id e36sm9126172wfj.2.2010.10.24.05.12.06
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Oct 2010 05:11:55 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 24 Oct 2010 19:11:51 +0700
+        Sun, 24 Oct 2010 05:12:08 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 24 Oct 2010 19:12:05 +0700
 X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
+In-Reply-To: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159858>
 
-These tests are created according to [1] and its following
-discussions. I have yet to create tests for the last 16 cases, which
-might be simpler.  Tests from 8-15 are usually copy of 0-7 with some
-modification. If you find bugs in 0-7, stop reading 8-15, it's just
-wasting time.
-
-The rules are bent a bit the way the code does it, specifically:
-
- - GIT_WORK_TREE is relative to cwd, not GIT_DIR
- - core.worktree is always effective regardless GIT_DIR/--git-dir
-
-Also I assume that when cwd is outside worktree, cwd should be
-unchanged (therefore prefix is NULL). This is the behavior when
-GIT_DIR and GIT_WORK_TREE are set. Let's apply it to all other cases
-where cwd may be outside worktree.
-
-Adjusting the expected results is not hard. So it's up to you guys.
-Once we agree on something, I can update the tests.
-
-Also when GIT_DIR is set, .git _file_ is not recognized because
-setup_explicit_git_dir() does not accept it. There are a
-_lot_ of failed tests due to this. I probably should fix that,
-otherwise tests #8-15 may not be very reliable.
-
-[1] http://mid.gmane.org/20101020085859.GA13135@do
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (18):
-  rev-parse: add --internal-cwd and --internal-git-dir for tests
-  Add t1510 for setup tests
-  t1510: setup case #0
-  t1510: setup case #1
-  t1510: setup case #2
-  t1510: setup case #3
-  t1510: setup case #4
-  t1510: setup case #5
-  t1510: setup case #6
-  t1510: setup case #7
-  t1510: setup case #8
-  t1510: setup case #9
-  t1510: setup case #10
-  t1510: setup case #11
-  t1510: setup case #12
-  t1510: setup case #13
-  t1510: setup case #14
-  t1510: setup case #15
-
- builtin/rev-parse.c   |   11 +
- t/t1510-repo-setup.sh | 2483 +++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 2 files changed, 2494 insertions(+), 0 deletions(-)
+---
+ t/t1510-repo-setup.sh |   56 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 56 insertions(+), 0 deletions(-)
  create mode 100755 t/t1510-repo-setup.sh
+
+diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
+new file mode 100755
+index 0000000..d618787
+--- /dev/null
++++ b/t/t1510-repo-setup.sh
+@@ -0,0 +1,56 @@
++#!/bin/sh
++
++test_description='Tests of cwd/prefix/worktree/gitdir setup in all cases'
++
++. ./test-lib.sh
++
++# A few principles for repo setup:
++#
++# 1. GIT_DIR is relative to user's cwd. This directory is refered as
++#    "git_dir" below. Auto discovered repo is also "git_dir".
++#    --git-dir is equivalent to GIT_DIR.
++#
++# 2. core.worktree is relative to git_dir
++#
++# 3. GIT_WORK_TREE is relative to user's cwd. --work-tree is
++#    equivalent to GIT_WORK_TREE.
++#
++# 4. .git file is relative to git_dir. Note that the repo where .git
++#    file points to is not considered "git_dir" in the above.
++#
++# 5. GIT_WORK_TREE is only effective if GIT_DIR is
++#    set (hence "Effective GIT_WORK_TREE"
++#    below). Uneffective GIT_WORK_TREE should be warned.
++#
++# 6. Effective GIT_WORK_TREE will override core.worktree
++#
++# 7. During repo discovery, if "." is found a repo, it is considered a
++#    bare repo unless core.worktree is set
++#
++# 8. core.bare conflicts with core.worktree
++#
++# 9. Effective GIT_WORK_TREE will override core.bare
++#
++# 10. When user's cwd is outside worktree, cwd will remain unchanged,
++#     prefix be NULL.
++
++test_repo() {
++	(
++	if [ -n "$1" ]; then cd "$1"; fi &&
++	git symbolic-ref HEAD >/dev/null && # git_dir reachability test first
++	git rev-parse --internal-git-dir >result &&
++	git rev-parse --show-toplevel >>result &&
++	git rev-parse --internal-cwd >>result &&
++	git rev-parse --show-prefix >>result &&
++	test_cmp expected result
++	)
++}
++
++# Bit 0 = GIT_WORK_TREE
++# Bit 1 = GIT_DIR
++# Bit 2 = core.worktree
++# Bit 3 = .git is a file
++# Bit 4 = bare repo
++# Case# = encoding of the above 5 bits
++
++test_done
+-- 
+1.7.0.2.445.gcbdb3
