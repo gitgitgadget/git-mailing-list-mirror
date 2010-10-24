@@ -1,93 +1,111 @@
-From: Mike Herrick <mike.herrick@gmail.com>
-Subject: fsck errors on newly cloned, newly imported git repository
-Date: Sun, 24 Oct 2010 11:54:04 -0400
-Message-ID: <AANLkTimxXXNxUOMQyDDoW9+vT9aKL5C5m+VD51jk0zL9@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 24 17:54:13 2010
+From: Robin Green <greenrd@greenrd.org>
+Subject: [TopGit PATCH] Make tg help work in any directory
+Date: Sun, 24 Oct 2010 14:34:59 +0000
+Message-ID: <1287930899-20186-1-git-send-email-greenrd@greenrd.org>
+Cc: Robin Green <greenrd@greenrd.org>
+X-From: git-owner@vger.kernel.org Sun Oct 24 18:14:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PA2tg-0007VS-JU
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 17:54:13 +0200
+	id 1PA3Cp-000347-Jw
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 18:14:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932910Ab0JXPyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 11:54:06 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:58400 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932662Ab0JXPyF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 11:54:05 -0400
-Received: by wyf28 with SMTP id 28so2517623wyf.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 08:54:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=yMssSXPrKNHczE/FXyhvctc/G1/u9yVSWK0P0FIrHRQ=;
-        b=h43GPXQDydaA45YzU5H98jwaWF+bfWnaUOPPzvNanWGwzWv3q6Jtp55C3yzE1UMdbo
-         ST/uECoPExZ11FJROevsNdEAkzPizr0ZWCGyQHoI0NqjlYsPJSaKcy8LIPHbvdIPWjte
-         dKhIZWFPMdmCFbG06kK/yTTmB+ixBrH66wkco=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=i2/SF2a+xvQqlYTtCgdjseooqg2iG2FUdQinEc/L23nJ3UJ+G8dO+6Gg+UtRnmQlMi
-         BUHI3vlMTS0HobeZ2kNfN3OUBq1baYPw3S4xguEG6M9f5GWeVA9QIaAZ/QXjlKQFe0Sf
-         GSkDN4sheCOQCt5DKmaIB4teyjOfC/wP1JFzU=
-Received: by 10.227.156.136 with SMTP id x8mr5333997wbw.148.1287935644227;
- Sun, 24 Oct 2010 08:54:04 -0700 (PDT)
-Received: by 10.216.255.143 with HTTP; Sun, 24 Oct 2010 08:54:04 -0700 (PDT)
+	id S1757586Ab0JXQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 12:13:53 -0400
+Received: from host29.netdorm.com ([64.182.105.29]:41252 "EHLO
+	mxout.netdorm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754785Ab0JXQNw (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 12:13:52 -0400
+X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Oct 2010 12:13:52 EDT
+Received: from mail.dnsexit.com (mail.dnsexit.com [67.214.171.75] (may be forged))
+	by mxout.netdorm.com (8.13.8/8.13.8) with ESMTP id o9OG8fPE007000
+	for <git@vger.kernel.org>; Sun, 24 Oct 2010 12:08:42 -0400
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.dnsexit.com (Postfix) with ESMTP id 59CA28B5D23
+	for <git@vger.kernel.org>; Sun, 24 Oct 2010 12:04:17 -0400 (EDT)
+X-Quarantine-ID: <l1GyaUTSW3-h>
+X-Virus-Scanned: amavisd-new at box11.dnsexit.com
+X-Amavis-Alert: BAD HEADER, Duplicate header field: "To"
+Received: from mail.dnsexit.com ([127.0.0.1])
+	by localhost (mail.dnsexit.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id l1GyaUTSW3-h; Sun, 24 Oct 2010 12:04:16 -0400 (EDT)
+Received: from cspcnh.swan.ac.uk (cspcnh.swan.ac.uk [137.44.6.171])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.dnsexit.com (Postfix) with ESMTP id 98DE98B5D21;
+	Sun, 24 Oct 2010 12:04:16 -0400 (EDT)
+Received: from cspcnh.swan.ac.uk (exherbo.local [127.0.0.1])
+	by cspcnh.swan.ac.uk (8.14.4/8.14.4) with ESMTP id o9OEa0gT020223;
+	Sun, 24 Oct 2010 14:36:00 GMT
+Received: (from greenrd@localhost)
+	by cspcnh.swan.ac.uk (8.14.4/8.14.4/Submit) id o9OEa069020222;
+	Sun, 24 Oct 2010 14:36:00 GMT
+To: git@vger.kernel.org
+X-Mailer: git-send-email 1.7.2.3
+To: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159882>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159883>
 
-This weekend we're cutting over to use git for our source code control
-system.  I've imported about 20 years worth of previous history using
-"git cvsimport" (takes about four hours).  I then cloned the resulting
-repository onto five different machines (four Linux, one Solaris).
-I've set up a cron job to do a nightly "git fsck" on each of the five
-machines, and last night, two of the machines reported fsck errors on
-their initial run.  Here's a sample of the errors:
+tg was checking if the current directory is a git repository,
+which isn't necessary if the command is "help" or there is no
+command.
 
-error: packed cd00921f75f91985d1b67181632a4764af50d4e8 from
-.git/objects/pack/pack-b17f2e0a970084fed1f7a6c7664601e78059063f.pack
-is corrupt
-error: sha1 mismatch 20abcd833a10aad51ff7f59b6a5e179d77e9a388
+Signed-off-by: Robin Green <greenrd@greenrd.org>
 
-error: 20abcd833a10aad51ff7f59b6a5e179d77e9a388: object corrupt or missing
-error: sha1 mismatch 343c28f127a5e5b9b85b0bdc5419e131b10ff2f0
-...
-broken link from    tree df17bc72fd5f7cea686f97e14f71f8464149ed25
-              to    blob d085a51be07285bec9ccf0323a7cf47856dbb31f
-broken link from    tree ab9e5b7383bcde71680abe552e30ae5abf64cf6d
-              to    blob 83e8475441911692d1a63d0272e17d62d1b7b8d1
-...
-missing blob ad3209e27bbc3676bf06f889779908928948b65a
-missing blob 4d4829314e64e2a0524fa520f59f7d18482e2b0a
-missing blob 9ed481a1970e5f38b1479241ed21a2296c09cda0
-...
+---
+ tg.sh |   26 +++++++++++++++++---------
+ 1 files changed, 17 insertions(+), 9 deletions(-)
 
-The errors reported on these two machines were different, but what's
-interesting is that all of the missing blobs refer to various
-revisions of the same file, namely our "Changes" file (which is
-updated with each change).  It's also the largest file in our
-repository (3.3M).  I immediately started looking at logs to see if
-there was any indication of disk corruption and found none (no SMART
-errors either).  Both of these machines have been stable over a
-multi-year period of time (no unexplained crashes).  They're also
-older Linux machines (running  2.6.5-1.358 and  2.6.1-1.65, with
-relatively little memory: 1GB and .5GB), but with newly installed
-version of git (1.7.3.1).  I initially used git-daemon for the clone
-process, but even using ssh, I still see fsck errors on the resulting
-clones on these two machines.
-
-If I don't find an explanation for this behavior, our conversion to
-git will need to be backed out before development begins tomorrow :-(.
-
-Thanks for any pointers.
-
-Mike.
+diff --git a/tg.sh b/tg.sh
+index 8264a3b..03ef227 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -356,16 +356,25 @@ setup_pager()
+ 
+ ## Initial setup
+ 
+-set -e
+-git_dir="$(git rev-parse --git-dir)"
+-root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
++cmd="$1"
++[ -z "$tg__include" ] || cmd="include" # ensure setup happens
++case "$cmd" in
++help|--help|-h)
++        :;;
++*)
++        if [ -n "$cmd" ]; then
++            set -e
++            git_dir="$(git rev-parse --git-dir)"
++            root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
+ # Make sure root_dir doesn't end with a trailing slash.
+-root_dir="${root_dir%/}"
+-base_remote="$(git config topgit.remote 2>/dev/null)" || :
+-tg="tg"
++            root_dir="${root_dir%/}"
++            base_remote="$(git config topgit.remote 2>/dev/null)" || :
++            tg="tg"
+ # make sure merging the .top* files will always behave sanely
+-setup_ours
+-setup_hook "pre-commit"
++            setup_ours
++            setup_hook "pre-commit"
++        fi
++esac
+ 
+ ## Dispatch
+ 
+@@ -385,7 +394,6 @@ if [ "$1" = "-r" ]; then
+ 	tg="$tg -r $base_remote"
+ fi
+ 
+-cmd="$1"
+ [ -n "$cmd" ] || { do_help; exit 1; }
+ shift
+ 
+-- 
+tg: (8b0f1f9..) t/help-anywhere (depends on: master)
