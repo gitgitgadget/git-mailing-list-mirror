@@ -1,83 +1,128 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [PATCH v2] make pack-objects a bit more resilient to repo
- corruption
-Date: Sat, 23 Oct 2010 22:47:52 -0400 (EDT)
-Message-ID: <alpine.LFD.2.00.1010232237150.2764@xanadu.home>
-References: <alpine.LFD.2.00.1010220037250.2764@xanadu.home>
- <20101022144600.GA5554@sigill.intra.peff.net>
- <alpine.LFD.2.00.1010221427390.2764@xanadu.home>
- <alpine.LFD.2.00.1010221606550.2764@xanadu.home>
- <AANLkTimy-ihrF1syWYe3T4W6-UHzCaj5Jud5rdFmv3D5@mail.gmail.com>
- <alpine.LFD.2.00.1010221714450.2764@xanadu.home>
- <30FC97D9-D9F2-4A08-8E69-4556DE204AA6@adacore.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/7] branch -h: show usage even in an invalid repository
+Date: Sun, 24 Oct 2010 02:20:32 -0500
+Message-ID: <20101024072032.GA23455@burratino>
+References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
+ <1287544320-8499-4-git-send-email-pclouds@gmail.com>
+ <20101022063837.GA6081@burratino>
+ <20101022064258.GB6081@burratino>
+ <7v8w1qnkr1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Sun Oct 24 05:03:28 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 24 09:25:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9qro-00082h-9b
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 05:03:28 +0200
+	id 1P9ux6-0001mB-5z
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 09:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755692Ab0JXCry (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 22:47:54 -0400
-Received: from relais.videotron.ca ([24.201.245.36]:36797 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754837Ab0JXCrx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 22:47:53 -0400
-Received: from xanadu.home ([66.130.28.92]) by vl-mo-mrz23.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LAR0003QX3L9O80@vl-mo-mrz23.ip.videotron.ca> for
- git@vger.kernel.org; Sat, 23 Oct 2010 22:47:46 -0400 (EDT)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <30FC97D9-D9F2-4A08-8E69-4556DE204AA6@adacore.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S932124Ab0JXHY2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 03:24:28 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:37893 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932082Ab0JXHY1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 03:24:27 -0400
+Received: by ywk9 with SMTP id 9so1551692ywk.19
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 00:24:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=aVQ5rPsMjv3KA3huEj8OEzBxYOYPvQFglgiAdUR6xIw=;
+        b=Ktv5Vpsfk8vpta+rXEb56kF5E1Nr5ZJ4Z6DK3Op2qsMMmA/qvLHkO1RLtZFWAyjZgf
+         ig5EQd2O3M0VPhg3yXvswZzFHvroagv8pdeL1Yv7n3WqEAmzYJgmL84rKIbEbbIMmZso
+         LA0luxGVQVYASMLUsn054SvsTCHXNPNK7jI24=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZBmxcO+x8C2msVRNtMk6VJ4osJraBbw93tqmr1qNUU5jm5FX+P2G8TSvahCfSfwcRw
+         j3Us3gmCZq9UMiumCXEc3F6M0JLqWWapynLwEdSf/nqTu73WJFfgycLSQKOM4btYe+pN
+         0Mzk6qbDgCGf38i8bPafvbpIn+Vu2RbWd8uUY=
+Received: by 10.151.79.2 with SMTP id g2mr10075922ybl.84.1287905067139;
+        Sun, 24 Oct 2010 00:24:27 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id q4sm1555198yba.2.2010.10.24.00.24.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 24 Oct 2010 00:24:26 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7v8w1qnkr1.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159837>
 
-On Sat, 23 Oct 2010, Geert Bosch wrote:
+Junio C Hamano wrote:
 
-> 
-> On Oct 22, 2010, at 17:19, Nicolas Pitre wrote:
-> 
-> >> On Fri, Oct 22, 2010 at 13:26, Nicolas Pitre <nico@fluxnic.net> wrote:
-> >>> +                               static int warned = 0;
-> >>> +                               if (!warned++)
-> >>> +                                       warning("object %s cannot be read",
-> >>> +                                               sha1_to_hex(src_entry->idx.sha1));
-> >> 
-> >> How does this handle multiple missing objects? Will it only warn for
-> >> the first one?
-> > 
-> > Yes, only the first one, so you have a bone to chase if that ever 
-> > happens to you.  And that's good enough IMHO.  Trying to warn for every 
-> > missing object would require extra storage per object to remember if any 
-> > particular object was warned for already, which is I think overkill for 
-> > an extremely unlikely event.  Comprehensive reporting is the job of 
-> > fsck.
-> 
-> Maybe add a ", run git fsck" to the message. Will still comfortably fit a line.
+>  - Some tests redirect both the standard output and the standard error
+>    (like this patch) and check the combined result, while some others
+>    (e.g. 2/7) check only the standard error stream.  Don't we want to be
+>    testing them more uniformly?
 
-Maybe if this message ever gets printed often enough.  Let's see if 
-someone will even report it before 2012, and be clueless about it. And 
-to be consistent, you'd have to do the same throughout the code where 
-this could be relevant.
+Good point.  The current state is:
 
-Furthermore, if someone really need the additional clue, then I'm afraid 
-that the current fsck output won't help at all except to confuse that 
-person even more.
+ - Messages from a mistake in usage are reported to stderr.
+ - Messages from git <command> -h are reported to stdout or
+   stderr, with a slight preference for stdout.
 
-Better for people to ask for help on this list when things break due to 
-corruptions if they can't figure it out on their own.
+A nicer behavior would be
 
+ - Messages from a mistake in usage are reported to stderr.
+ - Messages from git <command> -h are reported to stdout.
 
-Nicolas
+Here's a helper to make it easier for commands that use parse-options
+to adopt that nicer behavior.  It writes its output to stdout, so it
+should only be used to be used to handle the -h option.  Example:
+
+	if (argc == 2 && !strcmp(argv[1], "-h"))
+		usage_for_help_opt(builtin_foo_usage, options);
+
+	... some scary commands that should not run with -h ...
+
+	argc = parse_options(argc, ...
+	if (argc != 1)
+		usage_with_options(builtin_foo_usage, options);
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+
+diff --git a/parse-options.c b/parse-options.c
+index 0fa79bc..e92fcfe 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -567,6 +567,13 @@ void usage_with_options(const char * const *usagestr,
+ 	exit(129);
+ }
+ 
++void usage_for_help_opt(const char * const *usagestr,
++			const struct option *opts)
++{
++	usage_with_options_internal(NULL, usagestr, opts, 0, 0);
++	exit(129);
++}
++
+ void usage_msg_opt(const char *msg,
+ 		   const char * const *usagestr,
+ 		   const struct option *options)
+diff --git a/parse-options.h b/parse-options.h
+index d982f0f..de69826 100644
+--- a/parse-options.h
++++ b/parse-options.h
+@@ -152,6 +152,9 @@ extern int parse_options(int argc, const char **argv, const char *prefix,
+ extern NORETURN void usage_with_options(const char * const *usagestr,
+                                         const struct option *options);
+ 
++extern NORETURN void usage_for_help_opt(const char * const *usagestr,
++                                        const struct option *options);
++
+ extern NORETURN void usage_msg_opt(const char *msg,
+ 				   const char * const *usagestr,
+ 				   const struct option *options);
