@@ -1,103 +1,81 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 09/10] user-manual.txt: explain better the
- remote(-tracking) branch terms
-Date: Sun, 24 Oct 2010 10:18:39 -0500
-Message-ID: <20101024151839.GA31764@burratino>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
- <1287851481-27952-10-git-send-email-Matthieu.Moy@imag.fr>
- <9A09AA7C-BAE2-4571-8453-17CB3F3256D4@gmail.com>
+Subject: Re: [WIP PATCH 01/18] rev-parse: add --internal-cwd and
+ --internal-git-dir for tests
+Date: Sun, 24 Oct 2010 10:40:05 -0500
+Message-ID: <20101024154005.GB31764@burratino>
+References: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
+ <1287922310-14678-2-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Thore Husfeldt <thore.husfeldt@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Oct 24 17:22:43 2010
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 24 17:44:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PA2PC-0000F1-AX
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 17:22:42 +0200
+	id 1PA2js-0005Cf-Nn
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 17:44:05 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932801Ab0JXPWh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 11:22:37 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:33305 "EHLO
+	id S932890Ab0JXPn6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 11:43:58 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:34549 "EHLO
 	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932106Ab0JXPWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 11:22:36 -0400
-Received: by yxn35 with SMTP id 35so1588834yxn.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 08:22:35 -0700 (PDT)
+	with ESMTP id S932838Ab0JXPn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 11:43:57 -0400
+Received: by yxn35 with SMTP id 35so1594233yxn.19
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 08:43:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=jHrc0FR9EcuW6PuM6XyJDWbgxSLeAQ9CszAeJiPvsEg=;
-        b=D34SNaFBY7VXO+zmsT4NZmDoY8+4+r8CfiUL6l6mnuqjaFGOhfQXvnVTztNtEbBsny
-         VrR+pYB3qa1R76Agh3WkHSErj0iOzgIJDQMwHkjJmA3PZf9Kqg9tTxCNwIIFVRFtIB7a
-         Qr8BjPRDiVxHYbRJR0xu+lrteHGzcNynuV6ig=
+        bh=SzC0FP67vD7Slj1+oTAD16QsVHvq4Eeechnjr7Ff3kI=;
+        b=jrAKt0VIF8winfrjOa4XB+w5Ey4U4E94LiU8QUmphvMphjfthS55A58c6o6+4nw/IN
+         12zH4imRIvCMaYcEZ1NO/dnW41tVbsFz8rUrKeJmPs3d03TjWJacFMBRmkV8NOjRcm1j
+         W/IAsVfV1ADID26ASawV0VZO3oJLT1ObZ9gEA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=Jd3AY6m9PYQbew2PUW4/uMPsrmqqp20Mps2oS/eOrKJzK9b0id6eBYDckqCrFipUgA
-         gKMl8ktUFS+oeeAeUh78nLjy83ClaGCLP8VCXTV4uz72HitV1OPDC8dwSJXuxeUFDfVw
-         q7q8uUwTecjwubbYP5R7/SNerdgrk3E/9pQoA=
-Received: by 10.151.105.19 with SMTP id h19mr10662614ybm.369.1287933755353;
-        Sun, 24 Oct 2010 08:22:35 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id q14sm5590284ybk.19.2010.10.24.08.22.33
+        b=xYCYVkn9NonSANqP4MXU/ncydh9PcyFuqSSGO+5LWqFAA11OvpX329D/a/yF2YYklN
+         i0rIu3uT6qrCTQbpi06Mm8dy8P9LPJO/9tU27TbAVge1LFZwFbVqJzTuTNVUJfVfKYkF
+         CYbXDWMEnZwC1xbZREtZqqa0cCSPdE4Ez3JJI=
+Received: by 10.150.12.11 with SMTP id 11mr10972328ybl.0.1287935037179;
+        Sun, 24 Oct 2010 08:43:57 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id m22sm4504989yha.5.2010.10.24.08.43.55
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 24 Oct 2010 08:22:34 -0700 (PDT)
+        Sun, 24 Oct 2010 08:43:56 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <9A09AA7C-BAE2-4571-8453-17CB3F3256D4@gmail.com>
+In-Reply-To: <1287922310-14678-2-git-send-email-pclouds@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159880>
 
-Thore Husfeldt wrote:
-> On 23 Oct 2010, at 18:31, Matthieu Moy wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
->> +In this case, "origin" is called a remote repository, or "remote" f=
-or
->> +short. The branches of this repository are called "remote branches"
->> +from our point of view, and Git will maintain a copy of these
->> +branches, called "remote-tracking branches" in the local repository=
-=2E
+> --internal-cwd is obvious, no way else to expose it for testing.
 >
-> No. Git does not =E2=80=9Cmaintain a copy of [the remote] branches=E2=
-=80=9D. It=E2=80=99s exactly one
-> of the pitfalls I fell into: that Git, automagically, puts the *curre=
-nt*
-> state of the remote branch into remote/branchname, or at least
-[...]
-> I realise that it would be more constructive for me to suggest a conc=
-rete
-> improvement, but I=E2=80=99m not quite there yet.
+> --internal-git-dir is introduced because --git-dir prepares its outpu=
+t
+> suitable for scripting. For tests, it must be exactly what git stores=
+=2E
 
-Yes, it really would.  Or could you try to figure out what exactly is
-confusing in the wording (for example by giving an interpretation like
+Hmm.  Forget this is used in tests, would it make sense to do this
+with trace_printf, at the end of setup, as in your earlier patch?
 
-	[do a good job at] maintain[ing] a copy of the branches
+I think it might: just like the exec: lines provide context about what
+command is being traced, such trace: cwd: lines would make it clearer
+what paths that are being output might be referring to.
 
-to indicate which part was confusing)?
-
-As it is, I'm a little confused.  At least according to one interpretat=
-ion,
-Git does maintain a copy of the remote branches.  This is not tracking =
-like
-a Basset hound, and it is not maintaining a copy like cron running rsyn=
-c
-every 5 minutes, but git tracks remote branches like a human and
-maintains a copy like a human running rsync whenever she finds time to
-get around to it.
-
-Of course, the wording can be improved.  A nice side-effect of clear
-suggestions intended to disambiguate one aspect is that they tend to
-result in the text becoming clearer in other ways at the same time.
+Returning to the topic of tests, is it possible to get at these
+variables using an external command that is run by git?  pre-commit
+hook, maybe.  Testing of other symptoms is also possible, as in
+=46r=C3=A9d=C3=A9ric's example.
