@@ -1,160 +1,93 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: [PATCH] CodingGuidelines: Add a section on writing documentation
-Date: Sun, 24 Oct 2010 17:51:22 +0200
-Message-ID: <20101024155121.GA9503@headley>
-References: <20101021222129.GA13262@burratino>
+From: Mike Herrick <mike.herrick@gmail.com>
+Subject: fsck errors on newly cloned, newly imported git repository
+Date: Sun, 24 Oct 2010 11:54:04 -0400
+Message-ID: <AANLkTimxXXNxUOMQyDDoW9+vT9aKL5C5m+VD51jk0zL9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 24 17:52:50 2010
+X-From: git-owner@vger.kernel.org Sun Oct 24 17:54:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PA2sK-0007HG-CM
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 17:52:48 +0200
+	id 1PA2tg-0007VS-JU
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 17:54:13 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932906Ab0JXPwn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 11:52:43 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:49239 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932662Ab0JXPwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 11:52:42 -0400
-Received: by bwz11 with SMTP id 11so1749988bwz.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 08:52:41 -0700 (PDT)
+	id S932910Ab0JXPyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 11:54:06 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:58400 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932662Ab0JXPyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 11:54:05 -0400
+Received: by wyf28 with SMTP id 28so2517623wyf.19
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 08:54:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mail-followup-to:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=UOeXNTiDIbcygffy1Yg0hhnn6uGv1muEuimJ44DI34Y=;
-        b=LAsExQPmRpJKWhctrSpeLqwBJgAPsieqfqb7dRh7ogv/W4cyTO3O58Isx+rtwBcywR
-         VwporTc9Syu25jCmurOKGlMTyY1LOzVLgKbSK2lEdvJdqkvZPu7hZblrhZR9cbmy5tEY
-         FhktK9/Qdb00ExB5S23wV2slz5RiV4ePSRT6A=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=yMssSXPrKNHczE/FXyhvctc/G1/u9yVSWK0P0FIrHRQ=;
+        b=h43GPXQDydaA45YzU5H98jwaWF+bfWnaUOPPzvNanWGwzWv3q6Jtp55C3yzE1UMdbo
+         ST/uECoPExZ11FJROevsNdEAkzPizr0ZWCGyQHoI0NqjlYsPJSaKcy8LIPHbvdIPWjte
+         dKhIZWFPMdmCFbG06kK/yTTmB+ixBrH66wkco=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=bTbOHon7l3yexCZrRnPaUeu8Lcel7fNmq+Kgt3s4u+MAYmyToUV+cl7UpJAScMWMP0
-         7dS1kJjRR/kmVWJfK/2C5iQEXYYKGxpQaPwoLq8xc42Uyi9KeGG70O43x6yJOYup71Ss
-         dgLqediAtCEsEi4zBgSx8st54t0A7nC7dUPsA=
-Received: by 10.204.24.144 with SMTP id v16mr4160378bkb.137.1287935559257;
-        Sun, 24 Oct 2010 08:52:39 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
-        by mx.google.com with ESMTPS id d27sm3983061bkw.14.2010.10.24.08.52.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Oct 2010 08:52:38 -0700 (PDT)
-Mail-Followup-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-Content-Disposition: inline
-In-Reply-To: <20101021222129.GA13262@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=i2/SF2a+xvQqlYTtCgdjseooqg2iG2FUdQinEc/L23nJ3UJ+G8dO+6Gg+UtRnmQlMi
+         BUHI3vlMTS0HobeZ2kNfN3OUBq1baYPw3S4xguEG6M9f5GWeVA9QIaAZ/QXjlKQFe0Sf
+         GSkDN4sheCOQCt5DKmaIB4teyjOfC/wP1JFzU=
+Received: by 10.227.156.136 with SMTP id x8mr5333997wbw.148.1287935644227;
+ Sun, 24 Oct 2010 08:54:04 -0700 (PDT)
+Received: by 10.216.255.143 with HTTP; Sun, 24 Oct 2010 08:54:04 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159882>
 
-Provide a few examples on argument and option notation in usage strings
-and command synopses.
+This weekend we're cutting over to use git for our source code control
+system.  I've imported about 20 years worth of previous history using
+"git cvsimport" (takes about four hours).  I then cloned the resulting
+repository onto five different machines (four Linux, one Solaris).
+I've set up a cron job to do a nightly "git fsck" on each of the five
+machines, and last night, two of the machines reported fsck errors on
+their initial run.  Here's a sample of the errors:
 
-Signed-off-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
----
-Jonathan Nieder <jrnieder@gmail.com> writes:
+error: packed cd00921f75f91985d1b67181632a4764af50d4e8 from
+.git/objects/pack/pack-b17f2e0a970084fed1f7a6c7664601e78059063f.pack
+is corrupt
+error: sha1 mismatch 20abcd833a10aad51ff7f59b6a5e179d77e9a388
 
-> =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec wrote:
+error: 20abcd833a10aad51ff7f59b6a5e179d77e9a388: object corrupt or missing
+error: sha1 mismatch 343c28f127a5e5b9b85b0bdc5419e131b10ff2f0
+...
+broken link from    tree df17bc72fd5f7cea686f97e14f71f8464149ed25
+              to    blob d085a51be07285bec9ccf0323a7cf47856dbb31f
+broken link from    tree ab9e5b7383bcde71680abe552e30ae5abf64cf6d
+              to    blob 83e8475441911692d1a63d0272e17d62d1b7b8d1
+...
+missing blob ad3209e27bbc3676bf06f889779908928948b65a
+missing blob 4d4829314e64e2a0524fa520f59f7d18482e2b0a
+missing blob 9ed481a1970e5f38b1479241ed21a2296c09cda0
+...
 
-[...]
+The errors reported on these two machines were different, but what's
+interesting is that all of the missing blobs refer to various
+revisions of the same file, namely our "Changes" file (which is
+updated with each change).  It's also the largest file in our
+repository (3.3M).  I immediately started looking at logs to see if
+there was any indication of disk corruption and found none (no SMART
+errors either).  Both of these machines have been stable over a
+multi-year period of time (no unexplained crashes).  They're also
+older Linux machines (running  2.6.5-1.358 and  2.6.1-1.65, with
+relatively little memory: 1GB and .5GB), but with newly installed
+version of git (1.7.3.1).  I initially used git-daemon for the clone
+process, but even using ssh, I still see fsck errors on the resulting
+clones on these two machines.
 
->> I can try to compile an initial version of such a document, based on=
- the
->> commit message of the original single-patch version
->> (<http://article.gmane.org/gmane.comp.version-control.git/158467>) a=
-nd
->> including some more cases/examples.
->>=20
->> Where do you think would be the most appropriate place for it?
->> Just add a section to CodingGuidelines, or a separate
->> Documentation/WritingGuidelines or something?
->
-> Sorry for the slow response.  Documentation/CodingGuidelines makes se=
-nse
-> to me, since it affects the usage strings in code.
+If I don't find an explanation for this behavior, our conversion to
+git will need to be backed out before development begins tomorrow :-(.
 
-Thanks, here's a patch.
+Thanks for any pointers.
 
- Documentation/CodingGuidelines |   53 ++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 53 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuide=
-lines
-index 09ffc46..0ac7aac 100644
---- a/Documentation/CodingGuidelines
-+++ b/Documentation/CodingGuidelines
-@@ -139,3 +139,56 @@ For C programs:
-=20
-  - When we pass <string, length> pair to functions, we should try to
-    pass them in that order.
-+
-+Writing Documentation:
-+
-+ Every user-visible change should be reflected in the documentation.
-+ The same general rule as for code applies -- imitate the existing
-+ conventions.  A few commented examples follow to provide reference
-+ when writing or modifying command usage strings and synopsis sections
-+ in the manual pages:
-+
-+ Placeholders are enclosed in angle brackets:
-+   <file>
-+   --sort=3D<key>
-+   --abbrev[=3D<n>]
-+
-+ Possibility of multiple occurences is indicated by three dots:
-+   <file>...
-+   (One or more of <file>.)
-+
-+ Optional parts are enclosed in square brackets:
-+   [<extra>]
-+   (Zero or one <extra>.)
-+
-+   --exec-path[=3D<path>]
-+   (Option with an optional argument.  Note that the "=3D" is inside t=
-he
-+   brackets.)
-+
-+   [<patch>...]
-+   (Zero or more of <patch>.  Note that the dots are inside, not
-+   outside the brackets.)
-+
-+ Parentheses are used for grouping, often combined with vertical bar
-+ to indicate alternatives:
-+   [(<rev>|<range>)...]
-+   (Any number of either <rev> or <range>.  Parens are needed to make
-+   it clear that "..." pertains to both <rev> and <range>.)
-+
-+   [(-p <parent>)...]
-+   (Any number of option -p, each with one <parent> argument.)
-+
-+   git remote set-head <name> (-a | -d | <branch>)
-+   (One and only one of "-a", "-d" or "<branch>" _must_ (no square
-+   brackets) be provided.)
-+
-+ Specific number of occurences is indicated as follows:
-+   <commit>{0,2}
-+   (Up to two <commit>s.)
-+
-+ And a somewhat more contrived example:
-+   --diff-filter=3D[(A|C|D|M|R|T|U|X|B)...[*]]
-+   Here "=3D" is outside the brackets, because "--diff-filter=3D" is a
-+   valid usage.  "*" has its own pair of brackets, because it can
-+   (optionally) be specified only when one or more of the letters is
-+   also provided.
---=20
-1.7.3.rc2.221.gbf93f.dirty
+Mike.
