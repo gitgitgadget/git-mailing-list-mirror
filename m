@@ -1,111 +1,89 @@
-From: Robin Green <greenrd@greenrd.org>
-Subject: [TopGit PATCH] Make tg help work in any directory
-Date: Sun, 24 Oct 2010 14:34:59 +0000
-Message-ID: <1287930899-20186-1-git-send-email-greenrd@greenrd.org>
-Cc: Robin Green <greenrd@greenrd.org>
-X-From: git-owner@vger.kernel.org Sun Oct 24 18:14:00 2010
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: Re: [completion] Request: Include remote heads as push targets
+Date: Sun, 24 Oct 2010 12:28:30 -0400
+Message-ID: <20101024122830.791ce80e@montecarlo.grandprix.int>
+References: <4CC05E4B.1010106@xiplink.com>
+	<4CC06439.8040003@xiplink.com>
+	<20101021191045.GC11759@burratino>
+	<20101021210842.6545a661@montecarlo.grandprix.int>
+	<20101023130434.GA29386@neumann>
+	<20101023200739.28b6eb1e@montecarlo.grandprix.int>
+	<20101024112325.GB29386@neumann>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Mathias Lafeldt <misfire@debugon.org>
+To: SZEDER =?ISO-8859-1?B?R+Fib3I=?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Sun Oct 24 18:29:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PA3Cp-000347-Jw
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 18:14:00 +0200
+	id 1PA3RM-0000OB-7y
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 18:29:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757586Ab0JXQNx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 12:13:53 -0400
-Received: from host29.netdorm.com ([64.182.105.29]:41252 "EHLO
-	mxout.netdorm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754785Ab0JXQNw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 12:13:52 -0400
-X-Greylist: delayed 369 seconds by postgrey-1.27 at vger.kernel.org; Sun, 24 Oct 2010 12:13:52 EDT
-Received: from mail.dnsexit.com (mail.dnsexit.com [67.214.171.75] (may be forged))
-	by mxout.netdorm.com (8.13.8/8.13.8) with ESMTP id o9OG8fPE007000
-	for <git@vger.kernel.org>; Sun, 24 Oct 2010 12:08:42 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.dnsexit.com (Postfix) with ESMTP id 59CA28B5D23
-	for <git@vger.kernel.org>; Sun, 24 Oct 2010 12:04:17 -0400 (EDT)
-X-Quarantine-ID: <l1GyaUTSW3-h>
-X-Virus-Scanned: amavisd-new at box11.dnsexit.com
-X-Amavis-Alert: BAD HEADER, Duplicate header field: "To"
-Received: from mail.dnsexit.com ([127.0.0.1])
-	by localhost (mail.dnsexit.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id l1GyaUTSW3-h; Sun, 24 Oct 2010 12:04:16 -0400 (EDT)
-Received: from cspcnh.swan.ac.uk (cspcnh.swan.ac.uk [137.44.6.171])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.dnsexit.com (Postfix) with ESMTP id 98DE98B5D21;
-	Sun, 24 Oct 2010 12:04:16 -0400 (EDT)
-Received: from cspcnh.swan.ac.uk (exherbo.local [127.0.0.1])
-	by cspcnh.swan.ac.uk (8.14.4/8.14.4) with ESMTP id o9OEa0gT020223;
-	Sun, 24 Oct 2010 14:36:00 GMT
-Received: (from greenrd@localhost)
-	by cspcnh.swan.ac.uk (8.14.4/8.14.4/Submit) id o9OEa069020222;
-	Sun, 24 Oct 2010 14:36:00 GMT
-To: git@vger.kernel.org
-X-Mailer: git-send-email 1.7.2.3
-To: git@vger.kernel.org
+	id S1757501Ab0JXQ2o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 12:28:44 -0400
+Received: from morn.lunarbreeze.com ([216.227.218.220]:53416 "EHLO
+	morn.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754272Ab0JXQ2n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Oct 2010 12:28:43 -0400
+Received: from c-69-248-103-68.hsd1.nj.comcast.net ([69.248.103.68] helo=monza.grandprix.int)
+	by morn.lunarbreeze.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <peter@avirtualhome.com>)
+	id 1PA3Qw-0002By-91; Sun, 24 Oct 2010 09:28:34 -0700
+Received: from montecarlo.grandprix.int (montecarlo.grandprix.int [192.168.1.102])
+	by monza.grandprix.int (Postfix) with ESMTPA id 4399C101F82;
+	Sun, 24 Oct 2010 12:28:31 -0400 (EDT)
+In-Reply-To: <20101024112325.GB29386@neumann>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - morn.lunarbreeze.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - avirtualhome.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159884>
 
-tg was checking if the current directory is a git repository,
-which isn't necessary if the command is "help" or there is no
-command.
+On Sun, 24 Oct 2010 13:23:26 +0200
+SZEDER G=E1bor <szeder@ira.uka.de> wrote:
 
-Signed-off-by: Robin Green <greenrd@greenrd.org>
 
----
- tg.sh |   26 +++++++++++++++++---------
- 1 files changed, 17 insertions(+), 9 deletions(-)
+> Checking for the function first, and declaring it if it doesn't exist=
+s
+> could be a viewable alternative, but not with _get_cword().  The
+> _get_cword() implementation you are adding below is outdated.  It is
+> from bash-completion 1.1, changed quite a bit after that, and in the
+> end became deprecated in 1.2 in favor of _get_comp_words_by_ref().
+>=20
+>=20
 
-diff --git a/tg.sh b/tg.sh
-index 8264a3b..03ef227 100644
---- a/tg.sh
-+++ b/tg.sh
-@@ -356,16 +356,25 @@ setup_pager()
- 
- ## Initial setup
- 
--set -e
--git_dir="$(git rev-parse --git-dir)"
--root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
-+cmd="$1"
-+[ -z "$tg__include" ] || cmd="include" # ensure setup happens
-+case "$cmd" in
-+help|--help|-h)
-+        :;;
-+*)
-+        if [ -n "$cmd" ]; then
-+            set -e
-+            git_dir="$(git rev-parse --git-dir)"
-+            root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
- # Make sure root_dir doesn't end with a trailing slash.
--root_dir="${root_dir%/}"
--base_remote="$(git config topgit.remote 2>/dev/null)" || :
--tg="tg"
-+            root_dir="${root_dir%/}"
-+            base_remote="$(git config topgit.remote 2>/dev/null)" || :
-+            tg="tg"
- # make sure merging the .top* files will always behave sanely
--setup_ours
--setup_hook "pre-commit"
-+            setup_ours
-+            setup_hook "pre-commit"
-+        fi
-+esac
- 
- ## Dispatch
- 
-@@ -385,7 +394,6 @@ if [ "$1" = "-r" ]; then
- 	tg="$tg -r $base_remote"
- fi
- 
--cmd="$1"
- [ -n "$cmd" ] || { do_help; exit 1; }
- shift
- 
--- 
-tg: (8b0f1f9..) t/help-anywhere (depends on: master)
+Ok, I just used the bash_completion version installed with Ubuntu Lucid=
+=2E
+I think we should use the 1.2 version.
+
+--=20
+Peter van der Does
+
+GPG key: E77E8E98
+
+IRC: Ganseki on irc.freenode.net
+Twitter: @petervanderdoes
+
+WordPress Plugin Developer
+Blog: http://blog.avirtualhome.com
+=46orums: http://forums.avirtualhome.com
+Twitter: @avhsoftware
