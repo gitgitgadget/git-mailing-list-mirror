@@ -1,90 +1,115 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv6 06/10] gitweb: allow action specialization in page header
-Date: Sun, 24 Oct 2010 12:45:32 +0200
-Message-ID: <1287917136-26103-7-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv6 04/10] gitweb: nagivation menu for tags, heads and remotes
+Date: Sun, 24 Oct 2010 12:45:30 +0200
+Message-ID: <1287917136-26103-5-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Jakub Narebski <jnareb@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 24 12:46:37 2010
+X-From: git-owner@vger.kernel.org Sun Oct 24 12:46:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9y5x-0004rf-Qz
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 12:46:34 +0200
+	id 1P9y5w-0004rf-PI
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 12:46:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932474Ab0JXKqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 06:46:12 -0400
+	id S932467Ab0JXKqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 06:46:06 -0400
 Received: from mail-wy0-f174.google.com ([74.125.82.174]:45935 "EHLO
 	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932465Ab0JXKqL (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 06:46:11 -0400
+	with ESMTP id S932464Ab0JXKqD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 06:46:03 -0400
 Received: by mail-wy0-f174.google.com with SMTP id 28so2370311wyf.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 03:46:10 -0700 (PDT)
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 03:46:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=hX/oE0jsW8VTqxfJsy/L52oQogxEZuWxNb6wQyhyoeg=;
-        b=gFKOZbr0ezTeIFVrjGcw1R1lCH67MB1NNItoC6lSQBPesCQfuOILrMzsrXVTh7y1oV
-         lT/my9aeiZrjje07S3yRaSzL3PXigRSw91aYJWYb2YEGQIrqq9NNR1Aq5fgVFD4Ef6Fn
-         6A7Bcr/2MNBPIz3ofyhSkqVZ2vQ38ScQgS+oE=
+        bh=AAazEY7NBIOcWcRLSNEx3zRYOn0CSl04NavphykoBss=;
+        b=DXfJfEBHfIFrpRdmBSzA2ZrOmDJz2kXO4OaoURPH59Rebvb3NNxiTi4h+MvsHprZrX
+         folq1M1zOv1EkPAVCDQVwcrlEHyKlkGCyLWwlsRlw1XWoDy5GKdy+Nl4/QVdvgca+SlT
+         iMALY1SJ8dLZfi3eKwtB3qSuf6bOyuSUf++zU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=OgXa+CuX6M/YzBtKeHqA04URyVRpzZkX3k0VchcMbvLPkIX5SEtgSBCmZoXMfORxoI
-         habInOvenmklukp1GHYZTx4TWDeoH7mdcWo40AuHyP24U+UvQLsvCqRHYVvInDkFVQhd
-         bR/tlXReGY5b3V1Ua15N0/76mhglQzIkFKKrY=
-Received: by 10.227.135.9 with SMTP id l9mr3169893wbt.49.1287917170357;
-        Sun, 24 Oct 2010 03:46:10 -0700 (PDT)
+        b=uHKDYTYyZpeEwLufRGKCfoRFJVnQfZgi2gvs8/ET0TKWXBgdFZVV/qQF3LtwzglGIL
+         HGJv9FpUrI68t3cCDVRYyZE6TU+KyR/RENuSKUmbI9iVAQCGvcuvpmtzcZNTl/LbVZZl
+         mTvOeCCkOlQRaHzzZhuwLWvbFrQUqtU9W2ruc=
+Received: by 10.216.87.20 with SMTP id x20mr1629499wee.52.1287917163013;
+        Sun, 24 Oct 2010 03:46:03 -0700 (PDT)
 Received: from localhost ([151.60.176.122])
-        by mx.google.com with ESMTPS id i19sm4509876wbe.23.2010.10.24.03.46.08
+        by mx.google.com with ESMTPS id n40sm3310559weq.5.2010.10.24.03.46.01
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Oct 2010 03:46:09 -0700 (PDT)
+        Sun, 24 Oct 2010 03:46:02 -0700 (PDT)
 X-Mailer: git-send-email 1.7.3.68.g6ec8
 In-Reply-To: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159852>
 
-An optional -action_extra parameter is given to git_header_html() to
-identify a variant of the action that is being displayed. For example,
-this can be used to specify that the remotes view is being used for a
-specific remote and not to display all remotes.
-
-When -action_extra is provided, the action name in the header will be
-turned into a link to the action without any arguments or parameters, to
-provide a quick link to the non-specific variant of the action.
+tags, heads and remotes are all views that inspect a (particular class
+of) refs, so allow the user to easily switch between them by adding
+the appropriate navigation submenu to each view.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- gitweb/gitweb.perl |   10 +++++++++-
- 1 files changed, 9 insertions(+), 1 deletions(-)
+ gitweb/gitweb.perl |   19 ++++++++++++++++---
+ 1 files changed, 16 insertions(+), 3 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index a381892..3612e63 100755
+index 667c11b..f4592ad 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -3529,7 +3529,15 @@ EOF
- 	if (defined $project) {
- 		print $cgi->a({-href => href(action=>"summary")}, esc_html($project));
- 		if (defined $action) {
--			print " / $action";
-+			my $action_print = $action ;
-+			if (defined $opts{-action_extra}) {
-+				$action_print = $cgi->a({-href => href(action=>$action)},
-+					$action);
-+			}
-+			print " / $action_print";
-+		}
-+		if (defined $opts{-action_extra}) {
-+			print " / $opts{-action_extra}";
- 		}
- 		print "\n";
- 	}
+@@ -3736,6 +3736,19 @@ sub git_print_page_nav {
+ 	      "</div>\n";
+ }
+ 
++# returns a submenu for the nagivation of the refs views (tags, heads,
++# remotes) with the current view disabled and the remotes view only
++# available if the feature is enabled
++sub format_ref_views {
++	my ($current) = @_;
++	my @ref_views = qw{tags heads};
++	push @ref_views, 'remotes' if gitweb_check_feature('remote_heads');
++	return join " | ", map {
++		$_ eq $current ? $_ :
++		$cgi->a({-href => href(action=>$_)}, $_)
++	} @ref_views
++}
++
+ sub format_paging_nav {
+ 	my ($action, $page, $has_next_link) = @_;
+ 	my $paging_nav;
+@@ -5512,7 +5525,7 @@ sub git_blame_data {
+ sub git_tags {
+ 	my $head = git_get_head_hash($project);
+ 	git_header_html();
+-	git_print_page_nav('','', $head,undef,$head);
++	git_print_page_nav('','', $head,undef,$head,format_ref_views('tags'));
+ 	git_print_header_div('summary', $project);
+ 
+ 	my @tagslist = git_get_tags_list();
+@@ -5525,7 +5538,7 @@ sub git_tags {
+ sub git_heads {
+ 	my $head = git_get_head_hash($project);
+ 	git_header_html();
+-	git_print_page_nav('','', $head,undef,$head);
++	git_print_page_nav('','', $head,undef,$head,format_ref_views('heads'));
+ 	git_print_header_div('summary', $project);
+ 
+ 	my @headslist = git_get_heads_list(undef, 'heads');
+@@ -5541,7 +5554,7 @@ sub git_remotes {
+ 
+ 	my $head = git_get_head_hash($project);
+ 	git_header_html();
+-	git_print_page_nav('','', $head,undef,$head);
++	git_print_page_nav('','', $head,undef,$head,format_ref_views('remotes'));
+ 	git_print_header_div('summary', $project);
+ 
+ 	my @remotelist = git_get_heads_list(undef, 'remotes');
 -- 
 1.7.3.68.g6ec8
