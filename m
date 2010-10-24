@@ -1,326 +1,77 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [WIP PATCH 18/18] t1510: setup case #15
-Date: Sun, 24 Oct 2010 19:11:50 +0700
-Message-ID: <1287922310-14678-19-git-send-email-pclouds@gmail.com>
-References: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Oct 24 14:14:04 2010
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [RFC/PATCH 0/4] update-index: migrate to parse-options API
+Date: Sun, 24 Oct 2010 19:50:44 +0700
+Message-ID: <AANLkTik9OtRvB2P7OFFsYoUsPjdM8FofKVtGRt+VFQpm@mail.gmail.com>
+References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
+ <1287544320-8499-4-git-send-email-pclouds@gmail.com> <20101022063837.GA6081@burratino>
+ <20101022064258.GB6081@burratino> <7v8w1qnkr1.fsf@alter.siamese.dyndns.org>
+ <20101024072032.GA23455@burratino> <20101024081316.GA29630@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Stephen Boyd <bebarino@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 24 14:51:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9zSb-0000OZ-Bi
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 14:14:01 +0200
+	id 1PA02d-0001ZN-Ne
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 14:51:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932660Ab0JXMN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 08:13:57 -0400
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:55620 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932454Ab0JXMN4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 08:13:56 -0400
-Received: by mail-pv0-f174.google.com with SMTP id 32so423774pvb.19
-        for <git@vger.kernel.org>; Sun, 24 Oct 2010 05:13:56 -0700 (PDT)
+	id S932581Ab0JXMvH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 08:51:07 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:60117 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932478Ab0JXMvG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 24 Oct 2010 08:51:06 -0400
+Received: by wwe15 with SMTP id 15so2557249wwe.1
+        for <git@vger.kernel.org>; Sun, 24 Oct 2010 05:51:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=4VlBN7/NBb8w7UCsDl0tymN3kHtcKtv4hHh0js5oQjk=;
-        b=mRBGBDb3+5cu3WzVIc6ai5RxKbl4PxB4dcIqaHnLUYeBEnKOdw64/7qWEhRxhs27r3
-         z4BYgVnY0xzO0BVvHK7xxagbXhT2Rov7JL+MDnVIcBVzNF1+Ki6tskExqGidsyA2v6Cm
-         NX+li7Igi8W4+KzpdWJDgFqvTwJAaRGIoSdJQ=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Au+CYaXnQJ2j+iq2pbQaiQKhL6kYIiw9BTECCukikFo=;
+        b=qfiwGS4EB4vmjNerlzOu3NqbBUyBunTRQMt+lqs3HPeE8evvCoukrpc/Q8NEv5Olb+
+         /m5O7Sv9+onOuDy0uT+L4A87/839jS4ZBehbTmYWlKAOScSzUIMTGzj80hfJcdn09+Tm
+         9JAq8TRd6fTLKyqDtNw91k6lanqyn6Iy8yW+k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=DhyLHnQTYUXP8+3CB6l7cKWl9zVp5jPNeKdlmddXEuf40BGC3+xp9RpFNRPHuKTF/K
-         1beLFaRDDHWc5FV2oaAEI5o78n3iMW8adOq6UgoCsaRewJJ2YjdWHEYunHavxl+Ggs+h
-         tTtIUodvoxokC1/R0Axh0PxwodLvlsZs+vzwc=
-Received: by 10.142.133.21 with SMTP id g21mr4090838wfd.163.1287922436324;
-        Sun, 24 Oct 2010 05:13:56 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id p8sm9126328wff.16.2010.10.24.05.13.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 24 Oct 2010 05:13:55 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 24 Oct 2010 19:13:51 +0700
-X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
-In-Reply-To: <1287922310-14678-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=uu0TBqwNAkE9XpZOfGAmY9Ttmyi1Ydy+QfnD8uNHblFjq6Nzu0/3mBp9sn8eYs4R93
+         zRAim3d6OOK/anowd/+kbq2xRLI6F6pi53y4EWxPWVU4b5WWATVqLQi0xQmf5ZU+IGip
+         roDpZzuvkisWCzfsFLf4cifh2EXx29c1l/oOM=
+Received: by 10.216.1.149 with SMTP id 21mr1748044wed.10.1287924664596; Sun,
+ 24 Oct 2010 05:51:04 -0700 (PDT)
+Received: by 10.216.241.138 with HTTP; Sun, 24 Oct 2010 05:50:44 -0700 (PDT)
+In-Reply-To: <20101024081316.GA29630@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159875>
 
----
- t/t1510-repo-setup.sh |  256 +++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 256 insertions(+), 0 deletions(-)
+On Sun, Oct 24, 2010 at 3:13 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Jonathan Nieder wrote:
+>
+>> Here's a helper to make it easier for commands that use parse-option=
+s
+>> to adopt that nicer behavior. =C2=A0It writes its output to stdout, =
+so it
+>> should only be used to be used to handle the -h option.
+>
+> Alas, "git update-index" does not use parse-options yet. =C2=A0But th=
+at
+> is easily enough changed...
 
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 5c1b96e..f412890 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -2224,4 +2224,260 @@ EOF
- 	GIT_DIR="$TRASH_DIRECTORY/14/.git" test_repo 14/sub/sub
- '
- 
-+#
-+# case #15
-+#
-+############################################################
-+#
-+# Input:
-+#
-+#  - GIT_WORK_TREE is set
-+#  - GIT_DIR is set
-+#  - core.worktree is set
-+#  - .git is a file
-+#  - core.bare is not set, cwd is outside .git
-+#
-+# Output:
-+#
-+# same as case #7 except that git_dir is set by .git file
-+
-+test_expect_success '#15: setup' '
-+	unset GIT_DIR GIT_WORK_TREE &&
-+	mkdir 15 15/sub 15/sub/sub 15.wt 15.wt/sub 15/wt 15/wt/sub &&
-+	cd 15 &&
-+	git init &&
-+	git config core.worktree non-existent &&
-+	mv .git ../15.git &&
-+	echo gitdir: ../15.git >.git &&
-+	cd ..
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR=.git GIT_WORK_TREE="$TRASH_DIRECTORY/15" test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE(rel) at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR=.git GIT_WORK_TREE=. test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/15" test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE(rel) at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE=. test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORKTREE in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+sub/sub/
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE="$TRASH_DIRECTORY/15" test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORKTREE(rel) in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+sub/sub/
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE=../.. test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORKTREE in subdir' '
-+	cat >15/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+sub/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/15" test_repo 15/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORKTREE(rel) in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15
-+$TRASH_DIRECTORY/15
-+sub/sub/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE=../.. test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=wt at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR=.git GIT_WORK_TREE="$TRASH_DIRECTORY/15/wt" test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=wt(rel) at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR=.git GIT_WORK_TREE=wt test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=wt(rel) at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE=wt test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=wt at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/15/wt" test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=wt in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15/sub/sub
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE="$TRASH_DIRECTORY/15/wt" test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=wt(rel) in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15/sub/sub
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE=../../wt test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=wt(rel) in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15/sub/sub
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE=../../wt test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=wt in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY/15/wt
-+$TRASH_DIRECTORY/15/sub/sub
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE="$TRASH_DIRECTORY/15/wt" test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=.. at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/
-+EOF
-+	GIT_DIR=.git GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=..(rel) at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/
-+EOF
-+	GIT_DIR=.git GIT_WORK_TREE=.. test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=..(rel) at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE=.. test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=.. at root' '
-+	cat >15/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 15
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=.. in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/sub/sub/
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR(rel), GIT_WORK_TREE=..(rel) in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/sub/sub/
-+EOF
-+	GIT_DIR=../../.git GIT_WORK_TREE=../../.. test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=..(rel) in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/sub/sub/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE=../../../ test_repo 15/sub/sub
-+'
-+
-+test_expect_failure '#15: GIT_DIR, GIT_WORK_TREE=.. in subdir' '
-+	cat >15/sub/sub/expected <<EOF &&
-+$TRASH_DIRECTORY/15.git
-+$TRASH_DIRECTORY
-+$TRASH_DIRECTORY
-+15/sub/sub/
-+EOF
-+	GIT_DIR="$TRASH_DIRECTORY/15/.git" GIT_WORK_TREE="$TRASH_DIRECTORY" test_repo 15/sub/sub
-+'
-+
- test_done
--- 
-1.7.0.2.445.gcbdb3
+I don't know parse-options well enough to give comments. If I did, I
+would have converted update-index long ago (hit it a few times and
+always ran away). Thanks for the conversion.
+--=20
+Duy
