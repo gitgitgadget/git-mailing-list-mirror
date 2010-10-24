@@ -1,71 +1,83 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: [PATCH] docs: give more hints about how "add -e" works
-Date: Sun, 24 Oct 2010 02:32:14 +0200
-Message-ID: <20101024003213.GF22105@genesis.frugalware.org>
-References: <20101021143034.GA16083@sigill.intra.peff.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable descriptions
+Date: Sun, 24 Oct 2010 03:24:42 +0200
+Message-ID: <201010240324.42721.trast@student.ethz.ch>
+References: <cover.1287690696.git.trast@student.ethz.ch> <20101022155307.GB5554@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="uez3XWYSTYqFCK2C"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>,
+	=?iso-8859-1?q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Oct 24 02:44:44 2010
+X-From: git-owner@vger.kernel.org Sun Oct 24 03:25:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1P9ohX-0003aC-Qo
-	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 02:44:44 +0200
+	id 1P9pKi-00014q-7o
+	for gcvg-git-2@lo.gmane.org; Sun, 24 Oct 2010 03:25:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758605Ab0JXAoX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 23 Oct 2010 20:44:23 -0400
-Received: from virgo.iok.hu ([212.40.97.103]:36846 "EHLO virgo.iok.hu"
+	id S1752540Ab0JXBYw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 23 Oct 2010 21:24:52 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:6482 "EHLO gwse.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758583Ab0JXAoW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 23 Oct 2010 20:44:22 -0400
-X-Greylist: delayed 725 seconds by postgrey-1.27 at vger.kernel.org; Sat, 23 Oct 2010 20:44:22 EDT
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 851DB5809D;
-	Sun, 24 Oct 2010 02:32:15 +0200 (CEST)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id 430014496B;
-	Sun, 24 Oct 2010 02:32:15 +0200 (CEST)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id AA8F5132C38D; Sun, 24 Oct 2010 02:32:14 +0200 (CEST)
-Content-Disposition: inline
-In-Reply-To: <20101021143034.GA16083@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751815Ab0JXBYv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 23 Oct 2010 21:24:51 -0400
+Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 24 Oct
+ 2010 03:24:51 +0200
+Received: from pctrast.inf.ethz.ch (129.132.211.15) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 24 Oct
+ 2010 03:24:49 +0200
+User-Agent: KMail/1.13.5 (Linux/2.6.36-rc8-32-desktop; KDE/4.4.4; x86_64; ; )
+In-Reply-To: <20101022155307.GB5554@sigill.intra.peff.net>
+X-Originating-IP: [129.132.211.15]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159834>
 
+Jeff King wrote:
+>   1. It looks like you're more or less just parsing "::" list keys from
+>      all of the manpages. This seems somewhat fragile, as there could be
+>      other non-config lists. Can we at least restrict it to
+>      CONFIGURATION sections? It would be nice if we could put in some
+>      kind of semantic markup, but I'm not sure how painful that would be
+>      with asciidoc (we could always resort to comments in the source,
+>      but that would probably get unreadable quickly).
 
---uez3XWYSTYqFCK2C
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+I figured for consistency and ease of lookup *all* configuration docs
+should name the variables in the same format.  It can still be helpful
+to mention them elsewhere, e.g. in the option documentations, but the
+main docs should be a CONFIGURATION section formatted like this.
 
-On Thu, Oct 21, 2010 at 10:30:35AM -0400, Jeff King <peff@peff.net> wrote:
-> The previous text was not exactly accurate; it is OK to
-> change space and minus lines, but only in certain ways. This
-> patch attempts to cover explicitly what can be done at the
-> individual line level, and cautions the user that
-> conceptually larger changes (like modifying a line) require
-> some understanding of the patch format.
+Or do you think that would be a bad thing?
 
-Thanks for collecting those corner cases. :)
+As for false positives, we could do the CONFIGURATION but in any case
+I was hoping to avoid a special markup by using an asciidoc markup to
+mark false positives if they arise (there currently aren't any).
+E.g., it should be possible to make a {noconfig} attribute that
+expands to nothing or so.  [Then again the same trick could be used
+for all configs...]
 
---uez3XWYSTYqFCK2C
-Content-Type: application/pgp-signature
-Content-Disposition: inline
+>      [2]: Actually, as I mentioned a long time ago, I think it would be
+>           nicer to have a table like:
+> 
+>              format.attach         linkgit:git-format-patch[1]
+>              format.cc             linkgit:git-format-patch[1]
+>              format.headers        linkgit:git-format-patch[1]
+>              format.pretty         linkgit:gitpretty[7]
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+True, you said that.  I'll hack it into this format, since it's easy
+to do once the parsers are stable and can then just say something like
+"herein" for all the ones actually in git-config(1).
 
-iEYEARECAAYFAkzDfo0ACgkQe81tAgORUJYsTgCgjr9VbIMx+MoHCKBgOeJFKSu7
-26IAnR8EXBfASqkm/wNq0IaVth0OC34i
-=gYjV
------END PGP SIGNATURE-----
-
---uez3XWYSTYqFCK2C--
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
