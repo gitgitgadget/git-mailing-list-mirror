@@ -1,40 +1,40 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 05/10] Change "tracking branch" to "remote-tracking branch" in C code
-Date: Mon, 25 Oct 2010 08:08:37 +0200
-Message-ID: <1287986922-16308-6-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH v2 00/10] More consistant terminology ("remote-tracking branch", "not updated")
+Date: Mon, 25 Oct 2010 08:08:32 +0200
+Message-ID: <1287986922-16308-1-git-send-email-Matthieu.Moy@imag.fr>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Oct 25 08:12:24 2010
+X-From: git-owner@vger.kernel.org Mon Oct 25 08:12:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAGI9-0004qj-D1
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 08:12:21 +0200
+	id 1PAGIg-00050W-Hp
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 08:12:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752999Ab0JYGMQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 02:12:16 -0400
-Received: from imag.imag.fr ([129.88.30.1]:43850 "EHLO imag.imag.fr"
+	id S1752822Ab0JYGMt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 02:12:49 -0400
+Received: from imag.imag.fr ([129.88.30.1]:43894 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751296Ab0JYGMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 02:12:16 -0400
+	id S1752142Ab0JYGMt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 02:12:49 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9P68jIQ012304
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9P68j3L012303
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
 	Mon, 25 Oct 2010 08:08:45 +0200 (CEST)
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PAGEf-00050T-E3; Mon, 25 Oct 2010 08:08:45 +0200
+	id 1PAGEf-00050G-6o; Mon, 25 Oct 2010 08:08:45 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PAGEf-0004Fx-Bj; Mon, 25 Oct 2010 08:08:45 +0200
+	id 1PAGEf-0004Fj-2b; Mon, 25 Oct 2010 08:08:45 +0200
 X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
 In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 25 Oct 2010 08:08:45 +0200 (CEST)
@@ -46,64 +46,63 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159931>
 
-(Just like we did for documentation already)
+Here's a new version that should address Jonathan's remarks.
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- builtin/checkout.c |    2 +-
- builtin/fetch.c    |    4 ++--
- remote.c           |    2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+I've reworded a bit the user-manual.txt changes, they may adress
+Thore's remark, but we can probably do better. But no time for that
+now ;-).
 
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9a934af..1fa9ce4 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -784,7 +784,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	 *   between A and B, A...B names that merge base.
- 	 *
- 	 *   With no paths, if <something> is _not_ a commit, no -t nor -b
--	 *   was given, and there is a tracking branch whose name is
-+	 *   was given, and there is a remote-tracking branch whose name is
- 	 *   <something> in one and only one remote, then this is a short-hand
- 	 *   to fork local <something> from that remote-tracking branch.
- 	 *
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d35f000..3b0b614 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -52,7 +52,7 @@ static struct option builtin_fetch_options[] = {
- 	OPT_SET_INT('n', NULL, &tags,
- 		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
- 	OPT_BOOLEAN('p', "prune", &prune,
--		    "prune tracking branches no longer on remote"),
-+		    "prune remote-tracking branches no longer on remote"),
- 	OPT_BOOLEAN(0, "dry-run", &dry_run,
- 		    "dry run"),
- 	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
-@@ -98,7 +98,7 @@ static void add_merge_config(struct ref **head,
- 			continue;
- 
- 		/*
--		 * Not fetched to a tracking branch?  We need to fetch
-+		 * Not fetched to a remote-tracking branch?  We need to fetch
- 		 * it anyway to allow this branch's "branch.$name.merge"
- 		 * to be honored by 'git pull', but we do not have to
- 		 * fail if branch.$name.merge is misconfigured to point
-diff --git a/remote.c b/remote.c
-index 9143ec7..ca42a12 100644
---- a/remote.c
-+++ b/remote.c
-@@ -493,7 +493,7 @@ static void read_config(void)
- }
- 
- /*
-- * We need to make sure the tracking branches are well formed, but a
-+ * We need to make sure the remote-tracking branches are well formed, but a
-  * wildcard refspec in "struct refspec" must have a trailing slash. We
-  * temporarily drop the trailing '/' while calling check_ref_format(),
-  * and put it back.  The caller knows that a CHECK_REF_FORMAT_ONELEVEL
+Matthieu Moy (10):
+  Better "Changed but not updated" message in git-status
+  Replace "remote tracking" with "remote-tracking"
+  Change remote tracking to remote-tracking in non-trivial places
+  Change "tracking branch" to "remote-tracking branch"
+  Change "tracking branch" to "remote-tracking branch" in C code
+  Change incorrect uses of "remote branch" meaning "remote-tracking"
+  Change incorrect "remote branch" to "remote tracking branch" in C
+    code
+  Use 'remote-tracking branch' in generated merge messages
+  user-manual.txt: explain better the remote(-tracking) branch terms
+  git-branch.txt: mention --set-upstream as a way to change upstream
+    configuration
+
+ Documentation/config.txt               |   13 ++++++-----
+ Documentation/everyday.txt             |    6 ++--
+ Documentation/fetch-options.txt        |    2 +-
+ Documentation/git-branch.txt           |   14 +++++++-----
+ Documentation/git-checkout.txt         |    2 +-
+ Documentation/git-clone.txt            |    2 +-
+ Documentation/git-describe.txt         |    2 +-
+ Documentation/git-fetch.txt            |    2 +-
+ Documentation/git-gc.txt               |    6 ++--
+ Documentation/git-log.txt              |    2 +-
+ Documentation/git-pull.txt             |    8 +++---
+ Documentation/git-remote.txt           |    6 ++--
+ Documentation/git-tag.txt              |    4 +-
+ Documentation/gittutorial-2.txt        |    2 +-
+ Documentation/gittutorial.txt          |    6 ++--
+ Documentation/glossary-content.txt     |    8 +++---
+ Documentation/rev-list-options.txt     |    2 +-
+ Documentation/user-manual.txt          |   30 ++++++++++++++++++++-------
+ branch.h                               |    2 +-
+ builtin/checkout.c                     |    4 +-
+ builtin/fetch.c                        |    6 ++--
+ builtin/fmt-merge-msg.c                |    6 ++--
+ builtin/merge.c                        |    2 +-
+ builtin/remote.c                       |    6 ++--
+ contrib/examples/builtin-fetch--tool.c |    2 +-
+ remote.c                               |    2 +-
+ t/t1507-rev-parse-upstream.sh          |    2 +-
+ t/t3409-rebase-preserve-merges.sh      |    2 +-
+ t/t5400-send-pack.sh                   |    2 +-
+ t/t5505-remote.sh                      |    8 ++++--
+ t/t5513-fetch-track.sh                 |    2 +-
+ t/t7508-status.sh                      |   34 ++++++++++++++++----------------
+ t/t7608-merge-messages.sh              |    4 +-
+ wt-status.c                            |    2 +-
+ 34 files changed, 111 insertions(+), 92 deletions(-)
+
 -- 
 1.7.3.2.183.g2e7b0
