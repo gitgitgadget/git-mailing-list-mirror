@@ -1,211 +1,219 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 04/10] Change "tracking branch" to "remote-tracking branch"
-Date: Mon, 25 Oct 2010 08:08:36 +0200
-Message-ID: <1287986922-16308-5-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 02/10] Replace "remote tracking" with "remote-tracking"
+Date: Mon, 25 Oct 2010 08:08:34 +0200
+Message-ID: <1287986922-16308-3-git-send-email-Matthieu.Moy@imag.fr>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Oct 25 08:11:02 2010
+X-From: git-owner@vger.kernel.org Mon Oct 25 08:11:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAGGr-0004HG-Ii
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 08:11:02 +0200
+	id 1PAGHH-0004VO-P3
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 08:11:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752861Ab0JYGKx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 02:10:53 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53324 "EHLO rominette.imag.fr"
+	id S1753284Ab0JYGLO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 02:11:14 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53330 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752772Ab0JYGKw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 02:10:52 -0400
+	id S1753201Ab0JYGLN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 02:11:13 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9P62PHY006487
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9P62Plv006485
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
 	Mon, 25 Oct 2010 08:02:25 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PAGEf-00050Q-Cg; Mon, 25 Oct 2010 08:08:45 +0200
+	id 1PAGEf-00050I-8u; Mon, 25 Oct 2010 08:08:45 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PAGEf-0004Fu-9Z; Mon, 25 Oct 2010 08:08:45 +0200
+	id 1PAGEf-0004Fo-6r; Mon, 25 Oct 2010 08:08:45 +0200
 X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
 In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 25 Oct 2010 08:02:25 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9P62PHY006487
+X-MailScanner-ID: o9P62Plv006485
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1288591346.09956@caNtAnaqjtkzopK0bXSd7A
+MailScanner-NULL-Check: 1288591346.10521@jobsICRLZqonulkA/RuAlg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159929>
 
-One more step towards consistancy in our documentation...
+"remote-tracking" branch makes it explicit that the branch is "tracking a
+remote", as opposed to "remote, and tracking something".
+
+See discussion in e.g.
+http://mid.gmane.org/8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com
+for more details.
+
+This patch is a straightforward application of
+
+  perl -pi -e 's/remote tracking branch/remote-tracking branch/'
+
+except in the RelNotes directory.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Documentation/config.txt           |    4 ++--
- Documentation/git-fetch.txt        |    2 +-
- Documentation/git-pull.txt         |    6 +++---
- Documentation/git-remote.txt       |    2 +-
- Documentation/git-tag.txt          |    4 ++--
- Documentation/glossary-content.txt |    8 ++++----
+ Documentation/config.txt           |    2 +-
+ Documentation/fetch-options.txt    |    2 +-
+ Documentation/git-log.txt          |    2 +-
+ Documentation/git-pull.txt         |    2 +-
+ Documentation/git-remote.txt       |    4 ++--
+ Documentation/gittutorial.txt      |    2 +-
+ Documentation/rev-list-options.txt |    2 +-
  Documentation/user-manual.txt      |    2 +-
- 7 files changed, 14 insertions(+), 14 deletions(-)
+ builtin/checkout.c                 |    2 +-
+ t/t5513-fetch-track.sh             |    2 +-
+ 10 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e625d6a..e4f16d8 100644
+index 538ebb5..e625d6a 100644
 --- a/Documentation/config.txt
 +++ b/Documentation/config.txt
-@@ -680,7 +680,7 @@ color.branch::
- color.branch.<slot>::
- 	Use customized color for branch coloration. `<slot>` is one of
- 	`current` (the current branch), `local` (a local branch),
--	`remote` (a tracking branch in refs/remotes/), `plain` (other
-+	`remote` (a remote-tracking branch in refs/remotes/), `plain` (other
- 	refs).
- +
- The value for these configuration variables is a list of colors (at most
-@@ -1102,7 +1102,7 @@ gui.newbranchtemplate::
- 	linkgit:git-gui[1].
+@@ -708,7 +708,7 @@ color.diff.<slot>::
+ color.decorate.<slot>::
+ 	Use customized color for 'git log --decorate' output.  `<slot>` is one
+ 	of `branch`, `remoteBranch`, `tag`, `stash` or `HEAD` for local
+-	branches, remote tracking branches, tags, stash and HEAD, respectively.
++	branches, remote-tracking branches, tags, stash and HEAD, respectively.
  
- gui.pruneduringfetch::
--	"true" if linkgit:git-gui[1] should prune tracking branches when
-+	"true" if linkgit:git-gui[1] should prune remote-tracking branches when
- 	performing a fetch. The default value is "false".
+ color.grep::
+ 	When set to `always`, always highlight matches.  When `false` (or
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 470ac31..a435c23 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -36,7 +36,7 @@ ifndef::git-pull[]
  
- gui.trustmtime::
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index d159e88..c76e313 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -26,7 +26,7 @@ The ref names and their object names of fetched refs are stored
- in `.git/FETCH_HEAD`.  This information is left for a later merge
- operation done by 'git merge'.
+ -p::
+ --prune::
+-	After fetching, remove any remote tracking branches which
++	After fetching, remove any remote-tracking branches which
+ 	no longer exist	on the remote.
+ endif::git-pull[]
  
--When <refspec> stores the fetched result in tracking branches,
-+When <refspec> stores the fetched result in remote-tracking branches,
- the tags that point at these branches are automatically
- followed.  This is done by first fetching from the remote using
- the given <refspec>s, and if the repository has objects that are
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 6d40f00..ff41784 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -116,7 +116,7 @@ git log --follow builtin-rev-list.c::
+ git log --branches --not --remotes=origin::
+ 
+ 	Shows all commits that are in any of local branches but not in
+-	any of remote tracking branches for 'origin' (what you have that
++	any of remote-tracking branches for 'origin' (what you have that
+ 	origin doesn't).
+ 
+ git log master --not --remotes=*/master::
 diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 33e8438..54e7013 100644
+index c50f7dc..33e8438 100644
 --- a/Documentation/git-pull.txt
 +++ b/Documentation/git-pull.txt
-@@ -134,7 +134,7 @@ and if there is not any such variable, the value on `URL: ` line
- in `$GIT_DIR/remotes/<origin>` file is used.
+@@ -26,7 +26,7 @@ With `--rebase`, it runs 'git rebase' instead of 'git merge'.
+ <repository> should be the name of a remote repository as
+ passed to linkgit:git-fetch[1].  <refspec> can name an
+ arbitrary remote ref (for example, the name of a tag) or even
+-a collection of refs with corresponding remote tracking branches
++a collection of refs with corresponding remote-tracking branches
+ (e.g., refs/heads/*:refs/remotes/origin/*), but usually it is
+ the name of a branch in the remote repository.
  
- In order to determine what remote branches to fetch (and
--optionally store in the tracking branches) when the command is
-+optionally store in the remote-tracking branches) when the command is
- run without any refspec parameters on the command line, values
- of the configuration variable `remote.<origin>.fetch` are
- consulted, and if there aren't any, `$GIT_DIR/remotes/<origin>`
-@@ -147,9 +147,9 @@ refs/heads/*:refs/remotes/origin/*
- ------------
- 
- A globbing refspec must have a non-empty RHS (i.e. must store
--what were fetched in tracking branches), and its LHS and RHS
-+what were fetched in remote-tracking branches), and its LHS and RHS
- must end with `/*`.  The above specifies that all remote
--branches are tracked using tracking branches in
-+branches are tracked using remote-tracking branches in
- `refs/remotes/origin/` hierarchy under the same name.
- 
- The rule to determine which remote branch to merge after
 diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 5e4989d..c258ea4 100644
+index 0d28feb..5e4989d 100644
 --- a/Documentation/git-remote.txt
 +++ b/Documentation/git-remote.txt
-@@ -146,7 +146,7 @@ With `-n` option, the remote heads are not queried first with
+@@ -75,7 +75,7 @@ was passed.
  
- 'prune'::
+ 'rename'::
  
--Deletes all stale tracking branches under <name>.
-+Deletes all stale remote-tracking branches under <name>.
- These stale branches have already been removed from the remote repository
- referenced by <name>, but are still locally available in
- "remotes/<name>".
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 31c78a8..8b169e3 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -177,7 +177,7 @@ On Automatic following
- ~~~~~~~~~~~~~~~~~~~~~~
+-Rename the remote named <old> to <new>. All remote tracking branches and
++Rename the remote named <old> to <new>. All remote-tracking branches and
+ configuration settings for the remote are updated.
+ +
+ In case <old> and <new> are the same, and <old> is a file under
+@@ -84,7 +84,7 @@ the configuration file format.
  
- If you are following somebody else's tree, you are most likely
--using tracking branches (`refs/heads/origin` in traditional
-+using remote-tracking branches (`refs/heads/origin` in traditional
- layout, or `refs/remotes/origin/master` in the separate-remote
- layout).  You usually want the tags from the other end.
+ 'rm'::
  
-@@ -232,7 +232,7 @@ this case.
- It may well be that among networking people, they may want to
- exchange the tags internal to their group, but in that workflow
- they are most likely tracking with each other's progress by
--having tracking branches.  Again, the heuristic to automatically
-+having remote-tracking branches.  Again, the heuristic to automatically
- follow such tags is a good thing.
+-Remove the remote named <name>. All remote tracking branches and
++Remove the remote named <name>. All remote-tracking branches and
+ configuration settings for the remote are removed.
  
+ 'set-head'::
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index 1c16066..f1f4086 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -385,7 +385,7 @@ alice$ git fetch bob
  
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 1f029f8..a76de62 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -131,7 +131,7 @@ to point at the new commit.
- 	you have. In such these cases, you do not make a new <<def_merge,merge>>
- 	<<def_commit,commit>> but instead just update to his
- 	revision. This will happen frequently on a
--	<<def_tracking_branch,tracking branch>> of a remote
-+	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
- 	<<def_repository,repository>>.
+ Unlike the longhand form, when Alice fetches from Bob using a
+ remote repository shorthand set up with 'git remote', what was
+-fetched is stored in a remote tracking branch, in this case
++fetched is stored in a remote-tracking branch, in this case
+ `bob/master`.  So after this:
  
- [[def_fetch]]fetch::
-@@ -260,7 +260,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	The default upstream <<def_repository,repository>>. Most projects have
- 	at least one upstream project which they track. By default
- 	'origin' is used for that purpose. New upstream updates
--	will be fetched into remote <<def_tracking_branch,tracking branches>> named
-+	will be fetched into remote <<def_remote_tracking_branch,remote-tracking branches>> named
- 	origin/name-of-upstream-branch, which you can see using
- 	`git branch -r`.
+ -------------------------------------
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 7a42567..7a1b164 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -264,7 +264,7 @@ endif::git-rev-list[]
  
-@@ -418,11 +418,11 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	that each contain very well defined concepts or small incremental yet
- 	related changes.
+ 	Pretend as if all the refs in `refs/remotes` are listed
+ 	on the command line as '<commit>'. If '<pattern>' is given, limit
+-	remote tracking branches to ones matching given shell glob.
++	remote-tracking branches to ones matching given shell glob.
+ 	If pattern lacks '?', '*', or '[', '/*' at the end is implied.
  
--[[def_tracking_branch]]tracking branch::
-+[[def_remote_tracking_branch]]remote-tracking branch::
- 	A regular git <<def_branch,branch>> that is used to follow changes from
- 	another <<def_repository,repository>>. A tracking
- 	branch should not contain direct modifications or have local commits
--	made to it. A tracking branch can usually be
-+	made to it. A remote-tracking branch can usually be
- 	identified as the right-hand-side <<def_ref,ref>> in a Pull:
- 	<<def_refspec,refspec>>.
- 
+ --glob=<glob-pattern>::
 diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index d5505e8..d7835ca 100644
+index fc56da6..d5505e8 100644
 --- a/Documentation/user-manual.txt
 +++ b/Documentation/user-manual.txt
-@@ -435,7 +435,7 @@ linux-nfs/master
- origin/master
- -------------------------------------------------
+@@ -1700,7 +1700,7 @@ may wish to check the original repository for updates and merge them
+ into your own work.
  
--If you run "git fetch <remote>" later, the tracking branches for the
-+If you run "git fetch <remote>" later, the remote-tracking branches for the
- named <remote> will be updated.
+ We have already seen <<Updating-a-repository-With-git-fetch,how to
+-keep remote tracking branches up to date>> with linkgit:git-fetch[1],
++keep remote-tracking branches up to date>> with linkgit:git-fetch[1],
+ and how to merge two branches.  So you can merge in changes from the
+ original repository's master branch with:
  
- If you examine the file .git/config, you will see that git has added
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9240faf..9a934af 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -786,7 +786,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	 *   With no paths, if <something> is _not_ a commit, no -t nor -b
+ 	 *   was given, and there is a tracking branch whose name is
+ 	 *   <something> in one and only one remote, then this is a short-hand
+-	 *   to fork local <something> from that remote tracking branch.
++	 *   to fork local <something> from that remote-tracking branch.
+ 	 *
+ 	 *   Otherwise <something> shall not be ambiguous.
+ 	 *   - If it's *only* a reference, treat it like case (1).
+diff --git a/t/t5513-fetch-track.sh b/t/t5513-fetch-track.sh
+index 9e74862..65d1e05 100755
+--- a/t/t5513-fetch-track.sh
++++ b/t/t5513-fetch-track.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='fetch follows remote tracking branches correctly'
++test_description='fetch follows remote-tracking branches correctly'
+ 
+ . ./test-lib.sh
+ 
 -- 
 1.7.3.2.183.g2e7b0
