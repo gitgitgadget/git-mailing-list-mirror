@@ -1,79 +1,114 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv6 09/10] gitweb: provide a routine to display (sub)sections
-Date: Mon, 25 Oct 2010 17:15:54 +0200
-Message-ID: <201010251715.54531.jnareb@gmail.com>
-References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com> <1287917136-26103-10-git-send-email-giuseppe.bilotta@gmail.com>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: Why /var/cache/git?
+Date: Mon, 25 Oct 2010 08:24:47 -0700
+Message-ID: <4CC5A13F.2090702@eaglescrag.net>
+References: <20101025103006.GA18782@brong.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 25 17:16:15 2010
+Cc: git@vger.kernel.org, pape@smarden.org
+To: Bron Gondwana <brong@fastmail.fm>
+X-From: git-owner@vger.kernel.org Mon Oct 25 17:30:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAOmS-0005Ha-Nm
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 17:16:13 +0200
+	id 1PAOzr-0003pp-JH
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 17:30:03 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751561Ab0JYPQH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 11:16:07 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42172 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751542Ab0JYPQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 11:16:06 -0400
-Received: by bwz11 with SMTP id 11so2451552bwz.19
-        for <git@vger.kernel.org>; Mon, 25 Oct 2010 08:16:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=2C2f7wsTqvX400jFoOc8QNdDdnb0hlAxqcLBm8khY+c=;
-        b=frN9NrDA5LhEDDW4MUOx9dBLh7KPQMqpoDrH4nwNyWs1QyAIwRxjKVwb94rqkmRV/9
-         22Qixib5V5DEYbK96oizX/uP2TiDPahRuHzUgn2nIJDM02LEW1L35Q6jfZzWJlsTx3w5
-         0oQB3cje0hLata7t+geRTP94AiSTKW+Yzk668=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=qNHK4p43W9cBnM8Nivt7+AM+MAaxbYfGQuvPPCD/Y6joOEeK1pPymmE5YJgrPbpNJU
-         FlfDVAj0crELNB6HvgWYEOBa/GJmkI4SfXE9gitP4YGXpRyCxWNMeRIurqxfH4ba3HQL
-         FxeKSsHK8sQFoSAUu7+JdUnkeQwTFXri2XzHs=
-Received: by 10.204.79.131 with SMTP id p3mr5243684bkk.178.1288019764044;
-        Mon, 25 Oct 2010 08:16:04 -0700 (PDT)
-Received: from [192.168.1.13] (abwi90.neoplus.adsl.tpnet.pl [83.8.232.90])
-        by mx.google.com with ESMTPS id u4sm4921885bkz.17.2010.10.25.08.15.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 25 Oct 2010 08:16:01 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1287917136-26103-10-git-send-email-giuseppe.bilotta@gmail.com>
-Content-Disposition: inline
+	id S1756274Ab0JYP35 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 11:29:57 -0400
+Received: from shards.monkeyblade.net ([198.137.202.13]:58906 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755114Ab0JYP34 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 11:29:56 -0400
+Received: from voot-cruiser.eaglescrag.net ([216.239.45.19])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id o9PFOmox028304
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Mon, 25 Oct 2010 08:24:49 -0700
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
+In-Reply-To: <20101025103006.GA18782@brong.net>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 25 Oct 2010 08:24:50 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159960>
 
-On Sun, 24 Oct 2010, Giuseppe Bilotta wrote:
+On 10/25/2010 03:30 AM, Bron Gondwana wrote:
+> (resent - correct address for git list!)
+> 
+> (Gerrit: you're CC'd as the attribution in README.Debian
+>  which in the one place I can see /var/cache/git mentioned
+>  in the docs - without a justification for why it was
+>  chosen...)
 
+Couple of quick points:
+
+$ grep -Ri "/var/git\|\/var\/git" *
+Documentation/git-cvsserver.txt:     export
+CVSROOT=:ext:user@server:/var/git/project.git
+
+gitweb/README:    RewriteRule ^/var(/|/gitweb.cgi)?$	
+/cgi-bin/gitweb.cgi [QSA,E=GITWEB_PROJECTROOT:/var/git/,L,PT]
+
+gitweb/README:Second, repositories found in /pub/scm/ and /var/git/ will
+be accesible
+
+Are the only 3 instances where this is mentioned.  Looking at those
+quick it was probably chosen based on the fact that it's a location that
+likely exists on most machines.  Or just for explanatory reasons like
+/example/dir/project.git could be used.
+
+> I'm setting up shared repositories on a machine, and I notice
+> all the examples I can find on the web, and also the 
+> auto-created directory from the packages are /var/cache/git/
+
+I can't speak for the web, it's a place filled with many many evil dirty
+lies, but the primary documentation should likely get updated to not
+actually shove perminant data into a transient location.  Bonus that
+gitweb (caching) might use the directory for it's cache storage which
+could cause some amusement.
+
+> 
+> So I looked at the FHS, because that seemed odd to me:
 [...]
-> +# Group output by placing it in a DIV element and adding a header.
-> +# Options for start_div() can be provided by passing a hash reference as the
-> +# first parameter to the function.
-> +# Options to git_print_header_div() can be provided by passing an array
-> +# reference. This must follow the options to start_div if they are present.
-> +# The content can be a scalar, which is output as-is, a scalar reference, which
-> +# is output after html escaping, an IO handle passed either as *handle or
-> +# *handle{IO}, or a function reference. In the latter case all following
-> +# parameters will be taken as argument to the content function call.
-> +sub git_print_section {
+> I guess in theory, someone else has all those commits in their
+> local git repository somewhere.  Still, it feels to me that
+> /var/lib/git is the correct location.  Is there any reason why
+> /var/spool/git was chosen?
 
-Very nice API.  Good work!
+Ummmm are you talking about for where a set of repositories exist on a
+shared setup?  Personally, and depending on your beliefs as a sysadmin,
+it should likely end up under something like /home/git or some other
+shared location like /group/git, /pub/git, /shared/git or really
+anywhere where you are likely to do backups and not just run rm -rf
+because it should be a transient location.
 
--- 
-Jakub Narebski
-Poland
+> (I'm running Debian Lenny with the 1.7.1 backport packages, but
+> I see examples from Fedora with the same paths as well)
+
+Speaking from the Fedora angle (since I don't have a Debian box handy
+anywhere or in a VM) the only places I'm seeing /var/git mentioned is:
+
+/usr/share/doc/git-1.7.2.3/git-cvsserver.txt
+/usr/share/doc/git-1.7.2.3/git-cvsserver.html
+/usr/share/doc/git-cvs-1.7.2.3/git-cvsserver.txt
+/usr/share/doc/git-cvs-1.7.2.3/git-cvsserver.html
+/usr/share/doc/git-cvs-1.7.2.3/git-cvsserver.html
+/usr/share/doc/gitweb-1.7.2.3/README
+/usr/share/doc/gitweb-caching-1.6.5.2/README
+
+which are the latest versions of all of those packages and it's obvious
+it's the git-cvs and gitweb stuff that are to blame for the confusion there.
+
+Probably easiest thing to do is adjust the documentation to be
+/example/dir/project.git vs. /var/git since I agree, that's actually
+dangerous.
+
+- John 'Warthog9' Hawley
