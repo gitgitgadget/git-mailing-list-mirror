@@ -1,124 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable
- descriptions
-Date: Mon, 25 Oct 2010 11:11:25 -0400
-Message-ID: <20101025151125.GD28278@sigill.intra.peff.net>
-References: <cover.1287690696.git.trast@student.ethz.ch>
- <20101022155307.GB5554@sigill.intra.peff.net>
- <201010251444.08780.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv6 07/10] gitweb: remotes view for a single remote
+Date: Mon, 25 Oct 2010 17:12:28 +0200
+Message-ID: <201010251712.30362.jnareb@gmail.com>
+References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com> <1287917136-26103-8-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 25 17:10:42 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 25 17:12:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAOh7-0002In-Dd
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 17:10:41 +0200
+	id 1PAOjB-0003YR-0F
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 17:12:49 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751361Ab0JYPKg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 11:10:36 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49779 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751171Ab0JYPKg (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 11:10:36 -0400
-Received: (qmail 20755 invoked by uid 111); 25 Oct 2010 15:10:35 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (74.7.61.109)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 25 Oct 2010 15:10:35 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Oct 2010 11:11:25 -0400
+	id S1752775Ab0JYPMj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 11:12:39 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44589 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752649Ab0JYPMi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 11:12:38 -0400
+Received: by fxm16 with SMTP id 16so3020920fxm.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 08:12:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=qSeU09o3Bhr4G5dnCK+xrTqbrGjo96xWDrrzwOFA134=;
+        b=jC9NjBBOigvzTPxLy/LDlBCq8Q1tlWK632ZYyE7lPVCtQfvbppYsdcUbcgJJjuzc+A
+         4EgC5OFHSxJSZac5QSI+WtKUjBLeJurRvms3ZgLcZS23/Pw37sddMzjz+sb3aC+dO6CB
+         Gi2HAskGgDFwOLuQT6+enNckXwOBK+L8hX7x8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=RqOutt9iwSyPa63Cte53aEZ3WKZrEJn5h3lUAWDsHaPCTg/GC4/rQ3CPTIUKAQtVnO
+         0vcVko9u/JM179F6AAapnh14Z0k87vb9vVV/zE/BBC1PuufItrCCO2f+7TqfOIJgdHaN
+         s3MiGD/wUhp5CBkB5acmjk202mA1xeWd37wRM=
+Received: by 10.204.50.194 with SMTP id a2mr4404139bkg.183.1288019556680;
+        Mon, 25 Oct 2010 08:12:36 -0700 (PDT)
+Received: from [192.168.1.13] (abwi90.neoplus.adsl.tpnet.pl [83.8.232.90])
+        by mx.google.com with ESMTPS id u4sm4921976bkz.5.2010.10.25.08.12.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 25 Oct 2010 08:12:35 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1287917136-26103-8-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <201010251444.08780.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159958>
 
-On Mon, Oct 25, 2010 at 02:44:06PM +0200, Jakub Narebski wrote:
+On Sun, 24 Oct 2010, Giuseppe Bilotta wrote:
 
-> 2. With checking for CONFIGURATION-like, we would miss the following
->    configuration variables:
+> When 'remotes' view is passed the 'hash' parameter, interpret it as the
+> name of a remote and limit the view the the heads of that remote.
+
+I don't quite like (ab)using 'hash' parameter like that, but because
+it allows us to use e.g. 'project.git/remotes/origin' path_info
+without writing special code for that, I am all right with this hack.
+
 > 
->      http.getanyfile:: (for git-http-backend, in 'SERVICES')
->      http.uploadpack:: (for git-http-backend, in 'SERVICES')
->      http.receivepack:: (for git-http-backend, in 'SERVICES')
-> 
->    These are in git-http-backend manpage, in 'SERVICES' section, which 
->    probably should be named then 'CONFIGURING SERVICES'.
+> In single-remote view we let the user switch easily to the default
+> remotes view by specifying an -action_extra for the page header and by
+> enabling the 'remotes' link in the reference navigation submenu.
 
-I would argue those should probably go in a CONFIGURATION section for
-consistency with the rest of the manpages.
+Nice!
 
->    BTW, CONFIGURATION-like means:
-> 
->     * Configuration
->     * CONFIGURATION
->    
->   but also
-> 
->     * CONFIG FILE-ONLY OPTIONS
->     * CONFIGURATION FILE
->     * Configuration Mechanism
->     * CONFIG VARIABLES
->     * CONFIGURATION VARIABLES
->     * Configuring database backend
+> +	if (defined $remote) {
+> +		# only display the heads in a given remote
 
-Again, I think for consistency for the reader, it may make sense to
-switch them all to CONFIGURATION. I'd have to look at each page and see
-how appropraite that is, though.
+It also strips uninteresting '<remote>/' prefix, isn't it?
+It would be nice, though not necessary, to have this in comment.
 
-> >   2. You recursively follow includes via include::. This means that the
-> >      make rule is not accurate. E.g., try:
-> [...]
-> We do that: see 'doc.dep' target in Documentation/Makefile.  We just
-> need for this target to also add dependencies for config-vars.txt
-> (perhaps separate mode for make-config-list.perl, or perhaps 
-> build-docdep.perl should be config-vars-src.txt aware...).
+> +		@remotelist = map {
+> +			my $ref = $_ ;
+> +			$ref->{'name'} =~ s!^$remote/!!;
+> +			$ref
+> +		} git_get_heads_list(undef, "remotes/$remote");
+> +	} else {
 
-Yeah, that would definitely work.
-
-> Note however that make-config-list.perl only creates minimal documentation,
-> just link(s) to appropriate mapage(s).  Include-ing merge-config.txt both
-> in git-merge.txt and config-vars-src.txt means that we have merg config
-> variables defined in git-config(1) manpage, which I think is nice to have.
-
-I disagree. I think one of the benefits of this exercise is generating a
-more concise list. That being said, I don't think there's any reason we
-can't have a terse list in gitconfig(7) and a much larger one in
-gitconfigfull(7) or something like that (or even put it later in the
-manpage of gitconfig(7), or whatever).
-
-If you're going to do that, though, there's no point in having
-merge-options separate. make-config-list should just generate both
-lists.
-
-> >        format.pretty::
-> >                The default pretty format for log/show/whatchanged command,
-> >                See linkgit:git-log[1], linkgit:git-show[1],
-> >                linkgit:git-whatchanged[1].
-> [...]
-> 
-> Actually the above block describing `format.pretty` is from beginning in
-> config-vars-src.txt, and is not added / created by said script.
-
-Oh, you're right. I was browsing the output and just assumed it was
-created by the script, since it is of a similar form.
-
-> >      [1]: I assume the single line of block description is an error in
-> >           your script.
-> 
-> Hmmm?
-
-The comma at the end made it look to me like a sentence had been cut off
-during parsing. But looking at config.txt, it is simply a typo.  The
-comma should be a period.
-
--Peff
+-- 
+Jakub Narebski
+Poland
