@@ -1,106 +1,81 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH 00/11] More consistant terminology ("remote-tracking
-	branch", "not updated")
-Date: Mon, 25 Oct 2010 13:52:30 -0400
-Message-ID: <1288029150.819.78.camel@drew-northup.unet.maine.edu>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv6 03/10] gitweb: separate heads and remotes lists
+Date: Mon, 25 Oct 2010 20:14:13 +0200
+Message-ID: <AANLkTim-KAcGE1X_bgOQE+0OCA6PJA2wKb36caPvKDUH@mail.gmail.com>
+References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1287917136-26103-4-git-send-email-giuseppe.bilotta@gmail.com> <201010251701.15334.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Mon Oct 25 19:53:14 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 25 20:14:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAREL-0003hg-MH
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 19:53:10 +0200
+	id 1PARZB-0006j7-77
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 20:14:41 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759248Ab0JYRxC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 13:53:02 -0400
-Received: from beryl.its.maine.edu ([130.111.32.94]:46337 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759121Ab0JYRxA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 13:53:00 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9PHqZZX021788
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 25 Oct 2010 13:52:35 -0400
-In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=5 Fuz1=5
-	Fuz2=5
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: o9PHqZZX021788
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1288633955.98577@eIQGi0zypyXS6VXDUGT0Qw
+	id S1759299Ab0JYSOg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Oct 2010 14:14:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47947 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757525Ab0JYSOf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Oct 2010 14:14:35 -0400
+Received: by iwn10 with SMTP id 10so1110129iwn.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 11:14:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=efSPD4uzKin0XIqZQh0sLyn0b8V8lkIOjQ6z65wSNqI=;
+        b=MqhJ02LSFCRtHjdWTejoqmXczIQjvErcjrnpXUujdru3SsAE21syiHAjpTNpALp1I2
+         uJMO/rLOEQQ0l5UxGYza2QvuHOCHJ2htYmrIMBy68qhBXd4GlIn2v7L58ODl+ZRN9d66
+         P/zW2K8F2S5kgzXG+jKUDW0F7KY9BmrV+H8FM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=nSWW39d3r4OlQyQCi6eOx+T7I7KBKwlzPQW83MFpDkQkwXSxg9ko8fby28+32OTaoX
+         TngLFNJ22AADTcJtN44eM3I1JcDRDeWcaorMsgNiycwJJvriJzWj8YP+FuAt9LGaZecE
+         8DNohsJMoZJbtsOkRkoNkvez7NuGtpd1v/MSM=
+Received: by 10.231.11.137 with SMTP id t9mr4543386ibt.9.1288030474050; Mon,
+ 25 Oct 2010 11:14:34 -0700 (PDT)
+Received: by 10.231.149.141 with HTTP; Mon, 25 Oct 2010 11:14:13 -0700 (PDT)
+In-Reply-To: <201010251701.15334.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159963>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159964>
+
+2010/10/25 Jakub Narebski <jnareb@gmail.com>:
+> On Sun, 24 Oct 2010, Giuseppe Bilotta wrote:
+>
+>> We specialize the 'heads' action to only display local branches, and
+>> introduce a 'remotes' action to display the remote branches (only
+>> available when the remotes_head feature is enabled).
+>>
+>> Mirroring this, we also split the heads list in summary view into
+>> local and remote lists, each linking to the appropriate action.
+>>
+>> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>
+>> - =A0 =A0 my @headlist =3D git_get_heads_list(16);
+>> + =A0 =A0 my @headlist =3D git_get_heads_list(16, 'heads');
+>
+>> - =A0 =A0 my @headslist =3D git_get_heads_list();
+>> + =A0 =A0 my @headslist =3D git_get_heads_list(undef, 'heads');
+>
+> Hmmm... I wonder if it wouldn't be better to simply change defaults
+> in git_get_heads_list() so that second argument defaults always to
+> 'heads', even if 'remote_heads' feature is enabled...
+
+That's a good point. I'll look into that.
 
 
-On Sat, 2010-10-23 at 18:31 +0200, Matthieu Moy wrote:
-> Following the discussion in
-> 
-> http://thread.gmane.org/gmane.comp.version-control.git/159287/
-> http://thread.gmane.org/gmane.comp.version-control.git/159287/focus=159288
-> 
-> this is an attempt to be more consistant in the terminology used in Git.
-> 
-> The first patch fixes git status's "changed but not updated", and the
-> rest tries to use "remote-tracking branch" consistantly. This
-> essentially changes the doc, and also does slight modifications to the
-> code. This changes error message, and maybe more controversially the
-> generated merge messages (in a separate patch in case this is too
-> controversial).
-> 
-> I've tried splitting this into systematic changes to ease review, but
-> patches should be applicable in any order (i.e. Junio: if you find
-> some of the patches good and uncontroversial, you can pick them
-> right away).
-> 
-> Patch "user-manual.txt: explain better the remote(-tracking) branch
-> terms" comes last, and adds a few sentences to make the distinction
-> between remote, remote branch, remote-tracking branches explicit.
-> Hopefully, this should avoid future users to have the same
-> difficulties as Thore ;-).
-> 
-> The last 2 patches are minor things I noticed while going through the
-> docs, but are essentially unrelated.
-> 
-> I'll be busy next week, so if anyone else wants to pick this patch
-> serie and update it according to list review, he's welcome. Otherwise,
-> it may have to wait.
-> 
-> Matthieu Moy (11):
->   Better "Changed but not updated" message in git-status
->   Remplace "remote tracking" with "remote-tracking"
->   Change remote tracking to remote-tracking in non-trivial places
->   Change "tracking branch" to "remote-tracking branch"
->   Change "tracking branch" to "remote-tracking branch" in C code
->   Change incorrect uses of "remote branch" meaning "remote-tracking"
->   Change incorrect "remote branch" to "remote tracking branch" in C
->     code
->   Use 'remote-tracking branch' in generated merge messages
->   user-manual.txt: explain better the remote(-tracking) branch terms
->   git-branch.txt: mention --set-upstream as a way to change upstream
->     configuration
->   git-http-push.txt: fix typo (branch -> branches)
-
-I'm going to apply these to a branch of mine to see how they read in
-context before I come to any definite conclusions. So far I like what I
-see for the most part.
-
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+--=20
+Giuseppe "Oblomov" Bilotta
