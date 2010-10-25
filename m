@@ -1,12 +1,11 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 12/23] git notes merge: Handle real,
- non-conflicting notes merges
-Date: Mon, 25 Oct 2010 02:08:42 +0200
-Message-ID: <1287965333-5099-13-git-send-email-johan@herland.net>
+Subject: [PATCHv5 16/23] git notes merge: Manual conflict resolution, part 2/2
+Date: Mon, 25 Oct 2010 02:08:46 +0200
+Message-ID: <1287965333-5099-17-git-send-email-johan@herland.net>
 References: <1287965333-5099-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
 	avarab@gmail.com, gitster@pobox.com, srabbelier@gmail.com
 To: git@vger.kernel.org
@@ -16,740 +15,644 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAAdr-0000ju-TA
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:10:24 +0200
+	id 1PAAdr-0000ju-7S
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:10:23 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752169Ab0JYAKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 20:10:01 -0400
-Received: from smtp.getmail.no ([84.208.15.66]:59910 "EHLO smtp.getmail.no"
+	id S1752161Ab0JYAKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 24 Oct 2010 20:10:00 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:59867 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751794Ab0JYAJZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 20:09:25 -0400
+	id S1751839Ab0JYAJ2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 20:09:28 -0400
 Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
  by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAT0050YKFJGG50@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:19 +0200 (MEST)
+ with ESMTP id <0LAT0051HKFLGG50@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:21 +0200 (MEST)
 Received: from get-mta-scan01.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id A2442179913D_CC4CAAFB	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:19 +0000 (GMT)
+ with SMTP id 9F5471798FEC_CC4CAB1B	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:21 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 516B61796C4D_CC4CAAFF	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:18 +0000 (GMT)
+ with ESMTP id 56757179627C_CC4CAB1F	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:20 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAT004SRKFAVB20@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:13 +0200 (MEST)
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:16 +0200 (MEST)
 X-Mailer: git-send-email 1.7.3.98.g5ad7d9
 In-reply-to: <1287965333-5099-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159915>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159916>
 
-This continuation of the 'git notes merge' implementation teaches notes-merge
-to properly do real merges between notes trees: Two diffs are performed, one
-from $base to $remote, and another from $base to $local. The paths in each
-diff are normalized to SHA1 object names. The two diffs are then consolidated
-into a single list of change pairs to be evaluated. Each change pair consist
-of:
+When the notes merge conflicts in .git/NOTES_MERGE_WORKTREE have been
+resolved, we need to record a new notes commit on the appropriate notes
+ref with the resolved notes.
 
-  - The annotated object's SHA1
-  - The $base SHA1 (i.e. the common ancestor notes for this object)
-  - The $local SHA1 (i.e. the current notes for this object)
-  - The $remote SHA1 (i.e. the to-be-merged notes for this object)
+This patch implements 'git notes merge --commit' which the user should
+run after resolving conflicts in the notes merge worktree. This command
+finalizes the notes merge by recombining the partial notes tree from
+part 1 with the now-resolved conflicts in the notes merge worktree in a
+merge commit, and updating the appropriate ref to this merge commit.
 
->From the pair ($base -> $local, $base -> $remote), we can determine the merge
-result using regular 3-way rules. If conflicts are encountered in this
-process, we fail loudly and exit (conflict handling to be added in a future
-patch), If we can complete the merge without conflicts, the resulting
-notes tree is committed, and the current notes ref updated.
+In order to correctly finalize the merge, we need to keep track of thre=
+e
+things:
 
-The patch includes added testcases verifying that we can successfully do real
-conflict-less merges.
+- The partial merge result from part 1, containing the auto-merged note=
+s.
+  This is now stored into a ref called .git/NOTES_MERGE_PARTIAL.
+- The unmerged notes. These are already stored in
+  .git/NOTES_MERGE_WORKTREE, thanks to part 1.
+- The notes ref to be updated by the finalized merge result. This is no=
+w
+  stored in a symref called .git/NOTES_MERGE_REF.
+
+In addition to "git notes merge --commit", which uses the above details
+to create the finalized notes merge commit, this patch also implements
+"git notes merge --reset", which aborts the ongoing notes merge by simp=
+ly
+removing the files/directory described above.
+
+=46TR, "git notes merge --commit" reuses "git notes merge --reset" to r=
+emove
+the information described above (.git/NOTES_MERGE_*) after the notes me=
+rge
+have been successfully finalized.
+
+The patch also contains documentation and testcases for the two new opt=
+ions.
 
 This patch has been improved by the following contributions:
-- Jonathan Nieder: Future-proof by always checking add_note() return value
-- Stephen Boyd: Use test_commit
-- Jonathan Nieder: Use trace_printf(...) instead of OUTPUT(o, 5, ...)
+- =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason: Fix nonsense sentence in --co=
+mmit description
+- Sverre Rabbelier: Rename --reset to --abort
 
-Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
-Thanks-to: Stephen Boyd <bebarino@gmail.com>
+Thanks-to: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
+Thanks-to: Sverre Rabbelier <srabbelier@gmail.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- builtin/notes.c        |   15 ++-
- notes-merge.c          |  325 +++++++++++++++++++++++++++++++++++++++++++++++-
- notes-merge.h          |   15 ++-
- t/t3308-notes-merge.sh |  188 ++++++++++++++++++++++++++++
- 4 files changed, 532 insertions(+), 11 deletions(-)
+ Documentation/git-notes.txt           |   22 ++++
+ builtin/notes.c                       |  106 +++++++++++++++++++-
+ notes-merge.c                         |   71 +++++++++++++-
+ notes-merge.h                         |   23 +++++
+ t/t3310-notes-merge-manual-resolve.sh |  176 +++++++++++++++++++++++++=
+++++++++
+ 5 files changed, 394 insertions(+), 4 deletions(-)
 
+diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
+index f003b7c..a822551 100644
+--- a/Documentation/git-notes.txt
++++ b/Documentation/git-notes.txt
+@@ -15,6 +15,8 @@ SYNOPSIS
+ 'git notes' edit [<object>]
+ 'git notes' show [<object>]
+ 'git notes' merge [-v | -q] [-s <strategy> ] <notes_ref>
++'git notes' merge --commit [-v | -q]
++'git notes' merge --abort [-v | -q]
+ 'git notes' remove [<object>]
+ 'git notes' prune [-n | -v]
+=20
+@@ -95,6 +97,9 @@ conflicting notes (see the -s/--strategy option) is n=
+ot given,
+ the "manual" resolver is used. This resolver checks out the
+ conflicting notes in a special worktree (`.git/NOTES_MERGE_WORKTREE`),
+ and instructs the user to manually resolve the conflicts there.
++When done, the user can either finalize the merge with
++'git notes merge --commit', or abort the merge with
++'git notes merge --abort'.
+=20
+ remove::
+ 	Remove the notes for a given object (defaults to HEAD).
+@@ -154,6 +159,20 @@ OPTIONS
+ 	See the "NOTES MERGE STRATEGIES" section below for more
+ 	information on each notes merge strategy.
+=20
++--commit::
++	Finalize an in-progress 'git notes merge'. Use this option
++	when you have resolved the conflicts that 'git notes merge'
++	stored in .git/NOTES_MERGE_WORKTREE. This amends the partial
++	merge commit created by 'git notes merge' (stored in
++	.git/NOTES_MERGE_PARTIAL) by adding the notes in
++	.git/NOTES_MERGE_WORKTREE. The notes ref stored in the
++	.git/NOTES_MERGE_REF symref is updated to the resulting commit.
++
++--abort::
++	Abort/reset a in-progress 'git notes merge', i.e. a notes merge
++	with conflicts. This simply removes all files related to the
++	notes merge.
++
+ -q::
+ --quiet::
+ 	When merging notes, operate quietly.
+@@ -197,6 +216,9 @@ The default notes merge strategy is "manual", which=
+ checks out
+ conflicting notes in a special work tree for resolving notes conflicts
+ (`.git/NOTES_MERGE_WORKTREE`), and instructs the user to resolve the
+ conflicts in that work tree.
++When done, the user can either finalize the merge with
++'git notes merge --commit', or abort the merge with
++'git notes merge --abort'.
+=20
+ "ours" automatically resolves conflicting notes in favor of the local
+ version (i.e. the current notes ref).
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 97d8baa..c967b23 100644
+index 7a2a288..db60ead 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -765,6 +765,7 @@ static int merge(int argc, const char **argv, const char *prefix)
- {
- 	struct strbuf remote_ref = STRBUF_INIT, msg = STRBUF_INIT;
- 	unsigned char result_sha1[20];
+@@ -27,6 +27,8 @@ static const char * const git_notes_usage[] =3D {
+ 	"git notes [--ref <notes_ref>] edit [<object>]",
+ 	"git notes [--ref <notes_ref>] show [<object>]",
+ 	"git notes [--ref <notes_ref>] merge [-v | -q] [-s <strategy> ] <note=
+s_ref>",
++	"git notes merge --commit [-v | -q]",
++	"git notes merge --abort [-v | -q]",
+ 	"git notes [--ref <notes_ref>] remove [<object>]",
+ 	"git notes [--ref <notes_ref>] prune [-n | -v]",
+ 	NULL
+@@ -65,6 +67,8 @@ static const char * const git_notes_show_usage[] =3D =
+{
+=20
+ static const char * const git_notes_merge_usage[] =3D {
+ 	"git notes merge [<options>] <notes_ref>",
++	"git notes merge --commit [<options>]",
++	"git notes merge --abort [<options>]",
+ 	NULL
+ };
+=20
+@@ -761,33 +765,119 @@ static int show(int argc, const char **argv, con=
+st char *prefix)
+ 	return retval;
+ }
+=20
++static int merge_abort(struct notes_merge_options *o)
++{
++	int ret =3D 0;
++
++	/*
++	 * Remove .git/NOTES_MERGE_PARTIAL and .git/NOTES_MERGE_REF, and call
++	 * notes_merge_abort() to remove .git/NOTES_MERGE_WORKTREE.
++	 */
++
++	if (delete_ref("NOTES_MERGE_PARTIAL", NULL, 0))
++		ret +=3D error("Failed to delete ref NOTES_MERGE_PARTIAL");
++	if (delete_ref("NOTES_MERGE_REF", NULL, REF_NODEREF))
++		ret +=3D error("Failed to delete ref NOTES_MERGE_REF");
++	if (notes_merge_abort(o))
++		ret +=3D error("Failed to remove 'git notes merge' worktree");
++	return ret;
++}
++
++static int merge_commit(struct notes_merge_options *o)
++{
++	struct strbuf msg =3D STRBUF_INIT;
++	unsigned char sha1[20];
 +	struct notes_tree *t;
++	struct commit *partial;
++	struct pretty_print_context pretty_ctx;
++
++	/*
++	 * Read partial merge result from .git/NOTES_MERGE_PARTIAL,
++	 * and target notes ref from .git/NOTES_MERGE_REF.
++	 */
++
++	if (get_sha1("NOTES_MERGE_PARTIAL", sha1))
++		die("Failed to read ref NOTES_MERGE_PARTIAL");
++	else if (!(partial =3D lookup_commit_reference(sha1)))
++		die("Could not find commit from NOTES_MERGE_PARTIAL.");
++	else if (parse_commit(partial))
++		die("Could not parse commit from NOTES_MERGE_PARTIAL.");
++
++	t =3D xcalloc(1, sizeof(struct notes_tree));
++	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
++
++	o->local_ref =3D resolve_ref("NOTES_MERGE_REF", sha1, 0, 0);
++	if (!o->local_ref)
++		die("Failed to resolve NOTES_MERGE_REF");
++
++	if (notes_merge_commit(o, t, partial, sha1))
++		die("Failed to finalize notes merge");
++
++	/* Reuse existing commit message in reflog message */
++	memset(&pretty_ctx, 0, sizeof(pretty_ctx));
++	format_commit_message(partial, "%s", &msg, &pretty_ctx);
++	strbuf_trim(&msg);
++	strbuf_insert(&msg, 0, "notes: ", 7);
++	update_ref(msg.buf, o->local_ref, sha1, NULL, 0, DIE_ON_ERR);
++
++	free_notes(t);
++	strbuf_release(&msg);
++	return merge_abort(o);
++}
++
+ static int merge(int argc, const char **argv, const char *prefix)
+ {
+ 	struct strbuf remote_ref =3D STRBUF_INIT, msg =3D STRBUF_INIT;
+ 	unsigned char result_sha1[20];
+ 	struct notes_tree *t;
  	struct notes_merge_options o;
- 	int verbosity = 0, result;
- 	struct option options[] = {
-@@ -788,19 +789,23 @@ static int merge(int argc, const char **argv, const char *prefix)
++	int do_merge =3D 0, do_commit =3D 0, do_abort =3D 0;
+ 	int verbosity =3D 0, result;
+ 	const char *strategy =3D NULL;
+ 	struct option options[] =3D {
++		OPT_GROUP("General options"),
+ 		OPT__VERBOSITY(&verbosity),
++		OPT_GROUP("Merge options"),
+ 		OPT_STRING('s', "strategy", &strategy, "strategy",
+ 			   "resolve notes conflicts using the given "
+ 			   "strategy (manual/ours/theirs/union)"),
++		OPT_GROUP("Committing unmerged notes"),
++		{ OPTION_BOOLEAN, 0, "commit", &do_commit, NULL,
++			"finalize notes merge by committing unmerged notes",
++			PARSE_OPT_NOARG | PARSE_OPT_NONEG },
++		OPT_GROUP("Aborting notes merge resolution"),
++		{ OPTION_BOOLEAN, 0, "abort", &do_abort, NULL,
++			"abort notes merge",
++			PARSE_OPT_NOARG | PARSE_OPT_NONEG },
+ 		OPT_END()
+ 	};
+=20
+ 	argc =3D parse_options(argc, argv, prefix, options,
+ 			     git_notes_merge_usage, 0);
+=20
+-	if (argc !=3D 1) {
++	if (strategy || do_commit + do_abort =3D=3D 0)
++		do_merge =3D 1;
++	if (do_merge + do_commit + do_abort !=3D 1) {
++		error("cannot mix --commit, --abort or -s/--strategy");
++		usage_with_options(git_notes_merge_usage, options);
++	}
++
++	if (do_merge && argc !=3D 1) {
+ 		error("Must specify a notes ref to merge");
+ 		usage_with_options(git_notes_merge_usage, options);
++	} else if (!do_merge && argc) {
++		error("too many parameters");
++		usage_with_options(git_notes_merge_usage, options);
+ 	}
+=20
+ 	init_notes_merge_options(&o);
+ 	o.verbosity =3D verbosity + NOTES_MERGE_VERBOSITY_DEFAULT;
+=20
++	if (do_abort)
++		return merge_abort(&o);
++	if (do_commit)
++		return merge_commit(&o);
++
+ 	o.local_ref =3D default_notes_ref();
+ 	strbuf_addstr(&remote_ref, argv[0]);
  	expand_notes_ref(&remote_ref);
- 	o.remote_ref = remote_ref.buf;
- 
--	result = notes_merge(&o, result_sha1);
-+	t = init_notes_check("merge");
- 
- 	strbuf_addf(&msg, "notes: Merged notes from %s into %s",
- 		    remote_ref.buf, default_notes_ref());
--	if (result == 0) { /* Merge resulted (trivially) in result_sha1 */
-+	o.commit_msg = msg.buf + 7; // skip "notes: " prefix
-+
-+	result = notes_merge(&o, t, result_sha1);
-+
-+	if (result >= 0) /* Merge resulted (trivially) in result_sha1 */
+@@ -820,9 +910,19 @@ static int merge(int argc, const char **argv, cons=
+t char *prefix)
  		/* Update default notes ref with new commit */
  		update_ref(msg.buf, default_notes_ref(), result_sha1, NULL,
  			   0, DIE_ON_ERR);
--	} else {
-+	else
- 		/* TODO: */
--		die("'git notes merge' cannot yet handle non-trivial merges!");
--	}
-+		die("'git notes merge' cannot yet handle conflicts!");
- 
-+	free_notes(t);
+-	else /* Merge has unresolved conflicts */
+-		printf("Automatic notes merge failed. Fix conflicts in %s.\n",
++	else { /* Merge has unresolved conflicts */
++		/* Update .git/NOTES_MERGE_PARTIAL with partial merge result */
++		update_ref(msg.buf, "NOTES_MERGE_PARTIAL", result_sha1, NULL,
++			   0, DIE_ON_ERR);
++		/* Store ref-to-be-updated into .git/NOTES_MERGE_REF */
++		if (create_symref("NOTES_MERGE_REF", default_notes_ref(), NULL))
++			die("Failed to store link to current notes ref (%s)",
++			    default_notes_ref());
++		printf("Automatic notes merge failed. Fix conflicts in %s and "
++		       "commit the result with 'git notes merge --commit', or "
++		       "abort the merge with 'git notes merge --abort'.\n",
+ 		       git_path(NOTES_MERGE_WORKTREE));
++	}
+=20
+ 	free_notes(t);
  	strbuf_release(&remote_ref);
- 	strbuf_release(&msg);
- 	return 0;
 diff --git a/notes-merge.c b/notes-merge.c
-index 6ffa6e7..20db0b6 100644
+index 5734d0b..b44273c 100644
 --- a/notes-merge.c
 +++ b/notes-merge.c
-@@ -1,9 +1,15 @@
- #include "cache.h"
- #include "commit.h"
- #include "refs.h"
-+#include "diff.h"
-+#include "diffcore.h"
- #include "notes.h"
- #include "notes-merge.h"
- 
-+struct notes_merge_pair {
-+	unsigned char obj[20], base[20], local[20], remote[20];
-+};
+@@ -278,7 +278,7 @@ static void check_notes_merge_worktree(struct notes=
+_merge_options *o)
+ 				die("You have not concluded your previous "
+ 				    "notes merge (%s exists).\nPlease, use "
+ 				    "'git notes merge --commit' or 'git notes "
+-				    "merge --reset' to commit/abort the "
++				    "merge --abort' to commit/abort the "
+ 				    "previous merge before you start a new "
+ 				    "notes merge.", git_path("NOTES_MERGE_*"));
+ 			else
+@@ -649,3 +649,72 @@ found_result:
+ 	       result, sha1_to_hex(result_sha1));
+ 	return result;
+ }
 +
- void init_notes_merge_options(struct notes_merge_options *o)
- {
- 	memset(o, 0, sizeof(struct notes_merge_options));
-@@ -18,6 +24,305 @@ void init_notes_merge_options(struct notes_merge_options *o)
- 		} \
- 	} while (0)
- 
-+static int path_to_sha1(const char *path, unsigned char *sha1)
-+{
-+	char hex_sha1[40];
-+	int i = 0;
-+	while (*path && i < 40) {
-+		if (*path != '/')
-+			hex_sha1[i++] = *path;
-+		path++;
-+	}
-+	if (*path || i != 40)
-+		return -1;
-+	return get_sha1_hex(hex_sha1, sha1);
-+}
-+
-+static int verify_notes_filepair(struct diff_filepair *p, unsigned char *sha1)
-+{
-+	switch (p->status) {
-+	case DIFF_STATUS_MODIFIED:
-+		assert(p->one->mode == p->two->mode);
-+		assert(!is_null_sha1(p->one->sha1));
-+		assert(!is_null_sha1(p->two->sha1));
-+		break;
-+	case DIFF_STATUS_ADDED:
-+		assert(is_null_sha1(p->one->sha1));
-+		break;
-+	case DIFF_STATUS_DELETED:
-+		assert(is_null_sha1(p->two->sha1));
-+		break;
-+	default:
-+		return -1;
-+	}
-+	assert(!strcmp(p->one->path, p->two->path));
-+	return path_to_sha1(p->one->path, sha1);
-+}
-+
-+static struct notes_merge_pair *find_notes_merge_pair_pos(
-+		struct notes_merge_pair *list, int len, unsigned char *obj,
-+		int insert_new, int *occupied)
++int notes_merge_commit(struct notes_merge_options *o,
++		       struct notes_tree *partial_tree,
++		       struct commit *partial_commit,
++		       unsigned char *result_sha1)
 +{
 +	/*
-+	 * Both diff_tree_remote() and diff_tree_local() tend to process
-+	 * merge_pairs in ascending order. Therefore, cache last returned
-+	 * index, and search sequentially from there until the appropriate
-+	 * position is found.
-+	 *
-+	 * Since inserts only happen from diff_tree_remote() (which mainly
-+	 * _appends_), we don't care that inserting into the middle of the
-+	 * list is expensive (using memmove()).
++	 * Iterate through files in .git/NOTES_MERGE_WORKTREE and add all
++	 * found notes to 'partial_tree'. Write the updates notes tree to
++	 * the DB, and commit the resulting tree object while reusing the
++	 * commit message and parents from 'partial_commit'.
++	 * Finally store the new commit object SHA1 into 'result_sha1'.
 +	 */
-+	static int last_index = 0;
-+	int i = last_index < len ? last_index : len - 1;
-+	int prev_cmp = 0, cmp = -1;
-+	while (i >= 0 && i < len) {
-+		cmp = hashcmp(obj, list[i].obj);
-+		if (!cmp) /* obj belongs @ i */
-+			break;
-+		else if (cmp < 0 && prev_cmp <= 0) /* obj belongs < i */
-+			i--;
-+		else if (cmp < 0) /* obj belongs between i-1 and i */
-+			break;
-+		else if (cmp > 0 && prev_cmp >= 0) /* obj belongs > i */
-+			i++;
-+		else /* if (cmp > 0) */ { /* obj belongs between i and i+1 */
-+			i++;
-+			break;
-+		}
-+		prev_cmp = cmp;
-+	}
-+	if (i < 0)
-+		i = 0;
-+	/* obj belongs at, or immediately preceding, index i (0 <= i <= len) */
++	struct dir_struct dir;
++	const char *path =3D git_path(NOTES_MERGE_WORKTREE "/");
++	int path_len =3D strlen(path), i;
++	const char *msg =3D strstr(partial_commit->buffer, "\n\n");
 +
-+	if (!cmp)
-+		*occupied = 1;
-+	else {
-+		*occupied = 0;
-+		if (insert_new && i < len) {
-+			memmove(list + i + 1, list + i,
-+				(len - i) * sizeof(struct notes_merge_pair));
-+			memset(list + i, 0, sizeof(struct notes_merge_pair));
-+		}
-+	}
-+	last_index = i;
-+	return list + i;
-+}
++	OUTPUT(o, 3, "Committing notes in notes merge worktree at %.*s",
++	       path_len - 1, path);
 +
-+static unsigned char uninitialized[20] =
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff" \
-+	"\xff\xff\xff\xff\xff\xff\xff\xff\xff\xff";
++	if (!msg || msg[2] =3D=3D '\0')
++		die("partial notes commit has empty message");
++	msg +=3D 2;
 +
-+static struct notes_merge_pair *diff_tree_remote(struct notes_merge_options *o,
-+						 const unsigned char *base,
-+						 const unsigned char *remote,
-+						 int *num_changes)
-+{
-+	struct diff_options opt;
-+	struct notes_merge_pair *changes;
-+	int i, len = 0;
++	memset(&dir, 0, sizeof(dir));
++	read_directory(&dir, path, path_len, NULL);
++	for (i =3D 0; i < dir.nr; i++) {
++		struct dir_entry *ent =3D dir.entries[i];
++		struct stat st;
++		const char *relpath =3D ent->name + path_len;
++		unsigned char obj_sha1[20], blob_sha1[20];
 +
-+	trace_printf("\tdiff_tree_remote(base = %.7s, remote = %.7s)\n",
-+	       sha1_to_hex(base), sha1_to_hex(remote));
-+
-+	diff_setup(&opt);
-+	DIFF_OPT_SET(&opt, RECURSIVE);
-+	opt.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	if (diff_setup_done(&opt) < 0)
-+		die("diff_setup_done failed");
-+	diff_tree_sha1(base, remote, "", &opt);
-+	diffcore_std(&opt);
-+
-+	changes = xcalloc(diff_queued_diff.nr, sizeof(struct notes_merge_pair));
-+
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct notes_merge_pair *mp;
-+		int occupied;
-+		unsigned char obj[20];
-+
-+		if (verify_notes_filepair(p, obj)) {
-+			trace_printf("\t\tCannot merge entry '%s' (%c): "
-+			       "%.7s -> %.7s. Skipping!\n", p->one->path,
-+			       p->status, sha1_to_hex(p->one->sha1),
-+			       sha1_to_hex(p->two->sha1));
-+			continue;
-+		}
-+		mp = find_notes_merge_pair_pos(changes, len, obj, 1, &occupied);
-+		if (occupied) {
-+			/* We've found an addition/deletion pair */
-+			assert(!hashcmp(mp->obj, obj));
-+			if (is_null_sha1(p->one->sha1)) { /* addition */
-+				assert(is_null_sha1(mp->remote));
-+				hashcpy(mp->remote, p->two->sha1);
-+			} else if (is_null_sha1(p->two->sha1)) { /* deletion */
-+				assert(is_null_sha1(mp->base));
-+				hashcpy(mp->base, p->one->sha1);
-+			} else
-+				assert(!"Invalid existing change recorded");
-+		} else {
-+			hashcpy(mp->obj, obj);
-+			hashcpy(mp->base, p->one->sha1);
-+			hashcpy(mp->local, uninitialized);
-+			hashcpy(mp->remote, p->two->sha1);
-+			len++;
-+		}
-+		trace_printf("\t\tStored remote change for %s: %.7s -> %.7s\n",
-+		       sha1_to_hex(mp->obj), sha1_to_hex(mp->base),
-+		       sha1_to_hex(mp->remote));
-+	}
-+	diff_flush(&opt);
-+	diff_tree_release_paths(&opt);
-+
-+	*num_changes = len;
-+	return changes;
-+}
-+
-+static void diff_tree_local(struct notes_merge_options *o,
-+			    struct notes_merge_pair *changes, int len,
-+			    const unsigned char *base,
-+			    const unsigned char *local)
-+{
-+	struct diff_options opt;
-+	int i;
-+
-+	trace_printf("\tdiff_tree_local(len = %i, base = %.7s, local = %.7s)\n",
-+	       len, sha1_to_hex(base), sha1_to_hex(local));
-+
-+	diff_setup(&opt);
-+	DIFF_OPT_SET(&opt, RECURSIVE);
-+	opt.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	if (diff_setup_done(&opt) < 0)
-+		die("diff_setup_done failed");
-+	diff_tree_sha1(base, local, "", &opt);
-+	diffcore_std(&opt);
-+
-+	for (i = 0; i < diff_queued_diff.nr; i++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[i];
-+		struct notes_merge_pair *mp;
-+		int match;
-+		unsigned char obj[20];
-+
-+		if (verify_notes_filepair(p, obj)) {
-+			trace_printf("\t\tCannot merge entry '%s' (%c): "
-+			       "%.7s -> %.7s. Skipping!\n", p->one->path,
-+			       p->status, sha1_to_hex(p->one->sha1),
-+			       sha1_to_hex(p->two->sha1));
-+			continue;
-+		}
-+		mp = find_notes_merge_pair_pos(changes, len, obj, 0, &match);
-+		if (!match) {
-+			trace_printf("\t\tIgnoring local-only change for %s: "
-+			       "%.7s -> %.7s\n", sha1_to_hex(obj),
-+			       sha1_to_hex(p->one->sha1),
-+			       sha1_to_hex(p->two->sha1));
++		if (ent->len - path_len !=3D 40 || get_sha1_hex(relpath, obj_sha1)) =
+{
++			OUTPUT(o, 3, "Skipping non-SHA1 entry '%s'", ent->name);
 +			continue;
 +		}
 +
-+		assert(!hashcmp(mp->obj, obj));
-+		if (is_null_sha1(p->two->sha1)) { /* deletion */
-+			/*
-+			 * Either this is a true deletion (1), or it is part
-+			 * of an A/D pair (2), or D/A pair (3):
-+			 *
-+			 * (1) mp->local is uninitialized; set it to null_sha1
-+			 * (2) mp->local is not uninitialized; don't touch it
-+			 * (3) mp->local is uninitialized; set it to null_sha1
-+			 *     (will be overwritten by following addition)
-+			 */
-+			if (!hashcmp(mp->local, uninitialized))
-+				hashclr(mp->local);
-+		} else if (is_null_sha1(p->one->sha1)) { /* addition */
-+			/*
-+			 * Either this is a true addition (1), or it is part
-+			 * of an A/D pair (2), or D/A pair (3):
-+			 *
-+			 * (1) mp->local is uninitialized; set to p->two->sha1
-+			 * (2) mp->local is uninitialized; set to p->two->sha1
-+			 * (3) mp->local is null_sha1;     set to p->two->sha1
-+			 */
-+			assert(is_null_sha1(mp->local) ||
-+			       !hashcmp(mp->local, uninitialized));
-+			hashcpy(mp->local, p->two->sha1);
-+		} else { /* modification */
-+			/*
-+			 * This is a true modification. p->one->sha1 shall
-+			 * match mp->base, and mp->local shall be uninitialized.
-+			 * Set mp->local to p->two->sha1.
-+			 */
-+			assert(!hashcmp(p->one->sha1, mp->base));
-+			assert(!hashcmp(mp->local, uninitialized));
-+			hashcpy(mp->local, p->two->sha1);
-+		}
-+		trace_printf("\t\tStored local change for %s: %.7s -> %.7s\n",
-+		       sha1_to_hex(mp->obj), sha1_to_hex(mp->base),
-+		       sha1_to_hex(mp->local));
++		/* write file as blob, and add to partial_tree */
++		if (stat(ent->name, &st))
++			die_errno("Failed to stat '%s'", ent->name);
++		if (index_path(blob_sha1, ent->name, &st, 1))
++			die("Failed to write blob object from '%s'", ent->name);
++		if (add_note(partial_tree, obj_sha1, blob_sha1, NULL))
++			die("Failed to add resolved note '%s' to notes tree",
++			    ent->name);
++		OUTPUT(o, 4, "Added resolved note for object %s: %s",
++		       sha1_to_hex(obj_sha1), sha1_to_hex(blob_sha1));
 +	}
-+	diff_flush(&opt);
-+	diff_tree_release_paths(&opt);
++
++	create_notes_commit(partial_tree, partial_commit->parents, msg,
++			    result_sha1);
++	OUTPUT(o, 4, "Finalized notes merge commit: %s",
++	       sha1_to_hex(result_sha1));
++	return 0;
 +}
 +
-+static int merge_changes(struct notes_merge_options *o,
-+			 struct notes_merge_pair *changes, int *num_changes,
-+			 struct notes_tree *t)
++int notes_merge_abort(struct notes_merge_options *o)
 +{
-+	int i, conflicts = 0;
++	/* Remove .git/NOTES_MERGE_WORKTREE directory and all files within */
++	struct strbuf buf =3D STRBUF_INIT;
++	int ret;
 +
-+	trace_printf("\tmerge_changes(num_changes = %i)\n", *num_changes);
-+	for (i = 0; i < *num_changes; i++) {
-+		struct notes_merge_pair *p = changes + i;
-+		trace_printf("\t\t%.7s: %.7s -> %.7s/%.7s\n",
-+		       sha1_to_hex(p->obj), sha1_to_hex(p->base),
-+		       sha1_to_hex(p->local), sha1_to_hex(p->remote));
-+
-+		if (!hashcmp(p->base, p->remote)) {
-+			/* no remote change; nothing to do */
-+			trace_printf("\t\t\tskipping (no remote change)\n");
-+		} else if (!hashcmp(p->local, p->remote)) {
-+			/* same change in local and remote; nothing to do */
-+			trace_printf("\t\t\tskipping (local == remote)\n");
-+		} else if (!hashcmp(p->local, uninitialized) ||
-+			   !hashcmp(p->local, p->base)) {
-+			/* no local change; adopt remote change */
-+			trace_printf("\t\t\tno local change, adopted remote\n");
-+			if (add_note(t, p->obj, p->remote,
-+				     combine_notes_overwrite))
-+				die("confused: combine_notes_overwrite failed");
-+		} else {
-+			/* need file-level merge between local and remote */
-+			trace_printf("\t\t\tneed content-level merge\n");
-+			conflicts += 1; /* TODO */
-+		}
-+	}
-+
-+	return conflicts;
++	strbuf_addstr(&buf, git_path(NOTES_MERGE_WORKTREE));
++	OUTPUT(o, 3, "Removing notes merge worktree at %s", buf.buf);
++	ret =3D remove_dir_recursively(&buf, 0);
++	strbuf_release(&buf);
++	return ret;
 +}
-+
-+static int merge_from_diffs(struct notes_merge_options *o,
-+			    const unsigned char *base,
-+			    const unsigned char *local,
-+			    const unsigned char *remote, struct notes_tree *t)
-+{
-+	struct notes_merge_pair *changes;
-+	int num_changes, conflicts;
-+
-+	trace_printf("\tmerge_from_diffs(base = %.7s, local = %.7s, "
-+	       "remote = %.7s)\n", sha1_to_hex(base), sha1_to_hex(local),
-+	       sha1_to_hex(remote));
-+
-+	changes = diff_tree_remote(o, base, remote, &num_changes);
-+	diff_tree_local(o, changes, num_changes, base, local);
-+
-+	conflicts = merge_changes(o, changes, &num_changes, t);
-+	free(changes);
-+
-+	OUTPUT(o, 4, "Merge result: %i unmerged notes and a %s notes tree",
-+	       conflicts, t->dirty ? "dirty" : "clean");
-+
-+	return conflicts ? -1 : 1;
-+}
-+
- void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- 			 const char *msg, unsigned char *result_sha1)
- {
-@@ -45,15 +350,17 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- }
- 
- int notes_merge(struct notes_merge_options *o,
-+		struct notes_tree *local_tree,
- 		unsigned char *result_sha1)
- {
- 	unsigned char local_sha1[20], remote_sha1[20];
- 	struct commit *local, *remote;
- 	struct commit_list *bases = NULL;
--	const unsigned char *base_sha1;
-+	const unsigned char *base_sha1, *base_tree_sha1;
- 	int result = 0;
- 
- 	assert(o->local_ref && o->remote_ref);
-+	assert(!strcmp(o->local_ref, local_tree->ref));
- 	hashclr(result_sha1);
- 
- 	trace_printf("notes_merge(o->local_ref = %s, o->remote_ref = %s)\n",
-@@ -107,14 +414,17 @@ int notes_merge(struct notes_merge_options *o,
- 	bases = get_merge_bases(local, remote, 1);
- 	if (!bases) {
- 		base_sha1 = null_sha1;
-+		base_tree_sha1 = (unsigned char *)EMPTY_TREE_SHA1_BIN;
- 		OUTPUT(o, 4, "No merge base found; doing history-less merge");
- 	} else if (!bases->next) {
- 		base_sha1 = bases->item->object.sha1;
-+		base_tree_sha1 = bases->item->tree->object.sha1;
- 		OUTPUT(o, 4, "One merge base found (%.7s)",
- 		       sha1_to_hex(base_sha1));
- 	} else {
- 		/* TODO: How to handle multiple merge-bases? */
- 		base_sha1 = bases->item->object.sha1;
-+		base_tree_sha1 = bases->item->tree->object.sha1;
- 		OUTPUT(o, 3, "Multiple merge bases found. Using the first "
- 		       "(%.7s)", sha1_to_hex(base_sha1));
- 	}
-@@ -136,8 +446,17 @@ int notes_merge(struct notes_merge_options *o,
- 		goto found_result;
- 	}
- 
--	/* TODO: */
--	result = error("notes_merge() cannot yet handle real merges.");
-+	result = merge_from_diffs(o, base_tree_sha1, local->tree->object.sha1,
-+				  remote->tree->object.sha1, local_tree);
-+
-+	if (result > 0) { /* successful non-trivial merge */
-+		/* Commit result */
-+		struct commit_list *parents = NULL;
-+		commit_list_insert(remote, &parents); /* LIFO order */
-+		commit_list_insert(local, &parents);
-+		create_notes_commit(local_tree, parents, o->commit_msg,
-+				    result_sha1);
-+	}
- 
- found_result:
- 	free_commit_list(bases);
 diff --git a/notes-merge.h b/notes-merge.h
-index 49e1b3a..577cfb3 100644
+index 55ef3d9..aa75693 100644
 --- a/notes-merge.h
 +++ b/notes-merge.h
-@@ -9,6 +9,7 @@ enum notes_merge_verbosity {
- struct notes_merge_options {
- 	const char *local_ref;
- 	const char *remote_ref;
-+	const char *commit_msg;
- 	int verbosity;
- };
- 
-@@ -31,13 +32,20 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
- /*
-  * Merge notes from o->remote_ref into o->local_ref
-  *
-+ * The given notes_tree 'local_tree' must be the notes_tree referenced by the
-+ * o->local_ref. This is the notes_tree in which the object-level merge is
-+ * performed.
-+ *
-  * The commits given by the two refs are merged, producing one of the following
-  * outcomes:
-  *
-  * 1. The merge trivially results in an existing commit (e.g. fast-forward or
-- *    already-up-to-date). The SHA1 of the result is written into 'result_sha1'
-- *    and 0 is returned.
-- * 2. The merge fails. result_sha1 is set to null_sha1, and non-zero returned.
-+ *    already-up-to-date). 'local_tree' is untouched, the SHA1 of the result
-+ *    is written into 'result_sha1' and 0 is returned.
-+ * 2. The merge successfully completes, producing a merge commit. local_tree
-+ *    contains the updated notes tree, the SHA1 of the resulting commit is
-+ *    written into 'result_sha1', and 1 is returned.
-+ * 3. The merge fails. result_sha1 is set to null_sha1, and -1 is returned.
-  *
-  * Both o->local_ref and o->remote_ref must be given (non-NULL), but either ref
-  * (although not both) may refer to a non-existing notes ref, in which case
-@@ -45,6 +53,7 @@ void create_notes_commit(struct notes_tree *t, struct commit_list *parents,
-  * trivially results in what the other ref points to.
-  */
- int notes_merge(struct notes_merge_options *o,
-+		struct notes_tree *local_tree,
+@@ -71,4 +71,27 @@ int notes_merge(struct notes_merge_options *o,
+ 		struct notes_tree *local_tree,
  		unsigned char *result_sha1);
- 
+=20
++/*
++ * Finalize conflict resolution from an earlier notes_merge()
++ *
++ * The given notes tree 'partial_tree' must be the notes_tree correspo=
+nding to
++ * the given 'partial_commit', the partial result commit created by a =
+previous
++ * call to notes_merge().
++ *
++ * This function will add the (now resolved) notes in .git/NOTES_MERGE=
+_WORKTREE
++ * to 'partial_tree', and create a final notes merge commit, the SHA1 =
+of which
++ * will be stored in 'result_sha1'.
++ */
++int notes_merge_commit(struct notes_merge_options *o,
++		       struct notes_tree *partial_tree,
++		       struct commit *partial_commit,
++		       unsigned char *result_sha1);
++
++/*
++ * Abort conflict resolution from an earlier notes_merge()
++ *
++ * Removes the notes merge worktree in .git/NOTES_MERGE_WORKTREE.
++ */
++int notes_merge_abort(struct notes_merge_options *o);
++
  #endif
-diff --git a/t/t3308-notes-merge.sh b/t/t3308-notes-merge.sh
-index 9acb684..24d82b4 100755
---- a/t/t3308-notes-merge.sh
-+++ b/t/t3308-notes-merge.sh
-@@ -177,4 +177,192 @@ test_expect_success 'merge changed (y) into original (x) => Fast-forward' '
- 	test "$(git rev-parse refs/notes/x)" = "$(git rev-parse refs/notes/y)"
+diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merg=
+e-manual-resolve.sh
+index eadb6b7..0ec315a 100755
+--- a/t/t3310-notes-merge-manual-resolve.sh
++++ b/t/t3310-notes-merge-manual-resolve.sh
+@@ -171,6 +171,7 @@ cp expect_notes_y expect_notes_m
+ cp expect_log_y expect_log_m
+=20
+ git rev-parse refs/notes/y > pre_merge_y
++git rev-parse refs/notes/z > pre_merge_z
+=20
+ test_expect_success 'merge z into m (=3D=3D y) with default ("manual")=
+ resolver =3D> Conflicting 3-way merge' '
+ 	git update-ref refs/notes/m refs/notes/y &&
+@@ -289,4 +290,179 @@ test_expect_success 'can do merge without conflic=
+ts even if previous merge is un
+ 	verify_notes y
  '
- 
-+test_expect_success 'merge empty notes ref (z => y)' '
-+	# Prepare empty (but valid) notes ref (z)
-+	git config core.notesRef refs/notes/z &&
-+	git notes add -m "foo" &&
-+	git notes remove &&
-+	git notes >output_notes_z &&
-+	test_cmp /dev/null output_notes_z &&
-+	# Do the merge (z => y)
-+	git config core.notesRef refs/notes/y &&
-+	git notes merge z &&
-+	verify_notes y &&
-+	# y should no longer point to the same notes commit as x
-+	test "$(git rev-parse refs/notes/x)" != "$(git rev-parse refs/notes/y)"
-+'
-+
-+cat <<EOF | sort >expect_notes_y
-+0f2efbd00262f2fd41dfae33df8765618eeacd99 $commit_sha5
-+dec2502dac3ea161543f71930044deff93fa945c $commit_sha4
-+4069cdb399fd45463ec6eef8e051a16a03592d91 $commit_sha3
-+d000d30e6ddcfce3a8122c403226a2ce2fd04d9d $commit_sha2
-+43add6bd0c8c0bc871ac7991e0f5573cfba27804 $commit_sha1
+=20
++cat <<EOF | sort >expect_notes_m
++021faa20e931fb48986ffc6282b4bb05553ac946 $commit_sha4
++5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
++283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
++0a59e787e6d688aa6309e56e8c1b89431a0fc1c1 $commit_sha1
 +EOF
 +
-+cat >expect_log_y <<EOF
++cat >expect_log_m <<EOF
 +$commit_sha5 5th
-+Notes on 5th commit
 +
 +$commit_sha4 4th
-+New notes on 4th commit
++y and z notes on 4th commit
 +
 +$commit_sha3 3rd
-+Notes on 3rd commit
-+
-+More notes on 3rd commit
++y notes on 3rd commit
 +
 +$commit_sha2 2nd
-+New notes on 2nd commit
++z notes on 2nd commit
 +
 +$commit_sha1 1st
-+Notes on 1st commit
-+
-+More notes on 1st commit
++y and z notes on 1st commit
 +
 +EOF
 +
-+test_expect_success 'change notes on other notes ref (y)' '
-+	# Append to 1st commit notes
-+	git notes append -m "More notes on 1st commit" 1st &&
-+	# Add new notes to 2nd commit
-+	git notes add -m "New notes on 2nd commit" 2nd &&
-+	verify_notes y
-+'
-+
-+cat <<EOF | sort >expect_notes_x
-+0f2efbd00262f2fd41dfae33df8765618eeacd99 $commit_sha5
-+1f257a3a90328557c452f0817d6cc50c89d315d4 $commit_sha4
-+daa55ffad6cb99bf64226532147ffcaf5ce8bdd1 $commit_sha1
++test_expect_success 'finalize conflicting merge (z =3D> m)' '
++	# Resolve conflicts and finalize merge
++	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha1 <<EOF &&
++y and z notes on 1st commit
 +EOF
-+
-+cat >expect_log_x <<EOF
-+$commit_sha5 5th
-+Notes on 5th commit
-+
-+$commit_sha4 4th
-+New notes on 4th commit
-+
-+More notes on 4th commit
-+
-+$commit_sha3 3rd
-+
-+$commit_sha2 2nd
-+
-+$commit_sha1 1st
-+Notes on 1st commit
-+
++	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha4 <<EOF &&
++y and z notes on 4th commit
 +EOF
-+
-+test_expect_success 'change notes on notes ref (x)' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes remove 3rd &&
-+	git notes append -m "More notes on 4th commit" 4th &&
-+	verify_notes x
-+'
-+
-+cat <<EOF | sort >expect_notes_x
-+0f2efbd00262f2fd41dfae33df8765618eeacd99 $commit_sha5
-+1f257a3a90328557c452f0817d6cc50c89d315d4 $commit_sha4
-+d000d30e6ddcfce3a8122c403226a2ce2fd04d9d $commit_sha2
-+43add6bd0c8c0bc871ac7991e0f5573cfba27804 $commit_sha1
-+EOF
-+
-+cat >expect_log_x <<EOF
-+$commit_sha5 5th
-+Notes on 5th commit
-+
-+$commit_sha4 4th
-+New notes on 4th commit
-+
-+More notes on 4th commit
-+
-+$commit_sha3 3rd
-+
-+$commit_sha2 2nd
-+New notes on 2nd commit
-+
-+$commit_sha1 1st
-+Notes on 1st commit
-+
-+More notes on 1st commit
-+
-+EOF
-+
-+test_expect_success 'merge y into x => Non-conflicting 3-way merge' '
-+	git notes merge y &&
++	git notes merge --commit &&
++	# No .git/NOTES_MERGE_* files left
++	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
++	test_cmp /dev/null output &&
++	# Merge commit has pre-merge y and pre-merge z as parents
++	test "$(git rev-parse refs/notes/m^1)" =3D "$(cat pre_merge_y)" &&
++	test "$(git rev-parse refs/notes/m^2)" =3D "$(cat pre_merge_z)" &&
++	# Merge commit mentions the notes refs merged
++	git log -1 --format=3D%B refs/notes/m > merge_commit_msg &&
++	grep -q refs/notes/m merge_commit_msg &&
++	grep -q refs/notes/z merge_commit_msg &&
++	# Verify contents of merge result
++	verify_notes m &&
++	# Verify that other notes refs has not changed (w, x, y and z)
++	verify_notes w &&
 +	verify_notes x &&
-+	verify_notes y
-+'
-+
-+cat <<EOF | sort >expect_notes_w
-+05a4927951bcef347f51486575b878b2b60137f2 $commit_sha3
-+d000d30e6ddcfce3a8122c403226a2ce2fd04d9d $commit_sha2
-+EOF
-+
-+cat >expect_log_w <<EOF
-+$commit_sha5 5th
-+
-+$commit_sha4 4th
-+
-+$commit_sha3 3rd
-+New notes on 3rd commit
-+
-+$commit_sha2 2nd
-+New notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'create notes on new, separate notes ref (w)' '
-+	git config core.notesRef refs/notes/w &&
-+	# Add same note as refs/notes/y on 2nd commit
-+	git notes add -m "New notes on 2nd commit" 2nd &&
-+	# Add new note on 3rd commit (non-conflicting)
-+	git notes add -m "New notes on 3rd commit" 3rd &&
-+	# Verify state of notes on new, separate notes ref (w)
-+	verify_notes w
-+'
-+
-+cat <<EOF | sort >expect_notes_x
-+0f2efbd00262f2fd41dfae33df8765618eeacd99 $commit_sha5
-+1f257a3a90328557c452f0817d6cc50c89d315d4 $commit_sha4
-+05a4927951bcef347f51486575b878b2b60137f2 $commit_sha3
-+d000d30e6ddcfce3a8122c403226a2ce2fd04d9d $commit_sha2
-+43add6bd0c8c0bc871ac7991e0f5573cfba27804 $commit_sha1
-+EOF
-+
-+cat >expect_log_x <<EOF
-+$commit_sha5 5th
-+Notes on 5th commit
-+
-+$commit_sha4 4th
-+New notes on 4th commit
-+
-+More notes on 4th commit
-+
-+$commit_sha3 3rd
-+New notes on 3rd commit
-+
-+$commit_sha2 2nd
-+New notes on 2nd commit
-+
-+$commit_sha1 1st
-+Notes on 1st commit
-+
-+More notes on 1st commit
-+
-+EOF
-+
-+test_expect_success 'merge w into x => Non-conflicting history-less merge' '
-+	git config core.notesRef refs/notes/x &&
-+	git notes merge w &&
-+	# Verify new state of notes on other notes ref (x)
-+	verify_notes x &&
-+	# Also verify that nothing changed on other notes refs (y and w)
 +	verify_notes y &&
-+	verify_notes w
++	verify_notes z
++'
++
++cat >expect_conflict_$commit_sha4 <<EOF
++<<<<<<< refs/notes/m
++y notes on 4th commit
++=3D=3D=3D=3D=3D=3D=3D
++z notes on 4th commit
++
++More z notes on 4th commit
++>>>>>>> refs/notes/z
++EOF
++
++cp expect_notes_y expect_notes_m
++cp expect_log_y expect_log_m
++
++git rev-parse refs/notes/y > pre_merge_y
++git rev-parse refs/notes/z > pre_merge_z
++
++test_expect_success 'redo merge of z into m (=3D=3D y) with default ("=
+manual") resolver =3D> Conflicting 3-way merge' '
++	git update-ref refs/notes/m refs/notes/y &&
++	git config core.notesRef refs/notes/m &&
++	test_must_fail git notes merge z >output &&
++	# Output should point to where to resolve conflicts
++	grep -q "\\.git/NOTES_MERGE_WORKTREE" output &&
++	# Inspect merge conflicts
++	ls .git/NOTES_MERGE_WORKTREE >output_conflicts &&
++	test_cmp expect_conflicts output_conflicts &&
++	( for f in $(cat expect_conflicts); do
++		test_cmp "expect_conflict_$f" ".git/NOTES_MERGE_WORKTREE/$f" ||
++		exit 1
++	done ) &&
++	# Verify that current notes tree (pre-merge) has not changed (m =3D=3D=
+ y)
++	verify_notes y &&
++	verify_notes m &&
++	test "$(git rev-parse refs/notes/m)" =3D "$(cat pre_merge_y)"
++'
++
++test_expect_success 'abort notes merge' '
++	git notes merge --abort &&
++	# No .git/NOTES_MERGE_* files left
++	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
++	test_cmp /dev/null output &&
++	# m has not moved (still =3D=3D y)
++	test "$(git rev-parse refs/notes/m)" =3D "$(cat pre_merge_y)"
++	# Verify that other notes refs has not changed (w, x, y and z)
++	verify_notes w &&
++	verify_notes x &&
++	verify_notes y &&
++	verify_notes z
++'
++
++git rev-parse refs/notes/y > pre_merge_y
++git rev-parse refs/notes/z > pre_merge_z
++
++test_expect_success 'redo merge of z into m (=3D=3D y) with default ("=
+manual") resolver =3D> Conflicting 3-way merge' '
++	test_must_fail git notes merge z >output &&
++	# Output should point to where to resolve conflicts
++	grep -q "\\.git/NOTES_MERGE_WORKTREE" output &&
++	# Inspect merge conflicts
++	ls .git/NOTES_MERGE_WORKTREE >output_conflicts &&
++	test_cmp expect_conflicts output_conflicts &&
++	( for f in $(cat expect_conflicts); do
++		test_cmp "expect_conflict_$f" ".git/NOTES_MERGE_WORKTREE/$f" ||
++		exit 1
++	done ) &&
++	# Verify that current notes tree (pre-merge) has not changed (m =3D=3D=
+ y)
++	verify_notes y &&
++	verify_notes m &&
++	test "$(git rev-parse refs/notes/m)" =3D "$(cat pre_merge_y)"
++'
++
++cat <<EOF | sort >expect_notes_m
++304dfb4325cf243025b9957486eb605a9b51c199 $commit_sha5
++283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
++0a59e787e6d688aa6309e56e8c1b89431a0fc1c1 $commit_sha1
++EOF
++
++cat >expect_log_m <<EOF
++$commit_sha5 5th
++new note on 5th commit
++
++$commit_sha4 4th
++
++$commit_sha3 3rd
++
++$commit_sha2 2nd
++z notes on 2nd commit
++
++$commit_sha1 1st
++y and z notes on 1st commit
++
++EOF
++
++test_expect_success 'add + remove notes in finalized merge (z =3D> m)'=
+ '
++	# Resolve one conflict
++	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha1 <<EOF &&
++y and z notes on 1st commit
++EOF
++	# Remove another conflict
++	rm .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
++	# Remove a D/F conflict
++	rm .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
++	# Add a new note
++	echo "new note on 5th commit" > .git/NOTES_MERGE_WORKTREE/$commit_sha=
+5 &&
++	# Finalize merge
++	git notes merge --commit &&
++	# No .git/NOTES_MERGE_* files left
++	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
++	test_cmp /dev/null output &&
++	# Merge commit has pre-merge y and pre-merge z as parents
++	test "$(git rev-parse refs/notes/m^1)" =3D "$(cat pre_merge_y)" &&
++	test "$(git rev-parse refs/notes/m^2)" =3D "$(cat pre_merge_z)" &&
++	# Merge commit mentions the notes refs merged
++	git log -1 --format=3D%B refs/notes/m > merge_commit_msg &&
++	grep -q refs/notes/m merge_commit_msg &&
++	grep -q refs/notes/z merge_commit_msg &&
++	# Verify contents of merge result
++	verify_notes m &&
++	# Verify that other notes refs has not changed (w, x, y and z)
++	verify_notes w &&
++	verify_notes x &&
++	verify_notes y &&
++	verify_notes z
 +'
 +
  test_done
--- 
+--=20
 1.7.3.98.g5ad7d9
