@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 21/23] Provide 'git notes get-ref' to easily retrieve current
- notes ref
-Date: Mon, 25 Oct 2010 02:08:51 +0200
-Message-ID: <1287965333-5099-22-git-send-email-johan@herland.net>
+Subject: [PATCHv5 06/23] notes.h/c: Propagate combine_notes_fn return value to
+ add_note() and beyond
+Date: Mon, 25 Oct 2010 02:08:36 +0200
+Message-ID: <1287965333-5099-7-git-send-email-johan@herland.net>
 References: <1287965333-5099-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -10,161 +10,306 @@ Content-Transfer-Encoding: 7BIT
 Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
 	avarab@gmail.com, gitster@pobox.com, srabbelier@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 25 02:10:29 2010
+X-From: git-owner@vger.kernel.org Mon Oct 25 02:11:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAAdp-0000ju-4o
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:10:21 +0200
+	id 1PAAev-0001AX-ES
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:11:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752056Ab0JYAJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 20:09:41 -0400
+	id S1752087Ab0JYAKa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 20:10:30 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:59867 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751988Ab0JYAJ3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 20:09:29 -0400
+	id S1751752Ab0JYAJU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 20:09:20 -0400
 Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
  by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAT00520KFNGG50@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:23 +0200 (MEST)
+ with ESMTP id <0LAT005ZQKFFGG40@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:15 +0200 (MEST)
 Received: from get-mta-scan01.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id AEFA9179913F_CC4CAB3B	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:23 +0000 (GMT)
+ with SMTP id B660A17990AE_CC4CAABB	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:15 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 7D782179677F_CC4CAB3F	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:22 +0000 (GMT)
+ with ESMTP id 68E771796766_CC4CAABF	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:14 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAT004SRKFAVB20@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:18 +0200 (MEST)
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:12 +0200 (MEST)
 X-Mailer: git-send-email 1.7.3.98.g5ad7d9
 In-reply-to: <1287965333-5099-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159917>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159918>
 
-Script may use 'git notes get-ref' to easily retrieve the current notes ref.
+The combine_notes_fn functions uses a non-zero return value to indicate
+failure. However, this return value was converted to a call to die()
+in note_tree_insert().
 
-Suggested-by: Jonathan Nieder <jrnieder@gmail.com>
+Instead, propagate this return value out to add_note(), and return it
+from there to enable the caller to handle errors appropriately.
+
+Existing add_note() callers are updated to die() upon failure, thus
+preserving the current behaviour. The only exceptions are copy_note()
+and notes_cache_put() where we are able to propagate the add_note()
+return value instead.
+
+This patch has been improved by the following contributions:
+- Jonathan Nieder: Future-proof by always checking add_note() return value
+- Jonathan Nieder: Improve clarity of final if-condition in note_tree_insert()
+
+Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-notes.txt |    5 +++++
- builtin/notes.c             |   23 +++++++++++++++++++++++
- t/t3301-notes.sh            |   19 +++++++++++++++++++
- 3 files changed, 47 insertions(+), 0 deletions(-)
+ builtin/notes.c |   11 ++++++-----
+ notes-cache.c   |    3 +--
+ notes.c         |   55 ++++++++++++++++++++++++++++---------------------------
+ notes.h         |   11 ++++++++---
+ 4 files changed, 43 insertions(+), 37 deletions(-)
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index 1de1417..296f314 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -19,6 +19,7 @@ SYNOPSIS
- 'git notes' merge --abort [-v | -q]
- 'git notes' remove [<object>]
- 'git notes' prune [-n | -v]
-+'git notes' get-ref
- 
- 
- DESCRIPTION
-@@ -109,6 +110,10 @@ remove::
- prune::
- 	Remove all notes for non-existing/unreachable objects.
- 
-+get-ref::
-+	Print the current notes ref. This provides an easy way to
-+	retrieve the current notes ref (e.g. from scripts).
-+
- OPTIONS
- -------
- -f::
 diff --git a/builtin/notes.c b/builtin/notes.c
-index 79783a5..ef52ffd 100644
+index fbc347c..35f6eb6 100644
 --- a/builtin/notes.c
 +++ b/builtin/notes.c
-@@ -31,6 +31,7 @@ static const char * const git_notes_usage[] = {
- 	"git notes merge --abort [-v | -q]",
- 	"git notes [--ref <notes_ref>] remove [<object>]",
- 	"git notes [--ref <notes_ref>] prune [-n | -v]",
-+	"git notes [--ref <notes_ref>] get-ref",
- 	NULL
- };
+@@ -573,8 +573,8 @@ static int add(int argc, const char **argv, const char *prefix)
  
-@@ -82,6 +83,11 @@ static const char * const git_notes_prune_usage[] = {
- 	NULL
- };
+ 	if (is_null_sha1(new_note))
+ 		remove_note(t, object);
+-	else
+-		add_note(t, object, new_note, combine_notes_overwrite);
++	else if (add_note(t, object, new_note, combine_notes_overwrite))
++		die("confused: combine_notes_overwrite failed");
  
-+static const char * const git_notes_get_ref_usage[] = {
-+	"git notes get-ref",
-+	NULL
-+};
-+
- static const char note_template[] =
- 	"\n"
- 	"#\n"
-@@ -1002,6 +1008,21 @@ static int prune(int argc, const char **argv, const char *prefix)
- 	return 0;
+ 	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
+ 		 is_null_sha1(new_note) ? "removed" : "added", "add");
+@@ -653,7 +653,8 @@ static int copy(int argc, const char **argv, const char *prefix)
+ 		goto out;
+ 	}
+ 
+-	add_note(t, object, from_note, combine_notes_overwrite);
++	if (add_note(t, object, from_note, combine_notes_overwrite))
++		die("confused: combine_notes_overwrite failed");
+ 	commit_notes(t, "Notes added by 'git notes copy'");
+ out:
+ 	free_notes(t);
+@@ -712,8 +713,8 @@ static int append_edit(int argc, const char **argv, const char *prefix)
+ 
+ 	if (is_null_sha1(new_note))
+ 		remove_note(t, object);
+-	else
+-		add_note(t, object, new_note, combine_notes_overwrite);
++	else if (add_note(t, object, new_note, combine_notes_overwrite))
++		die("confused: combine_notes_overwrite failed");
+ 
+ 	snprintf(logmsg, sizeof(logmsg), "Notes %s by 'git notes %s'",
+ 		 is_null_sha1(new_note) ? "removed" : "added", argv[0]);
+diff --git a/notes-cache.c b/notes-cache.c
+index dee6d62..4c8984e 100644
+--- a/notes-cache.c
++++ b/notes-cache.c
+@@ -89,6 +89,5 @@ int notes_cache_put(struct notes_cache *c, unsigned char key_sha1[20],
+ 
+ 	if (write_sha1_file(data, size, "blob", value_sha1) < 0)
+ 		return -1;
+-	add_note(&c->tree, key_sha1, value_sha1, NULL);
+-	return 0;
++	return add_note(&c->tree, key_sha1, value_sha1, NULL);
+ }
+diff --git a/notes.c b/notes.c
+index 0c13a36..1674391 100644
+--- a/notes.c
++++ b/notes.c
+@@ -235,13 +235,14 @@ static void note_tree_remove(struct notes_tree *t, struct int_node *tree,
+  * - Else, create a new int_node, holding both the node-at-location and the
+  *   node-to-be-inserted, and store the new int_node into the location.
+  */
+-static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
++static int note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 		unsigned char n, struct leaf_node *entry, unsigned char type,
+ 		combine_notes_fn combine_notes)
+ {
+ 	struct int_node *new_node;
+ 	struct leaf_node *l;
+ 	void **p = note_tree_search(t, &tree, &n, entry->key_sha1);
++	int ret = 0;
+ 
+ 	assert(GET_PTR_TYPE(entry) == 0); /* no type bits set */
+ 	l = (struct leaf_node *) CLR_PTR_TYPE(*p);
+@@ -252,26 +253,21 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 			free(entry);
+ 		else
+ 			*p = SET_PTR_TYPE(entry, type);
+-		return;
++		return 0;
+ 	case PTR_TYPE_NOTE:
+ 		switch (type) {
+ 		case PTR_TYPE_NOTE:
+ 			if (!hashcmp(l->key_sha1, entry->key_sha1)) {
+ 				/* skip concatenation if l == entry */
+ 				if (!hashcmp(l->val_sha1, entry->val_sha1))
+-					return;
++					return 0;
+ 
+-				if (combine_notes(l->val_sha1, entry->val_sha1))
+-					die("failed to combine notes %s and %s"
+-					    " for object %s",
+-					    sha1_to_hex(l->val_sha1),
+-					    sha1_to_hex(entry->val_sha1),
+-					    sha1_to_hex(l->key_sha1));
+-
+-				if (is_null_sha1(l->val_sha1))
++				ret = combine_notes(l->val_sha1,
++						    entry->val_sha1);
++				if (!ret && is_null_sha1(l->val_sha1))
+ 					note_tree_remove(t, tree, n, entry);
+ 				free(entry);
+-				return;
++				return ret;
+ 			}
+ 			break;
+ 		case PTR_TYPE_SUBTREE:
+@@ -280,7 +276,7 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 				/* unpack 'entry' */
+ 				load_subtree(t, entry, tree, n);
+ 				free(entry);
+-				return;
++				return 0;
+ 			}
+ 			break;
+ 		}
+@@ -291,9 +287,8 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 			*p = NULL;
+ 			load_subtree(t, l, tree, n);
+ 			free(l);
+-			note_tree_insert(t, tree, n, entry, type,
+-					 combine_notes);
+-			return;
++			return note_tree_insert(t, tree, n, entry, type,
++						combine_notes);
+ 		}
+ 		break;
+ 	}
+@@ -303,13 +298,15 @@ static void note_tree_insert(struct notes_tree *t, struct int_node *tree,
+ 	       GET_PTR_TYPE(*p) == PTR_TYPE_SUBTREE);
+ 	if (is_null_sha1(entry->val_sha1)) { /* skip insertion of empty note */
+ 		free(entry);
+-		return;
++		return 0;
+ 	}
+ 	new_node = (struct int_node *) xcalloc(sizeof(struct int_node), 1);
+-	note_tree_insert(t, new_node, n + 1, l, GET_PTR_TYPE(*p),
+-			 combine_notes);
++	ret = note_tree_insert(t, new_node, n + 1, l, GET_PTR_TYPE(*p),
++			       combine_notes);
++	if (ret)
++		return ret;
+ 	*p = SET_PTR_TYPE(new_node, PTR_TYPE_INTERNAL);
+-	note_tree_insert(t, new_node, n + 1, entry, type, combine_notes);
++	return note_tree_insert(t, new_node, n + 1, entry, type, combine_notes);
  }
  
-+static int get_ref(int argc, const char **argv, const char *prefix)
-+{
-+	struct option options[] = { OPT_END() };
-+	argc = parse_options(argc, argv, prefix, options,
-+			     git_notes_get_ref_usage, 0);
-+
-+	if (argc) {
-+		error("too many parameters");
-+		usage_with_options(git_notes_get_ref_usage, options);
-+	}
-+
-+	puts(default_notes_ref());
-+	return 0;
-+}
-+
- int cmd_notes(int argc, const char **argv, const char *prefix)
- {
- 	int result;
-@@ -1040,6 +1061,8 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
- 		result = remove_cmd(argc, argv, prefix);
- 	else if (!strcmp(argv[0], "prune"))
- 		result = prune(argc, argv, prefix);
-+	else if (!strcmp(argv[0], "get-ref"))
-+		result = get_ref(argc, argv, prefix);
- 	else {
- 		result = error("Unknown subcommand: %s", argv[0]);
- 		usage_with_options(git_notes_usage, options);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index 4bf4e52..f5b72c7 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -1058,4 +1058,23 @@ test_expect_success 'git notes copy diagnoses too many or too few parameters' '
- 	test_must_fail git notes copy one two three
- '
+ /* Free the entire notes data contained in the given tree */
+@@ -452,8 +449,12 @@ static void load_subtree(struct notes_tree *t, struct leaf_node *subtree,
+ 				l->key_sha1[19] = (unsigned char) len;
+ 				type = PTR_TYPE_SUBTREE;
+ 			}
+-			note_tree_insert(t, node, n, l, type,
+-					 combine_notes_concatenate);
++			if (note_tree_insert(t, node, n, l, type,
++					     combine_notes_concatenate))
++				die("Failed to load %s %s into notes tree "
++				    "from %s",
++				    type == PTR_TYPE_NOTE ? "note" : "subtree",
++				    sha1_to_hex(l->key_sha1), t->ref);
+ 		}
+ 		continue;
  
-+test_expect_success 'git notes get-ref (no overrides)' '
-+	git config --unset core.notesRef &&
-+	unset GIT_NOTES_REF &&
-+	test "$(git notes get-ref)" = "refs/notes/commits"
-+'
-+
-+test_expect_success 'git notes get-ref (core.notesRef)' '
-+	git config core.notesRef refs/notes/foo &&
-+	test "$(git notes get-ref)" = "refs/notes/foo"
-+'
-+
-+test_expect_success 'git notes get-ref (GIT_NOTES_REF)' '
-+	test "$(GIT_NOTES_REF=refs/notes/bar git notes get-ref)" = "refs/notes/bar"
-+'
-+
-+test_expect_success 'git notes get-ref (--ref)' '
-+	test "$(GIT_NOTES_REF=refs/notes/bar git notes --ref=baz get-ref)" = "refs/notes/baz"
-+'
-+
- test_done
+@@ -1014,7 +1015,7 @@ void init_display_notes(struct display_notes_opt *opt)
+ 	string_list_clear(&display_notes_refs, 0);
+ }
+ 
+-void add_note(struct notes_tree *t, const unsigned char *object_sha1,
++int add_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 		const unsigned char *note_sha1, combine_notes_fn combine_notes)
+ {
+ 	struct leaf_node *l;
+@@ -1028,7 +1029,7 @@ void add_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 	l = (struct leaf_node *) xmalloc(sizeof(struct leaf_node));
+ 	hashcpy(l->key_sha1, object_sha1);
+ 	hashcpy(l->val_sha1, note_sha1);
+-	note_tree_insert(t, t->root, 0, l, PTR_TYPE_NOTE, combine_notes);
++	return note_tree_insert(t, t->root, 0, l, PTR_TYPE_NOTE, combine_notes);
+ }
+ 
+ void remove_note(struct notes_tree *t, const unsigned char *object_sha1)
+@@ -1204,7 +1205,7 @@ void format_display_notes(const unsigned char *object_sha1,
+ 
+ int copy_note(struct notes_tree *t,
+ 	      const unsigned char *from_obj, const unsigned char *to_obj,
+-	      int force, combine_notes_fn combine_fn)
++	      int force, combine_notes_fn combine_notes)
+ {
+ 	const unsigned char *note = get_note(t, from_obj);
+ 	const unsigned char *existing_note = get_note(t, to_obj);
+@@ -1213,9 +1214,9 @@ int copy_note(struct notes_tree *t,
+ 		return 1;
+ 
+ 	if (note)
+-		add_note(t, to_obj, note, combine_fn);
++		return add_note(t, to_obj, note, combine_notes);
+ 	else if (existing_note)
+-		add_note(t, to_obj, null_sha1, combine_fn);
++		return add_note(t, to_obj, null_sha1, combine_notes);
+ 
+ 	return 0;
+ }
+diff --git a/notes.h b/notes.h
+index 79ea797..b372575 100644
+--- a/notes.h
++++ b/notes.h
+@@ -104,11 +104,13 @@ void init_notes(struct notes_tree *t, const char *notes_ref,
+  * note with the empty note (using the given combine_notes function) results
+  * in a new/changed note.
+  *
++ * Returns zero on success; non-zero means combine_notes failed.
++ *
+  * IMPORTANT: The changes made by add_note() to the given notes_tree structure
+  * are not persistent until a subsequent call to write_notes_tree() returns
+  * zero.
+  */
+-void add_note(struct notes_tree *t, const unsigned char *object_sha1,
++int add_note(struct notes_tree *t, const unsigned char *object_sha1,
+ 		const unsigned char *note_sha1, combine_notes_fn combine_notes);
+ 
+ /*
+@@ -131,7 +133,10 @@ const unsigned char *get_note(struct notes_tree *t,
+ /*
+  * Copy a note from one object to another in the given notes_tree.
+  *
+- * Fails if the to_obj already has a note unless 'force' is true.
++ * Returns 1 if the to_obj already has a note and 'force' is false. Otherwise,
++ * returns non-zero if 'force' is true, but the given combine_notes function
++ * failed to combine from_obj's note with to_obj's existing note.
++ * Returns zero on success.
+  *
+  * IMPORTANT: The changes made by copy_note() to the given notes_tree structure
+  * are not persistent until a subsequent call to write_notes_tree() returns
+@@ -139,7 +144,7 @@ const unsigned char *get_note(struct notes_tree *t,
+  */
+ int copy_note(struct notes_tree *t,
+ 	      const unsigned char *from_obj, const unsigned char *to_obj,
+-	      int force, combine_notes_fn combine_fn);
++	      int force, combine_notes_fn combine_notes);
+ 
+ /*
+  * Flags controlling behaviour of for_each_note()
 -- 
 1.7.3.98.g5ad7d9
