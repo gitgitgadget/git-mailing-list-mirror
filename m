@@ -1,79 +1,84 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: fsck errors on newly cloned, newly imported git repository
-Date: Mon, 25 Oct 2010 06:58:02 -0400
-Message-ID: <1288004282.819.26.camel@drew-northup.unet.maine.edu>
-References: <AANLkTimxXXNxUOMQyDDoW9+vT9aKL5C5m+VD51jk0zL9@mail.gmail.com>
+From: Dominique Quatravaux <domq@google.com>
+Subject: Re: git rebase and merge commits
+Date: Mon, 25 Oct 2010 13:23:47 +0200
+Message-ID: <AANLkTinhi=4nUn_anUEuz=m9=E7QJsJFWNBfO2yTtnUi@mail.gmail.com>
+References: <AANLkTikroNPehcyBsueCnJ5hR0idd3cBP4m1KNccdRqL@mail.gmail.com> <20101020173201.GA10537@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Mike Herrick <mike.herrick@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 25 13:00:42 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 25 13:24:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAKnB-00020t-Ds
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 13:00:41 +0200
+	id 1PALA2-0004GQ-HX
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 13:24:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901Ab0JYLAf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 07:00:35 -0400
-Received: from basalt.its.maine.edu ([130.111.32.66]:43657 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751332Ab0JYLAf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 07:00:35 -0400
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9PAw7uf005537
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 25 Oct 2010 06:58:12 -0400
-In-Reply-To: <AANLkTimxXXNxUOMQyDDoW9+vT9aKL5C5m+VD51jk0zL9@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
-	Fuz1=2 Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: o9PAw7uf005537
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1288609177.64096@+kBVP7USwAWtVWveTLQkLg
+	id S1754794Ab0JYLYN convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Oct 2010 07:24:13 -0400
+Received: from smtp-out.google.com ([74.125.121.35]:52788 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750909Ab0JYLYM convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Oct 2010 07:24:12 -0400
+Received: from hpaq7.eem.corp.google.com (hpaq7.eem.corp.google.com [172.25.149.7])
+	by smtp-out.google.com with ESMTP id o9PBOARh004523
+	for <git@vger.kernel.org>; Mon, 25 Oct 2010 04:24:10 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1288005851; bh=HcBK0oroJGvGZG/4cJKcbLQGl/k=;
+	h=MIME-Version:In-Reply-To:References:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type:Content-Transfer-Encoding;
+	b=a1ymktIrxNEppuupdXqXl0pAKMpaR97hqONFrXmA2ZxKT3mlJBE20QIhEI9zJOhMK
+	 UUcMRyd/v9Y8SohcrlxJA==
+Received: from gxk5 (gxk5.prod.google.com [10.202.11.5])
+	by hpaq7.eem.corp.google.com with ESMTP id o9PBO9Re026849
+	for <git@vger.kernel.org>; Mon, 25 Oct 2010 04:24:09 -0700
+Received: by gxk5 with SMTP id 5so2523286gxk.26
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 04:24:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=beta;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vmZyG1uADg6GiQRSDAOgCGGmbdTzmr7kY1cTP89/MBo=;
+        b=T6JFYirdVnOUkbB0WjqgnFxYlgLzyvstIB07Q7PuANneDvUTvnj2UmhjNidhdAt786
+         cuJKcSYV42A+o3zPt5pg==
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=google.com; s=beta;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=FG0H+wBT2MaT4o/CSmi0OjrPnyUo9fUHc3gnyeDGNS99zeRa5V/ptvX4t1d0gT9Psq
+         tMPQXiiYfAmnNSK0rgTQ==
+Received: by 10.151.106.7 with SMTP id i7mr13098855ybm.145.1288005847282; Mon,
+ 25 Oct 2010 04:24:07 -0700 (PDT)
+Received: by 10.100.205.11 with HTTP; Mon, 25 Oct 2010 04:23:47 -0700 (PDT)
+In-Reply-To: <20101020173201.GA10537@burratino>
+X-System-Of-Record: true
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159944>
+
+On Wed, Oct 20, 2010 at 7:32 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Luckily, there is a roadmap for anyone interested in implementing it.=
+ =A0Maybe
+> it could be you? =A0See [1] and the surrounding thread.
+>
+> Thanks for your interest,
+> Jonathan
+>
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/148059/foc=
+us=3D148144
+>
+
+I gave it a shot last week, but this is more that I can chew on in my
+spare time. Sorry! Thanks for the information anyway.
 
 
-On Sun, 2010-10-24 at 11:54 -0400, Mike Herrick wrote:
-> This weekend we're cutting over to use git for our source code control
-> system.  I've imported about 20 years worth of previous history using
-> "git cvsimport" (takes about four hours).  I then cloned the resulting
-> repository onto five different machines (four Linux, one Solaris).
-> I've set up a cron job to do a nightly "git fsck" on each of the five
-> machines, and last night, two of the machines reported fsck errors on
-> their initial run.  
-<snip>
-
-> The errors reported on these two machines were different, but what's
-> interesting is that all of the missing blobs refer to various
-> revisions of the same file, namely our "Changes" file (which is
-> updated with each change).  It's also the largest file in our
-> repository (3.3M).  I immediately started looking at logs to see if
-> there was any indication of disk corruption and found none (no SMART
-> errors either).  Both of these machines have been stable over a
-> multi-year period of time (no unexplained crashes).  They're also
-> older Linux machines (running  2.6.5-1.358 and  2.6.1-1.65, with
-> relatively little memory: 1GB and .5GB), but with newly installed
-> version of git (1.7.3.1).  I initially used git-daemon for the clone
-> process, but even using ssh, I still see fsck errors on the resulting
-> clones on these two machines.
-
-Did you "git fsck" BEFORE you attempted to clone? Is it ONLY clones
-showing errors? Alas, no blatant evidence of disk corruption is not
-evidence of no disk corruption as well.
-
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+--=20
+=A0 Dominique Quatravaux
+=A0 +41 79 609 40 72
