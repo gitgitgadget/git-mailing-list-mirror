@@ -1,109 +1,68 @@
-From: Federico Cuello <fedux@lugmen.org.ar>
-Subject: [PATCH] Fix git-apply with -p greater than 1
-Date: Mon, 25 Oct 2010 11:11:37 -0300
-Message-ID: <1288015897-21565-1-git-send-email-fedux@lugmen.org.ar>
-References: <7v8w1qm5n2.fsf@alter.siamese.dyndns.org>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Federico Cuello <fedux@lugmen.org.ar>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 25 16:12:46 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Re[2]: git via http problem
+Date: Mon, 25 Oct 2010 22:20:05 +0800
+Message-ID: <AANLkTin95znfHbPwCs25+-2CFdf6upQpkgR1+uM+Sp9u@mail.gmail.com>
+References: <loom.20101025T123323-510@post.gmane.org>
+	<AANLkTiJ=geegYAXnHmNONw8UeocePTw2EMw4frMbQZA@mail.gmail.com>
+	<E1PAMqx-0004No-00.alekseyandni-mail-ru@f241.mail.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=KOI8-R
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?KOI8-R?B?4czFy9PFyiDlx8/Sz9c=?= <alekseyandni@mail.ru>
+X-From: git-owner@vger.kernel.org Mon Oct 25 16:20:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PANn1-0006Sp-JW
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 16:12:43 +0200
+	id 1PANuI-0001OQ-Po
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 16:20:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755760Ab0JYOMh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 10:12:37 -0400
-Received: from 64-76-18-116.static.impsat.net.ar ([64.76.18.116]:33783 "EHLO
-	mother.lugmen.org.ar" rhost-flags-OK-FAIL-OK-OK) by vger.kernel.org
-	with ESMTP id S1755409Ab0JYOMh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 10:12:37 -0400
-Received: from mail.fedux.com.ar (unknown [186.19.147.163])
-	by mother.lugmen.org.ar (Postfix) with ESMTPSA id D14EE19E66C;
-	Mon, 25 Oct 2010 11:12:34 -0300 (ART)
-Received: by mail.fedux.com.ar (Postfix, from userid 1000)
-	id D20CA100D9; Mon, 25 Oct 2010 11:12:32 -0300 (ART)
-X-Mailer: git-send-email 1.7.3.2
-In-Reply-To: <7v8w1qm5n2.fsf@alter.siamese.dyndns.org>
+	id S1755710Ab0JYOUI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 25 Oct 2010 10:20:08 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:61768 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755409Ab0JYOUH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 25 Oct 2010 10:20:07 -0400
+Received: by ewy7 with SMTP id 7so4256284ewy.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 07:20:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=n3mqwMCs1vsFm+tp1bRG9RQC12FfJYoYgZxSkr2XFlc=;
+        b=NjlEIa8kjx46dPESHdXjfd0mSpR73XNArjsIVSMKOgMusZLi2HbAtg2jpdZpG8pUeA
+         AJdTEBe2KRT7jcuBmKD0lABc/ulY3xh8qjd6jBhg6LLpnhyc4tTj0hUxcGvTqXuQlBx7
+         TOBRVsE++f5pTEvl30Aherva8/dflBg1EAo/Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=VoVAMTdOul/2jH7DBlEnf6+rRg0K7s5+aXxw1+5uLQnzVSq9APxk7STmGgO/5PxeGl
+         mlJFu59yeI4OAmelpQhntugGvaXFnNoccHf9WUCMXD1/GhSezVApvlUAYO/pSJHxLv/T
+         q0r7gJhFjHHpuNPMJTHJwwUweYoFY/IGvOSjo=
+Received: by 10.213.4.67 with SMTP id 3mr5676897ebq.79.1288016405836; Mon, 25
+ Oct 2010 07:20:05 -0700 (PDT)
+Received: by 10.213.3.78 with HTTP; Mon, 25 Oct 2010 07:20:05 -0700 (PDT)
+In-Reply-To: <E1PAMqx-0004No-00.alekseyandni-mail-ru@f241.mail.ru>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159952>
 
-Fix for rename/copy patches. Filenames don't include
-'a/' or 'b/' prefix, then use p_value minus one.
+Hi,
 
-Also add 'copy' test script.
+2010/10/25 =E1=CC=C5=CB=D3=C5=CA =E5=C7=CF=D2=CF=D7 <alekseyandni@mail.=
+ru>:
+> I'm using git-core 1:1.5.6.5-3+lenny3.2
+> I can see list of files using cadaver:
 
-Signed-off-by: Federico Cuello <fedux@lugmen.org.ar>
----
- builtin/apply.c       |    8 ++++----
- t/t4120-apply-popt.sh |   13 +++++++++++++
- 2 files changed, 17 insertions(+), 4 deletions(-)
+Probably a problem with git. Could you try updating your git installati=
+on?
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 14996f8..3197e38 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -919,28 +919,28 @@ static int gitdiff_newfile(const char *line, struct patch *patch)
- static int gitdiff_copysrc(const char *line, struct patch *patch)
- {
- 	patch->is_copy = 1;
--	patch->old_name = find_name(line, NULL, 0, 0);
-+	patch->old_name = find_name(line, NULL, p_value ? p_value - 1 : 0, 0);
- 	return 0;
- }
- 
- static int gitdiff_copydst(const char *line, struct patch *patch)
- {
- 	patch->is_copy = 1;
--	patch->new_name = find_name(line, NULL, 0, 0);
-+	patch->new_name = find_name(line, NULL, p_value ? p_value - 1 : 0, 0);
- 	return 0;
- }
- 
- static int gitdiff_renamesrc(const char *line, struct patch *patch)
- {
- 	patch->is_rename = 1;
--	patch->old_name = find_name(line, NULL, 0, 0);
-+	patch->old_name = find_name(line, NULL, p_value ? p_value - 1 : 0, 0);
- 	return 0;
- }
- 
- static int gitdiff_renamedst(const char *line, struct patch *patch)
- {
- 	patch->is_rename = 1;
--	patch->new_name = find_name(line, NULL, 0, 0);
-+	patch->new_name = find_name(line, NULL, p_value ? p_value - 1 : 0, 0);
- 	return 0;
- }
- 
-diff --git a/t/t4120-apply-popt.sh b/t/t4120-apply-popt.sh
-index 579c9e6..4ed06f0 100755
---- a/t/t4120-apply-popt.sh
-+++ b/t/t4120-apply-popt.sh
-@@ -82,4 +82,17 @@ test_expect_success 'apply (-p2) diff, rename' '
- 	test_cmp expected file2
- '
- 
-+test_expect_success 'apply (-p2) diff, copy' '
-+	cat >patch.copy <<-\EOF &&
-+	diff --git a/sub/file1 b/sub/file2
-+	similarity index 100%
-+	copy from sub/file1
-+	copy to sub/file2
-+	EOF
-+	cp file1.saved file1 &&
-+	rm -f file2 &&
-+	git apply -p2 patch.copy &&
-+	test_cmp file1 file2
-+'
-+
- test_done
--- 
-1.7.3.2
+--=20
+Cheers,
+Ray Chuan
