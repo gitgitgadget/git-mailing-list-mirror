@@ -1,75 +1,106 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 00/11] More consistant terminology ("remote-tracking branch", "not updated")
-Date: Mon, 25 Oct 2010 19:30:08 +0200
-Message-ID: <vpqsjzu5gf3.fsf@bauges.imag.fr>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH 00/11] More consistant terminology ("remote-tracking
+	branch", "not updated")
+Date: Mon, 25 Oct 2010 13:52:30 -0400
+Message-ID: <1288029150.819.78.camel@drew-northup.unet.maine.edu>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<m3fwvwkadi.fsf@localhost.localdomain>
-	<20101023191104.GM21040@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Oct 25 19:33:42 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Thore Husfeldt <thore.husfeldt@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Mon Oct 25 19:53:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAQvV-0002Vv-9j
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 19:33:41 +0200
+	id 1PAREL-0003hg-MH
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 19:53:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759225Ab0JYRda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 13:33:30 -0400
-Received: from imag.imag.fr ([129.88.30.1]:51989 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759216Ab0JYRda (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 13:33:30 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9PHU8xC022893
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 25 Oct 2010 19:30:08 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PAQs4-0007xu-9s; Mon, 25 Oct 2010 19:30:08 +0200
-In-Reply-To: <20101023191104.GM21040@burratino> (Jonathan Nieder's message of "Sat\, 23 Oct 2010 14\:11\:04 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 25 Oct 2010 19:30:09 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1759248Ab0JYRxC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 13:53:02 -0400
+Received: from beryl.its.maine.edu ([130.111.32.94]:46337 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759121Ab0JYRxA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 13:53:00 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id o9PHqZZX021788
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 25 Oct 2010 13:52:35 -0400
+In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=5 Fuz1=5
+	Fuz2=5
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: o9PHqZZX021788
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1288633955.98577@eIQGi0zypyXS6VXDUGT0Qw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159963>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Jakub Narebski wrote:
->> Matthieu Moy <Matthieu.Moy@imag.fr> writes:
->
->>> this is an attempt to be more consistant in the terminology used in Git.
->>
->> Thank you very much for your work!
->
-> Yes, seconded!  
+On Sat, 2010-10-23 at 18:31 +0200, Matthieu Moy wrote:
+> Following the discussion in
+> 
+> http://thread.gmane.org/gmane.comp.version-control.git/159287/
+> http://thread.gmane.org/gmane.comp.version-control.git/159287/focus=159288
+> 
+> this is an attempt to be more consistant in the terminology used in Git.
+> 
+> The first patch fixes git status's "changed but not updated", and the
+> rest tries to use "remote-tracking branch" consistantly. This
+> essentially changes the doc, and also does slight modifications to the
+> code. This changes error message, and maybe more controversially the
+> generated merge messages (in a separate patch in case this is too
+> controversial).
+> 
+> I've tried splitting this into systematic changes to ease review, but
+> patches should be applicable in any order (i.e. Junio: if you find
+> some of the patches good and uncontroversial, you can pick them
+> right away).
+> 
+> Patch "user-manual.txt: explain better the remote(-tracking) branch
+> terms" comes last, and adds a few sentences to make the distinction
+> between remote, remote branch, remote-tracking branches explicit.
+> Hopefully, this should avoid future users to have the same
+> difficulties as Thore ;-).
+> 
+> The last 2 patches are minor things I noticed while going through the
+> docs, but are essentially unrelated.
+> 
+> I'll be busy next week, so if anyone else wants to pick this patch
+> serie and update it according to list review, he's welcome. Otherwise,
+> it may have to wait.
+> 
+> Matthieu Moy (11):
+>   Better "Changed but not updated" message in git-status
+>   Remplace "remote tracking" with "remote-tracking"
+>   Change remote tracking to remote-tracking in non-trivial places
+>   Change "tracking branch" to "remote-tracking branch"
+>   Change "tracking branch" to "remote-tracking branch" in C code
+>   Change incorrect uses of "remote branch" meaning "remote-tracking"
+>   Change incorrect "remote branch" to "remote tracking branch" in C
+>     code
+>   Use 'remote-tracking branch' in generated merge messages
+>   user-manual.txt: explain better the remote(-tracking) branch terms
+>   git-branch.txt: mention --set-upstream as a way to change upstream
+>     configuration
+>   git-http-push.txt: fix typo (branch -> branches)
 
-Actually, I did the easy part ;-) (easy grep-able patterns, and
-uncontroversal solution).
-
-There's still a mess about the "upstream/downstream" Vs
-"remote-tracking" terminology, both in the UI (--track options here
-and there) and the doc.
-
-And I'd really like the "index/cache/stage" thing to be fixed too. I
-like "stage/staging area" best, but it seems this part does not make a
-consensus (yet?).
-
-I'm just hoping I gave the right example and someone else will now
-take care of these two ;-).
+I'm going to apply these to a branch of mine to see how they read in
+context before I come to any definite conclusions. So far I like what I
+see for the most part.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
