@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 03/23] notes.h: Make default_notes_ref() available in notes
- API
-Date: Mon, 25 Oct 2010 02:08:33 +0200
-Message-ID: <1287965333-5099-4-git-send-email-johan@herland.net>
+Subject: [PATCHv5 07/23] (trivial) t3303: Indent with tabs instead of spaces
+ for consistency
+Date: Mon, 25 Oct 2010 02:08:37 +0200
+Message-ID: <1287965333-5099-8-git-send-email-johan@herland.net>
 References: <1287965333-5099-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -16,83 +16,76 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAAcs-0000Uz-KF
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:09:22 +0200
+	id 1PAAct-0000Uz-M6
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751742Ab0JYAJR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 20:09:17 -0400
+	id S1751825Ab0JYAJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 20:09:22 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:59867 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751597Ab0JYAJP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 20:09:15 -0400
+	id S1751782Ab0JYAJU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 20:09:20 -0400
 Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
  by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAT005YWKFCGG40@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:12 +0200 (MEST)
+ with ESMTP id <0LAT005ZXKFGGG40@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:16 +0200 (MEST)
 Received: from get-mta-scan01.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 787BD17991EA_CC4CAA8B	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:12 +0000 (GMT)
+ with SMTP id 84D77179913F_CC4CAACB	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:16 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 60D371796C21_CC4CAA8F	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:11 +0000 (GMT)
+ with ESMTP id 6B6051796C56_CC4CAACF	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:15 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAT004SRKFAVB20@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:11 +0200 (MEST)
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:12 +0200 (MEST)
 X-Mailer: git-send-email 1.7.3.98.g5ad7d9
 In-reply-to: <1287965333-5099-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159900>
+
+The rest of the file uses tabs for indenting. Fix the one function
+that doesn't.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- notes.c |    2 +-
- notes.h |   14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletions(-)
+ t/t3303-notes-subtrees.sh |   18 +++++++++---------
+ 1 files changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/notes.c b/notes.c
-index bb03eb0..d71c0a3 100644
---- a/notes.c
-+++ b/notes.c
-@@ -898,7 +898,7 @@ static int notes_display_config(const char *k, const char *v, void *cb)
- 	return 0;
+diff --git a/t/t3303-notes-subtrees.sh b/t/t3303-notes-subtrees.sh
+index 75ec187..d571708 100755
+--- a/t/t3303-notes-subtrees.sh
++++ b/t/t3303-notes-subtrees.sh
+@@ -168,15 +168,15 @@ INPUT_END
  }
  
--static const char *default_notes_ref(void)
-+const char *default_notes_ref(void)
- {
- 	const char *notes_ref = NULL;
- 	if (!notes_ref)
-diff --git a/notes.h b/notes.h
-index c0288b0..20db42f 100644
---- a/notes.h
-+++ b/notes.h
-@@ -44,6 +44,20 @@ extern struct notes_tree {
- } default_notes_tree;
+ verify_concatenated_notes () {
+-    git log | grep "^    " > output &&
+-    i=$number_of_commits &&
+-    while [ $i -gt 0 ]; do
+-        echo "    commit #$i" &&
+-        echo "    first note for commit #$i" &&
+-        echo "    second note for commit #$i" &&
+-        i=$(($i-1));
+-    done > expect &&
+-    test_cmp expect output
++	git log | grep "^    " > output &&
++	i=$number_of_commits &&
++	while [ $i -gt 0 ]; do
++		echo "    commit #$i" &&
++		echo "    first note for commit #$i" &&
++		echo "    second note for commit #$i" &&
++		i=$(($i-1));
++	done > expect &&
++	test_cmp expect output
+ }
  
- /*
-+ * Return the default notes ref.
-+ *
-+ * The default notes ref is the notes ref that is used when notes_ref == NULL
-+ * is passed to init_notes().
-+ *
-+ * This the first of the following to be defined:
-+ * 1. The '--ref' option to 'git notes', if given
-+ * 2. The $GIT_NOTES_REF environment variable, if set
-+ * 3. The value of the core.notesRef config variable, if set
-+ * 4. GIT_NOTES_DEFAULT_REF (i.e. "refs/notes/commits")
-+ */
-+const char *default_notes_ref(void);
-+
-+/*
-  * Flags controlling behaviour of notes tree initialization
-  *
-  * Default behaviour is to initialize the notes tree from the tree object
+ test_expect_success 'test notes in no fanout concatenated with 2/38-fanout' 'test_concatenated_notes "s|^..|&/|" ""'
 -- 
 1.7.3.98.g5ad7d9
