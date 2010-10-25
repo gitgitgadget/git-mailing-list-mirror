@@ -1,69 +1,67 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable
- descriptions
-Date: Mon, 25 Oct 2010 11:04:05 -0400
-Message-ID: <20101025150405.GC28278@sigill.intra.peff.net>
-References: <cover.1287690696.git.trast@student.ethz.ch>
- <20101022155307.GB5554@sigill.intra.peff.net>
- <201010240324.42721.trast@student.ethz.ch>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv6 05/10] gitweb: use fullname as hash_base in heads link
+Date: Mon, 25 Oct 2010 17:07:33 +0200
+Message-ID: <AANLkTimcsjo1rH5EFZxnDOrR5pfgHamxN=z30OBSa=Xo@mail.gmail.com>
+References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1287917136-26103-6-git-send-email-giuseppe.bilotta@gmail.com> <201010251657.02802.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Oct 25 17:03:22 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Oct 25 17:08:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAOa1-0007IQ-B9
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 17:03:21 +0200
+	id 1PAOea-0001A4-FE
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 17:08:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755723Ab0JYPDQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 11:03:16 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52388 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753159Ab0JYPDP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 11:03:15 -0400
-Received: (qmail 20692 invoked by uid 111); 25 Oct 2010 15:03:14 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (74.7.61.109)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 25 Oct 2010 15:03:14 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 25 Oct 2010 11:04:05 -0400
-Content-Disposition: inline
-In-Reply-To: <201010240324.42721.trast@student.ethz.ch>
+	id S1756216Ab0JYPH4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 11:07:56 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:45033 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754671Ab0JYPHz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 11:07:55 -0400
+Received: by gyg4 with SMTP id 4so2076542gyg.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 08:07:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=h2ezx9HVPhcFKcHLKRaJNYwflxJXejmRTsB7+7D35cU=;
+        b=YQ1tE7iQb7eePZr7uaET6rfsvwsue8k8kEKINejDD6TxLaQF0OPpnU5RFZQhb9AeBJ
+         Q1AxlctFg+s2DvjBxws+6qVOYDSnPblFZYhCn6OC9VVNWgtBxWqxwvlhHSpkMMJf0l3U
+         IHciyNCE/ame2e4ZmFYNX0zW3mAABlxFYjA5E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=qyXTkGhn95+yOqFMkgDIuIyiEVbrpt4RXMonYVlO/vmuFjbN0ifGuWagwfp5jf2jp6
+         UPnOF82WKSABxvv2g01HdB98+QTRRytNmDecS/FoG8d8+YYjHoXH2lZV4YDdxK4FkGqw
+         Zai/Yq99HA7YRgBg9dNjuLNwrjcOyz4TuwIiM=
+Received: by 10.42.204.66 with SMTP id fl2mr1065900icb.280.1288019274288; Mon,
+ 25 Oct 2010 08:07:54 -0700 (PDT)
+Received: by 10.231.149.141 with HTTP; Mon, 25 Oct 2010 08:07:33 -0700 (PDT)
+In-Reply-To: <201010251657.02802.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159956>
 
-On Sun, Oct 24, 2010 at 03:24:42AM +0200, Thomas Rast wrote:
+2010/10/25 Jakub Narebski <jnareb@gmail.com>:
+> On Sun, 24 Oct 2010, Giuseppe Bilotta wrote:
+>
+>> Otherwise, if names are manipulated for display, the link will point to
+>> the wrong head.
+>>
+>> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+>
+> Shouldn't this patch be at beginning, as first patch of the series?
 
-> Jeff King wrote:
-> >   1. It looks like you're more or less just parsing "::" list keys from
-> >      all of the manpages. This seems somewhat fragile, as there could be
-> >      other non-config lists. Can we at least restrict it to
-> >      CONFIGURATION sections? It would be nice if we could put in some
-> >      kind of semantic markup, but I'm not sure how painful that would be
-> >      with asciidoc (we could always resort to comments in the source,
-> >      but that would probably get unreadable quickly).
-> 
-> I figured for consistency and ease of lookup *all* configuration docs
-> should name the variables in the same format.  It can still be helpful
-> to mention them elsewhere, e.g. in the option documentations, but the
-> main docs should be a CONFIGURATION section formatted like this.
-> 
-> Or do you think that would be a bad thing?
+Given how independent it is from the rest of the series, that's
+probably a good idea.
 
-No, I think everything should be in a CONFIGURATION section. So checking
-for that is probably enough. I was more concerned about false positives
-creeping in. Checking just the CONFIGURATION section would probably make
-that unlikely, though.
-
--Peff
+-- 
+Giuseppe "Oblomov" Bilotta
