@@ -1,169 +1,248 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 07/10] Change incorrect "remote branch" to "remote tracking branch" in C code
-Date: Mon, 25 Oct 2010 08:08:39 +0200
-Message-ID: <1287986922-16308-8-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 01/10] Better "Changed but not updated" message in git-status
+Date: Mon, 25 Oct 2010 08:08:33 +0200
+Message-ID: <1287986922-16308-2-git-send-email-Matthieu.Moy@imag.fr>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Oct 25 08:10:35 2010
+X-From: git-owner@vger.kernel.org Mon Oct 25 08:10:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAGGQ-000484-Kp
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 08:10:34 +0200
+	id 1PAGGR-000484-55
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 08:10:35 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752759Ab0JYGJt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 25 Oct 2010 02:09:49 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:53284 "EHLO rominette.imag.fr"
+	id S1752748Ab0JYGKY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 25 Oct 2010 02:10:24 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:53299 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752219Ab0JYGJt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 25 Oct 2010 02:09:49 -0400
+	id S1751499Ab0JYGKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 25 Oct 2010 02:10:24 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9P62P5E006489
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9P62PdV006483
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
 	Mon, 25 Oct 2010 08:02:25 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PAGEf-00050X-Go; Mon, 25 Oct 2010 08:08:45 +0200
+	id 1PAGEf-00050H-7g; Mon, 25 Oct 2010 08:08:45 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PAGEf-0004G3-EW; Mon, 25 Oct 2010 08:08:45 +0200
+	id 1PAGEf-0004Fl-4s; Mon, 25 Oct 2010 08:08:45 +0200
 X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
 In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 25 Oct 2010 08:02:25 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9P62P5E006489
+X-MailScanner-ID: o9P62PdV006483
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1288591346.108@3EqLRh9p/gEd3jnzI/kWDw
+MailScanner-NULL-Check: 1288591346.09558@lCsqpSva6SbcjDwaWUUYSg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159924>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159925>
 
-(Just like we did for documentation already)
+Older Gits talked about "updating" a file to add its content to the
+index, but this terminology is confusing for new users. "to stage" is far
+more intuitive and already used in e.g. the "git stage" command name.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- branch.h                               |    2 +-
- builtin/fetch.c                        |    2 +-
- builtin/remote.c                       |    6 +++---
- contrib/examples/builtin-fetch--tool.c |    2 +-
- t/t5505-remote.sh                      |    8 +++++---
- t/t7608-merge-messages.sh              |    2 +-
- 6 files changed, 12 insertions(+), 10 deletions(-)
+ Documentation/gittutorial-2.txt |    2 +-
+ t/t7508-status.sh               |   34 +++++++++++++++++-----------------
+ wt-status.c                     |    2 +-
+ 3 files changed, 19 insertions(+), 19 deletions(-)
 
-diff --git a/branch.h b/branch.h
-index eed817a..2004632 100644
---- a/branch.h
-+++ b/branch.h
-@@ -22,7 +22,7 @@ void create_branch(const char *head, const char *name, const char *start_name,
- void remove_branch_state(void);
+diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
+index ecab0c0..7fe5848 100644
+--- a/Documentation/gittutorial-2.txt
++++ b/Documentation/gittutorial-2.txt
+@@ -373,7 +373,7 @@ $ git status
+ #
+ #       new file: closing.txt
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #
+ #       modified: file.txt
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index c9300f3..4de3e27 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -44,7 +44,7 @@ cat >expect <<\EOF
+ #
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -73,7 +73,7 @@ cat >expect <<\EOF
+ # Changes to be committed:
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #	modified:   dir1/modified
+ #
+ # Untracked files:
+@@ -140,7 +140,7 @@ cat >expect <<EOF
+ #
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -167,7 +167,7 @@ cat >expect <<EOF
+ # Changes to be committed:
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #	modified:   dir1/modified
+ #
+ # Untracked files not listed
+@@ -202,7 +202,7 @@ cat >expect <<EOF
+ #
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -260,7 +260,7 @@ cat >expect <<EOF
+ #
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -320,7 +320,7 @@ cat >expect <<\EOF
+ #
+ #	new file:   ../dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -392,7 +392,7 @@ cat >expect <<\EOF
+ #
+ #	<GREEN>new file:   dir2/added<RESET>
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -521,7 +521,7 @@ cat >expect <<\EOF
+ #
+ #	new file:   dir2/added
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -614,7 +614,7 @@ cat >expect <<EOF
+ #	new file:   dir2/added
+ #	new file:   sm
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -673,7 +673,7 @@ cat >expect <<EOF
+ #	new file:   dir2/added
+ #	new file:   sm
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -718,7 +718,7 @@ test_expect_success 'status -s submodule summary' '
  
- /*
-- * Configure local branch "local" to merge remote branch "remote"
-+ * Configure local branch "local" to merge remote-tracking branch "remote"
-  * taken from origin "origin".
-  */
- #define BRANCH_CONFIG_VERBOSE 01
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 3b0b614..4243ef0 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -359,7 +359,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 			what = rm->name + 10;
- 		}
- 		else if (!prefixcmp(rm->name, "refs/remotes/")) {
--			kind = "remote branch";
-+			kind = "remote-tracking branch";
- 			what = rm->name + 13;
- 		}
- 		else {
-diff --git a/builtin/remote.c b/builtin/remote.c
-index e9a6e09..6a06282 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -507,7 +507,7 @@ static int add_branch_for_removal(const char *refname,
- 			return 0;
- 	}
+ cat >expect <<EOF
+ # On branch master
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -766,7 +766,7 @@ cat >expect <<EOF
+ #	new file:   dir2/added
+ #	new file:   sm
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -819,7 +819,7 @@ cat > expect << EOF
+ #
+ #	modified:   sm
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -931,7 +931,7 @@ cat > expect << EOF
+ #
+ #	modified:   sm
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #   (commit or discard the untracked or modified content in submodules)
+@@ -989,7 +989,7 @@ cat > expect << EOF
+ #
+ #	modified:   sm
+ #
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+@@ -1067,7 +1067,7 @@ test_expect_success ".git/config ignore=dirty doesn't suppress submodule summary
  
--	/* don't delete non-remote refs */
-+	/* don't delete non-remote-tracking refs */
- 	if (prefixcmp(refname, "refs/remotes")) {
- 		/* advise user how to delete local branches */
- 		if (!prefixcmp(refname, "refs/heads/"))
-@@ -791,9 +791,9 @@ static int rm(int argc, const char **argv)
+ cat > expect << EOF
+ # On branch master
+-# Changed but not updated:
++# Changes not staged for commit:
+ #   (use "git add <file>..." to update what will be committed)
+ #   (use "git checkout -- <file>..." to discard changes in working directory)
+ #
+diff --git a/wt-status.c b/wt-status.c
+index fc2438f..d9f3d9f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -88,7 +88,7 @@ static void wt_status_print_dirty_header(struct wt_status *s,
+ {
+ 	const char *c = color(WT_STATUS_HEADER, s);
  
- 	if (skipped.nr) {
- 		fprintf(stderr, skipped.nr == 1 ?
--			"Note: A non-remote branch was not removed; "
-+			"Note: A branch outside the refs/remotes/ hierarchy was not removed;\n"
- 			"to delete it, use:\n" :
--			"Note: Non-remote branches were not removed; "
-+			"Note: Some branches outside the refs/remotes/ hierarchy were not removed;\n"
- 			"to delete them, use:\n");
- 		for (i = 0; i < skipped.nr; i++)
- 			fprintf(stderr, "  git branch -d %s\n",
-diff --git a/contrib/examples/builtin-fetch--tool.c b/contrib/examples/builtin-fetch--tool.c
-index cd10dbc..3140e40 100644
---- a/contrib/examples/builtin-fetch--tool.c
-+++ b/contrib/examples/builtin-fetch--tool.c
-@@ -148,7 +148,7 @@ static int append_fetch_head(FILE *fp,
- 		what = remote_name + 10;
- 	}
- 	else if (!strncmp(remote_name, "refs/remotes/", 13)) {
--		kind = "remote branch";
-+		kind = "remote-tracking branch";
- 		what = remote_name + 13;
- 	}
- 	else {
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 5d1c66e..d189add 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -107,16 +107,18 @@ test_expect_success 'remove remote' '
- )
- '
- 
--test_expect_success 'remove remote protects non-remote branches' '
-+test_expect_success 'remove remote protects local branches' '
- (
- 	cd test &&
- 	{ cat >expect1 <<EOF
--Note: A non-remote branch was not removed; to delete it, use:
-+Note: A branch outside the refs/remotes/ hierarchy was not removed;
-+to delete it, use:
-   git branch -d master
- EOF
- 	} &&
- 	{ cat >expect2 <<EOF
--Note: Non-remote branches were not removed; to delete them, use:
-+Note: Some branches outside the refs/remotes/ hierarchy were not removed;
-+to delete them, use:
-   git branch -d foobranch
-   git branch -d master
- EOF
-diff --git a/t/t7608-merge-messages.sh b/t/t7608-merge-messages.sh
-index 28d5679..1c71296 100755
---- a/t/t7608-merge-messages.sh
-+++ b/t/t7608-merge-messages.sh
-@@ -47,7 +47,7 @@ test_expect_success 'ambiguous tag' '
- 	check_oneline "Merge commit QambiguousQ"
- '
- 
--test_expect_success 'remote branch' '
-+test_expect_success 'remote-tracking branch' '
- 	git checkout -b remote master &&
- 	test_commit remote-1 &&
- 	git update-ref refs/remotes/origin/master remote &&
+-	color_fprintf_ln(s->fp, c, "# Changed but not updated:");
++	color_fprintf_ln(s->fp, c, "# Changes not staged for commit:");
+ 	if (!advice_status_hints)
+ 		return;
+ 	if (!has_deleted)
 -- 
 1.7.3.2.183.g2e7b0
