@@ -1,8 +1,8 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv5 23/23] Provide 'git merge --abort' as a synonym to 'git reset
- --merge'
-Date: Mon, 25 Oct 2010 02:08:53 +0200
-Message-ID: <1287965333-5099-24-git-send-email-johan@herland.net>
+Subject: [PATCHv5 20/23] git notes merge: Add testcases for merging notes trees
+ at different fanouts
+Date: Mon, 25 Oct 2010 02:08:50 +0200
+Message-ID: <1287965333-5099-21-git-send-email-johan@herland.net>
 References: <1287965333-5099-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -10,34 +10,34 @@ Content-Transfer-Encoding: 7BIT
 Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
 	avarab@gmail.com, gitster@pobox.com, srabbelier@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Oct 25 02:10:19 2010
+X-From: git-owner@vger.kernel.org Mon Oct 25 02:10:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAAdn-0000ju-Ic
-	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:10:19 +0200
+	id 1PAAdo-0000ju-KO
+	for gcvg-git-2@lo.gmane.org; Mon, 25 Oct 2010 02:10:20 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752023Ab0JYAJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 24 Oct 2010 20:09:32 -0400
+	id S1752049Ab0JYAJe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 24 Oct 2010 20:09:34 -0400
 Received: from smtp.getmail.no ([84.208.15.66]:59910 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752017Ab0JYAJb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 24 Oct 2010 20:09:31 -0400
+	id S1752000Ab0JYAJa (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 24 Oct 2010 20:09:30 -0400
 Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
  by get-mta-out01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LAT0052CKFOGG50@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 25 Oct 2010 02:09:24 +0200 (MEST)
+ with ESMTP id <0LAT00522KFNGG50@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 25 Oct 2010 02:09:23 +0200 (MEST)
 Received: from get-mta-scan01.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id D0B71179913D_CC4CAB4B	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:24 +0000 (GMT)
+ with SMTP id B6C1B1799151_CC4CAB3B	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:23 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 7FA0A1796996_CC4CAB4F	for <git@vger.kernel.org>; Mon,
- 25 Oct 2010 00:09:23 +0000 (GMT)
+ with ESMTP id 5B4D01796769_CC4CAB3F	for <git@vger.kernel.org>; Mon,
+ 25 Oct 2010 00:09:22 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in03.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LAT004SRKFAVB20@get-mta-in03.get.basefarm.net> for
@@ -48,470 +48,462 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159910>
 
-Teach 'git merge' the --abort option, which verifies the existence of
-MERGE_HEAD and then invokes 'git reset --merge' to abort the current
-in-progress merge and attempt to reconstruct the pre-merge state.
+Notes trees may exist at different fanout levels internally. This
+implementation detail should not be visible to the user, and it should
+certainly not affect the merging of notes tree.
 
-The reason for adding this option is to provide a user interface for
-aborting an in-progress merge that is consistent with the interface
-for aborting a rebase ('git rebase --abort'), aborting the application
-of a patch series ('git am --abort'), and aborting an in-progress notes
-merge ('git notes merge --abort').
-
-The patch includes documentation and testcases that explain and verify
-the various scenarios in which 'git merge --abort' can run. The
-testcases also document the cases in which 'git merge --abort' is
-unable to correctly restore the pre-merge state (look for the '###'
-comments towards the bottom of t/t7609-merge-abort.sh).
+This patch adds testcases verifying the correctness of 'git notes merge'
+when merging notes trees at different fanout levels.
 
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- Documentation/git-merge.txt |   29 ++++-
- builtin/merge.c             |   14 ++
- t/t7609-merge-abort.sh      |  290 ++++++++++++++++++++++++++++++++++---------
- 3 files changed, 273 insertions(+), 60 deletions(-)
+ t/t3311-notes-merge-fanout.sh |  436 +++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 436 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3311-notes-merge-fanout.sh
 
-diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
-index 84043cc..d0099d3 100644
---- a/Documentation/git-merge.txt
-+++ b/Documentation/git-merge.txt
-@@ -13,6 +13,7 @@ SYNOPSIS
- 	[-s <strategy>] [-X <strategy-option>]
- 	[--[no-]rerere-autoupdate] [-m <msg>] <commit>...
- 'git merge' <msg> HEAD <commit>...
-+'git merge' --abort
- 
- DESCRIPTION
- -----------
-@@ -47,6 +48,15 @@ The second syntax (<msg> `HEAD` <commit>...) is supported for
- historical reasons.  Do not use it from the command line or in
- new scripts.  It is the same as `git merge -m <msg> <commit>...`.
- 
-+The third syntax ("`git merge --abort`") can only be run after the
-+merge has resulted in conflicts. 'git merge --abort' will abort the
-+merge process and reconstruct the pre-merge state. However, if there
-+were uncommitted changes when the merge started (and these changes
-+did not interfere with the merge itself, otherwise the merge would
-+have refused to start), and then additional modifications were made
-+to these uncommitted changes, 'git merge --abort' will not be able
-+reconstruct the original (pre-merge) uncommitted changes. Therefore:
-+
- *Warning*: Running 'git merge' with uncommitted changes is
- discouraged: while possible, it leaves you in a state that is hard to
- back out of in the case of a conflict.
-@@ -72,6 +82,19 @@ include::merge-options.txt[]
- 	Allow the rerere mechanism to update the index with the
- 	result of auto-conflict resolution if possible.
- 
-+--abort::
-+	Abort the current conflict resolution process, and
-+	reconstruct the pre-merge state.
-++
-+Any uncommitted worktree changes present when the merge started,
-+will only be preserved if they have not been further modified
-+since the merge started. Otherwise, git is unable to reconstruct
-+uncommitted changes. It is therefore recommended to always commit
-+or stash your changes before running 'git merge'.
-++
-+'git merge --abort' is equivalent to 'git reset --merge' when
-+`MERGE_HEAD` is present.
-+
- <commit>...::
- 	Commits, usually other branch heads, to merge into our branch.
- 	You need at least one <commit>.  Specifying more than one
-@@ -142,7 +165,7 @@ happens:
-    i.e. matching `HEAD`.
- 
- If you tried a merge which resulted in complex conflicts and
--want to start over, you can recover with `git reset --merge`.
-+want to start over, you can recover with `git merge --abort`.
- 
- HOW CONFLICTS ARE PRESENTED
- ---------------------------
-@@ -213,8 +236,8 @@ After seeing a conflict, you can do two things:
- 
-  * Decide not to merge.  The only clean-ups you need are to reset
-    the index file to the `HEAD` commit to reverse 2. and to clean
--   up working tree changes made by 2. and 3.; `git-reset --hard` can
--   be used for this.
-+   up working tree changes made by 2. and 3.; `git merge --abort`
-+   can be used for this.
- 
-  * Resolve the conflicts.  Git will mark the conflicts in
-    the working tree.  Edit the files into shape and
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 702f399..fbe342f 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -56,6 +56,7 @@ static size_t xopts_nr, xopts_alloc;
- static const char *branch;
- static int verbosity;
- static int allow_rerere_auto;
-+static int abort_current_merge;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -194,6 +195,8 @@ static struct option builtin_merge_options[] = {
- 		"message to be used for the merge commit (if any)",
- 		option_parse_message),
- 	OPT__VERBOSITY(&verbosity),
-+	OPT_BOOLEAN(0, "abort", &abort_current_merge,
-+		"abort the current in-progress merge"),
- 	OPT_END()
- };
- 
-@@ -914,6 +917,17 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	argc = parse_options(argc, argv, prefix, builtin_merge_options,
- 			builtin_merge_usage, 0);
- 
-+	if (abort_current_merge) {
-+		int nargc = 2;
-+		const char *nargv[] = {"reset", "--merge", NULL};
-+
-+		if (!file_exists(git_path("MERGE_HEAD")))
-+			die("There is no merge to abort (MERGE_HEAD missing).");
-+
-+		/* Invoke 'git reset --merge' */
-+		return cmd_reset(nargc, nargv, prefix);
-+	}
-+
- 	if (read_cache_unmerged()) {
- 		die_resolve_conflict("merge");
- 	}
-diff --git a/t/t7609-merge-abort.sh b/t/t7609-merge-abort.sh
-index 88d76e1..011a4c0 100755
---- a/t/t7609-merge-abort.sh
-+++ b/t/t7609-merge-abort.sh
-@@ -3,95 +3,271 @@
- test_description='test aborting in-progress merges'
- . ./test-lib.sh
- 
-+# Set up repo with conflicting and non-conflicting branches:
+diff --git a/t/t3311-notes-merge-fanout.sh b/t/t3311-notes-merge-fanout.sh
+new file mode 100755
+index 0000000..d1c7b69
+--- /dev/null
++++ b/t/t3311-notes-merge-fanout.sh
+@@ -0,0 +1,436 @@
++#!/bin/sh
 +#
-+# master1---master2---foo_foo  <-- master
-+#        \
-+#         --clean1             <-- clean_branch
-+#                 \
-+#                  --foo_bar   <-- conflict_branch
++# Copyright (c) 2010 Johan Herland
++#
 +
-+test_expect_success 'setup' '
-+	test_commit master1 &&
-+	git checkout -b clean_branch &&
-+	test_commit clean1 &&
-+	git checkout -b conflict_branch &&
-+	echo bar > foo &&
-+	git add foo &&
-+	git commit -m "foo_bar" &&
-+	git tag foo_bar &&
-+	git checkout master &&
-+	test_commit master2 &&
-+	echo foo > foo &&
-+	git add foo &&
-+	git commit -m "foo_foo" &&
-+	git tag foo_foo
-+'
++test_description='Test notes merging at various fanout levels'
 +
- # Test git merge --abort with the following variables:
- # - before/after successful merge (i.e. should fail if not in merge context)
- # - with/without conflicts
-+# - clean/dirty index before merge (merge fails on dirty index)
- # - clean/dirty worktree before merge (may fail to reconstruct dirty worktree)
--# - clean/dirty index before merge (merge should fail on dirty index)
-+# - dirty worktree before merge matches contents on remote branch
- # - changed/unchanged worktree after merge
- # - changed/unchanged index after merge
- 
--test_done
-+pre_merge_head="$(git rev-parse HEAD)"
- 
- test_expect_success 'fails without MERGE_HEAD (unstarted merge)' '
- 	test_must_fail git merge --abort 2>output &&
--	grep -q MERGE_HEAD output
-+	grep -q MERGE_HEAD output &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)"
- '
- 
- test_expect_success 'fails without MERGE_HEAD (completed merge)' '
--	test_commit master-1 &&
--	test_commit master-2 &&
--	git checkout -b side HEAD^ &&
--	test_commit side-1 &&
--	git checkout master &&
--	git merge side &&
-+	git merge clean_branch &&
-+	test ! -f .git/MERGE_HEAD &&
- 	# Merge successfully completed
-+	post_merge_head="$(git rev-parse HEAD)" &&
- 	test_must_fail git merge --abort 2>output &&
--	grep -q MERGE_HEAD output
-+	grep -q MERGE_HEAD output &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$post_merge_head" = "$(git rev-parse HEAD)"
- '
- 
--test_expect_success 'Abort successfully after --no-commit' '
--	# Forget previous merge
--	git reset --hard master^ &&
--	head=$(git rev-parse HEAD) &&
--	git merge --no-commit side &&
-+test_expect_success 'Forget previous merge' '
-+	git reset --hard "$pre_merge_head"
-+'
++. ./test-lib.sh
 +
-+test_expect_success 'Abort after --no-commit' '
-+	# Redo merge, but stop before creating merge commit
-+	git merge --no-commit clean_branch &&
- 	test -f .git/MERGE_HEAD &&
-+	# Abort non-conflicting merge
- 	git merge --abort &&
--	test "$head" = "$(git rev-parse HEAD)" &&
--	test -z "$(git diff HEAD)" &&
--	test ! -f .git/MERGE_HEAD
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff)" &&
-+	test -z "$(git diff --staged)"
- '
- 
-+test_expect_success 'Abort after conflicts' '
-+	# Create conflicting merge
-+	test_must_fail git merge conflict_branch &&
-+	test -f .git/MERGE_HEAD &&
-+	# Abort conflicting merge
-+	git merge --abort &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff)" &&
-+	test -z "$(git diff --staged)"
-+'
- 
-+test_expect_success 'Clean merge with dirty index fails' '
-+	echo xyzzy >> foo &&
-+	git add foo &&
-+	git diff --staged > expect &&
-+	test_must_fail git merge clean_branch &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff)" &&
-+	git diff --staged > actual &&
-+	test_cmp expect actual
-+'
- 
--test_done
-+test_expect_success 'Conflicting merge with dirty index fails' '
-+	test_must_fail git merge conflict_branch &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff)" &&
-+	git diff --staged > actual &&
-+	test_cmp expect actual
-+'
- 
--test_expect_success 'merge local branch' '
--	test_commit master-1 &&
--	git checkout -b local-branch &&
--	test_commit branch-1 &&
--	git checkout master &&
--	test_commit master-2 &&
--	git merge local-branch &&
--	check_oneline "Merge branch Qlocal-branchQ"
-+test_expect_success 'Reset index (but preserve worktree changes)' '
-+	git reset "$pre_merge_head" &&
-+	git diff > actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success 'merge octopus branches' '
--	git checkout -b octopus-a master &&
--	test_commit octopus-1 &&
--	git checkout -b octopus-b master &&
--	test_commit octopus-2 &&
--	git checkout master &&
--	git merge octopus-a octopus-b &&
--	check_oneline "Merge branches Qoctopus-aQ and Qoctopus-bQ"
-+test_expect_success 'Abort clean merge with non-conflicting dirty worktree' '
-+	git merge --no-commit clean_branch &&
-+	test -f .git/MERGE_HEAD &&
-+	# Abort merge
-+	git merge --abort &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success 'merge tag' '
--	git checkout -b tag-branch master &&
--	test_commit tag-1 &&
--	git checkout master &&
--	test_commit master-3 &&
--	git merge tag-1 &&
--	check_oneline "Merge commit Qtag-1Q"
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
- '
- 
--test_expect_success 'ambiguous tag' '
--	git checkout -b ambiguous master &&
--	test_commit ambiguous &&
--	git checkout master &&
--	test_commit master-4 &&
--	git merge ambiguous &&
--	check_oneline "Merge commit QambiguousQ"
-+test_expect_success 'Abort conflicting merge with non-conflicting dirty worktree' '
-+	echo xyzzy >> master1.t &&
-+	git diff > expect &&
-+	test_must_fail git merge conflict_branch &&
-+	test -f .git/MERGE_HEAD &&
-+	# Abort merge
-+	git merge --abort &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
- '
- 
--test_expect_success 'remote branch' '
--	git checkout -b remote master &&
--	test_commit remote-1 &&
--	git update-ref refs/remotes/origin/master remote &&
--	git checkout master &&
--	test_commit master-5 &&
--	git merge origin/master &&
--	check_oneline "Merge remote branch Qorigin/masterQ"
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
++verify_notes () {
++	notes_ref="$1"
++	commit="$2"
++	if test -f "expect_notes_$notes_ref"
++	then
++		git -c core.notesRef="refs/notes/$notes_ref" notes |
++			sort >"output_notes_$notes_ref" &&
++		test_cmp "expect_notes_$notes_ref" "output_notes_$notes_ref" ||
++			return 1
++	fi &&
++	git -c core.notesRef="refs/notes/$notes_ref" log --format="%H %s%n%N" \
++		"$commit" >"output_log_$notes_ref" &&
++	test_cmp "expect_log_$notes_ref" "output_log_$notes_ref"
++}
++
++verify_fanout () {
++	notes_ref="$1"
++	# Expect entire notes tree to have a fanout == 1
++	git rev-parse --quiet --verify "refs/notes/$notes_ref" >/dev/null &&
++	git ls-tree -r --name-only "refs/notes/$notes_ref" |
++	while read path
++	do
++		case "$path" in
++		??/??????????????????????????????????????)
++			: true
++			;;
++		*)
++			echo "Invalid path \"$path\"" &&
++			return 1
++			;;
++		esac
++	done
++}
++
++verify_no_fanout () {
++	notes_ref="$1"
++	# Expect entire notes tree to have a fanout == 0
++	git rev-parse --quiet --verify "refs/notes/$notes_ref" >/dev/null &&
++	git ls-tree -r --name-only "refs/notes/$notes_ref" |
++	while read path
++	do
++		case "$path" in
++		????????????????????????????????????????)
++			: true
++			;;
++		*)
++			echo "Invalid path \"$path\"" &&
++			return 1
++			;;
++		esac
++	done
++}
++
++# Set up a notes merge scenario with different kinds of conflicts
++test_expect_success 'setup a few initial commits with notes (notes ref: x)' '
++	git config core.notesRef refs/notes/x &&
++	for i in 1 2 3 4 5
++	do
++		test_commit "commit$i" >/dev/null &&
++		git notes add -m "notes for commit$i" || return 1
++	done
 +'
 +
-+test_expect_success 'Fail clean merge with conflicting dirty worktree' '
-+	echo xyzzy >> clean1.t &&
-+	git diff > expect &&
-+	test_must_fail git merge --no-commit clean_branch &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
++commit_sha1=$(git rev-parse commit1^{commit})
++commit_sha2=$(git rev-parse commit2^{commit})
++commit_sha3=$(git rev-parse commit3^{commit})
++commit_sha4=$(git rev-parse commit4^{commit})
++commit_sha5=$(git rev-parse commit5^{commit})
++
++cat <<EOF | sort >expect_notes_x
++aed91155c7a72c2188e781fdf40e0f3761b299db $commit_sha5
++99fab268f9d7ee7b011e091a436c78def8eeee69 $commit_sha4
++953c20ae26c7aa0b428c20693fe38bc687f9d1a9 $commit_sha3
++6358796131b8916eaa2dde6902642942a1cb37e1 $commit_sha2
++b02d459c32f0e68f2fe0981033bb34f38776ba47 $commit_sha1
++EOF
++
++cat >expect_log_x <<EOF
++$commit_sha5 commit5
++notes for commit5
++
++$commit_sha4 commit4
++notes for commit4
++
++$commit_sha3 commit3
++notes for commit3
++
++$commit_sha2 commit2
++notes for commit2
++
++$commit_sha1 commit1
++notes for commit1
++
++EOF
++
++test_expect_success 'sanity check (x)' '
++	verify_notes x commit5 &&
++	verify_no_fanout x
 +'
 +
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
++num=300
++
++cp expect_log_x expect_log_y
++
++test_expect_success 'Add a few hundred commits w/notes to trigger fanout (x -> y)' '
++	git update-ref refs/notes/y refs/notes/x &&
++	git config core.notesRef refs/notes/y &&
++	i=5 &&
++	while test $i -lt $num
++	do
++		i=$(($i + 1)) &&
++		test_commit "commit$i" >/dev/null &&
++		git notes add -m "notes for commit$i" || return 1
++	done &&
++	test "$(git rev-parse refs/notes/y)" != "$(git rev-parse refs/notes/x)" &&
++	# Expected number of commits and notes
++	test "$(git rev-list HEAD | wc -l)" = "$num" &&
++	test "$(git notes list | wc -l)" = "$num" &&
++	# 5 first notes unchanged
++	verify_notes y commit5
 +'
 +
-+test_expect_success 'Fail clean merge with matching dirty worktree' '
-+	echo clean1 > clean1.t &&
-+	git diff > expect &&
-+	test_must_fail git merge --no-commit clean_branch &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
++test_expect_success 'notes tree has fanout (y)' 'verify_fanout y'
++
++test_expect_success 'No-op merge (already included) (x => y)' '
++	git update-ref refs/notes/m refs/notes/y &&
++	git config core.notesRef refs/notes/m &&
++	git notes merge x &&
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/y)"
 +'
 +
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
++test_expect_success 'Fast-forward merge (y => x)' '
++	git update-ref refs/notes/m refs/notes/x &&
++	git notes merge y &&
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/y)"
 +'
 +
-+test_expect_success 'Fail conflicting merge with conflicting dirty worktree' '
-+	echo xyzzy >> foo &&
-+	git diff > expect &&
-+	test_must_fail git merge conflict_branch &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
-+'
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
++cat <<EOF | sort >expect_notes_z
++9f506ee70e20379d7f78204c77b334f43d77410d $commit_sha3
++23a47d6ea7d589895faf800752054818e1e7627b $commit_sha2
++b02d459c32f0e68f2fe0981033bb34f38776ba47 $commit_sha1
++EOF
++
++cat >expect_log_z <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++
++$commit_sha3 commit3
++notes for commit3
++
++appended notes for commit3
++
++$commit_sha2 commit2
++new notes for commit2
++
++$commit_sha1 commit1
++notes for commit1
++
++EOF
++
++test_expect_success 'change some of the initial 5 notes (x -> z)' '
++	git update-ref refs/notes/z refs/notes/x &&
++	git config core.notesRef refs/notes/z &&
++	git notes add -f -m "new notes for commit2" commit2 &&
++	git notes append -m "appended notes for commit3" commit3 &&
++	git notes remove commit4 &&
++	git notes remove commit5 &&
++	verify_notes z commit5
 +'
 +
-+test_expect_success 'Fail conflicting merge with matching dirty worktree' '
-+	echo bar > foo &&
-+	git diff > expect &&
-+	test_must_fail git merge conflict_branch &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
++test_expect_success 'notes tree has no fanout (z)' 'verify_no_fanout z'
++
++cp expect_log_z expect_log_m
++
++test_expect_success 'successful merge without conflicts (y => z)' '
++	git update-ref refs/notes/m refs/notes/z &&
++	git config core.notesRef refs/notes/m &&
++	git notes merge y &&
++	verify_notes m commit5 &&
++	# x/y/z unchanged
++	verify_notes x commit5 &&
++	verify_notes y commit5 &&
++	verify_notes z commit5
 +'
 +
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++cat >expect_log_w <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++other notes for commit4
++
++$commit_sha3 commit3
++other notes for commit3
++
++$commit_sha2 commit2
++notes for commit2
++
++$commit_sha1 commit1
++other notes for commit1
++
++EOF
++
++test_expect_success 'introduce conflicting changes (y -> w)' '
++	git update-ref refs/notes/w refs/notes/y &&
++	git config core.notesRef refs/notes/w &&
++	git notes add -f -m "other notes for commit1" commit1 &&
++	git notes add -f -m "other notes for commit3" commit3 &&
++	git notes add -f -m "other notes for commit4" commit4 &&
++	git notes remove commit5 &&
++	verify_notes w commit5
 +'
 +
-+test_expect_success 'Abort merge with pre- and post-merge worktree changes' '
-+	# Pre-merge worktree changes
-+	echo xyzzy >> master1.t &&
-+	git diff > expect &&
-+	# Perform merge
-+	test_must_fail git merge conflict_branch &&
-+	test -f .git/MERGE_HEAD &&
-+	# Post-merge worktree changes
-+	echo barf >> master1.t &&
-+	echo barf > foo &&
-+	### When aborting the merge, git can reconstruct foo, but for non-
-+	### conflicting files it cannot tell pre-merge changes apart from
-+	### post-merge changes. Therefore, the master1.t file will reflect
-+	### the post-merge state, while the foo file will reflect the
-+	### pre-merge (unchanged) state. Change expectations accordingly:
-+	git diff master1.t > expect &&
-+	# Abort merge
-+	git merge --abort &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
++cat >expect_log_m <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++other notes for commit4
++
++$commit_sha3 commit3
++other notes for commit3
++
++$commit_sha2 commit2
++new notes for commit2
++
++$commit_sha1 commit1
++other notes for commit1
++
++EOF
++
++test_expect_success 'successful merge using "ours" strategy (z => w)' '
++	git update-ref refs/notes/m refs/notes/w &&
++	git config core.notesRef refs/notes/m &&
++	git notes merge -s ours z &&
++	verify_notes m commit5 &&
++	# w/x/y/z unchanged
++	verify_notes w commit5 &&
++	verify_notes x commit5 &&
++	verify_notes y commit5 &&
++	verify_notes z commit5
 +'
 +
-+test_expect_success 'Reset worktree changes' '
-+	git reset --hard "$pre_merge_head" &&
-+	git clean -f
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++cat >expect_log_m <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++
++$commit_sha3 commit3
++notes for commit3
++
++appended notes for commit3
++
++$commit_sha2 commit2
++new notes for commit2
++
++$commit_sha1 commit1
++other notes for commit1
++
++EOF
++
++test_expect_success 'successful merge using "theirs" strategy (z => w)' '
++	git update-ref refs/notes/m refs/notes/w &&
++	git notes merge -s theirs z &&
++	verify_notes m commit5 &&
++	# w/x/y/z unchanged
++	verify_notes w commit5 &&
++	verify_notes x commit5 &&
++	verify_notes y commit5 &&
++	verify_notes z commit5
 +'
 +
-+test_expect_success 'Abort merge with pre-merge worktree changes and post-merge index changes' '
-+	# Pre-merge worktree changes
-+	echo xyzzy >> master1.t &&
-+	echo xyzzy >> master2.t &&
-+	### See explanation below for why we only expect the diff of master2.t
-+	git diff master2.t > expect &&
-+	# Perform merge
-+	test_must_fail git merge conflict_branch &&
-+	test -f .git/MERGE_HEAD &&
-+	# Post-merge worktree changes
-+	echo barf >> master1.t &&
-+	echo barf > foo &&
-+	git add master1.t foo &&
-+	### When aborting the merge, git will remove all staged changes,
-+	### including those that were staged post-merge. For any post-merge
-+	### changes that have overwritten pre-merge changes, git cannot
-+	### reconstruct the pre-merge changes. In this scenario, foo and
-+	### master1.t are reset to a clean state (i.e. losing the pre-merge
-+	### changes in master1.t), but the pre-merge changes in master2.t are
-+	### preserved (since it was not changed post-merge).
-+	# Abort merge
-+	git merge --abort &&
-+	test ! -f .git/MERGE_HEAD &&
-+	test "$pre_merge_head" = "$(git rev-parse HEAD)" &&
-+	test -z "$(git diff --staged)" &&
-+	git diff > actual &&
-+	test_cmp expect actual
- '
- 
- test_done
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++cat >expect_log_m <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++other notes for commit4
++
++$commit_sha3 commit3
++other notes for commit3
++
++notes for commit3
++
++appended notes for commit3
++
++$commit_sha2 commit2
++new notes for commit2
++
++$commit_sha1 commit1
++other notes for commit1
++
++EOF
++
++test_expect_success 'successful merge using "union" strategy (z => w)' '
++	git update-ref refs/notes/m refs/notes/w &&
++	git notes merge -s union z &&
++	verify_notes m commit5 &&
++	# w/x/y/z unchanged
++	verify_notes w commit5 &&
++	verify_notes x commit5 &&
++	verify_notes y commit5 &&
++	verify_notes z commit5
++'
++
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++cat >expect_log_m <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++other notes for commit4
++
++$commit_sha3 commit3
++appended notes for commit3
++notes for commit3
++other notes for commit3
++
++$commit_sha2 commit2
++new notes for commit2
++
++$commit_sha1 commit1
++other notes for commit1
++
++EOF
++
++test_expect_success 'successful merge using "cat_sort_uniq" strategy (z => w)' '
++	git update-ref refs/notes/m refs/notes/w &&
++	git notes merge -s cat_sort_uniq z &&
++	verify_notes m commit5 &&
++	# w/x/y/z unchanged
++	verify_notes w commit5 &&
++	verify_notes x commit5 &&
++	verify_notes y commit5 &&
++	verify_notes z commit5
++'
++
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++# We're merging z into w. Here are the conflicts we expect:
++#
++# commit | x -> w    | x -> z    | conflict?
++# -------|-----------|-----------|----------
++# 1      | changed   | unchanged | no, use w
++# 2      | unchanged | changed   | no, use z
++# 3      | changed   | changed   | yes (w, then z in conflict markers)
++# 4      | changed   | deleted   | yes (w)
++# 5      | deleted   | deleted   | no, deleted
++
++test_expect_success 'fails to merge using "manual" strategy (z => w)' '
++	git update-ref refs/notes/m refs/notes/w &&
++	test_must_fail git notes merge z
++'
++
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++cat <<EOF | sort >expect_conflicts
++$commit_sha3
++$commit_sha4
++EOF
++
++cat >expect_conflict_$commit_sha3 <<EOF
++<<<<<<< refs/notes/m
++other notes for commit3
++=======
++notes for commit3
++
++appended notes for commit3
++>>>>>>> refs/notes/z
++EOF
++
++cat >expect_conflict_$commit_sha4 <<EOF
++other notes for commit4
++EOF
++
++test_expect_success 'verify conflict entries (with no fanout)' '
++	ls .git/NOTES_MERGE_WORKTREE >output_conflicts &&
++	test_cmp expect_conflicts output_conflicts &&
++	( for f in $(cat expect_conflicts); do
++		test_cmp "expect_conflict_$f" ".git/NOTES_MERGE_WORKTREE/$f" ||
++		exit 1
++	done ) &&
++	# Verify that current notes tree (pre-merge) has not changed (m == w)
++	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
++'
++
++cat >expect_log_m <<EOF
++$commit_sha5 commit5
++
++$commit_sha4 commit4
++other notes for commit4
++
++$commit_sha3 commit3
++other notes for commit3
++
++appended notes for commit3
++
++$commit_sha2 commit2
++new notes for commit2
++
++$commit_sha1 commit1
++other notes for commit1
++
++EOF
++
++test_expect_success 'resolve and finalize merge (z => w)' '
++	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha3 <<EOF &&
++other notes for commit3
++
++appended notes for commit3
++EOF
++	git notes merge --commit &&
++	verify_notes m commit5 &&
++	# w/x/y/z unchanged
++	verify_notes w commit5 &&
++	verify_notes x commit5 &&
++	verify_notes y commit5 &&
++	verify_notes z commit5
++'
++
++test_expect_success 'notes tree still has fanout after merge (m)' 'verify_fanout m'
++
++test_done
 -- 
 1.7.3.98.g5ad7d9
