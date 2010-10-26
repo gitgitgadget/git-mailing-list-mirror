@@ -1,61 +1,80 @@
-From: Gerrit Pape <pape@smarden.org>
-Subject: Re: Why /var/cache/git?
-Date: Tue, 26 Oct 2010 15:22:18 +0000
-Message-ID: <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
-References: <20101025103006.GA18782@brong.net> <4CC5A13F.2090702@eaglescrag.net> <20101026012224.GA3360@brong.net> <1288099299.8291.6.camel@drew-northup.unet.maine.edu>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: How do I get a list of all unmerged files?
+Date: Tue, 26 Oct 2010 11:31:33 -0400
+Message-ID: <AANLkTi=JipA6P72hY5_FSvohCruf8hqsJc8Rh53FzAzT@mail.gmail.com>
+References: <20101026143245.11433.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Bron Gondwana <brong@fastmail.fm>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Tue Oct 26 17:29:10 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Tue Oct 26 17:32:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAlSW-0006S8-RH
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 17:29:09 +0200
+	id 1PAlVW-0007s8-Ul
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 17:32:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757343Ab0JZP3B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 11:29:01 -0400
-Received: from a.ns.smarden.org ([109.68.224.7]:41809 "HELO a.mx.smarden.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754095Ab0JZP3A (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 11:29:00 -0400
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Tue, 26 Oct 2010 11:29:00 EDT
-Received: (qmail 3932 invoked by uid 1000); 26 Oct 2010 15:22:18 -0000
-Content-Disposition: inline
-In-Reply-To: <1288099299.8291.6.camel@drew-northup.unet.maine.edu>
+	id S1759928Ab0JZPcH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 11:32:07 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34186 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751937Ab0JZPcF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 11:32:05 -0400
+Received: by iwn10 with SMTP id 10so2314240iwn.19
+        for <git@vger.kernel.org>; Tue, 26 Oct 2010 08:32:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=y6sBJZG28z/YGMw31HA5ULG/mFtXLTH9XwtKed6hwK0=;
+        b=I5oFwm6equ8eh8gYmpFdYIq8kl43lJlPQaMo8DTNhR9UJ3qmByuzkjtR8z0tccR5wn
+         kvTXuUPxF58nWgtTN3NBUKEBjRZr85+hRtBWzzlY8jQvhfeyMOH6GTFho/kByrAR2ETn
+         7HXpPDdZS3SlKXyfC4gce+qf5ELBSKsBvJmvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=l7JAhricP0uq5MLQ1pbgsN7JlsPQJ/eWt817OJgL7fCrOs4GIdoSJ7IyOl9avXjfJ5
+         KP0dBp0F71OfoRnYPv9wEopmuFcFQnV6cOcr5B3Ilj3hBUvoJeKrcAoA4ifkieUNbYpl
+         gXmGlUZQJ2W2N0N4mDEd6OPt7Szy1MVxGQVSU=
+Received: by 10.231.183.10 with SMTP id ce10mr7513973ibb.96.1288107124482;
+ Tue, 26 Oct 2010 08:32:04 -0700 (PDT)
+Received: by 10.231.150.201 with HTTP; Tue, 26 Oct 2010 08:31:33 -0700 (PDT)
+In-Reply-To: <20101026143245.11433.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159995>
 
-On Tue, Oct 26, 2010 at 09:21:39AM -0400, Drew Northup wrote:
-> On Tue, 2010-10-26 at 12:22 +1100, Bron Gondwana wrote:
-> > I have no problem with /var/git - it's /var/cache/git that worries
-> > me, since the FHS quite clearly says that blowing away /var/cache/*
-> > is not a problem.  It makes sense to back up /var/lib/ on any machine,
-> > since that's somewhere that contains application data.  We already
-> > back up a few things from /var/lib (like /var/lib/svn for example,
-> > at least until we finish this switchover!)
-> 
-> Bron,
-> Doing a 'git grep "/var"' on the git sources and then searching that
-> output for "cache" turns up nothing. I think you'd best bring this up
-> with the Debian package maintainer. Debian is well known for thinking it
-> knows better than the original authors where stuff should be--and that's
-> why I don't run Debian as a server (too much time spent transliterating
-> paths just to make stuff work properly--when I'm lucky; it makes an
-> excellent desktop for beginners).
+On Tue, Oct 26, 2010 at 10:32 AM, George Spelvin <linux@horizon.com> wr=
+ote:
+> After a merge with conflicts, mostly resolved by rerere, I want to pa=
+ss a list of
+> all unmerged files to the editor for manual review.
+>
+> I can see the list (wrapped in a bunch of inconvenient human-readable=
+ cruft)
+> in "git status". =C2=A0I can also get a list (again with a bunch of e=
+xtraneous
+> info) from "git ls-files -u". =C2=A0What I can't figure out is how to=
+ get
+> "git ls-files -u" with --stage turned *off*.
+>
+> I'm sure this exists somewhere, but I can't find it. =C2=A0Can someon=
+e enlighten
+> me?
+>
+> vim `git command here`
 
-Hi, it's also not my preference, but Debian adheres to the FHS.
-Unfortunately /var/git is not allowed by the FHS, so a different
-location must be chosen for Debian.  I chose /var/cache/git/, and
-suggested to populate that directory with symlinks to the repositories
-that should be available through git-daemon or gitweb, see
-http://bugs.debian.org/483788
+$ git help unmerged
+`git unmerged' is aliased to `!git ls-files --unmerged | cut -f2 | uniq=
+'
 
-Regards, Gerrit.
+If there's a better way to do it, I don't know what it is.
+
+j.
