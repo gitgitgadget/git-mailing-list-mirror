@@ -1,68 +1,70 @@
 From: Jay Soffian <jaysoffian@gmail.com>
 Subject: Re: [PATCH 09/10] user-manual.txt: explain better the
  remote(-tracking) branch terms
-Date: Tue, 26 Oct 2010 02:07:08 -0400
-Message-ID: <AANLkTiky=FiLX=FQL5V66FW_t4yeHjAxE_JJyovTTw5u@mail.gmail.com>
+Date: Tue, 26 Oct 2010 02:20:03 -0400
+Message-ID: <AANLkTinJQMSbW-bsEOS9610GXR7EtbESK_tLAfxt2ibK@mail.gmail.com>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr> <1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, gitster@pobox.com,
 	Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 26 08:07:50 2010
+X-From: git-owner@vger.kernel.org Tue Oct 26 08:20:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAchF-0005KO-3W
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 08:07:45 +0200
+	id 1PActo-0001Vi-5I
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 08:20:44 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752893Ab0JZGHj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 02:07:39 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:57404 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752635Ab0JZGHj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 02:07:39 -0400
-Received: by gwj21 with SMTP id 21so3050829gwj.19
-        for <git@vger.kernel.org>; Mon, 25 Oct 2010 23:07:38 -0700 (PDT)
+	id S1754970Ab0JZGUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 02:20:36 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:55004 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754637Ab0JZGUf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 02:20:35 -0400
+Received: by yxn35 with SMTP id 35so2629946yxn.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 23:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=IGhGLeNM4QhqvmhGDfowY3GYh5cWRq1nG37mVCFibbw=;
-        b=lTBwDPEqhXdrWtIkrmeh3mc+glTkVY6hKpcUOxY83tvl1Vouj/J9VbYXgPtk0nu4k7
-         eTnd6RjBEDZ/uvBF6pThJ7WdIuefQFb1IPCDYDaeejwnhaEsIRF+gJ/fJMfgiqxAPIyB
-         HS4VHozsEL4YkHVO0qZ8VYu9Oqv5rTIt1FEo4=
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=MDU0BYypqpGnuJz8W5Cs80uIwDxKiv4z9mqL5OkaD6s=;
+        b=CulCsj1EuUxgX7FZu81Eg+DunmdSFzTZp8y4Bwoniq+em6Qvnnbn4fKLPd3lwjUcg3
+         2WCDghPeT53GWXqVarV4VJaoJzHSu5mE3K39RHYZNaLZNO3Xudf3lnHH5J1pw/N6ZyAw
+         PiDOPpo/yToxCgKDmjTvDuv7f+kcNLY3jW6ww=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=k0pJmu8xUt9YXuZUXdBVXORpbkXmIk9NO0aYAXHD1hCPUVFFSGmB4StgyoqdGsCLyn
-         U78lcjRRDIAQjUaUl8DDCiF64nS16Sh2ZavNPX+naP/m8RzBBG2mXB2j5y39ujlkc/JX
-         JzdtwcmuWbjIviDXICt9snURvPg+OPbIxn4VU=
-Received: by 10.42.189.5 with SMTP id dc5mr5916865icb.126.1288073258225; Mon,
- 25 Oct 2010 23:07:38 -0700 (PDT)
-Received: by 10.231.150.201 with HTTP; Mon, 25 Oct 2010 23:07:08 -0700 (PDT)
+         :cc:content-type;
+        b=dxFy2CMv03sbJMceZAv4Q8bBqFZ/gAC0h29VXwKWAKwMbhYrlLRFowZAKwngkVRv+2
+         R1c522NwtdQcV6TKfIwvqwMz86VlWq2uNKRyZtgfNfef58PTj1sUb2lD5Pwl+6Whj14T
+         N372/JqPRBGWseAd1+0VjykIvbOH6OP+y18Fk=
+Received: by 10.42.115.138 with SMTP id k10mr2768816icq.335.1288074034789;
+ Mon, 25 Oct 2010 23:20:34 -0700 (PDT)
+Received: by 10.231.150.201 with HTTP; Mon, 25 Oct 2010 23:20:03 -0700 (PDT)
 In-Reply-To: <1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159980>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159981>
 
-On Mon, Oct 25, 2010 at 2:08 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wr=
-ote:
-> =C2=A0You cannot check out these remote-tracking branches, but you ca=
-n
-> =C2=A0examine them on a branch of your own, just as you would a tag:
+On Mon, Oct 25, 2010 at 2:08 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
+> +In this case, "origin" is called a remote repository, or "remote" for
+> +short. The branches of this repository are called "remote branches"
+> +from our point of view, and Git will keep a copy of these
+> +branches, called "remote-tracking branches" in the local repository.
+> +These remote-tracking branches are references that will be updated by
+> +"git fetch" (hence by "git pull"). See
+> +<<Updating-a-repository-With-git-fetch>> for details.
 
-Suggestion: "You do not commit directly to remote-tracking branches,
-but you can examine them or create a branch from them, just as you
-would a tag:"
+"...and Git will initially clone these branches into so-called
+"remote-tracking branches" in the local repository. Thereafter, the
+remote-tracking branches are updated upon fetching from[1] or pushing
+to the remote. ([1] which also includes pulling.)
 
 j.
