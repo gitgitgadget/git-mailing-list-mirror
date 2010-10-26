@@ -1,106 +1,80 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Why /var/cache/git?
-Date: Tue, 26 Oct 2010 09:47:55 -0700 (PDT)
-Message-ID: <m3y69kj40i.fsf@localhost.localdomain>
-References: <20101025103006.GA18782@brong.net>
-	<4CC5A13F.2090702@eaglescrag.net> <20101026012224.GA3360@brong.net>
-	<1288099299.8291.6.camel@drew-northup.unet.maine.edu>
-	<20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv6 02/10] gitweb: git_get_heads_list accepts an optional
+ list of refs.
+Date: Tue, 26 Oct 2010 18:30:04 +0200
+Message-ID: <AANLkTim238K41oJAgXJiGMY0E_J_fzQ4b_ovNman2Agn@mail.gmail.com>
+References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1287917136-26103-3-git-send-email-giuseppe.bilotta@gmail.com> <201010252356.37472.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Bron Gondwana <brong@fastmail.fm>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Tue Oct 26 18:48:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Oct 26 18:48:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAmh1-00086G-1Y
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 18:48:11 +0200
+	id 1PAmh0-00086G-G9
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 18:48:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760090Ab0JZQsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 12:48:02 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37854 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759628Ab0JZQr6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 12:47:58 -0400
-Received: by fxm16 with SMTP id 16so4289207fxm.19
-        for <git@vger.kernel.org>; Tue, 26 Oct 2010 09:47:57 -0700 (PDT)
+	id S1759714Ab0JZQr6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 12:47:58 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:61015 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760083Ab0JZQr5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 12:47:57 -0400
+Received: by pwj8 with SMTP id 8so700882pwj.19
+        for <git@vger.kernel.org>; Tue, 26 Oct 2010 09:47:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=1LsYVtaPQzzfi2Te8nrV9lsJyo/MFwv0JHYesQDSs0E=;
-        b=lMGuZ/8eKgQTg60APKslbeuui1Ih4jsr1HCHd/BjfsqmYkw90inDUJKcTgLtA20KIk
-         W3sdQuUQpGl3cnXrWAe2yH8CU8TPMG2jPIm5gfkxjmmwpzOTI8L6kRENxfqLwNvvZXbR
-         1suwJNTK/UWHpYgOkX376kZr9WO438/62psOM=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=CXpdO7rUjUNUgwhzX7wy8OqQzudyiJQs/4PH4TM8594=;
+        b=f2k8t3w8e05JutxO0m4BRQ4sTNbDKLrdVFkhWGQcjNy3M72lSsskVwZB0xtBmY+tRc
+         1Csd+OzxbQXswMkS9gGl+GkzKUC6JyJXCKKbjkJolgA5few07XYE0lMfaVYIF2QBe2Rs
+         YaVoE6MxCUf0WLYoCQUtxPtimOJBalirN75mw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=C5NNLg/o0Nflia6bh9MgTkBl5QdwFe/J3f+sq0JeAHsGNTXcVBqXoiXOyHmiBN3DPR
-         aAEZZVm9/LabAviP0dxMmoxbJKe1uUzl1A+0iwDuYOjIMzObePUu7gW/bZlBdvGV5VGy
-         Yaov3h9DYQwGHZxoACHkm9ZSXBgdO4tn4quVY=
-Received: by 10.223.79.2 with SMTP id n2mr1061684fak.133.1288111677039;
-        Tue, 26 Oct 2010 09:47:57 -0700 (PDT)
-Received: from localhost.localdomain (abwo92.neoplus.adsl.tpnet.pl [83.8.238.92])
-        by mx.google.com with ESMTPS id j8sm3654962fah.6.2010.10.26.09.47.54
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 26 Oct 2010 09:47:55 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9QGl5Hv010884;
-	Tue, 26 Oct 2010 18:47:16 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9QGkbsL010878;
-	Tue, 26 Oct 2010 18:46:37 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=wCEhejl3bdwCH90BM11yHLtKwJ/ZWCO/7HmLacXYrprNQpQuW5Xwv9H8wAsk+WSgn3
+         iCEde+ytFxlcMkn3rs4zwiHfmTHr97bRQn3Ef6mk7eS+sbfeRhUbxOt7GWynsqBKprVR
+         DPvR+z/NX42BxodTFleGUbVCYWmLUvcvyAoXM=
+Received: by 10.42.167.133 with SMTP id s5mr6597722icy.2.1288110988708; Tue,
+ 26 Oct 2010 09:36:28 -0700 (PDT)
+Received: by 10.231.149.141 with HTTP; Tue, 26 Oct 2010 09:30:04 -0700 (PDT)
+In-Reply-To: <201010252356.37472.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159999>
 
-Gerrit Pape <pape@smarden.org> writes:
-> On Tue, Oct 26, 2010 at 09:21:39AM -0400, Drew Northup wrote:
-> > On Tue, 2010-10-26 at 12:22 +1100, Bron Gondwana wrote:
+2010/10/25 Jakub Narebski <jnareb@gmail.com>:
+> On Sun, 24 Sep 2010, Giuseppe Bilotta wrote:
+>
+>> =A0sub git_get_heads_list {
+>> -=A0=A0=A0=A0=A0=A0=A0my $limit =3D shift;
+>> +=A0=A0=A0=A0=A0=A0=A0my ($limit, @classes) =3D @_;
+>> +=A0=A0=A0=A0=A0=A0=A0unless (defined @classes) {
+>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0my $remote_heads =3D g=
+itweb_check_feature('remote_heads');
+>> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0@classes =3D ('heads',=
+ $remote_heads ? 'remotes' : ());
+>> +=A0=A0=A0=A0=A0=A0=A0}
+>
+> defined(@array) is deprecated at t/../gitweb/gitweb.perl line 3221.
+>
+> Should be simply 'unless (@classes)', or 'unless (scalar @classes)' b=
+ut
+> conditionals provide boolean context, which is scalar context.
+>
+> I'm sorry about missing it earlier.
 
-> > > I have no problem with /var/git - it's /var/cache/git that worries
-> > > me, since the FHS quite clearly says that blowing away /var/cache/*
-> > > is not a problem.  It makes sense to back up /var/lib/ on any machine,
-> > > since that's somewhere that contains application data.  We already
-> > > back up a few things from /var/lib (like /var/lib/svn for example,
-> > > at least until we finish this switchover!)
-> > 
-> > Doing a 'git grep "/var"' on the git sources and then searching that
-> > output for "cache" turns up nothing. I think you'd best bring this up
-> > with the Debian package maintainer. Debian is well known for thinking it
-> > knows better than the original authors where stuff should be--and that's
-> > why I don't run Debian as a server (too much time spent transliterating
-> > paths just to make stuff work properly--when I'm lucky; it makes an
-> > excellent desktop for beginners).
-> 
-> Hi, it's also not my preference, but Debian adheres to the FHS.
-> Unfortunately /var/git is not allowed by the FHS, so a different
-> location must be chosen for Debian.  I chose /var/cache/git/, and
-> suggested to populate that directory with symlinks to the repositories
-> that should be available through git-daemon or gitweb, see
-> http://bugs.debian.org/483788
+No problem. Fixed for the next batch.
 
-Where did you get '/var/git' from?  "git grep /var/git" finds it
-mentioned in one place in git-cvsserver manpage and in two places in
-gitweb/README.  But git-daemon and gitweb's defaults are /pub/scm/git
-or /pub/git - they are FHS-compatibile, aren't they?
-
-So why Debian doesn't use either /pub/scm/git or /pub/git for 
-git-daemon, git-cvsserver and gitweb?
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+--=20
+Giuseppe "Oblomov" Bilotta
