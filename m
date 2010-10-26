@@ -1,69 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Why /var/cache/git?
-Date: Tue, 26 Oct 2010 11:30:04 -0700
-Message-ID: <7viq0ohknn.fsf@alter.siamese.dyndns.org>
-References: <20101025103006.GA18782@brong.net>
- <4CC5A13F.2090702@eaglescrag.net> <20101026012224.GA3360@brong.net>
- <1288099299.8291.6.camel@drew-northup.unet.maine.edu>
- <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Bulk move and some of its close relatives
+Date: Tue, 26 Oct 2010 20:13:14 +0200
+Message-ID: <20101026181314.GA5695@home.lan>
+References: <1287868022-24872-1-git-send-email-ydirson@altern.org>
+ <1287868022-24872-2-git-send-email-ydirson@altern.org>
+ <7veibeitip.fsf@alter.siamese.dyndns.org>
+ <20101025201227.GB3347@home.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Bron Gondwana <brong@fastmail.fm>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Tue Oct 26 20:30:39 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 26 20:30:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAoIA-0003Zp-Av
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 20:30:38 +0200
+	id 1PAoIB-0003Zp-IU
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 20:30:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933494Ab0JZSaU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 14:30:20 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:56099 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756342Ab0JZSaT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 14:30:19 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 97A31E15A2;
-	Tue, 26 Oct 2010 14:30:17 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SzTgC3uFD/1vK36Qcx27jJji7VQ=; b=evXvFD
-	Prv7RlHglF52rdIccZlo2MVzarFG8sgbKYfFekxUS7zDbaSV7MQczBU4zKyGDI+8
-	VzrSHbFemtLtU0InN0EUKccQ2wPM2zq7quCFi/41l61drKLawe2wkpVCrg9Pzzt8
-	IYtxZbHYqEcGUi3dQUEj96CS7Hako/Ij9MSpE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iVJJ0wVD37Ai/SnRU5gzw/fEA56V0GDZ
-	9yMHJCdyDjPWoj9iK81NPgph9JCjjTVNG55pCpjhpXj29Z5Tc+Es805ljswdRFej
-	XuNjoFoygRT0nIbhyCzCGNULyKOrIQjRIczZaM2Vr6C+X+UmAegzuT0YzdEYkpMy
-	tZ3Vlq27RDg=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 469F2E159B;
-	Tue, 26 Oct 2010 14:30:12 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 5CEEDE1598; Tue, 26 Oct
- 2010 14:30:06 -0400 (EDT)
-In-Reply-To: <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org> (Gerrit
- Pape's message of "Tue\, 26 Oct 2010 15\:22\:18 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 11CA819C-E12F-11DF-B4ED-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S933503Ab0JZSa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 14:30:29 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:59765 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756909Ab0JZSa1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 14:30:27 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 65B63D4811D
+	for <git@vger.kernel.org>; Tue, 26 Oct 2010 20:30:20 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PAo1K-0001nU-5L
+	for git@vger.kernel.org; Tue, 26 Oct 2010 20:13:14 +0200
+Content-Disposition: inline
+In-Reply-To: <20101025201227.GB3347@home.lan>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160003>
 
-Gerrit Pape <pape@smarden.org> writes:
+On Mon, Oct 25, 2010 at 10:12:27PM +0200, Yann Dirson wrote:
+> It is only later that I realized that the larger picture was about
+> bulk moves, and directory renames were only a subset of those.
 
-> Hi, it's also not my preference, but Debian adheres to the FHS.
-> Unfortunately /var/git is not allowed by the FHS, so a different
-> location must be chosen for Debian.
+I had a couple of thoughts about this dir-rename -> bulk-moves shift
+today while riding to/from work.  So here are some of the fresh air I
+got...
 
-It seems that /var/lib/ seems to be more appropriate place to store
-persistent database-y stuff. I see e.g. /var/lib/postgresql there.
+Is a bulk-move finally so special ?  There is a close relative to it
+which may be of interest too: bulk deletion.  If we implement
+detection of bulk deletion, we can build on it to get:
+
+* detection of a new type of conflict: addition in a branch of a new
+  file in a dir which is deleted in the other branch (quite similar to
+  the one we were talking about, of a new file in a dir that got moved in
+  other branch)
+* split a good part of the current bulk-move patch in a standalone
+  patch, which is something I wondered how to do
+* probably a much better base for directory-split detection
+
+
+Then, since a bulk-move is made of a bulk deletion, and addition
+somewhere else of those deleted files, it became tempting to
+contemplate the concept of "bulk addition".  At first sight it seems
+awkward, I confess, especially "bulk addition into a preexisting dir",
+which is a bit hard to define with precision.  OTOH, "bulk addition of
+a brand new dir" could bring goodies as well:
+
+* new conflict type: creation in both branches of a new directory with
+  same name
+
+That confict type made me think of another one.  Some of you may have
+noticed in the v7 commit message a suggestion for future developments
+labelled "support other types of bluk-grouping, like prefixes, and
+maybe config-specified patterns".  Now if we get the capability of
+specifying how we define a "group of files" with something other than
+the directory hierarchy (let's say eg. that in t/ every "t[0-9]{4}-"
+is a prefix), the "bulk-add/bulk-add" conflict generated by 2 tests
+with same numeric ID would be detected as a conflict.
+
+Another grouping example would be by file suffix - source-code reorgs
+eg. bulk-moving header files into their own dir are not rare either.
+
+
+Does that sound sane ?
+-- 
+Yann
