@@ -1,84 +1,68 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH 09/10] user-manual.txt: explain better the remote(-tracking) branch terms
-Date: Tue, 26 Oct 2010 13:16:15 +0900
-Message-ID: <buoy69llhbk.fsf@dhlpc061.dev.necel.com>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1287851481-27952-10-git-send-email-Matthieu.Moy@imag.fr>
-	<9A09AA7C-BAE2-4571-8453-17CB3F3256D4@gmail.com>
-	<vpqr5fdmywj.fsf@bauges.imag.fr>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: [PATCH 09/10] user-manual.txt: explain better the
+ remote(-tracking) branch terms
+Date: Tue, 26 Oct 2010 02:07:08 -0400
+Message-ID: <AANLkTiky=FiLX=FQL5V66FW_t4yeHjAxE_JJyovTTw5u@mail.gmail.com>
+References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr> <1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org,
-	gitster@pobox.com, Jonathan Nieder <jrnieder@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 26 06:16:41 2010
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Thore Husfeldt <thore.husfeldt@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@imag.fr>
+X-From: git-owner@vger.kernel.org Tue Oct 26 08:07:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAaxk-0000YT-Vl
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 06:16:41 +0200
+	id 1PAchF-0005KO-3W
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 08:07:45 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279Ab0JZEQf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 00:16:35 -0400
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:32789 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751166Ab0JZEQf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 00:16:35 -0400
-Received: from mailgate3.nec.co.jp ([10.7.69.160])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id o9Q4GG8Q027911;
-	Tue, 26 Oct 2010 13:16:16 +0900 (JST)
-Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
-	id o9Q4GGb13577; Tue, 26 Oct 2010 13:16:16 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.50])
-	by vgate02.nec.co.jp (8.14.4/8.14.4) with ESMTP id o9Q490Qe024715;
-	Tue, 26 Oct 2010 13:16:16 +0900 (JST)
-Received: from relay21.aps.necel.com ([10.29.19.16] [10.29.19.16]) by relay21.aps.necel.com with ESMTP; Tue, 26 Oct 2010 13:16:16 +0900
-Received: from dhlpc061 ([10.114.96.148] [10.114.96.148]) by relay21.aps.necel.com with ESMTP; Tue, 26 Oct 2010 13:16:16 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id E7C5B124042; Tue, 26 Oct 2010 13:16:15 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <vpqr5fdmywj.fsf@bauges.imag.fr> (Matthieu Moy's message of "Tue,
-	26 Oct 2010 05:11:08 +0200")
+	id S1752893Ab0JZGHj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 02:07:39 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:57404 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752635Ab0JZGHj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 02:07:39 -0400
+Received: by gwj21 with SMTP id 21so3050829gwj.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 23:07:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=IGhGLeNM4QhqvmhGDfowY3GYh5cWRq1nG37mVCFibbw=;
+        b=lTBwDPEqhXdrWtIkrmeh3mc+glTkVY6hKpcUOxY83tvl1Vouj/J9VbYXgPtk0nu4k7
+         eTnd6RjBEDZ/uvBF6pThJ7WdIuefQFb1IPCDYDaeejwnhaEsIRF+gJ/fJMfgiqxAPIyB
+         HS4VHozsEL4YkHVO0qZ8VYu9Oqv5rTIt1FEo4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=k0pJmu8xUt9YXuZUXdBVXORpbkXmIk9NO0aYAXHD1hCPUVFFSGmB4StgyoqdGsCLyn
+         U78lcjRRDIAQjUaUl8DDCiF64nS16Sh2ZavNPX+naP/m8RzBBG2mXB2j5y39ujlkc/JX
+         JzdtwcmuWbjIviDXICt9snURvPg+OPbIxn4VU=
+Received: by 10.42.189.5 with SMTP id dc5mr5916865icb.126.1288073258225; Mon,
+ 25 Oct 2010 23:07:38 -0700 (PDT)
+Received: by 10.231.150.201 with HTTP; Mon, 25 Oct 2010 23:07:08 -0700 (PDT)
+In-Reply-To: <1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159980>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
->> No. Git does not =E2=80=9Cmaintain a copy of [the remote] branches=E2=
-=80=9D.
->
-> Which part of the sentence is problematic to you ?
->
-> Remote-tracking branches _are_ a copy of the branches. The copy is
-> made at "git clone" time, and is periodically updated with "git fetch=
-"
-> later. And it seems to me that "periodically update" is a way to
-> "maintain" the copy up-to-date.
->
-> In the latest version of the patch, I changed "maintain" to "keep",
-> following Jakub's remark. Is that better?
+On Mon, Oct 25, 2010 at 2:08 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wr=
+ote:
+> =C2=A0You cannot check out these remote-tracking branches, but you ca=
+n
+> =C2=A0examine them on a branch of your own, just as you would a tag:
 
-Yup.
+Suggestion: "You do not commit directly to remote-tracking branches,
+but you can examine them or create a branch from them, just as you
+would a tag:"
 
-As far as I can tell, Thore's complaint is that the copy is not kept
-perfectly up-to-date automatically, but I think he's incorrect to assum=
-e
-that the language here implies that.  It doesn't.  "Maintaining a copy"
-simply means to keep a copy, so your change seems valid, though.
-
-I supposes git is also used by many people with a less-than-perfect
-command of english though, so perhaps using simpler language is
-sometimes warranted...
-
--Miles
-
---=20
-Ocean, n. A body of water covering seven-tenths of a world designed for=
- Man -
-who has no gills.
+j.
