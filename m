@@ -1,72 +1,106 @@
-From: Gavin Guo <tuffkidtt@gmail.com>
-Subject: Re: How do I get a list of all unmerged files?
-Date: Wed, 27 Oct 2010 00:23:02 +0800
-Message-ID: <AANLkTikthqc9xzJd0sDTXfVW6eGCNjZ0xpZuOmocFTt0@mail.gmail.com>
-References: <20101026143245.11433.qmail@science.horizon.com>
-	<7v1v7dhrc7.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Why /var/cache/git?
+Date: Tue, 26 Oct 2010 09:47:55 -0700 (PDT)
+Message-ID: <m3y69kj40i.fsf@localhost.localdomain>
+References: <20101025103006.GA18782@brong.net>
+	<4CC5A13F.2090702@eaglescrag.net> <20101026012224.GA3360@brong.net>
+	<1288099299.8291.6.camel@drew-northup.unet.maine.edu>
+	<20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Oct 26 18:23:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Drew Northup <drew.northup@maine.edu>,
+	Bron Gondwana <brong@fastmail.fm>,
+	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org
+To: Gerrit Pape <pape@smarden.org>
+X-From: git-owner@vger.kernel.org Tue Oct 26 18:48:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAmIp-0002Zb-UW
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 18:23:12 +0200
+	id 1PAmh1-00086G-1Y
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 18:48:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757702Ab0JZQXF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 12:23:05 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64832 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752870Ab0JZQXE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 12:23:04 -0400
-Received: by bwz11 with SMTP id 11so3521097bwz.19
-        for <git@vger.kernel.org>; Tue, 26 Oct 2010 09:23:02 -0700 (PDT)
+	id S1760090Ab0JZQsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 12:48:02 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37854 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759628Ab0JZQr6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 12:47:58 -0400
+Received: by fxm16 with SMTP id 16so4289207fxm.19
+        for <git@vger.kernel.org>; Tue, 26 Oct 2010 09:47:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+AgCEjw8qOl4MUQtG8YzI0Z+0xJqKs6bczc1MIMkTiw=;
-        b=sDNevCwgMeLwGX7nlWJ3S5+AZRKBl0zqMkb9TUflMvPdcK9PHGCRSsTErScRVKzsY6
-         ShbAAP1E7j47pOw2tP+ga8ras4HScx0LWDRKlFaTjEJl+sFg59fUm+efQSfOR+ExTVUK
-         njNkXiegmo4/p4Nwhjfxdh4iWfVMKxaTNF2KU=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=1LsYVtaPQzzfi2Te8nrV9lsJyo/MFwv0JHYesQDSs0E=;
+        b=lMGuZ/8eKgQTg60APKslbeuui1Ih4jsr1HCHd/BjfsqmYkw90inDUJKcTgLtA20KIk
+         W3sdQuUQpGl3cnXrWAe2yH8CU8TPMG2jPIm5gfkxjmmwpzOTI8L6kRENxfqLwNvvZXbR
+         1suwJNTK/UWHpYgOkX376kZr9WO438/62psOM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=YPJSyK5pVdcPseueHN5TROFD/eF4UdJwXAE3qufdL/POI9PYj+SBD5zJHi8HGeh3vT
-         4VurUU8HyAUk9GWr4IgH+z/dfaMYPgb7b1+FssSZssiNN0yGlBPdcD1XGYjfvdNUE78/
-         4I4PTaW7C0QzwIV6pjUVsMaVy3R9NSHIPO3h0=
-Received: by 10.204.98.84 with SMTP id p20mr6263579bkn.213.1288110182225; Tue,
- 26 Oct 2010 09:23:02 -0700 (PDT)
-Received: by 10.204.55.9 with HTTP; Tue, 26 Oct 2010 09:23:02 -0700 (PDT)
-In-Reply-To: <7v1v7dhrc7.fsf@alter.siamese.dyndns.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=C5NNLg/o0Nflia6bh9MgTkBl5QdwFe/J3f+sq0JeAHsGNTXcVBqXoiXOyHmiBN3DPR
+         aAEZZVm9/LabAviP0dxMmoxbJKe1uUzl1A+0iwDuYOjIMzObePUu7gW/bZlBdvGV5VGy
+         Yaov3h9DYQwGHZxoACHkm9ZSXBgdO4tn4quVY=
+Received: by 10.223.79.2 with SMTP id n2mr1061684fak.133.1288111677039;
+        Tue, 26 Oct 2010 09:47:57 -0700 (PDT)
+Received: from localhost.localdomain (abwo92.neoplus.adsl.tpnet.pl [83.8.238.92])
+        by mx.google.com with ESMTPS id j8sm3654962fah.6.2010.10.26.09.47.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 Oct 2010 09:47:55 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9QGl5Hv010884;
+	Tue, 26 Oct 2010 18:47:16 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9QGkbsL010878;
+	Tue, 26 Oct 2010 18:46:37 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159998>
 
-2010/10/27 Junio C Hamano <gitster@pobox.com>:
-> "George Spelvin" <linux@horizon.com> writes:
->
->> After a merge with conflicts, mostly resolved by rerere, I want to p=
-ass a list of
->> all unmerged files to the editor for manual review.
->>
->> I can see the list (wrapped in a bunch of inconvenient human-readabl=
-e cruft)
->> in "git status". =A0I can also get a list (again with a bunch of ext=
-raneous
->> info) from "git ls-files -u". =A0What I can't figure out is how to g=
-et
->> "git ls-files -u" with --stage turned *off*.
->
-> "rerere status"?
+Gerrit Pape <pape@smarden.org> writes:
+> On Tue, Oct 26, 2010 at 09:21:39AM -0400, Drew Northup wrote:
+> > On Tue, 2010-10-26 at 12:22 +1100, Bron Gondwana wrote:
 
-I think it should be reset ?? or revert ??
+> > > I have no problem with /var/git - it's /var/cache/git that worries
+> > > me, since the FHS quite clearly says that blowing away /var/cache/*
+> > > is not a problem.  It makes sense to back up /var/lib/ on any machine,
+> > > since that's somewhere that contains application data.  We already
+> > > back up a few things from /var/lib (like /var/lib/svn for example,
+> > > at least until we finish this switchover!)
+> > 
+> > Doing a 'git grep "/var"' on the git sources and then searching that
+> > output for "cache" turns up nothing. I think you'd best bring this up
+> > with the Debian package maintainer. Debian is well known for thinking it
+> > knows better than the original authors where stuff should be--and that's
+> > why I don't run Debian as a server (too much time spent transliterating
+> > paths just to make stuff work properly--when I'm lucky; it makes an
+> > excellent desktop for beginners).
+> 
+> Hi, it's also not my preference, but Debian adheres to the FHS.
+> Unfortunately /var/git is not allowed by the FHS, so a different
+> location must be chosen for Debian.  I chose /var/cache/git/, and
+> suggested to populate that directory with symlinks to the repositories
+> that should be available through git-daemon or gitweb, see
+> http://bugs.debian.org/483788
+
+Where did you get '/var/git' from?  "git grep /var/git" finds it
+mentioned in one place in git-cvsserver manpage and in two places in
+gitweb/README.  But git-daemon and gitweb's defaults are /pub/scm/git
+or /pub/git - they are FHS-compatibile, aren't they?
+
+So why Debian doesn't use either /pub/scm/git or /pub/git for 
+git-daemon, git-cvsserver and gitweb?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
